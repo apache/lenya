@@ -20,7 +20,6 @@
     <title>Reserved Names</title> 
   </header> 
   <body> 
-    <section>
 <p>List of Names that are reserved by Lenya for various subsystems </p>
 <ul>
 <li><p>  CSS Classes </p></li>
@@ -42,7 +41,6 @@
 <li><p>  org.apache.lenya.cms.info.target </p></li>
 </ul>
 <p>it seems that the convention is to use a proper class hierarchy for the session var name cookie variables should follow the same convention </p>    
-</section>
 </section>
   </body>
 </document>

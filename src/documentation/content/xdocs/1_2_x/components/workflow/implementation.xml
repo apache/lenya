@@ -28,44 +28,31 @@
   
 <section><title>Important Classes</title>
 
-<p><tt>org.apache.lenya.workflow</tt> The actual workflow API. It defines the workflow model. </p>
+<p><em>org.apache.lenya.workflow</em> The actual workflow API. It defines the workflow model. </p>
 <ul>
-<li><p>  <strong>Workflow</strong> - A workflow object describes a workflow schema. </p>
-</li>
-<li><p>  <strong>WorkflowInstance</strong> - A workflow instance. </p>
-
-</li>
-<li><p>  <strong>Situation</strong> - The environment of the workflow before the invocation of an event. </p>
-</li>
+<li><strong>Workflow</strong> - A workflow object describes a workflow schema.</li>
+<li><strong>WorkflowInstance</strong> - A workflow instance.</li>
+<li> <strong>Situation</strong> - The environment of the workflow before the invocation of an event.</li>
 </ul>
-<p><tt>org.apache.lenya.workflow.impl</tt> A basic abstract implementation of the API. </p>
+<p><em>org.apache.lenya.workflow.impl</em> A basic abstract implementation of the API. </p>
 <ul>
-<li><p>  <strong>WorkflowInstanceImpl</strong> - Basic implementation of a workflow instance. </p>
-
-</li>
-<li><p>  <strong>History</strong> - The history of a workflow instance. Use a history object to restore </p>
-</li>
+<li> <strong>WorkflowInstanceImpl</strong> - Basic implementation of a workflow instance. </li>
+<li> <strong>History</strong> - The history of a workflow instance. Use a history object to restore</li>
 </ul>
 <p>the state of a workflow instance. </p>
-<p><tt>org.apache.lenya.cms.workflow</tt> Some CMS-specific workflow implementation classes. </p>
+<p><em>org.apache.lenya.cms.workflow</em> Some CMS-specific workflow implementation classes. </p>
 <ul>
-<li><p>  <strong>WorkflowFactory</strong> - A factory to build all workflow-related objects. </p>
-
-</li>
-<li><p>  <strong>WorkflowDocument</strong> - A workflow instance wrapper for a CMS document. </p>
-</li>
-<li><p>  <strong>CMSHistory</strong> - CMS-specific workflow instance history. </p>
-</li>
-<li><p>  <strong>CMSSituation</strong> - CMS-specific environment situation. </p>
-
-</li>
+<li> <strong>WorkflowFactory</strong> - A factory to build all workflow-related objects. </li>
+<li> <strong>WorkflowDocument</strong> - A workflow instance wrapper for a CMS document. </li>
+<li> <strong>CMSHistory</strong> - CMS-specific workflow instance history. </li>
+<li> <strong>CMSSituation</strong> - CMS-specific environment situation. </li>
 </ul>
 
 </section><section><title id="head-2d1540f5c092fb4a2a534c9f988b419503a58bfc">Obtaining Workflow Instance and Situation Objects</title>
 
-<p>Use the <tt>WorkflowFactory</tt> to obtain workflow-related objects: </p>
+<p>Use the <em>WorkflowFactory</em> to obtain workflow-related objects: </p>
 
-<pre>
+<source>
 Document document = new DefaultDocument(
         publication, pageEnvelope.getDocumentId());
 
@@ -86,7 +73,7 @@ if (factory.hasWorkflow(document)) {
       
     ...
 }
-</pre></section>
+</source></section>
 
 </body>
 </document>

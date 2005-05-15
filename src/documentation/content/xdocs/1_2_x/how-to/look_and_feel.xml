@@ -25,7 +25,7 @@
   </header>
     <body>
 <p>To change your copy of the Default publication into your publication and have some first successes, you probably want to work on two things: </p>
-<ol type="1">
+<ol>
 <li><p>Change the color scheme and fonts to your own taste. </p>
 
 </li>
@@ -57,7 +57,7 @@
 
 <p>Have a look at the file $LENYA_DIR/your_pub_name/xslt/page2xhtml.xsl and look for this piece in it: </p>
 
-<pre>
+<source>
       &lt;table width="100%" cellpadding="0" cellspacing="0" border="0"&gt;
         &lt;tr&gt;
           &lt;td id="publication-title"&gt;Welcome to the Default Publication!&lt;/td&gt;
@@ -65,7 +65,7 @@
           &lt;td id="project-logo"&gt;&lt;img src="{$root}/images/project-logo.png"/&gt;&lt;/td&gt;
         &lt;/tr&gt;
       &lt;/table&gt;
-</pre>
+</source>
 <p>This is the page header. Put in what you want. It's that simple! </p>
 </section><section>
 <title id="head-3c25d4848127ea4921c40dfeee910b6a0216b60a">Altering navigational components (Tabs, Breadcrumbs and Menus)</title>
@@ -75,19 +75,19 @@
 <p>The navigational elements are built from the file sitetree.xml (look for it in the directory structure) using XSLTs that are usually global to Lenya and therefore not part of you publication. But the global XSLTs can be overridden with local ones quite easily. </p>
 <p>All it takes is to create the files </p>
 
-<pre>
+<source>
 $LENYA_DIR/lenya/pubs/__your_pub_name__/lenya/xslt/navigation/breadcrumbs.xsl
 $LENYA_DIR/lenya/pubs/__your_pub_name__/lenya/xslt/navigation/tabs.xsl
 $LENYA_DIR/lenya/pubs/__your_pub_name__/lenya/xslt/navigation/menu.xsl
-</pre>
+</source>
 <p>which will be used in favor of the core files </p>
 
-<pre>
+<source>
 $LENYA_DIR/lenya/lenya/xslt/navigation/breadcrumbs.xsl
 $LENYA_DIR/lenya/lenya/xslt/navigation/tabs.xsl
 $LENYA_DIR/lenya/lenya/xslt/navigation/menu.xsl
-</pre>
-<p>Usually, you will not want to use a completely different version of the stylesheet. So it is recommended to include the core file using <tt>&lt;xsl:import/&gt;</tt>. </p>
+</source>
+<p>Usually, you will not want to use a completely different version of the stylesheet. So it is recommended to include the core file using <em>&lt;xsl:import/&gt;</em>. </p>
 <p>This is possible because of a built-in fallback mechanism that will make Lenya use the global XSLTs in case there are no local versions inside the publication.
  See the <a href="site:navigation">Navigation Framework</a> for details on this. </p>    </section></body>
 </document>

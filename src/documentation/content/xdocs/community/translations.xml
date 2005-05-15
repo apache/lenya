@@ -36,19 +36,19 @@
 <p>The latter one is a publication specific translation file which gets merged with the global one. The publication specific translations will override the global ones. 
  
 
- An example name for a dictionary file is <tt>cmsui_de.xml</tt> or <tt>cmsui_fr.xml</tt> where <tt>_de</tt> and <tt>_fr</tt> are the official locale extensions. If you want to contribute a translation, make a copy of <tt>cmsui.xml</tt> , add your locale extension to the file name, and translate the text as shown below </p>
+ An example name for a dictionary file is <em>cmsui_de.xml</em> or <em>cmsui_fr.xml</em> where <em>_de</em> and <em>_fr</em> are the official locale extensions. If you want to contribute a translation, make a copy of <em>cmsui.xml</em> , add your locale extension to the file name, and translate the text as shown below </p>
 
 <p>Change </p>
 
-<pre>
+<source>
 &lt;message key="lenya.news.main.title"&gt;Maintain News&lt;/message&gt;
-</pre>
+</source>
 <p>to </p>
 
-<pre>
+<source>
 &lt;message key="lenya.news.main.title"&gt;News verwalten&lt;/message&gt;
 
-</pre>
+</source>
 <p>When you are done, submit a bug report to Bugzilla and attach your new dictionary file. That way, it gets noticed and can be added to Lenya. </p>
 
 </section><section><title id="head-3dccef277d6eba19c1ecd022ab2023c746c4de85">Message Key Naming Conventions</title>
@@ -67,13 +67,13 @@
 </section><section><title id="head-a95e9b852ff1f985e7b7c2c1cabaa430129dcc04">Global Message Keys</title>
 
 
-<pre>
+<source>
 &lt;message key="lenya.common.delete.label"&gt;Delete&lt;/message&gt;
 &lt;message key="lenya.common.delete.hint"&gt;Delete object&lt;/message&gt;
 
 &lt;message key="lenya.common.delete.label"&gt;Cancel&lt;/message&gt;
 &lt;message key="lenya.common.delete.hint"&gt;Cancel current action.&lt;/message&gt;
-</pre>
+</source>
 
 <p> 
  In the above examples the context is lenya.common which indicates the global context. </p>
@@ -81,10 +81,10 @@
 </section><section><title id="head-72f923ab0c18f9c75ebdec73ae50097813e5c0fe">Context Specific Message Keys</title>
 
 
-<pre>
+<source>
 &lt;message key="lenya.news.main.title"&gt;Maintain News&lt;/message&gt;
 &lt;message key="lenya.news.delete.hint"&gt;Delete all selected news items.&lt;/message&gt;
-</pre>
+</source>
 
 <p> 
  It is up to the message author how long(detailed) the context prefix is. </p>

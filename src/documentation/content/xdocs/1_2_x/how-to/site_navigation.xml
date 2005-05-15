@@ -28,12 +28,12 @@
 
 <section><title id="head-da34b3ca6421ef687314b2fc0830c891b3cfa8d7">Technical Background: How Lenya builds the site navigation</title>
 
-<p>The source of all navigation elements is the sitetree, which you can find in <tt>PUB_HOME/authoring/sitetree.xml</tt>, <tt>PUB_HOME/live/sitetree.xml</tt>, <tt>PUB_HOME/trash/sitetree.xml</tt> or <tt>PUB_HOME/archive/sitetree.xml</tt> depending on the relevant area. </p>
-<p>The tree you can see in the left half of the screen when you access the <tt>Site</tt> tab in authoring mode is pretty much a 1:1 representation of the site tree. </p>
+<p>The source of all navigation elements is the sitetree, which you can find in <em>PUB_HOME/authoring/sitetree.xml</em>, <em>PUB_HOME/live/sitetree.xml</em>, <em>PUB_HOME/trash/sitetree.xml</em> or <em>PUB_HOME/archive/sitetree.xml</em> depending on the relevant area. </p>
+<p>The tree you can see in the left half of the screen when you access the <em>Site</em> tab in authoring mode is pretty much a 1:1 representation of the site tree. </p>
 
 <p>The sitetree.xml document of the default publication which we will use as an example here looks like this: </p>
 
-<pre>
+<source>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt;
 &lt;site i18n:attr="label" label="Authoring"
     xmlns="http://apache.org/cocoon/lenya/sitetree/1.0"
@@ -83,7 +83,7 @@
  &lt;/node&gt;
 
 &lt;/site&gt;
-</pre>
+</source>
 <p>The default publication defines three navigation elements: </p>
 
 <ul>
@@ -137,16 +137,16 @@
 <p> </p>
 <p>a typical navigation could look this this: </p>
 
-<pre>
+<source>
 +--------------------------------------------------------------------
 |                       | *HOME* | Products | Services |
 +--------------------------------------------------------------------
 |
-</pre>
+</source>
 
 <p>when the user clicks on Producs, a menu will show up: </p>
 
-<pre>
+<source>
 +--------------------------------------------------------------------
 |                       | Home | *PRODUCTS* | Services |
 +--------------------------------------------------------------------
@@ -154,10 +154,10 @@
 | - Consumer Products
 | - Industrial Products
 |
-</pre>
+</source>
 <p>clicking on Services will show up a different menu: </p>
 
-<pre>
+<source>
 
 +--------------------------------------------------------------------
 |                       | Home | Products | *SERVICES* |
@@ -168,34 +168,34 @@
 | - 24-hour Emergency 
 |   Hotline
 
-</pre>
+</source>
 
-<h5 id="head-5180937f0e533c5948230c73f141c9b2c1aecb65">Simple solution: Hide the menus using CSS</h5>
+</section><section><title id="head-5180937f0e533c5948230c73f141c9b2c1aecb65">Simple solution: Hide the menus using CSS</title>
 
 <p>This behaviour can be achieved by changing the CSS of the default publication. Edit the file </p>
 
-<pre>
+<source>
 $PUB_HOME/resources/shared/css/page.css
-</pre>
-<p>and add the following snippet, preferrably beneath the existing <tt>menublock</tt> declarations: </p>
+</source>
+<p>and add the following snippet, preferrably beneath the existing <em>menublock</em> declarations: </p>
 
-<pre>
+<source>
 .menublock-1 {
     display: none;
 }
-</pre>
+</source>
 <p>This way, all non-selected first level menu entries are hidden, which comprises all menu entries belonging to the other tabs. </p>
 
-<h5 id="head-f6b2dc82fbfce6cdd76a5552ee76fcdd6fd55d53">Advanced solution: Exclude the menus using XSLT</h5>
+</section><section><title id="head-f6b2dc82fbfce6cdd76a5552ee76fcdd6fd55d53">Advanced solution: Exclude the menus using XSLT</title>
 
 <p>In this approach, you use a custom XSLT stylesheet to generate the menubar XHTML snippet. The file has to be placed at </p>
 
-<pre>
+<source>
 $PUB_HOME/lenya/xslt/navigation/menu.xsl
-</pre>
-<p>Note the step <tt>/lenya</tt> in the path, this is necessary to tell Lenya that you're overriding a file from the core. The stylesheet might look as follows: </p>
+</source>
+<p>Note the step <em>/lenya</em> in the path, this is necessary to tell Lenya that you're overriding a file from the core. The stylesheet might look as follows: </p>
 
-<pre>
+<source>
 
 &lt;xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -216,14 +216,14 @@ $PUB_HOME/lenya/xslt/navigation/menu.xsl
   &lt;/xsl:template&gt;
 
 &lt;/xsl:stylesheet&gt; 
-</pre>
+</source>
 <ul>
 <li><p> First, you import the core menu XSL so that you can reuse most of the core functionality. </p>
 
 </li>
-<li><p> The first <tt>&lt;xsl:template&gt;</tt> excludes all top-level <tt>&lt;nav:node&gt;</tt> entries which don't contain the current item. </p>
+<li><p> The first <em>&lt;xsl:template&gt;</em> excludes all top-level <em>&lt;nav:node&gt;</em> entries which don't contain the current item. </p>
 </li>
-<li><p> The second <tt>&lt;xsl:template&gt;</tt> is optional. If you include it, the top-level menu items won't be displayed in the menubar. </p>
+<li><p> The second <em>&lt;xsl:template&gt;</em> is optional. If you include it, the top-level menu items won't be displayed in the menubar. </p>
 
 </li>
 </ul></section></body>

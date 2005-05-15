@@ -29,9 +29,9 @@
 <section><title id="head-707eb025442a6dfa67ca897b5badaf9dee4fb713">File Locations</title>
 
 <ul>
-<li><p>  <tt>src/webapp/lenya/xslt/util/page2xhtml.xsl</tt> - The CMS screen stylesheet. </p>
+<li><p>  <em>src/webapp/lenya/xslt/util/page2xhtml.xsl</em> - The CMS screen stylesheet. </p>
 </li>
-<li><p>  <tt>src/webapp/lenya/resources/css</tt> - The CMS screen CSS files. </p>
+<li><p>  <em>src/webapp/lenya/resources/css</em> - The CMS screen CSS files. </p>
 </li>
 </ul>
 
@@ -39,7 +39,7 @@
 
 <p>Usually a resource is used to style a CMS screen: </p>
 
-<pre>
+<source>
 &lt;map:resource name="style-cms-page"&gt;
   &lt;map:transform src="lenya/xslt/util/page2xhtml.xsl"&gt;
     &lt;map:parameter name="contextprefix"
@@ -48,10 +48,10 @@
 
   &lt;map:serialize/&gt;
 &lt;/map:resource&gt;
-</pre>
+</source>
 <p>¨ This resource is called from the pipeline (the example serves the Lenya CMS starting page): </p>
 
-<pre>
+<source>
 &lt;map:match pattern="index.html"&gt;
   &lt;map:aggregate element="lenya" ...&gt;
     &lt;map:part src="cocoon:/publications.xml"/&gt;
@@ -61,13 +61,13 @@
   &lt;map:transform src="lenya/xslt/util/welcome.xsl"/&gt;
   &lt;map:call resource="style-cms-page"/&gt;
 &lt;/map:match&gt;
-</pre>
+</source>
 
 </section><section><title id="head-bc001dc9bb21e41435e11b6e1d8d83137c94f57c">Writing a CMS screen</title>
 
 <p>To write a CMS screen, use the following syntax: </p>
 
-<pre>
+<source>
 &lt;page:page xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"&gt;
 
   &lt;page:title&gt;
@@ -79,12 +79,12 @@
   &lt;/page:body&gt;
 
 &lt;/page:page&gt;
-</pre>
+</source>
 
 </section><section><title id="head-1b28e37b4edb357dcda08a8c350c39abee643a31">Cascading Stylesheets</title>
 
-<p>When using CSS classes or IDs, please follow the rule that every class or ID starts with the prefix <tt>lenya-</tt>. </p>
-<p>Put your specific CSS file in the CSS directory (see above) and include it in <tt>default.css</tt>. </p>
+<p>When using CSS classes or IDs, please follow the rule that every class or ID starts with the prefix <em>lenya-</em>. </p>
+<p>Put your specific CSS file in the CSS directory (see above) and include it in <em>default.css</em>. </p>
 <p>Currently, the following Lenya CSS classes are defined: </p>
 <ul>
 <li><p> Boxes </p><ul>

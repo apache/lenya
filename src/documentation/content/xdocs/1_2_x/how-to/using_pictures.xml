@@ -32,18 +32,18 @@ there are some pitfalls that you might trap in for sure and probably never find 
 
 <p>In a standard Lenya publication there are two possible places where pictures might be found:  </p>
 <ul>
-<li><p>  In the <tt>resources/shared/images</tt> folder of you publication. </p>
+<li><p>  In the <em>resources/shared/images</em> folder of you publication. </p>
 
 </li>
 <li><p>  In the content folder for a specific page. </p>
 </li>
 </ul>
-<p>As <tt>resources/shared</tt> suggests these are pictures that might be needed in any of the pages and that change seldom, such as the coporate logo or navigational elements for example. </p>
-<p>The pictures in the <tt>resources/shared/images</tt> folder cannot be uploaded by the content editor through the web browser but need to be put there by the administrator. They are referenced in the publication as {{ {$root}/images/name.ext}}, such as </p>
+<p>As <em>resources/shared</em> suggests these are pictures that might be needed in any of the pages and that change seldom, such as the coporate logo or navigational elements for example. </p>
+<p>The pictures in the <em>resources/shared/images</em> folder cannot be uploaded by the content editor through the web browser but need to be put there by the administrator. They are referenced in the publication as {{ {$root}/images/name.ext}}, such as </p>
 
-<pre>
+<source>
 &lt;img src="{$root}/images/project-logo.png"/&gt;
-</pre>
+</source>
 <p>In many cases the content editor of the site will never have to deal with it as these images are often only referenced from the XSLT template that he or she should also not (have to) touch at all. </p>
 <p>Pictures that are not global to the whole publication but belong to one page and therefore are subject to page editing are saved into the the folder that is named after the document id and holds the page as well. These pictures are called <em>Assets</em> in Lenya and can be uploaded by the editor. </p>
 
@@ -51,15 +51,15 @@ there are some pitfalls that you might trap in for sure and probably never find 
 
 <p>In order to allow upload assets, compile Lenya with the parameter <strong>enable.uploads=true</strong> wich is found in <strong>build.properties</strong>: </p>
 
-<pre>
+<source>
 # Enable multipart requests (for security reasons turned off by default.
 # Uncomment to enable)
 
 enable.uploads=true
-</pre>
+</source>
 <p>This option is commented by default wich means it is <em>false</em>. As a Lenya user you cannot change this option, please make sure you recompile and re-install lenya with this option turned on before you continue. </p>
 <p>If the option is off, we will be able to upload assets, but they will be discarded. The user does not receive a warning about that. </p>
-<p><strong>Note:</strong> If the option is off, you might expect the Asset upload to be disabled or to get a warning message similar to the page you see when Kupu is not installed and you try to use the <em>Edit with Kupu</em> menu option. None of this. In case the parameter is off, you can happily upload pictures. You will not get any error messages, but your pictures will be written to <tt>/dev/null</tt>. <strong>Note for the non-Unix people:</strong> <em>They will be silently discarded.</em> </p>
+<p><strong>Note:</strong> If the option is off, you might expect the Asset upload to be disabled or to get a warning message similar to the page you see when Kupu is not installed and you try to use the <em>Edit with Kupu</em> menu option. None of this. In case the parameter is off, you can happily upload pictures. You will not get any error messages, but your pictures will be written to <em>/dev/null</em>. <strong>Note for the non-Unix people:</strong> <em>They will be silently discarded.</em> </p>
 
 </section><section><title id="head-543727d3f7ff5362456e9f90f91b773a29989b28">Uploading pictures</title>
 
@@ -72,8 +72,8 @@ enable.uploads=true
 
 </section><section><title id="head-e89353653618c83710b1579bc01c1fb69cd321b8">Linking pictures in a document</title>
 
-<p>In order to link a picture that you have uploaded as an asset, you need to insert a relative link to <tt>doc_id/filename.ext</tt>. If for example you are editing the page <tt>index</tt> and you uploaded a picture called <tt>building.png</tt>, you would need to link to <tt>index/building.png</tt>. </p>
+<p>In order to link a picture that you have uploaded as an asset, you need to insert a relative link to <em>doc_id/filename.ext</em>. If for example you are editing the page <em>index</em> and you uploaded a picture called <em>building.png</em>, you would need to link to <em>index/building.png</em>. </p>
 
-<p>This is also true for pages that are not directly under home, but anywhere in the hierarchy. If for example you need to link a picture called photo.jpg in <tt>/products/enduser/product_a/overview_a</tt> the link would still be <tt>overview_a/photo.jpg</tt>. </p>
+<p>This is also true for pages that are not directly under home, but anywhere in the hierarchy. If for example you need to link a picture called photo.jpg in <em>/products/enduser/product_a/overview_a</em> the link would still be <em>overview_a/photo.jpg</em>. </p>
 <p>This remains true in any editor. In Kupu for example you can type this link directly into to the appropriate field and hit the "Insert Image" button beneath. You should see the image appear immediatelly inside the page you are editing. </p></section></body>
 </document>

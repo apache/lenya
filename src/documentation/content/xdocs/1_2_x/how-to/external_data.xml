@@ -81,6 +81,6 @@
              &lt;/map:match&gt;</source>
             <p>Notice I added the filename requested (without an extension) to the querystring of the remote request.</p>
 
-            <p>2.c Use these filenames for your transformation: <tt>xslt/people2xhtml.xsl</tt> (Use whatever is specified in 2.b, but this is the standard naming convention.)
-            <tt>xslt/page2xhtml-people.xsl</tt>  I recommend the second option. It is much less code (less chance of bugs), and takes advantage of Lenya's standards.</p></section>   </body>
+            <p>2.c Use these filenames for your transformation: <em>xslt/people2xhtml.xsl</em> (Use whatever is specified in 2.b, but this is the standard naming convention.)
+            <em>xslt/page2xhtml-people.xsl</em>  I recommend the second option. It is much less code (less chance of bugs), and takes advantage of Lenya's standards.</p></section>   </body>
 </document>

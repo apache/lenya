@@ -37,23 +37,23 @@
 
 <section><title>Organization</title>
 <ul>
-<li><p>  Put your test classes in <tt>src/test</tt>. </p>
+<li><p>  Put your test classes in <em>src/test</em>. </p>
 </li>
-<li><p>  Add the ant task that executes your test to <tt>src/targets/test-build.xml</tt>. </p>
+<li><p>  Add the ant task that executes your test to <em>src/targets/test-build.xml</em>. </p>
 
 </li>
 </ul>
 
 </section><section><title id="head-655f58cfc0972b961e3661ac08aac2ff99ca1b48">The Test Publication</title>
 
-<p>Most tests will need a publication in the install (servlet container) directory. To provide a predictable test publication, the clean <tt>default</tt> publication from the build directory is copied to the <tt>test</tt> publication in the installation directory. </p>
-<p>In the test buildfile, the test publication is setup by the <tt>test.pub.prepare</tt> target. The directory {{${install.dir}/lenya/pubs/test}} is deleted (so that the files created by former tests are removed), and the default publication is copied to this directory. Add this target to the <tt>depends</tt> attribute of your test target if you need the test publication. </p>
+<p>Most tests will need a publication in the install (servlet container) directory. To provide a predictable test publication, the clean <em>default</em> publication from the build directory is copied to the <em>test</em> publication in the installation directory. </p>
+<p>In the test buildfile, the test publication is setup by the <em>test.pub.prepare</em> target. The directory {{${install.dir}/lenya/pubs/test}} is deleted (so that the files created by former tests are removed), and the default publication is copied to this directory. Add this target to the <em>depends</em> attribute of your test target if you need the test publication. </p>
 
 </section><section><title id="head-65a89586ffaf2c23e63e3cf91ac1e6e40cd84cc6">The PublicationHelper</title>
 
-<p>To simplify the acces to a publication you can use the class <tt>org.apache.lenya.cms.PublicationHelper</tt>. It provides the following methods: </p>
+<p>To simplify the acces to a publication you can use the class <em>org.apache.lenya.cms.PublicationHelper</em>. It provides the following methods: </p>
 
-<pre>
+<source>
     /**
      * Initializes the object with the first parameters from the command
      * line arguments &lt;code&gt;args&lt;/code&gt;. The remainder of the array is returned.
@@ -68,12 +68,12 @@
      * @return A publication object.
      */
     public static Publication getPublication();
-</pre>
+</source>
 
-<p>The <tt>extractPublicationArguments(String[])</tt> method extracts the first two strings from the <tt>args</tt> parameter. The first one is the servlet context path, the second is the publication ID. </p>
-<p>To make use of the PublicationHelper, you have to call the <tt>extractPublicationArguments(String[])</tt> method in the <tt>main(String())</tt> method of your <tt>TestCase</tt> class. This initializes the PublicationHelper: </p>
+<p>The <em>extractPublicationArguments(String[])</em> method extracts the first two strings from the <em>args</em> parameter. The first one is the servlet context path, the second is the publication ID. </p>
+<p>To make use of the PublicationHelper, you have to call the <em>extractPublicationArguments(String[])</em> method in the <em>main(String())</em> method of your <em>TestCase</em> class. This initializes the PublicationHelper: </p>
 
-<pre>
+<source>
     public static void main(String[] args) {
 
         // extract the arguments needed for setting up the publication
@@ -82,12 +82,12 @@
 
         ...
     }
-</pre>
+</source>
 
 </section><section><title id="head-8878fcb8bad4bee373aa2a9f486fa1b5ac58586c">A TestCase Skeleton</title>
 
 
-<pre>
+<source>
 public class MyTest extends TestCase {
 
     // static fields to store test parameters
@@ -135,14 +135,14 @@ public class MyTest extends TestCase {
         return configFile;
     }
 }
-</pre>
+</source>
 
 </section><section><title id="head-d0a01800d3a5e8cc04a8fca0bdb4fd67dec4db20">Debugging a Test</title>
 
-<p>For debugging, it might be desired to run the test from an API. In this case, the <tt>main(String[])</tt> method is never executed. </p>
-<p>To provide the parameters, you can hardcode them as fallback in the !<a  class="nonexistent" href="/lenya/TestCase">?</a>TestCase.setup() method that is called before the test is invoked: </p>
+<p>For debugging, it might be desired to run the test from an API. In this case, the <em>main(String[])</em> method is never executed. </p>
+<p>To provide the parameters, you can hardcode them as fallback in the TestCase.setup() method that is called before the test is invoked: </p>
 
-<pre>
+<source>
     /** @see junit.framework.TestCase#setUp() */
     protected void setUp() throws Exception {
         if (getConfigFile() == null) {
@@ -154,11 +154,11 @@ public class MyTest extends TestCase {
             setConfigFile("config/something.xconf");
         }
     }
-</pre>
+</source>
 
 </section><section><title id="head-d8c100285806e70cf61740be84709676e34fd9c4">The Test Buildfile</title>
 
-<p>The test buildfile is located at <tt>src/targets/test-build.xml</tt>. It contains the following common targets: </p>
+<p>The test buildfile is located at <em>src/targets/test-build.xml</em>. It contains the following common targets: </p>
 <ul>
 <li><p>  <strong>test</strong> - Runs all tests. </p>
 </li>
@@ -176,10 +176,10 @@ public class MyTest extends TestCase {
 
 </section><section><title id="head-73e85ec07ad251e822d4a03aaf2f9a03b6473ec8">Adding the Test to the Buildfile</title>
 
-<p>To add your test to the buildfile, you create a target called <tt>test.&lt;name&gt;</tt>. </p>
-<p>If you use assertions (Java assertions, not the JUnit ones) in your test, it is important to enable them using the <tt>-ea</tt> or <tt>-enableassertions</tt> argument. </p>
+<p>To add your test to the buildfile, you create a target called <em>test.&lt;name&gt;</em>. </p>
+<p>If you use assertions (Java assertions, not the JUnit ones) in your test, it is important to enable them using the <em>-ea</em> or <em>-enableassertions</em> argument. </p>
 
-<pre>
+<source>
   &lt;target name="test.my" depends="test.pub.prepare"&gt;
     &lt;!-- My Test --&gt;
     &lt;java fork="yes" classname="org.apache.lenya.cms.mypackage.MyTest"&gt;
@@ -201,26 +201,26 @@ public class MyTest extends TestCase {
       &lt;/classpath&gt;
     &lt;/java&gt;
   &lt;/target&gt;
-</pre>
-<p>Finally, you have to add the test to the <tt>tests.junit</tt> target: </p>
+</source>
+<p>Finally, you have to add the test to the <em>tests.junit</em> target: </p>
 
-<pre>
+<source>
 
 &lt;target name="tests.junit" depends="init, tests.prepare, ..., test.my"&gt;
-</pre>
+</source>
 <p>Now you can run the tests: </p>
 
-<pre>
+<source>
 $LENYA_HOME &gt; build test
-</pre>
+</source>
 <p>If you want to call your test independently, you have to call the preparation targets before: </p>
 
-<pre>
+<source>
 $LENYA_HOME &gt; build init
 $LENYA_HOME &gt; build tests.prepare
 $LENYA_HOME &gt; build test.my
 
-</pre></section>    
+</source></section>    
   </body>
 </document>
 

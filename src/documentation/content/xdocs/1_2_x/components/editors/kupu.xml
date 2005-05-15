@@ -38,7 +38,7 @@
 </section><section><title id="head-cb7dd8a2b1dc471e0805416826a330e77b1cce07">What integrating an editor is all about</title>
 
 <p>From the user's perspective using an editor in Lenya works like this: </p>
-<ol type="1">
+<ol>
 <li><p>Navigate to the item that is to be edited </p>
 </li>
 <li><p>Click on a link to start the editing process (mostly from a pull-down menu, but there are other options) </p>
@@ -56,7 +56,7 @@
  As simple as that sounds, there is a number of things Lenya has to go through. </p>
 <p>Between Step 2. and 3. (the user clicking on 'Edit' and the editor showing up) Lenya has to </p>
 
-<ol type="1">
+<ol>
 <li><p>Make sure the editor is installed at all </p>
 </li>
 <li><p>Determine the file to be edited </p>
@@ -67,7 +67,7 @@
 </li>
 </ol>
 <p>Between Step 3. and 4. (Edit and Save) Lenya has to  </p>
-<ol type="1">
+<ol>
 
 <li><p>Make sure the file is still checked out so it can be edited </p>
 </li>
@@ -83,13 +83,11 @@
 <p><em>Note: Kupu allows the user to Save in between and continue editing. This is achieved by using HTTP POST operations. Thus Lenya needs to be prepared to 
 receive multiple updates of the same page and save it before the user might click on 'Exit and Save' so that Step 5 (Display the changed page) is finally triggered.</em> </p>
 
-<h3 id="head-e5a2711688441b7644fbdb11a61307c04fbf2061">The Kupu usecase pipeline in detail</h3>
+</section><section><title id="head-e5a2711688441b7644fbdb11a61307c04fbf2061">The Kupu usecase pipeline in detail</title>
+<section><title id="head-42ce962db03bd610fa943bc40b509ba6985810fd">step="open"</title>
 
 
-</section><section><title id="head-42ce962db03bd610fa943bc40b509ba6985810fd">step="open"</title>
-
-
-<pre>
+<source>
         &lt;map:match pattern="kupu" type="usecase"&gt;
           &lt;map:match pattern="open" type="step"&gt;
             &lt;map:match pattern="*/authoring/**.html"&gt;
@@ -129,12 +127,12 @@ receive multiple updates of the same page and save it before the user might clic
             &lt;/map:match&gt;
 
           &lt;/map:match&gt;
-</pre>
+</source>
 
 </section><section><title id="head-f6ed65665fa1e56a5371d0ab376effe42403dfae">step="content"</title>
 
 
-<pre>
+<source>
           &lt;map:match pattern="content" type="step"&gt;
             &lt;map:match pattern="*/authoring/**.html"&gt;
               &lt;map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/&gt;
@@ -147,12 +145,12 @@ receive multiple updates of the same page and save it before the user might clic
             &lt;/map:match&gt;
 
           &lt;/map:match&gt;
-</pre>
+</source>
 
 </section><section><title id="head-211e1aede1d0c03aa8411a1d19a43d3f5d18ccc9">step="save"</title>
 
 
-<pre>
+<source>
           &lt;map:match pattern="save" type="step"&gt;
             &lt;map:select type="request-method"&gt;
               &lt;map:when test="PUT"&gt;
@@ -211,6 +209,6 @@ receive multiple updates of the same page and save it before the user might clic
             &lt;/map:select&gt;
           &lt;/map:match&gt;
 
-</pre></section>
+</source></section></section>
 </body>
 </document>

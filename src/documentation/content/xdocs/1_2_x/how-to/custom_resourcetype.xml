@@ -63,9 +63,9 @@ resource type for what you are trying to achieve or if you should be looking for
 
 </section><section><title id="head-d05f4f01dd36c53247e296e75bc2f09a5d801429">Define the resource type ID</title>
 
-<p>Define the resource type ID in <tt>mypub/config/doctypes/doctypes.xconf</tt> Note that resource types were historically called doctypes, thus the names of the config files. </p>
+<p>Define the resource type ID in <em>mypub/config/doctypes/doctypes.xconf</em> Note that resource types were historically called doctypes, thus the names of the config files. </p>
 
-<pre>
+<source>
 &lt;doctypes&gt; 
   &lt;!-- Here is the document ID --&gt;
   &lt;doc type="myresourcetype"&gt;
@@ -93,14 +93,14 @@ resource type for what you are trying to achieve or if you should be looking for
     &lt;workflow src="workflow.xml"/&gt;
   &lt;/doc&gt;
 
-&lt;/doctypes&gt;</pre>
+&lt;/doctypes&gt;</source>
 
 </section><section><title id="head-cea12489d4b764632fd61dd792a9e5f90626e11e">Create the schema</title>
 
-<p>Create relax NG schema: <tt>mypub/config/doctypes/schemas/myresourcetype.rng</tt> </p>
+<p>Create relax NG schema: <em>mypub/config/doctypes/schemas/myresourcetype.rng</em> </p>
 <p>Note: This is optional, but important if you want to use the form editors. If you get your XML files that you try to render as a custom resource type from 
 somewhere else you can omit this step. You can also omit it if you want to create a sample document manually first to see all the rest working and come back to this point later. </p>
-<pre>
+<source>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt; 
 &lt;!--+
     | myresourcetype resource type
@@ -151,15 +151,15 @@ somewhere else you can omit this step. You can also omit it if you want to creat
 &lt;/define&gt;
 
 
-&lt;/grammar&gt;</pre>
+&lt;/grammar&gt;</source>
 <p>Note that you can generate Relax NG schemas from sample files by using <a  href="http://www.thaiopensource.com/relaxng/trang.html">
  Trang</a> or <a  href="http://wwws.sun.com/software/xml/developers/relaxngconverter/"> Sun RELAX NG Converter</a> </p>
 
 </section><section><title id="head-ff4bce85b820a235e0f917955b004b766b9a6d41">Resource type matcher</title>
 
-<p>Add a sourcetype matcher in <tt>mypub/parameter-doctype.xmap</tt> 
+<p>Add a sourcetype matcher in <em>mypub/parameter-doctype.xmap</em> 
 </p>
-<pre>
+<source>
 &lt;!-- This file is map:mounted from mypub/publication-sitemap.xmap --&gt;
 
 &lt;map:action name="sourcetype" src="org.apache.cocoon.acting.sourcetype.SourceTypeAction"&gt;
@@ -170,7 +170,7 @@ somewhere else you can omit this step. You can also omit it if you want to creat
   &lt;/sourcetype&gt;
 &lt;/map:action&gt;
 
-</pre>
+</source>
 <p>The parameter-doctype.xmap allows Lenya to determine the resource type of any URI. the mapping provided in here allows to mix and match resource types freely.
  It makes use of the <a  href="http://forrest.apache.org/docs/cap.html"> Source Type action</a>. There are several ways to identify a resource type, 
  such as by its root tag, the namespace of its root element or its schema. Please note that the name of the resource type you specify here is used throughout 
@@ -185,10 +185,10 @@ So pay special attention to this. Check the overview page in the site area where
 
 </section><section><title id="head-efab8428b801182274861ad033341c99f13bb014">Sample File</title>
 
-<p>Add a sample file: <tt>mypub/config/doctypes/samples/myresourcetype.xml</tt> </p>
+<p>Add a sample file: <em>mypub/config/doctypes/samples/myresourcetype.xml</em> </p>
 <p>The sample file will be used as a template. If you create a new document with this resource type a copy of the sample file will be placed as a starting point. 
 Therefore it makes sense to set some good defaults here. </p>
-<pre>
+<source>
 &lt;?xml version="1.0" encoding="UTF-8"?&gt; 
 &lt;html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:xhtml="http://www.w3.org/1999/xhtml"
@@ -226,34 +226,34 @@ Therefore it makes sense to set some good defaults here. </p>
     &lt;h1&gt;New resource type sample&lt;/h1&gt;
     &lt;p&gt;This sample page is the basis for pages based on this resource type&lt;/p&gt;
   &lt;/body&gt;
-&lt;/html&gt;</pre>
+&lt;/html&gt;</source>
 
 </section><section><title id="head-e41c27c12a329ba8438e3a4b228ac2f4e0e3ccd5">Presentation</title>
 
 <ul>
-<li><p> Create presentation XSLT and CSS.  If the XSLT and CSS are specific to the publication, you may want to store them in <tt>mypub/xslt/myresourcetype2xhtml.xsl</tt>
- and <tt>mypub/resources/shared/css/myresourcetype.css</tt>, respectively. Take care of the naming conventions for the XSLT files. </p>
+<li><p> Create presentation XSLT and CSS.  If the XSLT and CSS are specific to the publication, you may want to store them in <em>mypub/xslt/myresourcetype2xhtml.xsl</em>
+ and <em>mypub/resources/shared/css/myresourcetype.css</em>, respectively. Take care of the naming conventions for the XSLT files. </p>
 </li>
-<li class="gap"><p> Copy <tt>mypub/xslt/page2xhtml-xhtml.xsl</tt> to <tt>mypub/xslt/page2xhtml-myresourcetype.xsl</tt>. This will style your new document type
- like your old documents. If you wish to change how the new documents look, create your own stylesheet at <tt>mypub/xslt/page2xhtml-myresourcetype.xsl</tt> </p>
+<li class="gap"><p> Copy <em>mypub/xslt/page2xhtml-xhtml.xsl</em> to <em>mypub/xslt/page2xhtml-myresourcetype.xsl</em>. This will style your new document type
+ like your old documents. If you wish to change how the new documents look, create your own stylesheet at <em>mypub/xslt/page2xhtml-myresourcetype.xsl</em> </p>
 
 </li>
 <li class="gap"><p> If you wish to edit your new documents using BXE (Kupu works only with XHTML), you should place a CSS file for styling your documents in
- <tt>mypub/resources/misc/myresourcetype-bxeng.css</tt> </p>
+ <em>mypub/resources/misc/myresourcetype-bxeng.css</em> </p>
 </li>
-<li class="gap"><p> Add presentation pipelines in <tt>mypub/sitemap.xmap</tt> if you need special pipelines for your resource type </p>
+<li class="gap"><p> Add presentation pipelines in <em>mypub/sitemap.xmap</em> if you need special pipelines for your resource type </p>
 </li>
 </ul>
 <p>Make sure you understand that for your new resource type you don't need a replacement for page2xhtml.xsl but for xhtml2xhtml. The reason is this: </p>
 
 <p>Transforming a document to a page in the browser is always a two-step process, </p>
-<ol type="1">
+<ol>
 <li><p>Using {resourcetype}2xhtml.xsl the document (which might be any arbritary XML such as the link list, Docbook, a RSS feed, etc.) is turned into an XHTML presentation. </p>
 </li>
 <li><p>This XHTML is then processed to contain nagivation, menus and the like using page2xhtml. </p>
 </li>
 <li><p>The stylesheet {resourcetype}2xhtml.xsl must return a document of the form 
-<tt>&lt;div&nbsp;id="body"&nbsp;xmlns="http://www.w3.org/1999/xhtml"&gt;&nbsp;...&nbsp;&lt;/div&gt;</tt>. </p>
+<em>&lt;div&nbsp;id="body"&nbsp;xmlns="http://www.w3.org/1999/xhtml"&gt;&nbsp;...&nbsp;&lt;/div&gt;</em>. </p>
 
 </li>
 </ol>
@@ -272,28 +272,28 @@ Therefore it makes sense to set some good defaults here. </p>
 </ul>
 <p>the concept would be </p>
 
-<pre>
+<source>
 document -&gt; rss2xhtml.xsl       --+
 document -&gt; linklist2xhtml.xsl  --+
 document -&gt; gallery2xhtml.xsl   --+---&gt; page2xhtml.xsl -&gt; Browser
 document -&gt; docbook2xhtml.xsl   --+
 document -&gt; xhtml2xhtml.xsl     --+
 
-</pre>
+</source>
 
 </section><section><title id="head-cb2652bbd893f7f0e164215f740a06953ffb30a1">Menus</title>
 
 <p>Configure the menus (either 1. or 2.) </p>
 
-<h4 id="head-a546c21eb7f721406e7b0fb338f2241933bb5397">Using an existing menu</h4>
+</section><section><title id="head-a546c21eb7f721406e7b0fb338f2241933bb5397">Using an existing menu</title>
 
 <p>Use an existing menu and add necessary menu items </p>
 <ul>
-<li><p> Edit <tt>mypub/config/menus/generic.xsp</tt> and add an entry for the new resource type </p>
+<li><p> Edit <em>mypub/config/menus/generic.xsp</em> and add an entry for the new resource type </p>
 
 </li>
 <li><p> </p>
-<pre>
+<source>
 ... 
     &lt;menus&gt;
       &lt;menu i18n:attr="name" name="File" label="File"&gt;
@@ -312,18 +312,18 @@ document -&gt; xhtml2xhtml.xsl     --+
           &lt;/xsp:logic&gt;
 
         &lt;/block&gt;
-...</pre>
+...</source>
 </li>
 </ul>
 
-<h4 id="head-46fd0096d6ae1a5ed8d88f18cc135cf069164b2f">using a custom menu</h4>
+</section><section><title id="head-46fd0096d6ae1a5ed8d88f18cc135cf069164b2f">using a custom menu</title>
 
 <p>or Create a custom menu for this resource type </p>
 <ul>
-<li><p> edit <tt>mypub/menus.xmap</tt> </p>
+<li><p> edit <em>mypub/menus.xmap</em> </p>
 
 </li>
-<li><p> create a menu file <tt>mypub/config/menus/myresourcetype.xsp</tt> </p>
+<li><p> create a menu file <em>mypub/config/menus/myresourcetype.xsp</em> </p>
 </li>
 </ul>
 
@@ -331,10 +331,10 @@ document -&gt; xhtml2xhtml.xsl     --+
 
 <p>(optional) define a specific workflow </p>
 <ul>
-<li><p> add the workflow schema to <tt>mypub/config/workflow/</tt> </p>
+<li><p> add the workflow schema to <em>mypub/config/workflow/</em> </p>
 
 </li>
-<li><p> assign the workflow schema to the resource type in <tt>mypub/config/doctypes/doctypes.xconf</tt> </p>
+<li><p> assign the workflow schema to the resource type in <em>mypub/config/doctypes/doctypes.xconf</em> </p>
 </li>
 </ul></section>   </body>
 </document>

@@ -26,17 +26,17 @@
     <body>
 <p>How to deploy a publication in Apache Lenya: </p>
 
-<h4 id="head-4e8484518e11290b9ee62111d0dbd603f11932df">Note:</h4>
+<section><title id="head-4e8484518e11290b9ee62111d0dbd603f11932df">Note:</title>
 
-<p>It is <strong>not</strong> sufficient to copy the publication directories to the <tt>lenya/pubs</tt> directory of your Lenya installation. This way, the core configuration files are not patched, the libraries are not deployed, and other important deployment steps are not applied. </p>
+<p>It is <strong>not</strong> sufficient to copy the publication directories to the <em>lenya/pubs</em> directory of your Lenya installation. This way, the core configuration files are not patched, the libraries are not deployed, and other important deployment steps are not applied. </p>
 
-<h4 id="head-25336e7dc2bcad9b79daba07afd7af57b3236a6c">Deploying a Publication</h4>
+</section><section><title id="head-25336e7dc2bcad9b79daba07afd7af57b3236a6c">Deploying a Publication</title>
 
-<ol type="1">
+<ol>
 <li><p>Download the publication to a directory of your choice. For instance: </p>
 <ul>
 
-<li style="list-style-type:none">
+<li>
 <source>
 /src
     /lenya-1.2.x                  &lt;- $LENYA_HOME
@@ -46,37 +46,37 @@
 </li>
 </ul>
 </li>
-<li><p>Declare the publications in <tt>$LENYA_HOME/local.build.properties</tt> using <tt>pubs.root.dirs</tt> </p>
+<li><p>Declare the publications in <em>$LENYA_HOME/local.build.properties</em> using <em>pubs.root.dirs</em> </p>
 
 <ul>
 <li><p> For deploying a single publication, add the publication home directory:
- <tt>pubs.root.dirs=src/webapp/lenya/pubs:../../projects/lenya/pubs/my-pub</tt> </p>
+ <em>pubs.root.dirs=src/webapp/lenya/pubs:../../projects/lenya/pubs/my-pub</em> </p>
 </li>
 <li><p> For deploying a directory containing publications, add the directory:
- <tt>pubs.root.dirs=src/webapp/lenya/pubs:../../projects/lenya/pubs</tt> </p>
+ <em>pubs.root.dirs=src/webapp/lenya/pubs:../../projects/lenya/pubs</em> </p>
 </li>
 
 </ul>
 </li>
 <li><p>Deploy the publication: </p>
 <ul>
-<li><p> Jetty: <tt>$LENYA_HOME&gt;&nbsp;build</tt> </p>
+<li><p> Jetty: <em>$LENYA_HOME&gt;&nbsp;build</em> </p>
 </li>
 <li><p> Tomcat: </p>
-<ol type="a">
-<li><p><tt>$LENYA_HOME&gt;&nbsp;build&nbsp;install-pub</tt> </p>
+<ol>
+<li><p><em>$LENYA_HOME&gt;&nbsp;build&nbsp;install-pub</em> </p>
 
 </li>
-<li><p>in case if this fails try it in a different way: <tt>$LENYA_HOME&gt;&nbsp;./build.sh&nbsp;install-pub&nbsp;-Dpub.prefix=""</tt> </p>
+<li><p>in case if this fails try it in a different way: <em>$LENYA_HOME&gt;&nbsp;./build.sh&nbsp;install-pub&nbsp;-Dpub.prefix=""</em> </p>
 </li>
 </ol>
 </li>
 </ul>
 </li>
-<li class="gap"><p>Restart the servlet engine </p>
+<li><p>Restart the servlet engine </p>
 </li>
 <li><p>Go to your Lenya homepage and enjoy the new publication </p>
 
 </li>
-</ol></body>
+</ol></section></body>
 </document>

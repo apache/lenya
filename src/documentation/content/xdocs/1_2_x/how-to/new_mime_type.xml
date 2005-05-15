@@ -30,22 +30,22 @@ If you have a Mime-Type which is not yet known to Lenya, such as Avi Videos (Mim
 
 <section><title id="head-a4bbfe45a08bfc3cc5d0cd1bcfff7fa83460fca6">Enabling the downloads</title>
 
-<p>The resource types which are known to your Lenya installation are defined in the file <tt>lenya/resources.xmap</tt>. Add the new Mime-Type in here, for example for AVI this is:  
+<p>The resource types which are known to your Lenya installation are defined in the file <em>lenya/resources.xmap</em>. Add the new Mime-Type in here, for example for AVI this is:  
 </p>
-<pre>
+<source>
           &lt;map:match pattern="*/*/**.avi"&gt;
             &lt;map:read src="pubs/{1}/resources/{2}/{3}.avi" mime-tyoe="video/x-msvideo" /&gt;
           &lt;/map:match&gt;
 
-</pre>
+</source>
 <p>You probably need to restart your servlet container in order for the changes to take effect. </p>
 <p>Now, visitors of your pages should be able to download objects of this mime-type. </p>
 </section>
 <section><title id="head-c0a473eaffabfbcc5c34cdb6c5efff7ab9e5b7f4">Enabling uploading for content editors</title>
 
 <p>In the asset handling, there are some restrictions as to what filetypes you are allowed to upload. If the file extension you require is not yet allowed, 
-edit the file <tt>xslt/authoring/asset.xsl</tt> and add it to the list of types defined in <tt>&nbsp;&lt;xsl:param&nbsp;name="extensions"&nbsp;...</tt> </p>
+edit the file <em>xslt/authoring/asset.xsl</em> and add it to the list of types defined in <em>&nbsp;&lt;xsl:param&nbsp;name="extensions"&nbsp;...</em> </p>
 
-<p>If you are using BXE, edit the file <tt>xslt/bxeng/asset.xsl</tt> and add it to the list of types defined in <tt>&lt;xsl:param&nbsp;name="extensions"&nbsp;...</tt> </p>
+<p>If you are using BXE, edit the file <em>xslt/bxeng/asset.xsl</em> and add it to the list of types defined in <em>&lt;xsl:param&nbsp;name="extensions"&nbsp;...</em> </p>
 </section></body>
 </document>

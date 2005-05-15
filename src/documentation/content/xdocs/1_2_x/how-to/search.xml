@@ -48,9 +48,9 @@
             <p>NOTE: Replace {pub} with your publication name in all instructions.</p>
             </section>
             <section><title>Indexing on Windows</title>
-            <p>This assumes Lenya 1.2.2 was installed to C:\apache-lenya-1.2.2 If your installation is different, adjust the paths. The indexer adds namespaces to the data of Fields in the index. The namespaces are not used (and are annoying), so remove them. An alternative is to fix the XML later, but why bother? File: <tt>C:\apache-lenya-1.2.2\build\lenya\webapp\WEB-INF\classes\org\apache\lenya\lucene\index\configuration2xslt.xsl</tt> Add the following line:</p>
+            <p>This assumes Lenya 1.2.2 was installed to C:\apache-lenya-1.2.2 If your installation is different, adjust the paths. The indexer adds namespaces to the data of Fields in the index. The namespaces are not used (and are annoying), so remove them. An alternative is to fix the XML later, but why bother? File: <em>C:\apache-lenya-1.2.2\build\lenya\webapp\WEB-INF\classes\org\apache\lenya\lucene\index\configuration2xslt.xsl</em> Add the following line:</p>
             <source>&lt;xsl:template match="namespace"/&gt;</source>
-            <ol><li>Set the configuration by changing: <tt>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\pubs\{pub}\config\search\lucene-live.xconf</tt>
+            <ol><li>Set the configuration by changing: <em>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\pubs\{pub}\config\search\lucene-live.xconf</em>
             To:
             <source>
             &lt;?xml version="1.0"?&gt;
@@ -63,7 +63,7 @@
                      &lt;extensions src="xml"/&gt;
                  &lt;/indexer&gt;
              &lt;/lucene&gt;</source></li>
-            <li> Create a new file in the same directory to tell lucene what fields to index (filename must match the configuration src in lucene-live.xconf): <tt>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\pubs\{pub}\config\search\lenyadocs.xconf</tt>
+            <li> Create a new file in the same directory to tell lucene what fields to index (filename must match the configuration src in lucene-live.xconf): <em>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\pubs\{pub}\config\search\lenyadocs.xconf</em>
             Add this:
             <source>&lt;?xml version="1.0"?&gt;
              &lt;luc:document xmlns:luc="http://apache.org/cocoon/lenya/lucene/1.0"&gt;
@@ -93,7 +93,7 @@
              &lt;luc:field name="contents" type="UnStored" xpath="/"/&gt;
              &lt;/luc:document&gt;</source>
             </li>
-            <li> Create a batch file: <tt>C:\apache-lenya-1.2.2\tools\bin\Index-{pub}.bat</tt> With this:
+            <li> Create a batch file: <em>C:\apache-lenya-1.2.2\tools\bin\Index-{pub}.bat</em> With this:
             <source>
              SET LENYAPUB={pub}
              SET CLASSPATH=.
@@ -103,7 +103,7 @@
             index</source>
             </li>
             
-            <li> To create a logfile (and avoid some ant errors), create a file: <tt>C:\apache-lenya-1.2.2\tools\bin\log4j.properties</tt> With this:
+            <li> To create a logfile (and avoid some ant errors), create a file: <em>C:\apache-lenya-1.2.2\tools\bin\log4j.properties</em> With this:
             <source>
              log4j.rootLogger=INFO, lucene
              log4j.appender.lucene = org.apache.log4j.FileAppender
@@ -121,8 +121,8 @@
             <li>These are fixed in the next section.</li></ol>
             
             </section><section><title>Fix the XML results to be usable.</title>
-            <p>Copy <tt>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\xslt\search\sort.xsl</tt> To: <tt>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\pubs\{pub}\lenya\xslt\search\sort.xsl</tt>. Copy <tt>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\xslt\navigation\search.xsl</tt>
-            to <tt>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\pubs\{pub}\lenya\xslt\navigation\search.xsl</tt>
+            <p>Copy <em>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\xslt\search\sort.xsl</em> To: <em>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\pubs\{pub}\lenya\xslt\search\sort.xsl</em>. Copy <em>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\xslt\navigation\search.xsl</em>
+            to <em>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\pubs\{pub}\lenya\xslt\navigation\search.xsl</em>
             After the other params, add this line:</p>
             <source>&lt;xsl:param name="chosenlanguage"/&gt;</source>
             <p>Add the usecase and language fields to the form tag:</p>
@@ -133,7 +133,7 @@
                 &lt;input class="searchfield" type="text" name="query" alt="Search field"/&gt;
                 &lt;input class="searchsubmit" type="submit" value="Search" name="find"/&gt;
             &lt;/form&gt;</source>
-            <p><a href="search-and-results.xsp">Download</a> new file: <tt>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\pubs\{pub}\lenya\content\search\search-and-results.xsp</tt> Based on <tt>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\content\search\search-and-results.xsp</tt></p>
+            <p><a href="search-and-results.xsp">Download</a> new file: <em>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\pubs\{pub}\lenya\content\search\search-and-results.xsp</em> Based on <em>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\content\search\search-and-results.xsp</em></p>
             <ul>
             <li>Removed useless information. (I like dynamic lists better than anyone, but Search is a standard function with standard outputs, so why bother? I only left the &lt;fields&gt; tag to separate our output from lucene's.)</li>
             <li>Added language filter.</li>
@@ -143,7 +143,7 @@
             <li>Fixed counters and total. (Total-hits changed from property to element of results.)</li>
            <li>Other bug fixes</li></ul>
             
-            <p><a href="searchfixer.xsl">Download</a> new file: <tt>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\pubs\{pub}\lenya\xslt\search\searchfixer.xsl</tt> This file converts our poor output to something usable.</p>
+            <p><a href="searchfixer.xsl">Download</a> new file: <em>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\pubs\{pub}\lenya\xslt\search\searchfixer.xsl</em> This file converts our poor output to something usable.</p>
             <ul><li>Add languages to configuration</li>
             <li>Move total-hits from element to property of results.</li>
             <li>Choose "title" from "htmltitle" or Lucene's "title".</li>
@@ -152,12 +152,12 @@
             <li>The default is to use htmlbody for the excerpt. <strong>This file must be modified when using Custom Doctypes that do not have a /html/body.</strong></li>
             </ul> 
             <p><a href="usecase-search.xmap">Download</a> new file:
-            <tt>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\pubs\{pub}\usecase-search.xmap</tt></p>
+            <em>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\pubs\{pub}\usecase-search.xmap</em></p>
             
             </section><section><title>Blocking default search.</title>
            <p> It is important to block the default search when implementing ProtectedAreas to prevent visitors from typing the URL of the default search (or, if this publication was in production, using a bookmark to the old search) and seeing links to protected documents.</p>
            <ul> 
-            <li> Create new file:  <tt>build\lenya\webapp\lenya\pubs\{pub}\lenya\lucene.xmap</tt></li>
+            <li> Create new file:  <em>build\lenya\webapp\lenya\pubs\{pub}\lenya\lucene.xmap</em></li>
             <li>Add content:
             <source>
              &lt;?xml version="1.0" encoding="UTF-8"?&gt;

@@ -207,14 +207,14 @@
 
 <p>When reading the sitemaps in Lenya 1.4 you probably came across the lenya-scheme, often also referred to as the lenya protocol. For example, in the doctypes.xmap, you will find this section: </p>
 
-<pre>
+<source>
       &lt;!-- parametrized doctype matcher --&gt;
       &lt;!-- pattern="{rendertype}/{area}/{doctype}/{document-path}" --&gt;
       &lt;map:match pattern="*/*/*/**.xml"&gt;
         &lt;map:generate src="lenya:/{4}.xml"/&gt;
         &lt;map:transform src="fallback://xslt/{3}2xhtml.xsl"&gt;
 
-</pre>
+</source>
 <p>The lenya: scheme just needs the document path to locate the source document, i.e. lenya:/concepts/index_en.xml. All other elements of the actual storage location of the document (publication id and area) will be read from the page envelope and interpreted in the LenyaSourceFactory. </p>
 <p>In other words: The lenya: scheme hides the storage implementation details from the sitemap. </p>
 

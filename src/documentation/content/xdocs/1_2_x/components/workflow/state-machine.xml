@@ -51,7 +51,7 @@
 <li><p>  <strong>T</strong> is a set of transitions: <strong>T</strong> subseteq <strong>E</strong> x <strong>S</strong> --&gt; <strong>S</strong> x <strong>CS</strong> x <strong>AS</strong> </p>
 
 <ul>
-<li style="list-style-type:none"><p>with </p>
+<li><p>with </p>
 </li>
 <li><p> <strong>CS</strong> subseteq <strong>C</strong> </p>
 </li>

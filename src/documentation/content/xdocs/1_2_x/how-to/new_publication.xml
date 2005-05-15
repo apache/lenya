@@ -29,7 +29,7 @@
             Although this situation will change for 1.4 (it already has a 'New Publication' wizard), at the moment threse are the steps that you should follow. </p>
 
 <p><strong>Note:</strong> At the moment, you need the source distribution of Lenya to create new publications.
- <strong>Note:</strong> All <tt>http://localhost</tt> URLs on this page are assuming that you use the Jetty servlet engine. </p>
+ <strong>Note:</strong> All <em>http://localhost</em> URLs on this page are assuming that you use the Jetty servlet engine. </p>
 <p>Attached is a diagram of a <a  href="typical-lenya-setup.pdf">typical Lenya setup</a>. </p>
 <p>First of all make a copy of the default publication and rename it (the new publication is named NEW-PUB). </p>
 
@@ -53,28 +53,28 @@ copy -r default %PUBLICATIONS_HOME%\NEW-PUB
 
 </source>
 <p>Then follow these steps: </p>
-<ol type="1">
-<li><p>Move to <tt>$NEW_PUB_HOME</tt> folder and edit the <tt>publication.xml</tt> file in this directory to describe your new publication. Specifically, edit the <tt>/lenya:publication/lenya:name</tt> tag to reflect the name of your publication. </p>
+<ol>
+<li><p>Move to <em>$NEW_PUB_HOME</em> folder and edit the <em>publication.xml</em> file in this directory to describe your new publication. Specifically, edit the <em>/lenya:publication/lenya:name</em> tag to reflect the name of your publication. </p>
 </li>
-<li><p>Move to <tt>$NEW_PUB_HOME/config/ac/</tt> and edit <tt>ac.xconf</tt> changing every occurence of default to NEW-PUB; </p>
+<li><p>Move to <em>$NEW_PUB_HOME/config/ac/</em> and edit <em>ac.xconf</em> changing every occurence of default to NEW-PUB; </p>
 
 </li>
-<li><p>Move to <tt>$NEW_PUB_HOME/config/tasks/</tt> and edit <tt>targets.xml</tt> changing <tt>&lt;property&nbsp;name="export.expression"&nbsp;value="/lenya/default/live/"/&gt;</tt> to <tt>&lt;property&nbsp;name="export.expression"&nbsp;value="/lenya/NEW-PUB/live/"/&gt;</tt>. </p>
+<li><p>Move to <em>$NEW_PUB_HOME/config/tasks/</em> and edit <em>targets.xml</em> changing <em>&lt;property&nbsp;name="export.expression"&nbsp;value="/lenya/default/live/"/&gt;</em> to <em>&lt;property&nbsp;name="export.expression"&nbsp;value="/lenya/NEW-PUB/live/"/&gt;</em>. </p>
 
 </li>
 <li><p>Deploy your publication (see <a  href="site:deploypub">Deploy Publication How-To</a>) </p>
 </li>
-<li><p>The should then show up on the page at <tt>http://localhost:8888</tt>; </p>
+<li><p>The should then show up on the page at <em>http://localhost:8888</em>; </p>
 </li>
-<li><p>Add new users using <tt>http://localhost:8888/NEW-PUB/admin/users.html</tt> (for security reasons it's better to remove default users or at least change passwords) If you get a Java Script error, 
+<li><p>Add new users using <em>http://localhost:8888/NEW-PUB/admin/users.html</em> (for security reasons it's better to remove default users or at least change passwords) If you get a Java Script error, 
 check if the files under NEW-PUB have the correct permissions to be modified by your servlet engine; </p>
 
 </li>
 <li><p>Delete pages of default publication leaving only the Home page available. Probably you would like to delete german pages (german is labelled with "de" string) and add your  language: </p>
-<ol type="1">
-<li><p>in Authoring mode <tt>http:/localhost:8888/NEW-PUB/info-authoring/index.html?lenya.usecase=info-overview&amp;lenya.step=showscreen</tt>, click on "de" tab and start removing the german pages </p>
+<ol>
+<li><p>in Authoring mode <em>http:/localhost:8888/NEW-PUB/info-authoring/index.html?lenya.usecase=info-overview&amp;lenya.step=showscreen</em>, click on "de" tab and start removing the german pages </p>
 </li>
-<li><p>edit the <tt>$NEW_PUB_HOME/config/publication.xconf</tt> file removing the element <tt>&lt;language&gt;de&lt;/language&gt;</tt>
+<li><p>edit the <em>$NEW_PUB_HOME/config/publication.xconf</em> file removing the element <em>&lt;language&gt;de&lt;/language&gt;</em>
  (be sure you have removed all german pages before) and eventually add you language. Pay attention, you can add your language even if there's no available translation for the Lenya CMS
   interface (i.e. you can add "ru" for russian even if available Lenya is translated only in english or german). The servlet container has to be restarted to apply the changes to the language configuration. </p>
 
@@ -83,10 +83,10 @@ check if the files under NEW-PUB have the correct permissions to be modified by 
 </li>
 </ol>
 <p>Optional: </p>
-<ol type="1">
-<li><p>Move to <tt>$NEW_PUB_HOME/config/doctypes/samples/</tt> and edit <tt>xhtml.xml</tt> changing the page that is shown when you create a new document. </p>
+<ol>
+<li><p>Move to <em>$NEW_PUB_HOME/config/doctypes/samples/</em> and edit <em>xhtml.xml</em> changing the page that is shown when you create a new document. </p>
 </li>
-<li><p>Start changing the look &amp; feel of default publication to the one you want to your new publication. See: <a  href="/lenya/ApplicationLookandFeelHowto">ApplicationLookandFeelHowto</a> </p>
+<li><p>Start changing the look &amp; feel of default publication to the one you want to your new publication. See: <a  href="site:lookandfeel">Look &amp; Feel How-To</a> </p>
 
 </li>
 <li><p>Deploy your publication when you made changes to the source. </p>
