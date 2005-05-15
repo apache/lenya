@@ -28,7 +28,6 @@ import org.w3c.dom.Element;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.xml.DocumentHelper;
 
-import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Map;
@@ -61,25 +60,44 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
         day = fmtdd.format(date);
 
         if (getLogger().isDebugEnabled())
-            getLogger().debug("NewBlogEntryCreator.init(): Initialize Creator: " + year + "/" + month + "/" + day);
+            getLogger().debug("NewBlogEntryCreator.init(): " + year + "/" + month + "/" + day);
     }
 
     /**
-     *
+     * Implementation note: ignores parentId; blog has a specific site structure, not depending on parent
+     * 
+     * @see org.apache.lenya.cms.authoring.NodeCreatorInterface#getNewDocumentURI(String, String, String, String)
      */
-    protected String getChildFileName(File parentDir, String childId, String language) {
-        String newFilename = parentDir + File.separator + "entries" + File.separator + year + File.separator + month + File.separator + day + File.separator + childId + File.separator + "index.xml";
-
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("NewBlogEntryCreator.getChildFileName(): " + newFilename);
-
-        return newFilename;
+    public String getNewDocumentURI(
+        String contentBaseURI,
+        String parentId,
+        String newId,
+        String language) {
+        return
+           contentBaseURI
+           + "/" 
+           + "entries" 
+           + "/" 
+           + year 
+           + "/" 
+           + month 
+           + "/" 
+           + day 
+           + "/" 
+           + newId 
+           + "/" 
+           + "index.xml";
     }
 
     /**
      *
      */
     protected void transformXML(Document doc, String childId, short childType, String childName, Map parameters) throws Exception {
+
+       // sanity check: blog entry creation depends on certain parameters
+       if (parameters == null)
+           throw new IllegalArgumentException("parameters may not be null for blog entry creation");
+
        Element parent = doc.getDocumentElement();
 
        if (getLogger().isDebugEnabled())

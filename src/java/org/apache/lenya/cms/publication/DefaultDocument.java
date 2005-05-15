@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id$  */
-
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
@@ -46,10 +44,12 @@ import org.apache.lenya.workflow.WorkflowException;
 
 /**
  * A typical CMS document.
+ * @version $Id$
  */
 public class DefaultDocument extends AbstractLogEnabled implements Document {
 
     private String id;
+    private String sourceURI;
     private DocumentIdentityMap identityMap;
     protected ServiceManager manager;
     private MetaDataManager metaDataManager;
@@ -469,11 +469,29 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     }
 
     /**
+     * When source URI has not been set by whoever created the document,
+     * provides a default mechanism for constructing the document's URI.
+     */
+    private String getDefaultSourceURI() {
+        String path = publication.getPathMapper().getPath(getId(), getLanguage());
+        return publication.getSourceURI() + "/content/" + getArea() + "/" + path;
+
+    }
+
+    /**
      * @see org.apache.lenya.cms.publication.Document#getSourceURI()
      */
     public String getSourceURI() {
-        String path = publication.getPathMapper().getPath(getId(), getLanguage());
-        return publication.getSourceURI() + "/content/" + getArea() + "/" + path;
+        if (sourceURI == null)
+            sourceURI = getDefaultSourceURI();
+        return sourceURI;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Document#setSourceURI(String)
+     */
+    public void setSourceURI(String _uri) {
+        sourceURI = _uri;
     }
 
     /**

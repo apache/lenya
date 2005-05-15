@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id$  */
-
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
@@ -30,6 +28,7 @@ import org.apache.lenya.workflow.Workflowable;
 
 /**
  * A CMS document.
+ * @version $Id$
  */
 public interface Document extends MetaDataOwner, Workflowable, Identifiable {
     
@@ -175,6 +174,12 @@ public interface Document extends MetaDataOwner, Workflowable, Identifiable {
      * @return A string.
      */
     String getSourceURI();
+    
+    /**
+     * Setter for the URI to resolve the document's source.
+     * @param uri URI
+     */
+    void setSourceURI(String uri);
     
     /**
      * Accepts a document visitor.

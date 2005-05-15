@@ -16,7 +16,9 @@
  */
 package org.apache.lenya.cms.publication;
 
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,12 +34,16 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.authoring.NodeCreatorInterface;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.workflow.WorkflowManager;
+import org.apache.lenya.transaction.Transactionable;
+import org.apache.lenya.transaction.TransactionException;
 
 /**
  * DocumentManager implementation.
@@ -48,10 +54,140 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         Serviceable, Contextualizable {
 
     /**
-     * @see org.apache.lenya.cms.publication.DocumentManager#add(org.apache.lenya.cms.publication.Document)
+     * The instance of Document will be built by the implementation of DocumentBuilder; the physical representation will be built by the implementation of NodeCreatorInterface, where the implementation to be used is specified in doctypes.xconf (and thus depends on the publication and the resource type to be used)
+     *
+     * @see DocumentManager#add(Document,String,String,String,String,String,String,short,Map,boolean)
+     * @see org.apache.lenya.cms.authoring.NodeCreatorInterface
+     * @see org.apache.lenya.cms.publication.DocumentBuilder
      */
-    public void add(Document document) throws PublicationException {
+    public Document add(Document parentDocument, 
+                        String newDocumentNodeName,
+                        String newDocumentId, 
+                        String documentTypeName, 
+                        String language, 
+                        String navigationTitle,
+                        String initialContentsURI,
+                        short nodeType,
+                        Map parameters,
+                        boolean useSiteManager) 
+            throws DocumentBuildException, PublicationException {
 
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("DocumentManagerImpl::add() called with:\n"
+               + "\t parentDocument.getId() [" + parentDocument.getId() + "]\n"
+               + "\t newDocumentNodeName [" + newDocumentNodeName + "]\n"
+               + "\t newDocumentId [" + newDocumentId + "]\n"
+               + "\t documentTypeName [" + documentTypeName + "]\n"
+               + "\t language [" + language + "]\n"
+               + "\t navigationTitle [" + navigationTitle + "]\n"
+               + "\t initialContentsURI [" + initialContentsURI + "]\n"
+               + "\t nodeType [" + nodeType + "]\n"
+               + "\t non-empty parameters [" + (parameters != null) + "]\n"
+               + "\t useSiteManager [" + useSiteManager + "]\n"
+               );
+
+        Publication publication = parentDocument.getPublication();
+        DocumentIdentityMap map = parentDocument.getIdentityMap();
+        String area = parentDocument.getArea();
+
+        /*
+         * Get an instance of Document.
+         * This will (ultimately) be created by the implementation for
+         * the DocumentBuilder role.
+         */
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("DocumentManagerImpl::add() creating Document instance");
+        Document newDocument = map.get(publication, area, newDocumentId, language);
+
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("DocumentManagerImpl::add() looking up a DocumentTypeBuilder so that we can call the creator");
+
+        // Get an instance of DocumentType
+        DocumentTypeBuilder documentTypeBuilder = null;
+        DocumentType documentType = null;
+        try {
+            documentTypeBuilder = (DocumentTypeBuilder) this.manager.lookup(DocumentTypeBuilder.ROLE);
+
+            documentType = documentTypeBuilder.buildDocumentType(documentTypeName, publication);
+        } 
+        catch (Exception e) {
+            throw new DocumentBuildException("could not build type for new document", e);
+        }
+        finally {
+            if (documentTypeBuilder != null) {
+                this.manager.release(documentTypeBuilder);
+            }
+        }
+
+        // Call the creator for the document type to physically create a document of this type
+        try {
+            String parentId = "";
+            if (parentDocument != null)
+                parentId = parentDocument.getId().substring(1);
+
+            if (initialContentsURI == null)
+                initialContentsURI = documentType.getSampleContentLocation();
+
+            if (getLogger().isDebugEnabled())
+                getLogger().debug("DocumentManagerImpl::add() using initialContentsURI [" + initialContentsURI + "]");
+
+            // look up creator for documents of this type
+            NodeCreatorInterface creator = documentType.getCreator();
+
+            // the concrete creator implementation decides
+            // where, relative to content base (and potentially to the parent
+            // as well), the new document shall be created
+            String contentBaseURI = publication.getContentURI(area);
+            String newDocumentURI = creator.getNewDocumentURI(contentBaseURI, parentDocument.getId(), newDocumentNodeName, language);
+
+            // Important note:
+            // how the new document's source URI is constructed is
+            // publication dependant; this is handled through the creator
+            // for that type in that publication.
+            // Therefore, we must ask the creator what this URI is
+            // and set it in the document. 
+            newDocument.setSourceURI(newDocumentURI);
+
+            // now that the source is determined, lock involved nodes
+            Transactionable[] nodes = newDocument.getRepositoryNodes();
+            for (int i = 0; i < nodes.length; i++) {
+                nodes[i].lock();
+	    }
+
+            //
+            creator.create(
+                initialContentsURI,
+                newDocumentURI,
+                newDocumentNodeName,
+                nodeType,
+                navigationTitle,
+                parameters);
+        } 
+        catch (Exception e) {
+            throw new DocumentBuildException("call to creator for new document failed", e);
+        }
+        finally {
+            if (documentTypeBuilder != null) {
+                this.manager.release(documentTypeBuilder);
+            }
+        }
+
+        // Write Lenya-internal meta-data
+        Map lenyaMetaData = new HashMap(2);
+        lenyaMetaData.put(LenyaMetaData.ELEMENT_RESOURCE_TYPE, documentTypeName);
+        lenyaMetaData.put(LenyaMetaData.ELEMENT_CONTENT_TYPE, "xml");
+        newDocument.getMetaDataManager().setLenyaMetaData(lenyaMetaData);
+
+        // Notify site manager about new document
+        if (useSiteManager)
+            addToSiteManager(newDocument, navigationTitle);
+
+        return newDocument;
+    }
+
+    private void addToSiteManager(Document document, String navigationTitle) 
+        throws PublicationException 
+    {
         Publication publication = document.getPublication();
         SiteManager siteManager = null;
         ServiceSelector selector = null;
@@ -60,10 +196,11 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
             if (siteManager.contains(document)) {
                 throw new PublicationException("The document [" + document
-                        + "] is already contained in this publication!");
+                   + "] is already contained in this publication!");
             }
 
             siteManager.add(document);
+            siteManager.setLabel(document, navigationTitle);
         } catch (ServiceException e) {
             throw new PublicationException(e);
         } finally {

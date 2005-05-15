@@ -17,7 +17,6 @@
 
 package org.apache.lenya.cms.authoring;
 
-import java.io.File;
 import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
@@ -25,10 +24,10 @@ import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 
 /**
- * Interface for creation of hierarchical documents
+ * Interface for creation of nodes in the document hierarchy
  * @version $Id$
  */
-public interface ParentChildCreatorInterface {
+public interface NodeCreatorInterface {
     /**
      * Constant for a branch node. Branch nodes are somewhat related
      * to the concept of collections in WebDAV. They are not the same
@@ -86,26 +85,39 @@ public interface ParentChildCreatorInterface {
     String generateTreeId(String childId, short childType) throws Exception;
 
     /**
-     * Create a new document.
+     * Create a physical representation for a new document.
      *
      * @param initialContentsURI the URI where initial content for this document can be found.
-     * @param parentDir in which directory the document is to be created.
+     * @param newURI the URI under which the new node is to be created. Can be retrieved via getNewDocumentURI()
      * @param childId the document id of the new document
-     * @param childType the type of the new document.
+     * @param childType the node type (branch, leaf)
      * @param childName the name of the new document.
-     * @param language for which the document is created.
-     * @param parameters additional parameters that can be used when creating the child
+     * @param parameters additional parameters that can be used when creating the document
      * 
+     * @see #getNewDocumentURI(String,String,String,String)
      * @exception Exception if an error occurs
      */
     void create(
         String initialContentsURI,
-        File parentDir,
+        String newURI,
         String childId,
         short childType,
         String childName,
-        String language,
         Map parameters)
         throws Exception;
+
+    /**
+     * Get the URI of a new document
+     * @param contentBaseURI the base URI of where contents are found
+     * @param parentId the id of the parent, if known
+     * @param newId the id of the new document
+     * @param language for which the document is created
+     * @return the new URI
+     */
+    String getNewDocumentURI(
+        String contentBaseURI,
+        String parentId,
+        String newId,
+        String language);
 
 }

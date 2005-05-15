@@ -17,8 +17,6 @@
 
 package org.apache.lenya.cms.authoring;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
@@ -27,21 +25,21 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.xml.DocumentHelper;
 import org.w3c.dom.Document;
 
 /**
- * The default creator for documents
+ * Base creator for creating documents
  * @version $Id$
  */
-public class DefaultCreator extends AbstractLogEnabled implements ParentChildCreatorInterface  {
+public abstract class DefaultCreator extends AbstractLogEnabled implements NodeCreatorInterface  {
 
     private String sampleResourceName = null;
     private ServiceManager manager;
 
     /**
-     * @see org.apache.lenya.cms.authoring.ParentChildCreatorInterface#init(Configuration, ServiceManager, Logger)
+     * @see org.apache.lenya.cms.authoring.NodeCreatorInterface#init(Configuration, ServiceManager, Logger)
      */
     public void init(Configuration conf, ServiceManager _manager, Logger _logger) {
         // parameter conf ignored: nothing to configure in current implementation
@@ -84,25 +82,30 @@ public class DefaultCreator extends AbstractLogEnabled implements ParentChildCre
         return "abstract_default";
     }
 
-
     /**
-     * @see org.apache.lenya.cms.authoring.ParentChildCreatorInterface#create(String, File,
-     * String, short, String, String, Map)
+     * @see NodeCreatorInterface#create(String, String, String, short, String, Map)
       */
     public void create(
         String initialContentsURI,
-        File parentDir,
+        String newURI,
         String childId,
         short childType,
         String childName,
-        String language,
         Map parameters)
         throws Exception {
 
-        // Set filenames
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("DefaultCreator::create() called with\n"
+               + "\t initialContentsURI [" + initialContentsURI + "]\n"
+               + "\t newURI [" + newURI + "]\n"
+               + "\t childId [" + childId + "]\n"
+               + "\t childType [" + childType + "]\n"
+               + "\t childName [" + childName + "]\n"
+               + "\t non-empty parameters [" + (parameters != null) + "]\n"
+               );
+
+        // 
         String id = generateTreeId(childId, childType);
-        String filename = getChildFileName(parentDir, id, language);
-        String filenameMeta = getChildMetaFileName(parentDir, id, language);
 
         // Read initial contents as DOM
         if (getLogger().isDebugEnabled())
@@ -122,20 +125,13 @@ public class DefaultCreator extends AbstractLogEnabled implements ParentChildCre
         // transform the xml if needed
         transformXML(doc, id, childType, childName, parameters);
 
-        // write the document (create the path, i.e. the parent
-        // directory first if needed)
-        File parent = new File(new File(filename).getParent());
-
-        if (!parent.exists()) {
-            parent.mkdirs();
+        // write the document 
+        try {
+            SourceUtil.writeDOM(doc, newURI, manager);
         }
-
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("write file: " + filename);
-
-        // Write file
-        DocumentHelper.writeDocument(doc, new File(filename));
-
+        catch (Exception e) {
+            throw new DocumentBuildException("could not write document to URI [" + newURI + "], exception " + e.toString(), e);
+        }
     }
 
     /**
@@ -158,51 +154,13 @@ public class DefaultCreator extends AbstractLogEnabled implements ParentChildCre
     }
 
     /**
-     * Apply some transformation on the meta file of newly created child.
-     * @param doc the xml document
-     * @param childId the id of the child
-     * @param childType the type of child
-     * @param childName the name of the child
-     * @param parameters additional parameters that can be used in the transformation
-     * @throws Exception if the transformation fails
+     * @see org.apache.lenya.cms.authoring.NodeCreatorInterface#getNewDocumentURI(String, String, String, String)
      */
-    protected void transformMetaXML(
-        Document doc,
-        String childId,
-        short childType,
-        String childName,
-        Map parameters)
-        throws Exception {
-	    // do nothing
-        }
-
-    /**
-     * Get the file name of the child
-     * @param parentDir the parent directory
-     * @param childId the id of the child
-     * @param language for which the document is created
-     * @return the file name of the child
-     */
-    protected String getChildFileName(
-        File parentDir,
-        String childId,
-        String language) {
-        return null;
-    }
-
-    /**
-     * Get the file name of the meta file
-     * @param parentDir the parent directory
-     * @param childId the id of the child
-     * @param language for which the document is created
-     * @return the name of the meta file
-     */
-    protected String getChildMetaFileName(
-        File parentDir,
-        String childId,
-        String language) {
-        return null;
-    }
+    public abstract String getNewDocumentURI(
+        String contentBaseURI,
+        String parentId,
+        String newId,
+        String language);
 
     /**
      * Create the language suffix for a file name given a language string

@@ -32,7 +32,7 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.lenya.cms.authoring.DefaultBranchCreator;
-import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
+import org.apache.lenya.cms.authoring.NodeCreatorInterface;
 import org.xml.sax.SAXException;
 
 /**
@@ -175,13 +175,13 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
                     type.setSchemaDefinition(schemaFileName);
                 }
 
-                ParentChildCreatorInterface creator;
+                NodeCreatorInterface creator;
                 Configuration creatorConf = doctypeConf.getChild(CREATOR_ELEMENT, false);
 
                 if (creatorConf != null) {
                     String creatorClassName = creatorConf.getAttribute(SRC_ATTRIBUTE);
                     Class creatorClass = Class.forName(creatorClassName);
-                    creator = (ParentChildCreatorInterface) creatorClass.newInstance();
+                    creator = (NodeCreatorInterface) creatorClass.newInstance();
                     creator.init(creatorConf, manager, getLogger());
                 } else {
                     creator = new DefaultBranchCreator();

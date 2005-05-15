@@ -54,12 +54,12 @@ public class CreateLanguage extends Create {
         }
 
         if (getNonExistingLanguages().isEmpty()) {
-            addErrorMessage("All language versions do already exist.");
+            addErrorMessage("All language versions already exist.");
         }
     }
 
     /**
-     * @return All non-existing language strings for the source document.
+     * @return All languages supported by the publication for which this document does not yet have a version
      * @throws DocumentBuildException if an error occurs.
      * @throws DocumentException if an error occurs.
      */
@@ -69,10 +69,11 @@ public class CreateLanguage extends Create {
         String[] languages = source.getPublication().getLanguages();
         DocumentIdentityMap map = source.getIdentityMap();
         for (int i = 0; i < languages.length; i++) {
-            Document version = map.get(source.getPublication(),
-                    source.getArea(),
-                    source.getId(),
-                    languages[i]);
+            Document version = 
+                map.get(source.getPublication(),
+                        source.getArea(),
+                        source.getId(),
+                        languages[i]);
             if (!version.exists()) {
                 nonExistingLanguages.add(languages[i]);
             }
@@ -99,8 +100,7 @@ public class CreateLanguage extends Create {
     }
 
     /**
-     * For new language version of a document, name is the same
-     * as that document's
+     * For new language version of a document, name is the same as that document's
      * @see Create#getNewDocumentName()
      */
     protected String getNewDocumentName() {
@@ -108,8 +108,7 @@ public class CreateLanguage extends Create {
     }
 
     /**
-     * For new language version of a document, id is the same
-     * as that document's
+     * For new language version of a document, id is the same as that document's
      * @see Create#getNewDocumentId()
      */
     protected String getNewDocumentId() {
@@ -127,16 +126,15 @@ public class CreateLanguage extends Create {
     }
 
     /**
-     * New language version of a document: 
-     * use that document's content
-     * @see Create#getInitialContentsURI(Document, DocumentType)
+     * New language version of a document: use that document's content
+     * @see Create#getInitialContentsURI()
      */
-    protected String getInitialContentsURI(Document referenceDocument, DocumentType type) {
-        return referenceDocument.getSourceURI();
+    protected String getInitialContentsURI() {
+        return getSourceDocument().getSourceURI();
     }
 
     /**
-     * @see org.apache.lenya.cms.site.usecases.Create#getDocumentTypeName()
+     * @see Create#getDocumentTypeName()
      */
     protected String getDocumentTypeName() {
         if (this.documentTypeName == null) {

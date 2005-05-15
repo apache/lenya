@@ -16,36 +16,28 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
-import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
-import org.apache.lenya.cms.metadata.LenyaMetaData;
+import org.apache.lenya.cms.authoring.NodeCreatorInterface;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
-import org.apache.lenya.cms.publication.DocumentType;
-import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
@@ -111,120 +103,34 @@ public abstract class Create extends AbstractUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
 
-        Document document = createDocument();
-
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("Create.doExecute() got document instance, now notifying document manager");
-
+        // create new document
         DocumentManager documentManager = null;
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
+        Document newDocument = null;
         try {
-            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            documentManager.add(document);
-
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(document.getPublication()
-                    .getSiteManagerHint());
-            siteManager.setLabel(document, getParameterAsString(DublinCore.ELEMENT_TITLE));
-        } finally {
-            if (documentManager != null) {
-                this.manager.release(documentManager);
-            }
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
+           documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
+           newDocument = 
+               documentManager.add(getParentDocument(),
+                                   getNewDocumentName(),
+                                   getNewDocumentId(),
+                                   getDocumentTypeName(),
+                                   getParameterAsString(LANGUAGE),
+                                   getParameterAsString(DublinCore.ELEMENT_TITLE),
+                                   getInitialContentsURI(),
+                                   NodeCreatorInterface.BRANCH_NODE,
+                                   null,
+                                   true);
         }
-
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("Create.doExecute() done notifying document manager, now setting meta data");
-
-        setMetaData(document);
-
-        setTargetURL(document.getCanonicalWebappURL());
-    }
-
-    /**
-     * Creates a document.
-     * @return A document.
-     * @throws Exception if an error occurs.
-     */
-    protected Document createDocument() throws Exception {
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("createDocument() called");
-
-        Document usecaseDocument = getSourceDocument();
-        String newDocumentId = getNewDocumentId();
-        String navigationTitle = getParameterAsString(DublinCore.ELEMENT_TITLE);
-        String documentTypeName = getDocumentTypeName();
-        String language = getParameterAsString(LANGUAGE);
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("createDocument() read parameters:");
-            getLogger().debug("    UsecaseDocument document:   [" + usecaseDocument.getId() + "]");
-            getLogger().debug("    Child document:    [" + newDocumentId + "]");
-            getLogger().debug("    Language:          [" + language + "]");
-            getLogger().debug("    Document Type:     [" + documentTypeName + "]");
-            getLogger().debug("    Navigation Title:  [" + navigationTitle + "]");
-        }
-
-        Publication publication = usecaseDocument.getPublication();
-        DocumentIdentityMap map = usecaseDocument.getIdentityMap();
-        String area = usecaseDocument.getArea();
-
-        /*
-         * Get an instance of Document.
-         * This will (ultimately) be created by the implementation for
-         * the DocumentBuilder role.
-         */
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("createDocument() creating Document instance");
-        Document document = map.get(publication, area, newDocumentId, language);
-        Transactionable[] nodes = document.getRepositoryNodes();
-        for (int i = 0; i < nodes.length; i++) {
-            nodes[i].lock();
-        }
-
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("createDocument() looking up a DocumentTypeBuilder so that we can call the creator");
-
-        /*
-         * Create an instance of DocumentType, and then
-         * use the creator for this DocumentType to actually
-         * physically create a document of this type.
-         */
-        DocumentTypeBuilder documentTypeBuilder = null;
-        DocumentType documentType = null;
-        try {
-            documentTypeBuilder = (DocumentTypeBuilder) this.manager.lookup(DocumentTypeBuilder.ROLE);
-
-            documentType = documentTypeBuilder.buildDocumentType(documentTypeName, publication);
-
-            String parentId = "";
-            Document parentDocument = getParentDocument();
-            if (parentDocument != null)
-                parentId = parentDocument.getId().substring(1);
-
-            ParentChildCreatorInterface creator = documentType.getCreator();
-            creator.create(
-                getInitialContentsURI(usecaseDocument, documentType),
-                new File(publication.getContentDirectory(area), parentId),
-                getNewDocumentName(),
-                ParentChildCreatorInterface.BRANCH_NODE,
-                navigationTitle,
-                language,
-                Collections.EMPTY_MAP);
-        } 
         finally {
-            if (documentTypeBuilder != null) {
-                this.manager.release(documentTypeBuilder);
-            }
+           if (documentManager != null)
+               this.manager.release(documentManager);
         }
 
-        return document;
+        // set dublin core meta-data
+        setMetaData(newDocument);
+
+        // the location to navigate to after completion of usecase
+        setTargetURL(newDocument.getCanonicalWebappURL());
+
     }
 
 
@@ -246,15 +152,13 @@ public abstract class Create extends AbstractUsecase {
     protected abstract Document getParentDocument() throws DocumentBuildException;
 
     /**
-     * If there is a reference document from which to copy contents, 
-     * pass this as parameter. If there is no such document, the document 
-     * type will be used instead to read a sample content.
+     * If the document created in the usecase shall have initial contents
+     * copied from an existing document, construct that document's URI 
+     * in this method. 
      *
-     * @param referenceDocument the document to use as reference for the initial contents
-     * @param type the type of resource to be created
-     * @return A URI.
+     * @return a URI.
      */
-    protected abstract String getInitialContentsURI(Document referenceDocument, DocumentType type);
+    protected abstract String getInitialContentsURI();
 
     /**
      * @return The type of the created document.
@@ -267,6 +171,9 @@ public abstract class Create extends AbstractUsecase {
      * @throws DocumentException if an error occurs.
      */
     protected void setMetaData(Document document) throws DocumentException {
+
+        if (document == null)
+            throw new IllegalArgumentException("parameter document may not be null");
 
         Map dcMetaData = new HashMap();
         dcMetaData.put(DublinCore.ELEMENT_TITLE,
@@ -284,11 +191,7 @@ public abstract class Create extends AbstractUsecase {
         dcMetaData.put(DublinCore.ELEMENT_LANGUAGE, 
                 getParameterAsString(LANGUAGE));
 
-        Map lenyaMetaData = new HashMap(2);
-        lenyaMetaData.put(LenyaMetaData.ELEMENT_RESOURCE_TYPE, getDocumentTypeName());
-        lenyaMetaData.put(LenyaMetaData.ELEMENT_CONTENT_TYPE, "xml");
-
-        document.getMetaDataManager().setMetaData(dcMetaData, lenyaMetaData, null);
+        document.getMetaDataManager().setDublinCoreMetaData(dcMetaData);
     }
 
     /**
@@ -314,8 +217,7 @@ public abstract class Create extends AbstractUsecase {
     }
 
     /**
-     * @return The source document or <code>null</code> if the usecase was not invoked on a
-     *         document.
+     * @return The source document or <code>null</code> if the usecase was not invoked on a document.
      */
     protected Document getSourceDocument() {
         Document document = null;

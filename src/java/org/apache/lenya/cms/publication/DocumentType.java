@@ -23,7 +23,7 @@ import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 
-import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
+import org.apache.lenya.cms.authoring.NodeCreatorInterface;
 
 
 /**
@@ -84,21 +84,21 @@ public class DocumentType extends AbstractLogEnabled {
 	}
     
     
-    private ParentChildCreatorInterface creator = null;
+    private NodeCreatorInterface creator = null;
 
-	/**
-	 * Get the creator for this document type.
-	 * @return a <code>ParentChildCreatorInterface</code>
-	 */
-    public ParentChildCreatorInterface getCreator() {
+    /**
+     * Get the creator for this document type.
+     * @return a <code>NodeCreatorInterface</code>
+     */
+    public NodeCreatorInterface getCreator() {
         return this.creator;
     }
 
-	/**
-	 * Set the creator
-	 * @param _creator a <code>ParentChildCreatorInterface</code>
-	 */
-    protected void setCreator(ParentChildCreatorInterface _creator) {
+    /**
+     * Set the creator
+     * @param _creator a <code>NodeCreatorInterface</code>
+     */
+    protected void setCreator(NodeCreatorInterface _creator) {
         assert _creator != null;
         this.creator = _creator;
     }

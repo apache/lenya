@@ -19,7 +19,6 @@ package org.apache.lenya.cms.site.usecases;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentManager;
-import org.apache.lenya.cms.publication.DocumentType;
 
 /**
  * Usecase to create a document.
@@ -97,11 +96,11 @@ public class CreateDocument extends Create {
     }
 
     /**
-     * New document: reference not relevant, use type sample
-     * @see Create#getInitialContentsURI(Document, DocumentType)
+     * New document: no existing document is referenced
+     * @see Create#getInitialContentsURI()
      */
-    protected String getInitialContentsURI(Document referenceDocument, DocumentType type) {
-        return type.getSampleContentLocation();
+    protected String getInitialContentsURI() {
+        return null;
     }
 
 

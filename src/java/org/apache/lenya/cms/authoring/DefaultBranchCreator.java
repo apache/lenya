@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,8 +19,6 @@
 
 package org.apache.lenya.cms.authoring;
 
-import java.io.File;
-
 /**
  * Default creator for Documents of type branch (ie, they can have child documents)
  */
@@ -36,34 +34,22 @@ public class DefaultBranchCreator extends DefaultCreator {
     }
 
     /**
-     * @see org.apache.lenya.cms.authoring.DefaultCreator#getChildFileName(java.io.File, java.lang.String, java.lang.String)
+     * @see org.apache.lenya.cms.authoring.NodeCreatorInterface#getNewDocumentURI(String, String, String, String)
      */
-    protected String getChildFileName(
-        File parentDir,
-        String childId,
+    public String getNewDocumentURI(
+        String contentBaseURI,
+        String parentId,
+        String newId,
         String language) {
-        return parentDir
-            + File.separator
-            + childId
-            + File.separator
+        return 
+            contentBaseURI
+            + parentId
+            + "/"
+            + newId
+            + "/"
             + "index"
             + getLanguageSuffix(language)
             + ".xml";
     }
 
-    /**
-     * @see org.apache.lenya.cms.authoring.DefaultCreator#getChildMetaFileName(java.io.File, java.lang.String, java.lang.String)
-     */
-    protected String getChildMetaFileName(
-        File parentDir,
-        String childId,
-        String language) {
-        return parentDir
-            + File.separator
-            + childId
-            + File.separator
-            + "indexmeta"
-            + getLanguageSuffix(language)
-            + ".xml";
-    }
 }

@@ -16,12 +16,13 @@
  */
 package org.apache.lenya.cms.publication;
 
+import java.util.Map;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 
 /**
  * Helper to manage documents. It takes care of workflow, attachments etc.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public interface DocumentManager {
 
@@ -59,10 +60,31 @@ public interface DocumentManager {
 
     /**
      * Adds a document to the publication.
-     * @param document The document.
+     *
+     * @param parentDocument The parent document.
+     * @param newDocumentNodeName the name of the node representing the new document
+     * @param newDocumentId the id of the new document
+     * @param documentTypeName the document type (aka resource type) of the new document 
+     * @param language language of the new document
+     * @param navigationTitle navigation title
+     * @param initialContentsURI an URI from which initial contents for the new document can be read. Optional parameter; may be set to null, in which case the default initial sample will be used.
+     * @param nodeType the node type, as defined by the constants in NodeCreatorInterface
+     * @param parameters any parameters the caller needs to pass to the creator
+     * @param useSiteManager set to true if the site manager is used in the publication; if set the site manager will be notified about the new document
+     * @throws DocumentBuildException if the document can not be created
      * @throws PublicationException if the document is already contained.
      */
-    void add(Document document) throws PublicationException;
+    Document add(Document parentDocument, 
+                 String newDocumentNodeName,
+                 String newDocumentId, 
+                 String documentTypeName, 
+                 String language, 
+                 String navigationTitle,
+                 String initialContentsURI,
+                 short nodeType,
+                 Map parameters,
+                 boolean useSiteManager) 
+       throws DocumentBuildException, PublicationException;
 
     /**
      * Deletes a document.
