@@ -57,6 +57,9 @@
 
   	<!-- Make sure linefeeds in shell scripts are UNIX-style -->
    <fixcrlf srcdir="${dist.bin.dir}" eol="lf" includes="*.sh"/>
+
+  	<!-- Make sure linefeeds in batch files are Windows-style -->
+   <fixcrlf srcdir="${dist.bin.dir}" eol="crlf" includes="*.bat"/>
   </target>
 
   <target name="dist-bin" depends="prepare-dist-bin" description="Build a regular binary distribution tar ball">
@@ -127,6 +130,9 @@
 
   	<!-- Make sure linefeeds in shell scripts are UNIX-style -->
    <fixcrlf srcdir="${dist.src.dir}" eol="lf" includes="*.sh"/>
+
+  	<!-- Make sure linefeeds in batch files are Windows-style -->
+   <fixcrlf srcdir="${dist.src.dir}" eol="crlf" includes="*.bat"/>
   </target>
 
   <target name="dist-src" depends="prepare-dist-src" description="Builds a regular tar ball containing the sources for developers">
