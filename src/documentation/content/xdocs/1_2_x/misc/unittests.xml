@@ -36,11 +36,191 @@
     </section>
 
 <section><title>Organization</title>
-<ol>
-  <li>Put your test classes in <code>src/test</code>.</li>
-  <li>Add the ant task that executes your test to <code>src/targets/test-build.xml</code></li>
-</ol>
-</section>    
+<ul>
+<li><p>  Put your test classes in <tt>src/test</tt>. </p>
+</li>
+<li><p>  Add the ant task that executes your test to <tt>src/targets/test-build.xml</tt>. </p>
+
+</li>
+</ul>
+
+</section><section><title id="head-655f58cfc0972b961e3661ac08aac2ff99ca1b48">The Test Publication</title>
+
+<p>Most tests will need a publication in the install (servlet container) directory. To provide a predictable test publication, the clean <tt>default</tt> publication from the build directory is copied to the <tt>test</tt> publication in the installation directory. </p>
+<p>In the test buildfile, the test publication is setup by the <tt>test.pub.prepare</tt> target. The directory {{${install.dir}/lenya/pubs/test}} is deleted (so that the files created by former tests are removed), and the default publication is copied to this directory. Add this target to the <tt>depends</tt> attribute of your test target if you need the test publication. </p>
+
+</section><section><title id="head-65a89586ffaf2c23e63e3cf91ac1e6e40cd84cc6">The PublicationHelper</title>
+
+<p>To simplify the acces to a publication you can use the class <tt>org.apache.lenya.cms.PublicationHelper</tt>. It provides the following methods: </p>
+
+<pre>
+    /**
+     * Initializes the object with the first parameters from the command
+     * line arguments &lt;code&gt;args&lt;/code&gt;. The remainder of the array is returned.
+     * @param args The command line arguments of the test.
+     * @return The remainder of the arguments after the publication
+     * parameters are extracted.
+     */
+    public static String[] extractPublicationArguments(String args[]);
+
+    /**
+     * Returns the publication.
+     * @return A publication object.
+     */
+    public static Publication getPublication();
+</pre>
+
+<p>The <tt>extractPublicationArguments(String[])</tt> method extracts the first two strings from the <tt>args</tt> parameter. The first one is the servlet context path, the second is the publication ID. </p>
+<p>To make use of the PublicationHelper, you have to call the <tt>extractPublicationArguments(String[])</tt> method in the <tt>main(String())</tt> method of your <tt>TestCase</tt> class. This initializes the PublicationHelper: </p>
+
+<pre>
+    public static void main(String[] args) {
+
+        // extract the arguments needed for setting up the publication
+        // only the remaining arguments are returned
+        args = PublicationHelper.extractPublicationArguments(args);
+
+        ...
+    }
+</pre>
+
+</section><section><title id="head-8878fcb8bad4bee373aa2a9f486fa1b5ac58586c">A TestCase Skeleton</title>
+
+
+<pre>
+public class MyTest extends TestCase {
+
+    // static fields to store test parameters
+    private File configFile;
+    ...
+    
+    /** Constructor. */
+    public MyTest(String test) {
+        super(test);
+    }
+
+    /**
+     * The main program.
+     * The parameters are set from the command line arguments.
+     *
+     * @param args The command line arguments.
+     */
+    public static void main(String[] args) {
+        args = PublicationHelper.extractPublicationArguments(args);
+        setConfigFile(args[0]);
+        TestRunner.run(getSuite());
+    }
+
+    /** Returns the test suite. */
+    public static Test getSuite() {
+        return new TestSuite(MyTest.class);
+    }
+
+    /** Tests whatever you want. */
+    public void testSomething() {
+        ...
+    }
+
+    /** Sets a parameter value. */
+    protected static void setConfigFile(String fileName) {
+        assertNotNull(string);
+        File publicationDirectory
+            = PublicationHelper.getPublication().getDirectory();
+        configFile = new File(publicationDirectory, fileName);
+        assertTrue(configFile.exists());
+    }
+
+    /** Returns a parameter value. */
+    protected static File getConfigFile() {
+        return configFile;
+    }
+}
+</pre>
+
+</section><section><title id="head-d0a01800d3a5e8cc04a8fca0bdb4fd67dec4db20">Debugging a Test</title>
+
+<p>For debugging, it might be desired to run the test from an API. In this case, the <tt>main(String[])</tt> method is never executed. </p>
+<p>To provide the parameters, you can hardcode them as fallback in the !<a  class="nonexistent" href="/lenya/TestCase">?</a>TestCase.setup() method that is called before the test is invoked: </p>
+
+<pre>
+    /** @see junit.framework.TestCase#setUp() */
+    protected void setUp() throws Exception {
+        if (getConfigFile() == null) {
+            String args[] = {
+                "D:\\Development\\build\\tomcat-4.1.24\\webapps\\lenya",
+                "test"
+            };
+            PublicationHelper.extractPublicationArguments(args);
+            setConfigFile("config/something.xconf");
+        }
+    }
+</pre>
+
+</section><section><title id="head-d8c100285806e70cf61740be84709676e34fd9c4">The Test Buildfile</title>
+
+<p>The test buildfile is located at <tt>src/targets/test-build.xml</tt>. It contains the following common targets: </p>
+<ul>
+<li><p>  <strong>test</strong> - Runs all tests. </p>
+</li>
+<li><p>  <strong>tests.junit</strong> - Runs the JUnit tests. </p>
+
+</li>
+<li><p>  <strong>tests.anteater</strong> - Runs the Anteater tests. </p>
+</li>
+<li><p>  <strong>tests.prepare</strong> - Prepares the tests, e.g. compiles test classes. </p>
+</li>
+<li><p>  <strong>test.pub.prepare</strong> - Prepares the test publication.  </p>
+
+</li>
+</ul>
+
+</section><section><title id="head-73e85ec07ad251e822d4a03aaf2f9a03b6473ec8">Adding the Test to the Buildfile</title>
+
+<p>To add your test to the buildfile, you create a target called <tt>test.&lt;name&gt;</tt>. </p>
+<p>If you use assertions (Java assertions, not the JUnit ones) in your test, it is important to enable them using the <tt>-ea</tt> or <tt>-enableassertions</tt> argument. </p>
+
+<pre>
+  &lt;target name="test.my" depends="test.pub.prepare"&gt;
+    &lt;!-- My Test --&gt;
+    &lt;java fork="yes" classname="org.apache.lenya.cms.mypackage.MyTest"&gt;
+      &lt;jvmarg value="-enableassertions"/&gt;
+
+      &lt;arg value="${install.dir}"/&gt;           // PublicationHelper
+      &lt;arg value="test"/&gt;                     // PublicationHelper
+      &lt;arg value="config/something.xconf"/&gt;   // MyTest
+
+      &lt;classpath refid="classpath"/&gt;
+
+      &lt;classpath&gt;
+        &lt;pathelement location="${build.test}" /&gt;
+        &lt;pathelement path="${build.root}/lenya/webapp/WEB-INF/classes" /&gt;
+        &lt;fileset dir="${build.root}/lenya/webapp/WEB-INF/lib"&gt;
+          &lt;include name="ant**.jar"/&gt;
+        &lt;/fileset&gt;
+
+      &lt;/classpath&gt;
+    &lt;/java&gt;
+  &lt;/target&gt;
+</pre>
+<p>Finally, you have to add the test to the <tt>tests.junit</tt> target: </p>
+
+<pre>
+
+&lt;target name="tests.junit" depends="init, tests.prepare, ..., test.my"&gt;
+</pre>
+<p>Now you can run the tests: </p>
+
+<pre>
+$LENYA_HOME &gt; build test
+</pre>
+<p>If you want to call your test independently, you have to call the preparation targets before: </p>
+
+<pre>
+$LENYA_HOME &gt; build init
+$LENYA_HOME &gt; build tests.prepare
+$LENYA_HOME &gt; build test.my
+
+</pre></section>    
   </body>
 </document>
 
