@@ -111,6 +111,7 @@
                 <ldapauthentication href="ldap_authentication.html" label="LDAP Authentication"/>
                 <cmsmenus href="cms_menus.html" label="CMS Menus"/>
                 <cmsscreens href="cms_screens.html" label="CMS Screens"/>
+                <howtosearch href="search.html" label="Search Publications"/>
             </howtos>
             <components href="components/" label="Components">
                 <accesscontrol href="accesscontrol/" label="Access&#160;Control">

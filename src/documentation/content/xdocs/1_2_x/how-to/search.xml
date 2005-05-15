@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 1.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-1.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>Searching Publications How-To</title>
+  </header>
+    <body>
+    <section><title>Introduction</title>
+            <p>This article has 4 goals:</p>
+            <ol>
+            <li>Complete instructions for indexing on Windows.</li>
+            <li>Display search with a publication's layout rather than the global layout.</li>
+            <li> Filter out a Member's Only area from the results.</li>
+            <li> Fix poor design decisions and bugs.</li>
+            </ol>
+            <p>Changes include:</p>
+            <ol>
+            <li> Index live XML files.<br/>The standard method crawls the site, putting the results into the  "htdocs_dump" directory. The index is built from there. The index will not include documents not accessible from the start page, such as Members' Only sections. The index also include navigation menus.<br/>Using the XML files indexes all content, whether accessible or not, and does not index the site architecture. If a visitor searches on "search", they should receive documents including the word "search", not every page with the search function (which should be every page in a well-designed website).<br/>The index still includes everything in a document including header information such as author. It is easy to limit the index to the content body, but that could cause complications when using non-standard Lenya documents (Custom DocTypes/Resource Types). If Custom Doctypes are used, modify searchfixer.xsl (see below). <strong>Custom Doctypes were not tested with this configuration.</strong></li>
+            
+            <li> Remove "Members' Only" documents if not authorized. Visitors must be logged in and in one of the specified Goups. It is the reverse of the current Lenya security, since deep URLs must pass the test for all parents. Example: /employees/programmers must pass tests for both the "/employees" and "/employees/programmers" sections.</li>
+            
+            <li> Add language to the index.</li>
+            <li> Limit initial search to current language.</li>
+            <li> Search page: Remove choice of publications. (This is a design decision. One publication = one website. With protected areas, there should be no need for multiple publications.)</li>
+            <li> Search page: Filter by chosen languages.</li>
+            <li> Default to search "Content", not "Title".</li>
+            <li> Increase the default results per page from 3 to 10.</li></ol>
+            
+            <p>NOTE: Replace {pub} with your publication name in all instructions.</p>
+            </section>
+            <section><title>Indexing on Windows</title>
+            <p>This assumes Lenya 1.2.2 was installed to C:\apache-lenya-1.2.2 If your installation is different, adjust the paths. The indexer adds namespaces to the data of Fields in the index. The namespaces are not used (and are annoying), so remove them. An alternative is to fix the XML later, but why bother? File: <tt>C:\apache-lenya-1.2.2\build\lenya\webapp\WEB-INF\classes\org\apache\lenya\lucene\index\configuration2xslt.xsl</tt> Add the following line:</p>
+            <source>&lt;xsl:template match="namespace"/&gt;</source>
+            <ol><li>Set the configuration by changing: <tt>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\pubs\{pub}\config\search\lucene-live.xconf</tt>
+            To:
+            <source>
+            &lt;?xml version="1.0"?&gt;
+             &lt;lucene&gt;
+                 &lt;update-index type="new"/&gt;
+                 &lt;index-dir src="../../work/search/lucene/index/live/index"/&gt;
+                 &lt;htdocs-dump-dir src="../../content/live"/&gt;
+                 &lt;indexer class="org.apache.lenya.lucene.index.ConfigurableIndexer"&gt;
+                     &lt;configuration src="lenyadocs.xconf"/&gt;
+                     &lt;extensions src="xml"/&gt;
+                 &lt;/indexer&gt;
+             &lt;/lucene&gt;</source></li>
+            <li> Create a new file in the same directory to tell lucene what fields to index (filename must match the configuration src in lucene-live.xconf): <tt>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\pubs\{pub}\config\search\lenyadocs.xconf</tt>
+            Add this:
+            <source>&lt;?xml version="1.0"?&gt;
+             &lt;luc:document xmlns:luc="http://apache.org/cocoon/lenya/lucene/1.0"&gt;
+             &lt;luc:field name="title" type="Text"&gt;
+                 &lt;namespace prefix="lenya"&gt;http://apache.org/cocoon/lenya/page-envelope/1.0&lt;/namespace&gt;
+                 &lt;namespace prefix="dc"&gt;http://purl.org/dc/elements/1.1/&lt;/namespace&gt;
+                 &lt;xpath&gt;/*/lenya:meta/dc:subject&lt;/xpath&gt;
+             &lt;/luc:field&gt;
+             &lt;luc:field name="htmltitle" type="Text"&gt;
+                 &lt;namespace prefix="xhtml"&gt;http://www.w3.org/1999/xhtml&lt;/namespace&gt;
+                 &lt;xpath&gt;/xhtml:html/xhtml:head/xhtml:title&lt;/xpath&gt;
+             &lt;/luc:field&gt;
+             &lt;luc:field name="language" type="Text"&gt;
+                 &lt;namespace prefix="lenya"&gt;http://apache.org/cocoon/lenya/page-envelope/1.0&lt;/namespace&gt;
+                 &lt;namespace prefix="dc"&gt;http://purl.org/dc/elements/1.1/&lt;/namespace&gt;
+                 &lt;xpath&gt;/*/lenya:meta/dc:language&lt;/xpath&gt;
+             &lt;/luc:field&gt;
+             &lt;luc:field name="description" type="Text"&gt;
+                 &lt;namespace prefix="lenya"&gt;http://apache.org/cocoon/lenya/page-envelope/1.0&lt;/namespace&gt;
+                 &lt;namespace prefix="dc"&gt;http://purl.org/dc/elements/1.1/&lt;/namespace&gt;
+                 &lt;xpath&gt;/*/lenya:meta/dc:description&lt;/xpath&gt;
+             &lt;/luc:field&gt;
+             &lt;luc:field name="htmlbody" type="Text"&gt;
+                 &lt;namespace prefix="xhtml"&gt;http://www.w3.org/1999/xhtml&lt;/namespace&gt;
+                 &lt;xpath&gt;/xhtml:html/xhtml:body&lt;/xpath&gt;
+             &lt;/luc:field&gt;
+             &lt;luc:field name="contents" type="UnStored" xpath="/"/&gt;
+             &lt;/luc:document&gt;</source>
+            </li>
+            <li> Create a batch file: <tt>C:\apache-lenya-1.2.2\tools\bin\Index-{pub}.bat</tt> With this:
+            <source>
+             SET LENYAPUB={pub}
+             SET CLASSPATH=.
+             SET ANT_HOME=C:\apache-lenya-1.2.2\tools
+             ant -f ../../build/lenya/webapp/lenya/bin/crawl_and_index.xml
+            -Dlucene.xconf=../../build/lenya/webapp/lenya/pubs/%LENYAPUB%/config/search/lucene-live.xconf
+            index</source>
+            </li>
+            
+            <li> To create a logfile (and avoid some ant errors), create a file: <tt>C:\apache-lenya-1.2.2\tools\bin\log4j.properties</tt> With this:
+            <source>
+             log4j.rootLogger=INFO, lucene
+             log4j.appender.lucene = org.apache.log4j.FileAppender
+             log4j.appender.lucene.File = lucene.log
+             log4j.appender.lucene.Append = false
+             log4j.appender.lucene.layout = org.apache.log4j.PatternLayout
+             log4j.appender.lucene.layout.ConversionPattern = %d{ABSOLUTE} [%t] %-5p
+            %-30.30c{2} %x - %m %n</source>
+            </li>
+            
+            <li> Quit Lenya (to avoid file-locking issues). Run the batch file. Check the  log.The index created works, but the results are not formatted properly.</li>
+            <li> "sitemap.xml" may appear.</li>
+            <li> All links are wrong. They have an extra slash and "/index_xx.xml" must be changed to ".html".</li>
+            <li> The excerpt is not available and displays a Java error.</li>
+            <li>These are fixed in the next section.</li></ol>
+            
+            </section><section><title>Fix the XML results to be usable.</title>
+            <p>Copy <tt>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\xslt\search\sort.xsl</tt> To: <tt>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\pubs\{pub}\lenya\xslt\search\sort.xsl</tt>. Copy <tt>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\xslt\navigation\search.xsl</tt>
+            to <tt>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\pubs\{pub}\lenya\xslt\navigation\search.xsl</tt>
+            After the other params, add this line:</p>
+            <source>&lt;xsl:param name="chosenlanguage"/&gt;</source>
+            <p>Add the usecase and language fields to the form tag:</p>
+            <source>
+            &lt;form&gt;
+                &lt;input type="hidden" name="lenya.usecase" value="search"/&gt;
+                &lt;input type="hidden" name="language" value="{$chosenlanguage}"/&gt;
+                &lt;input class="searchfield" type="text" name="query" alt="Search field"/&gt;
+                &lt;input class="searchsubmit" type="submit" value="Search" name="find"/&gt;
+            &lt;/form&gt;</source>
+            <p><a href="search-and-results.xsp">Download</a> new file: <tt>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\pubs\{pub}\lenya\content\search\search-and-results.xsp</tt> Based on <tt>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\content\search\search-and-results.xsp</tt></p>
+            <ul>
+            <li>Removed useless information. (I like dynamic lists better than anyone, but Search is a standard function with standard outputs, so why bother? I only left the &lt;fields&gt; tag to separate our output from lucene's.)</li>
+            <li>Added language filter.</li>
+            <li>Added protected section filter.</li>
+            <li>Hardcoded ProtectedUrls. The default is to require visitors be in an  "employee" Group to access "/live/employee". <strong>Configure this for your website.</strong></li>
+            <li>Uses Groups rather than Roles. (Roles are useless as long as "world" inherits "visit" for everything.)</li>
+            <li>Fixed counters and total. (Total-hits changed from property to element of results.)</li>
+           <li>Other bug fixes</li></ul>
+            
+            <p><a href="searchfixer.xsl">Download</a> new file: <tt>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\pubs\{pub}\lenya\xslt\search\searchfixer.xsl</tt> This file converts our poor output to something usable.</p>
+            <ul><li>Add languages to configuration</li>
+            <li>Move total-hits from element to property of results.</li>
+            <li>Choose "title" from "htmltitle" or Lucene's "title".</li>
+            <li>Choose "excerpt" from "htmlbody", Lenya's "description", or Lucene's "excerpt"</li>
+            <li>Transform URI from lucene's "uri" (/about/jobs/index_en.xml) to Lenya link (about/jobs_en.html).</li>
+            <li>The default is to use htmlbody for the excerpt. <strong>This file must be modified when using Custom Doctypes that do not have a /html/body.</strong></li>
+            </ul> 
+            <p><a href="usecase-search.xmap">Download</a> new file:
+            <tt>C:\apache-lenya-1.2.2\build\lenya\webapp\lenya\pubs\{pub}\usecase-search.xmap</tt></p>
+            
+            </section><section><title>Blocking default search.</title>
+           <p> It is important to block the default search when implementing ProtectedAreas to prevent visitors from typing the URL of the default search (or, if this publication was in production, using a bookmark to the old search) and seeing links to protected documents.</p>
+           <ul> 
+            <li> Create new file:  <tt>build\lenya\webapp\lenya\pubs\{pub}\lenya\lucene.xmap</tt></li>
+            <li>Add content:
+            <source>
+             &lt;?xml version="1.0" encoding="UTF-8"?&gt;
+             &lt;map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0"&gt;
+             &lt;map:pipelines&gt;
+                 &lt;map:pipeline&gt;
+                     &lt;map:match pattern="*/search-*/lucene.xml"&gt;
+                         &lt;map:redirect-to uri="/{page-envelope:publication-id}/live/index.html?lenya.usecase=search"/&gt;
+                     &lt;/map:match&gt;
+                     &lt;map:match pattern="*/search-*/lucene*"&gt;
+                         &lt;map:redirect-to uri="/{page-envelope:publication-id}/live/index.html?lenya.usecase=search"/&gt;
+                     &lt;/map:match&gt;
+                 &lt;/map:pipeline&gt;
+             &lt;/map:pipelines&gt;
+             &lt;/map:sitemap&gt;</source></li></ul>
+</section>   </body>
+</document>
