@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>CMS Screens How-To</title>
+  </header>
+    <body>
+<p>A CMS screen is an HTML page that belongs to the Lenya CMS, not to a specific publication (this is the reason for choosing the term "screen" instead of "page"). Typical examples are site administration screens and confirmation screens.</p>
+
+<section><title id="head-707eb025442a6dfa67ca897b5badaf9dee4fb713">File Locations</title>
+
+<ul>
+<li><p>  <tt>src/webapp/lenya/xslt/util/page2xhtml.xsl</tt> - The CMS screen stylesheet. </p>
+</li>
+<li><p>  <tt>src/webapp/lenya/resources/css</tt> - The CMS screen CSS files. </p>
+</li>
+</ul>
+
+</section><section><title id="head-7338ac28444bd3b38e19444cad22202b925f4a69">Sitemap Usage</title>
+
+<p>Usually a resource is used to style a CMS screen: </p>
+
+<pre>
+&lt;map:resource name="style-cms-page"&gt;
+  &lt;map:transform src="lenya/xslt/util/page2xhtml.xsl"&gt;
+    &lt;map:parameter name="contextprefix"
+                   value="{request:contextPath}"/&gt;
+  &lt;/map:transform&gt;
+
+  &lt;map:serialize/&gt;
+&lt;/map:resource&gt;
+</pre>
+<p>¨ This resource is called from the pipeline (the example serves the Lenya CMS starting page): </p>
+
+<pre>
+&lt;map:match pattern="index.html"&gt;
+  &lt;map:aggregate element="lenya" ...&gt;
+    &lt;map:part src="cocoon:/publications.xml"/&gt;
+
+    &lt;map:part src="lenya/content/introduction.xml"/&gt;
+  &lt;/map:aggregate&gt;
+  &lt;map:transform src="lenya/xslt/util/welcome.xsl"/&gt;
+  &lt;map:call resource="style-cms-page"/&gt;
+&lt;/map:match&gt;
+</pre>
+
+</section><section><title id="head-bc001dc9bb21e41435e11b6e1d8d83137c94f57c">Writing a CMS screen</title>
+
+<p>To write a CMS screen, use the following syntax: </p>
+
+<pre>
+&lt;page:page xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"&gt;
+
+  &lt;page:title&gt;
+    &lt;!-- the page title (used for HTML title and heading) --&gt;
+  &lt;/page:title&gt;
+
+  &lt;page:body&gt;
+    &lt;!-- put your XHTML here --&gt;
+  &lt;/page:body&gt;
+
+&lt;/page:page&gt;
+</pre>
+
+</section><section><title id="head-1b28e37b4edb357dcda08a8c350c39abee643a31">Cascading Stylesheets</title>
+
+<p>When using CSS classes or IDs, please follow the rule that every class or ID starts with the prefix <tt>lenya-</tt>. </p>
+<p>Put your specific CSS file in the CSS directory (see above) and include it in <tt>default.css</tt>. </p>
+<p>Currently, the following Lenya CSS classes are defined: </p>
+<ul>
+<li><p> Boxes </p><ul>
+<li><p>div.lenya-box </p></li>
+<li><p>div.lenya-box-title </p></li>
+<li><p>div.lenya-box-body </p></li>
+</ul>
+</li>
+<li><p> Forms </p>
+<ul>
+<li><p>td.lenya-entry-caption </p></li>
+<li><p>.lenya-form-element </p></li>
+</ul>
+</li>
+<li><p> Tables </p>
+<ul>
+<li><p>table.lenya-table </p></li>
+<li><p>table.lenya-table-noborder </p></li>
+<li><p>table.lenya-table th </p></li>
+<li><p>table.lenya-table td </p></li>
+<li><p>table.lenya-table-noborder td </p></li>
+</ul>
+</li>
+<li><p> Tabs </p>
+<ul>
+<li><p>.lenya-tab </p></li>
+<li><p>.lenya-tablink </p></li>
+</ul>
+
+</li>
+<li><p> Antlog </p>
+<ul>
+<li><p>.lenya-ant-bannercell </p></li>
+<li><p>table.lenya-ant-status </p></li>
+<li><p>.lenya-ant-error </p></li>
+<li><p>.lenya-ant-warn </p></li>
+<li><p>.lenya-ant-info </p></li>
+<li><p>.lenya-ant-debug </p></li>
+<li><p>.lenya-ant-failed </p></li>
+<li><p>.lenya-ant-complete </p></li>
+<li><p>.lenya-ant-a td </p></li>
+<li><p>.lenya-ant-b td </p></li>
+</ul>
+</li>
+<li><p> Misc </p>
+<ul>
+<li><p>.lenya-body </p></li>
+<li><p>.lenya-project-logo </p></li>
+<li><p>td.lenya-content </p></li>
+<li><p>td.lenya-sidebar </p></li>
+<li><p>td.lenya-frontpage </p></li>
+<li><p>.lenya-page-title </p></li>
+<li><p>.lenya-page-subtitle </p></li>
+<li><p>.lenya-publication-item </p></li>
+<li><p>.lenya-sidebar a </p></li>
+<li><p>.lenya-sidebar-heading </p></li>
+</ul>
+</li>
+</ul>
+</section>   </body>
+</document>
