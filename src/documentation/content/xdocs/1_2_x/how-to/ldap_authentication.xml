@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>LDAP Authentication How-To</title>
+  </header>
+    <body>
+<p>Lenya supports LDAP authentication, and was tested with OpenLDAP and MS Active Directory servers.  Note that only the authentication is done through LDAP;  
+the Lenya administrator still has to assign roles to the users within the Lenya Admin GUI. </p>
+
+<section><title id="head-c6473a347c56f380b016b80abd50c11a339f65ba">Configuring and activating LDAP in Lenya</title>
+
+<ol type="1">
+<li><p>Go to the directory <tt>lenya/pubs/&lt;your-publication-name&gt;/config/ac</tt> </p>
+</li>
+
+<li><p>Edit the file <tt>ac.xconf</tt> and uncomment the line regarding "LDAP support" </p>
+</li>
+<li><p>Go to the subdirectory <tt>passwd</tt> and copy the file <tt>lenya/pubs/&lt;your-publication-name&gt;/config/ac/passwd/ldap.properties.sample</tt> to the file <tt>ldap.properties</tt> in this directory.  </p>
+
+</li>
+<li><p>Edit the file <tt>ldap.properties</tt> with your settings (the sample file contains explanations for the entries) </p>
+</li>
+<li><p>Restart your servlet container, so that the changes take effect </p>
+</li>
+<li><p>Login as administrator. In the user's section, you can now add LDAP users: enter the LDAP id, and provide a Lenya id (which may be the same as the LDAP id). Now add group memberships for this id. </p>
+</li>
+<li><p>You should now be able to login with this LDAP user and password. </p>
+</li>
+</ol>
+
+</section><section><title id="head-7a25fa154659dcf977c814cc7e12b6a94861a91e">Allowing LDAP users to login</title>
+
+<p>Once you have everything configured OK, you can tell Lenya to allow certain LDAP users. It is important to understand that, just because a user exists in LDAP, does not mean she has access to Lenya. The user needs to be explicitly added in Lenya, along with the group memberships. However, the authentication itself (password handling) is then completely handled through LDAP. </p>
+<ol type="1">
+<li><p>In the administration GUI, add the "LDAP user" in order to make this user known to Lenya. You can use the same id for Lenya as the existing LDAP id. </p>
+</li>
+<li><p>Click on the user and add group settings - if user belongs to no groups at all, she will not be able to login </p>
+</li>
+<li><p>Logout and login with the newly created id. </p>
+</li>
+</ol>
+
+</section><section><title id="head-3d053bed75c60a57241ca53fb6de8c2d45aed024">More technical information</title>
+
+<ul>
+<li><p> Lenya uses the Cocoon class LDAPTransformer : for documentation see the Cocoon documentation on <a href="ext:cocoon"> http://cocoon.apache.org</a> </p>
+</li>
+<li><p> This LDAPTransformer is included in Lenya's sitemap (sitemap.xmap) </p>
+
+</li>
+<li><p> This implementation of LDAP Authentication in Lenya works, but might be replaced later by a more advanced implementation and / or by container managed security which would possibly provide these advantages: </p>
+<ul>
+<li><p> Maintainance of the groups in LDAP as well. </p>
+</li>
+<li><p> Remove the need to separately enable each LDAP user in Lenya. </p>
+</li>
+</ul>
+</li>
+</ul>
+</section><section><title id="head-066b132fa6e8227f03b8c07a5bc6057717a7564b">Encrypted LDAP</title>
+
+<ul>
+<li><p>  in the file ldap.properties, set security-protocol to the value ssl and set key-store to the name of your keystore file </p>
+</li>
+<li><p> add the LDAP server certificate file to the local keystore using this command: </p>
+</li>
+</ul>
+
+<pre>
+
+      keytool -import -keystore .keystore -file &lt;ca_cert_file&gt; -alias &lt;yourdomain.com&gt;
+</pre>
+
+</section><section><title id="head-9019cde2979c770be142ebf7a0c6e03dacaf1480">Notes</title>
+
+<ul>
+<li><p> If you modify <tt>ldap.properties</tt>, it may be necessary to restart your servlet container or at least to reload your webapp in order for the changes to take effect. </p>
+
+</li>
+<li><p> Lenya expects the users to be in container called <tt>ou=People</tt> that needs to be nested into the container you provide in the <tt>provider-url</tt> parameter in <tt>ldap.properties</tt>. (Example: <tt>provider-url=ldap://your.ldap.server/ou=intern,dc=example,dc=com</tt> will look for users in <tt>ou=People,ou=intern,dc=example,dc=com</tt>) </p>
+
+</li>
+</ul>
+
+</section><section><title id="head-f1c02c22309913c9392d9f61ac234d4c4b7ed6c3">An example publication using LDAP Authentication: the University of Zurich Lenya Publication</title>
+
+<p>The "University of Zurich Publication" is an example of a publication which uses LDAP authentication. You may wish to install and configure it to authenticate against your LDAP server: this way, you can check whether LDAP authentication is working, before proceeding to activate it in another application. </p>
+<p>Note: this HOW-TO was tested using the "University of Zurich Publication" state on May 26th, 2004. If another version is incompatible with your Lenya installation, don't despair, you will still be able to use the LDAP relevant stuff. </p>
+<ol type="1">
+<li><p>Retrieve the University of Zurich Lenya publications (unitemplate, unizh) described on <a  href="http://wyona.org/">http://wyona.org/</a> </p>
+</li>
+
+<li><p>Go to the <tt>unitemplate/config/ac/passwd</tt> directory and edit <tt>ldap.properties</tt> as described above </p>
+</li>
+<li><p>if secure LDAP is required, add the server certificate to the keystore as described above </p>
+</li>
+<li><p>Deploy the publications (see <a  href="site:deploypub">?</a>Deploy Publication How-To) </p>
+</li>
+
+<li><p>In your browser, refresh your Lenya start page. You should now see, on the left hand side, a link to the "Unitemplate" publication. Login as lenya / levi user and go the Admin area to add a user. </p>
+</li>
+<li><p>Click on "Add University User" (this means LDAP user). In the field "UniAccessID", use the LDAP userid. In the field "CMS User", use the id with which you 
+want to user to log in to Lenya. This may be the same id as for LDAP. </p>
+</li>
+<li><p>Add the desired groups for this user and log out of Lenya. </p>
+</li>
+<li><p>You should now be able to login to Lenya using this new user and his/her LDAP password. </p>
+</li>
+</ol>
+    </section></body>
+</document>

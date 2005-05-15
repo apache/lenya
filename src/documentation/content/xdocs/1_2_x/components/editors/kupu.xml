@@ -23,16 +23,194 @@
 
 <header> 
     <title>Kupu</title>
-     
-     
-     
 </header> 
 <body> 
 
-<section>
-<title>Download</title>
-<p>Information about Kupu development is available at the <a href="http://kupu.oscom.org/devel/">Kupu site</a>.</p>
+<p>Kupu is a browser based WYSIWYG XHTML editor which is developed independently of Lenya by  <a   href="http://www.oscom.org/">OSCOM</a>
+ and is available at <a href="http://kupu.oscom.org/"> http://kupu.oscom.org/</a>. Kupu can and actually is being used in other projects as well, that have nothing to do with 
+ Java, XML or the Apache software stack. Lenya is just prepared for the Kupu Editor to be plugged in, and ships with Kupu pre-installed. </p>
 
-</section>
+<section><title id="head-9b4594a57c32f9b79007a4319d02bc57c1656c90">Kupu as a sample for integrating editors in general</title>
+
+<p>Understanding the Kupu integration in Lenya is helpful to understand how editors are integrated into Lenya at all. This knowledge is
+ important if you are looking into changing the way Kupu is used inside Lenya or if you are thinking about taking any other editor and integrate it in Lenya. </p>
+
+</section><section><title id="head-cb7dd8a2b1dc471e0805416826a330e77b1cce07">What integrating an editor is all about</title>
+
+<p>From the user's perspective using an editor in Lenya works like this: </p>
+<ol type="1">
+<li><p>Navigate to the item that is to be edited </p>
+</li>
+<li><p>Click on a link to start the editing process (mostly from a pull-down menu, but there are other options) </p>
+
+</li>
+<li><p>Edit </p>
+</li>
+<li><p>Save </p>
+</li>
+<li><p>Enjoy the changes </p>
+</li>
+</ol>
+<p>The link to start the editing is nohting but a GET request to an editing usecase. (See: [<a  href="http://wiki.apache.org/lenya/CreatePageWalkthrough">CreatePageWalkthrough</a>]
+ for some background on Usecases). The reply to that request is the page that contains the editor with the to be edited file loaded. 
+ As simple as that sounds, there is a number of things Lenya has to go through. </p>
+<p>Between Step 2. and 3. (the user clicking on 'Edit' and the editor showing up) Lenya has to </p>
+
+<ol type="1">
+<li><p>Make sure the editor is installed at all </p>
+</li>
+<li><p>Determine the file to be edited </p>
+</li>
+<li><p>Make sure editing is allowed (i.e. the file is not checked out reserved by someone else) </p>
+</li>
+<li><p>Aggregate the content that is to be edited, the editor part of the page itself and whatever parameter the editor needs and serve it to the browser. </p>
+</li>
+</ol>
+<p>Between Step 3. and 4. (Edit and Save) Lenya has to  </p>
+<ol type="1">
+
+<li><p>Make sure the file is still checked out so it can be edited </p>
+</li>
+<li><p>Extract the edited page content from the HTTP POST </p>
+</li>
+<li><p>Save the edited file </p>
+</li>
+<li><p>Check in the edited file </p>
+</li>
+<li><p>Trigger and workflow events on the document that belong to the "edit" event. </p>
+</li>
+</ol>
+<p><em>Note: Kupu allows the user to Save in between and continue editing. This is achieved by using HTTP POST operations. Thus Lenya needs to be prepared to 
+receive multiple updates of the same page and save it before the user might click on 'Exit and Save' so that Step 5 (Display the changed page) is finally triggered.</em> </p>
+
+<h3 id="head-e5a2711688441b7644fbdb11a61307c04fbf2061">The Kupu usecase pipeline in detail</h3>
+
+
+</section><section><title id="head-42ce962db03bd610fa943bc40b509ba6985810fd">step="open"</title>
+
+
+<pre>
+        &lt;map:match pattern="kupu" type="usecase"&gt;
+          &lt;map:match pattern="open" type="step"&gt;
+            &lt;map:match pattern="*/authoring/**.html"&gt;
+
+              &lt;!-- Check for Kupu--&gt;
+              &lt;map:act type="resource-exists" src="resources/kupu/common/kupueditor.js"&gt;
+
+                &lt;map:act type="reserved-checkout"&gt;
+                  &lt;map:generate type="serverpages" src="content/rc/{exception}.xsp"&gt;
+                    &lt;map:parameter name="user" value="{user}"/&gt;
+                    &lt;map:parameter name="filename" value="{filename}"/&gt;
+
+                    &lt;map:parameter name="date" value="{date}"/&gt;
+                    &lt;map:parameter name="message" value="{message}"/&gt;
+                  &lt;/map:generate&gt;
+                  &lt;map:transform src="xslt/rc/rco-exception.xsl"/&gt;
+                  &lt;map:call resource="style-cms-page"/&gt;
+                &lt;/map:act&gt;
+
+                &lt;map:generate src="resources/kupu/apache-lenya/kupumacros.html"/&gt;
+                &lt;map:transform src="resources/kupu/apache-lenya/kupumacros-xhtml.xsl"&gt;
+                  &lt;map:parameter name="contentfile" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=kupu&amp;amp;lenya.step=content"/&gt;
+                  &lt;map:parameter name="context" value="{request:contextPath}"/&gt;
+                  &lt;map:parameter name="document-path" value="{page-envelope:document-path}"/&gt;
+
+                  &lt;map:parameter name="root" value="{page-envelope:context-prefix}"/&gt;
+                  &lt;map:parameter name="save-destination" value="{page-envelope:context-prefix}/{../1}/authoring/{../2}.html?lenya.usecase=kupu&amp;amp;lenya.step=save"/&gt;
+                  &lt;map:parameter name="reload-on-save" value="0"/&gt; &lt;!-- 1 means you can see the saving --&gt;
+                  &lt;map:parameter name="use-css" value="1"/&gt;
+                  &lt;map:parameter name="redirect-to" value="{page-envelope:document-name}.html"/&gt;
+
+                &lt;/map:transform&gt;
+                &lt;map:serialize type="html"/&gt;
+              &lt;/map:act&gt;
+              &lt;map:generate src="resources/misc/kupu/download.xhtml"/&gt;
+              &lt;map:call resource="style-cms-page"/&gt;
+            &lt;/map:match&gt;
+
+          &lt;/map:match&gt;
+</pre>
+
+</section><section><title id="head-f6ed65665fa1e56a5371d0ab376effe42403dfae">step="content"</title>
+
+
+<pre>
+          &lt;map:match pattern="content" type="step"&gt;
+            &lt;map:match pattern="*/authoring/**.html"&gt;
+              &lt;map:generate src="pubs/{1}/content/authoring/{page-envelope:document-path}"/&gt;
+
+              &lt;map:transform src="resources/kupu/apache-lenya/kupucontent-xhtml.xsl"&gt;
+                &lt;map:parameter name="css" value="{page-envelope:context-prefix}/{1}/authoring/css/page.css"/&gt;
+              &lt;/map:transform&gt;
+              &lt;map:transform src="xslt/util/strip_namespaces.xsl"/&gt;
+                &lt;map:serialize type="xhtml"/&gt;
+            &lt;/map:match&gt;
+
+          &lt;/map:match&gt;
+</pre>
+
+</section><section><title id="head-211e1aede1d0c03aa8411a1d19a43d3f5d18ccc9">step="save"</title>
+
+
+<pre>
+          &lt;map:match pattern="save" type="step"&gt;
+            &lt;map:select type="request-method"&gt;
+              &lt;map:when test="PUT"&gt;
+
+                &lt;map:act type="reserved-checkout-test"&gt;
+                  &lt;map:generate type="serverpages" src="../../content/rc/{exception}.xsp"&gt;
+                    &lt;map:parameter name="user" value="{user}"/&gt;
+                    &lt;map:parameter name="filename" value="{filename}"/&gt;
+                    &lt;map:parameter name="date" value="{date}"/&gt;
+                    &lt;map:parameter name="message" value="{message}"/&gt;
+
+                  &lt;/map:generate&gt;
+                  &lt;map:transform src="../../xslt/rc/rco-exception.xsl"/&gt;
+                  &lt;map:call resource="style-cms-page"/&gt;
+                &lt;/map:act&gt;
+
+                &lt;map:aggregate element="edit-envelope"&gt;
+                  &lt;map:part element="edited" src="cocoon:/kupu-stream"/&gt;
+
+                  &lt;map:part element="original" src="pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/&gt;
+                &lt;/map:aggregate&gt;
+
+                &lt;map:transform src="resources/kupu/apache-lenya/kupusave-xhtml.xsl"/&gt;
+
+                &lt;map:act type="reserved-checkin"&gt;
+                  &lt;map:generate src="content/rc/{exception}.xsp" type="serverpages"&gt;
+
+                    &lt;map:parameter name="user" value="{user}"/&gt;
+                    &lt;map:parameter name="filename" value="{filename}"/&gt;
+                    &lt;map:parameter name="checkType" value="{checkType}"/&gt;
+                    &lt;map:parameter name="date" value="{date}"/&gt;
+                    &lt;map:parameter name="message" value="{message}"/&gt;
+                  &lt;/map:generate&gt;
+
+                  &lt;map:transform src="xslt/rc/rco-exception.xsl"/&gt;
+                  &lt;map:serialize/&gt;
+                &lt;/map:act&gt;
+
+                &lt;map:transform src="xslt/authoring/edit/addSourceTags.xsl"&gt;
+                  &lt;map:parameter name="source" value="pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/&gt;
+                &lt;/map:transform&gt;
+
+                &lt;map:transform type="write-source"/&gt;
+
+                &lt;!-- Trigger workflow with *edit* action --&gt;
+                &lt;map:act type="workflow"&gt;
+                  &lt;map:parameter name="area" value="{page-envelope:area}"/&gt;
+                  &lt;map:parameter name="document-id" value="{page-envelope:document-id}"/&gt;
+                  &lt;map:parameter name="language" value="{page-envelope:document-language}"/&gt;
+
+                  &lt;map:parameter name="event" value="edit"/&gt;
+                &lt;/map:act&gt;
+
+                &lt;map:serialize type="xml" status-code="204"/&gt;
+              &lt;/map:when&gt;
+            &lt;/map:select&gt;
+          &lt;/map:match&gt;
+
+</pre></section>
 </body>
 </document>

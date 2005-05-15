@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>Site Navigation How-To</title>
+  </header>
+    <body>
+<p>One of the ingredients for a good website is a well structured navigation. The Default publication in Lenya comes with a <a   href="site:navigation">navigation framework</a> that is made up of horizontal tabs, breadcrumbs and a menu on the left. A lot of websites use these navigational elements, but depending on the site you're building, you might want to change the navigation or structure if differently. </p>
+
+<section><title id="head-da34b3ca6421ef687314b2fc0830c891b3cfa8d7">Technical Background: How Lenya builds the site navigation</title>
+
+<p>The source of all navigation elements is the sitetree, which you can find in <tt>PUB_HOME/authoring/sitetree.xml</tt>, <tt>PUB_HOME/live/sitetree.xml</tt>, <tt>PUB_HOME/trash/sitetree.xml</tt> or <tt>PUB_HOME/archive/sitetree.xml</tt> depending on the relevant area. </p>
+<p>The tree you can see in the left half of the screen when you access the <tt>Site</tt> tab in authoring mode is pretty much a 1:1 representation of the site tree. </p>
+
+<p>The sitetree.xml document of the default publication which we will use as an example here looks like this: </p>
+
+<pre>
+&lt;?xml version="1.0" encoding="UTF-8"?&gt;
+&lt;site i18n:attr="label" label="Authoring"
+    xmlns="http://apache.org/cocoon/lenya/sitetree/1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation=
+        "http://apache.org/cocoon/lenya/sitetree/1.0
+        ../../../../resources/entities/sitetree.xsd"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+&gt;
+
+  &lt;node id="index"&gt;
+    &lt;label xml:lang="en"&gt;Home&lt;/label&gt;
+
+    &lt;label xml:lang="de"&gt;Home&lt;/label&gt;
+  &lt;/node&gt;
+
+  &lt;node id="tutorial"&gt;
+    &lt;label xml:lang="en"&gt;Tutorial&lt;/label&gt;
+
+    &lt;label xml:lang="de"&gt;Tutorial&lt;/label&gt;
+
+    &lt;node id="new_doctype"&gt;
+      &lt;label xml:lang="en"&gt;Create new doctype&lt;/label&gt;
+    &lt;/node&gt;
+
+  &lt;/node&gt;
+
+  &lt;node id="concepts"&gt;
+    &lt;label xml:lang="en"&gt;Concepts (english only)&lt;/label&gt;
+  &lt;/node&gt;
+
+  &lt;node id="features"&gt;
+
+    &lt;label xml:lang="en"&gt;Features&lt;/label&gt;
+    &lt;label xml:lang="de"&gt;Funktionen&lt;/label&gt;
+  &lt;/node&gt;
+
+  &lt;node id="doctypes"&gt;
+
+    &lt;label xml:lang="en"&gt;Document Type Examples&lt;/label&gt;
+    &lt;label xml:lang="de"&gt;Dokumenttyp Beispiele&lt;/label&gt;
+     &lt;node id="xhtml-document"&gt;
+      &lt;label xml:lang="en"&gt;XHTML Doctype&lt;/label&gt;
+
+      &lt;label xml:lang="de"&gt;XHTML Dokumenttyp&lt;/label&gt;
+    &lt;/node&gt;
+ &lt;/node&gt;
+
+&lt;/site&gt;
+</pre>
+<p>The default publication defines three navigation elements: </p>
+
+<ul>
+<li><p> Tabs (horizontal) </p>
+</li>
+<li><p> Breadcrumbs </p>
+</li>
+<li><p> Menu (left) </p>
+</li>
+</ul>
+<p>Each of them is built by applying a specific XSLT to sitetree.xml (compare: <a   href="site:navigation">navigation framework</a>). </p>
+
+<p>In case you need additional navigation elements besides tabs, breadcrumbs and menus, you can set up an additional XSLT file and integrate it into the sitemap. (More on this later.) </p>
+
+</section><section><title id="head-07624a224de9bea81634763b7f1dce088cb62439">Tabs as main navigation, menubar as sub-navigation</title>
+
+<p>Depending on the amount of content on your site, you may opt for different styles of navigation. You might for example get rid of the tabs and only use the menu on the left. You can also use the tabs and the menu as parallel means of navigation, which is what the default publication does. If you have a lot of content organized on multiple levels, you might also choose to use the tabs as the first level of navigation and the menu as a second level. </p>
+<p>If your sitetree for example looks like this: </p>
+<p> </p>
+<ul>
+<li><p> Home </p>
+
+</li>
+<li><p> Products </p>
+<ul>
+<li><p> Consumer Products </p>
+<ul>
+<li><p> Product Line A </p>
+</li>
+<li><p> Product Line B </p>
+</li>
+
+<li><p> Product Line C </p>
+</li>
+</ul>
+</li>
+<li><p> Industrial Products </p>
+</li>
+</ul>
+</li>
+<li><p> Services </p>
+<ul>
+<li><p> Maintainance Contracts </p>
+
+</li>
+<li><p> 24-hour Emergency Hotline </p>
+</li>
+</ul>
+</li>
+</ul>
+<p> </p>
+<p>a typical navigation could look this this: </p>
+
+<pre>
++--------------------------------------------------------------------
+|                       | *HOME* | Products | Services |
++--------------------------------------------------------------------
+|
+</pre>
+
+<p>when the user clicks on Producs, a menu will show up: </p>
+
+<pre>
++--------------------------------------------------------------------
+|                       | Home | *PRODUCTS* | Services |
++--------------------------------------------------------------------
+|
+| - Consumer Products
+| - Industrial Products
+|
+</pre>
+<p>clicking on Services will show up a different menu: </p>
+
+<pre>
+
++--------------------------------------------------------------------
+|                       | Home | Products | *SERVICES* |
++--------------------------------------------------------------------
+|
+| - Maintainance 
+|   Contracts
+| - 24-hour Emergency 
+|   Hotline
+
+</pre>
+
+<h5 id="head-5180937f0e533c5948230c73f141c9b2c1aecb65">Simple solution: Hide the menus using CSS</h5>
+
+<p>This behaviour can be achieved by changing the CSS of the default publication. Edit the file </p>
+
+<pre>
+$PUB_HOME/resources/shared/css/page.css
+</pre>
+<p>and add the following snippet, preferrably beneath the existing <tt>menublock</tt> declarations: </p>
+
+<pre>
+.menublock-1 {
+    display: none;
+}
+</pre>
+<p>This way, all non-selected first level menu entries are hidden, which comprises all menu entries belonging to the other tabs. </p>
+
+<h5 id="head-f6b2dc82fbfce6cdd76a5552ee76fcdd6fd55d53">Advanced solution: Exclude the menus using XSLT</h5>
+
+<p>In this approach, you use a custom XSLT stylesheet to generate the menubar XHTML snippet. The file has to be placed at </p>
+
+<pre>
+$PUB_HOME/lenya/xslt/navigation/menu.xsl
+</pre>
+<p>Note the step <tt>/lenya</tt> in the path, this is necessary to tell Lenya that you're overriding a file from the core. The stylesheet might look as follows: </p>
+
+<pre>
+
+&lt;xsl:stylesheet version="1.0"
+    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+    xmlns:nav="http://apache.org/cocoon/lenya/navigation/1.0"
+    xmlns="http://www.w3.org/1999/xhtml"
+    exclude-result-prefixes="nav"
+    &gt;
+
+  &lt;xsl:import href="../../../../../xslt/navigation/menu.xsl"/&gt;
+
+  &lt;xsl:template match="nav:site/nav:node[not(descendant-or-self::nav:node[@current = 'true'])]"/&gt;
+
+  &lt;xsl:template match="nav:site/nav:node[descendant-or-self::nav:node[@current = 'true']]"&gt;
+    &lt;div class="menublock-selected-{count(ancestor-or-self::nav:node)}"&gt;
+
+      &lt;xsl:apply-templates select="nav:node"/&gt;
+    &lt;/div&gt;
+  &lt;/xsl:template&gt;
+
+&lt;/xsl:stylesheet&gt; 
+</pre>
+<ul>
+<li><p> First, you import the core menu XSL so that you can reuse most of the core functionality. </p>
+
+</li>
+<li><p> The first <tt>&lt;xsl:template&gt;</tt> excludes all top-level <tt>&lt;nav:node&gt;</tt> entries which don't contain the current item. </p>
+</li>
+<li><p> The second <tt>&lt;xsl:template&gt;</tt> is optional. If you include it, the top-level menu items won't be displayed in the menubar. </p>
+
+</li>
+</ul></section></body>
+</document>
