@@ -30,6 +30,7 @@
 <head>
 <link rel="service.edit" type="application/x.atom+xml" href="introspection.xml" title="AtomAPI"/>
 <link rel="stylesheet" type="text/css" href="{$contextprefix}/blog/live/css/styles.css" title="default css"/>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
 <title>
   <xsl:value-of select="echo:feed/echo:title"/>
 </title>
@@ -51,7 +52,7 @@
 </tr>
 
 <tr>
-<td valign="top" id="content" width="70%">
+<td valign="top" id="content">
     <xsl:if test="not(echo:feed/echo:entry)">
     <p>
     No entries yet!
@@ -73,7 +74,7 @@
     <xsl:apply-templates select="echo:feed/echo:entry"/>
 </td>
 
-<td valign="top" id="sidebar" width="30%">
+<td valign="top" id="sidebar">
 
 <xsl:apply-templates select="sidebar/block" mode="atom"/>
 </td>

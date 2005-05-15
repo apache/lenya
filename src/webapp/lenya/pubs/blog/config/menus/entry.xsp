@@ -71,9 +71,6 @@
       </block>
     </menu>
 
-    <menu i18n:attr="name" name="Search" label="Search">
-    </menu>
-
     <menu i18n:attr="name" name="Help" label="Help">
       <block>
         <item href="http://lenya.apache.org/docs/index.html"><i18n:text>Documentation</i18n:text></item>

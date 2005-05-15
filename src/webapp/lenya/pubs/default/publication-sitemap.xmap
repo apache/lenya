@@ -108,7 +108,7 @@
         </map:transform>
       </map:otherwise>
         </map:select>
-        <map:serialize type="html"/>
+        <map:serialize type="xhtml"/>
       </map:handle-errors>    
       </map:pipeline>
     <!-- /BX Editor: RNG Schema -->
@@ -134,6 +134,9 @@
           <map:parameter name="document-type" value="{page-envelope:document-type}"/>
           <map:parameter name="language" value="{page-envelope:document-language}"/>
         </map:transform>
+        <map:transform type="i18n">      
+          <map:parameter name="locale" value="{request:locale}"/>
+        </map:transform>    
         <map:select type="parameter">
           <map:parameter name="parameter-selector-test" value="{1}"/>
           <map:when test="view">
@@ -175,7 +178,7 @@
                 </map:transform>
                 <map:transform src="../../xslt/authoring/edit/removeSourceTags.xsl"/>
               </map:match>
-              <map:serialize type="html"/>
+              <map:serialize type="xhtml"/>
             </map:otherwise>
 	  </map:select>
         </map:act>
@@ -217,7 +220,7 @@
         </map:transform>
       </map:otherwise>
         </map:select>
-        <map:serialize type="html"/>
+        <map:serialize type="xhtml"/>
       </map:handle-errors>
       
     </map:pipeline>

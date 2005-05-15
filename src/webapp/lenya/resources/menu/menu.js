@@ -14,7 +14,7 @@
 * limitations under the License.
 */
 
-menus = new Array("File","Search","Help","Debug")
+var numberOfMenus = 5; // change this if you have a different number of menus
 var activeMenu = null; //defines which menu is currently open
 
 //runs at onload of window        
@@ -53,18 +53,16 @@ function eventHideMenu() {
 
 //nav events
 function userEventsInit() {
-    for (i=0; i < menus.length; i++) {
-        obj = document.getElementById("nav"+menus[i]);
+    for (i=1; i < numberOfMenus + 1; i++) {
+	    obj = document.getElementById("nav"+i);
 	    if (obj != null) {
 		    obj.onclick = eventShowMenu;
 	    }
-
-        obj = document.getElementById("menu"+menus[i]);
+	
+	    obj = document.getElementById("menu"+i);
 	    if (obj != null) {
 		    obj.onmouseover = menuOver;
 		    obj.onmouseout = menuOut;
 	    }
     }
-
  }
-

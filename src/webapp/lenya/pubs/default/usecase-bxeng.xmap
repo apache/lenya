@@ -44,10 +44,10 @@
       <map:select type="parameter">
         <map:parameter name="statusCode" value="{statusCode}"/>
         <map:when test="">
-          <map:serialize type="html" />
+          <map:serialize type="xhtml" />
         </map:when>
         <map:otherwise>
-          <map:serialize type="html" status-code="{statusCode}"/>
+          <map:serialize type="xhtml" status-code="{statusCode}"/>
         </map:otherwise>
       </map:select>
     </map:resource>
@@ -117,7 +117,7 @@
         </map:act>
         <map:generate src="../../resources/misc/bxeng/download.xhtml"/>
         <map:call resource="style-cms-page"/>
-        <map:serialize type="html"/>
+        <map:serialize type="xhtml"/>
       </map:match>
       
       <map:match pattern="image-upload-show" type="step">
@@ -262,7 +262,7 @@
         </map:transform>
          </map:otherwise>
         </map:select>
-        <map:serialize type="html"/>
+        <map:serialize type="xhtml"/>
       </map:handle-errors>
       
     </map:pipeline>

@@ -16,152 +16,92 @@
 -->
 <css>
     
-body {
-    background-color: white;
-    margin: 0px; 
-    padding: 0px
-}
+body { background-color: #fff; margin: 0; padding: 0; }
 
-#lenya-menubar {
-	position: absolute;
-	top: 0px;
-	left: 0px;
-	z-index: 2;
-}
+#lenya-menus { position: absolute; top: 0; left: 0; z-index: 2; width: 100%; height: 57px; background: url(<context-prefix/>/lenya/menu/images/menu-background.gif) 0 0 repeat-x; }
 
-#lenya-cmsbody {
-	position: absolute;
-	width: 100%;
-	top: 55px;
-	left: 0px;
-	z-index: 1;
-}
+#lenya-logo { position: absolute; z-index: 3; width: 90px; height: 25px; top: 31px; left: 100%; margin-left: -90px; }
 
-table.lenya-menubar-menu a { color: #3360AA; text-decoration:none; background-color: transparent; }
-table.lenya-menubar-menu a:hover { color: #FF3333; background-color: transparent; }
-table.lenya-menubar-menu a:visited { color: #6688AA; background-color: transparent; } 
-table.lenya-menubar-menu a:visited:hover { color: #FF3333; background-color: transparent; } 
+#lenya-cmsbody { position: absolute; width: 100%; top: 57px; left: 0px; z-index: 1; }
 
-table.lenya-menubar-menu img {border:0px}
+#lenya-areas { float: left; height: 25px; margin: 5px 0 0 10px; }
 
-#navTopBG {
-	font-family: verdana, helvetica, sans-serif;
-	height: 22px;
-    background-image: url('<context-prefix/>/lenya/menu/images/menu-bg_2.gif');
-	background-repeat: repeat-x;
-	font-size: 10pt;
-	color: #333333;
-}
+#lenya-info { float: right; height: 20px; margin: 9px 10px 0 0; font-size: 11px; font-family: Arial, "Lucida Grande", Verdana, Helvetica, sans-serif; line-height: 1; }
 
-#navBlue {
-	height: 6px;
-	background-image: url('<context-prefix/>/lenya/menu/images/unten.gif');
-    background-repeat: repeat-x;
-    padding-top: 1px
-}
-               
-#menuSearch, #menuHelp, #menuFile, #menuDebug  {
-	position:absolute;
-	display:block;
-	visibility:hidden;
-	width:170px;
-	top:54px;
-	overflow: hidden;
-}
+#lenya-options { padding: 9px 0 0 27px; clear: both; height: 31px; font-size: 11px; font-family: Arial, "Lucida Grande", Verdana, Helvetica, sans-serif; line-height: 1; }
 
-.lenya-menubar-menu-disabled {
-    color: #AAAAAA;
-}
+#lenya-options ul { list-style: none; margin: 0; padding: 0; }
 
-.lenya-menubar-highlight {
-    color: #BAFF00;
-}
+#lenya-options ul li { float: left; width: 7em; }
 
-#menuFile {left:14px;}
-#menuSearch {left:114px;}
-#menuHelp {left:214px;}
-#menuDebug {left:314px;}
+#lenya-options ul li#nav4 { width: 9em; }
 
-.menuOutline {
-	border: 1px solid #666666;
-	border-top: 0px;
-	padding: 2px;
-	background-color: #EEEEEE;
-}
+#lenya-options ul li, #lenya-options ul li a { display: block; color: #333; font-size: 12px; text-decoration: none; font-weight: bold; cursor: pointer; }
 
-.menuBg {
-	padding: 2px;
-	background-color: #EEEEEE;
-	background-repeat: repeat;
-	background-attachment: scroll;
-    background-image: url('<context-prefix/>/lenya/menu/images/bottombg.gif');
-	background-position: 0%;
-	color: black;
-}
+#lenya-options ul li ul { position: absolute; display: block; width: 12em; top: 56px; border: 1px solid #c6c6c5; background: #f1f1f1; padding: 7px; visibility: hidden; }
 
-.menuBg .mI, .menuBg .mI:visited {
-	display:block;
-	padding: 2px 4px;
-	font:11px verdana, arial, sans-serif; 
-	color:#444444; 
-	background-color: transparent;
-        text-decoration: none;
-}
+#lenya-options ul li ul#menu1 { left: 20px; }
 
-.lenya-menubar-separator {
-	height: 1px;
-	margin: 3px 0px;
-	background-color: #EEEEEE;
-	background-repeat: repeat;
-	background-attachment: scroll;
-	background-image: url('<context-prefix/>/lenya/menu/images/dotted.gif');
-	background-position: 0% 50%;
-}
+#lenya-options ul li ul#menu2 { left: 105px; }
 
-.lenya-menubar-td-infoline {
-        text-align:right;
-}
+#lenya-options ul li ul#menu3 { left: 187px; }
 
-.lenya-menubar-td-left {
-        text-align:right;
-}
+#lenya-options ul li ul#menu4 { left: 275px; }
 
-.lenya-menubar-infoline {
-	margin-right: 10px;
-	color: #FFFFFF;
-	font-size: 11px;
-	font-family: verdana, helvetica, sans-serif;
-}
+#lenya-options ul li ul#menu5 { left: 360px; }
 
-.menuBg a.mI:hover {
-	background:#FFFFFF;
-	color: black;
-}
+#lenya-options ul li ul#menu6 { left: 445px; }
 
-.menuBg span.mI {
-	color: #AAAAAA;
-	background-color: transparent;
-}
+#lenya-options ul li ul li { width: 12em; }
 
-.click {
-	cursor:pointer
-}
+#lenya-options ul li ul li.lenya-menu-separator { border-bottom: 1px dotted #c6c5c5; margin: 4px 0; font-size: 1px; height: 2px; width: 95%; }
 
-.menuBg a {
-	color: #0066FF;
-	text-decoration: none;
-	background-color: transparent;
-}
+#lenya-options ul li ul li { padding: 0 0 0 3px; }
 
-.menuBg a:visited {
-	color: #0066FF;
-	text-decoration: none;
-	background-color: transparent;
-}
+#lenya-options ul li ul li.disabled { font-size: 11px; font-weight: normal; color: #999; padding: 2px 0 2px 3px; cursor: default; }
 
-#page {
-	width:100%;
-	height:100%;
-}
+#lenya-options ul li.disabled { cursor: default; color: #999; }
+
+#lenya-options ul li ul li a { font-size: 11px; font-weight: normal; padding: 2px 0; }
+
+#lenya-options ul li ul li a:hover { background: #fff; }
+
+#lenya-areas ul { margin: 0; padding: 0; }
+
+#lenya-areas ul li { list-style: none; float: left; display: block; margin: 0 1px 0 0; }
+
+#lenya-areas ul li a { color: #454646; display: block; text-decoration: none; text-align: center; padding: 9px 9px 0 9px; height: 16px !important; height /**/: 25px; display: inline-block; }
+
+#lenya-areas ul li a span { font: bold 10px/1.0 Arial, Verdana, sans-serif; text-transform: uppercase; }
+
+#lenya-areas ul li#area-admin-active a { color: #3975b3; background: url(<context-prefix/>/lenya/menu/images/active.gif) 0 0 repeat-x; }
+
+#lenya-areas ul li#area-admin a { background: url(<context-prefix/>/lenya/menu/images/inactive.gif) 0 0 repeat-x; }
+
+#lenya-areas ul li#area-info-authoring a { background: url(<context-prefix/>/lenya/menu/images/inactive.gif) 0 0 repeat-x; }
+
+#lenya-areas ul li#area-info-authoring-active a { color: #3975b3; background: url(<context-prefix/>/lenya/menu/images/active.gif) 0 0 repeat-x; }
+
+#lenya-areas ul li#area-authoring a { background: url(<context-prefix/>/lenya/menu/images/inactive.gif) 0 0 repeat-x; }
+
+#lenya-areas ul li#area-authoring-active a { color: #3975b3; background: url(<context-prefix/>/lenya/menu/images/active.gif) 0 0 repeat-x; }
+
+#lenya-areas ul li#area-live-active a { color: #3975b3; background: url(<context-prefix/>/lenya/menu/images/active.gif) 0 0 repeat-x; }
+
+#lenya-areas ul li#area-live a { background: url(<context-prefix/>/lenya/menu/images/inactive.gif) 0 0 repeat-x; }
+
+#lenya-areas ul li#area-staging-active a { color: #3975b3; background: url(<context-prefix/>/lenya/menu/images/active.gif) 0 0 repeat-x; }
+
+#lenya-areas ul li#area-staging a { background: url(<context-prefix/>/lenya/menu/images/inactive.gif) 0 0 repeat-x; }
+
+#lenya-areas ul li#area-admin a:hover, #lenya-areas ul li#area-info-authoring a:hover, #lenya-areas ul li#area-authoring a:hover, #lenya-areas ul li#area-staging a:hover, #lenya-areas ul li#area-live a:hover { background-position: 0 -25px; }
+
+#lenya-info ul { margin: 0; padding: 0; }
+
+#lenya-info ul li { list-style: none; display: block; float: left; font-size: 11px; color: #fff; padding: 0 5px; border-right: 1px solid #fff; }
+
+#lenya-info ul li#info-time { border: 0; }
+
+#page { width: 100%; height: 100%; }
 
 </css>

@@ -115,7 +115,7 @@
           <map:parameter name="locale" value="{request:locale}"/>
         </map:transform>
         <map:transform src="xslt/util/strip_namespaces.xsl"/>
-        <map:serialize type="html"/>
+        <map:serialize type="xhtml"/>
       </map:match>
            
     </map:pipeline>
@@ -179,7 +179,7 @@
         <map:transform src="xslt/admin/status2html.xslt">
           <map:parameter name="contextPath" value="{request:contextPath}"/>
         </map:transform>
-        <map:serialize type="html"/>
+        <map:serialize type="xhtml"/>
       </map:match>
       
       <!-- ============================================================ -->
@@ -242,7 +242,7 @@
         <map:generate type="serverpages" src="content/ac/passwd-input-screen.xsp"/>
         <map:transform src="xslt/ac/simple-page2html.xsl"/>
        <map:transform src="xslt/util/strip_namespaces.xsl"/>
-          <map:serialize type="html"/>
+          <map:serialize type="xhtml"/>
       </map:match>
     </map:pipeline>
     
@@ -269,7 +269,7 @@
           <map:parameter name="locale" value="{request:locale}"/>
         </map:transform>
         <map:transform src="xslt/util/strip_namespaces.xsl"/>
-        <map:serialize type="html"/>
+        <map:serialize type="xhtml"/>
       </map:match>
       
     </map:pipeline>

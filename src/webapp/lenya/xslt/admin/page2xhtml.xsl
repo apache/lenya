@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: page2xhtml.xsl,v 1.6 2004/03/13 12:42:10 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
 	  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -33,6 +33,7 @@
         <title><xsl:value-of select="page:page/page:title"/></title>
         <link rel="stylesheet" type="text/css"
           href="{$contextprefix}/lenya/css/admin.css" title="admin css"/>
+      <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
       </head>
       <body>
         <xsl:apply-templates/>
