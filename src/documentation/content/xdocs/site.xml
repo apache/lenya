@@ -112,6 +112,7 @@
                 <cmsmenus href="cms_menus.html" label="CMS Menus"/>
                 <cmsscreens href="cms_screens.html" label="CMS Screens"/>
                 <howtosearch href="search.html" label="Search Publications"/>
+                <howtoexternaldata href="external_data.html" label="External Data"/>
             </howtos>
             <components href="components/" label="Components">
                 <accesscontrol href="accesscontrol/" label="Access&#160;Control">

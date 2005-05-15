@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>Integrating external data How-To</title>
+  </header>
+    <body>
+            <p>This article is about how to pull XML data from another web server and integrate it into a Lenya website.  Your first decision is where Lenya enters your code. There are two good possibilities for your goals:</p><ol>
+            <li>Interrupt before &lt;map:match pattern="**.html"&gt;</li>
+            <li>Interrupt at getting the data.</li></ol>
+            <section><title>First Solution</title>
+            <p>
+            1. Interrupt before &lt;map:match pattern="**.html"&gt;
+            Add a match and write everything needed to create your page.
+            {1} = url before "/people/"
+            {2} = url between "people/" and ".html"</p>
+            <source>
+            &lt;map:match pattern="**/people/*.html"&gt;
+                 &lt;map:aggregate element="cmsbody"&gt;
+                     &lt;map:part src="cocoon://navigation/{page-envelope:publication-id}/{page-envelope:area}/breadcrumb/index.xml"/&gt;
+                     &lt;map:part src="cocoon://navigation/{page-envelope:publication-id}/{page-envelope:area}/tabs/index.xml"/&gt;
+                     &lt;map:part src="cocoon://navigation/{page-envelope:publication-id}/{page-envelope:area}/menu/index.xml"/&gt;
+                     &lt;map:part src="cocoon://navigation/{page-envelope:publication-id}/{page-envelope:area}/search/index.xml"/&gt;
+                     &lt;map:part src="cocoon:/people-{2}"/&gt;
+                 &lt;/map:aggregate&gt;
+                 &lt;map:transform src="xslt/page2xhtml-people.xsl"/&gt;
+                 &lt;map:serialize type="xml"/&gt;
+             &lt;/map:match&gt;</source>
+            <p>(You should copy all the code in &lt;map:match pattern="lenyabody-*/*/*/*/**"&gt;.</p>
+             <source>
+              &lt;map:match pattern="people-**"&gt;
+                 &lt;map:generate src="http://www.xmlhack.com/cdf.cdf?{1}"/&gt;
+                 &lt;map:transform src="xslt/xmlhack.xsl"/&gt;
+                 &lt;map:serialize type="html"/&gt;
+             &lt;/map:match&gt;</source>
+            <p>Notice I added the filename requested (without an extension) to the querystring of the remote request.</p>
+            </section>
+            <section><title>Second Solution</title>
+            <p>
+            2. Interrupt at getting the data.
+            2.a Set a new doctype in "parameter-doctype.xmap". This code must be before &lt;map:match pattern="*/**.html"&gt;:</p>
+             <source>&lt;map:match pattern="**/people/*.html"&gt;
+             &lt;map:generate type="serverpages" src="../../config/parameters/default.xsp"&gt;
+             &lt;map:parameter name="value" value="people"/&gt;
+             &lt;/map:generate&gt;
+             &lt;map:serialize type="xml"/&gt;
+             &lt;/map:match&gt;</source>
+            
+            <p>2.b Get the content from the remote source in "doctypes.xmap". This code must be before &lt;map:match pattern="*/*/*/**.xml"&gt;:
+            {1} = "view"
+            {2} = area
+            {3} = document=path with final ".xml" removed</p>
+             <source>
+             &lt;map:match pattern="*/*/people/**.xml"&gt;
+                 &lt;map:generate src="http://www.xmlhack.com/cdf.cdf?{3}"/&gt;
+                 &lt;map:transform src="xslt/people2xhtml.xsl"&gt;
+                     &lt;map:parameter name="rendertype" value="{1}"/&gt;
+                     &lt;map:parameter name="nodeid" value="{page-envelope:document-node-id}"/&gt;
+                     &lt;map:parameter name="language" value="{page-envelope:document-language}"/&gt;
+                 &lt;/map:transform&gt;
+                 &lt;map:serialize type="xml"/&gt;
+             &lt;/map:match&gt;</source>
+            <p>Notice I added the filename requested (without an extension) to the querystring of the remote request.</p>
+
+            <p>2.c Use these filenames for your transformation: <tt>xslt/people2xhtml.xsl</tt> (Use whatever is specified in 2.b, but this is the standard naming convention.)
+            <tt>xslt/page2xhtml-people.xsl</tt>  I recommend the second option. It is much less code (less chance of bugs), and takes advantage of Lenya's standards.</p></section>   </body>
+</document>
