@@ -21,9 +21,6 @@
 <document> 
   <header> 
     <title>Usecases</title>
-    <version major="0" minor="2">Version 0.2</version>
-     
-    <abstract>Description of the usecase concept and the existing usecases.</abstract> 
   </header> 
   <body> 
 
@@ -442,9 +439,6 @@
       </tr>
     </table>
 
-    <fixme author="ce">Can the authenticate process done in a
-      similar way?</fixme>
-
   </section>
 
   <section>
@@ -591,12 +585,11 @@
         </tr>
       </table>
     </section>
+<section><title id="head-2e3e0110bd5e2eadb614e4e61873e220fc9a4f74">Usecases versus FlowScript</title>
 
-    <fixme author="ce">Add remaining use cases</fixme>
+<p>The usecase concept in Lenya 1.2 is inferior to FlowScript. Lenya 1.4-dev contains a simple <a   href="site:usecase-framework"> Usecase Framework</a> for writing usecases based on flow, JX templates, and Java classes for business logic. </p>    </section>
+
   </section>
       
   </body> 
-  <footer> 
-    <legal>© 200 wyona.org</legal> 
-  </footer>
 </document>
