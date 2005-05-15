@@ -23,12 +23,86 @@
 
 <header> 
     <title>The Workflow State Machine</title>
-     
-    <type>Overview document</type> 
-     
 </header> 
 <body>
 
+<section><title>Syntax</title>
+
+<p>A workflow description is called a <strong>workflow schema</strong>. It is a guarded automaton: </p>
+
+<p><strong>W</strong> = (<strong>S</strong>, <strong>T</strong>, <strong>E</strong>, <strong>C</strong>, <strong>A</strong>, <strong>V</strong>, <strong>s0</strong>) </p>
+
+<p>with </p>
+<ul>
+<li><p>  <strong>S</strong> is a set of states </p>
+</li>
+<li><p>  <strong>E</strong> is a set of events </p>
+</li>
+<li><p>  <strong>C</strong> is a set of conditions </p>
+
+</li>
+<li><p>  <strong>A</strong> is a set of actions </p>
+</li>
+<li><p>  <strong>V</strong> is a set of boolean variables </p>
+</li>
+<li><p>  <strong>Ass</strong> is a set of assignments: <strong>Ass</strong> subseteq <strong>V</strong> x {true, false} </p>
+
+</li>
+<li><p>  <strong>T</strong> is a set of transitions: <strong>T</strong> subseteq <strong>E</strong> x <strong>S</strong> --&gt; <strong>S</strong> x <strong>CS</strong> x <strong>AS</strong> </p>
+
+<ul>
+<li style="list-style-type:none"><p>with </p>
+</li>
+<li><p> <strong>CS</strong> subseteq <strong>C</strong> </p>
+</li>
+<li><p> <strong>AS</strong> = {(A1, ..., An)} for Ai in <strong>A</strong> union <strong>Ass</strong> and n in N0 </p>
+
+</li>
+</ul>
+</li>
+<li><p>  <strong>s0</strong> in <strong>S</strong> is the initial state </p>
+</li>
+</ul>
+
+</section><section><title id="head-945e87ed4208e632a5490049df50982140ecc57a">Semantics</title>
+
+<p>A <strong>workflow instance</strong> is defined as follows: </p>
+<p><strong>I</strong> = (<strong>W</strong>, <strong>s</strong>, <strong>i</strong>) </p>
+<p>with </p>
+
+<ul>
+<li><p>  a workflow schema <strong>W</strong> = (<strong>S</strong>, <strong>T</strong>, <strong>E</strong>, <strong>C</strong>, <strong>A</strong>, <strong>V</strong>, <strong>s0</strong>) </p>
+
+</li>
+<li><p>  a current state <strong>s</strong> in <strong>S</strong> </p>
+</li>
+<li><p>  a variable instantiation <strong>i</strong>: <strong>V</strong> --&gt; {true, false} </p>
+
+</li>
+</ul>
+<p>Be <strong>I</strong> = (<strong>W</strong>, <strong>s</strong>, <strong>i</strong>) a workflow instance. The successor of <strong>I</strong> for the event <strong>e</strong> is </p>
+
+<p>(a) the workflow instance <strong>I</strong>' = (<strong>W</strong>, <strong>s</strong>', <strong>i</strong>') with </p>
+<ul>
+<li><p>  there is a t in <strong>T</strong> with </p>
+
+<ul>
+<li><p> t = (<strong>e</strong>, <strong>s</strong>, <strong>s</strong>', <strong>cs</strong>, <strong>as</strong>) </p>
+</li>
+<li><p> all c in <strong>cs</strong> are complied </p>
+
+</li>
+</ul>
+</li>
+<li><p>  <strong>i</strong>'(v) = b for all v with (v, b) in <strong>as</strong> </p>
+</li>
+<li><p>  <strong>i</strong>'(v) = <strong>i</strong>(v) for all other v </p>
+</li>
+
+</ul>
+<p>(b) <strong>I</strong>, if such a t does not exist. </p>
+
+</section>
 <section><title>Invoking a Transition</title>
 <p>
 When an event <em>e</em> is invoked on a workflow instance <em>I</em>, the following
