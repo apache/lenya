@@ -101,6 +101,7 @@
             </tutorial>
 
             <howtos href="how-to/" label="How-To">
+                <faq href="faq.html" label="FAQ"/>
                 <newpub href="new_publication.html" label="New Publication"/>
                 <deploypub href="deploy_publication.html" label="Deploy Publication"/>
                 <lookandfeel href="look_and_feel.html" label="Look and Feel"/>
@@ -189,7 +190,7 @@
                     <node-45 label="Included tasks">
                         <node-46 href="anttask.html" label="AntTask"/>
                         <node-47 href="publisher.html" label="DefaultFilePublisher"/>
-                        <node-48 href="exporter.html" label="StaticHTMLExporter"/>
+                        <taskexporter href="exporter.html" label="StaticHTMLExporter"/>
                         <node-49 href="mailtask.html" label="MailTask"/>
                     </node-45>
                     <node-50 href="development.html" label="Developing Tasks"/>
@@ -266,6 +267,8 @@
         <lenya href="http://lenya.apache.org"/>
         <lenya.demo href="http://olr.kbs.uni-hannover.de:8888"/>
         <lenya.dist href="http://www.apache.org/dyn/closer.cgi/lenya"/>
+        <lenya.archive.user href="http://mail-archives.apache.org/mod_mbox/lenya-user/"/>
+        <lenya.archive.devel href="http://mail-archives.apache.org/mod_mbox/lenya-dev/"/>
         <cvs.asf href="http://svn.apache.org/"/>
         <bxe href="http://bxe.oscom.org"/>
         <kupu href="http://kupu.oscom.org"/>

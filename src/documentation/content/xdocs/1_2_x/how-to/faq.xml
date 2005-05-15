@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>Frequently Asked Questions</title>
+  </header>
+    <body>
+       <ol>
+          <li>
+            <a href="#head-5db5277b98942661b1969971b6efc9174422a105">Errors</a> 
+            <ol>
+              <li><a href="#head-0373b4b0a56b6bc690e427f6fb5f2735d7069b27">I get an error
+              or an exception, where can I look at, what should I do?</a></li>
+            </ol>
+          </li>
+          <li>
+            <a href="#head-abfa1b062bbdbc047382217da6831202617d497d">General Lenya
+            capabilities</a> 
+            <ol>
+              <li><a href="#head-87f6d9cc7f4ad578df61301614a51bb0e897d1fb">Can a local
+              Lenya instance generate a site that is deployed on a remote hosting
+              service?</a></li>
+            </ol>
+          </li>
+          <li>
+            <a href="#head-462496b77b10044784689a329b76fd6a0e29a3d9">Installation, Setup,
+            Virtual hosts etc.</a> 
+            <ol>
+              <li><a href="#head-ca2f8178bd31ced88f4843c3af3055da6f48ea58">I have already
+              deployed cocoon in my servlet engine. Can I install Lenya in
+              parallel?</a></li>
+              <li><a href="#head-779e3973a215ee2b8959fed75524e04b3de26ad8">Can lenya be
+              integrated into a virtual hosting environment?</a></li>
+              <li><a href="#head-10c56d9e26be7fc0448fc93223ba0c98ee735325">Do I need to
+              create a Lenya install for each virtual server?</a></li>
+              <li><a href="#head-251a91fa7416b9f0ef45df8a0e94d08eca719769">Is there a way
+              to create multiple sites accessible via various methods of access control
+              (based on who owns them)?</a></li>
+              <li><a href="#head-be840ede2e55659bcd0df23be98ca6027fcd9b21">How do I
+              enable email notifications?</a></li>
+            </ol>
+          </li>
+          <li>
+            <a href="#head-427120a2ec8ce5593f2867a0d499dc7038e3d2fd">Running Lenya</a> 
+            <ol>
+              <li><a href="#head-b72382ba8f6f242dbf7a7a0fee47eab6cc630b3a">Lenya CMS ui
+              tabs are not displayed, whats wrong?</a></li>
+              <li><a href="#head-8600110d3f153b59ee0fd5487a71a88a7122b615">I can't run
+              the lenya.sh script in a linux shell.</a></li>
+              <li><a href="#head-7bebb8181baceb522ec7176d0c715e5f4a4a3cd8">Why do I get
+              an "illegal cookie" warning with all the lenya reference sites using
+              Opera?</a></li>
+              <li><a href="#head-3cdc782ad18f5328dd583a712e506756bbe14bf7">I get a
+              error:</a></li>
+              <li><a href="#head-ce80d1aef0ad610871c0d1c1ec2ce21c6f18d43d">How can I
+              create new users?</a></li>
+              <li><a href="#head-5776aeb902ec6b66c8f0c773045e4a49fdd72e57">When using
+              Lenya, a blank page occurs.</a></li>
+              <li><a href="#head-9c9338aa4978e7189a98777c0b0cc041a2f88983">I get a
+              "Connection timed out" errors such as
+              "org.apache.cocoon.ProcessingException: Unable to get transformer handler
+              for cocoon://scheduler/default/xxx"</a></li>
+            </ol>
+          </li>
+          <li>
+            <a href="#head-073bd0a8a39ff624f3505381f4c7c7bb24bf53db">Document Types
+            (short: Doctypes)</a> 
+            <ol>
+              <li><a href="#head-aa106303b52e0aa5703d1e505844420580923d54">Where can I
+              find lenya-documentation about the exact meaning of:</a></li>
+              <li><a href="#head-3f16c460f9acf75d805b9754dd7fc0f2812a1e9a">How to create
+              a new document type?</a></li>
+              <li><a href="#head-8143b677e57e642774dc8db8cdcbc06a63ac9478">How to to use
+              my own Relax NG schema for editing documents with Bitflux in
+              Lenya?</a></li>
+            </ol>
+          </li>
+          <li>
+            <a href="#head-eed52c4e444a9486524fa902254fec7aaf28618b">File-upload</a> 
+            <ol>
+              <li><a href="#head-e945c9c01a86f883cac8203ed9b24917645c3c41">How can I
+              Upload XML Files?</a></li>
+            </ol>
+          </li>
+          <li>
+            <a href="#head-6e971f9ed538ab42f352a77825305fcd38eb3447">Compliance to
+            standards</a> 
+            <ol>
+              <li><a href="#head-6ef6323947fdd859e7c0994c91f95db530043edc">How to port
+              the default pub to XHTML?</a></li>
+            </ol>
+          </li>
+          <li>
+            <a href="#head-d4b0d0502b0debd341654fdfa20528ece35ca597">Revision Control</a>
+            
+            <ol>
+              <li>
+                <a href="#head-d7ae6004b33695f696e45b752994e1b8a0f79382">How do I break a
+                lock on a document?</a> 
+                <ol>
+                  <li><a
+                  href="#head-4e29c86a0e361916412b4708eb7e60cb22b54ebd">Background:</a></li>
+                </ol>
+              </li>
+            </ol>
+          </li>
+          <li>
+            <a href="#head-1942e5ee89668002b8540e44807a663ff96d4626">Edit documents</a> 
+            <ol>
+              <li><a href="#head-e2a3d5bd16858aac474b1c76f18229829feeb763">How can I
+              delete a document?</a></li>
+            </ol>
+          </li>
+          <li>
+            <a href="#head-18756b23c0c47e9c1df6d0c2e7eb8f1253cd802b">Asset management</a>
+            
+            <ol>
+              <li><a href="#head-4644e44019d408c3109df15e500307f00cbd656e">Asset upload
+              does not work. How do I enable asset uploads?</a></li>
+            </ol>
+          </li>
+          <li>
+            <a href="#head-d4c2fa687aa75c4c5e32f64aa6258850056b52e7">Fallback</a> 
+            <ol>
+              <li><a href="#head-4bba854b1228b7cb9a59ffd1a7d678bf5ee86513">How can I
+              provide a different authoring login page for my publication?</a></li>
+            </ol>
+          </li>
+          <li>
+            <a href="#head-1fd5cb004f70073184d31e97586ffa693be48d1c">Internationalization
+            (i18n)</a> 
+            <ol>
+              <li><a href="#head-19baa282c3fa086fa00d3f5eca95f90da748e27d">How do I
+              switch the default language for an existing publication?</a></li>
+            </ol>
+          </li>
+          <li>
+            <a href="#head-398df26ef29a65f74145baac60b42b84d8c57f7f">Editors</a> 
+            <ol>
+              <li><a href="#head-0a116c111e424548d1691b1ec04d7e15dcfb9ac9">BXE doesn't
+              let me insert a &lt;h1&gt; heading?</a></li>
+            </ol>
+          </li>
+        </ol>
+        <br />
+        <br />
+         
+        <hr />
+        <h3 id="head-5db5277b98942661b1969971b6efc9174422a105">Errors</h3>
+        <h4 id="head-0373b4b0a56b6bc690e427f6fb5f2735d7069b27">I get an error or an
+        exception, where can I look at, what should I do?</h4>
+        <ol type="1">
+          <li>
+            <p>Read this FAQ carefully</p>
+          </li>
+          <li>
+            <p><a href="http://wiki.apache.org/lenya/FindPage">Search the wiki</a></p>
+          </li>
+          <li>
+            <p>Search the mailing lists: <a 
+            href="ext:lenya.archive.user">
+             User</a> or <a 
+            href="ext:lenya.archive.devel">
+             Dev</a></p>
+          </li>
+          <li>
+            <p>If all that fails, ask the user mailing list and provide following
+            informations:</p>
+            <ul>
+              <li>
+                <p>as possible all error output with somewhat descriptive package
+                names</p>
+              </li>
+              <li>
+                <p>what web container are you running on what system</p>
+              </li>
+              <li>
+                <p>what lenya/cocoon versions are you using</p>
+              </li>
+              <li>
+                <p>what do the error logs of your container say (eg:
+                "tomcat/logs/catalina.out" for Tomcat)</p>
+              </li>
+              <li>
+                <p>what do the error logs of lenya say, these can be found in
+                lenya/WEB-INF/logs, look here for the output of error.log</p>
+              </li>
+            </ul>
+          </li>
+        </ol>
+        <hr />
+        <h3 id="head-abfa1b062bbdbc047382217da6831202617d497d">General Lenya
+        capabilities</h3>
+        <h4 id="head-87f6d9cc7f4ad578df61301614a51bb0e897d1fb">Can a local Lenya instance
+        generate a site that is deployed on a remote hosting service?</h4>
+        <p>Yes. Using the <a 
+        href="site:tasksexporter">
+        StaticHTMLExporter task</a>, Lenya can generate static html, css, and other
+        supported files. Lenya maintains the directory structure of the generated site,
+        which can then be uploaded to another site.</p>
+        <p>To enable the StaticHTMLExporter task, configure the tasks.xconf file located
+        in /$PUBLICATION_DIRECTORY/$YOUR_PROJECT_NAME/config/tasks/.</p>
+        <p>Enable the StaticHTMLExporter as a sub-task of the
+        <tt>&lt;task&nbsp;id="publish"&gt;</tt> task,</p>
+<pre>
+&lt;task id="publish"&gt;
+  ....
+&lt;task id="export" class="org.apache.lenya.cms.publishing.StaticHTMLExporter"&gt;
+      &lt;parameter name="export-path" value="work/export/pending"/&gt;
+      &lt;parameter name="substitute-regexp" value="/lenya/$YOUR_PROJECT_NAME/live/"/&gt;
+      &lt;parameter name="substitute-replacement" value="/"/&gt;
+      &lt;parameter name="my-server-port" value="$THE_SERVER_PORT_RUNNING_LENYA"/&gt;
+&lt;/task&gt;
+&lt;/task&gt;
+</pre>
+        <p>When publishing files, the static files will be stored in the "export-path"
+        directory.</p>
+        <p>As of Lenya 1.2, this task is included in the publish task, but commented out
+        by default.</p>
+        <p>And alternative way is to use the <a href="http://cocoon.apache.org/2.1/userdocs/offline/cli.html"> Cocoon
+        CLI</a> as there may be some issues with the StaticHTMLExporter, or to call WGet
+        directly outside of lenya.</p>
+        <hr />
+        <h3 id="head-462496b77b10044784689a329b76fd6a0e29a3d9">Installation, Setup,
+        Virtual hosts etc.</h3>
+        <h4 id="head-ca2f8178bd31ced88f4843c3af3055da6f48ea58">I have already deployed
+        cocoon in my servlet engine. Can I install Lenya in parallel?</h4>
+        <p>Yes you can.</p>
+        <hr />
+        <h4 id="head-779e3973a215ee2b8959fed75524e04b3de26ad8">Can lenya be integrated
+        into a virtual hosting environment?</h4>
+        <p>Yes, the probably most simple setup would be to use a standard Apache
+        webserver with mod_proxy and then connect the various "URL prefixes" to the
+        various other servers. See the <a 
+        href="site:mod_proxy_and_lenya">Mod Proxy tutorial</a> for reference.</p>
+        <hr />
+        <h4 id="head-10c56d9e26be7fc0448fc93223ba0c98ee735325">Do I need to create a
+        Lenya install for each virtual server?</h4>
+        <p>No, you can run all publications within one servlet container context, which
+        are being called by the virtual servers within Apache for instance.<br />
+        </p>
+        <hr />
+        <h4 id="head-251a91fa7416b9f0ef45df8a0e94d08eca719769">Is there a way to create
+        multiple sites accessible via various methods of access control (based on who
+        owns them)?</h4>
+        <p>Yes, with the Lenya access control framework this is no problem.</p>
+        <hr />
+        <h4 id="head-be840ede2e55659bcd0df23be98ca6027fcd9b21">How do I enable email
+        notifications?</h4>
+        <p>Set enabled="true" in lenya/config/notification/notification.xconf</p>
+        <p>Set the property in pubname/config/tasks/targets.xml to your smtp server
+        &lt;property name="mail.mailhost" value="localhost"/&gt;</p>
+        <hr />
+        <h3 id="head-427120a2ec8ce5593f2867a0d499dc7038e3d2fd">Running Lenya</h3>
+        <h4 id="head-b72382ba8f6f242dbf7a7a0fee47eab6cc630b3a">Lenya CMS ui tabs are not
+        displayed, whats wrong?</h4>
+        <p>As of Lenya 1.2, this is no longer a problem. It used to be a problem with
+        Xalan.</p>
+        <hr />
+        <h4 id="head-8600110d3f153b59ee0fd5487a71a88a7122b615">I can't run the lenya.sh
+        script in a linux shell.</h4>
+        <p>The lenya.sh script has DOS line breaks. Fix it like that.</p>
+        <ul>
+          <li>
+            <p>dos2unix lenya.sh</p>
+          </li>
+          <li>
+            <p>chmod +x lenya.sh</p>
+          </li>
+          <li>
+            <p>Then start it with your prefered param...</p>
+          </li>
+        </ul>
+        <p>...and lenya will work like a charm </p>
+        <hr />
+        <h4 id="head-7bebb8181baceb522ec7176d0c715e5f4a4a3cd8">Why do I get an "illegal
+        cookie" warning with all the lenya reference sites using Opera?</h4>
+        <p>cocoon issues a cookie containing <tt>/lenya</tt>. If the path to the Lenya
+        publication does conflict with the cookie-path, Opera will (rightfully)
+        complain.</p>
+        <hr />
+        <h4 id="head-4d1f66d4005aa31c18293b90c01f921d7d6378d4">I get a
+        {{{java.net.URISyntaxException}}} error:</h4>
+<pre>
+java.net.URISyntaxException: Illegal character in path at index 21: 
+file:/D:/build/Tomcat 4.1/webapps/lenya/lenya/pubs/blog/config/ac/passwd/
+</pre>
+        <p>The installation path may not contain spaces: <a 
+        href="site:install"> Lenya
+        Installation Instructions</a></p>
+        <hr />
+        <h4 id="head-ce80d1aef0ad610871c0d1c1ec2ce21c6f18d43d">How can I create new
+        users?</h4>
+        <p>Log in initially as "alice" with password "levi". Then go to the admin tab and
+        you'll see a link for users. You can then add new users and delete existing
+        ones.</p>
+        <hr />
+        <h4 id="head-5776aeb902ec6b66c8f0c773045e4a49fdd72e57">When using Lenya, a blank
+        page occurs.</h4>
+        <p>This could be caused by an exception which is not caught by Lenya. Look into
+        the log files of your servlet container (Tomcat) or the command line if logging
+        is not enabled.</p>
+        <hr />
+        <h4 id="head-9c9338aa4978e7189a98777c0b0cc041a2f88983">I get a "Connection timed
+        out" errors such as "org.apache.cocoon.ProcessingException: Unable to get
+        transformer handler for cocoon://scheduler/default/xxx"</h4>
+        <p>Make sure your machine can get a connection to itself under all its hostnames.
+        Test by pinging all hostnames. Edit your hosts file if necessary.</p>
+        <hr />
+        <h3 id="head-073bd0a8a39ff624f3505381f4c7c7bb24bf53db">Document Types (short:
+        Doctypes)</h3>
+        <h4 id="head-aa106303b52e0aa5703d1e505844420580923d54">Where can I find
+        lenya-documentation about the exact meaning of:</h4>
+        <ul>
+          <li>
+            <p>page-envelope</p>
+          </li>
+          <li>
+            <p>document-id</p>
+          </li>
+          <li>
+            <p>document-type</p>
+          </li>
+          <li>
+            <p>context-precis</p>
+          </li>
+          <li>
+            <p>etc.</p>
+          </li>
+        </ul>
+        <p>see <a  href="site:pageenvelopemodule">Page envelope module</a></p>
+        <h4 id="head-3f16c460f9acf75d805b9754dd7fc0f2812a1e9a">How to create a new
+        document type?</h4>
+        <p>See <a href="site:customresourcetype">Adding Custom Resource Type</a>.</p>
+        <h4 id="head-8143b677e57e642774dc8db8cdcbc06a63ac9478">How to to use my own Relax
+        NG schema for editing documents with Bitflux in Lenya?</h4>
+        <ul>
+          <li>
+            <p>You have to create a new document type.</p>
+          </li>
+          <li>
+            <p>You have to add the appropriate menu item.</p>
+          </li>
+        </ul>
+        <hr />
+        <h3 id="head-eed52c4e444a9486524fa902254fec7aaf28618b">File-upload</h3>
+        <h4 id="head-e945c9c01a86f883cac8203ed9b24917645c3c41">How can I Upload XML
+        Files?</h4>
+        <p>Does Lenya have something along the lines of a form that will allow people to
+        upload XML files, have them validated, etc, then publish on a live site?</p>
+        <p>There is the one form editor (a big text area to edit XML in). Another
+        possibility is to use WebDAV to import XML files.</p>
+        <hr />
+        <h3 id="head-6e971f9ed538ab42f352a77825305fcd38eb3447">Compliance to
+        standards</h3>
+        <h4 id="head-6ef6323947fdd859e7c0994c91f95db530043edc">How to port the default
+        pub to XHTML?</h4>
+        <p>The Default publication is validated as HTML Transitional, how to port it to
+        XHTML?</p>
+        <p>The final serialization done in pipeline is to HTML (publication-sitemap.xmap
+        line 154 ATM). You can change it to XHTML there.</p>
+        <hr />
+        <h3 id="head-d4b0d0502b0debd341654fdfa20528ece35ca597">Revision Control</h3>
+        <h4 id="head-d7ae6004b33695f696e45b752994e1b8a0f79382">How do I break a lock on a
+        document?</h4>
+        <p>Also known as: How can manage this error: "Could not check out the file Reason
+        : The resource has already been checked out by another user"</p>
+        <p>unfortunately, currently there is no GUI way to break a lock (but have a look
+        on the Background). you have to go into
+        content/rcml/content/authoring/yourpage/index_en.xml.rcml and look at the entries
+        in there</p>
+<pre>
+&lt;!CheckOut&gt;
+&lt;Identity&gt;lenya&lt;/Identity&gt;
+&lt;Time&gt;1083252253647&lt;/Time&gt;
+&lt;/!CheckOut&gt;
+</pre>
+        <p>if the most recent (the ones on top) are CheckOut and no corresponding CheckIn
+        you have a lock. you can break the lock by removing the CheckOut line.</p>
+        <h5 id="head-4e29c86a0e361916412b4708eb7e60cb22b54ebd">Background:</h5>
+        <p>If you edit a document, it gets checked out. This means you telling lenya that
+        you want the exclusive right to change the document. Lenya will lock this
+        document for other users (so it cannot be edit by someone else). After you
+        finished editing the document, save it and exit the editor. By doing so the
+        document gets checked in again. This means you are telling lenya that you want to
+        drop the exclusiv right to change the document. If for some reason it does not
+        get checked in (browser crash?) the document remains locked. Log in initially as
+        "alice" with password "levi". Try to open the document (e.g. with the forms
+        editor) and hit CANCEL. Then it should be checked-in again.</p>
+        <hr />
+        <h3 id="head-1942e5ee89668002b8540e44807a663ff96d4626">Edit documents</h3>
+        <h4 id="head-e2a3d5bd16858aac474b1c76f18229829feeb763">How can I delete a
+        document?</h4>
+        <p>To remove a document you have two options:<br />
+        </p>
+        <ol type="1">
+          <li>
+            <p>you can either archive it (and restore it later): In the site tab go to
+            Edit-&gt;Archive.</p>
+          </li>
+          <li>
+            <p>or you can delete it: In the site tab go to Edit-&gt;Delete</p>
+          </li>
+        </ol>
+        <hr />
+        <h3 id="head-18756b23c0c47e9c1df6d0c2e7eb8f1253cd802b">Asset management</h3>
+        <h4 id="head-4644e44019d408c3109df15e500307f00cbd656e">Asset upload does not
+        work. How do I enable asset uploads?</h4>
+        <p>Edit the file lenya/WEB-INF/web.xml, look for "enable-uploads" and change the
+        param-value to "true". This is also a build option you can set in
+        local.build.properties.</p>
+        <hr />
+        <h3 id="head-d4c2fa687aa75c4c5e32f64aa6258850056b52e7">Fallback</h3>
+        <h4 id="head-4bba854b1228b7cb9a59ffd1a7d678bf5ee86513">How can I provide a
+        different authoring login page for my publication?</h4>
+        <p>You've to use Fallbacks. In sitemap.xmap put the login xsl under fallback.</p>
+<pre>
+  &lt;map:match type="step" pattern="showscreen"&gt;
+          &lt;map:generate type="serverpages" src="lenya/content/ac/login.xsp"/&gt;
+          &lt;map:transform src="lenya/{fallback:xslt/ac/login.xsl}"&gt;
+          &lt;map:parameter name="publication_name" value="{page-envelope:publication-id}"/&gt;
+          &lt;/map:transform&gt;
+         &lt;map:call resource="style-cms-page"/&gt;
+        &lt;/map:match&gt;
+</pre>
+        <p>And now write your alternative login.xsl in the publication filesystem, under
+        config/ac (webapps/lenya/lenya/pubs/[pubName]/config/ac)</p>
+        <h3 id="head-1fd5cb004f70073184d31e97586ffa693be48d1c">Internationalization
+        (i18n)</h3>
+        <h4 id="head-19baa282c3fa086fa00d3f5eca95f90da748e27d">How do I switch the
+        default language for an existing publication?</h4>
+        <p>Go to <tt>lenya/pubs/&lt;youpubname&gt;/config/publication.xconf</tt> and move
+        the <tt>default="true"</tt> attribute to your default language.</p>
+        <h3 id="head-398df26ef29a65f74145baac60b42b84d8c57f7f">Editors</h3>
+        <h4 id="head-0a116c111e424548d1691b1ec04d7e15dcfb9ac9">BXE doesn't let me insert
+        a &lt;h1&gt; heading?</h4>
+        <p>This is a setting in <tt>lenya/lenya/resources/misc/bxeng/contextmenu.xml</tt>
+        - all tags appearing there cannot be inserted by the BXE popup menu.</p>
+   </body>
+</document>
