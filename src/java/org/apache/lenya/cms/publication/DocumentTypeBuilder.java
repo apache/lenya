@@ -19,7 +19,7 @@ package org.apache.lenya.cms.publication;
 
 
 /**
- * Interface for a builder for document types.
+ * Interface for a builder that builds {@link DocumentType} objects.
  *
  * Note that the term "document types" is deprecated, and
  * will be replaced by the term "resource types" in the future.

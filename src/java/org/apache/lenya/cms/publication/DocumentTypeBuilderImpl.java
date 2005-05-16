@@ -36,11 +36,16 @@ import org.apache.lenya.cms.authoring.NodeCreatorInterface;
 import org.xml.sax.SAXException;
 
 /**
- * A service for building an instance of DocumentType.
+ * Avalon Service for building an instance of {@link DocumentType} using information
+ * from the <code>doctypes.xconf</code> configuration file.
  * 
- * Since this service is very frequently used, it is implemented as a poolable service. Furthermore,
- * the instances are cached, to avoid re-reading configuration unless necessary (that is, when the
- * configuration file has changed).
+ * <p>
+ * Since this service is very frequently used, it is implemented as a poolable service.
+ * </p> 
+ * <p>
+ * Furthermore, the instances are cached, to avoid re-reading configuration unless the
+ * configuration file has changed.
+ * </p>
  * 
  * @version $Id$
  */

@@ -27,7 +27,26 @@ import org.apache.lenya.cms.authoring.NodeCreatorInterface;
 
 
 /**
- * A document type.
+ * <p>
+ * Represents a resource type (formerly known as document type)
+ * which is usually configured in the file <code>doctypes.xconf</code>.
+ * </p>
+ * 
+ * <p>
+ * Has no behaviour but only holds:
+ * </p>
+ * <ul>
+ * <li>the name of the resource type (xhtml, rss, ...)</li>
+ * <li>the linkAttributeXPaths</li>
+ * <li>the location of a template used to instantiate new resources of this type</li>
+ * <li>the schema defintion for the ressource type</li>
+ * <li>the workflow file</li>
+ * <li>the NodeCreatorInterface which is used to create a new
+ *   document with this doctype</li>
+ * </ul>
+ * 
+ * <p>Instances of DocumentType are instantiated by a {@link DocumentTypeBuilder}.</p>
+ * 
  */
 public class DocumentType extends AbstractLogEnabled {
     /**
