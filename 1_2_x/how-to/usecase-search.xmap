@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+<!-- =========================== Components ================================ -->
+   <map:components>
+      <map:generators default="file"/>
+      <map:transformers default="xalan"/>
+      <map:readers default="resource"/>
+      <map:serializers default="xhtml"/>
+      <map:matchers default="wildcard"/>
+      <map:actions/>
+      <map:selectors>
+         <map:selector name="request-method" logger="sitemap.selector.request-method" src="org.apache.cocoon.selection.RequestMethodSelector"/>
+       </map:selectors>
+   </map:components>
+
+  <map:resources>
+      <map:resource name="finish">
+           <map:transform type="i18n">
+              <map:parameter name="locale" value="{page-envelope:document-language}"/>
+           </map:transform>
+           <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
+           <map:select type="parameter">
+              <map:parameter name="statusCode" value="{statusCode}"/>
+              <map:when test="">
+                <map:serialize type="html" />
+              </map:when>
+              <map:otherwise>
+                <map:serialize type="html" status-code="{statusCode}"/>
+              </map:otherwise>
+           </map:select>
+      </map:resource>
+
+      <map:resource name="page-xhtml">
+           <map:transform src="xslt/page2xhtml.xsl">
+              <map:parameter name="root" value="/{page-envelope:publication-id}/live"/>
+              <map:parameter name="document-id" value="/index"/>
+              <map:parameter name="url" value="live/index.html"/>
+              <map:parameter name="language" value="{page-envelope:document-language}"/>
+              <map:parameter name="showLogin" value="1"/>
+              <map:parameter name="showFav" value="0"/>
+              <map:parameter name="querystring" value="{request:queryString}"/>
+           </map:transform>
+      </map:resource>
+  </map:resources>
+
+<!-- =========================== Pipelines ================================ -->
+   <map:pipelines>
+      <map:pipeline>
+      <map:match pattern="*/search-*/lucene.xml">
+        <map:generate type="serverpages" src="lenya/content/search/search-and-results.xsp" label="xml">
+          <map:parameter name="max-hits-per-page" value="10"/>
+          <map:parameter name="max-pages" value="10"/>
+          <map:parameter name="excerpt-offset" value="150"/>
+          <map:parameter name="number-of-pubs" value="1"/>
+          <map:parameter name="pub0-id" value="{page-envelope:publication-id}"/>
+          <map:parameter name="pub0-name" value="{page-envelope:publication}"/>
+          <map:parameter name="pub0-index-dir" value="./work/search/lucene/index/{2}/index"/>
+          <map:parameter name="pub0-search-fields" value="contents,title"/>
+          <map:parameter name="pub0-excerpt-dir" value="./content/{2}"/>
+          <map:parameter name="pub0-prefix" value=""/>
+        </map:generate>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <map:match pattern="search-page">
+        <map:aggregate element="search-results">
+          <map:part src="./config/publication.xconf"/>
+          <map:part src="cocoon:/{page-envelope:publication-id}/search-live/lucene.xml?{request:queryString}"/>
+        </map:aggregate>
+        <map:transform src="xslt/search/searchfixer.xsl">
+            <map:parameter name="area" value="live"/>
+        </map:transform>
+        <map:transform src="xslt/search/sort.xsl"/>
+        <map:act type="resource-exists" src="xslt/search/search-and-results-body.xsl">
+          <map:transform src="lenya/xslt/search/search-and-results-body.xsl">
+            <map:parameter name="contextprefix" value="{request:contextPath}"/>
+            <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
+            <map:parameter name="area" value="live"/>
+          </map:transform>
+        </map:act>
+        <map:transform src="xslt/search/search-and-results.xsl">
+            <map:parameter name="contextprefix" value="{request:contextPath}"/>
+            <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
+            <map:parameter name="area" value="live"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+
+     <map:match type="usecase" pattern="search">
+        <map:aggregate element="cmsbody">
+          <map:part src="cocoon://navigation/{page-envelope:publication-id}/live/breadcrumb/live/index.xml"/>
+          <map:part src="cocoon://navigation/{page-envelope:publication-id}/live/tabs/index.xml"/>
+          <map:part src="cocoon://navigation/{page-envelope:publication-id}/live/menu/index.xml" prefix="xhtml"/>
+          <map:part src="cocoon://navigation/{page-envelope:publication-id}/live/search/index.xml"/>
+          <map:part src="cocoon:/search-page"/>
+        </map:aggregate>
+        <map:call resource="page-xhtml"/>
+        <map:call resource="finish"/>
+      </map:match>
+
+    </map:pipeline>
+  </map:pipelines>
+</map:sitemap>
