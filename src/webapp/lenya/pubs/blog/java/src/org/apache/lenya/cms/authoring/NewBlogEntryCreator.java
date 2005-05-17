@@ -64,7 +64,27 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
     }
 
     /**
-     * Implementation note: ignores parentId; blog has a specific site structure, not depending on parent
+     * The blog publication has a specific site structuring: 
+     * it uses the filesystem hierarchy to group nodes by date.
+     * In particular, the new URI of a blog entry is not dependent upon a "parent", so parameter <code>parentId</code> is unused.
+     *
+     * <p>Example structuring of blog entries:</p>
+     * <ul>
+     *  <li>2004</li>
+     *  <li>2005</li>
+     *    <ul>
+     *      <li>01</li>
+     *      <li>02</li>
+     *      <ul>
+     *        <li>23</li>
+     *        <li>24</li>
+     *          <ul>
+     *            <li>article-one</li>
+     *            <li>article-two</li>
+     *          </ul>
+     *      </ul>
+     *    </ul>
+     * </ul>
      * 
      * @see org.apache.lenya.cms.authoring.NodeCreatorInterface#getNewDocumentURI(String, String, String, String)
      */
