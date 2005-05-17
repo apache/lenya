@@ -485,6 +485,8 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
   <site-managers>
     <component-instance name="tree" logger="lenya.site"
                         class="org.apache.lenya.cms.site.tree.TreeSiteManager"/>
+    <component-instance name="simple" logger="lenya.site"
+                        class="org.apache.lenya.cms.site.simple.SimpleSiteManager"/>
   </site-managers>
   
   <document-builders>
