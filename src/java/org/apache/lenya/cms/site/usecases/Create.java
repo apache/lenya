@@ -117,8 +117,7 @@ public abstract class Create extends AbstractUsecase {
                                    getParameterAsString(DublinCore.ELEMENT_TITLE),
                                    getInitialContentsURI(),
                                    NodeCreatorInterface.BRANCH_NODE,
-                                   null,
-                                   true);
+                                   null);
         }
         finally {
            if (documentManager != null)

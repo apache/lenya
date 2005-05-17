@@ -51,45 +51,36 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         Serviceable, Contextualizable {
 
     /**
-     * The instance of Document will be built by the implementation of DocumentBuilder; the physical representation will be built by the implementation of NodeCreatorInterface, where the implementation to be used is specified in doctypes.xconf (and thus depends on the publication and the resource type to be used)
-     *
-     * @see DocumentManager#add(Document,String,String,String,String,String,String,short,Map,boolean)
+     * The instance of Document will be built by the implementation of DocumentBuilder; the physical
+     * representation will be built by the implementation of NodeCreatorInterface, where the
+     * implementation to be used is specified in doctypes.xconf (and thus depends on the publication
+     * and the resource type to be used)
+     * 
+     * @see DocumentManager#add(Document,String,String,String,String,String,String,short,Map)
      * @see org.apache.lenya.cms.authoring.NodeCreatorInterface
      * @see org.apache.lenya.cms.publication.DocumentBuilder
      */
-    public Document add(Document parentDocument, 
-                        String newDocumentNodeName,
-                        String newDocumentId, 
-                        String documentTypeName, 
-                        String language, 
-                        String navigationTitle,
-                        String initialContentsURI,
-                        short nodeType,
-                        Map parameters,
-                        boolean useSiteManager) 
+    public Document add(Document parentDocument, String newDocumentNodeName, String newDocumentId,
+            String documentTypeName, String language, String navigationTitle,
+            String initialContentsURI, short nodeType, Map parameters)
             throws DocumentBuildException, PublicationException {
 
         if (getLogger().isDebugEnabled())
             getLogger().debug("DocumentManagerImpl::add() called with:\n"
-               + "\t parentDocument.getId() [" + parentDocument.getId() + "]\n"
-               + "\t newDocumentNodeName [" + newDocumentNodeName + "]\n"
-               + "\t newDocumentId [" + newDocumentId + "]\n"
-               + "\t documentTypeName [" + documentTypeName + "]\n"
-               + "\t language [" + language + "]\n"
-               + "\t navigationTitle [" + navigationTitle + "]\n"
-               + "\t initialContentsURI [" + initialContentsURI + "]\n"
-               + "\t nodeType [" + nodeType + "]\n"
-               + "\t non-empty parameters [" + (parameters != null) + "]\n"
-               + "\t useSiteManager [" + useSiteManager + "]\n"
-               );
+                    + "\t parentDocument.getId() [" + parentDocument.getId() + "]\n"
+                    + "\t newDocumentNodeName [" + newDocumentNodeName + "]\n"
+                    + "\t newDocumentId [" + newDocumentId + "]\n" + "\t documentTypeName ["
+                    + documentTypeName + "]\n" + "\t language [" + language + "]\n"
+                    + "\t navigationTitle [" + navigationTitle + "]\n" + "\t initialContentsURI ["
+                    + initialContentsURI + "]\n" + "\t nodeType [" + nodeType + "]\n"
+                    + "\t non-empty parameters [" + (parameters != null) + "]\n");
 
         Publication publication = parentDocument.getPublication();
         DocumentIdentityMap map = parentDocument.getIdentityMap();
         String area = parentDocument.getArea();
 
         /*
-         * Get an instance of Document.
-         * This will (ultimately) be created by the implementation for
+         * Get an instance of Document. This will (ultimately) be created by the implementation for
          * the DocumentBuilder role.
          */
         if (getLogger().isDebugEnabled())
@@ -97,20 +88,20 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         Document newDocument = map.get(publication, area, newDocumentId, language);
 
         if (getLogger().isDebugEnabled())
-            getLogger().debug("DocumentManagerImpl::add() looking up a DocumentTypeBuilder so that we can call the creator");
+            getLogger()
+                    .debug("DocumentManagerImpl::add() looking up a DocumentTypeBuilder so that we can call the creator");
 
         // Get an instance of DocumentType
         DocumentTypeBuilder documentTypeBuilder = null;
         DocumentType documentType = null;
         try {
-            documentTypeBuilder = (DocumentTypeBuilder) this.manager.lookup(DocumentTypeBuilder.ROLE);
+            documentTypeBuilder = (DocumentTypeBuilder) this.manager
+                    .lookup(DocumentTypeBuilder.ROLE);
 
             documentType = documentTypeBuilder.buildDocumentType(documentTypeName, publication);
-        } 
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new DocumentBuildException("could not build type for new document", e);
-        }
-        finally {
+        } finally {
             if (documentTypeBuilder != null) {
                 this.manager.release(documentTypeBuilder);
             }
@@ -123,7 +114,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 initialContentsURI = documentType.getSampleContentLocation();
 
             if (getLogger().isDebugEnabled())
-                getLogger().debug("DocumentManagerImpl::add() using initialContentsURI [" + initialContentsURI + "]");
+                getLogger().debug("DocumentManagerImpl::add() using initialContentsURI ["
+                        + initialContentsURI + "]");
 
             // look up creator for documents of this type
             NodeCreatorInterface creator = documentType.getCreator();
@@ -132,35 +124,33 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             // where, relative to content base (and potentially to the parent
             // as well), the new document shall be created
             String contentBaseURI = publication.getContentURI(area);
-            String newDocumentURI = creator.getNewDocumentURI(contentBaseURI, parentDocument.getId(), newDocumentNodeName, language);
+            String newDocumentURI = creator.getNewDocumentURI(contentBaseURI, parentDocument
+                    .getId(), newDocumentNodeName, language);
 
             // Important note:
             // how the new document's source URI is constructed is
             // publication dependant; this is handled through the creator
             // for that type in that publication.
             // Therefore, we must ask the creator what this URI is
-            // and set it in the document. 
+            // and set it in the document.
             newDocument.setSourceURI(newDocumentURI);
 
             // now that the source is determined, lock involved nodes
             Transactionable[] nodes = newDocument.getRepositoryNodes();
             for (int i = 0; i < nodes.length; i++) {
                 nodes[i].lock();
-	    }
+            }
 
             //
-            creator.create(
-                initialContentsURI,
-                newDocumentURI,
-                newDocumentNodeName,
-                nodeType,
-                navigationTitle,
-                parameters);
-        } 
-        catch (Exception e) {
+            creator.create(initialContentsURI,
+                    newDocumentURI,
+                    newDocumentNodeName,
+                    nodeType,
+                    navigationTitle,
+                    parameters);
+        } catch (Exception e) {
             throw new DocumentBuildException("call to creator for new document failed", e);
-        }
-        finally {
+        } finally {
             if (documentTypeBuilder != null) {
                 this.manager.release(documentTypeBuilder);
             }
@@ -173,15 +163,13 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         newDocument.getMetaDataManager().setLenyaMetaData(lenyaMetaData);
 
         // Notify site manager about new document
-        if (useSiteManager)
-            addToSiteManager(newDocument, navigationTitle);
+        addToSiteManager(newDocument, navigationTitle);
 
         return newDocument;
     }
 
-    private void addToSiteManager(Document document, String navigationTitle) 
-        throws PublicationException 
-    {
+    private void addToSiteManager(Document document, String navigationTitle)
+            throws PublicationException {
         Publication publication = document.getPublication();
         SiteManager siteManager = null;
         ServiceSelector selector = null;
@@ -190,7 +178,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
             if (siteManager.contains(document)) {
                 throw new PublicationException("The document [" + document
-                   + "] is already contained in this publication!");
+                        + "] is already contained in this publication!");
             }
 
             siteManager.add(document);
@@ -493,8 +481,9 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             source = sourceResolver.resolveURI(sourceDocument.getSourceURI());
             destination = sourceResolver.resolveURI(destinationDocument.getSourceURI());
             SourceUtil.copy(source, (ModifiableSource) destination, true);
-            
-            destinationDocument.getMetaDataManager().replaceMetaData(sourceDocument.getMetaDataManager());
+
+            destinationDocument.getMetaDataManager().replaceMetaData(sourceDocument
+                    .getMetaDataManager());
 
         } catch (Exception e) {
             throw new PublicationException(e);
@@ -700,50 +689,54 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.DocumentManager#move(org.apache.lenya.cms.publication.util.DocumentSet, org.apache.lenya.cms.publication.util.DocumentSet)
+     * @see org.apache.lenya.cms.publication.DocumentManager#move(org.apache.lenya.cms.publication.util.DocumentSet,
+     *      org.apache.lenya.cms.publication.util.DocumentSet)
      */
     public void move(DocumentSet sources, DocumentSet destinations) throws PublicationException {
         Document[] sourceDocs = sources.getDocuments();
         Document[] targetDocs = destinations.getDocuments();
-        
+
         if (sourceDocs.length != targetDocs.length) {
-            throw new PublicationException("The number of source and destination documents must be equal!");
+            throw new PublicationException(
+                    "The number of source and destination documents must be equal!");
         }
-        
+
         Map source2target = new HashMap();
         for (int i = 0; i < sourceDocs.length; i++) {
             source2target.put(sourceDocs[i], targetDocs[i]);
         }
-        
+
         DocumentSet sortedSources = new DocumentSet(sourceDocs);
         SiteUtil.sortAscending(this.manager, sortedSources);
         Document[] sortedSourceDocs = sortedSources.getDocuments();
-        
+
         for (int i = 0; i < sortedSourceDocs.length; i++) {
             move(sortedSourceDocs[i], (Document) source2target.get(sortedSourceDocs[i]));
         }
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.DocumentManager#copy(org.apache.lenya.cms.publication.util.DocumentSet, org.apache.lenya.cms.publication.util.DocumentSet)
+     * @see org.apache.lenya.cms.publication.DocumentManager#copy(org.apache.lenya.cms.publication.util.DocumentSet,
+     *      org.apache.lenya.cms.publication.util.DocumentSet)
      */
     public void copy(DocumentSet sources, DocumentSet destinations) throws PublicationException {
         Document[] sourceDocs = sources.getDocuments();
         Document[] targetDocs = destinations.getDocuments();
-        
+
         if (sourceDocs.length != targetDocs.length) {
-            throw new PublicationException("The number of source and destination documents must be equal!");
+            throw new PublicationException(
+                    "The number of source and destination documents must be equal!");
         }
-        
+
         Map source2target = new HashMap();
         for (int i = 0; i < sourceDocs.length; i++) {
             source2target.put(sourceDocs[i], targetDocs[i]);
         }
-        
+
         DocumentSet sortedSources = new DocumentSet(sourceDocs);
         SiteUtil.sortAscending(this.manager, sortedSources);
         Document[] sortedSourceDocs = sortedSources.getDocuments();
-        
+
         for (int i = 0; i < sortedSourceDocs.length; i++) {
             copy(sortedSourceDocs[i], (Document) source2target.get(sortedSourceDocs[i]));
         }

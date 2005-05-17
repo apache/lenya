@@ -106,8 +106,7 @@ public class CreateBlogEntry extends DocumentUsecase {
                                     getParameterAsString(DublinCore.ELEMENT_TITLE),
                                     null,
                                     NodeCreatorInterface.LEAF_NODE,
-                                    allParameters,
-                                    true);
+                                    allParameters);
         }
         finally {
             if (documentManager != null)
