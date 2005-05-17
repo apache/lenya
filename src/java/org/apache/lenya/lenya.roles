@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright 1999-2004 The Apache Software Foundation
+  Copyright 1999-2005 The Apache Software Foundation
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -14,6 +14,34 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
+<!--
+  This file contains the role definitions for Lenya-specific Avalon services.
+  A role is the interface for an Avalon service.
+
+  The name of the role usually corresponds to the class name of the interface,
+  and is used for looking up a class implementing that interface.
+
+  The relation between a role and implementations for that role may be
+  one-to-one or one-to-many.
+
+  For a one-to-one relationship, the entry in this file can be sufficient
+  to completely specify this role, by setting the "default-class" for that
+  role. This is the class name of the implementation.
+
+  For a one-to-many relationship, the entry in this file refers to an
+  ExtendedComponentSelector, meaning that the list of available 
+  implementations for that role are retrieved via a selector.
+  This requires additional configuration in the Cocoon service
+  configuration file (cocoon.xconf).
+  
+  If a service requires configuration parameters, these can be specified
+  in the Cocoon service configuration file (cocoon.xconf) as an arbitrary
+  XML snippet which is then automatically passed to the service's 
+  configure() method at initialization.
+
+  $Id$
+  -->
+
 <!DOCTYPE role-list [
 <!ELEMENT role-list (role+)> 
 <!ELEMENT role (hint*)>
