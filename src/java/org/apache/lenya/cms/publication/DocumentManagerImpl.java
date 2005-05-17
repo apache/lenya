@@ -67,7 +67,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
         if (getLogger().isDebugEnabled())
             getLogger().debug("DocumentManagerImpl::add() called with:\n"
-                    + "\t parentDocument.getId() [" + parentDocument.getId() + "]\n"
+                    + "\t parentDocument.getId() [" + (parentDocument != null ? parentDocument.getId() : "null") + "]\n"
                     + "\t newDocumentNodeName [" + newDocumentNodeName + "]\n"
                     + "\t newDocumentId [" + newDocumentId + "]\n" + "\t documentTypeName ["
                     + documentTypeName + "]\n" + "\t language [" + language + "]\n"
@@ -124,8 +124,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             // where, relative to content base (and potentially to the parent
             // as well), the new document shall be created
             String contentBaseURI = publication.getContentURI(area);
-            String newDocumentURI = creator.getNewDocumentURI(contentBaseURI, parentDocument
-                    .getId(), newDocumentNodeName, language);
+            String parentId = (parentDocument != null ? parentDocument.getId() : "/");
+            String newDocumentURI = creator.getNewDocumentURI(contentBaseURI, parentId, newDocumentNodeName, language);
 
             // Important note:
             // how the new document's source URI is constructed is
