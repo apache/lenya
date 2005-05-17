@@ -146,12 +146,12 @@ public interface SiteManager {
 
     /**
      * @param map The identity map.
-     * @param publiation The publication.
+     * @param publication The publication.
      * @param area The area.
      * @return The object that holds the site structure information.
      * @throws SiteException if an error occurs.
      */
-    SiteStructure getSiteStructure(DocumentIdentityMap map, Publication publiation, String area)
+    SiteStructure getSiteStructure(DocumentIdentityMap map, Publication publication, String area)
             throws SiteException;
 
     /**
