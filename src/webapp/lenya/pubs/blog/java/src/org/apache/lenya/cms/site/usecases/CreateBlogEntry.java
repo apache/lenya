@@ -16,7 +16,6 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import java.io.File;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -31,9 +30,6 @@ import org.apache.lenya.cms.authoring.NodeCreatorInterface;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
-import org.apache.lenya.cms.publication.DocumentType;
-import org.apache.lenya.cms.publication.DocumentTypeBuilder;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 
 
@@ -111,7 +107,7 @@ public class CreateBlogEntry extends DocumentUsecase {
                                     null,
                                     NodeCreatorInterface.LEAF_NODE,
                                     allParameters,
-                                    false);
+                                    true);
         }
         finally {
             if (documentManager != null)

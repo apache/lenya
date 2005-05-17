@@ -26,4 +26,5 @@
   <document-builder name="default"/>
   <breadcrumb-prefix/>
   <ssl-prefix/>
+  <site-manager name="simple"/>
 </publication>
