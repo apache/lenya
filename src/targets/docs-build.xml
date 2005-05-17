@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <!--
-  Copyright 1999-2004 The Apache Software Foundation
+  Copyright 1999-2005 The Apache Software Foundation
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -43,7 +43,6 @@
   <target name="javadocs" depends="prepare-src, javadocs_check, javadocs_done" unless="javadocs.notrequired" description="Generates the API documentation">
     <mkdir dir="${dist.bin.javadocs}"/>
     <javadoc packagenames="${packages}"
-             sourcepath="${src.java.dir}"
              destdir="${dist.bin.javadocs}"
              author="true"
              version="true"
@@ -55,6 +54,12 @@
              bottom="Copyright &#169; ${year} Apache Software Foundation. All Rights Reserved."
              stylesheetfile="${resource.dir}/javadoc.css"
              source="1.4">
+      <!-- sources -->
+      <sourcepath>
+         <pathelement path="${src.java.dir}"/>
+         <pathelement path="${build.src}"/>
+      </sourcepath>
+
       <!-- pass ant in the classpath to avoid class not found errors -->
       <classpath>
         <fileset dir="${lib.dir}">
