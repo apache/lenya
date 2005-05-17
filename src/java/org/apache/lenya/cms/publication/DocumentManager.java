@@ -75,6 +75,7 @@ public interface DocumentManager {
      * @param nodeType the node type, as defined by the constants in {@link org.apache.lenya.cms.authoring.NodeCreatorInterface NodeCreatorInterface}
      * @param parameters any parameters the caller needs to pass to the creator
      * @param useSiteManager set to true if the site manager is used in the publication; if set the site manager will be notified about the new document
+     * @return A document.
      * 
      * @throws DocumentBuildException if the document can not be created
      * @throws PublicationException if the document is already contained.

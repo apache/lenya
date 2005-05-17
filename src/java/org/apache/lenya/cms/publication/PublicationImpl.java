@@ -411,7 +411,7 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Publication#getContentDirectory(String)
+     * @see org.apache.lenya.cms.publication.Publication#getContentURI(java.lang.String)
      */
     public String getContentURI(String area) {
         return getSourceURI() + "/" + CONTENT_PATH + "/" + area;

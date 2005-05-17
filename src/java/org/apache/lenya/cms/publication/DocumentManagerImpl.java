@@ -16,9 +16,7 @@
  */
 package org.apache.lenya.cms.publication;
 
-import java.io.File;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,7 +41,6 @@ import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.workflow.WorkflowManager;
 import org.apache.lenya.transaction.Transactionable;
-import org.apache.lenya.transaction.TransactionException;
 
 /**
  * DocumentManager implementation.
@@ -121,9 +118,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
         // Call the creator for the document type to physically create a document of this type
         try {
-            String parentId = "";
-            if (parentDocument != null)
-                parentId = parentDocument.getId().substring(1);
 
             if (initialContentsURI == null)
                 initialContentsURI = documentType.getSampleContentLocation();

@@ -189,6 +189,7 @@ public interface Publication {
     String getSourceURI();
 
     /**
+     * @param area The area.
      * @return the URI base under which contents in this publication are accessed
      */
     String getContentURI(String area);

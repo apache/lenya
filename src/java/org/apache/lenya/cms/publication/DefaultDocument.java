@@ -471,6 +471,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     /**
      * When source URI has not been set by whoever created the document,
      * provides a default mechanism for constructing the document's URI.
+     * @return A URI.
      */
     private String getDefaultSourceURI() {
         String path = publication.getPathMapper().getPath(getId(), getLanguage());
