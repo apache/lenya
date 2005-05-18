@@ -56,28 +56,27 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * implementation to be used is specified in doctypes.xconf (and thus depends on the publication
      * and the resource type to be used)
      * 
-     * @see DocumentManager#add(Document,String,String,String,String,String,String,Map)
+     * @see DocumentManager#add(DocumentIdentityMap,
+     *      Publication,String,String,String,DocumentType,String,String,Map)
      * @see org.apache.lenya.cms.authoring.NodeCreatorInterface
      * @see org.apache.lenya.cms.publication.DocumentBuilder
      */
-    public Document add(Document parentDocument, String newDocumentNodeName, String newDocumentId,
-            String documentTypeName, String language, String navigationTitle,
-            String initialContentsURI, Map parameters)
-            throws DocumentBuildException, PublicationException {
+    public Document add(DocumentIdentityMap map,
+            Publication publication,
+            String area,
+            String newDocumentId,
+            String language,
+            DocumentType documentType,
+            String navigationTitle,
+            String initialContentsURI,
+            Map parameters) throws DocumentBuildException, PublicationException {
 
         if (getLogger().isDebugEnabled())
-            getLogger().debug("DocumentManagerImpl::add() called with:\n"
-                    + "\t parentDocument.getId() [" + (parentDocument != null ? parentDocument.getId() : "null") + "]\n"
-                    + "\t newDocumentNodeName [" + newDocumentNodeName + "]\n"
-                    + "\t newDocumentId [" + newDocumentId + "]\n" + "\t documentTypeName ["
-                    + documentTypeName + "]\n" + "\t language [" + language + "]\n"
-                    + "\t navigationTitle [" + navigationTitle + "]\n" + "\t initialContentsURI ["
-                    + initialContentsURI + "]\n" 
+            getLogger().debug("DocumentManagerImpl::add() called with:\n" + "\t newDocumentId ["
+                    + newDocumentId + "]\n" + "\t documentTypeName [" + documentType.getName() + "]\n"
+                    + "\t language [" + language + "]\n" + "\t navigationTitle [" + navigationTitle
+                    + "]\n" + "\t initialContentsURI [" + initialContentsURI + "]\n"
                     + "\t non-empty parameters [" + (parameters != null) + "]\n");
-
-        Publication publication = parentDocument.getPublication();
-        DocumentIdentityMap map = parentDocument.getIdentityMap();
-        String area = parentDocument.getArea();
 
         /*
          * Get an instance of Document. This will (ultimately) be created by the implementation for
@@ -88,24 +87,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         Document newDocument = map.get(publication, area, newDocumentId, language);
 
         if (getLogger().isDebugEnabled())
-            getLogger()
-                    .debug("DocumentManagerImpl::add() looking up a DocumentTypeBuilder so that we can call the creator");
-
-        // Get an instance of DocumentType
-        DocumentTypeBuilder documentTypeBuilder = null;
-        DocumentType documentType = null;
-        try {
-            documentTypeBuilder = (DocumentTypeBuilder) this.manager
-                    .lookup(DocumentTypeBuilder.ROLE);
-
-            documentType = documentTypeBuilder.buildDocumentType(documentTypeName, publication);
-        } catch (Exception e) {
-            throw new DocumentBuildException("could not build type for new document", e);
-        } finally {
-            if (documentTypeBuilder != null) {
-                this.manager.release(documentTypeBuilder);
-            }
-        }
+            getLogger().debug("DocumentManagerImpl::add() looking up a DocumentTypeBuilder"
+                    + " so that we can call the creator");
 
         // Call the creator for the document type to physically create a document of this type
         try {
@@ -124,8 +107,16 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             // where, relative to content base (and potentially to the parent
             // as well), the new document shall be created
             String contentBaseURI = publication.getContentURI(area);
-            String parentId = (parentDocument != null ? parentDocument.getId() : "/");
-            String newDocumentURI = creator.getNewDocumentURI(contentBaseURI, parentId, newDocumentNodeName, language);
+
+            String[] steps = newDocumentId.split("/");
+            String newDocumentNodeName = steps[steps.length - 1];
+            String parentId = newDocumentId.substring(0, newDocumentId.length()
+                    - ("/" + newDocumentNodeName).length());
+
+            String newDocumentURI = creator.getNewDocumentURI(contentBaseURI,
+                    parentId,
+                    newDocumentNodeName,
+                    language);
 
             // Important note:
             // how the new document's source URI is constructed is
@@ -149,15 +140,11 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                     parameters);
         } catch (Exception e) {
             throw new DocumentBuildException("call to creator for new document failed", e);
-        } finally {
-            if (documentTypeBuilder != null) {
-                this.manager.release(documentTypeBuilder);
-            }
         }
 
         // Write Lenya-internal meta-data
         Map lenyaMetaData = new HashMap(2);
-        lenyaMetaData.put(LenyaMetaData.ELEMENT_RESOURCE_TYPE, documentTypeName);
+        lenyaMetaData.put(LenyaMetaData.ELEMENT_RESOURCE_TYPE, documentType.getName());
         lenyaMetaData.put(LenyaMetaData.ELEMENT_CONTENT_TYPE, "xml");
         newDocument.getMetaDataManager().setLenyaMetaData(lenyaMetaData);
 
@@ -363,9 +350,12 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      *      org.apache.lenya.cms.publication.Publication, java.lang.String,
      *      org.apache.lenya.cms.publication.Document, java.lang.String, java.lang.String)
      */
-    public String[] canCreate(DocumentIdentityMap identityMap, Publication publication,
-            String area, Document parent, String nodeId, String language)
-            throws DocumentBuildException, DocumentException {
+    public String[] canCreate(DocumentIdentityMap identityMap,
+            Publication publication,
+            String area,
+            Document parent,
+            String nodeId,
+            String language) throws DocumentBuildException, DocumentException {
 
         List errorMessages = new ArrayList();
 

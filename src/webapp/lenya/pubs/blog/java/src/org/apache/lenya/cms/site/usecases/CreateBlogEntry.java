@@ -28,9 +28,11 @@ import org.apache.lenya.ac.Identity;
 
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.DocumentType;
+import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
-
 
 /**
  * Usecase to create a Blog entry.
@@ -93,26 +95,36 @@ public class CreateBlogEntry extends DocumentUsecase {
         // document id (full path) and document id-name (this leaf's id)
         // are the same
         DocumentManager documentManager = null;
-        Document newDocument = null;
+        DocumentTypeBuilder documentTypeBuilder = null;
         try {
+            documentTypeBuilder = (DocumentTypeBuilder) this.manager
+                    .lookup(DocumentTypeBuilder.ROLE);
+
+            DocumentType documentType = documentTypeBuilder
+                    .buildDocumentType(getDocumentTypeName(), getSourceDocument().getPublication());
+
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            newDocument = 
-                documentManager.add(parent,
-                                    documentId,
-                                    documentId,
-                                    getDocumentTypeName(),
-                                    language,
-                                    getParameterAsString(DublinCore.ELEMENT_TITLE),
-                                    null,
-                                    allParameters);
-        }
-        finally {
-            if (documentManager != null)
+            documentManager.add((DocumentIdentityMap) getUnitOfWork().getIdentityMap(),
+                    getSourceDocument().getPublication(),
+                    getSourceDocument().getArea(),
+                    documentId,
+                    language,
+                    documentType,
+                    getParameterAsString(DublinCore.ELEMENT_TITLE),
+                    null,
+                    allParameters);
+        } finally {
+            if (documentManager != null) {
                 this.manager.release(documentManager);
+            }
+            if (documentTypeBuilder != null) {
+                this.manager.release(documentTypeBuilder);
+            }
         }
     }
 
     /**
+     * @return The document name.
      * @see org.apache.lenya.cms.site.usecases.Create#getNewDocumentName()
      */
     protected String getNewDocumentName() {
@@ -120,6 +132,7 @@ public class CreateBlogEntry extends DocumentUsecase {
     }
 
     /**
+     * @return The name of the document type.
      * @see org.apache.lenya.cms.site.usecases.Create#getDocumentTypeName()
      */
     protected String getDocumentTypeName() {

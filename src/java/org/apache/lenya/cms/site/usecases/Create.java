@@ -31,7 +31,10 @@ import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.DocumentType;
+import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
@@ -105,21 +108,33 @@ public abstract class Create extends AbstractUsecase {
         // create new document
         DocumentManager documentManager = null;
         Document newDocument = null;
+        DocumentTypeBuilder documentTypeBuilder = null;
         try {
-           documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-           newDocument = 
-               documentManager.add(getParentDocument(),
-                                   getNewDocumentName(),
-                                   getNewDocumentId(),
-                                   getDocumentTypeName(),
-                                   getParameterAsString(LANGUAGE),
-                                   getParameterAsString(DublinCore.ELEMENT_TITLE),
-                                   getInitialContentsURI(),
-                                   null);
-        }
-        finally {
-           if (documentManager != null)
-               this.manager.release(documentManager);
+
+            documentTypeBuilder = (DocumentTypeBuilder) this.manager
+                    .lookup(DocumentTypeBuilder.ROLE);
+
+            DocumentType documentType = documentTypeBuilder
+                    .buildDocumentType(getDocumentTypeName(), getPublication());
+
+            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
+            newDocument = documentManager.add((DocumentIdentityMap) getUnitOfWork()
+                    .getIdentityMap(),
+                    getPublication(),
+                    getSourceDocument().getArea(),
+                    getNewDocumentId(),
+                    getParameterAsString(LANGUAGE),
+                    documentType,
+                    getParameterAsString(DublinCore.ELEMENT_TITLE),
+                    getInitialContentsURI(),
+                    null);
+        } finally {
+            if (documentManager != null) {
+                this.manager.release(documentManager);
+            }
+            if (documentTypeBuilder != null) {
+                this.manager.release(documentTypeBuilder);
+            }
         }
 
         // set dublin core meta-data
@@ -129,7 +144,6 @@ public abstract class Create extends AbstractUsecase {
         setTargetURL(newDocument.getCanonicalWebappURL());
 
     }
-
 
     /**
      * @return the name of the document being created in the usecase
@@ -149,10 +163,9 @@ public abstract class Create extends AbstractUsecase {
     protected abstract Document getParentDocument() throws DocumentBuildException;
 
     /**
-     * If the document created in the usecase shall have initial contents
-     * copied from an existing document, construct that document's URI 
-     * in this method. 
-     *
+     * If the document created in the usecase shall have initial contents copied from an existing
+     * document, construct that document's URI in this method.
+     * 
      * @return a URI.
      */
     protected abstract String getInitialContentsURI();
@@ -173,20 +186,16 @@ public abstract class Create extends AbstractUsecase {
             throw new IllegalArgumentException("parameter document may not be null");
 
         Map dcMetaData = new HashMap();
-        dcMetaData.put(DublinCore.ELEMENT_TITLE,
-                getParameterAsString(DublinCore.ELEMENT_TITLE));
-        dcMetaData.put(DublinCore.ELEMENT_CREATOR,
-                getParameterAsString(DublinCore.ELEMENT_CREATOR));
+        dcMetaData.put(DublinCore.ELEMENT_TITLE, getParameterAsString(DublinCore.ELEMENT_TITLE));
+        dcMetaData
+                .put(DublinCore.ELEMENT_CREATOR, getParameterAsString(DublinCore.ELEMENT_CREATOR));
         dcMetaData.put(DublinCore.ELEMENT_PUBLISHER,
                 getParameterAsString(DublinCore.ELEMENT_PUBLISHER));
-        dcMetaData.put(DublinCore.ELEMENT_SUBJECT,
-                getParameterAsString(DublinCore.ELEMENT_SUBJECT));
-        dcMetaData.put(DublinCore.ELEMENT_DATE, 
-                getParameterAsString(DublinCore.ELEMENT_DATE));
-        dcMetaData.put(DublinCore.ELEMENT_RIGHTS,
-                getParameterAsString(DublinCore.ELEMENT_RIGHTS));
-        dcMetaData.put(DublinCore.ELEMENT_LANGUAGE, 
-                getParameterAsString(LANGUAGE));
+        dcMetaData
+                .put(DublinCore.ELEMENT_SUBJECT, getParameterAsString(DublinCore.ELEMENT_SUBJECT));
+        dcMetaData.put(DublinCore.ELEMENT_DATE, getParameterAsString(DublinCore.ELEMENT_DATE));
+        dcMetaData.put(DublinCore.ELEMENT_RIGHTS, getParameterAsString(DublinCore.ELEMENT_RIGHTS));
+        dcMetaData.put(DublinCore.ELEMENT_LANGUAGE, getParameterAsString(LANGUAGE));
 
         document.getMetaDataManager().setDublinCoreMetaData(dcMetaData);
     }
@@ -214,7 +223,8 @@ public abstract class Create extends AbstractUsecase {
     }
 
     /**
-     * @return The source document or <code>null</code> if the usecase was not invoked on a document.
+     * @return The source document or <code>null</code> if the usecase was not invoked on a
+     *         document.
      */
     protected Document getSourceDocument() {
         Document document = null;
@@ -240,12 +250,10 @@ public abstract class Create extends AbstractUsecase {
     private Publication publication;
 
     /**
-     * Access to the current publication. 
-     * Use this when the publication is not yet known in the usecase: 
-     * e.g. when creating a global asset. When adding a resource or a child
-     * to a document, access the publication via that document's interface
-     * instead.
-     *
+     * Access to the current publication. Use this when the publication is not yet known in the
+     * usecase: e.g. when creating a global asset. When adding a resource or a child to a document,
+     * access the publication via that document's interface instead.
+     * 
      * @return the publication in which the use-case is being executed
      */
     protected Publication getPublication() {

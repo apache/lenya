@@ -59,34 +59,35 @@ public interface DocumentManager {
     void copyToArea(DocumentSet documentSet, String destinationArea) throws PublicationException;
 
     /**
-     * Creates a new document in the same publication the <code>parentDocument</code>
-     * belongs to with the given parameters:
-     *
-     * @param parentDocument The parent document.
-     * @param newDocumentNodeName the name of the node representing the new document
+     * Creates a new document in the same publication the <code>parentDocument</code> belongs to
+     * with the given parameters:
+     * 
+     * @param map The identity map.
+     * @param publication The publication.
+     * @param area The area.
      * @param newDocumentId the id of the new document
-     * @param documentTypeName the document type (aka resource type) of the new document 
+     * @param documentType the document type (aka resource type) of the new document
      * @param language language of the new document
      * @param navigationTitle navigation title
-     * @param initialContentsURI an URI from which initial contents for the 
-     * new document can be read. Optional parameter; may be set to <code>null</code>, 
-     * in which case the default initial sample as configured in 
-     * <code>doctypes.xconf</code> will be used.
+     * @param initialContentsURI an URI from which initial contents for the new document can be
+     *            read. Optional parameter; may be set to <code>null</code>, in which case the
+     *            default initial sample as configured in <code>doctypes.xconf</code> will be
+     *            used.
      * @param parameters any parameters the caller needs to pass to the creator
      * @return A document.
      * 
      * @throws DocumentBuildException if the document can not be created
      * @throws PublicationException if the document is already contained.
      */
-    Document add(Document parentDocument, 
-                 String newDocumentNodeName,
-                 String newDocumentId, 
-                 String documentTypeName, 
-                 String language, 
-                 String navigationTitle,
-                 String initialContentsURI,
-                 Map parameters) 
-       throws DocumentBuildException, PublicationException;
+    Document add(DocumentIdentityMap map,
+            Publication publication,
+            String area,
+            String newDocumentId,
+            String language,
+            DocumentType documentType,
+            String navigationTitle,
+            String initialContentsURI,
+            Map parameters) throws DocumentBuildException, PublicationException;
 
     /**
      * Deletes a document.
@@ -138,9 +139,12 @@ public interface DocumentManager {
      * @throws DocumentBuildException if an error occurs.
      * @throws DocumentException if an error occurs.
      */
-    String[] canCreate(DocumentIdentityMap identityMap, Publication publication, String area,
-            Document parent, String nodeId, String language) throws DocumentBuildException,
-            DocumentException;
+    String[] canCreate(DocumentIdentityMap identityMap,
+            Publication publication,
+            String area,
+            Document parent,
+            String nodeId,
+            String language) throws DocumentBuildException, DocumentException;
 
     /**
      * Moves a document to another location, incl. all requiring documents. If a sitetree is used,
