@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -15,16 +15,21 @@
  *
  */
 
-/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
 /**
- * Single Language Identity mapper
+ * Single Language Identity mapper.
+ * Similar to the {@link DefaultDocumentIdToPathMapper}, but doesn't add 
+ * a language suffix to the source URIs. This is useful for publications
+ * which do not have multiple language version of the same document,
+ * such as the "blog" publication.
+ * @version $Id$
  */
 public class SingleLanguageIdentityMapper extends IdentityDocumentIdToPathMapper {
 
     /**
+     * The parameter <code>language</code> is ignored, since this mapper is used for situations where only one language version of a document exists
      * @see org.apache.lenya.cms.publication.IdentityDocumentIdToPathMapper#getSuffix(java.lang.String)
      */
     protected String getSuffix(String language) {
