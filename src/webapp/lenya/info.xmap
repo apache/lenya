@@ -301,17 +301,18 @@
             <map:parameter name="cutdocumentid" value="{session-attr:org.apache.lenya.cms.info.cutdocumentid}"/>
           </map:transform>
           
-          <map:transform src="cocoon://lenya-page/{../1}/info/default.xml?doctype={page-envelope:document-type}"/>
-        
+          <map:act type="language-exists">
+            <map:transform src="cocoon://lenya-page/{../../1}/info/default.xml?doctype={page-envelope:document-type}"/>
+
+            <map:call resource="i18n"/>
+            <map:transform src="xslt/util/strip_namespaces.xsl"/>        
+            <map:serialize type="html"/>
+          </map:act>
+
+          <map:transform src="cocoon://lenya-page/{../1}/info/default.xml"/>
           <map:call resource="i18n"/>
           <map:transform src="xslt/util/strip_namespaces.xsl"/>        
           <map:serialize type="html"/>
-          
-          <!--
-          <map:match pattern="update" type="step">
-          <map:redirect-to session="true" uri="{request:requestURI}?lenya.step=view-revision&amp;documentid={request-param:documentid}&amp;rollbackTime={request-param:rollbackTime}"/>
-        </map:match>
-          -->
           
         </map:match>
         
