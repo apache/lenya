@@ -17,7 +17,6 @@
 package org.apache.lenya.cms.site.usecases;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 
@@ -87,23 +86,6 @@ public class CreateDocument extends Create {
      */
     protected String getNewDocumentId() {
         return getSourceDocument().getId() + "/" + getNewDocumentName();
-    }
-
-    /**
-     * In this usecase, the parent document is simply the source document the usecase was invoked
-     * upon.
-     * @see Create#getParentDocument()
-     */
-    protected Document getParentDocument() throws DocumentBuildException {
-        return getSourceDocument();
-    }
-
-    /**
-     * New document: no existing document is referenced
-     * @see Create#getInitialContentsURI()
-     */
-    protected String getInitialContentsURI() {
-        return null;
     }
 
     /**

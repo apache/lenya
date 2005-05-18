@@ -116,21 +116,11 @@ public class CreateLanguage extends Create {
     }
 
     /**
-     * For new language version, the parent document is the same as for the document the usecase is called on
-     * @see Create#getParentDocument()
-     */
-    protected Document getParentDocument() throws DocumentBuildException {
-        DocumentIdentityMap documentMap = getSourceDocument().getIdentityMap();
-        Document parent = documentMap.getParent(getSourceDocument());
-        return parent;
-    }
-
-    /**
      * New language version of a document: use that document's content
-     * @see Create#getInitialContentsURI()
+     * @see Create#getInitialDocument()
      */
-    protected String getInitialContentsURI() {
-        return getSourceDocument().getSourceURI();
+    protected Document getInitialDocument() {
+        return getSourceDocument();
     }
 
     /**

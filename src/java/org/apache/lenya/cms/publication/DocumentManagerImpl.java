@@ -33,6 +33,7 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.authoring.NodeCreatorInterface;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.LenyaMetaData;
+import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.site.SiteManager;
@@ -54,37 +55,62 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * implementation to be used is specified in doctypes.xconf (and thus depends on the publication
      * and the resource type to be used)
      * 
-     * @see DocumentManager#add(Document, DocumentType, String, String, Map)
+     * @see DocumentManager#add(Document, DocumentType, String, Map)
      * @see org.apache.lenya.cms.authoring.NodeCreatorInterface
      * @see org.apache.lenya.cms.publication.DocumentBuilder
      */
     public void add(Document document,
             DocumentType documentType,
             String navigationTitle,
-            String initialContentsURI,
             Map parameters) throws DocumentBuildException, PublicationException {
 
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Create");
-            getLogger().debug("    document:     [" + document + "]");
-            getLogger().debug("    nav title:    [" + navigationTitle + "]");
-            getLogger().debug("    contents URI: [" + initialContentsURI + "]");
-        }
+        String contentsURI = documentType.getSampleContentLocation();
+        add(document, documentType, navigationTitle, parameters, contentsURI);
+    }
 
-        /*
-         * Get an instance of Document. This will (ultimately) be created by the implementation for
-         * the DocumentBuilder role.
-         */
+    /**
+     * @see org.apache.lenya.cms.publication.DocumentManager#add(org.apache.lenya.cms.publication.Document,
+     *      org.apache.lenya.cms.publication.Document,
+     *      java.lang.String, java.util.Map)
+     */
+    public void add(Document document,
+            Document sourceDocument,
+            String navigationTitle,
+            Map parameters) throws DocumentBuildException, PublicationException {
+        String contentsURI = sourceDocument.getSourceURI();
+        add(document, sourceDocument.getResourceType(), navigationTitle, parameters, contentsURI);
+        MetaDataManager mgr = document.getMetaDataManager();
+        MetaDataManager srcMgr = sourceDocument.getMetaDataManager();
+        mgr.getLenyaMetaData().replaceBy(srcMgr.getLenyaMetaData());
+        mgr.getDublinCoreMetaData().replaceBy(srcMgr.getDublinCoreMetaData());
+        mgr.getCustomMetaData().replaceBy(srcMgr.getCustomMetaData());
+    }
 
-        // Call the creator for the document type to physically create a document of this type
+    /**
+     * Adds a document.
+     * @param document The document.
+     * @param documentType The document type.
+     * @param navigationTitle The navigation title.
+     * @param parameters The parameters for the creator.
+     * @param initialContentsURI A URI to read the contents from.
+     * @throws DocumentBuildException if an error occurs.
+     * @throws DocumentException if an error occurs.
+     * @throws PublicationException if an error occurs.
+     */
+    protected void add(Document document,
+            DocumentType documentType,
+            String navigationTitle,
+            Map parameters,
+            String initialContentsURI) throws DocumentBuildException, DocumentException,
+            PublicationException {
         try {
 
-            if (initialContentsURI == null)
-                initialContentsURI = documentType.getSampleContentLocation();
-
-            if (getLogger().isDebugEnabled())
-                getLogger().debug("DocumentManagerImpl::add() using initialContentsURI ["
-                        + initialContentsURI + "]");
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("Create");
+                getLogger().debug("    document:     [" + document + "]");
+                getLogger().debug("    nav title:    [" + navigationTitle + "]");
+                getLogger().debug("    contents URI: [" + initialContentsURI + "]");
+            }
 
             // look up creator for documents of this type
             NodeCreatorInterface creator = documentType.getCreator();

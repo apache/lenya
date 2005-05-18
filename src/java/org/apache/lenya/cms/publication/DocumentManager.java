@@ -65,10 +65,6 @@ public interface DocumentManager {
      * @param document The document to add.
      * @param documentType the document type (aka resource type) of the new document
      * @param navigationTitle navigation title
-     * @param initialContentsURI an URI from which initial contents for the new document can be
-     *            read. Optional parameter; may be set to <code>null</code>, in which case the
-     *            default initial sample as configured in <code>doctypes.xconf</code> will be
-     *            used.
      * @param parameters any parameters the caller needs to pass to the creator
      * 
      * @throws DocumentBuildException if the document can not be created
@@ -77,7 +73,23 @@ public interface DocumentManager {
     void add(Document document,
             DocumentType documentType,
             String navigationTitle,
-            String initialContentsURI,
+            Map parameters) throws DocumentBuildException, PublicationException;
+
+    /**
+     * Creates a new document in the same publication the <code>parentDocument</code> belongs to
+     * with the given parameters:
+     * 
+     * @param document The document to add.
+     * @param sourceDocument The document to initialize the contents and meta data from.
+     * @param navigationTitle navigation title
+     * @param parameters any parameters the caller needs to pass to the creator
+     * 
+     * @throws DocumentBuildException if the document can not be created
+     * @throws PublicationException if the document is already contained.
+     */
+    void add(Document document,
+            Document sourceDocument,
+            String navigationTitle,
             Map parameters) throws DocumentBuildException, PublicationException;
 
     /**

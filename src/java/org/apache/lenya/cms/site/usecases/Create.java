@@ -29,7 +29,6 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
@@ -113,9 +112,6 @@ public abstract class Create extends AbstractUsecase {
             documentTypeBuilder = (DocumentTypeBuilder) this.manager
                     .lookup(DocumentTypeBuilder.ROLE);
 
-            DocumentType documentType = documentTypeBuilder
-                    .buildDocumentType(getDocumentTypeName(), getPublication());
-
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
             DocumentIdentityMap map = (DocumentIdentityMap) getUnitOfWork().getIdentityMap();
@@ -124,11 +120,20 @@ public abstract class Create extends AbstractUsecase {
                     getNewDocumentId(),
                     getParameterAsString(LANGUAGE));
 
-            documentManager.add(document,
-                    documentType,
-                    getParameterAsString(DublinCore.ELEMENT_TITLE),
-                    getInitialContentsURI(),
-                    null);
+            Document initialDocument = getInitialDocument();
+            if (initialDocument == null) {
+                DocumentType documentType = documentTypeBuilder
+                        .buildDocumentType(getDocumentTypeName(), getPublication());
+                documentManager.add(document,
+                        documentType,
+                        getParameterAsString(DublinCore.ELEMENT_TITLE),
+                        null);
+            } else {
+                documentManager.add(document,
+                        initialDocument,
+                        getParameterAsString(DublinCore.ELEMENT_TITLE),
+                        null);
+            }
 
             setMetaData(document);
 
@@ -157,19 +162,14 @@ public abstract class Create extends AbstractUsecase {
     protected abstract String getNewDocumentId();
 
     /**
-     * Determine the parent document of the document being created by this usecase
-     * @return the parent document
-     * @throws DocumentBuildException if an error occurs.
-     */
-    protected abstract Document getParentDocument() throws DocumentBuildException;
-
-    /**
      * If the document created in the usecase shall have initial contents copied from an existing
-     * document, construct that document's URI in this method.
+     * document, construct that document in this method.
      * 
-     * @return a URI.
+     * @return A document.
      */
-    protected abstract String getInitialContentsURI();
+    protected Document getInitialDocument() {
+        return null;
+    }
 
     /**
      * @return The type of the created document.
