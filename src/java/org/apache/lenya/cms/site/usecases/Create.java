@@ -107,7 +107,6 @@ public abstract class Create extends AbstractUsecase {
 
         // create new document
         DocumentManager documentManager = null;
-        Document newDocument = null;
         DocumentTypeBuilder documentTypeBuilder = null;
         try {
 
@@ -118,16 +117,24 @@ public abstract class Create extends AbstractUsecase {
                     .buildDocumentType(getDocumentTypeName(), getPublication());
 
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            newDocument = documentManager.add((DocumentIdentityMap) getUnitOfWork()
-                    .getIdentityMap(),
-                    getPublication(),
-                    getSourceDocument().getArea(),
+
+            DocumentIdentityMap map = (DocumentIdentityMap) getUnitOfWork().getIdentityMap();
+            Document document = map.get(getPublication(),
+                    getArea(),
                     getNewDocumentId(),
-                    getParameterAsString(LANGUAGE),
+                    getParameterAsString(LANGUAGE));
+
+            documentManager.add(document,
                     documentType,
                     getParameterAsString(DublinCore.ELEMENT_TITLE),
                     getInitialContentsURI(),
                     null);
+
+            setMetaData(document);
+
+            // the location to navigate to after completion of usecase
+            setTargetURL(document.getCanonicalWebappURL());
+
         } finally {
             if (documentManager != null) {
                 this.manager.release(documentManager);
@@ -136,12 +143,6 @@ public abstract class Create extends AbstractUsecase {
                 this.manager.release(documentTypeBuilder);
             }
         }
-
-        // set dublin core meta-data
-        setMetaData(newDocument);
-
-        // the location to navigate to after completion of usecase
-        setTargetURL(newDocument.getCanonicalWebappURL());
 
     }
 

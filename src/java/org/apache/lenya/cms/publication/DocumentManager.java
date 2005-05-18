@@ -62,28 +62,19 @@ public interface DocumentManager {
      * Creates a new document in the same publication the <code>parentDocument</code> belongs to
      * with the given parameters:
      * 
-     * @param map The identity map.
-     * @param publication The publication.
-     * @param area The area.
-     * @param newDocumentId the id of the new document
+     * @param document The document to add.
      * @param documentType the document type (aka resource type) of the new document
-     * @param language language of the new document
      * @param navigationTitle navigation title
      * @param initialContentsURI an URI from which initial contents for the new document can be
      *            read. Optional parameter; may be set to <code>null</code>, in which case the
      *            default initial sample as configured in <code>doctypes.xconf</code> will be
      *            used.
      * @param parameters any parameters the caller needs to pass to the creator
-     * @return A document.
      * 
      * @throws DocumentBuildException if the document can not be created
      * @throws PublicationException if the document is already contained.
      */
-    Document add(DocumentIdentityMap map,
-            Publication publication,
-            String area,
-            String newDocumentId,
-            String language,
+    void add(Document document,
             DocumentType documentType,
             String navigationTitle,
             String initialContentsURI,
@@ -124,27 +115,13 @@ public interface DocumentManager {
      *             exist.
      */
     void copy(DocumentSet sources, DocumentSet destinations) throws PublicationException;
-
+    
     /**
-     * Checks if a document can be created. This is the case if the document ID is valid and the
-     * document does not yet exist.
-     * @param identityMap The identity map to use.
-     * @param publication The publication.
-     * @param area The area.
-     * @param parent The parent of the document or <code>null</code> if the document has no
-     *            parent.
-     * @param nodeId The node ID.
-     * @param language The language.
-     * @return An array of error messages. The array is empty if the document can be created.
-     * @throws DocumentBuildException if an error occurs.
-     * @throws DocumentException if an error occurs.
+     * Checks if a document name is valid.
+     * @param documentName The document name.
+     * @return A boolean value.
      */
-    String[] canCreate(DocumentIdentityMap identityMap,
-            Publication publication,
-            String area,
-            Document parent,
-            String nodeId,
-            String language) throws DocumentBuildException, DocumentException;
+    boolean isValidDocumentName(String documentName);
 
     /**
      * Moves a document to another location, incl. all requiring documents. If a sitetree is used,

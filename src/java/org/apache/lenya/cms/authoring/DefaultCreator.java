@@ -33,13 +33,14 @@ import org.w3c.dom.Document;
  * Base creator for creating documents
  * @version $Id$
  */
-public abstract class DefaultCreator extends AbstractLogEnabled implements NodeCreatorInterface  {
+public abstract class DefaultCreator extends AbstractLogEnabled implements NodeCreatorInterface {
 
     private String sampleResourceName = null;
     private ServiceManager manager;
 
     /**
-     * @see org.apache.lenya.cms.authoring.NodeCreatorInterface#init(Configuration, ServiceManager, Logger)
+     * @see org.apache.lenya.cms.authoring.NodeCreatorInterface#init(Configuration, ServiceManager,
+     *      Logger)
      */
     public void init(Configuration conf, ServiceManager _manager, Logger _logger) {
         // parameter conf ignored: nothing to configure in current implementation
@@ -62,72 +63,43 @@ public abstract class DefaultCreator extends AbstractLogEnabled implements NodeC
 
     /**
      * @see NodeCreatorInterface#create(String, String, String, String, Map)
-      */
-    public void create(
-        String initialContentsURI,
-        String newURI,
-        String childId,
-        String childName,
-        Map parameters)
-        throws Exception {
+     */
+    public void create(String initialContentsURI,
+            org.apache.lenya.cms.publication.Document document,
+            Map parameters) throws Exception {
 
         if (getLogger().isDebugEnabled())
-            getLogger().debug("DefaultCreator::create() called with\n"
-               + "\t initialContentsURI [" + initialContentsURI + "]\n"
-               + "\t newURI [" + newURI + "]\n"
-               + "\t childId [" + childId + "]\n"
-               + "\t childName [" + childName + "]\n"
-               + "\t non-empty parameters [" + (parameters != null) + "]\n"
-               );
+            getLogger().debug("DefaultCreator::create() called with\n" + "\t initialContentsURI ["
+                    + initialContentsURI + "]\n" + "\t document [" + document + "]\n"
+                    + "\t non-empty parameters [" + (parameters != null) + "]\n");
 
         // Read initial contents as DOM
         if (getLogger().isDebugEnabled())
-            getLogger().debug("DefaultCreator::create(), ready to read initial contents from URI [" + initialContentsURI + "]");
+            getLogger().debug("DefaultCreator::create(), ready to read initial contents from URI ["
+                    + initialContentsURI + "]");
 
-        Document doc = null;
+        Document xmlDoc = null;
         try {
-           doc = SourceUtil.readDOM(initialContentsURI, manager);
-        }
-        catch (Exception e) {
-	    throw new DocumentException("could not read document at location [ " + initialContentsURI + "]", e);
+            xmlDoc = SourceUtil.readDOM(initialContentsURI, manager);
+        } catch (Exception e) {
+            throw new DocumentException("could not read document at location [ "
+                    + initialContentsURI + "]", e);
         }
 
         if (getLogger().isDebugEnabled())
             getLogger().debug("transform sample file: ");
 
         // transform the xml if needed
-        transformXML(doc, childId, childName, parameters);
+        transformXML(xmlDoc, document, parameters);
 
-        // write the document 
+        // write the document
         try {
-            SourceUtil.writeDOM(doc, newURI, manager);
-        }
-        catch (Exception e) {
-            throw new DocumentBuildException("could not write document to URI [" + newURI + "], exception " + e.toString(), e);
+            SourceUtil.writeDOM(xmlDoc, document.getSourceURI(), manager);
+        } catch (Exception e) {
+            throw new DocumentBuildException("could not write document [" + document
+                    + "], exception " + e.toString(), e);
         }
     }
-
-    /**
-     * Default implementation: do nothing
-     * @see #transformXML(Document, String, String, Map)
-     */
-    public void transformXML(
-        Document doc,
-        String childId,
-        String childName,
-        Map parameters)
-        throws Exception {
-	    // do nothing
-    }
-
-    /**
-     * @see org.apache.lenya.cms.authoring.NodeCreatorInterface#getNewDocumentURI(String, String, String, String)
-     */
-    public abstract String getNewDocumentURI(
-        String contentBaseURI,
-        String parentId,
-        String newId,
-        String language);
 
     /**
      * Create the language suffix for a file name given a language string
@@ -137,4 +109,18 @@ public abstract class DefaultCreator extends AbstractLogEnabled implements NodeC
     protected String getLanguageSuffix(String language) {
         return (language != null) ? "_" + language : "";
     }
+
+    /**
+     * Apply some transformation on the newly created document.
+     * @param doc the xml document
+     * @param childId the id of the child
+     * @param childName the name of the child
+     * @param parameters additional parameters that can be used in the transformation
+     * @throws Exception if the transformation fails
+     */
+    protected void transformXML(Document doc,
+            org.apache.lenya.cms.publication.Document document,
+            Map parameters) throws Exception {
+    }
+
 }

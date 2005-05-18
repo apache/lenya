@@ -19,6 +19,7 @@ package org.apache.lenya.cms.site.usecases;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.Publication;
 
 /**
  * Usecase to create a document.
@@ -53,19 +54,20 @@ public class CreateDocument extends Create {
     protected void doCheckExecutionConditions() throws Exception {
         super.doCheckExecutionConditions();
 
-        String nodeId = getParameterAsString(DOCUMENT_ID);
-        Document parent = getSourceDocument();
+        String documentName = getParameterAsString(DOCUMENT_ID);
         String language = getParameterAsString(LANGUAGE);
         DocumentManager documentManager = null;
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            String[] messages = documentManager.canCreate(getDocumentIdentityMap(),
-                    parent.getPublication(),
-                    getArea(),
-                    parent,
-                    nodeId,
+            Document parent = getSourceDocument();
+            Publication publication = getSourceDocument().getPublication();
+            Document document = getSourceDocument().getIdentityMap().get(publication,
+                    getSourceDocument().getArea(),
+                    parent.getId() + "/" + documentName,
                     language);
-            addErrorMessages(messages);
+            if (document.exists()) {
+                addErrorMessage("The document does already exist.");
+            }
         } finally {
             if (documentManager != null) {
                 this.manager.release(documentManager);
@@ -88,7 +90,8 @@ public class CreateDocument extends Create {
     }
 
     /**
-     * In this usecase, the parent document is simply the source document the usecase was invoked upon.
+     * In this usecase, the parent document is simply the source document the usecase was invoked
+     * upon.
      * @see Create#getParentDocument()
      */
     protected Document getParentDocument() throws DocumentBuildException {
@@ -102,7 +105,6 @@ public class CreateDocument extends Create {
     protected String getInitialContentsURI() {
         return null;
     }
-
 
     /**
      * @see org.apache.lenya.cms.site.usecases.Create#getDocumentTypeName()

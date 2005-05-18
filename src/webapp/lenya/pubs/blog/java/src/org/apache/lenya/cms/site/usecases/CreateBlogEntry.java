@@ -16,6 +16,9 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -80,7 +83,6 @@ public class CreateBlogEntry extends DocumentUsecase {
         super.doExecute();
 
         // prepare values necessary for blog entry creation
-        String documentId = "/" + getNewDocumentName();
         Document parent = getSourceDocument();
         String language = parent.getPublication().getDefaultLanguage();
         Map objectModel = ContextHelper.getObjectModel(getContext());
@@ -104,11 +106,14 @@ public class CreateBlogEntry extends DocumentUsecase {
                     .buildDocumentType(getDocumentTypeName(), getSourceDocument().getPublication());
 
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            documentManager.add((DocumentIdentityMap) getUnitOfWork().getIdentityMap(),
-                    getSourceDocument().getPublication(),
-                    getSourceDocument().getArea(),
-                    documentId,
-                    language,
+
+            DocumentIdentityMap map = (DocumentIdentityMap) getUnitOfWork().getIdentityMap();
+
+            String documentId = getDocumentID();
+            Document document = map.get(getSourceDocument().getPublication(), getSourceDocument()
+                    .getArea(), documentId, language);
+
+            documentManager.add(document,
                     documentType,
                     getParameterAsString(DublinCore.ELEMENT_TITLE),
                     null,
@@ -121,6 +126,46 @@ public class CreateBlogEntry extends DocumentUsecase {
                 this.manager.release(documentTypeBuilder);
             }
         }
+    }
+
+    /**
+     * The blog publication has a specific site structuring: it groups nodes by date.
+     * 
+     * <p>
+     * Example structuring of blog entries:
+     * </p>
+     * <ul>
+     * <li>2004</li>
+     * <li>2005</li>
+     * <ul>
+     * <li>01</li>
+     * <li>02</li>
+     * <ul>
+     * <li>23</li>
+     * <li>24</li>
+     * <ul>
+     * <li>article-one</li>
+     * <li>article-two</li>
+     * </ul>
+     * </ul>
+     * </ul>
+     * </ul>
+     * 
+     * @return The document ID.
+     */
+    protected String getDocumentID() {
+        DateFormat fmtyyyy = new SimpleDateFormat("yyyy");
+        DateFormat fmtMM = new SimpleDateFormat("MM");
+        DateFormat fmtdd = new SimpleDateFormat("dd");
+        Date date = new Date();
+
+        String year = fmtyyyy.format(date);
+        String month = fmtMM.format(date);
+        String day = fmtdd.format(date);
+
+        String documentId = "/entries/" + year + "/" + month + "/" + day + "/"
+                + getNewDocumentName() + "/index";
+        return documentId;
     }
 
     /**

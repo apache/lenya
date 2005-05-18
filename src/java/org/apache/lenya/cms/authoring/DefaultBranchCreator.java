@@ -24,23 +24,4 @@ package org.apache.lenya.cms.authoring;
  */
 public class DefaultBranchCreator extends DefaultCreator {
 
-    /**
-     * @see org.apache.lenya.cms.authoring.NodeCreatorInterface#getNewDocumentURI(String, String, String, String)
-     */
-    public String getNewDocumentURI(
-        String contentBaseURI,
-        String parentId,
-        String newId,
-        String language) {
-        return 
-            contentBaseURI
-            + parentId
-            + "/"
-            + newId
-            + "/"
-            + "index"
-            + getLanguageSuffix(language)
-            + ".xml";
-    }
-
 }

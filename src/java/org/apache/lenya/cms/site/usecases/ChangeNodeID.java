@@ -127,17 +127,22 @@ public class ChangeNodeID extends DocumentUsecase {
         DocumentIdentityMap identityMap = getSourceDocument().getIdentityMap();
 
         String nodeId = getParameterAsString(NODE_ID);
-        Document parent = identityMap.getParent(getSourceDocument());
         DocumentManager documentManager = null;
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            String[] messages = documentManager.canCreate(identityMap,
-                    getSourceDocument().getPublication(),
-                    getSourceDocument().getArea(),
-                    parent,
-                    nodeId,
-                    getSourceDocument().getLanguage());
-            addErrorMessages(messages);
+            if (!documentManager.isValidDocumentName(nodeId)) {
+                addErrorMessage("The document ID is not valid.");
+            } else {
+                Document parent = identityMap.getParent(getSourceDocument());
+                Publication publication = getSourceDocument().getPublication();
+                Document document = identityMap.get(publication,
+                        getSourceDocument().getArea(),
+                        parent.getId() + "/" + nodeId,
+                        getSourceDocument().getLanguage());
+                if (document.exists()) {
+                    addErrorMessage("The document does already exist.");
+                }
+            }
         } finally {
             if (documentManager != null) {
                 this.manager.release(documentManager);
