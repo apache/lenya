@@ -26,7 +26,6 @@ import org.apache.cocoon.environment.Session;
 
 import org.apache.lenya.ac.Identity;
 
-import org.apache.lenya.cms.authoring.NodeCreatorInterface;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
@@ -105,7 +104,6 @@ public class CreateBlogEntry extends DocumentUsecase {
                                     language,
                                     getParameterAsString(DublinCore.ELEMENT_TITLE),
                                     null,
-                                    NodeCreatorInterface.LEAF_NODE,
                                     allParameters);
         }
         finally {

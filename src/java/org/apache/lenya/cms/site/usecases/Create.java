@@ -27,7 +27,6 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
-import org.apache.lenya.cms.authoring.NodeCreatorInterface;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
@@ -116,7 +115,6 @@ public abstract class Create extends AbstractUsecase {
                                    getParameterAsString(LANGUAGE),
                                    getParameterAsString(DublinCore.ELEMENT_TITLE),
                                    getInitialContentsURI(),
-                                   NodeCreatorInterface.BRANCH_NODE,
                                    null);
         }
         finally {

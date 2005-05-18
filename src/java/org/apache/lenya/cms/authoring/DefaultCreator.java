@@ -48,28 +48,6 @@ public abstract class DefaultCreator extends AbstractLogEnabled implements NodeC
     }
 
     /**
-     * Generate a tree id by returning the child ID.
-     * @param childId a <code>String</code> value
-     * @param childType a <code>short</code> value
-     * @return a <code>String</code> value
-     * @exception Exception if an error occurs
-     */
-    public String generateTreeId(String childId, short childType)
-        throws Exception {
-        return childId;
-    }
-
-    /**
-     * Return the child type by simply returning the child type.
-     * @param childType a <code>short</code> value
-     * @return a <code>short</code> value
-     * @exception Exception if an error occurs
-     */
-    public short getChildType(short childType) throws Exception {
-        return childType;
-    }
-
-    /**
      * Create Child Name for tree entry
      * @param childname a <code>String</code> value
      * @return a <code>String</code> for Child Name for tree entry
@@ -83,13 +61,12 @@ public abstract class DefaultCreator extends AbstractLogEnabled implements NodeC
     }
 
     /**
-     * @see NodeCreatorInterface#create(String, String, String, short, String, Map)
+     * @see NodeCreatorInterface#create(String, String, String, String, Map)
       */
     public void create(
         String initialContentsURI,
         String newURI,
         String childId,
-        short childType,
         String childName,
         Map parameters)
         throws Exception {
@@ -99,13 +76,9 @@ public abstract class DefaultCreator extends AbstractLogEnabled implements NodeC
                + "\t initialContentsURI [" + initialContentsURI + "]\n"
                + "\t newURI [" + newURI + "]\n"
                + "\t childId [" + childId + "]\n"
-               + "\t childType [" + childType + "]\n"
                + "\t childName [" + childName + "]\n"
                + "\t non-empty parameters [" + (parameters != null) + "]\n"
                );
-
-        // 
-        String id = generateTreeId(childId, childType);
 
         // Read initial contents as DOM
         if (getLogger().isDebugEnabled())
@@ -123,7 +96,7 @@ public abstract class DefaultCreator extends AbstractLogEnabled implements NodeC
             getLogger().debug("transform sample file: ");
 
         // transform the xml if needed
-        transformXML(doc, id, childType, childName, parameters);
+        transformXML(doc, childId, childName, parameters);
 
         // write the document 
         try {
@@ -135,18 +108,12 @@ public abstract class DefaultCreator extends AbstractLogEnabled implements NodeC
     }
 
     /**
-     * Apply some transformation on the newly created child.
-     * @param doc the xml document
-     * @param childId the id of the child
-     * @param childType the type of child
-     * @param childName the name of the child
-     * @param parameters additional parameters that can be used in the transformation
-     * @throws Exception if the transformation fails
+     * Default implementation: do nothing
+     * @see #transformXML(Document, String, String, Map)
      */
-    protected void transformXML(
+    public void transformXML(
         Document doc,
         String childId,
-        short childType,
         String childName,
         Map parameters)
         throws Exception {

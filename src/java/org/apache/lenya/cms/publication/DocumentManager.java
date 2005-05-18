@@ -72,7 +72,6 @@ public interface DocumentManager {
      * new document can be read. Optional parameter; may be set to <code>null</code>, 
      * in which case the default initial sample as configured in 
      * <code>doctypes.xconf</code> will be used.
-     * @param nodeType the node type, as defined by the constants in {@link org.apache.lenya.cms.authoring.NodeCreatorInterface NodeCreatorInterface}
      * @param parameters any parameters the caller needs to pass to the creator
      * @return A document.
      * 
@@ -86,7 +85,6 @@ public interface DocumentManager {
                  String language, 
                  String navigationTitle,
                  String initialContentsURI,
-                 short nodeType,
                  Map parameters) 
        throws DocumentBuildException, PublicationException;
 

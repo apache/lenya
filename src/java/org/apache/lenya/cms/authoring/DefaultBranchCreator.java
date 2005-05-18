@@ -23,15 +23,6 @@ package org.apache.lenya.cms.authoring;
  * Default creator for Documents of type branch (ie, they can have child documents)
  */
 public class DefaultBranchCreator extends DefaultCreator {
-    /**
-     * Return the child type.
-     * @param childType a <code>short</code> value
-     * @return a <code>short</code> value
-     * @exception Exception if an error occurs
-     */
-    public short getChildType(short childType) throws Exception {
-        return BRANCH_NODE;
-    }
 
     /**
      * @see org.apache.lenya.cms.authoring.NodeCreatorInterface#getNewDocumentURI(String, String, String, String)

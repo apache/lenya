@@ -22,27 +22,13 @@ import java.util.Map;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.w3c.dom.Document;
 
 /**
  * Interface for creation of nodes in the document hierarchy
  * @version $Id$
  */
 public interface NodeCreatorInterface {
-    /**
-     * Constant for a branch node. Branch nodes are somewhat related
-     * to the concept of collections in WebDAV. They are not the same
-     * however.
-     *
-     */
-    short BRANCH_NODE = 1;
-
-    /**
-     * Constant for a leaf node. Leaf nodes are somewhat related to
-     * the concept of resources in WebDAV. They are not the same
-     * however.
-     *
-     */
-    short LEAF_NODE = 0;
 
     /**
      * Configures the Creator, based on a configuration file.
@@ -52,19 +38,6 @@ public interface NodeCreatorInterface {
      * @param logger A logger
      */
     void init(Configuration doctypeConf, ServiceManager manager, Logger logger);
-
-    /**
-     * Return the type of node this creator will create. It can be
-     * either <code>BRANCH_NODE</code> or <code>LEAF_NODE</code>. An
-     * implementation can simply return the input parameter (which can
-     * be used to pass in a request parameter) or choose to ignore it.
-     *
-     * @param childType a <code>short</code> value
-     * @return a <code>short</code> value (either <code>BRANCH_NODE</code> or <code>LEAF_NODE</code>)
-     * @exception Exception if an error occurs
-     */
-    short getChildType(short childType) throws Exception;
-
     /**
      * Describe <code>getChildName</code> method here.
      *
@@ -75,22 +48,11 @@ public interface NodeCreatorInterface {
     String getChildName(String childname) throws Exception;
 
     /**
-     * Describe <code>generateTreeId</code> method here.
-     *
-     * @param childId a <code>String</code> value
-     * @param childType a <code>short</code> value
-     * @return a <code>String</code> value
-     * @exception Exception if an error occurs
-     */
-    String generateTreeId(String childId, short childType) throws Exception;
-
-    /**
      * Create a physical representation for a new document.
      *
      * @param initialContentsURI the URI where initial content for this document can be found.
      * @param newURI the URI under which the new node is to be created. Can be retrieved via getNewDocumentURI()
      * @param childId the document id of the new document
-     * @param childType the node type (branch, leaf)
      * @param childName the name of the new document.
      * @param parameters additional parameters that can be used when creating the document
      * 
@@ -101,7 +63,6 @@ public interface NodeCreatorInterface {
         String initialContentsURI,
         String newURI,
         String childId,
-        short childType,
         String childName,
         Map parameters)
         throws Exception;
@@ -119,5 +80,21 @@ public interface NodeCreatorInterface {
         String parentId,
         String newId,
         String language);
+
+    /**
+     * Apply some transformation on the newly created document.
+     * @param doc the xml document
+     * @param childId the id of the child
+     * @param childName the name of the child
+     * @param parameters additional parameters that can be used in the transformation
+     * @throws Exception if the transformation fails
+     */
+    void transformXML(
+        Document doc,
+        String childId,
+        String childName,
+        Map parameters)
+        throws Exception;
+
 
 }

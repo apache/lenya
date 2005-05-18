@@ -56,13 +56,13 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * implementation to be used is specified in doctypes.xconf (and thus depends on the publication
      * and the resource type to be used)
      * 
-     * @see DocumentManager#add(Document,String,String,String,String,String,String,short,Map)
+     * @see DocumentManager#add(Document,String,String,String,String,String,String,Map)
      * @see org.apache.lenya.cms.authoring.NodeCreatorInterface
      * @see org.apache.lenya.cms.publication.DocumentBuilder
      */
     public Document add(Document parentDocument, String newDocumentNodeName, String newDocumentId,
             String documentTypeName, String language, String navigationTitle,
-            String initialContentsURI, short nodeType, Map parameters)
+            String initialContentsURI, Map parameters)
             throws DocumentBuildException, PublicationException {
 
         if (getLogger().isDebugEnabled())
@@ -72,7 +72,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                     + "\t newDocumentId [" + newDocumentId + "]\n" + "\t documentTypeName ["
                     + documentTypeName + "]\n" + "\t language [" + language + "]\n"
                     + "\t navigationTitle [" + navigationTitle + "]\n" + "\t initialContentsURI ["
-                    + initialContentsURI + "]\n" + "\t nodeType [" + nodeType + "]\n"
+                    + initialContentsURI + "]\n" 
                     + "\t non-empty parameters [" + (parameters != null) + "]\n");
 
         Publication publication = parentDocument.getPublication();
@@ -145,7 +145,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             creator.create(initialContentsURI,
                     newDocumentURI,
                     newDocumentNodeName,
-                    nodeType,
                     navigationTitle,
                     parameters);
         } catch (Exception e) {

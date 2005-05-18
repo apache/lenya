@@ -110,9 +110,9 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
     }
 
     /**
-     *
+     * @see #transformXML(Document, String, String, Map)
      */
-    protected void transformXML(Document doc, String childId, short childType, String childName, Map parameters) throws Exception {
+    public void transformXML(Document doc, String childId, String childName, Map parameters) throws Exception {
 
        // sanity check: blog entry creation depends on certain parameters
        if (parameters == null)
