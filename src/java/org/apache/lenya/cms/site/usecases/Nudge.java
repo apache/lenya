@@ -18,11 +18,16 @@ package org.apache.lenya.cms.site.usecases;
 
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.SiteStructure;
+import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
-import org.apache.lenya.cms.site.tree.TreeSiteManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Nudge a document one position up or down.
@@ -52,12 +57,11 @@ public class Nudge extends DocumentUsecase {
         try {
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
-            if (siteManager instanceof TreeSiteManager) {
+            SiteStructure structure = siteManager.getSiteStructure(getSourceDocument()
+                    .getIdentityMap(), publication, getSourceDocument().getArea());
+            if (structure instanceof SiteTree) {
 
-                TreeSiteManager treeManager = (TreeSiteManager) siteManager;
-                SiteTree tree = treeManager.getTree(getSourceDocument().getIdentityMap(),
-                        publication,
-                        getSourceDocument().getArea());
+                SiteTree tree = (SiteTree) structure;
                 SiteTreeNode node = tree.getNode(getSourceDocument().getId());
                 SiteTreeNode[] siblings = null;
 
@@ -67,7 +71,7 @@ public class Nudge extends DocumentUsecase {
                 } else if (direction.equals(DOWN)) {
                     siblings = node.getNextSiblings();
                 } else {
-                    addErrorMessage("nudge-error-direction-unknown", new String[]{direction});
+                    addErrorMessage("nudge-error-direction-unknown", new String[] { direction });
                 }
 
                 if (siblings != null && siblings.length == 0) {
@@ -89,6 +93,20 @@ public class Nudge extends DocumentUsecase {
     }
 
     /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
+     */
+    protected Transactionable[] getObjectsToLock() throws UsecaseException {
+        try {
+            Node node = SiteUtil.getSiteStructure(this.manager, getSourceDocument())
+                    .getRepositoryNode();
+            Node[] nodes = { node };
+            return nodes;
+        } catch (SiteException e) {
+            throw new UsecaseException(e);
+        }
+    }
+
+    /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
@@ -100,19 +118,22 @@ public class Nudge extends DocumentUsecase {
         try {
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
-            if (siteManager instanceof TreeSiteManager) {
+            SiteStructure structure = siteManager.getSiteStructure(getSourceDocument()
+                    .getIdentityMap(), publication, getSourceDocument().getArea());
+            if (structure instanceof SiteTree) {
 
-                TreeSiteManager treeManager = (TreeSiteManager) siteManager;
-                SiteTree tree = treeManager.getTree(getSourceDocument().getIdentityMap(),
-                        publication,
-                        getSourceDocument().getArea());
-
+                SiteTree tree = (SiteTree) structure;
                 String direction = getParameterAsString(DIRECTION);
                 if (direction.equals(UP)) {
                     tree.moveUp(getSourceDocument().getId());
                 } else if (direction.equals(DOWN)) {
                     tree.moveDown(getSourceDocument().getId());
+                } else {
+                    throw new IllegalArgumentException("The direction [" + direction
+                            + "] is not supported.");
                 }
+            } else {
+                throw new IllegalStateException("This operation is only supported for site trees.");
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -126,5 +147,4 @@ public class Nudge extends DocumentUsecase {
         }
 
     }
-
 }
