@@ -90,11 +90,18 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         Document parent;
         try {
             parent = resource.getIdentityMap().getParent(resource);
-        } catch (DocumentBuildException e) {
+            if (parent != null) {
+                String[] languages = parent.getLanguages();
+                for (int i = 0; i < languages.length; i++) {
+                    Document version = resource.getIdentityMap().getLanguageVersion(parent,
+                            languages[i]);
+                    ancestors.add(version);
+                }
+            }
+        } catch (Exception e) {
             throw new SiteException(e);
         }
         if (parent != null) {
-            ancestors.add(parent);
             ancestors.addAll(getAncestors(parent));
         }
         return ancestors;
@@ -390,7 +397,8 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      * @see org.apache.lenya.cms.site.SiteManager#getSiteStructure(org.apache.lenya.cms.publication.DocumentIdentityMap,
      *      org.apache.lenya.cms.publication.Publication, java.lang.String)
      */
-    public SiteStructure getSiteStructure(DocumentIdentityMap map, Publication publiation,
+    public SiteStructure getSiteStructure(DocumentIdentityMap map,
+            Publication publiation,
             String area) throws SiteException {
         return getTree(map, publiation, area);
     }
