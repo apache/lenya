@@ -25,6 +25,8 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteUtil;
@@ -87,14 +89,28 @@ public class Paste extends DocumentUsecase {
             nodes.add(siteNode);
 
             Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
-            if (clipboard.getMethod() == Clipboard.METHOD_CUT) {
-                DocumentIdentityMap identityMap = getDocumentIdentityMap();
-                Document clippedDocument = clipboard.getDocument(identityMap);
-                nodes.addAll(Arrays.asList(clippedDocument.getRepositoryNodes()));
-            }
-
+            DocumentIdentityMap map = getDocumentIdentityMap();
+            Publication pub = getSourceDocument().getPublication();
+            String area = getSourceDocument().getArea();
+            Document clippedDocument = clipboard.getDocument(map);
             Document targetDocument = getTargetDocument();
-            nodes.addAll(Arrays.asList(targetDocument.getRepositoryNodes()));
+
+            String clippedName = clippedDocument.getName();
+            String clippedId = clippedDocument.getId();
+            String clippedBase = clippedId.substring(0, clippedId.length() - clippedName.length());
+
+            String targetBase = getSourceDocument().getId() + "/";
+
+            DocumentSet subsite = SiteUtil.getSubSite(this.manager, clippedDocument);
+            Document[] subsiteDocs = subsite.getDocuments();
+            for (int i = 0; i < subsiteDocs.length; i++) {
+                if (clipboard.getMethod() == Clipboard.METHOD_CUT) {
+                    nodes.addAll(Arrays.asList(subsiteDocs[i].getRepositoryNodes()));
+                }
+                String id = subsiteDocs[i].getId().substring(clippedBase.length());
+                Document targetSubsiteDoc = map.get(pub, area, targetBase + id, subsiteDocs[i].getLanguage());
+                nodes.addAll(Arrays.asList(targetSubsiteDoc.getRepositoryNodes()));
+            }
 
         } catch (Exception e) {
             throw new UsecaseException(e);
@@ -147,16 +163,6 @@ public class Paste extends DocumentUsecase {
                 targetArea,
                 potentialDocumentId,
                 language);
-        DocumentManager documentManager = null;
-        Document availableDocument = null;
-        try {
-            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            availableDocument = SiteUtil.getAvailableDocument(this.manager, potentialDocument);
-        } finally {
-            if (documentManager != null) {
-                this.manager.release(documentManager);
-            }
-        }
-        return availableDocument;
+        return SiteUtil.getAvailableDocument(this.manager, potentialDocument);
     }
 }
