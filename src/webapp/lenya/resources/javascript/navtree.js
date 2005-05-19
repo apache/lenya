@@ -296,7 +296,8 @@ function isLastChild(parent, child) {
 
 NavRoot.prototype.handleItemClick = function(item, event) {
     if (!item.isprotected && item.root!=item) {
-        href = CONTEXT_PREFIX+'/'+PUBLICATION_ID+"/info-"+item.area+"/"+item.href+"?lenya.usecase=info-overview&lenya.step=showscreen"; 
+    	var itemhref = item.href.replace(/^\//, "");
+        href = CONTEXT_PREFIX+'/'+PUBLICATION_ID+"/info-"+item.area+"/"+itemhref+"?lenya.usecase=info-overview&lenya.step=showscreen"; 
         window.location = href;
     }
 };
