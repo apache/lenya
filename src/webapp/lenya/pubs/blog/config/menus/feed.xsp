@@ -57,7 +57,7 @@
  
     <menu i18n:attr="name" name="Help" label="Help">
       <block>
-        <item href="http://lenya.apache.org/docs/index.html"><i18n:text>Documentation</i18n:text></item>
+        <item href="http://lenya.apache.org/1_2_x/index.html"><i18n:text>Documentation</i18n:text></item>
         <item href="http://wiki.apache.org/lenya/"><i18n:text>Wiki</i18n:text></item>
       </block>
       <block>

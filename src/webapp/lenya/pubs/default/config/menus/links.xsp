@@ -89,7 +89,7 @@
 
       <menu i18n:attr="name" name="Help" label="Debug">
 	<block>
-	  <item><xsp:attribute name="href">http://lenya.apache.org/docs/index.html</xsp:attribute><i18n:text>System&#160;Documentation</i18n:text></item>
+	  <item><xsp:attribute name="href">http://lenya.apache.org/1_2_x/index.html</xsp:attribute><i18n:text>System&#160;Documentation</i18n:text></item>
 	  <item href="http://wiki.apache.org/lenya/"><i18n:text>Wiki</i18n:text></item>
 	</block>
   <block>

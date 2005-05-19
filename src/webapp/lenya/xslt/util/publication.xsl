@@ -39,7 +39,7 @@
   <li><a href="authoring/">Login&#160;as&#160;Editor</a></li>
 </ul>
 <div class="lenya-publication-item"><a href="../index.html">Other&#160;Publications</a></div>
-<div class="lenya-publication-item"><a href="http://lenya.apache.org/docs/index.html">Documentation</a></div>
+<div class="lenya-publication-item"><a href="http://lenya.apache.org/1_2_x/index.html">Documentation</a></div>
 <div class="lenya-publication-item"><a href="http://wiki.apache.org/lenya">Wiki&#160;Documentation</a></div>
 </div>
 
