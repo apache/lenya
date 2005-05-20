@@ -220,7 +220,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     /**
      * @see org.apache.lenya.transaction.Transactionable#saveTransactionable()
      */
-    public void saveTransactionable() throws TransactionException {
+    public synchronized void saveTransactionable() throws TransactionException {
         if (!isCheckedOut()) {
             throw new TransactionException("Cannot save node [" + this.sourceURI
                     + "]: not checked out!");
@@ -351,7 +351,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     /**
      * @see org.apache.lenya.cms.repository.Node#getInputStream()
      */
-    public InputStream getInputStream() throws TransactionException {
+    public synchronized InputStream getInputStream() throws TransactionException {
         if (!exists()) {
             throw new RuntimeException(this + " does not exist!");
         }
@@ -362,7 +362,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
      * Loads the data from the real source.
      * @throws TransactionException if an error occurs.
      */
-    protected void loadData() throws TransactionException {
+    protected synchronized void loadData() throws TransactionException {
 
         if (this.data != null) {
             return;
@@ -413,7 +413,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     /**
      * @see org.apache.lenya.cms.repository.Node#getOutputStream()
      */
-    public OutputStream getOutputStream() throws TransactionException {
+    public synchronized OutputStream getOutputStream() throws TransactionException {
         return new NodeOutputStream();
     }
 
@@ -424,7 +424,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
         /**
          * @see java.io.OutputStream#close()
          */
-        public void close() throws IOException {
+        public synchronized void close() throws IOException {
             SourceNode.this.data = super.toByteArray();
             super.close();
         }
