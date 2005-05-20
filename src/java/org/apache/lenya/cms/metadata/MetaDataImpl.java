@@ -43,20 +43,17 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
 
-
 /**
  * Generic meta-data implementation.
- *
- * Meta-data is represented as XML. For compatibility with the Dublin Core 
- * meta-data requirements, a set of meta-data may contain up to two 
- * namespaces, one for "elements" and one for "terms".
- * A metadata implementation requiring only one namespace can ignore the
- * "terms".
+ * 
+ * Meta-data is represented as XML. For compatibility with the Dublin Core meta-data requirements, a
+ * set of meta-data may contain up to two namespaces, one for "elements" and one for "terms". A
+ * metadata implementation requiring only one namespace can ignore the "terms".
  * 
  * @version $Id$
  */
 public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaData {
-    
+
     private String sourceUri;
     private ServiceManager manager;
 
@@ -68,15 +65,15 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
     private static final String META_ROOT = "meta";
 
     /**
-     * Creates a new instance of metadata, reading any existing
-     * values from the source URI.
-     *
+     * Creates a new instance of metadata, reading any existing values from the source URI.
+     * 
      * @param sourceUri The source URI.
      * @param manager The service manager.
      * @param _logger A logger
      * @throws DocumentException if an error occurs
      */
-    public MetaDataImpl(String sourceUri, ServiceManager manager, Logger _logger) throws DocumentException {
+    public MetaDataImpl(String sourceUri, ServiceManager manager, Logger _logger)
+            throws DocumentException {
         ContainerUtil.enableLogging(this, _logger);
         this.sourceUri = sourceUri;
         this.manager = manager;
@@ -87,48 +84,45 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
 
     /**
      * Determine under which element name this meta-data is specified.
-     *
+     * 
      * @return the name of the element containing this meta-data
      */
-    protected abstract String getLocalElementName();   
+    protected abstract String getLocalElementName();
 
     /**
      * The namespaces under which this meta-data is specified.
-     *
+     * 
      * @return an array of strings, containing the names of the namespaces
      */
     protected abstract String[] getNamespaces();
 
     /**
      * The prefixes under which this meta-data is specified.
-     *
+     * 
      * @return an array of strings, containing the names of the prefixes
      */
     protected abstract String[] getPrefixes();
 
     /**
-     * Elements to be used in this meta-data. A meta-data
-     * implementation which does not have a fixed list
-     * of elements may return an empty array, and override
-     * useFixedElements()
+     * Elements to be used in this meta-data. A meta-data implementation which does not have a fixed
+     * list of elements may return an empty array, and override useFixedElements()
      * @see #useFixedElements()
-     * @return  an array of string representing the elements
+     * @return an array of string representing the elements
      */
     protected abstract String[] getElements();
 
     /**
-     * Terms to be used in this meta-data. A meta-data
-     * implementation requiring only one namespace may
-     * ignore terms and return an empty array.
-     *
+     * Terms to be used in this meta-data. A meta-data implementation requiring only one namespace
+     * may ignore terms and return an empty array.
+     * 
      * @return an array of string representing the terms
      */
     protected abstract String[] getTerms();
 
     /**
-     * Determine if the meta-data should consist of a fixed list
-     * of known attributes, or whether arbitrary names can be used.
-     *
+     * Determine if the meta-data should consist of a fixed list of known attributes, or whether
+     * arbitrary names can be used.
+     * 
      * @return true if meta-data consists of fixed elements
      */
     protected boolean useFixedElements() {
@@ -153,7 +147,8 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
                 Map[] maps = { this.elements, this.terms };
 
                 for (int type = 0; type < namespaces.length; type++) {
-                    NamespaceHelper helper = new NamespaceHelper(namespaces[type], prefixes[type], doc);
+                    NamespaceHelper helper = new NamespaceHelper(namespaces[type], prefixes[type],
+                            doc);
 
                     if (useFixedElements()) {
                         String[] elementNames = arrays[type];
@@ -161,11 +156,11 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
                             Element[] children = helper.getChildren(metaElement, elementNames[i]);
                             loadElementValues(maps[type], elementNames[i], children);
                         }
-                    }
-                    else {
+                    } else {
                         Element[] elements = helper.getChildren(metaElement);
                         for (int i = 0; i < elements.length; i++) {
-                            loadElementValues(maps[type], elements[i].getTagName(), helper.getChildren(metaElement, elements[i].getTagName()));
+                            loadElementValues(maps[type], elements[i].getTagName(), helper
+                                    .getChildren(metaElement, elements[i].getTagName()));
                         }
                     }
                 }
@@ -181,8 +176,7 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
     private void loadElementValues(Map map, String elementName, Element[] children) {
         String[] values = new String[children.length];
         for (int valueIndex = 0; valueIndex < children.length; valueIndex++) {
-            values[valueIndex] = 
-               DocumentHelper.getSimpleElementText(children[valueIndex]);
+            values[valueIndex] = DocumentHelper.getSimpleElementText(children[valueIndex]);
         }
         map.put(elementName, values);
     }
@@ -211,9 +205,9 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
                     childNodes.add(nodes.item(i));
                 }
             }
-            Node[] children = (Node[])childNodes.toArray(new Node[childNodes.size()]);
-            for (int i = 0; i < children.length; i++){
-                metaElement.removeChild(children[i]);  
+            Node[] children = (Node[]) childNodes.toArray(new Node[childNodes.size()]);
+            for (int i = 0; i < children.length; i++) {
+                metaElement.removeChild(children[i]);
             }
 
             for (int type = 0; type < namespaces.length; type++) {
@@ -223,11 +217,11 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
                     for (int i = 0; i < elementNames.length; i++) {
                         writeElementValues(helper, metaElement, maps[type], elementNames[i]);
                     }
-                }
-                else {
-		    Iterator elementNames = maps[type].keySet().iterator();
+                } else {
+                    Iterator elementNames = maps[type].keySet().iterator();
                     while (elementNames.hasNext()) {
-                        writeElementValues(helper, metaElement, maps[type], (String)elementNames.next());
+                        writeElementValues(helper, metaElement, maps[type], (String) elementNames
+                                .next());
                     }
                 }
             }
@@ -241,21 +235,25 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
     /**
      * Add a new element (and its values) to an existing element in the DOM
      */
-    private void writeElementValues(NamespaceHelper helper, Element father, Map elementMap, String elementName) {
+    private void writeElementValues(NamespaceHelper helper,
+            Element father,
+            Map elementMap,
+            String elementName) {
         String[] values = (String[]) elementMap.get(elementName);
         for (int valueIndex = 0; valueIndex < values.length; valueIndex++) {
-            Element valueElement = helper.createElement(elementName,
-                                                        values[valueIndex]);
+            Element valueElement = helper.createElement(elementName, values[valueIndex]);
             father.appendChild(valueElement);
         }
     }
-
 
     /**
      * Create a DOM representation of this meta-data.
      * @return A DOM document.
      * @throws ServiceException if a general error occurs.
      * @throws SourceNotFoundException if the meta-data's source can not be found
+     * @throws ParserConfigurationException if an error occurs during XML parsing.
+     * @throws SAXException if an error occurs during XML parsing.
+     * @throws IOException if an error occurs during source access..
      */
     protected Document getDocument() throws ServiceException, SourceNotFoundException,
             ParserConfigurationException, SAXException, IOException {
@@ -270,7 +268,6 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
         }
         return namespaceHelper.getDocument();
     }
-
 
     /**
      * Returns the Lenya meta data element.
@@ -384,8 +381,7 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
      * @param key The key.
      * @param value The value.
      * @throws DocumentException if an error occurs.
-     * @see org.apache.lenya.cms.metadata.MetaData#setValue(java.lang.String,
-     *      java.lang.String)
+     * @see org.apache.lenya.cms.metadata.MetaData#setValue(java.lang.String, java.lang.String)
      */
     public void setValue(String key, String value) throws DocumentException {
         String[] newValues = { value };
@@ -397,11 +393,10 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
                 this.terms.put(key, newValues);
             } else {
                 throw new DocumentException("The key [" + key
-                    + "] does not refer to a dublin core element or term!");
+                        + "] does not refer to a dublin core element or term!");
             }
-        }
-	else
-            this.elements.put(key, newValues);  
+        } else
+            this.elements.put(key, newValues);
     }
 
     /**
@@ -423,8 +418,7 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
                 removeAllValues(key);
                 addValues(key, other.getValues(key));
             }
-        }
-        else {
+        } else {
             // elements not fixed: clear old elements and write all from other
             elementList = new ArrayList();
             termList = new ArrayList();
@@ -504,6 +498,5 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
                     + "] does not refer to a dublin core element or term!");
         }
     }
-
 
 }
