@@ -29,10 +29,10 @@
   <message key="Referer">Ссылка</message>
   <message key="EXCEPTION">ИСКЛЮЧЕНИЕ</message>
   <message key="User">Пользователь</message>
-  <message key="live">live</message>
+  <message key="live">опубликовано</message>
+  <message key="authoring">разработка</message>
+  <message key="Authoring">разработка</message>
   <message key="not">не</message>
-  <message key="authoring">authoring</message>
-  <message key="Authoring">Authoring</message>
   <message key="review">отзыв</message>
   <message key="user">пользователь</message>
   <message key="Users">Пользователи</message>
@@ -210,9 +210,9 @@
   <message key="Rollback to this version">Откатиться к этой версии</message>
   <message key="AC Archive">AC&#160;Архив</message>
   <message key="AC Trash">AC&#160;Корзина</message>
-  <message key="AC Auth">AC&#160;Авторизация</message>
-  <message key="AC Live">AC&#160;Внешний вид сайта</message>
-  <message key="Scheduler">Планировщик</message>
+  <message key="AC Live">AC&#160;Просмотра</message>
+  <message key="AC Auth">AC&#160;Разработки</message>
+   <message key="Scheduler">Планировщик</message>
 
     <!-- Info screen actions-->
   <message key="New Navigation Title">Новый заголовок навигации</message>
