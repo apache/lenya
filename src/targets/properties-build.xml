@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: properties-build.xml 43145 2004-07-27 03:07:25Z michi $ -->
+<!-- $Id$ -->
 
 <project name="lenya-properties">
 
@@ -113,8 +113,7 @@
   <taskdef name="copyJavaSources" classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.CopyJavaSourcesTask"/>
   <taskdef name="bulkCopy"        classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.BulkCopyTask"/>
   <taskdef name="copyPubs"        classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.CopyTask"/>
-  <taskdef name="xpatch"          classpath="${tools.tasks.dest}" classname="XConfToolTask"/>
-
+  <taskdef name="xpatch"            classpath="${cocoon.src.dir}/tools/anttasks" classname="XConfToolTask" />
 
   <!-- Set up classpath -->
   <path id="classpath">
