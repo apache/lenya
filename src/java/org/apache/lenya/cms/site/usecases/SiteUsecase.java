@@ -47,7 +47,7 @@ public class SiteUsecase extends DocumentUsecase {
                 Version latestVersion = getSourceDocument().getLatestVersion();
                 Boolean isLive = null;
                 if (latestVersion != null) {
-                    setParameter(STATE, latestVersion.getState().toString());
+                    setParameter(STATE, latestVersion.getState());
                     if (Arrays.asList(variableNames).contains(ISLIVE)) {
                         isLive = Boolean.valueOf(latestVersion.getValue(ISLIVE));
                     }
