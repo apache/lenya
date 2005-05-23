@@ -325,13 +325,15 @@
   <message key="Asset Library">Asset Library</message>
   <message key="No assets available">No assets available</message>
   <message key="Insert Asset">Insert Asset</message>
-
+  <message key="lenya.assetuploa.no.asset.selected">No asset selected. Please select one.</message>
+  
   <!-- Image Upload/Insert Dialog -->
   <message key="lenya.imageupload.title">Insert Image</message>
   <message key="lenya.imageupload.selectimage.label">Select Image</message>
   <message key="lenya.imageupload.info.noimages">No images available.</message>
   <message key="lenya.imageupload.links.hint">External links have to start with 'http://', internal links have to start with '/'</message>
-
+  <message key="lenya.imageupload.no.image.selected">No image selected. Please select one.</message>
+  
   <!-- Revision Controller -->
   <message key="Reason">Reason</message>
   <message key="Filename">File name</message>

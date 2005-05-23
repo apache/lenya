@@ -319,12 +319,13 @@
   <message key="Asset Library">Objektbibliothek</message>
   <message key="No assets available">Keine Objekte verfügbar</message>
   <message key="lenya.assetupload.title">Objekt einfügen</message>
+  <message key="lenya.assetuploa.no.asset.selected">Es wurde kein Asset ausgewählt. Bitte wählen Sie eines aus.</message>
 
   <!-- Image Upload/Insert Dialog -->
   <message key="lenya.imageupload.title">Bild einfügen</message>
   <message key="lenya.imageupload.selectimage.label">Bild auswählen</message>
   <message key="lenya.imageupload.info.noimages">Keine Bilder verfügbar.</message>
   <message key="lenya.imageupload.links.hint">Externe Verweise müssen mit 'http://' und interne Verweise mit '/' beginnen.</message>  
-
+  <message key="lenya.imageupload.no.image.selected">Es wurde kein Bild ausgewählt. Bitte wählen Sie eines aus.</message>
 </catalogue>
 

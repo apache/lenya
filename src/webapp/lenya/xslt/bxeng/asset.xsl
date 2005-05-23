@@ -46,10 +46,17 @@
 	  title = title.replace(/&amp;/g, "&");          
 	  title = title.replace(/&/g, "&amp;");
 	  title = title.replace(/&lt;/g, "<");          
-	  title = title.replace(/</g, "&lt;");       
-      window.opener.bxe_insertContent('<asset xmlns="http://apache.org/cocoon/lenya/page-envelope/1.0" src="'+src+'" size="'+size+'" type="">'+title+'</asset>',window.opener.BXE_SELECTION,window.opener.BXE_SPLIT_IF_INLINE);
-      ]]>
-      window.close();
+	  title = title.replace(/</g, "&lt;"); 
+	  ]]>    
+	  if(src)
+	  {  
+        window.opener.bxe_insertContent('<asset xmlns="http://apache.org/cocoon/lenya/page-envelope/1.0" src="'+src+'" size="'+size+'" type="">'+title+'</asset>',window.opener.BXE_SELECTION,window.opener.BXE_SPLIT_IF_INLINE);
+        window.close();
+      }
+      else
+      {
+        alert('<i18n:text key="lenya.assetuploa.no.asset.selected"/>')
+      }  
     }
     
   </script>
@@ -57,7 +64,7 @@
 
 
 <xsl:template name="library-buttons">
-  <input i18n:attr="value" type="submit"
+  <input i18n:attr="value" type="button"
          onClick="insertAsset(document.getElementById('assetSource').value,
                               document.getElementById('assetExtent').value,
                               document.getElementById('assetTitle').value);" value="Submit"/>&#160;

@@ -85,8 +85,17 @@
                                                                                            
                       var content = '<object xmlns="'+window.opener.XHTMLNS+'" href="'+link+'" title="'+title+'" type="'+type+'" data="'+nodeid + src+'">'+caption+'</object>'; 
                       ]]>
-                      window.opener.bxe_insertContent(content,window.opener.bxe_ContextNode); 
-                      window.close();
+                      if(src)
+                      {
+                        window.opener.bxe_insertContent(content,window.opener.bxe_ContextNode); 
+                        window.close();
+                      }
+                      else
+                      {
+                        alert('<i18n:text key="lenya.imageupload.no.image.selected"/>')
+                      }
+                      
+                      
                    }
 
                    function insertCaption() { 
@@ -169,7 +178,7 @@
                 </div>
 				 <div class="lenya-box">
 				    <div class="lenya-box-title"><i18n:text>Asset Library</i18n:text></div>
-				      <form id="image">
+				      <form id="image" action="" method="post">
 				        <table class="lenya-table-noborder">
 				        <xsl:choose>
 				        <xsl:when test="not(lenya-info:asset)">
@@ -209,7 +218,7 @@
 				          <tr>
 				            <td/>
 				            <td colspan="4">
-								 <input i18n:attr="value" type="submit"
+								 <input i18n:attr="value" type="button"
 				      		   onClick="javascript:insertImage(document.getElementById('imageSource').value, escape(document.getElementById('imageFormat').value));" value="Submit"/>&#160;
 				 			 <input i18n:attr="value" type="button" onClick="location.href='javascript:window.close();';" value="Cancel"/>
 				            </td>
