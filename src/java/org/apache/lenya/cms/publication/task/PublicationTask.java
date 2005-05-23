@@ -19,13 +19,6 @@
 
 package org.apache.lenya.cms.publication.task;
 
-import java.io.File;
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.avalon.framework.parameters.ParameterException;
@@ -33,7 +26,6 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
-import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeFactory;
 import org.apache.lenya.cms.task.AbstractTask;
