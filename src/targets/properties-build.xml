@@ -46,13 +46,11 @@
 
   <property name="debug"          value="on"/>
   <property name="optimize"       value="on"/>
-  <property name="deprecation"    value="off"/>
-  <property name="nowarn"         value="on"/>
+  <property name="deprecation"    value="on"/>
+  <property name="nowarn"         value="off"/>
   <property name="target.vm"      value="1.4"/>
 
   <property name="packages"      value="*.*"/>
-
-  <property name="today"         value="${TODAY}"/>
 
   <!-- The libraries we use and which are not already included in the cocoon package -->
   <property name="lib.dir" value="lib"/>
