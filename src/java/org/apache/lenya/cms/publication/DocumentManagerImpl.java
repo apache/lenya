@@ -152,7 +152,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
             siteManager.add(document);
             siteManager.setLabel(document, navigationTitle);
-        } catch (ServiceException e) {
+        } catch (final ServiceException e) {
             throw new PublicationException(e);
         } finally {
             if (selector != null) {
