@@ -489,6 +489,11 @@ public class SwingHTMLHandler extends ParserCallback {
          */
         public class UnderflowException extends Exception {
             /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
+			/**
              * Creates a new UnderflowException object.
              */
             public UnderflowException() {
