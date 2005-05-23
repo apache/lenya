@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  Copyright 1999-2004 The Apache Software Foundation
+  Copyright 1999-2005 The Apache Software Foundation
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 
@@ -24,8 +24,15 @@
     <title>LDAP Authentication How-To</title>
   </header>
     <body>
-<p>Lenya supports LDAP authentication, and was tested with OpenLDAP and MS Active Directory servers.  Note that only the authentication is done through LDAP;  
-the Lenya administrator still has to assign roles to the users within the Lenya Admin GUI. </p>
+<p>Lenya supports LDAP authentication out-of-the-box, and was tested with
+  OpenLDAP and MS Active Directory servers.</p>
+
+<p>Authentication means that password checking is handled through LDAP, so
+that the user does not need a Lenya-specific password. Note that only the
+authentication is done through LDAP; the Lenya administrator still has to tell
+Lenya which LDAP users to allow and to assign Lenya roles to these users. LDAP
+setup is handled in Lenya configuration files; adding users and assigning them roles
+is handled within the Lenya Admin GUI. </p>
 
 <section><title id="head-c6473a347c56f380b016b80abd50c11a339f65ba">Configuring and activating LDAP in Lenya</title>
 
@@ -48,7 +55,9 @@ the Lenya administrator still has to assign roles to the users within the Lenya 
 </li>
 </ol>
 
-</section><section><title id="head-7a25fa154659dcf977c814cc7e12b6a94861a91e">Allowing LDAP users to login</title>
+</section><section><title
+id="head-7a25fa154659dcf977c814cc7e12b6a94861a91e">Allowing LDAP users to work
+with Lenya</title>
 
 <p>Once you have everything configured OK, you can tell Lenya to allow certain LDAP users. It is important to understand that, just because a user exists in LDAP, does not mean she has access to Lenya. The user needs to be explicitly added in Lenya, along with the group memberships. However, the authentication itself (password handling) is then completely handled through LDAP. </p>
 <ol>
@@ -60,27 +69,35 @@ the Lenya administrator still has to assign roles to the users within the Lenya 
 </li>
 </ol>
 
-</section><section><title id="head-3d053bed75c60a57241ca53fb6de8c2d45aed024">More technical information</title>
+</section><section><title
+id="head-3d053bed75c60a57241ca53fb6de8c2d45aed024">Going further with LDAP</title>
 
+<p>The LDAP implementation in Lenya is based on the premise that you have an
+existing LDAP directory containing users and passwords, but you do not want to (or are
+not allowed to) add anything particular to Lenya within this LDAP directory,
+such as Lenya roles.</p>
+<p>As a consequence, the Lenya specific user information is <em>not</em>
+stored in LDAP, but instead with the same mechanism as non-LDAP users. What Lenya does
+do for you is delegate authorization (the checking of the user's password in
+LDAP), meaning that the user does not require an additional "Lenya password".</p>
+<p> This implementation of LDAP authentication in Lenya works can be
+replaced by a tighter integration of LDAP, which would possibly provide these advantages:
 <ul>
-<li><p> Lenya uses the Cocoon class LDAPTransformer : for documentation see the Cocoon documentation on <a href="ext:cocoon"> http://cocoon.apache.org</a> </p>
+<li>Maintenance of roles, groups in LDAP as well.
 </li>
-<li><p> This LDAPTransformer is included in Lenya's sitemap (sitemap.xmap) </p>
-
-</li>
-<li><p> This implementation of LDAP Authentication in Lenya works, but might be replaced later by a more advanced implementation and / or by container managed security which would possibly provide these advantages: </p>
-<ul>
-<li><p> Maintainance of the groups in LDAP as well. </p>
-</li>
-<li><p> Remove the need to separately enable each LDAP user in Lenya. </p>
+<li>Remove the need to separately enable each LDAP user in Lenya.
 </li>
 </ul>
-</li>
-</ul>
+There is a <a
+href="http://issues.apache.org/bugzilla/show_bug.cgi?id=34737">patch (nb
+34737)</a> which replaces Lenya's default LDAP handling and fully integrates
+Lenya with an LDAP where users are stored according to the Posix scheme.
+ </p>
+
 </section><section><title id="head-066b132fa6e8227f03b8c07a5bc6057717a7564b">Encrypted LDAP</title>
 
 <ul>
-<li><p>  in the file ldap.properties, set security-protocol to the value ssl and set key-store to the name of your keystore file </p>
+<li><p>  in the file <em>ldap.properties</em>, set <em>security-protocol</em> to the value <em>ssl</em> and set <em>key-store</em> to the name of your keystore file </p>
 </li>
 <li><p> add the LDAP server certificate file to the local keystore using this command: </p>
 </li>
@@ -94,9 +111,6 @@ the Lenya administrator still has to assign roles to the users within the Lenya 
 
 <ul>
 <li><p> If you modify <em>ldap.properties</em>, it may be necessary to restart your servlet container or at least to reload your webapp in order for the changes to take effect. </p>
-
-</li>
-<li><p> Lenya expects the users to be in container called <em>ou=People</em> that needs to be nested into the container you provide in the <em>provider-url</em> parameter in <em>ldap.properties</em>. (Example: <em>provider-url=ldap://your.ldap.server/ou=intern,dc=example,dc=com</em> will look for users in <em>ou=People,ou=intern,dc=example,dc=com</em>) </p>
 
 </li>
 </ul>
