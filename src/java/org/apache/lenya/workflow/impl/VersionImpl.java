@@ -69,7 +69,7 @@ public class VersionImpl implements Version {
      * @see org.apache.lenya.workflow.Version#setValue(java.lang.String, boolean)
      */
     public void setValue(String variableName, boolean value) {
-        this.variableValues.put(variableName, new Boolean(value));
+        this.variableValues.put(variableName, Boolean.valueOf(value));
     }
 
 }
