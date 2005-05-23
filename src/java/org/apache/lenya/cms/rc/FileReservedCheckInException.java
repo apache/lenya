@@ -26,7 +26,11 @@ import java.util.Date;
  * Reserved check-in exception
  */
 public class FileReservedCheckInException extends Exception {
-    private String source = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String source = null;
     private Date date = null;
     private String username = null;
     private String typeString = null;
@@ -74,7 +78,7 @@ public class FileReservedCheckInException extends Exception {
      * @return the date
      */
     public Date getDate() {
-        return this.date;
+        return new Date(this.date.getTime());
     }
 
     /**

@@ -26,7 +26,11 @@ import java.util.Date;
  * Exception for already checked out files
  */
 public class FileReservedCheckOutException extends Exception {
-    private String source = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String source = null;
     private Date checkOutDate = null;
     private String checkOutUsername = null;
 
@@ -55,7 +59,15 @@ public class FileReservedCheckOutException extends Exception {
      * @return the date of the checkout
      */
     public Date getCheckOutDate() {
-        return this.checkOutDate;
+        return new Date(this.checkOutDate.getTime());
+    }
+
+    /**
+     * Get the source of the checkout.
+     * @return the source of the checkout
+     */
+    public String getSource() {
+        return this.source;
     }
 
     /**
