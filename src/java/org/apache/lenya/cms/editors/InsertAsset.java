@@ -17,11 +17,8 @@
 package org.apache.lenya.cms.editors;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.lenya.cms.publication.Resource;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
@@ -31,7 +28,7 @@ import org.apache.lenya.cms.usecase.UsecaseInvoker;
 /**
  * Usecase to insert an image into a document.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class InsertAsset extends DocumentUsecase {
 
