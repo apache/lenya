@@ -308,10 +308,10 @@
 
   <!-- New Document -->
   <message key="Please check the following possible causes of the exception">Bitte überprüfen Sie folgende Ursachen für die Ausnahme.</message>
-  <message key="Parent ID">Übergerodnete ID</message>
+  <message key="Parent ID">Übergeordnete ID</message>
   <message key="exception.cause.createdoc.whitespace-in-id">Die ID darf keine Leerzeichen enthalten.</message>
   <message key="exception.cause.createdoc.id-in-use">Die ID ist schon vergeben.</message>   
-    <message key="failmessage.createdoc.invalidformat">Bitte geben sie einen gültigen Wert für "ID" ein. Gültige Zeichen sind A-Z, a-z, 0-9 oder -</message>
+    <message key="failmessage.createdoc.invalidformat">Bitte geben sie einen gültigen Wert für 'ID' ein. Gültige Zeichen sind A-Z, a-z, 0-9 oder -</message>
     <message key="failmessage.createdoc.required">Bitte füllen Sie alle Pflichfelder (*) aus..</message>
 
   <!-- Asset Upload/Insert Dialog -->
