@@ -24,6 +24,11 @@ package org.apache.lenya.cms.usecase;
 public class UsecaseException extends Exception {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Ctor.
      */
     public UsecaseException() {

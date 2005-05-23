@@ -24,6 +24,11 @@ package org.apache.lenya.cms.authoring;
  */
 public class CreatorException extends Exception {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * The Constructor
      */
     public CreatorException() {

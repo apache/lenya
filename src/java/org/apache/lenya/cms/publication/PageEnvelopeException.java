@@ -25,6 +25,11 @@ package org.apache.lenya.cms.publication;
  */
 public class PageEnvelopeException extends Exception {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Creates a new PageEnvelopeException.
      */
     public PageEnvelopeException() {

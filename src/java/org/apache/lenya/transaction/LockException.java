@@ -24,6 +24,10 @@ package org.apache.lenya.transaction;
 public class LockException extends TransactionException {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	/**
      * Ctor.
      */
     public LockException() {

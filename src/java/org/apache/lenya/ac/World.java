@@ -27,6 +27,11 @@ import java.util.Collections;
 public final class World implements Identifiable, Serializable {
     
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Creates a new World object.
      */
     private World() {

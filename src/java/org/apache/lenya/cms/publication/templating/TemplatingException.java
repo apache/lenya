@@ -22,6 +22,11 @@ package org.apache.lenya.cms.publication.templating;
 public class TemplatingException extends RuntimeException {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Ctor.
      */
     public TemplatingException() {

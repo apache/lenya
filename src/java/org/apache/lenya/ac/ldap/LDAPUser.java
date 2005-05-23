@@ -49,7 +49,12 @@ import com.sun.jndi.ldap.LdapCtxFactory;
  * @version $Id$
  */
 public class LDAPUser extends FileUser {
-    private static Properties defaultProperties = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private static Properties defaultProperties = null;
 
     /**
      * <code>LDAP_ID</code> The LDAP id

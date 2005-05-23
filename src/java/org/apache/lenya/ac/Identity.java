@@ -34,7 +34,11 @@ import org.apache.cocoon.environment.Session;
  * Identity object. Used to store the authenticated accreditables in the session.
  */
 public class Identity extends AbstractLogEnabled implements Identifiable, Serializable {
-    private Set identifiables = new HashSet();
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private Set identifiables = new HashSet();
 
     /**
      * Ctor.

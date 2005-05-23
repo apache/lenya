@@ -23,6 +23,11 @@ package org.apache.lenya.ac;
  */
 public class AccessControlException extends Exception {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Create an AccessControlException
      *
      */

@@ -30,6 +30,11 @@ import java.util.List;
 public class Machine implements Identifiable, Serializable {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Creates a new machine object. This method accepts
      * numeric IPv4 addresses like <code>"129.168.0.32"</code>,
      * numeric IPv6 addresses like <code>"1080::8:800:200C:417A"</code>

@@ -40,6 +40,11 @@ import org.apache.lenya.net.InetAddressUtil;
 public class FileIPRange extends AbstractIPRange implements Serializable {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Main method.
      * @param args The command-line arguments.
      * @deprecated This should be moved to a JUnit test.

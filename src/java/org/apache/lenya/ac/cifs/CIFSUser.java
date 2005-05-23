@@ -39,7 +39,12 @@ import java.net.UnknownHostException;
  */
 public class CIFSUser extends FileUser {
 
-    private static Properties defaultProperties = null;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private static Properties defaultProperties = null;
 
     // The name for the cifs.properties domain controller lookup
     private static final String DOMAIN_CONTROLLER = "domain-controller";

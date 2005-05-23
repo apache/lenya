@@ -25,6 +25,11 @@ package org.apache.lenya.cms.publication;
 public class DocumentDoesNotExistException extends DocumentException {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Creates a new DocumentDoesNotExistException
      * 
      */

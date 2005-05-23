@@ -26,6 +26,11 @@ import org.apache.lenya.cms.publication.PublicationException;
 public class SiteException extends PublicationException {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Ctor.
      */
     public SiteException() {

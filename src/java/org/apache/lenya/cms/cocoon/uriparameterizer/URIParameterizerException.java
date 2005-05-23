@@ -25,6 +25,11 @@ package org.apache.lenya.cms.cocoon.uriparameterizer;
 public class URIParameterizerException extends Exception {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Ctor.
      */
     public URIParameterizerException() {

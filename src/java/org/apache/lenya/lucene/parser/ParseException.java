@@ -23,7 +23,12 @@ package org.apache.lenya.lucene.parser;
  * Parse exception
  */
 public class ParseException extends Exception {
-    /** Creates a new instance of ParseException */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/** Creates a new instance of ParseException */
     public ParseException() {
         // do nothing
     }

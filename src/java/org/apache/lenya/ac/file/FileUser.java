@@ -36,7 +36,11 @@ import org.apache.lenya.ac.impl.ItemConfiguration;
  */
 public class FileUser extends AbstractUser implements Item, Serializable {
 
-    protected static final String ID = "identity";
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	protected static final String ID = "identity";
     protected static final String EMAIL = "email";
     protected static final String MENU_LOCALE = "default-menu-locale";
     protected static final String DOCUMENT_LOCALE = "default-document-locale";

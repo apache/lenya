@@ -24,6 +24,11 @@ package org.apache.lenya.cms.publication;
  */
 public class DocumentBuildException extends PublicationException {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Constructor.
      */
     public DocumentBuildException() {

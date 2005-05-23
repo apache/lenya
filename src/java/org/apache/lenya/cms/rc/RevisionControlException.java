@@ -25,6 +25,11 @@ package org.apache.lenya.cms.rc;
 public class RevisionControlException extends Exception {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Ctor.
      */
     public RevisionControlException() {

@@ -27,7 +27,12 @@ public class TokenMgrError extends Error {
      * Ordinals for various reasons why an Error of this type can be thrown.
      */
 
-    /** Lexical error occured. */
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/** Lexical error occured. */
     static final int LEXICAL_ERROR = 0;
 
     /** An attempt wass made to create a second instance of a static token manager. */

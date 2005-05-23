@@ -24,6 +24,11 @@ package org.apache.lenya.cms.publishing;
  */
 public class ExportException extends Exception {
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Creates a new ExportException.
      */
     public ExportException() {

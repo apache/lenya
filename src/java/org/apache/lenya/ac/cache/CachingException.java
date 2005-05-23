@@ -24,6 +24,11 @@ package org.apache.lenya.ac.cache;
 public class CachingException extends Exception {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Ctor.
      */
     public CachingException() {

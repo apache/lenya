@@ -25,6 +25,11 @@ package org.apache.lenya.cms.publication;
 public class PublicationException extends Exception {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Creates a new PublicationException.
      */
     public PublicationException() {

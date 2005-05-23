@@ -25,6 +25,11 @@ package org.apache.lenya.ac.cache;
 public class BuildException extends Exception {
 
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Ctor.
      */
     public BuildException() {

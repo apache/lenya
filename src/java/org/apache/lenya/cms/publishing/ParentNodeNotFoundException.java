@@ -25,6 +25,11 @@ package org.apache.lenya.cms.publishing;
  */
 public class ParentNodeNotFoundException extends PublishingException{
     /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	/**
      * Creates a new ParentNodeNotFoundException.
      */
     public ParentNodeNotFoundException() {
