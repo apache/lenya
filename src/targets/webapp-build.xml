@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: webapp-build.xml 46135 2004-09-15 21:58:38Z antonio $ -->
+<!-- $Id$ -->
 
 <project name="lenya-webapp">
 
@@ -85,41 +85,16 @@
             includes="*/targets/test-build.xconf"
             addComments="true"/>
 
-    <!-- now copy our roles -->
-    <copy todir="${build.webapp}/WEB-INF/classes">
-      <fileset dir="${java.dir}">
-        <include name="**/*.roles"/>
-      </fileset>
-    </copy>
-
-    <!-- now copy our properties -->
+    <!--  copy properties, xml configuration files and roles -->
     <copy todir="${build.webapp}/WEB-INF/classes">
       <fileset dir="${build.src}">
         <include name="**/*.properties"/>
-      </fileset>
-      <fileset dir="${java.dir}">
         <include name="**/*.roles"/>
-      </fileset>
-    </copy>
-
-    <!-- now copy our xml configuration files -->
-    <copy todir="${build.webapp}/WEB-INF/classes">
-      <fileset dir="${build.src}">
         <include name="**/*.xml"/>
       </fileset>
-      <fileset dir="${java.dir}">
-        <include name="**/*.roles"/>
-      </fileset>
-    </copy>
-
-    <!-- now copy our roles -->
-    <copy todir="${build.webapp}/WEB-INF/classes">
-      <fileset dir="${build.src}">
-        <include name="**/*.roles"/>
-      </fileset>
-      <fileset dir="${java.dir}">
-        <include name="**/*.roles"/>
-      </fileset>
+        <fileset dir="${java.dir}">
+          <include name="**/*.roles"/>
+        </fileset>
     </copy>
 
     <!-- now create logs directory, where log4j can write to -->
@@ -194,7 +169,6 @@
   <!-- Cleans the build directory, with the exception of target.reset.excludes -->
   <target name="clean" depends="init" description="Cleans the build directories">
     <mkdir dir="${build.root}"/> <!-- Create dir such that build process does not fail if build dir does not exist -->
-    <!--<echo>Delete directory ${build.root}</echo>-->
     <delete includeEmptyDirs="true">
       <fileset dir="${build.root}" excludes="${target.reset.excludes}" />
     </delete>
