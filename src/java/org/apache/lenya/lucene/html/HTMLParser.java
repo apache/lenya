@@ -35,7 +35,7 @@ public class HTMLParser implements HTMLParserConstants {
     /**
      * <code>SUMMARY_LENGTH</code> Contains the length of the summary.
      */
-    public static int SUMMARY_LENGTH = 200;
+    public static final int SUMMARY_LENGTH = 200;
     /**
      * <code>token_source</code>
      */
