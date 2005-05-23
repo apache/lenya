@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: init-build.xml 46135 2004-09-15 21:58:38Z antonio $ -->
+<!-- $Id$ -->
 
 <project name="lenya-init">
 
@@ -40,7 +40,6 @@
 
   <!-- Prepare the build webapp directory -->
   <target name="check-cocoon" depends="init" unless="gump.skipcocoonbuild">
-    <echo>Check if Cocoon has been built: ${cocoon.src.dir}/build/webapp</echo>
     <available file="${cocoon.src.dir}/build/webapp" type="dir" property="cocoon.build.webapp.dir.exists"/>
     <antcall target="build-cocoon"/>
   </target>
