@@ -23,12 +23,16 @@ import java.util.Vector;
 
 
 /**
- * A helper class to implement a stack
+ * A helper class to implement a stack. Unlike java.util.Stack, this stack
+ * discards old elements once maxsize is reached.
+ * @see java.util.Stack
  */
-
-// FIXME: this class seems pretty useless. Why not remove it?
 public class Stack extends Vector {
-    int maxsize = 0;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	int maxsize = 0;
 
     /**
      * Creates a new Stack object.
