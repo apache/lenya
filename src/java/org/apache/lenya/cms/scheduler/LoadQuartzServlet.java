@@ -59,7 +59,12 @@ import org.w3c.dom.Document;
  * A simple servlet that starts an instance of a Quartz scheduler.
  */
 public class LoadQuartzServlet extends HttpServlet {
-    private static final class IsDirectoryFileFilter implements FileFilter {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	private static final class IsDirectoryFileFilter implements FileFilter {
         /**
          * @see java.io.FileFilter#accept(java.io.File)
          */
