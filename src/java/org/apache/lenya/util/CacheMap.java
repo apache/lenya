@@ -31,7 +31,11 @@ import org.apache.log4j.Logger;
  */
 public class CacheMap extends HashMap {
     
-    private static final Logger log = Logger.getLogger(CacheMap.class);
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static final Logger log = Logger.getLogger(CacheMap.class);
     
     /**
      * Ctor.
