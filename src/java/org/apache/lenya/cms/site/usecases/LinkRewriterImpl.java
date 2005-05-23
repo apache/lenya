@@ -155,7 +155,7 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
 
                 }
             }
-        } catch (Exception e) {
+        } catch (final Exception e) {
             throw new RuntimeException(e);
         } finally {
             if (doctypeResolver != null) {
