@@ -110,31 +110,13 @@
       </fileset>
     </copy>
 
-    <!-- now copy our logicsheets -->
-    <copy todir="${build.webapp}/WEB-INF/classes">
-      <fileset dir="${build.src}">
-        <include name="**/*.xsl"/>
-      </fileset>
-    </copy>
-
-    <!-- now copy our properties -->
+    <!--  copy properties, logicsheets, xml configuration files and roles -->
     <copy todir="${build.webapp}/WEB-INF/classes">
       <fileset dir="${build.src}">
         <include name="**/*.properties"/>
-      </fileset>
-    </copy>
-
-    <!-- now copy our xml configuration files -->
-    <copy todir="${build.webapp}/WEB-INF/classes">
-      <fileset dir="${build.src}">
-        <include name="**/*.xml"/>
-      </fileset>
-    </copy>
-
-    <!-- now copy our roles -->
-    <copy todir="${build.webapp}/WEB-INF/classes">
-      <fileset dir="${build.src}">
         <include name="**/*.roles"/>
+        <include name="**/*.xml"/>
+        <include name="**/*.xsl"/>
       </fileset>
     </copy>
 
