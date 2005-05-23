@@ -265,18 +265,15 @@ public class IterativeHTMLCrawler implements Configurable {
     /**
      * Parse a URL
      * @param urlString URL to parse
-     * @return ok if the parse succeeded, or an error message if it did not
-     * FIXME why does this return null?
+     * @return a list of URL
      */
     public List parsePage(String urlString) {
-        String status = "ok";
+    	HttpURLConnection httpCon = null;
 
-        try {
-            URL currentURL = new java.net.URL(urlString);
-            HttpURLConnection httpCon = (HttpURLConnection) currentURL.openConnection();
-
+    	try {
+            URL currentURL = new URL(urlString);
+            httpCon = (HttpURLConnection) currentURL.openConnection();
             httpCon.setRequestProperty("User-Agent", "Lenya Lucene Crawler");
-
             httpCon.connect();
 
             if (httpCon.getResponseCode() == HttpURLConnection.HTTP_OK) {
@@ -286,25 +283,14 @@ public class IterativeHTMLCrawler implements Configurable {
                     return handleHTML(httpCon);
                 } else if (contentType.indexOf("application/pdf") != -1) {
                     handlePDF(httpCon);
-                } else {
-                    status = "Not an excepted content type : " + contentType;
                 }
-            } else {
-                status = "bad";
             }
 
+        } catch (final Exception e) {
+            log.error(e.getMessage(), e);
+        } finally {
             httpCon.disconnect();
-        } catch (java.net.MalformedURLException mue) {
-            status = mue.toString();
-        } catch (java.net.UnknownHostException uh) {
-            status = uh.toString(); // Mark as a bad URL
-        } catch (java.io.IOException ioe) {
-            status = ioe.toString(); // Mark as a bad URL
-        } catch (Exception e) {
-            status = e.toString(); // Mark as a bad URL
         }
-
-        //return status;
         return null;
     }
 
@@ -501,12 +487,8 @@ public class IterativeHTMLCrawler implements Configurable {
                 httpConnection.disconnect();
 
                 log.info("URL dumped: " + url + " (" + file + ")");
-            } catch (final FileNotFoundException e) {
-                log.error("" + e);
-                log.error("URL not dumped: " + url);
-            } catch (final IOException e) {
-                log.error("" + e);
-                log.error("URL not dumped: " + url);
+            } catch (final Exception e) {
+                log.error(e.getMessage(), e);
             } finally {
                 try {
                     if (in !=null)
