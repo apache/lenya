@@ -211,9 +211,4 @@ public interface SiteTree extends SiteStructure {
     void importSubtree(SiteTreeNode subtreeRoot, SiteTreeNode newParent, String newid,
             String refDocumentId) throws SiteException;
 
-    /**
-     * @deprecated Superceded by transactions.
-     */
-    void save() throws TransactionException;
-
 }

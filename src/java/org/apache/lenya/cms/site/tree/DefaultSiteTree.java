@@ -544,12 +544,6 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     }
 
     /**
-     * @see org.apache.lenya.cms.site.tree.SiteTree#save()
-     */
-    public void save() throws TransactionException {
-    }
-
-    /**
      * @see org.apache.lenya.cms.site.SiteStructure#getRepositoryNode()
      */
     public org.apache.lenya.cms.repository.Node getRepositoryNode() {

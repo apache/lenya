@@ -26,7 +26,6 @@ import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
-import org.apache.lenya.transaction.TransactionException;
 import org.apache.tools.ant.BuildException;
 
 /**
@@ -147,12 +146,7 @@ public class TreePublisher extends PublicationTask {
                             + " doesn't contain a label for language " + _language);
                 }
             }
-            liveTree.save();
-        } catch (final ParentNodeNotFoundException e) {
-            throw new PublishingException("Couldn't publish to live tree :", e);
-        } catch (final TransactionException e) {
-            throw new PublishingException("Couldn't publish to live tree :", e);
-        } catch (final PublishingException e) {
+        } catch (final Exception e) {
             throw new PublishingException("Couldn't publish to live tree :", e);
         }
     }
