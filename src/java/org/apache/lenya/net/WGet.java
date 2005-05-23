@@ -68,7 +68,7 @@ public class WGet {
                 }
             }
 
-            byte[] response = wget.download(new URL(args[0]), "s/\\/lenya\\/default//g", "");
+            wget.download(new URL(args[0]), "s/\\/lenya\\/default//g", "");
         } catch (final MalformedURLException e) {
             System.err.println(e);
         } catch (final IOException e) {
@@ -202,8 +202,8 @@ public class WGet {
 
         org.apache.lenya.util.HTML html = new org.apache.lenya.util.HTML(url.toString());
         links = html.getImageSrcs(false);
-        links.addAll(html.getLinkHRefs(false));
         if (links != null) {
+	        links.addAll(html.getLinkHRefs(false));
             log.debug(".getLinks(): Number of links found: " + links.size());
         }
 
