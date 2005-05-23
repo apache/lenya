@@ -20,7 +20,6 @@ package org.apache.lenya.cms.site.tree;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteStructure;
-import org.apache.lenya.transaction.TransactionException;
 
 /**
  * A sitetree.
