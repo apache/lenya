@@ -249,7 +249,7 @@ public final class PublicationFactory extends AbstractLogEnabled {
             String servletContextPath = servletContext.getAbsolutePath();
 
             File publicationsDirectory = new File(servletContext,
-                    PublicationImpl.PUBLICATION_PREFIX);
+                    Publication.PUBLICATION_PREFIX);
             File[] publicationDirectories = publicationsDirectory.listFiles(new FileFilter() {
                 public boolean accept(File file) {
                     return file.isDirectory();
