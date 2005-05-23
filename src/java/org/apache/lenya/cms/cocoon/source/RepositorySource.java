@@ -191,7 +191,7 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
         return pis;
     }
 
-    private void transform(org.w3c.dom.Document edoc, PipedOutputStream pos)
+    void transform(org.w3c.dom.Document edoc, PipedOutputStream pos)
             throws TransformerException {
 
         TransformerFactory tFactory = TransformerFactory.newInstance();

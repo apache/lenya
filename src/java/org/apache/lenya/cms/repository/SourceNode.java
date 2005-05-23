@@ -346,7 +346,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
         return "node " + this.sourceURI;
     }
 
-    private byte[] data = null;
+    byte[] data = null;
 
     /**
      * @see org.apache.lenya.cms.repository.Node#getInputStream()
