@@ -26,7 +26,7 @@ import org.apache.lenya.transaction.Transactionable;
 /**
  * Usecase to edit documents.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class EditDocument extends DocumentUsecase {
 
@@ -63,6 +63,11 @@ public class EditDocument extends DocumentUsecase {
     }
 
     protected Transactionable[] getObjectsToLock() throws UsecaseException {
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("EditDocument::getObjectsToLock() called on source document [" + getSourceDocument().getId() + "]");
+        }
+
         return getSourceDocument().getRepositoryNodes();
     }
+
 }

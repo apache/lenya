@@ -619,17 +619,27 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
      * @see #getObjectsToLock()
      */
     public final void lockInvolvedObjects(Transactionable[] objects) throws UsecaseException {
+
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("AbstractUsecase::lockInvolvedObjects() called, are there objects to lock ? " + (objects != null));
+
         try {
             boolean canExecute = true;
 
             for (int i = 0; i < objects.length; i++) {
                 if (objects[i].isCheckedOut()) {
+                    if (getLogger().isDebugEnabled())
+                        getLogger().debug("AbstractUsecase::lockInvolvedObjects() can not execute, object [" + objects[i] + "] is already checked out");
+
                     canExecute = false;
                 }
             }
 
             if (canExecute) {
                 for (int i = 0; i < objects.length; i++) {
+                    if (getLogger().isDebugEnabled())
+                        getLogger().debug("AbstractUsecase::lockInvolvedObjects() locking " + objects[i]);
+
                     objects[i].lock();
                     if (!isOptimistic()) {
                         objects[i].checkout();

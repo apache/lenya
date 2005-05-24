@@ -49,6 +49,11 @@ function editDocument() {
         var flowHelper = cocoon.getComponent("org.apache.lenya.cms.cocoon.flow.FlowHelper");
         var request = flowHelper.getRequest(cocoon);
         var sourceUrl = Packages.org.apache.lenya.util.ServletHelper.getWebappURI(request);
+
+        if (cocoon.log.isDebugEnabled()) {
+            cocoon.log.debug("edit-document.js::editDocument() calling usecase methods, usecaseName [" + usecaseName + "], sourceUrl [" + sourceUrl + "]");    
+        }
+
         usecase.setSourceURL(sourceUrl);
         usecase.setName(usecaseName);
 
@@ -56,6 +61,10 @@ function editDocument() {
         usecase.lockInvolvedObjects();
         
         usecase.execute();
+
+        if (cocoon.log.isDebugEnabled()) {
+            cocoon.log.debug("edit-document.js::editDocument() after usecase.execute(), hasErrors ? " + usecase.hasErrors());
+        }
 
         // FIXME: handle error messages
         //if (usecase.hasErrors()) {

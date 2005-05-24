@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -97,7 +97,7 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
      */
     public synchronized void commit() throws TransactionException {
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("commit");
+            getLogger().debug("UnitOfWorkImpl::commit() called");
         }
 
         Set involvedObjects = new HashSet();
@@ -122,7 +122,7 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
         for (Iterator i = this.modifiedObjects.iterator(); i.hasNext();) {
             Transactionable t = (Transactionable) i.next();
             if (getLogger().isDebugEnabled()) {
-                getLogger().debug("save [" + t + "]");
+                getLogger().debug("UnitOfWorkImpl::commit() calling save on [" + t + "]");
             }
             t.saveTransactionable();
         }
@@ -175,7 +175,7 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
      */
     public synchronized void rollback() throws TransactionException {
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("rollback");
+            getLogger().debug("UnitOfWorkImpl::rollback() called");
         }
         if (getIdentityMap() != null) {
             Identifiable[] objects = getIdentityMap().getObjects();
