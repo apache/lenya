@@ -89,7 +89,7 @@ foldersTree.treeID = "t2"
   <xsl:variable name="link">
     <xsl:if test="not(@protected = 'true')">
       <xsl:text>, "</xsl:text>
-      <xsl:value-of select="concat($contextprefix, '/', $publicationid, '/info-', @area, '/', $suffix)"/>
+      <xsl:value-of select="concat($contextprefix, '/', $publicationid, '/', @area, '/', $suffix)"/>
       <xsl:text>?lenya.usecase=tab.overview</xsl:text>
       <xsl:text>"</xsl:text>
     </xsl:if>
@@ -116,7 +116,7 @@ foldersTree.treeID = "t2"
   <xsl:variable name="link">
     <xsl:if test="not(@protected = 'true')">
       <xsl:text>, "</xsl:text>
-      <xsl:value-of select="concat($contextprefix, '/', $publicationid, '/info-', $tree-area, '/', @basic-url, @language-suffix, @suffix)"/>
+      <xsl:value-of select="concat($contextprefix, '/', $publicationid, '/', $tree-area, '/', @basic-url, @language-suffix, @suffix)"/>
       <xsl:text>?lenya.usecase=tab.overview</xsl:text>
       <xsl:text>"</xsl:text>
     </xsl:if>

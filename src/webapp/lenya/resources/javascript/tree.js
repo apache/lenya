@@ -828,7 +828,7 @@ function addLoadedSite(site)
 // useful e.g. for link lookup in xopus or bxe.
 var makeHref = function makeDefaultHref(area, link)
 {
-  return CONTEXT_PREFIX+'/'+PUBLICATION_ID+"/info-"+area+"/"+link+"?lenya.usecase=tab.overview"; 
+  return CONTEXT_PREFIX+'/'+PUBLICATION_ID+"/"+area+"/"+link+"?lenya.usecase=tab.overview"; 
 }
 
 function addNodesRec(parentNode, parentFolder, area)

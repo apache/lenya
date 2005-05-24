@@ -34,15 +34,15 @@
         <jx:set var="languageVersion"
                 value="${document.getIdentityMap().getLanguageVersion(document, language)}"/>
         <jx:set var="languageUrl"
-                value="${request.contextPath + '/' + publicationId + '/info-' + area + languageVersion.getCanonicalDocumentURL()}"/>
+                value="${request.contextPath + '/' + publicationId + '/' + area + languageVersion.getCanonicalDocumentURL()}"/>
         
         <td>
           <jx:choose>
             <jx:when test="${language.equals(document.getLanguage())}">
-              <a id="${language}" class="lenya-tablink-active" href="${languageUrl}"><jx:out value="${language}"/></a>
+              <a id="${language}" class="lenya-tablink-active" href="${languageUrl}?lenya.usecase=${usecase.getName()}"><jx:out value="${language}"/></a>
             </jx:when>
             <jx:otherwise>
-              <a id="${language}" class="lenya-tablink" href="${languageUrl}"><jx:out value="${language}"/></a>
+              <a id="${language}" class="lenya-tablink" href="${languageUrl}?lenya.usecase=${usecase.getName()}"><jx:out value="${language}"/></a>
             </jx:otherwise>
           </jx:choose>
         </td>
@@ -61,7 +61,7 @@
         </tr>
       </table>
     </div>
-    <jx:set var="url" value="${request.contextPath + '/' + publicationId + '/info-' + area + document.getCanonicalDocumentURL()}"/>
+    <jx:set var="url" value="${request.contextPath + '/' + publicationId + '/' + area + document.getCanonicalDocumentURL()}"/>
       <script>
       initializeDocument('<jx:out value="${area}"/>', '<jx:out value="${document.getId()}"/>');
       loadSynchPage('<jx:out value="${url}"/>');
