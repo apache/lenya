@@ -409,9 +409,11 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
     </component-instance>
     <component-instance name="tab.acAuthoring" logger="lenya.site" class="org.apache.lenya.cms.ac.usecases.AccessControl">
       <view template="tab/acAuthoring" menu="true"/>
+      <parameter name="acArea" value="authoring"/>
     </component-instance>
     <component-instance name="tab.acLive" logger="lenya.site" class="org.apache.lenya.cms.ac.usecases.AccessControl">
       <view template="tab/acLive" menu="true"/>
+      <parameter name="acArea" value="live"/>
     </component-instance>
     <component-instance name="tab.acTrash" logger="lenya.site" class="org.apache.lenya.cms.ac.usecases.AccessControl">
       <view template="tab/acTrash" menu="true"/>
@@ -469,13 +471,13 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
       <transaction policy="pessimistic"/>
       <view template="edit/forms/oneform" menu="false"/>
     </component-instance>
-<!--
+
     <component-instance name="edit.bxe" logger="lenya.publication"
-                        class="org.apache.lenya.cms.editors.Editor">
+                        class="org.apache.lenya.cms.editors.bxe.BXE">
       <transaction policy="pessimistic"/>
       <view template="edit/bxe/bxe" menu="false"/>
     </component-instance>
--->
+
   </usecases>
 
   <component role="org.apache.cocoon.components.cron.CronJob/usecase"
