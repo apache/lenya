@@ -145,7 +145,8 @@
   <message key="Edit with one Form">Редактор&#160;исходных текстов</message>
   <message key="Edit with Forms">Редактор&#160;форм</message>
   <message key="Edit Metadata">Редактировать&#160;метаданные</message>
-  <message key="Edit Navigation Title">Редактировать&#160;навигационный заголовок</message>
+<message key="Edit Navigation Title">Редактировать&#160;навигационный&#160;заголовок</message>
+
   <message key="Rename URL">Переименовать&#160;URL</message>
 
   <!-- cms tabs -->
