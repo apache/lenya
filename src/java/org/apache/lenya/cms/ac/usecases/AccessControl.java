@@ -16,9 +16,13 @@
  */
 package org.apache.lenya.cms.ac.usecases;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 import org.apache.cocoon.ProcessingException;
+import org.apache.lenya.cms.ac.cocoon.CredentialWrapper;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.URLInformation;
@@ -33,6 +37,7 @@ import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.impl.Credential;
 import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.ac.impl.DefaultPolicy;
 import org.apache.lenya.ac.impl.InheritingPolicyManager;
@@ -58,6 +63,8 @@ public class AccessControl extends AccessControlUsecase {
     protected static final String SSL = "ssl";
     protected static final String ANCESTOR_SSL = "ancestorSsl";
     protected static final String DOCUMENT = "document";
+    protected static final String URL_CREDENTIALS = "urlCredentials";
+    protected static final String PARENT_CREDENTIALS = "parentCredentials";
     private String COMPLETE_AREA = "private.completeArea";
 
     /**
@@ -83,7 +90,7 @@ public class AccessControl extends AccessControlUsecase {
 
             setParameter(SSL, Boolean.toString(isSSLProtected()));
             setParameter(ANCESTOR_SSL, Boolean.toString(isAncestorSSLProtected()));
-            
+
             User[] users = getUserManager().getUsers();
             String[] userIds = new String[users.length];
             for (int i = 0; i < users.length; i++) {
@@ -91,7 +98,7 @@ public class AccessControl extends AccessControlUsecase {
             }
             Arrays.sort(userIds);
             setParameter("users", userIds);
-            
+
             Group[] groups = getGroupManager().getGroups();
             String[] groupIds = new String[groups.length];
             for (int i = 0; i < groups.length; i++) {
@@ -99,7 +106,7 @@ public class AccessControl extends AccessControlUsecase {
             }
             Arrays.sort(groupIds);
             setParameter("groups", groupIds);
-            
+
             IPRange[] ipRanges = getIpRangeManager().getIPRanges();
             String[] ipRangeIds = new String[ipRanges.length];
             for (int i = 0; i < ipRanges.length; i++) {
@@ -107,7 +114,6 @@ public class AccessControl extends AccessControlUsecase {
             }
             Arrays.sort(ipRangeIds);
             setParameter("ipRanges", ipRangeIds);
-            
 
             Role[] roles = getRoleManager().getRoles();
             String visitorRole = "";
@@ -121,9 +127,9 @@ public class AccessControl extends AccessControlUsecase {
             Arrays.sort(roleIds);
             setParameter("roles", roleIds);
             setParameter("visitorRole", visitorRole);
-
-            //FIXME expects the component manager
-            // helper.setup(objectModel, this.manager, area);
+            
+            setParameter(URL_CREDENTIALS, getURICredentials());
+            setParameter(PARENT_CREDENTIALS, getParentCredentials());
 
             for (int i = 0; i < types.length; i++) {
                 Item[] _items = null;
@@ -161,7 +167,7 @@ public class AccessControl extends AccessControlUsecase {
             }
         } catch (final Exception e) {
             addErrorMessage("Could not read a value.");
-            getLogger().error("Could not read value for AccessControl usecase. " + e.toString());
+            getLogger().error("Could not read value for AccessControl usecase. ", e);
         }
 
     }
@@ -231,9 +237,9 @@ public class AccessControl extends AccessControlUsecase {
         boolean ssl;
         try {
             String ancestorUrl = "";
-            int lastSlashIndex = getSourceURL().lastIndexOf("/");
+            int lastSlashIndex = getPolicyURL().lastIndexOf("/");
             if (lastSlashIndex != -1) {
-                ancestorUrl = getSourceURL().substring(0, lastSlashIndex);
+                ancestorUrl = getPolicyURL().substring(0, lastSlashIndex);
             }
 
             Policy policy = getPolicyManager().getPolicy(getAccreditableManager(), ancestorUrl);
@@ -252,7 +258,7 @@ public class AccessControl extends AccessControlUsecase {
     protected boolean isSSLProtected() throws ProcessingException {
         boolean ssl;
         try {
-            Policy policy = getPolicyManager().getPolicy(getAccreditableManager(), getSourceURL());
+            Policy policy = getPolicyManager().getPolicy(getAccreditableManager(), getPolicyURL());
             ssl = policy.isSSLProtected();
         } catch (AccessControlException e) {
             throw new ProcessingException("Resolving policy failed: ", e);
@@ -268,9 +274,9 @@ public class AccessControl extends AccessControlUsecase {
     protected void setSSLProtected(boolean ssl) throws ProcessingException {
         try {
             DefaultPolicy policy = getPolicyManager().buildSubtreePolicy(getAccreditableManager(),
-                    getSourceURL());
+                    getPolicyURL());
             policy.setSSL(ssl);
-            getPolicyManager().saveSubtreePolicy(getSourceURL(), policy);
+            getPolicyManager().saveSubtreePolicy(getPolicyURL(), policy);
         } catch (AccessControlException e) {
             throw new ProcessingException("Resolving policy failed: ", e);
         }
@@ -297,7 +303,7 @@ public class AccessControl extends AccessControlUsecase {
 
         try {
             DefaultPolicy policy = getPolicyManager().buildSubtreePolicy(getAccreditableManager(),
-                    getSourceURL());
+                    getPolicyURL());
             Accreditable accreditable = (Accreditable) item;
 
             if (operation.equals(ADD)) {
@@ -306,10 +312,106 @@ public class AccessControl extends AccessControlUsecase {
                 policy.removeRole(accreditable, role);
             }
 
-            getPolicyManager().saveSubtreePolicy(getSourceURL(), policy);
+            getPolicyManager().saveSubtreePolicy(getPolicyURL(), policy);
 
         } catch (Exception e) {
             throw new ProcessingException("Manipulating credential failed: ", e);
         }
     }
+
+    /**
+     * Returns the URI credential wrappers for the request of this object model.
+     * @return An array of CredentialWrappers.
+     * @throws ProcessingException when something went wrong.
+     */
+    public CredentialWrapper[] getURICredentials() throws ProcessingException {
+        return getCredentials(true);
+    }
+
+    /**
+     * Returns the credential wrappers for the parent URI of the URL belonging to the request of
+     * this object model.
+     * @return An array of CredentialWrappers.
+     * @throws ProcessingException when something went wrong.
+     */
+    public CredentialWrapper[] getParentCredentials() throws ProcessingException {
+        return getCredentials(false);
+    }
+
+    /**
+     * Returns the credentials of the policy of the selected URL.
+     * @param urlOnly If true, the URL policy credentials are returned. If false, the credentials of
+     *            all ancestor policies are returned.
+     * @return An array of CredentialWrappers.
+     * @throws ProcessingException when something went wrong.
+     */
+    public CredentialWrapper[] getCredentials(boolean urlOnly) throws ProcessingException {
+
+        List credentials = new ArrayList();
+
+        DefaultPolicy policies[] = getPolicies(urlOnly);
+        List policyCredentials = new ArrayList();
+        for (int i = 0; i < policies.length; i++) {
+            Credential[] creds = policies[i].getCredentials();
+            for (int j = 0; j < creds.length; j++) {
+                policyCredentials.add(creds[j]);
+            }
+        }
+        for (Iterator i = policyCredentials.iterator(); i.hasNext();) {
+            Credential credential = (Credential) i.next();
+            Accreditable accreditable = credential.getAccreditable();
+            Role[] roles = credential.getRoles();
+            for (int j = 0; j < roles.length; j++) {
+                credentials.add(new CredentialWrapper(accreditable, roles[j]));
+            }
+        }
+        return (CredentialWrapper[]) credentials.toArray(new CredentialWrapper[credentials.size()]);
+    }
+
+    /**
+     * Returns the policies for a certain URL.
+     * @param onlyUrl If true, only the URL policies are returned. Otherwise, all ancestor policies
+     *            are returned.
+     * @return An array of DefaultPolicy objects.
+     * @throws ProcessingException when something went wrong.
+     */
+    protected DefaultPolicy[] getPolicies(boolean onlyUrl) throws ProcessingException {
+
+        DefaultPolicy[] policies;
+
+        try {
+            if (onlyUrl) {
+                policies = new DefaultPolicy[1];
+                AccreditableManager policyManager = getAccreditableManager();
+                policies[0] = getPolicyManager().buildSubtreePolicy(policyManager, getPolicyURL());
+            } else {
+                String ancestorUrl = "";
+
+                String currentUrl = getPolicyURL();
+                if (currentUrl.endsWith("/")) {
+                    currentUrl = currentUrl.substring(0, currentUrl.length() - 1);
+                }
+
+                int lastSlashIndex = currentUrl.lastIndexOf("/");
+                if (lastSlashIndex != -1) {
+                    ancestorUrl = currentUrl.substring(0, lastSlashIndex);
+                }
+                policies = getPolicyManager().getPolicies(getAccreditableManager(), ancestorUrl);
+            }
+        } catch (AccessControlException e) {
+            throw new ProcessingException(e);
+        }
+
+        return policies;
+    }
+    
+    protected String getPolicyURL() {
+        String infoUrl = getSourceURL();
+        URLInformation info = new URLInformation(infoUrl);
+        
+        String area = getParameterAsString("acArea");
+        String url = "/" + info.getPublicationId() + "/" + area + info.getDocumentUrl();
+        return url;
+    }
+
 }
