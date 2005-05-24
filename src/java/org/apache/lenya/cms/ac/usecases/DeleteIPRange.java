@@ -21,6 +21,14 @@ package org.apache.lenya.cms.ac.usecases;
  *
  * @version $Id:$
  */
-public class DeleteIPRange {
+public class DeleteIPRange extends AccessControlUsecase {
 
+    /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
+     */
+    protected void initParameters() {
+        super.initParameters();
+        setExitUsecase("admin.ipRanges", null);
+    }
+    
 }

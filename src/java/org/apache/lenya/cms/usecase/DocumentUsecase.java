@@ -118,7 +118,7 @@ public class DocumentUsecase extends AbstractUsecase {
             documentArea = Publication.INFO_AREA_PREFIX + documentArea;
         }
         String url = "/" + document.getPublication().getId() + "/" + documentArea + documentUrl;
-        return url;
+        return url + getExitUsecaseQueryString();
     }
 
     /**

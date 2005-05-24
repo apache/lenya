@@ -27,6 +27,14 @@ public class Group extends AccessControlUsecase {
     protected static final String GROUP = "group";
 
     /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
+     */
+    protected void initParameters() {
+        super.initParameters();
+        setExitUsecase("admin.groups", null);
+    }
+    
+    /**
      * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.Object)
      */
     public void setParameter(String name, Object value) {

@@ -41,17 +41,6 @@ function passRequestParameters(flowHelper, usecase) {
 }
 
 
-/* Returns the query string to attach to the target URL. This is used in the site area. */
-function getTargetQueryString(usecaseName) {
-    var isTabUsecase = new Packages.java.lang.String(usecaseName).startsWith('tab');
-    var queryString = "";
-    if (isTabUsecase) {
-        queryString = "?lenya.usecase=" + usecaseName;
-    }
-    return queryString;
-}
-
-
 /*
  * Main function to execute a usecase.
  *
@@ -212,7 +201,7 @@ function executeUsecase() {
         }
     }
     
-    var url = request.getContextPath() + targetUrl + getTargetQueryString(usecaseName);
+    var url = request.getContextPath() + targetUrl;
 
     if (cocoon.log.isDebugEnabled())
        cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", completed, redirecting to url = [" + url + "]");

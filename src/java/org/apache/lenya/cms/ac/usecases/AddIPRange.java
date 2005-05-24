@@ -22,7 +22,9 @@ package org.apache.lenya.cms.ac.usecases;
 import java.io.File;
 import java.net.InetAddress;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.lenya.ac.IPRange;
@@ -93,6 +95,10 @@ public class AddIPRange extends AccessControlUsecase {
 
         ipRange.save();
         getIpRangeManager().add(ipRange);
+        
+        Map parameters = new HashMap();
+        parameters.put(IPRangeProfile.ID, id);
+        setExitUsecase("admin.ipRange", parameters);
     }
 
     /**

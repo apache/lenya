@@ -17,8 +17,10 @@
 package org.apache.lenya.cms.ac.usecases;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Groupable;
@@ -27,7 +29,7 @@ import org.apache.lenya.cms.usecase.UsecaseException;
 
 /**
  * Usecase to change the members of a group.
- *
+ * 
  * @version $Id:$
  */
 public class GroupMembers extends AccessControlUsecase {
@@ -42,18 +44,28 @@ public class GroupMembers extends AccessControlUsecase {
     protected static final String OTHER_USER = "otherUser";
 
     /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
+     */
+    protected void initParameters() {
+        super.initParameters();
+        Map parameters = new HashMap();
+        parameters.put(GroupProfile.ID, getParameterAsString(GroupProfile.ID));
+        setExitUsecase("admin.groups", parameters);
+    }
+
+    /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
         super.doExecute();
-        
+
         this.group.removeAllMembers();
-        
+
         List groupUsers = (List) getParameter(GROUP_USERS);
-        for (Iterator i = groupUsers.iterator(); i.hasNext(); ) {
+        for (Iterator i = groupUsers.iterator(); i.hasNext();) {
             User user = (User) i.next();
             this.group.add(user);
-	    user.save();
+            user.save();
         }
     }
 
@@ -69,7 +81,7 @@ public class GroupMembers extends AccessControlUsecase {
 
             List groupUsers = (List) getParameter(GROUP_USERS);
             List otherUsers = (List) getParameter(OTHER_USERS);
-            
+
             if (add != null) {
                 String userId = getParameterAsString(OTHER_USER);
                 if (userId != null) {
@@ -93,7 +105,7 @@ public class GroupMembers extends AccessControlUsecase {
                     groupUsers.remove(user);
                 }
             }
-            
+
             deleteParameter(ADD);
             deleteParameter(REMOVE);
             deleteParameter(GROUP_USER);
@@ -103,8 +115,7 @@ public class GroupMembers extends AccessControlUsecase {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String,
-     *      java.lang.Object)
+     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.Object)
      */
     public void setParameter(String name, Object value) {
         super.setParameter(name, value);
@@ -114,7 +125,7 @@ public class GroupMembers extends AccessControlUsecase {
             if (this.group == null) {
                 throw new RuntimeException("Group [" + groupId + "] not found.");
             }
-            
+
             Groupable[] members = this.group.getMembers();
             List groupUsers = new ArrayList();
             for (int i = 0; i < members.length; i++) {
@@ -138,6 +149,5 @@ public class GroupMembers extends AccessControlUsecase {
         }
 
     }
-
 
 }

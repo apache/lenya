@@ -37,6 +37,8 @@ public class IPRanges extends AccessControlUsecase {
      */
     protected void initParameters() {
         super.initParameters();
+        
+        setExitUsecase(getName(), null);
 
         IPRange[] ipRanges = getIpRangeManager().getIPRanges();
         List ipRangeList = new ArrayList();

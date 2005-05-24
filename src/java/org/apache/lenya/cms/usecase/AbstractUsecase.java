@@ -19,6 +19,7 @@ package org.apache.lenya.cms.usecase;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -78,14 +79,14 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
     }
 
     /**
-     * Determine if the usecase has error messages.
-     * Provides a way of checking for errors without actually retrieving them.
+     * Determine if the usecase has error messages. Provides a way of checking for errors without
+     * actually retrieving them.
      * @return true if the usecase resulted in error messages.
      */
     public boolean hasErrors() {
         boolean ret = false;
         if (this.errorMessages != null)
-            ret = ! this.errorMessages.isEmpty();
+            ret = !this.errorMessages.isEmpty();
 
         if (getLogger().isDebugEnabled())
             getLogger().debug("AbstractUsecase::hasErrors() called, returning " + ret);
@@ -94,14 +95,14 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
     }
 
     /**
-     * Determine if the usecase has info messages.
-     * Provides a way of checking for info messages without actually retrieving them.
+     * Determine if the usecase has info messages. Provides a way of checking for info messages
+     * without actually retrieving them.
      * @return true if the usecase resulted in info messages being generated.
      */
     public boolean hasInfoMessages() {
         boolean ret = false;
         if (this.infoMessages != null)
-            ret = ! this.infoMessages.isEmpty();
+            ret = !this.infoMessages.isEmpty();
         return ret;
     }
 
@@ -433,7 +434,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
         if (url == null) {
             url = getSourceURL();
         }
-        return url;
+        return url + getExitUsecaseQueryString();
     }
 
     /**
@@ -607,13 +608,11 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
     }
 
     /**
-     * Lock the objects, for example when you need to change them
-     * (for example, delete). If you know when entering the usecase
-     * what these objects are, you do not need to call this, the
-     * framework will take of it if you implement getObjectsToLock().
-     * If you do not know in advance what the objects are, you can
-     * call this method explicitly when appropriate.
-     *
+     * Lock the objects, for example when you need to change them (for example, delete). If you know
+     * when entering the usecase what these objects are, you do not need to call this, the framework
+     * will take of it if you implement getObjectsToLock(). If you do not know in advance what the
+     * objects are, you can call this method explicitly when appropriate.
+     * 
      * @param objects the transactionable objects to lock
      * @see #lockInvolvedObjects()
      * @see #getObjectsToLock()
@@ -621,7 +620,9 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
     public final void lockInvolvedObjects(Transactionable[] objects) throws UsecaseException {
 
         if (getLogger().isDebugEnabled())
-            getLogger().debug("AbstractUsecase::lockInvolvedObjects() called, are there objects to lock ? " + (objects != null));
+            getLogger()
+                    .debug("AbstractUsecase::lockInvolvedObjects() called, are there objects to lock ? "
+                            + (objects != null));
 
         try {
             boolean canExecute = true;
@@ -629,7 +630,9 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
             for (int i = 0; i < objects.length; i++) {
                 if (objects[i].isCheckedOut()) {
                     if (getLogger().isDebugEnabled())
-                        getLogger().debug("AbstractUsecase::lockInvolvedObjects() can not execute, object [" + objects[i] + "] is already checked out");
+                        getLogger()
+                                .debug("AbstractUsecase::lockInvolvedObjects() can not execute, object ["
+                                        + objects[i] + "] is already checked out");
 
                     canExecute = false;
                 }
@@ -638,7 +641,8 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
             if (canExecute) {
                 for (int i = 0; i < objects.length; i++) {
                     if (getLogger().isDebugEnabled())
-                        getLogger().debug("AbstractUsecase::lockInvolvedObjects() locking " + objects[i]);
+                        getLogger().debug("AbstractUsecase::lockInvolvedObjects() locking "
+                                + objects[i]);
 
                     objects[i].lock();
                     if (!isOptimistic()) {
@@ -664,5 +668,28 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
         } catch (Exception e) {
             throw new UsecaseException(e);
         }
+    }
+
+    private String exitUsecaseName = null;
+    private Map exitUsecaseParameters = new HashMap();
+
+    protected void setExitUsecase(String usecaseName, Map parameters) {
+        this.exitUsecaseName = usecaseName;
+        if (parameters != null) {
+            this.exitUsecaseParameters = parameters;
+        }
+    }
+
+    protected String getExitUsecaseQueryString() {
+        String queryString = "";
+        if (this.exitUsecaseName != null) {
+            queryString = "?lenya.usecase=" + this.exitUsecaseName;
+            for (Iterator i = this.exitUsecaseParameters.keySet().iterator(); i.hasNext(); ) {
+                String key = (String) i.next();
+                String value = (String) this.exitUsecaseParameters.get(key);
+                queryString += "&" + key + "=" + value;
+            }
+        }
+        return queryString;
     }
 }

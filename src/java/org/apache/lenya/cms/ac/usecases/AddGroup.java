@@ -17,6 +17,8 @@
 package org.apache.lenya.cms.ac.usecases;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.file.FileGroup;
@@ -75,6 +77,10 @@ public class AddGroup extends AccessControlUsecase {
         
         group.save();
         getGroupManager().add(group);
+        
+        Map parameters = new HashMap();
+        parameters.put(GroupProfile.ID, id);
+        setExitUsecase("admin.group", parameters);
     }
 
 }
