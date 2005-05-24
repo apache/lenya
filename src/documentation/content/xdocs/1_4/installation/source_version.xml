@@ -247,7 +247,7 @@
           <p>
             <strong>Get Apache Tomcat</strong> for JDK 1.4
             <br/>
-            version: 5.0.28 or newer, 5.5.x should work too.
+Lenya is developed and tested with Tomcat 5.0.28; it is assumed in the following instructions, and we highly recommend it. Tomcat 4.0.0+, 4.1.24+, 5.0.18+ and 5.5.0+ should work too.            <br/>
             <br/>
             Get it from  <a href="site:tomcat5">http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0</a>
           </p>
