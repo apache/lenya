@@ -16,6 +16,8 @@
  */
 package org.apache.lenya.cms.ac.usecases;
 
+import java.util.Arrays;
+
 import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
@@ -25,9 +27,12 @@ import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.AccreditableManager;
+import org.apache.lenya.ac.Group;
+import org.apache.lenya.ac.IPRange;
 import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
+import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.ac.impl.DefaultPolicy;
 import org.apache.lenya.ac.impl.InheritingPolicyManager;
@@ -78,15 +83,43 @@ public class AccessControl extends AccessControlUsecase {
 
             setParameter(SSL, Boolean.toString(isSSLProtected()));
             setParameter(ANCESTOR_SSL, Boolean.toString(isAncestorSSLProtected()));
+            
+            User[] users = getUserManager().getUsers();
+            String[] userIds = new String[users.length];
+            for (int i = 0; i < users.length; i++) {
+                userIds[i] = users[i].getId();
+            }
+            Arrays.sort(userIds);
+            setParameter("users", userIds);
+            
+            Group[] groups = getGroupManager().getGroups();
+            String[] groupIds = new String[groups.length];
+            for (int i = 0; i < groups.length; i++) {
+                groupIds[i] = groups[i].getId();
+            }
+            Arrays.sort(groupIds);
+            setParameter("groups", groupIds);
+            
+            IPRange[] ipRanges = getIpRangeManager().getIPRanges();
+            String[] ipRangeIds = new String[ipRanges.length];
+            for (int i = 0; i < ipRanges.length; i++) {
+                ipRangeIds[i] = ipRanges[i].getId();
+            }
+            Arrays.sort(ipRangeIds);
+            setParameter("ipRanges", ipRangeIds);
+            
 
             Role[] roles = getRoleManager().getRoles();
             String visitorRole = "";
+            String[] roleIds = new String[roles.length];
             for (int i = 0; i < roles.length; i++) {
+                roleIds[i] = roles[i].getId();
                 if (roles[i].getId().equals("visit")) {
                     visitorRole = roles[i].getId();
                 }
             }
-
+            Arrays.sort(roleIds);
+            setParameter("roles", roleIds);
             setParameter("visitorRole", visitorRole);
 
             //FIXME expects the component manager

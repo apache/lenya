@@ -22,10 +22,10 @@
   
   <jx:import uri="tab/head.jx"/>
   <page:body>
-    <!--
     <jx:import uri="tab/sitetree.jx"/>
-    -->
     <jx:import uri="tab/tabs.jx"/>
+    
+    <jx:set var="area" value="${usecase.getParameter('document').getArea()}"/>
     <div id="contentblock1" class="lenya-tab-sitetree">
       <table class="lenya-table-noborder">
         <tr>
@@ -40,35 +40,90 @@
                 <th colspan="2">
                   <i18n:text>Access Object</i18n:text>
                 </th>
-                <th colspan="2">
-                  <jx:if test="${usecase.getParameter('document').getArea().equals('authoring')}">
+                <th>
+                  <jx:if test="${area.equals('authoring')}">
                     <i18n:text>Role</i18n:text>
-                  </jx:if>&#160;</th>
-              </tr>
-              <!--
-              <tr>
-                <jx:call-template name="form-add-credential">
-                  <jx:with-param name="larea" select="@area"/>
-                  <jx:with-param name="type">user</jx:with-param>
-                  <jx:with-param name="title">User</jx:with-param>
-                </jx:call-template>
+                  </jx:if>&#160;
+                </th>
+                <th/>
               </tr>
               <tr>
-                <jx:call-template name="form-add-credential">
-                  <jx:with-param name="larea" select="@area"/>
-                  <jx:with-param name="type">group</jx:with-param>
-                  <jx:with-param name="title">Group</jx:with-param>
-                </jx:call-template>
+                
+                <form method="get">
+                  <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
+                  <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+                  <td><i18n:text>User</i18n:text></td>
+                  <td>
+                    <select name="user" class="lenya-form-element-narrow">
+                      <jx:forEach var="user" items="${usecase.getParameter('users')}">
+                        <option value="${user}"><jx:out value="${user}"/></option>
+                      </jx:forEach>
+                    </select>
+                  </td>
+                  <td>
+                    <select name="userRole" class="lenya-form-element-narrow">
+                      <jx:forEach var="role" items="${usecase.getParameter('roles')}">
+                        <option value="${role}"><jx:out value="${role}"/></option>
+                      </jx:forEach>
+                    </select>
+                  </td>
+                  <td>
+                    <input i18n:attr="value" type="submit" name="add_credential_user" value="Add"/>
+                  </td>
+                </form>
+                          
               </tr>
-              <jx:if test="@area = 'live'">
+              <tr>
+                <form method="get">
+                  <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
+                  <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+                  <td><i18n:text>Group</i18n:text></td>
+                  <td>
+                    <select name="group" class="lenya-form-element-narrow">
+                      <jx:forEach var="group" items="${usecase.getParameter('groups')}">
+                        <option value="${group}"><jx:out value="${group}"/></option>
+                      </jx:forEach>
+                    </select>
+                  </td>
+                  <td>
+                    <select name="groupRole" class="lenya-form-element-narrow">
+                      <jx:forEach var="role" items="${usecase.getParameter('roles')}">
+                        <option value="${role}"><jx:out value="${role}"/></option>
+                      </jx:forEach>
+                    </select>
+                  </td>
+                  <td>
+                    <input i18n:attr="value" type="submit" name="add_credential_group" value="Add"/>
+                  </td>
+                </form>
+              </tr>
+              <jx:if test="${area.equals('live')}">
                 <tr>
-                  <jx:call-template name="form-add-credential">
-                    <jx:with-param name="larea" select="@area"/>
-                    <jx:with-param name="type">iprange</jx:with-param>
-                    <jx:with-param name="title">IP Range</jx:with-param>
-                  </jx:call-template>
+                  <form method="get">
+                    <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
+                    <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+                    <td><i18n:text>IP Range</i18n:text></td>
+                    <td>
+                      <select name="ipRange" class="lenya-form-element-narrow">
+                        <jx:forEach var="ipRange" items="${usecase.getParameter('ipRanges')}">
+                          <option value="${ipRange}"><jx:out value="${ipRange}"/></option>
+                        </jx:forEach>
+                      </select>
+                    </td>
+                    <td>
+                      <select name="ipRangeRole" class="lenya-form-element-narrow">
+                        <jx:forEach var="role" items="${usecase.getParameter('roles')}">
+                          <option value="${role}"><jx:out value="${role}"/></option>
+                        </jx:forEach>
+                      </select>
+                    </td>
+                    <td>
+                      <input i18n:attr="value" type="submit" name="add_credential_ipRange" value="Add"/>
+                    </td>
+                  </form>
                 </tr>
               </jx:if>
+              <!--
               <jx:apply-templates select="lenya-info:credential">
                 <jx:with-param name="larea" select="@area"/>
               </jx:apply-templates>
