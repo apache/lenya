@@ -67,7 +67,7 @@
     <property name="libs" refid="libs"/>
 
     <!-- expand properties in the template file -->
-    <copy file="src/resources/dev/eclipse/classpath-tmpl.xml"
+    <copy file="${src.resource.dir}/dev/eclipse/classpath-tmpl.xml"
           tofile="${build.temp}/classpath-temp.xml"
           filtering="yes"
           overwrite="yes">
@@ -95,12 +95,12 @@
     <!-- now build the .classpath file -->
     <xslt in="${build.temp}/classpath-temp.xml" out="${basedir}/.classpath"
           processor="trax"
-          style="src/resources/dev/eclipse/make-classpath.xsl">
+          style="${src.resource.dir}/dev/eclipse/make-classpath.xsl">
        <param name="exportlib" expression="${ide.eclipse.export.libs}"/>
     </xslt>
 
     <!-- copy the project file (expand version) -->
-    <copy file="src/resources/dev/eclipse/project"
+    <copy file="${src.resource.dir}/dev/eclipse/project"
           tofile="${basedir}/.project"
           overwrite="yes">
     </copy>

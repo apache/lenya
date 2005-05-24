@@ -101,7 +101,7 @@
   -->
   <property name="src.webapp.dir" value="src/webapp"/>
   <property name="tools.tasks.dest" value="tools/anttasks"/>
-  <property name="resource.dir"  value="${src.webapp.dir}/resources/css"/>
+  <property name="src.resource.dir"  value="src/resources"/>
   <!-- cocoon build properties directory -->
   <property name="src.cocoon.properties.dir" value="src/cocoon"/>
   <!-- hsqldb database config files directory -->

@@ -45,7 +45,7 @@
   </target>
 
   <!-- Build Cocoon with our properties -->
-  <target name="build-cocoon" depends="init" unless="cocoon.build.webapp.dir.exists">
+  <target name="build-cocoon" unless="cocoon.build.webapp.dir.exists">
     <copy todir="${cocoon.src.dir}" filtering="off">
       <fileset dir="${src.cocoon.properties.dir}"/>
     </copy>
@@ -56,6 +56,7 @@
   <target name="prepare-cocoon" depends="check-cocoon" unless="gump.skipcocoonbuild">
     <copy todir="${build.webapp}" filtering="off">
       <fileset dir="${cocoon.webapp.dir}">
+        <exclude name="resources/**"/>
         <exclude name="*.xml"/>
         <exclude name="*.xslt"/>
         <exclude name="test-suite/**"/>

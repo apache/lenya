@@ -52,7 +52,7 @@
              windowtitle="${Name} API - Version ${version}"
              doctitle="${Name}"
              bottom="Copyright &#169; ${year} Apache Software Foundation. All Rights Reserved."
-             stylesheetfile="${resource.dir}/javadoc.css"
+             stylesheetfile="${src.resource.dir}/javadoc.css"
              source="1.4">
       <!-- sources -->
       <sourcepath>
