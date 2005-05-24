@@ -20,49 +20,18 @@
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
   xmlns="http://www.w3.org/1999/xhtml" xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
   
-  <div>
+  <jx:import uri="tab/head.jx"/>
+  <page:body>
+    <!--
+    <jx:import uri="tab/sitetree.jx"/>
+    -->
     <jx:import uri="tab/tabs.jx"/>
-    <div id="contentblock1" class="lenya-tab">
+    <div id="contentblock1" class="lenya-tab-sitetree">
       <table class="lenya-table-noborder">
         <tr>
           <td>
-            <form method="get" name="form_ssl_{$usecase.getParameter('document').getArea()}">
-              <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
-              <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
-              <input type="hidden" name="change_ssl" value="true"/>
-              
-              <jx:choose>
-                <jx:when test="${usecase.getParameter('ssl').equals('true') || usecase.getParameter('anchestor-ssl').equals('true')}">
-                  <jx:choose>
-                    <jx:when test="${usecase.getParameter('anchestor-ssl').equals('true')}">
-                      <input type="checkbox" name="ssl" onclick="document.forms.form_ssl_{@area}.submit()" value="true" checked="checked" disabled="disabled">
-                        <i18n:text>SSL Encryption</i18n:text>
-                      </input>
-                    </jx:when>
-                    <jx:otherwise>
-                      <input type="checkbox" name="ssl" onclick="document.forms.form_ssl_{@area}.submit()" value="true" checked="checked">
-                        <i18n:text>SSL Encryption</i18n:text>
-                      </input>
-                    </jx:otherwise>
-                  </jx:choose>
-                </jx:when>
-                <jx:otherwise>
-                  <jx:choose>
-                    <jx:when test="${usecase.getParameter('anchestor-ssl').equals('true')}">
-                      <input type="checkbox" name="ssl" onclick="document.forms.form_ssl_{@area}.submit()" value="true" disabled="disabled">
-                        <i18n:text>SSL Encryption</i18n:text>
-                      </input>
-                    </jx:when>
-                    <jx:otherwise>
-                      <input type="checkbox" name="ssl" onclick="document.forms.form_ssl_{@area}.submit()" value="true">
-                        <i18n:text>SSL Encryption</i18n:text>
-                      </input>
-                    </jx:otherwise>
-                  </jx:choose>
-                </jx:otherwise>
-              </jx:choose>
-            </form>
-          </td>
+            <jx:import uri="tab/ac/ssl-form.jx"/>
+           </td>
         </tr>
         <tr>
           <td>
@@ -109,5 +78,5 @@
         </tr>
       </table>
     </div>
-  </div>
+  </page:body>
 </page:page>
