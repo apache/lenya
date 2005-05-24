@@ -62,6 +62,9 @@ public class EditDocument extends DocumentUsecase {
         }
     }
 
+    /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
+     */
     protected Transactionable[] getObjectsToLock() throws UsecaseException {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("EditDocument::getObjectsToLock() called on source document [" + getSourceDocument().getId() + "]");
