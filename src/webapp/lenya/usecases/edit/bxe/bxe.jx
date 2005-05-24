@@ -1,0 +1,48 @@
+<page:page
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+  xmlns:cinclude="http://apache.org/cocoon/include/1.0"
+  >
+  
+  <page:head>
+    <link rel="stylesheet" href="${request.getContextPath()}/bxe/css/editor.css" type="text/css"/>
+    <script src="${request.getContextPath()}/bxe/bxeLoader.js" type="text/javascript"/>
+    
+    <meta name="bxeNS" content="xhtml=http://www.w3.org/1999/xhtml"/>
+    <meta name="bxeNS" content="lenya=http://apache.org/cocoon/lenya/page-envelope/1.0"/>
+    <meta name="bxeNS" content="dc=http://purl.org/dc/elements/1.1/"/>
+    <meta name="bxeNS" content="dcterms=http://purl.org/dc/terms/"/>
+  </page:head>
+  
+  <page:title><i18n:text>Bitflux Editor</i18n:text></page:title>
+  
+  <jx:set var="configFile" value="${request.getRequestURI()}"/>
+
+  <jx:choose>
+    <jx:when test="${usecase.hasErrors()}">
+      <page:body>
+        <jx:import uri="templates/messages.jx"/>
+      </page:body>
+    </jx:when>
+    <jx:otherwise>
+      <page:body onload="bxe_start('${configFile}?lenya.usecase=bxe&amp;lenya.step=config&amp;lenya.continuation=${continuation.id}')">
+    
+        <!-- everything in the following div element will be replaced -->
+        <div id="bxe_area">
+        <noscript>
+        <span style='font-family: Arial; padding: 5px; background-color: #ffffff'>
+        You need JavaScript enabled. Otherwise nothing at all works here
+        :)</span></noscript>
+        </div>
+        
+        <!-- another way to do it without having to use xslt
+          <div id="foobar" bxe_xpath="/xhtml:body"></div>
+        -->
+            
+      </page:body>
+    </jx:otherwise>
+  </jx:choose>
+  
+</page:page>
