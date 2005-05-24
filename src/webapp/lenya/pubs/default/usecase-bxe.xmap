@@ -71,20 +71,6 @@
 	  
     <map:pipeline type="noncaching">
 
-      <!--
-         This reads the data that BXE posts when the user saves changes,      
-         applies a transformation and provides the data as XML
-         TODO: document why the special transformation is needed, either here
-         or in the change-object-path-back.xsl stylesheet.
-       -->
-      <map:match pattern="request2document">
-        <map:generate type="stream"/>
-        <map:transform src="../../xslt/bxe/change-object-path-back.xsl">
-          <map:parameter name="documentid" value="{page-envelope:document-id}"/>
-        </map:transform>
-        <map:serialize type="xml"/>
-      </map:match>
-      
       <map:match type="usecase" pattern="bxe">
         
         <map:match type="step" pattern="open">
@@ -246,7 +232,7 @@
   <!--       The document is checked in when we exit from bx (in case of save&exit and in case of exit), so we use the usecase
              for the checkin while we redirect to the document
   -->
-            <map:parameter name="BX_exitdestination" value="{request:requestURI}?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=true"/>
+            <map:parameter name="BX_exitdestination" value="{request:requestURI}?lenya.usecase=edit.bxe&amp;lenya.continuation={request-param:lenya.continuation}&amp;submit=Submit"/>
             <map:parameter name="contextmenufile" value="../../resources/misc/bxe/contextmenu.xml"/>
           </map:transform>
           <map:transform type="cinclude"/>
@@ -266,27 +252,23 @@
             +-->
         <map:select type="request-method">
           
+          <!--
+             This reads the data that BXE posts when the user saves changes,      
+             applies a transformation and provides the data as XML
+             TODO: document why the special transformation is needed, either here
+             or in the change-object-path-back.xsl stylesheet.
+           -->
           <map:when test="PUT">
-
-             <!--+
-	         | before we save, we must be sure that the document is well checked out
-                 +-->           
-
-	     <map:act type="reserved-checkout-test">
-    	       <map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
-                 <map:parameter name="user" value="{user}"/>
-                 <map:parameter name="filename" value="{filename}"/>
-	         <map:parameter name="date" value="{date}"/>
-    	       </map:generate>
-               <map:transform src="../../xslt/rc/rco-exception.xsl"/>
-	       <map:call resource="style-cms-page"/>
-             </map:act>
-          
-             <map:call function="editDocument">
-               <map:parameter name="lenya.usecase" value="publication.edit"/>
-               <map:parameter name="sourceUri" value="cocoon:/request2document"/>
-               <map:parameter name="noCheckin" value="true"/>
-             </map:call>
+            <map:generate type="stream"/>
+            <map:transform src="../../xslt/bxe/change-object-path-back.xsl">
+              <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+            </map:transform>
+            <map:transform src="../../usecases/edit/bxe/addSourceTags.xsl">
+              <map:parameter name="source" value="context://lenya/pubs/{page-envelope:publication-id}/work/bxe/content/{page-envelope:area}/{page-envelope:document-path}.tmp"/>
+            </map:transform>
+            <map:transform type="write-source"/>
+            <map:transform src="../../usecases/edit/bxe/removeSourceTags.xsl"/>
+            <map:serialize type="xml" status-code="204"/>
           </map:when>
 
           <map:otherwise> <!-- GET -->
