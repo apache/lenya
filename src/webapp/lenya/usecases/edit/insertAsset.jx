@@ -42,7 +42,7 @@
         <jx:forEach var="asset" items="${usecase.getParameter('assets')}">
           <tr>
             <td><input type="radio" name="asset" value="${asset.getName()}"
-                       onClick="javascript:insertCaption('${asset.getName()}', '${asset.getMetaDataManager().getDublinCoreMetaData().getFirstValue('title')}', '${asset.getMimeType()}')"/></td>
+                       onClick="javascript:insertCaption('${asset.getName()}', '${asset.getMetaDataManager().getDublinCoreMetaData().getFirstValue('title')}', '${asset.getMimeType()}', '${asset.getContentLength() / 1000}')"/></td>
             <td><jx:out value="${asset.getName()}"/></td>
             <td>        
               <jx:set var="mimeType" value="${asset.getMimeType()}"/>
@@ -63,10 +63,11 @@
               <label for="caption"><i18n:text>Caption</i18n:text></label>: <input class="lenya-form-element" type="text" name="caption"/>
               <input type="hidden" name="type" value=""/>
               <input type="hidden" name="assetName" value=""/>
+              <input type="hidden" name="assetSize" value=""/>
             </div>
             <div style="margin: 10px">
               <input i18n:attr="value" type="submit" name="submit" value="Submit"
-                     onClick="javascript:insertImage('${usecase.getParameter('document').getName()}');" />
+                     onClick="javascript:${usecase.getView().getParameter('callbackFunction')}('${usecase.getParameter('document').getName()}');" />
               &#160;
               <input i18n:attr="value" type="submit" name="cancel" value="Cancel"
                      onClick="location.href='javascript:window.close();';" />
