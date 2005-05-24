@@ -216,28 +216,28 @@
             <map:transform src="fallback://lenya/xslt/menu/menu2xul.xsl">
               <map:parameter name="contextprefix" value="{request:contextPath}"/>
               <map:parameter name="publicationid" value="{1}"/>
-              <map:parameter name="completearea" value="{2}"/>
-              <map:parameter name="documentarea" value="{page-envelope:area}"/>
+              <map:parameter name="area" value="{2}"/>
               <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
               <map:parameter name="documentid" value="{page-envelope:document-id}"/>
               <map:parameter name="userid" value="{access-control:user-id}"/>
               <map:parameter name="servertime" value="{date-i18n:currentDate}"/>
               <map:parameter name="workflowstate" value="{workflow:state}"/>
               <map:parameter name="islive" value="{workflow:variable.is_live}"/>
+              <map:parameter name="usecase" value="{request-param:lenya.usecase}"/>
             </map:transform>
           </map:when>
           <map:otherwise>
             <map:transform src="fallback://lenya/xslt/menu/menu2xhtml.xsl">
               <map:parameter name="contextprefix" value="{request:contextPath}"/>
               <map:parameter name="publicationid" value="{1}"/>
-              <map:parameter name="completearea" value="{2}"/>
-              <map:parameter name="documentarea" value="{page-envelope:area}"/>
+              <map:parameter name="area" value="{2}"/>
               <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
               <map:parameter name="documentid" value="{page-envelope:document-id}"/>
               <map:parameter name="userid" value="{access-control:user-id}"/>
               <map:parameter name="servertime" value="{date-i18n:currentDate}"/>
               <map:parameter name="workflowstate" value="{workflow:state}"/>
               <map:parameter name="islive" value="{workflow:variable.is_live}"/>
+              <map:parameter name="usecase" value="{request-param:lenya.usecase}"/>
             </map:transform>
           </map:otherwise>
         </map:select>

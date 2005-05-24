@@ -27,14 +27,22 @@
   
 <xsl:param name="contextprefix"/>
 <xsl:param name="publicationid"/>
-<xsl:param name="documentarea"/>
-<xsl:param name="completearea"/>
+<xsl:param name="area"/>
 <xsl:param name="documenturl"/>
 <xsl:param name="documentid"/>
 <xsl:param name="userid"/>
 <xsl:param name="servertime"/>
 <xsl:param name="workflowstate"/>
 <xsl:param name="islive"/>
+<xsl:param name="usecase"/>
+
+<xsl:variable name="currentTab">
+  <xsl:choose>
+    <xsl:when test="starts-with($usecase, 'admin.')">admin</xsl:when>
+    <xsl:when test="starts-with($usecase, 'tab.')">site</xsl:when>
+    <xsl:otherwise>authoring</xsl:otherwise>
+  </xsl:choose>
+</xsl:variable>
 
 <xsl:variable name="image-prefix"><xsl:value-of select="$contextprefix"/>/lenya/menu/images</xsl:variable>
  
@@ -50,32 +58,34 @@
     <!-- The main tabs for the different areas of Lenya -->
     <div id="lenya-areas">
       <ul>
-  
+        
         <!-- ADMIN TAB -->
         <xsl:if test="not(menu:tabs/menu:tab[@label = 'admin']/@show = 'false')">
           <xsl:call-template name="area-tab">
             <xsl:with-param name="tab-area">admin</xsl:with-param>
+            <xsl:with-param name="tabName">admin</xsl:with-param>
           </xsl:call-template>
         </xsl:if>
           
-        <!-- INFO/SITE TAB -->
         <xsl:variable name="info-area">
           <xsl:choose>
-            <xsl:when test="not(starts-with($documentarea, 'info-'))">info-authoring</xsl:when>
-            <xsl:otherwise><xsl:value-of select="$documentarea"/></xsl:otherwise>
+            <xsl:when test="$area = 'admin'">authoring</xsl:when>
+            <xsl:otherwise><xsl:value-of select="$area"/></xsl:otherwise>
           </xsl:choose>
         </xsl:variable>
           
         <xsl:if test="not(menu:tabs/menu:tab[@label = 'info']/@show = 'false')">
           <xsl:call-template name="area-tab">
             <xsl:with-param name="tab-area" select="$info-area"/>
-            <xsl:with-param name="tab-area-prefix">info</xsl:with-param>
+            <xsl:with-param name="queryString">?lenya.usecase=tab.overview</xsl:with-param>
+            <xsl:with-param name="tabName">site</xsl:with-param>
           </xsl:call-template>
         </xsl:if>
           
         <!-- AUTHORING TAB -->
         <xsl:call-template name="area-tab">
           <xsl:with-param name="tab-area">authoring</xsl:with-param>
+          <xsl:with-param name="tabName">authoring</xsl:with-param>
         </xsl:call-template>
           
         <!-- STAGING TAB -->
@@ -90,6 +100,7 @@
           <xsl:call-template name="area-tab">
             <xsl:with-param name="tab-area">live</xsl:with-param>
             <xsl:with-param name="target">_blank</xsl:with-param>
+            <xsl:with-param name="tabName">live</xsl:with-param>
           </xsl:call-template>
         </xsl:if>
           
@@ -123,31 +134,24 @@
     <xsl:param name="tab-area"/>
     <xsl:param name="tab-area-prefix" select="$tab-area"/>
     <xsl:param name="target" select="'_self'"/>
+    <xsl:param name="queryString"/>
+    <xsl:param name="tabName"/>
     
     <xsl:variable name="tab-documenturl">
       <xsl:choose>
         <!-- index.html for link from/to admin area -->
-        <xsl:when test="$tab-area = 'admin' or $documentarea = 'admin'">/index.html</xsl:when>
-        <xsl:when test="starts-with($completearea, 'info') and $documentid = '/'">/index.html</xsl:when>
+        <xsl:when test="$tab-area = 'admin' or $area = 'admin'">/index.html</xsl:when>
+        <xsl:when test="($currentTab = 'site') and $documentid = '/'">/index.html</xsl:when>
         <xsl:otherwise><xsl:value-of select="$documenturl"/></xsl:otherwise>
       </xsl:choose>
     </xsl:variable>
 
-    <xsl:variable name="tab-name">
-      <xsl:choose>
-        <xsl:when test="starts-with($tab-area, 'info')">Site</xsl:when>
-        <xsl:otherwise>
-          <xsl:value-of select="$tab-area"/>
-        </xsl:otherwise>
-      </xsl:choose>
-    </xsl:variable>
-    
     <xsl:choose>
-      <xsl:when test="starts-with($completearea, $tab-area-prefix)">
-        <li id="area-{$tab-area}-active"><a href="{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}" target="{$target}"><span><i18n:text><xsl:value-of select="$tab-name"/></i18n:text></span></a></li>
+      <xsl:when test="$tabName = $currentTab">
+        <li id="area-{$tab-area}-active"><a href="{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}{$queryString}" target="{$target}"><span><i18n:text><xsl:value-of select="$tabName"/></i18n:text></span></a></li>
       </xsl:when>
       <xsl:otherwise>
-        <li id="area-{$tab-area}"><a href="{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}" target="{$target}"><span><i18n:text><xsl:value-of select="$tab-name"/></i18n:text></span></a></li>
+        <li id="area-{$tab-area}"><a href="{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}{$queryString}" target="{$target}"><span><i18n:text><xsl:value-of select="$tabName"/></i18n:text></span></a></li>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
@@ -170,7 +174,7 @@
   <xsl:template match="menu:menu" mode="nav">
     <li id="nav{position()}"><xsl:value-of select="@name"/>
       <ul id="menu{position()}">
-        <xsl:apply-templates select="menu:block[not(@info = 'false') and starts-with($completearea, 'info') or not(@*[local-name() = $completearea] = 'false') and not(starts-with($completearea, 'info'))]"/>
+        <xsl:apply-templates select="menu:block[not(@info = 'false') and ($currentTab = 'site') or not(@*[local-name() = $currentTab] = 'false') and not($currentTab = 'site')]"/>
       </ul>
     </li>
   </xsl:template>
@@ -184,7 +188,7 @@
   <!-- match blocks with not area='false' -->
   <xsl:template match="menu:block">
     <xsl:apply-templates select="menu:title"/>
-    <xsl:apply-templates select="menu:item[not(@info = 'false') and starts-with($completearea, 'info') or not(@*[local-name() = $completearea] = 'false') and not(starts-with($completearea, 'info'))]"/>
+    <xsl:apply-templates select="menu:item[not(@info = 'false') and ($currentTab = 'site') or not(@*[local-name() = $currentTab] = 'false') and not($currentTab = 'site')]"/>
 		
     <xsl:if test="position() != last()">
       <li class="lenya-menu-separator"></li>
@@ -205,7 +209,7 @@
             <xsl:value-of select="@href"/>
             <xsl:apply-templates select="@*[local-name() != 'href']"/>
             <xsl:text/>
-            <xsl:if test="starts-with($completearea, 'info-')">
+            <xsl:if test="$currentTab = 'site'">
               <xsl:choose>
                 <xsl:when test="contains(@href, '?')">
                   <xsl:text>&amp;</xsl:text>
@@ -214,7 +218,6 @@
                   <xsl:text>?</xsl:text>
                 </xsl:otherwise>
               </xsl:choose>
-              <xsl:text>lenya.area=info</xsl:text>
             </xsl:if>
           </xsl:attribute>
           <span><xsl:value-of select="."/></span>
@@ -234,6 +237,9 @@
       <xsl:otherwise>?</xsl:otherwise>
     </xsl:choose>
     <xsl:text/>lenya.usecase=<xsl:value-of select="normalize-space(.)"/><xsl:text/>
+    <xsl:if test="$usecase != ''">
+      <xsl:text>&amp;lenya.exitUsecase=</xsl:text><xsl:value-of select="$usecase"/><xsl:text/>
+    </xsl:if>
   </xsl:template>
   
   <xsl:template match="menu:item/@uc:step">

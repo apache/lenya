@@ -690,6 +690,12 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
                 queryString += "&" + key + "=" + value;
             }
         }
+        else {
+            String exitUsecase = getParameterAsString("lenya.exitUsecase");
+            if (exitUsecase != null && !"".equals(exitUsecase)) {
+                queryString = "?lenya.usecase=" + exitUsecase;
+            }
+        }
         return queryString;
     }
 }
