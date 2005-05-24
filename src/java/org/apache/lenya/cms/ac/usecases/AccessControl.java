@@ -57,7 +57,11 @@ public class AccessControl extends AccessControlUsecase {
     protected static final String ADD = "add";
     protected static final String DELETE = "delete";
 
-    private static String[] types = { "user", "group", "iprange", "role" };
+    protected static final String USER = "user";
+    protected static final String GROUP = "group";
+    protected static final String IPRANGE = "ipRange";
+    protected static final String ROLE = "role";
+    private static String[] types = { USER, GROUP, IPRANGE };
     private static String[] operations = { ADD, DELETE };
 
     protected static final String SSL = "ssl";
@@ -127,44 +131,10 @@ public class AccessControl extends AccessControlUsecase {
             Arrays.sort(roleIds);
             setParameter("roles", roleIds);
             setParameter("visitorRole", visitorRole);
-            
+
             setParameter(URL_CREDENTIALS, getURICredentials());
             setParameter(PARENT_CREDENTIALS, getParentCredentials());
 
-            for (int i = 0; i < types.length; i++) {
-                Item[] _items = null;
-
-                if (types[i].equals("user")) {
-                    _items = getUserManager().getUsers();
-                } else if (types[i].equals("group")) {
-                    _items = getGroupManager().getGroups();
-                } else if (types[i].equals("iprange")) {
-                    _items = getIpRangeManager().getIPRanges();
-                } else if (types[i].equals("role")) {
-                    _items = getRoleManager().getRoles();
-                }
-                for (int j = 0; j < operations.length; j++) {
-                    if (getParameterAsString(operations[j] + "_credential_" + types[i]) != null) {
-                        String roleId = getParameterAsString("role_id");
-
-                        String accreditableId = getParameterAsString("accreditable_id");
-                        Item item = null;
-                        for (int k = 0; k < _items.length; k++) {
-                            if (accreditableId.equals(_items[k].getId())) {
-                                item = _items[k];
-                            }
-                        }
-
-                        Role role = getRoleManager().getRole(roleId);
-
-                        if (role == null) {
-                            addErrorMessage("role_no_such_role", new String[] { roleId });
-                        }
-
-                        manipulateCredential(item, role, operations[j]);
-                    }
-                }
-            }
         } catch (final Exception e) {
             addErrorMessage("Could not read a value.");
             getLogger().error("Could not read value for AccessControl usecase. ", e);
@@ -209,6 +179,37 @@ public class AccessControl extends AccessControlUsecase {
                 deleteParameter("change_ssl");
                 deleteParameter("ssl");
             }
+
+            for (int i = 0; i < types.length; i++) {
+                for (int j = 0; j < operations.length; j++) {
+                    String paramName = operations[j] + "Credential_" + types[i];
+                    if (getParameterAsString(paramName) != null) {
+                        String roleId = getParameterAsString(ROLE);
+
+                        String id = getParameterAsString(types[i]);
+                        Item item = null;
+                        if (types[i].equals(USER)) {
+                            item = getUserManager().getUser(id);
+                        } else if (types[i].equals(GROUP)) {
+                            item = getGroupManager().getGroup(id);
+                        } else if (types[i].equals(IPRANGE)) {
+                            item = getIpRangeManager().getIPRange(id);
+                        }
+                        if (item == null) {
+                            addErrorMessage("no_such_accreditable", new String[] { types[i], id });
+                        } else {
+                            Role role = getRoleManager().getRole(roleId);
+                            if (role == null) {
+                                addErrorMessage("role_no_such_role", new String[] { roleId });
+                            }
+                            manipulateCredential(item, role, operations[j]);
+                            setParameter(URL_CREDENTIALS, getURICredentials());
+                        }
+                        deleteParameter(paramName);
+                    }
+                }
+            }
+
         } catch (Exception e) {
             throw new UsecaseException(e);
         }
@@ -404,11 +405,11 @@ public class AccessControl extends AccessControlUsecase {
 
         return policies;
     }
-    
+
     protected String getPolicyURL() {
         String infoUrl = getSourceURL();
         URLInformation info = new URLInformation(infoUrl);
-        
+
         String area = getParameterAsString("acArea");
         String url = "/" + info.getPublicationId() + "/" + area + info.getDocumentUrl();
         return url;
