@@ -22,7 +22,6 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.cocoon.ProcessingException;
-import org.apache.lenya.cms.ac.cocoon.CredentialWrapper;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.URLInformation;
