@@ -64,16 +64,16 @@ set EXEC=
 :gotExec
 
 set LENYA_HOME=.
-echo lenya.bat: using %LENYA_HOME% as home
+:: echo lenya.bat: using %LENYA_HOME% as home
 
 set LENYA_LIB=%LENYA_HOME%\build\lenya\webapp\WEB-INF\lib
-echo lenya.bat: using %LENYA_LIB% as lib
+:: echo lenya.bat: using %LENYA_LIB% as lib
 
 set JETTY_PORT=8888
 
 set JETTY_ADMIN_PORT=8889
 set JETTY_WEBAPP=%LENYA_HOME%\build\lenya\webapp
-echo lenya.bat: using %JETTY_WEBAPP% as the webapp directory
+:: echo lenya.bat: using %JETTY_WEBAPP% as the webapp directory
 
 set JAVA_DEBUG_PORT=8000
 
