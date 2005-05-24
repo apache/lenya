@@ -24,6 +24,12 @@ importClass(Packages.org.apache.lenya.cms.cocoon.source.SourceUtil);
  * @version $Id$
  */
 
+function checkoutDocument() {
+}
+
+function checkinDocument() {
+}
+
 /**
  * Saves a Source to the document in the current PageEnvelope.
  * TODO: Use nobby's new usecase fw in 1.4 branch. Exception handling e.g. display appropriate error pages.
@@ -59,8 +65,15 @@ function editDocument() {
 
         usecase.checkPreconditions();
         usecase.lockInvolvedObjects();
-        
-        usecase.execute();
+        if (!usecase.getErrorMessages().isEmpty()) {
+            throw new Exception("Checking pre-conditions or locking failed!");
+        }
+        else {
+            usecase.execute();
+            if (usecase.getErrorMessages().isEmpty()) {
+                // TODO: handle error messages
+            }
+        }
 
         if (cocoon.log.isDebugEnabled()) {
             cocoon.log.debug("edit-document.js::editDocument() after usecase.execute(), hasErrors ? " + usecase.hasErrors());
