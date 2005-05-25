@@ -30,18 +30,14 @@ import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.impl.PolicyAuthorizer;
-import org.apache.lenya.cms.publication.DefaultDocument;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentType;
-import org.apache.lenya.cms.publication.DocumentTypeResolver;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Workflow;
@@ -61,16 +57,12 @@ public class WorkflowResolverImpl extends AbstractLogEnabled implements Workflow
      * @see org.apache.lenya.cms.workflow.WorkflowResolver#getWorkflowSchema(org.apache.lenya.cms.publication.Document)
      */
     public Workflow getWorkflowSchema(Document document) throws WorkflowException {
-        DocumentTypeResolver doctypeResolver = null;
         WorkflowImpl workflow = null;
 
         try {
-            doctypeResolver = (DocumentTypeResolver) this.manager.lookup(DocumentTypeResolver.ROLE);
-            DocumentType doctype = doctypeResolver.resolve(document);
-
+            DocumentType doctype = document.getResourceType();
             if (doctype.hasWorkflow()) {
                 String workflowFileName = doctype.getWorkflowFileName();
-
                 Publication publication = document.getPublication();
 
                 File workflowDirectory = new File(publication.getDirectory(), WORKFLOW_DIRECTORY);
@@ -79,11 +71,7 @@ public class WorkflowResolverImpl extends AbstractLogEnabled implements Workflow
                 workflow = builder.buildWorkflow(workflowFileName, workflowFile);
             }
         } catch (final Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (doctypeResolver != null) {
-                this.manager.release(doctypeResolver);
-            }
+            throw new WorkflowException(e);
         }
 
         return workflow;
@@ -124,8 +112,7 @@ public class WorkflowResolverImpl extends AbstractLogEnabled implements Workflow
             }
 
             situation = new CMSSituation(roleIds, userId, machineIp);
-        }
-        else {
+        } else {
             situation = new CMSSituation(new String[0], null, null);
         }
         return situation;
@@ -144,33 +131,15 @@ public class WorkflowResolverImpl extends AbstractLogEnabled implements Workflow
      * @see org.apache.lenya.cms.workflow.WorkflowResolver#hasWorkflow(org.apache.lenya.cms.publication.Document)
      */
     public boolean hasWorkflow(Document document) {
-        SourceResolver resolver = null;
-        DocumentTypeResolver doctypeResolver = null;
-        Source source = null;
+
         boolean hasWorkflow = false;
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            String uri = ((DefaultDocument) document).getHistory().getSourceURI();
-            source = resolver.resolveURI(uri);
-            if (source.exists()) {
-                hasWorkflow = true;
-            } else {
-                doctypeResolver = (DocumentTypeResolver) this.manager.lookup(DocumentTypeResolver.ROLE);
-                DocumentType doctype = doctypeResolver.resolve(document);
+            if (document.exists()) {
+                DocumentType doctype = document.getResourceType();
                 hasWorkflow = doctype.hasWorkflow();
             }
         } catch (final Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
-            }
-            if (doctypeResolver != null) {
-                this.manager.release(doctypeResolver);
-            }
         }
         return hasWorkflow;
     }

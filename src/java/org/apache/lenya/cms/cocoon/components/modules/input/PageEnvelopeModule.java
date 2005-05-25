@@ -27,12 +27,10 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentType;
-import org.apache.lenya.cms.publication.DocumentTypeResolver;
 import org.apache.lenya.cms.publication.PageEnvelope;
 
 /**
@@ -109,13 +107,16 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
                     Date date = document.getLastModified();
                     value = new SimpleDateFormat(DATE_FORMAT).format(date);
                 } else if (name.equals(PageEnvelope.DOCUMENT_TYPE)) {
-                    value = getDocumentType(envelope);
+                    DocumentType resourceType = document.getResourceType();
+                    if (resourceType == null) {
+                        value = null;
+                    }
+                    else {
+                        value = resourceType.getName();
+                    }
                 }
             }
         } catch (final DocumentException e) {
-            throw new ConfigurationException("Getting attribute for name [" + name + "] failed: ",
-                    e);
-        } catch (final ServiceException e) {
             throw new ConfigurationException("Getting attribute for name [" + name + "] failed: ",
                     e);
         }
@@ -131,27 +132,6 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
      * <code>DATE_FORMAT</code> The date format
      */
     public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
-
-    /**
-     * Returns the document type.
-     * @param envelope The page envelope.
-     * @return A string.
-     * @throws ServiceException when something went wrong.
-     */
-    protected String getDocumentType(PageEnvelope envelope) throws ServiceException {
-        String documentType;
-        DocumentTypeResolver resolver = null;
-        try {
-            resolver = (DocumentTypeResolver) this.manager.lookup(DocumentTypeResolver.ROLE);
-            DocumentType type = resolver.resolve(envelope.getDocument());
-            documentType = type.getName();
-        } finally {
-            if (resolver != null) {
-                this.manager.release(resolver);
-            }
-        }
-        return documentType;
-    }
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration,
