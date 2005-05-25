@@ -150,7 +150,7 @@
 		<tr>
 			<td class="lenya-entry-caption"><i18n:text>Description</i18n:text>&#160;&#160;</td>
 			<td>
-				<textarea class="lenya-form-element" name="description"><xsl:value-of select="normalize-space(.)"/>&#160;</textarea>
+				<textarea class="lenya-form-element" name="description"><xsl:value-of select="normalize-space(.)"/><xsl:text> </xsl:text></textarea>
 			</td>
 		</tr>
 	</xsl:template>  
