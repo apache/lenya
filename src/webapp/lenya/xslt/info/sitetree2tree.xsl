@@ -102,8 +102,17 @@ foldersTree.treeID = "t2"
   <xsl:variable name="post" select="$protected-post"/>
   
   <xsl:choose>
+    <!-- FIXME
+    The area nodes must not be clickable unless we find a solution for non-document URLs.
+    The nodes were used for area access control and for an overview of the scheduled jobs.
+    
   	<xsl:when test="descendant::s:node"><xsl:value-of select="generate-id(.)"/> = insFld(foldersTree, gFld("&#160;<xsl:value-of select="$pre"/><xsl:value-of select="@label"/><xsl:value-of select="$post"/>&#160;" <xsl:value-of select="$link"/>))</xsl:when>
     <xsl:otherwise>insDoc(foldersTree, gLnk("S", "&#160;<xsl:value-of select="$pre"/><xsl:value-of select="@label"/><xsl:value-of select="$post"/>&#160;" <xsl:value-of select="$link"/>))</xsl:otherwise>
+    -->
+    
+  	<xsl:when test="descendant::s:node"><xsl:value-of select="generate-id(.)"/> = insFld(foldersTree, gFld("&#160;<xsl:value-of select="$pre"/><xsl:value-of select="@label"/><xsl:value-of select="$post"/>&#160;"))</xsl:when>
+    <xsl:otherwise>insDoc(foldersTree, gLnk("S", "&#160;<xsl:value-of select="$pre"/><xsl:value-of select="@label"/><xsl:value-of select="$post"/>&#160;"))</xsl:otherwise>
+
   </xsl:choose>
   <xsl:apply-templates>
     <xsl:with-param name="parentPath"><xsl:value-of select="@id"/></xsl:with-param>
