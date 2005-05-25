@@ -99,7 +99,7 @@
   <xsl:template match="id">
 		<tr>
 			
-			<td class="lenya-entry-caption"><i18n:text>CMS User ID</i18n:text>&#160;<span class="lenya-admin-required">*</span></td>
+			<td class="lenya-entry-caption" style="white-space:nowrap"><i18n:text>CMS User ID</i18n:text>&#160;<span class="lenya-admin-required">*</span></td>
 			<td>
 				 <xsl:choose>
 					 <xsl:when test="../@new = 'true'">

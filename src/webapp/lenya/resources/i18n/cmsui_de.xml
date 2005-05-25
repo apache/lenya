@@ -177,7 +177,7 @@
     <!-- User Administration -->
   <message key="User Data">Benutzerdetails</message>
   <message key="User ID">Benutzer</message>
-  <message key="CMS User ID">CMS&#160;Benutzer</message>
+  <message key="CMS User ID">CMS&#160;Benutzer ID</message>
   <message key="LDAP ID">LDAP&#160;ID</message>
   <message key="Confirm password">Passwort&#160;bestätigen</message>
   <message key="Add User">Benutzer hinzufügen</message>
@@ -188,6 +188,18 @@
   <message key="Group Affiliation">Gruppenmitgliedschaften</message>
   <message key="Change Password">Passwort ändern</message>
   <message key="Edit Group Affiliation">Mitgliedschaften ändern</message>
+  <message key="This user already exists.">Diese Benutzer ID existiert schon.</message>
+  <message key="This is not a valid user ID.">Das ist kein gültige CMS Benutzer ID</message>
+  <message key="Please enter an e-mail address.">Bitte eine E-Mail Adresse eingeben.</message>
+  <message key="This LDAP user ID does not exist.">Diese LDAP Benutzer ID existiert nicht.</message>
+  <message key="Password and confirmed password are not equal.">Das Passwort und das Bestätigungs-Passwort stimmen nicht überein.</message>
+  <message key="The password must be at least six characters long.">Das Passwort muss mindestens sechs Zeichen lang sein.</message>
+  <message key="The password must contain at least one number.">Das Passwort muss mindestens eine Zahl enthalten.</message>
+  <message key="You cannot change the password of this user.">Konnte das Passwort dieses Benutzers nicht ändern.</message>
+  
+    <!-- User Types -->
+  <message key="LDAP User">LDAP Benutzer</message>
+  <message key="Local User">CMS Benutzer</message>
   
   <!-- IP Range Administration -->
   <message key="IP Range">IP&#160;Bereich</message>

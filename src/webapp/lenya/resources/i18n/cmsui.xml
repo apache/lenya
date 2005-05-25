@@ -190,7 +190,7 @@
   <message key="Change Password">Change Password</message>
   <message key="Edit Group Affiliation">Edit Group Affiliation</message>
   <message key="This user already exists.">This user already exists.</message>
-  <message key="This is not a valid user ID.">This is not a valid user ID.</message>
+  <message key="This is not a valid user ID.">This is not a valid CMS User ID.</message>
   <message key="Please enter an e-mail address.">Please enter an e-mail address.</message>
   <message key="This LDAP user ID does not exist.">This LDAP user ID does not exist.</message>
   <message key="Password and confirmed password are not equal.">Password and confirmed password are not equal.</message>
