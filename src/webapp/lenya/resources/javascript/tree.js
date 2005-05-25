@@ -1014,8 +1014,10 @@ function highlightObjLink(nodeObj) {
     if (clickedDOMObj != null) {
         if (lastClicked != null) {
             var prevClickedDOMObj = getElById('itemTextLink'+lastClicked.id);
-            prevClickedDOMObj.style.color=lastClickedColor;
-            prevClickedDOMObj.style.backgroundColor=lastClickedBgColor;
+            if (prevClickedDOMObj) {
+                prevClickedDOMObj.style.color=lastClickedColor;
+                prevClickedDOMObj.style.backgroundColor=lastClickedBgColor;
+            }
         }
         
         lastClickedColor    = clickedDOMObj.style.color;
