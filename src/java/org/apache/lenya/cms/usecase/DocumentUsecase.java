@@ -19,8 +19,6 @@ package org.apache.lenya.cms.usecase;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.URLInformation;
 
 /**
  * <p>
@@ -37,7 +35,6 @@ public class DocumentUsecase extends AbstractUsecase {
 
     protected static final String DOCUMENT = "document";
     protected static final String TARGET_DOCUMENT = "private.targetDocument";
-    private String COMPLETE_AREA = "private.completeArea";
 
     /**
      * Ctor.
@@ -64,9 +61,6 @@ public class DocumentUsecase extends AbstractUsecase {
             if (getDocumentIdentityMap().isDocument(url)) {
                 setParameter(DOCUMENT, getDocumentIdentityMap().getFromURL(url));
             }
-
-            URLInformation info = new URLInformation(url);
-            setParameter(COMPLETE_AREA, info.getCompleteArea());
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -112,12 +106,8 @@ public class DocumentUsecase extends AbstractUsecase {
     public String getTargetURL(boolean success) {
         Document document = getTargetDocument(success);
         String documentUrl = document.getCanonicalDocumentURL();
-        String completeArea = getParameterAsString(COMPLETE_AREA);
-        String documentArea = document.getArea();
-        if (completeArea.startsWith(Publication.INFO_AREA_PREFIX)) {
-            documentArea = Publication.INFO_AREA_PREFIX + documentArea;
-        }
-        String url = "/" + document.getPublication().getId() + "/" + documentArea + documentUrl;
+        String url = "/" + document.getPublication().getId() + "/" + document.getArea()
+                + documentUrl;
         return url + getExitUsecaseQueryString();
     }
 

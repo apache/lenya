@@ -75,10 +75,6 @@ public interface Publication {
      */
     String DELETE_PATH = "delete";
     /**
-     * <code>INFO_AREA_PREFIX</code> The info area prefix
-     */
-    String INFO_AREA_PREFIX = "info-";
-    /**
      * <code>SEARCH_AREA_PREFIX</code> The search area prefix
      */
     String SEARCH_AREA_PREFIX = "search-";

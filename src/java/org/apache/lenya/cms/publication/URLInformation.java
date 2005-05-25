@@ -83,10 +83,7 @@ public class URLInformation {
                 this.documentUrl = "";
             }
             
-            if (this.completeArea.startsWith(Publication.INFO_AREA_PREFIX)) {
-				this.area = this.completeArea.substring(Publication.INFO_AREA_PREFIX.length());
-            }
-            else if (this.completeArea.startsWith(Publication.SEARCH_AREA_PREFIX)) {
+            if (this.completeArea.startsWith(Publication.SEARCH_AREA_PREFIX)) {
                 this.area = this.completeArea.substring(Publication.SEARCH_AREA_PREFIX.length());
             }
             else {

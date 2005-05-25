@@ -26,7 +26,7 @@
   
   <page:head>
     <jx:set var="pubId" value="${usecase.getParameter('document').getPublication().getId()}"/>
-    <jx:set var="area" value="${usecase.getParameter('private.completeArea')}"/>
+    <jx:set var="area" value="${usecase.getParameter('document').getArea()}"/>
     <jx:set var="language" value="${usecase.getParameter('document').getLanguage()}"/>
     <jx:set var="incrementalLoading" value="${'false'}"/>
     <script src="${request.contextPath}/${pubId}/${area}/info-sitetree/ua.js"/>

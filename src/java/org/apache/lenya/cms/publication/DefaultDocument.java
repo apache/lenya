@@ -228,14 +228,6 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     }
 
     /**
-     * @see Document#getCompleteInfoURL()
-     */
-    public String getCompleteInfoURL() {
-        return "/" + getPublication().getId() + "/" + Publication.INFO_AREA_PREFIX + getArea()
-                + getCanonicalDocumentURL();
-    }
-
-    /**
      * Sets the area.
      * @param _area A string.
      */

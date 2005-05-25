@@ -36,9 +36,7 @@ import org.apache.lenya.cms.repository.Node;
 public class PublicationImpl extends AbstractLogEnabled implements Publication {
 
     private static final String[] areas = { AUTHORING_AREA, STAGING_AREA, LIVE_AREA, ADMIN_AREA,
-            ARCHIVE_AREA, TRASH_AREA, INFO_AREA_PREFIX + AUTHORING_AREA,
-            INFO_AREA_PREFIX + STAGING_AREA, INFO_AREA_PREFIX + LIVE_AREA,
-            INFO_AREA_PREFIX + ARCHIVE_AREA, INFO_AREA_PREFIX + TRASH_AREA };
+            ARCHIVE_AREA, TRASH_AREA };
 
     private String id;
     private File servletContext;
@@ -416,6 +414,5 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     public String getContentURI(String area) {
         return getSourceURI() + "/" + CONTENT_PATH + "/" + area;
     }
-
 
 }

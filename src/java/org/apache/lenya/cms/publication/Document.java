@@ -77,13 +77,6 @@ public interface Document extends MetaDataOwner, Workflowable, Identifiable {
     String getCanonicalWebappURL();
 
     /**
-     * Returns the complete URL of this document in the info area:<br/>
-     * /{publication-id}/info-{area}{document-id}{language-suffix}.{extension}
-     * @return A string.
-     */
-    String getCompleteInfoURL();
-
-    /**
      * Returns the canonical document URL.
      * @return A string.
      */

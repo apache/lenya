@@ -225,7 +225,7 @@ public class PageEnvelope {
     public String getArea() {
         if (this.area == null) {
             URLInformation info = new URLInformation(this.webappUrl);
-            this.area = info.getCompleteArea();
+            this.area = info.getArea();
         }
         return this.area;
     }
