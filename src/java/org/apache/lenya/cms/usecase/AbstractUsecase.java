@@ -673,6 +673,13 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
     private String exitUsecaseName = null;
     private Map exitUsecaseParameters = new HashMap();
 
+    /**
+     * Sets the exit usecase of this usecase, i.e. the usecase that should be entered when this
+     * usecase is finished.
+     * @param usecaseName The name of the exit usecase.
+     * @param parameters Parameters to pass to the usecase or <code>null</code> if no parameters
+     *            should be passed.
+     */
     protected void setExitUsecase(String usecaseName, Map parameters) {
         this.exitUsecaseName = usecaseName;
         if (parameters != null) {
@@ -680,17 +687,21 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
         }
     }
 
+    /**
+     * Returns the query string to access the exit usecase of this usecase.
+     * @return A query string of the form
+     *         <code>?lenya.usecase=...&amp;param1=foo&amp;param2=bar</code>.
+     */
     protected String getExitUsecaseQueryString() {
         String queryString = "";
         if (this.exitUsecaseName != null) {
             queryString = "?lenya.usecase=" + this.exitUsecaseName;
-            for (Iterator i = this.exitUsecaseParameters.keySet().iterator(); i.hasNext(); ) {
+            for (Iterator i = this.exitUsecaseParameters.keySet().iterator(); i.hasNext();) {
                 String key = (String) i.next();
                 String value = (String) this.exitUsecaseParameters.get(key);
                 queryString += "&" + key + "=" + value;
             }
-        }
-        else {
+        } else {
             String exitUsecase = getParameterAsString("lenya.exitUsecase");
             if (exitUsecase != null && !"".equals(exitUsecase)) {
                 queryString = "?lenya.usecase=" + exitUsecase;
