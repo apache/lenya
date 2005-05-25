@@ -54,6 +54,9 @@
     <map:view from-label="xsp" name="xsp">
       <map:serialize type="xml"/>
     </map:view>
+    <map:view from-label="xopus-pipeline" name="xopus-pipeline">
+      <map:serialize type="xml"/>
+    </map:view>
   </map:views>
   
   <!-- =========================== Resources ================================ -->
@@ -337,7 +340,7 @@
                 </map:act>
                 
                 <map:generate src="content/util/empty.xml"/>
-                <map:transform src="xslt/authoring/edit/xopus-xhtml.xsl">
+                <map:transform src="xslt/authoring/edit/xopus-xhtml.xsl" label="xopus-pipeline">
                   <map:parameter name="contextPrefix" value="{request:contextPath}"/>
                   <map:parameter name="publicationId" value="{page-envelope:publication-id}"/>
                   <map:parameter name="completeArea" value="authoring"/>
