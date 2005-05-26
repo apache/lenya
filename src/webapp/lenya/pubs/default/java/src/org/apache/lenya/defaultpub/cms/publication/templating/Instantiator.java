@@ -56,8 +56,9 @@ public class Instantiator extends AbstractLogEnabled implements
             "config/ac/passwd/ldap.properties.sample", "config/ac/passwd/editor.gml",
             "config/ac/passwd/edit.rml", "config/ac/passwd/alice.iml",
             "config/ac/passwd/admin.rml", "config/ac/passwd/admin.gml", "config/ac/ac.xconf",
-            "config/doctypes/doctypes.xconf", "config/workflow/workflow.xml",
-            "content/authoring/sitetree.xml", "content/authoring/index/index_en.xml" };
+            "config/ac/usecase-policies.xml", "config/doctypes/doctypes.xconf",
+            "config/workflow/workflow.xml", "content/authoring/sitetree.xml",
+            "content/authoring/index/index_en.xml", "content/authoring/index/index_en.xml.meta" };
 
     /**
      * @see org.apache.lenya.cms.publication.templating.Instantiator#instantiate(org.apache.lenya.cms.publication.Publication,
@@ -131,8 +132,11 @@ public class Instantiator extends AbstractLogEnabled implements
         }
     }
 
-    protected void copySource(Publication template, String publicationId, SourceResolver resolver,
-            String publicationsUri, String source) throws MalformedURLException, IOException {
+    protected void copySource(Publication template,
+            String publicationId,
+            SourceResolver resolver,
+            String publicationsUri,
+            String source) throws MalformedURLException, IOException {
         Source templateSource = null;
         ModifiableSource targetSource = null;
         try {
