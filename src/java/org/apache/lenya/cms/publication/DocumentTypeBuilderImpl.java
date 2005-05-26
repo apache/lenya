@@ -36,15 +36,15 @@ import org.apache.lenya.cms.authoring.NodeCreatorInterface;
 import org.xml.sax.SAXException;
 
 /**
- * Avalon Service for building an instance of {@link DocumentType} using information
- * from the <code>doctypes.xconf</code> configuration file.
+ * Avalon Service for building an instance of {@link DocumentType}using information from the
+ * <code>doctypes.xconf</code> configuration file.
  * 
  * <p>
  * Since this service is very frequently used, it is implemented as a poolable service.
- * </p> 
+ * </p>
  * <p>
- * Furthermore, the instances are cached, to avoid re-reading configuration unless the
- * configuration file has changed.
+ * Furthermore, the instances are cached, to avoid re-reading configuration unless the configuration
+ * file has changed.
  * </p>
  * 
  * @version $Id$
@@ -170,7 +170,8 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
                 }
 
                 if (doctypeConf == null) {
-                    throw new DocumentTypeBuildException("No definition found for doctype '" + name);
+                    throw new DocumentTypeBuildException("No definition found for doctype '" + name
+                            + "'");
                 }
 
                 Configuration schemaConf = doctypeConf.getChild(SCHEMA_ELEMENT, false);
