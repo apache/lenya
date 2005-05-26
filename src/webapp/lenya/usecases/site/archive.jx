@@ -47,6 +47,11 @@
               </td>
             </tr>
             <tr>
+              <td>
+                <jx:import uri="templates/messages.jx"/>
+              </td>
+            </tr>
+            <tr>
               <jx:if test="${not(empty(usecase.getParameter('inconsistentdocument')))}">
                 <td class="lenya-entry-caption">
                   <span class="lenya-form-message-error"><i18n:text key="docs-have-links-to-doc"/>:</span>
@@ -60,9 +65,8 @@
             </tr>
             <tr>
               <td>
-                <br/>
-                <input i18n:attr="value" type="submit" value="Archive"/>&#160;
-                <input i18n:attr="value" type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
+                <input i18n:attr="value" type="submit" name="submit" value="Archive"/>&#160;
+                <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>
               </td>
             </tr>
           </table>
