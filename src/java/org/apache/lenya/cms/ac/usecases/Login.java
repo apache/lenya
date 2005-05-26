@@ -26,9 +26,11 @@ import org.apache.cocoon.environment.Request;
 /**
  * Usecase to login a user.
  * 
- * @version $Id: Login.java 124001 2005-01-03 16:27:21Z andreas $
+ * @version $Id$
  */
 public class Login extends AccessControlUsecase {
+
+    protected static final String REFERRER_QUERY_STRING = "referrerQueryString";
 
     /**
      * Ctor.
@@ -52,7 +54,6 @@ public class Login extends AccessControlUsecase {
         if (password.length() == 0) {
             addErrorMessage("Please enter a password.");
         }
-
     }
 
     /**
@@ -70,10 +71,20 @@ public class Login extends AccessControlUsecase {
         Request request = ObjectModelHelper.getRequest(objectModel);
         request.getSession(true);
         if (getAccessController().authenticate(request)) {
-        	setTargetURL(request.getRequestURI());
-		} else {
-        	addErrorMessage("Authentication failed");
+            setTargetURL(request.getRequestURI());
+        } else {
+            addErrorMessage("Authentication failed");
         }
-   }
+    }
 
+    /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getExitUsecaseQueryString()
+     */
+    protected String getExitUsecaseQueryString() {
+        String queryString = getParameterAsString(REFERRER_QUERY_STRING);
+        if (queryString != null && !queryString.equals("")) {
+            queryString = "?" + queryString;
+        }
+        return queryString;
+    }
 }
