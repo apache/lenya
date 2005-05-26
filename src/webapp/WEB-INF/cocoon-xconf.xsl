@@ -115,7 +115,10 @@
                 
     <component-instance name="date-i18n" logger="core.modules.input" class="org.apache.cocoon.components.modules.input.DateInputModule">
       <format>yyyy-M-dd HH:mm:ss Z</format>
-    </component-instance>       
+    </component-instance>
+    
+  <component-instance name="proxy-url" logger="sitemap.modules.input.proxy-url"
+      class="org.apache.lenya.cms.cocoon.components.modules.input.ProxyUrlModule"/>
 
   </xsl:copy>
 </xsl:template>
@@ -403,6 +406,12 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
       <view template="site/paste"/>
     </component-instance>
     <component-instance name="site.nudge" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Nudge"/>
+    <component-instance name="site.archive" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Archive">
+      <view template="site/archive"/>
+    </component-instance>
+    <component-instance name="site.restore" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Restore">
+      <view template="workflow/restore"/>
+    </component-instance>
     
     <component-instance name="tab.acArchive" logger="lenya.site" class="org.apache.lenya.cms.ac.usecases.AccessControl">
       <view template="tab/acArchive" menu="true"/>
