@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2005 The Apache Software Foundation
+ * Copyright  1999-2004 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -19,12 +19,11 @@ package org.apache.lenya.cms.site.usecases;
 import org.apache.lenya.cms.publication.Publication;
 
 /**
- * Delete a document and all its descendants, including all language versions. The documents are
- * moved to the trash.
+ * Archive usecase handler.
  * 
- * @version $Id$
+ * @version $Id:$
  */
-public class Delete extends MoveSubsite {
+public class Archive extends MoveSubsite {
 
     /**
      * @see org.apache.lenya.cms.site.usecases.MoveSubsite#getSourceAreas()
@@ -37,7 +36,7 @@ public class Delete extends MoveSubsite {
      * @see org.apache.lenya.cms.site.usecases.MoveSubsite#getTargetArea()
      */
     protected String getTargetArea() {
-        return Publication.TRASH_AREA;
+        return Publication.ARCHIVE_AREA;
     }
 
     /**
@@ -46,5 +45,6 @@ public class Delete extends MoveSubsite {
     protected String getEvent() {
         return "delete";
     }
+
 
 }
