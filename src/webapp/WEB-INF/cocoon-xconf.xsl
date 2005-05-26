@@ -102,7 +102,10 @@
                 
     <component-instance name="date-i18n" logger="core.modules.input" class="org.apache.cocoon.components.modules.input.DateInputModule">
       <format>yyyy-M-dd HH:mm:ss Z</format>
-    </component-instance>       
+    </component-instance>
+    
+  <component-instance name="proxy-url" logger="sitemap.modules.input.proxy-url"
+      class="org.apache.lenya.cms.cocoon.components.modules.input.ProxyUrlModule"/>
 
   </xsl:copy>
 </xsl:template>
