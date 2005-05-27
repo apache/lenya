@@ -18,11 +18,9 @@ package org.apache.lenya.cms.ant;
 
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeResolver;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.site.SiteManager;
 import org.apache.tools.ant.BuildException;
 
 /**
@@ -48,7 +46,7 @@ public class TestTask extends PublicationTask {
             log(message);
             System.out.println(message);
         }
-        catch (Exception e) {
+        catch (final Exception e) {
             throw new BuildException(e);
         }
         finally {
