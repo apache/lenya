@@ -17,8 +17,6 @@
 package org.apache.lenya.cms.ac.usecases;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.lenya.ac.AccessControlException;
@@ -121,8 +119,6 @@ public class AddUser extends AccessControlUsecase {
         user.save();
         getUserManager().add(user);
         
-        Map parameters = new HashMap();
-        parameters.put(UserProfile.USER_ID, userId);
-        setExitUsecase("admin.user", parameters);
+        setExitParameter(UserProfile.USER_ID, userId);
     }
 }

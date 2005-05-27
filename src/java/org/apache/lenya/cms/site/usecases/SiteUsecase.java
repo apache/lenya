@@ -39,8 +39,6 @@ public class SiteUsecase extends DocumentUsecase {
     protected void initParameters() {
         super.initParameters();
         
-        setExitUsecase(getName(), null);
-        
         WorkflowResolver resolver = null;
         try {
             resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);

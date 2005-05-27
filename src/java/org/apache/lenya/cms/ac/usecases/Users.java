@@ -45,8 +45,6 @@ public class Users extends AccessControlUsecase {
     protected void initParameters() {
         super.initParameters();
         
-        setExitUsecase(getName(), null);
-
         User[] users = getUserManager().getUsers();
         List userList = new ArrayList();
         userList.addAll(Arrays.asList(users));

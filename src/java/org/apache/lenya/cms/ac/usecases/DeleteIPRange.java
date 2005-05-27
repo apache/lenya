@@ -24,11 +24,18 @@ package org.apache.lenya.cms.ac.usecases;
 public class DeleteIPRange extends AccessControlUsecase {
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
-    protected void initParameters() {
-        super.initParameters();
-        setExitUsecase("admin.ipRanges", null);
+    protected void doExecute() throws Exception {
+        super.doExecute();
+
+        String id = getParameterAsString(IPRangeProfile.ID);
+        org.apache.lenya.ac.IPRange ipRange = getIpRangeManager().getIPRange(id);
+        if (ipRange == null) {
+            throw new RuntimeException("IP range [" + ipRange + "] not found.");
+        }
+        
+        getIpRangeManager().remove(ipRange);
+        ipRange.delete();
     }
-    
 }

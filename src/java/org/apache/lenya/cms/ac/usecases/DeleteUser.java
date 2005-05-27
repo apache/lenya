@@ -26,14 +26,6 @@ import org.apache.lenya.ac.User;
 public class DeleteUser extends AccessControlUsecase {
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
-     */
-    protected void initParameters() {
-        super.initParameters();
-        setExitUsecase("admin.users", null);
-    }
-    
-    /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {

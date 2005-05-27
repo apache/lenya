@@ -38,8 +38,6 @@ public class Groups extends AccessControlUsecase {
     protected void initParameters() {
         super.initParameters();
         
-        setExitUsecase(getName(), null);
-        
         Group[] groups = getGroupManager().getGroups();
         List groupList = new ArrayList();
         groupList.addAll(Arrays.asList(groups));

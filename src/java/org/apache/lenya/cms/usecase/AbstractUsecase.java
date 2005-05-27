@@ -434,7 +434,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
         if (url == null) {
             url = getSourceURL();
         }
-        return url + getExitUsecaseQueryString();
+        return url + getExitQueryString();
     }
 
     /**
@@ -547,6 +547,8 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
     protected static final String ATTRIBUTE_POLICY = "policy";
     protected static final String VALUE_OPTIMISTIC = "optimistic";
     protected static final String VALUE_PESSIMISTIC = "pessimistic";
+    protected static final String ELEMENT_EXIT = "exit";
+    protected static final String ATTRIBUTE_USECASE = "usecase";
 
     private boolean isOptimistic = true;
 
@@ -583,6 +585,17 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
                 this.isOptimistic = false;
             }
         }
+
+        Configuration exitConfig = config.getChild(ELEMENT_EXIT, false);
+        if (exitConfig != null) {
+            this.exitUsecaseName = exitConfig.getAttribute(ATTRIBUTE_USECASE);
+            Configuration[] exitParameterConfigs = exitConfig.getChildren(ELEMENT_PARAMETER);
+            for (int i = 0; i < exitParameterConfigs.length; i++) {
+                String name = exitParameterConfigs[i].getAttribute(ATTRIBUTE_NAME);
+                String value = exitParameterConfigs[i].getAttribute(ATTRIBUTE_VALUE);
+                setExitParameter(name, value);
+            }
+        }
     }
 
     /**
@@ -614,6 +627,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
      * objects are, you can call this method explicitly when appropriate.
      * 
      * @param objects the transactionable objects to lock
+     * @throws UsecaseException if an error occurs.
      * @see #lockInvolvedObjects()
      * @see #getObjectsToLock()
      */
@@ -674,17 +688,12 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
     private Map exitUsecaseParameters = new HashMap();
 
     /**
-     * Sets the exit usecase of this usecase, i.e. the usecase that should be entered when this
-     * usecase is finished.
-     * @param usecaseName The name of the exit usecase.
-     * @param parameters Parameters to pass to the usecase or <code>null</code> if no parameters
-     *            should be passed.
+     * Sets a parameter to pass to the exit usecase.
+     * @param name The parameter name.
+     * @param value The parameter value.
      */
-    protected void setExitUsecase(String usecaseName, Map parameters) {
-        this.exitUsecaseName = usecaseName;
-        if (parameters != null) {
-            this.exitUsecaseParameters = parameters;
-        }
+    protected void setExitParameter(String name, String value) {
+        this.exitUsecaseParameters.put(name, value);
     }
 
     /**
@@ -692,7 +701,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
      * @return A query string of the form
      *         <code>?lenya.usecase=...&amp;param1=foo&amp;param2=bar</code>.
      */
-    protected String getExitUsecaseQueryString() {
+    protected String getExitQueryString() {
         String queryString = "";
         if (this.exitUsecaseName != null) {
             queryString = "?lenya.usecase=" + this.exitUsecaseName;

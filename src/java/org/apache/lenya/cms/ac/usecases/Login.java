@@ -78,9 +78,9 @@ public class Login extends AccessControlUsecase {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getExitUsecaseQueryString()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getExitQueryString()
      */
-    protected String getExitUsecaseQueryString() {
+    protected String getExitQueryString() {
         String queryString = getParameterAsString(REFERRER_QUERY_STRING);
         if (queryString != null && !queryString.equals("")) {
             queryString = "?" + queryString;

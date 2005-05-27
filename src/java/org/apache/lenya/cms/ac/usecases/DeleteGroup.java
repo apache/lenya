@@ -26,14 +26,6 @@ import org.apache.lenya.ac.Group;
 public class DeleteGroup extends AccessControlUsecase {
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
-     */
-    protected void initParameters() {
-        super.initParameters();
-        setExitUsecase("admin.groups", null);
-    }
-    
-    /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {

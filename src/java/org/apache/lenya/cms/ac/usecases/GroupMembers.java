@@ -17,10 +17,8 @@
 package org.apache.lenya.cms.ac.usecases;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Groupable;
@@ -48,9 +46,7 @@ public class GroupMembers extends AccessControlUsecase {
      */
     protected void initParameters() {
         super.initParameters();
-        Map parameters = new HashMap();
-        parameters.put(GroupProfile.ID, getParameterAsString(GroupProfile.ID));
-        setExitUsecase("admin.groups", parameters);
+        setExitParameter(GroupProfile.ID, getParameterAsString(GroupProfile.ID));
     }
 
     /**

@@ -83,8 +83,6 @@ public class AccessControl extends AccessControlUsecase {
     protected void initParameters() {
         super.initParameters();
 
-        setExitUsecase(getName(), null);
-        
         try {
             URLInformation info = new URLInformation(getSourceURL());
             setParameter(COMPLETE_AREA, info.getCompleteArea());

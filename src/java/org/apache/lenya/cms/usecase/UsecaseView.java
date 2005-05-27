@@ -26,7 +26,7 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 /**
  * Information about a usecase view.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class UsecaseView implements Configurable {
     
