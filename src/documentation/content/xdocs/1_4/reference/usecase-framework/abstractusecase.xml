@@ -65,10 +65,23 @@
           <br/>
         </li>
         
+        <li>Element <code>&lt;parameter&gt;</code> (arbitrary number)
+          <ul>
+            <li>Attribute <code>name</code></li>
+            <li>Attribute <code>value</code></li>
+          </ul>
+          <br/>
+          <p>
+            An arbitrary number of initial parameters can be passed to the usecase.
+          </p>
+          <br/>
+        </li>
+        
         <li>Element <code>&lt;view&gt;</code> (optional)
           <ul>
             <li>Attribute <code>template</code> (required)</li>
             <li>Attribute <code>menu = (true | false)</code> (optional)</li>
+            <li>Element <code>&lt;parameter name="..." value="..."/&gt;</code> (arbitrary number)</li>
           </ul>
           <br/>
           <p>
@@ -76,6 +89,21 @@
             points to the JX template to use, relatively to the <code>lenya/usecases</code>
             directory. The suffix <code>.jx</code> is added automatically. The attribute <code>menu</code>
             determines if the menu should be visible. It can be omitted and defaults to <code>false</code>.
+          </p>
+          <br/>
+        </li>
+
+        <li>Element <code>&lt;exit&gt;</code> (optional)
+          <ul>
+            <li>Attribute <code>usecase</code> (required)</li>
+            <li>Element <code>&lt;parameter name="..." value="..."/&gt;</code> (arbitrary number)</li>
+          </ul>
+          <br/>
+          <p>
+            This element declares the exit usecase. By default, a usecase exits on the
+            URL it was started from, without any request parameters. Using this method,
+            is is possible to specify a usecase that should be called after this usecase
+            has exited. Additional parameter elements can be supplied.
           </p>
           <br/>
         </li>
@@ -87,7 +115,8 @@
       <title>Extending AbstractUsecase</title>
       
       <p>
-        The following methods of the <code>AbstractUsecase</code> class are meant to be overridden:
+        The following methods of the <code>AbstractUsecase</code> class are meant to be overridden
+        or invoked by subclasses:
       </p>
       
       <ul>
@@ -159,6 +188,15 @@
           these objects are checked out immediately.
         </p>
         <br/>
+      </li>
+      
+      <li>
+        <code>protected void setExitParameter(String name, String value)</code>
+        <p>
+          Call this method to set a parameter that should be added to the exit request.
+          For instance, imagine a usecase which edits a user's groups. The exit usecase
+          might be <em>userProfile</em>, with the additional parameter <em>userId</em>.
+        </p>
       </li>
       
       </ul>
