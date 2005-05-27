@@ -78,7 +78,6 @@ public interface Node extends Transactionable {
     /**
      * Accessor for the source URI of this node
      * @return the source URI
-     * @throws TransactionException if the node does not exist.
      */
     String getSourceURI();
 
