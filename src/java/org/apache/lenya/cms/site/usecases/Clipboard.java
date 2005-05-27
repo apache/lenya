@@ -45,15 +45,15 @@ public class Clipboard {
     /**
      * Ctor.
      * @param document The document to put on the clipboard.
-     * @param method The clipping method.
+     * @param _method The clipping method.
      */
-    public Clipboard(Document document, int method) {
+    public Clipboard(Document document, int _method) {
         this.publicationId = document.getPublication().getId();
         this.servletContextPath = document.getPublication().getServletContext().getAbsolutePath();
         this.area = document.getArea();
         this.documentId = document.getId();
         this.language = document.getLanguage();
-        this.method = method;
+        this.method = _method;
     }
 
     /**

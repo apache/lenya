@@ -308,8 +308,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    public void service(ServiceManager _manager) throws ServiceException {
+        this.manager = _manager;
     }
 
     private Context context;
@@ -317,8 +317,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     /**
      * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
      */
-    public void contextualize(Context context) throws ContextException {
-        this.context = context;
+    public void contextualize(Context _context) throws ContextException {
+        this.context = _context;
     }
 
     /**
