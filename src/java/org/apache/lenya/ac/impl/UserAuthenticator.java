@@ -15,6 +15,7 @@
 
 package org.apache.lenya.ac.impl;
 
+import org.apache.commons.codec.binary.Base64;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.AccessControlException;
@@ -32,11 +33,33 @@ public class UserAuthenticator extends AbstractLogEnabled implements Authenticat
     /**
      * @see org.apache.lenya.ac.Authenticator#authenticate(org.apache.lenya.ac.AccreditableManager,
      *      org.apache.cocoon.environment.Request)
+     *      Note that this implementation first checks if the user has authenticated over basic
+     *      HTTP authentication. If yes, it uses these credentials.
      */
     public boolean authenticate(AccreditableManager accreditableManager, Request request)
             throws AccessControlException {
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
+
+        String encoded = "";
+        String unencoded = "";
+        String username = "";
+        String password = "";
+        if (request.getHeader("Authorization") != null) {
+          encoded = request.getHeader("Authorization");
+        }
+        if(encoded.indexOf("Basic") > -1) {
+          encoded = encoded.trim();
+          encoded = encoded.substring(encoded.indexOf(' ')+1);
+            unencoded = new String(Base64.decodeBase64(encoded.getBytes()));
+        }
+        if (unencoded.indexOf(":")-1 > -1 ) {
+          username = unencoded.substring(0,unencoded.indexOf(":"));
+          password = unencoded.substring(unencoded.indexOf(":")+1);
+        }
+
+        if (encoded.length() == 0 && request.getParameter("username") != null) {
+                username = request.getParameter("username");
+                password = request.getParameter("password");
+        }
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug(
@@ -49,11 +72,11 @@ public class UserAuthenticator extends AbstractLogEnabled implements Authenticat
 
         Identity identity = (Identity) request.getSession(false).getAttribute(
                 Identity.class.getName());
-        
+
         if (identity == null) {
             throw new AccessControlException("The session does not contain the identity!");
         }
-        
+
         boolean authenticated = authenticate(accreditableManager, username, password, identity);
         return authenticated;
     }
