@@ -19,9 +19,7 @@
 
 package org.apache.lenya.cms.ant;
 
-import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.SiteTree;
@@ -115,10 +113,8 @@ public class SetIdentifier extends PublicationTask {
                             language));
                 }
             }
-        } catch (DocumentException e1) {
-            throw new BuildException(e1);
-        } catch (DocumentBuildException e2) {
-            throw new BuildException(e2);
+        } catch (final Exception e) {
+            throw new BuildException(e);
         }
     }
 
