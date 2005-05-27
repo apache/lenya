@@ -65,7 +65,7 @@
     </map:pipeline>
     
     <map:pipeline>
-      <!-- pattern="{rendertype}/{area}/{doctype}/{document-path}" -->
+    <!-- pattern="{rendertype}/{area}/{doctype}/{document-path}" -->
       <!-- NOTE: rendertype seems to be 'edit' or 'view' -->
       <map:match pattern="lenya-document/*/*/*/**.xml">
         <map:mount uri-prefix="lenya-document/" src="{fallback:doctypes.xmap}" check-reload="true" reload-method="synchron"/>
@@ -105,7 +105,7 @@
         </map:transform>
       </map:otherwise>
         </map:select>
-        <map:serialize type="html"/>
+        <map:serialize type="xhtml"/>
       </map:handle-errors>    
       </map:pipeline>
     <!-- /BX Editor: RNG Schema -->
@@ -189,7 +189,7 @@
                   <map:transform src="../../xslt/authoring/edit/removeSourceTags.xsl"/>
                 </map:when>
               </map:select>
-    	      <map:serialize type="html"/>
+    	      <map:serialize type="xhtml"/>
             </map:otherwise>
           </map:select>
             </map:otherwise>
@@ -233,7 +233,7 @@
         </map:transform>
       </map:otherwise>
         </map:select>
-        <map:serialize type="html"/>
+        <map:serialize type="xhtml"/>
       </map:handle-errors>
       
     </map:pipeline>
