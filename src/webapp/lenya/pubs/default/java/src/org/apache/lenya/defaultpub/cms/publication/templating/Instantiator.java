@@ -20,6 +20,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
+import java.util.Collection;
+import java.util.Iterator;
 
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -34,6 +36,7 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.excalibur.source.impl.FileSource;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationImpl;
 import org.apache.lenya.xml.DocumentHelper;
@@ -57,8 +60,7 @@ public class Instantiator extends AbstractLogEnabled implements
             "config/ac/passwd/edit.rml", "config/ac/passwd/alice.iml",
             "config/ac/passwd/admin.rml", "config/ac/passwd/admin.gml", "config/ac/ac.xconf",
             "config/ac/usecase-policies.xml", "config/doctypes/doctypes.xconf",
-            "config/workflow/workflow.xml", "content/authoring/sitetree.xml",
-            "content/authoring/index/index_en.xml", "content/authoring/index/index_en.xml.meta" };
+            "config/workflow/workflow.xml", "content/authoring/sitetree.xml", "content/" };
 
     /**
      * @see org.apache.lenya.cms.publication.templating.Instantiator#instantiate(org.apache.lenya.cms.publication.Publication,
@@ -80,7 +82,11 @@ public class Instantiator extends AbstractLogEnabled implements
             for (int i = 0; i < sourcesToCopy.length; i++) {
 
                 String source = sourcesToCopy[i];
-                copySource(template, newPublicationId, resolver, publicationsUri, source);
+                if (source.endsWith("/")) {
+                    copyDirSource(template, newPublicationId, resolver, publicationsUri, source);
+                } else {
+                    copySource(template, newPublicationId, resolver, publicationsUri, source);
+                }
             }
 
             metaSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
@@ -152,6 +158,26 @@ public class Instantiator extends AbstractLogEnabled implements
             }
             if (targetSource != null) {
                 resolver.release(targetSource);
+            }
+        }
+    }
+
+    protected void copyDirSource(Publication template,
+            String publicationId,
+            SourceResolver resolver,
+            String publicationsUri,
+            String source) throws MalformedURLException, IOException {
+        FileSource directory = new FileSource(publicationsUri + "/" + template.getId() + "/"
+                + source);
+        Collection files = directory.getChildren();
+        for (Iterator iter = files.iterator(); iter.hasNext();) {
+            FileSource filesource = (FileSource) iter.next();
+            if (filesource.isCollection()) {
+                copyDirSource(template, publicationId, resolver, publicationsUri, source + "/"
+                        + filesource.getName());
+            } else {
+                copySource(template, publicationId, resolver, publicationsUri, source + "/"
+                        + filesource.getName());
             }
         }
     }
