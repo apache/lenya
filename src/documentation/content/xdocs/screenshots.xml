@@ -25,21 +25,18 @@ The following screenshots are meant for the evaluator in a hurry. For a much mor
 , <a href="ext:lenya.dist">download</a> the latest release and try it out yourself. You may also want
 to try out the <a href="ext:lenya.demo">online demo</a>.
 </p>
-        <section id="authoring">
-      <title>Authoring</title><p>
-    The Apache Lenya authoring area is used to edit individual pages. The author browses through the authoring
-    area just like a visitor to the web site would, by using the navigation of the site. The menu at the top of
-    the screen is the only indication that you are inside the authoring environment, everything else is just
-    like it appears on the live site. <br/><br/>
-      <img src="images/live/apache-lenya-authoring-area.jpg" alt="Screenshot of the Apache Lenya authoring area"/>
-      </p>
-  </section>
-        <section id="site">
+        <section id="site-assets">
       <title>Site management</title><p>
     The Apache Lenya site area is used to perform operations that concern multiple pages, like moving pages
     around, renaming sections of the site, etc. The site area gives a quick overview of the complete site.
     Detailed information about each page can be accessed by clicking on the relevant node in the tree
-    structure at left. <br/><br/><img src="images/live/apache-lenya-site-area.jpg" alt="Screenshot of the Apache Lenya site area"/>
+    structure at left. In this view, the asset management is shown. <br/><br/><img src="images/live/apache-lenya-site-assets.gif" alt="Screenshot of the Apache Lenya site area"/>
+      </p>
+<p>
+  This is the metadata tab of the site area.<br/><br/><img src="images/live/apache-lenya-site-meta.gif" alt="Screenshot of the Apache Lenya site area"/>
+      </p>
+<p>
+  This is the workflow tab of the site area.<br/><br/><img src="images/live/apache-lenya-site-workflow.gif" alt="Screenshot of the Apache Lenya site area"/>
       </p>
   </section>
         <section id="wysiwyg">
@@ -49,8 +46,13 @@ to try out the <a href="ext:lenya.demo">online demo</a>.
     schema while it is being edited.
     BXE uses validation to restrict the editing choices instead of allowing free-form input and then
     generating validation errors on save (an approach that makes it different from most other editors).
-      <br/><br/><img src="images/live/apache-lenya-editor-bxe.jpg" alt="Screenshot of editing a page with the BXE editor inside Apache Lenya"/>
+      <br/><br/><img src="images/live/apache-lenya-editor-bxe.gif" alt="Screenshot of editing a page with the BXE editor inside Apache Lenya"/>
       </p>
+      <p>Another editor shipping with Apache Lenya is <a href="ext:kupu">Kupu</a>. Kupu is specialized for XHTML editing and works in Internet Explorer and Mozilla.
+      <br/><br/><img src="images/live/apache-lenya-editor-kupu.gif" alt="Screenshot of editing a page with the Kupu editor inside Apache Lenya"/>
+      </p>
+      <p>Both editors are tightly integrated, and can of course access assets and links managed by Apache Lenya, as the following insert link popup shows.
+      <br/><br/><img src="images/live/apache-lenya-editor-insertlink.gif" alt="Screenshot of the insert link popup"/></p>
   </section>
 
   </body>
