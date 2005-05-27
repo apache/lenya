@@ -20,13 +20,11 @@
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
   <map:components>
-    <map:generators default="file" />
     <map:matchers default="wildcard">
       <map:matcher name="doctype" logger="sitemap.matcher.doctype" src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
         <parameter-name>doctype</parameter-name>
       </map:matcher>
     </map:matchers>
-    <map:actions/>
   </map:components>
 
   <map:pipelines>
