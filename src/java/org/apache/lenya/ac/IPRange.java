@@ -92,4 +92,9 @@ public interface IPRange extends Accreditable, Item, Groupable {
      */
     void save() throws AccessControlException;
     
+    /**
+     * Delete an IP range.
+     * @throws AccessControlException if the delete failed
+     */
+    void delete() throws AccessControlException;
 }
