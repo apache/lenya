@@ -63,7 +63,14 @@
                 </td>
                 <td>
                     <jx:forEach var="relation" items="${usecase.getParameter('relations')}">
-                      <input type="radio" name="relation" value="${relation}"/><i18n:text>${relation}</i18n:text>
+                      <jx:choose>
+                        <jx:when test="${relation.equals(usecase.getParameter('relation'))}">
+                          <input type="radio" name="relation" value="${relation}" checked="checked"/><i18n:text>${relation}</i18n:text>
+                        </jx:when>
+                        <jx:otherwise>
+                          <input type="radio" name="relation" value="${relation}"/><i18n:text>${relation}</i18n:text>
+                        </jx:otherwise>
+                      </jx:choose>
                     </jx:forEach>
                 </td>
               </tr> 
