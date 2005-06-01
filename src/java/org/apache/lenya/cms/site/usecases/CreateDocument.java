@@ -27,71 +27,103 @@ import org.apache.lenya.cms.publication.Publication;
  */
 public class CreateDocument extends Create {
 
-    protected static final String PARENT_ID = "parentId";
-    protected static final String DOCUMENT_TYPE = "doctype";
+	protected static final String PARENT_ID = "parentId";
 
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
-     */
-    protected void initParameters() {
-        super.initParameters();
+	protected static final String DOCUMENT_TYPE = "doctype";
 
-        Document parent = getSourceDocument();
-        if (parent != null) {
-            setParameter(PARENT_ID, parent.getId());
-        } else {
-            setParameter(PARENT_ID, "");
-        }
+	protected static final String RELATION = "relation";
 
-        String[] languages = parent.getPublication().getLanguages();
-        setParameter(LANGUAGES, languages);
-    }
+	protected static final String RELATIONS = "relations";
 
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
-     */
-    protected void doCheckExecutionConditions() throws Exception {
-        super.doCheckExecutionConditions();
+	/**
+	 * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
+	 */
+	protected void initParameters() {
+		super.initParameters();
 
-        String documentName = getParameterAsString(DOCUMENT_ID);
-        String language = getParameterAsString(LANGUAGE);
-        DocumentManager documentManager = null;
-        try {
-            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            Document parent = getSourceDocument();
-            Publication publication = getSourceDocument().getPublication();
-            Document document = getSourceDocument().getIdentityMap().get(publication,
-                    getSourceDocument().getArea(),
-                    parent.getId() + "/" + documentName,
-                    language);
-            if (document.exists()) {
-                addErrorMessage("The document does already exist.");
-            }
-        } finally {
-            if (documentManager != null) {
-                this.manager.release(documentManager);
-            }
-        }
-    }
+		Document parent = getSourceDocument();
+		if (parent != null) {
+			setParameter(PARENT_ID, parent.getId());
+		} else {
+			setParameter(PARENT_ID, "");
+		}
 
-    /**
-     * @see Create#getNewDocumentName()
-     */
-    protected String getNewDocumentName() {
-        return getParameterAsString(DOCUMENT_ID);
-    }
+		String[] languages = parent.getPublication().getLanguages();
+		setParameter(LANGUAGES, languages);
 
-    /**
-     * @see Create#getNewDocumentId()
-     */
-    protected String getNewDocumentId() {
-        return getSourceDocument().getId() + "/" + getNewDocumentName();
-    }
+		/** todo: need to check valid relations for this new doc * */
+		String[] relations = { "child", "after" }; // "after");
+		setParameter(RELATIONS, relations);
 
-    /**
-     * @see org.apache.lenya.cms.site.usecases.Create#getDocumentTypeName()
-     */
-    protected String getDocumentTypeName() {
-        return getParameterAsString(DOCUMENT_TYPE);
-    }
+	}
+
+	/**
+	 * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
+	 */
+	protected void doCheckExecutionConditions() throws Exception {
+		super.doCheckExecutionConditions();
+
+		String documentName = getParameterAsString(DOCUMENT_ID);
+		String language = getParameterAsString(LANGUAGE);
+		String relation = getParameterAsString(RELATION);
+		DocumentManager documentManager = null;
+		try {
+			documentManager = (DocumentManager) this.manager
+					.lookup(DocumentManager.ROLE);
+			Document parent = getSourceDocument();
+			Publication publication = getSourceDocument().getPublication();
+			Document document = getSourceDocument().getIdentityMap().get(
+					publication, getSourceDocument().getArea(),
+					parent.getId() + "/" + documentName, language);
+			if (document.exists()) {
+				addErrorMessage("The document does already exist.");
+			}
+		} finally {
+			if (documentManager != null) {
+				this.manager.release(documentManager);
+			}
+		}
+	}
+
+	/**
+	 * @see Create#getNewDocumentName()
+	 */
+	protected String getNewDocumentName() {
+		return getParameterAsString(DOCUMENT_ID);
+	}
+
+	/**
+	 * @see Create#getNewRelation()
+	 */
+	protected String getRelation() {
+		return getParameterAsString(RELATION);
+	}
+
+	/**
+	 * @see Create#getNewDocumentId()
+	 */
+	protected String getNewDocumentId() {
+		String relation = getRelation();
+		Document sourceDoc = getSourceDocument();
+		if (relation.equals("child")) {
+			return sourceDoc.getId() + "/" + getNewDocumentName();
+		} else if (relation.equals("before")) {
+			return sourceDoc.getId().substring(0,
+					sourceDoc.getId().lastIndexOf(sourceDoc.getName()))
+					+ getNewDocumentName();
+		} else if (relation.equals("after")) {
+			return sourceDoc.getId().substring(0,
+					sourceDoc.getId().lastIndexOf(sourceDoc.getName()))
+					+ getNewDocumentName();
+		} else {
+			return getSourceDocument().getId() + "/" + getNewDocumentName();
+		}
+	}
+
+	/**
+	 * @see org.apache.lenya.cms.site.usecases.Create#getDocumentTypeName()
+	 */
+	protected String getDocumentTypeName() {
+		return getParameterAsString(DOCUMENT_TYPE);
+	}
 }
