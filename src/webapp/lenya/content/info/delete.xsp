@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: delete.xsp,v 1.10 2004/03/13 12:31:30 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsp:page 
   language="java" 
@@ -45,7 +45,7 @@
         
         
 	DocumentReferencesHelper helper = new DocumentReferencesHelper(objectModel);
-	Document[] references = helper.getReferences(Publication.LIVE_AREA);
+	Document[] references = helper.getReferences(Publication.AUTHORING_AREA);
 	if (references.length &gt; 0) {
           </xsp:logic><inconsistent-documents><xsp:logic>
 
