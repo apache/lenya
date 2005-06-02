@@ -16,17 +16,14 @@
  */
 package org.apache.lenya.defaultpub.cms.usecases;
 
-import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.util.DocumentSet;
-import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.workflow.WorkflowManager;
 
 /**
  * Delete usecase handler.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class Delete extends org.apache.lenya.cms.site.usecases.Delete {
 
@@ -35,7 +32,7 @@ public class Delete extends org.apache.lenya.cms.site.usecases.Delete {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        DocumentSet set = getSubset();
+        DocumentSet set = SiteUtil.getSubSite(this.manager, getSourceDocument());
         WorkflowManager wfManager = null;
         try {
             wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
@@ -60,8 +57,10 @@ public class Delete extends org.apache.lenya.cms.site.usecases.Delete {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
+        
+        super.doExecute();
 
-        DocumentSet set = getSubset();
+        DocumentSet set = SiteUtil.getSubSite(this.manager, getSourceDocument());
         WorkflowManager wfManager = null;
         try {
             wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
@@ -73,33 +72,6 @@ public class Delete extends org.apache.lenya.cms.site.usecases.Delete {
         }
 
         super.doExecute();
-    }
-
-    /**
-     * @return A document set containing all requiring resources and the source document itself.
-     * @throws SiteException if an error occurs.
-     */
-    protected DocumentSet getSubset() throws SiteException {
-        Document document = getSourceDocument();
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(document.getPublication()
-                    .getSiteManagerHint());
-            DocumentSet set = new DocumentSet(siteManager.getRequiringResources(document));
-            set.add(document);
-            return set;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
-        }
     }
 
 }
