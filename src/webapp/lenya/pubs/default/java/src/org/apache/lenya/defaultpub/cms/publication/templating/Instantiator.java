@@ -53,14 +53,10 @@ public class Instantiator extends AbstractLogEnabled implements
         org.apache.lenya.cms.publication.templating.Instantiator, Serviceable {
 
     protected static final String[] sourcesToCopy = { "publication.xml",
-            "config/publication.xconf", "config/ac/passwd/visit.rml",
-            "config/ac/passwd/reviewer.gml", "config/ac/passwd/review.rml",
-            "config/ac/passwd/localhost.ipml", "config/ac/passwd/lenya.iml",
-            "config/ac/passwd/ldap.properties.sample", "config/ac/passwd/editor.gml",
-            "config/ac/passwd/edit.rml", "config/ac/passwd/alice.iml",
-            "config/ac/passwd/admin.rml", "config/ac/passwd/admin.gml", "config/ac/ac.xconf",
-            "config/ac/usecase-policies.xml", "config/doctypes/doctypes.xconf",
-            "config/workflow/workflow.xml", "content/authoring/sitetree.xml", "content/" };
+        "config/publication.xconf", "config/ac/passwd/",
+        "config/ac/ac.xconf","config/ac/policies/", 
+        "config/ac/usecase-policies.xml", "config/doctypes/doctypes.xconf",
+        "config/workflow/workflow.xml", "content/" };
 
     /**
      * @see org.apache.lenya.cms.publication.templating.Instantiator#instantiate(org.apache.lenya.cms.publication.Publication,
