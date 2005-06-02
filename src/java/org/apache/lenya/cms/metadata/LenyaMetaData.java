@@ -48,9 +48,16 @@ public class LenyaMetaData extends MetaDataImpl {
      */
     public static final String ELEMENT_CONTENT_TYPE = "contentType";
 
+    /**
+     * A workflow version.
+     * @see org.apache.lenya.cms.workflow.DocumentWorkflowable
+     */
+    public static final String ELEMENT_WORKFLOW_VERSION = "workflowVersion";
+
     static final String[] ELEMENTS = {
        ELEMENT_RESOURCE_TYPE,
-       ELEMENT_CONTENT_TYPE
+       ELEMENT_CONTENT_TYPE,
+       ELEMENT_WORKFLOW_VERSION
     };
 
     /**

@@ -29,11 +29,13 @@ import org.apache.lenya.transaction.Transactionable;
  * <code>cocoon.xconf</code>:<code>
  * <pre>
  * 
- *    &lt;component-instance name=&quot;default/workflow.submit&quot;
- *                        logger=&quot;lenya.usecases.workflow&quot;
- *                        class=&quot;org.apache.lenya.cms.workflow.usecases.InvokeWorkflow&quot;&gt;
- *      &lt;event id=&quot;submit&quot;/&gt;
- *    &lt;/component-instance&gt;
+ *  
+ *     &lt;component-instance name=&quot;default/workflow.submit&quot;
+ *                         logger=&quot;lenya.usecases.workflow&quot;
+ *                         class=&quot;org.apache.lenya.cms.workflow.usecases.InvokeWorkflow&quot;&gt;
+ *       &lt;event id=&quot;submit&quot;/&gt;
+ *     &lt;/component-instance&gt;
+ *   
  *  
  * </pre>
  * </code>
@@ -65,7 +67,8 @@ public class InvokeWorkflow extends DocumentUsecase implements Configurable {
         try {
             workflowManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
             if (!workflowManager.canInvoke(getSourceDocument(), getEvent())) {
-                addErrorMessage("error-workflow-document", new String[]{getEvent(), getSourceDocument().getId()});
+                addErrorMessage("error-workflow-document", new String[] { getEvent(),
+                        getSourceDocument().getId() });
             }
         } finally {
             if (workflowManager != null) {

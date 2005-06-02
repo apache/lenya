@@ -92,8 +92,19 @@ public class DocumentType extends AbstractLogEnabled {
 	 * for this resource type
 	 */
 	public String getSchemaDefinition() {
+        if (this.schemaDefinition == null) {
+            throw new IllegalStateException("No schema assigned to resource type [" + getName() + "]");
+        }
 		return schemaDefinition;
 	}
+    
+    /**
+     * @return The source URI of the RelaxNG schema.
+     */
+    public String getSchemaDefinitionSourceURI() {
+        return "fallback://lenya/resources/schemas/" + getSchemaDefinition();
+    }
+    
 	/**
 	 * @param schemaDefinition The path to the RelaxNG schema
 	 * definition file
@@ -120,38 +131,6 @@ public class DocumentType extends AbstractLogEnabled {
     protected void setCreator(NodeCreatorInterface _creator) {
         assert _creator != null;
         this.creator = _creator;
-    }
-
-    private String workflowFile = null;
-
-    /**
-     * Returns if this document type has a workflow definition.
-     * @return A boolean value.
-     */
-    public boolean hasWorkflow() {
-        return this.workflowFile != null;
-    }
-
-	/**
-	 * Get the file name of the workflow file.
-	 * @return a <code>String</code>
-	 * @throws DocumentTypeBuildException if the document type has no workflow
-	 */
-    public String getWorkflowFileName() throws DocumentTypeBuildException {
-        if (!hasWorkflow()) {
-            throw new DocumentTypeBuildException("The document type '" + getName() +
-                "' has no workflow!");
-        }
-        return this.workflowFile;
-    }
-
-	/**
-	 * Set the file name of the workflow file.
-	 * @param string the new file name
-	 */
-    public void setWorkflowFileName(String string) {
-        assert string != null;
-        this.workflowFile = string;
     }
 
     private String[] linkAttributeXPaths = { };

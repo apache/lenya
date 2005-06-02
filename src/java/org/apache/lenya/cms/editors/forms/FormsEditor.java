@@ -43,7 +43,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.transaction.Transactionable;
@@ -106,11 +106,6 @@ public class FormsEditor extends DocumentUsecase {
     public void advance() throws UsecaseException {
         super.advance();
 
-        String form = getParameterAsString("form");
-        String pubUrl = "context://" 
-            + Publication.PUBLICATION_PREFIX + "/"
-            + getSourceDocument().getPublication().getId();
-        String schemaUri = pubUrl + "/config/doctypes/schemas/" + form + ".rng";
         String unnumberTagsXslUri = "context://lenya/usecases/edit/forms/unnumberTags.xsl";
         String numberTagsXslUri = "context://lenya/usecases/edit/forms/numberTags.xsl";
 
@@ -124,7 +119,11 @@ public class FormsEditor extends DocumentUsecase {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
 
             xmlSource = (ModifiableSource) resolver.resolveURI(getSourceDocument().getSourceURI());
+            
+            DocumentType resourceType = getSourceDocument().getResourceType();
+            String schemaUri = resourceType.getSchemaDefinitionSourceURI();
             schemaSource = resolver.resolveURI(schemaUri);
+            
             unnumberTagsXslSource = resolver.resolveURI(unnumberTagsXslUri);
             numberTagsXslSource = resolver.resolveURI(numberTagsXslUri);
 

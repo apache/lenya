@@ -17,7 +17,6 @@
 
 package org.apache.lenya.cms.publication;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Hashtable;
@@ -31,8 +30,11 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.authoring.DefaultBranchCreator;
 import org.apache.lenya.cms.authoring.NodeCreatorInterface;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
@@ -58,21 +60,10 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
     }
 
     /**
-     * The default document types configuration directory, relative to the publication directory.
-     */
-    private static final String DOCTYPE_DIRECTORY = "config/doctypes".replace('/',
-            File.separatorChar);
-
-    /**
-     * The location of sample contents for this resource type. Note that this need not be a file.
-     */
-    private static final String DOCTYPE_SAMPLES = "config/doctypes/samples/";
-
-    /**
      * <code>CONFIG_FILE</code> The default document types configuration file, relative to the
      * publication directory.
      */
-    public static final String CONFIG_FILE = "doctypes.xconf";
+    public static final String CONFIG_FILE = "doctype.xconf";
     /**
      * <code>DOCTYPES_ELEMENT</code> The doctypes element
      */
@@ -97,10 +88,6 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
      * <code>SRC_ATTRIBUTE</code> The src attribute
      */
     public static final String SRC_ATTRIBUTE = "src";
-    /**
-     * <code>WORKFLOW_ELEMENT</code> The workflow element
-     */
-    public static final String WORKFLOW_ELEMENT = "workflow";
     /**
      * <code>ELEMENT_REWRITE_ATTRIBUTE</code> The link-attribute element.
      */
@@ -131,113 +118,97 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
 
         // see if configuration has changed since last load.
         // if it has, do not use cache.
-        boolean useCache = isEntryUptodate(confLastModifiedCache,
-                publication.getId(),
-                getDocTypeConfigFile(publication).lastModified());
 
         // this will refer to the returned instance
         DocumentType type = null;
 
-        if (useCache) {
-            // try to get an instance from cache
-            type = docTypeCache.get(publication.getId(), name);
-        }
+        String configUri = "fallback://lenya/doctypes/" + name + "/doctype.xconf";
 
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("buildDocumentType() called with name [" + name
-                    + "], publication.getId [" + publication.getId() + "], lookInCache ["
-                    + useCache + "], is in cache [" + (type != null) + "]");
+        Source configSource = null;
+        SourceResolver resolver = null;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            configSource = resolver.resolveURI(configUri);
 
-        if (type == null) {
+            boolean useCache = isEntryUptodate(confLastModifiedCache,
+                    publication.getId(),
+                    configSource.getLastModified());
 
-            // create a new instance of DocumentType
-            type = new DocumentType(name, getLogger());
+            if (useCache) {
+                // try to get an instance from cache
+                type = docTypeCache.get(publication.getId(), name);
+            }
 
-            try {
-                // retrieve configuration for this publication
-                Configuration configuration = getDocTypeConfiguration(publication);
+            if (getLogger().isDebugEnabled())
+                getLogger().debug("buildDocumentType() called with name [" + name
+                        + "], publication.getId [" + publication.getId() + "], lookInCache ["
+                        + useCache + "], is in cache [" + (type != null) + "]");
 
-                // now get configuration for this resource type
-                Configuration[] doctypeConfigurations = configuration.getChildren(DOCTYPE_ELEMENT);
+            if (type == null) {
 
-                Configuration doctypeConf = null;
+                // create a new instance of DocumentType
+                type = new DocumentType(name, getLogger());
 
-                for (int i = 0; i < doctypeConfigurations.length; i++) {
-                    if (doctypeConfigurations[i].getAttribute(TYPE_ATTRIBUTE).equals(name)) {
-                        doctypeConf = doctypeConfigurations[i];
-                        break;
+                try {
+                    // retrieve configuration for this publication
+                    Configuration doctypeConf = getDocTypeConfiguration(configSource, publication);
+
+                    Configuration schemaConf = doctypeConf.getChild(SCHEMA_ELEMENT, false);
+
+                    if (schemaConf != null) {
+                        String schemaFileName = schemaConf.getAttribute(SRC_ATTRIBUTE);
+                        type.setSchemaDefinition(schemaFileName);
                     }
-                }
 
-                if (doctypeConf == null) {
-                    throw new DocumentTypeBuildException("No definition found for doctype '" + name
-                            + "'");
-                }
+                    NodeCreatorInterface creator;
+                    Configuration creatorConf = doctypeConf.getChild(CREATOR_ELEMENT, false);
 
-                Configuration schemaConf = doctypeConf.getChild(SCHEMA_ELEMENT, false);
-
-                if (schemaConf != null) {
-                    String schemaFileName = schemaConf.getAttribute(SRC_ATTRIBUTE);
-                    type.setSchemaDefinition(schemaFileName);
-                }
-
-                NodeCreatorInterface creator;
-                Configuration creatorConf = doctypeConf.getChild(CREATOR_ELEMENT, false);
-
-                if (creatorConf != null) {
-                    String creatorClassName = creatorConf.getAttribute(SRC_ATTRIBUTE);
-                    Class creatorClass = Class.forName(creatorClassName);
-                    creator = (NodeCreatorInterface) creatorClass.newInstance();
-                    creator.init(creatorConf, manager, getLogger());
-                } else {
-                    creator = new DefaultBranchCreator();
-                }
-
-                type.setCreator(creator);
-
-                // determine the sample content location.
-                if (creatorConf != null) {
-                    Configuration sampleConf = creatorConf.getChild(SAMPLE_NAME, false);
-                    if (sampleConf != null) {
-                        String sampleLocation = sampleConf.getValue();
-                        String pubBase = publication.getSourceURI();
-                        type.setSampleContentLocation("fallback://" + DOCTYPE_SAMPLES + sampleLocation);
+                    if (creatorConf != null) {
+                        String creatorClassName = creatorConf.getAttribute(SRC_ATTRIBUTE);
+                        Class creatorClass = Class.forName(creatorClassName);
+                        creator = (NodeCreatorInterface) creatorClass.newInstance();
+                        creator.init(creatorConf, manager, getLogger());
+                    } else {
+                        creator = new DefaultBranchCreator();
                     }
+
+                    type.setCreator(creator);
+
+                    // determine the sample content location.
+                    if (creatorConf != null) {
+                        Configuration sampleConf = creatorConf.getChild(SAMPLE_NAME, false);
+                        if (sampleConf != null) {
+                            String sampleLocation = sampleConf.getValue();
+                            type.setSampleContentLocation("fallback://lenya/doctypes/" + name
+                                    + "/samples/" + sampleLocation);
+                        }
+                    }
+
+                    Configuration[] rewriteAttributeConfigs = doctypeConf
+                            .getChildren(ELEMENT_REWRITE_ATTRIBUTE);
+                    List xPaths = new ArrayList();
+                    for (int i = 0; i < rewriteAttributeConfigs.length; i++) {
+                        String xPath = rewriteAttributeConfigs[i].getAttribute(ATTRIBUTE_XPATH);
+                        xPaths.add(xPath);
+                    }
+                    String[] xPathArray = (String[]) xPaths.toArray(new String[xPaths.size()]);
+                    type.setLinkAttributeXPaths(xPathArray);
+
+                    docTypeCache.add(publication.getId(), name, type);
+
+                } catch (final Exception e) {
+                    throw new DocumentTypeBuildException(e);
                 }
+            }
 
-                Configuration workflowConf = doctypeConf.getChild(WORKFLOW_ELEMENT, false);
-
-                if (workflowConf != null) {
-                    String workflowFileName = workflowConf.getAttribute(SRC_ATTRIBUTE);
-                    type.setWorkflowFileName(workflowFileName);
+        } catch (Exception e) {
+            throw new DocumentTypeBuildException(e);
+        } finally {
+            if (resolver != null) {
+                if (configSource != null) {
+                    resolver.release(configSource);
                 }
-
-                Configuration[] rewriteAttributeConfigs = doctypeConf
-                        .getChildren(ELEMENT_REWRITE_ATTRIBUTE);
-                List xPaths = new ArrayList();
-                for (int i = 0; i < rewriteAttributeConfigs.length; i++) {
-                    String xPath = rewriteAttributeConfigs[i].getAttribute(ATTRIBUTE_XPATH);
-                    xPaths.add(xPath);
-                }
-                String[] xPathArray = (String[]) xPaths.toArray(new String[xPaths.size()]);
-                type.setLinkAttributeXPaths(xPathArray);
-
-                docTypeCache.add(publication.getId(), name, type);
-
-            } catch (final ConfigurationException e) {
-                throw new DocumentTypeBuildException(e);
-            } catch (final SAXException e) {
-                throw new DocumentTypeBuildException(e);
-            } catch (final IOException e) {
-                throw new DocumentTypeBuildException(e);
-            } catch (final DocumentTypeBuildException e) {
-                throw new DocumentTypeBuildException(e);
-            } catch (final ClassNotFoundException e) {
-                throw new DocumentTypeBuildException(e);
-            } catch (final InstantiationException e) {
-                throw new DocumentTypeBuildException(e);
-            } catch (final IllegalAccessException e) {
-                throw new DocumentTypeBuildException(e);
+                this.manager.release(resolver);
             }
         }
 
@@ -250,7 +221,7 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
     private Hashtable confCache = new Hashtable();
     private Hashtable confLastModifiedCache = new Hashtable();
 
-    private Configuration getDocTypeConfiguration(Publication _publication)
+    private Configuration getDocTypeConfiguration(Source source, Publication _publication)
             throws DocumentTypeBuildException, SAXException, IOException, ConfigurationException {
 
         Object conf = confCache.get(_publication.getId());
@@ -259,14 +230,13 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
             getLogger().debug("getDocTypeConfiguration() for publication [" + _publication.getId()
                     + "], conf in cache ? " + (conf != null));
 
-        File configFile = getDocTypeConfigFile(_publication);
-        if (!configFile.exists())
-            throw new DocumentTypeBuildException("configuration file for publication ["
-                    + _publication.getId() + "] does not exist");
+        if (!source.exists())
+            throw new DocumentTypeBuildException("configuration file [" + source.getURI()
+                    + "] for publication [" + _publication.getId() + "] does not exist");
 
         if (conf == null
-                || !isEntryUptodate(confLastModifiedCache, _publication.getId(), configFile
-                        .lastModified())) {
+                || !isEntryUptodate(confLastModifiedCache, _publication.getId(), source
+                        .getLastModified())) {
 
             // load / reload the configuration from file
             if (getLogger().isDebugEnabled())
@@ -274,11 +244,11 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
                         .debug("getDocTypeConfiguration() reloading configuration for publication ["
                                 + _publication.getId() + "]");
 
-            conf = new DefaultConfigurationBuilder().buildFromFile(configFile);
-
+            conf = new DefaultConfigurationBuilder()
+                    .build(new InputSource(source.getInputStream()));
             // put in cache
             confCache.put(_publication.getId(), conf);
-            confLastModifiedCache.put(_publication.getId(), new Long(configFile.lastModified()));
+            confLastModifiedCache.put(_publication.getId(), new Long(source.getLastModified()));
         }
 
         return (Configuration) conf;
@@ -305,23 +275,6 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
         }
 
         return isUptodate;
-    }
-
-    /**
-     * @param _publication The publication.
-     * @return The doctype configuration file.
-     * @throws DocumentTypeBuildException if the configuration file does not exist.
-     */
-    private File getDocTypeConfigFile(Publication _publication) throws DocumentTypeBuildException {
-
-        File configDirectory = new File(_publication.getDirectory(), DOCTYPE_DIRECTORY);
-        File ret = new File(configDirectory, CONFIG_FILE);
-        if (!ret.exists())
-            throw new DocumentTypeBuildException(
-                    "Resource types configuration file for publication " + _publication.getId()
-                            + " does not exist; should be located at [" + ret.getPath() + "]");
-
-        return ret;
     }
 
     protected ServiceManager manager;

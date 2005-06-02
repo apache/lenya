@@ -451,12 +451,9 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
     }
 
     /**
-     * Adds a value for a certain key.
-     * @param key The key.
-     * @param value The value.
-     * @throws DocumentException if an error occurs.
+     * @see org.apache.lenya.cms.metadata.MetaData#addValue(java.lang.String, java.lang.String)
      */
-    private void addValue(String key, String value) throws DocumentException {
+    public void addValue(String key, String value) throws DocumentException {
         String[] existingValues = getElementOrTerm(key);
         List list = new ArrayList(Arrays.asList(existingValues));
         list.add(value);

@@ -23,9 +23,6 @@ import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
@@ -51,7 +48,7 @@ import org.apache.lenya.workflow.impl.WorkflowImpl;
  * @version $Id$
  */
 public class WorkflowResolverImpl extends AbstractLogEnabled implements WorkflowResolver,
-        Contextualizable, Serviceable {
+        Contextualizable {
 
     /**
      * @see org.apache.lenya.cms.workflow.WorkflowResolver#getWorkflowSchema(org.apache.lenya.cms.publication.Document)
@@ -61,14 +58,14 @@ public class WorkflowResolverImpl extends AbstractLogEnabled implements Workflow
 
         try {
             DocumentType doctype = document.getResourceType();
-            if (doctype.hasWorkflow()) {
-                String workflowFileName = doctype.getWorkflowFileName();
+            String workflowSchema = document.getPublication().getWorkflowSchema(doctype);
+            if (workflowSchema != null) {
                 Publication publication = document.getPublication();
 
                 File workflowDirectory = new File(publication.getDirectory(), WORKFLOW_DIRECTORY);
-                File workflowFile = new File(workflowDirectory, workflowFileName);
+                File workflowFile = new File(workflowDirectory, workflowSchema);
                 WorkflowBuilder builder = new WorkflowBuilder(getLogger());
-                workflow = builder.buildWorkflow(workflowFileName, workflowFile);
+                workflow = builder.buildWorkflow(workflowSchema, workflowFile);
             }
         } catch (final Exception e) {
             throw new WorkflowException(e);
@@ -136,7 +133,7 @@ public class WorkflowResolverImpl extends AbstractLogEnabled implements Workflow
         try {
             if (document.exists()) {
                 DocumentType doctype = document.getResourceType();
-                hasWorkflow = doctype.hasWorkflow();
+                hasWorkflow = (document.getPublication().getWorkflowSchema(doctype) != null);
             }
         } catch (final Exception e) {
             throw new RuntimeException(e);
@@ -146,14 +143,5 @@ public class WorkflowResolverImpl extends AbstractLogEnabled implements Workflow
 
     protected static final String WORKFLOW_DIRECTORY = "config/workflow".replace('/',
             File.separatorChar);
-
-    private ServiceManager manager;
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager _manager) throws ServiceException {
-        this.manager = _manager;
-    }
 
 }

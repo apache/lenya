@@ -190,4 +190,16 @@ public interface Publication {
      */
     String getContentURI(String area);
 
+    /**
+     * @param resourceType The resource type or <code>null</code> if no workflow is registered for
+     *            this resource type.
+     * @return The workflow schema to use for this resource type.
+     */
+    String getWorkflowSchema(DocumentType resourceType);
+    
+    /**
+     * @return The resource types that are supported by this publication.
+     */
+    String[] getResourceTypeNames();
+
 }

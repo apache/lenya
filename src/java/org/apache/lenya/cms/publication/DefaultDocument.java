@@ -36,6 +36,7 @@ import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.workflow.CMSHistory;
+import org.apache.lenya.cms.workflow.DocumentWorkflowable;
 import org.apache.lenya.cms.workflow.History;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Version;
@@ -409,16 +410,46 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         return this.history;
     }
 
+    protected DocumentWorkflowable workflowable;
+    
+    protected DocumentWorkflowable getWorkflowable() {
+        if (this.workflowable == null) {
+            this.workflowable = new DocumentWorkflowable(this, this.manager, getLogger());
+        }
+        return this.workflowable;
+    }
+
     /**
      * @see org.apache.lenya.workflow.Workflowable#getVersions()
      */
     public Version[] getVersions() {
-        return getHistory().getVersions();
+        return getWorkflowable().getVersions();
     }
 
     /**
      * @see org.apache.lenya.workflow.Workflowable#getLatestVersion()
      */
+    public Version getLatestVersion() {
+        return getWorkflowable().getLatestVersion();
+    }
+
+    /**
+     * @see org.apache.lenya.workflow.Workflowable#newVersion(org.apache.lenya.workflow.Workflow,
+     *      org.apache.lenya.workflow.Version, org.apache.lenya.workflow.Situation)
+     */
+    public void newVersion(Workflow workflow, Version version, Situation situation) {
+        getWorkflowable().newVersion(workflow, version, situation);
+    }
+
+    /**
+     * @see org.apache.lenya.workflow.Workflowable#getVersions()
+    public Version[] getVersions() {
+        return getHistory().getVersions();
+    }
+     */
+
+    /**
+     * @see org.apache.lenya.workflow.Workflowable#getLatestVersion()
     public Version getLatestVersion() {
         Version[] versions = getVersions();
         Version lastVersion = null;
@@ -427,14 +458,15 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         }
         return lastVersion;
     }
+     */
 
     /**
      * @see org.apache.lenya.workflow.Workflowable#newVersion(org.apache.lenya.workflow.Workflow,
      *      org.apache.lenya.workflow.Version, org.apache.lenya.workflow.Situation)
-     */
     public void newVersion(Workflow workflow, Version version, Situation situation) {
         getHistory().newVersion(workflow, version, situation);
     }
+     */
 
     /**
      * @see org.apache.lenya.cms.publication.Document#delete()

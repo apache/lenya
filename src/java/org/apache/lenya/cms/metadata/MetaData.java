@@ -55,6 +55,14 @@ public interface MetaData {
      * @throws DocumentException when something went wrong.
      */
     void setValue(String key, String value) throws DocumentException;
+    
+    /**
+     * Addds a value for a certain key. The existing values will not be removed.
+     * @param key The key.
+     * @param value The value to add.
+     * @throws DocumentException when something went wrong.
+     */
+    void addValue(String key, String value) throws DocumentException;
 
     /**
      * Replace the contents of the current meta data by the contents of other.

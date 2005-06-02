@@ -30,8 +30,6 @@ import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.DocumentType;
-import org.apache.lenya.cms.publication.DocumentTypeResolver;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.transaction.Transactionable;
@@ -75,22 +73,8 @@ public class OneFormEditor extends DocumentUsecase {
 
         // Save file temporarily
 
-        DocumentType doctype;
-        DocumentTypeResolver doctypeResolver = null;
-        try {
-            doctypeResolver = (DocumentTypeResolver) this.manager.lookup(DocumentTypeResolver.ROLE);
-            doctype = doctypeResolver.resolve(getSourceDocument());
-        } finally {
-            if (doctypeResolver != null) {
-                this.manager.release(doctypeResolver);
-            }
-        }
-
-        String pubId = getSourceDocument().getPublication().getId();
-        String schemaUri = "context://" 
-            + Publication.PUBLICATION_PREFIX_URI + "/" 
-            + pubId + "/config/doctypes/schemas/"
-            + doctype.getName() + ".rng";
+        DocumentType resourceType = getSourceDocument().getResourceType();
+        String schemaUri = resourceType.getSchemaDefinitionSourceURI();
         Source schemaSource = null;
         ModifiableSource xmlSource = null;
         SourceResolver resolver = null;

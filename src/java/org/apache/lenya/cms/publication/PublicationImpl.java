@@ -70,6 +70,8 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     private static final String LANGUAGES = "languages";
     private static final String DEFAULT_LANGUAGE_ATTR = "default";
     private static final String BREADCRUMB_PREFIX = "breadcrumb-prefix";
+    private static final String ELEMENT_RESOURCE_TYPE = "resource-type";
+    private static final String ATTRIBUTE_WORKFLOW = "workflow";
 
     /**
      * Creates a new instance of Publication
@@ -184,6 +186,17 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
                         .getAttribute(PublicationImpl.ATTRIBUTE_NAME);
             }
 
+            Configuration[] resourceTypeConfigs = config.getChildren(ELEMENT_RESOURCE_TYPE);
+            for (int i = 0; i< resourceTypeConfigs.length; i++) {
+                String name = resourceTypeConfigs[i].getAttribute(ATTRIBUTE_NAME);
+                this.resourceTypes.add(name);
+                
+                String workflow = resourceTypeConfigs[i].getAttribute(ATTRIBUTE_WORKFLOW, null);
+                if (workflow != null) {
+                    this.resourceType2workflow.put(name, workflow);
+                }
+            }
+            
         } catch (final Exception e) {
             throw new RuntimeException("Problem with config file: " + configFile.getAbsolutePath(),
                     e);
@@ -413,6 +426,25 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
      */
     public String getContentURI(String area) {
         return getSourceURI() + "/" + CONTENT_PATH + "/" + area;
+    }
+    
+    private Map resourceType2workflow = new HashMap();
+
+    /**
+     * @see org.apache.lenya.cms.publication.Publication#getWorkflowSchema(org.apache.lenya.cms.publication.DocumentType)
+     */
+    public String getWorkflowSchema(DocumentType resourceType) {
+        String workflow = (String) this.resourceType2workflow.get(resourceType.getName());
+        return workflow;
+    }
+    
+    private List resourceTypes = new ArrayList();
+
+    /**
+     * @see org.apache.lenya.cms.publication.Publication#getResourceTypeNames()
+     */
+    public String[] getResourceTypeNames() {
+        return (String[]) resourceTypes.toArray(new String[resourceTypes.size()]);
     }
 
 }
