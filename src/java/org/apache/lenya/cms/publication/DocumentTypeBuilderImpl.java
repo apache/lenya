@@ -201,8 +201,7 @@ public final class DocumentTypeBuilderImpl extends AbstractLogEnabled implements
                     if (sampleConf != null) {
                         String sampleLocation = sampleConf.getValue();
                         String pubBase = publication.getSourceURI();
-                        type.setSampleContentLocation(pubBase + "/" + DOCTYPE_SAMPLES
-                                + sampleLocation);
+                        type.setSampleContentLocation("fallback://" + DOCTYPE_SAMPLES + sampleLocation);
                     }
                 }
 
