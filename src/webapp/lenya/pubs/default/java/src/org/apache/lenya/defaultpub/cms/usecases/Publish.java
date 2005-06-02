@@ -77,6 +77,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
             DocumentSet set = getInvolvedDocuments(doc);
             Document[] documents = set.getDocuments();
             for (int i = 0; i < documents.length; i++) {
+                nodes.addAll(Arrays.asList(documents[i].getRepositoryNodes()));
                 Document liveVersion = documents[i].getIdentityMap().getAreaVersion(documents[i],
                         Publication.LIVE_AREA);
                 nodes.addAll(Arrays.asList(liveVersion.getRepositoryNodes()));
