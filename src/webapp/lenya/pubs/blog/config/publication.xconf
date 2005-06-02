@@ -27,4 +27,5 @@
   <breadcrumb-prefix/>
   <ssl-prefix/>
   <site-manager name="simple"/>
+  <resource-type name="entry" workflow="workflow.xml"/>
 </publication>
