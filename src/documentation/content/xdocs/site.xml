@@ -64,6 +64,7 @@
         <abstractusecase href="abstractusecase.html" label="AbstractUsecase"/> 	 
       </usecase-framework>
       <publication-templating href="publication-templating/index.html" label="Publication Templating"/> 	 
+      <resource-types href="resource-types.html" label="Resource Types"/> 	 
     </reference>
 
     <javadoc1.4 href="../../../../apidocs/1.4/index.html" label="1.4 API (Javadoc)"/>

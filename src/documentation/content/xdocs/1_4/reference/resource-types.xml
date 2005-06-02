@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+	<header>
+		<title>Resource Types</title>
+	</header>
+	<body>
+	  
+<section>
+	<title>Introduction</title>
+	
+	<p>
+	A resource type defines a certain XML source format, together with processing options.
+	It typically consists of
+	</p>
+	<ul>
+	  <li>an XML structure definition (e.g., Relax NG)</li>
+	  <li>some presentation pipelines,</li>
+	  <li>some presentation XSLT stylesheets,</li>
+	  <li>usecases to manipulate documents.</li>
+	</ul>
+	<p>
+	  All of these can be shared between several resource types.
+	</p>
+</section>
+
+<section>
+  <title>Configuring Resource Types</title>
+  
+  <p>
+    The configuration files of a resource type are stored in a single directory:
+  </p>
+  
+<source xml:space="preserve"><![CDATA[
+doctypes/
+    mydoctype/
+        doctype.xconf                configuration file
+        samples/
+            mydoctype.xml            sample file
+]]></source>
+
+  <p>
+    The schema definition file is stored in the common <code>resources</code> directory.
+    This allows to share schemas between multiple resource types:
+  </p>
+
+<source xml:space="preserve"><![CDATA[
+resources/
+    schemas/
+        mydoctype.rng
+]]></source>
+  
+  <p>
+    Some resource types are provided by the Lenya core:
+  </p>
+    
+<source xml:space="preserve"><![CDATA[$LENYA_HOME
+    lenya/
+        doctypes/
+            xhtml/...
+            links/...
+        resources/
+            schemas/
+                xhtml.rng
+                links.rng
+                ...
+]]></source>
+
+  <p>
+    To add custom usecases to your publication, use the following directory structure:
+  </p>
+
+<source xml:space="preserve"><![CDATA[$PUB_HOME
+    lenya/
+        doctypes/
+            mydoctype1/...
+            mydoctype2/...
+            ...
+        resources/
+            schemas/
+                mydoctyep1.rng
+                mydoctype2.rng
+                ...
+]]></source>
+  
+</section>
+
+<section>
+  <title>Adding Resource Types to a Publication</title>
+  
+  <p>
+    The resource types used by a publication are declared in <code>publication.xconf</code>,
+    including the assignment of a workflow schema to a resource type:
+  </p>
+  
+<source xml:space="preserve"><![CDATA[<publication>
+  ...
+  <resource-type name="xhtml" workflow="workflow.xml"/>
+  <resource-type name="homepage" workflow="workflow.xml"/>
+  <resource-type name="links" workflow="workflow.xml"/>
+  ...
+</publication>
+]]></source>
+
+  
+  <p>
+    You can add references to
+  </p>
+  
+  <ul>
+    <li>core resource types,</li>
+    <li>resource types of template publications, or</li>
+    <li>resource types of the publication itself.</li>
+  </ul>
+  
+  <p>
+    Adding a custom resource type to your publication includes the following steps:
+  </p>
+  
+  <section><title>Choose a Unique Resource Type Name</title>
+  <p>
+    You should choose a reasonable name for your resource type.
+    In the examples, we use <em>profile</em> (page with information about a person).
+  </p>
+  </section>
+  
+  <section><title>Providing a Sample XML Document</title>
+    <p>
+      If you want to enable users to create new resources belonging to
+      your resource type, it is useful to provide a sample XML document.
+      If you want to use the <code>DefaultBranchCreator</code> that ships
+      with Lenya, you have to add the sample document because it is used
+      as a template for creating new resources.
+    </p>
+    <p>
+      The sample document is placed in
+      <code>{publication}/lenya/doctypes/{resource-type-name}/samples/</code>.
+      You can choose an arbitrary filename, but it is recommended to
+      use the resource type name (e.g., <code>profile.xml</code>).
+    </p>
+  </section>
+  
+  <section><title>Providing an XML Structure Definition</title>
+    <p>
+      This step is only needed if you want to edit resources with Lenya
+      or validate them after they have been imported or manipulated.
+      The type of the structure definition
+      (<a href="http://www.w3.org/XML/Schema">XML Schema</a>,
+      <a href="http://www.relaxng.org/">Relax NG</a>, ...)
+      depends on the editor or validator you want to use. For instance,
+      the <a href="http://www.bitfluxeditor.org/">BXE</a> WYSIWYG
+      editor requires a Relax NG document.
+    </p>
+    <p>The structure definition document is placed in the directory
+      <code>{publication}/lenya/resources/schemas/</code>. The name
+      of the file is arbitrary, but it is recommended to use the
+      resource type name (e.g., <code>profile.rng</code>).
+    </p>
+  </section>
+  
+  <section><title>Creating a Workflow Schema</title>
+    <p>
+      If your resources should have a workflow, you have to add a workflow
+      schema for your resource type as described in
+      <a href="../workflow/configuration.html">Workflow Configuration</a>.
+      A workflow schema can be shared between multiple resource types.
+    </p>
+  </section>
+  
+  <section><title>The Resource Type Definition</title>
+    <p>
+    To assign the creator, schema etc. to your resource type,
+	  declare it in <code>{publication}/lenya/doctypes/{resource-type-name}/doctype.xconf</code>:
+	  </p>
+<source><![CDATA[<resource-type name="profile">
+    <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
+      <sample-name>profile.xml</sample-name>
+    </creator>
+    <schema src="profile.rng"/>
+  </resource-type]]></source>
+  </section>
+  
+  <section><title>Define a Custom Menubar</title>
+    <p>
+      If you want to use a custom menubar for your resource type,
+      follow the guidelines on the page
+      <a href="../layout/lenya-menubar.html">The Lenya Menubar</a>.
+      Typically, a menubar is shared between multiple resource types.
+      Small customizations can be achieved with Java code in the menubar XSP.
+    </p>
+    <p>
+      To let the user create new resources using the <code>DefaultBranchCreator</code>,
+      you have to add the following menu item:
+    </p>
+<source><![CDATA[<item uc:usecase="create" uc:step="showscreen" href="?doctype=profile"><i18n:text>New Document</i18n:text></item>]]>
+</source>
+  </section>
+  
+  <section><title>Presentation</title>
+    
+    <p>
+      To make your resources available as HTTP pages, you have to add the
+      appropriate pipelines and XSLT stylesheets. In general, there are no
+      restrictions.
+    </p>
+    <p>
+      If you derive your publication from the default publication,
+      the pipelines have to be placed in
+      <code>{publication}/doctypes.xmap</code>. The stylesheets are located in
+      <code>{publication}/xslt/</code> and are named <code>{resource-type}2xhtml.xsl</code>
+      (e.g., <code>profile2xhtml.xsl</code>). The stylesheet is supposed to generate
+      a valid XHTML fragment (in the XHTML namespace) with <code>&lt;div id="body"&gt;</code>
+      as the document element.
+    </p>
+    
+  </section>
+
+</section>
+
+	</body>
+</document>
