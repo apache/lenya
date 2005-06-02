@@ -137,11 +137,6 @@
           <item uc:usecase="workflow.publish" href="?"><i18n:text>Publish</i18n:text></item>
           <item uc:usecase="workflow.deactivate" href="?"><i18n:text>Deactivate</i18n:text></item>
        </block>
-       <!--
-       <block>
-          <item uc:usecase="schedule" uc:step="showscreen" href="?"><i18n:text>Schedule</i18n:text></item>
-        </block>
-        -->
       </menu>
 
       <menu i18n:attr="name" name="Help">
