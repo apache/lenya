@@ -16,10 +16,8 @@
  */
 package org.apache.lenya.cms.ant;
 
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentType;
-import org.apache.lenya.cms.publication.DocumentTypeResolver;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.tools.ant.BuildException;
 
@@ -36,23 +34,15 @@ public class TestTask extends PublicationTask {
     public void execute() throws BuildException {
         super.execute();
         
-        ServiceManager manager = getServiceManager();
-        DocumentTypeResolver resolver = null;
         try {
-            resolver = (DocumentTypeResolver) manager.lookup(DocumentTypeResolver.ROLE);
             Document document = getIdentityMap().get(getPublication(), Publication.AUTHORING_AREA, "/index");
-            DocumentType doctype = resolver.resolve(document);
+            DocumentType doctype = document.getResourceType();
             String message = "Document type of [" + document + "] is [" + doctype.getName() + "]";
             log(message);
             System.out.println(message);
         }
         catch (final Exception e) {
             throw new BuildException(e);
-        }
-        finally {
-            if (resolver != null) {
-                manager.release(resolver);
-            }
         }
         
     }

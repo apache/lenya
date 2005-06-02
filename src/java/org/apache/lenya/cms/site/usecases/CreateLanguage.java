@@ -24,7 +24,6 @@ import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentType;
-import org.apache.lenya.cms.publication.DocumentTypeResolver;
 import org.apache.lenya.cms.publication.Publication;
 
 /**
@@ -59,7 +58,8 @@ public class CreateLanguage extends Create {
     }
 
     /**
-     * @return All languages supported by the publication for which this document does not yet have a version
+     * @return All languages supported by the publication for which this document does not yet have
+     *         a version
      * @throws DocumentBuildException if an error occurs.
      * @throws DocumentException if an error occurs.
      */
@@ -69,11 +69,10 @@ public class CreateLanguage extends Create {
         String[] languages = source.getPublication().getLanguages();
         DocumentIdentityMap map = source.getIdentityMap();
         for (int i = 0; i < languages.length; i++) {
-            Document version = 
-                map.get(source.getPublication(),
-                        source.getArea(),
-                        source.getId(),
-                        languages[i]);
+            Document version = map.get(source.getPublication(),
+                    source.getArea(),
+                    source.getId(),
+                    languages[i]);
             if (!version.exists()) {
                 nonExistingLanguages.add(languages[i]);
             }
@@ -128,21 +127,16 @@ public class CreateLanguage extends Create {
      */
     protected String getDocumentTypeName() {
         if (this.documentTypeName == null) {
-            Document source = getSourceDocument();
-            DocumentTypeResolver resolver = null;
             try {
-                resolver = (DocumentTypeResolver) this.manager.lookup(DocumentTypeResolver.ROLE);
-                DocumentType type = resolver.resolve(source);
+                DocumentType type = getSourceDocument().getResourceType();
                 this.documentTypeName = type.getName();
 
                 List nonExistingLanguages = getNonExistingLanguages();
-                setParameter(LANGUAGES, nonExistingLanguages.toArray(new String[nonExistingLanguages
-                        .size()]));
+                setParameter(LANGUAGES, nonExistingLanguages
+                        .toArray(new String[nonExistingLanguages.size()]));
 
             } catch (Exception e) {
                 throw new RuntimeException(e);
-            } finally {
-                this.manager.release(resolver);
             }
         }
         return this.documentTypeName;

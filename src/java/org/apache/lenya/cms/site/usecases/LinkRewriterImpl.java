@@ -34,7 +34,6 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentType;
-import org.apache.lenya.cms.publication.DocumentTypeResolver;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.transaction.Transactionable;
@@ -46,7 +45,7 @@ import org.w3c.dom.NodeList;
 /**
  * Rewrite the links in a publication. This is used after renaming / moving a document.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter, Serviceable,
         Contextualizable {
@@ -86,15 +85,11 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
             }
         }
 
-        DocumentTypeResolver doctypeResolver = null;
-
         Request request = ObjectModelHelper.getRequest(this.objectModel);
         String contextPath = request.getContextPath();
 
         try {
             for (int documentIndex = 0; documentIndex < documents.length; documentIndex++) {
-
-                doctypeResolver = (DocumentTypeResolver) manager.lookup(DocumentTypeResolver.ROLE);
 
                 Document examinedDocument = documents[documentIndex];
                 if (examinedDocument.exists()) {
@@ -105,7 +100,7 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
 
                     boolean linksRewritten = false;
 
-                    DocumentType doctype = doctypeResolver.resolve(examinedDocument);
+                    DocumentType doctype = examinedDocument.getResourceType();
                     String[] xPaths = doctype.getLinkAttributeXPaths();
 
                     try {
@@ -157,10 +152,6 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
             }
         } catch (final Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (doctypeResolver != null) {
-                this.manager.release(doctypeResolver);
-            }
         }
     }
 

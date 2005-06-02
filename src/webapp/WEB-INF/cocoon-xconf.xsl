@@ -234,10 +234,6 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
      	class="org.apache.lenya.ac.cache.SourceCacheImpl"
      	role="org.apache.lenya.ac.cache.SourceCache"/>
      	
-  <component logger="lenya.uriparameterizer"
-      class="org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizerImpl"
-      role="org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizer"/>
-      
   <component logger="lenya.publication.templatemanager"
       class="org.apache.lenya.cms.publication.templating.PublicationTemplateManagerImpl"
       role="org.apache.lenya.cms.publication.templating.PublicationTemplateManager"/>

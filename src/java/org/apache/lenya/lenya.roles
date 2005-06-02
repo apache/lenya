@@ -98,10 +98,6 @@
   		shorthand="sourcecache"
   		default-class="org.apache.lenya.ac.cache.SourceCacheImpl"/>
   		
-  <role name="org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizer"
-        shorthand="uriparameterizer"
-        default-class="org.apache.lenya.cms.cocoon.uriparameterizer.URIParameterizerImpl"/>
-        
   <role name="org.apache.lenya.cms.publication.templating.PublicationTemplateManager"
   	    shorthand="publication-template-manager"
   	    default-class="org.apache.lenya.cms.publication.templating.PublicationTemplateManagerImpl"/>
@@ -121,10 +117,6 @@
   <role name="org.apache.lenya.cms.usecase.UsecaseResolver"
   	    shorthand="usecase-resolver"
   	    default-class="org.apache.lenya.cms.usecase.UsecaseResolverImpl"/>
-        
-  <role name="org.apache.lenya.cms.publication.DocumentTypeResolver"
-  	    shorthand="document-type-resolver"
-  	    default-class="org.apache.lenya.cms.publication.DocumentTypeResolverImpl"/>
         
   <role name="org.apache.lenya.cms.cocoon.flow.FlowHelper"
   	    shorthand="flowhelper"
