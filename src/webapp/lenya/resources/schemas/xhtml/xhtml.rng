@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: xhtml.rng 42702 2004-03-13 12:34:18Z gregor $ -->
+    
+<grammar ns="http://www.w3.org/1999/xhtml"
+         xmlns="http://relaxng.org/ns/structure/1.0">
+
+<!-- XHTML -->
+<!-- This corresponds to the union of transitional and frameset. -->
+
+
+<include href="modules/datatypes.rng"/>
+<include href="modules/attribs.rng"/>
+<!-- <include href="modules/struct.rng"/> -->
+<include href="modules/frames.rng"/>
+<include href="modules/text.rng"/>
+<include href="modules/hypertext.rng"/>
+<include href="modules/list.rng"/>
+<include href="modules/image.rng"/>
+<include href="modules/ssismap.rng"/>
+<include href="modules/base.rng"/>
+<include href="modules/link.rng"/>
+<include href="modules/meta.rng"/>
+<include href="modules/param.rng"/>
+<include href="modules/object.rng"/>
+<include href="modules/bdo.rng"/>
+<include href="modules/pres.rng"/>
+<include href="modules/edit.rng"/>
+<include href="modules/applet.rng"/>
+<!-- <include href="modules/basic-form.rng"/> -->
+<include href="modules/form.rng"/>
+<include href="modules/style.rng"/>
+<include href="modules/script.rng"/>
+<!-- <include href="modules/basic-table.rng"/> -->
+<include href="modules/table.rng"/>
+<include href="modules/csismap.rng"/>
+<include href="modules/events.rng"/>
+<include href="modules/inlstyle.rng"/>
+<include href="modules/target.rng"/>
+<include href="modules/iframe.rng"/>
+<include href="modules/nameident.rng"/>
+<include href="modules/legacy.rng"/>
+
+</grammar>

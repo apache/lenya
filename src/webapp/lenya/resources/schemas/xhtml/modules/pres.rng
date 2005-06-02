@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: pres.rng 42702 2004-03-13 12:34:18Z gregor $ -->
+
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+
+<define name="hr">
+  <element name="hr">
+    <ref name="hr.attlist"/>
+  </element>
+</define>
+
+<define name="hr.attlist">
+  <ref name="Common.attrib"/>
+</define>
+
+<define name="Block.class" combine="choice">
+  <ref name="hr"/>
+</define>
+
+<define name="b">
+  <element name="b">
+    <ref name="b.attlist"/>
+    <ref name="Inline.model"/>
+  </element>
+</define>
+
+<define name="b.attlist">
+  <ref name="Common.attrib"/>
+</define>
+
+<define name="big">
+  <element name="big">
+    <ref name="big.attlist"/>
+    <ref name="Inline.model"/>
+  </element>
+</define>
+
+<define name="big.attlist">
+  <ref name="Common.attrib"/>
+</define>
+
+<define name="i">
+  <element name="i">
+    <ref name="i.attlist"/>
+    <ref name="Inline.model"/>
+  </element>
+</define>
+
+<define name="i.attlist">
+  <ref name="Common.attrib"/>
+</define>
+
+<define name="small">
+  <element name="small">
+    <ref name="small.attlist"/>
+    <ref name="Inline.model"/>
+  </element>
+</define>
+
+<define name="small.attlist">
+  <ref name="Common.attrib"/>
+</define>
+
+<define name="sub">
+  <element name="sub">
+    <ref name="sub.attlist"/>
+    <ref name="Inline.model"/>
+  </element>
+</define>
+
+<define name="sub.attlist">
+  <ref name="Common.attrib"/>
+</define>
+
+<define name="sup">
+  <element name="sup">
+    <ref name="sup.attlist"/>
+    <ref name="Inline.model"/>
+  </element>
+</define>
+
+<define name="sup.attlist">
+  <ref name="Common.attrib"/>
+</define>
+
+<define name="tt">
+  <element name="tt">
+    <ref name="tt.attlist"/>
+    <ref name="Inline.model"/>
+  </element>
+</define>
+
+<define name="tt.attlist">
+  <ref name="Common.attrib"/>
+</define>
+
+<define name="Inline.class" combine="choice">
+  <choice>
+    <ref name="b"/>
+    <ref name="big"/>
+    <ref name="i"/>
+    <ref name="small"/>
+    <ref name="sub"/>
+    <ref name="sup"/>
+    <ref name="tt"/>
+  </choice>
+</define>
+
+</grammar>
