@@ -26,7 +26,7 @@ import org.apache.lenya.transaction.IdentifiableFactory;
 /**
  * Factory to create source nodes.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public class SourceNodeFactory extends AbstractLogEnabled implements IdentifiableFactory {
 

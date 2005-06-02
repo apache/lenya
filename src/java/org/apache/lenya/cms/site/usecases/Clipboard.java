@@ -28,7 +28,7 @@ import org.apache.lenya.cms.publication.PublicationFactory;
  * Clipboard for cut/copy/paste of documents. The clipping method is either {@link #METHOD_CUT}or
  * {@link #METHOD_COPY}.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class Clipboard {
 

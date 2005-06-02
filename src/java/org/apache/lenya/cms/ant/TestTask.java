@@ -26,7 +26,7 @@ import org.apache.tools.ant.BuildException;
 /**
  * Test task.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public class TestTask extends PublicationTask {
 

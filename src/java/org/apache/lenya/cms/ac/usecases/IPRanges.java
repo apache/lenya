@@ -26,7 +26,7 @@ import org.apache.lenya.ac.IPRange;
 /**
  * Manage IP ranges.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class IPRanges extends AccessControlUsecase {
 

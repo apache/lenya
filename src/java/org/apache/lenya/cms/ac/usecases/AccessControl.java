@@ -46,7 +46,7 @@ import org.apache.lenya.ac.impl.InheritingPolicyManager;
  * that ideally would inherit both from AccessControlUsecase and DocumentUsecase. FIXME i just took
  * the appropriate code from DocumentUsecase, maybe its possible to have a saner inheritance?
  * 
- * @version $Id: AccessControl.java 123980 2005-01-03 15:00:14Z andreas $
+ * @version $Id$
  */
 
 public class AccessControl extends AccessControlUsecase {

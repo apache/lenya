@@ -19,7 +19,7 @@ package org.apache.lenya.cms.usecase;
 /**
  * Usecase for presentation purposes using a plain JX template.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public class DummyUsecase extends AbstractUsecase {
 

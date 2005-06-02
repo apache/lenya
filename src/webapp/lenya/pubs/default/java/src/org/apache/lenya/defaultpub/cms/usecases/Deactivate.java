@@ -40,7 +40,7 @@ import org.apache.lenya.workflow.WorkflowException;
 /**
  * Deactivate usecase handler.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class Deactivate extends DocumentUsecase implements DocumentVisitor {
 

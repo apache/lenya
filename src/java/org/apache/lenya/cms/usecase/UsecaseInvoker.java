@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * Invoke a usecase.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public interface UsecaseInvoker {
 

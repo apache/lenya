@@ -31,7 +31,7 @@ import org.apache.lenya.transaction.IdentifiableFactory;
 /**
  * Document factory.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public class DocumentFactory extends AbstractLogEnabled implements IdentifiableFactory {
 

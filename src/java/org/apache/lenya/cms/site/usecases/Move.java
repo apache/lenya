@@ -22,7 +22,7 @@ import org.apache.lenya.cms.usecase.UsecaseException;
 /**
  * Usecase to move a resource.
  * 
- * @version $Id: Move.java 123984 2005-01-03 15:02:18Z andreas $
+ * @version $Id$
  */
 public class Move extends SiteUsecase {
 

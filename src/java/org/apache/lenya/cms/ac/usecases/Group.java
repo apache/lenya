@@ -19,7 +19,7 @@ package org.apache.lenya.cms.ac.usecases;
 /**
  * Display group information.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public class Group extends AccessControlUsecase {
 

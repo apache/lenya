@@ -21,7 +21,7 @@ import org.apache.avalon.framework.service.ServiceException;
 /**
  * Operation interface.
  * 
- * @version $Id: Operation.java 158432 2005-03-21 09:56:48Z andreas $
+ * @version $Id$
  */
 public interface Operation {
 

@@ -28,7 +28,7 @@ import org.apache.avalon.framework.service.Serviceable;
 /**
  * Usecase invoker implementation.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInvoker, Serviceable {
 

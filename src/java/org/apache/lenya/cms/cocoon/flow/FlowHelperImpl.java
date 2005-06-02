@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FlowHelper.java 123348 2004-12-25 22:49:57Z gregor $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.flow;
 

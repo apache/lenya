@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: History.java 126320 2005-01-24 22:16:21Z gregor $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.workflow;
 

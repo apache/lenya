@@ -26,7 +26,7 @@ import org.apache.lenya.ac.Identity;
 /**
  * Default implementation of a unit of work.
  * 
- * @version $Id: UnitOfWorkImpl.java 159567 2005-03-31 07:27:09Z andreas $
+ * @version $Id$
  */
 public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
 

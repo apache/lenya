@@ -28,7 +28,7 @@ import org.apache.lenya.cms.usecase.UsecaseException;
 /**
  * Usecase to change the members of a group.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class GroupMembers extends AccessControlUsecase {
 

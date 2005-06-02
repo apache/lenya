@@ -19,7 +19,7 @@ package org.apache.lenya.cms.ac.usecases;
 /**
  * Delete an IP range.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public class DeleteIPRange extends AccessControlUsecase {
 

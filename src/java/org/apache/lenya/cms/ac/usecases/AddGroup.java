@@ -27,7 +27,7 @@ import org.apache.lenya.cms.usecase.UsecaseException;
 /**
  * Usecase to add a group.
  *
- * @version $Id:$ 
+ * @version $Id$ 
  */
 public class AddGroup extends AccessControlUsecase {
 

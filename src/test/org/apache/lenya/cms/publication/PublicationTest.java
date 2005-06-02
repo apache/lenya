@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: PublicationTest.java,v 1.5 2004/03/04 15:41:09 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 

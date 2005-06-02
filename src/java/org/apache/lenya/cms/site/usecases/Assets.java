@@ -33,7 +33,7 @@ import org.apache.lenya.transaction.Transactionable;
 /**
  * Usecase to add Assets to a resource.
  * 
- * @version $Id: Assets.java 123984 2005-01-03 15:02:18Z andreas $
+ * @version $Id$
  */
 public class Assets extends SiteUsecase {
 

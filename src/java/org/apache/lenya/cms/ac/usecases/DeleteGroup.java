@@ -21,7 +21,7 @@ import org.apache.lenya.ac.Group;
 /**
  * Usecase to delete a group.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public class DeleteGroup extends AccessControlUsecase {
 

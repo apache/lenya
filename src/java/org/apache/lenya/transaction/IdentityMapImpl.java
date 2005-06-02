@@ -27,7 +27,7 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 /**
  * Identity map implementation.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class IdentityMapImpl extends AbstractLogEnabled implements IdentityMap {
 

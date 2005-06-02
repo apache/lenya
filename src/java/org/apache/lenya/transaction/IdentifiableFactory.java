@@ -19,7 +19,7 @@ package org.apache.lenya.transaction;
 /**
  * Factory for transactionables.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public interface IdentifiableFactory {
 

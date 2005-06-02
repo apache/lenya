@@ -30,7 +30,7 @@ import org.apache.lenya.cms.usecase.AbstractUsecase;
 /**
  * Super class for access-control related usecases.
  * 
- * @version $Id: AccessControlUsecase.java 123981 2005-01-03 15:00:51Z andreas $
+ * @version $Id$
  */
 public class AccessControlUsecase extends AbstractUsecase {
 

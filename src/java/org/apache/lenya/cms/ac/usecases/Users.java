@@ -31,7 +31,7 @@ import org.apache.lenya.ac.UserType;
 /**
  * Manage users.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class Users extends AccessControlUsecase {
 

@@ -30,7 +30,7 @@ import org.apache.lenya.cms.usecase.UsecaseException;
 /**
  * Usecase to add a user.
  * 
- * @version $Id: AddUser.java 123348 2004-12-25 22:49:57Z gregor $
+ * @version $Id$
  */
 public class AddUser extends AccessControlUsecase {
 

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Version.java 152682 2005-02-08 18:13:39Z gregor $  */
+/* $Id$  */
 
 package org.apache.lenya.workflow.impl;
 

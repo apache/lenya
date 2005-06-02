@@ -26,7 +26,7 @@ import org.apache.lenya.ac.Group;
 /**
  * Manage groups.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class Groups extends AccessControlUsecase {
     

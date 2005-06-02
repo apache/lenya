@@ -26,7 +26,7 @@ import org.apache.lenya.ac.User;
 
 /**
  * Wrapper class for credentials.
- * @version $Id: CredentialWrapper.java 152682 2005-02-08 18:13:39Z gregor $
+ * @version $Id$
  */
 public class CredentialWrapper {
 

@@ -28,7 +28,7 @@ import org.apache.lenya.ac.User;
  * The anonymous authenticator authenticates to an anonymous user with no password 
  * (you just have to add a user named 'anonymous' with an arbitrary password and the permissions
  * you'd like via the admin screen). This is useful in conjunction with client certificates.
- * @version $Id: UserAuthenticator.java 43241 2004-08-16 16:36:57Z andreas $
+ * @version $Id$
  */
 public class AnonymousAuthenticator extends AbstractLogEnabled implements Authenticator {
 

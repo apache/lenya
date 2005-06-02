@@ -28,7 +28,7 @@ import org.apache.lenya.transaction.UnitOfWork;
  * Proxy which holds the parameters of a usecase. It is used to restore the usecase after the
  * flowscript is re-entered and to pass the usecase parameters to a JX template.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class UsecaseProxy {
 

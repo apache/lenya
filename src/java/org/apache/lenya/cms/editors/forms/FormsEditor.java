@@ -68,7 +68,7 @@ import org.xmldb.xupdate.lexus.XUpdateQueryImpl;
 /**
  * Multiple forms editor usecase.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class FormsEditor extends DocumentUsecase {
 

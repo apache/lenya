@@ -24,7 +24,7 @@ import org.apache.lenya.cms.usecase.UsecaseException;
 /**
  * Usecase to display the overview tab in the site area for a document.
  * 
- * @version $Id: Overview.java 123984 2005-01-03 15:02:18Z andreas $
+ * @version $Id$
  */
 public class Overview extends SiteUsecase {
 

@@ -19,7 +19,7 @@ package org.apache.lenya.transaction;
 /**
  * Identity map.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public interface IdentityMap {
 

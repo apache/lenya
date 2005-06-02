@@ -21,7 +21,7 @@ import org.apache.lenya.ac.User;
 /**
  * Usecase to delete a user.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public class DeleteUser extends AccessControlUsecase {
 

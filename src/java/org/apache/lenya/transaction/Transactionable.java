@@ -19,7 +19,7 @@ package org.apache.lenya.transaction;
 /**
  * Object to take part in a transaction.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public interface Transactionable extends Identifiable, Versionable {
 
