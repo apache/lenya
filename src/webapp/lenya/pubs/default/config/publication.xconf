@@ -28,6 +28,10 @@
   <breadcrumb-prefix/>
   <site-manager name="tree"/>
   
+  <resource-type name="xhtml" workflow="workflow.xml"/>
+  <resource-type name="homepage" workflow="workflow.xml"/>
+  <resource-type name="links" workflow="workflow.xml"/>
+  
   <!--
        For information about these settings, read 
        http://lenya.apache.org/docs/1_2_x/components/deployment/proxying.html
