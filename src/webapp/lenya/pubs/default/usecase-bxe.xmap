@@ -211,8 +211,8 @@
 	    +-->
 
         <map:match type="step" pattern="config">
-          <map:generate src="../../resources/misc/bxe/inc/config.xml"/>
-          <map:transform src="../../xslt/bxe/config-xml.xsl">
+          <map:generate src="fallback://lenya/resources/misc/bxe/inc/config.xml"/>
+          <map:transform src="fallback://lenya/xslt/bxe/config-xml.xsl">
 
             <!-- Parameter BX_xmlfile:
                  defines the Lenya URL with which BXE interacts, to
