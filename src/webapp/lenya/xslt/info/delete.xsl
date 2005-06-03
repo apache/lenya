@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: delete.xsl,v 1.15 2004/03/13 12:42:06 gregor Exp $ -->
+<!-- $Id$ -->
 
  <xsl:stylesheet version="1.0"
    xmlns="http://www.w3.org/1999/xhtml"
@@ -99,7 +99,7 @@
 
   <xsl:template match="inconsistent-documents">
     <td class="lenya-entry-caption">
-      <span class="lenya-form-message-error"><i18n:text key="docs-have-links-to-doc"/>The following documents have links to this document:</span>
+      <span class="lenya-form-message-error"><i18n:text key="docs-have-links-to-doc">The following documents have links to this document:</i18n:text></span>
     </td>
     <td valign="top">
       <xsl:for-each select="inconsistent-document">
