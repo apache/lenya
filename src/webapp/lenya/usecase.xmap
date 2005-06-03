@@ -107,7 +107,10 @@
         <map:transform src="{fallback:xslt/notification/message2xslt.xsl}">
           <map:parameter name="usecase" value="{2}"/>
           <map:parameter name="server-uri" value="http://{request:serverName}:{request:serverPort}"/>
-          <map:parameter name="document-url" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}{page-envelope:document-url}"/>
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+          <map:parameter name="publication-id" value="{page-envelope:publication-id}"/>
+          <map:parameter name="area" value="{page-envelope:area}"/>
+          <map:parameter name="document-url" value="{page-envelope:document-url}"/>         
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
