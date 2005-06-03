@@ -189,18 +189,6 @@
       </map:match>
     </map:pipeline>
 
-    <!-- Internal usecases -->
-    <map:pipeline internal-only="true">
-      <map:match type="usecase" pattern="*">
-        <map:match pattern="core/*/**">
-          <map:mount uri-prefix="core/{1}" src="lenya/usecases/{1}/usecase.xmap"></map:mount>
-        </map:match>
-        <map:match pattern="*/**">
-          <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
-        </map:match>
-      </map:match>
-    </map:pipeline>
-
     <map:pipeline>
       <!-- Lenya GUI -->
       <map:match pattern="lenya/**">
@@ -311,6 +299,22 @@
           </map:when>
         </map:select>
       </map:match>
+      
+    </map:pipeline>
+    
+    <!-- Internal usecases -->
+    <map:pipeline internal-only="true">
+      <map:match type="usecase" pattern="*">
+        <map:match pattern="core/*/**">
+          <map:mount uri-prefix="core/{1}" src="lenya/usecases/{1}/usecase.xmap"></map:mount>
+        </map:match>
+        <map:match pattern="*/**">
+          <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+        </map:match>
+      </map:match>
+    </map:pipeline>
+
+    <map:pipeline>
       
       <!-- Usecases -->
       <map:match type="usecase" pattern="*">
