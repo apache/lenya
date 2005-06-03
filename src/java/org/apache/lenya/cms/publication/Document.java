@@ -24,13 +24,12 @@ import org.apache.lenya.cms.metadata.MetaDataOwner;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.transaction.Identifiable;
-import org.apache.lenya.workflow.Workflowable;
 
 /**
  * A CMS document.
  * @version $Id$
  */
-public interface Document extends MetaDataOwner, Workflowable, Identifiable {
+public interface Document extends MetaDataOwner, Identifiable {
     
     /**
      * The document namespace URI.

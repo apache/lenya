@@ -25,7 +25,7 @@ import org.apache.lenya.workflow.WorkflowException;
  * workflow-related tasks. You can safely invoke all methods for non-workflow
  * documents.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public interface WorkflowManager {
 
@@ -86,28 +86,5 @@ public interface WorkflowManager {
      * @return if an error occurs.
      */
     boolean canInvoke(DocumentSet documents, String event);
-
-    /**
-     * Copies the workflow history from one document to another.
-     * @param source The source document.
-     * @param target The target document.
-     * @throws WorkflowException if the history could not be copied.
-     */
-    void copyHistory(Document source, Document target) throws WorkflowException;
-
-    /**
-     * Moves the workflow history of a document.
-     * @param source The source document.
-     * @param target The destination document.
-     * @throws WorkflowException if an error occurs.
-     */
-    void moveHistory(Document source, Document target) throws WorkflowException;
-
-    /**
-     * Deletes the workflow history of a document.
-     * @param document The document.
-     * @throws WorkflowException if an error occurs.
-     */
-    void deleteHistory(Document document) throws WorkflowException;
 
 }

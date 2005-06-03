@@ -30,13 +30,12 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.cms.workflow.WorkflowManager;
 import org.apache.lenya.cms.workflow.WorkflowResolver;
-import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Workflow;
-import org.apache.lenya.workflow.WorkflowEngine;
-import org.apache.lenya.workflow.impl.WorkflowEngineImpl;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -116,8 +115,9 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
             throws ProcessingException, SAXException, IOException {
 
         super.setup(_resolver, _objectModel, src, _parameters);
-        
+
         PageEnvelope envelope = null;
+        WorkflowManager workflowManager = null;
         WorkflowResolver workflowResolver = null;
 
         try {
@@ -127,19 +127,23 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
             Document document = envelope.getDocument();
             if (document == null) {
                 setHasWorkflow(false);
-            }
-            else {
-                workflowResolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
-                setHasWorkflow(workflowResolver.hasWorkflow(document));
+            } else {
+                DocumentType doctype = document.getResourceType();
+                if (document.getPublication().getWorkflowSchema(doctype) != null) {
+                    setHasWorkflow(true);
+                    workflowManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
+                    workflowResolver = (WorkflowResolver) this.manager
+                            .lookup(WorkflowResolver.ROLE);
+                } else {
+                    setHasWorkflow(false);
+                }
             }
 
             if (hasWorkflow()) {
-                WorkflowEngine engine = new WorkflowEngineImpl();
-                Situation situation = workflowResolver.getSituation();
                 Workflow workflow = workflowResolver.getWorkflowSchema(document);
                 String[] events = workflow.getEvents();
                 for (int i = 0; i < events.length; i++) {
-                    if (engine.canInvoke(document, workflow, situation, events[i])) {
+                    if (workflowManager.canInvoke(document, events[i])) {
                         this.executableEvents.add(events[i]);
                     }
                 }
@@ -147,10 +151,12 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
             }
         } catch (final Exception e) {
             throw new ProcessingException(e);
-        }
-        finally {
+        } finally {
             if (workflowResolver != null) {
                 this.manager.release(workflowResolver);
+            }
+            if (workflowManager != null) {
+                this.manager.release(workflowManager);
             }
         }
 

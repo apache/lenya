@@ -16,10 +16,16 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import java.util.Arrays;
+
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.cms.workflow.DocumentWorkflowable;
+import org.apache.lenya.cms.workflow.WorkflowResolver;
+import org.apache.lenya.workflow.Version;
+import org.apache.lenya.workflow.Workflow;
 
 /**
  * Usecase to display the overview tab in the site area for a document.
@@ -27,6 +33,9 @@ import org.apache.lenya.cms.usecase.UsecaseException;
  * @version $Id$
  */
 public class Overview extends SiteUsecase {
+
+    protected static final String STATE = "state";
+    protected static final String ISLIVE = "is_live";
 
     /**
      * Ctor.
@@ -41,22 +50,50 @@ public class Overview extends SiteUsecase {
     protected void initParameters() {
         super.initParameters();
 
+        WorkflowResolver resolver = null;
         try {
             // read parameters from Dublin Core meta-data
             MetaData dc = getSourceDocument().getMetaDataManager().getDublinCoreMetaData();
             setParameter(DublinCore.ELEMENT_TITLE, dc.getFirstValue(DublinCore.ELEMENT_TITLE));
-            setParameter(DublinCore.ELEMENT_DESCRIPTION, dc.getFirstValue(DublinCore.ELEMENT_DESCRIPTION));
+            setParameter(DublinCore.ELEMENT_DESCRIPTION, dc
+                    .getFirstValue(DublinCore.ELEMENT_DESCRIPTION));
 
             // read parameters from document attributes
             setParameter("languages", getSourceDocument().getLanguages());
-            setParameter("languages", getSourceDocument().getLanguages());
-            setParameter("lastmodified", getSourceDocument().getLastModified());     
-            setParameter("resourcetype", getSourceDocument().getResourceType());           
-            setParameter("live", "");
+            setParameter("lastmodified", getSourceDocument().getLastModified());
+            setParameter("resourcetype", getSourceDocument().getResourceType());
+
+            resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
+            if (resolver.hasWorkflow(getSourceDocument())) {
+                Workflow workflow = resolver.getWorkflowSchema(getSourceDocument());
+                String[] variableNames = workflow.getVariableNames();
+                DocumentWorkflowable workflowable = new DocumentWorkflowable(getSourceDocument(),
+                        this.manager, getLogger());
+                Version latestVersion = workflowable.getLatestVersion();
+                Boolean isLive = null;
+                if (latestVersion != null) {
+                    setParameter(STATE, latestVersion.getState());
+                    if (Arrays.asList(variableNames).contains(ISLIVE)) {
+                        isLive = Boolean.valueOf(latestVersion.getValue(ISLIVE));
+                    }
+                } else {
+                    setParameter(STATE, workflow.getInitialState());
+                    if (Arrays.asList(variableNames).contains(ISLIVE)) {
+                        isLive = Boolean.valueOf(workflow.getInitialValue(ISLIVE));
+                    }
+                }
+                setParameter(ISLIVE, isLive);
+            } else {
+                setParameter(STATE, "");
+            }
 
         } catch (final Exception e) {
             addErrorMessage("Could not read a value. See log files for details.");
             getLogger().error("Could not read value for Overview usecase. ", e);
+        } finally {
+            if (resolver != null) {
+                this.manager.release(resolver);
+            }
         }
     }
 

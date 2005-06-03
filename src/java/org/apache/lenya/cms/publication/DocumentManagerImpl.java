@@ -38,7 +38,6 @@ import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteUtil;
-import org.apache.lenya.cms.workflow.WorkflowManager;
 import org.apache.lenya.transaction.Transactionable;
 
 /**
@@ -177,7 +176,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         copyDocumentSource(sourceDocument, destinationDocument);
 
         ResourcesManager resourcesManager = null;
-        WorkflowManager workflowManager = null;
         SiteManager siteManager = null;
         ServiceSelector selector = null;
         try {
@@ -186,15 +184,9 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
             siteManager.copy(sourceDocument, destinationDocument);
-
-            workflowManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-            workflowManager.copyHistory(sourceDocument, destinationDocument);
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {
-            if (workflowManager != null) {
-                this.manager.release(workflowManager);
-            }
             if (resourcesManager != null) {
                 this.manager.release(resourcesManager);
             }
@@ -217,13 +209,10 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
         SiteManager siteManager = null;
         ServiceSelector selector = null;
-        WorkflowManager workflowManager = null;
         ResourcesManager resourcesManager = null;
         try {
             resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
             resourcesManager.deleteResources(document);
-            workflowManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-            workflowManager.deleteHistory(document);
 
             Publication publication = document.getPublication();
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
@@ -234,9 +223,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {
-            if (workflowManager != null) {
-                this.manager.release(workflowManager);
-            }
             if (resourcesManager != null) {
                 this.manager.release(resourcesManager);
             }
@@ -258,20 +244,13 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         copy(sourceDocument, destinationDocument);
 
         ResourcesManager resourcesManager = null;
-        WorkflowManager workflowManager = null;
         try {
             resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
             resourcesManager.copyResources(sourceDocument, destinationDocument);
             resourcesManager.deleteResources(sourceDocument);
-
-            workflowManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-            workflowManager.moveHistory(sourceDocument, destinationDocument);
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {
-            if (workflowManager != null) {
-                this.manager.release(workflowManager);
-            }
             if (resourcesManager != null) {
                 this.manager.release(resourcesManager);
             }

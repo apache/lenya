@@ -20,7 +20,7 @@ import java.util.Map;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 
 /**
- * Helper to manage documents. It takes care of workflow, attachments etc.
+ * Helper to manage documents. It takes care of attachments etc.
  * 
  * @version $Id$
  */

@@ -30,13 +30,8 @@ import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.workflow.WorkflowResolver;
+import org.apache.lenya.cms.workflow.WorkflowManager;
 import org.apache.lenya.util.ServletHelper;
-import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.Workflow;
-import org.apache.lenya.workflow.WorkflowEngine;
-import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.impl.WorkflowEngineImpl;
 
 /**
  * If the client requested invoking a workflow event, this authorizer checks if the current document
@@ -74,7 +69,7 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
 
         String event = request.getParameter(EVENT_PARAMETER);
         SourceResolver resolver = null;
-        WorkflowResolver workflowResolver = null;
+        WorkflowManager workflowManager = null;
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Authorizing workflow for event [" + event + "]");
@@ -86,30 +81,20 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
                 resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
                 DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
                 if (map.isDocument(webappUrl)) {
-
                     Document document = map.getFromURL(webappUrl);
-                    workflowResolver = (WorkflowResolver) this.manager
-                            .lookup(WorkflowResolver.ROLE);
-
-                    if (workflowResolver.hasWorkflow(document)) {
-                        Workflow workflow = workflowResolver.getWorkflowSchema(document);
-                        Situation situation = workflowResolver.getSituation();
-                        WorkflowEngine engine = new WorkflowEngineImpl();
-                        authorized = engine.canInvoke(document, workflow, situation, event);
-                    }
+                    workflowManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
+                    authorized = workflowManager.canInvoke(document, event);
                 }
             } catch (final ServiceException e) {
                 throw new AccessControlException(e);
             } catch (final DocumentBuildException e) {
                 throw new AccessControlException(e);
-            } catch (final WorkflowException e) {
-                throw new AccessControlException(e);
             } finally {
                 if (resolver != null) {
                     this.manager.release(resolver);
                 }
-                if (workflowResolver != null) {
-                    this.manager.release(workflowResolver);
+                if (workflowManager != null) {
+                    this.manager.release(workflowManager);
                 }
             }
 

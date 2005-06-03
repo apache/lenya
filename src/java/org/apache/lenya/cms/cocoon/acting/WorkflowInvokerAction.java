@@ -30,11 +30,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
-import org.apache.lenya.cms.workflow.WorkflowResolver;
-import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.Workflow;
-import org.apache.lenya.workflow.WorkflowEngine;
-import org.apache.lenya.workflow.impl.WorkflowEngineImpl;
+import org.apache.lenya.cms.workflow.WorkflowManager;
 
 /**
  * Action to invoke a workflow transition independently from the request document URL. Parameters:
@@ -69,7 +65,10 @@ public class WorkflowInvokerAction extends ServiceableAction {
      *      org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String,
      *      org.apache.avalon.framework.parameters.Parameters)
      */
-    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source,
+    public Map act(Redirector redirector,
+            SourceResolver resolver,
+            Map objectModel,
+            String source,
             Parameters parameters) throws Exception {
 
         String area = parameters.getParameter(AREA);
@@ -89,30 +88,18 @@ public class WorkflowInvokerAction extends ServiceableAction {
         Publication pub = pubFactory.getPublication(objectModel);
         DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
         Document document = map.get(pub, area, documentId, language);
-        
-        WorkflowResolver workflowResolver = null;
-        
-        try {
-            workflowResolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
-            if (workflowResolver.hasWorkflow(document)) {
 
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("    Invoking workflow event");
-                }
-                
-                Workflow workflow = workflowResolver.getWorkflowSchema(document);
-                Situation situation = workflowResolver.getSituation();
-                WorkflowEngine engine = new WorkflowEngineImpl();
-                engine.invoke(document, workflow, situation, eventName);
-            } else {
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("    Document has no workflow.");
-                }
+        WorkflowManager wfManager = null;
+
+        try {
+            wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("    Invoking workflow event");
             }
-        }
-        finally {
-            if (resolver != null) {
-                this.manager.release(resolver);
+            wfManager.invoke(document, eventName);
+        } finally {
+            if (wfManager != null) {
+                this.manager.release(wfManager);
             }
         }
 

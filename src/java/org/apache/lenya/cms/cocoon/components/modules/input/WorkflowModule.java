@@ -26,6 +26,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.workflow.DocumentWorkflowable;
 import org.apache.lenya.cms.workflow.WorkflowResolver;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
@@ -70,7 +71,9 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
                 resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
                 if (resolver.hasWorkflow(document)) {
 
-                    Version latestVersion = document.getLatestVersion();
+                    DocumentWorkflowable workflowable = new DocumentWorkflowable(document,
+                            this.manager, getLogger());
+                    Version latestVersion = workflowable.getLatestVersion();
 
                     if (name.equals(STATE)) {
                         if (latestVersion == null) {

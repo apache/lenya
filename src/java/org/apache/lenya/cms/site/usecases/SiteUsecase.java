@@ -16,12 +16,7 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import java.util.Arrays;
-
 import org.apache.lenya.cms.usecase.DocumentUsecase;
-import org.apache.lenya.cms.workflow.WorkflowResolver;
-import org.apache.lenya.workflow.Version;
-import org.apache.lenya.workflow.Workflow;
 
 /**
  * Super class for site related usecases.
@@ -30,46 +25,5 @@ import org.apache.lenya.workflow.Workflow;
  */
 public class SiteUsecase extends DocumentUsecase {
 
-    protected static final String STATE = "state";
-    protected static final String ISLIVE = "is_live";
-
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
-     */
-    protected void initParameters() {
-        super.initParameters();
-        
-        WorkflowResolver resolver = null;
-        try {
-            resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
-            if (resolver.hasWorkflow(getSourceDocument())) {
-                Workflow workflow = resolver.getWorkflowSchema(getSourceDocument());
-                String[] variableNames = workflow.getVariableNames();
-                Version latestVersion = getSourceDocument().getLatestVersion();
-                Boolean isLive = null;
-                if (latestVersion != null) {
-                    setParameter(STATE, latestVersion.getState());
-                    if (Arrays.asList(variableNames).contains(ISLIVE)) {
-                        isLive = Boolean.valueOf(latestVersion.getValue(ISLIVE));
-                    }
-                } else {
-                    setParameter(STATE, workflow.getInitialState());
-                    if (Arrays.asList(variableNames).contains(ISLIVE)) {
-                        isLive = Boolean.valueOf(workflow.getInitialValue(ISLIVE));
-                    }
-                }
-                setParameter("islive", isLive);
-            } else {
-                setParameter("state", "");
-            }
-        } catch (Exception e) {
-            getLogger().error("Could not get workflow state.", e);
-            addErrorMessage("Could not get workflow state. See log files for details.");
-        } finally {
-            if (resolver != null) {
-                this.manager.release(resolver);
-            }
-        }
-    }
 
 }

@@ -35,13 +35,6 @@ import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteManager;
-import org.apache.lenya.cms.workflow.CMSHistory;
-import org.apache.lenya.cms.workflow.DocumentWorkflowable;
-import org.apache.lenya.cms.workflow.History;
-import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.Version;
-import org.apache.lenya.workflow.Workflow;
-import org.apache.lenya.workflow.WorkflowException;
 
 /**
  * A typical CMS document.
@@ -390,84 +383,6 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         return metaDataManager;
     }
 
-    private History history;
-
-    /**
-     * @return The workflow history.
-     */
-    public History getHistory() {
-        if (this.history == null) {
-            try {
-                final String path = getPublication().getPathMapper()
-                        .getPath(getId(), getLanguage());
-                final String uri = getPublication().getSourceURI() + "/content/workflow/history/"
-                        + path;
-                this.history = new CMSHistory(uri, this.manager);
-            } catch (WorkflowException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return this.history;
-    }
-
-    protected DocumentWorkflowable workflowable;
-    
-    protected DocumentWorkflowable getWorkflowable() {
-        if (this.workflowable == null) {
-            this.workflowable = new DocumentWorkflowable(this, this.manager, getLogger());
-        }
-        return this.workflowable;
-    }
-
-    /**
-     * @see org.apache.lenya.workflow.Workflowable#getVersions()
-     */
-    public Version[] getVersions() {
-        return getWorkflowable().getVersions();
-    }
-
-    /**
-     * @see org.apache.lenya.workflow.Workflowable#getLatestVersion()
-     */
-    public Version getLatestVersion() {
-        return getWorkflowable().getLatestVersion();
-    }
-
-    /**
-     * @see org.apache.lenya.workflow.Workflowable#newVersion(org.apache.lenya.workflow.Workflow,
-     *      org.apache.lenya.workflow.Version, org.apache.lenya.workflow.Situation)
-     */
-    public void newVersion(Workflow workflow, Version version, Situation situation) {
-        getWorkflowable().newVersion(workflow, version, situation);
-    }
-
-    /**
-     * @see org.apache.lenya.workflow.Workflowable#getVersions()
-    public Version[] getVersions() {
-        return getHistory().getVersions();
-    }
-     */
-
-    /**
-     * @see org.apache.lenya.workflow.Workflowable#getLatestVersion()
-    public Version getLatestVersion() {
-        Version[] versions = getVersions();
-        Version lastVersion = null;
-        if (versions.length > 0) {
-            lastVersion = versions[versions.length - 1];
-        }
-        return lastVersion;
-    }
-     */
-
-    /**
-     * @see org.apache.lenya.workflow.Workflowable#newVersion(org.apache.lenya.workflow.Workflow,
-     *      org.apache.lenya.workflow.Version, org.apache.lenya.workflow.Situation)
-    public void newVersion(Workflow workflow, Version version, Situation situation) {
-        getHistory().newVersion(workflow, version, situation);
-    }
-     */
-
     /**
      * @see org.apache.lenya.cms.publication.Document#delete()
      */
@@ -475,9 +390,6 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         try {
             SourceUtil.delete(getSourceURI(), this.manager);
             SourceUtil.delete(getMetaSourceURI(), this.manager);
-            if (getArea().equals(Publication.AUTHORING_AREA)) {
-                SourceUtil.delete(getHistory().getSourceURI(), this.manager);
-            }
         } catch (Exception e) {
             throw new DocumentException(e);
         }
@@ -530,19 +442,16 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.cms.publication.Document#getRepositoryNodes()
      */
     public Node[] getRepositoryNodes() {
-        Node[] nodes = new Node[3];
+        Node[] nodes = new Node[2];
         SourceResolver resolver = null;
         RepositorySource documentSource = null;
         RepositorySource metaSource = null;
-        RepositorySource historySource = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             documentSource = (RepositorySource) resolver.resolveURI(getSourceURI());
             metaSource = (RepositorySource) resolver.resolveURI(getMetaSourceURI());
-            historySource = (RepositorySource) resolver.resolveURI(getHistory().getSourceURI());
             nodes[0] = documentSource.getNode();
             nodes[1] = metaSource.getNode();
-            nodes[2] = historySource.getNode();
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -552,9 +461,6 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
                 }
                 if (metaSource != null) {
                     resolver.release(metaSource);
-                }
-                if (historySource != null) {
-                    resolver.release(historySource);
                 }
                 this.manager.release(resolver);
             }
