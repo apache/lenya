@@ -135,7 +135,7 @@
           <map:parameter name="language" value="{page-envelope:document-language}"/>
         </map:transform>
         <map:transform type="i18n">      
-          <map:parameter name="locale" value="{request:locale}"/>
+          <map:parameter name="locale" value="{page-envelope:document-language}"/>
         </map:transform>    
         <map:select type="parameter">
           <map:parameter name="parameter-selector-test" value="{1}"/>
