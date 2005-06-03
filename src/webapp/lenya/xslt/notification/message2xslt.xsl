@@ -132,7 +132,15 @@
   <xsl:template match="not:body/text()"><xsl:value-of select="."/></xsl:template>
 
   <xsl:template match="not:document-url">
-    <xsl:value-of select="$server-uri"/><xsl:value-of select="$contextPath"/>/<xsl:value-of select="$publication-id"/>/<xsl:value-of select="@area"/><xsl:value-of select="$document-url"/>
+    <xsl:choose>
+      <xsl:when test="@area">
+        <xsl:value-of select="$server-uri"/><xsl:value-of select="$contextPath"/>/<xsl:value-of select="$publication-id"/>/<xsl:value-of select="@area"/><xsl:value-of select="$document-url"/>  
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$server-uri"/><xsl:value-of select="$contextPath"/>/<xsl:value-of select="$publication-id"/>/<xsl:value-of select="$area"/><xsl:value-of select="$document-url"/>  
+      </xsl:otherwise>
+    </xsl:choose>
+
   </xsl:template>
 
 
