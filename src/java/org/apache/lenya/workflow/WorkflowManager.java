@@ -14,18 +14,14 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.workflow;
-
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.util.DocumentSet;
-import org.apache.lenya.workflow.WorkflowException;
+package org.apache.lenya.workflow;
 
 /**
  * Manager for workflow issues. This is the main entry point for
  * workflow-related tasks. You can safely invoke all methods for non-workflow
  * documents.
  * 
- * @version $Id$
+ * @version $Id: WorkflowManager.java 179751 2005-06-03 09:13:35Z andreas $
  */
 public interface WorkflowManager {
 
@@ -37,54 +33,53 @@ public interface WorkflowManager {
     /**
      * Invokes a workflow event on a document. This is the same as
      * <code>invoke(Document, String, true)</code>.
-     * @param document The document.
+     * @param workflowable The workflowable.
      * @param event The name of the event.
      * @throws WorkflowException if the event could not be invoked in the
      *             current situation.
      */
-    void invoke(Document document, String event) throws WorkflowException;
+    void invoke(Workflowable workflowable, String event) throws WorkflowException;
 
     /**
      * Invokes a workflow event on a document.
-     * @param document The document.
+     * @param workflowable The document.
      * @param event The name of the event.
      * @param force If this is set to <code>true</code>, the execution is
-     *            forced, which means an exception is thrown if the document in
+     *            forced, which means an exception is thrown if the workflowable in
      *            the set does not support the event. If set to
      *            <code>false</code>, non-supporting documents are ignored.
      * @throws WorkflowException if the event could not be invoked in the
      *             current situation.
      */
-    void invoke(Document document, String event, boolean force) throws WorkflowException;
-
-    /**
-     * Invokes a workflow event on a document set.
-     * @param documentSet The document.
-     * @param event The event.
-     * @param force If this is set to <code>true</code>, the execution is
-     *            forced, which means an exception is thrown if a document in
-     *            the set does not support the event. If set to
-     *            <code>false</code>, non-supporting documents are ignored.
-     * @throws WorkflowException if <code>force</code> is set to
-     *             <code>true</code> and a document does not support the
-     *             workflow event.
-     */
-    void invoke(DocumentSet documentSet, String event, boolean force) throws WorkflowException;
+    void invoke(Workflowable workflowable, String event, boolean force) throws WorkflowException;
 
     /**
      * Checks if an event can be invoked on a document.
-     * @param document The document.
+     * @param workflowable The workflowable.
      * @param event The event.
      * @return A boolean value.
      */
-    boolean canInvoke(Document document, String event);
+    boolean canInvoke(Workflowable workflowable, String event);
 
     /**
-     * Checks if an event can be invoked on all documents in a set.
-     * @param documents The documents.
-     * @param event The event.
-     * @return if an error occurs.
+     * Checks if a workflowable has a workflow.
+     * @param workflowable The workflowable.
+     * @return A boolean value.
      */
-    boolean canInvoke(DocumentSet documents, String event);
+    boolean hasWorkflow(Workflowable workflowable);
+
+    /**
+     * Resolves the workflow schema of a workflowable.
+     * @param workflowable The workflowable.
+     * @return A workflow schema.
+     * @throws WorkflowException if the document has no workflow.
+     */
+    Workflow getWorkflowSchema(Workflowable workflowable) throws WorkflowException;
+
+    /**
+     * Resolves the current workflow situation.
+     * @return A situation object.
+     */
+    Situation getSituation();
 
 }

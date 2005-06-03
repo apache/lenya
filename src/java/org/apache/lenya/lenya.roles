@@ -122,13 +122,9 @@
   	    shorthand="flowhelper"
   	    default-class="org.apache.lenya.cms.cocoon.flow.FlowHelperImpl"/>
         
-  <role name="org.apache.lenya.cms.workflow.WorkflowResolver"
-  	    shorthand="workflow-resolver"
-  	    default-class="org.apache.lenya.cms.workflow.WorkflowResolverImpl"/>
-        
-  <role name="org.apache.lenya.cms.workflow.WorkflowManager"
+  <role name="org.apache.lenya.workflow.WorkflowManager"
   	    shorthand="workflow-manager"
-  	    default-class="org.apache.lenya.cms.workflow.WorkflowManagerImpl"/>
+  	    default-class="org.apache.lenya.cms.workflow.LenyaWorkflowManager"/>
         
   <role name="org.apache.lenya.cms.site.usecases.LinkRewriter"
   	    shorthand="link-rewriter"

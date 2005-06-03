@@ -27,9 +27,9 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.workflow.DocumentWorkflowable;
-import org.apache.lenya.cms.workflow.WorkflowResolver;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
+import org.apache.lenya.workflow.WorkflowManager;
 
 /**
  * Module for workflow access.
@@ -62,29 +62,29 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
             throws ConfigurationException {
 
         Object value = null;
-        WorkflowResolver resolver = null;
+        WorkflowManager wfManager = null;
 
         try {
             PageEnvelope envelope = getEnvelope(objectModel, name);
             Document document = envelope.getDocument();
             if (document != null) {
-                resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
-                if (resolver.hasWorkflow(document)) {
+                wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
+                DocumentWorkflowable workflowable = new DocumentWorkflowable(document,
+                        getLogger());
+                if (wfManager.hasWorkflow(workflowable)) {
 
-                    DocumentWorkflowable workflowable = new DocumentWorkflowable(document,
-                            this.manager, getLogger());
                     Version latestVersion = workflowable.getLatestVersion();
 
                     if (name.equals(STATE)) {
                         if (latestVersion == null) {
-                            Workflow workflow = resolver.getWorkflowSchema(document);
+                            Workflow workflow = wfManager.getWorkflowSchema(workflowable);
                             value = workflow.getInitialState();
                         } else {
                             value = latestVersion.getState();
                         }
                     } else if (name.startsWith(VARIABLE_PREFIX)) {
                         String variableName = name.substring(VARIABLE_PREFIX.length());
-                        Workflow workflow = resolver.getWorkflowSchema(document);
+                        Workflow workflow = wfManager.getWorkflowSchema(workflowable);
                         String[] variableNames = workflow.getVariableNames();
                         if (Arrays.asList(variableNames).contains(variableName)) {
                             if (latestVersion == null) {
@@ -112,8 +112,8 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
         } catch (Exception e) {
             throw new ConfigurationException("Resolving attribute failed: ", e);
         } finally {
-            if (resolver != null) {
-                this.manager.release(resolver);
+            if (wfManager != null) {
+                this.manager.release(wfManager);
             }
         }
         return value;

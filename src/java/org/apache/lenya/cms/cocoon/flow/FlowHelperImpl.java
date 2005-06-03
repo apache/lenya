@@ -43,10 +43,10 @@ import org.apache.lenya.cms.publication.util.DocumentHelper;
 import org.apache.lenya.cms.rc.FileReservedCheckInException;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RevisionController;
-import org.apache.lenya.cms.workflow.WorkflowManager;
-import org.apache.lenya.cms.workflow.WorkflowResolver;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
+import org.apache.lenya.workflow.WorkflowManager;
 
 /**
  * Flowscript utility class. The FOM_Cocoon object is not passed in the constructor to avoid errors.
@@ -66,14 +66,14 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Se
      */
     public Situation getSituation(FOM_Cocoon cocoon) throws AccessControlException {
         Situation situation;
-        WorkflowResolver resolver = null;
+        WorkflowManager wfManager = null;
         try {
-            resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
-            situation = resolver.getSituation();
+            wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
+            situation = wfManager.getSituation();
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         } finally {
-            this.manager.release(resolver);
+            this.manager.release(wfManager);
         }
         return situation;
     }
@@ -153,20 +153,8 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Se
      */
     public void triggerWorkflow(FOM_Cocoon cocoon, String event) throws WorkflowException,
             PageEnvelopeException, AccessControlException {
-
-        WorkflowManager wfManager = null;
-        try {
-            wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-            Document document = getPageEnvelope(cocoon).getDocument();
-            wfManager.invoke(document, event);
-        } catch (Exception e) {
-            throw new WorkflowException(e);
-        } finally {
-            if (wfManager != null) {
-                this.manager.release(wfManager);
-            }
-        }
-
+        Document document = getPageEnvelope(cocoon).getDocument();
+        WorkflowUtil.invoke(this.manager, getLogger(), document, event);
     }
 
     /**

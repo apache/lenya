@@ -1,8 +1,18 @@
 /*
- * Created on 27.05.2005
+ * Copyright  1999-2004 The Apache Software Foundation
  *
- * TODO To change the template for this generated file go to
- * Window - Preferences - Java - Code Style - Code Templates
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
  */
 package org.apache.lenya.cms.workflow;
 
@@ -15,7 +25,6 @@ import java.util.Map;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -26,29 +35,28 @@ import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.Workflowable;
 
 /**
- * @author nobby
+ * Workflowable around a CMS document.
  * 
- * TODO To change the template for this generated type comment go to Window - Preferences - Java -
- * Code Style - Code Templates
+ * @version $Id:$
  */
 public class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
 
     /**
      * Ctor.
      * @param document The document.
-     * @param manager The service manager.
      * @param logger The logger.
      */
-    public DocumentWorkflowable(Document document, ServiceManager manager, Logger logger) {
+    public DocumentWorkflowable(Document document, Logger logger) {
         this.document = document;
-        this.manager = manager;
         ContainerUtil.enableLogging(this, logger);
     }
 
     private Document document;
-    private ServiceManager manager;
 
-    protected String getWorkflowName() {
+    /**
+     * @return The name of the workflow schema.
+     */
+    protected String getWorkflowSchema() {
         String workflowName = null;
         try {
             DocumentType doctype = document.getResourceType();
@@ -115,7 +123,7 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
         int number = newVersions.length - 1;
         newVersions[number] = version;
 
-        String string = number + " " + encodeVersion(version, (CMSSituation) situation);
+        String string = number + " " + encodeVersion(workflow, version, (LenyaSituation) situation);
         try {
             LenyaMetaData meta = this.document.getMetaDataManager().getLenyaMetaData();
             meta.addValue(LenyaMetaData.ELEMENT_WORKFLOW_VERSION, string);
@@ -125,7 +133,7 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
         }
     }
 
-    protected String encodeVersion(Version version, CMSSituation situation) {
+    protected String encodeVersion(Workflow workflow, Version version, LenyaSituation situation) {
 
         String string = "event:" + version.getEvent();
         string += " state:" + version.getState();
@@ -136,21 +144,10 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         string += " date:" + format.format(new Date());
 
-        WorkflowResolver resolver = null;
-        try {
-            resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
-            Workflow workflow = resolver.getWorkflowSchema(this.document);
-            String names[] = workflow.getVariableNames();
-            for (int i = 0; i < names.length; i++) {
-                String value = Boolean.toString(version.getValue(names[i]));
-                string += " var:" + names[i] + "=" + value;
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (resolver != null) {
-                this.manager.release(resolver);
-            }
+        String names[] = workflow.getVariableNames();
+        for (int i = 0; i < names.length; i++) {
+            String value = Boolean.toString(version.getValue(names[i]));
+            string += " var:" + names[i] + "=" + value;
         }
         return string;
     }
@@ -175,13 +172,21 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
                 variables.put(nameValue[0], nameValue[1]);
             }
         }
-        Version version = new CMSVersion(event, state);
+        Version version = new LenyaVersion(event, state);
         for (Iterator i = variables.keySet().iterator(); i.hasNext();) {
             String name = (String) i.next();
             String value = (String) variables.get(name);
             version.setValue(name, Boolean.valueOf(value).booleanValue());
         }
         return version;
+    }
+
+    /**
+     * @see org.apache.lenya.workflow.Workflowable#getWorkflowSchemaURI()
+     */
+    public String getWorkflowSchemaURI() {
+        return this.document.getPublication().getSourceURI() + "/config/workflow/"
+                + getWorkflowSchema();
     }
 
 }

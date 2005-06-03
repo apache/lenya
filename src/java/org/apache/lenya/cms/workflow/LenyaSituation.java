@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id$  */
+/* $Id: CMSSituation.java 157324 2005-03-13 09:41:14Z andreas $  */
 
 package org.apache.lenya.cms.workflow;
 
@@ -24,7 +24,7 @@ import org.apache.lenya.workflow.Situation;
 /**
  * The CMS situation
  */
-public class CMSSituation implements Situation {
+public class LenyaSituation implements Situation {
 
     /**
      * Returns the machine IP address.
@@ -48,7 +48,7 @@ public class CMSSituation implements Situation {
      * @param _userId The user ID.
      * @param _machineIp The machine IP address.
 	 */
-    protected CMSSituation(String[] _roleIds, String _userId, String _machineIp) {
+    protected LenyaSituation(String[] _roleIds, String _userId, String _machineIp) {
         this.roleIds = _roleIds;
         this.userId = _userId;
         this.machineIp = _machineIp;

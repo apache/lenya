@@ -20,7 +20,7 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.cms.workflow.WorkflowManager;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.transaction.Transactionable;
 
 /**
@@ -41,23 +41,16 @@ public class EditDocument extends DocumentUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
         SourceResolver resolver = null;
-        WorkflowManager wfManager = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             SourceUtil.copy(resolver, getParameterAsString(SOURCE_URI), getSourceDocument()
                     .getSourceURI());
 
-            wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-            if (wfManager.canInvoke(getSourceDocument(), "edit")) {
-                wfManager.invoke(getSourceDocument(), "edit");
-            }
+            WorkflowUtil.invoke(this.manager, getLogger(), getSourceDocument(), "edit");
 
         } finally {
             if (resolver != null) {
                 this.manager.release(resolver);
-            }
-            if (wfManager != null) {
-                this.manager.release(wfManager);
             }
         }
     }

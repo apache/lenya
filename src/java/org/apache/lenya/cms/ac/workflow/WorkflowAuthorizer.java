@@ -28,9 +28,8 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.workflow.WorkflowManager;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -69,7 +68,6 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
 
         String event = request.getParameter(EVENT_PARAMETER);
         SourceResolver resolver = null;
-        WorkflowManager workflowManager = null;
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Authorizing workflow for event [" + event + "]");
@@ -82,19 +80,13 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
                 DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
                 if (map.isDocument(webappUrl)) {
                     Document document = map.getFromURL(webappUrl);
-                    workflowManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-                    authorized = workflowManager.canInvoke(document, event);
+                    authorized = WorkflowUtil.canInvoke(this.manager, getLogger(), document, event);
                 }
-            } catch (final ServiceException e) {
-                throw new AccessControlException(e);
-            } catch (final DocumentBuildException e) {
+            } catch (final Exception e) {
                 throw new AccessControlException(e);
             } finally {
                 if (resolver != null) {
                     this.manager.release(resolver);
-                }
-                if (workflowManager != null) {
-                    this.manager.release(workflowManager);
                 }
             }
 

@@ -28,7 +28,7 @@ import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.cms.workflow.WorkflowManager;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.transaction.Transactionable;
 
 /**
@@ -74,16 +74,8 @@ public abstract class MoveSubsite extends DocumentUsecase {
                     addErrorMessage("delete-doc-live", new String[] { liveVersion.getId() });
                 }
             }
-            WorkflowManager wfManager = null;
-            try {
-                wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-                if (!wfManager.canInvoke(set, getEvent())) {
-                    addErrorMessage("The workflow event cannot be invoked on all documents.");
-                }
-            } finally {
-                if (wfManager != null) {
-                    this.manager.release(wfManager);
-                }
+            if (!WorkflowUtil.canInvoke(this.manager, getLogger(), set, getEvent())) {
+                addErrorMessage("The workflow event cannot be invoked on all documents.");
             }
         }
     }
@@ -142,11 +134,9 @@ public abstract class MoveSubsite extends DocumentUsecase {
         Document target = doc.getIdentityMap().getAreaVersion(doc, getTargetArea());
         target = SiteUtil.getAvailableDocument(this.manager, target);
 
-        WorkflowManager wfManager = null;
         DocumentManager documentManager = null;
         try {
-            wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-            wfManager.invoke(sources, getEvent(), true);
+            WorkflowUtil.invoke(this.manager, getLogger(), sources, getEvent(), true);
 
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             DocumentSet targets = SiteUtil.getTransferedSubSite(this.manager,
@@ -156,9 +146,6 @@ public abstract class MoveSubsite extends DocumentUsecase {
             documentManager.move(sources, targets);
 
         } finally {
-            if (wfManager != null) {
-                this.manager.release(wfManager);
-            }
             if (documentManager != null) {
                 this.manager.release(documentManager);
             }

@@ -30,7 +30,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
-import org.apache.lenya.cms.workflow.WorkflowManager;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 
 /**
  * Action to invoke a workflow transition independently from the request document URL. Parameters:
@@ -89,19 +89,10 @@ public class WorkflowInvokerAction extends ServiceableAction {
         DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
         Document document = map.get(pub, area, documentId, language);
 
-        WorkflowManager wfManager = null;
-
-        try {
-            wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("    Invoking workflow event");
-            }
-            wfManager.invoke(document, eventName);
-        } finally {
-            if (wfManager != null) {
-                this.manager.release(wfManager);
-            }
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("    Invoking workflow event");
         }
+        WorkflowUtil.invoke(this.manager, getLogger(), document, eventName);
 
         return Collections.EMPTY_MAP;
     }

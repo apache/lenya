@@ -31,10 +31,11 @@ import org.apache.lenya.cms.site.tree.SiteTreeFactory;
 import org.apache.lenya.cms.task.AbstractTask;
 import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.cms.task.Task;
-import org.apache.lenya.cms.workflow.WorkflowManager;
-import org.apache.lenya.cms.workflow.WorkflowResolver;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.transaction.IdentifiableFactory;
 import org.apache.lenya.workflow.Situation;
+import org.apache.lenya.workflow.WorkflowException;
+import org.apache.lenya.workflow.WorkflowManager;
 import org.apache.log4j.Logger;
 
 /**
@@ -82,36 +83,25 @@ public abstract class PublicationTask extends AbstractTask {
      * Copies the resources of a document to another document.
      * @param sourceDocument The source document.
      * @param destinationDocument The destination document.
-     * @throws ExecutionException when something went wrong.
-    protected void copyResources(Document sourceDocument, Document destinationDocument)
-            throws ExecutionException {
-
-        if (log.isDebugEnabled()) {
-            log.debug("Copying resources");
-        }
-
-        ResourcesManager sourceManager = sourceDocument.getResourcesManager();
-        ResourcesManager destinationManager = destinationDocument.getResourcesManager();
-
-        List resourcesList = new ArrayList(Arrays.asList(sourceManager.getResources()));
-        resourcesList.addAll(Arrays.asList(sourceManager.getMetaFiles()));
-        File[] resources = (File[]) resourcesList.toArray(new File[resourcesList.size()]);
-        File destinationDirectory = destinationManager.getPath();
-
-        for (int i = 0; i < resources.length; i++) {
-            File destinationResource = new File(destinationDirectory, resources[i].getName());
-
-            if (log.isDebugEnabled()) {
-                log.debug("Copy file [" + resources[i].getAbsolutePath() + "] to ["
-                        + destinationResource.getAbsolutePath() + "]");
-            }
-            try {
-                FileUtil.copyFile(resources[i], destinationResource);
-            } catch (IOException e) {
-                throw new ExecutionException(e);
-            }
-        }
-    }
+     * @throws ExecutionException when something went wrong. protected void copyResources(Document
+     *             sourceDocument, Document destinationDocument) throws ExecutionException {
+     * 
+     * if (log.isDebugEnabled()) { log.debug("Copying resources"); }
+     * 
+     * ResourcesManager sourceManager = sourceDocument.getResourcesManager(); ResourcesManager
+     * destinationManager = destinationDocument.getResourcesManager();
+     * 
+     * List resourcesList = new ArrayList(Arrays.asList(sourceManager.getResources()));
+     * resourcesList.addAll(Arrays.asList(sourceManager.getMetaFiles())); File[] resources =
+     * (File[]) resourcesList.toArray(new File[resourcesList.size()]); File destinationDirectory =
+     * destinationManager.getPath();
+     * 
+     * for (int i = 0; i < resources.length; i++) { File destinationResource = new
+     * File(destinationDirectory, resources[i].getName());
+     * 
+     * if (log.isDebugEnabled()) { log.debug("Copy file [" + resources[i].getAbsolutePath() + "] to [" +
+     * destinationResource.getAbsolutePath() + "]"); } try { FileUtil.copyFile(resources[i],
+     * destinationResource); } catch (IOException e) { throw new ExecutionException(e); } } }
      */
 
     /**
@@ -147,16 +137,12 @@ public abstract class PublicationTask extends AbstractTask {
             log.debug("Checking workflow of document [" + document + "].");
         }
 
-        WorkflowManager wfManager = null;
         try {
-            wfManager = (WorkflowManager) getServiceManager().lookup(WorkflowManager.ROLE);
-            return wfManager.canInvoke(document, getEventName());
-        } catch (Exception e) {
+            return WorkflowUtil.canInvoke(getServiceManager(), new ConsoleLogger(), document, getEventName());
+        } catch (ParameterException e) {
             throw new ExecutionException(e);
-        } finally {
-            if (wfManager != null) {
-                getServiceManager().release(wfManager);
-            }
+        } catch (WorkflowException e) {
+            throw new ExecutionException(e);
         }
     }
 
@@ -166,15 +152,15 @@ public abstract class PublicationTask extends AbstractTask {
      * @throws ParameterException when something went wrong.
      */
     protected Situation getSituation() throws ParameterException {
-        WorkflowResolver wfResolver = null;
+        WorkflowManager wfManager = null;
         try {
-            wfResolver = (WorkflowResolver) getServiceManager().lookup(WorkflowResolver.ROLE);
-            return wfResolver.getSituation();
+            wfManager = (WorkflowManager) getServiceManager().lookup(WorkflowManager.ROLE);
+            return wfManager.getSituation();
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
-            if (wfResolver != null) {
-                getServiceManager().release(wfResolver);
+            if (wfManager != null) {
+                getServiceManager().release(wfManager);
             }
         }
     }
@@ -190,16 +176,10 @@ public abstract class PublicationTask extends AbstractTask {
             log.debug("Trying to execute workflow on document [" + document.getId() + "].");
         }
 
-        WorkflowManager wfManager = null;
         try {
-            wfManager = (WorkflowManager) getServiceManager().lookup(WorkflowManager.ROLE);
-            wfManager.invoke(document, getEventName());
+            WorkflowUtil.invoke(getServiceManager(), new ConsoleLogger(), document, getEventName());
         } catch (Exception e) {
             throw new ExecutionException(e);
-        } finally {
-            if (wfManager != null) {
-                getServiceManager().release(wfManager);
-            }
         }
 
     }
@@ -232,14 +212,13 @@ public abstract class PublicationTask extends AbstractTask {
     protected SiteTree getSiteTree1(String area) {
         try {
 
-            IdentifiableFactory factory = getIdentityMap()
-                    .getFactory(SiteTree.IDENTIFIABLE_TYPE);
+            IdentifiableFactory factory = getIdentityMap().getFactory(SiteTree.IDENTIFIABLE_TYPE);
             if (factory == null) {
                 factory = new SiteTreeFactory(getServiceManager());
                 ContainerUtil.enableLogging(factory, new ConsoleLogger());
                 getIdentityMap().setFactory(SiteTree.IDENTIFIABLE_TYPE, factory);
             }
-            
+
             String key = getPublication().getId() + ":" + area;
 
             return (SiteTree) getIdentityMap().get(SiteTree.IDENTIFIABLE_TYPE, key);

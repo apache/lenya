@@ -35,7 +35,7 @@ public class History extends DocumentUsecase {
         super.initParameters();
 
         DocumentWorkflowable workflowable = new DocumentWorkflowable(getSourceDocument(),
-                this.manager, getLogger());
+                getLogger());
         Version[] versions = workflowable.getVersions();
         setParameter("versions", versions);
     }

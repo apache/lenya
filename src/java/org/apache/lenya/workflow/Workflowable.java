@@ -19,7 +19,7 @@ package org.apache.lenya.workflow;
 /**
  * Interface for objects which can be workflowed.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public interface Workflowable {
 
@@ -40,5 +40,10 @@ public interface Workflowable {
      * @param situation The situation in which the version was added.
      */
     void newVersion(Workflow workflow, Version version, Situation situation);
+    
+    /**
+     * @return The URI to resolve the schema configuration from.
+     */
+    String getWorkflowSchemaURI();
     
 }

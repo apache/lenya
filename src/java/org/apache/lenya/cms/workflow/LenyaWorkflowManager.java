@@ -16,13 +16,11 @@
  */
 package org.apache.lenya.cms.workflow;
 
-import java.io.File;
 import java.util.Map;
 
 import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
@@ -33,49 +31,18 @@ import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.impl.PolicyAuthorizer;
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentType;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.Workflow;
-import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.impl.WorkflowBuilder;
-import org.apache.lenya.workflow.impl.WorkflowImpl;
+import org.apache.lenya.workflow.impl.WorkflowManagerImpl;
 
 /**
- * Default implementation of the workflow resolver component.
+ * Lenya-specific workflow manager.
  * 
- * @version $Id$
+ * @version $Id:$
  */
-public class WorkflowResolverImpl extends AbstractLogEnabled implements WorkflowResolver,
-        Contextualizable {
+public class LenyaWorkflowManager extends WorkflowManagerImpl implements Contextualizable {
 
     /**
-     * @see org.apache.lenya.cms.workflow.WorkflowResolver#getWorkflowSchema(org.apache.lenya.cms.publication.Document)
-     */
-    public Workflow getWorkflowSchema(Document document) throws WorkflowException {
-        WorkflowImpl workflow = null;
-
-        try {
-            DocumentType doctype = document.getResourceType();
-            String workflowSchema = document.getPublication().getWorkflowSchema(doctype);
-            if (workflowSchema != null) {
-                Publication publication = document.getPublication();
-
-                File workflowDirectory = new File(publication.getDirectory(), WORKFLOW_DIRECTORY);
-                File workflowFile = new File(workflowDirectory, workflowSchema);
-                WorkflowBuilder builder = new WorkflowBuilder(getLogger());
-                workflow = builder.buildWorkflow(workflowSchema, workflowFile);
-            }
-        } catch (final Exception e) {
-            throw new WorkflowException(e);
-        }
-
-        return workflow;
-    }
-
-    /**
-     * @see org.apache.lenya.cms.workflow.WorkflowResolver#getSituation()
+     * @see org.apache.lenya.workflow.WorkflowManager#getSituation()
      */
     public Situation getSituation() {
         Request request = ObjectModelHelper.getRequest(this.objectModel);
@@ -108,9 +75,9 @@ public class WorkflowResolverImpl extends AbstractLogEnabled implements Workflow
                 roleIds[i] = roles[i].getId();
             }
 
-            situation = new CMSSituation(roleIds, userId, machineIp);
+            situation = new LenyaSituation(roleIds, userId, machineIp);
         } else {
-            situation = new CMSSituation(new String[0], null, null);
+            situation = new LenyaSituation(new String[0], null, null);
         }
         return situation;
     }
@@ -123,25 +90,5 @@ public class WorkflowResolverImpl extends AbstractLogEnabled implements Workflow
     public void contextualize(Context context) throws ContextException {
         this.objectModel = ContextHelper.getObjectModel(context);
     }
-
-    /**
-     * @see org.apache.lenya.cms.workflow.WorkflowResolver#hasWorkflow(org.apache.lenya.cms.publication.Document)
-     */
-    public boolean hasWorkflow(Document document) {
-
-        boolean hasWorkflow = false;
-        try {
-            if (document.exists()) {
-                DocumentType doctype = document.getResourceType();
-                hasWorkflow = (document.getPublication().getWorkflowSchema(doctype) != null);
-            }
-        } catch (final Exception e) {
-            throw new RuntimeException(e);
-        }
-        return hasWorkflow;
-    }
-
-    protected static final String WORKFLOW_DIRECTORY = "config/workflow".replace('/',
-            File.separatorChar);
 
 }

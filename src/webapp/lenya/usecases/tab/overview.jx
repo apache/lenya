@@ -58,7 +58,7 @@
             <tr>
               <td class="lenya-entry-caption"><i18n:text>Live</i18n:text>:</td>
               <td>
-                <jx:out value="${usecase.getParameter('islive')}"/>
+                <jx:out value="${usecase.getParameter('isLive')}"/>
               </td>
             </tr>
             <tr>

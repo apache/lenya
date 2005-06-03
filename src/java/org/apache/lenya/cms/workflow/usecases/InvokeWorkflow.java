@@ -21,7 +21,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.cms.workflow.WorkflowManager;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.transaction.Transactionable;
 
 /**
@@ -30,11 +30,15 @@ import org.apache.lenya.transaction.Transactionable;
  * <pre>
  * 
  *  
- *     &lt;component-instance name=&quot;default/workflow.submit&quot;
- *                         logger=&quot;lenya.usecases.workflow&quot;
- *                         class=&quot;org.apache.lenya.cms.workflow.usecases.InvokeWorkflow&quot;&gt;
- *       &lt;event id=&quot;submit&quot;/&gt;
- *     &lt;/component-instance&gt;
+ *   
+ *    
+ *       &lt;component-instance name=&quot;default/workflow.submit&quot;
+ *                           logger=&quot;lenya.usecases.workflow&quot;
+ *                           class=&quot;org.apache.lenya.cms.workflow.usecases.InvokeWorkflow&quot;&gt;
+ *         &lt;event id=&quot;submit&quot;/&gt;
+ *       &lt;/component-instance&gt;
+ *     
+ *    
  *   
  *  
  * </pre>
@@ -63,17 +67,9 @@ public class InvokeWorkflow extends DocumentUsecase implements Configurable {
             return;
         }
 
-        WorkflowManager workflowManager = null;
-        try {
-            workflowManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-            if (!workflowManager.canInvoke(getSourceDocument(), getEvent())) {
-                addErrorMessage("error-workflow-document", new String[] { getEvent(),
-                        getSourceDocument().getId() });
-            }
-        } finally {
-            if (workflowManager != null) {
-                this.manager.release(workflowManager);
-            }
+        if (!WorkflowUtil.canInvoke(this.manager, getLogger(), getSourceDocument(), getEvent())) {
+            addErrorMessage("error-workflow-document", new String[] { getEvent(),
+                    getSourceDocument().getId() });
         }
     }
 
@@ -89,16 +85,7 @@ public class InvokeWorkflow extends DocumentUsecase implements Configurable {
      */
     protected void doExecute() throws Exception {
         super.doExecute();
-
-        WorkflowManager workflowManager = null;
-        try {
-            workflowManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-            workflowManager.invoke(getSourceDocument(), getEvent());
-        } finally {
-            if (workflowManager != null) {
-                this.manager.release(workflowManager);
-            }
-        }
+        WorkflowUtil.invoke(this.manager, getLogger(), getSourceDocument(), getEvent());
     }
 
     protected static final String ELEMENT_EVENT = "event";

@@ -20,7 +20,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
@@ -33,7 +32,7 @@ import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.cms.workflow.WorkflowManager;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.transaction.Transactionable;
 import org.apache.lenya.workflow.WorkflowException;
 
@@ -53,7 +52,7 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
 
-        if (! hasErrors()) {
+        if (!hasErrors()) {
 
             if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
                 addErrorMessage("This usecase can only be invoked from the authoring area.");
@@ -62,19 +61,11 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
 
             String event = getEvent();
 
-            WorkflowManager wfManager = null;
-            try {
-                wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-                if (!wfManager.canInvoke(getSourceDocument(), event)) {
-                    setParameter(Publish.ALLOW_SINGLE_DOCUMENT, Boolean.toString(false));
-                    addInfoMessage("The single document cannot be deactivated because the workflow event cannot be invoked.");
-                } else {
-                    setParameter(Publish.ALLOW_SINGLE_DOCUMENT, Boolean.toString(true));
-                }
-            } finally {
-                if (wfManager != null) {
-                    this.manager.release(wfManager);
-                }
+            if (!WorkflowUtil.canInvoke(this.manager, getLogger(), getSourceDocument(), event)) {
+                setParameter(Publish.ALLOW_SINGLE_DOCUMENT, Boolean.toString(false));
+                addInfoMessage("The single document cannot be deactivated because the workflow event cannot be invoked.");
+            } else {
+                setParameter(Publish.ALLOW_SINGLE_DOCUMENT, Boolean.toString(true));
             }
 
             // get involved objects to lock them
@@ -134,17 +125,15 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
 
         boolean success = false;
 
-        WorkflowManager wfManager = null;
         DocumentManager documentManager = null;
         try {
-            wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
             Document liveDocument = authoringDocument.getIdentityMap()
                     .getAreaVersion(authoringDocument, Publication.LIVE_AREA);
 
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             documentManager.delete(liveDocument);
 
-            wfManager.invoke(authoringDocument, getEvent());
+            WorkflowUtil.invoke(this.manager, getLogger(), authoringDocument, getEvent());
             success = true;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -152,9 +141,6 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Deactivate document [" + authoringDocument + "]. Success: ["
                         + success + "]");
-            }
-            if (wfManager != null) {
-                this.manager.release(wfManager);
             }
             if (documentManager != null) {
                 this.manager.release(documentManager);
@@ -255,24 +241,13 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
     protected void deactivateAllLanguageVersions(Document document) throws PublicationException,
             WorkflowException {
         String[] languages = document.getPublication().getLanguages();
-        WorkflowManager wfManager = null;
-        try {
-            wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-            for (int i = 0; i < languages.length; i++) {
-                Document version = document.getIdentityMap().getLanguageVersion(document,
-                        languages[i]);
-                if (version.exists() && wfManager.canInvoke(version, getEvent())) {
-                    deactivate(version);
-                }
-            }
-        } catch (ServiceException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (wfManager != null) {
-                this.manager.release(wfManager);
+        for (int i = 0; i < languages.length; i++) {
+            Document version = document.getIdentityMap().getLanguageVersion(document, languages[i]);
+            if (version.exists()
+                    && WorkflowUtil.canInvoke(this.manager, getLogger(), version, getEvent())) {
+                deactivate(version);
             }
         }
-
     }
 
 }

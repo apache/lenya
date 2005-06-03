@@ -18,7 +18,7 @@ package org.apache.lenya.defaultpub.cms.usecases;
 
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.site.SiteUtil;
-import org.apache.lenya.cms.workflow.WorkflowManager;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 
 /**
  * Delete usecase handler.
@@ -33,16 +33,8 @@ public class Delete extends org.apache.lenya.cms.site.usecases.Delete {
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
         DocumentSet set = SiteUtil.getSubSite(this.manager, getSourceDocument());
-        WorkflowManager wfManager = null;
-        try {
-            wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-            if (!wfManager.canInvoke(set, getEvent())) {
-                addErrorMessage("The workflow event cannot be invoked on all documents.");
-            }
-        } finally {
-            if (wfManager != null) {
-                this.manager.release(wfManager);
-            }
+        if (!WorkflowUtil.canInvoke(this.manager, getLogger(), set, getEvent())) {
+            addErrorMessage("The workflow event cannot be invoked on all documents.");
         }
     }
 
@@ -57,20 +49,8 @@ public class Delete extends org.apache.lenya.cms.site.usecases.Delete {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
-        
-        super.doExecute();
-
         DocumentSet set = SiteUtil.getSubSite(this.manager, getSourceDocument());
-        WorkflowManager wfManager = null;
-        try {
-            wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-            wfManager.invoke(set, getEvent(), true);
-        } finally {
-            if (wfManager != null) {
-                this.manager.release(wfManager);
-            }
-        }
-
+        WorkflowUtil.invoke(this.manager, getLogger(), set, getEvent(), true);
         super.doExecute();
     }
 

@@ -23,9 +23,9 @@ import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.DocumentWorkflowable;
-import org.apache.lenya.cms.workflow.WorkflowResolver;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
+import org.apache.lenya.workflow.WorkflowManager;
 
 /**
  * Usecase to display the overview tab in the site area for a document.
@@ -35,7 +35,7 @@ import org.apache.lenya.workflow.Workflow;
 public class Overview extends SiteUsecase {
 
     protected static final String STATE = "state";
-    protected static final String ISLIVE = "is_live";
+    protected static final String ISLIVE = "isLive";
 
     /**
      * Ctor.
@@ -50,7 +50,7 @@ public class Overview extends SiteUsecase {
     protected void initParameters() {
         super.initParameters();
 
-        WorkflowResolver resolver = null;
+        WorkflowManager resolver = null;
         try {
             // read parameters from Dublin Core meta-data
             MetaData dc = getSourceDocument().getMetaDataManager().getDublinCoreMetaData();
@@ -63,12 +63,12 @@ public class Overview extends SiteUsecase {
             setParameter("lastmodified", getSourceDocument().getLastModified());
             setParameter("resourcetype", getSourceDocument().getResourceType());
 
-            resolver = (WorkflowResolver) this.manager.lookup(WorkflowResolver.ROLE);
-            if (resolver.hasWorkflow(getSourceDocument())) {
-                Workflow workflow = resolver.getWorkflowSchema(getSourceDocument());
+            DocumentWorkflowable workflowable = new DocumentWorkflowable(getSourceDocument(),
+                    getLogger());
+            resolver = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
+            if (resolver.hasWorkflow(workflowable)) {
+                Workflow workflow = resolver.getWorkflowSchema(workflowable);
                 String[] variableNames = workflow.getVariableNames();
-                DocumentWorkflowable workflowable = new DocumentWorkflowable(getSourceDocument(),
-                        this.manager, getLogger());
                 Version latestVersion = workflowable.getLatestVersion();
                 Boolean isLive = null;
                 if (latestVersion != null) {

@@ -56,7 +56,7 @@ public class RoleCondition extends AbstractCondition {
      * @see org.apache.lenya.workflow.impl.AbstractCondition#isComplied(Workflow, Situation, Workflowable)
      */
     public boolean isComplied(Workflow workflow, Situation situation, Workflowable instance) {
-        CMSSituation situationImpl = (CMSSituation) situation;
+        LenyaSituation situationImpl = (LenyaSituation) situation;
         String[] roles = situationImpl.getRoleIds();
 
         boolean complied = false;

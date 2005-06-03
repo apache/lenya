@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id$  */
+/* $Id: CMSVersion.java 156931 2005-03-10 10:26:24Z andreas $  */
 
 package org.apache.lenya.cms.workflow;
 
@@ -26,7 +26,7 @@ import org.apache.lenya.workflow.impl.VersionImpl;
 /**
  * A CMS version
  */
-public class CMSVersion extends VersionImpl {
+public class LenyaVersion extends VersionImpl {
     
     private Date date;
 
@@ -67,7 +67,7 @@ public class CMSVersion extends VersionImpl {
      * @param event The event.
      * @param state The state.
      */
-    public CMSVersion(String event, String state) {
+    public LenyaVersion(String event, String state) {
         super(event, state);
     }
     

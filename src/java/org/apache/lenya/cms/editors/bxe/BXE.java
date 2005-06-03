@@ -22,13 +22,13 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.cms.workflow.WorkflowManager;
 import org.apache.lenya.transaction.Transactionable;
+import org.apache.lenya.workflow.WorkflowManager;
 
 /**
  * BXE usecase handler.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class BXE extends DocumentUsecase {
 

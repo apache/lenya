@@ -33,9 +33,9 @@ import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
-import org.apache.lenya.cms.workflow.WorkflowManager;
-import org.apache.lenya.cms.workflow.WorkflowResolver;
+import org.apache.lenya.cms.workflow.DocumentWorkflowable;
 import org.apache.lenya.workflow.Workflow;
+import org.apache.lenya.workflow.WorkflowManager;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -118,7 +118,6 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
 
         PageEnvelope envelope = null;
         WorkflowManager workflowManager = null;
-        WorkflowResolver workflowResolver = null;
 
         try {
             DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
@@ -132,18 +131,17 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
                 if (document.getPublication().getWorkflowSchema(doctype) != null) {
                     setHasWorkflow(true);
                     workflowManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-                    workflowResolver = (WorkflowResolver) this.manager
-                            .lookup(WorkflowResolver.ROLE);
                 } else {
                     setHasWorkflow(false);
                 }
             }
 
             if (hasWorkflow()) {
-                Workflow workflow = workflowResolver.getWorkflowSchema(document);
+                DocumentWorkflowable workflowable = new DocumentWorkflowable(document, getLogger());
+                Workflow workflow = workflowManager.getWorkflowSchema(workflowable);
                 String[] events = workflow.getEvents();
                 for (int i = 0; i < events.length; i++) {
-                    if (workflowManager.canInvoke(document, events[i])) {
+                    if (workflowManager.canInvoke(workflowable, events[i])) {
                         this.executableEvents.add(events[i]);
                     }
                 }
@@ -152,9 +150,6 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
         } catch (final Exception e) {
             throw new ProcessingException(e);
         } finally {
-            if (workflowResolver != null) {
-                this.manager.release(workflowResolver);
-            }
             if (workflowManager != null) {
                 this.manager.release(workflowManager);
             }

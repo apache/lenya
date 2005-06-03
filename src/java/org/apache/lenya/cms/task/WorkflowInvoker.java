@@ -29,7 +29,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.workflow.WorkflowManager;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.log4j.Logger;
 
@@ -207,16 +207,10 @@ public class WorkflowInvoker extends ParameterWrapper {
      */
     public void invokeTransition() throws ExecutionException {
 
-        WorkflowManager wfManager = null;
         try {
-            wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-            wfManager.invoke(this.document, getEventName());
+            WorkflowUtil.invoke(this.manager, new ConsoleLogger(), this.document, getEventName());
         } catch (Exception e) {
             throw new ExecutionException(e);
-        } finally {
-            if (wfManager != null) {
-                this.manager.release(wfManager);
-            }
         }
     }
 

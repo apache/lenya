@@ -38,7 +38,7 @@ import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler;
-import org.apache.lenya.cms.workflow.WorkflowManager;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.transaction.Transactionable;
 import org.apache.lenya.workflow.WorkflowException;
 
@@ -101,7 +101,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        if (! hasErrors()) {
+        if (!hasErrors()) {
 
             String event = getEvent();
             Document document = getSourceDocument();
@@ -111,19 +111,11 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
                 return;
             }
 
-            WorkflowManager wfManager = null;
-            try {
-                wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-                if (!wfManager.canInvoke(getSourceDocument(), event)) {
-                    setParameter(ALLOW_SINGLE_DOCUMENT, Boolean.toString(false));
-                    addInfoMessage("The single document cannot be published because the workflow event cannot be invoked.");
-                } else {
-                    setParameter(ALLOW_SINGLE_DOCUMENT, Boolean.toString(true));
-                }
-            } finally {
-                if (wfManager != null) {
-                    this.manager.release(wfManager);
-                }
+            if (!WorkflowUtil.canInvoke(this.manager, getLogger(), getSourceDocument(), event)) {
+                setParameter(ALLOW_SINGLE_DOCUMENT, Boolean.toString(false));
+                addInfoMessage("The single document cannot be published because the workflow event cannot be invoked.");
+            } else {
+                setParameter(ALLOW_SINGLE_DOCUMENT, Boolean.toString(true));
             }
 
             Publication publication = document.getPublication();
@@ -207,19 +199,14 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
      */
     protected void publish(Document authoringDocument) {
 
-        WorkflowManager wfManager = null;
         DocumentManager documentManager = null;
         try {
-            wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             documentManager.copyToArea(authoringDocument, Publication.LIVE_AREA);
-            wfManager.invoke(authoringDocument, getEvent());
+            WorkflowUtil.invoke(this.manager, getLogger(), authoringDocument, getEvent());
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
-            if (wfManager != null) {
-                this.manager.release(wfManager);
-            }
             if (documentManager != null) {
                 this.manager.release(documentManager);
             }
@@ -334,24 +321,18 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
             WorkflowException {
         String[] languages = document.getPublication().getLanguages();
 
-        WorkflowManager wfManager = null;
         try {
-            wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
             for (int i = 0; i < languages.length; i++) {
                 Document version = document.getIdentityMap().getLanguageVersion(document,
                         languages[i]);
                 if (version.exists()) {
-                    if (wfManager.canInvoke(version, getEvent())) {
+                    if (WorkflowUtil.canInvoke(this.manager, getLogger(), version, getEvent())) {
                         publish(version);
                     }
                 }
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (wfManager != null) {
-                this.manager.release(wfManager);
-            }
         }
 
     }
