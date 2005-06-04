@@ -15,11 +15,12 @@
   limitations under the License.
 -->
 
-<!-- $Id: parent-node-not-found.xsl,v 1.2 2004/03/13 12:42:12 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
   >
   
   <xsl:import href="../util/page-util.xsl"/>
@@ -29,16 +30,16 @@
   <xsl:template match="/">
     
     <page:page>
-      <page:title>Parent document not found</page:title>
+      <page:title><i18n:text>Parent document not found</i18n:text></page:title>
       <page:body>
 	<div class="lenya-box">
-	  <div class="lenya-box-title">Error while publishing</div>
+	  <div class="lenya-box-title"><i18n:text>Error while publishing</i18n:text></div>
 	  <div class="lenya-box-body">
 	    <p>
-	      An error occured while publishing. Most likely you are trying
+	      <i18n:text>An error occured while publishing. Most likely you are trying
 	      to publish a document whose parent document hasn't been
-	      published yet.</p>
-	    <p>Try to publish the parent document first.</p>
+	      published yet.</i18n:text></p>
+	    <p><i18n:text>Try to publish the parent document first.</i18n:text></p>
 	  </div>
 	</div>
       </page:body>

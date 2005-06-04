@@ -96,12 +96,17 @@
               <map:parameter name="statusCode" value="404"/>
             </map:call>
           </map:when>
-      <map:otherwise>
-        <map:generate type="notifying"/>
-        <map:transform src="stylesheets/system/error2html.xslt">
-          <map:parameter name="contextPath" value="{request:contextPath}"/>
-        </map:transform>
-      </map:otherwise>
+	      <map:otherwise>
+	        <map:generate type="notifying"/>
+	        <map:transform src="fallback://lenya/xslt/exception/generic.xsl">
+	          <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+	          <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
+	          <map:parameter name="contextPath" value="{request:contextPath}"/>
+	        </map:transform>
+            <map:call resource="style-cms-page">
+              <map:parameter name="statusCode" value="500"/>
+            </map:call>
+	      </map:otherwise>
         </map:select>
         <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
         <map:serialize type="xhtml"/>

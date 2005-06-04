@@ -84,6 +84,8 @@
   <message key="Link">Verweis</message>
   <message key="Caption">Überschrift</message>
   <message key="All rights reserved">Alle Rechte vorbehalten.</message>
+  <message key="show">Anzeigen</message>
+  <message key="hide">Verbergen</message>
 
   <!-- submit screen -->
   <message key="submit-for-approval">Dokument {0} einreichen</message>
@@ -326,5 +328,20 @@
   <message key="lenya.imageupload.info.noimages">Keine Bilder verfügbar.</message>
   <message key="lenya.imageupload.links.hint">Externe Verweise müssen mit 'http://' und interne Verweise mit '/' beginnen.</message>  
 
+  <!-- Revision Controller -->
+  <message key="Reason">Grund</message>
+  <message key="Filename">Dateiname</message>
+  <message key="lenya.rc.nocheckout">Resource konnte nicht ausgecheckt werden</message>
+  <message key="lenya.rc.checkedoutalready">Die Ressource wurde bereits von jemand anders ausgecheckt.</message>
+  <message key="lenya.rc.nocheckin">Resource konnte nicht eingecheckt werden</message>
+  <message key="Generic Exception">Allgemeiner Fehler</message>
+  <message key="Check the log files.">Ü	berprüfen Sie die Logdatei.</message>
+
+  <!-- Error messages of a general nature -->
+  <message key="error-document-form">Dokument ist nicht wohlgeformt: {0}</message>
+  <message key="error-validation">Schema Validierung schlug fehl: {0}</message>
+  <message key="error-missing-language">Das angeforderte Dokument ist nicht verfügbar in der Sprache: {0}</message>
+  <message key="error-document-existance">Das angeforderte Dokument {0} mit der ID {1} existiert nicht.</message>
+  <message key="error-generic">Ein Fehler ist aufgetreten.</message>
 </catalogue>
 

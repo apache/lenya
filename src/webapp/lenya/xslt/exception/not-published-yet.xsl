@@ -15,32 +15,31 @@
   limitations under the License.
 -->
 
-<!-- $Id: not-published-yet.xsl,v 1.3 2004/04/24 20:59:15 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
   >
   
   <xsl:import href="../util/page-util.xsl"/>
   
-  <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
-  
   <xsl:template match="/">
     
     <page:page>
-      <page:title>Page not published yet</page:title>
+      <page:title><i18n:text>Page not published yet</i18n:text></page:title>
       <page:body>
 	<div class="lenya-box">
-	  <div class="lenya-box-title">Page not published yet</div>
+	  <div class="lenya-box-title"><i18n:text>Page not published yet</i18n:text></div>
 	  <div class="lenya-box-body">
 	    <p>
-	      An error occured. Most likely you are trying access a
-	      page which has not been published yet.</p>
+	      <i18n:text>An error occured. Most likely you are trying access a
+	      page which has not been published yet.</i18n:text></p>
 	      
-	    <p>To publish this page click on the <strong>File</strong> menu
+	    <p><i18n:text>To publish this page click on the <strong>File</strong> menu
 	      within the Authoring area and then click on the
-	      <strong>Publish</strong> menu item.</p>
+	      <strong>Publish</strong> menu item.</i18n:text></p>
 	  </div>
 	</div>
       </page:body>

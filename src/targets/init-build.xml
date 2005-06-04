@@ -58,6 +58,7 @@
     <copy todir="${build.webapp}" filtering="off">
       <fileset dir="${cocoon.webapp.dir}">
         <exclude name="resources/**"/>
+        <exclude name="stylesheets**"/>
         <exclude name="*.xml"/>
         <exclude name="*.xslt"/>
         <exclude name="test-suite/**"/>

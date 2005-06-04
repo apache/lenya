@@ -15,11 +15,12 @@
   limitations under the License.
 -->
 
-<!-- $Id: missing-language.xsl,v 1.3 2004/03/13 12:42:12 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
   >
   
   <xsl:import href="../util/page-util.xsl"/>
@@ -29,13 +30,21 @@
   <xsl:template match="/">
     
     <page:page>
-      <page:title>Document not available for this language</page:title>
+      <page:title><i18n:text>Document not available for this language</i18n:text></page:title>
       <page:body>
 	<div class="lenya-box">
-	  <div class="lenya-box-title">The requested document is not available for language "<xsl:value-of select="$language"/>"</div>
+	  <div class="lenya-box-title">      <i18n:translate>
+        <i18n:text i18n:key="error-missing-language" />
+        <i18n:param>'<xsl:value-of select="$language"/>'</i18n:param>
+      </i18n:translate>
+</div>
 	  <div class="lenya-box-body">
 	    <p>
-	      The requested document is not available for language "<xsl:value-of select="$language"/>". The following languages are available:
+      <i18n:translate>
+        <i18n:text i18n:key="error-missing-language" />
+        <i18n:param>'<xsl:value-of select="$language"/>'</i18n:param>
+      </i18n:translate>
+	      <i18n:text>The following languages are available:</i18n:text>
 	    </p>
 	    <ul>
 	      <xsl:apply-templates select="missing-language/available-languages/available-language"/>
