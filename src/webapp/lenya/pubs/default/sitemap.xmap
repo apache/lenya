@@ -165,7 +165,7 @@
                     <map:parameter name="source" value="{global:cache-dir}/{../1}/{../2}.html"/>
                   </map:transform>
                   <map:transform type="write-source">
-                    <map:parameter name="serializer" value="html-no-dtd"/>
+                    <map:parameter name="serializer" value="xhtml"/>
                   </map:transform>
                   <map:transform src="../../xslt/authoring/edit/removeSourceTags.xsl"/>
                 </map:when>
