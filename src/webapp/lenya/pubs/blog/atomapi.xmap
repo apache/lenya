@@ -27,13 +27,6 @@
         <map:generate src="content/introspection.xml"/>
         <map:serialize type="xml"/>
       </map:match>
-      <map:handle-errors>
-        <map:generate type="notifying"/>
-        <map:transform src="../../../stylesheets/system/error2html.xslt">
-          <map:parameter name="contextPath" value="{request:contextPath}"/>
-        </map:transform>
-        <map:serialize type="html"/>
-      </map:handle-errors>
     </map:pipeline>
 
     <!-- search-entries -->
@@ -69,13 +62,6 @@
           </map:otherwise>
         </map:select>
       </map:match>
-      <map:handle-errors>
-        <map:generate type="notifying"/>
-        <map:transform src="../../../stylesheets/system/error2html.xslt">
-          <map:parameter name="contextPath" value="{request:contextPath}"/>
-        </map:transform>
-        <map:serialize type="html"/>
-      </map:handle-errors>
     </map:pipeline>
 
     <!-- Get entry -->
@@ -96,13 +82,6 @@
           </map:otherwise>
         </map:select>
       </map:match>
-      <map:handle-errors>
-        <map:generate type="notifying"/>
-        <map:transform src="../../../stylesheets/system/error2html.xslt">
-          <map:parameter name="contextPath" value="{request:contextPath}"/>
-        </map:transform>
-        <map:serialize type="html"/>
-      </map:handle-errors>
     </map:pipeline>
 
   </map:pipelines>

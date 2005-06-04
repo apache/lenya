@@ -296,23 +296,6 @@
         
       </map:match>
       
-      <map:handle-errors>
-        <map:select type="exception">
-          <map:when test="parent-node-not-found">
-            <map:generate src="content/util/empty.xml"/>
-            <map:transform src="fallback://lenya/xslt/exception/parent-node-not-found.xsl"/>
-            <map:call resource="style-cms-page"/>
-          </map:when>
-          <map:otherwise>
-            <map:generate type="notifying"/>
-            <map:transform src="../stylesheets/system/error2html.xslt">
-              <map:parameter name="contextPath" value="{request:contextPath}"/>
-            </map:transform>
-          </map:otherwise>
-        </map:select>
-        <map:serialize type="html"/>
-      </map:handle-errors>
-      
     </map:pipeline>
     
   </map:pipelines>

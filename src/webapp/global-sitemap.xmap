@@ -19,40 +19,6 @@
     
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
-<!-- =========================== Views =================================== -->
-
-  <!--+
-      | Views provide diffent, well, views to resources. Views are
-      | orthogonal to pipelines. Please refer to the docs.
-      +-->
-  <map:views>
-
-    <map:view name="first" from-position="first">
-      <map:serialize type="xml"/>
-    </map:view>
-
-    <map:view name="last" from-position="last">
-      <map:serialize type="xml"/>
-    </map:view>
-
-    <map:view from-label="content" name="content">
-      <map:serialize type="xml"/>
-    </map:view>
-
-    <map:view from-label="data" name="pretty-content">
-      <map:transform src="stylesheets/simple-xml2html.xsl"/>
-      <map:serialize type="html"/>
-    </map:view>
-
-    <map:view from-position="last" name="links">
-      <map:serialize type="links"/>
-    </map:view>
-
-    <map:view from-label="aggregate" name="aggregate">
-      <map:serialize type="xml"/>
-    </map:view>
-  </map:views>
-
 <!-- =========================== Resources ================================= -->
 
   <!--+
@@ -147,24 +113,6 @@
       <map:match pattern="*/search-*/lucene*">
         <map:mount uri-prefix="" src="{fallback:lenya/lucene.xmap}" check-reload="true" reload-method="synchron"/>
       </map:match>
-      <map:handle-errors>
-        <map:select type="exception">
-           <map:when test="not-found">
-             <map:generate src="lenya/content/util/empty.xml" />
-            <map:transform src="lenya/xslt/exception/document-does-not-exist.xsl"/>
-            <map:call resource="style-cms-page">
-              <map:parameter name="statusCode" value="404"/>
-            </map:call>
-          </map:when>
-      <map:otherwise>
-        <map:generate type="notifying"/>
-        <map:transform src="stylesheets/system/error2html.xslt">
-          <map:parameter name="contextPath" value="{request:contextPath}"/>
-        </map:transform>
-      </map:otherwise>
-        </map:select>
-        <map:serialize type="html"/>
-      </map:handle-errors>    
     </map:pipeline>
     <!-- /Search with Lucene -->
 
@@ -346,28 +294,7 @@
         <map:generate src="lenya/content/about.xml"/>
         <map:call resource="style-cms-page"/>
       </map:match>
-    
-      <map:handle-errors>
-        <map:select type="exception">
-           <map:when test="not-found">
-             <map:generate src="lenya/content/util/empty.xml" />
-            <map:transform src="lenya/xslt/exception/document-does-not-exist.xsl"/>
-            <map:call resource="style-cms-page">
-              <map:parameter name="statusCode" value="404"/>
-            </map:call>
-          </map:when>
-      <map:otherwise>
-        <map:generate type="notifying"/>
-        <map:transform src="stylesheets/system/error2html.xslt">
-          <map:parameter name="contextPath" value="{request:contextPath}"/>
-        </map:transform>
-      </map:otherwise>
-        </map:select>
-        <map:serialize type="html"/>
-      </map:handle-errors>    
-    </map:pipeline>
 
-    <map:pipeline>
       <!-- Publications -->
       <map:match pattern="*/">
         <map:redirect-to uri="introduction.html"/>
@@ -414,26 +341,6 @@
       <map:match pattern="*/**">
         <map:mount uri-prefix="{1}" src="{fallback:sitemap.xmap}" check-reload="true" reload-method="synchron"/>
       </map:match>
-
-      <map:handle-errors>
-        <map:select type="exception">
-          <map:when test="not-found">
-            <map:generate src="lenya/content/util/empty.xml" />
-            <map:transform src="fallback://xslt/exception/document-does-not-exist.xsl"/>
-            <map:call resource="style-cms-page">
-              <map:parameter name="statusCode" value="404"/>
-            </map:call>
-          </map:when>
-          <map:otherwise>
-            <map:generate type="notifying"/>
-            <map:transform src="stylesheets/system/error2html.xslt">
-              <map:parameter name="contextPath" value="{request:contextPath}"/>
-            </map:transform>
-          </map:otherwise>
-        </map:select>
-        <map:serialize type="html"/>
-      </map:handle-errors>    
-
    </map:pipeline>
 
  </map:pipelines>

@@ -102,19 +102,6 @@
         <map:serialize type="xml"/>
       </map:match>
 
-      <!-- Serialize Live as XHTML such that it works with Inspezilla -->
-      <!-- FIXME: serializing as XHTML within the Authoring area doesn't seem to work (see pipeline below) -->
-      <map:match pattern="live/entries/*/*/*/*/index.html">
-        <map:generate src="cocoon:/live/entries/{1}/{2}/{3}/{4}/lenya-page-body.xml"/>
-        <map:transform src="xslt/entry/main-live.xsl">
-          <map:parameter name="contextprefix" value="{request:contextPath}"/>
-          <map:parameter name="relative2root" value="../../../../.."/>
-        </map:transform>
-        <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
-        <map:serialize type="xhtml"/>
-      </map:match>
-
-      <!-- Serialize Authoring as HTML because XHTML doesn't seem to work -->
       <map:match pattern="*/entries/*/*/*/*/index.html">
         <map:generate src="cocoon:/{1}/entries/{2}/{3}/{4}/{5}/lenya-page-body.xml"/>
         <map:transform src="xslt/entry/main-{1}.xsl">
@@ -129,30 +116,10 @@
           <map:otherwise>
             <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/entry.xml"/>
             <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
-            <map:serialize type="html"/>
+            <map:serialize type="xhtml"/>
           </map:otherwise>
         </map:select>
       </map:match>
-
-
-      <map:handle-errors>
-        <map:select type="exception">
-           <map:when test="not-found">
-             <map:generate src="../../content/util/empty.xml" />
-            <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl"/>
-            <map:call resource="style-cms-page">
-              <map:parameter name="statusCode" value="404"/>
-            </map:call>
-          </map:when>
-        <map:otherwise>
-        <map:generate type="notifying"/>
-        <map:transform src="../../../stylesheets/system/error2html.xslt">
-          <map:parameter name="contextPath" value="{request:contextPath}"/>
-        </map:transform>
-         </map:otherwise>
-        </map:select>
-        <map:serialize type="html"/>
-      </map:handle-errors>
     </map:pipeline>
 
     <!-- BX Editor: Entries -->
@@ -172,7 +139,7 @@
           <map:serialize type="xhtml"/>
         </map:act>
         <map:generate src="../../resources/misc/bxe/download.xhtml"/>
-        <map:serialize type="html"/>
+        <map:serialize type="xhtml"/>
       </map:match>
     </map:pipeline>
     <map:pipeline>
@@ -200,24 +167,6 @@
         <map:generate src="config/doctypes/schemas/entry.rng"/>
         <map:serialize type="xml"/>
       </map:match>
-      <map:handle-errors>
-        <map:select type="exception">
-           <map:when test="not-found">
-             <map:generate src="../../content/util/empty.xml" />
-            <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl"/>
-            <map:call resource="style-cms-page">
-              <map:parameter name="statusCode" value="404"/>
-            </map:call>
-          </map:when>
-        <map:otherwise>
-        <map:generate type="notifying"/>
-        <map:transform src="../../../stylesheets/system/error2html.xslt">
-          <map:parameter name="contextPath" value="{request:contextPath}"/>
-        </map:transform>
-         </map:otherwise>
-        </map:select>
-        <map:serialize type="html"/>
-      </map:handle-errors>
     </map:pipeline>
     <!-- /BX Editor: Entries -->
 
@@ -270,28 +219,10 @@
           <map:otherwise>
             <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/feed.xml"/>
             <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
-            <map:serialize type="html"/>
+            <map:serialize type="xhtml"/>
           </map:otherwise>
         </map:select>
       </map:match>
-      <map:handle-errors>
-        <map:select type="exception">
-           <map:when test="not-found">
-             <map:generate src="../../content/util/empty.xml" />
-            <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl"/>
-            <map:call resource="style-cms-page">
-              <map:parameter name="statusCode" value="404"/>
-            </map:call>
-          </map:when>
-        <map:otherwise>
-        <map:generate type="notifying"/>
-        <map:transform src="../../../stylesheets/system/error2html.xslt">
-          <map:parameter name="contextPath" value="{request:contextPath}"/>
-        </map:transform>
-         </map:otherwise>
-        </map:select>
-        <map:serialize type="html"/>
-      </map:handle-errors>
     </map:pipeline>
 
     <!-- Archives -->
@@ -323,26 +254,8 @@
         </map:transform>
         <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/archive.xml"/>
         <map:transform src="xslt/util/strip_namespaces.xsl"/>
-        <map:serialize type="html"/>
+        <map:serialize type="xhtml"/>
       </map:match>
-      <map:handle-errors>
-        <map:select type="exception">
-           <map:when test="not-found">
-             <map:generate src="../../content/util/empty.xml" />
-            <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl"/>
-            <map:call resource="style-cms-page">
-              <map:parameter name="statusCode" value="404"/>
-            </map:call>
-          </map:when>
-        <map:otherwise>
-        <map:generate type="notifying"/>
-        <map:transform src="../../../stylesheets/system/error2html.xslt">
-          <map:parameter name="contextPath" value="{request:contextPath}"/>
-        </map:transform>
-         </map:otherwise>
-        </map:select>
-        <map:serialize type="html"/>
-      </map:handle-errors>
     </map:pipeline>
 
   </map:pipelines>

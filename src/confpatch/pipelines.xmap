@@ -49,45 +49,12 @@
     <map:match pattern="favicon.ico">
       <map:read mime-type="image/x-icon" src="lenya/resources/images/lenya.ico"/>
     </map:match>
-
-    <!-- images -->
-    <map:match pattern="images/*.gif">
-      <map:read mime-type="images/gif" src="resources/images/{1}.gif"/>
-    </map:match>
-
-    <!-- CSS stylesheets -->
-    <map:match pattern="styles/*.css">
-      <map:read mime-type="text/css" src="resources/styles/{1}.css"/>
-    </map:match>
-
-    <!-- JavaScript scripts -->
-    <map:match pattern="scripts/*.js">
-      <map:read mime-type="text/javascript" src="resources/scripts/{1}.js"/>
-    </map:match>
-
-      <map:handle-errors>
-        <map:generate type="notifying"/>
-        <map:transform src="stylesheets/system/error2html.xslt">
-          <map:parameter name="contextPath" value="{request:contextPath}"/>
-        </map:transform>
-        <map:serialize type="html"/>
-      </map:handle-errors>
-
     </map:pipeline>
 
     <map:pipeline internal-only="true">
       <map:match pattern="**">
         <map:mount uri-prefix="" src="global-sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
-
-      <map:handle-errors>
-        <map:generate type="notifying"/>
-        <map:transform src="stylesheets/system/error2html.xslt">
-          <map:parameter name="contextPath" value="{request:contextPath}"/>
-        </map:transform>
-        <map:serialize type="html"/>
-      </map:handle-errors>
-
     </map:pipeline>
       
     <map:pipeline>
@@ -97,15 +64,47 @@
         </map:act>
         <map:redirect-to uri="{request:requestURI}?lenya.usecase=ac.login&amp;referrerQueryString={request:queryString}" session="true"/>
       </map:match>
+    </map:pipeline>
 
+     <!-- this is the default error handler -->
       <map:handle-errors>
+        <map:select type="exception">
+          <map:when test="parent-node-not-found">
+            <map:generate src="lenya/content/util/empty.xml"/>
+            <map:transform src="fallback://lenya/xslt/exception/parent-node-not-found.xsl"/>
+            <map:call resource="style-cms-page">
+              <map:parameter name="statusCode" value="404"/>
+            </map:call>
+          </map:when>
+          <map:when test="document-does-not-exist">
+            <map:generate src="lenya/content/util/empty.xml"/>
+            <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl">
+              <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+              <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
+            </map:transform>
+            <map:call resource="style-cms-page">
+              <map:parameter name="statusCode" value="404"/>
+            </map:call>
+          </map:when>
+           <map:when test="not-found">
+             <map:generate src="lenya/content/util/empty.xml" />
+            <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl">
+              <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+              <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
+            </map:transform>
+            <map:call resource="style-cms-page">
+              <map:parameter name="statusCode" value="404"/>
+            </map:call>
+          </map:when>
+      <map:otherwise>
         <map:generate type="notifying"/>
         <map:transform src="stylesheets/system/error2html.xslt">
           <map:parameter name="contextPath" value="{request:contextPath}"/>
         </map:transform>
-        <map:serialize type="html"/>
-      </map:handle-errors>
-
-    </map:pipeline>
+      </map:otherwise>
+        </map:select>
+        <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
+        <map:serialize type="xhtml"/>
+      </map:handle-errors>    
 
   </map:pipelines></xmap>

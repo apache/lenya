@@ -56,7 +56,8 @@
         <map:match pattern="view/menu/**">
           <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{page-envelope:area}/default.xml"/>
         </map:match>
-        <map:serialize type="html"/>
+        <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
+        <map:serialize type="xhtml"/>
       </map:match>
       
     </map:pipeline>

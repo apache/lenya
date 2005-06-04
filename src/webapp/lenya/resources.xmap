@@ -238,11 +238,6 @@
             <map:read src="pubs/{1}/resources/{2}/{3}.cfg" mime-type="application/x-ms-word" />
           </map:match>
 
-<!-- matches pub-id/area/**.* this fallback may not work very well, but better than a 404
-          <map:match pattern="*/*/**.*">
-            <map:read src="pubs/{1}/resources/{2}/{3}.*" mime-type="application/x-ms-word" />
-          </map:match>
--->
     </map:pipeline>
   </map:pipelines>
 </map:sitemap>

@@ -133,7 +133,7 @@
                 <map:parameter name="link-libraries-uri" 
                   value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=link_libraries"/>
               </map:transform>
-              <map:serialize type="html"/>
+              <map:serialize type="xhtml"/>
             </map:act>
             <!-- If Kupu is not installed; Action failed -->
             <map:generate src="{global:basedir}/resources/misc/kupu/download.xhtml"/>

@@ -19,21 +19,6 @@
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
-  <!-- =========================== Pipelines ================================ -->
-
-    <map:resources>
-      <map:resource name="style-cms-page">
-      <map:transform type="i18n">      
-        <map:parameter name="locale" value="{request:locale}"/>
-      </map:transform>    
-      <map:transform src="xslt/util/page2xhtml.xsl">
-        <map:parameter name="contextprefix" value="{request:contextPath}"/>
-      </map:transform>
-      <map:transform src="xslt/util/strip_namespaces.xsl"/>
-      <map:serialize type="xhtml"/>
-    </map:resource>
-  </map:resources>
-
   <map:pipelines>
 
     <map:pipeline>
@@ -90,26 +75,6 @@
           </map:otherwise>
         </map:select>
       </map:match>
-
-      <map:handle-errors>
-        <map:select type="exception">
-           <map:when test="not-found">
-             <map:generate src="content/util/empty.xml" />
-            <map:transform src="xslt/exception/document-does-not-exist.xsl"/>
-            <map:call resource="style-cms-page">
-              <map:parameter name="statusCode" value="404"/>
-            </map:call>
-          </map:when>
-      <map:otherwise>
-        <map:generate type="notifying"/>
-        <map:transform src="../stylesheets/system/error2html.xslt">
-          <map:parameter name="contextPath" value="{request:contextPath}"/>
-        </map:transform>
-      </map:otherwise>
-        </map:select>
-        <map:serialize type="html"/>
-      </map:handle-errors>
-
     </map:pipeline>
   </map:pipelines>
 </map:sitemap>

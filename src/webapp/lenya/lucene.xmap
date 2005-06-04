@@ -34,7 +34,7 @@
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
       <map:transform src="xslt/util/strip_namespaces.xsl"/>
-      <map:serialize type="html"/>
+      <map:serialize type="xhtml"/>
     </map:resource>
 </map:resources>  
 
@@ -74,14 +74,6 @@
         </map:transform>
       <map:call resource="style-cms-page"/>
       </map:match>
-
-      <map:handle-errors>
-        <map:generate type="notifying"/>
-        <map:transform src="../stylesheets/system/error2html.xslt">
-          <map:parameter name="contextPath" value="{request:contextPath}"/>
-        </map:transform>
-        <map:serialize type="html"/>
-      </map:handle-errors>
     </map:pipeline>
    </map:pipelines>
 
