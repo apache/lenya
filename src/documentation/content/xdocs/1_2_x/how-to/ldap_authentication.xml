@@ -69,8 +69,9 @@ with Lenya</title>
 </li>
 </ol>
 
-</section><section><title
-id="head-3d053bed75c60a57241ca53fb6de8c2d45aed024">Going further with LDAP</title>
+</section>
+<section>
+	<title id="head-3d053bed75c60a57241ca53fb6de8c2d45aed024">Going further with LDAP</title>
 
 <p>The LDAP implementation in Lenya is based on the premise that you have an
 existing LDAP directory containing users and passwords, but you do not want to (or are
@@ -82,19 +83,22 @@ do for you is delegate authorization (the checking of the user's password in
 LDAP), meaning that the user does not require an additional "Lenya password".</p>
 <p> This implementation of LDAP authentication in Lenya works can be
 replaced by a tighter integration of LDAP, which would possibly provide these advantages:
+</p>
 <ul>
 <li>Maintenance of roles, groups in LDAP as well.
 </li>
 <li>Remove the need to separately enable each LDAP user in Lenya.
 </li>
 </ul>
-There is a <a
-href="http://issues.apache.org/bugzilla/show_bug.cgi?id=34737">patch (nb
+<p>
+There is a <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=34737">patch (nb
 34737)</a> which replaces Lenya's default LDAP handling and fully integrates
 Lenya with an LDAP where users are stored according to the Posix scheme.
  </p>
 
-</section><section><title id="head-066b132fa6e8227f03b8c07a5bc6057717a7564b">Encrypted LDAP</title>
+</section>
+
+<section><title id="head-066b132fa6e8227f03b8c07a5bc6057717a7564b">Encrypted LDAP</title>
 
 <ul>
 <li><p>  in the file <em>ldap.properties</em>, set <em>security-protocol</em> to the value <em>ssl</em> and set <em>key-store</em> to the name of your keystore file </p>
