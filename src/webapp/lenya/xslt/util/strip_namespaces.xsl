@@ -35,4 +35,11 @@ as namespace prefix (<html> instead of <xhtml:html>).
     </xsl:element>
   </xsl:template>
   
+  <xsl:template match="textarea|script|style">
+   <xsl:element name="{local-name()}">
+      <xsl:copy-of select="@*"/>
+      <xsl:apply-templates/>
+	  <xsl:if test="string-length(.) = 0"><xsl:text> </xsl:text></xsl:if>
+    </xsl:element>
+  </xsl:template>
 </xsl:stylesheet>
