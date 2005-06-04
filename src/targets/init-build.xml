@@ -33,7 +33,7 @@
 
     <property name="Name"     value="Apache Lenya"/>
     <property name="release"  value="1th"/>
-    <property name="year"     value="1999-2004"/>
+    <property name="year"     value="1999-2005"/>
 
     <echo message="------------------- ${Name} ${version} [${year}] ----------------"/>
     <echo>Building with ${ant.version}</echo>
