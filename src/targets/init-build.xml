@@ -30,7 +30,8 @@
     </tstamp>
     
     <echo message="------------------- ${Name} ${version} [${year}] ----------------"/>
-    <echo>Building with ${ant.version} using build file ${ant.file}</echo>
+    <echo>Building with ${ant.version}</echo>
+    <echo>Using build file ${ant.file}</echo>
 
     <property name="snapshot.bin.name" value="${fullname}-${SNAPSHOT_STAMP}-bin"/>
     <property name="snapshot.src.name" value="${fullname}-${SNAPSHOT_STAMP}-src"/>
