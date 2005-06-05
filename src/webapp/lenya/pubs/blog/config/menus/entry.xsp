@@ -49,7 +49,7 @@
         <item wf:event="edit" uc:usecase="1formedit" uc:step="open">Edit&#160;with&#160;one&#160;Form</item>
       </block>
       <block>
-        <item wf:event="publish" uc:usecase="publish" uc:step="showscreen"><xsp:attribute name="href">?sources=<xsp:expr>source</xsp:expr>&amp;uris=<xsp:expr>uri</xsp:expr>,feeds/all/index.html</xsp:attribute><i18n:text>Publish</i18n:text></item>
+          <item uc:usecase="workflow.publish" href="?"><i18n:text>Publish</i18n:text></item>
       </block>
       <!--
       <block>
