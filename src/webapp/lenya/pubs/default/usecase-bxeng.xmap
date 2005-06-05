@@ -44,10 +44,10 @@
       <map:select type="parameter">
         <map:parameter name="statusCode" value="{statusCode}"/>
         <map:when test="">
-          <map:serialize type="xhtml" />
+          <map:serialize type="html" />
         </map:when>
         <map:otherwise>
-          <map:serialize type="xhtml" status-code="{statusCode}"/>
+          <map:serialize type="html" status-code="{statusCode}"/>
         </map:otherwise>
       </map:select>
     </map:resource>
