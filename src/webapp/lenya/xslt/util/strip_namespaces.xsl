@@ -37,7 +37,7 @@ as namespace prefix (<html> instead of <xhtml:html>).
 
   <!--
     Workaround to prevent the serializer from collapsing these
-    elements, since browsers currently can not handled things like
+    elements, since browsers currently can not handle things like
       <textarea/>
     The XHTML serializer currently used by Lenya can not be
     configured to avoid this collapsing; as long as that is the case
