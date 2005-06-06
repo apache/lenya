@@ -185,9 +185,9 @@ public class DocumentHelper {
             throws TransformerConfigurationException, TransformerException, IOException {
         // sanity checks
         if (document == null)
-            throw new IllegalArgumentException("parameter document may not be null");
+            throw new IllegalArgumentException("illegal usage, parameter document may not be null");
         if (file == null)
-            throw new IllegalArgumentException("parameter file may not be null");
+            throw new IllegalArgumentException("illegal usage, parameter file may not be null");
 
         file.getParentFile().mkdirs();
         file.createNewFile();
@@ -206,13 +206,20 @@ public class DocumentHelper {
      */
     public static void writeDocument(Document document, Writer writer)
             throws TransformerConfigurationException, TransformerException {
+
+        // sanity checks
+        if (document == null)
+            throw new IllegalArgumentException("illegal usage of DocumentHelper::writeDocument(), parameter document may not be null");
+        if (document.getDoctype() == null)
+            throw new IllegalArgumentException("illegal usage of DocumentHelper::writeDocument(), parameter document has null doctype");
+
         DOMSource source = new DOMSource(document);
         StreamResult result = new StreamResult(writer);
         getTransformer(document.getDoctype()).transform(source, result);
     }
 
     /**
-     * Get the tranformer.
+     * Get the transformer.
      * @param documentType the document type
      * @return a transformer
      * @throws TransformerConfigurationException if an error occurs
