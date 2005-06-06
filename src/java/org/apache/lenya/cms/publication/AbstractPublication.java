@@ -446,69 +446,66 @@ public abstract class AbstractPublication implements Publication {
                 if (sourceNode == null) {
                     throw new PublicationException("The node for source document ["
                             + sourceDocument.getId() + "] doesn't exist!");
-                } else {
-
-                    SiteTreeNode[] siblings = sourceNode.getNextSiblings();
-                    String parentId = sourceNode.getAbsoluteParentId();
-                    SiteTreeNode sibling = null;
-                    String siblingDocId = null;
-
-                    // same document ID -> insert at the same position
-                    if (sourceDocument.getId().equals(destinationDocument.getId())) {
-                        for (int i = 0; i < siblings.length; i++) {
-                            String docId = parentId + "/" + siblings[i].getId();
-                            sibling = destinationTree.getNode(docId);
-                            if (sibling != null) {
-                                siblingDocId = docId;
-                                break;
-                            }
-                        }
-                    }
-                    
-           
-                    Label label = sourceNode.getLabel(sourceDocument.getLanguage());
-                    if (label == null) {
-                        // the node that we're trying to publish
-                        // doesn't have this language
-                        throw new PublicationException("The node " + sourceDocument.getId()
-                                + " doesn't contain a label for language "
-                                + sourceDocument.getLanguage());
-                    } else {
-                        SiteTreeNode destinationNode = destinationTree.getNode(destinationDocument
-                                .getId());
-                        if (destinationNode == null) {
-                            Label[] labels = { label };
-
-                            if (siblingDocId == null) {
-                                destinationTree.addNode(destinationDocument.getId(), labels,
-                                		sourceNode.visibleInNav(), sourceNode.getHref(), sourceNode.getSuffix(), sourceNode
-                                                .hasLink());
-                            } else {
-                                destinationTree.addNode(destinationDocument.getId(), labels, sourceNode.visibleInNav(),
-                                        sourceNode.getHref(), sourceNode.getSuffix(), sourceNode
-                                                .hasLink(), siblingDocId);
-                            }
-
-                        } else {
-                            // if the node already exists in the live
-                            // tree simply insert the label in the
-                            // live tree
-                            destinationTree.setLabel(destinationDocument.getId(), label);
-                            //and synchronize visibilityinnav attribute with the one in the source area 
-                            String visibility ="true";
-                            if (!sourceNode.visibleInNav()) visibility = "false";
-                            destinationNode.setNodeAttribute(SiteTreeNodeImpl.VISIBLEINNAV_ATTRIBUTE_NAME,
-                                    visibility);
-
-                            // also update the link attribute if necessary
-                            if (sourceNode.hasLink() != destinationNode.hasLink()) {
-                                String link = (sourceNode.hasLink() ? "true" : "false");
-                                destinationNode.setNodeAttribute(SiteTreeNodeImpl.LINK_ATTRIBUTE_NAME, link);
-                            }
-
-                        }
-                    }
                 }
+				SiteTreeNode[] siblings = sourceNode.getNextSiblings();
+				String parentId = sourceNode.getAbsoluteParentId();
+				SiteTreeNode sibling = null;
+				String siblingDocId = null;
+
+				// same document ID -> insert at the same position
+				if (sourceDocument.getId().equals(destinationDocument.getId())) {
+				    for (int i = 0; i < siblings.length; i++) {
+				        String docId = parentId + "/" + siblings[i].getId();
+				        sibling = destinationTree.getNode(docId);
+				        if (sibling != null) {
+				            siblingDocId = docId;
+				            break;
+				        }
+				    }
+				}
+				
+         
+				Label label = sourceNode.getLabel(sourceDocument.getLanguage());
+				if (label == null) {
+				    // the node that we're trying to publish
+				    // doesn't have this language
+				    throw new PublicationException("The node " + sourceDocument.getId()
+				            + " doesn't contain a label for language "
+				            + sourceDocument.getLanguage());
+				}
+				SiteTreeNode destinationNode = destinationTree.getNode(destinationDocument
+				        .getId());
+				if (destinationNode == null) {
+				    Label[] labels = { label };
+
+				    if (siblingDocId == null) {
+				        destinationTree.addNode(destinationDocument.getId(), labels,
+				        		sourceNode.visibleInNav(), sourceNode.getHref(), sourceNode.getSuffix(), sourceNode
+				                        .hasLink());
+				    } else {
+				        destinationTree.addNode(destinationDocument.getId(), labels, sourceNode.visibleInNav(),
+				                sourceNode.getHref(), sourceNode.getSuffix(), sourceNode
+				                        .hasLink(), siblingDocId);
+				    }
+
+				} else {
+				    // if the node already exists in the live
+				    // tree simply insert the label in the
+				    // live tree
+				    destinationTree.setLabel(destinationDocument.getId(), label);
+				    //and synchronize visibilityinnav attribute with the one in the source area 
+				    String visibility ="true";
+				    if (!sourceNode.visibleInNav()) visibility = "false";
+				    destinationNode.setNodeAttribute(SiteTreeNodeImpl.VISIBLEINNAV_ATTRIBUTE_NAME,
+				            visibility);
+
+				    // also update the link attribute if necessary
+				    if (sourceNode.hasLink() != destinationNode.hasLink()) {
+				        String link = (sourceNode.hasLink() ? "true" : "false");
+				        destinationNode.setNodeAttribute(SiteTreeNodeImpl.LINK_ATTRIBUTE_NAME, link);
+				    }
+
+				}
 
                 destinationTree.save();
             } catch (SiteTreeException e) {
