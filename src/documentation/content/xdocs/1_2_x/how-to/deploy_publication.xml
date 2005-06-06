@@ -28,7 +28,8 @@
 
 <section><title id="head-4e8484518e11290b9ee62111d0dbd603f11932df">Note:</title>
 
-<p>It is <strong>not</strong> sufficient to copy the publication directories to the <em>lenya/pubs</em> directory of your Lenya installation. This way, the core configuration files are not patched, the libraries are not deployed, and other important deployment steps are not applied. </p>
+<p>It is <strong>not</strong> sufficient to copy the publication directories to the <em>lenya/pubs</em> directory of your Lenya installation. This way, the core configuration files are not patched, the libraries are not deployed, and other important deployment steps are not applied.</p>
+<p>You must use the <strong>source version</strong> of lenya. The binary distributions are missing some files required for the necessary build process of your new publication.</p>
 
 </section><section><title id="head-25336e7dc2bcad9b79daba07afd7af57b3236a6c">Deploying a Publication</title>
 

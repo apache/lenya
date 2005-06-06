@@ -58,7 +58,7 @@
           <p>
             <strong>Java 2 Platform, Standard Edition</strong>
             <br/>
-            version 1.4.2 or newer, <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=32923">1.5.x works with limitations</a>.
+            We recommend version 1.4.2 or newer, though 1.4.1 has been reported to work as well. Version 1.5 works with <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=32923">limitations</a> (see Bugzilla).
             <br/>
             Get it from <a href="site:java">http://java.sun.com/j2se/1.4.2/download.html</a>
           </p>
@@ -73,7 +73,7 @@
       		</p>
       		
       		<p>
-      		After expanding the	downloaded archives or after a <a href="site:subversion">svn checkout</a>,
+      		After expanding the	downloaded archives or after a <a href="subversion.html">svn checkout</a>,
       		the directory structure should look like this:
       		</p>
       		
@@ -101,8 +101,8 @@
             <br/>
             Extract the downloaded Lenya archive in the
             <code>src/</code> directory described above. This will create <code>lenya-1.2.x/</code> inside <code>src/</code>.
-            If you use <a href="site:subversion">Subversion</a>, checkout Lenya inside the
-            <code>src/</code> directory. 
+            If you use <a href="site:subversion">Subversion</a>, <a href="subversion.html">checkout Lenya</a> inside the
+            <code>src/</code> directory.
           </p>
         </li>
 
@@ -123,7 +123,7 @@
             version of Lenya, but the resulting Lenya webapp is
             completely self contained and therefore  does not need
             the Cocoon webapp to be installed. See the <a
-            href="site:wiki/lenya/FAQ">FAQ</a>
+            href="../how-to/faq.html">FAQ</a>
             for details of configuration changes required when running
             multiple Cocoon based applications.
           </p>
@@ -288,7 +288,7 @@
           <p>
             <strong>Get Apache Tomcat</strong> for JDK 1.4
             <br/>
-Lenya is developed and tested with Tomcat 5.0.28; it is assumed in the following instructions, and we highly recommend it. Tomcat 4.0.0+, 4.1.24+, 5.0.18+ and 5.5.0+ should work too.            <br/>
+Lenya is developed and tested with Tomcat 5.0.28; this version is assumed in the following instructions, and we highly recommend it. Tomcat 4.0.0+, 4.1.24+, 5.0.18+ and 5.5.0+ should work too.            <br/>
             Get it from  <a href="site:tomcat5">http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0</a>
           </p>
 

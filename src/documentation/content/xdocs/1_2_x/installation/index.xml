@@ -32,9 +32,13 @@
   <li>
     Download Apache Lenya 1.2.x
     <ul>
-      <li><a href="ext:releases">Releases</a></li>
-      <li><a href="ext:nightly.builds">Nightly Snapshots</a></li>
-      <li><a href="subversion.html">Subversion</a></li>
+      <li><a href="ext:releases">Releases</a><br />
+          Here you'll find both binary and source (recommended) packages.<br />
+          Some tasks such as <a href="../how-to/deploy_publication.html">deploying your own publication</a> require you to use the source version.</li>
+      <li><a href="ext:nightly.builds">Nightly Snapshots</a><br />
+          These are automated snapshots (tar.gz archives) of the current development tree.</li>
+      <li><a href="subversion.html">Subversion</a><br />
+      	  Instructions on how to get Apache Lenya via Subversion.</li>
     </ul>
   </li>
   <li>
