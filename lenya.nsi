@@ -76,6 +76,7 @@ Section "Apache Lenya 1.2.3" SecDummy
   
   SetOutPath $INSTDIR
   File lenya.bat
+  File build.properties
   File build.xml
   File NOTICE.txt
   File LICENSE.txt
