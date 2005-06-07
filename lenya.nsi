@@ -70,12 +70,11 @@ Section "Apache Lenya 1.4-dev" SecDummy
   File build\lenya\webapp\global-sitemap.xmap
   File build\lenya\webapp\sitemap.xmap
   File /r build\lenya\webapp\lenya
-  File /r build\lenya\webapp\resources
-  File /r build\lenya\webapp\stylesheets
   File /r build\lenya\webapp\WEB-INF
   
   SetOutPath $INSTDIR
   File lenya.bat
+  File build.properties
   File build.xml
   File NOTICE.txt
   File LICENSE.txt
