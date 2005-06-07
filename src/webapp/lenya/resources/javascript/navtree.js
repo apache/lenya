@@ -58,7 +58,7 @@ NavRoot.prototype.initialTreeLoaded = function(xml)
   var items=[];
   var item;
   for (var i = 0; i < children.length; i++) {
-     if (children[i].tagName == "nav:site") {
+     if (getTagName(children[i]) == "nav:site") {
         item = this.addLoadedSite(children[i]);
         items.push(item);
         item.addNodesRec(children[i]);
@@ -353,7 +353,7 @@ NavNode.prototype.subTreeLoaded = function(xml, handler)
   var children = root.childNodes;
   var items=[];
   for (var i = 0; i < children.length; i++) {
-     if (children[i].tagName == "nav:node") {
+     if (getTagName(children[i]) == "nav:node") {
         items.push(this.addLoadedNode(children[i]));
      } 
   }
@@ -369,7 +369,7 @@ NavNode.prototype.addNodesRec = function(parentNode)
     var nodes = [];
     var item;
     for (var i = 0; i < children.length; i++) {
-       if (children[i].tagName == "nav:node") {
+       if (getTagName(children[i]) == "nav:node") {
           this.reopen = true; // this causes the parent to unfold
           item = this.addLoadedNode(children[i]);
           items.push(item);
@@ -429,7 +429,7 @@ function getLabel(node)
     // lenya generates the xml and is responsible to insert the label
     // of the correct language
     for (var i = 0; i < l; i++) {
-       if (cs[i].tagName=='nav:label') {
+       if (getTagName(cs[i]) =='nav:label') {
           return cs[i].firstChild.nodeValue;
        } 
     }
@@ -455,7 +455,7 @@ function existsChosenLanguage(node)
 {
     var children = node.childNodes;
     for (var i = 0; i < children.length; i++) {
-       if (children[i].tagName=='nav:label' && children[i].getAttribute('xml:lang')==CHOSEN_LANGUAGE) {
+       if (getTagName(children[i]) =='nav:label' && children[i].getAttribute('xml:lang')==CHOSEN_LANGUAGE) {
           return true;
        } 
     }
@@ -482,4 +482,16 @@ function createXMLHttp()
     if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
       xmlhttp = new XMLHttpRequest();
     }
+}
+    
+//workaround for http://issues.apache.org/bugzilla/show_bug.cgi?id=35227
+function getTagName(element) 
+{
+  var tagName = element.tagName;
+  var prefix = element.prefix;
+
+  if(tagName.indexOf(prefix + ':') == -1) {
+    tagName = prefix + ':' + tagName;
+  }
+  return tagName;
 }
