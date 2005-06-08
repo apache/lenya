@@ -24,13 +24,10 @@
 	</header>
 	<body>
 <p><img src="images/menubar.png" alt="Screenshot of the Apache Lenya menu bar"/></p><p>
-Apache Lenya is an Open Source Java/XML Content Management System and comes with revision control, site management, scheduling, search, WYSIWYG editors, and workflow.</p>
+Apache Lenya is an Open Source Java/XML Content Management Syxstem and comes with revision control, site management, scheduling, search, WYSIWYG editors, and workflow.
+Please see some <a href="screenshots.html">screenshots</a> or try the <a href="ext:lenya.demo">Demo</a>.</p>
 
-<p>
-<a href="screenshots.html">Screenshots</a> | <a href="ext:lenya.demo">Demo</a> | <a href="ext:lenya.dist">Download</a>
-</p>
-
-        <section id="news">
+   	<section id="news">
       <title>News</title>
       <ul>
         <li>Two Lenya presentations at <a href="ext:apachecon">ApacheCon Europe 2005</a> (Stuttgart, Germany
@@ -41,6 +38,22 @@ Apache Lenya is an Open Source Java/XML Content Management System and comes with
         <li>Lenya 1.2.2 released (February 28, 2005) </li>
         <li>Lenya 1.2.1 released (December 29, 2004) </li>
       </ul>
+    </section>
+    
+    <section id="download">
+    <title>Downloads</title>
+    <p>Current stable version of Apache Lenya is 1.2.3. This is the recommended version for production. You will at least need the Java 2 Platform, Standard Edition, version 1.4.2. Please follow the <a href="site:install">installation instructions</a>.</p>
+    <ul>
+    	<li>Lenya 1.2.3 <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.3-bin.exe">Windows binary</a> (Windows Installer) <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.3-bin.exe.asc">ASC Signature</a> <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.3-bin.exe.md5">MD5 Checksum</a></li>
+    	<li>Lenya 1.2.3 <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.3-bin.zip">Windows binary</a> (ZIP archive) <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.3-bin.zip.asc">ASC Signature</a> <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.3-bin.zip.md5">MD5 Checksum</a></li>
+    	<li>Lenya 1.2.3 <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.3-src.zip">Windows source code</a> (ZIP archive) <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.3-src.zip.asc">ASC Signature</a> <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.3-src.zip.md5">MD5 Checksum</a></li>
+    	<li>Lenya 1.2.3 <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.3-bin.tar.gz">Unix binary</a> (tar.gz archive) <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.3-bin.tar.gz.asc">ASC Signature</a> <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.3-bin.tar.gz.md5">MD5 Checksum</a></li>
+    	<li>Lenya 1.2.3 <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.3-src.tar.gz">Unix source code</a> (tar.gz archive) <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.3-src.tar.gz.asc">ASC Signature</a> <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.3-src.tar.gz.md5">MD5 Checksum</a></li>
+    </ul>
+    <p>The Apache Software Foundation has <a href="http://people.apache.org/~henkp/cgi-bin/md5.cgi">more information on ASC Signatures and MD5 checksums</a>.</p>
+    <p>Please go to the <a href="site:download12">download section</a> of version 1.2 for more download options such as SVN.</p>
+    <p>You may want to <a href="site:download14">download</a> the current development version 1.4, which is still under heavy development and should not be used for production yet.</p>
+
     </section>
 		
 		<section>
