@@ -24,7 +24,5 @@
     <exception class="org.xml.sax.SAXParseException" name="sax-parsing"/>
     <exception class="org.xml.sax.SAXException" name="sax" unroll="true"/>
     <exception class="org.apache.cocoon.ProcessingException" name="processing" unroll="true"/>
-    <exception class="org.apache.lenya.cms.publishing.ParentNodeNotFoundException" name="parent-node-not-found"/>
-    <!--         <exception class="org.apache.lenya.cms.publishing.PublishingException" name="publishing"/> -->
     <!--         <exception class="org.apache.lenya.cms.site.SiteException" name="sitetree"/> -->
 </xmap>      

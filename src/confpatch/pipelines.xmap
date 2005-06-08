@@ -69,13 +69,6 @@
      <!-- this is the default error handler -->
       <map:handle-errors>
         <map:select type="exception">
-          <map:when test="parent-node-not-found">
-            <map:generate src="lenya/content/util/empty.xml"/>
-            <map:transform src="fallback://lenya/xslt/exception/parent-node-not-found.xsl"/>
-            <map:call resource="style-cms-page">
-              <map:parameter name="statusCode" value="404"/>
-            </map:call>
-          </map:when>
           <map:when test="document-does-not-exist">
             <map:generate src="lenya/content/util/empty.xml"/>
             <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl">
