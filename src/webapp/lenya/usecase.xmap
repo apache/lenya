@@ -110,7 +110,9 @@
           <map:parameter name="contextPath" value="{request:contextPath}"/>
           <map:parameter name="publication-id" value="{page-envelope:publication-id}"/>
           <map:parameter name="area" value="{page-envelope:area}"/>
-          <map:parameter name="document-url" value="{page-envelope:document-url}"/>         
+          <map:parameter name="document-url" value="{page-envelope:document-url}"/>
+          <map:parameter name="proxy-url-live" value="{proxy-url:live:{page-envelope:document-id}:{page-envelope:document-language}}"/>
+          <map:parameter name="proxy-url-authoring" value="{proxy-url:authoring:{page-envelope:document-id}:{page-envelope:document-language}}"/>              
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
