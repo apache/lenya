@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: tabs.xsl,v 1.2 2004/03/13 12:42:21 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -38,6 +38,7 @@
       </xsl:if>
       
       <xsl:choose>
+        <xsl:when test="@visibleinnav = 'false'"/>
         <xsl:when test="descendant-or-self::nav:node[@current = 'true']">
           <xsl:call-template name="tab-selected"/>
         </xsl:when>
