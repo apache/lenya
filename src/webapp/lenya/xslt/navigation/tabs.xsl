@@ -36,6 +36,7 @@
       </xsl:if>
       
       <xsl:choose>
+        <xsl:when test="@visibleinnav = 'false'"/>
         <xsl:when test="descendant-or-self::nav:node[@current = 'true']">
           <xsl:call-template name="tab-selected"/>
         </xsl:when>
