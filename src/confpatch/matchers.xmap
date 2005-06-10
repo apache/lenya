@@ -16,6 +16,9 @@
 -->
 
 <xmap xpath="/sitemap/components/matchers" unless="/sitemap/components/matchers/matcher[@name = 'usecase']">
+     <map:matcher name="agent-match" logger="sitemap.matcher.referer-match" src="org.apache.cocoon.matching.WildcardHeaderMatcher">
+        <header-name>User-Agent</header-name>
+    </map:matcher>
     <map:matcher name="usecase" logger="sitemap.matcher.usecase" src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
       <parameter-name>lenya.usecase</parameter-name>
     </map:matcher>

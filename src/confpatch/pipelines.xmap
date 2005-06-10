@@ -16,6 +16,7 @@
 -->
 
 <xmap remove="/sitemap/pipelines" xpath="/sitemap" insert-after="/sitemap/resources">
+
 <!-- =========================== Pipelines ================================= -->
 
   <map:pipelines>
@@ -58,12 +59,35 @@
     </map:pipeline>
       
     <map:pipeline>
-      <map:match pattern="**">
-        <map:act type="authorizer">
-          <map:mount uri-prefix="" src="global-sitemap.xmap" check-reload="true" reload-method="synchron"/>
-        </map:act>
-        <map:redirect-to uri="{request:requestURI}?lenya.usecase=ac.login&amp;referrerQueryString={request:queryString}" session="true"/>
-      </map:match>
+
+    <map:match pattern="**">
+      <map:select type="client">
+        <map:when test="webdav">
+            <map:act type="authenticator">
+              <map:act type="authorizer">
+                <map:mount uri-prefix="" src="global-sitemap.xmap" check-reload="true" reload-method="synchron"/> 
+              </map:act>
+              <map:act type="set-header">
+                <map:parameter name="WWW-Authenticate" value="Basic Realm=lenya" />
+                <map:generate type="html" src="fallback://lenya/usecases/webdav/401error.html"/>
+                <map:serialize type="xhtml" status-code="401"/>
+              </map:act>
+            </map:act>
+            <map:act type="set-header">
+              <map:parameter name="WWW-Authenticate" value="Basic Realm=lenya" />
+              <map:generate type="html" src="fallback://lenya/usecases/webdav/401error.html"/>
+              <map:serialize type="xhtml" status-code="401"/>
+            </map:act>
+        </map:when>
+        <map:otherwise>
+          <map:act type="authorizer">
+            <map:mount uri-prefix="" src="global-sitemap.xmap" check-reload="true" reload-method="synchron"/>
+          </map:act>
+          <map:redirect-to uri="{request:requestURI}?lenya.usecase=ac.login&amp;referrerQueryString={request:queryString}" session="true"/>        
+        </map:otherwise>
+      </map:select>
+    </map:match>
+
     </map:pipeline>
 
      <!-- this is the default error handler -->

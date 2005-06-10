@@ -54,4 +54,26 @@
       <view template="site/delete"/>
     </component-instance>
 
+    <component-instance name="default/webdav.put"
+                        logger="lenya.publication"
+                        class="org.apache.lenya.defaultpub.cms.usecases.webdav.Put">
+    </component-instance>
+    
+    <component-instance name="default/webdav.filePropfind"
+                        logger="lenya.publication"
+                        class="org.apache.lenya.defaultpub.cms.usecases.webdav.FilePropfind">
+      <view template="webdav/filePropfind"/>
+    </component-instance>
+    
+    <component-instance name="default/webdav.propfind"
+                        logger="lenya.publication"
+                        class="org.apache.lenya.defaultpub.cms.usecases.webdav.Propfind">
+      <view template="webdav/propfind"/>
+    </component-instance>
+    
+    <component-instance name="default/webdav.delete"
+                        logger="lenya.usecases.delete"
+                        class="org.apache.lenya.defaultpub.cms.usecases.Delete">
+    </component-instance>
+
   </xconf>
