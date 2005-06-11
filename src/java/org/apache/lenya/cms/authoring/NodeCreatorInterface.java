@@ -26,6 +26,7 @@ import org.apache.avalon.framework.service.ServiceManager;
 /**
  * Interface for creation of nodes in the document hierarchy
  * @version $Id$
+ * @deprecated This interface and it's implementations will be removed during the 1.4 development cycle
  */
 public interface NodeCreatorInterface {
 
