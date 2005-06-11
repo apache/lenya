@@ -514,6 +514,11 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
       <view template="edit/bxe/bxe" menu="false"/>
     </component-instance>
 
+    <component-instance name="edit.kupu" logger="lenya.publication"
+                        class="org.apache.lenya.cms.editors.kupu.Kupu">
+      <transaction policy="pessimistic"/>
+      <view template="edit/kupu/kupu" menu="false"/>
+    </component-instance>
   </usecases>
 
   <component role="org.apache.cocoon.components.cron.CronJob/usecase"
