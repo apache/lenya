@@ -16,8 +16,7 @@
 -->
 <!-- $Id$ -->
 <xsl:stylesheet version="2.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
-    <!-- Let the processor do the formatting via indent = yes -->
-    <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="yes"/>
+    <xsl:output method="xml" version="1.0" encoding="UTF-8" indent="no"/>
     <xsl:strip-space elements="*"/>
     <xsl:preserve-space elements="xsl:text"/>
     
