@@ -250,7 +250,7 @@
   <!-- ============================================================ -->
   <!-- Install publication                                          -->
   <!-- ============================================================ -->
-  <target name="install-pub" depends="webapp" description="Install a publication into servlet engine context. Usage: -Dpub.prefix=blog">
+  <target name="install-pub" depends="webapp" description="Install a single publication into servlet engine context (e.g. Tomcat). This target is being used to speed up development. Usage: -Dpub.prefix=blog">
     <!-- Copy From build.webapp=${build.webapp}/lenya/pubs/${pub.prefix} To tomcat.webapps.dir=${tomcat.webapps.dir}/lenya/pubs/${pub.prefix} -->
     <copy todir="${tomcat.webapps.dir}/lenya/pubs/${pub.prefix}" filtering="off">
       <fileset dir="${build.webapp}/lenya/pubs/${pub.prefix}" excludes="${target.install.excludes}"/>
