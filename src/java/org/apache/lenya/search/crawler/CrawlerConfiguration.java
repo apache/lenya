@@ -20,6 +20,7 @@
 package org.apache.lenya.search.crawler;
 
 import java.io.File;
+import java.io.IOException;
 
 import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.lenya.xml.DOMUtil;
@@ -261,10 +262,23 @@ public class CrawlerConfiguration {
      * @return Resolved path
      */
     public String resolvePath(String path) {
-        if (path.indexOf(File.separator) == 0) {
-            return path;
-        }
 
-        return FileUtil.catPath(configurationFilePath, path);
+		// nothing to do if we already have an absolute pathname
+		if ( new File(path) .isAbsolute() ) {
+			return path;
+		}
+
+		// from the Java API doc:  "A canonical pathname is both absolute and unique."
+		// however we may get an exception while converting a path to it's canonical form
+		try {
+			String configDir = new File(configurationFilePath) .getAbsoluteFile() .getParent();
+			return new File(configDir, path) .getCanonicalPath();
+
+		} catch (java.io.IOException e) {
+			// FIXME: maybe this Exception should be thrown to the caller ?
+			e.printStackTrace();
+			return null;
+		}
+
     }
 }

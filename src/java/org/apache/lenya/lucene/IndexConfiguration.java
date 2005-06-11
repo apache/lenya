@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: IndexConfiguration.java,v 1.10 2004/03/01 16:18:25 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.lucene;
 
@@ -154,10 +154,23 @@ public class IndexConfiguration {
      * @return DOCUMENT ME!
      */
     public String resolvePath(String path) {
-        if (path.indexOf(File.separator) == 0) {
-            return path;
-        }
 
-        return FileUtil.catPath(configurationFilePath, path);
+		// nothing to do if we already have an absolute pathname
+		if ( new File(path) .isAbsolute() ) {
+			return path;
+		}
+
+		// from the Java API doc:  "A canonical pathname is both absolute and unique."
+		// however we may get an exception while converting a path to it's canonical form
+		try {
+			String configDir = new File(configurationFilePath) .getAbsoluteFile() .getParent();
+			return new File(configDir, path) .getCanonicalPath();
+
+		} catch (java.io.IOException e) {
+			// FIXME: maybe this Exception should be thrown to the caller ?
+			e.printStackTrace();
+			return null;
+		}
+
     }
 }
