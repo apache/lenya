@@ -36,6 +36,7 @@
 <div>
 <div class="lenya-box">
   <div class="lenya-box-title" style="text-align: right">
+    <input type="hidden" name="namespaces"><xsl:attribute name="value"><xsl:apply-templates select="//*" mode="namespaces" /></xsl:attribute></input>
     <input type="submit" value="SAVE" name="submit"/>&#160;<input type="submit" value="CANCEL" name="cancel"/>
   </div>
   <div class="lenya-box-body">
@@ -150,8 +151,6 @@
 <xsl:template match="content">
 <xsl:choose>
 <xsl:when test="$edit = ../@select">
-  <!-- TODO: what about "input" field ... -->
-  <input type="hidden" name="namespaces"><xsl:attribute name="value"><xsl:apply-templates select="textarea" mode="namespaces" /></xsl:attribute></input>
   <xsl:apply-templates select="textarea"/>
   <xsl:copy-of select="input"/>
 </xsl:when>
