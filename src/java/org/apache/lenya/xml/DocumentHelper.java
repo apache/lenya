@@ -210,8 +210,6 @@ public class DocumentHelper {
         // sanity checks
         if (document == null)
             throw new IllegalArgumentException("illegal usage of DocumentHelper::writeDocument(), parameter document may not be null");
-        if (document.getDoctype() == null)
-            throw new IllegalArgumentException("illegal usage of DocumentHelper::writeDocument(), parameter document has null doctype");
 
         DOMSource source = new DOMSource(document);
         StreamResult result = new StreamResult(writer);
