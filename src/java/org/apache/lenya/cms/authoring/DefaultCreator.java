@@ -62,7 +62,7 @@ public abstract class DefaultCreator extends AbstractLogEnabled implements NodeC
     }
 
     /**
-     * @see NodeCreatorInterface#create(String, String, String, String, Map)
+     * @see NodeCreatorInterface#create(String, org.apache.lenya.cms.publication.Document, Map)
      */
     public void create(String initialContentsURI,
             org.apache.lenya.cms.publication.Document document,
@@ -113,8 +113,7 @@ public abstract class DefaultCreator extends AbstractLogEnabled implements NodeC
     /**
      * Apply some transformation on the newly created document.
      * @param doc the xml document
-     * @param childId the id of the child
-     * @param childName the name of the child
+     * @param document the Lenya document
      * @param parameters additional parameters that can be used in the transformation
      * @throws Exception if the transformation fails
      */

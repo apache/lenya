@@ -220,7 +220,8 @@ public class UsecaseAuthorizer
     }
 
     /**
-     * @see org.apache.lenya.ac.Authorizer#authorize(org.apache.cocoon.environment.Request, java.lang.String)
+     * FIXME: Should this be exposed publically now that this method signature has been removed
+     * from Authorizer?
      */
     public boolean authorize(Request request, String webappUrl) throws AccessControlException {
         return authorize(request);
