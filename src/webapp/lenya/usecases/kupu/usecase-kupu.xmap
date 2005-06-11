@@ -47,7 +47,7 @@
   <!-- =========================== Flow ===================================== -->
   <map:flow language="javascript">
     <map:script src="usecase-kupu.js"/>
-    <map:script src="../edit-document.js"/>
+    <map:script src="context://lenya/usecases/edit-document.js"/>
   </map:flow>
   <!-- =========================== Pipelines ================================ -->  
   <map:pipelines>
