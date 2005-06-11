@@ -18,8 +18,7 @@
 importClass(Packages.java.util.ArrayList);
 
 importClass(Packages.org.apache.lenya.cms.cocoon.flow.FlowHelper);
-importClass(Packages.org.apache.lenya.cms.publication.DocumentHelper);
-importClass(Packages.org.apache.lenya.cms.publication.PublicationHelper);
+importClass(Packages.org.apache.lenya.cms.publication.util.DocumentHelper);
 importClass(Packages.org.apache.lenya.cms.publication.DefaultResourcesManager);
 
 /**
@@ -64,7 +63,7 @@ function sitetree_link_library() {
 
 /**
  * Collects infos about all image resources in a publication.
- */
+FIXME PublicationHelper does no longer exist
 function publication_image_library() {        
     var pageEnvelope = new FlowHelper().getPageEnvelope(cocoon);
     var pubHelper = new PublicationHelper(pageEnvelope.getPublication());
@@ -92,3 +91,4 @@ function publication_image_library() {
     }
     cocoon.sendPage(cocoon.parameters["template"], {"imageInfos" : imageInfos});
 }
+*/
