@@ -21,6 +21,9 @@
 	<usecase id="create">
 		<role id="edit"/>
 	</usecase>
+	<usecase id="publish">
+		<role id="edit"/>
+	</usecase>
     <usecase id="archive">
         <role id="edit"/>
     </usecase>
