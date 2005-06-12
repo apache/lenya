@@ -28,7 +28,7 @@ import org.apache.lenya.workflow.WorkflowManager;
 /**
  * Supports WebDAV PUT.
  * 
- * @version $Id: BXE.java 179790 2005-06-03 13:45:13Z andreas $
+ * @version $Id$
  */
 public class Put extends DocumentUsecase {
 
