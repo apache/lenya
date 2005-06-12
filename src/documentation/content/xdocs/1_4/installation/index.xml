@@ -34,10 +34,14 @@
   <ul>
   <li>
     Download Apache Lenya 1.4
-    <ul>
+<ul>
+    	<li>Lenya 1.4alpha1 <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.4alpha1-src.zip">Windows source code</a> (ZIP archive) <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.4alpha1-src.zip.asc">ASC Signature</a> <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.4alpha1-src.zip.md5">MD5 Checksum</a></li>
+    	<li>Lenya 1.4alpha1 <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.4alpha1-src.tar.gz">Unix source code</a> (tar.gz archive) <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.4alpha1-src.tar.gz.asc">ASC Signature</a> <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.4alpha1-src.tar.gz.md5">MD5 Checksum</a></li>
       <li><a href="subversion.html">Subversion</a></li>
-      <li><a href="ext:nightly.builds">Nightly snapshots</a> (tar.gz archives) of the SVN repository.</li>
-	</ul>
+    </ul>
+<p> 
+During the development of Apache Lenya 1.4, only source versions will be released. The Apache Software Foundation has <a href="http://people.apache.org/~henkp/cgi-bin/md5.cgi">more information on ASC Signatures and MD5 checksums</a>.
+</p>
   </li>
   <li>
     Install Apache Lenya 1.4
