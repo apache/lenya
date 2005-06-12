@@ -1,26 +1,422 @@
 <?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN" "http://my.netscape.com/publish/formats/rss-0.91.dtd">
-<rss version="0.91"><channel><title> Changes</title><link>changes.html</link><description> Changes</description><language>en-us</language><item><title> update</title><link>changes.html</link><description> update
-              by 
-              gregor
-              :
-              [] 
-            Tagging release 1.2.3 Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-              by 
-              gregor
-              :
-              [1.4] 
-            Explicitly exclude build directories from dist-src target Diff
-         </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+<rss version="0.91"><channel><title> Changes</title><link>changes.html</link><description> Changes</description><language>en-us</language><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
               gregor
               :
               [1.2] 
-            Explicitly exclude build directories from dist-src target Diff
-         </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+            Avoid StringIndexOutOfBoundsException in crawler configuration. Patch by Michael Wohlfahrt, this resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35307 Diff</description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
               by 
               gregor
               :
               [1.4] 
-            Added Gregor's PGP key Diff
-         </description></item></channel></rss>
+            Started editing screen for the links doctype. Diff</description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Added UltraVNC to live sites Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Made sure hidden namespaces field is always set Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Removed IllegalArgumentException for null doctype since getTransformer() handles the null case Diff</description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              gregor
+              :
+              [1.4] 
+            Started work on a Kupu usecase Diff</description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              gregor
+              :
+              [1.4] 
+            Started work on a Kupu usecase Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Changed URL of flowscript to allow it to be resolved correctly Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Fixed reference to a moved Java class Diff</description></item><item><title>1.4 </title><link>changes.html</link><description>1.4 
+              by 
+              gregor
+              :
+              [1.4] 
+            Removed doctypes from old location and added a schema location for the homepage doctype. Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              michi
+              :
+              [1.2] 
+            note added about install-pub target Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Do not show pages hidden from navigation in the tabs, either.  Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Do not show pages hidden from navigation in the tabs, either.  Diff</description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              gregor
+              :
+              [1.4] 
+            Added WebDAV support. Patch by Doug Chestnut, this resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=34994 Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Made sure links sent by notification emails are proxied, if appropriate. Patch by Simon Litwan, this resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35287 Diff</description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Added more prominent links to the downloads and clarified purpose of binary distributions. Patch by Hubertus Groepper, this resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35271 Diff</description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              gregor
+              :
+              [1.4] 
+            added xsl for caching Diff</description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              gregor
+              :
+              [1.4] 
+            Added compatibility classes Diff</description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              gregor
+              :
+              [1.4] 
+            Added compatibility classes Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Removed publishing, ant and tasks classes. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=27335 Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Updated russian translation. Patch by Anton Kovalenko, this resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=34798 Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Updated russian translation. Patch by Anton Kovalenko, this resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=34798 Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Worked around lack of namespace support in some older browser DOM implementations to make the sitetree work again on Netscape 7. Patch by Clint Harris, this resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35227 Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Fixed issue that stripped the lenya namespace from the BXE asset popup. Patch by Simon Litwan. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35153 Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Added build.properties to the Windows installer Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Added build.properties to the Windows installer Diff</description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Clarified purpose of source and binary versions. Patch by Hubertus Groepper, this resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35248 Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              jwkaltz
+              :
+              [1.4] 
+            [minor change] check for null for easier tracing of NullPointerException when document is created Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Removed unnecessary if statements Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Set serializer for BXE usecases to HTML because there are too many problems for JS inside XHTML (see http://hixie.ch/advocacy/xhtml) This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35152 Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              jwkaltz
+              :
+              [1.4] 
+            [minor change] fixed typo in doc Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              jwkaltz
+              :
+              [1.4] 
+            [minor change] added explanation for workaround Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Switched blog publication to use the publish usecase instead of ant task Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Added workaround for collapsed &lt;textarea&gt;, &lt;script&gt; and &lt;style&gt; problem Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Switched to a Lenya-branded error screen. Made all error screens I18N-aware. This (partially) resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=34003 Diff</description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Made docs valid again, patch by Hubertus Groepper. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35221 Diff</description></item><item><title>1.4 </title><link>changes.html</link><description>1.4 
+              by 
+              gregor
+              :
+              [1.4] 
+            Removed unused sitemap. Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              antonio
+              :
+              [1.4] 
+            Update ant to 1.6.5 Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              antonio
+              :
+              [1.4] 
+            Merge from 1.2.4-dev Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              antonio
+              :
+              [1.2] 
+            Update ant to 1.6.5 Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              antonio
+              :
+              [1.2] 
+            Fix copyright year Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Removed unused menus Diff</description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              gregor
+              :
+              [1.4] 
+            Added metadata for blog feeds, needs to be incorporated into creator / publisher for the blog publication Diff</description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              thorsten
+              :
+              [Docs] 
+            changed project name Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Made sure that the cached files are XHTML strict too Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Switched serializers to XHTML strict and consolidated error handling pipelines Diff</description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Typo fixed Diff</description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Added Jann Forrer to the committers list. Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              andreas
+              :
+              [1.2] 
+            applied patch for bug 35205, thanks to Simon Litwan Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              andreas
+              :
+              [1.2] 
+            applied patch for bug #35088, thanks to Simon Litwan Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              andreas
+              :
+              [1.2] 
+            applied patch for bug #35088, credits to simon litwan Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            refactored workflow classes, this minimizes the dependencies between core and workflow package Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            refactored workflow classes, this removes references from the core to workflow packages Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            reverted pipeline order (site area was broken) Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            fixed pipeline structure (fixes bug #35171) Diff</description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+              by 
+              gregor
+              :
+              [Site] 
+            Added link to ApacheCon Europe 2005 Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Changed i18n to take the language of the document into account, not the request language. Patch by Paul Ercolino. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35099 Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Changed i18n to take the language of the document into account, not the request language. Patch by Paul Ercolino. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35099 Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Delete warning for referencing files was not properly translated. Patch by Felix Roethenbacher resolves this http://issues.apache.org/bugzilla/show_bug.cgi?id=35189 Diff</description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Added new japanese live site Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            publish: add source repository nodes to locked objects, this is necessary because of workflow changes Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            moved functionality from defaultpub usecase to core Diff</description></item><item><title>1.4 </title><link>changes.html</link><description>1.4 
+              by 
+              andreas
+              :
+              [1.4] 
+            removed obsolete DocumentTypeResolver Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            removed obsolete URIParameterizer and DocumentTypeResolver Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            No longer check the live area when deleting a document. Patch by Felix Roethenbacher, this resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35190 Diff</description></item><item><title>Docs add</title><link>changes.html</link><description>Docs add
+              by 
+              andreas
+              :
+              [Docs] 
+            added resource types documentation for 1.4 Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            added resource-type definitions to default pub publication.xconf Diff</description></item><item><title>1.4 </title><link>changes.html</link><description>1.4 
+              by 
+              andreas
+              :
+              [1.4] 
+            removed old doctypes directory from blog pub Diff</description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              andreas
+              :
+              [1.4] 
+            added schemas to resources dir in blog pub Diff</description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              andreas
+              :
+              [1.4] 
+            moved doctype definitions in blog publication Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            removed scheduler menu item Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            reflecting new schema locations in sitemaps. Actually that should be handled by calls to the API (e.g. via input modules) Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            reflecting new schema locations in sitemaps. Actually that should be handled by calls to the API (e.g. via input modules) Diff</description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              andreas
+              :
+              [1.4] 
+            added homepage schema definition to resources/schemas dir Diff</description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              andreas
+              :
+              [1.4] 
+            added schemas to resources directory Diff</description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              andreas
+              :
+              [1.4] 
+            added default pub doctype definition to lenya/doctypes directory Diff</description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              andreas
+              :
+              [1.4] 
+            added resource type definitions to core Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            (1) added fallback for doctypes, this means doctypes can be served by the core (1st step towards resource type packages) (2) store workflow state and variable values in meta data. currently the history is stored there as well, this is subject to changes. Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              jwkaltz
+              :
+              [1.4] 
+            [minor change] set missing svn:eol-style and svn:keywords properties in Java files Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Use fallback source to resolve sample content location. This enables the create usecase to work in publications that use publication templating. Patch by Doug Chestnut. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35132 Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Added polices to sources to copy for publication instanciator, patch by Doug Chestnut. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35167 Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Added fallbacks to enable publication templating where necessary. Patch by Doug Chestnut,  this resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35168 Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            create-document usecase: checking selected relation in JX template, validate relation in exec conditions, set initial relation 'child' Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Allow to set the relation of a new document to an existing one, thanks to a patch by Doug Chestnut. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35130  Diff</description></item></channel></rss>

@@ -125,6 +125,12 @@
 <div onclick="SwitchMenu('menu_1.1.3', '../../../skin/')" id="menu_1.1.3Title" class="menutitle">Concepts</div>
 <div id="menu_1.1.3" class="menuitemgroup">
 <div class="menuitem">
+<a title="" href="../../../1_4/concepts/publication.html">Publication</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_4/concepts/authoring_live.html">Authoring and Live mode</a>
+</div>
+<div class="menuitem">
 <a title="" href="../../../1_4/concepts/wysiwyg.html">WYSIWYG</a>
 </div>
 </div>
@@ -155,6 +161,9 @@
 </div>
 <div class="menuitem">
 <a title="" href="../../../1_4/reference/publication-templating/index.html">Publication Templating</a>
+</div>
+<div class="menuitem">
+<a title="" href="../../../1_4/reference/resource-types.html">Resource Types</a>
 </div>
 </div>
 <div class="menuitem">
@@ -236,12 +245,36 @@
 </li>
         
         
+<li>Element <span class="codefrag">&lt;parameter&gt;</span> (arbitrary number)
+          <ul>
+            
+<li>Attribute <span class="codefrag">name</span>
+</li>
+            
+<li>Attribute <span class="codefrag">value</span>
+</li>
+          
+</ul>
+          
+<br>
+          
+<p>
+            An arbitrary number of initial parameters can be passed to the usecase.
+          </p>
+          
+<br>
+        
+</li>
+        
+        
 <li>Element <span class="codefrag">&lt;view&gt;</span> (optional)
           <ul>
             
 <li>Attribute <span class="codefrag">template</span> (required)</li>
             
 <li>Attribute <span class="codefrag">menu = (true | false)</span> (optional)</li>
+            
+<li>Element <span class="codefrag">&lt;parameter name="..." value="..."/&gt;</span> (arbitrary number)</li>
           
 </ul>
           
@@ -257,16 +290,40 @@
 <br>
         
 </li>
+
+        
+<li>Element <span class="codefrag">&lt;exit&gt;</span> (optional)
+          <ul>
+            
+<li>Attribute <span class="codefrag">usecase</span> (required)</li>
+            
+<li>Element <span class="codefrag">&lt;parameter name="..." value="..."/&gt;</span> (arbitrary number)</li>
+          
+</ul>
+          
+<br>
+          
+<p>
+            This element declares the exit usecase. By default, a usecase exits on the
+            URL it was started from, without any request parameters. Using this method,
+            is is possible to specify a usecase that should be called after this usecase
+            has exited. Additional parameter elements can be supplied.
+          </p>
+          
+<br>
+        
+</li>
       
 </ul>
 </div>
     
     
-<a name="N10077"></a><a name="Extending+AbstractUsecase"></a>
+<a name="N100B3"></a><a name="Extending+AbstractUsecase"></a>
 <h2 class="h3">Extending AbstractUsecase</h2>
 <div class="section">
 <p>
-        The following methods of the <span class="codefrag">AbstractUsecase</span> class are meant to be overridden:
+        The following methods of the <span class="codefrag">AbstractUsecase</span> class are meant to be overridden
+        or invoked by subclasses:
       </p>
 <ul>
       
@@ -371,6 +428,19 @@
         </p>
         
 <br>
+      
+</li>
+      
+      
+<li>
+        
+<span class="codefrag">protected void setExitParameter(String name, String value)</span>
+        
+<p>
+          Call this method to set a parameter that should be added to the exit request.
+          For instance, imagine a usecase which edits a user's groups. The exit usecase
+          might be <em>userProfile</em>, with the additional parameter <em>userId</em>.
+        </p>
       
 </li>
       
