@@ -150,6 +150,15 @@ public class SMTP {
             errlog = errlog + "Subject: " + subject + "\n";
             out.println("Subject: " + subject);
 
+            errlog = errlog + "MIME-Version: 1.0\n";
+            out.println("MIME-Version: 1.0");
+
+            errlog = errlog + "Content-Type: text/plain; charset=UTF-8; format=flowed\n";
+            out.println("Content-Type: text/plain; charset=UTF-8; format=flowed");
+
+            errlog = errlog + "Content-Transfer-Encoding: 8bit\n";
+            out.println("Content-Transfer-Encoding: 8bit");
+            
             errlog = errlog + data + "\n.\n";
             out.println(data + "\n.");
             errlog = errlog + getResponse(250);
