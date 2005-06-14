@@ -136,7 +136,7 @@
                   </div>
 </div>
 </td>
-<td>
+<td valign="top">
  <form action="" name="link" onsubmit="insertLink()">
                         <table class="lenya-table-noborder">
                                 <tr>
