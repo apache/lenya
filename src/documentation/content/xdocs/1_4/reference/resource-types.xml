@@ -179,6 +179,8 @@ resources/
       schema for your resource type as described in
       <a href="../workflow/configuration.html">Workflow Configuration</a>.
       A workflow schema can be shared between multiple resource types.
+      The workflow schema is assigned to a resource type in <code>publication.xconf</code>
+      (see section <em>Adding Resource Types to a Publication</em>).
     </p>
   </section>
   
