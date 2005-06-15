@@ -190,11 +190,11 @@ resources/
 	  declare it in <code>{publication}/lenya/doctypes/{resource-type-name}/doctype.xconf</code>:
 	  </p>
 <source><![CDATA[<resource-type name="profile">
-    <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
-      <sample-name>profile.xml</sample-name>
-    </creator>
-    <schema src="profile.rng"/>
-  </resource-type]]></source>
+  <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
+    <sample-name>profile.xml</sample-name>
+  </creator>
+  <schema src="profile.rng"/>
+</resource-type]]></source>
   </section>
   
   <section><title>Define a Custom Menubar</title>
