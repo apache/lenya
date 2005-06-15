@@ -207,7 +207,7 @@ resources/
       To let the user create new resources using the <code>DefaultBranchCreator</code>,
       you have to add the following menu item:
     </p>
-<source><![CDATA[<item uc:usecase="create" uc:step="showscreen" href="?doctype=profile"><i18n:text>New Document</i18n:text></item>]]>
+<source><![CDATA[<item uc:usecase="site.create" href="?doctype=profile"><i18n:text>New Profile Document</i18n:text></item>]]>
 </source>
   </section>
   
