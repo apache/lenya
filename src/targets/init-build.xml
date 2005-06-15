@@ -24,7 +24,7 @@
   </description>
 
   <!-- Initialization target -->
-  <target name="init">
+  <target name="init" depends="init-tasks">
     <tstamp>
       <format property="SNAPSHOT_STAMP" pattern="yyyyMMddhhmmss"/>
     </tstamp>

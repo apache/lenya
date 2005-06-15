@@ -107,12 +107,6 @@
   <!-- hsqldb database config files directory -->
   <property name="src.database.dir" value="src/webapp/WEB-INF/db"/>
 
-  <!-- Custom Ant tasks used for building Lenya -->
-  <taskdef name="copyJavaSources" classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.CopyJavaSourcesTask"/>
-  <taskdef name="bulkCopy"        classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.BulkCopyTask"/>
-  <taskdef name="copyPubs"        classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.CopyTask"/>
-  <taskdef name="xpatch"            classpath="${cocoon.src.dir}/tools/anttasks" classname="XConfToolTask" />
-
   <!-- Set up classpath -->
   <path id="classpath">
     <fileset dir="${lib.dir}">
@@ -125,5 +119,17 @@
       <include name="servlet-2.3.jar"/>
     </fileset>
   </path>
-  
+
+  <target name="cocoon-init-tasks">
+    <ant dir="${cocoon.src.dir}" target="init-tasks" inheritall="false"/>
+  </target>
+
+  <!-- Custom Ant tasks used for building Lenya -->
+  <target name="init-tasks" depends="cocoon-init-tasks">
+    <taskdef name="copyJavaSources" classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.CopyJavaSourcesTask"/>
+    <taskdef name="bulkCopy"        classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.BulkCopyTask"/>
+    <taskdef name="copyPubs"        classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.CopyTask"/>
+    <taskdef name="xpatch"          classpath="${cocoon.src.dir}/tools/anttasks" classname="XConfToolTask" />
+  </target>  
+
 </project>
