@@ -38,7 +38,6 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.impl.FileSource;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationImpl;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
@@ -47,7 +46,7 @@ import org.w3c.dom.Element;
 /**
  * Instantiate the publication.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class Instantiator extends AbstractLogEnabled implements
         org.apache.lenya.cms.publication.templating.Instantiator, Serviceable {
@@ -55,7 +54,7 @@ public class Instantiator extends AbstractLogEnabled implements
     protected static final String[] sourcesToCopy = { "publication.xml",
         "config/publication.xconf", "config/ac/passwd/",
         "config/ac/ac.xconf","config/ac/policies/", 
-        "config/ac/usecase-policies.xml", "config/doctypes/doctypes.xconf",
+        "config/ac/usecase-policies.xml",
         "config/workflow/workflow.xml", "content/" };
 
     /**
@@ -72,7 +71,7 @@ public class Instantiator extends AbstractLogEnabled implements
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             publicationsSource = resolver.resolveURI("context://"
-                    + PublicationImpl.PUBLICATION_PREFIX_URI);
+                    + Publication.PUBLICATION_PREFIX_URI);
             String publicationsUri = publicationsSource.getURI();
 
             for (int i = 0; i < sourcesToCopy.length; i++) {
