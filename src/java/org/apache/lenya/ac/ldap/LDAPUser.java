@@ -343,8 +343,22 @@ public class LDAPUser extends FileUser {
                 + File.separator + defaultProperties.getProperty(KEY_STORE_PROP));
 
         env.put(Context.INITIAL_CONTEXT_FACTORY, LdapCtxFactory.class.getName());
-        env.put(Context.PROVIDER_URL, defaultProperties.getProperty(PROVIDER_URL_PROP));
-        env.put(Context.SECURITY_PROTOCOL, defaultProperties.getProperty(SECURITY_PROTOCOL_PROP));
+
+        String prop = defaultProperties.getProperty(PROVIDER_URL_PROP);
+        if (prop == null)
+            throw new RuntimeException("LDAP configuration error: property " +
+                                       PROVIDER_URL_PROP + 
+                                       " is not set in property file " + 
+                                       LDAP_PROPERTIES_FILE);
+        env.put(Context.PROVIDER_URL, prop);
+
+        prop = defaultProperties.getProperty(SECURITY_PROTOCOL_PROP);
+        if (prop == null)
+            throw new RuntimeException("LDAP configuration error: property " +
+                                       SECURITY_PROTOCOL_PROP + 
+                                       " is not set in property file " + 
+                                       LDAP_PROPERTIES_FILE);
+        env.put(Context.SECURITY_PROTOCOL, prop);
 
         env.put(Context.SECURITY_AUTHENTICATION, authMethod);
 	if (authMethod != null && ! authMethod.equals("none")) {
