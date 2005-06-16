@@ -93,6 +93,12 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
             for (int i = 0; i < documents.length; i++) {
                 nodes.addAll(Arrays.asList(documents[i].getRepositoryNodes()));
             }
+            
+            set = SiteUtil.getSubSite(this.manager, doc);
+            documents = set.getDocuments();
+            for (int i = 0; i < documents.length; i++) {
+                nodes.addAll(Arrays.asList(documents[i].getRepositoryNodes()));
+            }
 
             nodes.add(SiteUtil.getSiteStructure(this.manager,
                     doc.getIdentityMap(),
