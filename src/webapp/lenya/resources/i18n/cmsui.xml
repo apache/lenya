@@ -252,6 +252,7 @@
       <!-- Rename document -->
   <message key="Rename Document">Rename Document</message>
   <message key="rename-doc">Rename document {0}</message>
+  <message key="rename-losing-scheduler-warning">Please check the document and the subtree for scheduled jobs as they will get lost after renaming</message>  
       <!-- Copy document -->
   <message key="Copy Document">Copy Document</message>
   <message key="copy-doc">Copy document {0}</message>
@@ -260,6 +261,7 @@
   <message key="Paste Document">Paste Document</message>
   <message key="paste-doc">Paste document {0}</message>
   <message key="paste-doc-from-clip?">Do you want to paste the document {0} from the clipboard?</message>
+  <message key="move-losing-scheduler-warning">Please check the document and the subtree for scheduled jobs as they will get lost after moving.</message>
       <!-- Cut document -->
   <message key="Cut Document">Cut Document</message>
   <message key="cut-doc">Cut document {0}</message>

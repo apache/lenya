@@ -73,7 +73,9 @@ return true;
           <input type="hidden" name="lenya.usecase" value="rename"/>
           <input type="hidden" name="lenya.step" value="rename"/>
           <input type="hidden" name="parenturl" value="{parent-url}"/>
-          
+          <p>
+            <i18n:text key="rename-losing-scheduler-warning"/>
+          </p>
           <table class="lenya-table-noborder">
             <tr>
               <td class="lenya-entry-caption"><i18n:text>New Document ID</i18n:text>:</td>

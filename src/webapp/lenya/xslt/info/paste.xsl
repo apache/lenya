@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: paste.xsl,v 1.15 2004/03/13 12:42:06 gregor Exp $ -->
+<!-- $Id$ -->
 
  <xsl:stylesheet version="1.0"
    xmlns="http://www.w3.org/1999/xhtml"
@@ -71,10 +71,13 @@
           <table class="lenya-table-noborder">
           	<tr>
           		<td>
-                  <i18n:translate>          		
+                <i18n:translate>          		
           		    <i18n:text key="paste-doc-from-clip?"/>
-                    <i18n:param><strong><xsl:value-of select="first-document-id"/></strong></i18n:param>			
-                  </i18n:translate>          		
+                  <i18n:param><strong><xsl:value-of select="first-document-id"/></strong></i18n:param>			
+                </i18n:translate>  
+                <p>
+                  <i18n:text key="move-losing-scheduler-warning"/>
+                </p>                          		
           		</td>
           	</tr>
           	<tr>

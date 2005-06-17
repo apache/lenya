@@ -256,6 +256,7 @@
       <!--Rename document -->
   <message key="Rename Document">Dokument umbenennen</message>
   <message key="rename-doc">Dokument {0} umbenennen</message>
+  <message key="rename-losing-scheduler-warning">Bitte Dokument und untergeordnete Dokumente auf Zeitgesteuerte Aufgaben überprüfen, da diese beim umbenennen verloren gehen.</message>  
       <!-- Copy document -->
   <message key="Copy Document">Dokument kopieren</message>
   <message key="copy-doc">Kopieren von Dokument {0}</message>
@@ -264,6 +265,7 @@
   <message key="Paste Document">Dokument einfügen</message>
   <message key="paste-doc">Dokument {0} einfügen</message>
   <message key="paste-doc-from-clip?">Wollen Sie das Dokument {0} aus der Zwischenablage einfügen?</message>
+  <message key="move-losing-scheduler-warning">Bitte Dokument und untergeordnete Dokumente auf Zeitgesteuerte Aufgaben überprüfen, da diese beim verschieben verloren gehen.</message>  
       <!-- Cut document -->
   <message key="Cut Document">Dokument ausschneiden</message>
   <message key="cut-doc">Ausschneiden von Dokument {0}</message>
