@@ -47,14 +47,14 @@
         <jx:forEach var="user" items="${usecase.getParameter('users')}">
           <tr>
             <td style="vertical-align: middle">
-              <a href="${request.contextPath}${request.requestURI}?lenya.usecase=admin.user&amp;userId=${user.getId()}"><jx:out value="${user.getId()}"/></a>
+              <a href="${request.requestURI}?lenya.usecase=admin.user&amp;userId=${user.getId()}"><jx:out value="${user.getId()}"/></a>
             </td>
             <td style="vertical-align: middle">
               <jx:out value="${user.getName()}"/>
             </td>
             <td>
               <jx:forEach var="group" items="${user.getGroups()}">
-                <a href="${request.contextPath}${request.requestURI}?lenya.usecase=admin.groupProfile&amp;groupId=${group.getId()}"><jx:out value="${group.getId()}"/></a>
+                <a href="${request.requestURI}?lenya.usecase=admin.groupProfile&amp;groupId=${group.getId()}"><jx:out value="${group.getId()}"/></a>
               </jx:forEach>
             </td>
             <td style="vertical-align: middle">
