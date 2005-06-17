@@ -195,16 +195,28 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
 
                     if (href.startsWith(_context + "/" + publication.getId())) {
 
-                        final String webappUrlWithAnchor = href.substring(_context.length());
-
+                        final String webappUrlWithQueryString = href.substring(_context.length());
+                        String webappUrlWithAnchor;
+                        
+                        String queryString = null;
+                        int queryStringIndex = webappUrlWithQueryString.indexOf("?");
+                        if (queryStringIndex > -1) {
+                            webappUrlWithAnchor = webappUrlWithQueryString.substring(0, queryStringIndex);
+                            queryString = webappUrlWithQueryString.substring(queryStringIndex + 1);
+                        }
+                        else {
+                            webappUrlWithAnchor = webappUrlWithQueryString;
+                        }
+                        
                         String anchor = null;
                         String webappUrl = null;
-
+                        
                         int anchorIndex = webappUrlWithAnchor.indexOf("#");
                         if (anchorIndex > -1) {
                             webappUrl = webappUrlWithAnchor.substring(0, anchorIndex);
                             anchor = webappUrlWithAnchor.substring(anchorIndex + 1);
-                        } else {
+                        }
+                        else {
                             webappUrl = webappUrlWithAnchor;
                         }
 
@@ -226,7 +238,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                                     .getLanguage());
 
                             if (targetDocument.exists()) {
-                                rewriteLink(newAttrs, targetDocument, anchor);
+                                rewriteLink(newAttrs, targetDocument, anchor, queryString);
                             } else {
                                 this.ignoreAElement = true;
                             }
@@ -267,9 +279,10 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
      * @param newAttrs The new attributes.
      * @param targetDocument The target document.
      * @param anchor The anchor (the string after the # character in the URL).
+     * @param queryString The query string without question mark.
      * @throws AccessControlException when something went wrong.
      */
-    protected void rewriteLink(AttributesImpl newAttrs, Document targetDocument, String anchor)
+    protected void rewriteLink(AttributesImpl newAttrs, Document targetDocument, String anchor, String queryString)
             throws AccessControlException {
 
         String webappUrl = targetDocument.getCanonicalWebappURL();
@@ -287,6 +300,10 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
 
         if (anchor != null) {
             rewrittenURL += "#" + anchor;
+        }
+
+        if (queryString != null) {
+            rewrittenURL += "?" + queryString;
         }
 
         if (getLogger().isDebugEnabled()) {
