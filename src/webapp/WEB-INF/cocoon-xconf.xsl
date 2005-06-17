@@ -382,6 +382,12 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
       </view>
       <exit usecase="admin.serverStatus"/>
     </component-instance>
+    <component-instance name="admin.sessions" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.SessionViewer">
+      <view template="admin/sessions" menu="true">
+        <parameter name="tab" value="sessions"/>
+      </view>
+      <exit usecase="admin.sessions"/>
+    </component-instance>
 
     <!--+
         | Search usecases
