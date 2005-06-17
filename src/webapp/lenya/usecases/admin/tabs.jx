@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: overview.jx 123960 2005-01-03 12:39:05Z andreas $ -->
+<!-- $Id$ -->
 
 <jx:template
   xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
@@ -60,7 +60,7 @@
         <jx:set var="contextPath" value="${request.contextPath}"/>
         <jx:set var="requestURI" value="${request.requestURI}"/>
         <jx:set var="steps" value="${requestURI.substring(contextPath.length()).split('/')}"/>
-        <jx:set var="urlPrefix" value="${contextPath + steps[1]}"/>
+        <jx:set var="urlPrefix" value="${contextPath + '/' + steps[1]}"/>
         
         <td>
           <jx:choose>
@@ -73,7 +73,7 @@
           </jx:choose>
         </td>
         <td>
-          <a class="lenya-tablink" href="/${urlPrefix}/admin/lucene.html"><i18n:text>Search</i18n:text></a>
+          <a class="lenya-tablink" href="${urlPrefix}/admin/lucene.html"><i18n:text>Search</i18n:text></a>
         </td>
         <td>
           <jx:choose>
@@ -82,6 +82,16 @@
             </jx:when>
             <jx:otherwise>
               <a href="?lenya.usecase=admin.serverStatus" class="lenya-tablink"><i18n:text>Cocoon and Server Status</i18n:text></a>
+            </jx:otherwise>
+          </jx:choose>
+        </td>
+        <td>
+          <jx:choose>
+            <jx:when test="${usecase.getView().getParameter('tab').equals('sessions')}">
+              <a href="?lenya.usecase=admin.sessions" class="lenya-tablink-active"><i18n:text>Active Users</i18n:text></a>
+            </jx:when>
+            <jx:otherwise>
+              <a href="?lenya.usecase=admin.sessions" class="lenya-tablink"><i18n:text>Online Users</i18n:text></a>
             </jx:otherwise>
           </jx:choose>
         </td>
