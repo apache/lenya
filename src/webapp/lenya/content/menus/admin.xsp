@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: admin.xsp,v 1.10 2004/03/13 12:31:34 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsp:page 
     language="java" 
@@ -37,19 +37,10 @@
   </xsp:logic>
 
   <menus>
-    <menu i18n:attr="name" name="File" label="File">
+    <menu i18n:attr="name" name="File">
       <block>
         <item href="?lenya.usecase=logout&amp;lenya.step=showscreen"><i18n:text>Logout</i18n:text></item>
       </block>
-    </menu>
-
-    <menu i18n:attr="name" name="Edit" label="Search">
-    </menu>
-
-    <menu i18n:attr="name" name="Workflow" label="Help">
-    </menu>
-
-    <menu i18n:attr="name" name="Debug" label="Debug">
     </menu>
   </menus>
 

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: info.xsp,v 1.17 2004/03/13 12:31:34 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsp:page 
     language="java" 
@@ -91,14 +91,6 @@
         <item wf:event="deactivate"><xsp:attribute name="href"><xsp-request:get-uri/>?lenya.usecase=deactivate&amp;lenya.step=showscreen</xsp:attribute>Deactivate</item>
       </block>
     </menu>
-
-    <menu name="Debug" label="Debug">
-      <block>
-        <item>..</item>
-      </block>
-    </menu>
-  </menus>
-
 </menu>
 
 </xsp:page>
