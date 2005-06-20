@@ -151,10 +151,24 @@
         </map:act>
       </map:match>
 
-      <map:match pattern="PROPFIND/**_*.html">
-        <map:call function="filePropfind" >
-          <map:parameter name="last-modified" value="{page-envelope:document-lastmodified}"/>
-        </map:call>
+      <map:match pattern="PROPFIND/**.html">
+        <map:match pattern="PROPFIND/*_*.html">
+          <map:act type="resource-exists" src="fallback://content/authoring/{1}/index_{2}.xml">
+            <map:call function="filePropfind" >
+              <map:parameter name="last-modified" value="{page-envelope:document-lastmodified}"/>
+            </map:call>
+          </map:act>
+        </map:match>
+        <map:match pattern="PROPFIND/**/*_*.html">
+          <map:act type="resource-exists" src="fallback://content/authoring/{1}/{2}/index_{3}.xml">
+            <map:call function="filePropfind" >
+              <map:parameter name="last-modified" value="{page-envelope:document-lastmodified}"/>
+            </map:call>
+          </map:act>
+        </map:match>
+        <!-- does not exist -->
+        <map:generate src="dummy.xml"/>
+        <map:serialize status-code="404"/>
       </map:match>
  
       <map:match pattern="PROPFIND/**">        
@@ -167,8 +181,26 @@
         </map:call>
       </map:match>
 
-      <map:match pattern="HEAD/**_*.html">
-        <map:call function="filePropfind" />
+      <map:match pattern="HEAD/**.html">
+        <map:match pattern="HEAD/*_*.html">
+          <map:act type="resource-exists" src="fallback://content/authoring/{1}/index_{2}.xml">
+            <map:act type="set-header">
+              <map:parameter name="Last-Modified" value="{page-envelope:document-lastmodified}" />
+              <map:call function="filePropfind" />
+            </map:act>
+          </map:act>
+        </map:match>
+        <map:match pattern="HEAD/**/*_*.html">
+          <map:act type="resource-exists" src="fallback://content/authoring/{1}/{2}/index_{3}.xml">
+            <map:act type="set-header">
+              <map:parameter name="Last-Modified" value="{page-envelope:document-lastmodified}" />
+              <map:call function="filePropfind" />
+            </map:act>
+          </map:act>
+        </map:match>
+        <!-- doesn't exist -->
+        <map:generate src="dummy.xml"/>
+        <map:serialize status-code="404"/>
       </map:match>
       
       <map:match pattern="HEAD/**">
@@ -182,15 +214,19 @@
       <map:match pattern="checkin">
         <map:act type="reserved-checkin">
           <map:generate src="dummy.xml"/>
-          <map:serialize type="xml"/>
+          <map:serialize type="xml" status-code="423"/>
         </map:act>
         <map:generate src="dummy.xml"/>
         <map:serialize type="xml" status-code="201" />
       </map:match>
 
       <map:match pattern="PUT/**_*.html">
+        <!--fixme:  Have to checkin or we get "can not lock error" trying to put when file is already checked out-->
+        <map:act type="reserved-checkin">  
           <map:call function="put" />
-      </map:match>
+        </map:act>
+        <map:call function="put" />  
+      </map:match> 
             
       <map:match pattern="DELETE/**">
         <map:call function="remove" />
@@ -201,8 +237,21 @@
           <map:generate src="dummy.xml"/>
           <map:serialize type="xml"  status-code="423"/>
         </map:act>
-        <map:generate src="lock.xml"/>
-        <map:serialize type="xml"/>
+        <map:generate src="dummy.xml"/>
+        <map:transform type="xslt" src="fallback://lenya/usecases/webdav/lock.xsl">
+          <map:parameter name="userid" value="{access-control:user-id}"/>
+          <map:parameter name="docid" value="{page-envelope:document-id}"/>
+        </map:transform>
+        <map:serialize type="xml" status-code="200" />
+      </map:match>
+
+      <map:match pattern="UNLOCK/**">
+        <map:act type="reserved-checkin">
+          <map:generate src="dummy.xml"/>
+          <map:serialize type="xml"  status-code="424"/>
+        </map:act>
+        <map:generate src="dummy.xml"/>
+        <map:serialize type="xml" status-code="204" />
       </map:match>
       
     </map:pipeline>

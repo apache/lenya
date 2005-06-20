@@ -58,7 +58,7 @@ function put() {
   if(status)
     cocoon.sendPage("checkin",{});
   else {
-    sendStatus(500);
+    sendStatus(415);
   }
 }
 
