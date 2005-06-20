@@ -270,7 +270,7 @@
             <mirror href="mirror.cgi"/>
         </cocoon>
         <lenya href="http://lenya.apache.org"/>
-        <lenya.demo href="http://olr.kbs.uni-hannover.de:8888"/>
+        <lenya.demo href="http://lenya.zones.apache.org:8888/"/>
         <lenya.dist href="http://www.apache.org/dyn/closer.cgi/lenya"/>
         <lenya.archive.user href="http://mail-archives.apache.org/mod_mbox/lenya-user/"/>
         <lenya.archive.devel href="http://mail-archives.apache.org/mod_mbox/lenya-dev/"/>
