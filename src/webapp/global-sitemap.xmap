@@ -316,7 +316,10 @@
       <map:match pattern="*">
         <map:select type="request-method">
           <map:when test="PROPFIND">
-            <map:generate type="file" src="fallback://lenya/usecases/webdav/init.xml"/>
+            <map:generate type="file" src="fallback://lenya/usecases/webdav/dummy.xml"/>
+            <map:transform src="fallback://lenya/usecases/webdav/init.xsl">
+              <map:parameter name="pubid" value="{page-envelope:publication-id}"/>
+            </map:transform>
             <map:serialize type="xml" status-code="207"/>
           </map:when>
           <map:when test="OPTIONS">
@@ -325,10 +328,13 @@
         </map:select>
       </map:match> 
 
-      <map:match pattern="*/">
+      <map:match pattern="{page-envelope:publication-id}/">
         <map:select type="request-method">
           <map:when test="PROPFIND">
-            <map:generate type="file" src="fallback://lenya/usecases/webdav/init.xml"/>
+           <map:generate type="file" src="fallback://lenya/usecases/webdav/dummy.xml"/>
+            <map:transform src="fallback://lenya/usecases/webdav/init.xsl">
+              <map:parameter name="pubid" value="{page-envelope:publication-id}"/>            
+            </map:transform>
             <map:serialize type="xml" status-code="207"/>
           </map:when>
           <map:when test="OPTIONS">
@@ -369,12 +375,12 @@
         <map:act type="resource-exists-enhanced">
           <map:parameter name="url" value="fallback://resources/{2}/{3}"/>
           <map:parameter name="type" value="file"/>
-          <map:mount uri-prefix="" src="lenya/resources.xmap" check-reload="true" reload-method="synchron"/>
+          <map:mount uri-prefix="" src="{fallback://lenya/resources.xmap}" check-reload="true" reload-method="synchron"/>
         </map:act>
         <map:act type="resource-exists-enhanced">
           <map:parameter name="url" value="fallback://resources/shared/{3}"/>
           <map:parameter name="type" value="file"/>
-          <map:mount uri-prefix="" src="lenya/resources-shared.xmap" check-reload="true" reload-method="synchron"/>
+          <map:mount uri-prefix="" src="{fallback://lenya/resources-shared.xmap}" check-reload="true" reload-method="synchron"/>
         </map:act>
       </map:match>
       
