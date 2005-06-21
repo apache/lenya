@@ -19,7 +19,7 @@ package org.apache.lenya.transaction;
 /**
  * A versionable object.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public interface Versionable extends Lockable {
 
@@ -40,6 +40,12 @@ public interface Versionable extends Lockable {
      * @throws TransactionException if an error occurs.
      */
     boolean isCheckedOut() throws TransactionException;
+    
+    /**
+     * @return if the object can be checked out
+     * @throws TransactionException if an error occurs.
+     */
+    boolean canCheckOut() throws TransactionException;
 
     /**
      * Checks if the object has been changed since it has been locked.

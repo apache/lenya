@@ -642,8 +642,8 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
             boolean canExecute = true;
 
             for (int i = 0; i < objects.length; i++) {
-                if (objects[i].isCheckedOut()) {
-                    if (getLogger().isDebugEnabled())
+                if(!objects[i].canCheckOut()) {
+            	    if (getLogger().isDebugEnabled())
                         getLogger()
                                 .debug("AbstractUsecase::lockInvolvedObjects() can not execute, object ["
                                         + objects[i] + "] is already checked out");

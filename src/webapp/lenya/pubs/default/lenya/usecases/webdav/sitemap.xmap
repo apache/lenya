@@ -222,10 +222,6 @@
       </map:match>
 
       <map:match pattern="PUT/**_*.html">
-        <!--fixme:  Have to checkin or we get "can not lock error" trying to put when file is already checked out-->
-        <map:act type="reserved-checkin">  
-          <map:call function="put" />
-        </map:act>
         <map:call function="put" />  
       </map:match> 
             

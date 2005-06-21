@@ -40,6 +40,7 @@ import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.TransactionException;
+import org.apache.lenya.cms.rc.RCMLEntry;
 
 /**
  * A repository node.
@@ -113,6 +114,25 @@ public class SourceNode extends AbstractLogEnabled implements Node {
         }
     }
 
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#canCheckOut()
+     */
+    public boolean canCheckOut() throws TransactionException {
+        try {
+        	RCMLEntry entry = getRevisionController().getRCML(getRCPath()).getLatestEntry();
+            if(!isCheckedOut())
+            	return true;
+        	else if(entry.getIdentity().equals(getUserId())) 
+                return true;
+        	else
+        	    return false;
+        } catch (TransactionException e) {
+        	throw e;
+        } catch (Exception e) {
+        	throw new TransactionException(e);
+        }
+    }    
+    
     /**
      * @see org.apache.lenya.transaction.Transactionable#checkout()
      */
@@ -286,8 +306,8 @@ public class SourceNode extends AbstractLogEnabled implements Node {
      * @see org.apache.lenya.transaction.Transactionable#lock()
      */
     public void lock() throws TransactionException {
-        if (isCheckedOut()) {
-            throw new TransactionException("Cannot lock [" + this + "]: node is checked out.");
+        if (!canCheckOut()) {
+    	    throw new TransactionException("Cannot lock [" + this + "]: node is checked out.");
         }
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Locking [" + this + "]");
