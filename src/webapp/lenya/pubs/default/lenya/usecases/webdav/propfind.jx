@@ -77,5 +77,22 @@
           </D:response>
        </jx:if>
       </jx:forEach>
+      <jx:forEach var="asset" items="${usecase.getParameter('assets')}">
+          <D:response>
+              <D:href>/${sourceURL}${asset.getName()}</D:href>
+              <D:propstat>
+                <D:prop>
+                  <D:displayname>${asset.getName()}</D:displayname>
+                  <D:getlastmodified>${dateFormat.format(asset.getLastModified())}</D:getlastmodified>
+                  <D:creationdate />
+                  <D:getcontenttype>asset.getMimeType()</D:getcontenttype>
+                  <D:getcontentlength>${asset.getContentLength()}</D:getcontentlength>
+                  <D:resourcetype />
+                  <D:lockdiscovery/>
+                </D:prop>
+                <D:status>HTTP/1.1 200 OK</D:status>
+              </D:propstat>
+          </D:response>
+      </jx:forEach>
       
 </D:multistatus>
