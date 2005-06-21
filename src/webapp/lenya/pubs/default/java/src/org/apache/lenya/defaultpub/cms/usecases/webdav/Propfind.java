@@ -17,6 +17,7 @@
 package org.apache.lenya.defaultpub.cms.usecases.webdav;
 
 import java.io.File;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.Vector;
 import java.text.SimpleDateFormat;
@@ -32,6 +33,8 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.Resource;
+import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 
@@ -65,6 +68,7 @@ public class Propfind extends SiteUsecase {
 
         ServiceSelector selector = null;
         SiteManager siteManager = null;
+        ResourcesManager resourcesManager = null;
         DocumentBuilder docBuilder = null;
         Vector docs = new Vector();
         Vector checkedOut = new Vector();
@@ -127,6 +131,18 @@ public class Propfind extends SiteUsecase {
                     }
             	}
             }
+             
+            //get assets if we are currently looking at a document            		
+            if (!request.endsWith("authoring/")) {
+                String url = request.substring(0,request.length()-1)+".html";
+    		    Document currentDoc = docBuilder.buildDocument(getDocumentIdentityMap(),_publication,url);
+                if (currentDoc.exists()) {
+    		        resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
+                    Resource[] resources = resourcesManager.getResources(currentDoc);
+                    setParameter("assets", Arrays.asList(resources)); 
+                }
+            }
+              
             setParameter(DOCUMENTS, docs);
             setParameter(RC, checkedOut);
             setParameter(SOURCEURL,request);
