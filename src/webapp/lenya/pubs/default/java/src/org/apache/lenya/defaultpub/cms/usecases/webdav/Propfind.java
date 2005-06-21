@@ -133,7 +133,7 @@ public class Propfind extends SiteUsecase {
             }
              
             //get assets if we are currently looking at a document            		
-            if (!request.endsWith("authoring/")) {
+            if (!request.equals("/"+_publication.getId()+"/authoring/")) {
                 String url = request.substring(0,request.length()-1)+".html";
     		    Document currentDoc = docBuilder.buildDocument(getDocumentIdentityMap(),_publication,url);
                 if (currentDoc.exists()) {
