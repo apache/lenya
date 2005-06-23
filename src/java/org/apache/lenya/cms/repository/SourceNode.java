@@ -117,19 +117,17 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     /**
      * @see org.apache.lenya.transaction.Transactionable#canCheckOut()
      */
-    public boolean canCheckOut() throws TransactionException {
+    public boolean isCheckedOutByUser() throws TransactionException {
         try {
-        	RCMLEntry entry = getRevisionController().getRCML(getRCPath()).getLatestEntry();
-            if(!isCheckedOut())
-            	return true;
-        	else if(entry.getIdentity().equals(getUserId())) 
+            RCMLEntry entry = getRevisionController().getRCML(getRCPath()).getLatestEntry();
+            if(entry.getIdentity().equals(getUserId())) 
                 return true;
-        	else
-        	    return false;
+            else
+                return false;
         } catch (TransactionException e) {
-        	throw e;
+            throw e;
         } catch (Exception e) {
-        	throw new TransactionException(e);
+            throw new TransactionException(e);
         }
     }    
     
@@ -306,7 +304,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
      * @see org.apache.lenya.transaction.Transactionable#lock()
      */
     public void lock() throws TransactionException {
-        if (!canCheckOut()) {
+        if (isCheckedOut() && !isCheckedOutByUser()) {
     	    throw new TransactionException("Cannot lock [" + this + "]: node is checked out.");
         }
         if (getLogger().isDebugEnabled()) {

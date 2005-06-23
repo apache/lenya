@@ -42,10 +42,10 @@ public interface Versionable extends Lockable {
     boolean isCheckedOut() throws TransactionException;
     
     /**
-     * @return if the object can be checked out
+     * @return if the object is checked out by the current user.
      * @throws TransactionException if an error occurs.
      */
-    boolean canCheckOut() throws TransactionException;
+    boolean isCheckedOutByUser() throws TransactionException;
 
     /**
      * Checks if the object has been changed since it has been locked.
