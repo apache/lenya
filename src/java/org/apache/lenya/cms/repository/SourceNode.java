@@ -115,7 +115,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     }
 
     /**
-     * @see org.apache.lenya.transaction.Transactionable#canCheckOut()
+     * @see org.apache.lenya.transaction.Transactionable#isCheckedOutByUser()
      */
     public boolean isCheckedOutByUser() throws TransactionException {
         try {
