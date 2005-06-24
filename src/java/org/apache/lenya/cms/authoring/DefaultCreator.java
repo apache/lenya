@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DefaultCreator.java,v 1.28 2004/03/02 16:43:58 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.authoring;
 
@@ -271,5 +271,12 @@ public class DefaultCreator implements ParentChildCreatorInterface {
      */
     protected String getLanguageSuffix(String language) {
         return (language != null) ? "_" + language : "";
+    }
+
+    /**
+     * Get filename of template/sample
+     */
+    public String getSampleResourceName() {
+        return sampleResourceName;
     }
 }
