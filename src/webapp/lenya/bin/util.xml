@@ -35,12 +35,9 @@
 
   <path id="class.path">
     <pathelement path="${lenya.dir.web-inf}/classes"/>
-    <pathelement path="${lenya.dir.web-inf}/lib/xercesImpl-2.1.0.jar"/>
-    <pathelement path="${lenya.dir.web-inf}/lib/xml-apis.jar"/>
-    <pathelement path="${lenya.dir.web-inf}/lib/xalan-2.4.1.jar"/>
-    <pathelement path="${lenya.dir.web-inf}/lib/log4j-1.2.8.jar"/>
-    <pathelement path="${lenya.dir.web-inf}/lib/excalibur-io-1.1.jar"/>
-    <pathelement path="${lenya.dir.web-inf}/lib/jtidy-04aug2000r7-dev.jar"/>
+    <fileset dir="${lenya.dir.web-inf}/lib">
+      <include name="**/*.jar"/>
+    </fileset>   
   </path>
 </target>
 
