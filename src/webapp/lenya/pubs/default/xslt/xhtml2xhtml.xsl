@@ -74,7 +74,7 @@
    </xsl:variable>
    <div class="asset">
        <xsl:text>&#160;</xsl:text>
-       <a href="{$nodeid}/{@src}">
+       <a href="{$nodeid}/{@src}" title="{text()}">
          <xsl:value-of select="text()"/>
        </a>
        (<xsl:value-of select="number($extent)"/>KB)
@@ -104,6 +104,9 @@
           <xsl:choose>
             <xsl:when test="@name != ''">
               <xsl:value-of select="@name"/>
+            </xsl:when>
+            <xsl:when test="@title != ''">
+              <xsl:value-of select="@title"/>
             </xsl:when>
             <xsl:otherwise>
               <xsl:value-of select="dc:metadata/dc:title"/>                    
