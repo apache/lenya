@@ -54,12 +54,15 @@
     
      <!-- Make shell scripts executable -->
     <chmod file="${dist.bin.dir}/*.sh" perm="ugo+rx"/>
+    <chmod file="${dist.bin.dir}/tools/bin/*.sh" perm="ugo+rx"/>
 
   	<!-- Make sure linefeeds in shell scripts are UNIX-style -->
    <fixcrlf srcdir="${dist.bin.dir}" eol="lf" includes="*.sh"/>
+   <fixcrlf srcdir="${dist.bin.dir}/tools/bin" eol="lf" includes="*.sh"/>
 
   	<!-- Make sure linefeeds in batch files are Windows-style -->
    <fixcrlf srcdir="${dist.bin.dir}" eol="crlf" includes="*.bat"/>
+   <fixcrlf srcdir="${dist.bin.dir}/tools/bin" eol="crlf" includes="*.bat"/>
   </target>
 
   <target name="dist-bin" depends="prepare-dist-bin" description="Build a regular binary distribution tar ball">
@@ -127,12 +130,19 @@
 
     <!-- Make shell scripts executable -->
    <chmod file="${dist.src.dir}/*.sh" perm="ugo+rx"/>
+    <chmod file="${dist.src.dir}/tools/bin/*.sh" perm="ugo+rx"/>
+    <chmod file="${dist.src.dir}/src/webapp/lenya/bin/*.sh" perm="ugo+rx"/>
+    <chmod file="${dist.src.dir}/src/webapp/lenya/bin/replication/*.sh" perm="ugo+rx"/>
 
   	<!-- Make sure linefeeds in shell scripts are UNIX-style -->
    <fixcrlf srcdir="${dist.src.dir}" eol="lf" includes="*.sh"/>
+    <fixcrlf srcdir="${dist.src.dir}/tools/bin" eol="lf" includes="*.sh"/>
+    <fixcrlf srcdir="${dist.src.dir}/src/webapp/lenya/bin" eol="lf" includes="*.sh"/>
+    <fixcrlf srcdir="${dist.src.dir}/src/webapp/lenya/bin/replication" eol="lf" includes="*.sh"/>
 
   	<!-- Make sure linefeeds in batch files are Windows-style -->
    <fixcrlf srcdir="${dist.src.dir}" eol="crlf" includes="*.bat"/>
+    <fixcrlf srcdir="${dist.src.dir}/tools/bin" eol="crlf" includes="*.bat"/>
   </target>
 
   <target name="dist-src" depends="prepare-dist-src" description="Builds a regular tar ball containing the sources for developers">
