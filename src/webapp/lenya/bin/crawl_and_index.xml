@@ -19,27 +19,20 @@
 
 <project default="main" basedir=".">
 
-
-
 <target name="main" description="main" depends="init">
   <echo>INFO: webapp.dir=${webapp.dir}</echo>
 </target>
 
-
-
-
 <target name="init">
-  <echo message="INFO: Init"/>
-
   <property file="local.search.properties"/>
   <property file="search.properties"/>
 
   <!-- Dummy arguments -->
-  <property name="crawler.xconf" value="src/webapp/lenya/pubs/oscom/config/search/crawler.xconf"/>
-  <property name="lucene.xconf" value="src/webapp/lenya/pubs/oscom/config/search/lucene-cmfsMatrix.xconf"/>
-  <property name="htdocs.dump.dir" value="src/webapp/lenya/pubs/oscom/content/live/matrix"/>
-  <property name="file" value="src/webapp/lenya/pubs/oscom/content/live/matrix/lenya.xml"/>
-  <property name="index.dir" value="src/webapp/lenya/pubs/oscom/work/search/lucene/index/index-cmfsMatrix"/>
+  <property name="crawler.xconf" value="src/webapp/lenya/pubs/default/config/search/crawler.xconf"/>
+  <property name="lucene.xconf" value="src/webapp/lenya/pubs/default/config/search/lucene-cmfsMatrix.xconf"/>
+  <property name="htdocs.dump.dir" value="src/webapp/lenya/pubs/default/content/live"/>
+  <property name="file" value="src/webapp/lenya/pubs/default/content/live/index.xml"/>
+  <property name="index.dir" value="src/webapp/lenya/pubs/default/work/search/lucene/index/index"/>
   <property name="search.term" value="Lenya"/>
   <!-- /Dummy arguments -->
 
@@ -47,25 +40,13 @@
 
   <path id="class.path">
     <pathelement path="${web-inf.dir}/classes"/>
-    <pathelement path="${web-inf.dir}/lib/xercesImpl-2.6.2.jar"/>
-    <pathelement path="${web-inf.dir}/lib/xml-apis.jar"/>
-    <pathelement path="${web-inf.dir}/lib/xalan-2.6.1-dev-20041008T0304.jar"/>
-    <pathelement path="${web-inf.dir}/lib/log4j-1.2.9.jar"/>
-    <pathelement path="${web-inf.dir}/lib/excalibur-io-1.1.jar"/>
-    <pathelement path="${web-inf.dir}/lib/lucene-1.4.3.jar"/>
-    <pathelement path="${web-inf.dir}/lib/websphinx-0.5.jar"/>
-    <pathelement path="${web-inf.dir}/lib/xml-commons-resolver-1.1.jar"/>
+    <fileset dir="${web-inf.dir}/lib">
+      <include name="**/*.jar"/>
+    </fileset>   
   </path>
-
-<!--
-  <property environment="env"/>
-  <property name="javaexe" value="${env.JAVA_HOME}/bin/java"/>
--->
 
   <chmod file="${webapp.dir}/lenya/bin/crawl_and_index.sh" perm="755"/>
 </target>
-
-
 
 <target name="crawl" description="Crawl and dump hypertext documents. Usage: -Dcrawler.xconf=/foo/bar/crawler.xconf (IMPORTANT NOTE: Use an absolute path to specify the crawler.xconf file" depends="init">
   <echo>INFO: Crawl and dump hypertext documents (${crawler.xconf})</echo>
@@ -81,7 +62,7 @@
     <arg value="${crawler.xconf}"/>
     <classpath refid="class.path"/>
   </java>
-  <echo>INFO: Crawling DONE</echo>
+  <echo>INFO: Crawling finished</echo>
 </target>
 
 
