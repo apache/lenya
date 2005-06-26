@@ -1,3 +1,4 @@
+@echo off
 rem  Copyright 1999-2004 The Apache Software Foundation
 rem
 rem  Licensed under the Apache License, Version 2.0 (the "License");
