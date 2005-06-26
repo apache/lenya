@@ -32,22 +32,22 @@ Please see some <a href="screenshots.html">screenshots</a> or try the <a href="e
       <ul>
         <li>Two Lenya presentations at <a href="ext:apachecon">ApacheCon Europe 2005</a> (Stuttgart, Germany
 18-22 July 2005)</li>
+        <li><a href="site:download14">Lenya 1.2.4 released</a> (June 25, 2005)</li>
         <li><a href="site:download14">Lenya 1.4alpha1 released</a> (June 12, 2005)</li>
         <li>New <a href="site:faq">Lenya How-To's</a> posted (May 15, 2005) </li>
-        <li>Lenya 1.2.3 released (May 1, 2005) </li>
         <li>New <a href="site:tutorial">Lenya tutorials</a> posted (April 24, 2005) </li>
       </ul>
     </section>
     
     <section id="download">
     <title>Downloads</title>
-    <p>Current stable version of Apache Lenya is 1.2.3. This is the recommended version for production. You will at least need the Java 2 Platform, Standard Edition, version 1.4.2. Please follow the <a href="site:install">installation instructions</a>.</p>
+    <p>Current stable version of Apache Lenya is 1.2.4. This is the recommended version for production. You will at least need the Java 2 Platform, Standard Edition, version 1.4.2. Please follow the <a href="site:install">installation instructions</a>.</p>
     <ul>
-    	<li>Lenya 1.2.3 <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.3-bin.exe">Windows binary</a> (Windows Installer) <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.3-bin.exe.asc">ASC Signature</a> <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.3-bin.exe.md5">MD5 Checksum</a></li>
-    	<li>Lenya 1.2.3 <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.3-bin.zip">Windows binary</a> (ZIP archive) <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.3-bin.zip.asc">ASC Signature</a> <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.3-bin.zip.md5">MD5 Checksum</a></li>
-    	<li>Lenya 1.2.3 <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.3-src.zip">Windows source code</a> (ZIP archive) <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.3-src.zip.asc">ASC Signature</a> <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.3-src.zip.md5">MD5 Checksum</a></li>
-    	<li>Lenya 1.2.3 <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.3-bin.tar.gz">Unix binary</a> (tar.gz archive) <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.3-bin.tar.gz.asc">ASC Signature</a> <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.3-bin.tar.gz.md5">MD5 Checksum</a></li>
-    	<li>Lenya 1.2.3 <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.3-src.tar.gz">Unix source code</a> (tar.gz archive) <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.3-src.tar.gz.asc">ASC Signature</a> <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.3-src.tar.gz.md5">MD5 Checksum</a></li>
+    	<li>Lenya 1.2.4 <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.4-bin.exe">Windows binary</a> (Windows Installer) <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.4-bin.exe.asc">ASC Signature</a> <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.4-bin.exe.md5">MD5 Checksum</a></li>
+    	<li>Lenya 1.2.4 <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.4-bin.zip">Windows binary</a> (ZIP archive) <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.4-bin.zip.asc">ASC Signature</a> <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.4-bin.zip.md5">MD5 Checksum</a></li>
+    	<li>Lenya 1.2.4 <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.4-src.zip">Windows source code</a> (ZIP archive) <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.4-src.zip.asc">ASC Signature</a> <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.4-src.zip.md5">MD5 Checksum</a></li>
+    	<li>Lenya 1.2.4 <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.4-bin.tar.gz">Unix binary</a> (tar.gz archive) <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.4-bin.tar.gz.asc">ASC Signature</a> <a href="http://www.apache.org/dyn/closer.cgi/lenya/BINARIES/apache-lenya-1.2.4-bin.tar.gz.md5">MD5 Checksum</a></li>
+    	<li>Lenya 1.2.4 <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.4-src.tar.gz">Unix source code</a> (tar.gz archive) <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.4-src.tar.gz.asc">ASC Signature</a> <a href="http://www.apache.org/dyn/closer.cgi/lenya/SOURCES/apache-lenya-1.2.4-src.tar.gz.md5">MD5 Checksum</a></li>
     </ul>
     <p>The Apache Software Foundation has <a href="http://people.apache.org/~henkp/cgi-bin/md5.cgi">more information on ASC Signatures and MD5 checksums</a>.</p>
     <p>Please go to the <a href="site:download12">download section</a> of version 1.2 for more download options such as SVN.</p>
