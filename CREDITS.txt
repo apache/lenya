@@ -13,9 +13,11 @@ the ways the Lenya community pays back.
  Active Committers:
  ------------------
 
+* Doug Chestnut
 * Edith Chevrier
 * Dale Christ
 * Christian Egli
+* Jann Forrer
 * Antonio Gallardo
 * Andreas Hartmann   Andreas runs the cocooncenter.org site.
 * Andreas Kuckartz   Tester, Bugzilla reporter
@@ -41,9 +43,8 @@ the ways the Lenya community pays back.
                        lot to integrate it into Lenya. Recently he 
                        rewrote the JavaScript of the Lenya menubar.
 * Jose Chaso           Spanish translation.
-* Dale Christ          Fixes for blog publication.
+* Paul Ercolino (solprovider)  Refactored search, various small fixes
 * Stephen England      Design of the Lenya logo, design of the Lenya UI.
-* Jann Forrer          Usability enhancements.
 * Jorge Gutierrez      Spanish translation.
 * Martin Hitz
 * Margrit John
