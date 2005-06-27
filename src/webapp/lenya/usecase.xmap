@@ -282,10 +282,10 @@
               <map:select type="parameter">
                 <map:parameter name="parameter-selector-test" value="{request-param:properties.create.parent-id}"/>
                 <map:when test="/">
-                  <map:redirect-to uri="{document-url:{page-envelope:area}:{request-param:properties.create.parent-id}{request-param:properties.create.child-id}:{request-param:properties.create.language}}"/>
+                  <map:redirect-to session="true" uri="{document-url:{page-envelope:area}:{request-param:properties.create.parent-id}{request-param:properties.create.child-id}:{request-param:properties.create.language}}?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=true"/>
                 </map:when>
                 <map:otherwise>
-                  <map:redirect-to uri="{document-url:{page-envelope:area}:{request-param:properties.create.parent-id}/{request-param:properties.create.child-id}:{request-param:properties.create.language}}"/>
+                  <map:redirect-to session="true" uri="{document-url:{page-envelope:area}:{request-param:properties.create.parent-id}/{request-param:properties.create.child-id}:{request-param:properties.create.language}}?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=true"/>
                 </map:otherwise>
               </map:select>
             </map:act>
@@ -315,7 +315,7 @@
             <map:act type="task">
               <map:parameter name="task-id" value="create-language"/>
               <map:parameter name="properties.create.doctype" value="{page-envelope:document-type}"/>
-              <map:redirect-to uri="{document-url:{page-envelope:area}:{page-envelope:document-id}:{request-param:properties.create.new.language}}"/>
+              <map:redirect-to uri="{document-url:{page-envelope:area}:{page-envelope:document-id}:{request-param:properties.create.new.language}}?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=true"/>
             </map:act>
           </map:match>
 
