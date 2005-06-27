@@ -177,7 +177,7 @@ resources/
     <p>
       If your resources should have a workflow, you have to add a workflow
       schema for your resource type as described in
-      <a href="../workflow/configuration.html">Workflow Configuration</a>.
+      <a href="site:wfconfig">Workflow Configuration</a>.
       A workflow schema can be shared between multiple resource types.
       The workflow schema is assigned to a resource type in <code>publication.xconf</code>
       (see section <em>Adding Resource Types to a Publication</em>).
@@ -201,7 +201,7 @@ resources/
     <p>
       If you want to use a custom menubar for your resource type,
       follow the guidelines on the page
-      <a href="../layout/lenya-menubar.html">The Lenya Menubar</a>.
+      <a href="site:menubar">The Lenya Menubar</a>.
       Typically, a menubar is shared between multiple resource types.
       Small customizations can be achieved with Java code in the menubar XSP.
     </p>
