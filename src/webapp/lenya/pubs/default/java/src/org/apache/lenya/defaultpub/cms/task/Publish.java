@@ -76,7 +76,7 @@ public class Publish extends PublicationTask {
                 setModificationDate(authoringDocument, date);
                 setPublisher(authoringDocument);
                 authoringDocument.getDublinCore().save();
-                reservedCheckIn(authoringDocument, true);
+                reservedCheckIn(authoringDocument, false);
 
                 publish(authoringDocument);
 
