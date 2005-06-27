@@ -515,7 +515,7 @@
 <a href="http://cocoon.apache.org/mirror.cgi">Cocoon 2.1.7</a>  (the TAR/GZ source version)</li>
   
 <li>
-<a href="http://www.apache.org/dyn/closer.cgi/lenya">Lenya 1.2.3</a>  (the tar.gz source version is what we are using, under the SOURCES directory)</li>
+<a href="http://www.apache.org/dyn/closer.cgi/lenya">Lenya 1.2.4</a>  (the tar.gz source version is what we are using, under the SOURCES directory)</li>
   
 <li>(optional) <a href="http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0">Tomcat 5.0.28</a>  (the binary tar.gz version)</li>
 
@@ -561,7 +561,7 @@
     </pre>
 <p>Save and exit. Then, create a new file called webapps.sh and add the following
         inside:</p>
-<pre class="code"> export LENYA_HOME=/home/webapp/web_software/lenya-1.2.3 export
+<pre class="code"> export LENYA_HOME=/home/webapp/web_software/lenya-1.2.4 export
         COCOON_HOME=/home/webapp/web_software/cocoon-2.1.7 export
         COCOON_WEBAPP=/home/webapp/web_software/cocoon-2.1.7/build/webapp
     </pre>
@@ -592,7 +592,7 @@ chown -R webapp:webapp /home/webapp/web_software
 <p>Go ahead and move both Lenya's and Cocoon's zipped up files to that directory (you'll have to
     change to the directory that your downloaded files are stored first):</p>
 <pre class="code">
-mv apache-lenya-1.2.3-src.tar.gz /home/webapp/web_software/
+mv apache-lenya-1.2.4-src.tar.gz /home/webapp/web_software/
 mv cocoon-2.1.7-src.tar.gz /home/webapp/web_software/
 </pre>
 <p>Tomcat needs to go in /usr/local/ (at least that's the typical place for it):</p>
@@ -613,9 +613,9 @@ chown -R webapp:webapp /home/webapp/web_software/
 <p>Pretty easy stuff:</p>
 <pre class="code">
 cd web_software
-tar xzvf apache-lenya-1.2.3-src.tar.gz
+tar xzvf apache-lenya-1.2.4-src.tar.gz
 
-mv apache-lenya-1.2.3-src lenya-1.2.3
+mv apache-lenya-1.2.4-src lenya-1.2.4
 </pre>
 <a name="N100E2"></a><a name="unzip_and_build_cocoon"></a>
 <h3 class="h4">Step 7: Unzip and build Cocoon</h3>
@@ -626,8 +626,8 @@ mv cocoon-2.1.7-src cocoon-2.1.7
 </pre>
 <p>Now, you'll need to copy some config files from Lenya into Cocoon's directory:</p>
 <pre class="code">
-cp lenya-1.2.3/local.build.properties cocoon-2.1.7/
-cp lenya-1.2.3/local.blocks.properties cocoon-2.1.7/
+cp lenya-1.2.4/local.build.properties cocoon-2.1.7/
+cp lenya-1.2.4/local.blocks.properties cocoon-2.1.7/
 </pre>
 <p>Then the all-important part, compiling Cocoon.  It's this simple:</p>
 <pre class="code">
@@ -647,7 +647,7 @@ tar xzvf jakarta-tomcat-5.0.28.tar.gz
 <h3 class="h4">Step 9: Configure and install
     Lenya</h3>
 <p>OK, we need to let Lenya know where Tomcat is before we install it.</p>
-<pre class="code"> cd /home/webapp/web_software/lenya-1.2.3/ cp build.properties
+<pre class="code"> cd /home/webapp/web_software/lenya-1.2.4/ cp build.properties
         local.build.properties
         </pre>
 <p>Inside this file, you'll need to change a couple of things. Below are the lines you'll

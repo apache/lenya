@@ -343,27 +343,29 @@ resources/
 <p>
       If your resources should have a workflow, you have to add a workflow
       schema for your resource type as described in
-      <a href="../workflow/configuration.html">Workflow Configuration</a>.
+      <a href="../../1_2_x/components/workflow/configuration.html">Workflow Configuration</a>.
       A workflow schema can be shared between multiple resource types.
+      The workflow schema is assigned to a resource type in <span class="codefrag">publication.xconf</span>
+      (see section <em>Adding Resource Types to a Publication</em>).
     </p>
-<a name="N100BD"></a><a name="The+Resource+Type+Definition"></a>
+<a name="N100C3"></a><a name="The+Resource+Type+Definition"></a>
 <h3 class="h4">The Resource Type Definition</h3>
 <p>
     To assign the creator, schema etc. to your resource type,
 	  declare it in <span class="codefrag">{publication}/lenya/doctypes/{resource-type-name}/doctype.xconf</span>:
 	  </p>
 <pre class="code">&lt;resource-type name="profile"&gt;
-    &lt;creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator"&gt;
-      &lt;sample-name&gt;profile.xml&lt;/sample-name&gt;
-    &lt;/creator&gt;
-    &lt;schema src="profile.rng"/&gt;
-  &lt;/resource-type</pre>
-<a name="N100CD"></a><a name="Define+a+Custom+Menubar"></a>
+  &lt;creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator"&gt;
+    &lt;sample-name&gt;profile.xml&lt;/sample-name&gt;
+  &lt;/creator&gt;
+  &lt;schema src="profile.rng"/&gt;
+&lt;/resource-type</pre>
+<a name="N100D3"></a><a name="Define+a+Custom+Menubar"></a>
 <h3 class="h4">Define a Custom Menubar</h3>
 <p>
       If you want to use a custom menubar for your resource type,
       follow the guidelines on the page
-      <a href="../layout/lenya-menubar.html">The Lenya Menubar</a>.
+      <a href="../../1_2_x/components/layout/lenya-menubar.html">The Lenya Menubar</a>.
       Typically, a menubar is shared between multiple resource types.
       Small customizations can be achieved with Java code in the menubar XSP.
     </p>
@@ -371,9 +373,9 @@ resources/
       To let the user create new resources using the <span class="codefrag">DefaultBranchCreator</span>,
       you have to add the following menu item:
     </p>
-<pre class="code">&lt;item uc:usecase="create" uc:step="showscreen" href="?doctype=profile"&gt;&lt;i18n:text&gt;New Document&lt;/i18n:text&gt;&lt;/item&gt;
+<pre class="code">&lt;item uc:usecase="site.create" href="?doctype=profile"&gt;&lt;i18n:text&gt;New Profile Document&lt;/i18n:text&gt;&lt;/item&gt;
 </pre>
-<a name="N100E4"></a><a name="Presentation"></a>
+<a name="N100EA"></a><a name="Presentation"></a>
 <h3 class="h4">Presentation</h3>
 <p>
       To make your resources available as HTTP pages, you have to add the

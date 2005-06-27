@@ -1,5 +1,448 @@
 <?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN" "http://my.netscape.com/publish/formats/rss-0.91.dtd">
-<rss version="0.91"><channel><title> Changes</title><link>changes.html</link><description> Changes</description><language>en-us</language><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+<rss version="0.91"><channel><title> Changes</title><link>changes.html</link><description> Changes</description><language>en-us</language><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Added information about Lenya 1.2.4 Diff</description></item><item><title> add</title><link>changes.html</link><description> add
+              by 
+              gregor
+              :
+              [] 
+            Tagged release 1.2.4 Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Added Paul Ercolino to credits. Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Added Paul Ercolino to credits. Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Applied ASL Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Small syntax fix for index shell script Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Made sure that all batch files have their executable bit set. Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Made sure that all batch files have their executable bit set. Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Added search usecase to default publication. Thanks to Paul Ercolino, this makes searching work out of the box on Windows for the first time. Diff</description></item><item><title>1.2 add</title><link>changes.html</link><description>1.2 add
+              by 
+              gregor
+              :
+              [1.2] 
+            Added search usecase to default publication. Thanks to Paul Ercolino, this makes searching work out of the box on Windows for the first time. Diff</description></item><item><title>1.2 add</title><link>changes.html</link><description>1.2 add
+              by 
+              gregor
+              :
+              [1.2] 
+            Added search usecase to default publication. Thanks to Paul Ercolino, this makes searching work out of the box on Windows for the first time. Diff</description></item><item><title>1.2 add</title><link>changes.html</link><description>1.2 add
+              by 
+              gregor
+              :
+              [1.2] 
+            Added search usecase to default publication. Thanks to Paul Ercolino, this makes searching work out of the box on Windows for the first time. Diff</description></item><item><title>1.2 add</title><link>changes.html</link><description>1.2 add
+              by 
+              gregor
+              :
+              [1.2] 
+            Added search usecase to default publication. Thanks to Paul Ercolino, this makes searching work out of the box on Windows for the first time. Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Explicitly set alt tags for images, and title for assets. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35412 Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Explicitly set alt tags for images, and title for assets. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35412 Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Set version to 1.2.4 Diff</description></item><item><title>1.2 add</title><link>changes.html</link><description>1.2 add
+              by 
+              gregor
+              :
+              [1.2] 
+            Added search usecase to default publication. Thanks to Paul Ercolino, this makes searching work out of the box on Windows for the first time. Diff</description></item><item><title>1.2 add</title><link>changes.html</link><description>1.2 add
+              by 
+              gregor
+              :
+              [1.2] 
+            Added search usecase to default publication. Thanks to Paul Ercolino, this makes searching work out of the box on Windows for the first time. Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            No longer hardcode jars in the ant classpath. This resolves the constant breakage as new versions of these jars are added. Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            No longer hardcode jars in the ant classpath. This resolves the constant breakage as new versions of these jars are added. Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              chestnut
+              :
+              [1.4] 
+            resolves Bug 35483
+and added fallback:// to shared resources for pub templating Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              michi
+              :
+              [1.4] 
+            bug fixed re copying of publication specific libraries Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              michi
+              :
+              [1.2] 
+            bug fixed re copying of publication specific libraries Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              michi
+              :
+              [1.2] 
+            make sample/template filename accessible such that the default creator can be reused Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              chestnut
+              :
+              [1.4] 
+            I forgot to change the method name in the comment Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              chestnut
+              :
+              [1.4] 
+            Allows a user to checkout an object, execute multiple usecases on the object, and checkin the object  Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              chestnut
+              :
+              [1.4] 
+            fixed problem of not allowing owner of lock on objects to lock again Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              chestnut
+              :
+              [1.4] 
+            needs to work even when we have documents named authoring Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              chestnut
+              :
+              [1.4] 
+            List assets of a document for PROPFIND webDAV method Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              chestnut
+              :
+              [1.4] 
+            List assets of a document for PROPFIND webDAV method Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              chestnut
+              :
+              [1.4] 
+            stripped namespace from document that has been PUT Diff</description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            point lenya demo at ASF instance Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              chestnut
+              :
+              [1.4] 
+            fixed PROPFIND match on publications root for webDAV, and added fallback: proto to access resources sitemap for templating  Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              chestnut
+              :
+              [1.4] 
+            Added UNLOCK and fixed some problems Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              chestnut
+              :
+              [1.4] 
+            Added validation and ability to create a new document Diff</description></item><item><title> add</title><link>changes.html</link><description> add
+              by 
+              michi
+              :
+              [] 
+            README added Diff</description></item><item><title> </title><link>changes.html</link><description> 
+              by 
+              michi
+              :
+              [] 
+            obsolete Diff</description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+              by 
+              michi
+              :
+              [Site] 
+            obsolete pipeline removed Diff</description></item><item><title> add</title><link>changes.html</link><description> add
+              by 
+              michi
+              :
+              [] 
+            cforms within default publication Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Removed empty menus (no longer needed) Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              michi
+              :
+              [1.4] 
+            read from cache dir disabled Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              michi
+              :
+              [1.2] 
+            read from cache disabled Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              jann
+              :
+              [1.4] 
+            remove context path so that the link to the user profile works
+ Diff</description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              jann
+              :
+              [1.4] 
+            Add sessions.jx for the session usecase
+ Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              jann
+              :
+              [1.4] 
+            Adding the session usecaset as a tab in the admin area and change the
+urlPrefix value, so that the Search tab also works if you use tomcat.
+ Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              jann
+              :
+              [1.4] 
+            Add the SessionViewer to the list of usecases
+ Diff</description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              jann
+              :
+              [1.4] 
+            Add SessionViewer which gets all sessions from the SessionListener,
+extract the sessions belonging to the actual publication and 
+prepare it to the usecase
+ Diff</description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              jann
+              :
+              [1.4] 
+            Add a patch in order to add the SessionListener class to web.xml
+ Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            LinkRewritingTransformer: add query string to rewritten URLs. This fixes http://issues.apache.org/bugzilla/show_bug.cgi?id=29701 Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              andreas
+              :
+              [1.2] 
+            LinkRewritingTransformer: add query string to rewritten URLs. This fixes http://issues.apache.org/bugzilla/show_bug.cgi?id=29701 Diff</description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              jann
+              :
+              [1.4] 
+            Add SessionListener class 
+ Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              thorsten
+              :
+              [1.2] 
+            Bugfix 35397 Submitted by Simon Litwan. Thx Simon Litwan Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              thorsten
+              :
+              [1.2] 
+            Bugfix 35356 Submitted by Simon Litwan. Thx Simon Litwan Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              andreas
+              :
+              [1.2] 
+            Delete temp cocoon.xconf patch file on exit. This avoids that the build cancels under Windows when a file locking error occurs. The temp file won't be deleted in this case, so there's still room for improvement.
+Bug: http://issues.apache.org/bugzilla/show_bug.cgi?id=35394, Patch supplied by Jan Metzner. Thanks! Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              jwkaltz
+              :
+              [1.4] 
+            [minor change] added explicit check for required properties for nicer error message Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Properly lock affected documents when deactivating. Patch by Doug Chestnut, this resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35381 Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Removed doctypes config from instantiator and did some minor code cleanup. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35382 Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              jwkaltz
+              :
+              [1.2] 
+            [minor change] added sanity checks for clearer error message in the case of a missing configuration item Diff</description></item><item><title> update</title><link>changes.html</link><description> update
+              by 
+              michi
+              :
+              [] 
+            code link added Diff</description></item><item><title> update</title><link>changes.html</link><description> update
+              by 
+              michi
+              :
+              [] 
+            link to JCR and Blogs article added Diff</description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+              by 
+              gregor
+              :
+              [1.4] 
+            Added portuguese translation, thanks to Rolando Isidoro. Diff</description></item><item><title>1.2 add</title><link>changes.html</link><description>1.2 add
+              by 
+              gregor
+              :
+              [1.2] 
+            Added portuguese translation, thanks to Rolando Isidoro. Diff</description></item><item><title> add</title><link>changes.html</link><description> add
+              by 
+              gregor
+              :
+              [] 
+            Created branch for doco integration work Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              jann
+              :
+              [1.4] 
+            dos2unix in order to remove windows carriage returns
+ Diff</description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              andreas
+              :
+              [Docs] 
+            [minor change] fixed indentation Diff</description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              andreas
+              :
+              [Docs] 
+            added note to resource type docs about assigning workflow schemas to resource types Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            set svn:eol-style to native Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              andreas
+              :
+              [1.4] 
+            Build Cocoon Ant tasks first, this resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35367 Diff</description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              andreas
+              :
+              [Docs] 
+            Updated resource type docs: menu item reflects usecase framework syntax Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              edith
+              :
+              [1.2] 
+            Set the form at the top of the row, so that it is easy to see him, even when there are a mutlitude of documents Diff</description></item><item><title>1.2 add</title><link>changes.html</link><description>1.2 add
+              by 
+              michi
+              :
+              [1.2] 
+            redirects added to guarantee backwards compatibility Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              michi
+              :
+              [1.2] 
+            xhtml iso for backwards compatibility added Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              gregor
+              :
+              [1.2] 
+            Explicitly set utf-8 as the charset. This should hopefully resolve the remaining UTF-8 problems. Diff</description></item><item><title>1.4 </title><link>changes.html</link><description>1.4 
+              by 
+              gregor
+              :
+              [1.4] 
+            Changed WebDAV status code and made WebDAV work with publication templating. Patch by Doug Chestnut, this resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35337 Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+              by 
+              edith
+              :
+              [1.2] 
+            set the encoding in the email header Diff</description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Added University of Kiel to the live sites Diff</description></item><item><title> add</title><link>changes.html</link><description> add
+              by 
+              gregor
+              :
+              [] 
+            Tagging 1.4alpha1 Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Added publish to usecase policies Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Properties set Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Explicitly set charset for serializers Diff</description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Updated the site in preparation of 1.4alpha1 release Diff</description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+              by 
+              gregor
+              :
+              [Site] 
+            Updated the site in preparation of 1.4alpha1 release Diff</description></item><item><title>1.4 </title><link>changes.html</link><description>1.4 
+              by 
+              gregor
+              :
+              [1.4] 
+            Removed no longer needed classes Diff</description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+              by 
+              gregor
+              :
+              [Docs] 
+            Don't indent and save 10% of the file size Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Minor javadoc fixes Diff</description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+              by 
+              gregor
+              :
+              [1.4] 
+            Added deprecation notice to creator interface Diff</description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
               by 
               gregor
               :
