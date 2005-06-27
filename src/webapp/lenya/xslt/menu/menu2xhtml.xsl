@@ -197,7 +197,9 @@
   
   
   <xsl:template match="menu:title">
-    <xsl:apply-templates/>
+    <li class="lenya-menu-title">
+      <xsl:apply-templates select="node()"/>
+    </li>
   </xsl:template>
   	
   <!-- match items with not area='false' -->
