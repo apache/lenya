@@ -264,3 +264,72 @@ h2 {
     font-size: 10px;
     margin: 10px 10px 10px 5px;
 }
+
+div.search-box {
+	border: solid 1px #CCCCCC;
+	width: auto;
+	max-width: 100%;
+	font-size: small;
+	margin-bottom: 10px;
+}
+
+div.search-box-title {
+    background-color: #DDDCCF;
+	border-bottom: solid 1px #CCCCCC;
+	color: Black;
+	font-weight: bold;
+	padding: 3px 10px;
+}
+
+div.search-box-body {
+    padding: 10px;
+    background-color: #F5F4E9;
+	color: Black;
+}
+
+table.search-table {
+	color: Black;
+	background-color: White;
+	border-spacing: 0px;
+	border-collapse: collapse;
+}
+
+table.search-table-noborder {
+	border: 0px;
+	border-spacing: 0px;
+}
+
+table.search-table th {
+    background-color: #DDDCCF;
+	border: solid 1px #CCCCCC;
+	color: Black;
+	font-weight: bold;
+	padding: 3px 10px;
+	text-align: left;
+	font-size: small;
+}
+
+table.search-table td {
+    background-color: #F5F4E9;
+	border: solid 1px #CCCCCC;
+	padding: 3px 10px;
+	font-size: small;
+	color: Black;
+}
+
+table.search-table-noborder td {
+	border: 0px;
+	padding: 3px 10px;
+	font-size: small;
+}
+
+table.search-table-noborder-nopadding td {
+	border: 0px;
+	padding: 0px;
+	font-size: small;
+}
+
+table.search-table-noborder-nopadding th {
+	font-size: small;
+}
+
