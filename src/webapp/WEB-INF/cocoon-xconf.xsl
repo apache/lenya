@@ -526,6 +526,8 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
       <view template="edit/kupu/kupu" menu="false"/>
     </component-instance>
   </usecases>
+  
+  <resource-types/>
 
   <component role="org.apache.cocoon.components.cron.CronJob/usecase"
              class="org.apache.lenya.cms.usecase.scheduling.UsecaseCronJob"

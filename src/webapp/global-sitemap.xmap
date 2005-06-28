@@ -146,7 +146,11 @@
       <!-- Lenya page transformation -->
       <!-- lenya-page/{publication-id}/{complete-area}/... -->
       <map:match pattern="lenya-page/*/*/**">
-        <map:generate src="cocoon:/menu-xml/{1}/{2}/{3}"/>
+        <map:aggregate element="menu" ns="http://apache.org/cocoon/lenya/menubar/1.0">
+          <map:part src="cocoon:/menu-xml/{1}/{2}/{3}" strip-root="true"/>
+          <map:part src="cocoon:/menu-xml/publets/{1}/{2}.xml" strip-root="true"/>
+        </map:aggregate>
+        <map:transform src="lenya/xslt/menu/merge-menus.xsl"/>
         
         <map:call resource="i18n"/>
         
@@ -221,6 +225,21 @@
       <map:match pattern="menu-xml/*/admin/**" internal-only="true">
         <map:generate type="serverpages" src="lenya/content/menus/admin.xsp"/>
         <map:serialize type="xml"/>
+      </map:match>
+      
+      <!-- menu-xml/publets -->
+      <!-- menu-xml/publets/{pub-id}/{area}.xml -->
+      <map:match pattern="menu-xml/publets/*/*.xml">
+        <map:generate src="lenya/pubs/{1}/config/publication.xconf"/>
+        <map:transform src="lenya/xslt/publets/publets2xinclude.xsl">
+          <map:parameter name="area" value="{2}"/>
+        </map:transform>
+        <map:transform type="xinclude"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <!-- menu-xml/publet/{publet-id}/{area}.xml -->
+      <map:match pattern="menu-xml/publet/*/*.xml">
+        <map:mount uri-prefix="menu-xml/publet/{1}/" src="lenya/publets/{2}/menus.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
       
       <!-- menu-xml/{publication-id}/... -->
@@ -382,6 +401,11 @@
           <map:parameter name="type" value="file"/>
           <map:mount uri-prefix="" src="{fallback://lenya/resources-shared.xmap}" check-reload="true" reload-method="synchron"/>
         </map:act>
+      </map:match>
+
+      <!-- Enter a publet -->
+      <map:match pattern="publets/*/**">
+        <map:mount uri-prefix="publets/{1}/" src="lenya/publets/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
       
       <!-- Enter the actual publication -->
