@@ -24,7 +24,7 @@
     <map:pipeline>
     	
       <map:match pattern="**">
-        <map:generate type="serverpages" src="config/menus/links.xsp"/>
+        <map:generate type="serverpages" src="config/menu.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
       
