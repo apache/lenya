@@ -65,6 +65,8 @@
   <import file="src/targets/kupu-build.xml" />
   <!-- Export targets          -->
   <import file="src/targets/export-build.xml" />
+  <!-- Publet targets          -->
+  <import file="src/targets/publets-build.xml" />
   <!-- Publication tests       -->
   <import file="src/targets/publication-test-build.xml" />
   <!-- Successfully Built Message       -->
