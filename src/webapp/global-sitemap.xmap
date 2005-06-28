@@ -239,7 +239,15 @@
       </map:match>
       <!-- menu-xml/publet/{publet-id}/{area}.xml -->
       <map:match pattern="menu-xml/publet/*/*.xml">
-        <map:mount uri-prefix="menu-xml/publet/{1}/" src="lenya/publets/{2}/menus.xmap" check-reload="true" reload-method="synchron"/>
+        <map:select type="resource-exists">
+          <map:when test="lenya/publets/{2}/menus.xmap">
+            <map:mount uri-prefix="menu-xml/publet/{1}/" src="lenya/publets/{2}/menus.xmap" check-reload="true" reload-method="synchron"/>
+          </map:when>
+          <map:otherwise>
+            <map:generate type="serverpages" src="lenya/content/menus/live.xsp"/>
+            <map:serialize type="xml"/>
+          </map:otherwise>
+        </map:select>
       </map:match>
       
       <!-- menu-xml/{publication-id}/... -->
