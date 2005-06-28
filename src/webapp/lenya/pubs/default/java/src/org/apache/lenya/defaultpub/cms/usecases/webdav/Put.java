@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
@@ -30,19 +31,16 @@ import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
-import org.apache.lenya.cms.publication.DocumentTypeBuilder;
+import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
-import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.transaction.Transactionable;
 import org.apache.lenya.workflow.WorkflowManager;
-import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.excalibur.source.Source;
 import org.xml.sax.InputSource;
 import org.apache.lenya.xml.RelaxNG;
@@ -53,7 +51,7 @@ import org.apache.lenya.xml.RelaxNG;
  * @version $Id$
  */
 public class Put extends DocumentUsecase {
-	
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
@@ -61,37 +59,31 @@ public class Put extends DocumentUsecase {
         super.doExecute();
         SourceResolver resolver = null;
         WorkflowManager wfManager = null;
- 
+
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
 
             Document doc = getSourceDocument();
-            //sanity check
+            // sanity check
             if (doc == null)
                 throw new IllegalArgumentException("illegal usage, source document may not be null");
 
             if (!doc.exists()) {
                 DocumentManager documentManager = null;
-                DocumentTypeBuilder documentTypeBuilder = null;
+                ServiceSelector selector = null;
+                ResourceType resourceType = null;
                 try {
-
-                    documentTypeBuilder = (DocumentTypeBuilder) this.manager
-                            .lookup(DocumentTypeBuilder.ROLE);
+                    selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
 
                     documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-     
-                    DocumentIdentityMap map = (DocumentIdentityMap) getUnitOfWork().getIdentityMap();
-                    Document document = map.get(getPublication(),
-                            doc.getArea(),
-                            doc.getId(),
-                            doc.getLanguage());
-                    
-                    DocumentType documentType = documentTypeBuilder
-                            .buildDocumentType("xhtml", getPublication());
-                    documentManager.add(document,
-                            documentType,
-                            doc.getName(),
-                            null);
+
+                    DocumentIdentityMap map = (DocumentIdentityMap) getUnitOfWork()
+                            .getIdentityMap();
+                    Document document = map.get(getPublication(), doc.getArea(), doc.getId(), doc
+                            .getLanguage());
+
+                    resourceType = (ResourceType) selector.select("xhtml");
+                    documentManager.add(document, resourceType, doc.getName(), null);
 
                     setMetaData(document);
                     doc = document;
@@ -99,8 +91,11 @@ public class Put extends DocumentUsecase {
                     if (documentManager != null) {
                         this.manager.release(documentManager);
                     }
-                    if (documentTypeBuilder != null) {
-                        this.manager.release(documentTypeBuilder);
+                    if (selector != null) {
+                        if (resourceType != null) {
+                            selector.release(resourceType);
+                        }
+                        this.manager.release(selector);
                     }
                 }
             }
@@ -109,24 +104,24 @@ public class Put extends DocumentUsecase {
             String path = mapper.getPath(doc.getId(), getSourceDocument().getLanguage());
             String sourceUri = doc.getSourceURI();
             String pubId = doc.getPublication().getId();
-            String uploadSourceUri = "cocoon:/request/PUT"; 
+            String uploadSourceUri = "cocoon:/request/PUT";
 
-            //lets copy the source to temp work area
+            // lets copy the source to temp work area
             String tempSourceUri = "context://lenya/pubs/" + pubId + "/work/webdav/content/"
                     + doc.getArea() + "/" + path + ".tmp";
             tempSourceUri = tempSourceUri.substring("lenya://".length());
             tempSourceUri = "context://" + tempSourceUri;
 
             SourceUtil.copy(resolver, uploadSourceUri, tempSourceUri, true);
-            
+
             Source tempSource = resolver.resolveURI(tempSourceUri);
             if (!tempSource.exists()) {
                 throw new IllegalArgumentException("The temp file [" + tempSource.getURI()
                         + "] does not exist.");
             }
-            
-            //validity check
-            DocumentType resourceType = doc.getResourceType();
+
+            // validity check
+            ResourceType resourceType = doc.getResourceType();
             String schemaUri = resourceType.getSchemaDefinitionSourceURI();
             Source schemaSource = resolver.resolveURI(schemaUri);
             if (!schemaSource.exists()) {
@@ -134,19 +129,20 @@ public class Put extends DocumentUsecase {
                         + "] does not exist.");
             }
 
-            InputSource schemaInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(schemaSource);
-            InputSource xmlInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(tempSource);
+            InputSource schemaInputSource = org.apache.cocoon.components.source.SourceUtil
+                    .getInputSource(schemaSource);
+            InputSource xmlInputSource = org.apache.cocoon.components.source.SourceUtil
+                    .getInputSource(tempSource);
 
             String message = RelaxNG.validate(schemaInputSource, xmlInputSource);
             if (message != null) {
-                addErrorMessage("error-validation", new String[]{message});
-            }            
-            
+                addErrorMessage("error-validation", new String[] { message });
+            }
+
             if (SourceUtil.exists(tempSourceUri, this.manager)) {
                 SourceUtil.copy(resolver, tempSourceUri, sourceUri, true);
                 SourceUtil.delete(tempSourceUri, this.manager);
             }
-
 
         } finally {
             if (resolver != null) {
@@ -158,7 +154,6 @@ public class Put extends DocumentUsecase {
         }
     }
 
-
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
      */
@@ -166,29 +161,29 @@ public class Put extends DocumentUsecase {
         try {
             List nodes = new ArrayList();
             Document doc = getSourceDocument();
-            Document liveVersion = doc.getIdentityMap().getAreaVersion(doc, Publication.LIVE_AREA);
-            
+
             DocumentSet set = SiteUtil.getSubSite(this.manager, doc);
             Document[] documents = set.getDocuments();
             for (int i = 0; i < documents.length; i++) {
                 nodes.addAll(Arrays.asList(documents[i].getRepositoryNodes()));
             }
 
-            nodes.add(SiteUtil.getSiteStructure(this.manager,
-                    doc.getIdentityMap(),
-                    doc.getPublication(),
-                    Publication.LIVE_AREA).getRepositoryNode());
+            nodes.add(SiteUtil.getSiteStructure(this.manager, doc.getIdentityMap(),
+                    doc.getPublication(), Publication.LIVE_AREA).getRepositoryNode());
             return (Transactionable[]) nodes.toArray(new Transactionable[nodes.size()]);
 
         } catch (Exception e) {
             throw new UsecaseException(e);
         }
-    }    
-    
+    }
+
     /**
      * Sets the meta data of the created document.
-     * @param document The document.
-     * @throws DocumentException if an error occurs.
+     * 
+     * @param document
+     *            The document.
+     * @throws DocumentException
+     *             if an error occurs.
      */
     protected void setMetaData(Document document) throws DocumentException {
 
@@ -198,9 +193,8 @@ public class Put extends DocumentUsecase {
         Map dcMetaData = new HashMap();
         dcMetaData.put(DublinCore.ELEMENT_TITLE, document.getName());
         dcMetaData.put(DublinCore.ELEMENT_CREATOR, "");
-        dcMetaData.put(DublinCore.ELEMENT_PUBLISHER,"");
-        dcMetaData
-                .put(DublinCore.ELEMENT_SUBJECT, "");
+        dcMetaData.put(DublinCore.ELEMENT_PUBLISHER, "");
+        dcMetaData.put(DublinCore.ELEMENT_SUBJECT, "");
         dcMetaData.put(DublinCore.ELEMENT_DATE, "");
         dcMetaData.put(DublinCore.ELEMENT_RIGHTS, "");
         dcMetaData.put(DublinCore.ELEMENT_LANGUAGE, document.getLanguage());
@@ -211,9 +205,10 @@ public class Put extends DocumentUsecase {
     private Publication publication;
 
     /**
-     * Access to the current publication. Use this when the publication is not yet known in the
-     * usecase: e.g. when creating a global asset. When adding a resource or a child to a document,
-     * access the publication via that document's interface instead.
+     * Access to the current publication. Use this when the publication is not
+     * yet known in the usecase: e.g. when creating a global asset. When adding
+     * a resource or a child to a document, access the publication via that
+     * document's interface instead.
      * 
      * @return the publication in which the use-case is being executed
      */
@@ -229,6 +224,4 @@ public class Put extends DocumentUsecase {
         return this.publication;
     }
 
-
-    
 }

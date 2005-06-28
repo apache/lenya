@@ -19,14 +19,6 @@
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
-  <map:components>
-    <map:matchers default="wildcard">
-      <map:matcher name="doctype" logger="sitemap.matcher.doctype" src="org.apache.cocoon.matching.WildcardRequestParameterMatcher">
-        <parameter-name>doctype</parameter-name>
-      </map:matcher>
-    </map:matchers>
-  </map:components>
-
   <map:pipelines>
 
     <map:pipeline>
@@ -36,15 +28,7 @@
         <map:serialize type="xml"/>
       </map:match>
       
-      <!-- document type: links -->
-      <!--
-      <map:match type="doctype" pattern="links">
-        <map:generate type="serverpages" src="config/menus/links.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      -->
-      
-      <!-- all other document types: xhtml, ... -->
+      <!-- all document types -->
       <map:match pattern="**">
         <map:generate type="serverpages" src="fallback://config/menus/generic.xsp"/>
         <map:serialize type="xml"/>

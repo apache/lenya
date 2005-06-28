@@ -115,7 +115,7 @@
           <map:part src="cocoon://navigation/{2}/{3}/tabs/{5}.xml"/>
           <map:part src="cocoon://navigation/{2}/{3}/menu/{5}.xml"/>
           <map:part src="cocoon://navigation/{2}/{3}/search/{5}.xml"/>
-          <map:part src="cocoon:/lenya-document/{1}/{3}/{4}/{page-envelope:document-path}"/>
+          <map:part src="cocoon://publets/{page-envelope:document-type}/{1}.xml"/>
         </map:aggregate>
         <map:transform src="fallback://xslt/page2xhtml-{4}.xsl">
           <map:parameter name="root" value="{page-envelope:context-prefix}/{2}/{3}"/>
@@ -130,7 +130,7 @@
         <map:select type="parameter">
           <map:parameter name="parameter-selector-test" value="{1}"/>
           <map:when test="view">
-	      <map:transform type="link-rewrite"/>
+            <map:transform type="link-rewrite"/>
           </map:when>
         </map:select>
         <map:serialize type="xml"/>
@@ -185,9 +185,9 @@
                   <map:transform src="../../xslt/authoring/edit/removeSourceTags.xsl"/>
                 </map:when>
               </map:select>
-    	      <map:serialize type="xhtml"/>
+              <map:serialize type="xhtml"/>
             </map:otherwise>
-          </map:select>
+            </map:select>
             </map:otherwise>
           </map:select>
         </map:act>

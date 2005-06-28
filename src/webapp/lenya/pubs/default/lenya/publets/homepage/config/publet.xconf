@@ -17,16 +17,16 @@
 
 <!-- $Id: doctypes.xconf 164635 2005-04-25 20:01:43Z tschlabach $ -->
 
-<!--+
-    | This configuration file is read by the
-    | org.apache.lenya.cms.publication.DocumentTypeBuilder
-    | to digest the resource types known to the publication
-    +-->
+<xconf xpath="/cocoon/resource-types" unless="/cocoon/resource-types/component-instance[@name = 'homepage']">
 
-<resource-type name="xhtml">
-  <schema src="xhtml.rng"/>
-  <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
-    <sample-name>xhtml.xml</sample-name>
-  </creator>
-  <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@href"/>
-</resource-type>
+  <component-instance name="homepage"
+                      logger="lenya.resourcetypes.homepage"
+                      class="org.apache.lenya.cms.publication.ResourceTypeImpl">
+    <schema src="homepage.rng"/>
+    <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
+      <sample-name>homepage.xml</sample-name>
+    </creator>
+    <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@href"/>
+  </component-instance>
+
+</xconf>

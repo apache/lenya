@@ -32,6 +32,10 @@
   <resource-type name="homepage" workflow="workflow.xml"/>
   <resource-type name="links" workflow="workflow.xml"/>
   
+  <publet name="xhtml"/>
+  <publet name="links"/>
+  <publet name="homepage"/>
+  
   <!--
        For information about these settings, read 
        http://lenya.apache.org/docs/1_2_x/components/deployment/proxying.html

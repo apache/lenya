@@ -22,6 +22,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.HashMap;
 
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
@@ -33,8 +34,7 @@ import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
-import org.apache.lenya.cms.publication.DocumentType;
-import org.apache.lenya.cms.publication.DocumentTypeBuilder;
+import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 
 /**
@@ -97,13 +97,11 @@ public class CreateBlogEntry extends DocumentUsecase {
         // document id (full path) and document id-name (this leaf's id)
         // are the same
         DocumentManager documentManager = null;
-        DocumentTypeBuilder documentTypeBuilder = null;
+        ServiceSelector selector = null;
+        ResourceType resourceType = null;
         try {
-            documentTypeBuilder = (DocumentTypeBuilder) this.manager
-                    .lookup(DocumentTypeBuilder.ROLE);
-
-            DocumentType documentType = documentTypeBuilder
-                    .buildDocumentType(getDocumentTypeName(), getSourceDocument().getPublication());
+            selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
+            resourceType = (ResourceType) selector.select(getDocumentTypeName());
 
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
@@ -114,15 +112,18 @@ public class CreateBlogEntry extends DocumentUsecase {
                     .getArea(), documentId, language);
 
             documentManager.add(document,
-                    documentType,
+                    resourceType,
                     getParameterAsString(DublinCore.ELEMENT_TITLE),
                     allParameters);
         } finally {
             if (documentManager != null) {
                 this.manager.release(documentManager);
             }
-            if (documentTypeBuilder != null) {
-                this.manager.release(documentTypeBuilder);
+            if (selector != null) {
+                if (resourceType != null) {
+                    selector.release(resourceType);
+                }
+                this.manager.release(selector);
             }
         }
     }
