@@ -84,7 +84,7 @@
             <tr>
               <td class="lenya-entry-caption"><i18n:text>Resource Type</i18n:text>:</td>
               <td>
-                <jx:out value="${usecase.getParameter('resourcetype')}"/>
+                <jx:out value="${usecase.getParameter('resourcetype').getName()}"/>
               </td>
             </tr>
           </table>
