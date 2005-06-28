@@ -28,4 +28,5 @@
   <ssl-prefix/>
   <site-manager name="simple"/>
   <resource-type name="entry" workflow="workflow.xml"/>
+  <publet name="entry"/>
 </publication>
