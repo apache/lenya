@@ -195,7 +195,7 @@ public interface Publication {
      *            this resource type.
      * @return The workflow schema to use for this resource type.
      */
-    String getWorkflowSchema(DocumentType resourceType);
+    String getWorkflowSchema(ResourceType resourceType);
     
     /**
      * @return The resource types that are supported by this publication.

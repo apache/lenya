@@ -28,7 +28,7 @@ import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentType;
+import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
@@ -37,7 +37,7 @@ import org.apache.lenya.workflow.Workflowable;
 /**
  * Workflowable around a CMS document.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
 
@@ -59,7 +59,7 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
     protected String getWorkflowSchema() {
         String workflowName = null;
         try {
-            DocumentType doctype = document.getResourceType();
+            ResourceType doctype = document.getResourceType();
             if (doctype != null) {
                 workflowName = document.getPublication().getWorkflowSchema(doctype);
             }

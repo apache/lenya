@@ -33,7 +33,7 @@ import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.publication.DocumentType;
+import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.transaction.Transactionable;
@@ -100,7 +100,7 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
 
                     boolean linksRewritten = false;
 
-                    DocumentType doctype = examinedDocument.getResourceType();
+                    ResourceType doctype = examinedDocument.getResourceType();
                     String[] xPaths = doctype.getLinkAttributeXPaths();
 
                     try {

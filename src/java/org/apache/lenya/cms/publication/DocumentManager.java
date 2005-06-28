@@ -71,7 +71,7 @@ public interface DocumentManager {
      * @throws PublicationException if the document is already contained.
      */
     void add(Document document,
-            DocumentType documentType,
+            ResourceType resourceType,
             String navigationTitle,
             Map parameters) throws DocumentBuildException, PublicationException;
 

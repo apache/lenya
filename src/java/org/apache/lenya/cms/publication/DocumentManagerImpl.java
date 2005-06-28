@@ -59,11 +59,11 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * @see org.apache.lenya.cms.publication.DocumentBuilder
      */
     public void add(Document document,
-            DocumentType documentType,
+            ResourceType documentType,
             String navigationTitle,
             Map parameters) throws DocumentBuildException, PublicationException {
 
-        String contentsURI = documentType.getSampleContentLocation();
+        String contentsURI = documentType.getSampleURI();
         add(document, documentType, navigationTitle, parameters, contentsURI);
     }
 
@@ -97,7 +97,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * @throws PublicationException if an error occurs.
      */
     protected void add(Document document,
-            DocumentType documentType,
+            ResourceType documentType,
             String navigationTitle,
             Map parameters,
             String initialContentsURI) throws DocumentBuildException, DocumentException,

@@ -433,7 +433,7 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     /**
      * @see org.apache.lenya.cms.publication.Publication#getWorkflowSchema(org.apache.lenya.cms.publication.DocumentType)
      */
-    public String getWorkflowSchema(DocumentType resourceType) {
+    public String getWorkflowSchema(ResourceType resourceType) {
         String workflow = (String) this.resourceType2workflow.get(resourceType.getName());
         return workflow;
     }

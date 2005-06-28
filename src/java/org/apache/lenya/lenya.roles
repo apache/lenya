@@ -158,4 +158,8 @@
   	    shorthand="usecase-scheduler"
   	    default-class="org.apache.lenya.cms.usecase.scheduling.UsecaseSchedulerImpl"/>
         
+  <role name="org.apache.lenya.cms.publication.ResourceTypeSelector"
+  	    shorthand="resource-types"
+  	    default-class="org.apache.lenya.cms.publication.ResourceTypeSelector"/>
+        
 </role-list>

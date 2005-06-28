@@ -43,7 +43,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.cms.publication.DocumentType;
+import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.transaction.Transactionable;
@@ -120,7 +120,7 @@ public class FormsEditor extends DocumentUsecase {
 
             xmlSource = (ModifiableSource) resolver.resolveURI(getSourceDocument().getSourceURI());
             
-            DocumentType resourceType = getSourceDocument().getResourceType();
+            ResourceType resourceType = getSourceDocument().getResourceType();
             String schemaUri = resourceType.getSchemaDefinitionSourceURI();
             schemaSource = resolver.resolveURI(schemaUri);
             

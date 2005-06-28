@@ -23,7 +23,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.publication.DocumentType;
+import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.publication.Publication;
 
 /**
@@ -128,7 +128,7 @@ public class CreateLanguage extends Create {
     protected String getDocumentTypeName() {
         if (this.documentTypeName == null) {
             try {
-                DocumentType type = getSourceDocument().getResourceType();
+                ResourceType type = getSourceDocument().getResourceType();
                 this.documentTypeName = type.getName();
 
                 List nonExistingLanguages = getNonExistingLanguages();

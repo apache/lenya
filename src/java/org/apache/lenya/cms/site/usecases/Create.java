@@ -21,6 +21,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
@@ -32,8 +33,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
-import org.apache.lenya.cms.publication.DocumentType;
-import org.apache.lenya.cms.publication.DocumentTypeBuilder;
+import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
@@ -53,7 +53,9 @@ import org.apache.lenya.transaction.Transactionable;
 public abstract class Create extends AbstractUsecase {
 
     protected static final String LANGUAGE = "language";
+
     protected static final String LANGUAGES = "languages";
+
     protected static final String DOCUMENT_ID = "documentId";
 
     /**
@@ -106,33 +108,25 @@ public abstract class Create extends AbstractUsecase {
 
         // create new document
         DocumentManager documentManager = null;
-        DocumentTypeBuilder documentTypeBuilder = null;
+        ServiceSelector selector = null;
+        ResourceType resourceType = null;
         try {
-
-            documentTypeBuilder = (DocumentTypeBuilder) this.manager
-                    .lookup(DocumentTypeBuilder.ROLE);
 
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
             DocumentIdentityMap map = (DocumentIdentityMap) getUnitOfWork().getIdentityMap();
-            Document document = map.get(getPublication(),
-                    getArea(),
-                    getNewDocumentId(),
+            Document document = map.get(getPublication(), getArea(), getNewDocumentId(),
                     getParameterAsString(LANGUAGE));
 
             Document initialDocument = getInitialDocument();
             if (initialDocument == null) {
-                DocumentType documentType = documentTypeBuilder
-                        .buildDocumentType(getDocumentTypeName(), getPublication());
-                documentManager.add(document,
-                        documentType,
-                        getParameterAsString(DublinCore.ELEMENT_TITLE),
-                        null);
+                selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
+                resourceType = (ResourceType) selector.select(getDocumentTypeName());
+                documentManager.add(document, resourceType,
+                        getParameterAsString(DublinCore.ELEMENT_TITLE), null);
             } else {
-                documentManager.add(document,
-                        initialDocument,
-                        getParameterAsString(DublinCore.ELEMENT_TITLE),
-                        null);
+                documentManager.add(document, initialDocument,
+                        getParameterAsString(DublinCore.ELEMENT_TITLE), null);
             }
 
             setMetaData(document);
@@ -144,8 +138,11 @@ public abstract class Create extends AbstractUsecase {
             if (documentManager != null) {
                 this.manager.release(documentManager);
             }
-            if (documentTypeBuilder != null) {
-                this.manager.release(documentTypeBuilder);
+            if (selector != null) {
+                if (resourceType != null) {
+                    selector.release(resourceType);
+                }
+                this.manager.release(selector);
             }
         }
 
@@ -162,8 +159,8 @@ public abstract class Create extends AbstractUsecase {
     protected abstract String getNewDocumentId();
 
     /**
-     * If the document created in the usecase shall have initial contents copied from an existing
-     * document, construct that document in this method.
+     * If the document created in the usecase shall have initial contents copied
+     * from an existing document, construct that document in this method.
      * 
      * @return A document.
      */
@@ -178,8 +175,11 @@ public abstract class Create extends AbstractUsecase {
 
     /**
      * Sets the meta data of the created document.
-     * @param document The document.
-     * @throws DocumentException if an error occurs.
+     * 
+     * @param document
+     *            The document.
+     * @throws DocumentException
+     *             if an error occurs.
      */
     protected void setMetaData(Document document) throws DocumentException {
 
@@ -224,8 +224,8 @@ public abstract class Create extends AbstractUsecase {
     }
 
     /**
-     * @return The source document or <code>null</code> if the usecase was not invoked on a
-     *         document.
+     * @return The source document or <code>null</code> if the usecase was not
+     *         invoked on a document.
      */
     protected Document getSourceDocument() {
         Document document = null;
@@ -251,9 +251,10 @@ public abstract class Create extends AbstractUsecase {
     private Publication publication;
 
     /**
-     * Access to the current publication. Use this when the publication is not yet known in the
-     * usecase: e.g. when creating a global asset. When adding a resource or a child to a document,
-     * access the publication via that document's interface instead.
+     * Access to the current publication. Use this when the publication is not
+     * yet known in the usecase: e.g. when creating a global asset. When adding
+     * a resource or a child to a document, access the publication via that
+     * document's interface instead.
      * 
      * @return the publication in which the use-case is being executed
      */

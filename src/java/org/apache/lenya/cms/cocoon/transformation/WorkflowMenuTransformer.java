@@ -30,7 +30,7 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.publication.DocumentType;
+import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.workflow.DocumentWorkflowable;
@@ -127,7 +127,7 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
             if (document == null) {
                 setHasWorkflow(false);
             } else {
-                DocumentType doctype = document.getResourceType();
+                ResourceType doctype = document.getResourceType();
                 if (document.getPublication().getWorkflowSchema(doctype) != null) {
                     setHasWorkflow(true);
                     workflowManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);

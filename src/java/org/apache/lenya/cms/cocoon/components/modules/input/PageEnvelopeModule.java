@@ -30,8 +30,8 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.ResourceType;
 
 /**
  * Input module wrapping the page envelope. This module provides publication
@@ -107,7 +107,7 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
                     Date date = document.getLastModified();
                     value = new SimpleDateFormat(DATE_FORMAT).format(date);
                 } else if (name.equals(PageEnvelope.DOCUMENT_TYPE)) {
-                    DocumentType resourceType = document.getResourceType();
+                    ResourceType resourceType = document.getResourceType();
                     if (resourceType == null) {
                         value = null;
                     }

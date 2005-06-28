@@ -468,26 +468,22 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         return nodes;
     }
 
-    private DocumentType resourceType;
+    private ResourceType resourceType;
 
     /**
      * Convenience method to read the document's resource type from the meta-data.
      * @see Document#getResourceType()
      */
-    public DocumentType getResourceType() throws DocumentException {
+    public ResourceType getResourceType() throws DocumentException {
         if (this.resourceType == null) {
             String name = getMetaDataManager().getLenyaMetaData()
                     .getFirstValue(LenyaMetaData.ELEMENT_RESOURCE_TYPE);
-            DocumentTypeBuilder builder = null;
+            ServiceSelector selector = null;
             try {
-                builder = (DocumentTypeBuilder) this.manager.lookup(DocumentTypeBuilder.ROLE);
-                this.resourceType = builder.buildDocumentType(name, getPublication());
+                selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
+                this.resourceType = (ResourceType) selector.select(name);
             } catch (Exception e) {
                 throw new DocumentException(e);
-            } finally {
-                if (builder != null) {
-                    this.manager.release(builder);
-                }
             }
         }
         return this.resourceType;

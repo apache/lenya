@@ -195,5 +195,5 @@ public interface Document extends MetaDataOwner, Identifiable {
      * @return The resource type of this document (formerly known as doctype)
      * @throws DocumentException if an error occurs.
      */
-    DocumentType getResourceType() throws DocumentException;
+    ResourceType getResourceType() throws DocumentException;
 }
