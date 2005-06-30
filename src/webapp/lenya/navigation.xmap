@@ -28,31 +28,16 @@ This sitemap creates default navigation components.
   <map:resources>
     
     <map:resource name="fallback-transformation">
-    
-      <!-- use publication-specific navigation schema if available -->
-      <map:act type="resource-exists">
-        <map:parameter name="url" value="pubs/{publication-id}/lenya/xslt/navigation/{stylesheet}.xsl"/>
-        <map:transform src="pubs/{../publication-id}/lenya/xslt/navigation/{../stylesheet}.xsl">
-          <map:parameter name="url" value="{../url}"/>
-          <map:parameter name="root" value="{page-envelope:context-prefix}/{../publication-id}/{page-envelope:area}/"/>
-          <map:parameter name="area" value="{page-envelope:area}"/>
-          <map:parameter name="chosenlanguage" value="{page-envelope:document-language}"/>
-          <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
-          <map:parameter name="breadcrumbprefix" value="{page-envelope:breadcrumb-prefix}"/>
-        </map:transform>       
-        <map:serialize type="xml"/>
-      </map:act>
-      
-      <!-- use default navigation schema -->
-      <map:transform src="xslt/navigation/{stylesheet}.xsl">
+
+      <map:transform src="fallback://lenya/xslt/navigation/{stylesheet}.xsl">
         <map:parameter name="url" value="{url}"/>
         <map:parameter name="root" value="{page-envelope:context-prefix}/{publication-id}/{page-envelope:area}/"/>
         <map:parameter name="area" value="{page-envelope:area}"/>
         <map:parameter name="chosenlanguage" value="{page-envelope:document-language}"/>
         <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
         <map:parameter name="breadcrumbprefix" value="{page-envelope:breadcrumb-prefix}"/>
-      </map:transform>             
-      <map:serialize type="xml"/>      
+      </map:transform>       
+      <map:serialize type="xml"/>     
       
     </map:resource>
   
