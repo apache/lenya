@@ -226,7 +226,21 @@
         </a></li>
       </xsl:when>
       <xsl:otherwise>
-        <li class="disabled"><xsl:value-of select="."/></li>
+        <li class="disabled">
+          <a>
+            <xsl:for-each select="menu:message">
+              <xsl:copy>
+                <i18n:translate>
+                  <i18n:text><xsl:value-of select="text()"/></i18n:text>
+                  <xsl:for-each select="menu:parameter">
+                    <i18n:param><xsl:value-of select="text()"/></i18n:param>
+                  </xsl:for-each>
+                </i18n:translate>
+              </xsl:copy>
+            </xsl:for-each>
+            <span><xsl:value-of select="text()"/></span>
+          </a>
+        </li>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>

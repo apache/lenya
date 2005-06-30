@@ -59,7 +59,8 @@ body { background-color: #fff; margin: 0; padding: 0; }
 #lenya-options ul li ul li { padding: 0 0 0 3px; }
 
 #lenya-options ul li ul li.disabled { font-size: 11px; font-weight: normal; color: #999; padding: 2px 0 2px 3px; cursor: default; }
-
+#lenya-options li.disabled a { color: #999; cursor: default; }
+  
 #lenya-options ul li.disabled { cursor: default; color: #999; }
 
 #lenya-options ul li ul li a { font-size: 11px; font-weight: normal; padding: 2px 0; }

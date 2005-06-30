@@ -20,6 +20,9 @@
 package org.apache.lenya.cms.cocoon.transformation;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.activity.Disposable;
@@ -40,6 +43,7 @@ import org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.usecase.Usecase;
+import org.apache.lenya.cms.usecase.UsecaseMessage;
 import org.apache.lenya.cms.usecase.UsecaseResolver;
 import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.Attributes;
@@ -56,6 +60,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
      * <code>MENU_ELEMENT</code> The menu element
      */
     public static final String MENU_ELEMENT = "menu";
+    public static final String MENU_NAMESPACE = "http://apache.org/cocoon/lenya/menubar/1.0";
     /**
      * <code>ITEM_ELEMENT</code> The item element
      */
@@ -75,6 +80,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
 
     /**
      * (non-Javadoc)
+     * 
      * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
      *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
@@ -82,6 +88,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
             throws SAXException {
 
         Attributes attributes = attr;
+        List messages = null;
 
         UsecaseResolver usecaseResolver = null;
         try {
@@ -101,6 +108,8 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
                             getLogger().debug("Usecase not authorized");
                         }
                         attributes = removeHrefAttribute(attr);
+                        UsecaseMessage message = new UsecaseMessage("Access denied", null);
+                        messages = Collections.singletonList(message);
                     }
                 }
 
@@ -118,7 +127,9 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
                             if (getLogger().isDebugEnabled()) {
                                 getLogger().debug("Usecase preconditions not complied");
                             }
+
                             attributes = removeHrefAttribute(attr);
+                            messages = usecase.getErrorMessages();
                         }
                     } finally {
                         if (usecase != null) {
@@ -136,12 +147,18 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
         }
 
         super.startElement(uri, localName, raw, attributes);
+        
+        if (messages != null) {
+            addMessages(messages);
+        }
 
     }
 
     /**
      * Removes the <code>href</code> attribute.
-     * @param attr The original attributes.
+     * 
+     * @param attr
+     *            The original attributes.
      * @return An attributes object.
      */
     protected Attributes removeHrefAttribute(Attributes attr) {
@@ -154,11 +171,35 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
         return attributes;
     }
 
+    protected void addMessages(List messages) throws SAXException {
+
+        for (Iterator i = messages.iterator(); i.hasNext();) {
+            UsecaseMessage message = (UsecaseMessage) i.next();
+            super.startElement(MENU_NAMESPACE, "message", "message", new AttributesImpl());
+            String messageString = message.getMessage();
+            super.characters(messageString.toCharArray(), 0, messageString.length());
+            if (message.hasParameters()) {
+                String[] parameters = message.getParameters();
+                for (int p = 0; p < parameters.length; p++) {
+                    super.startElement(MENU_NAMESPACE, "parameter", "parameter",
+                            new AttributesImpl());
+                    super.characters(parameters[p].toCharArray(), 0, parameters[p].length());
+                    super.endElement(MENU_NAMESPACE, "parameter", "parameter");
+                }
+            }
+            super.endElement(MENU_NAMESPACE, "message", "message");
+        }
+
+    }
+
     /**
      * Pass the request parameters from the <code>href</code> attribute to the
      * usecase handler.
-     * @param usecase The usecase handler.
-     * @param href The value of the <code>href</code> attribute.
+     * 
+     * @param usecase
+     *            The usecase handler.
+     * @param href
+     *            The value of the <code>href</code> attribute.
      */
     void passRequestParameters(Usecase usecase, String href) {
         int questionMarkIndex = href.indexOf("?");

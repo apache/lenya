@@ -21,6 +21,8 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xso="http://apache.org/cocoon/lenya/xslt/1.0"
+  xmlns:menu="http://apache.org/cocoon/lenya/menubar/1.0"
+  exclude-result-prefixes="menu"
   >
   
 <xsl:param name="contextprefix"/>
@@ -102,6 +104,13 @@
   <xsl:element name="{local-name()}">
     <xsl:apply-templates select="@*|node()"/>
   </xsl:element>
+</xsl:template>
+
+
+<xsl:template match="menu:message">
+  <xsl:attribute name="title">
+    <xsl:value-of select="."/>
+  </xsl:attribute>
 </xsl:template>
 
   
