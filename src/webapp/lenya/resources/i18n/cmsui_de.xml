@@ -283,13 +283,14 @@
   <message key="submit">einreichen</message>
   <message key="reject">ablehnen</message>
   <message key="publish">veröffentlichen</message>
-
+  <message key="error-workflow-document">Das Ereignis {0} kann nicht auf das Dokument {1} angewandt werden.</message>
+    
   <!-- Info asset  --> 
   <message key="New Asset">Neue Anlage</message>
 
   <!-- Info RC  --> 
   <message key="Current Version">Aktuelle Version</message>
-  <message key="Rollback to this revision">Zu dieser version zurücksetzen</message>
+  <message key="Rollback to this revision">Zu dieser Version zurücksetzen</message>
 
   <!-- Info AC  --> 
   <message key="SSL Encryption">SSL&#160;Verschlüsselung</message>
