@@ -358,7 +358,11 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         Node node = this.getNodeInternal(documentId);
         Node parentNode = node.getParentNode();
         Node newNode = parentNode.removeChild(node);
-        SourceUtil.registerDirty(this.sourceUri, this.manager);
+        try {
+            saveDocument();
+        } catch (SiteException e) {
+            throw new RuntimeException(e);
+        }
         return newNode;
     }
 
