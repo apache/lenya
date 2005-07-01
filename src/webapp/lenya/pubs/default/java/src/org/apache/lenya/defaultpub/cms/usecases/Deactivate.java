@@ -20,15 +20,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
-import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.Node;
+import org.apache.lenya.cms.site.NodeFactory;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -60,23 +60,24 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
             }
 
             String event = getEvent();
+            boolean allowSingle = true;
 
             if (!WorkflowUtil.canInvoke(this.manager, getLogger(), getSourceDocument(), event)) {
-                setParameter(Publish.ALLOW_SINGLE_DOCUMENT, Boolean.toString(false));
+                allowSingle = false;
                 addInfoMessage("The single document cannot be deactivated because the workflow event cannot be invoked.");
-            } else {
-                setParameter(Publish.ALLOW_SINGLE_DOCUMENT, Boolean.toString(true));
             }
-
-            // get involved objects to lock them
-            Document doc = getSourceDocument();
-            try {
-                Document liveVersion = doc.getIdentityMap().getAreaVersion(doc,
-                        Publication.LIVE_AREA);
-                getInvolvedDocuments(liveVersion);
-            } catch (DocumentBuildException e) {
-                throw new RuntimeException(e);
+            
+            DocumentIdentityMap map = getSourceDocument().getIdentityMap();
+            Document liveDoc = map.getAreaVersion(getSourceDocument(), Publication.LIVE_AREA);
+            DocumentSet subSite = SiteUtil.getSubSite(this.manager, liveDoc);
+            Node node = NodeFactory.getNode(liveDoc);
+            subSite.removeAll(SiteUtil.getExistingDocuments(map, node));
+            
+            if (!subSite.isEmpty()) {
+                allowSingle = false;
+                addInfoMessage("You have to deactivate the whole subtree because descendants are live.");
             }
+            setParameter(Publish.ALLOW_SINGLE_DOCUMENT, Boolean.toString(allowSingle));
         }
     }
 
@@ -86,24 +87,20 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
     protected Transactionable[] getObjectsToLock() throws UsecaseException {
         try {
             List nodes = new ArrayList();
+            DocumentSet set = new DocumentSet();
+            
             Document doc = getSourceDocument();
-            Document liveVersion = doc.getIdentityMap().getAreaVersion(doc, Publication.LIVE_AREA);
-            DocumentSet set = getInvolvedDocuments(liveVersion);
+            set.addAll(SiteUtil.getSubSite(this.manager, doc));
+            
+            Document liveDoc = doc.getIdentityMap().getAreaVersion(doc, Publication.LIVE_AREA);
+            set.addAll(SiteUtil.getSubSite(this.manager, liveDoc));
+
             Document[] documents = set.getDocuments();
             for (int i = 0; i < documents.length; i++) {
                 nodes.addAll(Arrays.asList(documents[i].getRepositoryNodes()));
             }
-            
-            set = SiteUtil.getSubSite(this.manager, doc);
-            documents = set.getDocuments();
-            for (int i = 0; i < documents.length; i++) {
-                nodes.addAll(Arrays.asList(documents[i].getRepositoryNodes()));
-            }
 
-            nodes.add(SiteUtil.getSiteStructure(this.manager,
-                    doc.getIdentityMap(),
-                    doc.getPublication(),
-                    Publication.LIVE_AREA).getRepositoryNode());
+            nodes.add(SiteUtil.getSiteStructure(this.manager, liveDoc).getRepositoryNode());
             return (Transactionable[]) nodes.toArray(new Transactionable[nodes.size()]);
 
         } catch (Exception e) {
@@ -125,6 +122,7 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
 
     /**
      * Deactivates a document.
+     * 
      * @param authoringDocument The authoring document.
      */
     protected void deactivate(Document authoringDocument) {
@@ -164,6 +162,7 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
 
     /**
      * Deactivates a document or the subtree below a document, based on the parameter SUBTREE.
+     * 
      * @param document The document.
      */
     protected void deactivateAll(Document document) {
@@ -173,8 +172,9 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
             getLogger().debug("Subtree deactivation: [" + isSubtreeEnabled() + "]");
         }
 
-        DocumentSet set = getInvolvedDocuments(document);
         try {
+            DocumentSet set = SiteUtil.getSubSite(this.manager, document);
+            SiteUtil.sortDescending(this.manager, set);
             set.visit(this);
         } catch (PublicationException e) {
             throw new RuntimeException(e);
@@ -185,35 +185,9 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
         }
     }
 
-    protected DocumentSet getInvolvedDocuments(Document document) {
-        DocumentSet set;
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(document.getPublication()
-                    .getSiteManagerHint());
-
-            Document[] descendants = siteManager.getRequiringResources(document);
-            set = new DocumentSet(descendants);
-            set.add(document);
-            siteManager.sortAscending(set);
-            set.reverse();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
-        }
-        return set;
-    }
-
     /**
      * Returns whether subtree publishing is enabled.
+     * 
      * @return A boolean value.
      */
     protected boolean isSubtreeEnabled() {
@@ -240,6 +214,7 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
 
     /**
      * Publishes all existing language versions of a document.
+     * 
      * @param document The document.
      * @throws PublicationException if an error occurs.
      * @throws WorkflowException

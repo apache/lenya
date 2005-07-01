@@ -33,6 +33,8 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.publication.util.DocumentSet;
+import org.apache.lenya.cms.site.Node;
+import org.apache.lenya.cms.site.NodeFactory;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
@@ -70,24 +72,24 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
      */
     protected Transactionable[] getObjectsToLock() throws UsecaseException {
-
         try {
             List nodes = new ArrayList();
+            DocumentSet set = new DocumentSet();
+            
             Document doc = getSourceDocument();
-            DocumentSet set = getInvolvedDocuments(doc);
+            set.addAll(SiteUtil.getSubSite(this.manager, doc));
+            
+            Document liveDoc = doc.getIdentityMap().getAreaVersion(doc, Publication.LIVE_AREA);
+            set.addAll(SiteUtil.getSubSite(this.manager, liveDoc));
+
             Document[] documents = set.getDocuments();
             for (int i = 0; i < documents.length; i++) {
                 nodes.addAll(Arrays.asList(documents[i].getRepositoryNodes()));
-                Document liveVersion = documents[i].getIdentityMap().getAreaVersion(documents[i],
-                        Publication.LIVE_AREA);
-                nodes.addAll(Arrays.asList(liveVersion.getRepositoryNodes()));
             }
 
-            nodes.add(SiteUtil.getSiteStructure(this.manager,
-                    doc.getIdentityMap(),
-                    doc.getPublication(),
-                    Publication.LIVE_AREA).getRepositoryNode());
+            nodes.add(SiteUtil.getSiteStructure(this.manager, liveDoc).getRepositoryNode());
             return (Transactionable[]) nodes.toArray(new Transactionable[nodes.size()]);
+
         } catch (Exception e) {
             throw new UsecaseException(e);
         }
@@ -130,13 +132,25 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
             try {
                 selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
                 siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
-                Document[] requiredDocuments = siteManager.getRequiredResources(liveDocument);
-                for (int i = 0; i < requiredDocuments.length; i++) {
-                    if (!siteManager.containsInAnyLanguage(requiredDocuments[i])) {
-                        Document authoringVersion = map.getAreaVersion(requiredDocuments[i],
-                                Publication.AUTHORING_AREA);
-                        missingDocuments.add(authoringVersion);
+
+                Node liveNode = NodeFactory.getNode(liveDocument);
+                Node[] requiredNodes = siteManager.getRequiredResources(map, liveNode);
+
+                for (int i = 0; i < requiredNodes.length; i++) {
+
+                    DocumentSet liveDocs = SiteUtil.getExistingDocuments(map, requiredNodes[i]);
+                    if (liveDocs.isEmpty()) {
+                        Document authoringDoc = map.get(requiredNodes[i].getPublication(),
+                                Publication.AUTHORING_AREA,
+                                requiredNodes[i].getDocumentId());
+                        if (authoringDoc.exists()) {
+                            missingDocuments.add(authoringDoc);
+                        } else {
+                            missingDocuments.add(map.getLanguageVersion(authoringDoc,
+                                    authoringDoc.getPublication().getDefaultLanguage()));
+                        }
                     }
+
                 }
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -195,6 +209,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
 
     /**
      * Publishes a document.
+     * 
      * @param authoringDocument The authoring document.
      */
     protected void publish(Document authoringDocument) {
@@ -222,6 +237,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
 
     /**
      * Publishes a document or the subtree below a document, based on the parameter SUBTREE.
+     * 
      * @param document The document.
      */
     protected void publishAll(Document document) {
@@ -231,10 +247,11 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
             getLogger().debug("Subtree publishing: [" + isSubtreeEnabled() + "]");
         }
 
-        DocumentSet set = getInvolvedDocuments(document);
         try {
+            DocumentSet set = SiteUtil.getSubSite(this.manager, document);
+            SiteUtil.sortAscending(this.manager, set);
             set.visit(this);
-        } catch (PublicationException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -244,38 +261,8 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
     }
 
     /**
-     * @param document The document.
-     * @return All documents that are involved in this transaction.
-     */
-    protected DocumentSet getInvolvedDocuments(Document document) {
-        DocumentSet set;
-
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(document.getPublication()
-                    .getSiteManagerHint());
-
-            Document[] descendants = siteManager.getRequiringResources(document);
-            set = new DocumentSet(descendants);
-            set.add(document);
-            siteManager.sortAscending(set);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
-        }
-        return set;
-    }
-
-    /**
      * Returns whether subtree publishing is enabled.
+     * 
      * @return A boolean value.
      */
     protected boolean isSubtreeEnabled() {
@@ -313,6 +300,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
 
     /**
      * Publishes all existing language versions of a document.
+     * 
      * @param document The document.
      * @throws PublicationException if an error occurs.
      * @throws WorkflowException
