@@ -28,7 +28,7 @@ import org.apache.lenya.cms.publication.util.DocumentSet;
 /**
  * Utility to handle site structures.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class SiteUtil {
 
@@ -37,6 +37,7 @@ public class SiteUtil {
 
     /**
      * Returns a site structure object.
+     * 
      * @param map The identity map.
      * @param publication The publication.
      * @param area The area.
@@ -69,6 +70,7 @@ public class SiteUtil {
 
     /**
      * Returns the site structure a document belongs to.
+     * 
      * @param manager The service manager.
      * @param document The document.
      * @return A site structure.
@@ -76,13 +78,16 @@ public class SiteUtil {
      */
     public static SiteStructure getSiteStructure(ServiceManager manager, Document document)
             throws SiteException {
-        return SiteUtil.getSiteStructure(manager, document.getIdentityMap(), document
-                .getPublication(), document.getArea());
+        return SiteUtil.getSiteStructure(manager,
+                document.getIdentityMap(),
+                document.getPublication(),
+                document.getArea());
     }
 
     /**
      * Returns a sub-site starting with a certain document, which includes the document itself and
      * all documents which require this document, including all language versions.
+     * 
      * @param manager The service manager.
      * @param document The top-level document.
      * @return A document set.
@@ -97,13 +102,14 @@ public class SiteUtil {
             selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(document.getPublication()
                     .getSiteManagerHint());
-            set = new DocumentSet(siteManager.getRequiringResources(document));
 
-            String[] languages = document.getLanguages();
-            for (int i = 0; i < languages.length; i++) {
-                Document version = document.getIdentityMap().getLanguageVersion(document,
-                        languages[i]);
-                set.add(version);
+            DocumentIdentityMap map = document.getIdentityMap();
+            Node node = NodeFactory.getNode(document);
+            set = getExistingDocuments(map, node);
+
+            Node[] requiringNodes = siteManager.getRequiringResources(map, node);
+            for (int i = 0; i < requiringNodes.length; i++) {
+                set.addAll(getExistingDocuments(map, requiringNodes[i]));
             }
 
         } catch (Exception e) {
@@ -120,7 +126,27 @@ public class SiteUtil {
     }
 
     /**
+     * @param map An identity map.
+     * @param node A node.
+     * @return All existing documents belonging to the node.
+     * @throws DocumentBuildException if an error occurs.
+     * @throws DocumentException if an error occurs.
+     */
+    public static DocumentSet getExistingDocuments(DocumentIdentityMap map, Node node)
+            throws DocumentBuildException, DocumentException {
+        DocumentSet set = new DocumentSet();
+        Document document = map.get(node.getPublication(), node.getArea(), node.getDocumentId());
+        String[] languages = document.getLanguages();
+        for (int i = 0; i < languages.length; i++) {
+            Document version = document.getIdentityMap().getLanguageVersion(document, languages[i]);
+            set.add(version);
+        }
+        return set;
+    }
+
+    /**
      * Sorts a document set in ascending order.
+     * 
      * @param manager The service manager.
      * @param set The set.
      * @throws SiteException if an error occurs.
@@ -152,6 +178,7 @@ public class SiteUtil {
 
     /**
      * Sorts a document set in descending order.
+     * 
      * @param manager The service manager.
      * @param set The set.
      * @throws SiteException if an error occurs.
@@ -178,6 +205,7 @@ public class SiteUtil {
 
     /**
      * Returns a document set that represents the transfer of a sub-site to another area.
+     * 
      * @param manager The service manager.
      * @param source The source document.
      * @param targetArea The target area.

@@ -22,7 +22,7 @@ import org.apache.lenya.transaction.Identifiable;
 /**
  * Object to hold a site structure information.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public interface SiteStructure extends Identifiable {
     

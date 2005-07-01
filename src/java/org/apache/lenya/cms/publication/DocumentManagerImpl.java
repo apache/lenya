@@ -346,13 +346,11 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             siteManager = (SiteManager) selector.select(source.getPublication()
                     .getSiteManagerHint());
 
-            Document[] descendantsArray = siteManager.getRequiringResources(source);
-            DocumentSet descendants = new DocumentSet(descendantsArray);
-            descendants.add(source);
-            siteManager.sortAscending(descendants);
+            DocumentSet subsite = SiteUtil.getSubSite(this.manager, source);
+            siteManager.sortAscending(subsite);
 
             DocumentVisitor visitor = new CopyVisitor(this, source, target);
-            descendants.visit(visitor);
+            subsite.visit(visitor);
         } catch (ServiceException e) {
             throw new PublicationException(e);
         } finally {
@@ -517,10 +515,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             siteManager = (SiteManager) selector.select(document.getPublication()
                     .getSiteManagerHint());
 
-            Document[] descendantsArray = siteManager.getRequiringResources(document);
-            DocumentSet descendants = new DocumentSet(descendantsArray);
-            descendants.add(document);
-            delete(descendants);
+            DocumentSet subsite = SiteUtil.getSubSite(this.manager, document);
+            delete(subsite);
         } catch (ServiceException e) {
             throw new PublicationException(e);
         } finally {

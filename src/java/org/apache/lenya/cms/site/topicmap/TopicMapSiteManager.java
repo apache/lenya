@@ -20,6 +20,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.AbstractSiteManager;
+import org.apache.lenya.cms.site.Node;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteStructure;
 
@@ -29,27 +30,30 @@ import org.apache.lenya.cms.site.SiteStructure;
 public class TopicMapSiteManager extends AbstractSiteManager {
 
     /**
-     * @see org.apache.lenya.cms.site.SiteManager#requires(org.apache.lenya.cms.publication.Document,
-     *      org.apache.lenya.cms.publication.Document)
+     * @see org.apache.lenya.cms.site.SiteManager#requires(org.apache.lenya.cms.publication.DocumentIdentityMap,
+     *      org.apache.lenya.cms.site.Node, org.apache.lenya.cms.site.Node)
      */
-    public boolean requires(Document dependingResource, Document requiredResource)
+    public boolean requires(DocumentIdentityMap map, Node dependingResource, Node requiredResource)
             throws SiteException {
         // TODO Auto-generated method stub
         return false;
     }
 
     /**
-     * @see org.apache.lenya.cms.site.SiteManager#getRequiredResources(org.apache.lenya.cms.publication.Document)
+     * @see org.apache.lenya.cms.site.SiteManager#getRequiredResources(org.apache.lenya.cms.publication.DocumentIdentityMap,
+     *      org.apache.lenya.cms.site.Node)
      */
-    public Document[] getRequiredResources(Document resource) throws SiteException {
+    public Node[] getRequiredResources(DocumentIdentityMap map, Node resource) throws SiteException {
         // TODO Auto-generated method stub
         return null;
     }
 
     /**
-     * @see org.apache.lenya.cms.site.SiteManager#getRequiringResources(org.apache.lenya.cms.publication.Document)
+     * @see org.apache.lenya.cms.site.SiteManager#getRequiringResources(org.apache.lenya.cms.publication.DocumentIdentityMap,
+     *      org.apache.lenya.cms.site.Node)
      */
-    public Document[] getRequiringResources(Document resource) throws SiteException {
+    public Node[] getRequiringResources(DocumentIdentityMap map, Node resource)
+            throws SiteException {
         // TODO Auto-generated method stub
         return null;
     }
@@ -123,9 +127,11 @@ public class TopicMapSiteManager extends AbstractSiteManager {
     }
 
     /**
-     * @see org.apache.lenya.cms.site.SiteManager#getSiteStructure(org.apache.lenya.cms.publication.DocumentIdentityMap, org.apache.lenya.cms.publication.Publication, java.lang.String)
+     * @see org.apache.lenya.cms.site.SiteManager#getSiteStructure(org.apache.lenya.cms.publication.DocumentIdentityMap,
+     *      org.apache.lenya.cms.publication.Publication, java.lang.String)
      */
-    public SiteStructure getSiteStructure(DocumentIdentityMap map, Publication publiation, String area) throws SiteException {
+    public SiteStructure getSiteStructure(DocumentIdentityMap map, Publication publiation,
+            String area) throws SiteException {
         // TODO Auto-generated method stub
         return null;
     }

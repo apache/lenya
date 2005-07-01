@@ -28,7 +28,9 @@ import org.apache.lenya.cms.publication.util.DocumentSet;
  * </p>
  * 
  * <p>
- * Dependence on a set of resources must be a strict partial order <strong>&lt; </strong>:
+ * A site manager has a dependence relation, which is always applied to documents of a single
+ * language. This means a document may not require a document of another language. Dependence on a
+ * set of resources must be a strict partial order <strong>&lt; </strong>:
  * </p>
  * <ul>
  * <li><em>irreflexive:</em> d <strong>&lt; </strong>d does not hold for any resource d</li>
@@ -37,6 +39,7 @@ import org.apache.lenya.cms.publication.util.DocumentSet;
  * <li><em>transitive:</em> d <strong>&lt; </strong>e and e <strong>&lt; </strong>f implies d
  * <strong>&lt; </strong>f</li>
  * </ul>*
+ * 
  * @version $Id$
  */
 public interface SiteManager {
@@ -48,31 +51,38 @@ public interface SiteManager {
 
     /**
      * Checks if a resource requires another one.
+     * @param map The identity map to operate on.
      * @param dependingResource The depending resource.
      * @param requiredResource The required resource.
      * @return A boolean value.
      * @throws SiteException if an error occurs.
      */
-    boolean requires(Document dependingResource, Document requiredResource) throws SiteException;
+    boolean requires(DocumentIdentityMap map, Node dependingResource, Node requiredResource)
+            throws SiteException;
 
     /**
      * Returns the resources which are required by a certain resource.
+     * 
+     * @param map The identity map to operate on.
      * @param resource The depending resource.
      * @return An array of resources.
      * @throws SiteException if an error occurs.
      */
-    Document[] getRequiredResources(Document resource) throws SiteException;
+    Node[] getRequiredResources(DocumentIdentityMap map, Node resource) throws SiteException;
 
     /**
      * Returns the resources which require a certain resource.
+     * 
+     * @param map The identity map to operate on.
      * @param resource The required resource.
      * @return An array of resources.
      * @throws SiteException if an error occurs.
      */
-    Document[] getRequiringResources(Document resource) throws SiteException;
+    Node[] getRequiringResources(DocumentIdentityMap map, Node resource) throws SiteException;
 
     /**
      * Adds a document to the site structure.
+     * 
      * @param document The document to add.
      * @throws SiteException if the document is already contained.
      */
@@ -80,6 +90,7 @@ public interface SiteManager {
 
     /**
      * Checks if the site structure contains a certain resource in a certain area.
+     * 
      * @param resource The resource.
      * @return A boolean value.
      * @throws SiteException if an error occurs.
@@ -89,6 +100,7 @@ public interface SiteManager {
     /**
      * Checks if the site structure contains any language version of a certain resource in a certain
      * area.
+     * 
      * @param resource The resource.
      * @return A boolean value.
      * @throws SiteException if an error occurs.
@@ -97,6 +109,7 @@ public interface SiteManager {
 
     /**
      * Copies a document in the site structure.
+     * 
      * @param sourceDocument The source document.
      * @param destinationDocument The destination document.
      * @throws SiteException when something went wrong.
@@ -105,6 +118,7 @@ public interface SiteManager {
 
     /**
      * Deletes a document from the site structure.
+     * 
      * @param document The document to remove.
      * @throws SiteException when something went wrong.
      */
@@ -112,6 +126,7 @@ public interface SiteManager {
 
     /**
      * Returns the label of a document.
+     * 
      * @param document The document.
      * @return A label.
      * @throws SiteException if an error occurs.
@@ -120,6 +135,7 @@ public interface SiteManager {
 
     /**
      * Sets the label of a certain document.
+     * 
      * @param document The document.
      * @param label The label.
      * @throws SiteException if an error occurs.
@@ -128,6 +144,7 @@ public interface SiteManager {
 
     /**
      * Returns all documents in a certain area.
+     * 
      * @param identityMap The identityMap to use.
      * @param publication The publication.
      * @param area The area.
@@ -139,6 +156,7 @@ public interface SiteManager {
 
     /**
      * Sorts a set of documents using the "requires" relation.
+     * 
      * @param set The set.
      * @throws SiteException if an error occurs.
      */
@@ -157,6 +175,7 @@ public interface SiteManager {
     /**
      * Checks if the document does already exist. If it does, returns a non-existing document with a
      * similar document ID. If it does not, the original document is returned.
+     * 
      * @param document The document.
      * @return A document.
      * @throws SiteException if the new document could not be built.

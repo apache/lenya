@@ -25,6 +25,7 @@ import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.AbstractSiteManager;
+import org.apache.lenya.cms.site.Node;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.transaction.IdentifiableFactory;
@@ -33,7 +34,7 @@ import org.apache.lenya.transaction.IdentifiableFactory;
  * Simple site manager which does not imply structural information. The documents are stored in
  * collections.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class SimpleSiteManager extends AbstractSiteManager implements Serviceable {
 
@@ -47,26 +48,29 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
     }
 
     /**
-     * @see org.apache.lenya.cms.site.SiteManager#requires(org.apache.lenya.cms.publication.Document,
-     *      org.apache.lenya.cms.publication.Document)
+     * @see org.apache.lenya.cms.site.SiteManager#requires(org.apache.lenya.cms.publication.DocumentIdentityMap,
+     *      org.apache.lenya.cms.site.Node, org.apache.lenya.cms.site.Node)
      */
-    public boolean requires(Document dependingResource, Document requiredResource)
+    public boolean requires(DocumentIdentityMap map, Node dependingResource, Node requiredResource)
             throws SiteException {
         return false;
     }
 
     /**
-     * @see org.apache.lenya.cms.site.SiteManager#getRequiredResources(org.apache.lenya.cms.publication.Document)
+     * @see org.apache.lenya.cms.site.SiteManager#getRequiredResources(org.apache.lenya.cms.publication.DocumentIdentityMap,
+     *      org.apache.lenya.cms.site.Node)
      */
-    public Document[] getRequiredResources(Document resource) throws SiteException {
-        return new Document[0];
+    public Node[] getRequiredResources(DocumentIdentityMap map, Node resource) throws SiteException {
+        return new Node[0];
     }
 
     /**
-     * @see org.apache.lenya.cms.site.SiteManager#getRequiringResources(org.apache.lenya.cms.publication.Document)
+     * @see org.apache.lenya.cms.site.SiteManager#getRequiringResources(org.apache.lenya.cms.publication.DocumentIdentityMap,
+     *      org.apache.lenya.cms.site.Node)
      */
-    public Document[] getRequiringResources(Document resource) throws SiteException {
-        return new Document[0];
+    public Node[] getRequiringResources(DocumentIdentityMap map, Node resource)
+            throws SiteException {
+        return new Node[0];
     }
 
     /**
