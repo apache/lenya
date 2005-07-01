@@ -36,6 +36,7 @@ import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -168,8 +169,9 @@ public class Put extends DocumentUsecase {
                 nodes.addAll(Arrays.asList(documents[i].getRepositoryNodes()));
             }
 
-            nodes.add(SiteUtil.getSiteStructure(this.manager, doc.getIdentityMap(),
-                    doc.getPublication(), Publication.LIVE_AREA).getRepositoryNode());
+            SiteStructure structure = SiteUtil.getSiteStructure(this.manager, getSourceDocument());
+            nodes.add(structure.getRepositoryNode());
+            
             return (Transactionable[]) nodes.toArray(new Transactionable[nodes.size()]);
 
         } catch (Exception e) {
