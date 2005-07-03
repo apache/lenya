@@ -70,7 +70,7 @@
                                     </td>
                                 </tr>
                             </table>
-<input type="submit" value="Search"/>
+                             <input i18n:attr="value" type="submit" value="Search"/>
                         </form>
 
                         <xsl:apply-templates select="search/exception"/>

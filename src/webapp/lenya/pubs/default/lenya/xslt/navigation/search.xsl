@@ -20,6 +20,7 @@
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:nav="http://apache.org/cocoon/lenya/navigation/1.0"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     xmlns="http://www.w3.org/1999/xhtml"
     exclude-result-prefixes="nav"
     >
@@ -30,7 +31,7 @@
 
 <xsl:template match="nav:site">
   <div id="search">
-    <form><input type="hidden" name="lenya.usecase" value="search"/><input type="hidden" name="language" value="{$chosenlanguage}"/><input class="searchfield" type="text" name="query" alt="Search field"/><input class="searchsubmit" type="submit" value="Search" name="find"/></form>
+    <form><input type="hidden" name="lenya.usecase" value="search"/><input type="hidden" name="language" value="{$chosenlanguage}"/><input class="searchfield" type="text" name="query" alt="Search field"/><input class="searchsubmit" i18n:attr="value" type="submit" value="Search" name="find"/></form>
   </div>
 </xsl:template>
 
