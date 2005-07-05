@@ -9,8 +9,8 @@
 
    2) Download the additonal libraries
 
-        - ant-contrib-1.0b1.jar
-        - jsch-20040329.jar
+        - ant-contrib-1.0b1.jar (http://ant-contrib.sourceforge.net/)
+        - jsch-20040329.jar (http://www.jcraft.com/jsch/index.html, http://www.ibiblio.org/maven2/ant/ant-jsch/)
 
       and copy them to the lib dir of ant (e.g. /usr/local/apache-ant-1.6.2/lib)
 
