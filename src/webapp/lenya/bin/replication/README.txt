@@ -5,7 +5,7 @@
    Requirements
    ------------
 
-   1) Ant 1.6.X or higher
+   1) Ant 1.6.X or higher (installed on the Apache Lenya Authoring machine)
 
    2) Download the additonal libraries
 
@@ -21,6 +21,8 @@
       and copy to remote server 
 
         scp .ssh/id_dsa.pub REMOTE_SERVER:.ssh/authorized_keys
+
+      HOWTO for Windows: http://graphics.stanford.edu/infrastructure/net/putty.html
 
 
    Howto Replicate
