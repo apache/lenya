@@ -25,6 +25,7 @@
 
     <!-- === Test targets =========================================================== -->
 
+  <property name="debug" value="true"/>
   <property name="test.pub.id" value="test"/>
   <property name="test.pub.source.id" value="default"/>
 
@@ -44,6 +45,7 @@
   
   <!-- Prepares the test publication -->
   <target name="test.pub.prepare">
+  <!--
     
     <property name="test.pub.dir" value="${build.webapp}/lenya/pubs/${test.pub.id}"/>
     
@@ -54,6 +56,7 @@
       <fileset dir="${build.webapp}/lenya/pubs/${test.pub.source.id}"/>
     </copy>
     
+  -->
   </target>
   
   <!-- prepares the tests. -->
@@ -70,7 +73,8 @@
     <!-- Compile tests -->
     <javac srcdir="${src.test.dir}"
            destdir="${build.test}"
-           debug="{debug}"
+           debug="true"
+           debuglevel="lines,vars,source"
            optimize="{optimize}"
            deprecation="{deprecation}"
            target="${target.vm}"
@@ -86,6 +90,9 @@
 
   <!-- Runs JUnit tests -->
   <target name="tests.junit"	depends="init, tests.prepare,
+        test.identity" />
+  
+  <!--
   			test.identity,
   			test.workflow,
   			test.anttask,
@@ -93,12 +100,12 @@
   			test.accesscontrol,
         test.deactivate,
         test.publications" />
- 
+  -->
 
   
   <!-- Identity Test -->
   <target name="test.identity">
-    <java fork="yes" classname="org.apache.lenya.ac.impl.IdentityTest">
+    <java fork="no" classname="org.apache.lenya.ac.impl.IdentityTest">
       <arg value="${build.webapp}"/>
       <arg value="default"/>
       <classpath refid="classpath"/>
@@ -106,6 +113,7 @@
         <pathelement location="${build.test}" />
         <pathelement path="${build.webapp}/WEB-INF/classes" />
         <pathelement path="${build.webapp}/WEB-INF/lib" />
+        <pathelement path="${src.test.dir}"/>
       </classpath>
     </java>
   </target>

@@ -18,7 +18,7 @@
   Build the Eclipse .classpath file from a list of path items
   (see "eclipse-project" target in build.xml)
   
-  $Id: make-classpath.xsl,v 1.1 2004/03/21 21:26:21 gregor Exp $
+  $Id$
 -->
 
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">

@@ -29,8 +29,8 @@
     <jx:set var="area" value="${usecase.getParameter('document').getArea()}"/>
     <jx:set var="language" value="${usecase.getParameter('document').getLanguage()}"/>
     <jx:set var="incrementalLoading" value="${'false'}"/>
-    <script src="${request.contextPath}/${pubId}/${area}/info-sitetree/ua.js"/>
-    <script src="${request.contextPath}/${pubId}/${area}/info-sitetree/tree.js"/>
-    <script src="${request.contextPath}/${pubId}/${area}/info-sitetree/sitetree.js?language=${language}&amp;incremental=${incrementalLoading}"/>
+    <script src="${request.contextPath}/${pubId}/${area}/info-sitetree/ua.js?lenya.publet=sitetree"/>
+    <script src="${request.contextPath}/${pubId}/${area}/info-sitetree/tree.js?lenya.publet=sitetree"/>
+    <script src="${request.contextPath}/${pubId}/${area}/info-sitetree/sitetree.js?lenya.publet=sitetree&amp;language=${language}&amp;incremental=${incrementalLoading}"/>
   </page:head>
 </jx:template>

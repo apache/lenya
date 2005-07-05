@@ -29,13 +29,6 @@
       +-->
   <map:resources>
 
-    <map:resource name="navigation">
-      <map:generate src="lenya/pubs/{pub_id}/content/live/sitetree.xml" />
-      <map:transform src="lenya/xslt/util/sitetree2navigation.xsl">
-        <map:parameter name="nav_id" value="{nav_id}"/>
-      </map:transform>
-    </map:resource>
-   
     <map:resource name="style-cms-page">
     <!-- FIXME: due to resolver issues, i18n can currently not be used outside
         of a publication IF you do not make a hit into a publication context first.     
@@ -255,11 +248,6 @@
         <map:mount uri-prefix="menu-xml/{1}/" src="{fallback:menus.xmap}" check-reload="true" reload-method="synchron"/>
       </map:match>
       
-      <!-- navigation -->
-      <map:match pattern="navigation/**">
-        <map:mount uri-prefix="navigation" src="lenya/navigation.xmap" check-reload="true" reload-method="synchron"/>
-      </map:match>
-
       <!-- Access Control Policies -->
       <map:match pattern="*/policies/**">
         <map:mount uri-prefix="{1}/policies" src="lenya/pubs/{1}/policies-sitemap.xmap" check-reload="true" reload-method="synchron"/>
@@ -296,13 +284,6 @@
         <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
 
-      <!-- Info area -->
-      <map:match pattern="*/*/info-sitetree/**">
-        <map:mount uri-prefix="" src="lenya/info.xmap" check-reload="true" reload-method="synchron"/>
-      </map:match>
-      <map:match pattern="*/info-*/**">
-        <map:mount uri-prefix="" src="lenya/info.xmap" check-reload="true" reload-method="synchron"/>
-      </map:match>
     </map:pipeline>
 
     <map:pipeline>
@@ -414,6 +395,9 @@
       <!-- Enter a publet -->
       <map:match pattern="publets/*/**">
         <map:mount uri-prefix="publets/{1}/" src="lenya/publets/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+      <map:match type="request-parameter" pattern="lenya.publet">
+        <map:mount uri-prefix="" src="lenya/publets/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
       
       <!-- Enter the actual publication -->

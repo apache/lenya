@@ -96,9 +96,6 @@
     <component-instance logger="core.modules.input.workflow" name="workflow"
         class="org.apache.lenya.cms.cocoon.components.modules.input.WorkflowModule"/>
         
-    <component-instance logger="core.modules.input.sitetree" name="sitetree"
-        class="org.apache.lenya.cms.cocoon.components.modules.input.SitetreeModule"/>
-        
     <component-instance logger="core.modules.input.fallback" name="fallback"
         class="org.apache.lenya.cms.cocoon.components.modules.input.PublicationTemplateFallbackModule">
       <directory src="context:///lenya"/>
@@ -434,7 +431,6 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
     <component-instance name="site.paste" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Paste">
       <view template="site/paste"/>
     </component-instance>
-    <component-instance name="site.nudge" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Nudge"/>
     <component-instance name="site.archive" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Archive">
       <view template="site/archive"/>
     </component-instance>
@@ -540,8 +536,6 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
              logger="cron.usecase"/>
              
   <site-managers>
-    <component-instance name="tree" logger="lenya.site"
-                        class="org.apache.lenya.cms.site.tree.TreeSiteManager"/>
     <component-instance name="simple" logger="lenya.site"
                         class="org.apache.lenya.cms.site.simple.SimpleSiteManager"/>
   </site-managers>

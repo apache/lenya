@@ -111,10 +111,10 @@
       <!-- /lenyabody-{rendertype}/{publication-id}/{area}/{doctype}/{url} -->
       <map:match pattern="lenyabody-*/*/*/*/**">
         <map:aggregate element="cmsbody">
-          <map:part src="cocoon://navigation/{2}/{3}/breadcrumb/{5}.xml"/>
-          <map:part src="cocoon://navigation/{2}/{3}/tabs/{5}.xml"/>
-          <map:part src="cocoon://navigation/{2}/{3}/menu/{5}.xml"/>
-          <map:part src="cocoon://navigation/{2}/{3}/search/{5}.xml"/>
+          <map:part src="cocoon://publets/sitetree/{2}/{3}/breadcrumb/{5}.xml"/>
+          <map:part src="cocoon://publets/sitetree/{2}/{3}/tabs/{5}.xml"/>
+          <map:part src="cocoon://publets/sitetree/{2}/{3}/menu/{5}.xml"/>
+          <map:part src="cocoon://publets/sitetree/{2}/{3}/search/{5}.xml"/>
           <map:part src="cocoon://publets/{page-envelope:document-type}/{1}.xml"/>
         </map:aggregate>
         <map:transform src="fallback://xslt/page2xhtml-{4}.xsl">
