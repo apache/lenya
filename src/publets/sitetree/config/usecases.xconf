@@ -17,7 +17,7 @@
 
 <!-- $Id: doctypes.xconf 164635 2005-04-25 20:01:43Z tschlabach $ -->
 
-<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'nudge']">
+<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'site.nudge']">
 
   <component-instance name="site.nudge" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Nudge"/>
   
