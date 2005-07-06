@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: submit-screen.xsl,v 1.7 2004/03/13 12:42:07 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -27,14 +27,17 @@
     >
  
 <xsl:import href="../util/page-util.xsl"/>
+<xsl:import href="../util/waitScreen.xsl"/>
 
 <xsl:output version="1.0" indent="yes" encoding="UTF-8"/>
 
 <xsl:param name="lenya.event"/>
+<xsl:variable name="contextprefix"><xsl:value-of select="/usecase:submit/usecase:contextprefix"/></xsl:variable>
 
 <xsl:template match="/usecase:submit">
 
   <page:page>
+    <xsl:call-template name="wait_script"/>   
     <page:title>
       <i18n:translate>
         <i18n:text i18n:key="submit-for-approval"/>
@@ -71,7 +74,7 @@
                     <tr>
                         <td/>
                         <td>
-                            <input i18n:attr="value" type="submit" name="submit" value="Submit"/> &#160;
+                            <input i18n:attr="value" type="submit" name="submit" value="Submit" onclick="submit_wait(this.form)"/> &#160;
                             <input i18n:attr="value" type="button" onClick="location.href='{usecase:referer}';" value="Cancel"/>
                         </td>
                     </tr>
@@ -82,6 +85,7 @@
             </form>
         </div>
       </div>
+      <xsl:call-template name="wait_screen"/>   
     </page:body>
   </page:page>
 </xsl:template>

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: archive.xsl,v 1.14 2004/03/13 12:42:06 gregor Exp $ -->
+<!-- $Id$ -->
 
  <xsl:stylesheet version="1.0"
    xmlns="http://www.w3.org/1999/xhtml"
@@ -25,11 +25,14 @@
    xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
    xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
    >
+
+  <xsl:import href="../util/waitScreen.xsl"/>
   
   <xsl:param name="lenya.event"/>
 
   <xsl:output version="1.0" indent="yes" encoding="UTF-8"/>
   
+  <xsl:variable name="contextprefix"><xsl:value-of select="/page/info/contextprefix"/></xsl:variable>
   <xsl:variable name="document-id"><xsl:value-of select="/page/info/document-id"/></xsl:variable>
   <xsl:variable name="area"><xsl:value-of select="/page/info/area"/></xsl:variable>
   <xsl:variable name="task-id"><xsl:value-of select="/page/info/task-id"/></xsl:variable>
@@ -41,10 +44,12 @@
   
   <xsl:template match="page">
     <page:page>
+      <xsl:call-template name="wait_script"/>   
       <page:title><i18n:text>Archive Document</i18n:text></page:title>
       <page:body>
         <xsl:apply-templates select="body"/>
         <xsl:apply-templates select="info"/>
+        <xsl:call-template name="wait_screen"/>   
       </page:body>
     </page:page>
   </xsl:template>
@@ -86,7 +91,7 @@
             <tr>
               <td>
                 <br/>
-                <input i18n:attr="value" type="submit" value="Archive"/>&#160;
+                <input i18n:attr="value" type="submit" value="Archive" onclick="submit_wait(this.form)"/>&#160;
                 <input i18n:attr="value" type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
               </td>
             </tr>

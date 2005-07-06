@@ -24,9 +24,12 @@
    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
    xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
    >
+
+  <xsl:import href="../util/waitScreen.xsl"/>
   
   <xsl:output version="1.0" indent="yes" encoding="UTF-8"/>
   
+  <xsl:variable name="contextprefix"><xsl:value-of select="/page/info/contextprefix"/></xsl:variable>
   <xsl:variable name="request-uri"><xsl:value-of select="/page/info/request-uri"/></xsl:variable>
   <xsl:variable name="first-document-id"><xsl:value-of select="/page/info/first-document-id"/></xsl:variable>
   <xsl:variable name="sec-document-id"><xsl:value-of select="/page/info/sec-document-id"/></xsl:variable>
@@ -43,10 +46,12 @@
   
   <xsl:template match="page">
     <page:page>
+      <xsl:call-template name="wait_script"/>   
       <page:title><i18n:text>Paste Document</i18n:text></page:title>
       <page:body>
         <xsl:apply-templates select="body"/>
 	    <xsl:apply-templates select="info"/>
+        <xsl:call-template name="wait_screen"/>   
       </page:body>
     </page:page>
   </xsl:template>
@@ -83,7 +88,7 @@
           	<tr>
           		<td>
           			<br/>
-                    <input i18n:attr="value" type="submit" value="Paste"/>&#160;
+                    <input i18n:attr="value" type="submit" value="Paste" onclick="submit_wait(this.form)"/>&#160;
 					<input i18n:attr="value" type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
           		</td>
           	</tr>

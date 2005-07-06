@@ -25,10 +25,13 @@
    xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
    >
   
+  <xsl:import href="../util/waitScreen.xsl"/>
+
   <xsl:param name="lenya.event" select="'delete'"/>
   
   <xsl:output version="1.0" indent="yes" encoding="UTF-8"/>
   
+  <xsl:variable name="contextprefix"><xsl:value-of select="/page/info/contextprefix"/></xsl:variable>
   <xsl:variable name="document-id"><xsl:value-of select="/page/info/document-id"/></xsl:variable>
   <xsl:variable name="area"><xsl:value-of select="/page/info/area"/></xsl:variable>
   <xsl:variable name="task-id"><xsl:value-of select="/page/info/task-id"/></xsl:variable>
@@ -40,10 +43,12 @@
   
   <xsl:template match="page">
     <page:page>
+      <xsl:call-template name="wait_script"/>   
       <page:title><i18n:text>Delete Document</i18n:text></page:title>
       <page:body>
         <xsl:apply-templates select="body"/>
         <xsl:apply-templates select="info"/>
+        <xsl:call-template name="wait_screen"/>   
       </page:body>
     </page:page>
   </xsl:template>
@@ -87,7 +92,7 @@
             <tr>
               <td>
                 <br/>
-                <input i18n:attr="value" type="submit" value="Delete"/>&#160;
+                <input i18n:attr="value" type="submit" value="Delete" onclick="submit_wait(this.form)"/>&#160;
                 <input i18n:attr="value" type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
               </td>
             </tr>

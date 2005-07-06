@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: deactivate.xsl,v 1.19 2004/03/13 12:42:06 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml"
   xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
@@ -26,7 +26,13 @@
   xmlns:sch="http://apache.org/cocoon/lenya/scheduler/1.0"
   >
   
+  <xsl:import href="../util/waitScreen.xsl"/>
+
   <xsl:output encoding="UTF-8" indent="yes" version="1.0"/>
+  
+  <xsl:variable name="contextprefix">
+    <xsl:value-of select="/page/info/contextprefix"/>
+  </xsl:variable>
   
   <xsl:variable name="document-id">
     <xsl:value-of select="/page/info/document-id"/>
@@ -51,10 +57,12 @@
   
   <xsl:template match="page">
     <page:page>
+      <xsl:call-template name="wait_script"/>   
       <page:title><i18n:text>Deactivate Document</i18n:text></page:title>
       <page:body>
         <xsl:apply-templates select="body"/>
         <xsl:apply-templates select="info"/>
+        <xsl:call-template name="wait_screen"/>   
       </page:body>
     </page:page>
   </xsl:template>
@@ -92,7 +100,7 @@
             <tr>
               <td/>
               <td>
-                <input i18n:attr="value" type="submit" value="Yes"/> &#160;
+                <input i18n:attr="value" type="submit" value="Yes" onclick="submit_wait(this.form)"/> &#160;
                 <input i18n:attr="value" onClick="location.href='{$request-uri}';" type="button" value="Cancel"/>
               </td>
             </tr>

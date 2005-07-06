@@ -28,6 +28,7 @@
   >
   
   <xsl:import href="../util/page-util.xsl"/>
+  <xsl:import href="../util/waitScreen.xsl"/>
 
   <xsl:output version="1.0" indent="yes" encoding="UTF-8"/>
 
@@ -43,6 +44,7 @@
   <xsl:variable name="document-language"><xsl:value-of select="/usecase:publish/usecase:language"/></xsl:variable>
   <xsl:variable name="task-id"><xsl:value-of select="/usecase:publish/usecase:task-id"/></xsl:variable>
   <xsl:variable name="referer"><xsl:value-of select="/usecase:publish/usecase:referer"/></xsl:variable>
+  <xsl:variable name="contextprefix"><xsl:value-of select="/usecase:contextprefix"/></xsl:variable>
 
 
   <xsl:template match="/usecase:publish[usecase:message]">
@@ -111,6 +113,7 @@
   <xsl:template match="/usecase:publish[not(usecase:message)]">
 
     <page:page>
+      <xsl:call-template name="wait_script"/>   
       <page:title><i18n:text>Publish</i18n:text></page:title>
       <page:body>
         
@@ -161,7 +164,7 @@
                 <tr>
                   <td/>
                   <td>
-                    <input i18n:attr="value" type="submit" value="Publish"/>&#160;
+                    <input i18n:attr="value" type="submit" value="Publish" onclick="submit_wait(this.form)"/>&#160;
                     <input i18n:attr="value" type="button" onClick="location.href='{$referer}';" value="Cancel"/>
                   </td>
                 </tr>
@@ -201,7 +204,7 @@
           
         </sch:scheduler-form>
         -->                
-          
+        <xsl:call-template name="wait_screen"/>   
       </page:body>
     </page:page>
   </xsl:template>

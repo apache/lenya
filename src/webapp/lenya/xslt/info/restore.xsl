@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: restore.xsl,v 1.4 2004/03/13 12:42:06 gregor Exp $ -->
+<!-- $Id$ -->
 
  <xsl:stylesheet version="1.0"
    xmlns="http://www.w3.org/1999/xhtml"
@@ -24,10 +24,13 @@
    xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
    >
   
+  <xsl:import href="../util/waitScreen.xsl"/>
+  
   <xsl:output version="1.0" indent="yes" encoding="ISO-8859-1"/>
   
   <xsl:param name="lenya.event"/>
   
+  <xsl:variable name="contextprefix"><xsl:value-of select="/page/info/contextprefix"/></xsl:variable>
   <xsl:variable name="document-id"><xsl:value-of select="/page/info/document-id"/></xsl:variable>
   <xsl:variable name="dest-document-id"><xsl:value-of select="/page/info/dest-document-id"/></xsl:variable>
   <xsl:variable name="area"><xsl:value-of select="/page/info/area"/></xsl:variable>
@@ -40,10 +43,12 @@
   
   <xsl:template match="page">
     <page:page>
+      <xsl:call-template name="wait_script"/>   
       <page:title>Restore Document</page:title>
       <page:body>
         <xsl:apply-templates select="body"/>
 	    <xsl:apply-templates select="info"/>
+        <xsl:call-template name="wait_screen"/>   
       </page:body>
     </page:page>
   </xsl:template>
@@ -72,7 +77,7 @@
           <p>
  	      Do you really want to restore <xsl:value-of select="document-id"/>?
           </p>
-          <input type="submit" value="Restore"/>&#160;
+          <input type="submit" value="Restore" onclick="submit_wait(this.form)"/>&#160;
           <input type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
         </form>
     	</xsl:otherwise>
