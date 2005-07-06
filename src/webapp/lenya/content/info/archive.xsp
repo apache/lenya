@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: archive.xsp,v 1.12 2004/03/13 12:31:30 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsp:page 
   language="java" 
@@ -33,6 +33,7 @@
   
   <page>
     <info>
+      <context-prefix><input:get-attribute module="page-envelope" name="context-prefix" as="string"/></context-prefix>
       <request-uri><xsp-request:get-uri/></request-uri>
       <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></document-id>
       <area><input:get-attribute module="page-envelope" as="string" name="area"/></area>

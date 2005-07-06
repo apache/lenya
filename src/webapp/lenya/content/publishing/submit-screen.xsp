@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: submit-screen.xsp,v 1.7 2004/03/13 12:31:32 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsp:page
        language="java"
@@ -35,6 +35,7 @@
   <usecase:referer><input:get-attribute module="request" name="requestURI" as="string"/></usecase:referer>
   <publication-id><xsp-session:get-attribute name="org.apache.lenya.cms.cocoon.acting.Authenticator.id"/></publication-id>
   <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></document-id>
+  <usecase:context-prefix><input:get-attribute module="page-envelope" name="context-prefix" as="string"/></usecase:context-prefix>
   
 	<not:users>
 	<xsp:logic>

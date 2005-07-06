@@ -33,6 +33,7 @@
   
   <page>
     <info>
+      <context-prefix><input:get-attribute module="page-envelope" name="context-prefix" as="string"/></context-prefix>
       <request-uri><xsp-request:get-uri/></request-uri>
       <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></document-id>
       <area><input:get-attribute module="page-envelope" as="string" name="area"/></area>

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: paste.xsp,v 1.12 2004/03/13 12:31:30 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsp:page 
   language="java" 
@@ -27,6 +27,7 @@
   
 <page>
   <info>
+    <context-prefix><input:get-attribute module="page-envelope" name="context-prefix" as="string"/></context-prefix>
     <first-document-id><xsp-session:get-attribute name="org.apache.lenya.cms.info.firstdocid"/></first-document-id>
     <sec-document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></sec-document-id>
     <first-area><xsp-session:get-attribute name="org.apache.lenya.cms.info.firstarea"/></first-area>
