@@ -85,6 +85,9 @@
   <message key="File Size">Taille</message>
   <message key="Image">Image</message>
 
+  <!-- wait screen -->
+  <message key="please_wait">Veuillez patienter</message>
+
   <!-- submit screen -->
   <message key="submit-for-approval">Soumettre {0} pour approbation</message>
   <message key="submit-for-approval?">Voulez-vous soumettre {0} pour approbation?</message>

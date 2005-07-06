@@ -80,6 +80,8 @@
 	<message key="Creation Date">Data creazione</message>
 	<message key="File Size">Dimensione File</message>
 	<message key="Image">Immagine</message>
+    <!-- wait screen -->
+    <message key="please_wait">Attendere prego</message>
 	<!-- submit screen -->
 	<message key="submit-for-approval">Proponi {0} per la pubblicazione</message>
 	<message key="submit-for-approval?">Vuoi proporre {0} per la pubblicazione?</message>

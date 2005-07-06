@@ -85,6 +85,9 @@
   <message key="Caption">Caption</message>
   <message key="All rights reserved">All rights reserved.</message>
 
+  <!-- wait screen -->
+  <message key="please_wait">Please Wait</message>
+
   <!-- submit screen -->
   <message key="submit-for-approval">Submit {0} for approval</message>
   <message key="submit-for-approval?">Do you want to submit {0} for approval?</message>

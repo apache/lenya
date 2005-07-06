@@ -91,6 +91,9 @@
   <message key="Caption">Subtítulo</message>
   <message key="All rights reserved">Todos los derechos reservados.</message>
 
+  <!-- wait screen -->
+  <message key="please_wait">Espera por favor</message>
+
   <!-- submit screen -->
   <message key="submit-for-approval">Enviar&#160;{0}&#160;para&#160;su&#160;aprobación</message>
   <message key="submit-for-approval?">¿Desea&#160;enviar&#160;{0}&#160;para&#160;su&#160;aprobación?</message>
