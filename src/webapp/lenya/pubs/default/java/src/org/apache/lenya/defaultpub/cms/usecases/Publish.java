@@ -80,8 +80,12 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
             set.addAll(SiteUtil.getSubSite(this.manager, doc));
             
             Document liveDoc = doc.getIdentityMap().getAreaVersion(doc, Publication.LIVE_AREA);
-            set.addAll(SiteUtil.getSubSite(this.manager, liveDoc));
-
+            if(liveDoc.exists())
+                set.addAll(SiteUtil.getSubSite(this.manager, liveDoc));
+            else
+                set.add(liveDoc);
+            
+            
             Document[] documents = set.getDocuments();
             for (int i = 0; i < documents.length; i++) {
                 nodes.addAll(Arrays.asList(documents[i].getRepositoryNodes()));
