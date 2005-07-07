@@ -20,13 +20,6 @@
   function submit_wait(fm)
     {
       document.getElementById("pleasewaitScreen").style.visibility = "visible";
-      window.setTimeout('submit_form(fm)',1);
-    }
-
-  function submit_form(form)
-    {
-      form.submit();
-      document.getElementById("pleasewaitScreen").style.visibility = "hidden";
     }
 
   function onClick_wait()
