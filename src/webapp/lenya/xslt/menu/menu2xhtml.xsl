@@ -202,7 +202,7 @@
         <li><a>
           <xsl:attribute name="href">
             <xsl:value-of select="@href"/>
-            <xsl:apply-templates select="@*[local-name() != 'href']"/>
+            <xsl:apply-templates select="@*[local-name() != 'href' and local-name() != 'onClick']"/>
             <xsl:text/>
             <xsl:if test="starts-with($completearea, 'info-')">
               <xsl:choose>
@@ -216,6 +216,7 @@
               <xsl:text>lenya.area=info</xsl:text>
             </xsl:if>
           </xsl:attribute>
+          <xsl:apply-templates select="./@onClick"/>
           <span><xsl:value-of select="."/></span>
         </a></li>
       </xsl:when>
