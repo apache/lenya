@@ -29,9 +29,11 @@ import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.transaction.Transactionable;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.RelaxNG;
@@ -105,6 +107,9 @@ public class OneFormEditor extends DocumentUsecase {
                 if (message != null) {
                     addErrorMessage("error-validation", new String[]{message});
                 }
+                
+                if (!hasErrors())
+                    WorkflowUtil.invoke(this.manager, getLogger(), getSourceDocument(), "edit");
             }
 
         } finally {
@@ -183,4 +188,6 @@ public class OneFormEditor extends DocumentUsecase {
         int i = content.indexOf(">");
         return content.substring(0, i) + " " + namespaces + content.substring(i);
     }
+
+
 }
