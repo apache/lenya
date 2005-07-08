@@ -45,29 +45,28 @@ public class UniqueDocumentId {
             String idwithoutsuffix = null;
 
             if (node != null) {
-                int n = documentid.lastIndexOf("/");
+                int n = documentid.lastIndexOf("/");               
                 String lastToken = "";
                 String substring = documentid;
-                if ((n < documentid.length()) && (n > 0)) {
-                    lastToken = documentid.substring(n);
-                    substring = documentid.substring(0, n);
-                }
+                lastToken = documentid.substring(n);
+                substring = documentid.substring(0, n);
 
                 int l = lastToken.length();
                 int index = lastToken.lastIndexOf("-");
-                if (0 < index && index < l) {
+                if (0 < index && index < l && lastToken.substring(index + 1).matches("[\\d]*")) {
                     suffix = lastToken.substring(index + 1);
                     idwithoutsuffix = substring + lastToken.substring(0, index);
-                    version = Integer.parseInt(suffix);
+                    version = Integer.parseInt(suffix);                   
                 } else {
                     idwithoutsuffix = substring + lastToken;
                 }
+                
 
                 while (node != null) {
                     version = version + 1;
                     suffix = (new Integer(version)).toString();
                     documentid = idwithoutsuffix + "-" + suffix;
-                    node = tree.getNode(documentid);
+                    node = tree.getNode(documentid);                           
                 }
             }
         } catch (SiteTreeException e) {
