@@ -55,7 +55,7 @@
   <message key="Search">Buscar</message>
   <message key="Home">Inicio</message>
   <message key="Title">Título</message>
-  <message key="Last modified">Última modificación </message>
+  <message key="Last modified">Última modificación</message>
   <message key="Overview">General</message>
   <message key="Role">Rol</message>
   <message key="View">Ver</message>
@@ -92,7 +92,7 @@
   <message key="All rights reserved">Todos los derechos reservados.</message>
 
   <!-- wait screen -->
-  <message key="please_wait">Espera por favor</message>
+  <message key="please_wait">Espere por favor</message>
 
   <!-- submit screen -->
   <message key="submit-for-approval">Enviar&#160;{0}&#160;para&#160;su&#160;aprobación</message>
@@ -108,12 +108,12 @@
   <message key="Password">Contraseña</message>
   <message key="Username">Nombre&#160;de&#160;usuario</message>
   <message key="Authentication failed">Error&#160;en&#160;la&#160;autentificación</message>
-  <message key="try-user-lenya">Pruebe con usuario {0} y contraseña {1} (editor) o usuario {2} y contraseña {3} (revisor)</message>
+  <message key="try-user-lenya">Intente con usuario {0} y contraseña {1} (editor) o usuario {2} y contraseña {3} (revisor)</message>
 
   <!-- logout screen -->
-  <message key="logout-from-pub">Salir&#160;de&#160;la&#160;{0}&#160;Publicación</message>
-  <message key="Your History">Su&#160;Historial</message>
-  <message key="Login to Authoring Area">Entrar&#160;en&#160;la&#160;Zona&#160;de&#160;Edición</message>
+  <message key="logout-from-pub">Salir&#160;de&#160;la&#160;Publicación&#160;{0}</message>
+  <message key="Your History">Su&#160;historial</message>
+  <message key="Login to Authoring Area">Entrar&#160;en&#160;la&#160;zona&#160;de&#160;edición</message>
 
   <!-- reject screen -->
   <message key="Reject">Rechazar</message>
@@ -132,7 +132,7 @@
   <message key="Paste">Pegar</message>
   <message key="Cut">Cortar</message>
   <message key="Help">Ayuda</message>
-  <message key="Debug">Depuración</message>
+  <message key="Debug">Depurar</message>
   <message key="Delete">Borrar</message>
   <message key="Archive">Archivar</message>
   <message key="Restore">Recuperar</message>
@@ -170,32 +170,46 @@
   <message key="Passwd">Contraseña</message>
   <message key="Switch User">Cambiar&#160;usuario</message>
   <message key="Delete Trash">Vaciar&#160;papelera</message>
-  <message key="Cocoon and Server Status">Estado&#160;del&#160;Servidor&#160;y&#160;de&#160;Cocoon</message>
+  <message key="Cocoon and Server Status">Estado&#160;de&#160;Cocoon&#160;y&#160;del&#160;servidor</message>
 
     <!-- Group Administration -->
   <message key="Profile">Perfil</message>
   <message key="Members">Miembros</message>
   <message key="IP Ranges">Rangos&#160;de IP</message>
-  <message key="Edit Profile">Editar&#160;Perfil</message>
-  <message key="Edit Members">Editar&#160;Miembros</message>
+  <message key="Edit Profile">Editar&#160;perfil</message>
+  <message key="Edit Members">Editar&#160;miembros</message>
   <message key="Group Administration">Administración&#160;de&#160;grupos</message>
   <message key="Add Group">Añadir&#160;Grupo</message>
   <message key="Group Data">Datos&#160;del&#160;Grupo</message>
+  <message key="This group already exists.">Este grupo ya existe.</message>
+  <message key="This is not a valid group ID.">No es un ID de grupo válido.</message>
 
     <!-- User Administration -->
   <message key="User Data">Datos&#160;del&#160;Usuario</message>
 
   <message key="CMS User ID">ID&#160;del&#160;Usuario&#160;de&#160;CMS</message>
   <message key="LDAP ID">ID&#160;de&#160;LDAP</message>
-  <message key="Confirm password">Confirme&#160;contraseña</message>
-  <message key="Add User">Añadir Usuario</message>
-  <message key="User Administration">Administración del Usuario</message>
-  <message key="User Details">Detalles del Usuario</message>
-  <message key="All Groups">Todos los Grupos</message>
-  <message key="User Groups">Grupos del Usuario</message>
-  <message key="Group Affiliation">Afiliación a un Grupo</message>
-  <message key="Change Password">Cambiar Contraseña</message>
-  <message key="Edit Group Affiliation">Editar Grupo de Afiliación</message>
+  <message key="Confirm password">Confirme&#160;la&#160;contraseña</message>
+  <message key="Add User">Añadir usuario</message>
+  <message key="User Administration">Administración del usuario</message>
+  <message key="User Details">Detalles del usuario</message>
+  <message key="All Groups">Todos los grupos</message>
+  <message key="User Groups">Grupos del usuario</message>
+  <message key="Group Affiliation">Afiliación a un grupo</message>
+  <message key="Change Password">Cambiar contraseña</message>
+  <message key="Edit Group Affiliation">Editar grupo de afiliación</message>
+  <message key="This user already exists.">Este usuario ya existe.</message>
+  <message key="This is not a valid user ID.">Este no es in ID de usuario CMS válido.</message>
+  <message key="Please enter an e-mail address.">Favor ingresar una dirección de correo electrónico.</message>
+  <message key="This LDAP user ID does not exist.">Este ID de usuario LDAP no existe.</message>
+  <message key="Password and confirmed password are not equal.">Contraseña y conforme contraseña no son iguales.</message>
+  <message key="The password must be at least six characters long.">La contraseña debe tener almenos 6 caracteres.</message>
+  <message key="The password must contain at least one number.">La contraseña debe tener almenos un digito.</message>
+  <message key="You cannot change the password of this user.">No puede cambiar la contraseña de este usuario.</message>
+
+      <!-- User Types -->
+  <message key="LDAP User">Usuario LDAP</message>
+  <message key="Local User">Usuario CMS</message>
 
     <!-- IP Range Administration -->
   <message key="IP Range">Rango&#160;de IP</message>
@@ -207,9 +221,9 @@
   <message key="IP Range Profile">Perfil&#160;del&#160;rango&#160;de IP</message>
 
   <!-- Site tab (info screens) -->
-  <message key="Available Languages">Idiomas Disponibles</message>
+  <message key="Available Languages">Idiomas disponibles</message>
   <message key="This document is not available in this language.">Este documento no se encuentra disponible en este idioma.</message>
-  <message key="Document ID">ID del Documento</message>
+  <message key="Document ID">ID del documento</message>
   <message key="Versions">Versiones</message>
   <message key="SSL Encryption">Cifrado&#160;SSL</message>
   <message key="Rollback to this version">Deshacer hasta esta versión</message>
@@ -218,48 +232,49 @@
   <message key="AC Auth">Edición&#160;AC</message>
   <message key="AC Live">Producción&#160;AC</message>
   <message key="Scheduler">Planificador</message>
-  <message key="Inherited Rights">Permisos heredados</message>
 
     <!-- Info screen actions-->
   <message key="New Navigation Title">Nuevo título de navegación</message>
-  <message key="Rename Document">Renombrar un Documento</message>
-  <message key="New Document ID">Nuevo ID de Documento</message>
+  <message key="Rename Document">Renombrar documento</message>
+  <message key="New Document ID">Nuevo ID de documento</message>
   <message key="No whitespace, no special characters">No se permiten espacios en blanco ni caracteres especiales</message>
       <!-- Scheduler -->
 <message key="No active jobs">No hay tareas activas.</message>
    <message key="The job date has expired">La fecha de la tarea ha expirado.</message>
-  <message key="check the log files">compruebe los archivos de log</message>
+  <message key="check the log files">compruebe los archivos de registro</message>
   <message key="Task">Tarea</message>
   <message key="Day">Día</message>
   <message key="Time">Hora</message>
       <!-- Deactivate and delete -->
   <message key="docs-have-links-to-doc">Los siguientes documentos tienen enlaces a este documento</message>
   <message key="Deactivate Document">Desactivar Documento</message>
-  <message key="deactivate-doc">Desactivar Documento {0}</message>
+  <message key="deactivate-doc">Desactivar documento {0}</message>
   <message key="deactivate-doc?">¿Seguro que desea desactivar el documento {0}?</message>
-  <message key="Delete Document">Borrar Documento</message>
-  <message key="delete-doc">Borrar Documento {0}</message>
+  <message key="Delete Document">Borrar documento</message>
+  <message key="delete-doc">Borrar documento {0}</message>
   <message key="cannot-deactivate-unless-children-deactivated">No se puede desactivar este documento a menos que los documentos hijos siguientes sean desactivados</message>
   <message key="delete-language-versions?">¿Quiere realmente borrar todas las versiones en diferentes lenguajes del documento {0}?</message>
       <!-- Archive document -->
-  <message key="Archive Document">Archivar Documento</message>
+  <message key="Archive Document">Archivar documento</message>
   <message key="archive-doc">Archivar documento {0}</message>
-  <message key="archive-doc?">¿Quiere realmente archivar el documento {0}?</message>
+  <message key="archive-doc?">¿Realmente desea archivar el documento {0}?</message>
       <!-- Rename document -->
   <message key="Rename Document">Renombrar Documento</message>
   <message key="rename-doc">Renombrar Documento {0}</message>
+  <message key="rename-losing-scheduler-warning">Favor revisar si el documento y los árboles hijos tienen tareas planificadas porque estas se perderán despueś de renombrar</message>
       <!-- Copy document -->
   <message key="Copy Document">Copiar Documento</message>
   <message key="copy-doc">Copiar documento {0}</message>
-  <message key="copy-doc-to-clip?">¿Seguro que desea copiar el documento {0} al portapapeles? Más tarde puede pegar el documento en el lugar que elija.</message>
+  <message key="copy-doc-to-clip?">¿Realmente desea copiar el documento {0} al portapapeles? Más tarde puede pegar el documento en el lugar que elija.</message>
       <!-- Paste document -->
   <message key="Paste Document">Pegar Documento</message>
   <message key="paste-doc">Pegar documento {0}</message>
-  <message key="paste-doc-from-clip?">¿Seguro que desea pegar el documento {0} del portapapeles?</message>
+  <message key="paste-doc-from-clip?">¿Realmente desea pegar el documento {0} desde el portapapeles?</message>
+  <message key="move-losing-scheduler-warning">Favor revisar si el documento y los árboles hijos tienen tareas planificadas porque estas se perderán despueś de mover.</message>
       <!-- Cut document -->
   <message key="Cut Document">Cortar Documento</message>
   <message key="cut-doc">Cortar documento {0}</message>
-  <message key="cut-doc-to-clip?">¿Seguro que desea cortar el documento {0} y moverlo al portapapeles? Más tarde puede pegar el documento en el lugar que elija.</message>
+  <message key="cut-doc-to-clip?">¿Realmente desea cortar el documento {0} y moverlo al portapapeles? Más tarde puede pegar el documento en el lugar que elija.</message>
     <!--Change visibility in navigation -->
   <message key="Change">Cambiar</message>
   <message key="Change Document visiblity in navigation">Cambiar la visibilidad del documento en la navegación</message>
@@ -268,11 +283,11 @@
   <message key="hidden">oculto</message>
 
   <!-- Info Asset -->
-  <message key="Insert Image">Insertar Imagen</message>
-  <message key="Insert Asset">Insertar Objeto</message>
-  <message key="Asset Upload">Subida de objetos</message>
-  <message key="Insert a new Image">Insertar una Imagen</message>
-  <message key="Upload an Asset">Subir un objeto</message>
+  <message key="Insert Image">Insertar imagen</message>
+  <message key="Insert Asset">Insertar activo</message>
+  <message key="Asset Upload">Carga de activos</message>
+  <message key="Insert a new Image">Insertar nueva imagen</message>
+  <message key="Upload an Asset">Cargar un activo</message>
 
   <!-- Info workflow  -->
   <message key="Value">Valor</message>
@@ -287,10 +302,10 @@
   <message key="publish">publicar</message>
 
   <!-- Info asset  -->
-  <message key="New Asset">Nuevo Activo</message>
+  <message key="New Asset">Nuevo activo</message>
 
   <!-- Info RC  -->
-  <message key="Current Version">Versión Actual</message>
+  <message key="Current Version">Versión actual</message>
   <message key="Rollback to this revision">Deshacer hasta esta revisión</message>
 
   <!-- Info AC  -->
@@ -304,9 +319,9 @@
   <message key="the world">todos</message>
 
   <!-- Scheduler -->
-  <message key="New job">Nueva tarea</message>
-  <message key="Active jobs">Tareas activas</message>
-  <message key="Publish and Export">Publicar&#160;y&#160;Exportar</message>
+  <message key="New job">Nueva&#160;tarea</message>
+  <message key="Active jobs">Tareas&#160;activas</message>
+  <message key="Publish and Export">Publicar&#160;y&#160;exportar</message>
   <message key="doc-has-links-to-unpublished">Este documento tiene enlace a los siguientes documentos sin publicar:</message>
 
   <!-- New Document -->
@@ -317,22 +332,25 @@
   <message key="failmessage.createdoc.required">Por favor, introduce todos los valores obligatorios (*).</message>
 
   <!-- Asset Upload/Insert Dialog -->
-  <message key="Add to Asset Library">Añadir librer&#237;a de Objetos</message>
-  <message key="Asset Library">Librer&#237;a de objetos</message>
-  <message key="No assets available">No hay objetos disponibles</message>
-  <message key="Insert Asset">Insertar Objeto</message>
+  <message key="Add to Asset Library">Añadir librería de activos</message>
+  <message key="Asset Library">Librería de activos</message>
+  <message key="No assets available">No hay activos disponibles</message>
+  <message key="Insert Asset">Insertar activo</message>
+  <message key="lenya.assetuploa.no.asset.selected">No hay un activo seleccionado. Favor elija uno.</message>
+
   <!-- Image Upload/Insert Dialog -->
-  <message key="lenya.imageupload.title">Insertar Imagen</message>
-  <message key="lenya.imageupload.selectimage.label">Elejir Imagen</message>
+  <message key="lenya.imageupload.title">Insertar imagen</message>
+  <message key="lenya.imageupload.selectimage.label">Elejir imagen</message>
   <message key="lenya.imageupload.info.noimages">No hay imágenes disponibles.</message>
   <message key="lenya.imageupload.links.hint">Los enlaces externos deben iniciar con 'http://', los enlaces internos deben iniciar con '/'</message>
+  <message key="lenya.imageupload.no.image.selected">No hay una imagen seleccionada. Favor elija una.</message>
 
   <!-- Revision Controller -->
   <message key="Reason">Razón</message>
   <message key="Filename">Nombre de archivo</message>
-  <message key="lenya.rc.nocheckout">El recurso no se puede obtener</message>
-  <message key="lenya.rc.checkedoutalready">El recurso ya ha sido obtenido por otro usuario</message>
-  <message key="lenya.rc.nocheckin">El recurso no puede ser devuelto</message>
-  <message key="Generic Exception">Excepción Genérica</message>
+  <message key="lenya.rc.nocheckout">No se puede obtener el recurso</message>
+  <message key="lenya.rc.checkedoutalready">Otro usuario está trabajando el recurso</message>
+  <message key="lenya.rc.nocheckin">No se puede enviar el recurso</message>
+  <message key="Generic Exception">Excepción genérica</message>
   <message key="Check the log files.">Ver bitácora.</message>
 </catalogue>
