@@ -23,7 +23,7 @@
                       logger="lenya.resourcetypes.entry"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
     <schema src="entry.rng"/>
-    <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
+    <creator src="org.apache.lenya.cms.authoring.NewBlogEntryCreator">
       <sample-name>entry.xml</sample-name>
     </creator>
   </component-instance>
