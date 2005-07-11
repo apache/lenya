@@ -22,9 +22,9 @@
   <component-instance name="entry"
                       logger="lenya.resourcetypes.entry"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
-    <schema src="entry.rng"/>
+    <schema src="fallback://lenya/resources/schemas/entry.rng"/>
     <creator src="org.apache.lenya.cms.authoring.NewBlogEntryCreator">
-      <sample-name>entry.xml</sample-name>
+      <sample-name>fallback://lenya/resources/samples/entry.xml</sample-name>
     </creator>
   </component-instance>
 
