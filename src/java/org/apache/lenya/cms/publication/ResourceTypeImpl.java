@@ -46,7 +46,7 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     protected static final String SAMPLE_NAME = "sample-name";
 
     private String schemaUri = null;
-    private String sampleName = null;
+    private String sampleUri = null;
     private String[] linkAttributeXPaths;
     private NodeCreatorInterface creator;
 
@@ -78,7 +78,7 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
             if (creatorConf != null) {
                 Configuration sampleConf = creatorConf.getChild(SAMPLE_NAME, false);
                 if (sampleConf != null) {
-                    this.sampleName = sampleConf.getValue();
+                    this.sampleUri = sampleConf.getValue();
                 }
             }
 
@@ -113,7 +113,7 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     }
 
     public String getSampleURI() {
-        return getBaseURI() + "/samples/" + this.sampleName;
+        return this.sampleUri;
     }
 
     public NodeCreatorInterface getCreator() {
@@ -130,10 +130,4 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
         return this.name;
     }
 
-    protected String getBaseURI() {
-        if (getName() == null) {
-            throw new IllegalStateException("Cannot call getBaseURI() before name is set!");
-        }
-        return "fallback://lenya/publets/" + getName();
-    }
 }
