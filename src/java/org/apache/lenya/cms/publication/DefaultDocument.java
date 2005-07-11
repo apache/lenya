@@ -478,6 +478,9 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         if (this.resourceType == null) {
             String name = getMetaDataManager().getLenyaMetaData()
                     .getFirstValue(LenyaMetaData.ELEMENT_RESOURCE_TYPE);
+            if (name == null) {
+                throw new DocumentException("No resource type defined for document [" + this + "]!");
+            }
             ServiceSelector selector = null;
             try {
                 selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
