@@ -147,7 +147,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      */
     protected void load() throws DocumentException {
         if (!this.isLoaded) {
-            getLogger().debug("Loading: ", new DocumentException());
+            getLogger().debug("Loading: ");
             NamespaceHelper helper;
             try {
                 helper = getNamespaceHelper();
