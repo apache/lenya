@@ -38,7 +38,7 @@
     <menus>
       <menu i18n:attr="name" name="File">
         <block>
-          <item uc:usecase="site.create" href="?doctype=xhtml"><i18n:text>New Links Document</i18n:text></item>
+          <item uc:usecase="site.create" href="?doctype=links"><i18n:text>New Links Document</i18n:text></item>
         </block>
       </menu>
       
