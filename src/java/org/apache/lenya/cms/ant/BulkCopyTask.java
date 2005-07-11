@@ -29,7 +29,7 @@ import org.apache.tools.ant.types.FileSet;
 import org.apache.tools.ant.types.Path;
 
 /**
- * Copies all files matching filename or a all specififed filesets from each source directory.
+ * Copies all files matching filename or all specified filesets from each source directory.
  * <br/><br/>
  * Usage:
  * &lt;bulkCopy 
@@ -64,7 +64,7 @@ public class BulkCopyTask extends Copy {
     }
 
     /**
-     * @param sourceDirs Colon seperated list of source directories
+     * @param sourceDirs Colon separated list of source directories
      */
     public void setSourceDirs(Path sourceDirs) {
         this.sourceDirs = sourceDirs;
