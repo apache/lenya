@@ -27,7 +27,7 @@
 
 <xsl:template match="/menu:menu">
   <xsl:copy>
-    <xsl:apply-templates select="menu:menus"/>
+    <xsl:apply-templates select="*"/>
   </xsl:copy>
 </xsl:template>
 
