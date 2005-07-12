@@ -247,7 +247,7 @@ public class FormsEditor extends DocumentUsecase {
      * Process elements
      * @param document
      * @param xq
-     * @return
+     * @return A string.
      * @throws Exception
      */
     private String processElements(Document document, XUpdateQuery xq) throws Exception {
