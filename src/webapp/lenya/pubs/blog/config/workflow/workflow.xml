@@ -34,68 +34,20 @@
   <!-- edit: authoring -> authoring -->  
   <transition source="authoring" destination="authoring">
     <event id="edit"/>
-    <condition class="org.apache.lenya.cms.workflow.RoleCondition">edit, review, organize</condition>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">edit</condition>
   </transition>
   
   <!-- publish: authoring -> live -->  
   <transition source="authoring" destination="live">
     <event id="publish"/>
-    <condition class="org.apache.lenya.cms.workflow.RoleCondition">review, organize</condition>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">edit</condition>
     <assign variable="is_live" value="true"/>
   </transition>
   
-  <!-- deactivate: authoring -> authoring -->  
-  <transition source="authoring" destination="authoring">
-    <event id="deactivate"/>
-    <condition class="org.apache.lenya.workflow.impl.BooleanVariableCondition">is_live = true</condition>
-    <condition class="org.apache.lenya.cms.workflow.RoleCondition">review, organize</condition>
-    <assign variable="is_live" value="false"/>
-  </transition>
-        
-  <!-- delete: authoring -> trash -->  
-  <transition source="authoring" destination="trash" synchronized="true">
-    <event id="delete"/>
-    <condition class="org.apache.lenya.workflow.impl.BooleanVariableCondition">is_live = false</condition>
-    <condition class="org.apache.lenya.cms.workflow.RoleCondition">edit, review, organize</condition>
-  </transition>
-        
-  <!-- archive: authoring -> archive -->  
-  <transition source="authoring" destination="archive" synchronized="true">
-    <event id="archive"/>
-    <condition class="org.apache.lenya.workflow.impl.BooleanVariableCondition">is_live = false</condition>
-    <condition class="org.apache.lenya.cms.workflow.RoleCondition">edit, review, organize</condition>
-  </transition>
-        
-  <!-- LIVE -->
-        
   <!-- edit: live -> authoring -->
   <transition source="live" destination="authoring">
     <event id="edit"/>
-    <condition class="org.apache.lenya.cms.workflow.RoleCondition">edit, review, organize</condition>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">edit</condition>
   </transition>
         
-  <!-- deactivate: live -> authoring -->  
-  <transition source="live" destination="authoring">
-    <event id="deactivate"/>
-    <condition class="org.apache.lenya.workflow.impl.BooleanVariableCondition">is_live = true</condition>
-    <condition class="org.apache.lenya.cms.workflow.RoleCondition">review, organize</condition>
-    <assign variable="is_live" value="false"/>
-  </transition>
-        
-  <!-- TRASH -->
-        
-  <!-- restore: trash -> authoring -->
-  <transition source="trash" destination="authoring" synchronized="true">
-    <event id="restore"/>
-    <condition class="org.apache.lenya.cms.workflow.RoleCondition">edit, review, organize</condition>
-  </transition>
-  
-  <!-- ARCHIVE -->
-        
-  <!-- restore: archive -> authoring -->
-  <transition source="archive" destination="authoring" synchronized="true">
-    <event id="restore"/>
-    <condition class="org.apache.lenya.cms.workflow.RoleCondition">edit, review, organize</condition>
-  </transition>
-  
 </workflow>
