@@ -38,7 +38,7 @@ import org.apache.lenya.cms.publication.util.DocumentSet;
  * d=e</li>
  * <li><em>transitive:</em> d <strong>&lt; </strong>e and e <strong>&lt; </strong>f implies d
  * <strong>&lt; </strong>f</li>
- * </ul>*
+ * </ul>
  * 
  * @version $Id$
  */
