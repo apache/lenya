@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: usecase-create.xmap,v 1.5 2004/04/24 21:20:50 gregor Exp $ -->
+<!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -31,7 +31,7 @@
       <map:transform src="../../xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
-      <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
+      <map:transform src="{fallback://xslt/util/strip_namespaces.xsl}"/>
       <map:select type="parameter">
         <map:parameter name="statusCode" value="{statusCode}"/>
         <map:when test="">

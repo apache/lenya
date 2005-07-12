@@ -26,10 +26,10 @@
       <map:transform type="i18n">      
         <map:parameter name="locale" value="{request:locale}"/>
       </map:transform>    
-      <map:transform src="../../xslt/util/page2xhtml.xsl">
+      <map:transform src="{fallback://xslt/util/page2xhtml.xsl}">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
-      <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
+      <map:transform src="{fallback://xslt/util/strip_namespaces.xsl}"/>
       <map:serialize/>
     </map:resource>
  </map:resources>
@@ -111,7 +111,7 @@
           <map:parameter name="relative2root" value="../../../../.."/>
         </map:transform>
         <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/entry.xml"/>
-        <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
+        <map:transform src="{fallback://xslt/util/strip_namespaces.xsl}"/>
         <map:serialize type="xhtml"/>
       </map:match>
       <map:handle-errors>
@@ -242,7 +242,7 @@
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
         </map:transform>
         <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/feed.xml"/>
-        <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
+        <map:transform src="{fallback://xslt/util/strip_namespaces.xsl}"/>
         <map:serialize type="xhtml"/>
       </map:match>
       <map:handle-errors>
@@ -294,7 +294,7 @@
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
         </map:transform>
         <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/archive.xml"/>
-        <map:transform src="xslt/util/strip_namespaces.xsl"/>
+        <map:transform src="{fallback://xslt/util/strip_namespaces.xsl}"/>
         <map:serialize type="xhtml"/>
       </map:match>
       <map:handle-errors>

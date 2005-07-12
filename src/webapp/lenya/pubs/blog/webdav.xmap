@@ -32,7 +32,7 @@
       <map:transform src="../../xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
-      <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
+      <map:transform src="{fallback://xslt/util/strip_namespaces.xsl}"/>
       <map:serialize/>
     </map:resource>
  </map:resources>
