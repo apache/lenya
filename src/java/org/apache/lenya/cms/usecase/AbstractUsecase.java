@@ -390,9 +390,15 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
         boolean valueBoolean = defaultValue;
         Object value = getParameter(name);
         if (value != null) {
-            valueBoolean = Boolean.valueOf(value.toString()).booleanValue();
+            if (value instanceof String) {
+                valueBoolean = Boolean.valueOf((String) value).booleanValue();
+            } else if (value instanceof Boolean) {
+                valueBoolean = ((Boolean) value).booleanValue();
+            } else {
+                throw new IllegalArgumentException("Cannot get boolean value of parameter [" + name
+                        + "] (class " + value.getClass().getName() + ")");
+            }
         }
-
         return valueBoolean;
     }
 
@@ -634,9 +640,8 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
     public final void lockInvolvedObjects(Transactionable[] objects) throws UsecaseException {
 
         if (getLogger().isDebugEnabled())
-            getLogger()
-                    .debug("AbstractUsecase::lockInvolvedObjects() called, are there objects to lock ? "
-                            + (objects != null));
+            getLogger().debug("AbstractUsecase::lockInvolvedObjects() called, are there objects to lock ? "
+                    + (objects != null));
 
         try {
             boolean canExecute = true;
@@ -644,9 +649,8 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
             for (int i = 0; i < objects.length; i++) {
                 if (objects[i].isCheckedOut() && !objects[i].isCheckedOutByUser()) {
                     if (getLogger().isDebugEnabled())
-                        getLogger()
-                                .debug("AbstractUsecase::lockInvolvedObjects() can not execute, object ["
-                                        + objects[i] + "] is already checked out");
+                        getLogger().debug("AbstractUsecase::lockInvolvedObjects() can not execute, object ["
+                                + objects[i] + "] is already checked out");
 
                     canExecute = false;
                 }
