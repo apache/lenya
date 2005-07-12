@@ -54,6 +54,17 @@ public class OneFormEditor extends DocumentUsecase {
     }
 
     /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
+     */
+    protected void doCheckPreconditions() throws Exception {
+        super.doCheckPreconditions();
+        if (!WorkflowUtil.canInvoke(this.manager, getLogger(), getSourceDocument(), getEvent())) {
+            addErrorMessage("error-workflow-document", new String[] { getEvent(),
+                    getSourceDocument().getId() });
+        }
+    }
+
+    /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
@@ -89,7 +100,7 @@ public class OneFormEditor extends DocumentUsecase {
                 DocumentHelper.readDocument(xmlSource.getInputStream());
                 wellFormed = true;
             } catch (SAXException e) {
-                addErrorMessage("error-document-form", new String[]{e.getMessage()});
+                addErrorMessage("error-document-form", new String[] { e.getMessage() });
             }
 
             if (wellFormed) {
@@ -104,11 +115,12 @@ public class OneFormEditor extends DocumentUsecase {
 
                 String message = RelaxNG.validate(schemaInputSource, xmlInputSource);
                 if (message != null) {
-                    addErrorMessage("error-validation", new String[]{message});
+                    addErrorMessage("error-validation", new String[] { message });
                 }
-                
-                if (!hasErrors())
-                    WorkflowUtil.invoke(this.manager, getLogger(), getSourceDocument(), "edit");
+
+                if (!hasErrors()) {
+                    WorkflowUtil.invoke(this.manager, getLogger(), getSourceDocument(), getEvent());
+                }
             }
 
         } finally {
@@ -188,5 +200,8 @@ public class OneFormEditor extends DocumentUsecase {
         return content.substring(0, i) + " " + namespaces + content.substring(i);
     }
 
+    protected String getEvent() {
+        return "edit";
+    }
 
 }

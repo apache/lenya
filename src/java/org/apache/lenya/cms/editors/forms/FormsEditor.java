@@ -46,6 +46,7 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.transaction.Transactionable;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.RelaxNG;
@@ -92,12 +93,25 @@ public class FormsEditor extends DocumentUsecase {
             this.tagID = _tagID;
         }
     }
+    
+    protected static final String WORKFLOW_INVOKED = "private.workflowInvoked";
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
      */
     protected Transactionable[] getObjectsToLock() throws UsecaseException {
         return getSourceDocument().getRepositoryNodes();
+    }
+
+    /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
+     */
+    protected void doCheckPreconditions() throws Exception {
+        super.doCheckPreconditions();
+        if (!WorkflowUtil.canInvoke(this.manager, getLogger(), getSourceDocument(), getEvent())) {
+            addErrorMessage("error-workflow-document", new String[] { getEvent(),
+                    getSourceDocument().getId() });
+        }
     }
 
     /**
@@ -119,25 +133,27 @@ public class FormsEditor extends DocumentUsecase {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
 
             xmlSource = (ModifiableSource) resolver.resolveURI(getSourceDocument().getSourceURI());
-            
+
             ResourceType resourceType = getSourceDocument().getResourceType();
             String schemaUri = resourceType.getSchemaDefinitionSourceURI();
             schemaSource = resolver.resolveURI(schemaUri);
-            
+
             unnumberTagsXslSource = resolver.resolveURI(unnumberTagsXslUri);
             numberTagsXslSource = resolver.resolveURI(numberTagsXslUri);
 
             if (getParameterAsString("cancel") != null) {
                 getLogger().warn("Editing has been canceled");
-                //                modifiableXmlSource.delete();
+                // modifiableXmlSource.delete();
                 return;
             }
 
-            try {
-                save(resolver, xmlSource, schemaSource, unnumberTagsXslSource, numberTagsXslSource);
-            } finally {
-
+            save(resolver, xmlSource, schemaSource, unnumberTagsXslSource, numberTagsXslSource);
+            
+            if (!getParameterAsBoolean(WORKFLOW_INVOKED, false)) {
+                WorkflowUtil.invoke(this.manager, getLogger(), getSourceDocument(), getEvent());
+                setParameter(WORKFLOW_INVOKED, Boolean.valueOf(true));
             }
+            
         } catch (final Exception e) {
             throw new UsecaseException(e);
         } finally {
@@ -197,9 +213,7 @@ public class FormsEditor extends DocumentUsecase {
 
         InputSource xmlInputSource = SourceUtil.getInputSource(xmlSource);
         Document document = builder.parse(xmlInputSource);
-        System
-                .setProperty(XPathQueryFactory.class.getName(), XPathQueryFactoryImpl.class
-                        .getName());
+        System.setProperty(XPathQueryFactory.class.getName(), XPathQueryFactoryImpl.class.getName());
 
         XUpdateQuery xUpdateQuery = new XUpdateQueryImpl();
 
@@ -278,9 +292,8 @@ public class FormsEditor extends DocumentUsecase {
                 XObject xObject = XPathAPI.eval(document.getDocumentElement(), select, resolver);
                 NodeList nodes = xObject.nodelist();
                 if (nodes.getLength() == 0) {
-                    getLogger()
-                            .debug(".act(): Node does not exist (might have been deleted during update): "
-                                    + select);
+                    getLogger().debug(".act(): Node does not exist (might have been deleted during update): "
+                            + select);
                 } else {
                     String xupdateModifications = null;
                     // now check for the different xupdate
@@ -601,8 +614,7 @@ public class FormsEditor extends DocumentUsecase {
 
         try {
             javax.xml.transform.Source xmlSource = new DOMSource(document);
-            javax.xml.transform.Source unnumberTagsXslSource = new StreamSource(unnumberTagsXsl
-                    .getInputStream());
+            javax.xml.transform.Source unnumberTagsXslSource = new StreamSource(unnumberTagsXsl.getInputStream());
 
             ByteArrayOutputStream out = new ByteArrayOutputStream();
             StreamResult unnumberXmlResult = new StreamResult(out);
@@ -666,11 +678,9 @@ public class FormsEditor extends DocumentUsecase {
      */
     private String removeParent(String xmlSnippet) {
         String xmlSnippetWithoutParent = xmlSnippet;
-        xmlSnippetWithoutParent = xmlSnippetWithoutParent.substring(xmlSnippetWithoutParent
-                .indexOf(">") + 1);
+        xmlSnippetWithoutParent = xmlSnippetWithoutParent.substring(xmlSnippetWithoutParent.indexOf(">") + 1);
         xmlSnippetWithoutParent = StringUtils.reverse(xmlSnippetWithoutParent);
-        xmlSnippetWithoutParent = xmlSnippetWithoutParent.substring(xmlSnippetWithoutParent
-                .indexOf("<") + 1);
+        xmlSnippetWithoutParent = xmlSnippetWithoutParent.substring(xmlSnippetWithoutParent.indexOf("<") + 1);
         xmlSnippetWithoutParent = StringUtils.reverse(xmlSnippetWithoutParent);
         return xmlSnippetWithoutParent;
     }
@@ -730,6 +740,10 @@ public class FormsEditor extends DocumentUsecase {
             return uri;
         }
 
+    }
+
+    protected String getEvent() {
+        return "edit";
     }
 
 }
