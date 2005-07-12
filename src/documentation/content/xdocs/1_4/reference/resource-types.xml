@@ -37,67 +37,39 @@
 	<p>
 	  All of these can be shared between several resource types.
 	</p>
+	<p>
+	  The information describing a resource type is managed by a
+	  <link href="http://lenya.apache.org/apidocs/1.4/org/apache/lenya/cms/publication/ResourceType.html"><code>ResourceType</code></link>
+	  service. The default implementation is 
+	  <link href="http://lenya.apache.org/apidocs/1.4/org/apache/lenya/cms/publication/ResourceTypeImpl.html"><code>ResourceTypeImpl</code></link>.
+	  It implements <code>ThreadSafe</code>, which ensures that only a single instance of every resource type is created.
+	  It is not possible to declare multiple resource types with the same name. 
+	</p>
 </section>
 
 <section>
   <title>Configuring Resource Types</title>
   
   <p>
-    The configuration files of a resource type are stored in a single directory:
+    Resource types are configured in <code>cocoon.xconf</code>.
+    Typically the configuration is added using an XPatch file:
   </p>
   
-<source xml:space="preserve"><![CDATA[
-doctypes/
-    mydoctype/
-        doctype.xconf                configuration file
-        samples/
-            mydoctype.xml            sample file
-]]></source>
+<source xml:space="preserve"><![CDATA[<xconf xpath="/cocoon/resource-types"
+       unless="/cocoon/resource-types/component-instance[@name = 'xhtml']">
 
-  <p>
-    The schema definition file is stored in the common <code>resources</code> directory.
-    This allows to share schemas between multiple resource types:
-  </p>
+  <component-instance name="xhtml"
+                      logger="lenya.resourcetypes.xhtml"
+                      class="org.apache.lenya.cms.publication.ResourceTypeImpl">
+    <schema src="fallback://lenya/resources/schemas/xhtml.rng"/>
+    <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
+      <sample-name>fallback://lenya/publets/xhtml/samples/xhtml.xml</sample-name>
+    </creator>
+    <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@href"/>
+  </component-instance>
 
-<source xml:space="preserve"><![CDATA[
-resources/
-    schemas/
-        mydoctype.rng
-]]></source>
-  
-  <p>
-    Some resource types are provided by the Lenya core:
-  </p>
-    
-<source xml:space="preserve"><![CDATA[$LENYA_HOME
-    lenya/
-        doctypes/
-            xhtml/...
-            links/...
-        resources/
-            schemas/
-                xhtml.rng
-                links.rng
-                ...
-]]></source>
+</xconf>]]></source>
 
-  <p>
-    To add custom usecases to your publication, use the following directory structure:
-  </p>
-
-<source xml:space="preserve"><![CDATA[$PUB_HOME
-    lenya/
-        doctypes/
-            mydoctype1/...
-            mydoctype2/...
-            ...
-        resources/
-            schemas/
-                mydoctyep1.rng
-                mydoctype2.rng
-                ...
-]]></source>
-  
 </section>
 
 <section>
@@ -119,12 +91,13 @@ resources/
 
   
   <p>
-    You can add references to
+    You can add references to any resource types configured in <code>cocoon.xconf</code>,
+    containing
   </p>
   
   <ul>
-    <li>core resource types,</li>
-    <li>resource types of template publications, or</li>
+    <li>resource types provided by publets,</li>
+    <li>resource types of template publications, and</li>
     <li>resource types of the publication itself.</li>
   </ul>
   
@@ -148,8 +121,8 @@ resources/
       as a template for creating new resources.
     </p>
     <p>
-      The sample document is placed in
-      <code>{publication}/lenya/doctypes/{resource-type-name}/samples/</code>.
+      The sample document is typically placed in
+      <code>{publication}/lenya/resources/samples/</code>.
       You can choose an arbitrary filename, but it is recommended to
       use the resource type name (e.g., <code>profile.xml</code>).
     </p>
@@ -166,7 +139,7 @@ resources/
       the <a href="http://www.bitfluxeditor.org/">BXE</a> WYSIWYG
       editor requires a Relax NG document.
     </p>
-    <p>The structure definition document is placed in the directory
+    <p>The structure definition document is typically placed in the directory
       <code>{publication}/lenya/resources/schemas/</code>. The name
       of the file is arbitrary, but it is recommended to use the
       resource type name (e.g., <code>profile.rng</code>).
@@ -186,15 +159,23 @@ resources/
   
   <section><title>The Resource Type Definition</title>
     <p>
-    To assign the creator, schema etc. to your resource type,
-	  declare it in <code>{publication}/lenya/doctypes/{resource-type-name}/doctype.xconf</code>:
-	  </p>
-<source><![CDATA[<resource-type name="profile">
-  <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
-    <sample-name>profile.xml</sample-name>
-  </creator>
-  <schema src="profile.rng"/>
-</resource-type]]></source>
+    To declare a custom resource type and assign the creator, schema etc. to it,
+	  add the component instance to an XPatch file (e.g., <code>{publication}/config/resourcetypes.xconf</code>):
+    </p>
+    <source><![CDATA[<xconf xpath="/cocoon/resource-types"
+       unless="/cocoon/resource-types/component-instance[@name = 'profile']">
+
+  <component-instance name="profile"
+                      logger="lenya.resourcetypes.profile"
+                      class="org.apache.lenya.cms.publication.ResourceTypeImpl">
+    <schema src="fallback://lenya/resources/schemas/profile.rng"/>
+    <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
+      <sample-name>fallback://lenya/resources/samples/profile.xml</sample-name>
+    </creator>
+    <link-attribute xpath="//*[namespace-uri() = 'http://foo.bar.org/profile']/@href"/>
+  </component-instance>
+
+</xconf>]]></source>
   </section>
   
   <section><title>Define a Custom Menubar</title>
