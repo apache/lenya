@@ -22,6 +22,7 @@
       <browser name="webdav" useragent="UCI"/>
       <browser name="webdav" useragent="DAV"/>
       <browser name="webdav" useragent="dav"/>
+      <browser name="webdav" useragent="Goliath"/>
       <browser name="explorer" useragent="MSIE"/>
       <browser name="mozilla5" useragent="Mozilla/5"/>
       <browser name="mozilla5" useragent="Netscape6/"/>
