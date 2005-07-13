@@ -44,7 +44,7 @@
   <xsl:variable name="document-language"><xsl:value-of select="/usecase:publish/usecase:language"/></xsl:variable>
   <xsl:variable name="task-id"><xsl:value-of select="/usecase:publish/usecase:task-id"/></xsl:variable>
   <xsl:variable name="referer"><xsl:value-of select="/usecase:publish/usecase:referer"/></xsl:variable>
-  <xsl:variable name="contextprefix"><xsl:value-of select="/usecase:contextprefix"/></xsl:variable>
+  <xsl:variable name="contextprefix"><xsl:value-of select="/usecase:publish/usecase:context-prefix"/></xsl:variable>
 
 
   <xsl:template match="/usecase:publish[usecase:message]">

@@ -32,7 +32,7 @@
 <xsl:output version="1.0" indent="yes" encoding="UTF-8"/>
 
 <xsl:param name="lenya.event"/>
-<xsl:variable name="contextprefix"><xsl:value-of select="/usecase:submit/usecase:contextprefix"/></xsl:variable>
+<xsl:variable name="contextprefix"><xsl:value-of select="/usecase:submit/usecase:context-prefix"/></xsl:variable>
 
 <xsl:template match="/usecase:submit">
 
@@ -74,7 +74,7 @@
                     <tr>
                         <td/>
                         <td>
-                            <input i18n:attr="value" type="submit" name="submit" value="Submit" onclick="submit_wait(this.form)"/> &#160;
+                            <input i18n:attr="value" type="submit" name="submit" value="Submit" onclick="wait()"/> &#160;
                             <input i18n:attr="value" type="button" onClick="location.href='{usecase:referer}';" value="Cancel"/>
                         </td>
                     </tr>
