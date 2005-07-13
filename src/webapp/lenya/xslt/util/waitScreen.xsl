@@ -23,9 +23,19 @@
     >
 
   <xsl:template name="wait_script">
-    <script src="{$contextprefix}/lenya/javascript/wait.js" type="text/javascript">
-    <xsl:comment>  
-    </xsl:comment>
+    <script type="text/javascript">
+      CONTEXT_PREFIX = "<xsl:value-of select="$contextprefix"/>";
+      function wait()
+        {
+          document.getElementById("pleasewaitScreen").style.visibility = "visible";
+          setTimeout("reloadImage()", 200); 
+        }
+
+      function reloadImage()
+        {
+          var imgPath = CONTEXT_PREFIX + "/lenya/images/wait.gif" ;
+          document.images['waitPicture'].src = imgPath; 
+        }
     </script>
   </xsl:template>
    
@@ -35,7 +45,7 @@
         <tr>
           <td width="100%" height="100%" bgcolor="#E5F5F8" align="center" valign="middle">
             <b><i18n:text>please_wait</i18n:text></b> <br/> <br/>
-            <img src="{$contextprefix}/lenya/images/wait.gif" alt="Please wait"/>
+            <img src="{$contextprefix}/lenya/images/wait.gif" alt="Please wait" id="waitPicture"/>
           </td>
         </tr>
       </table>

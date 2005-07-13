@@ -43,7 +43,6 @@
       <head>
         
         <link href="{$contextprefix}/lenya/css/default.css" rel="stylesheet" type="text/css"/>
-        <xsl:call-template name="wait_script"/>   
         <!-- These three scripts define the tree, do not remove-->
         <script src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/tree.js" type="text/javascript" />
         <script src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/navtree.js" type="text/javascript" />
@@ -66,6 +65,7 @@
           };
        
          </script>
+         <xsl:call-template name="wait_script"/>   
 
       </head>
 

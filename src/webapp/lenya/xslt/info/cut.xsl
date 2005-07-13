@@ -28,7 +28,7 @@
 
   <xsl:output version="1.0" indent="yes" encoding="UTF-8"/>
   
-  <xsl:variable name="contextprefix"><xsl:value-of select="/page/info/contextprefix"/></xsl:variable>
+  <xsl:variable name="contextprefix"><xsl:value-of select="/page/info/context-prefix"/></xsl:variable>
   <xsl:variable name="request-uri"><xsl:value-of select="/page/info/request-uri"/></xsl:variable>
   <xsl:variable name="document-id"><xsl:value-of select="/page/info/document-id"/></xsl:variable>
   <xsl:variable name="area"><xsl:value-of select="/page/info/area"/></xsl:variable>
@@ -78,7 +78,7 @@
           	<tr>
           		<td>
           			<br/>
-                    <input i18n:attr="value" type="submit" value="Cut" onclick="submit_wait(this.form)"/>&#160;
+                    <input i18n:attr="value" type="submit" value="Cut" onclick="wait()"/>&#160;
                     <input i18n:attr="value" type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
           		</td>
           	</tr>

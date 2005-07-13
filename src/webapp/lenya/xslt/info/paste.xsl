@@ -29,7 +29,7 @@
   
   <xsl:output version="1.0" indent="yes" encoding="UTF-8"/>
   
-  <xsl:variable name="contextprefix"><xsl:value-of select="/page/info/contextprefix"/></xsl:variable>
+  <xsl:variable name="contextprefix"><xsl:value-of select="/page/info/context-prefix"/></xsl:variable>
   <xsl:variable name="request-uri"><xsl:value-of select="/page/info/request-uri"/></xsl:variable>
   <xsl:variable name="first-document-id"><xsl:value-of select="/page/info/first-document-id"/></xsl:variable>
   <xsl:variable name="sec-document-id"><xsl:value-of select="/page/info/sec-document-id"/></xsl:variable>
@@ -88,7 +88,7 @@
           	<tr>
           		<td>
           			<br/>
-                    <input i18n:attr="value" type="submit" value="Paste" onclick="submit_wait(this.form)"/>&#160;
+                    <input i18n:attr="value" type="submit" value="Paste" onclick="wait()"/>&#160;
 					<input i18n:attr="value" type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
           		</td>
           	</tr>

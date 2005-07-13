@@ -30,7 +30,7 @@
   
   <xsl:param name="lenya.event"/>
   
-  <xsl:variable name="contextprefix"><xsl:value-of select="/page/info/contextprefix"/></xsl:variable>
+  <xsl:variable name="contextprefix"><xsl:value-of select="/page/info/context-prefix"/></xsl:variable>
   <xsl:variable name="document-id"><xsl:value-of select="/page/info/document-id"/></xsl:variable>
   <xsl:variable name="dest-document-id"><xsl:value-of select="/page/info/dest-document-id"/></xsl:variable>
   <xsl:variable name="area"><xsl:value-of select="/page/info/area"/></xsl:variable>
@@ -77,7 +77,7 @@
           <p>
  	      Do you really want to restore <xsl:value-of select="document-id"/>?
           </p>
-          <input type="submit" value="Restore" onclick="submit_wait(this.form)"/>&#160;
+          <input type="submit" value="Restore" onclick="wait()"/>&#160;
           <input type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
         </form>
     	</xsl:otherwise>

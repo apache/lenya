@@ -31,7 +31,7 @@
   <xsl:output encoding="UTF-8" indent="yes" version="1.0"/>
   
   <xsl:variable name="contextprefix">
-    <xsl:value-of select="/page/info/contextprefix"/>
+    <xsl:value-of select="/page/info/context-prefix"/>
   </xsl:variable>
   
   <xsl:variable name="document-id">
@@ -100,7 +100,7 @@
             <tr>
               <td/>
               <td>
-                <input i18n:attr="value" type="submit" value="Yes" onclick="submit_wait(this.form)"/> &#160;
+                <input i18n:attr="value" type="submit" value="Yes" onclick="wait()"/> &#160;
                 <input i18n:attr="value" onClick="location.href='{$request-uri}';" type="button" value="Cancel"/>
               </td>
             </tr>

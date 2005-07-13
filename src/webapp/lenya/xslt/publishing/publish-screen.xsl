@@ -164,7 +164,7 @@
                 <tr>
                   <td/>
                   <td>
-                    <input i18n:attr="value" type="submit" value="Publish" onclick="submit_wait(this.form)"/>&#160;
+                    <input i18n:attr="value" type="submit" value="Publish" onclick="wait()"/>&#160;
                     <input i18n:attr="value" type="button" onClick="location.href='{$referer}';" value="Cancel"/>
                   </td>
                 </tr>
