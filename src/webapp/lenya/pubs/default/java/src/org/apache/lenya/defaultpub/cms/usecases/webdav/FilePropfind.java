@@ -17,6 +17,7 @@
 package org.apache.lenya.defaultpub.cms.usecases.webdav;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Vector;
 
 import org.apache.avalon.framework.service.ServiceSelector;
@@ -43,6 +44,7 @@ public class FilePropfind extends SiteUsecase {
 	protected static final String DOCUMENT = "document";
 	protected static final String DOCUMENTS = "documents";
     protected static final String SOURCEURL = "sourceURL";
+    protected static final String DATEFORMAT = "dateFormat";    
     protected static final String RC = "rc";
 
     /**
@@ -88,6 +90,8 @@ public class FilePropfind extends SiteUsecase {
             setParameter(DOCUMENTS, docs);
             setParameter(RC, checkedOut);
             setParameter(SOURCEURL,request);
+            SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss zzz");
+            setParameter(DATEFORMAT, format);
 
         } catch (Exception e) {
             throw new RuntimeException(e);

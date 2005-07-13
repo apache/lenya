@@ -146,7 +146,7 @@ public class Propfind extends SiteUsecase {
             setParameter(DOCUMENTS, docs);
             setParameter(RC, checkedOut);
             setParameter(SOURCEURL,request);
-            SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss");
+            SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss zzz");
             setParameter(DATEFORMAT, format);
             Date rootModDate = new Date();
             setParameter("rootModDate",rootModDate);

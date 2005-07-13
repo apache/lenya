@@ -3,7 +3,7 @@
                xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
                xmlns:collection="http://apache.org/cocoon/collection/1.0"> --&gt;
       <jx:set var="sourceURL" value="${usecase.getParameter('sourceURL')}" />
-   
+      <jx:set var="dateFormat" value="${usecase.getParameter('dateFormat')}"/>  
       <jx:set var="checkedOut" value="${usecase.getParameter('rc')}" />   
       <jx:forEach var="doc" items="${usecase.getParameter('documents')}" varStatus="status">
        <jx:if test="${doc.getId()}">
@@ -12,7 +12,7 @@
               <D:propstat>
                 <D:prop>
                   <D:displayname>${doc.getName()}_${doc.getLanguage()}.html</D:displayname>
-                  <D:getlastmodified>${doc.getLastModified()}</D:getlastmodified>
+                  <D:getlastmodified>${dateFormat.format(doc.getLastModified())}</D:getlastmodified>
                   <D:creationdate />
                   <D:getcontenttype>text/html</D:getcontenttype>
                   <D:getcontentlength>${doc.getFile().length()}</D:getcontentlength>
