@@ -39,11 +39,6 @@ public interface UnitOfWork {
     IdentityMap getIdentityMap();
     
     /**
-     * @param map The identity map to use.
-     */
-    void setIdentityMap(IdentityMap map);
-    
-    /**
      * Registers an object as new.
      * @param object The object.
      * @throws TransactionException if an error occurs.

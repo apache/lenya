@@ -26,25 +26,11 @@ public interface IdentityMap {
     /**
      * Retrieve an instance from the map. If no instance exists
      * for the given key, the factory is used to build one.
-     * @see #getFactory(java.lang.String)
-     * @param type The type of the transactionable.
-     * @param key The key for the transactionable.
-     * @return A transactionable.
+     * @param factory The factory that produces the identifable.
+     * @param key The key for the identifiable.
+     * @return An identifiable.
      */
-    Identifiable get(String type, String key);
-
-    /**
-     * Sets the factory.
-     * @param type The transactionable type to use the factory for.
-     * @param factory The factory to use.
-     */
-    void setFactory(String type, IdentifiableFactory factory);
-
-    /**
-     * @param type The type to return the factory for.
-     * @return The factory.
-     */
-    IdentifiableFactory getFactory(String type);
+    Identifiable get(IdentifiableFactory factory, String key);
 
     /**
      * Returns the unit of work. This maybe <code>null</code> if the identity map is not involved

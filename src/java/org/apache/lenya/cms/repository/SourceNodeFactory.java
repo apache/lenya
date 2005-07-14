@@ -49,4 +49,8 @@ public class SourceNodeFactory extends AbstractLogEnabled implements Identifiabl
         return new SourceNode(map, key, this.manager, getLogger());
     }
 
+    public String getType() {
+        return Node.IDENTIFIABLE_TYPE;
+    }
+
 }

@@ -20,7 +20,6 @@ package org.apache.lenya.cms.site.tree;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
@@ -66,13 +65,8 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
 
         String key = getKey(publication, area);
         DefaultSiteTree sitetree;
-        IdentifiableFactory factory = map.getFactory(SiteTree.IDENTIFIABLE_TYPE);
-        if (factory == null) {
-            factory = new SiteTreeFactory(this.manager);
-            ContainerUtil.enableLogging(factory, getLogger());
-            map.setFactory(SiteTree.IDENTIFIABLE_TYPE, factory);
-        }
-        sitetree = (DefaultSiteTree) map.get(SiteTree.IDENTIFIABLE_TYPE, key);
+        IdentifiableFactory factory = new SiteTreeFactory(this.manager, getLogger());
+        sitetree = (DefaultSiteTree) map.getIdentityMap().get(factory, key);
 
         return sitetree;
     }

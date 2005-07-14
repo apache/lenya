@@ -17,7 +17,7 @@
 package org.apache.lenya.transaction;
 
 /**
- * Factory for transactionables.
+ * Factory for identifiables.
  *
  * @version $Id$
  */
@@ -27,9 +27,14 @@ public interface IdentifiableFactory {
      * Builds an identifiable.
      * @param map The identity map.
      * @param key The key.
-     * @return A transactionable.
+     * @return An identifiable.
      * @throws Exception if an error occurs.
      */
     Identifiable build(IdentityMap map, String key) throws Exception;
+    
+    /**
+     * @return The type of the identifables to produce.
+     */
+    String getType();
     
 }

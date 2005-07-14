@@ -16,46 +16,58 @@
  */
 package org.apache.lenya.cms.publication;
 
+import java.io.File;
+
 import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentBuilder;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.transaction.IdentityMapImpl;
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.excalibur.source.SourceUtil;
+import org.apache.lenya.transaction.Identifiable;
 import org.apache.lenya.transaction.IdentifiableFactory;
+import org.apache.lenya.transaction.IdentityMap;
+import org.apache.lenya.transaction.IdentityMapImpl;
 
 /**
  * A DocumentIdentityMap avoids the multiple instanciation of a document object.
  * 
  * @version $Id$
  */
-public class DocumentIdentityMap extends IdentityMapImpl {
+public class DocumentIdentityMap extends AbstractLogEnabled implements IdentifiableFactory {
 
+    private IdentityMap map;
+    protected ServiceManager manager;
+    
+    /**
+     * @return The identity map.
+     */
+    public IdentityMap getIdentityMap() {
+        return this.map;
+    }
+    
     /**
      * Ctor.
+     * @param map The identity map to use.
      * @param manager The service manager.
      * @param logger The logger to use.
      */
-    public DocumentIdentityMap(ServiceManager manager, Logger logger) {
+    public DocumentIdentityMap(IdentityMap map, ServiceManager manager, Logger logger) {
+        this.map = map;
         this.manager = manager;
-        enableLogging(logger);
+        ContainerUtil.enableLogging(this, logger);
     }
 
     /**
-     * @see org.apache.lenya.transaction.IdentityMap#getFactory(java.lang.String)
+     * Ctor.
+     * @param serviceManager The service manager.
+     * @param logger The logger.
      */
-    public IdentifiableFactory getFactory(String type) {
-        IdentifiableFactory factory = super.getFactory(type);
-        if (factory == null && type.equals(Document.TRANSACTIONABLE_TYPE)) {
-            factory = new DocumentFactory(this.manager);
-            ContainerUtil.enableLogging(factory, getLogger());
-            setFactory(type, factory);
-        }
-        return factory;
+    public DocumentIdentityMap(ServiceManager serviceManager, Logger logger) {
+        this(new IdentityMapImpl(logger), serviceManager, logger);
     }
 
     /**
@@ -73,13 +85,12 @@ public class DocumentIdentityMap extends IdentityMapImpl {
         if (getLogger().isDebugEnabled())
             getLogger().debug("DocumentIdentityMap::get() called on publication [" + publication.getId() + "], area [" + area + "], documentId [" + documentId + "], language [" + language + "]");
 
-        DocumentFactory factory = (DocumentFactory) getFactory(Document.TRANSACTIONABLE_TYPE);
-        String key = factory.getKey(publication, area, documentId, language);
+        String key = getKey(publication, area, documentId, language);
 
         if (getLogger().isDebugEnabled())
             getLogger().debug("DocumentIdentityMap::get() got key [" + key + "] from DocumentFactory");
 
-        return (Document) get(Document.TRANSACTIONABLE_TYPE, key);
+        return (Document) getIdentityMap().get(this, key);
     }
 
     /**
@@ -89,13 +100,9 @@ public class DocumentIdentityMap extends IdentityMapImpl {
      * @throws DocumentBuildException if an error occurs.
      */
     public Document getFromURL(String webappUrl) throws DocumentBuildException {
-
-        DocumentFactory factory = (DocumentFactory) getFactory(Document.TRANSACTIONABLE_TYPE);
-        String key = factory.getKey(this, webappUrl);
-        return (Document) get(Document.TRANSACTIONABLE_TYPE, key);
+        String key = getKey(webappUrl);
+        return (Document) getIdentityMap().get(this, key);
     }
-
-    protected ServiceManager manager;
 
     /**
      * Builds a clone of a document for another language.
@@ -231,4 +238,121 @@ public class DocumentIdentityMap extends IdentityMapImpl {
             throw new DocumentBuildException(e);
         }
     }
+
+    /**
+     * Builds a document key.
+     * @param publication The publication.
+     * @param area The area.
+     * @param documentId The document ID.
+     * @param language The language.
+     * @return A key.
+     */
+    public String getKey(Publication publication, String area, String documentId, String language) {
+        return publication.getId() + ":" + area + ":" + documentId + ":" + language;
+    }
+
+    /**
+     * Builds a document key.
+     * @param webappUrl The web application URL.
+     * @return A key.
+     */
+    public String getKey(String webappUrl) {
+        ServiceSelector selector = null;
+        DocumentBuilder builder = null;
+        SourceResolver resolver = null;
+        Source source = null;
+        Document document;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI("context://");
+            File servletContext = SourceUtil.getFile(source);
+
+            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+            URLInformation info = new URLInformation(webappUrl);
+            String publicationId = info.getPublicationId();
+            Publication publication = factory.getPublication(publicationId, servletContext
+                    .getAbsolutePath());
+
+            selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
+            builder = (DocumentBuilder) selector.select(publication.getDocumentBuilderHint());
+            document = builder.buildDocument(this, publication, webappUrl);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (selector != null) {
+                if (builder != null) {
+                    selector.release(builder);
+                }
+                this.manager.release(selector);
+            }
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                this.manager.release(resolver);
+            }
+        }
+        return getKey(document.getPublication(), document.getArea(), document.getId(), document
+                .getLanguage());
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.IdentifiableFactory#build(org.apache.lenya.transaction.IdentityMap,
+     *      java.lang.String)
+     */
+    public Identifiable build(IdentityMap map, String key) throws Exception {
+
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("DocumentFactory::build() called with key [" + key + "]");
+
+        String[] snippets = key.split(":");
+        String publicationId = snippets[0];
+        String area = snippets[1];
+        String documentId = snippets[2];
+        String language = snippets[3];
+
+        ServiceSelector selector = null;
+        DocumentBuilder builder = null;
+        SourceResolver resolver = null;
+        Source source = null;
+        Document document;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI("context://");
+            File servletContext = SourceUtil.getFile(source);
+
+            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+            Publication publication = factory.getPublication(publicationId, servletContext
+                    .getAbsolutePath());
+
+            selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
+            builder = (DocumentBuilder) selector.select(publication.getDocumentBuilderHint());
+            String webappUrl = builder.buildCanonicalUrl(publication, area, documentId, language);
+            document = builder.buildDocument(this, publication, webappUrl);
+        } finally {
+            if (selector != null) {
+                if (builder != null) {
+                    selector.release(builder);
+                }
+                this.manager.release(selector);
+            }
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                this.manager.release(resolver);
+            }
+        }
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("DocumentFactory::build() done.");
+
+        return document;
+    }
+
+    /**    * @see org.apache.lenya.transaction.IdentifiableFactory#getType()
+     */
+    public String getType() {
+        return Document.TRANSACTIONABLE_TYPE;
+    }
+
 }

@@ -41,7 +41,6 @@ import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.UnitOfWork;
 
 /**
@@ -131,12 +130,12 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
                 path = path.substring(1);
             }
 
-            IdentityMap map = null;
+            DocumentIdentityMap map = null;
 
             Request request = ContextHelper.getRequest(this.context);
             UnitOfWork unit = (UnitOfWork) request.getAttribute(UnitOfWork.class.getName());
             if (unit != null) {
-                map = unit.getIdentityMap();
+                map = new DocumentIdentityMap(unit.getIdentityMap(), this.manager, getLogger());
             } else {
                 map = new DocumentIdentityMap(this.manager, getLogger());
             }
@@ -146,7 +145,7 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
             }
 
             //            path = this.delegationScheme + this.delegationPrefix + path;
-            return new RepositorySource(this.manager, location, map, getLogger());
+            return new RepositorySource(this.manager, location, map.getIdentityMap(), getLogger());
 
             //            return sourceResolver.resolveURI(path);
 

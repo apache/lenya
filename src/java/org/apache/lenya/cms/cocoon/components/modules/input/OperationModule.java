@@ -66,7 +66,6 @@ public class OperationModule extends AbstractInputModule implements Operation, S
                getLogger().debug("OperationModule.getUnitOfWork() does not yet have instance.");
 
            this.unitOfWork = new UnitOfWorkImpl();
-           this.unitOfWork.setIdentityMap(getDocumentIdentityMap());
         }
 
         return this.unitOfWork;

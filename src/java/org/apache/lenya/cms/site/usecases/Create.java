@@ -114,7 +114,7 @@ public abstract class Create extends AbstractUsecase {
 
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
-            DocumentIdentityMap map = (DocumentIdentityMap) getUnitOfWork().getIdentityMap();
+            DocumentIdentityMap map = getDocumentIdentityMap();
             Document document = map.get(getPublication(), getArea(), getNewDocumentId(),
                     getParameterAsString(LANGUAGE));
 

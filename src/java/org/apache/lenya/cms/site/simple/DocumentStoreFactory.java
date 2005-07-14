@@ -18,7 +18,9 @@ package org.apache.lenya.cms.site.simple;
 
 import java.io.File;
 
+import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
@@ -33,7 +35,7 @@ import org.apache.lenya.transaction.IdentifiableFactory;
 /**
  * Factory for sitetree objects.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class DocumentStoreFactory extends AbstractLogEnabled implements IdentifiableFactory {
 
@@ -42,9 +44,11 @@ public class DocumentStoreFactory extends AbstractLogEnabled implements Identifi
     /**
      * Ctor.
      * @param manager The service manager.
+     * @param logger The logger.
      */
-    public DocumentStoreFactory(ServiceManager manager) {
+    public DocumentStoreFactory(ServiceManager manager, Logger logger) {
         this.manager = manager;
+        ContainerUtil.enableLogging(this, logger);
     }
 
     /**
@@ -68,7 +72,8 @@ public class DocumentStoreFactory extends AbstractLogEnabled implements Identifi
             Publication publication = factory.getPublication(publicationId, servletContext
                     .getAbsolutePath());
 
-            store = new DocumentStore(this.manager, (DocumentIdentityMap) map, publication, area,
+            DocumentIdentityMap docMap = new DocumentIdentityMap(map, this.manager, getLogger());
+            store = new DocumentStore(this.manager, docMap, publication, area,
                     getLogger());
 
         } finally {
@@ -80,6 +85,13 @@ public class DocumentStoreFactory extends AbstractLogEnabled implements Identifi
             }
         }
         return store;
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.IdentifiableFactory#getType()
+     */
+    public String getType() {
+        return DocumentStore.IDENTIFIABLE_TYPE;
     }
 
 }

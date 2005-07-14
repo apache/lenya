@@ -22,21 +22,29 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 
 /**
  * Identity map implementation.
  * 
  * @version $Id$
  */
-public class IdentityMapImpl extends AbstractLogEnabled implements IdentityMap {
+public final class IdentityMapImpl extends AbstractLogEnabled implements IdentityMap {
 
     private Map maps = new HashMap();
-
+    
     /**
-     * @see org.apache.lenya.transaction.IdentityMap#get(java.lang.String, java.lang.String)
+     * Ctor.
+     * @param logger The logger.
      */
-    public Identifiable get(String type, String key) {
+    public IdentityMapImpl(Logger logger) {
+        ContainerUtil.enableLogging(this, logger);
+    }
+
+    public Identifiable get(IdentifiableFactory factory, String key) {
+        String type = factory.getType();
         Map map = (Map) this.maps.get(type);
         if (map == null) {
             map = new HashMap();
@@ -45,34 +53,18 @@ public class IdentityMapImpl extends AbstractLogEnabled implements IdentityMap {
         Identifiable object = (Identifiable) map.get(key);
 
         if (getLogger().isDebugEnabled())
-            getLogger().debug("IdentityMapImpl::get() looked up type [" + type + "], key [" + key + "] in map, is it there ? " + (object != null));
+            getLogger().debug("IdentityMapImpl::get() looked up type [" + type + "], key [" + key
+                    + "] in map, is it there ? " + (object != null));
 
         if (object == null) {
             try {
-                object = getFactory(type).build(this, key);
+                object = factory.build(this, key);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
             map.put(key, object);
         }
         return object;
-    }
-
-    private Map factories = new HashMap();
-
-    /**
-     * @see org.apache.lenya.transaction.IdentityMap#setFactory(java.lang.String,
-     *      org.apache.lenya.transaction.IdentifiableFactory)
-     */
-    public void setFactory(String type, IdentifiableFactory factory) {
-        this.factories.put(type, factory);
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.IdentityMap#getFactory(java.lang.String)
-     */
-    public IdentifiableFactory getFactory(String type) {
-        return (IdentifiableFactory) this.factories.get(type);
     }
 
     private UnitOfWork unitOfWork;
@@ -96,9 +88,9 @@ public class IdentityMapImpl extends AbstractLogEnabled implements IdentityMap {
      */
     public Identifiable[] getObjects() {
         Set objects = new HashSet();
-        for (Iterator i = this.maps.values().iterator(); i.hasNext(); ) {
+        for (Iterator i = this.maps.values().iterator(); i.hasNext();) {
             Map map = (Map) i.next();
-            for (Iterator j = map.values().iterator(); j.hasNext(); ) {
+            for (Iterator j = map.values().iterator(); j.hasNext();) {
                 objects.add(j.next());
             }
         }

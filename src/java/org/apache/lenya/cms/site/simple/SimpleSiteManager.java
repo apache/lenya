@@ -16,7 +16,6 @@
  */
 package org.apache.lenya.cms.site.simple;
 
-import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
@@ -106,13 +105,8 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
     protected DocumentStore getStore(DocumentIdentityMap map, Publication publication, String area) {
         String key = getKey(publication, area);
         DocumentStore store;
-        IdentifiableFactory factory = map.getFactory(DocumentStore.IDENTIFIABLE_TYPE);
-        if (factory == null) {
-            factory = new DocumentStoreFactory(this.manager);
-            ContainerUtil.enableLogging(factory, getLogger());
-            map.setFactory(DocumentStore.IDENTIFIABLE_TYPE, factory);
-        }
-        store = (DocumentStore) map.get(DocumentStore.IDENTIFIABLE_TYPE, key);
+        IdentifiableFactory factory = new DocumentStoreFactory(this.manager, getLogger());
+        store = (DocumentStore) map.getIdentityMap().get(factory, key);
 
         return store;
     }

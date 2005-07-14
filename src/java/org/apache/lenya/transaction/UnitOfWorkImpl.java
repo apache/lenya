@@ -42,15 +42,11 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
      * @see org.apache.lenya.transaction.UnitOfWork#getIdentityMap()
      */
     public IdentityMap getIdentityMap() {
+        if (this.identityMap == null) {
+            this.identityMap = new IdentityMapImpl(getLogger());
+            this.identityMap.setUnitOfWork(this);
+        }
         return this.identityMap;
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.UnitOfWork#setIdentityMap(org.apache.lenya.transaction.IdentityMap)
-     */
-    public void setIdentityMap(IdentityMap map) {
-        this.identityMap = map;
-        map.setUnitOfWork(this);
     }
 
     private Set newObjects = new HashSet();

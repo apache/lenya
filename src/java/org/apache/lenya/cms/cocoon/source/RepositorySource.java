@@ -33,7 +33,7 @@ import org.apache.lenya.transaction.TransactionException;
 /**
  * Repository source.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class RepositorySource extends AbstractSource implements ModifiableSource,
         TransactionableSource {
@@ -56,6 +56,10 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
             throws SourceException, MalformedURLException {
         this.manager = manager;
         this.logger = logger;
+
+        if (map == null) {
+            throw new IllegalArgumentException("The identity map must not be null!");
+        }
         this.identityMap = map;
 
         if (uri == null) {
@@ -68,8 +72,8 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
         int start = 0;
         int end = uri.indexOf(':');
         if (end == -1)
-            throw new MalformedURLException(
-                    "Malformed uri for xmodule source (cannot find scheme) : " + uri);
+            throw new MalformedURLException("Malformed uri for xmodule source (cannot find scheme) : "
+                    + uri);
 
         String scheme = uri.substring(start, end);
         if (!SCHEME.equals(scheme))
@@ -77,11 +81,8 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
 
         setScheme(scheme);
 
-        if (map.getFactory(Node.IDENTIFIABLE_TYPE) == null) {
-            map.setFactory(Node.IDENTIFIABLE_TYPE, new SourceNodeFactory(this.manager, logger));
-        }
-
-        this.node = (Node) map.get(Node.IDENTIFIABLE_TYPE, uri);
+        SourceNodeFactory factory = new SourceNodeFactory(this.manager, getLogger());
+        this.node = (Node) map.get(factory, uri);
     }
 
     /**
@@ -102,6 +103,9 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
         try {
             if (!this.node.isLocked()) {
                 throw new RuntimeException("Cannot write to source [" + getURI() + "]: not locked!");
+            }
+            if (this.identityMap.getUnitOfWork() == null) {
+                throw new RuntimeException("Cannot write to source outside of a transaction (UnitOfWork is null)!");
             }
             this.identityMap.getUnitOfWork().registerDirty(this.node);
             return this.node.getOutputStream();
@@ -176,8 +180,8 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
                 try {
                     transform(doc, pos);
                 } catch (TransformerException e) {
-                    throw new RuntimeException(
-                            "Failed to tranform org.w3c.dom.Document to PipedOutputStream", e);
+                    throw new RuntimeException("Failed to tranform org.w3c.dom.Document to PipedOutputStream",
+                            e);
                 } finally {
                     try {
                         pos.close();
@@ -186,13 +190,13 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
                     }
                 }
             }
-        }, getClass().getName() + ".convert(org.w3c.dom.Document edoc)")).start();
+        },
+                getClass().getName() + ".convert(org.w3c.dom.Document edoc)")).start();
 
         return pis;
     }
 
-    void transform(org.w3c.dom.Document edoc, PipedOutputStream pos)
-            throws TransformerException {
+    void transform(org.w3c.dom.Document edoc, PipedOutputStream pos) throws TransformerException {
 
         TransformerFactory tFactory = TransformerFactory.newInstance();
         Transformer transformer = tFactory.newTransformer();

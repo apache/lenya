@@ -20,6 +20,7 @@ import java.io.File;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
@@ -42,9 +43,11 @@ public class SiteTreeFactory extends AbstractLogEnabled implements IdentifiableF
     /**
      * Ctor.
      * @param manager The service manager.
+     * @param logger The logger.
      */
-    public SiteTreeFactory(ServiceManager manager) {
+    public SiteTreeFactory(ServiceManager manager, Logger logger) {
         this.manager = manager;
+        ContainerUtil.enableLogging(this, logger);
     }
 
     /**
@@ -80,6 +83,13 @@ public class SiteTreeFactory extends AbstractLogEnabled implements IdentifiableF
             }
         }
         return tree;
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.IdentifiableFactory#getType()
+     */
+    public String getType() {
+        return SiteTree.IDENTIFIABLE_TYPE;
     }
 
 }

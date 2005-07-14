@@ -36,6 +36,7 @@ import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.transaction.AbstractOperation;
+import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.LockException;
 import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.transaction.Transactionable;
@@ -462,12 +463,18 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
         return (Part) getParameter(name);
     }
 
+    private DocumentIdentityMap documentFactory;
+
     protected DocumentIdentityMap getDocumentIdentityMap() {
-        try {
-            return (DocumentIdentityMap) getUnitOfWork().getIdentityMap();
-        } catch (ServiceException e) {
-            throw new RuntimeException(e);
+        if (this.documentFactory == null) {
+            try {
+                IdentityMap map = getUnitOfWork().getIdentityMap();
+                this.documentFactory = new DocumentIdentityMap(map, this.manager, getLogger());
+            } catch (ServiceException e) {
+                throw new RuntimeException(e);
+            }
         }
+        return this.documentFactory;
     }
 
     /**
@@ -475,8 +482,6 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
      */
     public final void initialize() throws Exception {
         super.initialize();
-        DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
-        getUnitOfWork().setIdentityMap(map);
         Request request = ContextHelper.getRequest(this.context);
         Session session = request.getSession(true);
         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
