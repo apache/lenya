@@ -133,6 +133,7 @@
   	<condition property="servlet.engine.tomcat">
       <equals arg1="${web.app.server}" arg2="Tomcat"/>
     </condition>
+    <antcall target="install-tomcat"/>
     <antcall target="successfully-built-message-tomcat"/>
 
     <condition property="servlet.engine.jetty">
@@ -146,7 +147,8 @@
   <target name="copy-cocoon.xconf" if="cocoon.xconf.copy">
     <copy
        file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
-       toFile="${build.webapp}/WEB-INF/cocoon.xconf"/>
+       toFile="${build.webapp}/WEB-INF/cocoon.xconf"
+       overwrite="true"/>
   </target>
 
   <!--
@@ -178,7 +180,7 @@
   </target>
 
   <!-- Install the webapp -->
-  <target name="install" depends="webapp" description="Install the webapp into servlet engine context">
+  <target name="install-tomcat" description="Install the webapp into Tomcat servlet engine context" if="servlet.engine.tomcat">
     <!-- Copy From build.webapp=${build.webapp} To tomcat.webapps.dir=${tomcat.webapps.dir} -->
     <copy todir="${tomcat.webapps.dir}" filtering="off">
       <fileset dir="${build.webapp}" excludes="${target.install.excludes}"/>
