@@ -45,8 +45,8 @@ import org.apache.lenya.cms.publication.DocumentBuilder;
  */
 public class Propfind extends SiteUsecase {
 
-	protected static final String DOCUMENT = "document";
-	protected static final String DOCUMENTS = "documents";
+    protected static final String DOCUMENT = "document";
+    protected static final String DOCUMENTS = "documents";
     protected static final String SOURCEURL = "sourceURL";
     protected static final String DATEFORMAT = "dateFormat";
     protected static final String RC = "rc";
@@ -63,7 +63,7 @@ public class Propfind extends SiteUsecase {
      */
     protected void initParameters() {
         super.initParameters();
- 
+
         Publication _publication = this.getPublication();
 
         ServiceSelector selector = null;
@@ -72,14 +72,14 @@ public class Propfind extends SiteUsecase {
         DocumentBuilder docBuilder = null;
         Vector docs = new Vector();
         Vector checkedOut = new Vector();
-         
+
         String request = getSourceURL();
-        if(request.endsWith(".html"))
-        	request = request.substring(0,request.indexOf(".html"));
-        if(!request.endsWith("/"))
-        	request = request+"/";
+        if (request.endsWith(".html"))
+            request = request.substring(0, request.indexOf(".html"));
+        if (!request.endsWith("/"))
+            request = request + "/";
         try {
-            //get Parameters for RC
+            // get Parameters for RC
             String publicationPath = _publication.getDirectory().getCanonicalPath();
             RCEnvironment rcEnvironment = RCEnvironment.getInstance(_publication.getServletContext()
                     .getCanonicalPath());
@@ -89,70 +89,78 @@ public class Propfind extends SiteUsecase {
             backupDirectory = publicationPath + File.separator + backupDirectory;
 
             // Initialize Revision Controller
-            RevisionController rc = new RevisionController(rcmlDirectory, backupDirectory, publicationPath);        	
-        	
-        	selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            RevisionController rc = new RevisionController(rcmlDirectory,
+                    backupDirectory,
+                    publicationPath);
+
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(_publication.getSiteManagerHint());
-            Document[] documents = siteManager.getDocuments(getDocumentIdentityMap(),_publication,this.getArea());
+            Document[] documents = siteManager.getDocuments(getDocumentIdentityMap(),
+                    _publication,
+                    this.getArea());
 
             selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
             docBuilder = (DocumentBuilder) selector.select(_publication.getDocumentBuilderHint());
-            
-            for(int i=0; i< documents.length; i++) {
-            	String test = documents[i].getCanonicalWebappURL().replaceFirst("/[^/]*.html","");
-                if(!test.endsWith("/"))
-                	test = test+"/";
-            	if(test.equals(request)){
+
+            for (int i = 0; i < documents.length; i++) {
+                String test = documents[i].getCanonicalWebappURL().replaceFirst("/[^/]*.html", "");
+                if (!test.endsWith("/"))
+                    test = test + "/";
+                if (test.equals(request)) {
                     docs.add(documents[i]);
 
-            		String filename = documents[i].getFile().getCanonicalPath();
-            		filename = filename.substring(publicationPath.length());
-                    RCMLEntry entry = rc.getRCML(filename).getLatestEntry();                    
-                    if ((entry != null) && (entry.getType() == RCML.co) )
-                    	checkedOut.add(entry);
-                    else 
-                    	checkedOut.add(null);
-                    //get additional language documents
+                    String filename = documents[i].getFile().getCanonicalPath();
+                    filename = filename.substring(publicationPath.length());
+                    RCMLEntry entry = rc.getRCML(filename).getLatestEntry();
+                    if ((entry != null) && (entry.getType() == RCML.co))
+                        checkedOut.add(entry);
+                    else
+                        checkedOut.add(null);
+                    // get additional language documents
                     String[] langs = documents[i].getLanguages();
-                    for(int j=0; j< langs.length; j++) {
-                    	if(!(langs[j].equals(documents[i].getLanguage()))) {
-                    		String url = documents[i].getCanonicalWebappURL().replaceFirst(".html$","_"+langs[j]+".html");
-                    		Document langDoc = docBuilder.buildDocument(documents[i].getIdentityMap(),_publication,url);
-                    		docs.add(langDoc);
+                    for (int j = 0; j < langs.length; j++) {
+                        if (!(langs[j].equals(documents[i].getLanguage()))) {
+                            String url = documents[i].getCanonicalWebappURL()
+                                    .replaceFirst(".html$", "_" + langs[j] + ".html");
+                            Document langDoc = docBuilder.buildDocument(documents[i].getIdentityMap(),
+                                    _publication,
+                                    url);
+                            docs.add(langDoc);
 
-                    		filename = langDoc.getFile().getCanonicalPath();
-                    		filename = filename.substring(publicationPath.length());
-                            entry = rc.getRCML(filename).getLatestEntry();                    
-                            if ((entry != null) && (entry.getType() == RCML.co) )
-                            	checkedOut.add(entry);
-                            else 
-                            	checkedOut.add(null);
-                    	}
+                            filename = langDoc.getFile().getCanonicalPath();
+                            filename = filename.substring(publicationPath.length());
+                            entry = rc.getRCML(filename).getLatestEntry();
+                            if ((entry != null) && (entry.getType() == RCML.co))
+                                checkedOut.add(entry);
+                            else
+                                checkedOut.add(null);
+                        }
                     }
-            	}
-            }
-             
-            //get assets if we are currently looking at a document            		
-            if (!request.equals("/"+_publication.getId()+"/authoring/")) {
-                String url = request.substring(0,request.length()-1)+".html";
-    		    Document currentDoc = docBuilder.buildDocument(getDocumentIdentityMap(),_publication,url);
-                if (currentDoc.exists()) {
-    		        resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
-                    Resource[] resources = resourcesManager.getResources(currentDoc);
-                    setParameter("assets", Arrays.asList(resources)); 
                 }
             }
-              
+
+            // get assets if we are currently looking at a document
+            if (!request.equals("/" + _publication.getId() + "/authoring/")) {
+                String url = request.substring(0, request.length() - 1) + ".html";
+                Document currentDoc = docBuilder.buildDocument(getDocumentIdentityMap(),
+                        _publication,
+                        url);
+                if (currentDoc.exists()) {
+                    resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
+                    Resource[] resources = resourcesManager.getResources(currentDoc);
+                    setParameter("assets", Arrays.asList(resources));
+                }
+            }
+
             setParameter(DOCUMENTS, docs);
             setParameter(RC, checkedOut);
-            setParameter(SOURCEURL,request);
+            setParameter(SOURCEURL, request);
             SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss zzz");
             setParameter(DATEFORMAT, format);
             Date rootModDate = new Date();
-            setParameter("rootModDate",rootModDate);
+            setParameter("rootModDate", rootModDate);
             String defaultLang = _publication.getDefaultLanguage();
-            setParameter("defaultLang",defaultLang);
-            
+            setParameter("defaultLang", defaultLang);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -195,5 +203,5 @@ public class Propfind extends SiteUsecase {
         }
         return this.publication;
     }
-	
+
 }

@@ -78,10 +78,11 @@ public class Put extends DocumentUsecase {
 
                     documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
-                    DocumentIdentityMap map = (DocumentIdentityMap) getUnitOfWork()
-                            .getIdentityMap();
-                    Document document = map.get(getPublication(), doc.getArea(), doc.getId(), doc
-                            .getLanguage());
+                    DocumentIdentityMap map = (DocumentIdentityMap) getUnitOfWork().getIdentityMap();
+                    Document document = map.get(getPublication(),
+                            doc.getArea(),
+                            doc.getId(),
+                            doc.getLanguage());
 
                     resourceType = (ResourceType) selector.select("xhtml");
                     documentManager.add(document, resourceType, doc.getName(), null);
@@ -130,10 +131,8 @@ public class Put extends DocumentUsecase {
                         + "] does not exist.");
             }
 
-            InputSource schemaInputSource = org.apache.cocoon.components.source.SourceUtil
-                    .getInputSource(schemaSource);
-            InputSource xmlInputSource = org.apache.cocoon.components.source.SourceUtil
-                    .getInputSource(tempSource);
+            InputSource schemaInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(schemaSource);
+            InputSource xmlInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(tempSource);
 
             String message = RelaxNG.validate(schemaInputSource, xmlInputSource);
             if (message != null) {
@@ -171,7 +170,7 @@ public class Put extends DocumentUsecase {
 
             SiteStructure structure = SiteUtil.getSiteStructure(this.manager, getSourceDocument());
             nodes.add(structure.getRepositoryNode());
-            
+
             return (Transactionable[]) nodes.toArray(new Transactionable[nodes.size()]);
 
         } catch (Exception e) {
@@ -182,10 +181,8 @@ public class Put extends DocumentUsecase {
     /**
      * Sets the meta data of the created document.
      * 
-     * @param document
-     *            The document.
-     * @throws DocumentException
-     *             if an error occurs.
+     * @param document The document.
+     * @throws DocumentException if an error occurs.
      */
     protected void setMetaData(Document document) throws DocumentException {
 
@@ -207,10 +204,9 @@ public class Put extends DocumentUsecase {
     private Publication publication;
 
     /**
-     * Access to the current publication. Use this when the publication is not
-     * yet known in the usecase: e.g. when creating a global asset. When adding
-     * a resource or a child to a document, access the publication via that
-     * document's interface instead.
+     * Access to the current publication. Use this when the publication is not yet known in the
+     * usecase: e.g. when creating a global asset. When adding a resource or a child to a document,
+     * access the publication via that document's interface instead.
      * 
      * @return the publication in which the use-case is being executed
      */

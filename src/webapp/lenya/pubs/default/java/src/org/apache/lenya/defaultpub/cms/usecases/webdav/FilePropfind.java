@@ -41,10 +41,10 @@ import org.apache.lenya.cms.publication.DocumentBuilder;
  */
 public class FilePropfind extends SiteUsecase {
 
-	protected static final String DOCUMENT = "document";
-	protected static final String DOCUMENTS = "documents";
+    protected static final String DOCUMENT = "document";
+    protected static final String DOCUMENTS = "documents";
     protected static final String SOURCEURL = "sourceURL";
-    protected static final String DATEFORMAT = "dateFormat";    
+    protected static final String DATEFORMAT = "dateFormat";
     protected static final String RC = "rc";
 
     /**
@@ -60,11 +60,11 @@ public class FilePropfind extends SiteUsecase {
         DocumentBuilder docBuilder = null;
         Vector docs = new Vector();
         Vector checkedOut = new Vector();
-         
+
         String request = getSourceURL();
 
         try {
-            //get Parameters for RC
+            // get Parameters for RC
             String publicationPath = _publication.getDirectory().getCanonicalPath();
             RCEnvironment rcEnvironment = RCEnvironment.getInstance(_publication.getServletContext()
                     .getCanonicalPath());
@@ -74,22 +74,24 @@ public class FilePropfind extends SiteUsecase {
             backupDirectory = publicationPath + File.separator + backupDirectory;
 
             // Initialize Revision Controller
-            RevisionController rc = new RevisionController(rcmlDirectory, backupDirectory, publicationPath);        	
-        	
-            Document doc = getTargetDocument(false); 
+            RevisionController rc = new RevisionController(rcmlDirectory,
+                    backupDirectory,
+                    publicationPath);
+
+            Document doc = getTargetDocument(false);
             docs.add(doc);
-            
+
             String filename = doc.getFile().getCanonicalPath();
             filename = filename.substring(publicationPath.length());
-            RCMLEntry entry = rc.getRCML(filename).getLatestEntry();                    
-            if ((entry != null) && (entry.getType() == RCML.co) )
-              	checkedOut.add(entry);
-            else 
-               	checkedOut.add(null);
+            RCMLEntry entry = rc.getRCML(filename).getLatestEntry();
+            if ((entry != null) && (entry.getType() == RCML.co))
+                checkedOut.add(entry);
+            else
+                checkedOut.add(null);
 
             setParameter(DOCUMENTS, docs);
             setParameter(RC, checkedOut);
-            setParameter(SOURCEURL,request);
+            setParameter(SOURCEURL, request);
             SimpleDateFormat format = new SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss zzz");
             setParameter(DATEFORMAT, format);
 
@@ -128,7 +130,7 @@ public class FilePropfind extends SiteUsecase {
         }
         return document;
     }
-    
+
     private Publication publication;
 
     /**
@@ -149,5 +151,5 @@ public class FilePropfind extends SiteUsecase {
         }
         return this.publication;
     }
-	
+
 }
