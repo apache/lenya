@@ -36,8 +36,8 @@ public class CreateDocument extends Create {
     protected static final String RELATION = "relation";
     protected static final String RELATIONS = "relations";
     protected static final String RELATION_CHILD = "child";
-    protected static final String RELATION_BEFORE = "before";
-    protected static final String RELATION_AFTER = "after";
+    protected static final String RELATION_BEFORE = "sibling before";
+    protected static final String RELATION_AFTER = "sibling after";
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
