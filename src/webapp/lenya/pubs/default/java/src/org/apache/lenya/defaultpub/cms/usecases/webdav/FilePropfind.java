@@ -20,19 +20,16 @@ import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Vector;
 
-import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.rc.RCMLEntry;
 import org.apache.lenya.cms.rc.RevisionController;
-import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.publication.DocumentBuilder;
 
 /**
  * Usecase to display the overview tab in the site area for a document.
@@ -55,9 +52,6 @@ public class FilePropfind extends SiteUsecase {
 
         Publication _publication = this.getPublication();
 
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
-        DocumentBuilder docBuilder = null;
         Vector docs = new Vector();
         Vector checkedOut = new Vector();
 
@@ -97,14 +91,6 @@ public class FilePropfind extends SiteUsecase {
 
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                    selector.release(docBuilder);
-                }
-                this.manager.release(selector);
-            }
         }
     }
 
