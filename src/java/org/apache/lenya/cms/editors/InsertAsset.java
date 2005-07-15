@@ -50,7 +50,10 @@ public class InsertAsset extends DocumentUsecase {
             List selectedResources = new ArrayList();
             String mimeTypePrefix = getParameterAsString("mimeTypePrefix", "");
             for (int i = 0; i < resources.length; i++) {
-                if (resources[i].getMimeType().startsWith(mimeTypePrefix)) {
+                String resMimeType = resources[i].getMimeType();
+                if(resMimeType == null)
+                    resMimeType = "unknown";
+                if (resMimeType.startsWith(mimeTypePrefix)) {
                     selectedResources.add(resources[i]);
                 }
             }
