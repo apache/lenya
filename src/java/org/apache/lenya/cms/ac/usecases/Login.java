@@ -18,10 +18,12 @@ package org.apache.lenya.cms.ac.usecases;
 
 import java.util.Map;
 
-import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.usecase.UsecaseException;
 
 /**
  * Usecase to login a user.
@@ -31,6 +33,24 @@ import org.apache.cocoon.environment.Request;
 public class Login extends AccessControlUsecase {
 
     protected static final String REFERRER_QUERY_STRING = "referrerQueryString";
+    protected static final String PUBLICATION_ID = "publicationId";
+
+    /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
+     */
+    protected void initParameters() {
+        super.initParameters();
+
+        try {
+            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+            Publication pub = factory.getPublication(this.manager, getSourceURL());
+            if (pub.exists()) {
+                setParameter(PUBLICATION_ID, pub.getId());
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     /**
      * Ctor.
