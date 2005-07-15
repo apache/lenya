@@ -66,7 +66,8 @@ public class Propfind extends SiteUsecase {
 
         Publication _publication = this.getPublication();
 
-        ServiceSelector selector = null;
+        ServiceSelector siteManagerSelector = null;
+        ServiceSelector docBuilderSelector = null;
         SiteManager siteManager = null;
         ResourcesManager resourcesManager = null;
         DocumentBuilder docBuilder = null;
@@ -93,14 +94,14 @@ public class Propfind extends SiteUsecase {
                     backupDirectory,
                     publicationPath);
 
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(_publication.getSiteManagerHint());
+            siteManagerSelector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) siteManagerSelector.select(_publication.getSiteManagerHint());
             Document[] documents = siteManager.getDocuments(getDocumentIdentityMap(),
                     _publication,
                     this.getArea());
 
-            selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
-            docBuilder = (DocumentBuilder) selector.select(_publication.getDocumentBuilderHint());
+            docBuilderSelector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
+            docBuilder = (DocumentBuilder) docBuilderSelector.select(_publication.getDocumentBuilderHint());
 
             for (int i = 0; i < documents.length; i++) {
                 String test = documents[i].getCanonicalWebappURL().replaceFirst("/[^/]*.html", "");
@@ -165,12 +166,17 @@ public class Propfind extends SiteUsecase {
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
-            if (selector != null) {
+            if (siteManagerSelector != null) {
                 if (siteManager != null) {
-                    selector.release(siteManager);
-                    selector.release(docBuilder);
+                    siteManagerSelector.release(siteManager);
                 }
-                this.manager.release(selector);
+                this.manager.release(siteManagerSelector);
+            }
+            if (docBuilderSelector != null) {
+                if (docBuilder != null) {
+                    docBuilderSelector.release(docBuilder);
+                }
+                this.manager.release(docBuilderSelector);
             }
         }
     }
