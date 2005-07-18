@@ -47,13 +47,7 @@
                         class="org.apache.lenya.defaultpub.cms.usecases.Deactivate">
       <view template="workflow/deactivate"/>
     </component-instance>
-<!--
-    <component-instance name="default/site.delete"
-                        logger="lenya.usecases.delete"
-                        class="org.apache.lenya.defaultpub.cms.usecases.Delete">
-      <view template="site/delete"/>
-    </component-instance>
--->
+
     <component-instance name="default/webdav.put"
                         logger="lenya.publication"
                         class="org.apache.lenya.defaultpub.cms.usecases.webdav.Put">
