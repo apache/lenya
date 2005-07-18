@@ -220,12 +220,11 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
         }
 
         ServiceSelector selector = null;
-        TreeSiteManager siteManager = null;
+        SiteManager siteManager = null;
         try {
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (TreeSiteManager) selector.select(this.publication.getSiteManagerHint());
-
-            SiteTree siteTree = siteManager.getTree(this.identityMap, this.publication, this.area);
+            siteManager = (SiteManager) selector.select(this.publication.getSiteManagerHint());
+            SiteTree siteTree = (SiteTree) siteManager.getSiteStructure(this.identityMap, this.publication, this.area);
 
             SiteTreeNode node = siteTree.getNode(this.documentid);
             if (this.getLogger().isDebugEnabled()) {
@@ -265,11 +264,11 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
             ProcessingException {
 
         ServiceSelector selector = null;
-        TreeSiteManager siteManager = null;
+        SiteManager siteManager = null;
         try {
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (TreeSiteManager) selector.select(this.publication.getSiteManagerHint());
-            SiteTree siteTree = siteManager.getTree(this.identityMap, this.publication, siteArea);
+            siteManager = (SiteManager) selector.select(this.publication.getSiteManagerHint());
+            SiteTree siteTree = (SiteTree) siteManager.getSiteStructure(this.identityMap, this.publication, siteArea);
 
             String label = "";
             String isFolder = "";

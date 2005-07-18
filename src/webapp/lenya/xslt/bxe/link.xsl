@@ -41,62 +41,24 @@
 
 <xsl:variable name="extension"><xsl:if test="$documentextension != ''">.</xsl:if><xsl:value-of select="$documentextension"/></xsl:variable>
   
-<!-- Decide whether to load the sitetree incrementally. 
-     true:  The sitetree.js will only contain the root node of the tree.  
-            All other nodes will be loaded dynamically by tree.js when needed.
-            Useful for large trees.
-     false: The sitetree.js will contain the whole sitetree structure and tree.js 
-            won't load anything dynamically. Useful for small trees or for browsers
-            which don't support xmlhttp requests. 
--->
-  <xsl:variable name="incremental-loading" select="'true'"/>
-    
 <xsl:template match="/">
     <page:page>
       <page:title>Insert Link</page:title>
       <page:body>
-      <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/ua.js">&#160;</script>
-      <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/tree.js">&#160;</script>
-      <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/{$documenturl}?lenya.usecase=bxe&amp;lenya.step=link-tree&amp;language={$chosenlanguage}&amp;incremental={$incremental-loading}">&#160;</script>
-      <script> 
-          var url;
-          window.onload = insertText
-
-          function insertText() { 
-            var selectionContent = window.opener.getSelection().getEditableRange().toString(); 
-            if (selectionContent.length != 0) { 
-                document.forms["link"].text.value = selectionContent;
-            } 
-            focus(); 
-          } 
-
-          function setLink(src) { 
-            url = src;
-            document.forms["link"].url.value = url;
-          }
-          
-          <!-- override the makeHref function -->
-          var makeHref = function makeSetLinkHref(area, link)
-          {
-            var temp = 'javascript:setLink(\'/'+link+'\')';
-            return temp;
-          }
-          
-          function insertLink() { 
-          var text = document.forms["link"].text.value;
-          var title = document.forms["link"].title.value;
-          var prefix ='<xsl:value-of select="$contextprefix"/>' + '/<xsl:value-of select="$publicationid"/>' + '/<xsl:value-of select="$area"/>';
-          var url = document.forms["link"].url.value;
-          if (url.charAt(0) == "/") {
-           // prepend hostname etc for internal links
-           url = prefix + url;
-          }
-          <![CDATA[
-          var content = '<a xmlns="'+window.opener.XHTMLNS+'" href="'+url+'" title="'+title+'">'+text+'</a>'; 
-          ]]>
-          window.opener.bxe_insertContent(content,window.opener.bxe_ContextNode); 
-          window.close();
-          }
+      <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/tree.js?lenya.publet=sitetree">&#160;</script>
+      <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/navtree.js?lenya.publet=sitetree">&#160;</script>
+      <script type="text/javascript" src="{$contextprefix}/lenya/javascript/insertLink.js">&#160;</script>
+      <script type="text/javascript" >
+          AREA = "<xsl:value-of select="$area"/>";
+          DOCUMENT_ID = "<xsl:value-of select="$documentid"/>";
+          CONTEXT_PREFIX = "<xsl:value-of select="$contextprefix"/>";
+          PUBLICATION_ID = "<xsl:value-of select="$publicationid"/>";
+          CHOSEN_LANGUAGE = "<xsl:value-of select="$chosenlanguage"/>";
+          DEFAULT_LANGUAGE = "<xsl:value-of select="$defaultlanguage"/>";
+          IMAGE_PATH = "<xsl:value-of select="$contextprefix"/>/lenya/images/tree/";
+          CUT_DOCUMENT_ID = '';
+          ALL_AREAS = "authoring"
+          PIPELINE_PATH = '/authoring/sitetree-fragment.xml'
       </script>
     <table border="0" cellpadding="0" cellspacing="0" width="100%">
 <tr>
@@ -113,20 +75,13 @@
                 </tr>
         </table>
 
-   <div id="lenya-info-tree">
-      <div style="display:none;">
-              <table border="0">
-                      <tr>
-                              <td>
-                                      <a style="font-size:7pt;text-decoration:none;color:white" href="http://www.treemenu.net/">JavaScript Tree Menu</a>
-                              </td>
-                      </tr>
-              </table>
-      </div>
-      <script type="text/javascript">
-         initializeDocument('authoring', '/');
-      </script>
-    </div>
+                 <div id="lenya-info-tree">
+                    <div id="tree">
+                      <script type="text/javascript">
+                        buildTree();
+                      </script>
+                    </div>
+                  </div>
 </div>
 </td>
 <td>

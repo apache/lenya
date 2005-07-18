@@ -47,5 +47,6 @@
   <proxy area="authoring" ssl="true" url="https://www.host.com/lenya/default/authoring"/>
   <proxy area="authoring" ssl="false" url="http://www.host.com/lenya/default/authoring"/>
   -->
+  <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@href"/>
   
 </publication>

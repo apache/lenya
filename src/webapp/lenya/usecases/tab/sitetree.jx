@@ -35,7 +35,6 @@
                 value="${document.getIdentityMap().getLanguageVersion(document, language)}"/>
         <jx:set var="languageUrl"
                 value="${request.contextPath + '/' + publicationId + '/' + area + languageVersion.getCanonicalDocumentURL()}"/>
-        
         <td>
           <jx:choose>
             <jx:when test="${language.equals(document.getLanguage())}">
@@ -50,21 +49,25 @@
     </tr>
   </table>
 
-  <div id="lenya-info-tree">
-    <div style="display:none;">
-      <table border="0">
-        <tr>
-          <td>
-            <a style="font-size:7pt;text-decoration:none;color:white"
-               href="http://www.treemenu.net/" target="_blank">JavaScript Tree Menu</a>
-          </td>
-        </tr>
-      </table>
+  <div id="lenya-info-treecanvas">
+    <div id="lenya-info-tree">
+      <div id="tree">
+        <script type="text/javascript">
+          CONTEXT_PREFIX = '<jx:out value="${request.contextPath}"/>';
+          PUBLICATION_ID = '<jx:out value="${publicationId}"/>';
+          CHOSEN_LANGUAGE = '<jx:out value="${document.getLanguage()}"/>';
+          DEFAULT_LANGUAGE = '<jx:out value="${document.getPublication().getDefaultLanguage()}"/>';
+          IMAGE_PATH = '<jx:out value="${request.contextPath + '/lenya/images/tree/'}"/>';
+          CUT_DOCUMENT_ID = '<jx:out value="${request.getSession().getAttribute('org.apache.lenya.cms.info.cutdocumentid')}"/>';
+          ALL_AREAS = 'authoring,trash,archive';
+          PIPELINE_PATH = '/authoring/sitetree-fragment.xml'
+
+          var root = new NavRoot(document, document.getElementById('tree'));
+          root.init(PUBLICATION_ID);
+          root.render();
+          root.loadInitialTree('<jx:out value="${area}"/>', '<jx:out value="${document.getId()}"/>');
+        </script>
+      </div>
     </div>
-    <jx:set var="url" value="${request.contextPath + '/' + publicationId + '/' + area + document.getCanonicalDocumentURL()}"/>
-      <script>
-      initializeDocument('<jx:out value="${area}"/>', '<jx:out value="${document.getId()}"/>');
-      loadSynchPage('<jx:out value="${url}"/>');
-    </script>
   </div>
 </jx:template>

@@ -104,17 +104,37 @@
     float: left;
 }
 
-#lenya-info-tree td {
+#lenya-info-tree span {
     font-family: verdana, helvetica, sans-serif;
     font-size: small;
+    color: #333333; text-decoration: none;
+    cursor: pointer;
 }
 
-#lenya-info-tree a { color: #333333; text-decoration: none; }
-#lenya-info-tree .lenya-info-nolanguage { color: #AAAAAA; }
-#lenya-info-tree .lenya-info-cut { color: #FFAAAA; font-style: italic; }
-#lenya-info-tree .lenya-info-protected { color: #CC3333; }
-//#lenya-info-tree a:hover { text-decoration: underline; }
-#lenya-info-tree a:hover { background-color: #DDDDDD }
+#lenya-info-treecanvas .lenya-info-root { font-weight: bold; cursor: default; }
+#lenya-info-treecanvas .lenya-info-nolanguage { color: #AAAAAA; }
+#lenya-info-treecanvas .lenya-info-cut { color: #FFAAAA; font-style: italic; }
+#lenya-info-treecanvas .lenya-info-protected { color: #CC3333; }
+#lenya-info-treecanvas span:hover { text-decoration: underline; }
+
+#lenya-info-tree table { 
+  border-spacing: 0px;
+  border-collapse: collapse;
+}
+#lenya-info-tree td {
+  vertical-align: top;
+  margin: 0px;
+  padding: 0px; 
+}
+#lenya-info-tree td.lenya-info-label-td {
+  vertical-align: top;
+  margin: 0px;
+  padding: 0px 0px 0px 2px; 
+}
+
+#lenya-info-treecanvas .treenode_icon { padding-left: 2px; padding-right: 1px; }
+#lenya-info-treecanvas .selected_node span { background-color: rgb(221, 220, 207); }
+#lenya-info-treecanvas .treenode_sign { vertical-align: top; padding: 0px; }
 
 #lenya-info-content {
 	float: left;

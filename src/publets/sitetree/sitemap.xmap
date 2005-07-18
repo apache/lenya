@@ -123,48 +123,7 @@ This sitemap creates default navigation components.
       </map:match>
       
       <!-- {publication-id}/{area}/info-sitetree -->
-      <map:match pattern="*/*/info-sitetree/sitetree.js">
-        <map:select type="parameter">
-          <map:parameter name="parameter-selector-test" value="{request-param:incremental}"/>
-          <map:when test="true">
-            <map:generate src="content/util/empty.xml" />
-            <map:act type="set-header">
-              <map:parameter name="Cache-Control" value="pre-check=0" />
-              <map:parameter name="Expires" value="-1" />
-            </map:act>
-          </map:when>
-          <map:otherwise>
-            <map:aggregate element="lenya" label="aggregate">
-              <map:part src="cocoon:/{1}/authoring/sitetree.xml"/>
-              <map:part src="cocoon:/{1}/archive/sitetree.xml"/>
-              <map:part src="cocoon:/{1}/trash/sitetree.xml"/>
-            </map:aggregate>
-            <map:act type="set-header">
-              <map:parameter name="Cache-Control" value="pre-check=0" />
-              <map:parameter name="Expires" value="-1" />
-            </map:act>
-            <map:transform src="xslt/navigation/sitetree2nav.xsl" label="navtree">
-              <map:parameter name="chosenlanguage" value="{request-param:language}"/>
-              <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
-            </map:transform>
-          </map:otherwise>
-        </map:select>
-        
-        <map:transform src="xslt/info/sitetree2tree.xsl" label="content">
-          <map:parameter name="contextprefix" value="{request:contextPath}"/>
-          <map:parameter name="publicationid" value="{1}"/>
-          <map:parameter name="chosenlanguage" value="{request-param:language}"/>
-          <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
-          <map:parameter name="cutdocumentid" value="{session-attr:org.apache.lenya.cms.info.cutdocumentid}"/>
-          <map:parameter name="incremental" value="{request-param:incremental}"/>
-          <map:parameter name="areas" value="authoring,archive,trash"/>
-        </map:transform>
-        
-        <map:serialize type="text"/>
-      </map:match>
-      
-      <!-- {publication-id}/{area}/info-sitetree -->
-      <map:match pattern="*/*/info-sitetree/sitetree-fragment.xml">
+      <map:match pattern="*/*/sitetree-fragment.xml">
         <map:generate type="sitetree-fragment">
           <map:parameter name="areas" value="{request-param:areas}"/>
           <map:parameter name="area" value="{request-param:area}"/>
@@ -188,18 +147,10 @@ This sitemap creates default navigation components.
       </map:match>
     </map:pipeline>
     
-    <!-- Sitetree Javascript array      -->
+    <!-- Sitetree Javascript   -->
     <map:pipeline>
-      <map:match pattern="*/*/info-sitetree/tree.js">
-        <map:read src="resources/javascript/tree.js"/>
-        <map:serialize type="text"/>
-      </map:match>
-    </map:pipeline>
-    
-    <!-- Sitetree Javascript array      -->
-    <map:pipeline>
-      <map:match pattern="*/*/info-sitetree/ua.js">
-        <map:read src="resources/javascript/ua.js"/>
+      <map:match pattern="*/*/*.js">
+        <map:read src="resources/javascript/{3}.js"/>
         <map:serialize type="text"/>
       </map:match>
     </map:pipeline>
