@@ -25,6 +25,7 @@ import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
@@ -32,6 +33,7 @@ import org.apache.lenya.cms.publication.util.DocumentHelper;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.site.Node;
 import org.apache.lenya.cms.site.NodeFactory;
+import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteUtil;
@@ -119,6 +121,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
                     getTargetArea(),
                     SiteUtil.MODE_CHANGE_ID);
             targets.addAll(getTargetDocsToCopy());
+            targets.addAll(getSourceDocsToDelete(sources));
             docs = targets.getDocuments();
             for (int i = 0; i < docs.length; i++) {
                 nodes.addAll(Arrays.asList(docs[i].getRepositoryNodes()));
@@ -148,6 +151,8 @@ public abstract class MoveSubsite extends DocumentUsecase {
         DocumentSet docsToCopy = getTargetDocsToCopy();
 
         DocumentManager documentManager = null;
+        ServiceSelector selector = null;
+        SiteManager siteManager = null;
         try {
 
             WorkflowUtil.invoke(this.manager, getLogger(), sources, getEvent(), true);
@@ -162,8 +167,10 @@ public abstract class MoveSubsite extends DocumentUsecase {
                         doc.getLanguage());
                 Document targetDoc = map.getAreaVersion(existingSourceDoc, getTargetArea());
                 documentManager.copy(existingSourceDoc, targetDoc);
-                LenyaMetaData meta = targetDoc.getMetaDataManager().getLenyaMetaData();
-                meta.setValue(LenyaMetaData.);
+                if (!targetDoc.getArea().equals(Publication.AUTHORING_AREA)) {
+                    LenyaMetaData meta = targetDoc.getMetaDataManager().getLenyaMetaData();
+                    meta.setValue(LenyaMetaData.ELEMENT_PLACEHOLDER, "true");
+                }
             }
 
             DocumentSet targets = SiteUtil.getTransferedSubSite(this.manager,
@@ -172,9 +179,21 @@ public abstract class MoveSubsite extends DocumentUsecase {
                     SiteUtil.MODE_CHANGE_ID);
             documentManager.move(sources, targets);
 
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(doc.getPublication().getSiteManagerHint());
+
+            DocumentSet docsToDelete = getSourceDocsToDelete(sources);
+            documentManager.delete(docsToDelete);
+
         } finally {
             if (documentManager != null) {
                 this.manager.release(documentManager);
+            }
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
             }
         }
 
@@ -183,7 +202,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
     }
 
     /**
-     * @return All live documents that are required by the moved documents and have to be copied.
+     * @return All target documents that are required by the moved documents and have to be copied.
      * @throws ServiceException if an error occurs.
      * @throws SiteException if an error occurs.
      * @throws DocumentBuildException if an error occurs.
@@ -219,5 +238,75 @@ public abstract class MoveSubsite extends DocumentUsecase {
             }
         }
         return docsToCopy;
+    }
+
+    /**
+     * @param sources The sources to be moved.
+     * @return All placeholder source documents that can be deleted..
+     * @throws ServiceException if an error occurs.
+     * @throws SiteException if an error occurs.
+     * @throws DocumentBuildException if an error occurs.
+     * @throws DocumentException
+     */
+    protected DocumentSet getSourceDocsToDelete(DocumentSet sources) throws ServiceException,
+            SiteException, DocumentBuildException, DocumentException {
+        DocumentSet docsToDelete = new DocumentSet();
+        Document doc = getSourceDocument();
+        DocumentIdentityMap map = getDocumentIdentityMap();
+        ServiceSelector selector = null;
+        SiteManager siteManager = null;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(doc.getPublication().getSiteManagerHint());
+
+            NodeSet nodesToDelete = new NodeSet();
+
+            Node sourceNode = NodeFactory.getNode(doc);
+            Node[] requiredSourceNodes = siteManager.getRequiredResources(map, sourceNode);
+            for (int i = 0; i < requiredSourceNodes.length; i++) {
+                Node node = requiredSourceNodes[i];
+                boolean delete = true;
+
+                Node[] requiringNodes = siteManager.getRequiringResources(map, node);
+                for (int j = 0; j < requiringNodes.length; j++) {
+                    Node n = requiringNodes[j];
+                    Document reqDoc = map.get(n.getPublication(), n.getArea(), n.getDocumentId());
+                    String[] languages = reqDoc.getLanguages();
+                    for (int l = 0; l < languages.length; l++) {
+                        Document langVersion = map.getLanguageVersion(reqDoc, languages[l]);
+                        if (!sources.contains(langVersion)) {
+                            LenyaMetaData meta = langVersion.getMetaDataManager()
+                                    .getLenyaMetaData();
+                            String placeholder = meta.getFirstValue(LenyaMetaData.ELEMENT_PLACEHOLDER);
+                            if (placeholder == null || !placeholder.equals("true")) {
+                                delete = false;
+                            }
+                        }
+                    }
+                }
+                if (delete) {
+                    nodesToDelete.add(node);
+                }
+            }
+
+            Node[] nodes = nodesToDelete.getNodes();
+            for (int i = 0; i < nodes.length; i++) {
+                Node n = nodes[i];
+                Document d = map.get(n.getPublication(), n.getArea(), n.getDocumentId());
+                String[] languages = d.getLanguages();
+                for (int l = 0; l < languages.length; l++) {
+                    Document langVersion = map.getLanguageVersion(d, languages[l]);
+                    docsToDelete.add(langVersion);
+                }
+            }
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
+        }
+        return docsToDelete;
     }
 }
