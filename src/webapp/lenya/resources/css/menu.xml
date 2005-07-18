@@ -95,6 +95,10 @@ body { background-color: #fff; margin: 0; padding: 0; }
 
 #lenya-areas ul li#area-staging a { background: url(<context-prefix/>/lenya/menu/images/inactive.gif) 0 0 repeat-x; }
 
+#lenya-areas ul li#area-trash-active a { color: #3975b3; background: url(<context-prefix/>/lenya/menu/images/active.gif) 0 0 repeat-x; }
+
+#lenya-areas ul li#area-archive-active a { color: #3975b3; background: url(<context-prefix/>/lenya/menu/images/active.gif) 0 0 repeat-x; }
+  
 #lenya-areas ul li#area-admin a:hover, #lenya-areas ul li#area-info-authoring a:hover, #lenya-areas ul li#area-authoring a:hover, #lenya-areas ul li#area-staging a:hover, #lenya-areas ul li#area-live a:hover { background-position: 0 -25px; }
 
 #lenya-info ul { margin: 0; padding: 0; }
