@@ -24,7 +24,7 @@
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
     <schema src="fallback://lenya/resources/schemas/search.rng"/>
     <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
-      <sample-name>search.xml</sample-name>
+      <sample-name>fallback://lenya/publets/search/samples/search.xml</sample-name>
     </creator>
   </component-instance>
 
