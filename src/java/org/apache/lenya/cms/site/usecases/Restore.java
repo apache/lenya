@@ -16,13 +16,34 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.cms.publication.Publication;
 
 /**
  * Restore usecase handler.
- *
+ * 
  * @version $Id:$
  */
-public class Restore extends DocumentUsecase {
+public class Restore extends MoveSubsite {
+
+    /**
+     * @see org.apache.lenya.cms.site.usecases.MoveSubsite#getSourceAreas()
+     */
+    protected String[] getSourceAreas() {
+        return new String[] { Publication.TRASH_AREA, Publication.ARCHIVE_AREA };
+    }
+
+    /**
+     * @see org.apache.lenya.cms.site.usecases.MoveSubsite#getTargetArea()
+     */
+    protected String getTargetArea() {
+        return Publication.AUTHORING_AREA;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.site.usecases.MoveSubsite#getEvent()
+     */
+    protected String getEvent() {
+        return "restore";
+    }
 
 }

@@ -435,7 +435,7 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
       <view template="site/archive"/>
     </component-instance>
     <component-instance name="site.restore" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Restore">
-      <view template="workflow/restore"/>
+      <view template="site/restore"/>
     </component-instance>
     
     <component-instance name="tab.acArchive" logger="lenya.site" class="org.apache.lenya.cms.ac.usecases.AccessControl">

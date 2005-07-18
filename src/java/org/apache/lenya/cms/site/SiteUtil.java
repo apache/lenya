@@ -227,7 +227,7 @@ public class SiteUtil {
             DocumentSet subSite = SiteUtil.getSubSite(manager, source);
             Document[] docs = subSite.getDocuments();
             for (int i = 0; i < docs.length; i++) {
-                Document target = SiteUtil.getTarget(siteManager, docs[i], targetArea, mode);
+                Document target = SiteUtil.getTransferedDocument(siteManager, docs[i], targetArea, mode);
                 if (target != null) {
                     set.add(target);
                 }
@@ -246,7 +246,7 @@ public class SiteUtil {
         return set;
     }
 
-    protected static Document getTarget(SiteManager siteManager, Document source,
+    public static Document getTransferedDocument(SiteManager siteManager, Document source,
             String targetArea, int mode) throws SiteException, DocumentException,
             DocumentBuildException {
         Document target = source.getIdentityMap().getAreaVersion(source, targetArea);

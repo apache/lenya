@@ -20,11 +20,20 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.util.DocumentHelper;
 import org.apache.lenya.cms.publication.util.DocumentSet;
+import org.apache.lenya.cms.site.Node;
+import org.apache.lenya.cms.site.NodeFactory;
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -109,6 +118,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
                     doc,
                     getTargetArea(),
                     SiteUtil.MODE_CHANGE_ID);
+            targets.addAll(getTargetDocsToCopy());
             docs = targets.getDocuments();
             for (int i = 0; i < docs.length; i++) {
                 nodes.addAll(Arrays.asList(docs[i].getRepositoryNodes()));
@@ -130,15 +140,32 @@ public abstract class MoveSubsite extends DocumentUsecase {
 
         Document doc = getSourceDocument();
         DocumentSet sources = SiteUtil.getSubSite(this.manager, doc);
+        DocumentIdentityMap map = getDocumentIdentityMap();
 
         Document target = doc.getIdentityMap().getAreaVersion(doc, getTargetArea());
         target = SiteUtil.getAvailableDocument(this.manager, target);
 
+        DocumentSet docsToCopy = getTargetDocsToCopy();
+
         DocumentManager documentManager = null;
         try {
+
             WorkflowUtil.invoke(this.manager, getLogger(), sources, getEvent(), true);
 
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
+
+            SiteUtil.sortAscending(this.manager, docsToCopy);
+            Document[] targetDocs = docsToCopy.getDocuments();
+            for (int i = 0; i < targetDocs.length; i++) {
+                Document sourceDoc = map.getAreaVersion(targetDocs[i], doc.getArea());
+                Document existingSourceDoc = DocumentHelper.getExistingLanguageVersion(sourceDoc,
+                        doc.getLanguage());
+                Document targetDoc = map.getAreaVersion(existingSourceDoc, getTargetArea());
+                documentManager.copy(existingSourceDoc, targetDoc);
+                LenyaMetaData meta = targetDoc.getMetaDataManager().getLenyaMetaData();
+                meta.setValue(LenyaMetaData.);
+            }
+
             DocumentSet targets = SiteUtil.getTransferedSubSite(this.manager,
                     doc,
                     getTargetArea(),
@@ -155,4 +182,42 @@ public abstract class MoveSubsite extends DocumentUsecase {
 
     }
 
+    /**
+     * @return All live documents that are required by the moved documents and have to be copied.
+     * @throws ServiceException if an error occurs.
+     * @throws SiteException if an error occurs.
+     * @throws DocumentBuildException if an error occurs.
+     */
+    protected DocumentSet getTargetDocsToCopy() throws ServiceException, SiteException,
+            DocumentBuildException {
+        Document doc = getSourceDocument();
+        DocumentIdentityMap map = getDocumentIdentityMap();
+        DocumentSet docsToCopy = new DocumentSet();
+        ServiceSelector selector = null;
+        SiteManager siteManager = null;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(doc.getPublication().getSiteManagerHint());
+
+            Node node = NodeFactory.getNode(doc);
+            Node[] requiredNodes = siteManager.getRequiredResources(map, node);
+            for (int i = 0; i < requiredNodes.length; i++) {
+                Document targetDoc = map.get(getSourceDocument().getPublication(),
+                        getTargetArea(),
+                        requiredNodes[i].getDocumentId(),
+                        doc.getLanguage());
+                if (!siteManager.containsInAnyLanguage(targetDoc)) {
+                    docsToCopy.add(targetDoc);
+                }
+            }
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
+        }
+        return docsToCopy;
+    }
 }

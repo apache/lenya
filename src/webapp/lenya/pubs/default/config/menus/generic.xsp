@@ -90,29 +90,9 @@
         <item uc:usecase="site.nudge" href="?direction=down"><i18n:text>Move Down</i18n:text></item>
       </block>
       <block authoring="false">
-        
-        <xsp:logic>
-               {
-               
-                 if (isDocument &amp;&amp;
-                   !"/index".equals(<input:get-attribute module="page-envelope" as="string" name="document-id"/>)) {
-            <item wf:event="delete" uc:usecase="site.delete" href="?"><i18n:text>Delete</i18n:text></item>
-            <item wf:event="archive" uc:usecase="site.archive" href="?"><i18n:text>Archive</i18n:text></item>
-                 }
-                 else {
-            <item><i18n:text>Delete</i18n:text></item>
-            <item><i18n:text>Archive</i18n:text></item>
-                 }
-               
-                if (isDocument &amp;&amp; (area.equals(Publication.TRASH_AREA) || area.equals(Publication.ARCHIVE_AREA))) {
-            <item wf:event="restore" uc:usecase="restore" uc:step="showscreen" href="?">Restore</item>
-                }
-                else {
-            <item><i18n:text>Restore</i18n:text></item>
-                }
-              }
-        </xsp:logic>
-        
+        <item uc:usecase="site.delete" href="?"><i18n:text>Delete</i18n:text></item>
+        <item uc:usecase="site.archive" href="?"><i18n:text>Archive</i18n:text></item>
+        <item uc:usecase="site.restore" href="?"><i18n:text>Restore</i18n:text></item>
       </block>
         
       </menu>

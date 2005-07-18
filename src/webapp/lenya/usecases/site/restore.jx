@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 <!-- $Id$ -->
-<page:page xmlns:c="http://apache.org/cocoon/templates/jx/1.0" 
+<page:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
            xmlns="http://www.w3.org/1999/xhtml" 
            xmlns:i18n="http://apache.org/cocoon/i18n/2.1" 
            xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" >
@@ -30,7 +30,7 @@
           <i18n:text key="restore-doc"/>
           <i18n:param>
             <q>
-              <jx:out value="${usecase.getParameter('documentid')}"/>
+              <jx:out value="${usecase.getParameter('document').getId()}"/>
             </q>
           </i18n:param>
         </i18n:translate>
@@ -43,7 +43,8 @@
           </jx:when>
           <jx:otherwise>
             <form method="get">
-              <input type="hidden" name="lenya.usecase" value="restore"/>
+              <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+              <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
               <i18n:translate>
                 <i18n:text key="restore-doc?"/>
                 <i18n:param>
@@ -52,8 +53,9 @@
                   </strong>
                 </i18n:param>
               </i18n:translate>
-              <input type="submit" value="Restore"/>&#160;
-              <input type="button" onClick="location.href='${requesturi}';" value="Cancel"/>
+              <input i18n:attr="value" type="submit" name="submit" value="Restore"/>
+              &#160;
+              <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>
             </form>
           </jx:otherwise>
         </jx:choose>	
