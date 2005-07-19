@@ -67,7 +67,7 @@
     
     <component-instance name="default/webdav.delete"
                         logger="lenya.usecases.delete"
-                        class="org.apache.lenya.defaultpub.cms.usecases.Delete">
+                        class="org.apache.lenya.cms.site.usecases.Delete">
     </component-instance>
 
   </xconf>
