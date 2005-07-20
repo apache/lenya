@@ -33,15 +33,6 @@
         <item uc:usecase="ac.logout" href="?"><i18n:text>Logout</i18n:text></item>
       </block>
     </menu>
-
-    <menu i18n:attr="name" name="Edit">
-    </menu>
-
-    <menu i18n:attr="name" name="Workflow">
-    </menu>
-
-    <menu i18n:attr="name" name="Debug">
-    </menu>
   </menus>
 
 </menu>
