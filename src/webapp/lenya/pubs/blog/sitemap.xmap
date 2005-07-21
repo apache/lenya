@@ -19,6 +19,12 @@
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
+  <map:components>
+    <map:generators default="file">
+      <map:generator logger="sitemap.generator.traversable" name="traversable" src="org.apache.cocoon.generation.TraversableGenerator"/>
+    </map:generators>
+  </map:components>
+
   <map:resources>
           <map:resource name="style-cms-page">
       <map:transform type="i18n">      
@@ -87,9 +93,9 @@
       </map:match>
       <map:match pattern="*/entries/*/*/*/*/lenya-body.xml">
         <map:aggregate element="feed">
-          <map:part src="content/{1}/feeds/all/index.xml"/>
+          <map:part src="lenya://lenya/pubs/blog/content/{1}/feeds/all/index.xml"/>
           <map:part src="cocoon:/{1}/entries/{2}/{3}/{4}/{5}/index.xml"/>
-          <map:part src="content/{1}/sidebar.xml"/>
+          <map:part src="lenya://lenya/pubs/blog/content/{1}/sidebar.xml"/>
         </map:aggregate>
         <map:transform src="xslt/entry/aggregate.xsl"/>
         <map:serialize type="xml"/>
@@ -180,9 +186,12 @@
     <map:pipeline>
       <map:match pattern="*/feeds/*/index.xml">
         <map:act type="resource-exists">
-          <map:parameter name="url" value="content/{1}/entries"/>
+          <map:parameter name="url" value="lenya://lenya/pubs/blog/content/{1}/entries"/>
 	
           <map:generate type="directory" src="content/{../1}/entries">
+<!--
+          <map:generate type="traversable" src="lenya://lenya/pubs/blog/content/{../1}/entries">
+-->
             <map:parameter name="depth" value="4"/>
             <map:parameter name="reverse" value="true"/>
           </map:generate>
@@ -194,7 +203,7 @@
           <map:serialize type="xml"/>
         </map:act>
 
-        <map:generate src="content/{1}/feeds/all/index.xml"/>
+        <map:generate src="lenya://lenya/pubs/blog/content/{1}/feeds/all/index.xml"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="*/feeds/*/lenya-page-body.xml">
