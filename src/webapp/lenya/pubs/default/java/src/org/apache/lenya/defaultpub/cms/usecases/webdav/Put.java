@@ -114,34 +114,42 @@ public class Put extends DocumentUsecase {
             tempSourceUri = tempSourceUri.substring("lenya://".length());
             tempSourceUri = "context://" + tempSourceUri;
 
-            SourceUtil.copy(resolver, uploadSourceUri, tempSourceUri, true);
-
-            Source tempSource = resolver.resolveURI(tempSourceUri);
-            if (!tempSource.exists()) {
-                throw new IllegalArgumentException("The temp file [" + tempSource.getURI()
-                        + "] does not exist.");
+            try {
+                SourceUtil.copy(resolver, uploadSourceUri, tempSourceUri, true);
+            } catch (Exception e) {
+                addErrorMessage("invalid source xml");
             }
 
-            // validity check
-            ResourceType resourceType = doc.getResourceType();
-            String schemaUri = resourceType.getSchemaDefinitionSourceURI();
-            Source schemaSource = resolver.resolveURI(schemaUri);
-            if (!schemaSource.exists()) {
-                throw new IllegalArgumentException("The schema [" + schemaSource.getURI()
-                        + "] does not exist.");
-            }
+            if(!hasErrors()) {
+            
+                Source tempSource = resolver.resolveURI(tempSourceUri);
+                if (!tempSource.exists()) {
+                    throw new IllegalArgumentException("The temp file [" + tempSource.getURI()
+                            + "] does not exist.");
+                }
 
-            InputSource schemaInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(schemaSource);
-            InputSource xmlInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(tempSource);
+                // validity check
+                ResourceType resourceType = doc.getResourceType();
+                String schemaUri = resourceType.getSchemaDefinitionSourceURI();
+                Source schemaSource = resolver.resolveURI(schemaUri);
+                if (!schemaSource.exists()) {
+                    throw new IllegalArgumentException("The schema [" + schemaSource.getURI()
+                            + "] does not exist.");
+                }
 
-            String message = RelaxNG.validate(schemaInputSource, xmlInputSource);
-            if (message != null) {
-                addErrorMessage("error-validation", new String[] { message });
-            }
+                InputSource schemaInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(schemaSource);
+                InputSource xmlInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(tempSource);
 
-            if (SourceUtil.exists(tempSourceUri, this.manager)) {
-                SourceUtil.copy(resolver, tempSourceUri, sourceUri, true);
-                SourceUtil.delete(tempSourceUri, this.manager);
+                String message = RelaxNG.validate(schemaInputSource, xmlInputSource);
+                if (message != null) {
+                    addErrorMessage("error-validation", new String[] { message });
+                }
+
+                if (SourceUtil.exists(tempSourceUri, this.manager)) {
+                    SourceUtil.copy(resolver, tempSourceUri, sourceUri, true);
+                    SourceUtil.delete(tempSourceUri, this.manager);
+                }
+            
             }
 
         } finally {
