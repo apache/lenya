@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Collection;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
@@ -30,6 +31,7 @@ import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.excalibur.source.TraversableSource;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
@@ -79,6 +81,9 @@ public class SourceNode extends AbstractLogEnabled implements Node {
         return userId;
     }
 
+    /**
+     * TODO: Replace by JCR of whatever
+     */
     protected String getRealSourceURI() {
         return "context://" + this.sourceURI.substring(Node.LENYA_PROTOCOL.length());
     }
@@ -377,6 +382,43 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     }
 
     /**
+     *
+     */
+    public Collection getChildren() throws TransactionException {
+        SourceResolver resolver = null;
+        TraversableSource source = null;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = (TraversableSource) resolver.resolveURI(getRealSourceURI());
+            Collection children = source.getChildren();
+            java.util.Iterator iterator = children.iterator();
+            while (iterator.hasNext()) {
+                Source child = (Source) iterator.next();
+                getLogger().error(child.getURI());
+            }
+            getLogger().warn("Not implemented yet!");
+            return null;
+        } catch (Exception e) {
+            throw new TransactionException(e);
+        }
+    }
+
+    /**
+     *
+     */
+    public boolean isCollection() throws TransactionException {
+        SourceResolver resolver = null;
+        TraversableSource source = null;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = (TraversableSource) resolver.resolveURI(getRealSourceURI());
+            return source.isCollection();
+        } catch (Exception e) {
+            throw new TransactionException(e);
+        }
+    }
+
+    /**
      * Loads the data from the real source.
      * @throws TransactionException if an error occurs.
      */
@@ -389,12 +431,12 @@ public class SourceNode extends AbstractLogEnabled implements Node {
         ByteArrayOutputStream out = null;
         InputStream in = null;
         SourceResolver resolver = null;
-        Source source = null;
+        TraversableSource source = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI(getRealSourceURI());
+            source = (TraversableSource) resolver.resolveURI(getRealSourceURI());
 
-            if (source.exists()) {
+            if (source.exists() && !source.isCollection()) {
                 byte[] buf = new byte[4096];
                 out = new ByteArrayOutputStream();
                 in = source.getInputStream();
