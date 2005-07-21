@@ -219,11 +219,18 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
             Label[] labels = { label };
 
             if (siblingDocId == null) {
-                destinationTree.addNode(destinationDocument.getId(), labels, sourceNode.getHref(),
-                        sourceNode.getSuffix(), sourceNode.hasLink());
+                destinationTree.addNode(destinationDocument.getId(),
+                        labels,
+                        sourceNode.getHref(),
+                        sourceNode.getSuffix(),
+                        sourceNode.hasLink());
             } else {
-                destinationTree.addNode(destinationDocument.getId(), labels, sourceNode.getHref(),
-                        sourceNode.getSuffix(), sourceNode.hasLink(), siblingDocId);
+                destinationTree.addNode(destinationDocument.getId(),
+                        labels,
+                        sourceNode.getHref(),
+                        sourceNode.getSuffix(),
+                        sourceNode.hasLink(),
+                        siblingDocId);
             }
 
         } else {
@@ -239,8 +246,9 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      * @see org.apache.lenya.cms.site.SiteManager#delete(org.apache.lenya.cms.publication.Document)
      */
     public void delete(Document document) throws SiteException {
-        SiteTree tree = getTree(document.getIdentityMap(), document.getPublication(), document
-                .getArea());
+        SiteTree tree = getTree(document.getIdentityMap(),
+                document.getPublication(),
+                document.getArea());
 
         SiteTreeNode node = tree.getNode(document.getId());
 
@@ -320,14 +328,18 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
             throws SiteException {
         try {
             List allNodes = getTree(map, publication, area).getNode("/").preOrder();
-            Document[] documents = new Document[allNodes.size() - 1];
+            List documents = new ArrayList();
 
             for (int i = 1; i < allNodes.size(); i++) {
                 SiteTreeNode node = (SiteTreeNode) allNodes.get(i);
-                documents[i - 1] = map.get(publication, area, node.getAbsoluteId());
+                Document doc = map.get(publication, area, node.getAbsoluteId());
+                String[] languages = doc.getLanguages();
+                for (int l = 0; l < languages.length; l++) {
+                    documents.add(map.getLanguageVersion(doc, languages[l]));
+                }
             }
-            return documents;
-        } catch (DocumentBuildException e) {
+            return (Document[]) documents.toArray(new Document[documents.size()]);
+        } catch (Exception e) {
             throw new SiteException(e);
         }
     }
@@ -388,7 +400,9 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         Document availableDocument;
         try {
             availableDocument = document.getIdentityMap().get(document.getPublication(),
-                    document.getArea(), availableDocumentId, document.getLanguage());
+                    document.getArea(),
+                    availableDocumentId,
+                    document.getLanguage());
         } catch (DocumentBuildException e) {
             throw new SiteException(e);
         }
