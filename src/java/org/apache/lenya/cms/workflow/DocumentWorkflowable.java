@@ -185,8 +185,11 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
      * @see org.apache.lenya.workflow.Workflowable#getWorkflowSchemaURI()
      */
     public String getWorkflowSchemaURI() {
-        return this.document.getPublication().getSourceURI() + "/config/workflow/"
+        String uri = this.document.getPublication().getSourceURI() + "/config/workflow/"
                 + getWorkflowSchema();
+        uri = uri.substring("lenya://".length());
+        uri = "context://" + uri;
+        return uri;
     }
 
 }
