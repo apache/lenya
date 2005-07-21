@@ -18,6 +18,7 @@ package org.apache.lenya.cms.repository;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.Collection;
 
 import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.transaction.Transactionable;
@@ -44,6 +45,18 @@ public interface Node extends Transactionable {
      * @throws TransactionException if an error occurs.
      */
     boolean exists() throws TransactionException;
+
+    /**
+     * @return if the node is a collection.
+     * @throws TransactionException if an error occurs.
+     */
+    boolean isCollection() throws TransactionException;
+
+    /**
+     * @return children
+     * @throws TransactionException if an error occurs.
+     */
+    public Collection getChildren() throws TransactionException;
 
     /**
      * @return The input stream.
