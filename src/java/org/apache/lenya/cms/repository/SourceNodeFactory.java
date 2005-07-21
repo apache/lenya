@@ -17,40 +17,49 @@
 package org.apache.lenya.cms.repository;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.Serviceable;
+import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.lenya.transaction.Identifiable;
 import org.apache.lenya.transaction.IdentityMap;
-import org.apache.lenya.transaction.IdentifiableFactory;
 
 /**
  * Factory to create source nodes.
- *
+ * 
  * @version $Id$
  */
-public class SourceNodeFactory extends AbstractLogEnabled implements IdentifiableFactory {
+public class SourceNodeFactory extends AbstractLogEnabled implements NodeFactory, Serviceable,
+        ThreadSafe {
 
     private ServiceManager manager;
-    
+
     /**
      * Ctor.
-     * @param manager
-     * @param logger
      */
-    public SourceNodeFactory(ServiceManager manager, Logger logger) {
-        this.manager = manager;
-        enableLogging(logger);
+    public SourceNodeFactory() {
     }
-    
+
     /**
-     * @see org.apache.lenya.transaction.IdentifiableFactory#build(org.apache.lenya.transaction.IdentityMap, java.lang.String)
+     * @see org.apache.lenya.transaction.IdentifiableFactory#build(org.apache.lenya.transaction.IdentityMap,
+     *      java.lang.String)
      */
     public Identifiable build(IdentityMap map, String key) throws Exception {
         return new SourceNode(map, key, this.manager, getLogger());
     }
 
+    /**
+     * @see org.apache.lenya.transaction.IdentifiableFactory#getType()
+     */
     public String getType() {
         return Node.IDENTIFIABLE_TYPE;
+    }
+
+    /**
+     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
+     */
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
     }
 
 }

@@ -20,13 +20,14 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.impl.AbstractSource;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.repository.SourceNodeFactory;
+import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.TransactionException;
 
@@ -81,8 +82,18 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
 
         setScheme(scheme);
 
-        SourceNodeFactory factory = new SourceNodeFactory(this.manager, getLogger());
-        this.node = (Node) map.get(factory, uri);
+        NodeFactory factory = null;
+        try {
+            factory = (NodeFactory) this.manager.lookup(NodeFactory.ROLE);
+            this.node = (Node) map.get(factory, uri);
+        } catch (ServiceException e) {
+            throw new SourceException("Creating repository node failed: ", e);
+        }
+        finally {
+            if (factory != null) {
+                this.manager.release(factory);
+            }
+        }
     }
 
     /**

@@ -162,4 +162,8 @@
   	    shorthand="resource-types"
   	    default-class="org.apache.lenya.cms.publication.ResourceTypeSelector"/>
         
+  <role name="org.apache.lenya.cms.repository.NodeFactory"
+        shorthand="node-factory"
+        default-class="org.apache.lenya.cms.repository.SourceNodeFactory"/>
+        
 </role-list>
