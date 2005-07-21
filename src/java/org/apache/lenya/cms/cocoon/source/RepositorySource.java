@@ -22,6 +22,7 @@ import java.io.OutputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.net.MalformedURLException;
+import java.util.Collection;
 
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerException;
@@ -32,7 +33,8 @@ import javax.xml.transform.stream.StreamResult;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.excalibur.source.ModifiableSource;
+import org.apache.excalibur.source.ModifiableTraversableSource;
+import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.impl.AbstractSource;
@@ -46,7 +48,7 @@ import org.apache.lenya.transaction.TransactionException;
  * 
  * @version $Id$
  */
-public class RepositorySource extends AbstractSource implements ModifiableSource,
+public class RepositorySource extends AbstractSource implements ModifiableTraversableSource,
         TransactionableSource {
 
     private ServiceManager manager;
@@ -68,7 +70,7 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
         this.manager = manager;
         this.logger = logger;
 
-        getLogger().debug("Init RepositorySource");
+	if (getLogger().isDebugEnabled()) getLogger().debug("Init RepositorySource: " + uri);
 
         if (map == null) {
             throw new IllegalArgumentException("The identity map must not be null!");
@@ -123,7 +125,7 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
      * @see org.apache.excalibur.source.ModifiableSource#getOutputStream()
      */
     public OutputStream getOutputStream() throws IOException {
-        getLogger().debug("Get OutputStream for " + getURI());
+        if (getLogger().isDebugEnabled()) getLogger().debug("Get OutputStream for " + getURI());
         try {
             if (!this.node.isLocked()) {
                 throw new RuntimeException("Cannot write to source [" + getURI() + "]: not locked!");
@@ -171,7 +173,11 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
      */
     public boolean exists() {
         try {
-            return this.node.exists();
+            if (this.node.exists()) {
+                return true;
+            } else {
+                return isCollection();
+            }
         } catch (TransactionException e) {
             throw new RuntimeException(e);
         }
@@ -181,7 +187,7 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
      * @see org.apache.excalibur.source.Source#getInputStream()
      */
     public InputStream getInputStream() throws IOException, SourceNotFoundException {
-        getLogger().debug("Get InputStream for " + getURI());
+        if (getLogger().isDebugEnabled()) getLogger().debug("Get InputStream for " + getURI());
         if (!exists()) {
             throw new SourceNotFoundException("The source [" + getURI() + "] does not exist!");
         }
@@ -318,6 +324,61 @@ public class RepositorySource extends AbstractSource implements ModifiableSource
     public String getMimeType() {
         try {
             return this.node.getMimeType();
+        } catch (TransactionException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     *
+     */
+    public Source getParent() {
+        getLogger().warn("getParent() not implemented yet!");
+        return null;
+    }
+
+    /**
+     *
+     */
+    public void makeCollection() {
+        getLogger().warn("makeCollection() not implemented yet!");
+    }
+
+    /**
+     *
+     */
+    public String getName() {
+        getLogger().warn("getName() not implemented yet!");
+        return null;
+    }
+
+    /**
+     *
+     */
+    public Source getChild(String name) {
+        getLogger().warn("getChild() not implemented yet!");
+        return null;
+    }
+
+    /**
+     *
+     */
+    public Collection getChildren() {
+        getLogger().warn("getChildren() not implemented yet!");
+        try {
+            Collection children = this.node.getChildren();
+        } catch (TransactionException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+
+    /**
+     *
+     */
+    public boolean isCollection() {
+        try {
+            return this.node.isCollection();
         } catch (TransactionException e) {
             throw new RuntimeException(e);
         }
