@@ -527,6 +527,10 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
       <transaction policy="pessimistic"/>
       <view template="edit/kupu/kupu" menu="false"/>
     </component-instance>
+    <component-instance name="jcr.import" logger="lenya.jcr"
+      class="org.apache.lenya.cms.jcr.usecases.Import">
+      <view template="jcr/import" menu="false"/>
+    </component-instance>
   </usecases>
   
   <resource-types/>
