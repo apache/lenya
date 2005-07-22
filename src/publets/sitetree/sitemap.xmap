@@ -68,8 +68,8 @@ This sitemap creates default navigation components.
     <!-- sitetree -->
     <!-- pattern: {pub-id}/{area}/sitetree/{url}.xml -->
     <map:match pattern="*/*/sitetree/**.xml">
-      <map:generate src="fallback://content/{2}/sitetree.xml"/>
-      <map:transform type="i18n">      
+      <map:generate src="lenya://lenya/pubs/{1}/content/{2}/sitetree.xml"/>
+      <map:transform type="i18n">
         <map:parameter name="locale" value="{request:locale}"/>
       </map:transform>
       <map:call resource="fallback-transformation">
@@ -110,7 +110,7 @@ This sitemap creates default navigation components.
       
       <!-- {publication-id}/{area}/sitetree.xml -->
       <map:match pattern="*/*/sitetree.xml">
-        <map:generate src="fallback://content/{2}/sitetree.xml"/>
+        <map:generate src="lenya://lenya/pubs/{1}/content/{2}/sitetree.xml"/>
         <map:call resource="i18n"/>
         <map:transform type="access-control-sitetree">
           <map:parameter name="publication-id" value="{1}"/>

@@ -40,7 +40,7 @@
       <!-- parametrized doctype matcher -->
       <!-- pattern="{rendertype}" -->
       <map:match pattern="*.xml">
-        <map:generate src="../../pubs/{page-envelope:publication-id}/content/{page-envelope:area}/{page-envelope:document-path}"/>
+        <map:generate src="lenya://lenya/pubs/{page-envelope:publication-id}/content/{page-envelope:area}/{page-envelope:document-path}"/>
         <map:transform src="fallback://lenya/publets/links/xslt/links2xhtml.xsl">
           <map:parameter name="rendertype" value="{1}"/>
           <map:parameter name="nodeid" value="{page-envelope:document-name}"/>
