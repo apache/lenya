@@ -42,6 +42,7 @@
   <!-- Prepare the build webapp directory -->
   <target name="check-cocoon" depends="init" unless="gump.skipcocoonbuild">
     <available file="${cocoon.src.dir}/build/webapp" type="dir" property="cocoon.build.webapp.dir.exists"/>
+    <antcall target="check-blocks"/>
     <antcall target="build-cocoon"/>
   </target>
 
@@ -50,7 +51,17 @@
     <copy todir="${cocoon.src.dir}" filtering="off">
       <fileset dir="${src.cocoon.properties.dir}"/>
     </copy>
+
     <ant dir="${cocoon.src.dir}" inheritall="false"/>
+  </target>
+
+  <!-- Check local.blocks.properties  -->
+  <target name="check-blocks" if="cocoon.build.webapp.dir.exists">
+    <property file="${cocoon.src.dir}/local.blocks.properties"/>
+    <condition property="local.blocks.properties.in.sync">
+      <equals arg1="${lenya.blocks.properties.version}" arg2="220218"/>
+    </condition>
+    <fail unless="local.blocks.properties.in.sync" message="It seems that your ${cocoon.src.dir}/local.blocks.properties is NOT in sync with ${src.cocoon.properties.dir}/local.blocks.properties! The file ${src.cocoon.properties.dir}/local.blocks.properties has probably been modified by some Apache Lenya developer. Re-build your Cocoon with the ${src.cocoon.properties.dir}/local.blocks.properties file. Please apologoize any inconvenience."/>
   </target>
 
   <!-- Copy the bulk of the cocoon webapp to our destination -->
