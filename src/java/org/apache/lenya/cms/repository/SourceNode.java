@@ -392,12 +392,12 @@ public class SourceNode extends AbstractLogEnabled implements Node {
             source = (TraversableSource) resolver.resolveURI(getRealSourceURI());
             Collection children = source.getChildren();
             java.util.Iterator iterator = children.iterator();
+            java.util.Vector newChildren = new java.util.Vector();
             while (iterator.hasNext()) {
-                Source child = (Source) iterator.next();
-                getLogger().error(child.getURI());
+                TraversableSource child = (TraversableSource) iterator.next();
+                newChildren.add(new SourceNode(identityMap, sourceURI + "/" + child.getName(), this.manager, getLogger()));
             }
-            getLogger().warn("Not implemented yet!");
-            return null;
+            return newChildren;
         } catch (Exception e) {
             throw new TransactionException(e);
         }
