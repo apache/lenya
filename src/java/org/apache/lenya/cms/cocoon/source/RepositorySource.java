@@ -341,15 +341,17 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
      *
      */
     public void makeCollection() {
-        getLogger().warn("makeCollection() not implemented yet!");
+        getLogger().warn("RepositorySource().makeCollection() not implemented yet!");
     }
 
     /**
      *
      */
     public String getName() {
-        getLogger().warn("getName() not implemented yet!");
-        return null;
+        // Quick and dirty
+        String name = new java.io.File(getURI()).getName();
+        if(getLogger().isDebugEnabled()) getLogger().debug("getName(): URI: " + name);
+        return name;
     }
 
     /**
@@ -364,13 +366,18 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
      *
      */
     public Collection getChildren() {
-        getLogger().warn("getChildren() not implemented yet!");
         try {
             Collection children = this.node.getChildren();
-        } catch (TransactionException e) {
+            java.util.Iterator iterator = children.iterator();
+            java.util.Vector newChildren = new java.util.Vector();
+            while (iterator.hasNext()) {
+                Node child = (Node) iterator.next();
+                newChildren.add(new RepositorySource(this.manager, child.getSourceURI(), this.identityMap, getLogger()));
+            }
+            return newChildren;
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return null;
     }
 
     /**
