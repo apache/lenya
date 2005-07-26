@@ -35,7 +35,10 @@
     <equals arg1="${build.properties.version}" arg2="210079"/>
   </condition>
 
-  <fail unless="local.properties.in.sync" message="It seems that your local.build.properties is NOT in sync with build.properties! The file build.properties has probably been modified by some Apache Lenya developer. Re-copy build.properties to local.build.properties and re-set your local properties to get the two files back in sync. Please apologoize the inconvenience."/>
+  <fail unless="local.properties.in.sync" message="It seems that your local.build.properties is NOT in sync with build.properties! The file build.properties has probably been modified by some Apache Lenya developer. Re-copy build.properties to local.build.properties and re-set your local properties to get the two files back in sync. Please apologoize any inconvenience."/>
+
+  <!-- cocoon build properties directory -->
+  <property name="src.cocoon.properties.dir" value="src/cocoon"/>
 
   <!-- Project version and name -->
   <property name="version" value="1.4-dev"/>
@@ -102,8 +105,6 @@
   <property name="src.webapp.dir" value="src/webapp"/>
   <property name="tools.tasks.dest" value="tools/anttasks"/>
   <property name="src.resource.dir"  value="src/resources"/>
-  <!-- cocoon build properties directory -->
-  <property name="src.cocoon.properties.dir" value="src/cocoon"/>
   <!-- hsqldb database config files directory -->
   <property name="src.database.dir" value="src/webapp/WEB-INF/db"/>
 
