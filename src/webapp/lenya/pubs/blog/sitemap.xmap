@@ -188,10 +188,10 @@
         <map:act type="resource-exists">
           <map:parameter name="url" value="lenya://lenya/pubs/blog/content/{1}/entries"/>
 	
-          <map:generate type="directory" src="content/{../1}/entries">
 <!--
-          <map:generate type="traversable" src="lenya://lenya/pubs/blog/content/{../1}/entries">
+          <map:generate type="directory" src="content/{../1}/entries">
 -->
+          <map:generate type="traversable" src="lenya://lenya/pubs/blog/content/{../1}/entries">
             <map:parameter name="depth" value="4"/>
             <map:parameter name="reverse" value="true"/>
           </map:generate>
