@@ -94,7 +94,6 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
         }
     }
 
-
     /**
      * Constructor
      */
@@ -129,7 +128,6 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
             String mimeType = part.getMimeType();
             int fileSize = part.getSize();
 
-
             /*
              * complement and create the meta description for the resource.
              */
@@ -154,9 +152,12 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
 
     /**
      * Saves the resource to a file.
-     * @param resource The resource.
-     * @param part The part of the multipart request.
-     * @throws IOException if an error occurs.
+     * @param resource
+     *            The resource.
+     * @param part
+     *            The part of the multipart request.
+     * @throws IOException
+     *             if an error occurs.
      */
     protected void saveResource(Resource resource, Part part) throws IOException {
         OutputStream out = null;
@@ -205,7 +206,6 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
         }
     }
 
-
     /**
      * @see org.apache.lenya.cms.publication.ResourcesManager#getResources(org.apache.lenya.cms.publication.Document)
      */
@@ -226,8 +226,10 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
 
     /**
      * Returns the resources that are matched by a certain file filter.
-     * @param document The document.
-     * @param filter A file filter.
+     * @param document
+     *            The document.
+     * @param filter
+     *            A file filter.
      * @return A resource array.
      */
     protected Resource[] getResources(Document document, FileFilter filter) {
@@ -238,7 +240,7 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
         Source source = null;
         try {
             Resource[] resources;
-            
+
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             source = resolver.resolveURI(tempResource.getBaseURI());
             if (source.exists()) {
@@ -248,10 +250,10 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
                 }
                 resources = new Resource[files.length];
                 for (int i = 0; i < files.length; i++) {
-                    resources[i] = new Resource(document, files[i].getName(), this.manager, getLogger());
+                    resources[i] = new Resource(document, files[i].getName(), this.manager,
+                            getLogger());
                 }
-            }
-            else {
+            } else {
                 resources = new Resource[0];
             }
             return resources;
@@ -293,8 +295,9 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
             throws Exception {
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Copying resources from [" + sourceDocument + "] to ["
-                    + destinationDocument + "]");
+            getLogger().debug(
+                    "Copying resources from [" + sourceDocument + "] to [" + destinationDocument
+                            + "]");
         }
 
         SourceResolver resolver = null;
@@ -311,7 +314,7 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
                 ModifiableSource destMetaSource = null;
 
                 try {
-
+                    resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
                     sourceSource = resolver.resolveURI(sourceResource.getSourceURI());
                     sourceMetaSource = resolver.resolveURI(sourceResource.getMetaSourceURI());
                     destSource = (ModifiableSource) resolver.resolveURI(destinationResource
@@ -384,7 +387,8 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
     public void deleteResource(Document document, String name) throws Exception {
         Resource theResource = getResource(document, name);
         if (theResource == null)
-            throw new Exception("no such resource [" + name + "] exists for document [ " + document.getId() + "]");
+            throw new Exception("no such resource [" + name + "] exists for document [ "
+                    + document.getId() + "]");
 
         deleteResource(theResource);
     }
