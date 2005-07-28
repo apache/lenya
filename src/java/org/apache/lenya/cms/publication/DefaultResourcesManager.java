@@ -152,12 +152,9 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
 
     /**
      * Saves the resource to a file.
-     * @param resource
-     *            The resource.
-     * @param part
-     *            The part of the multipart request.
-     * @throws IOException
-     *             if an error occurs.
+     * @param resource The resource.
+     * @param part The part of the multipart request.
+     * @throws IOException if an error occurs.
      */
     protected void saveResource(Resource resource, Part part) throws IOException {
         OutputStream out = null;
@@ -226,10 +223,8 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
 
     /**
      * Returns the resources that are matched by a certain file filter.
-     * @param document
-     *            The document.
-     * @param filter
-     *            A file filter.
+     * @param document The document.
+     * @param filter A file filter.
      * @return A resource array.
      */
     protected Resource[] getResources(Document document, FileFilter filter) {
