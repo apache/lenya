@@ -242,20 +242,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     public void move(Document sourceDocument, Document destinationDocument)
             throws PublicationException {
         copy(sourceDocument, destinationDocument);
-
-        ResourcesManager resourcesManager = null;
-        try {
-            resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
-            resourcesManager.copyResources(sourceDocument, destinationDocument);
-            resourcesManager.deleteResources(sourceDocument);
-        } catch (Exception e) {
-            throw new PublicationException(e);
-        } finally {
-            if (resourcesManager != null) {
-                this.manager.release(resourcesManager);
-            }
-        }
-
         delete(sourceDocument);
     }
 
