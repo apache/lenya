@@ -33,9 +33,9 @@
 
 </section><section><title id="head-8e7bea88bc6cc2c0ef5910f4785f11121b6ebde2">Lenya Core Documentation</title>
 
-<p>There is some information on the CMS Menus in the official Lenya documentation, but it's hidden in a pleace where you might not expect it. So here's a link: <a  href="site:menubar">Menubar documentation</a> </p>
+<p>There is some information on the CMS Menus in the official Lenya documentation, but it's hidden in a place where you might not expect it. So here's a link: <a  href="site:menubar">Menubar documentation</a> </p>
 <p>Make sure you read that before continuing reading this page here! </p>
-<p>Unfortunately the picture on the page mentioned above is a bit misleading. You might think that "Usecases" and "Workflow" steps in read in the right part of the picture refer to XSLT stylesheets which are applied using the XSLT transformer. This is not the case! They are own transformers implemted directly in the Lenya Java layer: </p>
+<p>Unfortunately the picture on the page mentioned above is a bit misleading. You might think that "Usecases" and "Workflow" steps in read in the right part of the picture refer to XSLT stylesheets which are applied using the XSLT transformer. This is not the case! They are own transformers implemented directly in the Lenya Java layer: </p>
 
 <source>
     &lt;map:transformer name="workflowmenu" logger="lenya.sitemap.transformer.workflowmenu" src="org.apache.lenya.cms.cocoon.transformation.WorkflowMenuTransformer"/&gt;
@@ -44,11 +44,11 @@
 <p>Nevertheless they do exactly what is described in the picture: They disable menu options if they are not accessible because  </p>
 <ul>
 <li><p> executing the usecase requires a role which the user belonging to the current session is lacking or  </p></li>
-<li><p> the current workflow state of the document forbidds the usecase </p></li>
+<li><p> the current workflow state of the document forbids the usecase </p></li>
 </ul>
 </section><section><title id="head-f06da7765bdcb4fdb7ca94cedada41bafeee1d5b">Introducing a new menu option</title>
 
-<p>First of all, before you start adding a new menu option to the CMS menus, ask yourself what usecase should be linked to that menu option and if the usecase exists already. If you find out that you need a new usecase as well, it is up to you if you first implement the new usecase and test it manuelly by invoking the appropriate URIs and then add the menu option or do it vice versa. It is just important that you understand that it will take both: The usecase and the menu option to enable new functionality for the user. </p>
+<p>First of all, before you start adding a new menu option to the CMS menus, ask yourself what usecase should be linked to that menu option and if the usecase exists already. If you find out that you need a new usecase as well, it is up to you if you first implement the new usecase and test it manually by invoking the appropriate URIs and then add the menu option or do it vice versa. It is just important that you understand that it will take both: The usecase and the menu option to enable new functionality for the user. </p>
 <p>According to the page on the core documentation mentioned above, the CMS menus are defined in an XML document like this: </p>
 
 <source>
@@ -71,7 +71,7 @@
 
 </section><section><title id="head-717f7a242c8db5f6fb81e54e27fcbcf590009452">Edit generic.xsp to add the item for the menu option</title>
 
-<p>In practive this XML is generated of an XSP which you can find in </p>
+<p>In practice this XML is generated of an XSP which you can find in </p>
 <p><em>lenya/pubs/&lt;your-pub&gt;/config/menus/generic.xsp</em> </p>
 <p>Edit this XSP to add your new menu item! </p>
 <p>The XSP is used in the following section of global-sitemap.xmap: </p>
