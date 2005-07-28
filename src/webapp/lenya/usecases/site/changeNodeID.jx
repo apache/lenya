@@ -32,7 +32,7 @@
           <i18n:text key="rename-label-doc"/>
           <i18n:param>
             <q>
-              <jx:out value="${usecase.getParameter('documentId')}"/>
+              <jx:out value="${usecase.getParameter('document').getId()}"/>
             </q>
           </i18n:param>
         </i18n:translate>

@@ -60,7 +60,6 @@ public class ChangeNodeID extends DocumentUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
      */
     protected Transactionable[] getObjectsToLock() throws UsecaseException {
-        super.lockInvolvedObjects();
 
         SiteManager siteManager = null;
         ServiceSelector selector = null;
@@ -134,10 +133,13 @@ public class ChangeNodeID extends DocumentUsecase {
                 addErrorMessage("The document ID is not valid.");
             } else {
                 Document parent = identityMap.getParent(getSourceDocument());
+                String parentId = "";
+                // if the document is at the top level, the parent is null
+                if (parent != null) parentId = parent.getId();
                 Publication publication = getSourceDocument().getPublication();
                 Document document = identityMap.get(publication,
                         getSourceDocument().getArea(),
-                        parent.getId() + "/" + nodeId,
+                        parentId + "/" + nodeId,
                         getSourceDocument().getLanguage());
                 if (document.exists()) {
                     addErrorMessage("The document does already exist.");
