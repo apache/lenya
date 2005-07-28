@@ -271,7 +271,7 @@
       </map:match>
       
       <map:match pattern="tabs/*">
-        <map:generate src="content/info/{1}.xsp" type="serverpages"/>
+        <map:generate src="{fallback:content/info/{1}.xsp}" type="serverpages"/>
         <map:serialize type="xml"/>
       </map:match>
       
