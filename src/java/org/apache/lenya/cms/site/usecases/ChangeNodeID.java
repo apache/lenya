@@ -18,7 +18,9 @@ package org.apache.lenya.cms.site.usecases;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
@@ -29,8 +31,11 @@ import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.util.DocumentSet;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteStructure;
+import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.transaction.TransactionException;
@@ -61,29 +66,27 @@ public class ChangeNodeID extends DocumentUsecase {
      */
     protected Transactionable[] getObjectsToLock() throws UsecaseException {
 
-        SiteManager siteManager = null;
-        ServiceSelector selector = null;
-        try {
-            Document doc = getSourceDocument();
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(doc.getPublication().getSiteManagerHint());
-            SiteStructure structure = siteManager.getSiteStructure(doc.getIdentityMap(), doc
-                    .getPublication(), doc.getArea());
+        List nodes = new ArrayList();
 
-            List objects = new ArrayList();
-            objects.add(structure.getRepositoryNode());
-            objects.addAll(getAllLanguageVersionNodes(doc));
-            return (Transactionable[]) objects.toArray(new Transactionable[objects.size()]);
+        try {
+            Node siteNode = SiteUtil.getSiteStructure(this.manager, getSourceDocument())
+                    .getRepositoryNode();
+            nodes.add(siteNode);
+
+            Document sourceDocument = getSourceDocument();
+
+            DocumentSet subsite = SiteUtil.getSubSite(this.manager, sourceDocument);
+            Document[] subsiteDocs = subsite.getDocuments();
+            for (int i = 0; i < subsiteDocs.length; i++) {
+                nodes.addAll(Arrays.asList(subsiteDocs[i].getRepositoryNodes()));
+                nodes.addAll(AssetUtil.getAssetNodes(subsiteDocs[i], this.manager, getLogger()));
+            }
+
         } catch (Exception e) {
             throw new UsecaseException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
         }
+
+        return (Transactionable[]) nodes.toArray(new Transactionable[nodes.size()]);
     }
 
     protected List getAllLanguageVersionNodes(Document doc) throws DocumentException,
@@ -123,8 +126,6 @@ public class ChangeNodeID extends DocumentUsecase {
     protected void doCheckExecutionConditions() throws Exception {
         super.doCheckExecutionConditions();
 
-        DocumentIdentityMap identityMap = getSourceDocument().getIdentityMap();
-
         String nodeId = getParameterAsString(NODE_ID);
         DocumentManager documentManager = null;
         try {
@@ -132,15 +133,7 @@ public class ChangeNodeID extends DocumentUsecase {
             if (!documentManager.isValidDocumentName(nodeId)) {
                 addErrorMessage("The document ID is not valid.");
             } else {
-                Document parent = identityMap.getParent(getSourceDocument());
-                String parentId = "";
-                // if the document is at the top level, the parent is null
-                if (parent != null) parentId = parent.getId();
-                Publication publication = getSourceDocument().getPublication();
-                Document document = identityMap.get(publication,
-                        getSourceDocument().getArea(),
-                        parentId + "/" + nodeId,
-                        getSourceDocument().getLanguage());
+                Document document = getTargetDocument();
                 if (document.exists()) {
                     addErrorMessage("The document does already exist.");
                 }
@@ -152,75 +145,63 @@ public class ChangeNodeID extends DocumentUsecase {
         }
     }
 
+    protected Document getTargetDocument() throws DocumentBuildException {
+        DocumentIdentityMap identityMap = getDocumentIdentityMap();
+        String nodeId = getParameterAsString(NODE_ID);
+        Document parent = identityMap.getParent(getSourceDocument());
+        String parentId = "";
+        // if the document is at the top level, the parent is null
+        if (parent != null)
+            parentId = parent.getId();
+        Publication publication = getSourceDocument().getPublication();
+        Document document = identityMap.get(publication, getSourceDocument().getArea(), parentId
+                + "/" + nodeId, getSourceDocument().getLanguage());
+        return document;
+    }
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
         super.doExecute();
 
-        Document document = getSourceDocument();
-        Document newDocument = moveAllLanguageVersions(document);
-
+        Document source = getSourceDocument();
+        Document target = getTargetDocument();
+        DocumentManager documentManager = null;
         LinkRewriter rewriter = null;
         try {
+
+            DocumentSet subsite = SiteUtil.getSubSite(this.manager, source);
+            Map targets = SiteUtil.getTransferedSubSite(this.manager, source, getTargetDocument(),
+                    SiteUtil.MODE_CANCEL);
+            Document[] subsiteDocs = subsite.getDocuments();
+            List nodes = new ArrayList();
+            for (int i = 0; i < subsiteDocs.length; i++) {
+
+                Document targetSubsiteDoc = (Document) targets.get(subsiteDocs[i]);
+                nodes.addAll(Arrays.asList(targetSubsiteDoc.getRepositoryNodes()));
+                nodes.addAll(AssetUtil.getCopiedAssetNodes(subsiteDocs[i], targetSubsiteDoc,
+                        this.manager, getLogger()));
+            }
+            for (Iterator i = nodes.iterator(); i.hasNext();) {
+                ((Node) i.next()).lock();
+            }
+
+            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
+            documentManager.moveAll(source, target);
+
             rewriter = (LinkRewriter) this.manager.lookup(LinkRewriter.ROLE);
-            rewriter.rewriteLinks(document, newDocument);
+            rewriter.rewriteLinks(source, target);
         } finally {
+            if (documentManager != null) {
+                this.manager.release(documentManager);
+            }
             if (rewriter != null) {
                 this.manager.release(rewriter);
             }
         }
 
-        setTargetDocument(newDocument);
-    }
-
-    /**
-     * Moves all language versions of a document.
-     * @param document The document.
-     * @return The moved version of the document.
-     * @throws DocumentException if an error occurs.
-     * @throws DocumentBuildException if an error occurs.
-     * @throws PublicationException if an error occurs.
-     * @throws ServiceException if an access error to a an Avalon service occurs
-     */
-    protected Document moveAllLanguageVersions(Document document) throws DocumentException,
-            DocumentBuildException, PublicationException, ServiceException {
-        Document newDocument = null;
-
-        DocumentIdentityMap identityMap = document.getIdentityMap();
-        String newDocumentId = getNewDocumentId();
-
-        String[] availableLanguages = document.getLanguages();
-
-        DocumentManager documentManager = null;
-        try {
-            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            for (int i = 0; i < availableLanguages.length; i++) {
-                Document languageVersion = identityMap.get(document.getPublication(), document
-                        .getArea(), document.getId(), availableLanguages[i]);
-
-                Document newLanguageVersion = identityMap.get(document.getPublication(), document
-                        .getArea(), newDocumentId, availableLanguages[i]);
-
-                Transactionable[] nodes = newLanguageVersion.getRepositoryNodes();
-                for (int j = 0; j < nodes.length; j++) {
-                    nodes[j].lock();
-                }
-                documentManager.move(languageVersion, newLanguageVersion);
-
-                if (availableLanguages[i].equals(document.getLanguage())) {
-                    newDocument = newLanguageVersion;
-                }
-            }
-        } catch (TransactionException e) {
-            throw new PublicationException(e);
-        } finally {
-            if (documentManager != null) {
-                this.manager.release(documentManager);
-            }
-        }
-
-        return newDocument;
+        setTargetDocument(getTargetDocument());
     }
 
     /**

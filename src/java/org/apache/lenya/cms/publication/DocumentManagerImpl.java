@@ -595,6 +595,9 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      *      org.apache.lenya.cms.publication.util.DocumentSet)
      */
     public void move(DocumentSet sources, DocumentSet destinations) throws PublicationException {
+        copy(sources,destinations);
+        delete(sources);
+        /*
         Document[] sourceDocs = sources.getDocuments();
         Document[] targetDocs = destinations.getDocuments();
 
@@ -615,6 +618,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         for (int i = 0; i < sortedSourceDocs.length; i++) {
             move(sortedSourceDocs[i], (Document) source2target.get(sortedSourceDocs[i]));
         }
+        */
     }
 
     /**

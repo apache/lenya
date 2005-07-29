@@ -19,6 +19,7 @@ package org.apache.lenya.cms.site.usecases;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
@@ -100,9 +101,9 @@ public abstract class MoveSubsite extends DocumentUsecase {
      * Lock the following objects:
      * <ul>
      * <li>all involved documents in the document's area</li>
-     * <li>the trash versions of these documents</li>
+     * <li>the target versions of these documents</li>
      * <li>the document area's site structure</li>
-     * <li>the trash site structure</li>
+     * <li>the target site structure</li>
      * </ul>
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
      */
@@ -111,25 +112,31 @@ public abstract class MoveSubsite extends DocumentUsecase {
         Document doc = getSourceDocument();
         try {
             DocumentSet sources = SiteUtil.getSubSite(this.manager, doc);
+            Map targets = SiteUtil.getTransferedSubSite(this.manager, doc, getTargetArea(),
+                    SiteUtil.MODE_CHANGE_ID);
+
             Document[] docs = sources.getDocuments();
             for (int i = 0; i < docs.length; i++) {
                 nodes.addAll(Arrays.asList(docs[i].getRepositoryNodes()));
+                nodes.addAll(AssetUtil.getAssetNodes(docs[i], this.manager, getLogger()));
+
+                Document target = (Document) targets.get(docs[i]);
+                nodes.addAll(Arrays.asList(target.getRepositoryNodes()));
+                nodes.addAll(AssetUtil.getCopiedAssetNodes(docs[i], target, this.manager,
+                        getLogger()));
             }
 
-            DocumentSet targets = SiteUtil.getTransferedSubSite(this.manager,
-                    doc,
-                    getTargetArea(),
-                    SiteUtil.MODE_CHANGE_ID);
-            targets.addAll(getTargetDocsToCopy());
-            targets.addAll(getSourceDocsToDelete(sources));
-            docs = targets.getDocuments();
+            DocumentSet furtherDocs = new DocumentSet();
+            furtherDocs.addAll(getTargetDocsToCopy());
+            furtherDocs.addAll(getSourceDocsToDelete(sources));
+            docs = furtherDocs.getDocuments();
             for (int i = 0; i < docs.length; i++) {
                 nodes.addAll(Arrays.asList(docs[i].getRepositoryNodes()));
             }
 
             nodes.add(SiteUtil.getSiteStructure(this.manager, doc).getRepositoryNode());
-            nodes.add(SiteUtil.getSiteStructure(this.manager, targets.getDocuments()[0])
-                    .getRepositoryNode());
+            nodes.add(SiteUtil.getSiteStructure(this.manager, getDocumentIdentityMap(),
+                    doc.getPublication(), getTargetArea()).getRepositoryNode());
         } catch (Exception e) {
             throw new UsecaseException(e);
         }
@@ -173,10 +180,13 @@ public abstract class MoveSubsite extends DocumentUsecase {
                 }
             }
 
-            DocumentSet targets = SiteUtil.getTransferedSubSite(this.manager,
-                    doc,
-                    getTargetArea(),
+            Map targetMap = SiteUtil.getTransferedSubSite(this.manager, doc, getTargetArea(),
                     SiteUtil.MODE_CHANGE_ID);
+            DocumentSet targets = new DocumentSet();
+            Document[] docs = sources.getDocuments();
+            for (int i = 0; i < docs.length; i++) {
+                targets.add((Document) targetMap.get(docs[i]));
+            }
             documentManager.move(sources, targets);
 
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
@@ -221,10 +231,8 @@ public abstract class MoveSubsite extends DocumentUsecase {
             Node node = NodeFactory.getNode(doc);
             Node[] requiredNodes = siteManager.getRequiredResources(map, node);
             for (int i = 0; i < requiredNodes.length; i++) {
-                Document targetDoc = map.get(getSourceDocument().getPublication(),
-                        getTargetArea(),
-                        requiredNodes[i].getDocumentId(),
-                        doc.getLanguage());
+                Document targetDoc = map.get(getSourceDocument().getPublication(), getTargetArea(),
+                        requiredNodes[i].getDocumentId(), doc.getLanguage());
                 if (!siteManager.containsInAnyLanguage(targetDoc)) {
                     docsToCopy.add(targetDoc);
                 }
@@ -277,7 +285,8 @@ public abstract class MoveSubsite extends DocumentUsecase {
                         if (!sources.contains(langVersion)) {
                             LenyaMetaData meta = langVersion.getMetaDataManager()
                                     .getLenyaMetaData();
-                            String placeholder = meta.getFirstValue(LenyaMetaData.ELEMENT_PLACEHOLDER);
+                            String placeholder = meta
+                                    .getFirstValue(LenyaMetaData.ELEMENT_PLACEHOLDER);
                             if (placeholder == null || !placeholder.equals("true")) {
                                 delete = false;
                             }

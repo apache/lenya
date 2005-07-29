@@ -24,6 +24,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
@@ -37,6 +38,7 @@ import org.apache.lenya.cms.site.Node;
 import org.apache.lenya.cms.site.NodeFactory;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteUtil;
+import org.apache.lenya.cms.site.usecases.AssetUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler;
@@ -75,23 +77,22 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
         try {
             List nodes = new ArrayList();
             DocumentSet set = new DocumentSet();
-            
+
             Document doc = getSourceDocument();
             set.addAll(SiteUtil.getSubSite(this.manager, doc));
-            
-            Document liveDoc = doc.getIdentityMap().getAreaVersion(doc, Publication.LIVE_AREA);
-            if(liveDoc.exists())
-                set.addAll(SiteUtil.getSubSite(this.manager, liveDoc));
-            else
-                set.add(liveDoc);
-            
-            
-            Document[] documents = set.getDocuments();
-            for (int i = 0; i < documents.length; i++) {
-                nodes.addAll(Arrays.asList(documents[i].getRepositoryNodes()));
+            Map targets = SiteUtil.getTransferedSubSite(this.manager, doc, Publication.LIVE_AREA,
+                    SiteUtil.MODE_REPLACE);
+            Document[] docs = set.getDocuments();
+            for (int i = 0; i < docs.length; i++) {
+                nodes.addAll(Arrays.asList(docs[i].getRepositoryNodes()));
+                Document target = (Document) targets.get(docs[i]);
+                nodes.addAll(Arrays.asList(target.getRepositoryNodes()));
+                nodes.addAll(AssetUtil.getCopiedAssetNodes(docs[i], target, this.manager,
+                        getLogger()));
             }
 
-            nodes.add(SiteUtil.getSiteStructure(this.manager, liveDoc).getRepositoryNode());
+            nodes.add(SiteUtil.getSiteStructure(this.manager, getDocumentIdentityMap(),
+                    doc.getPublication(), Publication.LIVE_AREA).getRepositoryNode());
             return (Transactionable[]) nodes.toArray(new Transactionable[nodes.size()]);
 
         } catch (Exception e) {
@@ -145,13 +146,12 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
                     DocumentSet liveDocs = SiteUtil.getExistingDocuments(map, requiredNodes[i]);
                     if (liveDocs.isEmpty()) {
                         Document authoringDoc = map.get(requiredNodes[i].getPublication(),
-                                Publication.AUTHORING_AREA,
-                                requiredNodes[i].getDocumentId());
+                                Publication.AUTHORING_AREA, requiredNodes[i].getDocumentId());
                         if (authoringDoc.exists()) {
                             missingDocuments.add(authoringDoc);
                         } else {
-                            missingDocuments.add(map.getLanguageVersion(authoringDoc,
-                                    authoringDoc.getPublication().getDefaultLanguage()));
+                            missingDocuments.add(map.getLanguageVersion(authoringDoc, authoringDoc
+                                    .getPublication().getDefaultLanguage()));
                         }
                     }
 

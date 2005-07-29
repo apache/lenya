@@ -16,6 +16,9 @@
  */
 package org.apache.lenya.cms.site;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
@@ -78,10 +81,8 @@ public class SiteUtil {
      */
     public static SiteStructure getSiteStructure(ServiceManager manager, Document document)
             throws SiteException {
-        return SiteUtil.getSiteStructure(manager,
-                document.getIdentityMap(),
-                document.getPublication(),
-                document.getArea());
+        return SiteUtil.getSiteStructure(manager, document.getIdentityMap(), document
+                .getPublication(), document.getArea());
     }
 
     /**
@@ -204,19 +205,18 @@ public class SiteUtil {
     public static final int MODE_CHANGE_ID = 2;
 
     /**
-     * Returns a document set that represents the transfer of a sub-site to another area.
+     * Returns a document set that represents the transfer of a sub-site to another location.
      * 
      * @param manager The service manager.
      * @param source The source document.
-     * @param targetArea The target area.
+     * @param target The target document.
      * @param mode The mode: {@link #MODE_REPLACE},{@link #MODE_CANCEL},{@link #MODE_CHANGE_ID}.
-     * @return A document set.
+     * @return A map which maps source to target documents.
      * @throws SiteException if an error occurs.
      */
-    public static DocumentSet getTransferedSubSite(ServiceManager manager, Document source,
-            String targetArea, int mode) throws SiteException {
-
-        DocumentSet set = new DocumentSet();
+    public static Map getTransferedSubSite(ServiceManager manager, Document source,
+            Document target, int mode) throws SiteException {
+        Map map = new HashMap();
         ServiceSelector selector = null;
         SiteManager siteManager = null;
         try {
@@ -227,9 +227,10 @@ public class SiteUtil {
             DocumentSet subSite = SiteUtil.getSubSite(manager, source);
             Document[] docs = subSite.getDocuments();
             for (int i = 0; i < docs.length; i++) {
-                Document target = SiteUtil.getTransferedDocument(siteManager, docs[i], targetArea, mode);
-                if (target != null) {
-                    set.add(target);
+                Document targetDoc = SiteUtil.getTransferedDocument(siteManager, docs[i], source,
+                        target, mode);
+                if (targetDoc != null) {
+                    map.put(docs[i], targetDoc);
                 }
             }
 
@@ -243,7 +244,78 @@ public class SiteUtil {
                 manager.release(selector);
             }
         }
-        return set;
+        return map;
+    }
+
+    public static Document getTransferedDocument(SiteManager siteManager, Document source,
+            Document baseSource, Document baseTarget, int mode) throws SiteException,
+            DocumentException, DocumentBuildException {
+
+        String targetArea = baseTarget.getArea();
+        String sourceId = baseSource.getId();
+
+        String suffix = source.getId().substring(sourceId.length());
+        String targetId = baseTarget.getId() + suffix;
+
+        Document target = source.getIdentityMap().get(baseTarget.getPublication(), targetArea,
+                targetId, source.getLanguage());
+        switch (mode) {
+        case MODE_REPLACE:
+            break;
+        case MODE_CANCEL:
+            if (target.exists()) {
+                target = null;
+            }
+            break;
+        case MODE_CHANGE_ID:
+            target = siteManager.getAvailableDocument(target);
+            break;
+        }
+        return target;
+    }
+
+    /**
+     * Returns a document set that represents the transfer of a sub-site to another area.
+     * 
+     * @param manager The service manager.
+     * @param source The source document.
+     * @param targetArea The target area.
+     * @param mode The mode: {@link #MODE_REPLACE},{@link #MODE_CANCEL},{@link #MODE_CHANGE_ID}.
+     * @return A map which maps sources to targets.
+     * @throws SiteException if an error occurs.
+     */
+    public static Map getTransferedSubSite(ServiceManager manager, Document source,
+            String targetArea, int mode) throws SiteException {
+
+        Map map = new HashMap();
+        ServiceSelector selector = null;
+        SiteManager siteManager = null;
+        try {
+            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(source.getPublication()
+                    .getSiteManagerHint());
+
+            DocumentSet subSite = SiteUtil.getSubSite(manager, source);
+            Document[] docs = subSite.getDocuments();
+            for (int i = 0; i < docs.length; i++) {
+                Document target = SiteUtil.getTransferedDocument(siteManager, docs[i], targetArea,
+                        mode);
+                if (target != null) {
+                    map.put(docs[i], target);
+                }
+            }
+
+        } catch (Exception e) {
+            throw new SiteException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                manager.release(selector);
+            }
+        }
+        return map;
     }
 
     public static Document getTransferedDocument(SiteManager siteManager, Document source,
