@@ -120,49 +120,18 @@ public class LDAPUser extends FileUser {
     }
 
     /**
-     * Checks if a user exists.
-     * 
-     * @param ldapId The LDAP id.
-     * @return A boolean value indicating whether the user is found in the directory
-     * @throws AccessControlException when an error occurs. 
-     */
-    public boolean existsUser(String ldapId) throws AccessControlException {
-
-	if (log.isDebugEnabled())
-	    log.debug("existsUser() checking id " + ldapId);
-
-        boolean exists = false;
-
-        try {
-            readProperties();
-	    SearchResult entry = getDirectoryEntry(ldapId);
-
-	    exists = (entry != null);
-
-        } catch (Exception e) {
-	    if (log.isDebugEnabled())
-		log.debug("existsUser() for id " + ldapId + " got exception: " + e);
-            throw new AccessControlException("Exception during search: ", e);
-        } 
-
-        return exists;
-    }
-
-    /**
      * Initializes this user.
      *
-     * The current (already authenticated) ldapId is queried in the directory, 
+     * The current ldapId is queried in the directory, 
      * in order to retrieve additional information, such as the user name.
      * In current implementation, only the user name is actually retrieved, but
      * other attributes may be used in the future (such as groups ?)
      *
-     * TODO: should the code be changed to not throw an exception when something
-     * goes wrong ? After all, it's only used to get additional info for display?
-     * This is a design decision, I'm not sure what's best.
-     * 
-     * @throws ConfigurationException when something went wrong.
+     * Note: if the user entry could not be retrieved, initialize the
+     * attributes to empty string (they are optional anyway), but do not
+     * throw an exception.
      */
-    protected void initialize() throws ConfigurationException {
+    protected void initialize() {
         DirContext context = null;
         try {
 	    if (log.isDebugEnabled())
@@ -193,15 +162,19 @@ public class LDAPUser extends FileUser {
 	    if (log.isDebugEnabled())
 		log.debug("initialize() set name to " + ldapName);
 
-        } catch (Exception e) {
-            throw new ConfigurationException("Could not read properties", e);
+        } catch (IOException e) {
+	    log.warn("LDAPUser.initialize() can not read the user name for the id [" + ldapId + "], this is probably a setup error of your user entry.", e);
+	    ldapName = "";
+        } catch (NamingException e) {
+	    log.warn("LDAPUser.initialize() can not read the user name for the id [" + ldapId + "], this is probably a setup error of your user entry.", e);
+	    ldapName = "";
         } finally {
             try {
                 if (context != null) {
                     close(context);
                 }
             } catch (NamingException e) {
-                throw new ConfigurationException("Closing context failed: ", e);
+		log.warn("LDAPUser.initialize() could not close the connection to the directory server, this should not happen", e);
             }
         }
     }
@@ -528,6 +501,9 @@ public class LDAPUser extends FileUser {
 	else {
 	    if (isSubtreeSearch()) {
 		// 2. Principal is constructed from directory entry
+		if (log.isDebugEnabled())
+		    log.debug("getPrincipal() getting entry ...");
+
 		SearchResult entry = getDirectoryEntry(getLdapId());
 		principal = entry.getName();
 		if (entry.isRelative()) {
@@ -551,6 +527,8 @@ public class LDAPUser extends FileUser {
      *
      */
     private String constructPrincipal(String userId) {
+	if (log.isDebugEnabled())
+	    log.debug("constructPrincipal() called with userId [" + userId + "]");
 	StringBuffer principal = new StringBuffer();
 	principal
 	    .append(defaultProperties.getProperty(USR_ATTR_PROP, USR_ATTR_DEFAULT))
@@ -573,12 +551,12 @@ public class LDAPUser extends FileUser {
 	}
 	else {
 	    // try for backwards compatibility of ldap properties
-	    log.warn("getPrincipal() read a deprecated format in ldap properties, please update");
+	    log.warn("constructPrincipal() read a deprecated format in ldap properties, please update");
 	    principal.append(defaultProperties.getProperty(PARTIAL_USER_DN_PROP));
 	}
 
 	if (log.isDebugEnabled())
-	    log.debug("getPrincipal() returning " + principal.toString());
+	    log.debug("constructPrincipal() returning " + principal.toString());
 
 	return principal.toString();
     }
