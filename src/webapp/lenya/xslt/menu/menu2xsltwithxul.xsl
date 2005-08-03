@@ -51,9 +51,12 @@
   <xsl:if test="$area != 'live'">
     
   <xso:template match="/">
-      <!--xso:processing-instruction name="xml-stylesheet">
+<!--
+      <xso:processing-instruction name="xml-stylesheet">
           href="chrome://global/skin/" type="text/css"
-      </xso:processing-instruction-->
+      </xso:processing-instruction>
+-->
+
       <xso:processing-instruction name="xml-stylesheet">
           href="<xsl:value-of select="$contextprefix"/>/lenya/css/xulmenu.css" type="text/css"
       </xso:processing-instruction>
@@ -86,9 +89,11 @@
       </xul:window>
   </xso:template>
   
+  <!-- TODO: I think only type="text/css" should be transformed into xml-stylesheet ... -->
+  <!-- TODO: Copy all attributes! -->
   <xso:template match="xhtml:link">
       <xso:processing-instruction name="xml-stylesheet">
-          href="<xso:value-of select="@href"/>" type="text/css" 
+          href="<xso:value-of select="@href"/>" type="<xso:value-of select="@type"/>"
       </xso:processing-instruction>
   </xso:template>
   
