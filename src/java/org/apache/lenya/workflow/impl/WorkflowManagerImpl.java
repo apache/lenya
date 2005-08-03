@@ -101,6 +101,7 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
 
         try {
             String uri = workflowable.getWorkflowSchemaURI();
+            getLogger().debug("Workflow URI: " + uri);
             if (uri != null) {
                 Document document = SourceUtil.readDOM(uri, this.manager);
                 WorkflowBuilder builder = new WorkflowBuilder(getLogger());
