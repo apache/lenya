@@ -33,7 +33,7 @@
       <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
-      <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
+      <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
       <map:serialize/>
     </map:resource>
  </map:resources>
@@ -82,8 +82,8 @@
         <map:select type="request-parameter">
           <map:parameter name="parameter-name" value="lenya.step"/>  
           <map:when test="view-revision"> <!-- view of an older version -->
-            <map:generate type="serverpages" src="../../content/rc/view.xsp"/>
-            <map:transform src="../../xslt/rc/toDoc.xsl"/>
+            <map:generate type="serverpages" src="fallback://lenya/content/rc/view.xsp"/>
+            <map:transform src="fallback://lenya/xslt/rc/toDoc.xsl"/>
           </map:when>
           <map:otherwise>
             <map:generate src="content/{1}/entries/{2}/{3}/{4}/{5}/index.xml"/>
@@ -121,7 +121,7 @@
           </map:when>
           <map:otherwise>
             <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/entry.xml"/>
-            <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
+            <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
             <map:serialize type="xhtml"/>
           </map:otherwise>
         </map:select>
@@ -132,26 +132,26 @@
     <map:pipeline>
       <map:match pattern="*/entries/*/*/*/*/index-bxe.html">
         <!-- Check for BXE -->
-        <map:act type="resource-exists" src="../../resources/bxe/bxeLoader.js">
+        <map:act type="resource-exists" src="fallback://lenya/resources/bxe/bxeLoader.js">
           <map:aggregate element="bxe">
-            <map:part src="../../resources/misc/bxe/index.xhtml"/>
+            <map:part src="fallback://lenya/resources/misc/bxe/index.xhtml"/>
             <map:part src="resources/misc/bxe/entry-namespaces.xml"/>
           </map:aggregate>
-          <map:transform src="../../xslt/bxe/aggregate.xsl"/>
-          <map:transform src="../../xslt/bxe/index-xhtml.xsl">
+          <map:transform src="fallback://lenya/xslt/bxe/aggregate.xsl"/>
+          <map:transform src="fallback://lenya/xslt/bxe/index-xhtml.xsl">
             <map:parameter name="configfile" value="./config-bxe.xml"/>
             <map:parameter name="context" value="{request:contextPath}"/>
           </map:transform>
           <map:serialize type="xhtml"/>
         </map:act>
-        <map:generate src="../../resources/misc/bxe/download.xhtml"/>
+        <map:generate src="fallback://lenya/resources/misc/bxe/download.xhtml"/>
         <map:serialize type="xhtml"/>
       </map:match>
     </map:pipeline>
     <map:pipeline>
       <map:match pattern="*/entries/*/*/*/*/config-bxe.xml">
-        <map:generate src="../../resources/misc/bxe/inc/config.xml"/>
-        <map:transform src="../../xslt/bxe/config-xml.xsl">
+        <map:generate src="fallback://lenya/resources/misc/bxe/inc/config.xml"/>
+        <map:transform src="fallback://lenya/xslt/bxe/config-xml.xsl">
           <map:parameter name="BX_xmlfile" value="../../../../../../webdav/entries/{2}/{3}/{4}/{5}/index.xml"/>
           <map:parameter name="BX_xslfile" value="entry-bxe.xsl"/>
           <map:parameter name="css" value="entry-bxe.css"/>
@@ -227,7 +227,7 @@
           </map:when>
           <map:otherwise>
             <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/feed.xml"/>
-            <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
+            <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
             <map:serialize type="xhtml"/>
           </map:otherwise>
         </map:select>

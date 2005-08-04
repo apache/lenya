@@ -33,7 +33,7 @@
       <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
-      <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
+      <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
       <map:select type="parameter">
         <map:parameter name="statusCode" value="{statusCode}"/>
         <map:when test="">
@@ -171,18 +171,18 @@
               <map:match pattern="authoring/**.html">
                 <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../../1}/{../../2}.xml?doctype={page-envelope:document-type}"/>
               </map:match>
-              <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
+              <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
               <!-- Write to cache for requests from live area -->
               <map:select type="parameter">
                 <map:parameter name="parameter-selector-test" value="{../1}"/>
                 <map:when test="live">
-                  <map:transform src="../../xslt/authoring/edit/addSourceTags.xsl">
+                  <map:transform src="fallback://lenya/xslt/authoring/edit/addSourceTags.xsl">
                     <map:parameter name="source" value="{global:cache-dir}/{../1}/{../2}.html"/>
                   </map:transform>
                   <map:transform type="write-source">
                     <map:parameter name="serializer" value="xhtml"/>
                   </map:transform>
-                  <map:transform src="../../xslt/authoring/edit/removeSourceTags.xsl"/>
+                  <map:transform src="fallback://lenya/xslt/authoring/edit/removeSourceTags.xsl"/>
                 </map:when>
               </map:select>
               <map:serialize type="xhtml"/>
@@ -194,7 +194,7 @@
 
         <!-- There is no version of the requested document-id for the
              requested language. -->
-        <map:generate type="serverpages" src="../../content/exception/missing-language.xsp"/>
+        <map:generate type="serverpages" src="fallback://lenya/content/exception/missing-language.xsp"/>
         <map:transform src="fallback://lenya/xslt/exception/missing-language.xsl"/>
         <map:call resource="style-cms-page"/>
 

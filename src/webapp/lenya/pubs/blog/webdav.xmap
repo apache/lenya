@@ -24,7 +24,7 @@
     <map:pipeline type="noncaching">
       <map:match pattern="entries/**/propfind-depth-*.xml">
         <map:generate type="directory" src="content/authoring/entries/{1}/"/>
-        <map:transform src="../../xslt/util/propfind.xsl">
+        <map:transform src="fallback://lenya/xslt/util/propfind.xsl">
           <map:parameter name="depth" value="{2}"/>
           <map:parameter name="href" value="{request:contextPath}/blog/webdav/entries/{1}/"/>
         </map:transform>
@@ -34,7 +34,7 @@
         <map:select type="request-method">
           <map:when test="PROPFIND">
             <map:generate type="directory" src="content/authoring/entries/{1}/"/>
-            <map:transform src="../../xslt/util/propfind.xsl">
+            <map:transform src="fallback://lenya/xslt/util/propfind.xsl">
               <map:parameter name="depth" value="{request-header:Depth}"/>
               <map:parameter name="href" value="{request:contextPath}/blog/webdav/entries/{1}/"/>
             </map:transform>
@@ -53,7 +53,7 @@
        <map:select type="request-method">
           <map:when test="PUT">
             <map:generate type="stream"/>
-            <map:transform src="../../xslt/authoring/edit/addSourceTags.xsl">
+            <map:transform src="fallback://lenya/xslt/authoring/edit/addSourceTags.xsl">
               <map:parameter name="source" value="content/authoring/entries/{1}.xml"/>
             </map:transform>
             <map:transform type="write-source"/>

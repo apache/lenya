@@ -24,7 +24,7 @@
     <map:pipeline>
     	
       <map:match pattern="live/**">
-        <map:generate type="serverpages" src="../../content/menus/live.xsp"/>
+        <map:generate type="serverpages" src="fallback://lenya/content/menus/live.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
       

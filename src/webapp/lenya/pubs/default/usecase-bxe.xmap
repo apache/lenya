@@ -31,7 +31,7 @@
       <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
-      <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
+      <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
       <map:select type="parameter">
         <map:parameter name="statusCode" value="{statusCode}"/>
         <map:when test="">
@@ -44,8 +44,8 @@
     </map:resource>
     
     <map:resource name="cms-screen-xml">
-          <map:generate src="../../content/{serverpage}" type="serverpages"/>
-          <map:transform src="../../xslt/{stylesheet}">
+          <map:generate src="fallback://lenya/content/{serverpage}" type="serverpages"/>
+          <map:transform src="fallback://lenya/xslt/{stylesheet}">
             <map:parameter name="use-request-parameters" value="true"/>
             <map:parameter name="contextprefix" value="{request:contextPath}"/>
           </map:transform>      
@@ -63,7 +63,7 @@
   </map:resources>
   <!-- =========================== Flow ===================================== -->
   <map:flow language="javascript">
-    <map:script src="../../usecases/edit-document.js"/>
+    <map:script src="fallback://lenya/usecases/edit-document.js"/>
   </map:flow>
 	<!-- =========================== Pipelines ================================ -->
 	
@@ -78,36 +78,36 @@
          <!--+
              | Check if BXE is installed 
 	     +-->
-         <map:act type="resource-exists" src="../../resources/bxe/bxeLoader.js">
+         <map:act type="resource-exists" src="fallback://lenya/resources/bxe/bxeLoader.js">
 
            <map:act type="reserved-checkout">
-             <map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
+             <map:generate type="serverpages" src="fallback://lenya/content/rc/{exception}.xsp">
                <map:parameter name="user" value="{user}"/>
                <map:parameter name="filename" value="{filename}"/>
                <map:parameter name="date" value="{date}"/>
                <map:parameter name="message" value="{message}"/>
              </map:generate>
-             <map:transform src="../../xslt/rc/rco-exception.xsl"/>
+             <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
              <map:call resource="style-cms-page"/>
            </map:act>
 
            <map:aggregate element="bxe">
-             <map:part src="../../resources/misc/bxe/index.xhtml"/>
-             <map:part src="../../resources/misc/bxe/content-namespaces.xml"/>
+             <map:part src="fallback://lenya/resources/misc/bxe/index.xhtml"/>
+             <map:part src="fallback://lenya/resources/misc/bxe/content-namespaces.xml"/>
            </map:aggregate>
-           <map:transform src="../../xslt/bxe/aggregate.xsl"/>
-           <map:transform src="../../xslt/bxe/index-xhtml.xsl">
+           <map:transform src="fallback://lenya/xslt/bxe/aggregate.xsl"/>
+           <map:transform src="fallback://lenya/xslt/bxe/index-xhtml.xsl">
              <map:parameter name="configfile" value="{request:requestURI}?lenya.usecase=bxe&amp;lenya.step=config"/>
              <map:parameter name="context" value="{request:contextPath}"/>
            </map:transform>
-           <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
+           <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
            <map:serialize type="xhtml"/>
          </map:act>
 
 	 <!--+
 	     | BXE is not installed - generate info page for the user 
 	     +-->
-         <map:generate src="../../resources/misc/bxe/download.xhtml"/>
+         <map:generate src="fallback://lenya/resources/misc/bxe/download.xhtml"/>
          <map:call resource="style-cms-page"/>
          <map:serialize type="xhtml"/>
 
@@ -143,8 +143,8 @@
 
       <map:match pattern="link-show" type="step">
             <!-- just a dummy xsp since we call the info area directly -->
-           <map:generate src="../../content/util/empty.xml"/>
-          <map:transform src="../../xslt/bxe/link.xsl" label="content">
+           <map:generate src="context://lenya/content/util/empty.xml"/>
+          <map:transform src="fallback://lenya/xslt/bxe/link.xsl" label="content">
             <map:parameter name="infoarea" value="true"/>
             <map:parameter name="contextprefix" value="{request:contextPath}"/>
             <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
@@ -189,7 +189,7 @@
              for the checkin while we redirect to the document
   -->
             <map:parameter name="BX_exitdestination" value="{request:requestURI}?lenya.usecase=edit.bxe&amp;lenya.continuation={request-param:lenya.continuation}&amp;submit=Submit"/>
-            <map:parameter name="contextmenufile" value="../../resources/misc/bxe/contextmenu.xml"/>
+            <map:parameter name="contextmenufile" value="fallback://lenya/resources/misc/bxe/contextmenu.xml"/>
           </map:transform>
           <map:transform type="cinclude"/>
           <map:serialize type="xml"/>
@@ -216,20 +216,20 @@
            -->
           <map:when test="PUT">
             <map:generate type="stream"/>
-            <map:transform src="../../xslt/bxe/change-object-path-back.xsl">
+            <map:transform src="fallback://lenya/xslt/bxe/change-object-path-back.xsl">
               <map:parameter name="documentid" value="{page-envelope:document-id}"/>
             </map:transform>
-            <map:transform src="../../usecases/edit/bxe/addSourceTags.xsl">
+            <map:transform src="fallback://lenya/usecases/edit/bxe/addSourceTags.xsl">
               <map:parameter name="source" value="context://lenya/pubs/{page-envelope:publication-id}/work/bxe/content/{page-envelope:area}/{page-envelope:document-path}.tmp"/>
             </map:transform>
             <map:transform type="write-source"/>
-            <map:transform src="../../usecases/edit/bxe/removeSourceTags.xsl"/>
+            <map:transform src="fallback://lenya/usecases/edit/bxe/removeSourceTags.xsl"/>
             <map:serialize type="xml" status-code="204"/>
           </map:when>
 
           <map:otherwise> <!-- GET -->
             <map:generate src="lenya://lenya/pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
-            <map:transform src="../../xslt/bxe/change-object-path.xsl">
+            <map:transform src="fallback://lenya/xslt/bxe/change-object-path.xsl">
               <map:parameter name="documentid" value="{page-envelope:document-id}"/>
             </map:transform>
             <map:serialize type="xml"/>

@@ -165,7 +165,7 @@
 
                   <!-- test if the document is checked out -->
         	        <map:act type="reserved-checkout-test">
-            	      <map:generate type="serverpages" src="../../content/rc/{exception}.xsp">
+            	      <map:generate type="serverpages" src="fallback://lenya/content/rc/{exception}.xsp">
                 	    <map:parameter name="user" value="{user}"/>
                     	<map:parameter name="filename" value="{filename}"/>
         	            <map:parameter name="date" value="{date}"/>

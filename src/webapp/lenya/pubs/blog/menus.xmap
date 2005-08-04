@@ -35,7 +35,7 @@
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="live/**.xml">
-        <map:generate type="serverpages" src="../../content/menus/live.xsp"/>
+        <map:generate type="serverpages" src="fallback://lenya/content/menus/live.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>

@@ -235,13 +235,13 @@
             <map:when test="PUT">
               <map:act type="reserved-checkout-test">
                 <map:generate type="serverpages" 
-                  src="{global:basedir}/../../content/rc/{exception}.xsp">
+                  src="fallback://lenya/content/rc/{exception}.xsp">
                   <map:parameter name="user" value="{user}"/>
                   <map:parameter name="filename" value="{filename}"/>
                   <map:parameter name="date" value="{date}"/>
                   <map:parameter name="message" value="{message}"/>
                 </map:generate>
-                <map:transform src="{global:basedir}/../../xslt/rc/rco-exception.xsl"/>
+                <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
                 <map:call resource="style-cms-page"/>
               </map:act>
               

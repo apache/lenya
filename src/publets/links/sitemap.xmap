@@ -25,9 +25,9 @@
       <!-- View Revision? -->
       <map:match pattern="*.xml">
         <map:match type="step" pattern="view-revision">
-          <map:generate type="serverpages" src="../../content/rc/view.xsp">
+          <map:generate type="serverpages" src="fallback://lenya/content/rc/view.xsp">
           </map:generate>
-          <map:transform src="../../xslt/rc/toDoc.xsl"/>
+          <map:transform src="fallback://lenya/xslt/rc/toDoc.xsl"/>
           <map:transform src="fallback://lenya/publets/links/xslt/links2xhtml.xsl">
             <map:parameter name="rendertype" value="{1}"/>
             <map:parameter name="nodeid" value="{page-envelope:document-name}"/>
