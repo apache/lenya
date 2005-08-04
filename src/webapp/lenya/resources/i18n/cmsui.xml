@@ -209,7 +209,20 @@
   <message key="IP Range Administration">IP&#160;Range&#160;Administration</message>
   <message key="Add IP Range">Add&#160;IP&#160;Range</message>
   <message key="IP Range Profile">IP&#160;Range&#160;Profile</message>
-
+  
+  <!-- Site Overview -->
+  <message key="filterResourceType">Resource Type</message>
+  <message key="filterWorkflowState">Workflow State</message>
+  <message key="filterLanguage">Language</message>
+  <message key="filterLastModified">Last Modification</message>
+  <message key="filterDocumentId">Document ID</message>
+  <message key="keyResourceType">Resource Type</message>
+  <message key="keyWorkflowState">Workflow State</message>
+  <message key="keyLanguage">Language</message>
+  <message key="keyLastModified">Last Modified</message>
+  <message key="keyDocumentId">Document ID</message>
+  <message key="Update">Update</message>
+  
   <!-- Site tab (info screens) -->
   <message key="Available Languages">Available Languages</message>
   <message key="This document is not available in this language.">This document is not available in this language.</message>

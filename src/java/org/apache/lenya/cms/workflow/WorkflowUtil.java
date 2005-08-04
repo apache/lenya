@@ -21,6 +21,7 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.util.DocumentSet;
+import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowManager;
 import org.apache.lenya.workflow.Workflowable;
@@ -199,6 +200,35 @@ public class WorkflowUtil {
             wfManager = (WorkflowManager) manager.lookup(WorkflowManager.ROLE);
             Workflowable workflowable = new DocumentWorkflowable(document, logger);
             return wfManager.hasWorkflow(workflowable);
+        } catch (ServiceException e) {
+            throw new WorkflowException(e);
+        } finally {
+            if (wfManager != null) {
+                manager.release(wfManager);
+            }
+        }
+    }
+
+    /**
+     * Returns the workflow schema of a document.
+     * @param manager The service manager.
+     * @param logger The logger.
+     * @param document The document.
+     * @return A workflow schema.
+     * @throws WorkflowException if an error occurs.
+     */
+    public static Workflow getWorkflowSchema(ServiceManager manager, Logger logger, Document document)
+            throws WorkflowException {
+        WorkflowManager wfManager = null;
+        try {
+            wfManager = (WorkflowManager) manager.lookup(WorkflowManager.ROLE);
+            Workflowable workflowable = new DocumentWorkflowable(document, logger);
+            if (wfManager.hasWorkflow(workflowable)) {
+                return wfManager.getWorkflowSchema(workflowable);
+            }
+            else {
+                throw new WorkflowException("The document [" + document + "] has no workflow!");
+            }
         } catch (ServiceException e) {
             throw new WorkflowException(e);
         } finally {

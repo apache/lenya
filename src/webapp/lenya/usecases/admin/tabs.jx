@@ -102,6 +102,16 @@
             </jx:otherwise>
           </jx:choose>
         </td>
+        <td>
+          <jx:choose>
+            <jx:when test="${usecase.getView().getParameter('tab').equals('siteOverview')}">
+              <a href="?lenya.usecase=admin.siteOverview" class="lenya-tablink-active"><i18n:text>Overview</i18n:text></a>
+            </jx:when>
+            <jx:otherwise>
+              <a href="?lenya.usecase=admin.siteOverview" class="lenya-tablink"><i18n:text>Overview</i18n:text></a>
+            </jx:otherwise>
+          </jx:choose>
+        </td>
       </tr>
     </table>
   </div>

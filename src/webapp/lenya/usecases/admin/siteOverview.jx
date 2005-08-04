@@ -1,0 +1,99 @@
+<!--
+  Copyright 1999-2005 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- $Id: emptyTrash.jx 164233 2005-04-22 13:01:45Z jwkaltz $ -->
+
+<page:page
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
+  >
+  
+  <page:body>
+    <jx:import uri="admin/tabs.jx"/>
+    <div id="contentblock1" class="lenya-tab">
+    <h1><i18n:text>Overview</i18n:text></h1>
+      
+    <jx:import uri="templates/messages.jx"/>
+    <form>
+      <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+      <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
+      
+      <div class="lenya-box">
+        <div class="lenya-box-title"><i18n:text>Filter</i18n:text></div>
+        <div class="lenya-box-body">
+          <table class="lenya-table-noborder">
+            <jx:forEach var="filter" items="${usecase.getParameter('filters')}">
+              <tr>
+                <td class="lenya-entry-caption"><i18n:text><jx:out value="${filter}"/></i18n:text></td>
+                <td>
+                  <select class="lenya-form-element" name="${filter}">
+                    <jx:forEach var="value" items="${usecase.getParameter(filter + 'Values')}">
+                      <jx:set var="selectedValue" value="${usecase.getParameter(filter)}"/>
+                      <jx:choose>
+                        <jx:when test="${value.equals(selectedValue)}">
+                          <option value="${value}" selected="selected"><i18n:text><jx:out value="${value}"/></i18n:text></option>
+                        </jx:when>
+                        <jx:otherwise>
+                          <option value="${value}"><i18n:text><jx:out value="${value}"/></i18n:text></option>
+                        </jx:otherwise>
+                      </jx:choose>
+                    </jx:forEach>
+                  </select>
+                </td>
+              </tr>
+            </jx:forEach>
+            <tr>
+              <td></td>
+              <td><input i18n:attr="value" type="submit" value="Update"/></td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      
+      <table class="lenya-table">
+
+        <tr>
+          <jx:forEach var="key" items="${usecase.getParameter('keys')}">
+            <th>
+              <jx:choose>
+                <jx:when test="${key.equals(usecase.getParameter('sort'))}">
+                  <i18n:text><jx:out value="${key}"/></i18n:text>
+                </jx:when>
+                <jx:otherwise>
+                  <a href="${request.getRequestURI()}?sort=${key}&amp;lenya.usecase=${usecase.getName()}&amp;lenya.continuation=${continuation.id}">
+                    <i18n:text><jx:out value="${key}"/></i18n:text>
+                  </a>
+                </jx:otherwise>
+              </jx:choose>
+            </th>
+          </jx:forEach>
+        </tr>
+        
+        <jx:forEach var="entry" items="${usecase.getParameter('documents')}">
+          <tr>
+            <jx:forEach var="key" items="${usecase.getParameter('keys')}">
+              <td><i18n:text><jx:out value="${entry.getValue(key)}"/></i18n:text></td>
+            </jx:forEach>
+          </tr>
+        </jx:forEach>
+        
+      </table>
+      
+    </form>
+    </div>
+  </page:body>
+</page:page>

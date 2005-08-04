@@ -208,7 +208,21 @@
   <message key="LDAP User">LDAP User</message>
   <message key="Local User">CMS User</message>
 
-  <!-- Site tab (info screens) -->
+    <!-- Site Overview -->
+    <message key="- all -">- alle -</message>
+    <message key="filterResourceType">Ressource-Typ</message>
+    <message key="filterWorkflowState">Workflow-Status</message>
+    <message key="filterLanguage">Sprache</message>
+    <message key="filterLastModified">Letzte Änderung</message>
+    <message key="filterDocumentId">Dokument-ID</message>
+    <message key="keyResourceType">Ressource-Typ</message>
+    <message key="keyWorkflowState">Workflow-Status</message>
+    <message key="keyLanguage">Sprache</message>
+    <message key="keyLastModified">Letzte Änderung</message>
+    <message key="keyDocumentId">Dokument-ID</message>
+    <message key="Update">Aktualisieren</message>
+    
+    <!-- Site tab (info screens) -->
   <message key="Available Languages">Verfügbare Sprachen</message>
   <message key="This document is not available in this language.">Das Dokument ist in der gewünschten Sprache nicht vorhanden.</message>
   <message key="Document ID">Dokument ID</message>
