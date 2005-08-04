@@ -102,7 +102,7 @@
         <map:generate type="stream">
           <map:parameter name="defaultContentType" value="text/xml" />
         </map:generate>
-        <map:transform src="../../../../../xslt/util/strip_namespaces.xsl"/>
+        <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
         <map:serialize type="xml" />
       </map:match>
       
