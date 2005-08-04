@@ -38,7 +38,6 @@ import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.tree.SiteTree;
-import org.apache.lenya.cms.site.tree.TreeSiteManager;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.xml.sax.SAXException;
