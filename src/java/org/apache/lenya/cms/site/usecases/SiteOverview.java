@@ -63,6 +63,7 @@ public class SiteOverview extends AbstractUsecase {
     protected static final String KEY_WORKFLOW_STATE = "keyWorkflowState";
     protected static final String KEY_LANGUAGE = "keyLanguage";
     protected static final String KEY_LAST_MODIFIED = "keyLastModified";
+    protected static final String KEY_URL = "keyUrl";
     protected static final String PARAMETER_KEYS = "keys";
     
     protected static final String[] KEYS = {
@@ -97,6 +98,7 @@ public class SiteOverview extends AbstractUsecase {
                 entry.setValue(KEY_DOCUMENT_ID, documents[i].getId());
                 entry.setValue(KEY_RESOURCE_TYPE, documents[i].getResourceType().getName());
                 entry.setValue(KEY_LANGUAGE, documents[i].getLanguage());
+                entry.setValue(KEY_URL, documents[i].getCanonicalWebappURL());
                 
                 DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String lastModified = format.format(documents[i].getLastModified());

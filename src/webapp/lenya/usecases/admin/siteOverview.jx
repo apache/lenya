@@ -86,7 +86,18 @@
         <jx:forEach var="entry" items="${usecase.getParameter('documents')}">
           <tr>
             <jx:forEach var="key" items="${usecase.getParameter('keys')}">
-              <td><i18n:text><jx:out value="${entry.getValue(key)}"/></i18n:text></td>
+              <td>
+                <jx:choose>
+                  <jx:when test="${key.equals('keyDocumentId')}">
+                    <a href="${request.getContextPath()}${entry.getValue('keyUrl')}">
+                      <i18n:text><jx:out value="${entry.getValue(key)}"/></i18n:text>
+                    </a>
+                  </jx:when>
+                  <jx:otherwise>
+                    <i18n:text><jx:out value="${entry.getValue(key)}"/></i18n:text>
+                  </jx:otherwise>
+                </jx:choose>
+              </td>
             </jx:forEach>
           </tr>
         </jx:forEach>
