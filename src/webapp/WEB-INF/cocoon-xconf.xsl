@@ -588,6 +588,11 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
 </xsl:template>
 
 
+  <xsl:template match="component[@role = 'javax.jcr.Repository']/@class">
+    <xsl:attribute name="class">org.apache.lenya.cms.jcr.LenyaRepository</xsl:attribute>
+  </xsl:template>
+
+
 <xsl:template match="datasources">
   <xsl:copy>
     <jdbc logger="core.datasources.lenya.scheduler" name="LenyaScheduler">
