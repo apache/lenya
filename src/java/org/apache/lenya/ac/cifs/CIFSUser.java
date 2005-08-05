@@ -101,7 +101,7 @@ public class CIFSUser extends FileUser {
     public boolean authenticate(String password) {
 
         System.setProperty("jcifs.smb.client.disablePlainTextPasswords",
-                            "false" );
+                            "true" );
         try {
             UniAddress mydomaincontroller = UniAddress.getByName(
                                                 getDomainController());
