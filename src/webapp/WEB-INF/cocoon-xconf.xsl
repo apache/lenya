@@ -588,38 +588,6 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
 </xsl:template>
 
 
-  <xsl:template match="component[@role = 'javax.jcr.Repository']">
-    <xsl:copy>
-      <xsl:apply-templates select="@*|node()"/>
-      
-      <namespace prefix="dc" uri="http://purl.org/dc/elements/1.1/"/>
-      <namespace prefix="dcterms" uri="http://purl.org/dc/terms/"/>
-      <namespace prefix="lenya" uri="http://apache.org/cocoon/lenya/page-envelope/1.0"/>
-      
-    </xsl:copy>
-  </xsl:template>
-    
-  <xsl:template match="component[@role = 'javax.jcr.Repository']/@class">
-    <xsl:attribute name="class">org.apache.lenya.cms.jcr.LenyaRepository</xsl:attribute>
-  </xsl:template>
-  
-  <xsl:template match="component-instance[@class = 'org.apache.cocoon.jcr.source.JCRSourceFactory']">
-    <xsl:copy>
-      <xsl:copy-of select="@*"/>
-      <folder-node new-file="nt:file" new-folder="nt:folder" type="rep:root"/>
-      <folder-node new-file="nt:file" new-folder="nt:unstructured" type="nt:unstructured"/>
-      <folder-node type="nt:folder" new-file="nt:file"/>
-      <file-node content-path="jcr:content" content-type="nt:resource" type="nt:file"/>
-      <file-node content-ref="jcr:content" type="nt:linkedFile"/>
-      <content-node type="nt:resource"
-        content-prop="jcr:data"
-        mimetype-prop="jcr:mimeType"
-        lastmodified-prop="jcr:lastModified"
-        validity-prop="jcr:lastModified"/>
-    </xsl:copy>
-  </xsl:template>
-
-
 <xsl:template match="datasources">
   <xsl:copy>
     <jdbc logger="core.datasources.lenya.scheduler" name="LenyaScheduler">
