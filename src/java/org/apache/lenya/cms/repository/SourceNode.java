@@ -35,6 +35,8 @@ import org.apache.excalibur.source.TraversableSource;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.metadata.MetaDataManager;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.rc.RCEnvironment;
@@ -52,7 +54,7 @@ import org.apache.lenya.cms.rc.RCMLEntry;
 public class SourceNode extends AbstractLogEnabled implements Node {
 
     private String sourceURI;
-    private ServiceManager manager;
+    protected ServiceManager manager;
     private IdentityMap identityMap;
 
     /**
@@ -82,7 +84,8 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     }
 
     /**
-     * TODO: Replace by JCR of whatever
+     * Returns the URI of the actual source which is used.
+     * @return A string.
      */
     protected String getRealSourceURI() {
         return "context://" + this.sourceURI.substring(Node.LENYA_PROTOCOL.length());
@@ -125,7 +128,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     public boolean isCheckedOutByUser() throws TransactionException {
         try {
             RCMLEntry entry = getRevisionController().getRCML(getRCPath()).getLatestEntry();
-            if(entry.getIdentity().equals(getUserId())) 
+            if (entry.getIdentity().equals(getUserId()))
                 return true;
             else
                 return false;
@@ -134,8 +137,8 @@ public class SourceNode extends AbstractLogEnabled implements Node {
         } catch (Exception e) {
             throw new TransactionException(e);
         }
-    }    
-    
+    }
+
     /**
      * @see org.apache.lenya.transaction.Transactionable#checkout()
      */
@@ -197,8 +200,8 @@ public class SourceNode extends AbstractLogEnabled implements Node {
                     contextSource = resolver.resolveURI("context://");
                     File context = org.apache.excalibur.source.SourceUtil.getFile(contextSource);
                     PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-                    Publication pub = factory.getPublication(publicationId, context
-                            .getAbsolutePath());
+                    Publication pub = factory.getPublication(publicationId,
+                            context.getAbsolutePath());
 
                     String publicationPath = pub.getDirectory().getCanonicalPath();
                     RCEnvironment rcEnvironment = RCEnvironment.getInstance(pub.getServletContext()
@@ -208,7 +211,8 @@ public class SourceNode extends AbstractLogEnabled implements Node {
                     String backupDirectory = publicationPath + File.separator
                             + rcEnvironment.getBackupDirectory();
                     this.revisionController = new RevisionController(rcmlDirectory,
-                            backupDirectory, publicationPath);
+                            backupDirectory,
+                            publicationPath);
                 } finally {
                     if (resolver != null) {
                         if (contextSource != null) {
@@ -310,7 +314,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
      */
     public void lock() throws TransactionException {
         if (isCheckedOut() && !isCheckedOutByUser()) {
-    	    throw new TransactionException("Cannot lock [" + this + "]: node is checked out.");
+            throw new TransactionException("Cannot lock [" + this + "]: node is checked out.");
         }
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Locking [" + this + "]");
@@ -382,7 +386,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     }
 
     /**
-     *
+     * 
      */
     public Collection getChildren() throws TransactionException {
         SourceResolver resolver = null;
@@ -395,7 +399,10 @@ public class SourceNode extends AbstractLogEnabled implements Node {
             java.util.Vector newChildren = new java.util.Vector();
             while (iterator.hasNext()) {
                 TraversableSource child = (TraversableSource) iterator.next();
-                newChildren.add(new SourceNode(identityMap, sourceURI + "/" + child.getName(), this.manager, getLogger()));
+                newChildren.add(new SourceNode(identityMap,
+                        sourceURI + "/" + child.getName(),
+                        this.manager,
+                        getLogger()));
             }
             return newChildren;
         } catch (Exception e) {
@@ -404,7 +411,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     }
 
     /**
-     *
+     * 
      */
     public boolean isCollection() throws TransactionException {
         SourceResolver resolver = null;
@@ -578,5 +585,22 @@ public class SourceNode extends AbstractLogEnabled implements Node {
         return sourceURI;
     }
 
+    protected String getMetaSourceURI() {
+        return getSourceURI() + ".meta";
+    }
+
+    private MetaDataManager metaDataManager;
+
+    /**
+     * @see org.apache.lenya.cms.metadata.MetaDataOwner#getMetaDataManager()
+     */
+    public MetaDataManager getMetaDataManager() throws DocumentException {
+        if (this.metaDataManager == null) {
+            this.metaDataManager = new MetaDataManager(getMetaSourceURI(),
+                    this.manager,
+                    getLogger());
+        }
+        return this.metaDataManager;
+    }
 
 }

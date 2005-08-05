@@ -20,6 +20,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collection;
 
+import org.apache.lenya.cms.metadata.MetaDataOwner;
 import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.transaction.Transactionable;
 
@@ -28,7 +29,7 @@ import org.apache.lenya.transaction.Transactionable;
  * 
  * @version $Id$
  */
-public interface Node extends Transactionable {
+public interface Node extends Transactionable, MetaDataOwner {
 
     /**
      * The protocol with which to find Lenya nodes

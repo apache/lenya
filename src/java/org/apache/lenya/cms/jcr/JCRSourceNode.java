@@ -18,6 +18,9 @@ package org.apache.lenya.cms.jcr;
 
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.lenya.cms.jcr.metadata.JCRMetaDataManager;
+import org.apache.lenya.cms.metadata.MetaDataManager;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.repository.SourceNode;
 import org.apache.lenya.transaction.IdentityMap;
 
@@ -46,6 +49,15 @@ public class JCRSourceNode extends SourceNode {
     protected String getRealSourceURI() {
         String path = this.sourceUri.substring(LENYA_PROTOCOL.length());
         return "jcr://" + path;
+    }
+    
+    private MetaDataManager metaDataManager;
+
+    public MetaDataManager getMetaDataManager() throws DocumentException {
+        if (this.metaDataManager == null) {
+            this.metaDataManager = new JCRMetaDataManager(getRealSourceURI(), this.manager, getLogger());
+        }
+        return this.metaDataManager;
     }
 
 }

@@ -30,13 +30,10 @@ import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.cms.jcr.JCRSourceNode;
-import org.apache.lenya.cms.jcr.metadata.JCRMetaDataManager;
 import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.repository.SourceNode;
 import org.apache.lenya.cms.site.SiteManager;
 
 /**
@@ -386,19 +383,10 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
             try {
                 resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
                 source = (RepositorySource) resolver.resolveURI(getSourceURI());
-                Node node = source.getNode();
-                if (node instanceof JCRSourceNode) {
-                    String path = getSourceURI().substring(SourceNode.LENYA_PROTOCOL.length());
-                    String jcrUri = "jcr://" + path;
-                    this.metaDataManager = new JCRMetaDataManager(jcrUri, this.manager, getLogger());
-                }
-                else {
-                    this.metaDataManager = new MetaDataManager(getMetaSourceURI(), this.manager, getLogger());
-                }
+                this.metaDataManager = source.getNode().getMetaDataManager();
             } catch (Exception e) {
                 throw new RuntimeException(e);
-            }
-            finally {
+            } finally {
                 if (resolver != null) {
                     if (source != null) {
                         resolver.release(source);
@@ -432,8 +420,8 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     }
 
     /**
-     * When source URI has not been set by whoever created the document,
-     * provides a default mechanism for constructing the document's URI.
+     * When source URI has not been set by whoever created the document, provides a default
+     * mechanism for constructing the document's URI.
      * @return A URI.
      */
     private String getDefaultSourceURI() {
