@@ -24,6 +24,7 @@ import java.util.Map;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.metadata.LenyaMetaData;
+import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -112,7 +113,9 @@ public abstract class MoveSubsite extends DocumentUsecase {
         Document doc = getSourceDocument();
         try {
             DocumentSet sources = SiteUtil.getSubSite(this.manager, doc);
-            Map targets = SiteUtil.getTransferedSubSite(this.manager, doc, getTargetArea(),
+            Map targets = SiteUtil.getTransferedSubSite(this.manager,
+                    doc,
+                    getTargetArea(),
                     SiteUtil.MODE_CHANGE_ID);
 
             Document[] docs = sources.getDocuments();
@@ -122,7 +125,9 @@ public abstract class MoveSubsite extends DocumentUsecase {
 
                 Document target = (Document) targets.get(docs[i]);
                 nodes.addAll(Arrays.asList(target.getRepositoryNodes()));
-                nodes.addAll(AssetUtil.getCopiedAssetNodes(docs[i], target, this.manager,
+                nodes.addAll(AssetUtil.getCopiedAssetNodes(docs[i],
+                        target,
+                        this.manager,
                         getLogger()));
             }
 
@@ -135,8 +140,10 @@ public abstract class MoveSubsite extends DocumentUsecase {
             }
 
             nodes.add(SiteUtil.getSiteStructure(this.manager, doc).getRepositoryNode());
-            nodes.add(SiteUtil.getSiteStructure(this.manager, getDocumentIdentityMap(),
-                    doc.getPublication(), getTargetArea()).getRepositoryNode());
+            nodes.add(SiteUtil.getSiteStructure(this.manager,
+                    getDocumentIdentityMap(),
+                    doc.getPublication(),
+                    getTargetArea()).getRepositoryNode());
         } catch (Exception e) {
             throw new UsecaseException(e);
         }
@@ -175,12 +182,14 @@ public abstract class MoveSubsite extends DocumentUsecase {
                 Document targetDoc = map.getAreaVersion(existingSourceDoc, getTargetArea());
                 documentManager.copy(existingSourceDoc, targetDoc);
                 if (!targetDoc.getArea().equals(Publication.AUTHORING_AREA)) {
-                    LenyaMetaData meta = targetDoc.getMetaDataManager().getLenyaMetaData();
+                    MetaData meta = targetDoc.getMetaDataManager().getLenyaMetaData();
                     meta.setValue(LenyaMetaData.ELEMENT_PLACEHOLDER, "true");
                 }
             }
 
-            Map targetMap = SiteUtil.getTransferedSubSite(this.manager, doc, getTargetArea(),
+            Map targetMap = SiteUtil.getTransferedSubSite(this.manager,
+                    doc,
+                    getTargetArea(),
                     SiteUtil.MODE_CHANGE_ID);
             DocumentSet targets = new DocumentSet();
             Document[] docs = sources.getDocuments();
@@ -231,8 +240,10 @@ public abstract class MoveSubsite extends DocumentUsecase {
             Node node = NodeFactory.getNode(doc);
             Node[] requiredNodes = siteManager.getRequiredResources(map, node);
             for (int i = 0; i < requiredNodes.length; i++) {
-                Document targetDoc = map.get(getSourceDocument().getPublication(), getTargetArea(),
-                        requiredNodes[i].getDocumentId(), doc.getLanguage());
+                Document targetDoc = map.get(getSourceDocument().getPublication(),
+                        getTargetArea(),
+                        requiredNodes[i].getDocumentId(),
+                        doc.getLanguage());
                 if (!siteManager.containsInAnyLanguage(targetDoc)) {
                     docsToCopy.add(targetDoc);
                 }
@@ -283,10 +294,8 @@ public abstract class MoveSubsite extends DocumentUsecase {
                     for (int l = 0; l < languages.length; l++) {
                         Document langVersion = map.getLanguageVersion(reqDoc, languages[l]);
                         if (!sources.contains(langVersion)) {
-                            LenyaMetaData meta = langVersion.getMetaDataManager()
-                                    .getLenyaMetaData();
-                            String placeholder = meta
-                                    .getFirstValue(LenyaMetaData.ELEMENT_PLACEHOLDER);
+                            MetaData meta = langVersion.getMetaDataManager().getLenyaMetaData();
+                            String placeholder = meta.getFirstValue(LenyaMetaData.ELEMENT_PLACEHOLDER);
                             if (placeholder == null || !placeholder.equals("true")) {
                                 delete = false;
                             }
