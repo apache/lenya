@@ -31,6 +31,6 @@
       mimetype-prop="jcr:mimeType"
       lastmodified-prop="jcr:lastModified"
       validity-prop="jcr:lastModified"/>
-  </component-instance>>
+  </component-instance>
   
 </xconf>
