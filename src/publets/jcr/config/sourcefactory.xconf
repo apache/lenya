@@ -17,7 +17,8 @@
 
 <!-- $Id: doctypes.xconf 164635 2005-04-25 20:01:43Z tschlabach $ -->
 
-<xconf xpath="/cocoon/source-factories/component-instance[@name = 'jcr']"
+<xconf xpath="/cocoon/source-factories"
+  remove="/cocoon/source-factories/component-instance[@name = 'jcr']"
   unless="/cocoon/source-factories/component-instance[@name = 'jcr'][@class = 'org.apache.lenya.cms.jcr.LenyaJCRSourceFactory']">
 
   <component-instance class="org.apache.lenya.cms.jcr.LenyaJCRSourceFactory" name="jcr">

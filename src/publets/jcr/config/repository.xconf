@@ -17,7 +17,9 @@
 
 <!-- $Id: doctypes.xconf 164635 2005-04-25 20:01:43Z tschlabach $ -->
 
-<xconf xpath="/cocoon/component[@role = 'javax.jcr.Repository']" unless="/cocoon/component[@role = 'javax.jcr.Repository'][@class = 'org.apache.lenya.cms.jcr.LenyaRepository']">
+<xconf xpath="/cocoon"
+  remove="/cocoon/component[@role = 'javax.jcr.Repository']"
+  unless="/cocoon/component[@role = 'javax.jcr.Repository'][@class = 'org.apache.lenya.cms.jcr.LenyaRepository']">
 
   <component class="org.apache.lenya.cms.jcr.LenyaRepository" logger="jcr" role="javax.jcr.Repository">
     <credentials login="anonymous" password=""/>
