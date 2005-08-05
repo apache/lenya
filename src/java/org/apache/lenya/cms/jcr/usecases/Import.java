@@ -18,13 +18,17 @@ package org.apache.lenya.cms.jcr.usecases;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.jcr.metadata.JCRMetaDataManager;
+import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
@@ -65,12 +69,14 @@ public class Import extends AbstractUsecase {
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             Source context = resolver.resolveURI("context://");
-            String contextPath = org.apache.excalibur.source.SourceUtil.getFile(context).getAbsolutePath();
+            String contextPath = org.apache.excalibur.source.SourceUtil.getFile(context)
+                    .getAbsolutePath();
             Publication pub = factory.getPublication(pubId, contextPath);
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(pub.getSiteManagerHint());
 
             List nodes = new ArrayList();
+            Map uri2meta = new HashMap();
 
             String[] areas = { Publication.AUTHORING_AREA, Publication.LIVE_AREA,
                     Publication.TRASH_AREA, Publication.ARCHIVE_AREA };
@@ -78,16 +84,25 @@ public class Import extends AbstractUsecase {
                 Document[] docs = siteManager.getDocuments(map, pub, areas[i]);
                 for (int j = 0; j < docs.length; j++) {
                     nodes.addAll(Arrays.asList(docs[j].getRepositoryNodes()));
+                    uri2meta.put(docs[j].getSourceURI(), docs[j].getMetaDataManager());
                 }
                 nodes.add(siteManager.getSiteStructure(map, pub, areas[i]).getRepositoryNode());
             }
-            
-            for (Iterator i = nodes.iterator(); i.hasNext(); ) {
+
+            for (Iterator i = nodes.iterator(); i.hasNext();) {
                 Node node = (Node) i.next();
                 final String lenyaUri = node.getSourceURI();
                 final String sourcePath = lenyaUri.substring("lenya://".length());
                 final String jcrUri = "jcr://" + sourcePath;
                 SourceUtil.copy(resolver, lenyaUri, jcrUri);
+
+                MetaDataManager sourceMgr = (MetaDataManager) uri2meta.get(lenyaUri);
+                if (sourceMgr != null) {
+                    MetaDataManager jcrMgr = new JCRMetaDataManager(jcrUri,
+                            this.manager,
+                            getLogger());
+                    jcrMgr.replaceMetaData(sourceMgr);
+                }
             }
 
         } finally {

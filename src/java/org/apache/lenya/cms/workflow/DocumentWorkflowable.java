@@ -26,6 +26,7 @@ import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.cms.metadata.LenyaMetaData;
+import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.ResourceType;
@@ -77,7 +78,7 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
     public Version[] getVersions() {
         if (this.versions == null) {
             try {
-                LenyaMetaData meta = this.document.getMetaDataManager().getLenyaMetaData();
+                MetaData meta = this.document.getMetaDataManager().getLenyaMetaData();
 
                 String[] versionStrings = meta.getValues(LenyaMetaData.ELEMENT_WORKFLOW_VERSION);
                 this.versions = new Version[versionStrings.length];
@@ -125,7 +126,7 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
 
         String string = number + " " + encodeVersion(workflow, version, (LenyaSituation) situation);
         try {
-            LenyaMetaData meta = this.document.getMetaDataManager().getLenyaMetaData();
+            MetaData meta = this.document.getMetaDataManager().getLenyaMetaData();
             meta.addValue(LenyaMetaData.ELEMENT_WORKFLOW_VERSION, string);
             meta.save();
         } catch (DocumentException e) {

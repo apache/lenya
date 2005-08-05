@@ -31,7 +31,7 @@ public class LenyaMetaData extends MetaDataImpl {
 
     private static final String LOCAL_META = "internal";
 
-    private static final String NAMESPACE = "http://apache.org/cocoon/lenya/page-envelope/1.0";
+    public static final String NAMESPACE = "http://apache.org/cocoon/lenya/page-envelope/1.0";
     private static final String PREFIX = "lenya";
 
     /**
@@ -60,7 +60,7 @@ public class LenyaMetaData extends MetaDataImpl {
      */
     public static final String ELEMENT_PLACEHOLDER = "placeholder";
 
-    static final String[] ELEMENTS = {
+    public static final String[] ELEMENTS = {
        ELEMENT_RESOURCE_TYPE,
        ELEMENT_CONTENT_TYPE,
        ELEMENT_WORKFLOW_VERSION,

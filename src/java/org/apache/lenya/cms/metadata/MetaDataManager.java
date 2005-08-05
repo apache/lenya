@@ -33,7 +33,7 @@ import org.apache.lenya.cms.publication.DocumentException;
 public class MetaDataManager extends AbstractLogEnabled {
     
     private String sourceUri;
-    private ServiceManager serviceManager;
+    protected ServiceManager serviceManager;
 
     private DublinCoreImpl dublinCoreMetaData;
     private LenyaMetaData lenyaMetaData;
@@ -53,7 +53,7 @@ public class MetaDataManager extends AbstractLogEnabled {
      * @return the dublin core meta-data
      * @throws DocumentException if the meta-data could not be retrieved
      */
-    public DublinCoreImpl getDublinCoreMetaData() throws DocumentException {
+    public MetaData getDublinCoreMetaData() throws DocumentException {
         if (dublinCoreMetaData == null) {
             dublinCoreMetaData = new DublinCoreImpl(this.sourceUri, this.serviceManager, getLogger());
         }
@@ -75,7 +75,7 @@ public class MetaDataManager extends AbstractLogEnabled {
      * @return the Lenya meta-data
      * @throws DocumentException if the meta-data could not be retrieved
      */
-    public LenyaMetaData getLenyaMetaData() throws DocumentException {
+    public MetaData getLenyaMetaData() throws DocumentException {
         if (lenyaMetaData == null) {
             lenyaMetaData = new LenyaMetaData(this.sourceUri, this.serviceManager, getLogger());
         }
@@ -97,7 +97,7 @@ public class MetaDataManager extends AbstractLogEnabled {
      * @return the custom meta-data
      * @throws DocumentException if the meta-data could not be retrieved
      */
-    public CustomMetaData getCustomMetaData() throws DocumentException {
+    public MetaData getCustomMetaData() throws DocumentException {
         if (customMetaData == null) {
             customMetaData = new CustomMetaData(this.sourceUri, this.serviceManager, getLogger());
         }
@@ -153,5 +153,9 @@ public class MetaDataManager extends AbstractLogEnabled {
         source = sourceManager.getCustomMetaData();
         dest = this.getCustomMetaData();
         dest.replaceBy(source);
+    }
+    
+    protected String getSourceURI() {
+        return this.sourceUri;
     }
 }

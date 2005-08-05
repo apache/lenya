@@ -40,7 +40,7 @@ public class CustomMetaData extends MetaDataImpl {
 
     private static final String LOCAL_META = "custom";
 
-    private static final String NAMESPACE = "http://apache.org/cocoon/lenya/page-envelope/1.0";
+    public static final String NAMESPACE = "http://apache.org/cocoon/lenya/page-envelope/1.0";
     private static final String PREFIX = "lenya";
 
     /**

@@ -30,10 +30,13 @@ import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.jcr.JCRSourceNode;
+import org.apache.lenya.cms.jcr.metadata.JCRMetaDataManager;
 import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.repository.SourceNode;
 import org.apache.lenya.cms.site.SiteManager;
 
 /**
@@ -378,7 +381,31 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      */
     public MetaDataManager getMetaDataManager() {
         if (this.metaDataManager == null) {
-            metaDataManager = new MetaDataManager(getMetaSourceURI(), this.manager, getLogger());
+            SourceResolver resolver = null;
+            RepositorySource source = null;
+            try {
+                resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+                source = (RepositorySource) resolver.resolveURI(getSourceURI());
+                Node node = source.getNode();
+                if (node instanceof JCRSourceNode) {
+                    String path = getSourceURI().substring(SourceNode.LENYA_PROTOCOL.length());
+                    String jcrUri = "jcr://" + path;
+                    this.metaDataManager = new JCRMetaDataManager(jcrUri, this.manager, getLogger());
+                }
+                else {
+                    this.metaDataManager = new MetaDataManager(getMetaSourceURI(), this.manager, getLogger());
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            finally {
+                if (resolver != null) {
+                    if (source != null) {
+                        resolver.release(source);
+                    }
+                    this.manager.release(resolver);
+                }
+            }
         }
         return metaDataManager;
     }

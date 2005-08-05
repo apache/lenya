@@ -35,8 +35,8 @@ public class DublinCoreImpl extends MetaDataImpl {
 
     private static final String LOCAL_META = "dc";
 
-    private static final String DC_NAMESPACE = "http://purl.org/dc/elements/1.1/";
-    private static final String DC_PREFIX = "dc";
+    public static final String DC_NAMESPACE = "http://purl.org/dc/elements/1.1/";
+    public static final String DC_PREFIX = "dc";
 
     /**
      * The dublin core elements.
@@ -58,8 +58,8 @@ public class DublinCoreImpl extends MetaDataImpl {
             DublinCore.ELEMENT_COVERAGE, 
             DublinCore.ELEMENT_RIGHTS };
 
-    private static final String DCTERMS_NAMESPACE = "http://purl.org/dc/terms/";
-    private static final String DCTERMS_PREFIX = "dcterms";
+    public static final String DCTERMS_NAMESPACE = "http://purl.org/dc/terms/";
+    public static final String DCTERMS_PREFIX = "dcterms";
 
     /**
      * The dublin core terms.
