@@ -120,6 +120,38 @@ public class LDAPUser extends FileUser {
     }
 
     /**
+     * Checks if a user exists.
+     *
+     * @param ldapId The LDAP id.
+     * @return A boolean value indicating whether the user is found in the directory
+     * @throws AccessControlException when an unexpected error occurs.
+     */
+    public boolean existsUser(String ldapId) throws AccessControlException {
+
+        if (log.isDebugEnabled())
+            log.debug("existsUser() checking id " + ldapId);
+
+        boolean exists = false;
+
+        try {
+            readProperties();
+            SearchResult entry = getDirectoryEntry(ldapId);
+
+            exists = (entry != null);
+
+        } catch (NamingException e) {
+            log.info("LDAPUser.existsUser() got exception while looking up id [" + ldapId + "], so will return false", e);
+            exists = false;
+        } catch (Exception e) {
+            if (log.isDebugEnabled())
+                log.debug("existsUser() for id [" + ldapId + "] got exception: " + e);
+            throw new AccessControlException("Exception during search: ", e);
+        }
+
+        return exists;
+    }
+
+    /**
      * Initializes this user.
      *
      * The current ldapId is queried in the directory, 
