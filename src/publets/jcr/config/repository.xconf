@@ -23,9 +23,9 @@
 
   <component class="org.apache.lenya.cms.jcr.LenyaRepository" logger="jcr" role="javax.jcr.Repository">
     <credentials login="anonymous" password=""/>
-    <jaas src="context://samples/blocks/jcr/jaas.config"/>
-    <home src="context://samples/blocks/jcr/repotest"/>
-    <configuration src="context://samples/blocks/jcr/repository.xml"/>
+    <jaas src="context://jcr-repository/jaas.config"/>
+    <home src="context://jcr-repository/repository"/>
+    <configuration src="context://jcr-repository/repository.xml"/>
     
     <namespace prefix="dc" uri="http://purl.org/dc/elements/1.1/"/>
     <namespace prefix="dcterms" uri="http://purl.org/dc/terms/"/>
