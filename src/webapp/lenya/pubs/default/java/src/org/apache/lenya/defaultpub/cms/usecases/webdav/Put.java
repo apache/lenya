@@ -17,7 +17,6 @@
 package org.apache.lenya.defaultpub.cms.usecases.webdav;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -120,8 +119,8 @@ public class Put extends DocumentUsecase {
                 addErrorMessage("invalid source xml");
             }
 
-            if(!hasErrors()) {
-            
+            if (!hasErrors()) {
+
                 Source tempSource = resolver.resolveURI(tempSourceUri);
                 if (!tempSource.exists()) {
                     throw new IllegalArgumentException("The temp file [" + tempSource.getURI()
@@ -149,7 +148,7 @@ public class Put extends DocumentUsecase {
                     SourceUtil.copy(resolver, tempSourceUri, sourceUri, true);
                     SourceUtil.delete(tempSourceUri, this.manager);
                 }
-            
+
             }
 
         } finally {
@@ -173,7 +172,7 @@ public class Put extends DocumentUsecase {
             DocumentSet set = SiteUtil.getSubSite(this.manager, doc);
             Document[] documents = set.getDocuments();
             for (int i = 0; i < documents.length; i++) {
-                nodes.addAll(Arrays.asList(documents[i].getRepositoryNodes()));
+                nodes.add(documents[i].getRepositoryNode());
             }
 
             SiteStructure structure = SiteUtil.getSiteStructure(this.manager, getSourceDocument());

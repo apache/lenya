@@ -17,7 +17,6 @@
 package org.apache.lenya.defaultpub.cms.usecases;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.lenya.cms.publication.Document;
@@ -97,7 +96,7 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
 
             Document[] documents = set.getDocuments();
             for (int i = 0; i < documents.length; i++) {
-                nodes.addAll(Arrays.asList(documents[i].getRepositoryNodes()));
+                nodes.add(documents[i].getRepositoryNode());
             }
 
             nodes.add(SiteUtil.getSiteStructure(this.manager, liveDoc).getRepositoryNode());

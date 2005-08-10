@@ -20,7 +20,6 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -84,9 +83,9 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
                     SiteUtil.MODE_REPLACE);
             Document[] docs = set.getDocuments();
             for (int i = 0; i < docs.length; i++) {
-                nodes.addAll(Arrays.asList(docs[i].getRepositoryNodes()));
+                nodes.add(docs[i].getRepositoryNode());
                 Document target = (Document) targets.get(docs[i]);
-                nodes.addAll(Arrays.asList(target.getRepositoryNodes()));
+                nodes.add(target.getRepositoryNode());
                 nodes.addAll(AssetUtil.getCopiedAssetNodes(docs[i], target, this.manager,
                         getLogger()));
             }
