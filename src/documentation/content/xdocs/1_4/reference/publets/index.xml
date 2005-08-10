@@ -77,5 +77,27 @@ mypublet/
 
     </section>
     
+    <section>
+      <title>Implementing Usecases in Publets</title>
+      <p>
+        To declare usecases, add a patch file for <code>cocoon.xconf</code>, for instance <code>publet/config/usecases.xconf</code>:
+      </p>
+<source xml:space="preserve"><![CDATA[<xconf xpath="/cocoon/usecases"
+       unless="/cocoon/usecases/component-instance[@name = 'mypublet.edit']">
+  <component-instance name="mypublet.edit"
+                      logger="lenya.usecases.edit
+                      class="org.myproject.lenya.mypublet.usecases.Edit">
+    <view template="publets/mypublet/usecases/edit.jx" menu="false"/>
+  </component-instance>
+</xconf>]]></source>
+
+      <p>
+        As you can see in the view declaration, the JX templates are typically stored in the <code>mypublet/usecases</code>
+        directory. The Java source files go into the <code>mypublet/java/src</code> directory, they are compiled
+        automatically by the Lenya build process.
+      </p>
+
+    </section>
+    
   </body>
 </document>
