@@ -261,7 +261,7 @@ $PUB_HOME
             to the user. The view is declared in the usecase configuration:
           </p>
 <source xml:space="preserve"><![CDATA[  <component-instance ...>
-    <view template="article/editHeadline" menu="false">
+    <view template="usecases/article/editHeadline.jx" menu="false">
       <parameter name="title" value="Edit Headline"/>
       <parameter name="..." value="..."/>
     </view>
@@ -281,8 +281,8 @@ $PUB_HOME
         <p>
           The view for a usecase is implemented using a JX template. The location of the
           JX template is defined using the <code>&lt;view&gt;</code> element's <code>template</code>
-          attribute (relatively to the <code>usecases</code> directory, the suffix <code>.jx</code>
-          is appended). The output of the view has to be a Lenya page:
+          attribute (relatively to the <code>context://lenya</code> directory).
+          The output of the view has to be a Lenya page:
         </p>
 <source xml:space="preserve"><![CDATA[<page:page
   xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
