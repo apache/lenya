@@ -17,7 +17,6 @@
 package org.apache.lenya.cms.site.usecases;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.avalon.framework.service.ServiceException;
@@ -93,7 +92,6 @@ public class Paste extends DocumentUsecase {
             Publication pub = getSourceDocument().getPublication();
             String area = getSourceDocument().getArea();
             Document clippedDocument = clipboard.getDocument(map);
-            Document targetDocument = getTargetDocument();
 
             String clippedName = clippedDocument.getName();
             String clippedId = clippedDocument.getId();
@@ -105,11 +103,11 @@ public class Paste extends DocumentUsecase {
             Document[] subsiteDocs = subsite.getDocuments();
             for (int i = 0; i < subsiteDocs.length; i++) {
                 if (clipboard.getMethod() == Clipboard.METHOD_CUT) {
-                    nodes.addAll(Arrays.asList(subsiteDocs[i].getRepositoryNodes()));
+                    nodes.add(subsiteDocs[i].getRepositoryNode());
                 }
                 String id = subsiteDocs[i].getId().substring(clippedBase.length());
                 Document targetSubsiteDoc = map.get(pub, area, targetBase + id, subsiteDocs[i].getLanguage());
-                nodes.addAll(Arrays.asList(targetSubsiteDoc.getRepositoryNodes()));
+                nodes.add(targetSubsiteDoc.getRepositoryNode());
             }
 
         } catch (Exception e) {

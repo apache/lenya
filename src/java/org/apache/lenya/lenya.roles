@@ -162,8 +162,14 @@
   	    shorthand="resource-types"
   	    default-class="org.apache.lenya.cms.publication.ResourceTypeSelector"/>
         
+  <role name="org.apache.lenya.cms.repository.RepositoryManager"
+        shorthand="repository-manager"
+        default-class="org.apache.lenya.cms.repository.RepositoryManagerImpl"/>
+        
   <role name="org.apache.lenya.cms.repository.NodeFactory"
         shorthand="node-factory"
         default-class="org.apache.lenya.cms.repository.SourceNodeFactory"/>
-        
+        <!--
+        default-class="org.apache.lenya.cms.jcr.JCRNodeFactory"/>
+        -->
 </role-list>

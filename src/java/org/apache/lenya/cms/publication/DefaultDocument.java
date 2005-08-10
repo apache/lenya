@@ -404,7 +404,6 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     public void delete() throws DocumentException {
         try {
             SourceUtil.delete(getSourceURI(), this.manager);
-            SourceUtil.delete(getMetaSourceURI(), this.manager);
         } catch (Exception e) {
             throw new DocumentException(e);
         }
@@ -447,26 +446,16 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     }
 
     /**
-     * @return The meta source URI.
+     * @see org.apache.lenya.cms.publication.Document#getRepositoryNode()
      */
-    public String getMetaSourceURI() {
-        return getSourceURI() + Document.DOCUMENT_META_SUFFIX;
-    }
-
-    /**
-     * @see org.apache.lenya.cms.publication.Document#getRepositoryNodes()
-     */
-    public Node[] getRepositoryNodes() {
-        Node[] nodes = new Node[2];
+    public Node getRepositoryNode() {
+        Node node = null;
         SourceResolver resolver = null;
         RepositorySource documentSource = null;
-        RepositorySource metaSource = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             documentSource = (RepositorySource) resolver.resolveURI(getSourceURI());
-            metaSource = (RepositorySource) resolver.resolveURI(getMetaSourceURI());
-            nodes[0] = documentSource.getNode();
-            nodes[1] = metaSource.getNode();
+            node = documentSource.getNode();
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -474,13 +463,10 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
                 if (documentSource != null) {
                     resolver.release(documentSource);
                 }
-                if (metaSource != null) {
-                    resolver.release(metaSource);
-                }
                 this.manager.release(resolver);
             }
         }
-        return nodes;
+        return node;
     }
 
     private ResourceType resourceType;

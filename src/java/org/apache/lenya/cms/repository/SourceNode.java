@@ -481,6 +481,18 @@ public class SourceNode extends AbstractLogEnabled implements Node {
      * @see org.apache.lenya.cms.repository.Node#getOutputStream()
      */
     public synchronized OutputStream getOutputStream() throws TransactionException {
+        if (getLogger().isDebugEnabled()) getLogger().debug("Get OutputStream for " + getSourceURI());
+        try {
+            if (!isLocked()) {
+                throw new RuntimeException("Cannot write to source [" + getSourceURI() + "]: not locked!");
+            }
+            if (this.identityMap.getUnitOfWork() == null) {
+                throw new RuntimeException("Cannot write to source outside of a transaction (UnitOfWork is null)!");
+            }
+            this.identityMap.getUnitOfWork().registerDirty(this);
+        } catch (TransactionException e) {
+            throw new RuntimeException(e);
+        }
         return new NodeOutputStream();
     }
 
@@ -601,6 +613,15 @@ public class SourceNode extends AbstractLogEnabled implements Node {
                     getLogger());
         }
         return this.metaDataManager;
+    }
+    
+    private Session session;
+
+    public Session getSession() {
+        if (this.session == null) {
+            this.session = new Session(this.identityMap);
+        }
+        return this.session;
     }
 
 }

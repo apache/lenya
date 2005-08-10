@@ -120,11 +120,11 @@ public abstract class MoveSubsite extends DocumentUsecase {
 
             Document[] docs = sources.getDocuments();
             for (int i = 0; i < docs.length; i++) {
-                nodes.addAll(Arrays.asList(docs[i].getRepositoryNodes()));
+                nodes.add(docs[i].getRepositoryNode());
                 nodes.addAll(AssetUtil.getAssetNodes(docs[i], this.manager, getLogger()));
 
                 Document target = (Document) targets.get(docs[i]);
-                nodes.addAll(Arrays.asList(target.getRepositoryNodes()));
+                nodes.add(target.getRepositoryNode());
                 nodes.addAll(AssetUtil.getCopiedAssetNodes(docs[i],
                         target,
                         this.manager,
@@ -136,7 +136,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
             furtherDocs.addAll(getSourceDocsToDelete(sources));
             docs = furtherDocs.getDocuments();
             for (int i = 0; i < docs.length; i++) {
-                nodes.addAll(Arrays.asList(docs[i].getRepositoryNodes()));
+                nodes.add(docs[i].getRepositoryNode());
             }
 
             nodes.add(SiteUtil.getSiteStructure(this.manager, doc).getRepositoryNode());

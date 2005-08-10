@@ -187,9 +187,9 @@ public interface Document extends MetaDataOwner, Identifiable {
     void delete() throws DocumentException;
     
     /**
-     * @return The repository nodes that represent this document.
+     * @return The repository node that represents this document.
      */
-    Node[] getRepositoryNodes();
+    Node getRepositoryNode();
 
     /**
      * @return The resource type of this document (formerly known as doctype)

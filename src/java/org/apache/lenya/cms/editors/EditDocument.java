@@ -63,7 +63,8 @@ public class EditDocument extends DocumentUsecase {
             getLogger().debug("EditDocument::getObjectsToLock() called on source document [" + getSourceDocument().getId() + "]");
         }
 
-        return getSourceDocument().getRepositoryNodes();
+        Transactionable[] objects = { getSourceDocument().getRepositoryNode() };
+        return objects;
     }
 
 }

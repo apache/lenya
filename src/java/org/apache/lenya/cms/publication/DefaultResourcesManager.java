@@ -274,7 +274,6 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
             Resource[] resources = getResources(document);
             for (int i = 0; i < resources.length; i++) {
                 SourceUtil.delete(resources[i].getSourceURI(), this.manager);
-                SourceUtil.delete(resources[i].getMetaSourceURI(), this.manager);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -304,27 +303,19 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
                         .getName(), this.manager, getLogger());
 
                 Source sourceSource = null;
-                Source sourceMetaSource = null;
                 ModifiableSource destSource = null;
                 ModifiableSource destMetaSource = null;
 
                 try {
                     resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
                     sourceSource = resolver.resolveURI(sourceResource.getSourceURI());
-                    sourceMetaSource = resolver.resolveURI(sourceResource.getMetaSourceURI());
                     destSource = (ModifiableSource) resolver.resolveURI(destinationResource
                             .getSourceURI());
-                    destMetaSource = (ModifiableSource) resolver.resolveURI(destinationResource
-                            .getMetaSourceURI());
 
                     SourceUtil.copy(sourceSource, destSource, true);
-                    SourceUtil.copy(sourceMetaSource, destMetaSource, true);
                 } finally {
                     if (sourceSource != null) {
                         resolver.release(sourceSource);
-                    }
-                    if (sourceMetaSource != null) {
-                        resolver.release(sourceMetaSource);
                     }
                     if (destSource != null) {
                         resolver.release(destSource);
@@ -371,7 +362,6 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
      */
     public void deleteResource(Resource theResource) throws Exception {
 
-        SourceUtil.delete(theResource.getMetaSourceURI(), this.manager);
         SourceUtil.delete(theResource.getSourceURI(), this.manager);
     }
 

@@ -27,18 +27,16 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
-import org.apache.excalibur.source.ModifiableSource;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.authoring.NodeCreatorInterface;
-import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.transaction.Transactionable;
+import org.w3c.dom.DocumentType;
 
 /**
  * DocumentManager implementation.
@@ -58,9 +56,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * @see org.apache.lenya.cms.authoring.NodeCreatorInterface
      * @see org.apache.lenya.cms.publication.DocumentBuilder
      */
-    public void add(Document document,
-            ResourceType documentType,
-            String navigationTitle,
+    public void add(Document document, ResourceType documentType, String navigationTitle,
             Map parameters) throws DocumentBuildException, PublicationException {
 
         String contentsURI = documentType.getSampleURI();
@@ -69,12 +65,9 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#add(org.apache.lenya.cms.publication.Document,
-     *      org.apache.lenya.cms.publication.Document,
-     *      java.lang.String, java.util.Map)
+     *      org.apache.lenya.cms.publication.Document, java.lang.String, java.util.Map)
      */
-    public void add(Document document,
-            Document sourceDocument,
-            String navigationTitle,
+    public void add(Document document, Document sourceDocument, String navigationTitle,
             Map parameters) throws DocumentBuildException, PublicationException {
         String contentsURI = sourceDocument.getSourceURI();
         add(document, sourceDocument.getResourceType(), navigationTitle, parameters, contentsURI);
@@ -96,12 +89,9 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * @throws DocumentException if an error occurs.
      * @throws PublicationException if an error occurs.
      */
-    protected void add(Document document,
-            ResourceType documentType,
-            String navigationTitle,
-            Map parameters,
-            String initialContentsURI) throws DocumentBuildException, DocumentException,
-            PublicationException {
+    protected void add(Document document, ResourceType documentType, String navigationTitle,
+            Map parameters, String initialContentsURI) throws DocumentBuildException,
+            DocumentException, PublicationException {
         try {
 
             if (getLogger().isDebugEnabled()) {
@@ -115,10 +105,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             NodeCreatorInterface creator = documentType.getCreator();
 
             // now that the source is determined, lock involved nodes
-            Transactionable[] nodes = document.getRepositoryNodes();
-            for (int i = 0; i < nodes.length; i++) {
-                nodes[i].lock();
-            }
+            Transactionable node = document.getRepositoryNode();
+            node.lock();
 
             //
             creator.create(initialContentsURI, document, parameters);
@@ -377,29 +365,15 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     public void copyDocumentSource(Document sourceDocument, Document destinationDocument)
             throws PublicationException {
 
-        SourceResolver sourceResolver = null;
-        Source source = null;
-        Source destination = null;
+        RepositoryManager repoManager = null;
         try {
-            sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = sourceResolver.resolveURI(sourceDocument.getSourceURI());
-            destination = sourceResolver.resolveURI(destinationDocument.getSourceURI());
-            SourceUtil.copy(source, (ModifiableSource) destination, true);
-
-            destinationDocument.getMetaDataManager().replaceMetaData(sourceDocument
-                    .getMetaDataManager());
-
+            repoManager = (RepositoryManager) this.manager.lookup(RepositoryManager.ROLE);
+            repoManager.copy(sourceDocument.getRepositoryNode(), destinationDocument.getRepositoryNode());
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {
-            if (sourceResolver != null) {
-                if (source != null) {
-                    sourceResolver.release(source);
-                }
-                if (destination != null) {
-                    sourceResolver.release(destination);
-                }
-                this.manager.release(sourceResolver);
+            if (repoManager != null) {
+                this.manager.release(repoManager);
             }
         }
     }
@@ -595,30 +569,25 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      *      org.apache.lenya.cms.publication.util.DocumentSet)
      */
     public void move(DocumentSet sources, DocumentSet destinations) throws PublicationException {
-        copy(sources,destinations);
+        copy(sources, destinations);
         delete(sources);
         /*
-        Document[] sourceDocs = sources.getDocuments();
-        Document[] targetDocs = destinations.getDocuments();
-
-        if (sourceDocs.length != targetDocs.length) {
-            throw new PublicationException(
-                    "The number of source and destination documents must be equal!");
-        }
-
-        Map source2target = new HashMap();
-        for (int i = 0; i < sourceDocs.length; i++) {
-            source2target.put(sourceDocs[i], targetDocs[i]);
-        }
-
-        DocumentSet sortedSources = new DocumentSet(sourceDocs);
-        SiteUtil.sortAscending(this.manager, sortedSources);
-        Document[] sortedSourceDocs = sortedSources.getDocuments();
-
-        for (int i = 0; i < sortedSourceDocs.length; i++) {
-            move(sortedSourceDocs[i], (Document) source2target.get(sortedSourceDocs[i]));
-        }
-        */
+         * Document[] sourceDocs = sources.getDocuments(); Document[] targetDocs =
+         * destinations.getDocuments();
+         * 
+         * if (sourceDocs.length != targetDocs.length) { throw new PublicationException( "The number
+         * of source and destination documents must be equal!"); }
+         * 
+         * Map source2target = new HashMap(); for (int i = 0; i < sourceDocs.length; i++) {
+         * source2target.put(sourceDocs[i], targetDocs[i]); }
+         * 
+         * DocumentSet sortedSources = new DocumentSet(sourceDocs);
+         * SiteUtil.sortAscending(this.manager, sortedSources); Document[] sortedSourceDocs =
+         * sortedSources.getDocuments();
+         * 
+         * for (int i = 0; i < sortedSourceDocs.length; i++) { move(sortedSourceDocs[i], (Document)
+         * source2target.get(sortedSourceDocs[i])); }
+         */
     }
 
     /**
@@ -630,8 +599,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         Document[] targetDocs = destinations.getDocuments();
 
         if (sourceDocs.length != targetDocs.length) {
-            throw new PublicationException(
-                    "The number of source and destination documents must be equal!");
+            throw new PublicationException("The number of source and destination documents must be equal!");
         }
 
         Map source2target = new HashMap();

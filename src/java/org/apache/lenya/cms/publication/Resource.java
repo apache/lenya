@@ -74,7 +74,22 @@ public class Resource extends AbstractLogEnabled implements MetaDataOwner {
      */
     public MetaDataManager getMetaDataManager() {
         if (this.metaDataManager == null) {
-            metaDataManager = new MetaDataManager(getMetaSourceURI(), this.manager, getLogger());
+            SourceResolver resolver = null;
+            RepositorySource source = null;
+            try {
+                resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+                source = (RepositorySource) resolver.resolveURI(getSourceURI());
+                this.metaDataManager = source.getNode().getMetaDataManager();
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            } finally {
+                if (resolver != null) {
+                    if (source != null) {
+                        resolver.release(source);
+                    }
+                    this.manager.release(resolver);
+                }
+            }
         }
         return metaDataManager;
     }
@@ -85,13 +100,6 @@ public class Resource extends AbstractLogEnabled implements MetaDataOwner {
     public String getSourceURI() {
         String srcUri = getResourcesURI() + "/" + getName();
         return srcUri;
-    }
-
-    /**
-     * @return The meta source URI.
-     */
-    public String getMetaSourceURI() {
-        return getSourceURI() + ResourcesManager.RESOURCES_META_SUFFIX;
     }
 
     /**
@@ -112,25 +120,19 @@ public class Resource extends AbstractLogEnabled implements MetaDataOwner {
      * @return The repository nodes that represent this resource.
      */
     public Transactionable[] getRepositoryNodes() {
-        Node[] nodes = new Node[2];
+        Node[] nodes = new Node[1];
         SourceResolver resolver = null;
         RepositorySource documentSource = null;
-        RepositorySource metaSource = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             documentSource = (RepositorySource) resolver.resolveURI(getSourceURI());
-            metaSource = (RepositorySource) resolver.resolveURI(getMetaSourceURI());
             nodes[0] = documentSource.getNode();
-            nodes[1] = metaSource.getNode();
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             if (resolver != null) {
                 if (documentSource != null) {
                     resolver.release(documentSource);
-                }
-                if (metaSource != null) {
-                    resolver.release(metaSource);
                 }
                 this.manager.release(resolver);
             }

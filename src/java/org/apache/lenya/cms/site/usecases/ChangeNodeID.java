@@ -17,24 +17,18 @@
 package org.apache.lenya.cms.site.usecases;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.site.SiteManager;
-import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -78,7 +72,7 @@ public class ChangeNodeID extends DocumentUsecase {
             DocumentSet subsite = SiteUtil.getSubSite(this.manager, sourceDocument);
             Document[] subsiteDocs = subsite.getDocuments();
             for (int i = 0; i < subsiteDocs.length; i++) {
-                nodes.addAll(Arrays.asList(subsiteDocs[i].getRepositoryNodes()));
+                nodes.add(subsiteDocs[i].getRepositoryNode());
                 nodes.addAll(AssetUtil.getAssetNodes(subsiteDocs[i], this.manager, getLogger()));
             }
 
@@ -94,8 +88,9 @@ public class ChangeNodeID extends DocumentUsecase {
         String[] languages = doc.getLanguages();
         List nodes = new ArrayList();
         for (int i = 0; i < languages.length; i++) {
-            nodes.addAll(Arrays.asList(doc.getIdentityMap().getLanguageVersion(doc, languages[i])
-                    .getRepositoryNodes()));
+            nodes.add(doc.getIdentityMap()
+                    .getLanguageVersion(doc, languages[i])
+                    .getRepositoryNode());
         }
         return nodes;
     }
@@ -172,16 +167,20 @@ public class ChangeNodeID extends DocumentUsecase {
         try {
 
             DocumentSet subsite = SiteUtil.getSubSite(this.manager, source);
-            Map targets = SiteUtil.getTransferedSubSite(this.manager, source, getTargetDocument(),
+            Map targets = SiteUtil.getTransferedSubSite(this.manager,
+                    source,
+                    getTargetDocument(),
                     SiteUtil.MODE_CANCEL);
             Document[] subsiteDocs = subsite.getDocuments();
             List nodes = new ArrayList();
             for (int i = 0; i < subsiteDocs.length; i++) {
 
                 Document targetSubsiteDoc = (Document) targets.get(subsiteDocs[i]);
-                nodes.addAll(Arrays.asList(targetSubsiteDoc.getRepositoryNodes()));
-                nodes.addAll(AssetUtil.getCopiedAssetNodes(subsiteDocs[i], targetSubsiteDoc,
-                        this.manager, getLogger()));
+                nodes.add(targetSubsiteDoc.getRepositoryNode());
+                nodes.addAll(AssetUtil.getCopiedAssetNodes(subsiteDocs[i],
+                        targetSubsiteDoc,
+                        this.manager,
+                        getLogger()));
             }
             for (Iterator i = nodes.iterator(); i.hasNext();) {
                 ((Node) i.next()).lock();

@@ -40,6 +40,7 @@ import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.impl.AbstractSource;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
+import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.TransactionException;
 
@@ -70,7 +71,8 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
         this.manager = manager;
         this.logger = logger;
 
-	if (getLogger().isDebugEnabled()) getLogger().debug("Init RepositorySource: " + uri);
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("Init RepositorySource: " + uri);
 
         if (map == null) {
             throw new IllegalArgumentException("The identity map must not be null!");
@@ -102,8 +104,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
             this.node = (Node) map.get(factory, uri);
         } catch (ServiceException e) {
             throw new SourceException("Creating repository node failed: ", e);
-        }
-        finally {
+        } finally {
             if (factory != null) {
                 this.manager.release(factory);
             }
@@ -125,15 +126,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
      * @see org.apache.excalibur.source.ModifiableSource#getOutputStream()
      */
     public OutputStream getOutputStream() throws IOException {
-        if (getLogger().isDebugEnabled()) getLogger().debug("Get OutputStream for " + getURI());
         try {
-            if (!this.node.isLocked()) {
-                throw new RuntimeException("Cannot write to source [" + getURI() + "]: not locked!");
-            }
-            if (this.identityMap.getUnitOfWork() == null) {
-                throw new RuntimeException("Cannot write to source outside of a transaction (UnitOfWork is null)!");
-            }
-            this.identityMap.getUnitOfWork().registerDirty(this.node);
             return this.node.getOutputStream();
         } catch (TransactionException e) {
             throw new RuntimeException(e);
@@ -144,14 +137,16 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
      * @see org.apache.excalibur.source.ModifiableSource#delete()
      */
     public void delete() {
+        RepositoryManager repoManager = null;
         try {
-            if (!this.node.isLocked()) {
-                throw new RuntimeException("Cannot delete source [" + getURI() + "]: not locked!");
-            } else {
-                this.identityMap.getUnitOfWork().registerRemoved(this.node);
-            }
-        } catch (TransactionException e) {
+            repoManager = (RepositoryManager) this.manager.lookup(RepositoryManager.ROLE);
+            repoManager.delete(this.node);
+        } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            if (repoManager != null) {
+                this.manager.release(repoManager);
+            }
         }
     }
 
@@ -187,7 +182,8 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
      * @see org.apache.excalibur.source.Source#getInputStream()
      */
     public InputStream getInputStream() throws IOException, SourceNotFoundException {
-        if (getLogger().isDebugEnabled()) getLogger().debug("Get InputStream for " + getURI());
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("Get InputStream for " + getURI());
         if (!exists()) {
             throw new SourceNotFoundException("The source [" + getURI() + "] does not exist!");
         }
@@ -330,7 +326,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
     }
 
     /**
-     *
+     * 
      */
     public Source getParent() {
         getLogger().warn("getParent() not implemented yet!");
@@ -338,24 +334,25 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
     }
 
     /**
-     *
+     * 
      */
     public void makeCollection() {
         getLogger().warn("RepositorySource().makeCollection() not implemented yet!");
     }
 
     /**
-     *
+     * 
      */
     public String getName() {
         // Quick and dirty
         String name = new java.io.File(getURI()).getName();
-        if(getLogger().isDebugEnabled()) getLogger().debug("getName(): URI: " + name);
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("getName(): URI: " + name);
         return name;
     }
 
     /**
-     *
+     * 
      */
     public Source getChild(String name) {
         getLogger().warn("getChild() not implemented yet!");
@@ -363,7 +360,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
     }
 
     /**
-     *
+     * 
      */
     public Collection getChildren() {
         try {
@@ -372,7 +369,10 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
             java.util.Vector newChildren = new java.util.Vector();
             while (iterator.hasNext()) {
                 Node child = (Node) iterator.next();
-                newChildren.add(new RepositorySource(this.manager, child.getSourceURI(), this.identityMap, getLogger()));
+                newChildren.add(new RepositorySource(this.manager,
+                        child.getSourceURI(),
+                        this.identityMap,
+                        getLogger()));
             }
             return newChildren;
         } catch (Exception e) {
@@ -381,7 +381,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
     }
 
     /**
-     *
+     * 
      */
     public boolean isCollection() {
         try {

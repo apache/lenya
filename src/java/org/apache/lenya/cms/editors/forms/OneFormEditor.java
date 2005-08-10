@@ -50,7 +50,8 @@ public class OneFormEditor extends DocumentUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
      */
     protected Transactionable[] getObjectsToLock() throws UsecaseException {
-        return getSourceDocument().getRepositoryNodes();
+        Transactionable[] objects = { getSourceDocument().getRepositoryNode() };
+        return objects;
     }
 
     /**

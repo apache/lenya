@@ -30,6 +30,11 @@ import org.apache.lenya.transaction.Transactionable;
  * @version $Id$
  */
 public interface Node extends Transactionable, MetaDataOwner {
+    
+    /**
+     * @return The session this node belongs to.
+     */
+    Session getSession();
 
     /**
      * The protocol with which to find Lenya nodes

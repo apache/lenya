@@ -17,7 +17,6 @@
 package org.apache.lenya.cms.site.usecases;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import org.apache.lenya.cms.publication.Document;
@@ -58,7 +57,7 @@ public class DeleteLanguage extends DocumentUsecase {
         List nodes = new ArrayList();
         Document doc = getSourceDocument();
         try {
-            nodes.addAll(Arrays.asList(doc.getRepositoryNodes()));
+            nodes.add(doc.getRepositoryNode());
         } catch (Exception e) {
             throw new UsecaseException(e);
         }
