@@ -67,7 +67,7 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
         try {
             PageEnvelope envelope = getEnvelope(objectModel, name);
             Document document = envelope.getDocument();
-            if (document != null) {
+            if (document != null && document.exists()) {
                 wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
                 DocumentWorkflowable workflowable = new DocumentWorkflowable(document,
                         getLogger());
