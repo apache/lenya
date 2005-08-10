@@ -47,7 +47,7 @@
         -->
       <map:match pattern="view/*/**" internal-only="true">
         
-        <map:generate type="jx" src="fallback://lenya/usecases/{2}.jx"/>
+        <map:generate type="jx" src="fallback://lenya/{2}"/>
         <map:transform type="cinclude"/>
         <map:transform type="i18n">
           <map:parameter name="locale" value="{request:locale}"/>
