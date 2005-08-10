@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document> 
+  <header> 
+    <title>Publets</title> 
+  </header>
+  <body>
+    
+    <section>
+      <title>Introduction</title>
+      <p>
+        Publets are packages providing a certain set of resources or functionality.
+      </p>
+      <p>Examples:</p>
+      <ul>
+        <li>a resource type (e.g., docbook publet)</li>
+        <li>a repository implementation (e.g., jdbc publet)</li>
+        <li>a collection of XSLTs (e.g., content2svg publet)</li>
+      </ul>
+      <p>
+        Some publets are included in the Lenya distribution:
+      </p>
+      <ul>
+        <li><strong>search</strong> - search functionality</li>
+        <li><strong>sitetree</strong> - manage documents in a tree-like structure</li>
+        <li><strong>jcr</strong> - store content in a <link href="http://www.jcp.org/en/jsr/detail?id=170">JCR</link> repository</li>
+        <li><strong>xhtml</strong> - XHTML-based resource type</li>
+        <li><strong>links</strong> - resource type to manage link lists</li>
+      </ul>
+    </section>
+
+    <section>
+      <title>Implementing a Publet</title>
+      
+      <p>
+        All resources of a publet are located in a single directory.
+        The following is an example directory structure, all files are optional
+        and depend on the nature of the publet.
+      </p>
+    
+<source xml:space="preserve">
+mypublet/
+    config/                  configuration files
+        components.xconf     patch for cocoon.xconf
+    usecases/
+        mypublet.jx          usecase view
+    java/
+        src/                 Java source files
+        lib/                 Java libraries
+    xslt/                    XSLT stylesheets
+    sitemap.xmap             main publet sitemap
+</source>
+
+      <p>
+        When the publet is deployed, the following steps are executed:
+      </p>
+      <ul>
+        <li>the publet files are copied to <code>context://lenya/publets</code></li>
+        <li>Java sources are compiled, libraries are installed</li>
+        <li><code>cocoon.xconf</code> is patched</li>
+      </ul>
+
+    </section>
+    
+  </body>
+</document>
