@@ -16,6 +16,7 @@
  */
 package org.apache.lenya.cms.jcr.metadata;
 
+import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -110,6 +111,12 @@ public class JCRMetaData extends AbstractLogEnabled implements MetaData {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             source = (JCRNodeSource) resolver.resolveURI(this.sourceUri);
 
+            if (!source.exists()) {
+                OutputStream stream = source.getOutputStream();
+                stream.flush();
+                stream.close();
+            }
+            
             Node node = source.getNode();
             String prefix = node.getSession()
                     .getWorkspace()

@@ -83,7 +83,7 @@ public class Import extends AbstractUsecase {
             for (int i = 0; i < areas.length; i++) {
                 Document[] docs = siteManager.getDocuments(map, pub, areas[i]);
                 for (int j = 0; j < docs.length; j++) {
-                    nodes.addAll(Arrays.asList(docs[j].getRepositoryNodes()));
+                    nodes.add(docs[j].getRepositoryNode());
                     final String lenyaUri = docs[j].getSourceURI();
                     final String sourcePath = lenyaUri.substring("lenya://".length());
                     final String contextUri = "context://" + sourcePath + ".meta";
