@@ -32,5 +32,8 @@
       <li><a href="live/index.html">Reader`s View</a> (Live)</li>
       <li><a href="authoring/index.html">Editor`s View</a> (Authoring)</li>
     </ol>
+
+    <h4>Import Content into JCR Repository</h4>
+    <a href="../index.html?lenya.usecase=jcr.import">../index.html?lenya.usecase=jcr.import</a>
   </lenya:readme>
 </lenya:publication>
