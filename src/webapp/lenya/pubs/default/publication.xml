@@ -35,5 +35,7 @@
 
     <h4>Import Content into JCR Repository</h4>
     <a href="../index.html?lenya.usecase=jcr.import">../index.html?lenya.usecase=jcr.import</a>
+    <br/>
+    Switch the NodeFactory within <i>build/lenya/webapp/WEB-INF/classes/org/apache/lenya/lenya.roles</i> and restart Lenya
   </lenya:readme>
 </lenya:publication>
