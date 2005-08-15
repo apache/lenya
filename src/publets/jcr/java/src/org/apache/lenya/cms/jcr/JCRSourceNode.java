@@ -21,8 +21,8 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.jcr.metadata.JCRMetaDataManager;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.repository.SourceNode;
-import org.apache.lenya.transaction.IdentityMap;
 
 /**
  * JCR based source node.
@@ -33,13 +33,13 @@ public class JCRSourceNode extends SourceNode {
 
     /**
      * Ctor.
-     * @param map The identity map.
+     * @param session The session.
      * @param sourceURI The source URI.
      * @param manager The service manager.
      * @param logger The logger.
      */
-    public JCRSourceNode(IdentityMap map, String sourceURI, ServiceManager manager, Logger logger) {
-        super(map, sourceURI, manager, logger);
+    public JCRSourceNode(Session session, String sourceURI, ServiceManager manager, Logger logger) {
+        super(session, sourceURI, manager, logger);
         this.sourceUri = sourceURI;
     }
 

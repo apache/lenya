@@ -16,27 +16,23 @@
  */
 package org.apache.lenya.cms.jcr;
 
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
-
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
-import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
-import org.apache.lenya.cms.repository.SourceNode;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.transaction.Identifiable;
 import org.apache.lenya.transaction.IdentityMap;
-import org.apache.lenya.xml.DocumentHelper;
-import org.w3c.dom.Document;
 
+/**
+ * JCR node factory.
+ */
 public class JCRNodeFactory extends AbstractLogEnabled implements NodeFactory, Serviceable {
 
     public Identifiable build(IdentityMap map, String key) throws Exception {
-        return new JCRSourceNode(map, key, this.manager, getLogger());
+        return new JCRSourceNode(this.session, key, this.manager, getLogger());
     }
 
     public String getType() {
@@ -47,6 +43,12 @@ public class JCRNodeFactory extends AbstractLogEnabled implements NodeFactory, S
 
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
+    }
+    
+    private Session session;
+
+    public void setSession(Session session) {
+        this.session = session;
     }
 
 }
