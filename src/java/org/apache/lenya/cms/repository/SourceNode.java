@@ -41,9 +41,9 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RevisionController;
-import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.TransactionException;
+import org.apache.lenya.transaction.Transactionable;
 import org.apache.lenya.cms.rc.RCMLEntry;
 
 /**
@@ -51,29 +51,28 @@ import org.apache.lenya.cms.rc.RCMLEntry;
  * 
  * @version $Id$
  */
-public class SourceNode extends AbstractLogEnabled implements Node {
+public class SourceNode extends AbstractLogEnabled implements Node, Transactionable {
 
     private String sourceURI;
     protected ServiceManager manager;
-    private IdentityMap identityMap;
 
     /**
      * Ctor.
-     * @param map
+     * @param session
      * @param sourceURI
      * @param manager
      * @param logger
      */
-    public SourceNode(IdentityMap map, String sourceURI, ServiceManager manager, Logger logger) {
+    public SourceNode(Session session, String sourceURI, ServiceManager manager, Logger logger) {
         this.sourceURI = sourceURI;
         this.manager = manager;
         enableLogging(logger);
-        this.identityMap = map;
+        this.session = session;
     }
 
     protected String getUserId() {
         String userId = null;
-        Identity identity = this.identityMap.getUnitOfWork().getIdentity();
+        Identity identity = getSession().getUnitOfWork().getIdentity();
         if (identity != null) {
             User user = identity.getUser();
             if (user != null) {
@@ -94,55 +93,51 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     /**
      * @see org.apache.lenya.transaction.Transactionable#checkin()
      */
-    public void checkin() throws TransactionException {
+    public void checkin() throws RepositoryException {
         if (!isCheckedOut()) {
-            throw new TransactionException("Cannot check in node [" + this.sourceURI
+            throw new RepositoryException("Cannot check in node [" + this.sourceURI
                     + "]: not checked out!");
         }
 
         try {
             String userName = getUserId();
-            boolean newVersion = this.identityMap.getUnitOfWork().isDirty(this);
+            boolean newVersion = getSession().getUnitOfWork().isDirty(this);
             getRevisionController().reservedCheckIn(getRCPath(), userName, true, newVersion);
         } catch (Exception e) {
-            throw new TransactionException(e);
+            throw new RepositoryException(e);
         }
     }
 
     /**
      * @see org.apache.lenya.transaction.Transactionable#isCheckedOut()
      */
-    public boolean isCheckedOut() throws TransactionException {
+    public boolean isCheckedOut() throws RepositoryException {
         try {
             return getRevisionController().isCheckedOut(getRCPath());
-        } catch (TransactionException e) {
-            throw e;
         } catch (Exception e) {
-            throw new TransactionException(e);
+            throw new RepositoryException(e);
         }
     }
 
     /**
      * @see org.apache.lenya.transaction.Transactionable#isCheckedOutByUser()
      */
-    public boolean isCheckedOutByUser() throws TransactionException {
+    public boolean isCheckedOutByUser() throws RepositoryException {
         try {
             RCMLEntry entry = getRevisionController().getRCML(getRCPath()).getLatestEntry();
             if (entry.getIdentity().equals(getUserId()))
                 return true;
             else
                 return false;
-        } catch (TransactionException e) {
-            throw e;
         } catch (Exception e) {
-            throw new TransactionException(e);
+            throw new RepositoryException(e);
         }
     }
 
     /**
      * @see org.apache.lenya.transaction.Transactionable#checkout()
      */
-    public void checkout() throws TransactionException {
+    public void checkout() throws RepositoryException {
 
         if (getLogger().isDebugEnabled())
             getLogger().debug("SourceNode::checkout() called, sourceURI [" + sourceURI + "]");
@@ -151,7 +146,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
             try {
                 getRevisionController().reservedCheckOut(getRCPath(), getUserId());
             } catch (Exception e) {
-                throw new TransactionException(e);
+                throw new RepositoryException(e);
             }
         }
     }
@@ -171,7 +166,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     /**
      * @see org.apache.lenya.transaction.Transactionable#deleteTransactionable()
      */
-    public void deleteTransactionable() throws TransactionException {
+    public void deleteTransactionable() throws RepositoryException {
         try {
             if (!isCheckedOut()) {
                 throw new RuntimeException("Cannot delete source [" + this.sourceURI
@@ -180,13 +175,13 @@ public class SourceNode extends AbstractLogEnabled implements Node {
                 SourceUtil.delete(getRealSourceURI(), this.manager);
             }
         } catch (Exception e) {
-            throw new TransactionException(e);
+            throw new RepositoryException(e);
         }
     }
 
     private RevisionController revisionController;
 
-    protected RevisionController getRevisionController() throws TransactionException {
+    protected RevisionController getRevisionController() throws RepositoryException {
         if (this.revisionController == null) {
             try {
                 String pubBase = Node.LENYA_PROTOCOL + Publication.PUBLICATION_PREFIX_URI + "/";
@@ -223,7 +218,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
                 }
 
             } catch (Exception e) {
-                throw new TransactionException(e);
+                throw new RepositoryException(e);
             }
         }
         return this.revisionController;
@@ -234,22 +229,22 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     /**
      * @see org.apache.lenya.transaction.Transactionable#hasChanged()
      */
-    public boolean hasChanged() throws TransactionException {
+    public boolean hasChanged() throws RepositoryException {
         try {
             int currentVersion = getRevisionController().getLatestVersion(getRCPath());
             int lockVersion = getLock().getVersion();
             return currentVersion > lockVersion;
         } catch (Exception e) {
-            throw new TransactionException(e);
+            throw new RepositoryException(e);
         }
     }
 
     /**
      * @see org.apache.lenya.transaction.Transactionable#saveTransactionable()
      */
-    public synchronized void saveTransactionable() throws TransactionException {
+    public synchronized void saveTransactionable() throws RepositoryException {
         if (!isCheckedOut()) {
-            throw new TransactionException("Cannot save node [" + this.sourceURI
+            throw new RepositoryException("Cannot save node [" + this.sourceURI
                     + "]: not checked out!");
         }
         if (getLogger().isDebugEnabled()) {
@@ -278,7 +273,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
                 }
 
             } catch (Exception e) {
-                throw new TransactionException(e);
+                throw new RepositoryException(e);
             } finally {
 
                 try {
@@ -306,15 +301,15 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     /**
      * @see org.apache.lenya.transaction.Transactionable#createTransactionable()
      */
-    public void createTransactionable() throws TransactionException {
+    public void createTransactionable() throws RepositoryException {
     }
 
     /**
      * @see org.apache.lenya.transaction.Transactionable#lock()
      */
-    public void lock() throws TransactionException {
+    public void lock() throws RepositoryException {
         if (isCheckedOut() && !isCheckedOutByUser()) {
-            throw new TransactionException("Cannot lock [" + this + "]: node is checked out.");
+            throw new RepositoryException("Cannot lock [" + this + "]: node is checked out.");
         }
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Locking [" + this + "]");
@@ -322,10 +317,8 @@ public class SourceNode extends AbstractLogEnabled implements Node {
         int currentVersion;
         try {
             currentVersion = getRevisionController().getLatestVersion(getRCPath());
-        } catch (TransactionException e) {
-            throw e;
         } catch (Exception e) {
-            throw new TransactionException(e);
+            throw new RepositoryException(e);
         }
         this.lock = new Lock(currentVersion);
     }
@@ -340,14 +333,14 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     /**
      * @see org.apache.lenya.transaction.Transactionable#unlock()
      */
-    public void unlock() throws TransactionException {
+    public void unlock() throws RepositoryException {
         this.lock = null;
     }
 
     /**
      * @see org.apache.lenya.transaction.Transactionable#isLocked()
      */
-    public boolean isLocked() throws TransactionException {
+    public boolean isLocked() throws RepositoryException {
         return this.lock != null;
     }
 
@@ -361,7 +354,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     /**
      * @see org.apache.lenya.cms.repository.Node#exists()
      */
-    public boolean exists() throws TransactionException {
+    public boolean exists() throws RepositoryException {
         loadData();
         return this.data != null;
     }
@@ -378,7 +371,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     /**
      * @see org.apache.lenya.cms.repository.Node#getInputStream()
      */
-    public synchronized InputStream getInputStream() throws TransactionException {
+    public synchronized InputStream getInputStream() throws RepositoryException {
         if (!exists()) {
             throw new RuntimeException(this + " does not exist!");
         }
@@ -388,7 +381,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     /**
      * 
      */
-    public Collection getChildren() throws TransactionException {
+    public Collection getChildren() throws RepositoryException {
         SourceResolver resolver = null;
         TraversableSource source = null;
         try {
@@ -399,21 +392,21 @@ public class SourceNode extends AbstractLogEnabled implements Node {
             java.util.Vector newChildren = new java.util.Vector();
             while (iterator.hasNext()) {
                 TraversableSource child = (TraversableSource) iterator.next();
-                newChildren.add(new SourceNode(identityMap,
+                newChildren.add(new SourceNode(getSession(),
                         sourceURI + "/" + child.getName(),
                         this.manager,
                         getLogger()));
             }
             return newChildren;
         } catch (Exception e) {
-            throw new TransactionException(e);
+            throw new RepositoryException(e);
         }
     }
 
     /**
      * 
      */
-    public boolean isCollection() throws TransactionException {
+    public boolean isCollection() throws RepositoryException {
         SourceResolver resolver = null;
         TraversableSource source = null;
         try {
@@ -421,15 +414,15 @@ public class SourceNode extends AbstractLogEnabled implements Node {
             source = (TraversableSource) resolver.resolveURI(getRealSourceURI());
             return source.isCollection();
         } catch (Exception e) {
-            throw new TransactionException(e);
+            throw new RepositoryException(e);
         }
     }
 
     /**
      * Loads the data from the real source.
-     * @throws TransactionException if an error occurs.
+     * @throws RepositoryException if an error occurs.
      */
-    protected synchronized void loadData() throws TransactionException {
+    protected synchronized void loadData() throws RepositoryException {
 
         if (this.data != null) {
             return;
@@ -457,7 +450,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
                 this.data = out.toByteArray();
             }
         } catch (Exception e) {
-            throw new TransactionException(e);
+            throw new RepositoryException(e);
         } finally {
             try {
                 if (in != null)
@@ -465,7 +458,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
                 if (out != null)
                     out.close();
             } catch (Exception e) {
-                throw new TransactionException(e);
+                throw new RepositoryException(e);
             }
 
             if (resolver != null) {
@@ -480,17 +473,17 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     /**
      * @see org.apache.lenya.cms.repository.Node#getOutputStream()
      */
-    public synchronized OutputStream getOutputStream() throws TransactionException {
+    public synchronized OutputStream getOutputStream() throws RepositoryException {
         if (getLogger().isDebugEnabled()) getLogger().debug("Get OutputStream for " + getSourceURI());
         try {
             if (!isLocked()) {
                 throw new RuntimeException("Cannot write to source [" + getSourceURI() + "]: not locked!");
             }
-            if (this.identityMap.getUnitOfWork() == null) {
+            if (getSession().getUnitOfWork() == null) {
                 throw new RuntimeException("Cannot write to source outside of a transaction (UnitOfWork is null)!");
             }
-            this.identityMap.getUnitOfWork().registerDirty(this);
-        } catch (TransactionException e) {
+            getSession().getUnitOfWork().registerDirty(this);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return new NodeOutputStream();
@@ -512,7 +505,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     /**
      * @see org.apache.lenya.cms.repository.Node#getContentLength()
      */
-    public long getContentLength() throws TransactionException {
+    public long getContentLength() throws RepositoryException {
         SourceResolver resolver = null;
         Source source = null;
         try {
@@ -539,7 +532,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     /**
      * @see org.apache.lenya.cms.repository.Node#getLastModified()
      */
-    public long getLastModified() throws TransactionException {
+    public long getLastModified() throws RepositoryException {
         SourceResolver resolver = null;
         Source source = null;
         try {
@@ -548,7 +541,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
             if (source.exists()) {
                 return source.getLastModified();
             } else {
-                throw new TransactionException("The source [" + getRealSourceURI()
+                throw new RepositoryException("The source [" + getRealSourceURI()
                         + "] does not exist!");
             }
         } catch (Exception e) {
@@ -566,7 +559,7 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     /**
      * @see org.apache.lenya.cms.repository.Node#getMimeType()
      */
-    public String getMimeType() throws TransactionException {
+    public String getMimeType() throws RepositoryException {
         SourceResolver resolver = null;
         Source source = null;
         try {
@@ -617,11 +610,27 @@ public class SourceNode extends AbstractLogEnabled implements Node {
     
     private Session session;
 
+    /**
+     * @see org.apache.lenya.cms.repository.Node#getSession()
+     */
     public Session getSession() {
-        if (this.session == null) {
-            this.session = new Session(this.identityMap);
-        }
         return this.session;
+    }
+
+    public void registerDirty() throws RepositoryException {
+        try {
+            getSession().getUnitOfWork().registerDirty(this);
+        } catch (TransactionException e) {
+            throw new RepositoryException(e);
+        }
+    }
+
+    public void registerRemoved() throws RepositoryException {
+        try {
+            getSession().getUnitOfWork().registerRemoved(this);
+        } catch (TransactionException e) {
+            throw new RepositoryException(e);
+        }
     }
 
 }

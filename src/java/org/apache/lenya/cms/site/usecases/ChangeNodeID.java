@@ -56,9 +56,9 @@ public class ChangeNodeID extends DocumentUsecase {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected Transactionable[] getObjectsToLock() throws UsecaseException {
+    protected Node[] getNodesToLock() throws UsecaseException {
 
         List nodes = new ArrayList();
 
@@ -80,7 +80,7 @@ public class ChangeNodeID extends DocumentUsecase {
             throw new UsecaseException(e);
         }
 
-        return (Transactionable[]) nodes.toArray(new Transactionable[nodes.size()]);
+        return (Node[]) nodes.toArray(new Transactionable[nodes.size()]);
     }
 
     protected List getAllLanguageVersionNodes(Document doc) throws DocumentException,

@@ -47,7 +47,6 @@ import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
-import org.apache.lenya.transaction.Transactionable;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.RelaxNG;
 import org.apache.lenya.xml.XPath;
@@ -97,10 +96,10 @@ public class FormsEditor extends DocumentUsecase {
     protected static final String WORKFLOW_INVOKED = "private.workflowInvoked";
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected Transactionable[] getObjectsToLock() throws UsecaseException {
-        Transactionable[] objects = { getSourceDocument().getRepositoryNode() };
+    protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
+        org.apache.lenya.cms.repository.Node[] objects = { getSourceDocument().getRepositoryNode() };
         return objects;
     }
 

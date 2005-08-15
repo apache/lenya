@@ -32,10 +32,10 @@ import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteUtil;
-import org.apache.lenya.transaction.Transactionable;
 import org.w3c.dom.DocumentType;
 
 /**
@@ -105,7 +105,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             NodeCreatorInterface creator = documentType.getCreator();
 
             // now that the source is determined, lock involved nodes
-            Transactionable node = document.getRepositoryNode();
+            Node node = document.getRepositoryNode();
             node.lock();
 
             //

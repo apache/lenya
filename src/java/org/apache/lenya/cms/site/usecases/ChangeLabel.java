@@ -19,11 +19,11 @@ package org.apache.lenya.cms.site.usecases;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Change the label of a document.
@@ -52,9 +52,9 @@ public class ChangeLabel extends DocumentUsecase {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected Transactionable[] getObjectsToLock() throws UsecaseException {
+    protected Node[] getNodesToLock() throws UsecaseException {
         SiteManager siteManager = null;
         ServiceSelector selector = null;
         try {
@@ -63,7 +63,7 @@ public class ChangeLabel extends DocumentUsecase {
             siteManager = (SiteManager) selector.select(doc.getPublication().getSiteManagerHint());
             SiteStructure structure = siteManager.getSiteStructure(doc.getIdentityMap(), doc
                     .getPublication(), doc.getArea());
-            Transactionable[] objects = { structure.getRepositoryNode() };
+            Node[] objects = { structure.getRepositoryNode() };
             return objects;
         } catch (Exception e) {
             throw new UsecaseException(e);

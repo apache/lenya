@@ -20,9 +20,9 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.transaction.Transactionable;
 import org.apache.lenya.workflow.WorkflowManager;
 
 /**
@@ -69,10 +69,10 @@ public class BXE extends DocumentUsecase {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected Transactionable[] getObjectsToLock() throws UsecaseException {
-        Transactionable[] objects = { getSourceDocument().getRepositoryNode() };
+    protected Node[] getNodesToLock() throws UsecaseException {
+        Node[] objects = { getSourceDocument().getRepositoryNode() };
         return objects;
     }
 

@@ -16,11 +16,13 @@
  */
 package org.apache.lenya.cms.repository;
 
+import org.apache.lenya.transaction.TransactionException;
+
 /**
  * Repository exception.
  * @version $Id:$
  */
-public class RepositoryException extends Exception {
+public class RepositoryException extends TransactionException {
 
     /**
      * Ctor.

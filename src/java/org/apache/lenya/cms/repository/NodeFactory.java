@@ -28,5 +28,10 @@ public interface NodeFactory extends IdentifiableFactory {
      * The role of the service.
      */
     String ROLE = NodeFactory.class.getName();
+    
+    /**
+     * @param session The session.
+     */
+    void setSession(Session session);
 
 }

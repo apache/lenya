@@ -16,16 +16,13 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Delete a language version.
@@ -51,17 +48,11 @@ public class DeleteLanguage extends DocumentUsecase {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected Transactionable[] getObjectsToLock() throws UsecaseException {
-        List nodes = new ArrayList();
-        Document doc = getSourceDocument();
-        try {
-            nodes.add(doc.getRepositoryNode());
-        } catch (Exception e) {
-            throw new UsecaseException(e);
-        }
-        return (Transactionable[]) nodes.toArray(new Transactionable[nodes.size()]);
+    protected Node[] getNodesToLock() throws UsecaseException {
+        Node[] nodes = { getSourceDocument().getRepositoryNode() };
+        return nodes;
     }
 
     /**

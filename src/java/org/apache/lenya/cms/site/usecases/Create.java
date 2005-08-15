@@ -38,12 +38,12 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Abstract superclass for usecases to create a document.
@@ -77,12 +77,12 @@ public abstract class Create extends AbstractUsecase {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected Transactionable[] getObjectsToLock() throws UsecaseException {
+    protected Node[] getNodesToLock() throws UsecaseException {
         try {
             SiteStructure structure = SiteUtil.getSiteStructure(this.manager, getSourceDocument());
-            Transactionable[] nodes = { structure.getRepositoryNode() };
+            Node[] nodes = { structure.getRepositoryNode() };
             return nodes;
         } catch (SiteException e) {
             throw new UsecaseException(e);

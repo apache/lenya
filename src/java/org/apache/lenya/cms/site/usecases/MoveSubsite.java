@@ -42,7 +42,6 @@ import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
-import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Usecase to move a subsite to another area.
@@ -106,9 +105,9 @@ public abstract class MoveSubsite extends DocumentUsecase {
      * <li>the document area's site structure</li>
      * <li>the target site structure</li>
      * </ul>
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected Transactionable[] getObjectsToLock() throws UsecaseException {
+    protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
         List nodes = new ArrayList();
         Document doc = getSourceDocument();
         try {
@@ -147,7 +146,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
         } catch (Exception e) {
             throw new UsecaseException(e);
         }
-        return (Transactionable[]) nodes.toArray(new Transactionable[nodes.size()]);
+        return (org.apache.lenya.cms.repository.Node[]) nodes.toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
     }
 
     /**

@@ -21,8 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.lenya.transaction.UnitOfWork;
+import org.apache.lenya.cms.repository.Session;
 
 /**
  * Proxy which holds the parameters of a usecase. It is used to restore the usecase after the
@@ -36,7 +35,7 @@ public class UsecaseProxy {
     private String name;
     private String sourceUrl;
     private UsecaseView view;
-    private UnitOfWork unitOfWork;
+    private Session session;
 
     /**
      * Ctor.
@@ -49,16 +48,12 @@ public class UsecaseProxy {
         for (int i = 0; i < names.length; i++) {
             this.parameters.put(names[i], usecase.getParameter(names[i]));
         }
-        
+
         this.errorMessages = usecase.getErrorMessages();
         this.infoMessages = usecase.getInfoMessages();
         this.sourceUrl = usecase.getSourceURL();
         this.view = usecase.getView();
-        try {
-            this.unitOfWork = usecase.getUnitOfWork();
-        } catch (ServiceException e) {
-            throw new RuntimeException(e);
-        }
+        this.session = usecase.getSession();
     }
 
     /**
@@ -66,7 +61,7 @@ public class UsecaseProxy {
      * @param usecase The usecase.
      */
     public void setup(Usecase usecase) {
-        usecase.setUnitOfWork(this.unitOfWork);
+        usecase.setSession(this.session);
         usecase.setName(this.name);
         usecase.setSourceURL(this.sourceUrl);
         usecase.setView(this.view);
@@ -130,26 +125,26 @@ public class UsecaseProxy {
     }
 
     /**
-     * Determine if the usecase has error messages.
-     * Provides a way of checking for errors without actually retrieving them.
+     * Determine if the usecase has error messages. Provides a way of checking for errors without
+     * actually retrieving them.
      * @return true if the usecase resulted in error messages.
      */
     public boolean hasErrors() {
         boolean ret = false;
         if (this.errorMessages != null)
-            ret = ! this.errorMessages.isEmpty();
+            ret = !this.errorMessages.isEmpty();
         return ret;
     }
 
     /**
-     * Determine if the usecase has info messages.
-     * Provides a way of checking for info messages without actually retrieving them.
+     * Determine if the usecase has info messages. Provides a way of checking for info messages
+     * without actually retrieving them.
      * @return true if the usecase resulted in info messages being generated.
      */
     public boolean hasInfoMessages() {
         boolean ret = false;
         if (this.infoMessages != null)
-            ret = ! this.infoMessages.isEmpty();
+            ret = !this.infoMessages.isEmpty();
         return ret;
     }
 
@@ -166,5 +161,5 @@ public class UsecaseProxy {
     public UsecaseView getView() {
         return this.view;
     }
-    
+
 }

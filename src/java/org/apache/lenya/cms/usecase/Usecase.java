@@ -19,14 +19,14 @@ package org.apache.lenya.cms.usecase;
 import java.util.List;
 
 import org.apache.cocoon.servlet.multipart.Part;
-import org.apache.lenya.transaction.Operation;
+import org.apache.lenya.cms.repository.Session;
 
 /**
  * Usecase interface.
  * 
  * @version $Id$
  */
-public interface Usecase extends Operation {
+public interface Usecase {
 
     /**
      * The <code>Usecase</code> role.
@@ -189,4 +189,14 @@ public interface Usecase extends Operation {
      */
     void setView(UsecaseView view);
 
+    /**
+     * @return The repository session.
+     */
+    Session getSession();
+    
+    /**
+     * @param session The repository session.
+     */
+    void setSession(Session session);
+    
 }

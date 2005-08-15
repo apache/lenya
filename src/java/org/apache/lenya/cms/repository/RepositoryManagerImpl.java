@@ -22,8 +22,6 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.transaction.TransactionException;
-import org.apache.lenya.transaction.UnitOfWork;
 
 /**
  * Repository manager implementation.
@@ -38,7 +36,7 @@ public class RepositoryManagerImpl extends AbstractLogEnabled implements Reposit
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             SourceUtil.copy(resolver, source.getSourceURI(), destination.getSourceURI());
-            
+
             destination.getMetaDataManager().replaceMetaData(source.getMetaDataManager());
         } catch (Exception e) {
             throw new RepositoryException(e);
@@ -62,15 +60,10 @@ public class RepositoryManagerImpl extends AbstractLogEnabled implements Reposit
      * @see org.apache.lenya.cms.repository.RepositoryManager#delete(org.apache.lenya.cms.repository.Node)
      */
     public void delete(Node node) throws RepositoryException {
-        try {
-            if (!node.isLocked()) {
-                throw new RuntimeException("Cannot delete node [" + node + "]: not locked!");
-            } else {
-                UnitOfWork unit = node.getSession().getIdentityMap().getUnitOfWork();
-                unit.registerRemoved(node);
-            }
-        } catch (TransactionException e) {
-            throw new RuntimeException(e);
+        if (!node.isLocked()) {
+            throw new RuntimeException("Cannot delete node [" + node + "]: not locked!");
+        } else {
+            node.registerRemoved();
         }
     }
 

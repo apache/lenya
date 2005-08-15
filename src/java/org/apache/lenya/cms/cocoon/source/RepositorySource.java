@@ -40,33 +40,32 @@ import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.impl.AbstractSource;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.transaction.IdentityMap;
-import org.apache.lenya.transaction.TransactionException;
+import org.apache.lenya.cms.repository.Session;
 
 /**
  * Repository source.
  * 
  * @version $Id$
  */
-public class RepositorySource extends AbstractSource implements ModifiableTraversableSource,
-        TransactionableSource {
+public class RepositorySource extends AbstractSource implements ModifiableTraversableSource {
 
     private ServiceManager manager;
     private Node node;
-    private IdentityMap identityMap;
+    private Session session;
     private Logger logger;
     protected static final String SCHEME = "lenya";
 
     /**
      * @param manager The service manager.
      * @param uri The source URI.
-     * @param map The identity map.
+     * @param session The repository session.
      * @param logger The logger.
      * @throws SourceException if an error occurs.
      * @throws MalformedURLException if an error occurs.
      */
-    public RepositorySource(ServiceManager manager, String uri, IdentityMap map, Logger logger)
+    public RepositorySource(ServiceManager manager, String uri, Session session, Logger logger)
             throws SourceException, MalformedURLException {
         this.manager = manager;
         this.logger = logger;
@@ -74,10 +73,10 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
         if (getLogger().isDebugEnabled())
             getLogger().debug("Init RepositorySource: " + uri);
 
-        if (map == null) {
-            throw new IllegalArgumentException("The identity map must not be null!");
+        if (session == null) {
+            throw new IllegalArgumentException("The repository session must not be null!");
         }
-        this.identityMap = map;
+        this.session = session;
 
         if (uri == null) {
             throw new MalformedURLException("The source URI must not be null!");
@@ -101,7 +100,8 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
         NodeFactory factory = null;
         try {
             factory = (NodeFactory) this.manager.lookup(NodeFactory.ROLE);
-            this.node = (Node) map.get(factory, uri);
+            factory.setSession(session);
+            this.node = (Node) session.getUnitOfWork().getIdentityMap().get(factory, uri);
         } catch (ServiceException e) {
             throw new SourceException("Creating repository node failed: ", e);
         } finally {
@@ -128,7 +128,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
     public OutputStream getOutputStream() throws IOException {
         try {
             return this.node.getOutputStream();
-        } catch (TransactionException e) {
+        } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
     }
@@ -173,7 +173,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
             } else {
                 return isCollection();
             }
-        } catch (TransactionException e) {
+        } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
     }
@@ -189,7 +189,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
         }
         try {
             return this.node.getInputStream();
-        } catch (TransactionException e) {
+        } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
     }
@@ -236,69 +236,12 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
     }
 
     /**
-     * @see org.apache.lenya.cms.cocoon.source.TransactionableSource#checkout()
-     */
-    public void checkout() throws TransactionException {
-    }
-
-    /**
-     * @see org.apache.lenya.cms.cocoon.source.TransactionableSource#checkin()
-     */
-    public void checkin() throws TransactionException {
-    }
-
-    /**
-     * @see org.apache.lenya.cms.cocoon.source.TransactionableSource#lock()
-     */
-    public void lock() throws TransactionException {
-        if (this.identityMap.getUnitOfWork() != null) {
-            try {
-                this.node.lock();
-            } catch (TransactionException e) {
-                throw new RuntimeException("Locking source [" + getURI() + "] failed.");
-            }
-        }
-    }
-
-    /**
-     * @see org.apache.lenya.cms.cocoon.source.TransactionableSource#unlock()
-     */
-    public void unlock() throws TransactionException {
-        if (this.identityMap.getUnitOfWork() != null) {
-            try {
-                this.node.unlock();
-            } catch (TransactionException e) {
-                throw new RuntimeException("Locking source [" + getURI() + "] failed.");
-            }
-        }
-    }
-
-    protected boolean isLocked() throws TransactionException {
-        if (this.identityMap.getUnitOfWork() != null) {
-            try {
-                return this.node.isLocked();
-            } catch (TransactionException e) {
-                throw new RuntimeException("Locking source [" + getURI() + "] failed.");
-            }
-        }
-        return false;
-    }
-
-    /**
-     * Registerns the source as dirty.
-     * @throws TransactionException if an error occurs.
-     */
-    public void registerDirty() throws TransactionException {
-        this.identityMap.getUnitOfWork().registerDirty(this.node);
-    }
-
-    /**
      * @see org.apache.excalibur.source.Source#getContentLength()
      */
     public long getContentLength() {
         try {
             return this.node.getContentLength();
-        } catch (TransactionException e) {
+        } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
     }
@@ -309,7 +252,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
     public long getLastModified() {
         try {
             return this.node.getLastModified();
-        } catch (TransactionException e) {
+        } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
     }
@@ -320,7 +263,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
     public String getMimeType() {
         try {
             return this.node.getMimeType();
-        } catch (TransactionException e) {
+        } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
     }
@@ -371,7 +314,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
                 Node child = (Node) iterator.next();
                 newChildren.add(new RepositorySource(this.manager,
                         child.getSourceURI(),
-                        this.identityMap,
+                        this.session,
                         getLogger()));
             }
             return newChildren;
@@ -386,7 +329,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
     public boolean isCollection() {
         try {
             return this.node.isCollection();
-        } catch (TransactionException e) {
+        } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
     }

@@ -27,7 +27,6 @@ import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.metadata.MetaDataOwner;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.transaction.Transactionable;
 
 /**
  * A resource (asset).
@@ -119,7 +118,7 @@ public class Resource extends AbstractLogEnabled implements MetaDataOwner {
     /**
      * @return The repository nodes that represent this resource.
      */
-    public Transactionable[] getRepositoryNodes() {
+    public Node[] getRepositoryNodes() {
         Node[] nodes = new Node[1];
         SourceResolver resolver = null;
         RepositorySource documentSource = null;

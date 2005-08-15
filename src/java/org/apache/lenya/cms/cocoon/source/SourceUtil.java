@@ -37,7 +37,7 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.transaction.TransactionException;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.xml.DocumentHelper;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -272,24 +272,24 @@ public final class SourceUtil {
     }
 
     /**
-     * Checks out a transactionable source.
+     * Checks out a repository source.
      * @param sourceUri The source URI.
      * @param manager The service manager.
-     * @throws TransactionException If an error occurs.
+     * @throws RepositoryException If an error occurs.
      * @throws ServiceException If an error occurs.
      * @throws MalformedURLException If an error occurs.
      * @throws IOException If an error occurs.
      */
     public static void checkout(String sourceUri, ServiceManager manager)
-            throws TransactionException, ServiceException, MalformedURLException, IOException {
+            throws RepositoryException, ServiceException, MalformedURLException, IOException {
         SourceResolver resolver = null;
-        TransactionableSource source = null;
+        RepositorySource source = null;
         try {
 
             resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-            source = (TransactionableSource) resolver.resolveURI(sourceUri);
+            source = (RepositorySource) resolver.resolveURI(sourceUri);
 
-            source.checkout();
+            source.getNode().checkout();
 
         } finally {
             if (resolver != null) {
@@ -305,21 +305,21 @@ public final class SourceUtil {
      * Checks in a transactionable source.
      * @param sourceUri The source URI.
      * @param manager The service manager.
-     * @throws TransactionException If an error occurs.
+     * @throws RepositoryException If an error occurs.
      * @throws ServiceException If an error occurs.
      * @throws MalformedURLException If an error occurs.
      * @throws IOException If an error occurs.
      */
     public static void checkin(String sourceUri, ServiceManager manager)
-            throws TransactionException, ServiceException, MalformedURLException, IOException {
+            throws RepositoryException, ServiceException, MalformedURLException, IOException {
         SourceResolver resolver = null;
-        TransactionableSource source = null;
+        RepositorySource source = null;
         try {
 
             resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-            source = (TransactionableSource) resolver.resolveURI(sourceUri);
+            source = (RepositorySource) resolver.resolveURI(sourceUri);
 
-            source.checkin();
+            source.getNode().checkin();
 
         } finally {
             if (resolver != null) {
@@ -335,20 +335,22 @@ public final class SourceUtil {
      * Locks a transactionable source.
      * @param sourceUri The source URI.
      * @param manager The service manager.
-     * @throws TransactionException If an error occurs.
+     * @throws RepositoryException If an error occurs.
      */
-    public static void lock(String sourceUri, ServiceManager manager) throws TransactionException {
+    public static void lock(String sourceUri, ServiceManager manager) throws RepositoryException {
         SourceResolver resolver = null;
-        TransactionableSource source = null;
+        RepositorySource source = null;
         try {
 
             resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-            source = (TransactionableSource) resolver.resolveURI(sourceUri);
+            source = (RepositorySource) resolver.resolveURI(sourceUri);
 
-            source.lock();
+            source.getNode().lock();
 
+        } catch (RepositoryException e) {
+            throw e;
         } catch (Exception e) {
-            throw new TransactionException(e);
+            throw new RepositoryException(e);
         } finally {
             if (resolver != null) {
                 if (source != null) {
@@ -363,20 +365,22 @@ public final class SourceUtil {
      * Unlocks a transactionable source.
      * @param sourceUri The source URI.
      * @param manager The service manager.
-     * @throws TransactionException If an error occurs.
+     * @throws RepositoryException If an error occurs.
      */
-    public static void unlock(String sourceUri, ServiceManager manager) throws TransactionException {
+    public static void unlock(String sourceUri, ServiceManager manager) throws RepositoryException {
         SourceResolver resolver = null;
-        TransactionableSource source = null;
+        RepositorySource source = null;
         try {
 
             resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-            source = (TransactionableSource) resolver.resolveURI(sourceUri);
+            source = (RepositorySource) resolver.resolveURI(sourceUri);
 
-            source.unlock();
+            source.getNode().unlock();
 
+        } catch (RepositoryException e) {
+            throw e;
         } catch (Exception e) {
-            throw new TransactionException(e);
+            throw new RepositoryException(e);
         } finally {
             if (resolver != null) {
                 if (source != null) {
@@ -399,9 +403,8 @@ public final class SourceUtil {
 
             resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
             source = (RepositorySource) resolver.resolveURI(sourceUri);
-
-            source.registerDirty();
-
+            source.getNode().registerDirty();
+            
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {

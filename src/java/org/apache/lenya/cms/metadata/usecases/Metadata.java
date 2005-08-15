@@ -17,9 +17,9 @@
 package org.apache.lenya.cms.metadata.usecases;
 
 import org.apache.lenya.cms.metadata.MetaData;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Usecase to edit metadata for a resource.
@@ -36,10 +36,10 @@ public class Metadata extends SiteUsecase {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected Transactionable[] getObjectsToLock() throws UsecaseException {
-        Transactionable[] objects = { getSourceDocument().getRepositoryNode() };
+    protected Node[] getNodesToLock() throws UsecaseException {
+        Node[] objects = { getSourceDocument().getRepositoryNode() };
         return objects;
     }
 

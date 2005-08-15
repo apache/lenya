@@ -26,9 +26,9 @@ import org.apache.cocoon.servlet.multipart.Part;
 
 import org.apache.lenya.cms.publication.Resource;
 import org.apache.lenya.cms.publication.ResourcesManager;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Usecase to add Assets to a resource.
@@ -112,7 +112,7 @@ public class Assets extends SiteUsecase {
             // Lock the resource nodes
             List nodes = new ArrayList();
             nodes.addAll(Arrays.asList(theResource.getRepositoryNodes()));
-            lockInvolvedObjects((Transactionable[])nodes.toArray(new Transactionable[nodes.size()]));
+            lockInvolvedObjects((Node[])nodes.toArray(new Node[nodes.size()]));
 
             // Delete the resource
             resourcesManager.deleteResource(theResource);

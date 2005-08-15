@@ -38,7 +38,7 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.LenyaMetaData;
-import org.apache.lenya.transaction.Transactionable;
+import org.apache.lenya.cms.repository.Node;
 
 /**
  * Manager for resources of a CMS document.
@@ -120,7 +120,7 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
             fileName = fileName.replace(' ', '_');
 
             Resource resource = new Resource(document, fileName, this.manager, getLogger());
-            Transactionable[] nodes = resource.getRepositoryNodes();
+            Node[] nodes = resource.getRepositoryNodes();
             for (int i = 0; i < nodes.length; i++) {
                 nodes[i].lock();
             }

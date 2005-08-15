@@ -24,29 +24,35 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.apache.avalon.framework.activity.Initializable;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.context.Context;
+import org.apache.avalon.framework.context.ContextException;
+import org.apache.avalon.framework.context.Contextualizable;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.transaction.AbstractOperation;
+import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.LockException;
-import org.apache.lenya.transaction.TransactionException;
-import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Abstract usecase implementation.
  * 
  * @version $Id$
  */
-public class AbstractUsecase extends AbstractOperation implements Usecase, Configurable {
+public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Configurable,
+        Contextualizable, Serviceable, Initializable {
 
     /**
      * Ctor.
@@ -262,13 +268,11 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
         } finally {
             try {
                 if (getErrorMessages().isEmpty() && exception == null) {
-                    getUnitOfWork().commit();
+                    getSession().commit();
                 } else {
-                    getUnitOfWork().rollback();
+                    getSession().rollback();
                 }
-            } catch (ServiceException e1) {
-                getLogger().error("Service could not be obtained: ", e1);
-            } catch (TransactionException e1) {
+            } catch (RepositoryException e1) {
                 getLogger().error("Exception during commit or rollback: ", e1);
                 addErrorMessage("Exception during commit or rollback: " + e1.getMessage()
                         + " (see logfiles for details)");
@@ -467,12 +471,8 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
 
     protected DocumentIdentityMap getDocumentIdentityMap() {
         if (this.documentFactory == null) {
-            try {
-                IdentityMap map = getUnitOfWork().getIdentityMap();
-                this.documentFactory = new DocumentIdentityMap(map, this.manager, getLogger());
-            } catch (ServiceException e) {
-                throw new RuntimeException(e);
-            }
+            IdentityMap map = getSession().getUnitOfWork().getIdentityMap();
+            this.documentFactory = new DocumentIdentityMap(map, this.manager, getLogger());
         }
         return this.documentFactory;
     }
@@ -481,11 +481,10 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
      * @see org.apache.avalon.framework.activity.Initializable#initialize()
      */
     public final void initialize() throws Exception {
-        super.initialize();
         Request request = ContextHelper.getRequest(this.context);
         Session session = request.getSession(true);
         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
-        getUnitOfWork().setIdentity(identity);
+        setSession(new org.apache.lenya.cms.repository.Session(identity, getLogger()));
     }
 
     /**
@@ -620,15 +619,15 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
      * @return The objects that could be changed during the usecase.
      * @throws UsecaseException if an error occurs.
      */
-    protected Transactionable[] getObjectsToLock() throws UsecaseException {
-        return new Transactionable[0];
+    protected Node[] getNodesToLock() throws UsecaseException {
+        return new Node[0];
     }
 
     /**
      * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
      */
     public final void lockInvolvedObjects() throws UsecaseException {
-        lockInvolvedObjects(getObjectsToLock());
+        lockInvolvedObjects(getNodesToLock());
     }
 
     /**
@@ -640,9 +639,9 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
      * @param objects the transactionable objects to lock
      * @throws UsecaseException if an error occurs.
      * @see #lockInvolvedObjects()
-     * @see #getObjectsToLock()
+     * @see #getNodesToLock()
      */
-    public final void lockInvolvedObjects(Transactionable[] objects) throws UsecaseException {
+    public final void lockInvolvedObjects(Node[] objects) throws UsecaseException {
 
         if (getLogger().isDebugEnabled())
             getLogger().debug("AbstractUsecase::lockInvolvedObjects() called, are there objects to lock ? "
@@ -677,7 +676,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
                         + "involved objects are checked out.");
             }
 
-        } catch (TransactionException e) {
+        } catch (RepositoryException e) {
             throw new UsecaseException(e);
         }
     }
@@ -687,7 +686,7 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
      */
     public void cancel() throws UsecaseException {
         try {
-            getUnitOfWork().rollback();
+            getSession().rollback();
         } catch (Exception e) {
             throw new UsecaseException(e);
         }
@@ -727,4 +726,32 @@ public class AbstractUsecase extends AbstractOperation implements Usecase, Confi
         }
         return queryString;
     }
+
+    public org.apache.lenya.cms.repository.Session getSession() {
+        return this.session;
+    }
+
+    private org.apache.lenya.cms.repository.Session session;
+
+    protected Context context;
+
+    /**
+     * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
+     */
+    public void contextualize(Context context) throws ContextException {
+        this.context = context;
+    }
+
+    protected ServiceManager manager;
+
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
+    }
+
+    public void setSession(org.apache.lenya.cms.repository.Session session) {
+        this.session = session;
+        Request request = ContextHelper.getRequest(this.context);
+        request.setAttribute(org.apache.lenya.cms.repository.Session.class.getName(), this.session);
+    }
+
 }

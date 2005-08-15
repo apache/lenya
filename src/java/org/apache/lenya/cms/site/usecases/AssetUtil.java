@@ -32,6 +32,13 @@ import org.apache.lenya.cms.publication.ResourcesManager;
  */
 public final class AssetUtil {
 
+    /**
+     * @param document The document.
+     * @param manager The service manager.
+     * @param logger The logger.
+     * @return A list of asset nodes.
+     * @throws ServiceException if an error occurs.
+     */
     public static List getAssetNodes(Document document, ServiceManager manager, Logger logger)
             throws ServiceException {
         ResourcesManager resMgr = null;
@@ -50,6 +57,14 @@ public final class AssetUtil {
         return nodes;
     }
 
+    /**
+     * @param sourceDocument The source document.
+     * @param targetDocument The target document.
+     * @param manager The service manager.
+     * @param logger The logger.
+     * @return A list of nodes.
+     * @throws ServiceException if an error occurs.
+     */
     public static List getCopiedAssetNodes(Document sourceDocument, Document targetDocument,
             ServiceManager manager, Logger logger) throws ServiceException {
         ResourcesManager resMgr = null;

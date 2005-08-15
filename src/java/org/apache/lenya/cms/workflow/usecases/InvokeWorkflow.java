@@ -19,10 +19,10 @@ package org.apache.lenya.cms.workflow.usecases;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
-import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Invoke a workflow event on the current document. The event is obtained from the configuration in
@@ -74,10 +74,10 @@ public class InvokeWorkflow extends DocumentUsecase implements Configurable {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected Transactionable[] getObjectsToLock() throws UsecaseException {
-        Transactionable[] objects = { getSourceDocument().getRepositoryNode() };
+    protected Node[] getNodesToLock() throws UsecaseException {
+        Node[] objects = { getSourceDocument().getRepositoryNode() };
         return objects;
     }
 

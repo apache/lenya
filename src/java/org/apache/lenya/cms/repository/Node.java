@@ -21,15 +21,13 @@ import java.io.OutputStream;
 import java.util.Collection;
 
 import org.apache.lenya.cms.metadata.MetaDataOwner;
-import org.apache.lenya.transaction.TransactionException;
-import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Repository node.
  * 
  * @version $Id$
  */
-public interface Node extends Transactionable, MetaDataOwner {
+public interface Node extends MetaDataOwner {
     
     /**
      * @return The session this node belongs to.
@@ -48,51 +46,51 @@ public interface Node extends Transactionable, MetaDataOwner {
 
     /**
      * @return if the node exists.
-     * @throws TransactionException if an error occurs.
+     * @throws RepositoryException if an error occurs.
      */
-    boolean exists() throws TransactionException;
+    boolean exists() throws RepositoryException;
 
     /**
      * @return if the node is a collection.
-     * @throws TransactionException if an error occurs.
+     * @throws RepositoryException if an error occurs.
      */
-    boolean isCollection() throws TransactionException;
+    boolean isCollection() throws RepositoryException;
 
     /**
      * @return children
-     * @throws TransactionException if an error occurs.
+     * @throws RepositoryException if an error occurs.
      */
-    public Collection getChildren() throws TransactionException;
+    public Collection getChildren() throws RepositoryException;
 
     /**
      * @return The input stream.
-     * @throws TransactionException if the node does not exist.
+     * @throws RepositoryException if the node does not exist.
      */
-    InputStream getInputStream() throws TransactionException;
+    InputStream getInputStream() throws RepositoryException;
 
     /**
      * @return The output stream.
-     * @throws TransactionException if the node does not exist.
+     * @throws RepositoryException if the node does not exist.
      */
-    OutputStream getOutputStream() throws TransactionException;
+    OutputStream getOutputStream() throws RepositoryException;
     
     /**
      * @return The last modification date.
-     * @throws TransactionException if the node does not exist.
+     * @throws RepositoryException if the node does not exist.
      */
-    long getLastModified() throws TransactionException;
+    long getLastModified() throws RepositoryException;
     
     /**
      * @return The content length.
-     * @throws TransactionException if the node does not exist.
+     * @throws RepositoryException if the node does not exist.
      */
-    long getContentLength() throws TransactionException;
+    long getContentLength() throws RepositoryException;
     
     /**
      * @return The MIME type.
-     * @throws TransactionException if the node does not exist.
+     * @throws RepositoryException if the node does not exist.
      */
-    String getMimeType() throws TransactionException;
+    String getMimeType() throws RepositoryException;
 
     /**
      * Accessor for the source URI of this node
@@ -100,4 +98,58 @@ public interface Node extends Transactionable, MetaDataOwner {
      */
     String getSourceURI();
 
+    /**
+     * Locks the node.
+     * @throws RepositoryException if an error occurs.
+     */
+    void lock() throws RepositoryException;
+
+    /**
+     * Unlocks the node.
+     * @throws RepositoryException if an error occurs.
+     */
+    void unlock() throws RepositoryException;
+
+    /**
+     * Checks out the node.
+     * @throws RepositoryException if an error occurs. 
+     */
+    void checkout() throws RepositoryException;
+
+    /**
+     * Checks in the node.
+     * @throws RepositoryException if an error occurs. 
+     */
+    void checkin() throws RepositoryException;
+
+    /**
+     * Registers the node as dirty.
+     * @throws RepositoryException if an error occurs.
+     */
+    void registerDirty() throws RepositoryException;
+
+    /**
+     * @return if the node is checked out.
+     * @throws RepositoryException if an error occurs.
+     */
+    boolean isCheckedOut() throws RepositoryException;
+
+    /**
+     * @return if the node is checked out by the current user.
+     * @throws RepositoryException if an error occurs.
+     */
+    boolean isCheckedOutByUser() throws RepositoryException;
+
+    /**
+     * @return if the node is locked.
+     * @throws RepositoryException if an error occurs.
+     */
+    boolean isLocked() throws RepositoryException;
+
+    /**
+     * Registers the node as removed.
+     * @throws RepositoryException if an error occurs.
+     */
+    void registerRemoved() throws RepositoryException;
+    
 }

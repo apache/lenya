@@ -29,9 +29,6 @@ import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
-import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
@@ -264,10 +261,18 @@ public class SiteOverview extends AbstractUsecase {
         public Entry() {
         }
         
+        /**
+         * @param key The key.
+         * @param value The value.
+         */
         public void setValue(String key, String value) {
             this.values.put(key, value);
         }
         
+        /**
+         * @param key The key.
+         * @return The value.
+         */
         public String getValue(String key) {
             return (String) this.values.get(key);
         }

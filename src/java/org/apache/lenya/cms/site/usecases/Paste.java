@@ -31,7 +31,6 @@ import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Paste a document from the clipboard.
@@ -77,9 +76,9 @@ public class Paste extends DocumentUsecase {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected Transactionable[] getObjectsToLock() throws UsecaseException {
+    protected Node[] getNodesToLock() throws UsecaseException {
         List nodes = new ArrayList();
 
         try {
@@ -114,7 +113,7 @@ public class Paste extends DocumentUsecase {
             throw new UsecaseException(e);
         }
 
-        return (Transactionable[]) nodes.toArray(new Transactionable[nodes.size()]);
+        return (Node[]) nodes.toArray(new Node[nodes.size()]);
     }
 
     /**

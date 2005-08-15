@@ -58,7 +58,7 @@ public class AbstractOperation extends AbstractLogEnabled implements Operation, 
      */
     public UnitOfWork getUnitOfWork() throws ServiceException {
         if (this.unitOfWork == null) {
-            setUnitOfWork(new UnitOfWorkImpl());
+            setUnitOfWork(new UnitOfWorkImpl(getLogger()));
         }
 
         return this.unitOfWork;

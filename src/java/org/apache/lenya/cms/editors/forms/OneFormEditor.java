@@ -30,10 +30,10 @@ import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.ResourceType;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
-import org.apache.lenya.transaction.Transactionable;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.RelaxNG;
 import org.xml.sax.InputSource;
@@ -47,10 +47,10 @@ import org.xml.sax.SAXException;
 public class OneFormEditor extends DocumentUsecase {
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected Transactionable[] getObjectsToLock() throws UsecaseException {
-        Transactionable[] objects = { getSourceDocument().getRepositoryNode() };
+    protected Node[] getObjectsToLock() throws UsecaseException {
+        Node[] objects = { getSourceDocument().getRepositoryNode() };
         return objects;
     }
 

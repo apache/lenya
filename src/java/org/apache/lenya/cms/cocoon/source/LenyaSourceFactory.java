@@ -36,12 +36,13 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceFactory;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.transaction.UnitOfWork;
+import org.apache.lenya.cms.repository.Session;
 
 /**
  * A factory for the "lenya" scheme (virtual protocol), which is used to resolve any src="lenya:..."
@@ -97,8 +98,7 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
         SourceResolver sourceResolver = null;
 
         try {
-            sourceResolver = (SourceResolver) this.manager
-                    .lookup(org.apache.excalibur.source.SourceResolver.ROLE);
+            sourceResolver = (SourceResolver) this.manager.lookup(org.apache.excalibur.source.SourceResolver.ROLE);
 
             String path = location.substring(SCHEME.length());
 
@@ -121,8 +121,8 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
                         }
                     }
                 } catch (final PageEnvelopeException e1) {
-                    throw new SourceException(
-                            "Cannot attach publication-id and/or area to " + path, e1);
+                    throw new SourceException("Cannot attach publication-id and/or area to " + path,
+                            e1);
                 }
             }
 
@@ -130,24 +130,22 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
                 path = path.substring(1);
             }
 
-            DocumentIdentityMap map = null;
-
             Request request = ContextHelper.getRequest(this.context);
-            UnitOfWork unit = (UnitOfWork) request.getAttribute(UnitOfWork.class.getName());
-            if (unit != null) {
-                map = new DocumentIdentityMap(unit.getIdentityMap(), this.manager, getLogger());
-            } else {
-                map = new DocumentIdentityMap(this.manager, getLogger());
+            Session session = (Session) request.getAttribute(Session.class.getName());
+            if (session == null) {
+                Identity identity = (Identity) request.getSession(false)
+                        .getAttribute(Identity.class.getName());
+                session = new Session(identity, getLogger());
             }
 
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Creating repository source for URI [" + location + "]");
             }
 
-            //            path = this.delegationScheme + this.delegationPrefix + path;
-            return new RepositorySource(this.manager, location, map.getIdentityMap(), getLogger());
+            // path = this.delegationScheme + this.delegationPrefix + path;
+            return new RepositorySource(this.manager, location, session, getLogger());
 
-            //            return sourceResolver.resolveURI(path);
+            // return sourceResolver.resolveURI(path);
 
         } catch (final ServiceException e) {
             throw new SourceException(e.getMessage(), e);

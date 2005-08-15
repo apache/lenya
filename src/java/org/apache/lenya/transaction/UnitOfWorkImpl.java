@@ -20,7 +20,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
+import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.Identity;
 
 /**
@@ -32,8 +34,10 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
 
     /**
      * Ctor.
+     * @param logger The logger.
      */
-    public UnitOfWorkImpl() {
+    public UnitOfWorkImpl(Logger logger) {
+        ContainerUtil.enableLogging(this, logger);
     }
 
     private IdentityMap identityMap;
