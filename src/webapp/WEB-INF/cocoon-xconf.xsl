@@ -489,7 +489,7 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
     
     <component-instance name="publication.createPublicationFromTemplate" logger="lenya.publication"
                         class="org.apache.lenya.cms.publication.usecases.CreatePublicationFromTemplate">
-      <view template="publication/createPublicationFromTemplate"/>
+      <view template="usecases/publication/createPublicationFromTemplate.jx"/>
     </component-instance>
 
     <component-instance name="publication.edit" logger="lenya.publication"
