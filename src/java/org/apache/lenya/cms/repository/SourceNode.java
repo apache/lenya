@@ -35,6 +35,7 @@ import org.apache.excalibur.source.TraversableSource;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.metadata.MetaDataImpl;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.Publication;
@@ -321,6 +322,14 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             throw new RepositoryException(e);
         }
         this.lock = new Lock(currentVersion);
+
+        if (!getSourceURI().endsWith(".meta")) {
+            lockMetaData();
+        }
+    }
+
+    protected void lockMetaData() throws RepositoryException {
+        SourceUtil.lock(getMetaSourceURI(), this.manager);
     }
 
     /**
@@ -474,10 +483,12 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
      * @see org.apache.lenya.cms.repository.Node#getOutputStream()
      */
     public synchronized OutputStream getOutputStream() throws RepositoryException {
-        if (getLogger().isDebugEnabled()) getLogger().debug("Get OutputStream for " + getSourceURI());
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("Get OutputStream for " + getSourceURI());
         try {
             if (!isLocked()) {
-                throw new RuntimeException("Cannot write to source [" + getSourceURI() + "]: not locked!");
+                throw new RuntimeException("Cannot write to source [" + getSourceURI()
+                        + "]: not locked!");
             }
             if (getSession().getUnitOfWork() == null) {
                 throw new RuntimeException("Cannot write to source outside of a transaction (UnitOfWork is null)!");
@@ -607,7 +618,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         }
         return this.metaDataManager;
     }
-    
+
     private Session session;
 
     /**
