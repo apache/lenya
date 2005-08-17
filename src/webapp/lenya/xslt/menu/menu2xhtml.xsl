@@ -46,7 +46,7 @@
 
 <xsl:variable name="image-prefix"><xsl:value-of select="$contextprefix"/>/lenya/menu/images</xsl:variable>
  
-<xsl:template match="menu:menu">
+<xsl:template match="/menu:menu">
     
   <!-- Lenya graphic -->
   <div id="lenya-logo">
@@ -178,7 +178,12 @@
       </ul>
     </li>
   </xsl:template>
-
+  
+  <xsl:template match="menu:menu//menu:menu">
+    <li class="lenya-menu-title"><xsl:value-of select="@name"/></li>
+    <xsl:apply-templates select="*"/>
+  </xsl:template>
+  
   <xsl:template match="menu:menu[not(*)]" mode="nav">
     <li id="nav{position()}" class="disabled">
       <xsl:value-of select="@name"/>
@@ -188,7 +193,7 @@
   <!-- match blocks with not area='false' -->
   <xsl:template match="menu:block">
     <xsl:apply-templates select="menu:title"/>
-    <xsl:apply-templates select="menu:item[not(@info = 'false') and ($currentTab = 'site') or not(@*[local-name() = $currentTab] = 'false') and not($currentTab = 'site')]"/>
+    <xsl:apply-templates select="menu:menu | menu:item[not(@info = 'false') and ($currentTab = 'site') or not(@*[local-name() = $currentTab] = 'false') and not($currentTab = 'site')]"/>
 		
     <xsl:if test="position() != last()">
       <li class="lenya-menu-separator"></li>
