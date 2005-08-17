@@ -32,7 +32,6 @@ import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
-import org.apache.lenya.transaction.Transactionable;
 import org.apache.lenya.workflow.WorkflowException;
 
 /**
@@ -65,13 +64,13 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
                 allowSingle = false;
                 addInfoMessage("The single document cannot be deactivated because the workflow event cannot be invoked.");
             }
-            
+
             DocumentIdentityMap map = getSourceDocument().getIdentityMap();
             Document liveDoc = map.getAreaVersion(getSourceDocument(), Publication.LIVE_AREA);
             DocumentSet subSite = SiteUtil.getSubSite(this.manager, liveDoc);
             Node node = NodeFactory.getNode(liveDoc);
             subSite.removeAll(SiteUtil.getExistingDocuments(map, node));
-            
+
             if (!subSite.isEmpty()) {
                 allowSingle = false;
                 addInfoMessage("You have to deactivate the whole subtree because descendants are live.");
@@ -81,16 +80,16 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected Transactionable[] getObjectsToLock() throws UsecaseException {
+    protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
         try {
             List nodes = new ArrayList();
             DocumentSet set = new DocumentSet();
-            
+
             Document doc = getSourceDocument();
             set.addAll(SiteUtil.getSubSite(this.manager, doc));
-            
+
             Document liveDoc = doc.getIdentityMap().getAreaVersion(doc, Publication.LIVE_AREA);
             set.addAll(SiteUtil.getSubSite(this.manager, liveDoc));
 
@@ -100,7 +99,7 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
             }
 
             nodes.add(SiteUtil.getSiteStructure(this.manager, liveDoc).getRepositoryNode());
-            return (Transactionable[]) nodes.toArray(new Transactionable[nodes.size()]);
+            return (org.apache.lenya.cms.repository.Node[]) nodes.toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
 
         } catch (Exception e) {
             throw new UsecaseException(e);

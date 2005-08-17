@@ -35,11 +35,11 @@ import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.transaction.Transactionable;
 import org.apache.lenya.workflow.WorkflowManager;
 import org.apache.excalibur.source.Source;
 import org.xml.sax.InputSource;
@@ -77,7 +77,8 @@ public class Put extends DocumentUsecase {
 
                     documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
-                    DocumentIdentityMap map = (DocumentIdentityMap) getSession().getUnitOfWork().getIdentityMap();
+                    DocumentIdentityMap map = (DocumentIdentityMap) getSession().getUnitOfWork()
+                            .getIdentityMap();
                     Document document = map.get(getPublication(),
                             doc.getArea(),
                             doc.getId(),
@@ -162,9 +163,9 @@ public class Put extends DocumentUsecase {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected Transactionable[] getObjectsToLock() throws UsecaseException {
+    protected Node[] getNodesToLock() throws UsecaseException {
         try {
             List nodes = new ArrayList();
             Document doc = getSourceDocument();
@@ -178,7 +179,7 @@ public class Put extends DocumentUsecase {
             SiteStructure structure = SiteUtil.getSiteStructure(this.manager, getSourceDocument());
             nodes.add(structure.getRepositoryNode());
 
-            return (Transactionable[]) nodes.toArray(new Transactionable[nodes.size()]);
+            return (Node[]) nodes.toArray(new Node[nodes.size()]);
 
         } catch (Exception e) {
             throw new UsecaseException(e);

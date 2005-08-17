@@ -42,7 +42,6 @@ import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
-import org.apache.lenya.transaction.Transactionable;
 import org.apache.lenya.workflow.WorkflowException;
 
 /**
@@ -70,29 +69,35 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected Transactionable[] getObjectsToLock() throws UsecaseException {
+    protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
         try {
             List nodes = new ArrayList();
             DocumentSet set = new DocumentSet();
 
             Document doc = getSourceDocument();
             set.addAll(SiteUtil.getSubSite(this.manager, doc));
-            Map targets = SiteUtil.getTransferedSubSite(this.manager, doc, Publication.LIVE_AREA,
+            Map targets = SiteUtil.getTransferedSubSite(this.manager,
+                    doc,
+                    Publication.LIVE_AREA,
                     SiteUtil.MODE_REPLACE);
             Document[] docs = set.getDocuments();
             for (int i = 0; i < docs.length; i++) {
                 nodes.add(docs[i].getRepositoryNode());
                 Document target = (Document) targets.get(docs[i]);
                 nodes.add(target.getRepositoryNode());
-                nodes.addAll(AssetUtil.getCopiedAssetNodes(docs[i], target, this.manager,
+                nodes.addAll(AssetUtil.getCopiedAssetNodes(docs[i],
+                        target,
+                        this.manager,
                         getLogger()));
             }
 
-            nodes.add(SiteUtil.getSiteStructure(this.manager, getDocumentIdentityMap(),
-                    doc.getPublication(), Publication.LIVE_AREA).getRepositoryNode());
-            return (Transactionable[]) nodes.toArray(new Transactionable[nodes.size()]);
+            nodes.add(SiteUtil.getSiteStructure(this.manager,
+                    getDocumentIdentityMap(),
+                    doc.getPublication(),
+                    Publication.LIVE_AREA).getRepositoryNode());
+            return (org.apache.lenya.cms.repository.Node[]) nodes.toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
 
         } catch (Exception e) {
             throw new UsecaseException(e);
@@ -145,12 +150,13 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
                     DocumentSet liveDocs = SiteUtil.getExistingDocuments(map, requiredNodes[i]);
                     if (liveDocs.isEmpty()) {
                         Document authoringDoc = map.get(requiredNodes[i].getPublication(),
-                                Publication.AUTHORING_AREA, requiredNodes[i].getDocumentId());
+                                Publication.AUTHORING_AREA,
+                                requiredNodes[i].getDocumentId());
                         if (authoringDoc.exists()) {
                             missingDocuments.add(authoringDoc);
                         } else {
-                            missingDocuments.add(map.getLanguageVersion(authoringDoc, authoringDoc
-                                    .getPublication().getDefaultLanguage()));
+                            missingDocuments.add(map.getLanguageVersion(authoringDoc,
+                                    authoringDoc.getPublication().getDefaultLanguage()));
                         }
                     }
 

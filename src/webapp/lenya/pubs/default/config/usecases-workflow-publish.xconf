@@ -25,7 +25,7 @@
     <component-instance name="default/workflow.publish"
                         logger="lenya.usecases.workflow"
                         class="org.apache.lenya.defaultpub.cms.usecases.Publish">
-      <view template="workflow/publish"/>
+      <view template="usecases/workflow/publish.jx"/>
     </component-instance>
 
   </xconf>

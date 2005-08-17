@@ -25,7 +25,7 @@
     <component-instance name="default/workflow.deactivate"
                         logger="lenya.usecases.workflow"
                         class="org.apache.lenya.defaultpub.cms.usecases.Deactivate">
-      <view template="workflow/deactivate"/>
+      <view template="usecases/workflow/deactivate.jx"/>
     </component-instance>
 
   </xconf>
