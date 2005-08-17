@@ -21,6 +21,7 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.jcr.metadata.JCRMetaDataManager;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.repository.SourceNode;
 
@@ -58,6 +59,13 @@ public class JCRSourceNode extends SourceNode {
             this.metaDataManager = new JCRMetaDataManager(getRealSourceURI(), this.manager, getLogger());
         }
         return this.metaDataManager;
+    }
+
+    /**
+     * No separate meta data node, so no locking is required.
+     * @see org.apache.lenya.cms.repository.SourceNode#lockMetaData()
+     */
+    protected void lockMetaData() throws RepositoryException {
     }
 
 }
