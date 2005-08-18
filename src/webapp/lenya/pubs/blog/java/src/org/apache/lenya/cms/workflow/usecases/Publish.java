@@ -23,11 +23,11 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentSet;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
-import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Publish usecase handler.
@@ -39,9 +39,9 @@ public class Publish extends DocumentUsecase {
     protected static final String MISSING_DOCUMENTS = "missingDocuments";
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getObjectsToLock()
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
-    protected Transactionable[] getObjectsToLock() throws UsecaseException {
+    protected Node[] getNodesToLock() throws UsecaseException {
         try {
             List nodes = new ArrayList();
             DocumentSet set = new DocumentSet();
@@ -62,7 +62,7 @@ public class Publish extends DocumentUsecase {
             }
 
             nodes.add(SiteUtil.getSiteStructure(this.manager, liveDoc).getRepositoryNode());
-            return (Transactionable[]) nodes.toArray(new Transactionable[nodes.size()]);
+            return (Node[]) nodes.toArray(new Node[nodes.size()]);
 
         } catch (Exception e) {
             throw new UsecaseException(e);
