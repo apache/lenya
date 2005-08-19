@@ -268,8 +268,11 @@
     <!-- Internal usecases -->
     <map:pipeline internal-only="true">
       <map:match type="usecase" pattern="*">
+        <map:match pattern="core/publets/*/*/**">
+          <map:mount uri-prefix="core/publets/{1}/{2}" src="lenya/publets/{1}/usecases/{2}/usecase.xmap"/>
+        </map:match>
         <map:match pattern="core/*/**">
-          <map:mount uri-prefix="core/{1}" src="lenya/usecases/{1}/usecase.xmap"></map:mount>
+          <map:mount uri-prefix="core/{1}" src="lenya/usecases/{1}/usecase.xmap"/>
         </map:match>
         <map:match pattern="*/**">
           <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
