@@ -66,14 +66,16 @@
                   </jx:if> 
                 <td>
                   <select class="lenya-form-element" name="visibleInNav">
-                      <jx:if test="${visible=='yes'}">
-                        <option value="true">yes</option>
-                        <option value="false">no</option>
-                      </jx:if>
-                      <jx:if test="${visible=='no'}">
-                        <option value="false">no</option>
-                        <option value="true">yes</option>
-                      </jx:if>
+                    <jx:choose>
+                      <jx:when test="${visible.equals('yes')}">
+                        <option value="true" selected="selected"><i18n:text>yes</i18n:text></option>
+                        <option value="false"><i18n:text>no</i18n:text></option>
+                      </jx:when>
+                      <jx:otherwise>
+                        <option value="true"><i18n:text>yes</i18n:text></option>
+                        <option value="false" selected="selected"><i18n:text>no</i18n:text></option>
+                      </jx:otherwise>
+                    </jx:choose>
                   </select>
                 </td>
               </tr>
