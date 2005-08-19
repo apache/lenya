@@ -57,6 +57,8 @@ public abstract class Create extends AbstractUsecase {
     protected static final String LANGUAGES = "languages";
 
     protected static final String DOCUMENT_ID = "documentId";
+    
+    protected static final String VISIBLEINNAV = "visibleInNav";
 
     /**
      * Ctor.
@@ -121,12 +123,12 @@ public abstract class Create extends AbstractUsecase {
             Document initialDocument = getInitialDocument();
             if (initialDocument == null) {
                 selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
-                resourceType = (ResourceType) selector.select(getDocumentTypeName());
+                resourceType = (ResourceType) selector.select(getDocumentTypeName()); 
                 documentManager.add(document, resourceType,
-                        getParameterAsString(DublinCore.ELEMENT_TITLE), null);
+                        getParameterAsString(DublinCore.ELEMENT_TITLE), getVisibleInNav(), null);
             } else {
                 documentManager.add(document, initialDocument,
-                        getParameterAsString(DublinCore.ELEMENT_TITLE), null);
+                        getParameterAsString(DublinCore.ELEMENT_TITLE), getVisibleInNav(), null);
             }
 
             setMetaData(document);
@@ -152,7 +154,7 @@ public abstract class Create extends AbstractUsecase {
      * @return the name of the document being created in the usecase
      */
     protected abstract String getNewDocumentName();
-
+    
     /**
      * @return the id of the new document being created in the usecase
      */
@@ -269,4 +271,15 @@ public abstract class Create extends AbstractUsecase {
         }
         return this.publication;
     }
+
+    /**
+     * @return the visibleInNav Attribute of the document being created in the usecase
+     */
+    protected boolean getVisibleInNav() {
+        if (getParameterAsString(VISIBLEINNAV).equals("false")) {
+            return false;
+        }
+        return true;
+    }
+
 }

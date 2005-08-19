@@ -200,6 +200,13 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
     }
 
     /**
+     * @see org.apache.lenya.cms.site.SiteManager#setVisibleInNav(org.apache.lenya.cms.publication.Document,
+     *      java.lang.String)
+     */
+    public void setVisibleInNav(Document document, boolean visibleInNav) throws SiteException {
+    }
+
+    /**
      * @see org.apache.lenya.cms.site.SiteManager#getDocuments(org.apache.lenya.cms.publication.DocumentIdentityMap,
      *      org.apache.lenya.cms.publication.Publication, java.lang.String)
      */

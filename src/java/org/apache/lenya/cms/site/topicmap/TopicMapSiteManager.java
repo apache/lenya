@@ -115,6 +115,14 @@ public class TopicMapSiteManager extends AbstractSiteManager {
         // TODO Auto-generated method stub
 
     }
+    
+    /**
+     * @see org.apache.lenya.cms.site.SiteManager#setVisibleInNav(org.apache.lenya.cms.publication.Document,
+     *      java.lang.String)
+     */
+    public void setVisibleInNav(Document document, boolean visibleInNav) throws SiteException {
+    }
+
 
     /**
      * @see org.apache.lenya.cms.site.SiteManager#getDocuments(org.apache.lenya.cms.publication.DocumentIdentityMap,

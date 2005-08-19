@@ -143,6 +143,16 @@ public interface SiteManager {
     void setLabel(Document document, String label) throws SiteException;
 
     /**
+     * Sets the visibility of a node in the navigation. 
+     * It is meant to hide specific nodes within the "public" navigation whereas the node is visible within the info/site area.
+     * 
+     * @param document The document.
+     * @param label The label.
+     * @throws SiteException if an error occurs.
+     */
+    void setVisibleInNav(Document document, boolean visibleInNav) throws SiteException;
+
+    /**
      * Returns all documents in a certain area.
      * 
      * @param identityMap The identityMap to use.

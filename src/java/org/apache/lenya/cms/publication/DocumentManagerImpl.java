@@ -57,10 +57,11 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * @see org.apache.lenya.cms.publication.DocumentBuilder
      */
     public void add(Document document, ResourceType documentType, String navigationTitle,
+            boolean visibleInNav, 
             Map parameters) throws DocumentBuildException, PublicationException {
 
         String contentsURI = documentType.getSampleURI();
-        add(document, documentType, navigationTitle, parameters, contentsURI);
+        add(document, documentType, navigationTitle, visibleInNav, parameters, contentsURI);
     }
 
     /**
@@ -68,9 +69,10 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      *      org.apache.lenya.cms.publication.Document, java.lang.String, java.util.Map)
      */
     public void add(Document document, Document sourceDocument, String navigationTitle,
+            boolean visibleInNav,
             Map parameters) throws DocumentBuildException, PublicationException {
         String contentsURI = sourceDocument.getSourceURI();
-        add(document, sourceDocument.getResourceType(), navigationTitle, parameters, contentsURI);
+        add(document, sourceDocument.getResourceType(), navigationTitle, visibleInNav, parameters, contentsURI);
         MetaDataManager mgr = document.getMetaDataManager();
         MetaDataManager srcMgr = sourceDocument.getMetaDataManager();
         mgr.getLenyaMetaData().replaceBy(srcMgr.getLenyaMetaData());
@@ -83,15 +85,18 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * @param document The document.
      * @param documentType The document type.
      * @param navigationTitle The navigation title.
+     * @param visibleInNav determines the visibility of a node in the navigation
      * @param parameters The parameters for the creator.
      * @param initialContentsURI A URI to read the contents from.
      * @throws DocumentBuildException if an error occurs.
      * @throws DocumentException if an error occurs.
      * @throws PublicationException if an error occurs.
      */
+
     protected void add(Document document, ResourceType documentType, String navigationTitle,
-            Map parameters, String initialContentsURI) throws DocumentBuildException,
+            boolean visibleInNav, Map parameters, String initialContentsURI) throws DocumentBuildException,
             DocumentException, PublicationException {
+
         try {
 
             if (getLogger().isDebugEnabled()) {
@@ -121,10 +126,10 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         document.getMetaDataManager().setLenyaMetaData(lenyaMetaData);
 
         // Notify site manager about new document
-        addToSiteManager(document, navigationTitle);
+        addToSiteManager(document, navigationTitle, visibleInNav);
     }
 
-    private void addToSiteManager(Document document, String navigationTitle)
+    private void addToSiteManager(Document document, String navigationTitle, boolean visibleInNav)
             throws PublicationException {
         Publication publication = document.getPublication();
         SiteManager siteManager = null;
@@ -139,6 +144,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
             siteManager.add(document);
             siteManager.setLabel(document, navigationTitle);
+            siteManager.setVisibleInNav(document, visibleInNav);
         } catch (final ServiceException e) {
             throw new PublicationException(e);
         } finally {
