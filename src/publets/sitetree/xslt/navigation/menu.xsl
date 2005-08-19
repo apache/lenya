@@ -31,6 +31,7 @@
   </div>
 </xsl:template>
 
+<xsl:template match="nav:node[@visibleinnav = 'false']"/>
 
 <xsl:template match="nav:node">
   <xsl:choose>

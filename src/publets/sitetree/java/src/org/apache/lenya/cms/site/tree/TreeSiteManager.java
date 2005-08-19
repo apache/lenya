@@ -221,12 +221,14 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
             if (siblingDocId == null) {
                 destinationTree.addNode(destinationDocument.getId(),
                         labels,
+                        sourceNode.visibleInNav(),
                         sourceNode.getHref(),
                         sourceNode.getSuffix(),
                         sourceNode.hasLink());
             } else {
                 destinationTree.addNode(destinationDocument.getId(),
                         labels,
+                        sourceNode.visibleInNav(),
                         sourceNode.getHref(),
                         sourceNode.getSuffix(),
                         sourceNode.hasLink(),
@@ -296,6 +298,16 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
     }
 
     /**
+     * @see org.apache.lenya.cms.site.SiteManager#setVisibleInNav(org.apache.lenya.cms.publication.Document,
+     *      java.lang.String)
+     */
+    public void setVisibleInNav(Document document, boolean visibleInNav) throws SiteException {
+
+        SiteTree tree = getTree(document);
+        tree.setVisibleInNav(document.getId(), visibleInNav);
+    }
+
+    /**
      * Returns the label object of a document.
      * 
      * @param document The document.
@@ -358,7 +370,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         SiteTreeNode node = tree.getNode(document.getId());
         if (node == null) {
             Label[] labels = { label };
-            tree.addNode(document.getId(), labels, null, null, false);
+            tree.addNode(document.getId(), labels, true, null, null, false);
         } else {
             tree.addLabel(document.getId(), label);
         }

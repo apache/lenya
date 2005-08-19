@@ -90,6 +90,15 @@ public interface SiteTreeNode {
     void removeLabel(Label label);
 
     /**
+     * Check whether this node is visible in the navigation 
+     * 
+     * @return true if this node is visible. The method should also
+     * return true if the attribute is not set. That means a node missing 
+     * this attribute becomes visible by default.
+     */
+    boolean visibleInNav();
+
+    /**
      * Get the href of this node.
      * 
      * @return the href.
@@ -186,6 +195,14 @@ public interface SiteTreeNode {
      * @param label the label to add
      */
     void setLabel(Label label);
+
+    /**
+     * Sets an attribute of this node. If the attribute already exists its value will be overwritten
+     *
+     * @param attributeName name of the attribute
+     * @param attributeValue the value of the respective attribute
+     */
+    void setNodeAttribute (String attributeName, String attributeValue);
 
     /**
      * Give a list of the children and this node in a pre order way

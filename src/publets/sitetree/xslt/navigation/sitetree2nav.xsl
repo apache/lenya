@@ -98,6 +98,7 @@ Apply nodes recursively
   <nav:node>
   
     <xsl:copy-of select="@id"/>
+    <xsl:copy-of select="@visibleinnav"/>
     <xsl:copy-of select="@protected"/>
     <xsl:copy-of select="@folder"/>
   

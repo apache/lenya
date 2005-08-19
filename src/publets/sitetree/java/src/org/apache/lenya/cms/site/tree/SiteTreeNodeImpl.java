@@ -44,6 +44,10 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
      */
     public static final String ID_ATTRIBUTE_NAME = "id";
     /**
+     * <code>ISIBLEINNAV_ATTRIBUTE_NAME</code>The visibleinnav attribute
+     */
+    public static final String VISIBLEINNAV_ATTRIBUTE_NAME="visibleinnav";
+    /**
      * <code>HREF_ATTRIBUTE_NAME</code> The href attribute
      */
     public static final String HREF_ATTRIBUTE_NAME = "href";
@@ -216,7 +220,19 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
             }
         }
     }
-
+    
+    /**
+     * @see org.apache.lenya.cms.site.tree.SiteTreeNode#visibleInNav()
+     */
+    public boolean visibleInNav() {
+        Node attribute = this.node.getAttributes().getNamedItem(VISIBLEINNAV_ATTRIBUTE_NAME);
+        
+        if (attribute != null){
+            return attribute.getNodeValue().equals("true");
+        }
+        return true;
+    }
+    
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTreeNode#getHref()
      */
@@ -396,6 +412,14 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         addLabel(label);
     }
 
+    /**
+     * @see org.apache.lenya.cms.site.tree.SiteTreeNode#setNodeAttribute(String, String)
+     */    
+    public void setNodeAttribute (String attributeName, String attributeValue) {
+        Element element = (Element) this.node;
+        element.setAttribute(attributeName, attributeValue);
+    }
+    
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTreeNode#getChildren(java.lang.String)
      */
