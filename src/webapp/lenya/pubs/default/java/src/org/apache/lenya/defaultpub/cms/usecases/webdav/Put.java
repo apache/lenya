@@ -85,7 +85,7 @@ public class Put extends DocumentUsecase {
                             doc.getLanguage());
 
                     resourceType = (ResourceType) selector.select("xhtml");
-                    documentManager.add(document, resourceType, doc.getName(), null);
+                    documentManager.add(document, resourceType, doc.getName(), true, null);
 
                     setMetaData(document);
                     doc = document;

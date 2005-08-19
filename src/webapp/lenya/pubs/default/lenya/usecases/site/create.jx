@@ -59,6 +59,16 @@
               </tr>
               <tr>
                 <td class="lenya-entry-caption">
+                  <label for="language"><i18n:text>Document visible in Navigation</i18n:text>*: </label></td>
+                <td>
+                  <select class="lenya-form-element" name="visibleInNav">
+                      <option selected="selected" value="true">yes</option>
+                      <option value="false">no</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td class="lenya-entry-caption">
                   <label for="relation"><i18n:text>Relation</i18n:text>*: </label>
                 </td>
                 <td>

@@ -114,6 +114,7 @@ public class CreateBlogEntry extends DocumentUsecase {
             documentManager.add(document,
                     resourceType,
                     getParameterAsString(DublinCore.ELEMENT_TITLE),
+                    true,
                     allParameters);
         } finally {
             if (documentManager != null) {
