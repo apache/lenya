@@ -59,11 +59,21 @@
               </tr>
               <tr>
                 <td class="lenya-entry-caption">
-                  <label for="language"><i18n:text>Document visible in Navigation</i18n:text>*: </label></td>
+                  <label for="visibleinnav"><i18n:text>Document visible in Navigation</i18n:text>*: </label></td>
+                  <jx:set var="visible" value="yes"/>
+                  <jx:if test="${usecase.getParameter('visibleInNav').equals('false')}">
+                     <jx:set var="visible" value="no"/>
+                  </jx:if> 
                 <td>
                   <select class="lenya-form-element" name="visibleInNav">
-                      <option selected="selected" value="true">yes</option>
-                      <option value="false">no</option>
+                      <jx:if test="${visible=='yes'}">
+                        <option value="true">yes</option>
+                        <option value="false">no</option>
+                      </jx:if>
+                      <jx:if test="${visible=='no'}">
+                        <option value="false">no</option>
+                        <option value="true">yes</option>
+                      </jx:if>
                   </select>
                 </td>
               </tr>
