@@ -1,0 +1,142 @@
+<!--
+  Copyright 1999-2005 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- $Id: serverStatus.jx 164233 2005-04-22 13:01:45Z jwkaltz $ -->
+
+<page:page
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+  xmlns:cinclude="http://apache.org/cocoon/include/1.0"
+  >
+  <page:title><i18n:text>JCR Import/Export</i18n:text></page:title>
+  
+  <page:body>
+    <!--
+    <jx:import uri="admin/tabs.jx"/>
+    <div id="contentblock1" class="lenya-tab">
+    -->
+    <jx:import uri="templates/messages.jx"/>
+    
+    <p><i18n:text>Import and export repository content in XML data format.</i18n:text></p>
+    <p><b><i18n:text>Note:</i18n:text></b> <i18n:text>Works with JCR repository only!</i18n:text></p>
+    
+    <table>
+      <tr>
+        <td>
+          <div class="lenya-box-body">
+            <table class="lenya-table">
+              <tr>
+                <th  class="lenya-caption" colspan="2"><i18n:text>Publication</i18n:text></th>
+              </tr>
+              <tr>
+                <td>
+                  <form method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+                    <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
+                    <input type="hidden" name="lenya.usecase.importExport.import" value="publication"/>
+                    <input type="hidden" name="submit" value=""/>
+                    
+                    <div class="lenya-box-body">
+                      <table class="lenya-table">
+                        <tr>
+                          <th class="lenya-caption"><i18n:text>Import</i18n:text></th>
+                        </tr>
+                        <tr>
+                          <td>
+                            <input type="file" name="jcrcontent" maxlength="0" accept="text/xml"/>
+                            <input i18n:attr="value" type="submit" value="Import"/>
+                            <br/><br/>
+                            <b><i18n:text>Note:</i18n:text></b><i18n:text>Existing publication will be overwritten!</i18n:text> 
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </form>
+                </td>
+                <td>
+                  <div class="lenya-box-body">
+                    <table class="lenya-table">
+                      <tr>
+                        <th class="lenya-entry-caption"><i18n:text>Export</i18n:text></th>
+                      </tr>
+                      <tr>
+                        <td nowrap=""><a href="${request.requestURI}?lenya.usecase=jcr.export&amp;scope=publication" target="_blank">Download Publication Content</a></td>
+                      </tr>
+                    </table>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <div class="lenya-box-body">
+            <table class="lenya-table">
+              <tr>
+                <th  class="lenya-caption" colspan="2"><i18n:text>Repository</i18n:text></th>
+              </tr>
+              <tr>
+                <td>
+                  <form method="POST" enctype="multipart/form-data">
+                    <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+                    <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
+                    <input type="hidden" name="lenya.usecase.importExport.import" value="repository"/>
+                    <input type="hidden" name="submit" value=""/>
+                    
+                    <div class="lenya-box-body">
+                      <table class="lenya-table">
+                        <tr>
+                          <th class="lenya-caption"><i18n:text>Import</i18n:text></th>
+                        </tr>
+                        <tr>
+                          <td>
+                            <input type="file" name="jcrcontent" maxlength="0" accept="text/xml"/>
+                            <input i18n:attr="value" type="submit" value="Import"/>
+                            <br/><br/>
+                            <b><i18n:text>Note:</i18n:text></b><i18n:text>All existing Lenya data will be overwritten!</i18n:text> 
+                          </td>
+                        </tr>
+                      </table>
+                    </div>
+                  </form>
+                </td>
+                <td>
+                  <div class="lenya-box-body">
+                    <table class="lenya-table">
+                      <tr>
+                        <th class="lenya-entry-caption"><i18n:text>Export</i18n:text></th>
+                      </tr>
+                      <tr>
+                        <td nowrap=""><a href="${request.requestURI}?lenya.usecase=jcr.export&amp;scope=repository" target="_blank">Download Repository Content</a></td>
+                      </tr>
+                    </table>
+                  </div>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </td>
+      </tr>
+    </table>
+    
+    <!--
+    </div>
+    -->
+  </page:body>
+</page:page>
