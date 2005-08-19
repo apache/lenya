@@ -107,13 +107,20 @@ function executeUsecase() {
         while (!ready) {
 
             try {
-                var viewUri = "view/" + menu + "/" + view.getTemplateURI();
-                if (cocoon.log.isDebugEnabled())
-                    cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", creating view, calling Cocoon with viewUri = [" + viewUri + "]");
-        
-                cocoon.sendPageAndWait(viewUri, {
-                    "usecase" : proxy
-                });
+                var templateUri = view.getTemplateURI();
+                if (templateUri) {
+                    var viewUri = "view/" + menu + "/" + view.getTemplateURI();
+                    if (cocoon.log.isDebugEnabled())
+                        cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", creating view, calling Cocoon with viewUri = [" + viewUri + "]");
+                    cocoon.sendPageAndWait(viewUri, {
+                        "usecase" : proxy
+                    });
+                }
+                else {
+                    var viewUri = view.getViewURI();
+                    cocoon.sendPage(viewUri);
+                    return;
+                }
             }
             catch (exception) {
                 /* if an exception was thrown by the view, allow the usecase to rollback the transition */

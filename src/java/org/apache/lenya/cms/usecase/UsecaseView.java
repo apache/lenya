@@ -35,6 +35,7 @@ public class UsecaseView implements Configurable {
     protected static final String ELEMENT_PARAMETER = "parameter";
     protected static final String ATTRIBUTE_NAME = "name";
     protected static final String ATTRIBUTE_VALUE = "value";
+    protected static final String ATTRIBUTE_URI = "uri";
     
     private Map parameters = new HashMap();
 
@@ -42,7 +43,13 @@ public class UsecaseView implements Configurable {
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
     public void configure(Configuration config) throws ConfigurationException {
-        this.templateUri = config.getAttribute(ATTRIBUTE_TEMPLATE_URI);
+        this.templateUri = config.getAttribute(ATTRIBUTE_TEMPLATE_URI, null);
+        this.viewUri = config.getAttribute(ATTRIBUTE_URI, null);
+        
+        if (this.viewUri == null && this.templateUri == null) {
+            throw new ConfigurationException("Either uri or template attribute must be declared!");
+        }
+        
         this.showMenu = config.getAttributeAsBoolean(ATTRIBUTE_SHOW_MENU, false);
         
         Configuration[] parameterConfigs = config.getChildren(ELEMENT_PARAMETER);
@@ -59,10 +66,16 @@ public class UsecaseView implements Configurable {
      * @return The URI of the JX template;
      */
     public String getTemplateURI() {
-        if (this.templateUri == null) {
-            throw new RuntimeException("The template URI was not configured!");
-        }
         return this.templateUri;
+    }
+    
+    private String viewUri;
+    
+    /**
+     * @return The URI of the JX template;
+     */
+    public String getViewURI() {
+        return this.viewUri;
     }
     
     private boolean showMenu;
