@@ -157,6 +157,10 @@
   <role name="org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler"
   	    shorthand="usecase-scheduler"
   	    default-class="org.apache.lenya.cms.usecase.scheduling.UsecaseSchedulerImpl"/>
+  	    
+  <role name="org.apache.lenya.cms.usecase.gui.GUIManager"
+        shorthand="gui-manager"
+        default-class="org.apache.lenya.cms.usecase.gui.GUIManagerImpl"/>
         
   <role name="org.apache.lenya.cms.publication.ResourceTypeSelector"
   	    shorthand="resource-types"

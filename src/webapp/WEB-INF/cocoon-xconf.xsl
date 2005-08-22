@@ -255,145 +255,145 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
 
     <component-instance name="admin.users" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.Users">
       <view template="usecases/admin/users.jx" menu="true">
-        <parameter name="tab" value="users"/>
+        <tab group="admin" name="users"/>
       </view>
       <exit usecase="admin.users"/>
     </component-instance>
     <component-instance name="admin.user" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.User">
       <view template="usecases/admin/user.jx" menu="true">
-        <parameter name="tab" value="users"/>
+        <tab group="admin" name="users"/>
       </view>
       <exit usecase="admin.users"/>
     </component-instance>
     <component-instance name="admin.addUser" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.AddUser">
       <view template="usecases/admin/addUser.jx" menu="true">
-        <parameter name="tab" value="users"/>
+        <tab group="admin" name="users"/>
       </view>
       <exit usecase="admin.user"/>
     </component-instance>
     <component-instance name="admin.userProfile" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.UserProfile">
       <view template="usecases/admin/userProfile.jx" menu="true">
-        <parameter name="tab" value="users"/>
+        <tab group="admin" name="users"/>
       </view>
       <exit usecase="admin.user"/>
     </component-instance>
     <component-instance name="admin.changePassword" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.UserPassword">
       <view template="usecases/admin/changePassword.jx" menu="true">
-        <parameter name="tab" value="users"/>
+        <tab group="admin" name="users"/>
       </view>
       <exit usecase="admin.user"/>
     </component-instance>
     <component-instance name="admin.userGroups" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.UserGroups">
       <view template="usecases/admin/userGroups.jx" menu="true">
-        <parameter name="tab" value="users"/>
+        <tab group="admin" name="users"/>
       </view>
       <exit usecase="admin.user"/>
     </component-instance>
     <component-instance name="admin.deleteUser" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.DeleteUser">
       <view template="usecases/admin/deleteUser.jx" menu="true">
-        <parameter name="tab" value="users"/>
+        <tab group="admin" name="users"/>
       </view>
       <exit usecase="admin.users"/>
     </component-instance>
     <component-instance name="admin.groups" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.Groups">
       <view template="usecases/admin/groups.jx" menu="true">
-        <parameter name="tab" value="groups"/>
+        <tab group="admin" name="groups"/>
       </view>
       <exit usecase="admin.groups"/>
     </component-instance>
     <component-instance name="admin.addGroup" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.AddGroup">
       <view template="usecases/admin/addGroup.jx" menu="true">
-        <parameter name="tab" value="groups"/>
+        <tab group="admin" name="groups"/>
       </view>
       <exit usecase="admin.group"/>
     </component-instance>
     <component-instance name="admin.group" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.Group">
       <view template="usecases/admin/group.jx" menu="true">
-        <parameter name="tab" value="groups"/>
+        <tab group="admin" name="groups"/>
       </view>
       <exit usecase="admin.groups"/>
     </component-instance>
     <component-instance name="admin.groupProfile" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.GroupProfile">
       <view template="usecases/admin/groupProfile.jx" menu="true">
-        <parameter name="tab" value="groups"/>
+        <tab group="admin" name="groups"/>
       </view>
       <exit usecase="admin.group"/>
     </component-instance>
     <component-instance name="admin.groupMembers" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.GroupMembers">
       <view template="usecases/admin/groupMembers.jx" menu="true">
-        <parameter name="tab" value="groups"/>
+        <tab group="admin" name="groups"/>
       </view>
       <exit usecase="admin.group"/>
     </component-instance>
     <component-instance name="admin.deleteGroup" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.DeleteGroup">
       <view template="usecases/admin/deleteGroup.jx" menu="true">
-        <parameter name="tab" value="groups"/>
+        <tab group="admin" name="groups"/>
       </view>
       <exit usecase="admin.groups"/>
     </component-instance>
     <component-instance name="admin.ipRanges" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.IPRanges">
       <view template="usecases/admin/ipRanges.jx" menu="true">
-        <parameter name="tab" value="ipRanges"/>
+        <tab group="admin" name="ipRanges"/>
       </view>
       <exit usecase="admin.ipRanges"/>
     </component-instance>
     <component-instance name="admin.addIPRange" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.AddIPRange">
       <view template="usecases/admin/addIPRange.jx" menu="true">
-        <parameter name="tab" value="ipRanges"/>
+        <tab group="admin" name="ipRanges"/>
       </view>
       <exit usecase="admin.ipRanges"/>
     </component-instance>
     <component-instance name="admin.ipRange" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.IPRange">
       <view template="usecases/admin/ipRange.jx" menu="true">
-        <parameter name="tab" value="ipRanges"/>
+        <tab group="admin" name="ipRanges"/>
       </view>
       <exit usecase="admin.ipRanges"/>
     </component-instance>
     <component-instance name="admin.ipRangeProfile" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.IPRangeProfile">
       <view template="usecases/admin/ipRangeProfile.jx" menu="true">
-        <parameter name="tab" value="ipRanges"/>
+        <tab group="admin" name="ipRanges"/>
       </view>
       <exit usecase="admin.ipRange"/>
     </component-instance>
     <component-instance name="admin.ipRangeGroups" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.IPRangeGroups">
       <view template="usecases/admin/ipRangeGroups.jx" menu="true">
-        <parameter name="tab" value="ipRanges"/>
+        <tab group="admin" name="ipRanges"/>
       </view>
       <exit usecase="admin.ipRange"/>
     </component-instance>
     <component-instance name="admin.deleteIPRange" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.DeleteIPRange">
       <view template="usecases/admin/deleteIPRange.jx" menu="true">
-        <parameter name="tab" value="ipRanges"/>
+        <tab group="admin" name="ipRanges"/>
       </view>
       <exit usecase="admin.ipRanges"/>
     </component-instance>
     <component-instance name="admin.emptyTrash" logger="lenya.admin" class="org.apache.lenya.cms.site.usecases.EmptyTrash">
       <view template="usecases/admin/emptyTrash.jx" menu="true">
-        <parameter name="tab" value="trash"/>
+        <tab group="admin" name="trash"/>
       </view>
       <exit usecase="admin.emptyTrash"/>
     </component-instance>
     <component-instance name="admin.serverStatus" logger="lenya.admin" class="org.apache.lenya.cms.usecase.DummyUsecase">
       <view template="usecases/admin/serverStatus.jx" menu="true">
-        <parameter name="tab" value="serverStatus"/>
+        <tab group="admin" name="serverStatus"/>
       </view>
       <exit usecase="admin.serverStatus"/>
     </component-instance>
     <component-instance name="admin.search" logger="lenya.admin" class="org.apache.lenya.cms.usecase.DummyUsecase">
       <view template="usecases/admin/search.jx" menu="true">
-        <parameter name="tab" value="search"/>
+        <tab group="admin" name="search"/>
       </view>
       <exit usecase="admin.search"/>
     </component-instance>
     <component-instance name="admin.sessions" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.SessionViewer">
       <view template="usecases/admin/sessions.jx" menu="true">
-        <parameter name="tab" value="sessions"/>
+        <tab group="admin" name="sessions"/>
       </view>
       <exit usecase="admin.sessions"/>
     </component-instance>
     <component-instance name="admin.siteOverview" logger="lenya.admin" class="org.apache.lenya.cms.site.usecases.SiteOverview">
       <view template="usecases/admin/siteOverview.jx" menu="true">
-        <parameter name="tab" value="siteOverview"/>
+        <tab group="admin" name="siteOverview"/>
       </view>
       <exit usecase="admin.siteOverview"/>
     </component-instance>
@@ -445,45 +445,65 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
     </component-instance>
     
     <component-instance name="tab.acArchive" logger="lenya.site" class="org.apache.lenya.cms.ac.usecases.AccessControl">
-      <view template="usecases/tab/acArchive.jx" menu="true"/>
+      <view template="usecases/tab/acArchive.jx" menu="true">
+        <tab group="site" name="acArchive"/>
+      </view>
       <exit usecase="tab.acArchive"/>
     </component-instance>
     <component-instance name="tab.acAuthoring" logger="lenya.site" class="org.apache.lenya.cms.ac.usecases.AccessControl">
-      <view template="usecases/tab/acAuthoring.jx" menu="true"/>
+      <view template="usecases/tab/acAuthoring.jx" menu="true">
+        <tab group="site" name="acAuthoring"/>
+      </view>
       <parameter name="acArea" value="authoring"/>
       <exit usecase="tab.acAuthoring"/>
     </component-instance>
     <component-instance name="tab.acLive" logger="lenya.site" class="org.apache.lenya.cms.ac.usecases.AccessControl">
-      <view template="usecases/tab/acLive.jx" menu="true"/>
+      <view template="usecases/tab/acLive.jx" menu="true">
+        <tab group="site" name="acLive"/>
+      </view>
       <parameter name="acArea" value="live"/>
       <exit usecase="tab.acLive"/>
     </component-instance>
     <component-instance name="tab.acTrash" logger="lenya.site" class="org.apache.lenya.cms.ac.usecases.AccessControl">
-      <view template="usecases/tab/acTrash.jx" menu="true"/>
+      <view template="usecases/tab/acTrash.jx" menu="true">
+        <tab group="site" name="acTrash"/>
+      </view>
       <exit usecase="tab.acTrash"/>
     </component-instance>
     <component-instance name="tab.assets" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Assets">
-      <view template="usecases/tab/assets.jx" menu="true"/>
+      <view template="usecases/tab/assets.jx" menu="true">
+        <tab group="site" name="assets"/>
+      </view>
       <exit usecase="tab.assets"/>
     </component-instance>
     <component-instance name="tab.meta" logger="lenya.site" class="org.apache.lenya.cms.metadata.usecases.Metadata">
-      <view template="usecases/tab/meta.jx" menu="true"/>
+      <view template="usecases/tab/meta.jx" menu="true">
+        <tab group="site" name="meta"/>
+      </view>
       <exit usecase="tab.meta"/>
     </component-instance>
     <component-instance name="tab.overview" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Overview">
-      <view template="usecases/tab/overview.jx" menu="true"/>
+      <view template="usecases/tab/overview.jx" menu="true">
+        <tab group="site" name="overview"/>
+      </view>
       <exit usecase="tab.overview"/>
     </component-instance>
     <component-instance name="tab.revisions" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Revisions">
-      <view template="usecases/tab/revisions.jx" menu="true"/>
+      <view template="usecases/tab/revisions.jx" menu="true">
+        <tab group="site" name="revisions"/>
+      </view>
       <exit usecase="tab.revisions"/>
     </component-instance>
     <component-instance name="tab.workflow" logger="lenya.site" class="org.apache.lenya.cms.workflow.usecases.History">
-      <view template="usecases/tab/workflow.jx" menu="true"/>
+      <view template="usecases/tab/workflow.jx" menu="true">
+        <tab group="site" name="workflow"/>
+      </view>
       <exit usecase="tab.workflow"/>
     </component-instance>
     <component-instance name="tab.scheduler" logger="lenya.site" class="org.apache.lenya.cms.usecase.scheduling.ManageJobs">
-      <view template="usecases/tab/scheduler.jx" menu="true"/>
+      <view template="usecases/tab/scheduler.jx" menu="true">
+        <tab group="site" name="scheduler"/>
+      </view>
       <exit usecase="tab.scheduler"/>
     </component-instance>
     
@@ -552,6 +572,37 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
   </document-builders>
   
   <template-instantiators/>
+  
+  <gui-manager>
+    <tab-group name="admin">
+      <tab name="users" label="Users" usecase="admin.users"/>
+      <tab name="groups" label="Groups" usecase="admin.groups"/>
+      <tab name="ipRanges" label="IP Ranges" usecase="admin.ipRanges"/>
+      <tab name="trash" label="Delete Trash" usecase="admin.emptyTrash"/>
+      <tab name="search" label="Search" usecase="admin.search"/>
+      <tab name="serverStatus" label="Server Status" usecase="admin.serverStatus"/>
+      <tab name="sessions" label="Sessions" usecase="admin.sessions"/>
+      <tab name="siteOverview" label="Overview" usecase="admin.siteOverview"/>
+    </tab-group>
+    <tab-group name="site">
+      <tab name="overview" label="Overview" usecase="tab.overview"/>
+      <tab name="meta" label="Meta" usecase="tab.meta"/>
+      <tab name="assets" label="Assets" usecase="tab.assets"/>
+      <tab name="workflow" label="Workflow" usecase="tab.workflow"/>
+      <tab name="revisions" label="Revisions" usecase="tab.revisions"/>
+      <tab name="acAuthoring" label="AC Auth" usecase="tab.acAuthoring">
+        <parameter name="acArea" value="authoring"/>
+      </tab>
+      <tab name="acTrash" label="AC Trash" usecase="tab.acTrash">
+        <parameter name="acArea" value="trash"/>
+      </tab>
+      <tab name="acArchive" label="AC Archive" usecase="tab.acArchive">
+        <parameter name="acArea" value="archive"/>
+      </tab>
+      <tab name="acLive" label="AC Live" usecase="tab.acLive"/>
+      <tab name="scheduler" label="Scheduler" usecase="tab.scheduler"/>
+    </tab-group>
+  </gui-manager>
   
   <!-- move scheduler to the end, datasources have to be available -->
   <xsl:apply-templates select="component[@role = 'org.apache.cocoon.components.cron.JobScheduler']" mode="scheduler"/>

@@ -23,7 +23,7 @@
   >
   
   <page:body>
-    <jx:import uri="admin/tabs.jx"/>
+    <jx:import uri="templates/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab">
     
       <table class="lenya-table-noborder">

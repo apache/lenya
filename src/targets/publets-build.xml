@@ -50,7 +50,9 @@
       <isfalse value="${cocoon.xconf.isEqual}"/>
     </condition>
     <antcall target="copy-cocoon.xconf"/>
+<!--
     <delete file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"/>
+-->
   </target>
 
   <target name="deploy-publets"

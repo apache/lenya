@@ -24,6 +24,7 @@ import java.util.List;
 import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.usecase.UsecaseException;
 
@@ -50,6 +51,8 @@ import org.apache.lenya.ac.impl.InheritingPolicyManager;
  */
 
 public class AccessControl extends AccessControlUsecase {
+
+    protected static final String AC_AREA = "acArea";
 
     private Item[] items = null;
 
@@ -139,6 +142,18 @@ public class AccessControl extends AccessControlUsecase {
             getLogger().error("Could not read value for AccessControl usecase. ", e);
         }
 
+    }
+
+    /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
+     */
+    protected void doCheckPreconditions() throws Exception {
+        super.doCheckPreconditions();
+        URLInformation info = new URLInformation(getSourceURL());
+        String acArea = getParameterAsString(AC_AREA);
+        if (!acArea.equals(Publication.LIVE_AREA) && !info.getArea().equals(acArea)) {
+            addErrorMessage("This usecase can only be invoked in the configured area.");
+        }
     }
 
     /**
@@ -409,7 +424,7 @@ public class AccessControl extends AccessControlUsecase {
         String infoUrl = getSourceURL();
         URLInformation info = new URLInformation(infoUrl);
 
-        String area = getParameterAsString("acArea");
+        String area = getParameterAsString(AC_AREA);
         String url = "/" + info.getPublicationId() + "/" + area + info.getDocumentUrl();
         return url;
     }

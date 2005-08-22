@@ -70,8 +70,8 @@ function editDocument() {
         }
         else {
             usecase.execute();
-            if (usecase.getErrorMessages().isEmpty()) {
-                // TODO: handle error messages
+            if (!usecase.getErrorMessages().isEmpty()) {
+                throw new Exception("Saving failed!");
             }
         }
 

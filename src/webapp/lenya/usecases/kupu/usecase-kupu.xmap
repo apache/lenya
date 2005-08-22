@@ -249,6 +249,7 @@
                 <map:parameter name="sourceUri" value="cocoon:/request2document"/>
                 <map:parameter name="useBuffer" value="true"/>
                 <map:parameter name="noCheckin" value="true"/>
+                <map:parameter name="lenya.usecase" value="edit.bxe"/>
               </map:call>
             </map:when>
           </map:select>

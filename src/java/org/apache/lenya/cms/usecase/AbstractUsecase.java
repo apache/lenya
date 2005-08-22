@@ -585,6 +585,11 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
         Configuration viewConfig = config.getChild(ELEMENT_VIEW, false);
         if (viewConfig != null) {
             this.view = new UsecaseView();
+            try {
+                view.service(this.manager);
+            } catch (ServiceException e) {
+                throw new ConfigurationException("Couldn't service view: ", e);
+            }
             view.configure(viewConfig);
         }
 

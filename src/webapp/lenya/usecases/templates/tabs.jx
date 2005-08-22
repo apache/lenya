@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: tabs.jx 227396 2005-08-04 13:13:35Z andreas $ -->
+
+<jx:template
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+  xmlns="http://www.w3.org/1999/xhtml"
+  name="">
+  
+	<div class="lenya-tabs">
+    <table border="0" cellpadding="0" cellspacing="0">
+
+      <tr>
+        <jx:set var="usecaseTab" value="${usecase.getView().getTab()}"/>
+        <jx:forEach var="tab" items="${usecase.getView().getTabsInGroup()}">
+          <td>
+            <jx:choose>
+              <jx:when test="${usecaseTab.getName().equals(tab.getName())}">
+                <a href="?lenya.usecase=${tab.getUsecase()}" class="lenya-tablink-active"><i18n:text><jx:out value="${tab.getLabel()}"/></i18n:text></a>
+              </jx:when>
+              <jx:otherwise>
+                <a href="?lenya.usecase=${tab.getUsecase()}" class="lenya-tablink"><i18n:text><jx:out value="${tab.getLabel()}"/></i18n:text></a>
+              </jx:otherwise>
+            </jx:choose>
+          </td>
+        </jx:forEach>
+      </tr>
+    
+    </table>
+  </div>
+</jx:template>
