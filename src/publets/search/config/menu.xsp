@@ -32,7 +32,7 @@
 
     <menus>
       <menu i18n:attr="name" name="File">
-        <block>
+        <block admin="false">
           <item uc:usecase="site.create" href="?doctype=search"><i18n:text>New Search Page</i18n:text></item>
         </block>
       </menu>

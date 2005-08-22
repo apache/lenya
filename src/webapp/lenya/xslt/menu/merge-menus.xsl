@@ -32,6 +32,9 @@
 </xsl:template>
 
 
+<!--
+Apply the first <menus>.
+-->
 <xsl:template match="menu:menus[not(preceding-sibling::menu:menus)]">
   <xsl:copy>
     <xsl:apply-templates select="menu:menu"/>
@@ -39,6 +42,11 @@
 </xsl:template>
 
 
+<!--
+Apply the <menu> children of the first <menus>.
+Insert items of publet menus (which have preceding siblings)
+before the items of this menu.
+-->
 <xsl:template match="/menu:menu/menu:menus[1]/menu:menu">
   <xsl:copy>
     <xsl:apply-templates select="@*"/>

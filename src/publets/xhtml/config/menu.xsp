@@ -37,7 +37,7 @@
 
     <menus>
       <menu i18n:attr="name" name="File">
-        <block>
+        <block admin="false">
           <item uc:usecase="site.create" href="?doctype=xhtml"><i18n:text>New XHTML Document</i18n:text></item>
         </block>
       </menu>

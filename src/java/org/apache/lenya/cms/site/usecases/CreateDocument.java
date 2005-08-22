@@ -46,14 +46,13 @@ public class CreateDocument extends Create {
         super.initParameters();
 
         Document parent = getSourceDocument();
-        if (parent != null) {
-            setParameter(PARENT_ID, parent.getId());
-        } else {
+        if (parent == null) {
             setParameter(PARENT_ID, "");
+        } else {
+            setParameter(PARENT_ID, parent.getId());
+            String[] languages = parent.getPublication().getLanguages();
+            setParameter(LANGUAGES, languages);
         }
-
-        String[] languages = parent.getPublication().getLanguages();
-        setParameter(LANGUAGES, languages);
 
         String[] relations = { RELATION_CHILD, RELATION_AFTER };
         setParameter(RELATIONS, relations);

@@ -214,12 +214,6 @@
       
       <!-- menus -->
       
-      <!-- menu-xml/{publication-id}/admin/... -->
-      <map:match pattern="menu-xml/*/admin/**" internal-only="true">
-        <map:generate type="serverpages" src="lenya/content/menus/admin.xsp"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      
       <!-- menu-xml/publets -->
       <!-- menu-xml/publets/{pub-id}/{area}.xml -->
       <map:match pattern="menu-xml/publets/*/*.xml">
@@ -241,6 +235,12 @@
             <map:serialize type="xml"/>
           </map:otherwise>
         </map:select>
+      </map:match>
+      
+      <!-- menu-xml/{publication-id}/admin/... -->
+      <map:match pattern="menu-xml/*/admin/**" internal-only="true">
+        <map:generate type="serverpages" src="lenya/content/menus/admin.xsp"/>
+        <map:serialize type="xml"/>
       </map:match>
       
       <!-- menu-xml/{publication-id}/... -->
