@@ -275,6 +275,9 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         if (node.getLabels().length == 0) {
             tree.removeNode(document.getId());
         }
+        else {
+            tree.save();
+        }
     }
 
     /**

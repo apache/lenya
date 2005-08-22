@@ -493,7 +493,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             if (getSession().getUnitOfWork() == null) {
                 throw new RuntimeException("Cannot write to source outside of a transaction (UnitOfWork is null)!");
             }
-            getSession().getUnitOfWork().registerDirty(this);
+            registerDirty();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

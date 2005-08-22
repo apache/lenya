@@ -222,5 +222,11 @@ public interface SiteTree extends SiteStructure {
      */
     void importSubtree(SiteTreeNode subtreeRoot, SiteTreeNode newParent, String newid,
             String refDocumentId) throws SiteException;
+    
+    /**
+     * Saves the tree. Call this method after a node has been changed.
+     * @throws SiteException if an error occurs.
+     */
+    void save() throws SiteException;
 
 }
