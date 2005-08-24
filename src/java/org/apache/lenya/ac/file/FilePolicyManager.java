@@ -372,15 +372,27 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
         Policy policy = buildURLPolicy(controller, url);
         policies.add(policy);
 
-        String[] directories = url.split("/");
-        url = "";
+        //The live area should be restrictive and will use the policy belonging to self-or-ancestor
+        if (url.startsWith("/live")) {
+            while (url.indexOf("/") >= 0) {
+                policy = buildSubtreePolicy(controller, url+"/");
+                policies.add(policy);
+                if(!policy.isEmpty()) {
+                    url="";
+                } else {
+                    url=url.replaceFirst("/[\\w\\-\\.\\_\\~]*$","");
+                }
+            }
+        } else { 
+            String[] directories = url.split("/");
+            url = "";
 
-        for (int i = 0; i < directories.length; i++) {
-            url += directories[i] + "/";
-            policy = buildSubtreePolicy(controller, url);
-            policies.add(policy);
+            for (int i = 0; i < directories.length; i++) {
+                url += directories[i] + "/";
+                policy = buildSubtreePolicy(controller, url);
+                policies.add(policy);
+            }
         }
-
         return (DefaultPolicy[]) policies.toArray(new DefaultPolicy[policies.size()]);
     }
 
