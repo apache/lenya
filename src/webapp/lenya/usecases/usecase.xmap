@@ -49,10 +49,12 @@
         
         <map:generate type="jx" src="fallback://lenya/{2}"/>
         <map:transform type="cinclude"/>
+        <map:transform type="forms" />
         <map:transform type="i18n">
           <map:parameter name="locale" value="{request:locale}"/>
         </map:transform>
         <map:transform src="cocoon://lenya-screen.xsl"/>
+        <map:transform src="fallback://lenya/xslt/cforms/forms-samples-styling.xsl"/>
         <map:match pattern="view/menu/**">
           <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{page-envelope:area}/default.xml"/>
         </map:match>

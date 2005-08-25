@@ -40,6 +40,13 @@ public class UsecaseView implements Configurable, Serviceable {
     protected static final String ELEMENT_PARAMETER = "parameter";
     protected static final String ATTRIBUTE_NAME = "name";
     protected static final String ATTRIBUTE_VALUE = "value";
+    
+    protected static final String ATTRIBUTE_TYPE = "type";
+    protected static final String VIEW_CFORM = "cforms";
+    
+    protected static final String ELEMENT_CFORM_DEFINITION = "definition";
+    protected static final String ELEMENT_CFORM_BINDING = "binding";
+    
     protected static final String ATTRIBUTE_URI = "uri";
     protected static final String ATTRIBUTE_GROUP = "group";
     protected static final String ELEMENT_TAB = "tab";
@@ -75,6 +82,19 @@ public class UsecaseView implements Configurable, Serviceable {
         }
 
         this.showMenu = config.getAttributeAsBoolean(ATTRIBUTE_SHOW_MENU, false);
+        
+        this.viewType = config.getAttribute(ATTRIBUTE_TYPE, null);
+        
+        if (this.viewType!=null && this.viewType.equals(VIEW_CFORM)){
+            Configuration cformDefinitionConfig = config.getChild(ELEMENT_CFORM_DEFINITION, false);
+            if (cformDefinitionConfig!=null){
+                this.cformDefinition = cformDefinitionConfig.getAttribute(ATTRIBUTE_TEMPLATE_URI, null);
+            }
+            Configuration cformBindingConfig = config.getChild(ELEMENT_CFORM_BINDING, false);
+            if (cformBindingConfig!=null){
+                this.cformBinding = cformBindingConfig.getAttribute(ATTRIBUTE_TEMPLATE_URI, null);
+            }
+        }
 
         Configuration[] parameterConfigs = config.getChildren(ELEMENT_PARAMETER);
         for (int i = 0; i < parameterConfigs.length; i++) {
@@ -156,6 +176,56 @@ public class UsecaseView implements Configurable, Serviceable {
      */
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
+    }
+
+    private String cformDefinition =null;
+
+	/**
+	 * @return Returns the cformDefinition.
+	 */
+	public String getCformDefinition() {
+		return cformDefinition;
+	}
+
+	/**
+	 * @param cformDefinition The cformDefinition to set.
+	 */
+	public void setCformDefinition(String cformDefinition) {
+		this.cformDefinition = cformDefinition;
+	}
+	
+    
+	private String cformBinding =null;
+    
+
+    /**
+	 * @return Returns the cformBinding.
+	 */
+	public String getCformBinding() {
+		return cformBinding;
+	}
+
+	/**
+	 * @param cformBinding The cformBinding to set.
+	 */
+	public void setCformBinding(String cformBinding) {
+		this.cformBinding = cformBinding;
+	}
+	
+    private String viewType;
+    
+    /**
+     * @return Returns the viewType.
+     */
+    public String getViewType() {
+        return viewType;
+    }
+
+    /**
+     * @param viewType The viewType to set.
+     */
+    public void setViewType(String viewType) {
+        this.viewType = viewType;
     }
 
 }

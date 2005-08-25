@@ -16,6 +16,7 @@
  */
 /* $Id$ */
  
+ cocoon.load("resource://org/apache/cocoon/forms/flow/javascript/Form.js");
 
 /* Helper method to add all request parameters to a usecase */
 function passRequestParameters(flowHelper, usecase) {
@@ -92,6 +93,7 @@ function executeUsecase() {
     
     var success = false;
     var targetUrl;
+    var form;
 
 
     /*
@@ -112,9 +114,26 @@ function executeUsecase() {
                     var viewUri = "view/" + menu + "/" + view.getTemplateURI();
                     if (cocoon.log.isDebugEnabled())
                         cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", creating view, calling Cocoon with viewUri = [" + viewUri + "]");
-                    cocoon.sendPageAndWait(viewUri, {
-                        "usecase" : proxy
-                    });
+                    if (view.getViewType()=="cforms"){
+                      var viewDef = "fallback://lenya/"+ view.getCformDefinition();
+                      if (cocoon.log.isDebugEnabled())
+                       cocoon.log.debug("usecases.js::executeUsecase()::cforms in usecase " + usecaseName + ", preparing formDefinition, calling Cocoon with viewUri = [" + viewDef + "]");
+
+                       // Form definition                       
+                       form = new Form(viewDef);
+
+                       form.showForm(viewUri, {"usecase" : proxy});
+                       if (view.getCformBinding() != null){
+                          var viewBind = "fallback://lenya/"+ view.getCformBinding();
+                          if (cocoon.log.isDebugEnabled())
+                             cocoon.log.debug("usecases.js::executeUsecase()::cforms in usecase " + usecaseName + ", preparing formDefinition, calling Cocoon with viewUri = [" + viewBind + "]");
+                       }
+                    }
+                    else{
+                        cocoon.sendPageAndWait(viewUri, {
+                            "usecase" : proxy
+                        });
+                    }
                 }
                 else {
                     var viewUri = view.getViewURI();
