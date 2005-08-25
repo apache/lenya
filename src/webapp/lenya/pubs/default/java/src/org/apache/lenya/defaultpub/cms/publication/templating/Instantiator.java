@@ -52,10 +52,9 @@ public class Instantiator extends AbstractLogEnabled implements
         org.apache.lenya.cms.publication.templating.Instantiator, Serviceable {
 
     protected static final String[] sourcesToCopy = { "publication.xml",
-        "config/publication.xconf", "config/ac/passwd/",
-        "config/ac/ac.xconf","config/ac/policies/", 
-        "config/ac/usecase-policies.xml",
-        "config/workflow/workflow.xml", "content/" };
+            "config/publication.xconf", "config/ac/passwd/", "config/ac/ac.xconf",
+            "config/ac/policies/", "config/ac/usecase-policies.xml",
+            "config/workflow/workflow.xml", "content/" };
 
     /**
      * @see org.apache.lenya.cms.publication.templating.Instantiator#instantiate(org.apache.lenya.cms.publication.Publication,
@@ -87,8 +86,9 @@ public class Instantiator extends AbstractLogEnabled implements
             metaSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
                     + newPublicationId + "/publication.xml");
             Document metaDoc = DocumentHelper.readDocument(metaSource.getInputStream());
-            NamespaceHelper helper = new NamespaceHelper(
-                    "http://apache.org/cocoon/lenya/publication/1.0", "lenya", metaDoc);
+            NamespaceHelper helper = new NamespaceHelper("http://apache.org/cocoon/lenya/publication/1.0",
+                    "lenya",
+                    metaDoc);
             Element nameElement = helper.getFirstChild(metaDoc.getDocumentElement(), "name");
             DocumentHelper.setSimpleElementText(nameElement, name);
 
@@ -96,13 +96,15 @@ public class Instantiator extends AbstractLogEnabled implements
 
             configSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
                     + newPublicationId + "/config/publication.xconf");
-            DefaultConfiguration config = (DefaultConfiguration) new DefaultConfigurationBuilder()
-                    .build(configSource.getInputStream());
-            DefaultConfiguration templatesConfig = new DefaultConfiguration("templates");
+            DefaultConfiguration config = (DefaultConfiguration) new DefaultConfigurationBuilder().build(configSource.getInputStream());
+            DefaultConfiguration templatesConfig = (DefaultConfiguration) config.getChild("templates", false);
+            if (templatesConfig == null) {
+                templatesConfig = new DefaultConfiguration("templates");
+                config.addChild(templatesConfig);
+            }
             DefaultConfiguration templateConfig = new DefaultConfiguration("template");
             templateConfig.setAttribute("id", template.getId());
             templatesConfig.addChild(templateConfig);
-            config.addChild(templatesConfig);
             OutputStream oStream = configSource.getOutputStream();
             new DefaultConfigurationSerializer().serialize(oStream, config);
             if (oStream != null) {
@@ -133,11 +135,8 @@ public class Instantiator extends AbstractLogEnabled implements
         }
     }
 
-    protected void copySource(Publication template,
-            String publicationId,
-            SourceResolver resolver,
-            String publicationsUri,
-            String source) throws MalformedURLException, IOException {
+    protected void copySource(Publication template, String publicationId, SourceResolver resolver,
+            String publicationsUri, String source) throws MalformedURLException, IOException {
         Source templateSource = null;
         ModifiableSource targetSource = null;
         try {
@@ -157,11 +156,9 @@ public class Instantiator extends AbstractLogEnabled implements
         }
     }
 
-    protected void copyDirSource(Publication template,
-            String publicationId,
-            SourceResolver resolver,
-            String publicationsUri,
-            String source) throws MalformedURLException, IOException {
+    protected void copyDirSource(Publication template, String publicationId,
+            SourceResolver resolver, String publicationsUri, String source)
+            throws MalformedURLException, IOException {
         FileSource directory = new FileSource(publicationsUri + "/" + template.getId() + "/"
                 + source);
         Collection files = directory.getChildren();
