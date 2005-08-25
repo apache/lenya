@@ -18,6 +18,7 @@
 package org.apache.lenya.cms.publication.templating;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
@@ -171,7 +172,8 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
 
         Publication[] templates = publication.getTemplates();
         for (int i = 0; i < templates.length; i++) {
-            publications.add(templates[i]);
+            Publication[] templateTemplates = getPublications(templates[i]);
+            publications.addAll(Arrays.asList(templateTemplates));
         }
 
         return (Publication[]) publications.toArray(new Publication[publications.size()]);
