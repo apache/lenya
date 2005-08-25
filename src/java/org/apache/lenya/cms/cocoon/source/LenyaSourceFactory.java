@@ -37,10 +37,6 @@ import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceFactory;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeException;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Session;
 
@@ -100,36 +96,6 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
         try {
             sourceResolver = (SourceResolver) this.manager.lookup(org.apache.excalibur.source.SourceResolver.ROLE);
 
-            String path = location.substring(SCHEME.length());
-
-            if (!path.startsWith("//")) {
-
-                Map objectModel = ContextHelper.getObjectModel(this.context);
-                try {
-                    DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
-                    PageEnvelopeFactory pageEnvelopeFactory = PageEnvelopeFactory.getInstance();
-
-                    if (pageEnvelopeFactory != null) {
-                        PageEnvelope pageEnvelope = pageEnvelopeFactory.getPageEnvelope(map,
-                                objectModel);
-
-                        if (pageEnvelope != null) {
-                            String publicationID = pageEnvelope.getPublication().getId();
-                            String area = pageEnvelope.getDocument().getArea();
-                            path = "/" + publicationID + "/" + Publication.CONTENT_PATH + "/"
-                                    + area + path;
-                        }
-                    }
-                } catch (final PageEnvelopeException e1) {
-                    throw new SourceException("Cannot attach publication-id and/or area to " + path,
-                            e1);
-                }
-            }
-
-            while (path.startsWith("/")) {
-                path = path.substring(1);
-            }
-
             Request request = ContextHelper.getRequest(this.context);
             Session session = (Session) request.getAttribute(Session.class.getName());
             if (session == null) {
@@ -142,10 +108,7 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
                 getLogger().debug("Creating repository source for URI [" + location + "]");
             }
 
-            // path = this.delegationScheme + this.delegationPrefix + path;
             return new RepositorySource(this.manager, location, session, getLogger());
-
-            // return sourceResolver.resolveURI(path);
 
         } catch (final ServiceException e) {
             throw new SourceException(e.getMessage(), e);
