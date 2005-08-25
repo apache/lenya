@@ -33,7 +33,6 @@ import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.transaction.TransactionException;
-import org.apache.lenya.transaction.Transactionable;
 
 /**
  * Change the node ID of a document.
@@ -80,7 +79,7 @@ public class ChangeNodeID extends DocumentUsecase {
             throw new UsecaseException(e);
         }
 
-        return (Node[]) nodes.toArray(new Transactionable[nodes.size()]);
+        return (Node[]) nodes.toArray(new Node[nodes.size()]);
     }
 
     protected List getAllLanguageVersionNodes(Document doc) throws DocumentException,
