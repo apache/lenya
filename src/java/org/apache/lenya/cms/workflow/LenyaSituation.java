@@ -19,12 +19,19 @@
 
 package org.apache.lenya.cms.workflow;
 
+import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.lenya.ac.Identity;
 import org.apache.lenya.workflow.Situation;
+
+import sun.security.action.GetLongAction;
 
 /**
  * The CMS situation
  */
-public class LenyaSituation implements Situation {
+public class LenyaSituation extends AbstractLogEnabled implements Situation {
 
     /**
      * Returns the machine IP address.
@@ -42,43 +49,35 @@ public class LenyaSituation implements Situation {
         return this.userId;
     }
 
-	/**
-	 * Creates a new instance of Situation
-	 * @param _roleIds The role IDs.
-     * @param _userId The user ID.
-     * @param _machineIp The machine IP address.
-	 */
-    protected LenyaSituation(String[] _roleIds, String _userId, String _machineIp) {
-        this.roleIds = _roleIds;
-        this.userId = _userId;
-        this.machineIp = _machineIp;
+    /**
+     * Creates a new instance of Situation
+     * @param manager The service manager.
+     */
+    protected LenyaSituation(Identity identity, ServiceManager manager, Logger logger) {
+        this.manager = manager;
+        this.identity = identity;
+        ContainerUtil.enableLogging(this, logger);
     }
 
-    private String[] roleIds;
+    private Identity identity;
+
+    private ServiceManager manager;
+
+    protected ServiceManager getServiceManager() {
+        return this.manager;
+    }
 
     /**
-     * Get the roles
-     * @return the roles
-     */
-    public String[] getRoleIds() {
-        return this.roleIds;
-    }
-
-    /** 
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        String rolesString = "";
-        for (int i = 0; i < this.roleIds.length; i++) {
-            if (i > 0) {
-                rolesString += ", ";
-            }
-            rolesString += this.roleIds[i];
-        }
-        return "roles: " + rolesString;
+        return this.userId + " " + this.machineIp;
     }
-    
+
     private String userId;
     private String machineIp;
-    
+
+    public Identity getIdentity() {
+        return this.identity;
+    }
 }

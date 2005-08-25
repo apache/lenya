@@ -22,6 +22,14 @@ package org.apache.lenya.cms.workflow;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.lenya.ac.AccessController;
+import org.apache.lenya.ac.AccessControllerResolver;
+import org.apache.lenya.ac.Policy;
+import org.apache.lenya.ac.PolicyManager;
+import org.apache.lenya.ac.Role;
+import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
@@ -32,17 +40,17 @@ import org.apache.lenya.workflow.impl.AbstractCondition;
  * Role condition
  */
 public class RoleCondition extends AbstractCondition {
-    
+
     private Set roleIds = new HashSet();
-    
+
     protected static final String SEPARATOR = ",";
-    
+
     /**
      * @see org.apache.lenya.workflow.Condition#setExpression(java.lang.String)
      */
     public void setExpression(String expression) throws WorkflowException {
         super.setExpression(expression);
-        
+
         String[] roles = expression.split(SEPARATOR);
         for (int i = 0; i < roles.length; i++) {
             this.roleIds.add(roles[i].trim());
@@ -50,24 +58,63 @@ public class RoleCondition extends AbstractCondition {
     }
 
     /**
-     * Returns if the condition is complied in a certain situation.
-     * The condition is complied when the current user has the
-     * role that is required by the RoleCondition.
-     * @see org.apache.lenya.workflow.impl.AbstractCondition#isComplied(Workflow, Situation, Workflowable)
+     * Returns if the condition is complied in a certain situation. The condition is complied when
+     * the current user has the role that is required by the RoleCondition.
+     * @see org.apache.lenya.workflow.impl.AbstractCondition#isComplied(Workflow, Situation,
+     *      Workflowable)
      */
     public boolean isComplied(Workflow workflow, Situation situation, Workflowable instance) {
         LenyaSituation situationImpl = (LenyaSituation) situation;
-        String[] roles = situationImpl.getRoleIds();
 
-        boolean complied = false;
+        DocumentWorkflowable workflowable = (DocumentWorkflowable) instance;
+        LenyaSituation lenyaSituation = (LenyaSituation) situation;
+        ServiceManager manager = lenyaSituation.getServiceManager();
+        String url = workflowable.getDocument().getCanonicalWebappURL();
 
-        for (int i = 0; i < roles.length; i++) {
-            if (this.roleIds.contains(roles[i])) {
-                complied = true;
+        ServiceSelector selector = null;
+        AccessControllerResolver acResolver = null;
+        AccessController accessController = null;
+        try {
+
+            selector = (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
+            acResolver = (AccessControllerResolver) selector.select(AccessControllerResolver.DEFAULT_RESOLVER);
+            accessController = acResolver.resolveAccessController(url);
+
+            if (accessController instanceof DefaultAccessController) {
+                DefaultAccessController defaultAccessController = (DefaultAccessController) accessController;
+                PolicyManager policyManager = defaultAccessController.getPolicyManager();
+
+                Policy policy = policyManager.getPolicy(defaultAccessController.getAccreditableManager(),
+                        url);
+
+                Role[] roles = policy.getRoles(lenyaSituation.getIdentity());
+                boolean complied = false;
+
+                for (int i = 0; i < roles.length; i++) {
+                    if (this.roleIds.contains(roles[i].getId())) {
+                        complied = true;
+                    }
+                }
+
+                return complied;
+            } else {
+                throw new IllegalStateException("Only supported for default access controllers!");
+            }
+
+        } catch (final Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (selector != null) {
+                if (acResolver != null) {
+                    if (accessController != null) {
+                        acResolver.release(accessController);
+                    }
+                    selector.release(acResolver);
+                }
+                manager.release(selector);
             }
         }
 
-        return complied;
     }
 
 }

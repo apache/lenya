@@ -16,6 +16,7 @@
  */
 package org.apache.lenya.workflow.impl;
 
+import org.apache.avalon.excalibur.pool.Poolable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
@@ -35,7 +36,7 @@ import org.w3c.dom.Document;
  * @version $Id: WorkflowManagerImpl.java 179751 2005-06-03 09:13:35Z andreas $
  */
 public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowManager,
-        Serviceable {
+        Serviceable, Poolable {
 
     /**
      * @see org.apache.lenya.workflow.WorkflowManager#invoke(org.apache.lenya.workflow.Workflowable,

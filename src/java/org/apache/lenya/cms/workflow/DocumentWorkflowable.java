@@ -53,6 +53,10 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
     }
 
     private Document document;
+    
+    protected Document getDocument() {
+        return this.document;
+    }
 
     /**
      * @return The name of the workflow schema.

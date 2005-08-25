@@ -25,12 +25,9 @@ import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
-import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Machine;
-import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
-import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.impl.WorkflowManagerImpl;
 
@@ -64,20 +61,9 @@ public class LenyaWorkflowManager extends WorkflowManagerImpl implements Context
                 machineIp = machine.getIp();
             }
 
-            Role[] roles;
-            try {
-                roles = PolicyAuthorizer.getRoles(request);
-            } catch (AccessControlException e) {
-                throw new RuntimeException(e);
-            }
-            String[] roleIds = new String[roles.length];
-            for (int i = 0; i < roles.length; i++) {
-                roleIds[i] = roles[i].getId();
-            }
-
-            situation = new LenyaSituation(roleIds, userId, machineIp);
+            situation = new LenyaSituation(identity, this.manager, getLogger());
         } else {
-            situation = new LenyaSituation(new String[0], null, null);
+            situation = new LenyaSituation(null, this.manager, getLogger());
         }
         return situation;
     }
