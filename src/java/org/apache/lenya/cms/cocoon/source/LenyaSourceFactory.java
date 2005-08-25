@@ -19,9 +19,6 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Map;
 
-import org.apache.avalon.framework.configuration.Configurable;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
@@ -35,7 +32,6 @@ import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceFactory;
-import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Session;
@@ -48,7 +44,7 @@ import org.apache.lenya.cms.repository.Session;
  * @version $Id$
  */
 public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFactory, ThreadSafe,
-        Contextualizable, Serviceable, Configurable {
+        Contextualizable, Serviceable {
 
     protected static final String SCHEME = "lenya:";
 
@@ -59,8 +55,6 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
 
     private Context context;
     private ServiceManager manager;
-    private String delegationScheme;
-    private String delegationPrefix;
 
     /**
      * Used for resolving the object model.
@@ -78,43 +72,25 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
     }
 
     /**
-     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
-     */
-    public void configure(Configuration configuration) throws ConfigurationException {
-        this.delegationScheme = configuration.getAttribute("scheme", DEFAULT_DELEGATION_SCHEME);
-        this.delegationPrefix = configuration.getAttribute("prefix", DEFAULT_DELEGATION_PREFIX);
-    }
-
-    /**
      * @see org.apache.excalibur.source.SourceFactory#getSource(java.lang.String, java.util.Map)
      */
     public Source getSource(final String location, final Map parameters)
             throws MalformedURLException, IOException, SourceException {
 
-        SourceResolver sourceResolver = null;
-
-        try {
-            sourceResolver = (SourceResolver) this.manager.lookup(org.apache.excalibur.source.SourceResolver.ROLE);
-
-            Request request = ContextHelper.getRequest(this.context);
-            Session session = (Session) request.getAttribute(Session.class.getName());
-            if (session == null) {
-                Identity identity = (Identity) request.getSession(false)
-                        .getAttribute(Identity.class.getName());
-                session = new Session(identity, getLogger());
-            }
-
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Creating repository source for URI [" + location + "]");
-            }
-
-            return new RepositorySource(this.manager, location, session, getLogger());
-
-        } catch (final ServiceException e) {
-            throw new SourceException(e.getMessage(), e);
-        } finally {
-            this.manager.release(sourceResolver);
+        Request request = ContextHelper.getRequest(this.context);
+        Session session = (Session) request.getAttribute(Session.class.getName());
+        if (session == null) {
+            Identity identity = (Identity) request.getSession(false)
+                    .getAttribute(Identity.class.getName());
+            session = new Session(identity, getLogger());
         }
+
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Creating repository source for URI [" + location + "]");
+        }
+
+        return new RepositorySource(this.manager, location, session, getLogger());
+
     }
 
     /**
