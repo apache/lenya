@@ -96,6 +96,7 @@ function executeUsecase() {
     var form;
     var scriptString;
     var evalFunc;
+    var genericDoc;
 
 
     /*
@@ -163,7 +164,6 @@ function executeUsecase() {
 	                          evalFunc = new Function ("form",scriptString);
                               evalFunc(form);
 	                      }
-	                      
                        }
                     }
                     else{
