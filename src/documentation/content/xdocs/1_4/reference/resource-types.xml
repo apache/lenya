@@ -39,9 +39,9 @@
 	</p>
 	<p>
 	  The information describing a resource type is managed by a
-	  <link href="http://lenya.apache.org/apidocs/1.4/org/apache/lenya/cms/publication/ResourceType.html"><code>ResourceType</code></link>
+	  <a href="http://lenya.apache.org/apidocs/1.4/org/apache/lenya/cms/publication/ResourceType.html"><code>ResourceType</code></a>
 	  service. The default implementation is 
-	  <link href="http://lenya.apache.org/apidocs/1.4/org/apache/lenya/cms/publication/ResourceTypeImpl.html"><code>ResourceTypeImpl</code></link>.
+	  <a href="http://lenya.apache.org/apidocs/1.4/org/apache/lenya/cms/publication/ResourceTypeImpl.html"><code>ResourceTypeImpl</code></a>.
 	  It implements <code>ThreadSafe</code>, which ensures that only a single instance of every resource type is created.
 	  It is not possible to declare multiple resource types with the same name. 
 	</p>
