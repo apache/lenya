@@ -1,0 +1,208 @@
+/*
+ * Copyright  1999-2005 The Apache Software Foundation
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+package org.apache.lenya.cms.cocoon.source;
+
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.util.Map;
+
+import org.apache.avalon.framework.configuration.Configurable;
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.context.Context;
+import org.apache.avalon.framework.context.ContextException;
+import org.apache.avalon.framework.context.Contextualizable;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.Serviceable;
+import org.apache.avalon.framework.thread.ThreadSafe;
+import org.apache.cocoon.components.ContextHelper;
+import org.apache.cocoon.environment.Request;
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceException;
+import org.apache.excalibur.source.SourceFactory;
+import org.apache.lenya.ac.Identity;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeException;
+import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.cms.repository.Session;
+
+/**
+ * A factory for the "lenyadoc" scheme (virtual protocol), which is used to resolve any
+ * src="lenyadoc:<...>" attributes in sitemaps.
+ * 
+ * <code>lenyadoc://<publication>/<area>/<language>/<document-id></code>
+ * <code>lenyadoc:/<language>/<document-id></code>
+ * 
+ * @version $Id:$
+ */
+public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceFactory, ThreadSafe,
+        Contextualizable, Serviceable, Configurable {
+
+    protected static final String SCHEME = "lenyadoc";
+
+    private Context context;
+    private ServiceManager manager;
+
+    /**
+     * Used for resolving the object model.
+     * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
+     */
+    public void contextualize(Context context) throws ContextException {
+        this.context = context;
+    }
+
+    /**
+     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
+     */
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
+    }
+
+    /**
+     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
+     */
+    public void configure(Configuration configuration) throws ConfigurationException {
+    }
+
+    /**
+     * @see org.apache.excalibur.source.SourceFactory#getSource(java.lang.String, java.util.Map)
+     */
+    public Source getSource(String location, Map parameters) throws MalformedURLException,
+            IOException, SourceException {
+        String scheme = null;
+        String publicationId = null;
+        String area = null;
+        String language = null;
+        String docId = null;
+
+        // Parse the url
+        int start = 0;
+        int end;
+
+        // Scheme
+        end = location.indexOf(':', start);
+        if (end == -1) {
+            throw new MalformedURLException("Malformed lenyadoc: URI: can not find scheme part ["
+                    + location + "]");
+        }
+        scheme = location.substring(start, end);
+        if (!SCHEME.equals(scheme)) {
+            throw new MalformedURLException("Malformed lenyadoc: URI: unknown scheme [" + location
+                    + "]");
+        }
+
+        // Absolute vs. relative
+        start = end + 1;
+        if (location.startsWith("//", start)) {
+            // Absolute: get publication id
+            start += 2;
+            end = location.indexOf('/', start);
+            if (end == -1) {
+                throw new MalformedURLException("Malformed lenyadoc: URI: publication part not found ["
+                        + location + "]");
+            }
+            publicationId = location.substring(start, end);
+
+            // Area
+            start = end + 1;
+            end = location.indexOf('/', start);
+            if (end == -1) {
+                throw new MalformedURLException("Malformed lenyadoc: URI: cannot find area ["
+                        + location + "]");
+            }
+            area = location.substring(start, end);
+
+        } else if (location.startsWith("/", start)) {
+            end += 1;
+            // Relative: get publication id and area from page envelope
+            Map objectModel = ContextHelper.getObjectModel(this.context);
+            try {
+                DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
+                PageEnvelopeFactory pageEnvelopeFactory = PageEnvelopeFactory.getInstance();
+
+                if (pageEnvelopeFactory != null) {
+                    PageEnvelope pageEnvelope = pageEnvelopeFactory.getPageEnvelope(map,
+                            objectModel);
+
+                    if (pageEnvelope != null) {
+                        publicationId = pageEnvelope.getPublication().getId();
+                        area = pageEnvelope.getArea();
+                    } else {
+                        throw new SourceException("Error getting publication id / area from page envelope ["
+                                + location + "]");
+                    }
+                } else {
+                    throw new SourceException("Error getting publication id / area from page envelope ["
+                            + location + "]");
+                }
+            } catch (final PageEnvelopeException e) {
+                throw new SourceException("Error getting publication id / area from page envelope ["
+                        + location + "]",
+                        e);
+            }
+        } else {
+            throw new MalformedURLException("Malformed lenyadoc: URI [" + location + "]");
+        }
+
+        // Language
+        start = end + 1;
+        end = location.indexOf('/', start);
+        if (end == -1) {
+            throw new MalformedURLException("Malformed lenyadoc: URI: cannot find language ["
+                    + location + "]");
+        }
+        language = location.substring(start, end);
+
+        // Document id
+        start = end + 1;
+        docId = location.substring(start);
+
+        Request request = ContextHelper.getRequest(this.context);
+        Session session = (Session) request.getAttribute(Session.class.getName());
+        if (session == null) {
+            Identity identity = (Identity) request.getSession(false)
+                    .getAttribute(Identity.class.getName());
+            session = new Session(identity, getLogger());
+        }
+
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Creating repository source for URI [" + location + "]");
+        }
+
+        // TODO: Replace hardcoded Lenya document structure
+        String lenyaURL = "lenya://lenya/pubs/" + publicationId + "/content/" + area + docId
+                + "/index_" + language + ".xml";
+
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Mapping 'lenyadoc:' URL [" + location + "] to 'lenya:' URL ["
+                    + lenyaURL + "]");
+            getLogger().debug("Creating repository source for URI [" + lenyaURL + "]");
+        }
+
+        return new RepositorySource(manager, lenyaURL, session, getLogger());
+    }
+
+    /**
+     * @see org.apache.excalibur.source.SourceFactory#release(org.apache.excalibur.source.Source)
+     */
+    public void release(Source source) {
+        // Source will be released by delegated source factory.
+    }
+}
