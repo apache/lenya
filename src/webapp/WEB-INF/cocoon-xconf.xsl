@@ -379,12 +379,6 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
       </view>
       <exit usecase="admin.serverStatus"/>
     </component-instance>
-    <component-instance name="admin.search" logger="lenya.admin" class="org.apache.lenya.cms.usecase.DummyUsecase">
-      <view template="usecases/admin/search.jx" menu="true">
-        <tab group="admin" name="search"/>
-      </view>
-      <exit usecase="admin.search"/>
-    </component-instance>
     <component-instance name="admin.sessions" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.SessionViewer">
       <view template="usecases/admin/sessions.jx" menu="true">
         <tab group="admin" name="sessions"/>
@@ -396,14 +390,6 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
         <tab group="admin" name="siteOverview"/>
       </view>
       <exit usecase="admin.siteOverview"/>
-    </component-instance>
-    
-    <!--+
-        | Search usecases
-        +-->
-
-    <component-instance name="search.search" logger="lenya.search" class="org.apache.lenya.cms.search.usecases.Search">
-      <view template="usecases/search/search.jx"/>
     </component-instance>
     
     <!--+
@@ -579,7 +565,6 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
       <tab name="groups" label="Groups" usecase="admin.groups"/>
       <tab name="ipRanges" label="IP Ranges" usecase="admin.ipRanges"/>
       <tab name="trash" label="Delete Trash" usecase="admin.emptyTrash"/>
-      <tab name="search" label="Search" usecase="admin.search"/>
       <tab name="serverStatus" label="Server Status" usecase="admin.serverStatus"/>
       <tab name="sessions" label="Sessions" usecase="admin.sessions"/>
       <tab name="siteOverview" label="Overview" usecase="admin.siteOverview"/>
