@@ -141,7 +141,7 @@
       <map:match pattern="lenya-page/*/*/**">
         <map:aggregate element="menu" ns="http://apache.org/cocoon/lenya/menubar/1.0">
           <map:part src="cocoon:/menu-xml/{1}/{2}/{3}" strip-root="true"/>
-          <map:part src="cocoon:/menu-xml/publets/{1}/{2}.xml" strip-root="true"/>
+          <map:part src="cocoon:/menu-xml/modules/{1}/{2}.xml" strip-root="true"/>
         </map:aggregate>
         <map:transform src="lenya/xslt/menu/merge-menus.xsl"/>
         
@@ -214,21 +214,21 @@
       
       <!-- menus -->
       
-      <!-- menu-xml/publets -->
-      <!-- menu-xml/publets/{pub-id}/{area}.xml -->
-      <map:match pattern="menu-xml/publets/*/*.xml">
+      <!-- menu-xml/modules -->
+      <!-- menu-xml/modules/{pub-id}/{area}.xml -->
+      <map:match pattern="menu-xml/modules/*/*.xml">
         <map:generate src="lenya/pubs/{1}/config/publication.xconf"/>
-        <map:transform src="lenya/xslt/publets/publets2xinclude.xsl">
+        <map:transform src="lenya/xslt/modules/modules2xinclude.xsl">
           <map:parameter name="area" value="{2}"/>
         </map:transform>
         <map:transform type="xinclude"/>
         <map:serialize type="xml"/>
       </map:match>
-      <!-- menu-xml/publet/{publet-id}/{area}.xml -->
-      <map:match pattern="menu-xml/publet/*/*.xml">
+      <!-- menu-xml/module/{module-id}/{area}.xml -->
+      <map:match pattern="menu-xml/module/*/*.xml">
         <map:select type="resource-exists">
-          <map:when test="lenya/publets/{2}/menus.xmap">
-            <map:mount uri-prefix="menu-xml/publet/{1}/" src="lenya/publets/{2}/menus.xmap" check-reload="true" reload-method="synchron"/>
+          <map:when test="lenya/modules/{2}/menus.xmap">
+            <map:mount uri-prefix="menu-xml/module/{1}/" src="lenya/modules/{2}/menus.xmap" check-reload="true" reload-method="synchron"/>
           </map:when>
           <map:otherwise>
             <map:generate type="serverpages" src="lenya/content/menus/live.xsp"/>
@@ -268,8 +268,8 @@
     <!-- Internal usecases -->
     <map:pipeline internal-only="true">
       <map:match type="usecase" pattern="*">
-        <map:match pattern="core/publets/*/*/**">
-          <map:mount uri-prefix="core/publets/{1}/{2}" src="lenya/publets/{1}/usecases/{2}/usecase.xmap"/>
+        <map:match pattern="core/modules/*/*/**">
+          <map:mount uri-prefix="core/modules/{1}/{2}" src="lenya/modules/{1}/usecases/{2}/usecase.xmap"/>
         </map:match>
         <map:match pattern="core/*/**">
           <map:mount uri-prefix="core/{1}" src="lenya/usecases/{1}/usecase.xmap"/>
@@ -395,12 +395,12 @@
         </map:act>
       </map:match>
 
-      <!-- Enter a publet -->
-      <map:match pattern="publets/*/**">
-        <map:mount uri-prefix="publets/{1}/" src="lenya/publets/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+      <!-- Enter a module -->
+      <map:match pattern="modules/*/**">
+        <map:mount uri-prefix="modules/{1}/" src="lenya/modules/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
-      <map:match type="request-parameter" pattern="lenya.publet">
-        <map:mount uri-prefix="" src="lenya/publets/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+      <map:match type="request-parameter" pattern="lenya.module">
+        <map:mount uri-prefix="" src="lenya/modules/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
       
       <!-- Enter the actual publication -->

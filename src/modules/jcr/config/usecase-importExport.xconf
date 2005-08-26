@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <!--
   Copyright 1999-2004 The Apache Software Foundation
 
@@ -15,18 +15,15 @@
   limitations under the License.
 -->
 
-<!-- $Id$ -->
+<!-- $Id: doctypes.xconf 164635 2005-04-25 20:01:43Z tschlabach $ -->
 
-<publication>
-  <languages>
-    <language default="true">en</language>
-    <language>de</language>
-  </languages>
-  <path-mapper>org.apache.lenya.cms.publication.SingleLanguageIdentityMapper</path-mapper>
-  <document-builder name="default"/>
-  <breadcrumb-prefix/>
-  <ssl-prefix/>
-  <site-manager name="simple"/>
-  <resource-type name="entry" workflow="workflow.xml"/>
-  <module name="entry"/>
-</publication>
+<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'jcr.importExport']">
+
+  <component-instance name="jcr.importExport" logger="lenya.jcr"
+    class="org.apache.lenya.cms.jcr.usecases.JCRImport">
+    <view template="modules/jcr/usecases/importExport/importExport.jx" menu="true">
+      <tab group="admin" name="jcr"/>
+    </view>
+  </component-instance>
+  
+</xconf>

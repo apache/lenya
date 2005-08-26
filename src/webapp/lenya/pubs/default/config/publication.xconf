@@ -33,10 +33,10 @@
   <resource-type name="links" workflow="workflow.xml"/>
   <resource-type name="search" workflow="workflow.xml"/>
   
-  <publet name="xhtml"/>
-  <publet name="links"/>
-  <publet name="homepage"/>
-  <publet name="search"/>
+  <module name="xhtml"/>
+  <module name="links"/>
+  <module name="homepage"/>
+  <module name="search"/>
   
   <!--
        For information about these settings, read 

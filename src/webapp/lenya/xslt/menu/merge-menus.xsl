@@ -44,7 +44,7 @@ Apply the first <menus>.
 
 <!--
 Apply the <menu> children of the first <menus>.
-Insert items of publet menus (which have preceding siblings)
+Insert items of module menus (which have preceding siblings)
 before the items of this menu.
 -->
 <xsl:template match="/menu:menu/menu:menus[1]/menu:menu">

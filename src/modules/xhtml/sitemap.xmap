@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: doctypes.xmap 179488 2005-06-02 02:29:39Z gregor $ -->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:pipelines>
+
+    <map:pipeline>
+      <!-- View Revision? -->
+      <map:match pattern="*.xml">
+        <map:match type="step" pattern="view-revision">
+          <map:generate type="serverpages" src="fallback://lenya/content/rc/view.xsp">
+          </map:generate>
+          <map:transform src="fallback://lenya/xslt/rc/toDoc.xsl"/>
+          <map:transform src="fallback://lenya/modules/xhtml/xslt/xhtml2xhtml.xsl">
+            <map:parameter name="rendertype" value="{1}"/>
+            <map:parameter name="nodeid" value="{page-envelope:document-name}"/>
+            <map:parameter name="language" value="{page-envelope:document-language}"/>
+          </map:transform>
+          <map:serialize type="xml"/>
+        </map:match>
+      </map:match>
+
+      <!-- parametrized doctype matcher -->
+      <!-- pattern="{rendertype}" -->
+      <map:match pattern="*.xml">
+        <map:generate src="lenya://lenya/pubs/{page-envelope:publication-id}/content/{page-envelope:area}/{page-envelope:document-path}"/>
+        <map:transform src="fallback://lenya/modules/xhtml/xslt/xhtml2xhtml.xsl">
+          <map:parameter name="rendertype" value="{1}"/>
+          <map:parameter name="nodeid" value="{page-envelope:document-name}"/>
+          <map:parameter name="language" value="{page-envelope:document-language}"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+
+    </map:pipeline>
+    
+  </map:pipelines>
+</map:sitemap>

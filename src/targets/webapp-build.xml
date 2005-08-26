@@ -113,7 +113,7 @@
       </fileset>
     </copy>
 
-    <antcall target="deploy-publets"/>
+    <antcall target="deploy-modules"/>
 
     <!-- Copy database files to ${build.webapp}/WEB-INF/db -->
     <copy todir="${build.webapp}/WEB-INF/db">

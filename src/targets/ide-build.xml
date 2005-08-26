@@ -34,7 +34,7 @@
       <dirset dir="src/webapp/lenya/pubs">
         <include name="*/java/src"/>
       </dirset>
-      <dirset dir="src/publets">
+      <dirset dir="src/modules">
         <include name="*/java/src"/>
       </dirset>
     </path>

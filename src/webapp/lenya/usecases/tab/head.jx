@@ -28,7 +28,7 @@
     <jx:set var="pubId" value="${usecase.getParameter('document').getPublication().getId()}"/>
     <jx:set var="area" value="${usecase.getParameter('document').getArea()}"/>
     <jx:set var="language" value="${usecase.getParameter('document').getLanguage()}"/>
-    <script src="${request.contextPath}/${pubId}/${area}/tree.js?lenya.publet=sitetree"/>
-    <script src="${request.contextPath}/${pubId}/${area}/navtree.js?lenya.publet=sitetree"/>
+    <script src="${request.contextPath}/${pubId}/${area}/tree.js?lenya.module=sitetree"/>
+    <script src="${request.contextPath}/${pubId}/${area}/navtree.js?lenya.module=sitetree"/>
   </page:head>
 </jx:template>

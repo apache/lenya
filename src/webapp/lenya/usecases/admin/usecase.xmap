@@ -35,7 +35,7 @@
           <map:parameter name="xpath" value="/crawler|/lucene"/>
           <map:parameter name="xmlFiles" value="\.x.*$"/>
         </map:generate>
-        <map:transform src="fallback://lenya/publets/search/xslt/admin.xsl"/>
+        <map:transform src="fallback://lenya/modules/search/xslt/admin.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
     

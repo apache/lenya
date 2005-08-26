@@ -119,7 +119,7 @@
     <!-- FIXME: Use bulkCopy task in the future; needs regexp mapper which is part of ant optional package. -->
     <!-- Copy java source files from ${pubs.root.dirs} to ${build.src} -->
     <copyJavaSources pubsrootdirs="${pubs.root.dirs}" javadir="java/src" builddir="${build.src}" />
-    <copyJavaSources pubsrootdirs="${publets.root.dirs}" javadir="java/src" builddir="${build.src}" />
+    <copyJavaSources pubsrootdirs="${modules.root.dirs}" javadir="java/src" builddir="${build.src}" />
     
     <!-- Copy publication specific libraries from ${pubs.root.dirs} (java/lib) to ${build.webapp}/WEB-INF/lib -->
     <bulkCopy 
@@ -130,7 +130,7 @@
       <fileset includes="java/lib/*"/>   <!-- if only a specific publication is being specified, e.g. pubs/blog -->
     </bulkCopy>
     <bulkCopy 
-      sourcedirs="${publets.root.dirs}" 
+      sourcedirs="${modules.root.dirs}" 
       todir="${build.webapp}/WEB-INF/lib" 
       flatten="true">
       <fileset includes="*/java/lib/*"/> <!-- if a directory with more than one publication is being specified, e.g. pubs -->

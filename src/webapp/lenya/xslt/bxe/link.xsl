@@ -45,8 +45,8 @@
     <page:page>
       <page:title>Insert Link</page:title>
       <page:body>
-      <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/tree.js?lenya.publet=sitetree">&#160;</script>
-      <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/navtree.js?lenya.publet=sitetree">&#160;</script>
+      <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/tree.js?lenya.module=sitetree">&#160;</script>
+      <script type="text/javascript" src="{$contextprefix}/{$publicationid}/{$area}/navtree.js?lenya.module=sitetree">&#160;</script>
       <script type="text/javascript" src="{$contextprefix}/lenya/javascript/insertLink.js">&#160;</script>
       <script type="text/javascript" >
           AREA = "<xsl:value-of select="$area"/>";

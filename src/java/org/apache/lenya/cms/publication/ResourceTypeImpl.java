@@ -31,7 +31,7 @@ import org.apache.lenya.cms.authoring.DefaultBranchCreator;
 import org.apache.lenya.cms.authoring.NodeCreatorInterface;
 
 /**
- * Resource type, implemented as a publet.
+ * Resource type.
  * 
  * @version $Id:$
  */

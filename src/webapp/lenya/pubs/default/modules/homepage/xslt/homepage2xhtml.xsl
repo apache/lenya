@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <!--
   Copyright 1999-2004 The Apache Software Foundation
 
@@ -6,7 +6,7 @@
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
 
-      http://www.apache.org/licenses/LICENSE-2.0
+  http://www.apache.org/licenses/LICENSE-2.0
 
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
@@ -15,18 +15,10 @@
   limitations under the License.
 -->
 
-<!-- $Id$ -->
-
-<publication>
-  <languages>
-    <language default="true">en</language>
-    <language>de</language>
-  </languages>
-  <path-mapper>org.apache.lenya.cms.publication.SingleLanguageIdentityMapper</path-mapper>
-  <document-builder name="default"/>
-  <breadcrumb-prefix/>
-  <ssl-prefix/>
-  <site-manager name="simple"/>
-  <resource-type name="entry" workflow="workflow.xml"/>
-  <module name="entry"/>
-</publication>
+<xsl:stylesheet version="1.0"
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+>
+  
+<xsl:import href="fallback://lenya/modules/xhtml/xslt/xhtml2xhtml.xsl"/>
+  
+</xsl:stylesheet>
