@@ -85,7 +85,7 @@
             your_home/ (or c:\ on Windows, NOT My Documents)
               `-- src/
                    |-- lenya-1.4.x/            $LENYA_HOME
-                   `-- cocoon-2.1.7/           $COCOON_HOME
+                   `-- cocoon-2.1.x/           $COCOON_HOME
                         `-- build/
                              `-- webapp/       $COCOON_WEBAPP
      		</source>
@@ -112,9 +112,9 @@
           <p>
             <strong>Get Apache Cocoon</strong>
             <br/>
-            version: 2.1.7
+            version: 2.1.x (BRANCH)
             <br/>
-            Get it from <a href="site:cocoon/mirror">http://cocoon.apache.org/mirror.cgi</a><br/>
+            Get it from <a href="site:cocoon/mirror">http://svn.apache.org/repos/asf/cocoon/branches/</a><br/>
             Unpack Coccon in <code>src/</code>.
           </p>
 
@@ -148,10 +148,7 @@
           </p>
 
           <p>
-            If your Cocoon source tree is set up as described above, you
-            can skip this step.  If your Cocoon source tree is not at
-            <code>../cocoon-2.1.7</code> relative to Lenya, you need
-            to edit your build properties. To do this, copy
+            You need to edit your build properties. To do this, copy
             <code>$LENYA_HOME/build.properties</code> to
             <code>$LENYA_HOME/local.build.properties</code>.
           </p>
@@ -166,6 +163,15 @@
           <ul>
             <li><code>cocoon.src.dir=$COCOON_HOME</code></li>
           </ul>
+            
+          <p>
+              Copy $LENYA_HOME/src/cocoon/local.blocks.properties and 
+              local.build.properties to $COCOON_HOME.
+          </p>
+           
+          <p>
+              Build Cocoon.
+          </p>  
         </li>
 
         <li>
@@ -193,6 +199,14 @@
           <source>
             $LENYA_HOME > ./build.sh
           </source>
+          <p>
+             <br/><br/>
+             If your build fails, because it cant delete cocoon.xconf.ant_patch try:
+             in $LENYA_HOME/src/targets/webapp-build.xml LINE 69 add
+             verbose="true" failonerror="false" to the delete tag.
+             In $LENYA_HOME/src/targets/publets-build.xml LINE 53 add
+             verbose="true" failonerror="false" to the delete tag.
+          </p>
         </li>
 
         <li>
