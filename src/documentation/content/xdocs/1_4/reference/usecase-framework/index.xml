@@ -309,6 +309,37 @@ $PUB_HOME
           <p>
           Take care of adding the hidden <code>lenya.usecase</code> and <code>lenya.continuation</code> fields as shown above.
           </p>
+          
+          <section>
+            <title>Displaying Usecases in Tabs</title>
+            <p>
+              It is possible to use a tab-based layout to assemble a set of usecases.
+              The admin and site areas are displayed using this style.
+              To add a tab-based usecase to a tab set, two steps are required: 
+            </p>
+            
+            <ol>
+              <li>
+                Add the tab to the GUI manager configuration:
+<source xml:space="preserve"><![CDATA[<xconf xpath="/cocoon/gui-manager/tab-group[@name = 'admin']"
+       unless="/cocoon/gui-manager/tab-group[@name = 'admin']/tab[@name = 'search']">
+
+  <tab name="search" label="Search" usecase="admin.search"/>
+  
+</xconf>]]></source>
+              </li>
+              <li>
+                Add the tab configuration to the usecase view declaration:
+<source xml:space="preserve"><![CDATA[<component-instance name="admin.search" logger="lenya.admin" class="org.apache.lenya.cms.usecase.DummyUsecase">
+  <view template="usecases/admin/search.jx" menu="true">
+    <tab group="admin" name="search"/>
+  </view>
+  <exit usecase="admin.search"/>
+</component-instance>]]></source>
+              </li>
+            </ol>
+          </section>
+          
       </section>
       
     </section>
