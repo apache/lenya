@@ -17,23 +17,23 @@
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 <document> 
   <header> 
-    <title>Publets</title> 
+    <title>Modules</title> 
   </header>
   <body>
     
     <section>
       <title>Introduction</title>
       <p>
-        Publets are packages providing a certain set of resources or functionality.
+        Modules are packages providing a certain set of resources or functionality.
       </p>
       <p>Examples:</p>
       <ul>
-        <li>a resource type (e.g., docbook publet)</li>
-        <li>a repository implementation (e.g., jdbc publet)</li>
-        <li>a collection of XSLTs (e.g., content2svg publet)</li>
+        <li>a resource type (e.g., docbook module)</li>
+        <li>a repository implementation (e.g., jdbc module)</li>
+        <li>a collection of XSLTs (e.g., content2svg module)</li>
       </ul>
       <p>
-        Some publets are included in the Lenya distribution:
+        Some modules are included in the Lenya distribution:
       </p>
       <ul>
         <li><strong>search</strong> - search functionality</li>
@@ -41,36 +41,37 @@
         <li><strong>jcr</strong> - store content in a <link href="http://www.jcp.org/en/jsr/detail?id=170">JCR</link> repository</li>
         <li><strong>xhtml</strong> - XHTML-based resource type</li>
         <li><strong>links</strong> - resource type to manage link lists</li>
+        <li><strong>lenyadoc</strong> - adds the <code>lenyadoc://</code> protocol</li>
       </ul>
     </section>
 
     <section>
-      <title>Implementing a Publet</title>
+      <title>Implementing a module</title>
       
       <p>
-        All resources of a publet are located in a single directory.
+        All resources of a module are located in a single directory.
         The following is an example directory structure, all files are optional
-        and depend on the nature of the publet.
+        and depend on the nature of the module.
       </p>
     
 <source xml:space="preserve">
-mypublet/
+mymodule/
     config/                  configuration files
         components.xconf     patch for cocoon.xconf
     usecases/
-        mypublet.jx          usecase view
+        mymodule.jx          usecase view
     java/
         src/                 Java source files
         lib/                 Java libraries
     xslt/                    XSLT stylesheets
-    sitemap.xmap             main publet sitemap
+    sitemap.xmap             main module sitemap
 </source>
 
       <p>
-        When the publet is deployed, the following steps are executed:
+        When the module is deployed, the following steps are executed:
       </p>
       <ul>
-        <li>the publet files are copied to <code>context://lenya/publets</code></li>
+        <li>the module files are copied to <code>context://lenya/modules</code></li>
         <li>Java sources are compiled, libraries are installed</li>
         <li><code>cocoon.xconf</code> is patched</li>
       </ul>
@@ -78,22 +79,22 @@ mypublet/
     </section>
     
     <section>
-      <title>Implementing Usecases in Publets</title>
+      <title>Implementing Usecases in Modules</title>
       <p>
-        To declare usecases, add a patch file for <code>cocoon.xconf</code>, for instance <code>publet/config/usecases.xconf</code>:
+        To declare usecases, add a patch file for <code>cocoon.xconf</code>, for instance <code>module/config/usecases.xconf</code>:
       </p>
 <source xml:space="preserve"><![CDATA[<xconf xpath="/cocoon/usecases"
-       unless="/cocoon/usecases/component-instance[@name = 'mypublet.edit']">
-  <component-instance name="mypublet.edit"
+       unless="/cocoon/usecases/component-instance[@name = 'mymodule.edit']">
+  <component-instance name="mymodule.edit"
                       logger="lenya.usecases.edit
-                      class="org.myproject.lenya.mypublet.usecases.Edit">
-    <view template="publets/mypublet/usecases/edit.jx" menu="false"/>
+                      class="org.myproject.lenya.mymodule.usecases.Edit">
+    <view template="modules/mymodule/usecases/edit.jx" menu="false"/>
   </component-instance>
 </xconf>]]></source>
 
       <p>
-        As you can see in the view declaration, the JX templates are typically stored in the <code>mypublet/usecases</code>
-        directory. The Java source files go into the <code>mypublet/java/src</code> directory, they are compiled
+        As you can see in the view declaration, the JX templates are typically stored in the <code>mymodule/usecases</code>
+        directory. The Java source files go into the <code>mymodule/java/src</code> directory, they are compiled
         automatically by the Lenya build process.
       </p>
 
