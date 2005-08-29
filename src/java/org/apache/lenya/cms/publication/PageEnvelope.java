@@ -266,14 +266,16 @@ public class PageEnvelope {
     }
 
     private Document document;
+    private boolean documentChecked = false;
 
     /**
      * Returns the document or <code>null</code> if the current URL does not represent a document.
      * @return A document
      */
     public Document getDocument() {
-        if (this.document == null) {
+        if (!documentChecked) {
             try {
+                documentChecked = true;
                 if (getIdentityMap().isDocument(this.webappUrl)) {
                     this.document = getIdentityMap().getFromURL(this.webappUrl);
                 }

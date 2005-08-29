@@ -49,37 +49,40 @@ public abstract class AbstractPageEnvelopeModule extends OperationModule {
      */
     protected PageEnvelope getEnvelope(Map objectModel, String name) throws ConfigurationException {
 
-        PageEnvelope envelope = null;
         String webappUrl = null;
         Request request = ObjectModelHelper.getRequest(objectModel);
 
-        String[] snippets = name.split(":");
-        if (snippets.length > 1) {
-            webappUrl = snippets[1];
-        } else {
-            webappUrl = ServletHelper.getWebappURI(request);
+        PageEnvelope envelope = (PageEnvelope) request.getAttribute(PageEnvelope.class.getName());
+        if (envelope == null) {
+
+            String[] snippets = name.split(":");
+            if (snippets.length > 1) {
+                webappUrl = snippets[1];
+            } else {
+                webappUrl = ServletHelper.getWebappURI(request);
+            }
+
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("Resolving page envelope for URL [" + webappUrl + "]");
+            }
+
+            String contextPath = request.getContextPath();
+            Context context = ObjectModelHelper.getContext(objectModel);
+            String servletContextPath = context.getRealPath("");
+
+            try {
+                DocumentIdentityMap map = getDocumentIdentityMap();
+                Publication pub = PublicationUtil.getPublicationFromUrl(this.manager, webappUrl);
+                envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map,
+                        contextPath,
+                        webappUrl,
+                        new File(servletContextPath),
+                        pub);
+            } catch (Exception e) {
+                throw new ConfigurationException("Resolving page envelope failed: ", e);
+            }
+            request.setAttribute(PageEnvelope.class.getName(), envelope);
         }
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Resolving page envelope for URL [" + webappUrl + "]");
-        }
-
-        String contextPath = request.getContextPath();
-        Context context = ObjectModelHelper.getContext(objectModel);
-        String servletContextPath = context.getRealPath("");
-
-        try {
-            DocumentIdentityMap map = getDocumentIdentityMap();
-            Publication pub = PublicationUtil.getPublicationFromUrl(this.manager, webappUrl);
-            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map,
-                    contextPath,
-                    webappUrl,
-                    new File(servletContextPath),
-                    pub);
-        } catch (Exception e) {
-            throw new ConfigurationException("Resolving page envelope failed: ", e);
-        }
-
         return envelope;
     }
 

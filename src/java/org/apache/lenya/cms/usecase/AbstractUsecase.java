@@ -336,10 +336,13 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
         this.parameters.put(name, value);
     }
 
+    private boolean parametersInitialized = false;
+
     /**
      * @see org.apache.lenya.cms.usecase.Usecase#getParameter(java.lang.String)
      */
     public Object getParameter(String name) {
+        initializeParametersIfNotDone();
         return this.parameters.get(name);
     }
 
@@ -412,6 +415,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      * @return the map
      */
     public Map getParameters() {
+        initializeParametersIfNotDone();
         return Collections.unmodifiableMap(this.parameters);
     }
 
@@ -527,8 +531,16 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      * @see org.apache.lenya.cms.usecase.Usecase#getParameterNames()
      */
     public String[] getParameterNames() {
+        initializeParametersIfNotDone();
         Set keys = this.parameters.keySet();
         return (String[]) keys.toArray(new String[keys.size()]);
+    }
+
+    protected void initializeParametersIfNotDone() {
+        if (!this.parametersInitialized) {
+            this.parametersInitialized = true;
+            initParameters();
+        }
     }
 
     /**
@@ -536,7 +548,6 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      */
     public void setSourceURL(String url) {
         setParameter(SOURCE_URL, url);
-        initParameters();
     }
 
     private UsecaseView view;
