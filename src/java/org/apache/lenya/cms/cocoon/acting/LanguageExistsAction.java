@@ -33,12 +33,9 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentDoesNotExistException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * Action that checks the sitetree if there is a node with the current document-id and the current
@@ -72,11 +69,9 @@ public class LanguageExistsAction extends ServiceableAction {
         Request request = ObjectModelHelper.getRequest(objectModel);
         Session session = RepositoryUtil.getSession(request, getLogger());
         DocumentIdentityMap map = new DocumentIdentityMap(session, this.manager, getLogger());
-        Publication pub = PublicationUtil.getPublication(this.manager, objectModel);
-        PageEnvelope pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map,
-                objectModel, pub);
 
-        Document doc = pageEnvelope.getDocument();
+        String url = ServletHelper.getWebappURI(request);
+        Document doc = map.getFromURL(url);
         String language = doc.getLanguage();
 
         if (!doc.existsInAnyLanguage()) {

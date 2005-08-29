@@ -59,9 +59,9 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
             DocumentIdentifier identifier, Logger _logger) {
 
         ContainerUtil.enableLogging(this, _logger);
-        // if (getLogger().isDebugEnabled())
-        getLogger().error("DefaultDocument() creating new instance with id [" + identifier.getId()
-                + "], language [" + identifier.getLanguage() + "]");
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("DefaultDocument() creating new instance with id ["
+                    + identifier.getId() + "], language [" + identifier.getLanguage() + "]");
 
         this.manager = manager;
         this.identifier = identifier;
@@ -75,8 +75,8 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         this.identityMap = map;
 
         if (getLogger().isDebugEnabled())
-            getLogger().debug("DefaultDocument() done building instance with _id [" + identifier.getId()
-                    + "], _language [" + identifier.getLanguage() + "]");
+            getLogger().debug("DefaultDocument() done building instance with _id ["
+                    + identifier.getId() + "], _language [" + identifier.getLanguage() + "]");
 
     }
 
