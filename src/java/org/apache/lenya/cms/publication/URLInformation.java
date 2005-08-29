@@ -23,12 +23,12 @@ package org.apache.lenya.cms.publication;
  * This class resolves all Lenya-specific information from a webapp URL.
  */
 public class URLInformation {
-    
+
     private String publicationId = null;
     private String area = null;
-	private String completeArea = null;
+    private String completeArea = null;
     private String documentUrl = null;
-    
+
     /**
      * Returns the area (without the "info-" prefix).
      * @return A string.
@@ -37,13 +37,13 @@ public class URLInformation {
         return this.area;
     }
 
-	/**
-	 * Returns the complete area (including the "info-" prefix).
-	 * @return A string.
-	 */
-	public String getCompleteArea() {
-		return this.completeArea;
-	}
+    /**
+     * Returns the complete area (including the "info-" prefix).
+     * @return A string.
+     */
+    public String getCompleteArea() {
+        return this.completeArea;
+    }
 
     /**
      * Returns the document URL.
@@ -67,30 +67,29 @@ public class URLInformation {
      */
     public URLInformation(String webappUrl) {
         assert webappUrl.startsWith("/");
-        
+
         String url = webappUrl.substring(1);
-        
+
         String[] fragments = url.split("/");
-        this.publicationId = fragments[0];
-        
-        if (fragments.length > 1) {
-            this.completeArea = fragments[1];
-            
-            if (url.length() > (this.publicationId + "/" + this.completeArea).length()) {
-                this.documentUrl = url.substring((this.publicationId + "/" + this.completeArea).length());
-            }
-            else {
-                this.documentUrl = "";
-            }
-            
-            if (this.completeArea.startsWith(Publication.SEARCH_AREA_PREFIX)) {
-                this.area = this.completeArea.substring(Publication.SEARCH_AREA_PREFIX.length());
-            }
-            else {
-            	this.area = this.completeArea;
+        if (fragments.length > 0) {
+            this.publicationId = fragments[0];
+
+            if (fragments.length > 1) {
+                this.completeArea = fragments[1];
+
+                if (url.length() > (this.publicationId + "/" + this.completeArea).length()) {
+                    this.documentUrl = url.substring((this.publicationId + "/" + this.completeArea).length());
+                } else {
+                    this.documentUrl = "";
+                }
+
+                if (this.completeArea.startsWith(Publication.SEARCH_AREA_PREFIX)) {
+                    this.area = this.completeArea.substring(Publication.SEARCH_AREA_PREFIX.length());
+                } else {
+                    this.area = this.completeArea;
+                }
             }
         }
     }
-    
-    
+
 }

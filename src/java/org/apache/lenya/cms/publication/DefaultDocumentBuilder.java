@@ -133,19 +133,12 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
         boolean isDocument = false;
 
         URLInformation info = new URLInformation(url);
-
-        String publicationURI = url.substring(("/" + info.getPublicationId()).length());
-        if (publicationURI.startsWith("/")) {
-            publicationURI = publicationURI.substring(1);
-
-            int slashIndex = publicationURI.indexOf("/");
-            if (slashIndex > -1) {
-                String area = publicationURI.substring(0, slashIndex);
-                String documentUri = publicationURI.substring(slashIndex);
-                if (PublicationImpl.isValidArea(area) && !area.equals(Publication.ADMIN_AREA)
-                        && documentUri.startsWith("/") && documentUri.length() > 1) {
-                    isDocument = true;
-                }
+        String area = info.getArea();
+        if (area != null && PublicationImpl.isValidArea(area)
+                && !area.equals(Publication.ADMIN_AREA)) {
+            String documentUrl = info.getDocumentUrl();
+            if (documentUrl != null && documentUrl.startsWith("/") && documentUrl.length() > 1) {
+                isDocument = true;
             }
         }
 
@@ -185,6 +178,12 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
      * @see org.apache.lenya.cms.publication.DocumentBuilder#getIdentitfier(java.lang.String)
      */
     public DocumentIdentifier getIdentitfier(String webappUrl) throws DocumentBuildException {
+
+        if (!isDocument(webappUrl)) {
+            throw new DocumentBuildException("The webapp URL [" + webappUrl
+                    + "] does not refer to a document!");
+        }
+
         URLInformation info = new URLInformation(webappUrl);
 
         Publication publication;

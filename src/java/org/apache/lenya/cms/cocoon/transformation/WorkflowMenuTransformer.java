@@ -126,10 +126,10 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
             Session session = RepositoryUtil.getSession(request, getLogger());
             DocumentIdentityMap map = new DocumentIdentityMap(session, this.manager, getLogger());
 
-            Document document = map.getFromURL(ServletHelper.getWebappURI(request));
-            if (document == null) {
-                setHasWorkflow(false);
-            } else {
+            String webappUrl = ServletHelper.getWebappURI(request);
+            Document document = null;
+            if (map.isDocument(webappUrl)) {
+                document = map.getFromURL(webappUrl);
                 ResourceType doctype = document.getResourceType();
                 if (document.getPublication().getWorkflowSchema(doctype) != null) {
                     setHasWorkflow(true);
@@ -137,6 +137,8 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
                 } else {
                     setHasWorkflow(false);
                 }
+            } else {
+                setHasWorkflow(false);
             }
 
             if (hasWorkflow()) {
