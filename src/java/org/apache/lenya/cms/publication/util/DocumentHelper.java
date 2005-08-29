@@ -32,13 +32,12 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeException;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -58,12 +57,13 @@ public class DocumentHelper {
     public DocumentHelper(ServiceManager manager, Map _objectModel) {
         this.objectModel = _objectModel;
         try {
-            PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
-            this.publication = factory.getPublication(_objectModel);
+            this.publication = PublicationUtil.getPublication(manager, _objectModel);
         } catch (PublicationException e) {
             throw new RuntimeException(e);
         }
-        this.identityMap = new DocumentIdentityMap(manager, new ConsoleLogger());
+        Request request = ObjectModelHelper.getRequest(_objectModel);
+        Session session = RepositoryUtil.getSession(request, new ConsoleLogger());
+        this.identityMap = new DocumentIdentityMap(session, manager, new ConsoleLogger());
     }
 
     /**
@@ -82,24 +82,21 @@ public class DocumentHelper {
         String url = null;
 
         try {
-            PageEnvelope envelope = PageEnvelopeFactory.getInstance()
-                    .getPageEnvelope(this.identityMap, this.objectModel);
-
+            Request request = ObjectModelHelper.getRequest(this.objectModel);
+            String webappUrl = ServletHelper.getWebappURI(request);
+            Document envDocument = this.identityMap.getFromURL(webappUrl);
             if (documentId == null) {
-                documentId = envelope.getDocument().getId();
+                documentId = envDocument.getId();
             }
 
-            Request request = ObjectModelHelper.getRequest(this.objectModel);
-
             if (documentArea == null) {
-                String webappUrl = ServletHelper.getWebappURI(request);
                 URLInformation info = new URLInformation(webappUrl);
                 String completeArea = info.getCompleteArea();
                 documentArea = completeArea;
             }
 
             if (language == null) {
-                language = envelope.getDocument().getLanguage();
+                language = envDocument.getLanguage();
             }
 
             Document document = this.identityMap.get(this.publication,
@@ -115,8 +112,6 @@ public class DocumentHelper {
 
             url = contextPath + url;
         } catch (final DocumentBuildException e) {
-            throw new ProcessingException(e);
-        } catch (final PageEnvelopeException e) {
             throw new ProcessingException(e);
         }
 
@@ -136,21 +131,17 @@ public class DocumentHelper {
         String parentUrl;
         String contextPath;
         try {
-            PageEnvelope envelope = PageEnvelopeFactory.getInstance()
-                    .getPageEnvelope(this.identityMap, this.objectModel);
-            Document document = envelope.getDocument();
-
             Request request = ObjectModelHelper.getRequest(this.objectModel);
+            String webappUrl = ServletHelper.getWebappURI(request);
+            Document document = this.identityMap.getFromURL(webappUrl);
+
             contextPath = request.getContextPath();
 
             Document parent = this.identityMap.getParent(document, "/index");
             parentUrl = parent.getCanonicalWebappURL();
         } catch (final DocumentBuildException e) {
             throw new ProcessingException(e);
-        } catch (final PageEnvelopeException e) {
-            throw new ProcessingException(e);
         }
-
         if (contextPath == null) {
             contextPath = "";
         }

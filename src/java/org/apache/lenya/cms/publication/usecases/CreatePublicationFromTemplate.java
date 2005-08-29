@@ -20,19 +20,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceResolver;
-import org.apache.excalibur.source.SourceUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.templating.Instantiator;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
 
 /**
  * Create a new publication based on a template publication.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class CreatePublicationFromTemplate extends AbstractUsecase {
 
@@ -47,9 +44,8 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
     protected void initParameters() {
         super.initParameters();
 
-        PublicationFactory factory = PublicationFactory.getInstance(getLogger());
         try {
-            Publication[] pubs = factory.getPublications(this.manager);
+            Publication[] pubs = PublicationUtil.getPublications(this.manager);
             List templates = new ArrayList();
             for (int i = 0; i < pubs.length; i++) {
                 if (pubs[i].getInstantiatorHint() != null) {
@@ -77,8 +73,7 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
         if (publicationId.trim().equals("")) {
             addErrorMessage("Please enter a publication ID!");
         } else {
-            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-            Publication publication = factory.getPublication(this.manager, publicationId);
+            Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
             if (publication.exists()) {
                 addErrorMessage("A publication with this ID already exists.");
             }
@@ -93,18 +88,12 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
 
         String templateId = getParameterAsString(TEMPLATE);
 
-        SourceResolver resolver = null;
-        Source contextSource = null;
         ServiceSelector selector = null;
         Instantiator instantiator = null;
 
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            Source context = resolver.resolveURI("context://");
-            String contextPath = SourceUtil.getFile(context).getAbsolutePath();
-            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
 
-            Publication template = factory.getPublication(templateId, contextPath);
+            Publication template = PublicationUtil.getPublication(this.manager, templateId);
             String name = getParameterAsString(PUBLICATION_NAME);
 
             selector = (ServiceSelector) this.manager.lookup(Instantiator.ROLE + "Selector");
@@ -118,12 +107,6 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
                     selector.release(instantiator);
                 }
                 this.manager.release(selector);
-            }
-            if (resolver != null) {
-                if (contextSource != null) {
-                    resolver.release(contextSource);
-                }
-                this.manager.release(resolver);
             }
         }
 

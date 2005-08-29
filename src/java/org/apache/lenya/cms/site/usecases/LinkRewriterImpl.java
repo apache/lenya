@@ -32,6 +32,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
+import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.publication.Publication;
@@ -104,7 +105,8 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
 
                     try {
 
-                        org.w3c.dom.Document xmlDocument = SourceUtil.readDOM(examinedDocument.getSourceURI(), this.manager);
+                        org.w3c.dom.Document xmlDocument = SourceUtil.readDOM(examinedDocument.getSourceURI(),
+                                this.manager);
 
                         for (int xPathIndex = 0; xPathIndex < xPaths.length; xPathIndex++) {
                             NodeList nodes = XPathAPI.selectNodeList(xmlDocument,
@@ -138,7 +140,9 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
 
                         if (linksRewritten) {
                             examinedDocument.getRepositoryNode().lock();
-                            SourceUtil.writeDOM(xmlDocument, examinedDocument.getSourceURI(), this.manager);
+                            SourceUtil.writeDOM(xmlDocument,
+                                    examinedDocument.getSourceURI(),
+                                    this.manager);
                         }
 
                     } finally {
@@ -184,10 +188,11 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
             builder = (DocumentBuilder) selector.select(originalTargetDocument.getPublication()
                     .getDocumentBuilderHint());
 
-            String newTargetUrl = builder.buildCanonicalUrl(newTargetDocument.getPublication(),
+            DocumentIdentifier identifier = new DocumentIdentifier(newTargetDocument.getPublication(),
                     newTargetDocument.getArea(),
                     newTargetDocument.getId() + childString,
                     targetDocument.getLanguage());
+            String newTargetUrl = builder.buildCanonicalUrl(identifier);
             return newTargetUrl;
         } catch (ServiceException e) {
             throw new RuntimeException(e);

@@ -28,7 +28,7 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
 
@@ -161,8 +161,7 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
             String publicationId = info.getPublicationId();
 
             if (publicationId != null) {
-                PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-                Publication pub = factory.getPublication(this.manager, webappUrl);
+                Publication pub = PublicationUtil.getPublicationFromUrl(this.manager, webappUrl);
                 if (pub.exists()) {
                     publication = pub;
                 }

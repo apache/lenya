@@ -35,7 +35,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
@@ -184,8 +184,7 @@ public class SiteOverview extends AbstractUsecase {
      * @throws PublicationException if an error occurs.
      */
     protected Publication getPublication() throws PublicationException {
-        PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-        return factory.getPublication(this.manager, getSourceURL());
+        return PublicationUtil.getPublicationFromUrl(this.manager, getSourceURL());
     }
 
     /**

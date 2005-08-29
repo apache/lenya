@@ -21,10 +21,10 @@ package org.apache.lenya.cms.task;
 
 import java.util.Map;
 
-import org.apache.avalon.framework.logger.ConsoleLogger;
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationUtil;
 
 /**
  * Task Parameters
@@ -41,12 +41,14 @@ public class TaskParameters extends ParameterWrapper {
      */
     public static final String PREFIX = "task";
 
+    private ServiceManager manager;
 
     /**
      * Ctor.
      * @param prefixedParameters The prefixed parameters .
+     * @param manager The service manager.
      */
-    public TaskParameters(Map prefixedParameters) {
+    public TaskParameters(Map prefixedParameters, ServiceManager manager) {
         super(prefixedParameters);
     }
 
@@ -72,9 +74,7 @@ public class TaskParameters extends ParameterWrapper {
     public Publication getPublication() throws ExecutionException {
         Publication publication;
         try {
-            PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
-            publication = factory.getPublication(get(Task.PARAMETER_PUBLICATION_ID),
-                    get(Task.PARAMETER_SERVLET_CONTEXT));
+            publication = PublicationUtil.getPublication(this.manager, get(Task.PARAMETER_PUBLICATION_ID));
         } catch (PublicationException e) {
             throw new ExecutionException(e);
         }

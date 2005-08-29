@@ -32,16 +32,18 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.components.ContextHelper;
+import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceFactory;
-import org.apache.lenya.ac.Identity;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeException;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * A factory for the "lenyadoc" scheme (virtual protocol), which is used to resolve any
@@ -133,29 +135,21 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
             end += 1;
             // Relative: get publication id and area from page envelope
             Map objectModel = ContextHelper.getObjectModel(this.context);
+            Request request = ObjectModelHelper.getRequest(objectModel);
+            Publication pub;
             try {
-                DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
-                PageEnvelopeFactory pageEnvelopeFactory = PageEnvelopeFactory.getInstance();
-
-                if (pageEnvelopeFactory != null) {
-                    PageEnvelope pageEnvelope = pageEnvelopeFactory.getPageEnvelope(map,
-                            objectModel);
-
-                    if (pageEnvelope != null) {
-                        publicationId = pageEnvelope.getPublication().getId();
-                        area = pageEnvelope.getArea();
-                    } else {
-                        throw new SourceException("Error getting publication id / area from page envelope ["
-                                + location + "]");
-                    }
-                } else {
-                    throw new SourceException("Error getting publication id / area from page envelope ["
-                            + location + "]");
-                }
-            } catch (final PageEnvelopeException e) {
+                pub = PublicationUtil.getPublication(this.manager, objectModel);
+            } catch (PublicationException e) {
                 throw new SourceException("Error getting publication id / area from page envelope ["
-                        + location + "]",
-                        e);
+                        + location + "]");
+            }
+            if (pub != null && pub.exists()) {
+                publicationId = pub.getId();
+                String url = ServletHelper.getWebappURI(request);
+                area = new URLInformation(url).getArea();
+            } else {
+                throw new SourceException("Error getting publication id / area from page envelope ["
+                        + location + "]");
             }
         } else {
             throw new MalformedURLException("Malformed lenyadoc: URI [" + location + "]");
@@ -175,12 +169,7 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
         docId = location.substring(start);
 
         Request request = ContextHelper.getRequest(this.context);
-        Session session = (Session) request.getAttribute(Session.class.getName());
-        if (session == null) {
-            Identity identity = (Identity) request.getSession(false)
-                    .getAttribute(Identity.class.getName());
-            session = new Session(identity, getLogger());
-        }
+        Session session = RepositoryUtil.getSession(request, getLogger());
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Creating repository source for URI [" + location + "]");

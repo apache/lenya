@@ -26,8 +26,6 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.ac.Machine;
-import org.apache.lenya.ac.User;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.impl.WorkflowManagerImpl;
 
@@ -48,19 +46,6 @@ public class LenyaWorkflowManager extends WorkflowManagerImpl implements Context
         Situation situation = null;
         if (session != null) {
             Identity identity = (Identity) session.getAttribute(Identity.class.getName());
-
-            User user = identity.getUser();
-            String userId = null;
-            if (user != null) {
-                userId = user.getId();
-            }
-
-            Machine machine = identity.getMachine();
-            String machineIp = null;
-            if (machine != null) {
-                machineIp = machine.getIp();
-            }
-
             situation = new LenyaSituation(identity, this.manager, getLogger());
         } else {
             situation = new LenyaSituation(null, this.manager, getLogger());

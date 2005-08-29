@@ -170,6 +170,10 @@
         shorthand="repository-manager"
         default-class="org.apache.lenya.cms.repository.RepositoryManagerImpl"/>
         
+  <role name="org.apache.lenya.cms.publication.PublicationManager"
+        shorthand="publication-manager"
+        default-class="org.apache.lenya.cms.publication.PublicationManagerImpl"/>
+        
   <role name="org.apache.lenya.cms.repository.NodeFactory"
         shorthand="node-factory"
         default-class="org.apache.lenya.cms.repository.SourceNodeFactory"/>

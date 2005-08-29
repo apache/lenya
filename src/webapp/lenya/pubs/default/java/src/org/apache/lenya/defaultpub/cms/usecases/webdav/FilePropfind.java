@@ -23,7 +23,7 @@ import java.util.Vector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RCML;
@@ -128,9 +128,8 @@ public class FilePropfind extends SiteUsecase {
      */
     protected Publication getPublication() {
         if (this.publication == null) {
-            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
             try {
-                this.publication = factory.getPublication(this.manager, getSourceURL());
+                this.publication = PublicationUtil.getPublicationFromUrl(this.manager, getSourceURL());
             } catch (PublicationException e) {
                 throw new RuntimeException(e);
             }

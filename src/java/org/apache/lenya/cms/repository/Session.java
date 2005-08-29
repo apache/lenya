@@ -20,6 +20,7 @@ import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.Identity;
+import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.transaction.UnitOfWork;
 import org.apache.lenya.transaction.UnitOfWorkImpl;
@@ -31,11 +32,12 @@ public class Session extends AbstractLogEnabled {
     
     /**
      * Ctor.
+     * @param map The identity map.
      * @param identity The identity.
      * @param logger The logger.
      */
-    public Session(Identity identity, Logger logger) {
-        this.unitOfWork = new UnitOfWorkImpl(logger);
+    public Session(IdentityMap map, Identity identity, Logger logger) {
+        this.unitOfWork = new UnitOfWorkImpl(map, logger);
         this.unitOfWork.setIdentity(identity);
         ContainerUtil.enableLogging(this, logger);
     }

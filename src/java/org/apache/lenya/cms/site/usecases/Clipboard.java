@@ -16,13 +16,10 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
  * Clipboard for cut/copy/paste of documents. The clipping method is either {@link #METHOD_CUT}or
@@ -33,7 +30,6 @@ import org.apache.lenya.cms.publication.PublicationFactory;
 public class Clipboard {
 
     private String publicationId;
-    private String servletContextPath;
     private String area;
     private String documentId;
     private String language;
@@ -49,7 +45,6 @@ public class Clipboard {
      */
     public Clipboard(Document document, int _method) {
         this.publicationId = document.getPublication().getId();
-        this.servletContextPath = document.getPublication().getServletContext().getAbsolutePath();
         this.area = document.getArea();
         this.documentId = document.getId();
         this.language = document.getLanguage();
@@ -59,18 +54,11 @@ public class Clipboard {
     /**
      * Returns the document for the current identity map.
      * @param identityMap The identity map.
+     * @param publication The publication.
      * @return A document.
      * @throws DocumentBuildException if the document could not be built.
      */
-    public Document getDocument(DocumentIdentityMap identityMap) throws DocumentBuildException {
-
-        PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
-        Publication publication;
-        try {
-            publication = factory.getPublication(this.publicationId, this.servletContextPath);
-        } catch (PublicationException e) {
-            throw new RuntimeException(e);
-        }
+    public Document getDocument(DocumentIdentityMap identityMap, Publication publication) throws DocumentBuildException {
         Document document = identityMap.get(publication, this.area, this.documentId, this.language);
         return document;
     }

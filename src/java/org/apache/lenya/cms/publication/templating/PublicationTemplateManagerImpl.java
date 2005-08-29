@@ -30,6 +30,8 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationUtil;
 
 /**
  * Manager for publication templates.
@@ -170,10 +172,15 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
 
         publications.add(publication);
 
-        Publication[] templates = publication.getTemplates();
-        for (int i = 0; i < templates.length; i++) {
-            Publication[] templateTemplates = getPublications(templates[i]);
-            publications.addAll(Arrays.asList(templateTemplates));
+        String[] templateIds = publication.getTemplateIds();
+        for (int i = 0; i < templateIds.length; i++) {
+            try {
+                Publication template = PublicationUtil.getPublication(this.manager, templateIds[i]);
+                Publication[] templateTemplates = getPublications(template);
+                publications.addAll(Arrays.asList(templateTemplates));
+            } catch (PublicationException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         return (Publication[]) publications.toArray(new Publication[publications.size()]);

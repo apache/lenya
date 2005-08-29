@@ -28,6 +28,8 @@ public interface DocumentBuilder {
      * The Avalon role.
      */
     String ROLE = DocumentBuilder.class.getName();
+    
+    DocumentIdentifier getIdentitfier(String webappUrl) throws DocumentBuildException;
 
     /**
      * Builds a document.
@@ -38,7 +40,7 @@ public interface DocumentBuilder {
      * @return A document.
      * @throws DocumentBuildException when something went wrong.
      */
-    Document buildDocument(DocumentIdentityMap map, Publication publication, String url)
+    Document buildDocument(DocumentIdentityMap map, DocumentIdentifier identifier)
             throws DocumentBuildException;
 
     /**
@@ -48,7 +50,7 @@ public interface DocumentBuilder {
      * @return A boolean value.
      * @throws DocumentBuildException when something went wrong.
      */
-    boolean isDocument(Publication publication, String url) throws DocumentBuildException;
+    boolean isDocument(String url) throws DocumentBuildException;
 
     /**
      * Builds an URL corresponding to a cms document from the publication, the area, the document id
@@ -59,7 +61,6 @@ public interface DocumentBuilder {
      * @param language The language of the document.
      * @return a String The builded url
      */
-    String buildCanonicalUrl(Publication publication, String area, String documentid,
-            String language);
+    String buildCanonicalUrl(DocumentIdentifier identifier);
 
 }

@@ -38,15 +38,14 @@ import org.apache.lenya.ac.cache.SourceCache;
 import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationUtil;
 
 /**
  * Authorizer for usecases.
  * @version $Id$
  */
-public class UsecaseAuthorizer
-    extends AbstractLogEnabled
-    implements Authorizer, Serviceable, Disposable, Parameterizable {
+public class UsecaseAuthorizer extends AbstractLogEnabled implements Authorizer, Serviceable,
+        Disposable, Parameterizable {
 
     protected static final String TYPE = "usecase";
     protected static final String USECASE_PARAMETER = "lenya.usecase";
@@ -55,25 +54,22 @@ public class UsecaseAuthorizer
     private String configurationUri;
 
     /**
-	 * Returns the configuration source cache.
-	 * @return A source cache.
-	 */
+     * Returns the configuration source cache.
+     * @return A source cache.
+     */
     public SourceCache getCache() {
         return this.cache;
     }
 
     /**
-	 * Returns the source URI of the usecase role configuration file for a certain publication.
-	 * 
-	 * @param publication The publication.
-	 * @return A string representing a URI.
-	 */
+     * Returns the source URI of the usecase role configuration file for a certain publication.
+     * 
+     * @param publication The publication.
+     * @return A string representing a URI.
+     */
     protected String getConfigurationURI(Publication publication) {
-        return "context:///"
-            + Publication.PUBLICATION_PREFIX_URI
-            + "/"
-            + publication.getId()
-            + CONFIGURATION_FILE;
+        return "context:///" + Publication.PUBLICATION_PREFIX_URI + "/" + publication.getId()
+                + CONFIGURATION_FILE;
     }
 
     /**
@@ -94,8 +90,7 @@ public class UsecaseAuthorizer
                 if (getConfigurationURI() != null) {
                     _configurationUri = getConfigurationURI();
                 } else {
-                    PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-                    Publication publication = factory.getPublication(resolver, request);
+                    Publication publication = PublicationUtil.getPublication(this.manager, request);
                     _configurationUri = getConfigurationURI(publication);
                 }
 
@@ -120,16 +115,16 @@ public class UsecaseAuthorizer
     }
 
     /**
-	 * Authorizes a usecase.
-	 * 
-	 * @param usecase The usecase ID.
-	 * @param roles The roles of the current identity.
-	 * @param _configurationUri The URI to retrieve the policy configuration from.
-	 * @return A boolean value.
-	 * @throws AccessControlException when something went wrong.
-	 */
+     * Authorizes a usecase.
+     * 
+     * @param usecase The usecase ID.
+     * @param roles The roles of the current identity.
+     * @param _configurationUri The URI to retrieve the policy configuration from.
+     * @return A boolean value.
+     * @throws AccessControlException when something went wrong.
+     */
     public boolean authorizeUsecase(String usecase, Role[] roles, String _configurationUri)
-        throws AccessControlException {
+            throws AccessControlException {
         getLogger().debug("Authorizing usecase [" + usecase + "]");
         boolean authorized = true;
 
@@ -140,11 +135,12 @@ public class UsecaseAuthorizer
         } catch (CachingException e) {
             throw new AccessControlException(e);
         }
-        
+
         if (usecaseRoles == null) {
-            throw new AccessControlException("Usecase policies configuration not found at [" + _configurationUri + "]");
+            throw new AccessControlException("Usecase policies configuration not found at ["
+                    + _configurationUri + "]");
         }
-        
+
         if (usecaseRoles.hasRoles(usecase)) {
 
             getLogger().debug("Roles for usecase found.");
@@ -155,8 +151,8 @@ public class UsecaseAuthorizer
             authorized = false;
             while (!authorized && i < roles.length) {
                 authorized = usecaseRoleIds.contains(roles[i].getId());
-                getLogger().debug(
-                    "Authorization for role [" + roles[i].getId() + "] is [" + authorized + "]");
+                getLogger().debug("Authorization for role [" + roles[i].getId() + "] is ["
+                        + authorized + "]");
                 i++;
             }
         } else {
@@ -168,8 +164,8 @@ public class UsecaseAuthorizer
     private ServiceManager manager;
 
     /**
-	 * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-	 */
+     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
+     */
     public void service(ServiceManager _manager) throws ServiceException {
         getLogger().debug("Servicing [" + getClass().getName() + "]");
         this.manager = _manager;
@@ -177,8 +173,8 @@ public class UsecaseAuthorizer
     }
 
     /**
-	 * @see org.apache.avalon.framework.activity.Disposable#dispose()
-	 */
+     * @see org.apache.avalon.framework.activity.Disposable#dispose()
+     */
     public void dispose() {
         if (getCache() != null) {
             this.manager.release(getCache());
@@ -189,8 +185,8 @@ public class UsecaseAuthorizer
     protected static final String PARAMETER_CONFIGURATION = "configuration";
 
     /**
-	 * @see org.apache.avalon.framework.parameters.Parameterizable#parameterize(org.apache.avalon.framework.parameters.Parameters)
-	 */
+     * @see org.apache.avalon.framework.parameters.Parameterizable#parameterize(org.apache.avalon.framework.parameters.Parameters)
+     */
     public void parameterize(Parameters parameters) throws ParameterException {
         if (parameters.isParameter(PARAMETER_CONFIGURATION)) {
             this.configurationUri = parameters.getParameter(PARAMETER_CONFIGURATION);
@@ -198,30 +194,30 @@ public class UsecaseAuthorizer
     }
 
     /**
-	 * Returns the configuration URL.
-	 * @return The configuration URL.
-	 */
+     * Returns the configuration URL.
+     * @return The configuration URL.
+     */
     public String getConfigurationURI() {
         return this.configurationUri;
     }
 
     /**
-	 * Authorizes a usecase.
-	 * 
-	 * @param usecase The usecase to authorize.
-	 * @param roles The roles of the identity.
-	 * @param publication The publication.
+     * Authorizes a usecase.
+     * 
+     * @param usecase The usecase to authorize.
+     * @param roles The roles of the identity.
+     * @param publication The publication.
      * @return A boolean value.
      * @throws AccessControlException when something went wrong.
-	 */
+     */
     public boolean authorizeUsecase(String usecase, Role[] roles, Publication publication)
-        throws AccessControlException {
+            throws AccessControlException {
         return authorizeUsecase(usecase, roles, getConfigurationURI(publication));
     }
 
     /**
-     * FIXME: Should this be exposed publically now that this method signature has been removed
-     * from Authorizer?
+     * FIXME: Should this be exposed publically now that this method signature has been removed from
+     * Authorizer?
      */
     public boolean authorize(Request request, String webappUrl) throws AccessControlException {
         return authorize(request);

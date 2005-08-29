@@ -21,13 +21,15 @@ package org.apache.lenya.cms.publication.util;
 
 import java.util.Map;
 
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationUtil;
 
 /**
  * Helper class for the policy GUI.
@@ -41,14 +43,16 @@ public class DocumentLanguagesHelper {
      * Create a new DocumentlanguageHelper.
      * @param map The identity map.
      * @param objectModel the objectModel
+     * @param manager The service manager.
      * @throws ProcessingException if the page envelope could not be created.
      */
-    public DocumentLanguagesHelper(DocumentIdentityMap map, Map objectModel)
+    public DocumentLanguagesHelper(DocumentIdentityMap map, Map objectModel, ServiceManager manager)
             throws ProcessingException {
+        this.identityMap = map;
         try {
-            this.identityMap = map;
-            this.pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
-        } catch (PageEnvelopeException e) {
+            Publication pub = PublicationUtil.getPublication(manager, objectModel);
+            this.pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel, pub);
+        } catch (Exception e) {
             throw new ProcessingException(e);
         }
     }

@@ -22,7 +22,6 @@ package org.apache.lenya.cms.cocoon.task;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -34,8 +33,7 @@ import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.task.DefaultTaskWrapper;
 import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.cms.task.Notifier;
@@ -67,9 +65,8 @@ public class CocoonTaskWrapper extends DefaultTaskWrapper {
 
         Publication publication;
         try {
-            PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
-            publication = factory.getPublication(objectModel);
-        } catch (PublicationException e) {
+            publication = PublicationUtil.getPublication(manager, objectModel);
+        } catch (Exception e) {
             throw new ExecutionException(e);
         }
         Request request = ObjectModelHelper.getRequest(objectModel);
@@ -179,8 +176,7 @@ public class CocoonTaskWrapper extends DefaultTaskWrapper {
             String[] toValues = request.getParameterValues(toKey);
 
             if (toValues == null) {
-                throw new IllegalStateException(
-                        "You must specify at least one [notification.tolist] request parameter!");
+                throw new IllegalStateException("You must specify at least one [notification.tolist] request parameter!");
             }
 
             for (int i = 0; i < toValues.length; i++) {

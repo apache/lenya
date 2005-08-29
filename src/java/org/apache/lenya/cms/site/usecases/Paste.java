@@ -67,7 +67,8 @@ public class Paste extends DocumentUsecase {
         if (clipboard != null) {
             String id;
             try {
-                id = clipboard.getDocument(getDocumentIdentityMap()).getId();
+                Publication pub = getSourceDocument().getPublication();
+                id = clipboard.getDocument(getDocumentIdentityMap(), pub).getId();
             } catch (DocumentBuildException e) {
                 throw new RuntimeException(e);
             }
@@ -90,7 +91,7 @@ public class Paste extends DocumentUsecase {
             DocumentIdentityMap map = getDocumentIdentityMap();
             Publication pub = getSourceDocument().getPublication();
             String area = getSourceDocument().getArea();
-            Document clippedDocument = clipboard.getDocument(map);
+            Document clippedDocument = clipboard.getDocument(map, pub);
 
             String clippedName = clippedDocument.getName();
             String clippedId = clippedDocument.getId();
@@ -124,7 +125,8 @@ public class Paste extends DocumentUsecase {
 
         DocumentIdentityMap identityMap = getDocumentIdentityMap();
         Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
-        Document clippedDocument = clipboard.getDocument(identityMap);
+        Publication pub = getSourceDocument().getPublication();
+        Document clippedDocument = clipboard.getDocument(identityMap, pub);
 
         Document targetDocument = getTargetDocument();
         DocumentManager documentManager = null;
@@ -149,7 +151,8 @@ public class Paste extends DocumentUsecase {
             ServiceException {
         DocumentIdentityMap identityMap = getDocumentIdentityMap();
         Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
-        Document clippedDocument = clipboard.getDocument(identityMap);
+        Publication pub = getSourceDocument().getPublication();
+        Document clippedDocument = clipboard.getDocument(identityMap, pub);
 
         String targetArea = getSourceDocument().getArea();
         String language = clippedDocument.getLanguage();

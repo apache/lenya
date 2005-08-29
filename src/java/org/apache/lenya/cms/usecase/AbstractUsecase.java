@@ -37,12 +37,12 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.servlet.multipart.Part;
-import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.LockException;
 
@@ -482,9 +482,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      */
     public final void initialize() throws Exception {
         Request request = ContextHelper.getRequest(this.context);
-        Session session = request.getSession(true);
-        Identity identity = (Identity) session.getAttribute(Identity.class.getName());
-        setSession(new org.apache.lenya.cms.repository.Session(identity, getLogger()));
+        Session session = RepositoryUtil.getSession(request, getLogger());
+        setSession(session);
     }
 
     /**

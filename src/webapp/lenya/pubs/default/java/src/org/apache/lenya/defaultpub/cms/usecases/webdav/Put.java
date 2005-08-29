@@ -30,11 +30,11 @@ import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
@@ -220,9 +220,8 @@ public class Put extends DocumentUsecase {
      */
     protected Publication getPublication() {
         if (this.publication == null) {
-            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
             try {
-                this.publication = factory.getPublication(this.manager, getSourceURL());
+                this.publication = PublicationUtil.getPublicationFromUrl(this.manager, getSourceURL());
             } catch (PublicationException e) {
                 throw new RuntimeException(e);
             }

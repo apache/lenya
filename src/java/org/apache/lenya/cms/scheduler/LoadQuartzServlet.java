@@ -46,8 +46,9 @@ import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationManagerImpl;
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.scheduler.xml.TriggerHelper;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.xml.DocumentHelper;
@@ -274,7 +275,7 @@ public class LoadQuartzServlet extends HttpServlet {
                 getScheduler().deleteJob(jobId, publicationId);
             } else if (action.equals(DOCUMENT_DELETED)) {
                 String documentUrl = (String) schedulerParameters.get(PARAMETER_DOCUMENT_URL);
-                DocumentIdentityMap map = new DocumentIdentityMap(null, null);
+                DocumentIdentityMap map = new DocumentIdentityMap((Session) null, null, null);
                 org.apache.lenya.cms.publication.Document document = map.getFromURL(documentUrl);
                 deleteDocumentJobs(document);
             }
@@ -406,7 +407,8 @@ public class LoadQuartzServlet extends HttpServlet {
         for (int i = 0; i < publicationDirectories.length; i++) {
             File directory = publicationDirectories[i];
             String publicationId = directory.getName();
-            PublicationFactory factory = PublicationFactory.getInstance(new ConsoleLogger());
+            /*
+            PublicationManagerImpl factory = PublicationManagerImpl.getInstance(new ConsoleLogger());
             Publication publication;
             try {
                 publication = factory.getPublication(publicationId, getServletContextDirectory());
@@ -416,6 +418,7 @@ public class LoadQuartzServlet extends HttpServlet {
             if (publication.exists()) {
                 getScheduler().restoreJobs(publicationId);
             }
+            */
         }
     }
 

@@ -17,8 +17,6 @@
 package org.apache.lenya.cms.usecase.gui;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,7 +32,6 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
-import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.AccessControlException;
@@ -46,12 +43,11 @@ import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseMessage;
 import org.apache.lenya.cms.usecase.UsecaseResolver;
 import org.apache.lenya.util.ServletHelper;
-import org.xml.sax.SAXException;
 
 /**
  * GUI manager implementation.
@@ -167,8 +163,7 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Co
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("Found usecase [" + tab.getUsecase() + "]");
                 }
-                PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-                Publication pub = factory.getPublication(this.manager, this.webappUrl);
+                Publication pub = PublicationUtil.getPublicationFromUrl(this.manager, this.webappUrl);
                 if (!authorizer.authorizeUsecase(tab.getUsecase(), this.roles, pub)) {
                     if (getLogger().isDebugEnabled()) {
                         getLogger().debug("Usecase not authorized");

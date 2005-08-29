@@ -29,6 +29,8 @@ import org.apache.avalon.framework.parameters.Parameterizable;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.cms.publication.Document;
@@ -36,13 +38,15 @@ import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.cms.site.tree.TreeSiteManager;
+import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -106,12 +110,14 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
             parameterize(_parameters);
 
             PageEnvelope envelope = null;
-            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-            this.publication = factory.getPublication(_objectModel);
-            this.identityMap = new DocumentIdentityMap(this.manager, getLogger());
-            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(this.identityMap,
-                    _objectModel);
-
+            this.publication = PublicationUtil.getPublication(this.manager, _objectModel);
+            Request request = ObjectModelHelper.getRequest(_objectModel);
+            Session session = RepositoryUtil.getSession(request, getLogger());
+            this.identityMap = new DocumentIdentityMap(session, this.manager, getLogger());
+            
+            String url = ServletHelper.getWebappURI(request);
+            setDocument(this.identityMap.getFromURL(url));
+            
             setDocument(envelope.getDocument());
             setArea(this.document.getArea());
 
@@ -157,7 +163,7 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
                 for (int i = 0; i < children.length; i++) {
                     String childId = documentId + "/" + children[i].getId();
 
-                    //get child document with the same language than the parent
+                    // get child document with the same language than the parent
                     // document
                     Document doc;
                     try {
@@ -168,7 +174,7 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
                     String url = doc.getCanonicalWebappURL();
 
                     if (!doc.exists()) {
-                        //get first the child document in the default language
+                        // get first the child document in the default language
                         // and then in any
                         // other
                         // existent language
@@ -176,7 +182,7 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
                                 + "] in the same language as the parent document [" + language
                                 + "]");
 
-                        //available language
+                        // available language
                         String[] availableLanguages = null;
                         try {
                             availableLanguages = doc.getLanguages();
@@ -187,9 +193,8 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
                         List languages = new ArrayList();
                         for (int l = 0; l < availableLanguages.length; l++) {
                             if (availableLanguages[l].equals(language)) {
-                                getLogger()
-                                        .debug("Do nothing because language was already tested: ["
-                                                + availableLanguages[l] + "]");
+                                getLogger().debug("Do nothing because language was already tested: ["
+                                        + availableLanguages[l] + "]");
                             } else if (availableLanguages[l].equals(defaultLanguage)) {
                                 languages.add(0, availableLanguages[l]);
                             } else {
@@ -215,7 +220,7 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
                     }
 
                     if (doc.exists()) {
-                        //create the tags for the child
+                        // create the tags for the child
                         String sourceUri = doc.getSourceURI();
 
                         AttributesImpl attribute = new AttributesImpl();
@@ -232,7 +237,7 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
                                 + "include");
                         super.endElement(NAMESPACE, "child", PREFIX + "child");
                     } else {
-                        //do nothing for this child
+                        // do nothing for this child
                         getLogger().warn("There are no existing file for the child with id "
                                 + childId);
                     }

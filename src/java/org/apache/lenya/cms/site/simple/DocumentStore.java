@@ -24,6 +24,7 @@ import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.CollectionImpl;
@@ -35,7 +36,7 @@ import org.w3c.dom.Element;
 /**
  * Site structure object which stores a list of documents.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class DocumentStore extends CollectionImpl implements SiteStructure {
 
@@ -56,7 +57,10 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
      */
     public DocumentStore(ServiceManager manager, DocumentIdentityMap map, Publication publication,
             String area, Logger _logger) throws DocumentException {
-        super(manager, map, publication, DOCUMENT_ID, area, _logger);
+        super(manager, map, new DocumentIdentifier(publication,
+                DOCUMENT_ID,
+                area,
+                publication.getDefaultLanguage()), _logger);
     }
 
     protected static final String ATTRIBUTE_LANGUAGE = "xml:lang";

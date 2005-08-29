@@ -42,62 +42,41 @@ import org.apache.lenya.cms.site.SiteManager;
  */
 public class DefaultDocument extends AbstractLogEnabled implements Document {
 
-    private String id;
+    private DocumentIdentifier identifier;
     private String sourceURI;
     private DocumentIdentityMap identityMap;
     protected ServiceManager manager;
     private MetaDataManager metaDataManager;
 
     /**
-     * Creates a new instance of DefaultDocument. The language of the document is the default
-     * language of the publication.
-     * @param manager The service manager.
-     * @param map The identity map the document belongs to.
-     * @param publication The publication.
-     * @param _id The document ID (starting with a slash).
-     * @param _area The area.
-     * @param _logger a logger
-     */
-    protected DefaultDocument(ServiceManager manager, DocumentIdentityMap map,
-            Publication publication, String _id, String _area, Logger _logger) {
-        this(manager, map, publication, _id, _area, publication.getDefaultLanguage(), _logger);
-    }
-
-    /**
      * Creates a new instance of DefaultDocument.
      * @param manager The service manager.
      * @param map The identity map the document belongs to.
-     * @param publication The publication.
-     * @param _id The document ID (starting with a slash).
-     * @param _area The area.
-     * @param _language the language
+     * @param identifier The identifier.
      * @param _logger a logger
      */
     protected DefaultDocument(ServiceManager manager, DocumentIdentityMap map,
-            Publication publication, String _id, String _area, String _language, Logger _logger) {
+            DocumentIdentifier identifier, Logger _logger) {
 
         ContainerUtil.enableLogging(this, _logger);
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("DefaultDocument() creating new instance with _id [" + _id
-                    + "], _language [" + _language + "]");
+        // if (getLogger().isDebugEnabled())
+        getLogger().error("DefaultDocument() creating new instance with id [" + identifier.getId()
+                + "], language [" + identifier.getLanguage() + "]");
 
         this.manager = manager;
-        if (_id == null) {
+        this.identifier = identifier;
+        if (identifier.getId() == null) {
             throw new IllegalArgumentException("The document ID must not be null!");
         }
-        if (!_id.startsWith("/")) {
+        if (!identifier.getId().startsWith("/")) {
             throw new IllegalArgumentException("The document ID must start with a slash!");
         }
-        this.id = _id;
-        this.publication = publication;
 
         this.identityMap = map;
-        this.language = _language;
-        setArea(_area);
 
         if (getLogger().isDebugEnabled())
-            getLogger().debug("DefaultDocument() done building instance with _id [" + _id
-                    + "], _language [" + _language + "]");
+            getLogger().debug("DefaultDocument() done building instance with _id [" + identifier.getId()
+                    + "], _language [" + identifier.getLanguage() + "]");
 
     }
 
@@ -105,26 +84,24 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.cms.publication.Document#getId()
      */
     public String getId() {
-        return this.id;
+        return this.identifier.getId();
     }
 
     /**
      * @see org.apache.lenya.cms.publication.Document#getName()
      */
     public String getName() {
-        String[] ids = this.id.split("/");
+        String[] ids = getId().split("/");
         String nodeId = ids[ids.length - 1];
 
         return nodeId;
     }
 
-    private Publication publication;
-
     /**
      * @see org.apache.lenya.cms.publication.Document#getPublication()
      */
     public Publication getPublication() {
-        return this.publication;
+        return this.identifier.getPublication();
     }
 
     /**
@@ -145,13 +122,11 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
                 getLanguage());
     }
 
-    private String language = "";
-
     /**
      * @see org.apache.lenya.cms.publication.Document#getLanguage()
      */
     public String getLanguage() {
-        return this.language;
+        return this.identifier.getLanguage();
     }
 
     /**
@@ -175,15 +150,6 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         }
 
         return (String[]) documentLanguages.toArray(new String[documentLanguages.size()]);
-    }
-
-    /**
-     * Sets the language of this document.
-     * @param _language The language.
-     */
-    public void setLanguage(String _language) {
-        assert _language != null;
-        this.language = _language;
     }
 
     /**
@@ -212,24 +178,11 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         return labelString;
     }
 
-    private String area;
-
     /**
      * @see org.apache.lenya.cms.publication.Document#getArea()
      */
     public String getArea() {
-        return this.area;
-    }
-
-    /**
-     * Sets the area.
-     * @param _area A string.
-     */
-    protected void setArea(String _area) {
-        if (!PublicationImpl.isValidArea(_area)) {
-            throw new IllegalArgumentException("The area [" + _area + "] is not valid!");
-        }
-        this.area = _area;
+        return this.identifier.getArea();
     }
 
     private String extension = "html";
@@ -424,8 +377,8 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @return A URI.
      */
     private String getDefaultSourceURI() {
-        String path = publication.getPathMapper().getPath(getId(), getLanguage());
-        return publication.getSourceURI() + "/content/" + getArea() + "/" + path;
+        String path = getPublication().getPathMapper().getPath(getId(), getLanguage());
+        return getPublication().getSourceURI() + "/content/" + getArea() + "/" + path;
 
     }
 

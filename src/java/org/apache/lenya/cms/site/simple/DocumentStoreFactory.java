@@ -16,21 +16,16 @@
  */
 package org.apache.lenya.cms.site.simple;
 
-import java.io.File;
-
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceResolver;
-import org.apache.excalibur.source.SourceUtil;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.transaction.Identifiable;
-import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.IdentifiableFactory;
+import org.apache.lenya.transaction.IdentityMap;
 
 /**
  * Factory for sitetree objects.
@@ -60,30 +55,15 @@ public class DocumentStoreFactory extends AbstractLogEnabled implements Identifi
         String publicationId = snippets[0];
         String area = snippets[1];
 
-        SourceResolver resolver = null;
-        Source source = null;
-        DocumentStore store;
-        try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI("context://");
-            File servletContext = SourceUtil.getFile(source);
+        Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
 
-            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-            Publication publication = factory.getPublication(publicationId, servletContext
-                    .getAbsolutePath());
+        DocumentIdentityMap docMap = new DocumentIdentityMap(map, this.manager, getLogger());
+        DocumentStore store = new DocumentStore(this.manager,
+                docMap,
+                publication,
+                area,
+                getLogger());
 
-            DocumentIdentityMap docMap = new DocumentIdentityMap(map, this.manager, getLogger());
-            store = new DocumentStore(this.manager, docMap, publication, area,
-                    getLogger());
-
-        } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
-            }
-        }
         return store;
     }
 

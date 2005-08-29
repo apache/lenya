@@ -25,6 +25,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.regex.Pattern;
 
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
@@ -33,10 +34,10 @@ import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.PathToDocumentIdMapper;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.search.Grep;
 import org.apache.log4j.Logger;
 
@@ -54,15 +55,17 @@ public class DocumentReferencesHelper {
      * Create a new DocumentReferencesHelper
      * @param map The identity map.
      * @param objectModel the objectModel
+     * @param manager The service manager.
      * 
      * @throws ProcessingException if the page envelope could not be created.
      */
-    public DocumentReferencesHelper(DocumentIdentityMap map, Map objectModel)
+    public DocumentReferencesHelper(DocumentIdentityMap map, Map objectModel, ServiceManager manager)
             throws ProcessingException {
         this.identityMap = map;
         try {
-            this.pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
-        } catch (PageEnvelopeException e) {
+            Publication pub = PublicationUtil.getPublication(manager, objectModel);
+            this.pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel, pub);
+        } catch (Exception e) {
             throw new ProcessingException(e);
         }
     }

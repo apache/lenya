@@ -64,7 +64,6 @@ public class RoleCondition extends AbstractCondition {
      *      Workflowable)
      */
     public boolean isComplied(Workflow workflow, Situation situation, Workflowable instance) {
-        LenyaSituation situationImpl = (LenyaSituation) situation;
 
         DocumentWorkflowable workflowable = (DocumentWorkflowable) instance;
         LenyaSituation lenyaSituation = (LenyaSituation) situation;
@@ -80,26 +79,22 @@ public class RoleCondition extends AbstractCondition {
             acResolver = (AccessControllerResolver) selector.select(AccessControllerResolver.DEFAULT_RESOLVER);
             accessController = acResolver.resolveAccessController(url);
 
-            if (accessController instanceof DefaultAccessController) {
-                DefaultAccessController defaultAccessController = (DefaultAccessController) accessController;
-                PolicyManager policyManager = defaultAccessController.getPolicyManager();
+            DefaultAccessController defaultAccessController = (DefaultAccessController) accessController;
+            PolicyManager policyManager = defaultAccessController.getPolicyManager();
 
-                Policy policy = policyManager.getPolicy(defaultAccessController.getAccreditableManager(),
-                        url);
+            Policy policy = policyManager.getPolicy(defaultAccessController.getAccreditableManager(),
+                    url);
 
-                Role[] roles = policy.getRoles(lenyaSituation.getIdentity());
-                boolean complied = false;
+            Role[] roles = policy.getRoles(lenyaSituation.getIdentity());
+            boolean complied = false;
 
-                for (int i = 0; i < roles.length; i++) {
-                    if (this.roleIds.contains(roles[i].getId())) {
-                        complied = true;
-                    }
+            for (int i = 0; i < roles.length; i++) {
+                if (this.roleIds.contains(roles[i].getId())) {
+                    complied = true;
                 }
-
-                return complied;
-            } else {
-                throw new IllegalStateException("Only supported for default access controllers!");
             }
+
+            return complied;
 
         } catch (final Exception e) {
             throw new RuntimeException(e);

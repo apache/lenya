@@ -24,7 +24,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.jcr.metadata.JCRMetaDataManager;
@@ -33,7 +32,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
@@ -48,9 +47,8 @@ public class Import extends AbstractUsecase {
 
     protected void initParameters() {
         super.initParameters();
-        PublicationFactory factory = PublicationFactory.getInstance(getLogger());
         try {
-            Publication[] pubs = factory.getPublications(this.manager);
+            Publication[] pubs = PublicationUtil.getPublications(this.manager);
             List pubList = Arrays.asList(pubs);
             setParameter(PUBLICATIONS, pubList);
         } catch (PublicationException e) {
@@ -60,7 +58,6 @@ public class Import extends AbstractUsecase {
 
     protected void doExecute() throws Exception {
         super.doExecute();
-        PublicationFactory factory = PublicationFactory.getInstance(getLogger());
         String pubId = getParameterAsString(PUBLICATION);
         DocumentIdentityMap map = getDocumentIdentityMap();
         ServiceSelector selector = null;
@@ -68,10 +65,7 @@ public class Import extends AbstractUsecase {
         SourceResolver resolver = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            Source context = resolver.resolveURI("context://");
-            String contextPath = org.apache.excalibur.source.SourceUtil.getFile(context)
-                    .getAbsolutePath();
-            Publication pub = factory.getPublication(pubId, contextPath);
+            Publication pub = PublicationUtil.getPublication(this.manager, pubId);
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(pub.getSiteManagerHint());
 

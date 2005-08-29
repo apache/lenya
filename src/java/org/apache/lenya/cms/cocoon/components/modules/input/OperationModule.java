@@ -17,21 +17,29 @@
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
 import org.apache.avalon.framework.activity.Initializable;
+import org.apache.avalon.framework.context.Context;
+import org.apache.avalon.framework.context.ContextException;
+import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
+import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.transaction.Operation;
 import org.apache.lenya.transaction.UnitOfWork;
 import org.apache.lenya.transaction.UnitOfWorkImpl;
 
 /**
  * Super class for operation-based input modules.
- *
- * @version $Id$ 
+ * 
+ * @version $Id$
  */
-public class OperationModule extends AbstractInputModule implements Operation, Serviceable, Initializable {
+public class OperationModule extends AbstractInputModule implements Operation, Serviceable,
+        Initializable, Contextualizable {
 
     /**
      * Ctor.
@@ -41,36 +49,40 @@ public class OperationModule extends AbstractInputModule implements Operation, S
     }
 
     private UnitOfWork unitOfWork;
-    
+
     private DocumentIdentityMap documentIdentityMap;
-    
+
+    private Request request;
+
     protected DocumentIdentityMap getDocumentIdentityMap() {
         if (this.documentIdentityMap == null) {
-            this.documentIdentityMap = new DocumentIdentityMap(this.manager, getLogger());
+            Session session = RepositoryUtil.getSession(this.request, getLogger());
+            this.documentIdentityMap = new DocumentIdentityMap(session, this.manager, getLogger());
         }
         return this.documentIdentityMap;
     }
 
     /**
-     * Retrieves a unit-of-work, which gives the operation access to business
-     * objects affected by the operation.
-     *
+     * Retrieves a unit-of-work, which gives the operation access to business objects affected by
+     * the operation.
+     * 
      * @return a UnitOfWork, the interface to access the objects
-     * @throws ServiceException if the unit-of-work component can not be initialized by the component framework
-     *
+     * @throws ServiceException if the unit-of-work component can not be initialized by the
+     *             component framework
+     * 
      * @see org.apache.lenya.transaction.Operation#getUnitOfWork()
      */
     public UnitOfWork getUnitOfWork() throws ServiceException {
         if (this.unitOfWork == null) {
-           if (getLogger().isDebugEnabled())
-               getLogger().debug("OperationModule.getUnitOfWork() does not yet have instance.");
+            if (getLogger().isDebugEnabled())
+                getLogger().debug("OperationModule.getUnitOfWork() does not yet have instance.");
 
-           this.unitOfWork = new UnitOfWorkImpl(getLogger());
+            this.unitOfWork = new UnitOfWorkImpl(getDocumentIdentityMap().getIdentityMap(),
+                    getLogger());
         }
 
         return this.unitOfWork;
     }
-
 
     protected ServiceManager manager;
 
@@ -85,7 +97,7 @@ public class OperationModule extends AbstractInputModule implements Operation, S
      * @see org.apache.avalon.framework.activity.Initializable#initialize()
      */
     public void initialize() throws Exception {
-       // do nothing
+        // do nothing
     }
 
     /**
@@ -105,5 +117,9 @@ public class OperationModule extends AbstractInputModule implements Operation, S
     public void setUnitOfWork(UnitOfWork unit) {
         this.unitOfWork = unit;
     }
-    
+
+    public void contextualize(Context context) throws ContextException {
+        this.request = ContextHelper.getRequest(context);
+    }
+
 }

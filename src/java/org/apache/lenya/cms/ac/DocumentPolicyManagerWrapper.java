@@ -19,21 +19,21 @@
 
 package org.apache.lenya.cms.ac;
 
-import java.io.File;
-
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.context.Context;
+import org.apache.avalon.framework.context.ContextException;
+import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceResolver;
-import org.apache.excalibur.source.SourceUtil;
+import org.apache.cocoon.components.ContextHelper;
+import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.AccreditableManager;
@@ -45,14 +45,16 @@ import org.apache.lenya.ac.impl.InheritingPolicyManager;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 
 /**
  * A PolicyManager which is capable of mapping all URLs of a document to the appropriate canonical
  * URL, e.g. <code>/foo/bar_de.print.html</code> is mapped to <code>/foo/bar</code>.
  */
 public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
-        InheritingPolicyManager, Serviceable, Configurable, Disposable {
+        InheritingPolicyManager, Serviceable, Configurable, Disposable, Contextualizable {
 
     /**
      * Ctor.
@@ -79,7 +81,10 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         Publication publication = getPublication(webappUrl);
         String url = null;
         try {
-            DocumentIdentityMap map = new DocumentIdentityMap(getServiceManager(), getLogger());
+            Session session = RepositoryUtil.getSession(this.request, getLogger());
+            DocumentIdentityMap map = new DocumentIdentityMap(session,
+                    getServiceManager(),
+                    getLogger());
             if (map.isDocument(webappUrl)) {
                 Document document = map.getFromURL(webappUrl);
                 if (document.existsInAnyLanguage()) {
@@ -116,29 +121,11 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
     protected Publication getPublication(String url) throws AccessControlException {
         getLogger().debug("Building publication");
 
-        Publication publication;
-        Source source = null;
-        SourceResolver resolver = null;
-
         try {
-            resolver = (SourceResolver) this.serviceManager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI("context:///");
-            File servletContext = SourceUtil.getFile(source);
-            getLogger().debug("    Webapp URL:      [" + url + "]");
-            getLogger().debug("    Serlvet context: [" + servletContext.getAbsolutePath() + "]");
-            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-            publication = factory.getPublication(url, servletContext);
+            return PublicationUtil.getPublicationFromUrl(this.serviceManager, url);
         } catch (Exception e) {
             throw new AccessControlException(e);
-        } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.serviceManager.release(resolver);
-            }
         }
-        return publication;
     }
 
     private ServiceManager serviceManager;
@@ -242,18 +229,17 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
     public void configure(Configuration configuration) throws ConfigurationException {
-        Configuration policyManagerConfiguration = configuration
-                .getChild(this.ELEMENT_POLICY_MANAGER, false);
+        Configuration policyManagerConfiguration = configuration.getChild(this.ELEMENT_POLICY_MANAGER,
+                false);
         if (policyManagerConfiguration != null) {
             String type = null;
             try {
                 type = policyManagerConfiguration.getAttribute(this.ATTRIBUTE_TYPE);
 
-                this.policyManagerSelector = (ServiceSelector) getServiceManager()
-                        .lookup(PolicyManager.ROLE + "Selector");
+                this.policyManagerSelector = (ServiceSelector) getServiceManager().lookup(PolicyManager.ROLE
+                        + "Selector");
 
-                PolicyManager _policyManager = (PolicyManager) this.policyManagerSelector
-                        .select(type);
+                PolicyManager _policyManager = (PolicyManager) this.policyManagerSelector.select(type);
 
                 if (!(_policyManager instanceof InheritingPolicyManager)) {
                     throw new AccessControlException("The " + getClass().getName()
@@ -303,6 +289,12 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
     public void accreditableAdded(AccreditableManager manager, Accreditable accreditable)
             throws AccessControlException {
         getPolicyManager().accreditableAdded(manager, accreditable);
+    }
+
+    private Request request;
+
+    public void contextualize(Context context) throws ContextException {
+        this.request = ContextHelper.getRequest(context);
     }
 
 }

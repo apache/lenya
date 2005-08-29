@@ -26,13 +26,19 @@ import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.acting.ServiceableAction;
+import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
+import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentDoesNotExistException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 
 /**
  * Action that checks the sitetree if there is a node with the current document-id and the current
@@ -57,16 +63,18 @@ public class LanguageExistsAction extends ServiceableAction {
      * 
      * @exception DocumentDoesNotExistException if there is no document with the specified
      *                document-id.
-     * @exception PageEnvelopeException if the PageEnvelope could not be created.
-     * @exception DocumentException if the language information could not be fetched from the
-     *                document.
+     * @exception Exception if the PageEnvelope could not be created or if the language information
+     *                could not be fetched from the document.
      */
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source,
             Parameters parameters) throws Exception {
 
-        DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
+        Request request = ObjectModelHelper.getRequest(objectModel);
+        Session session = RepositoryUtil.getSession(request, getLogger());
+        DocumentIdentityMap map = new DocumentIdentityMap(session, this.manager, getLogger());
+        Publication pub = PublicationUtil.getPublication(this.manager, objectModel);
         PageEnvelope pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map,
-                objectModel);
+                objectModel, pub);
 
         Document doc = pageEnvelope.getDocument();
         String language = doc.getLanguage();

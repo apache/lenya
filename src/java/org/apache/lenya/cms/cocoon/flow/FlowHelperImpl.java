@@ -39,10 +39,14 @@ import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
 import org.apache.lenya.cms.rc.FileReservedCheckInException;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RevisionController;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
@@ -82,9 +86,17 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Se
      * @see org.apache.lenya.cms.cocoon.flow.FlowHelper#getPageEnvelope(org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon)
      */
     public PageEnvelope getPageEnvelope(FOM_Cocoon cocoon) throws PageEnvelopeException {
-        DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
+        Request request = getRequest(cocoon);
+        Session session = RepositoryUtil.getSession(request, getLogger());
+        DocumentIdentityMap map = new DocumentIdentityMap(session, this.manager, getLogger());
         PageEnvelopeFactory factory = PageEnvelopeFactory.getInstance();
-        return factory.getPageEnvelope(map, cocoon.getObjectModel());
+        Publication publication;
+        try {
+            publication = PublicationUtil.getPublication(this.manager, request);
+        } catch (PublicationException e) {
+            throw new PageEnvelopeException(e);
+        }
+        return factory.getPageEnvelope(map, cocoon.getObjectModel(), publication);
     }
 
     /**
@@ -164,8 +176,8 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Se
             throws PageEnvelopeException, IOException {
         final Publication publication = getPageEnvelope(cocoon).getPublication();
         final String publicationPath = publication.getDirectory().getCanonicalPath();
-        final RCEnvironment rcEnvironment = RCEnvironment.getInstance(publication
-                .getServletContext().getCanonicalPath());
+        final RCEnvironment rcEnvironment = RCEnvironment.getInstance(publication.getServletContext()
+                .getCanonicalPath());
         String rcmlDirectory = rcEnvironment.getRCMLDirectory();
         rcmlDirectory = publicationPath + File.separator + rcmlDirectory;
         String backupDirectory = rcEnvironment.getBackupDirectory();
@@ -181,10 +193,13 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Se
     public void reservedCheckIn(FOM_Cocoon cocoon, boolean backup)
             throws FileReservedCheckInException, Exception {
         final Identity identity = (Identity) ObjectModelHelper.getRequest(cocoon.getObjectModel())
-                .getSession().getAttribute(Identity.class.getName());
+                .getSession()
+                .getAttribute(Identity.class.getName());
         final PageEnvelope pageEnvelope = getPageEnvelope(cocoon);
         final Publication publication = getPageEnvelope(cocoon).getPublication();
-        final String filename = pageEnvelope.getDocument().getFile().getCanonicalPath()
+        final String filename = pageEnvelope.getDocument()
+                .getFile()
+                .getCanonicalPath()
                 .substring(publication.getDirectory().getCanonicalPath().length());
         getRevisionController(cocoon).reservedCheckIn(filename,
                 identity.getUser().getId(),

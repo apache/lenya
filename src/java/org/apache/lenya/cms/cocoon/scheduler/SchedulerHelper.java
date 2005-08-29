@@ -23,16 +23,16 @@ import java.util.Map;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.ProcessingException;
+import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.lenya.cms.cocoon.task.CocoonTaskWrapper;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeException;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.scheduler.LoadQuartzServlet;
 import org.apache.lenya.cms.scheduler.ServletJob;
-import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.cms.task.TaskWrapper;
 import org.apache.lenya.util.NamespaceMap;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * Scheduler helper
@@ -73,18 +73,15 @@ public class SchedulerHelper {
 
             NamespaceMap schedulerParameters = new NamespaceMap(LoadQuartzServlet.PREFIX);
 
-            DocumentIdentityMap identityMap = new DocumentIdentityMap(null, null);
-            PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(identityMap,
-                    this.objectModel);
+            DocumentIdentityMap identityMap = new DocumentIdentityMap((Session) null, null, null);
+            String url = ServletHelper.getWebappURI(ObjectModelHelper.getRequest(this.objectModel));
+            Publication pub = null;
 
-            schedulerParameters.put(ServletJob.PARAMETER_DOCUMENT_URL, envelope.getDocument()
+            schedulerParameters.put(ServletJob.PARAMETER_DOCUMENT_URL,identityMap.getFromURL(url)
                     .getCanonicalWebappURL());
-            schedulerParameters.put(LoadQuartzServlet.PARAMETER_PUBLICATION_ID, envelope
-                    .getPublication().getId());
+            schedulerParameters.put(LoadQuartzServlet.PARAMETER_PUBLICATION_ID, pub.getId());
             map.putAll(schedulerParameters.getPrefixedMap());
-        } catch (final ExecutionException e) {
-            throw new ProcessingException(e);
-        } catch (final PageEnvelopeException e) {
+        } catch (final Exception e) {
             throw new ProcessingException(e);
         }
 

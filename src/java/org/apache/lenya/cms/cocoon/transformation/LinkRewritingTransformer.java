@@ -18,8 +18,9 @@ package org.apache.lenya.cms.cocoon.transformation;
 
 import java.io.IOException;
 import java.util.Map;
-import org.apache.avalon.framework.parameters.Parameters;
+
 import org.apache.avalon.framework.activity.Disposable;
+import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
@@ -40,11 +41,10 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeException;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -94,12 +94,14 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
             Parameters _parameters) throws ProcessingException, SAXException, IOException {
         super.setup(_resolver, _objectModel, _source, _parameters);
 
+        Request _request = ObjectModelHelper.getRequest(_objectModel);
+        
         try {
-            this.identityMap = new DocumentIdentityMap(this.manager, getLogger());
-            PageEnvelope envelope = PageEnvelopeFactory.getInstance()
-                    .getPageEnvelope(this.identityMap, _objectModel);
-            this.currentDocument = envelope.getDocument();
-        } catch (final PageEnvelopeException e1) {
+            Session session = RepositoryUtil.getSession(_request, getLogger());
+            this.identityMap = new DocumentIdentityMap(session, this.manager, getLogger());
+            String url = ServletHelper.getWebappURI(_request);
+            this.currentDocument = this.identityMap.getFromURL(url);
+        } catch (final Exception e1) {
             throw new ProcessingException(e1);
         }
 
@@ -107,8 +109,6 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
             getLogger().debug("Setting up transformer");
             getLogger().debug("    Processed version:       [" + getCurrentDocument() + "]");
         }
-
-        Request _request = ObjectModelHelper.getRequest(_objectModel);
 
         this.serviceSelector = null;
         this.acResolver = null;

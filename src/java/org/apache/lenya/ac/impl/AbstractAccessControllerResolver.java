@@ -115,7 +115,7 @@ public abstract class AbstractAccessControllerResolver
         */
     }
 
-    private ServiceManager manager;
+    protected ServiceManager manager;
 
     /**
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)

@@ -30,8 +30,8 @@ import org.apache.lenya.cms.publication.DefaultDocument;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
@@ -52,31 +52,13 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      * Ctor.
      * @param manager The service manager.
      * @param map A document identity map.
-     * @param publication The publication.
-     * @param id The document ID.
-     * @param area The area the document belongs to.
+     * @param identifier The identifier.
      * @param _logger a logger
      * @throws DocumentException when something went wrong.
      */
-    public CollectionImpl(ServiceManager manager, DocumentIdentityMap map, Publication publication,
-            String id, String area, Logger _logger) throws DocumentException {
-        super(manager, map, publication, id, area, _logger);
-    }
-
-    /**
-     * Ctor.
-     * @param manager The service manager.
-     * @param map A document identity map.
-     * @param publication The publication.
-     * @param id The document ID.
-     * @param area The area the document belongs to.
-     * @param language The language of the document.
-     * @param _logger a logger
-     * @throws DocumentException when something went wrong.
-     */
-    public CollectionImpl(ServiceManager manager, DocumentIdentityMap map, Publication publication,
-            String id, String area, String language, Logger _logger) throws DocumentException {
-        super(manager, map, publication, id, area, language, _logger);
+    public CollectionImpl(ServiceManager manager, DocumentIdentityMap map,
+            DocumentIdentifier identifier, Logger _logger) throws DocumentException {
+        super(manager, map, identifier, _logger);
     }
 
     private List documentsList = new ArrayList();
@@ -153,8 +135,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
                 helper = getNamespaceHelper();
 
                 Element collectionElement = helper.getDocument().getDocumentElement();
-                Element[] documentElements = helper
-                        .getChildren(collectionElement, ELEMENT_DOCUMENT);
+                Element[] documentElements = helper.getChildren(collectionElement, ELEMENT_DOCUMENT);
 
                 for (int i = 0; i < documentElements.length; i++) {
                     Element documentElement = documentElements[i];
@@ -186,7 +167,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
     }
 
     /**
-     * Saves the collection. 
+     * Saves the collection.
      * @throws TransactionException if an error occurs.
      */
     public void save() throws TransactionException {
@@ -260,7 +241,8 @@ public class CollectionImpl extends DefaultDocument implements Collection {
             org.w3c.dom.Document document = DocumentHelper.readDocument(file);
             helper = new NamespaceHelper(Collection.NAMESPACE, Collection.DEFAULT_PREFIX, document);
         } else {
-            helper = new NamespaceHelper(Collection.NAMESPACE, Collection.DEFAULT_PREFIX,
+            helper = new NamespaceHelper(Collection.NAMESPACE,
+                    Collection.DEFAULT_PREFIX,
                     ELEMENT_COLLECTION);
         }
         return helper;

@@ -32,13 +32,11 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.impl.AbstractAccessControllerResolver;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.URLInformation;
 
 /**
- * Resolves the access controller according to the <code>ac.xconf</code> file
- * of a publication.
+ * Resolves the access controller according to the <code>ac.xconf</code> file of a publication.
  */
 public class PublicationAccessControllerResolver extends AbstractAccessControllerResolver implements
         Initializable {
@@ -48,8 +46,8 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
     protected static final String TYPE_ATTRIBUTE = "type";
 
     /**
-     * This implementation uses the publication ID in combination with the
-     * context path as cache key.
+     * This implementation uses the publication ID in combination with the context path as cache
+     * key.
      * @see org.apache.lenya.ac.impl.AbstractAccessControllerResolver#generateCacheKey(java.lang.String,
      *      org.apache.excalibur.source.SourceResolver)
      */
@@ -85,8 +83,8 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
     }
 
     /**
-     * Returns the publication for the webapp URL or null if the URL is not
-     * included in a publication.
+     * Returns the publication for the webapp URL or null if the URL is not included in a
+     * publication.
      * @param webappUrl The webapp URL.
      * @return A publication.
      * @throws AccessControlException when something went wrong.
@@ -103,11 +101,9 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
             URLInformation info = new URLInformation(webappUrl);
             String publicationId = info.getPublicationId();
 
-            File contextDir = getContext();
-            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
             try {
-                publication = factory.getPublication(webappUrl, contextDir);
-            } catch (PublicationException e) {
+                publication = PublicationUtil.getPublicationFromUrl(this.manager, webappUrl);
+            } catch (Exception e) {
                 throw new AccessControlException(e);
             }
             if (publication.exists()) {
@@ -147,8 +143,7 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
 
         if (configurationFile.isFile()) {
             try {
-                Configuration configuration = new DefaultConfigurationBuilder()
-                        .buildFromFile(configurationFile);
+                Configuration configuration = new DefaultConfigurationBuilder().buildFromFile(configurationFile);
                 String type = configuration.getAttribute(TYPE_ATTRIBUTE);
 
                 accessController = (AccessController) getManager().lookup(AccessController.ROLE

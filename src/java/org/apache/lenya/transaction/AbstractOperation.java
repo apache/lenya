@@ -28,6 +28,8 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 
 /**
  * Abstract operation implementation.
@@ -58,7 +60,9 @@ public class AbstractOperation extends AbstractLogEnabled implements Operation, 
      */
     public UnitOfWork getUnitOfWork() throws ServiceException {
         if (this.unitOfWork == null) {
-            setUnitOfWork(new UnitOfWorkImpl(getLogger()));
+            Request request = ContextHelper.getRequest(this.context);
+            Session session = RepositoryUtil.getSession(request, getLogger());
+            setUnitOfWork(session.getUnitOfWork());
         }
 
         return this.unitOfWork;

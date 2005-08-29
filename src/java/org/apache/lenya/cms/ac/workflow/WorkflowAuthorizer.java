@@ -29,6 +29,8 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.util.ServletHelper;
 
@@ -77,7 +79,8 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
 
             try {
                 resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-                DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
+                Session session = RepositoryUtil.getSession(request, getLogger());
+                DocumentIdentityMap map = new DocumentIdentityMap(session, this.manager, getLogger());
                 if (map.isDocument(webappUrl)) {
                     Document document = map.getFromURL(webappUrl);
                     authorized = WorkflowUtil.canInvoke(this.manager, getLogger(), document, event);

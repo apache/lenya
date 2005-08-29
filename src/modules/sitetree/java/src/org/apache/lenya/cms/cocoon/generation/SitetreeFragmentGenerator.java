@@ -30,15 +30,16 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.generation.ServiceableGenerator;
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeException;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Label;
+import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.tree.SiteTree;
-import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -111,10 +112,8 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
             throws ProcessingException, SAXException, IOException {
         super.setup(_resolver, _objectModel, src, par);
 
-        PageEnvelope envelope = null;
-
+        Request request = ObjectModelHelper.getRequest(_objectModel);
         if (getLogger().isDebugEnabled()) {
-            Request request = ObjectModelHelper.getRequest(_objectModel);
             getLogger().debug("Resolving page envelope for URL [" + request.getRequestURI() + "]");
         }
 
@@ -147,15 +146,13 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
             this.getLogger().debug("Parameter areas: " + areasStr);
         }
 
+        Session session = RepositoryUtil.getSession(request, getLogger());
+        this.identityMap = new DocumentIdentityMap(session, this.manager, getLogger());
         try {
-            this.identityMap = new DocumentIdentityMap(this.manager, getLogger());
-            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(this.identityMap,
-                    _objectModel);
-        } catch (final PageEnvelopeException e) {
-            throw new ProcessingException("Resolving page envelope failed: ", e);
+            this.publication = PublicationUtil.getPublication(this.manager, _objectModel);
+        } catch (PublicationException e) {
+            throw new ProcessingException("Could not create publication: ", e);
         }
-
-        this.publication = envelope.getPublication();
         this.attributes = new AttributesImpl();
 
     }
@@ -223,7 +220,9 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
         try {
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(this.publication.getSiteManagerHint());
-            SiteTree siteTree = (SiteTree) siteManager.getSiteStructure(this.identityMap, this.publication, this.area);
+            SiteTree siteTree = (SiteTree) siteManager.getSiteStructure(this.identityMap,
+                    this.publication,
+                    this.area);
 
             SiteTreeNode node = siteTree.getNode(this.documentid);
             if (this.getLogger().isDebugEnabled()) {
@@ -267,7 +266,9 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
         try {
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(this.publication.getSiteManagerHint());
-            SiteTree siteTree = (SiteTree) siteManager.getSiteStructure(this.identityMap, this.publication, siteArea);
+            SiteTree siteTree = (SiteTree) siteManager.getSiteStructure(this.identityMap,
+                    this.publication,
+                    siteArea);
 
             String label = "";
             String isFolder = "";
@@ -378,7 +379,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
         this.attributes.clear();
 
         String id = node.getId();
-        //String isVisible = Boolean.toString(node.visibleInNav());
+        // String isVisible = Boolean.toString(node.visibleInNav());
         String hasLink = Boolean.toString(node.hasLink());
         String href = node.getHref();
         String suffix = node.getSuffix();
@@ -386,7 +387,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
 
         if (this.getLogger().isDebugEnabled()) {
             this.getLogger().debug("adding attribute id: " + id);
-            //this.getLogger().debug("adding attribute visibleinnav: " +
+            // this.getLogger().debug("adding attribute visibleinnav: " +
             // isVisible);
             this.getLogger().debug("adding attribute link: " + hasLink);
             if (href != null)
@@ -396,7 +397,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
             this.getLogger().debug("adding attribute folder: " + isFolder);
         }
         this.attributes.addAttribute("", ATTR_ID, ATTR_ID, "CDATA", id);
-        //attributes.addAttribute("", ATTR_VISIBLEINNAV, ATTR_VISIBLEINNAV,
+        // attributes.addAttribute("", ATTR_VISIBLEINNAV, ATTR_VISIBLEINNAV,
         // "CDATA", isVisible);
         this.attributes.addAttribute("", ATTR_LINK, ATTR_LINK, "CDATA", hasLink);
         if (href != null)

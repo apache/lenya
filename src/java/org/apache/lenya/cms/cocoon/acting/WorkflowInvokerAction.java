@@ -24,12 +24,17 @@ import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.acting.ServiceableAction;
+import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
+import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 
 /**
@@ -65,10 +70,7 @@ public class WorkflowInvokerAction extends ServiceableAction {
      *      org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String,
      *      org.apache.avalon.framework.parameters.Parameters)
      */
-    public Map act(Redirector redirector,
-            SourceResolver resolver,
-            Map objectModel,
-            String source,
+    public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source,
             Parameters parameters) throws Exception {
 
         String area = parameters.getParameter(AREA);
@@ -84,9 +86,16 @@ public class WorkflowInvokerAction extends ServiceableAction {
             getLogger().debug("    Event:       [" + eventName + "]");
         }
 
-        PublicationFactory pubFactory = PublicationFactory.getInstance(getLogger());
-        Publication pub = pubFactory.getPublication(objectModel);
-        DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
+        Publication pub;
+        Request request = ObjectModelHelper.getRequest(objectModel);
+
+        try {
+            pub = PublicationUtil.getPublication(this.manager, request);
+        } catch (Exception e) {
+            throw new AccessControlException(e);
+        }
+        Session session = RepositoryUtil.getSession(request, getLogger());
+        DocumentIdentityMap map = new DocumentIdentityMap(session, this.manager, getLogger());
         Document document = map.get(pub, area, documentId, language);
 
         if (getLogger().isDebugEnabled()) {

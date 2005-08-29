@@ -100,9 +100,8 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
         File configFile = getConfigurationFile();
 
         if (!configFile.exists()) {
-            getLogger()
-                    .error("Config file [" + configFile.getAbsolutePath() + "] does not exist: ",
-                            new RuntimeException());
+            getLogger().error("Config file [" + configFile.getAbsolutePath() + "] does not exist: ",
+                    new RuntimeException());
             throw new RuntimeException("The configuration file [" + configFile
                     + "] does not exist!");
         } else {
@@ -130,8 +129,7 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
             Configuration documentBuilderConfiguration = config.getChild(ELEMENT_DOCUMENT_BUILDER,
                     false);
             if (documentBuilderConfiguration != null) {
-                this.documentBuilderHint = documentBuilderConfiguration
-                        .getAttribute(ATTRIBUTE_NAME);
+                this.documentBuilderHint = documentBuilderConfiguration.getAttribute(ATTRIBUTE_NAME);
             }
 
             Configuration[] _languages = config.getChild(LANGUAGES).getChildren();
@@ -168,35 +166,31 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
 
             Configuration templatesConfig = config.getChild(ELEMENT_TEMPLATES);
             if (templatesConfig != null) {
-                PublicationFactory factory = PublicationFactory.getInstance(getLogger());
                 Configuration[] templateConfigs = templatesConfig.getChildren(ELEMENT_TEMPLATE);
-                this.templates = new Publication[templateConfigs.length];
+                this.templates = new String[templateConfigs.length];
                 for (int i = 0; i < templateConfigs.length; i++) {
                     String templateId = templateConfigs[i].getAttribute(ATTRIBUTE_ID);
-                    Publication template = factory.getPublication(templateId, getServletContext()
-                            .getAbsolutePath());
-                    this.templates[i] = template;
+                    this.templates[i] = templateId;
                 }
             }
 
-            Configuration templateInstantiatorConfig = config
-                    .getChild(ELEMENT_TEMPLATE_INSTANTIATOR, false);
+            Configuration templateInstantiatorConfig = config.getChild(ELEMENT_TEMPLATE_INSTANTIATOR,
+                    false);
             if (templateInstantiatorConfig != null) {
-                this.instantiatorHint = templateInstantiatorConfig
-                        .getAttribute(PublicationImpl.ATTRIBUTE_NAME);
+                this.instantiatorHint = templateInstantiatorConfig.getAttribute(PublicationImpl.ATTRIBUTE_NAME);
             }
 
             Configuration[] resourceTypeConfigs = config.getChildren(ELEMENT_RESOURCE_TYPE);
-            for (int i = 0; i< resourceTypeConfigs.length; i++) {
+            for (int i = 0; i < resourceTypeConfigs.length; i++) {
                 String name = resourceTypeConfigs[i].getAttribute(ATTRIBUTE_NAME);
                 this.resourceTypes.add(name);
-                
+
                 String workflow = resourceTypeConfigs[i].getAttribute(ATTRIBUTE_WORKFLOW, null);
                 if (workflow != null) {
                     this.resourceType2workflow.put(name, workflow);
                 }
             }
-            
+
         } catch (final Exception e) {
             throw new RuntimeException("Problem with config file: " + configFile.getAbsolutePath(),
                     e);
@@ -370,8 +364,7 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
         Proxy proxy = (Proxy) this.areaSsl2proxy.get(key);
 
         if (getLogger().isDebugEnabled()) {
-            getLogger()
-                    .debug("Resolving proxy for [" + document + "] SSL=[" + isSslProtected + "]");
+            getLogger().debug("Resolving proxy for [" + document + "] SSL=[" + isSslProtected + "]");
             getLogger().debug("Resolved proxy: [" + proxy + "]");
         }
 
@@ -387,15 +380,15 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
         return getConfigurationFile().exists();
     }
 
-    private Publication[] templates;
+    private String[] templates;
 
     /**
-     * @see org.apache.lenya.cms.publication.Publication#getTemplates()
+     * @see org.apache.lenya.cms.publication.Publication#getTemplateIds()
      */
-    public Publication[] getTemplates() {
+    public String[] getTemplateIds() {
         loadConfiguration();
         List list = Arrays.asList(this.templates);
-        return (Publication[]) list.toArray(new Publication[list.size()]);
+        return (String[]) list.toArray(new String[list.size()]);
     }
 
     /**
@@ -427,17 +420,17 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     public String getContentURI(String area) {
         return getSourceURI() + "/" + CONTENT_PATH + "/" + area;
     }
-    
+
     private Map resourceType2workflow = new HashMap();
 
     /**
-     * @see org.apache.lenya.cms.publication.Publication#getWorkflowSchema(org.apache.lenya.cms.publication.DocumentType)
+     * @see org.apache.lenya.cms.publication.Publication#getWorkflowSchema(org.apache.lenya.cms.publication.ResourceType)
      */
     public String getWorkflowSchema(ResourceType resourceType) {
         String workflow = (String) this.resourceType2workflow.get(resourceType.getName());
         return workflow;
     }
-    
+
     private List resourceTypes = new ArrayList();
 
     /**

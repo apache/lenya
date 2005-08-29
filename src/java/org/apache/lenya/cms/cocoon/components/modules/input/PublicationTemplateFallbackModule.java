@@ -20,11 +20,8 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceResolver;
-import org.apache.excalibur.source.SourceUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.templating.ExistingSourceResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
 
@@ -60,9 +57,7 @@ public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModul
         PublicationTemplateManager templateManager = null;
 
         try {
-            templateManager = (PublicationTemplateManager) this.manager
-                    .lookup(PublicationTemplateManager.ROLE);
-            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
+            templateManager = (PublicationTemplateManager) this.manager.lookup(PublicationTemplateManager.ROLE);
             Publication publication;
             String targetUri = null;
 
@@ -70,8 +65,7 @@ public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModul
             if (name.indexOf(":") > -1) {
                 String[] parts = name.split(":");
                 if (parts.length > 2) {
-                    throw new RuntimeException(
-                            "The attribute may not contain more than one colons!");
+                    throw new RuntimeException("The attribute may not contain more than one colons!");
                 }
                 String publicationId = parts[0];
                 targetUri = parts[1];
@@ -81,23 +75,9 @@ public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModul
                             + "]");
                 }
 
-                SourceResolver resolver = null;
-                Source source = null;
-                try {
-                    resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-                    source = resolver.resolveURI("context://");
-                    String contextPath = SourceUtil.getFile(source).getAbsolutePath();
-                    publication = factory.getPublication(publicationId, contextPath);
-                } finally {
-                    if (resolver != null) {
-                        if (source != null) {
-                            resolver.release(source);
-                        }
-                        this.manager.release(resolver);
-                    }
-                }
+                publication = PublicationUtil.getPublication(this.manager, publicationId);
             } else {
-                publication = factory.getPublication(objectModel);
+                publication = PublicationUtil.getPublication(this.manager, objectModel);
                 targetUri = name;
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("Publication resolved from request: [" + publication.getId()

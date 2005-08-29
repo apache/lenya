@@ -35,17 +35,16 @@ import org.apache.excalibur.source.TraversableSource;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.cms.metadata.MetaDataImpl;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.rc.RCEnvironment;
+import org.apache.lenya.cms.rc.RCMLEntry;
 import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.transaction.Transactionable;
-import org.apache.lenya.cms.rc.RCMLEntry;
 
 /**
  * A repository node.
@@ -189,34 +188,18 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                 String publicationsPath = this.sourceURI.substring(pubBase.length());
                 String publicationId = publicationsPath.split("/")[0];
 
-                Source contextSource = null;
-                SourceResolver resolver = null;
-                try {
-                    resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-                    contextSource = resolver.resolveURI("context://");
-                    File context = org.apache.excalibur.source.SourceUtil.getFile(contextSource);
-                    PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-                    Publication pub = factory.getPublication(publicationId,
-                            context.getAbsolutePath());
+                Publication pub = PublicationUtil.getPublication(this.manager, publicationId);
 
-                    String publicationPath = pub.getDirectory().getCanonicalPath();
-                    RCEnvironment rcEnvironment = RCEnvironment.getInstance(pub.getServletContext()
-                            .getCanonicalPath());
-                    String rcmlDirectory = publicationPath + File.separator
-                            + rcEnvironment.getRCMLDirectory();
-                    String backupDirectory = publicationPath + File.separator
-                            + rcEnvironment.getBackupDirectory();
-                    this.revisionController = new RevisionController(rcmlDirectory,
-                            backupDirectory,
-                            publicationPath);
-                } finally {
-                    if (resolver != null) {
-                        if (contextSource != null) {
-                            resolver.release(contextSource);
-                        }
-                        this.manager.release(resolver);
-                    }
-                }
+                String publicationPath = pub.getDirectory().getCanonicalPath();
+                RCEnvironment rcEnvironment = RCEnvironment.getInstance(pub.getServletContext()
+                        .getCanonicalPath());
+                String rcmlDirectory = publicationPath + File.separator
+                        + rcEnvironment.getRCMLDirectory();
+                String backupDirectory = publicationPath + File.separator
+                        + rcEnvironment.getBackupDirectory();
+                this.revisionController = new RevisionController(rcmlDirectory,
+                        backupDirectory,
+                        publicationPath);
 
             } catch (Exception e) {
                 throw new RepositoryException(e);

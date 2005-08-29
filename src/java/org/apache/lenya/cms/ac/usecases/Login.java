@@ -22,7 +22,7 @@ import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.usecase.UsecaseException;
 
 /**
@@ -41,11 +41,12 @@ public class Login extends AccessControlUsecase {
     protected void initParameters() {
         super.initParameters();
 
+        Publication publication;
+
         try {
-            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-            Publication pub = factory.getPublication(this.manager, getSourceURL());
-            if (pub.exists()) {
-                setParameter(PUBLICATION_ID, pub.getId());
+            publication = PublicationUtil.getPublicationFromUrl(this.manager, getSourceURL());
+            if (publication.exists()) {
+                setParameter(PUBLICATION_ID, publication.getId());
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

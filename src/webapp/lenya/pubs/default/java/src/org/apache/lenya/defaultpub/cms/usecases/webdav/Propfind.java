@@ -30,9 +30,10 @@ import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.Resource;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.publication.URLInformation;
@@ -94,13 +95,15 @@ public class Propfind extends SiteUsecase {
                     backupDirectory,
                     publicationPath);
 
-            siteManagerSelector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManagerSelector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE
+                    + "Selector");
             siteManager = (SiteManager) siteManagerSelector.select(_publication.getSiteManagerHint());
             Document[] documents = siteManager.getDocuments(getDocumentIdentityMap(),
                     _publication,
                     this.getArea());
 
-            docBuilderSelector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
+            docBuilderSelector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE
+                    + "Selector");
             docBuilder = (DocumentBuilder) docBuilderSelector.select(_publication.getDocumentBuilderHint());
 
             for (int i = 0; i < documents.length; i++) {
@@ -123,9 +126,9 @@ public class Propfind extends SiteUsecase {
                         if (!(langs[j].equals(documents[i].getLanguage()))) {
                             String url = documents[i].getCanonicalWebappURL()
                                     .replaceFirst(".html$", "_" + langs[j] + ".html");
+                            DocumentIdentifier identifier = docBuilder.getIdentitfier(url);
                             Document langDoc = docBuilder.buildDocument(documents[i].getIdentityMap(),
-                                    _publication,
-                                    url);
+                                    identifier);
                             docs.add(langDoc);
 
                             filename = langDoc.getFile().getCanonicalPath();
@@ -143,9 +146,8 @@ public class Propfind extends SiteUsecase {
             // get assets if we are currently looking at a document
             if (!request.equals("/" + _publication.getId() + "/authoring/")) {
                 String url = request.substring(0, request.length() - 1) + ".html";
-                Document currentDoc = docBuilder.buildDocument(getDocumentIdentityMap(),
-                        _publication,
-                        url);
+                DocumentIdentifier identifier = docBuilder.getIdentitfier(url);
+                Document currentDoc = docBuilder.buildDocument(getDocumentIdentityMap(), identifier);
                 if (currentDoc.exists()) {
                     resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
                     Resource[] resources = resourcesManager.getResources(currentDoc);
@@ -200,9 +202,8 @@ public class Propfind extends SiteUsecase {
      */
     protected Publication getPublication() {
         if (this.publication == null) {
-            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
             try {
-                this.publication = factory.getPublication(this.manager, getSourceURL());
+                this.publication = PublicationUtil.getPublicationFromUrl(this.manager, getSourceURL());
             } catch (PublicationException e) {
                 throw new RuntimeException(e);
             }

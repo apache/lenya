@@ -25,7 +25,7 @@ import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
@@ -34,7 +34,7 @@ import org.apache.lenya.cms.usecase.AbstractUsecase;
 /**
  * Empty the trash.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public class EmptyTrash extends AbstractUsecase {
     
@@ -81,8 +81,7 @@ public class EmptyTrash extends AbstractUsecase {
      * @throws SiteException if an error occurs.
      */
     protected Document[] getTrashDocuments() throws PublicationException, SiteException {
-        PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-        Publication publication = factory.getPublication(this.manager, getSourceURL());
+        Publication publication = PublicationUtil.getPublicationFromUrl(this.manager, getSourceURL());
         DocumentIdentityMap identityMap = getDocumentIdentityMap();
         Document[] documents;
         

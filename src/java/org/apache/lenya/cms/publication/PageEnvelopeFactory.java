@@ -58,14 +58,14 @@ public class PageEnvelopeFactory {
      * @return A page envelope.
      * @throws PageEnvelopeException if something went wrong.
      */
-    public PageEnvelope getPageEnvelope(DocumentIdentityMap map, Map objectModel)
+    public PageEnvelope getPageEnvelope(DocumentIdentityMap map, Map objectModel, Publication pub)
             throws PageEnvelopeException {
         Request request = ObjectModelHelper.getRequest(objectModel);
         String contextPath = request.getContextPath();
         Context context = ObjectModelHelper.getContext(objectModel);
         String webappUrl = ServletHelper.getWebappURI(request);
         String servletContextPath = context.getRealPath("");
-        return getPageEnvelope(map, contextPath, webappUrl, new File(servletContextPath));
+        return getPageEnvelope(map, contextPath, webappUrl, new File(servletContextPath), pub);
     }
 
     /**
@@ -78,8 +78,8 @@ public class PageEnvelopeFactory {
      * @throws PageEnvelopeException if something went wrong.
      */
     public PageEnvelope getPageEnvelope(DocumentIdentityMap map, String contextPath,
-            String webappUrl, File servletContext) throws PageEnvelopeException {
-        PageEnvelope envelope = new PageEnvelope(map, contextPath, webappUrl, servletContext);
+            String webappUrl, File servletContext, Publication pub) throws PageEnvelopeException {
+        PageEnvelope envelope = new PageEnvelope(map, contextPath, webappUrl, servletContext, pub);
         return envelope;
     }
 

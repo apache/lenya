@@ -29,7 +29,9 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
+import org.apache.lenya.transaction.IdentityMapImpl;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.log4j.Logger;
 
@@ -193,7 +195,9 @@ public class WorkflowInvoker extends ParameterWrapper {
             log.debug("Workflow event: [" + eventName + "]");
             // check for workflow instance first (task can initialize the workflow history)
             try {
-                DocumentIdentityMap map = new DocumentIdentityMap(this.manager, new ConsoleLogger());
+                org.apache.avalon.framework.logger.Logger logger = new ConsoleLogger();
+                Session session = new Session(new IdentityMapImpl(logger), null, logger);
+                DocumentIdentityMap map = new DocumentIdentityMap(session, this.manager, logger);
                 this.document = map.getFromURL(webappUrl);
             } catch (DocumentBuildException e) {
                 throw new ExecutionException(e);

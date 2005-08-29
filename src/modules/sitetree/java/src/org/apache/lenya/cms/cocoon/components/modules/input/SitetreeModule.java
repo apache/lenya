@@ -24,9 +24,13 @@ import java.util.Map;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.TreeSiteManager;
@@ -77,7 +81,9 @@ public class SitetreeModule extends AbstractPageEnvelopeModule {
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             _manager = (TreeSiteManager) selector.select(publication.getSiteManagerHint());
             
-            DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
+            Request request = ObjectModelHelper.getRequest(objectModel);
+            Session session = RepositoryUtil.getSession(request, getLogger());
+            DocumentIdentityMap map = new DocumentIdentityMap(session, this.manager, getLogger());
 
             if (name.equals(AUTHORING_NODE)) {
                 SiteTree authoringTree = _manager.getTree(map,

@@ -36,7 +36,7 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
 import org.apache.excalibur.source.URIAbsolutizer;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationManager;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.templating.ExistingSourceResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
@@ -87,9 +87,9 @@ public class FallbackSourceFactory extends AbstractOperation implements SourceFa
             getLogger().debug("Path:         [" + path + "]");
         }
 
+        PublicationManager pubMgr = null;
         PublicationTemplateManager templateManager = null;
         SourceResolver sourceResolver = null;
-        Source contextSource = null;
         Source source;
         try {
             sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
@@ -97,17 +97,14 @@ public class FallbackSourceFactory extends AbstractOperation implements SourceFa
             templateManager = (PublicationTemplateManager) this.manager
                     .lookup(PublicationTemplateManager.ROLE);
 
-            contextSource = sourceResolver.resolveURI("context://");
             Request request = ContextHelper.getRequest(this.context);
             String webappUrl = request.getRequestURI().substring(request.getContextPath().length());
-
-            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
             
-            String contextPath = SourceUtil.getFile(contextSource).getAbsolutePath();
             URLInformation info = new URLInformation(webappUrl);
             String publicationId = info.getPublicationId();
-            
-            Publication pub = factory.getPublication(publicationId, contextPath);
+
+            pubMgr = (PublicationManager) this.manager.lookup(PublicationManager.ROLE);
+            Publication pub = pubMgr.getPublication(publicationId);
             if (pub.exists()) {
                 ExistingSourceResolver resolver = new ExistingSourceResolver();
                 templateManager.visit(pub, path, resolver);
@@ -131,10 +128,10 @@ public class FallbackSourceFactory extends AbstractOperation implements SourceFa
             if (templateManager != null) {
                 this.manager.release(templateManager);
             }
+            if (pubMgr != null) {
+                this.manager.release(pubMgr);
+            }
             if (sourceResolver != null) {
-                if (contextSource != null) {
-                    sourceResolver.release(contextSource);
-                }
                 this.manager.release(sourceResolver);
             }
         }

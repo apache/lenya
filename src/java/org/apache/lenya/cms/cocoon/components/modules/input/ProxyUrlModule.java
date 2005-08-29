@@ -39,10 +39,11 @@ import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 
 /**
  * Input module for getting the proxied URL of a document.
@@ -88,10 +89,10 @@ public class ProxyUrlModule extends AbstractInputModule implements Serviceable {
 
         String value = null;
         try {
-            DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
-            PageEnvelope envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map,
-                    objectModel);
-            Publication publication = envelope.getPublication();
+            Request request = ObjectModelHelper.getRequest(objectModel);
+            Session session = RepositoryUtil.getSession(request, getLogger());
+            DocumentIdentityMap map = new DocumentIdentityMap(session, this.manager, getLogger());
+            Publication publication = PublicationUtil.getPublication(this.manager, request);
 
             Document doc = map.get(publication, area, documentId, language);
 
@@ -123,7 +124,6 @@ public class ProxyUrlModule extends AbstractInputModule implements Serviceable {
                 value = proxy.getURL(doc);
             } else {
                 // Take server name and port from request.
-                Request request = ObjectModelHelper.getRequest(objectModel);
                 value = "http://" + request.getServerName() + ":" + request.getServerPort()
                         + request.getContextPath() + doc.getCanonicalWebappURL();
             }

@@ -27,6 +27,7 @@ import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
@@ -34,9 +35,10 @@ import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RevisionController;
+import org.apache.lenya.cms.repository.RepositoryUtil;
 
 /**
  * Revision controller action.
@@ -68,21 +70,28 @@ public class RevisionControllerAction extends ServiceableAction {
         }
 
         PageEnvelope envelope = null;
-        PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-        Publication publication = factory.getPublication(objectModel);
-        DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
+        Publication publication;
+
+        try {
+            publication = PublicationUtil.getPublication(this.manager, request);
+        } catch (Exception e) {
+            throw new AccessControlException(e);
+        }
+        org.apache.lenya.cms.repository.Session repoSession = RepositoryUtil.getSession(request,
+                getLogger());
+        DocumentIdentityMap map = new DocumentIdentityMap(repoSession, this.manager, getLogger());
         Document document = null;
 
         try {
-            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel);
-            publication = envelope.getPublication();
+            publication = PublicationUtil.getPublication(this.manager, objectModel);
+            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel, publication);
             document = envelope.getDocument();
         } catch (Exception e) {
             getLogger().error("Resolving page envelope failed: ", e);
             throw e;
         }
 
-        //get Parameters for RC
+        // get Parameters for RC
         String publicationPath = publication.getDirectory().getCanonicalPath();
         RCEnvironment rcEnvironment = RCEnvironment.getInstance(publication.getServletContext()
                 .getCanonicalPath());
@@ -108,7 +117,7 @@ public class RevisionControllerAction extends ServiceableAction {
         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
         getLogger().debug(".act(): Identity: " + identity);
 
-        //FIXME: hack because of the uri for the editor bitflux. The filename
+        // FIXME: hack because of the uri for the editor bitflux. The filename
         // cannot be get from
         // the page-envelope
 

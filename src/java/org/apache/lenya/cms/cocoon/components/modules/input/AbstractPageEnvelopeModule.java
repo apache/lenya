@@ -29,6 +29,8 @@ import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -68,10 +70,12 @@ public abstract class AbstractPageEnvelopeModule extends OperationModule {
 
         try {
             DocumentIdentityMap map = getDocumentIdentityMap();
+            Publication pub = PublicationUtil.getPublicationFromUrl(this.manager, webappUrl);
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map,
                     contextPath,
                     webappUrl,
-                    new File(servletContextPath));
+                    new File(servletContextPath),
+                    pub);
         } catch (Exception e) {
             throw new ConfigurationException("Resolving page envelope failed: ", e);
         }

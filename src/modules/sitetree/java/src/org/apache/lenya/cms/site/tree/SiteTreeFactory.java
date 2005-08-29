@@ -16,20 +16,15 @@
  */
 package org.apache.lenya.cms.site.tree;
 
-import java.io.File;
-
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceResolver;
-import org.apache.excalibur.source.SourceUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.transaction.Identifiable;
-import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.IdentifiableFactory;
+import org.apache.lenya.transaction.IdentityMap;
 
 /**
  * Factory for sitetree objects.
@@ -59,29 +54,9 @@ public class SiteTreeFactory extends AbstractLogEnabled implements IdentifiableF
         String publicationId = snippets[0];
         String area = snippets[1];
 
-        SourceResolver resolver = null;
-        Source source = null;
-        DefaultSiteTree tree;
-        try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI("context://");
-            File servletContext = SourceUtil.getFile(source);
-
-            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-            Publication publication = factory.getPublication(publicationId, servletContext
-                    .getAbsolutePath());
-           
-            tree = new DefaultSiteTree(publication, area, this.manager);
-            ContainerUtil.enableLogging(tree, getLogger());
-            
-        } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
-            }
-        }
+        Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
+        DefaultSiteTree tree = new DefaultSiteTree(publication, area, this.manager);
+        ContainerUtil.enableLogging(tree, getLogger());
         return tree;
     }
 

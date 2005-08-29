@@ -34,10 +34,13 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
 
     /**
      * Ctor.
+     * @param map The identity map to use.
      * @param logger The logger.
      */
-    public UnitOfWorkImpl(Logger logger) {
+    public UnitOfWorkImpl(IdentityMap map, Logger logger) {
         ContainerUtil.enableLogging(this, logger);
+        this.identityMap = map;
+        this.identityMap.setUnitOfWork(this);
     }
 
     private IdentityMap identityMap;
@@ -46,11 +49,26 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
      * @see org.apache.lenya.transaction.UnitOfWork#getIdentityMap()
      */
     public IdentityMap getIdentityMap() {
-        if (this.identityMap == null) {
-            this.identityMap = new IdentityMapImpl(getLogger());
-            this.identityMap.setUnitOfWork(this);
-        }
         return this.identityMap;
+    }
+    
+    private boolean isTransaction = false;
+    
+    /**
+     * This starts the actual transaction. The unit of work starts to use a distinct
+     * identity map.
+     */
+    public void startTransaction() {
+        this.identityMap = new IdentityMapImpl(getLogger());
+        this.identityMap.setUnitOfWork(this);
+        this.isTransaction = true;
+    }
+    
+    /**
+     * @return if the unit of work is in a transaction.
+     */
+    public boolean isTransaction() {
+        return this.isTransaction;
     }
 
     private Set newObjects = new HashSet();

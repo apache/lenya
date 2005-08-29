@@ -41,7 +41,7 @@ import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseMessage;
 import org.apache.lenya.cms.usecase.UsecaseResolver;
@@ -51,8 +51,8 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
 /**
- * This transformer disables menu items (by removing the href attribute) which
- * are not allowed with respect to the usecase policies.
+ * This transformer disables menu items (by removing the href attribute) which are not allowed with
+ * respect to the usecase policies.
  */
 public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Disposable {
 
@@ -81,8 +81,8 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
     /**
      * (non-Javadoc)
      * 
-     * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
-     *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
+     * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String,
+     *      java.lang.String, org.xml.sax.Attributes)
      */
     public void startElement(String uri, String localName, String raw, Attributes attr)
             throws SAXException {
@@ -102,8 +102,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
                     if (getLogger().isDebugEnabled()) {
                         getLogger().debug("Found usecase [" + usecaseName + "]");
                     }
-                    if (!this.authorizer
-                            .authorizeUsecase(usecaseName, this.roles, this.publication)) {
+                    if (!this.authorizer.authorizeUsecase(usecaseName, this.roles, this.publication)) {
                         if (getLogger().isDebugEnabled()) {
                             getLogger().debug("Usecase not authorized");
                         }
@@ -147,7 +146,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
         }
 
         super.startElement(uri, localName, raw, attributes);
-        
+
         if (messages != null) {
             addMessages(messages);
         }
@@ -157,8 +156,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
     /**
      * Removes the <code>href</code> attribute.
      * 
-     * @param attr
-     *            The original attributes.
+     * @param attr The original attributes.
      * @return An attributes object.
      */
     protected Attributes removeHrefAttribute(Attributes attr) {
@@ -181,7 +179,9 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
             if (message.hasParameters()) {
                 String[] parameters = message.getParameters();
                 for (int p = 0; p < parameters.length; p++) {
-                    super.startElement(MENU_NAMESPACE, "parameter", "parameter",
+                    super.startElement(MENU_NAMESPACE,
+                            "parameter",
+                            "parameter",
                             new AttributesImpl());
                     super.characters(parameters[p].toCharArray(), 0, parameters[p].length());
                     super.endElement(MENU_NAMESPACE, "parameter", "parameter");
@@ -193,13 +193,10 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
     }
 
     /**
-     * Pass the request parameters from the <code>href</code> attribute to the
-     * usecase handler.
+     * Pass the request parameters from the <code>href</code> attribute to the usecase handler.
      * 
-     * @param usecase
-     *            The usecase handler.
-     * @param href
-     *            The value of the <code>href</code> attribute.
+     * @param usecase The usecase handler.
+     * @param href The value of the <code>href</code> attribute.
      */
     void passRequestParameters(Usecase usecase, String href) {
         int questionMarkIndex = href.indexOf("?");
@@ -226,8 +223,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
-     *      java.util.Map, java.lang.String,
-     *      org.apache.avalon.framework.parameters.Parameters)
+     *      java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
     public void setup(SourceResolver _resolver, Map _objectModel, String src, Parameters _parameters)
             throws ProcessingException, SAXException, IOException {
@@ -245,14 +241,11 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
 
         try {
             this.roles = PolicyAuthorizer.getRoles(_request);
+            this.publication = PublicationUtil.getPublication(this.manager, _objectModel);
 
-            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-            this.publication = factory.getPublication(_objectModel);
-
-            this.serviceSelector = (ServiceSelector) this.manager
-                    .lookup(AccessControllerResolver.ROLE + "Selector");
-            this.acResolver = (AccessControllerResolver) this.serviceSelector
-                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
+            this.serviceSelector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
+                    + "Selector");
+            this.acResolver = (AccessControllerResolver) this.serviceSelector.select(AccessControllerResolver.DEFAULT_RESOLVER);
             getLogger().debug("Resolved AC resolver [" + this.acResolver + "]");
 
             String webappUrl = ServletHelper.getWebappURI(_request);

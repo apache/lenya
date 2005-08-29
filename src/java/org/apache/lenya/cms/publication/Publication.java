@@ -177,7 +177,7 @@ public interface Publication {
     /**
      * @return The templates of the publication.
      */
-    Publication[] getTemplates();
+    String[] getTemplateIds();
 
     /**
      * @return the URI base for this publication

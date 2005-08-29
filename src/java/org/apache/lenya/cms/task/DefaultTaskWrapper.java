@@ -53,7 +53,7 @@ public class DefaultTaskWrapper implements TaskWrapper {
     private Map parameters = new HashMap();
     private TaskWrapperParameters wrapperParameters =
         new TaskWrapperParameters(getParameterObject());
-    private TaskParameters taskParameters = new TaskParameters(getParameterObject());
+    private TaskParameters taskParameters;
 
     private ServiceManager manager;
     
@@ -63,6 +63,7 @@ public class DefaultTaskWrapper implements TaskWrapper {
      */
     protected DefaultTaskWrapper(ServiceManager manager) {
         this.manager = manager;
+        this.taskParameters = new TaskParameters(getParameterObject(), manager);
     }
 
     /**

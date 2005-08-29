@@ -164,11 +164,12 @@ public class PageEnvelope {
      * @throws PageEnvelopeException when something went wrong.
      */
     public PageEnvelope(DocumentIdentityMap map, String contextPath, String webappUrl,
-            File servletContext) throws PageEnvelopeException {
+            File servletContext, Publication publication) throws PageEnvelopeException {
         this.identityMap = map;
         this.context = contextPath;
         this.webappUrl = webappUrl;
         this.servletContext = servletContext;
+        this.publication = publication;
     }
 
     private String webappUrl;
@@ -201,9 +202,10 @@ public class PageEnvelope {
      * @return a <code>Publication</code> value
      */
     public Publication getPublication() {
+        /*
         if (this.publication == null) {
             try {
-                Publication pub = PublicationFactory.getInstance(new ConsoleLogger())
+                Publication pub = PublicationManagerImpl.getInstance(new ConsoleLogger())
                         .getPublication(this.webappUrl, this.servletContext);
                 if (pub.exists()) {
                     this.publication = pub;
@@ -216,6 +218,7 @@ public class PageEnvelope {
                 throw new RuntimeException(e);
             }
         }
+        */
         return this.publication;
     }
 

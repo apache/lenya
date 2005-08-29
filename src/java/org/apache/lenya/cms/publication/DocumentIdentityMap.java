@@ -16,21 +16,16 @@
  */
 package org.apache.lenya.cms.publication;
 
-import java.io.File;
-
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceResolver;
-import org.apache.excalibur.source.SourceUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.transaction.Identifiable;
 import org.apache.lenya.transaction.IdentifiableFactory;
 import org.apache.lenya.transaction.IdentityMap;
-import org.apache.lenya.transaction.IdentityMapImpl;
 
 /**
  * A DocumentIdentityMap avoids the multiple instanciation of a document object.
@@ -41,14 +36,26 @@ public class DocumentIdentityMap extends AbstractLogEnabled implements Identifia
 
     private IdentityMap map;
     protected ServiceManager manager;
-    
+
     /**
      * @return The identity map.
      */
     public IdentityMap getIdentityMap() {
         return this.map;
     }
-    
+
+    /**
+     * Ctor.
+     * @param session The session to use.
+     * @param manager The service manager.
+     * @param logger The logger to use.
+     */
+    public DocumentIdentityMap(Session session, ServiceManager manager, Logger logger) {
+        this.map = session.getUnitOfWork().getIdentityMap();
+        this.manager = manager;
+        ContainerUtil.enableLogging(this, logger);
+    }
+
     /**
      * Ctor.
      * @param map The identity map to use.
@@ -59,15 +66,6 @@ public class DocumentIdentityMap extends AbstractLogEnabled implements Identifia
         this.map = map;
         this.manager = manager;
         ContainerUtil.enableLogging(this, logger);
-    }
-
-    /**
-     * Ctor.
-     * @param serviceManager The service manager.
-     * @param logger The logger.
-     */
-    public DocumentIdentityMap(ServiceManager serviceManager, Logger logger) {
-        this(new IdentityMapImpl(logger), serviceManager, logger);
     }
 
     /**
@@ -83,12 +81,15 @@ public class DocumentIdentityMap extends AbstractLogEnabled implements Identifia
             throws DocumentBuildException {
 
         if (getLogger().isDebugEnabled())
-            getLogger().debug("DocumentIdentityMap::get() called on publication [" + publication.getId() + "], area [" + area + "], documentId [" + documentId + "], language [" + language + "]");
+            getLogger().debug("DocumentIdentityMap::get() called on publication ["
+                    + publication.getId() + "], area [" + area + "], documentId [" + documentId
+                    + "], language [" + language + "]");
 
         String key = getKey(publication, area, documentId, language);
 
         if (getLogger().isDebugEnabled())
-            getLogger().debug("DocumentIdentityMap::get() got key [" + key + "] from DocumentFactory");
+            getLogger().debug("DocumentIdentityMap::get() got key [" + key
+                    + "] from DocumentFactory");
 
         return (Document) getIdentityMap().get(this, key);
     }
@@ -138,8 +139,10 @@ public class DocumentIdentityMap extends AbstractLogEnabled implements Identifia
         int lastSlashIndex = document.getId().lastIndexOf("/");
         if (lastSlashIndex > 0) {
             String parentId = document.getId().substring(0, lastSlashIndex);
-            parent = get(document.getPublication(), document.getArea(), parentId, document
-                    .getLanguage());
+            parent = get(document.getPublication(),
+                    document.getArea(),
+                    parentId,
+                    document.getLanguage());
         }
         return parent;
     }
@@ -155,8 +158,10 @@ public class DocumentIdentityMap extends AbstractLogEnabled implements Identifia
             throws DocumentBuildException {
         Document parent = getParent(document);
         if (parent == null) {
-            parent = get(document.getPublication(), document.getArea(), defaultDocumentId, document
-                    .getLanguage());
+            parent = get(document.getPublication(),
+                    document.getArea(),
+                    defaultDocumentId,
+                    document.getLanguage());
         }
         return parent;
     }
@@ -209,8 +214,7 @@ public class DocumentIdentityMap extends AbstractLogEnabled implements Identifia
     public boolean isDocument(String webappUrl) throws DocumentBuildException {
 
         try {
-            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-            Publication publication = factory.getPublication(this.manager, webappUrl);
+            Publication publication = PublicationUtil.getPublicationFromUrl(this.manager, webappUrl);
             if (publication.exists()) {
 
                 ServiceSelector selector = null;
@@ -218,9 +222,8 @@ public class DocumentIdentityMap extends AbstractLogEnabled implements Identifia
                 try {
                     selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE
                             + "Selector");
-                    builder = (DocumentBuilder) selector.select(publication
-                            .getDocumentBuilderHint());
-                    return builder.isDocument(publication, webappUrl);
+                    builder = (DocumentBuilder) selector.select(publication.getDocumentBuilderHint());
+                    return builder.isDocument(webappUrl);
                 } finally {
                     if (selector != null) {
                         if (builder != null) {
@@ -259,23 +262,12 @@ public class DocumentIdentityMap extends AbstractLogEnabled implements Identifia
     public String getKey(String webappUrl) {
         ServiceSelector selector = null;
         DocumentBuilder builder = null;
-        SourceResolver resolver = null;
-        Source source = null;
-        Document document;
+        DocumentIdentifier identifier;
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI("context://");
-            File servletContext = SourceUtil.getFile(source);
-
-            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-            URLInformation info = new URLInformation(webappUrl);
-            String publicationId = info.getPublicationId();
-            Publication publication = factory.getPublication(publicationId, servletContext
-                    .getAbsolutePath());
-
+            Publication publication = PublicationUtil.getPublicationFromUrl(this.manager, webappUrl);
             selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
             builder = (DocumentBuilder) selector.select(publication.getDocumentBuilderHint());
-            document = builder.buildDocument(this, publication, webappUrl);
+            identifier = builder.getIdentitfier(webappUrl);
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -285,15 +277,11 @@ public class DocumentIdentityMap extends AbstractLogEnabled implements Identifia
                 }
                 this.manager.release(selector);
             }
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
-            }
         }
-        return getKey(document.getPublication(), document.getArea(), document.getId(), document
-                .getLanguage());
+        return getKey(identifier.getPublication(),
+                identifier.getArea(),
+                identifier.getId(),
+                identifier.getLanguage());
     }
 
     /**
@@ -313,34 +301,24 @@ public class DocumentIdentityMap extends AbstractLogEnabled implements Identifia
 
         ServiceSelector selector = null;
         DocumentBuilder builder = null;
-        SourceResolver resolver = null;
-        Source source = null;
         Document document;
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI("context://");
-            File servletContext = SourceUtil.getFile(source);
 
-            PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-            Publication publication = factory.getPublication(publicationId, servletContext
-                    .getAbsolutePath());
+            Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
 
             selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
             builder = (DocumentBuilder) selector.select(publication.getDocumentBuilderHint());
-            String webappUrl = builder.buildCanonicalUrl(publication, area, documentId, language);
-            document = builder.buildDocument(this, publication, webappUrl);
+            DocumentIdentifier identifier = new DocumentIdentifier(publication,
+                    area,
+                    documentId,
+                    language);
+            document = builder.buildDocument(this, identifier);
         } finally {
             if (selector != null) {
                 if (builder != null) {
                     selector.release(builder);
                 }
                 this.manager.release(selector);
-            }
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
             }
         }
         if (getLogger().isDebugEnabled())
@@ -349,7 +327,9 @@ public class DocumentIdentityMap extends AbstractLogEnabled implements Identifia
         return document;
     }
 
-    /**    * @see org.apache.lenya.transaction.IdentifiableFactory#getType()
+    /**
+     * *
+     * @see org.apache.lenya.transaction.IdentifiableFactory#getType()
      */
     public String getType() {
         return Document.TRANSACTIONABLE_TYPE;

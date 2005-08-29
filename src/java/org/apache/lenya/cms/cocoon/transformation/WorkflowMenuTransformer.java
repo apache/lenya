@@ -26,14 +26,17 @@ import java.util.Set;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.ProcessingException;
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.ResourceType;
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.workflow.DocumentWorkflowable;
+import org.apache.lenya.util.ServletHelper;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowManager;
 import org.xml.sax.Attributes;
@@ -116,14 +119,14 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
 
         super.setup(_resolver, _objectModel, src, _parameters);
 
-        PageEnvelope envelope = null;
         WorkflowManager workflowManager = null;
 
         try {
-            DocumentIdentityMap map = new DocumentIdentityMap(this.manager, getLogger());
-            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, _objectModel);
+            Request request = ObjectModelHelper.getRequest(_objectModel);
+            Session session = RepositoryUtil.getSession(request, getLogger());
+            DocumentIdentityMap map = new DocumentIdentityMap(session, this.manager, getLogger());
 
-            Document document = envelope.getDocument();
+            Document document = map.getFromURL(ServletHelper.getWebappURI(request));
             if (document == null) {
                 setHasWorkflow(false);
             } else {

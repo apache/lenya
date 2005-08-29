@@ -32,8 +32,8 @@ import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceFactory;
-import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 
 /**
@@ -78,12 +78,7 @@ public class LenyaSourceFactory extends AbstractLogEnabled implements SourceFact
             throws MalformedURLException, IOException, SourceException {
 
         Request request = ContextHelper.getRequest(this.context);
-        Session session = (Session) request.getAttribute(Session.class.getName());
-        if (session == null) {
-            Identity identity = (Identity) request.getSession(false)
-                    .getAttribute(Identity.class.getName());
-            session = new Session(identity, getLogger());
-        }
+        Session session = RepositoryUtil.getSession(request, getLogger());
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Creating repository source for URI [" + location + "]");
