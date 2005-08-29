@@ -20,6 +20,9 @@ import org.apache.avalon.framework.component.Component;
 import org.apache.avalon.framework.component.ComponentException;
 import org.apache.cocoon.components.ExtendedComponentSelector;
 
+/**
+ * Specifis selector for resource types.
+ */
 public class ResourceTypeSelector extends ExtendedComponentSelector{
 
     /**

@@ -28,10 +28,10 @@ public class DocumentIdentifier {
     
     /**
      * Ctor.
-     * @param publication
-     * @param area
-     * @param id
-     * @param language
+     * @param publication The publication.
+     * @param area The area.
+     * @param id The document ID.
+     * @param language The language.
      */
     public DocumentIdentifier(Publication publication, String area, String id, String language) {
         this.publication = publication;
@@ -40,18 +40,30 @@ public class DocumentIdentifier {
         this.language = language;
     }
 
+    /**
+     * @return The area.
+     */
     public String getArea() {
         return area;
     }
 
+    /**
+     * @return The document ID.
+     */
     public String getId() {
         return id;
     }
 
+    /**
+     * @return The language.
+     */
     public String getLanguage() {
         return language;
     }
 
+    /**
+     * @return The publication.
+     */
     public Publication getPublication() {
         return publication;
     }

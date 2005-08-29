@@ -23,6 +23,9 @@ import org.apache.lenya.cms.authoring.NodeCreatorInterface;
  */
 public interface ResourceType {
     
+    /**
+     * The Avalon service role.
+     */
     String ROLE = ResourceType.class.getName();
     
     /**

@@ -21,7 +21,6 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 
-import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.rc.RCEnvironment;
 
@@ -161,6 +160,7 @@ public class PageEnvelope {
      * @param contextPath The servlet context prefix.
      * @param webappUrl The web application URL.
      * @param servletContext The servlet context directory.
+     * @param publication The publication.
      * @throws PageEnvelopeException when something went wrong.
      */
     public PageEnvelope(DocumentIdentityMap map, String contextPath, String webappUrl,
@@ -168,12 +168,10 @@ public class PageEnvelope {
         this.identityMap = map;
         this.context = contextPath;
         this.webappUrl = webappUrl;
-        this.servletContext = servletContext;
         this.publication = publication;
     }
 
     private String webappUrl;
-    private File servletContext;
 
     private DocumentIdentityMap identityMap;
 

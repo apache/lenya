@@ -55,6 +55,7 @@ public class PageEnvelopeFactory {
      * Returns the page envelope for the object model of a Cocoon component.
      * @param map The document identity map to use.
      * @param objectModel The object model.
+     * @param pub The publication.
      * @return A page envelope.
      * @throws PageEnvelopeException if something went wrong.
      */
@@ -74,6 +75,7 @@ public class PageEnvelopeFactory {
      * @param contextPath The servlet context prefix.
      * @param webappUrl The web application URL.
      * @param servletContext The servlet context directory.
+     * @param pub The publication.
      * @return A page envelope.
      * @throws PageEnvelopeException if something went wrong.
      */

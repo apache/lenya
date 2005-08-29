@@ -36,7 +36,6 @@ import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteUtil;
-import org.w3c.dom.DocumentType;
 
 /**
  * DocumentManager implementation.
@@ -52,7 +51,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * implementation to be used is specified in doctypes.xconf (and thus depends on the publication
      * and the resource type to be used)
      * 
-     * @see DocumentManager#add(Document, DocumentType, String, Map)
+     * @see DocumentManager#add(Document, ResourceType, String, boolean, Map)
      * @see org.apache.lenya.cms.authoring.NodeCreatorInterface
      * @see org.apache.lenya.cms.publication.DocumentBuilder
      */
@@ -66,7 +65,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#add(org.apache.lenya.cms.publication.Document,
-     *      org.apache.lenya.cms.publication.Document, java.lang.String, java.util.Map)
+     *      org.apache.lenya.cms.publication.Document, java.lang.String, boolean, 
+     *      java.util.Map)
      */
     public void add(Document document, Document sourceDocument, String navigationTitle,
             boolean visibleInNav,

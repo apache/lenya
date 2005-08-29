@@ -63,7 +63,7 @@ public interface DocumentManager {
      * with the given parameters:
      * 
      * @param document The document to add.
-     * @param documentType the document type (aka resource type) of the new document
+     * @param resourceType the document type (aka resource type) of the new document
      * @param navigationTitle navigation title
      * @param visibleInNav determines the visibility of a node in the navigation
      * @param parameters any parameters the caller needs to pass to the creator
