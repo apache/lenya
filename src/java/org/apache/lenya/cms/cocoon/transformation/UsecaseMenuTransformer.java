@@ -29,8 +29,6 @@ import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.ac.AccessController;
@@ -60,6 +58,9 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
      * <code>MENU_ELEMENT</code> The menu element
      */
     public static final String MENU_ELEMENT = "menu";
+    /**
+     * The menu namespace.
+     */
     public static final String MENU_NAMESPACE = "http://apache.org/cocoon/lenya/menubar/1.0";
     /**
      * <code>ITEM_ELEMENT</code> The item element
@@ -112,10 +113,10 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
                     }
                 }
 
-                if (usecaseResolver.isRegistered(usecaseName)) {
+                if (usecaseResolver.isRegistered(this.sourceUrl, usecaseName)) {
                     Usecase usecase = null;
                     try {
-                        usecase = usecaseResolver.resolve(usecaseName);
+                        usecase = usecaseResolver.resolve(this.sourceUrl, usecaseName);
                         usecase.setSourceURL(this.sourceUrl);
                         usecase.setName(usecaseName);
                         if (attr.getValue(HREF_ATTRIBUTE) != null) {
@@ -236,11 +237,10 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
         this.acResolver = null;
         this.authorizer = null;
 
-        Request _request = ObjectModelHelper.getRequest(_objectModel);
-        this.sourceUrl = ServletHelper.getWebappURI(request);
+        this.sourceUrl = ServletHelper.getWebappURI(this.request);
 
         try {
-            this.roles = PolicyAuthorizer.getRoles(_request);
+            this.roles = PolicyAuthorizer.getRoles(this.request);
             this.publication = PublicationUtil.getPublication(this.manager, _objectModel);
 
             this.serviceSelector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
@@ -248,7 +248,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
             this.acResolver = (AccessControllerResolver) this.serviceSelector.select(AccessControllerResolver.DEFAULT_RESOLVER);
             getLogger().debug("Resolved AC resolver [" + this.acResolver + "]");
 
-            String webappUrl = ServletHelper.getWebappURI(_request);
+            String webappUrl = ServletHelper.getWebappURI(this.request);
             AccessController accessController = this.acResolver.resolveAccessController(webappUrl);
 
             if (accessController instanceof DefaultAccessController) {

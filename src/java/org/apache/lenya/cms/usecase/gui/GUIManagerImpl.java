@@ -173,10 +173,10 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Co
                 }
             }
 
-            if (usecaseResolver.isRegistered(tab.getUsecase())) {
+            if (usecaseResolver.isRegistered(this.webappUrl, tab.getUsecase())) {
                 Usecase usecase = null;
                 try {
-                    usecase = usecaseResolver.resolve(tab.getUsecase());
+                    usecase = usecaseResolver.resolve(this.webappUrl, tab.getUsecase());
                     usecase.setSourceURL(this.webappUrl);
                     usecase.setName(tab.getUsecase());
                     String[] keys = tab.getParameterNames();

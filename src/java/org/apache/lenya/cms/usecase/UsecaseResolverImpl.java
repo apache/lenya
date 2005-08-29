@@ -17,16 +17,12 @@
 package org.apache.lenya.cms.usecase;
 
 import org.apache.avalon.framework.activity.Disposable;
-import org.apache.avalon.framework.context.Context;
-import org.apache.avalon.framework.context.ContextException;
-import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.Request;
+import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.URLInformation;
@@ -38,7 +34,7 @@ import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
  * @version $Id$
  */
 public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseResolver,
-        Serviceable, Disposable, Contextualizable {
+        Serviceable, Disposable, ThreadSafe {
 
     /**
      * Ctor.
@@ -48,13 +44,6 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
     }
 
     private ServiceSelector selector;
-
-    /**
-     * @see org.apache.lenya.cms.usecase.UsecaseResolver#resolve(java.lang.String)
-     */
-    public Usecase resolve(String name) throws ServiceException {
-        return this.resolve(getWebappURL(), name);
-    }
 
     private ServiceManager manager;
 
@@ -87,20 +76,6 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.UsecaseResolver#isRegistered(java.lang.String)
-     */
-    public boolean isRegistered(String name) throws ServiceException {
-        return this.isRegistered(getWebappURL(), name);
-    }
-
-    protected String getWebappURL() {
-        Request request = ContextHelper.getRequest(getContext());
-        String context = request.getContextPath();
-        String webappUrl = request.getRequestURI().substring(context.length());
-        return webappUrl;
-    }
-
-    /**
      * Returns the name of the publication-overridden usecase to be resolved.
      * @param webappUrl The web application URL.
      * @param name The plain usecase name.
@@ -130,23 +105,6 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
         }
 
         return newName;
-    }
-
-    private Context context;
-
-    /**
-     * @see org.apache.avalon.framework.context.Contextualizable#contextualize(org.apache.avalon.framework.context.Context)
-     */
-    public void contextualize(Context _context) throws ContextException {
-        this.context = _context;
-    }
-
-    /**
-     * Returns the context.
-     * @return A context.
-     */
-    protected Context getContext() {
-        return this.context;
     }
 
     /**
