@@ -59,7 +59,8 @@ public class DocumentUsecase extends AbstractUsecase {
     public void setSourceURL(String url) {
         try {
             if (getDocumentIdentityMap().isDocument(url)) {
-                setParameter(DOCUMENT, getDocumentIdentityMap().getFromURL(url));
+                Document document = getDocumentIdentityMap().getFromURL(url);
+                setParameter(DOCUMENT, document);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

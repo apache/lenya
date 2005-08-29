@@ -16,6 +16,9 @@
  */
 package org.apache.lenya.workflow.impl;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.avalon.excalibur.pool.Poolable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
@@ -37,6 +40,8 @@ import org.w3c.dom.Document;
  */
 public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowManager,
         Serviceable, Poolable {
+
+    private Map uri2workflow = new HashMap();
 
     /**
      * @see org.apache.lenya.workflow.WorkflowManager#invoke(org.apache.lenya.workflow.Workflowable,
@@ -104,9 +109,13 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
             String uri = workflowable.getWorkflowSchemaURI();
             getLogger().debug("Workflow URI: " + uri);
             if (uri != null) {
-                Document document = SourceUtil.readDOM(uri, this.manager);
-                WorkflowBuilder builder = new WorkflowBuilder(getLogger());
-                workflow = builder.buildWorkflow(uri, document);
+                workflow = (WorkflowImpl) this.uri2workflow.get(uri);
+                if (workflow == null) {
+                    Document document = SourceUtil.readDOM(uri, this.manager);
+                    WorkflowBuilder builder = new WorkflowBuilder(getLogger());
+                    workflow = builder.buildWorkflow(uri, document);
+                    this.uri2workflow.put(uri, workflow);
+                }
             }
         } catch (final Exception e) {
             throw new WorkflowException(e);

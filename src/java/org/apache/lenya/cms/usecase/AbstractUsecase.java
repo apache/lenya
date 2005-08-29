@@ -342,7 +342,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      * @see org.apache.lenya.cms.usecase.Usecase#getParameter(java.lang.String)
      */
     public Object getParameter(String name) {
-        initializeParametersIfNotDone();
+        if (!this.parameters.containsKey(name)) {
+            initializeParametersIfNotDone();
+        }
         return this.parameters.get(name);
     }
 
