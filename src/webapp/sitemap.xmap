@@ -288,6 +288,7 @@
      <exception name="sax" class="org.xml.sax.SAXException" unroll="true"/>
      <exception name="resourcenotfound" class="org.apache.cocoon.ResourceNotFoundException" unroll="true"/>
      <exception name="document-does-not-exist" class="org.apache.lenya.cms.publication.DocumentDoesNotExistException"/>
+     <exception name="no-child-document-exist" class="org.apache.lenya.cms.publication.NoChildDocumentExistException"/>
      <exception name="invalid-continuation" class="org.apache.cocoon.components.flow.InvalidContinuationException"/>
      <exception class="org.apache.cocoon.ProcessingException" unroll="true"/>
      <!-- The statement below tells the selector to unroll as much exceptions as possible -->
@@ -331,6 +332,7 @@
    <map:action name="document-id-exists" logger="sitemap.action.document-id-exists" src="org.apache.lenya.cms.cocoon.acting.DocumentIdExistsAction" />
    <map:action name="form-validator" logger="sitemap.action.form-validator" src="org.apache.cocoon.acting.FormValidatorAction"/>
    <map:action name="language-exists" logger="lenya.sitemap.action.language-exists" src="org.apache.lenya.cms.cocoon.acting.LanguageExistsAction"/>
+   <map:action name="first-child-exists" logger="lenya.sitemap.action.first-child-exists" src="org.apache.lenya.cms.cocoon.acting.FirstChildExistsAction"/>
    <map:action name="oneformeditorsave" logger="sitemap.action.oneformeditormsave" src="org.apache.lenya.cms.cocoon.acting.OneFormEditorSaveAction" />
    <map:action name="parent-child" logger="sitemap.action.parent-child" src="org.apache.lenya.cms.cocoon.acting.ParentChildCreatorAction">
      <tree-authoring href="content/authoring/tree.xml"/>
