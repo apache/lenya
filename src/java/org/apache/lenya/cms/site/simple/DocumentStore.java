@@ -58,8 +58,8 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
     public DocumentStore(ServiceManager manager, DocumentIdentityMap map, Publication publication,
             String area, Logger _logger) throws DocumentException {
         super(manager, map, new DocumentIdentifier(publication,
-                DOCUMENT_ID,
                 area,
+                DOCUMENT_ID,
                 publication.getDefaultLanguage()), _logger);
     }
 
