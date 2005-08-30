@@ -48,9 +48,9 @@ public class OneFormEditor extends DocumentUsecase {
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
-     */
-    protected Node[] getObjectsToLock() throws UsecaseException {
-        Node[] objects = { getSourceDocument().getRepositoryNode() };
+     */    
+    protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
+        org.apache.lenya.cms.repository.Node[] objects = { getSourceDocument().getRepositoryNode() };
         return objects;
     }
 
