@@ -54,6 +54,8 @@ import org.apache.lenya.transaction.LockException;
 public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Configurable,
         Contextualizable, Serviceable, Initializable {
 
+    protected static final String PARAMETERS_INITIALIZED = "private.parametersInitialized";
+
     /**
      * Ctor.
      */
@@ -539,8 +541,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     protected void initializeParametersIfNotDone() {
-        if (!this.parametersInitialized) {
-            this.parametersInitialized = true;
+        if (this.parameters.get(PARAMETERS_INITIALIZED) == null) {
+            this.parameters.put(PARAMETERS_INITIALIZED, Boolean.TRUE);
             initParameters();
         }
     }
