@@ -27,7 +27,6 @@ import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
 import org.apache.lenya.cms.rc.FileReservedCheckInException;
 import org.apache.lenya.cms.rc.RevisionController;
-import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
 
 /**
@@ -40,14 +39,6 @@ public interface FlowHelper {
      * The Avalon Role.
      */
     String ROLE = FlowHelper.class.getName();
-
-    /**
-     * Returns the current workflow situation.
-     * @param cocoon The FOM_Cocoon object.
-     * @return A situation.
-     * @throws AccessControlException when something went wrong.
-     */
-    Situation getSituation(FOM_Cocoon cocoon) throws AccessControlException;
 
     /**
      * Returns the current page envelope.

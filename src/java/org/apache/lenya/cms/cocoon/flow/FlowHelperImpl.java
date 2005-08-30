@@ -48,9 +48,7 @@ import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
-import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
-import org.apache.lenya.workflow.WorkflowManager;
 
 /**
  * Flowscript utility class. The FOM_Cocoon object is not passed in the constructor to avoid errors.
@@ -63,23 +61,6 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Se
      */
     public FlowHelperImpl() {
         // do nothing
-    }
-
-    /**
-     * @see org.apache.lenya.cms.cocoon.flow.FlowHelper#getSituation(org.apache.cocoon.components.flow.javascript.fom.FOM_Cocoon)
-     */
-    public Situation getSituation(FOM_Cocoon cocoon) throws AccessControlException {
-        Situation situation;
-        WorkflowManager wfManager = null;
-        try {
-            wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-            situation = wfManager.getSituation();
-        } catch (ServiceException e) {
-            throw new RuntimeException(e);
-        } finally {
-            this.manager.release(wfManager);
-        }
-        return situation;
     }
 
     /**
@@ -166,7 +147,9 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Se
     public void triggerWorkflow(FOM_Cocoon cocoon, String event) throws WorkflowException,
             PageEnvelopeException, AccessControlException {
         Document document = getPageEnvelope(cocoon).getDocument();
-        WorkflowUtil.invoke(this.manager, getLogger(), document, event);
+        Request request = getRequest(cocoon);
+        Session session = RepositoryUtil.getSession(request, getLogger());
+        WorkflowUtil.invoke(this.manager, session, getLogger(), document, event);
     }
 
     /**

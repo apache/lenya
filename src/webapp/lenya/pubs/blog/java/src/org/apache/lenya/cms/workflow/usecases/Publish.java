@@ -45,17 +45,16 @@ public class Publish extends DocumentUsecase {
         try {
             List nodes = new ArrayList();
             DocumentSet set = new DocumentSet();
-            
+
             Document doc = getSourceDocument();
             set.addAll(SiteUtil.getSubSite(this.manager, doc));
-            
+
             Document liveDoc = doc.getIdentityMap().getAreaVersion(doc, Publication.LIVE_AREA);
-            if(liveDoc.exists())
+            if (liveDoc.exists())
                 set.addAll(SiteUtil.getSubSite(this.manager, liveDoc));
             else
                 set.add(liveDoc);
-            
-            
+
             Document[] documents = set.getDocuments();
             for (int i = 0; i < documents.length; i++) {
                 nodes.add(documents[i].getRepositoryNode());
@@ -87,7 +86,11 @@ public class Publish extends DocumentUsecase {
                 return;
             }
 
-            if (!WorkflowUtil.canInvoke(this.manager, getLogger(), getSourceDocument(), event)) {
+            if (!WorkflowUtil.canInvoke(this.manager,
+                    getSession(),
+                    getLogger(),
+                    getSourceDocument(),
+                    event)) {
                 addErrorMessage("error-workflow-document", new String[] { getEvent(),
                         getSourceDocument().getId() });
             }
@@ -104,7 +107,11 @@ public class Publish extends DocumentUsecase {
             Document authoringDocument = getSourceDocument();
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             documentManager.copyToArea(authoringDocument, Publication.LIVE_AREA);
-            WorkflowUtil.invoke(this.manager, getLogger(), authoringDocument, getEvent());
+            WorkflowUtil.invoke(this.manager,
+                    getSession(),
+                    getLogger(),
+                    authoringDocument,
+                    getEvent());
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {

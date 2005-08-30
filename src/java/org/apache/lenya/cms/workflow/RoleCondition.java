@@ -30,7 +30,6 @@ import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.impl.DefaultAccessController;
-import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.Workflowable;
@@ -60,14 +59,12 @@ public class RoleCondition extends AbstractCondition {
     /**
      * Returns if the condition is complied in a certain situation. The condition is complied when
      * the current user has the role that is required by the RoleCondition.
-     * @see org.apache.lenya.workflow.impl.AbstractCondition#isComplied(Workflow, Situation,
-     *      Workflowable)
+     * @see org.apache.lenya.workflow.impl.AbstractCondition#isComplied(Workflow, Workflowable)
      */
-    public boolean isComplied(Workflow workflow, Situation situation, Workflowable instance) {
+    public boolean isComplied(Workflow workflow, Workflowable instance) {
 
         DocumentWorkflowable workflowable = (DocumentWorkflowable) instance;
-        LenyaSituation lenyaSituation = (LenyaSituation) situation;
-        ServiceManager manager = lenyaSituation.getServiceManager();
+        ServiceManager manager = workflowable.getServiceManager();
         String url = workflowable.getDocument().getCanonicalWebappURL();
 
         ServiceSelector selector = null;
@@ -85,7 +82,7 @@ public class RoleCondition extends AbstractCondition {
             Policy policy = policyManager.getPolicy(defaultAccessController.getAccreditableManager(),
                     url);
 
-            Role[] roles = policy.getRoles(lenyaSituation.getIdentity());
+            Role[] roles = policy.getRoles(workflowable.getSession().getUnitOfWork().getIdentity());
             boolean complied = false;
 
             for (int i = 0; i < roles.length; i++) {

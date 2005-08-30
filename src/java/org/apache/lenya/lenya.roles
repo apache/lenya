@@ -124,7 +124,7 @@
         
   <role name="org.apache.lenya.workflow.WorkflowManager"
   	    shorthand="workflow-manager"
-  	    default-class="org.apache.lenya.cms.workflow.LenyaWorkflowManager"/>
+  	    default-class="org.apache.lenya.workflow.impl.WorkflowManagerImpl"/>
         
   <role name="org.apache.lenya.cms.site.usecases.LinkRewriter"
   	    shorthand="link-rewriter"

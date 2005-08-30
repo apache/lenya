@@ -24,8 +24,11 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.workflow.DocumentWorkflowable;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
@@ -69,7 +72,11 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
             Document document = envelope.getDocument();
             if (document != null && document.exists()) {
                 wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-                DocumentWorkflowable workflowable = new DocumentWorkflowable(document,
+                Session session = RepositoryUtil.getSession(ObjectModelHelper.getRequest(objectModel),
+                        getLogger());
+                DocumentWorkflowable workflowable = new DocumentWorkflowable(this.manager,
+                        session,
+                        document,
                         getLogger());
                 if (wfManager.hasWorkflow(workflowable)) {
 
@@ -94,7 +101,8 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
                             }
                         }
                     } else if (name.equals(HISTORY_PATH)) {
-                        final String path = document.getPublication().getPathMapper()
+                        final String path = document.getPublication()
+                                .getPathMapper()
                                 .getPath(document.getId(), document.getLanguage());
                         final String uri = "content/workflow/history/" + path;
                         final File pubDir = document.getPublication().getDirectory();

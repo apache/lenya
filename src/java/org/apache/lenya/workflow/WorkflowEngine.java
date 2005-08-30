@@ -19,7 +19,7 @@ package org.apache.lenya.workflow;
 /**
  * Workflow engine.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public interface WorkflowEngine {
 
@@ -27,23 +27,21 @@ public interface WorkflowEngine {
      * Checks if an event can be invoked.
      * @param workflowable The workflowable.
      * @param workflow The workflow schema.
-     * @param situation The situation.
      * @param event The event.
      * @return A boolean value.
      * @throws WorkflowException if an error occurs.
      */
-    boolean canInvoke(Workflowable workflowable, Workflow workflow, Situation situation, String event)
+    boolean canInvoke(Workflowable workflowable, Workflow workflow, String event)
             throws WorkflowException;
 
     /**
      * Invokes an event.
      * @param workflowable The workflowable.
      * @param workflow The workflow.
-     * @param situation The situation.
      * @param event The event.
      * @throws WorkflowException if an error occurs.
      */
-    void invoke(Workflowable workflowable, Workflow workflow, Situation situation, String event)
+    void invoke(Workflowable workflowable, Workflow workflow, String event)
             throws WorkflowException;
 
 }

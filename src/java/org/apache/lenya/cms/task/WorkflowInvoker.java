@@ -212,7 +212,9 @@ public class WorkflowInvoker extends ParameterWrapper {
     public void invokeTransition() throws ExecutionException {
 
         try {
-            WorkflowUtil.invoke(this.manager, new ConsoleLogger(), this.document, getEventName());
+            org.apache.avalon.framework.logger.Logger logger = new ConsoleLogger();
+            Session session = new Session(new IdentityMapImpl(logger), null, logger);
+            WorkflowUtil.invoke(this.manager, session, new ConsoleLogger(), this.document, getEventName());
         } catch (Exception e) {
             throw new ExecutionException(e);
         }

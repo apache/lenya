@@ -43,10 +43,15 @@ public class EditDocument extends DocumentUsecase {
         SourceResolver resolver = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            SourceUtil.copy(resolver, getParameterAsString(SOURCE_URI), getSourceDocument()
-                    .getSourceURI());
+            SourceUtil.copy(resolver,
+                    getParameterAsString(SOURCE_URI),
+                    getSourceDocument().getSourceURI());
 
-            WorkflowUtil.invoke(this.manager, getLogger(), getSourceDocument(), "edit");
+            WorkflowUtil.invoke(this.manager,
+                    getSession(),
+                    getLogger(),
+                    getSourceDocument(),
+                    "edit");
 
         } finally {
             if (resolver != null) {
@@ -60,7 +65,8 @@ public class EditDocument extends DocumentUsecase {
      */
     protected Node[] getNodesToLock() throws UsecaseException {
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("EditDocument::getObjectsToLock() called on source document [" + getSourceDocument().getId() + "]");
+            getLogger().debug("EditDocument::getObjectsToLock() called on source document ["
+                    + getSourceDocument().getId() + "]");
         }
 
         Node[] objects = { getSourceDocument().getRepositoryNode() };

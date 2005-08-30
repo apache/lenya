@@ -86,7 +86,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
                     addErrorMessage("delete-doc-live", new String[] { liveVersion.getId() });
                 }
             }
-            if (!WorkflowUtil.canInvoke(this.manager, getLogger(), set, getEvent())) {
+            if (!WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), set, getEvent())) {
                 addErrorMessage("The workflow event cannot be invoked on all documents.");
             }
         }
@@ -168,7 +168,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
         SiteManager siteManager = null;
         try {
 
-            WorkflowUtil.invoke(this.manager, getLogger(), sources, getEvent(), true);
+            WorkflowUtil.invoke(this.manager, getSession(), getLogger(), sources, getEvent(), true);
 
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 

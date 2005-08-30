@@ -21,7 +21,6 @@ import java.util.List;
 
 import org.apache.lenya.workflow.Action;
 import org.apache.lenya.workflow.Condition;
-import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Transition;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
@@ -32,29 +31,29 @@ import org.apache.lenya.workflow.Workflowable;
 /**
  * Workflow engine implementation.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class WorkflowEngineImpl implements WorkflowEngine {
 
     /**
      * @see org.apache.lenya.workflow.WorkflowEngine#canInvoke(org.apache.lenya.workflow.Workflowable,
-     *      org.apache.lenya.workflow.Workflow, Situation, java.lang.String)
+     *      org.apache.lenya.workflow.Workflow, java.lang.String)
      */
-    public boolean canInvoke(Workflowable workflowable, Workflow workflow, Situation situation,
-            String event) throws WorkflowException {
-        List firingTransitions = getFiringTransitions(workflowable, workflow, situation, event);
+    public boolean canInvoke(Workflowable workflowable, Workflow workflow, String event)
+            throws WorkflowException {
+        List firingTransitions = getFiringTransitions(workflowable, workflow, event);
         return firingTransitions.size() == 1;
     }
 
     /**
      * @see org.apache.lenya.workflow.WorkflowEngine#invoke(org.apache.lenya.workflow.Workflowable,
-     *      org.apache.lenya.workflow.Workflow, Situation, java.lang.String)
+     *      org.apache.lenya.workflow.Workflow, java.lang.String)
      */
-    public void invoke(Workflowable workflowable, Workflow workflow, Situation situation,
-            String event) throws WorkflowException {
+    public void invoke(Workflowable workflowable, Workflow workflow, String event)
+            throws WorkflowException {
 
         Transition firingTransition = null;
-        List firingTransitions = getFiringTransitions(workflowable, workflow, situation, event);
+        List firingTransitions = getFiringTransitions(workflowable, workflow, event);
 
         if (firingTransitions.size() == 0) {
             throw new WorkflowException("No transition can fire!");
@@ -73,7 +72,7 @@ public class WorkflowEngineImpl implements WorkflowEngine {
             actions[i].execute(newVersion);
         }
 
-        workflowable.newVersion(workflow, newVersion, situation);
+        workflowable.newVersion(workflow, newVersion);
     }
 
     /**
@@ -107,29 +106,27 @@ public class WorkflowEngineImpl implements WorkflowEngine {
      * Returns the transitions that would fire in a certain situation.
      * @param workflowable The workflowable.
      * @param workflow The workflow.
-     * @param situation The situation.
      * @param event The event.
      * @return A list of transitions.
      * @throws WorkflowException if an error occurs.
      */
-    protected List getFiringTransitions(Workflowable workflowable, Workflow workflow,
-            Situation situation, String event) throws WorkflowException {
+    protected List getFiringTransitions(Workflowable workflowable, Workflow workflow, String event)
+            throws WorkflowException {
         Version lastVersion = workflowable.getLatestVersion();
-        
+
         String currentState;
         if (lastVersion == null) {
             currentState = workflow.getInitialState();
-        }
-        else {
+        } else {
             currentState = lastVersion.getState();
         }
-        
+
         Transition[] transitions = workflow.getLeavingTransitions(currentState);
         List firingTransitions = new ArrayList();
 
         for (int i = 0; i < transitions.length; i++) {
             if (transitions[i].getEvent().equals(event)
-                    && canFire(transitions[i], workflow, situation, workflowable)) {
+                    && canFire(transitions[i], workflow, workflowable)) {
                 firingTransitions.add(transitions[i]);
             }
         }
@@ -140,19 +137,18 @@ public class WorkflowEngineImpl implements WorkflowEngine {
      * Checks if a transition can fire.
      * @param transition The transition.
      * @param workflow The workflow.
-     * @param situation The situation.
      * @param workflowable The workflowable.
      * @return A boolean value.
      * @throws WorkflowException if an error occurs.
      */
-    public boolean canFire(Transition transition, Workflow workflow, Situation situation,
-            Workflowable workflowable) throws WorkflowException {
+    public boolean canFire(Transition transition, Workflow workflow, Workflowable workflowable)
+            throws WorkflowException {
         Condition[] _conditions = transition.getConditions();
         boolean canFire = true;
 
         int i = 0;
         while (canFire && i < _conditions.length) {
-            canFire = canFire && _conditions[i].isComplied(workflow, situation, workflowable);
+            canFire = canFire && _conditions[i].isComplied(workflow, workflowable);
             i++;
         }
 

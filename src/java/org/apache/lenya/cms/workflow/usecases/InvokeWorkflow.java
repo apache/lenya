@@ -28,19 +28,19 @@ import org.apache.lenya.cms.workflow.WorkflowUtil;
  * Invoke a workflow event on the current document. The event is obtained from the configuration in
  * <code>cocoon.xconf</code>:<code>
  * <pre>
- * 
- *  
  *   
  *    
- *       &lt;component-instance name=&quot;default/workflow.submit&quot;
- *                           logger=&quot;lenya.usecases.workflow&quot;
- *                           class=&quot;org.apache.lenya.cms.workflow.usecases.InvokeWorkflow&quot;&gt;
- *         &lt;event id=&quot;submit&quot;/&gt;
- *       &lt;/component-instance&gt;
+ *     
+ *      
+ *         &lt;component-instance name=&quot;default/workflow.submit&quot;
+ *                             logger=&quot;lenya.usecases.workflow&quot;
+ *                             class=&quot;org.apache.lenya.cms.workflow.usecases.InvokeWorkflow&quot;&gt;
+ *           &lt;event id=&quot;submit&quot;/&gt;
+ *         &lt;/component-instance&gt;
+ *       
+ *      
  *     
  *    
- *   
- *  
  * </pre>
  * </code>
  * 
@@ -67,7 +67,11 @@ public class InvokeWorkflow extends DocumentUsecase implements Configurable {
             return;
         }
 
-        if (!WorkflowUtil.canInvoke(this.manager, getLogger(), getSourceDocument(), getEvent())) {
+        if (!WorkflowUtil.canInvoke(this.manager,
+                getSession(),
+                getLogger(),
+                getSourceDocument(),
+                getEvent())) {
             addErrorMessage("error-workflow-document", new String[] { getEvent(),
                     getSourceDocument().getId() });
         }
@@ -86,7 +90,11 @@ public class InvokeWorkflow extends DocumentUsecase implements Configurable {
      */
     protected void doExecute() throws Exception {
         super.doExecute();
-        WorkflowUtil.invoke(this.manager, getLogger(), getSourceDocument(), getEvent());
+        WorkflowUtil.invoke(this.manager,
+                getSession(),
+                getLogger(),
+                getSourceDocument(),
+                getEvent());
     }
 
     protected static final String ELEMENT_EVENT = "event";

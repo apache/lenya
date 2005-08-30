@@ -25,7 +25,6 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowEngine;
 import org.apache.lenya.workflow.WorkflowException;
@@ -51,15 +50,13 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
             throws WorkflowException {
         if (hasWorkflow(workflowable)) {
             WorkflowEngine engine = new WorkflowEngineImpl();
-            Situation situation = getSituation();
             Workflow workflow = getWorkflowSchema(workflowable);
 
-            if (force && !engine.canInvoke(workflowable, workflow, situation, event)) {
+            if (force && !engine.canInvoke(workflowable, workflow, event)) {
                 throw new WorkflowException("The event [" + event
-                        + "] cannot be invoked on the document [" + workflowable
-                        + "] in the situation [" + situation + "]");
+                        + "] cannot be invoked on the document [" + workflowable + "]");
             }
-            engine.invoke(workflowable, workflow, situation, event);
+            engine.invoke(workflowable, workflow, event);
         }
     }
 
@@ -81,8 +78,7 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
             if (hasWorkflow(workflowable)) {
                 Workflow workflow = getWorkflowSchema(workflowable);
                 WorkflowEngine engine = new WorkflowEngineImpl();
-                Situation situation = getSituation();
-                canInvoke = engine.canInvoke(workflowable, workflow, situation, event);
+                canInvoke = engine.canInvoke(workflowable, workflow, event);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -129,13 +125,6 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
      */
     public boolean hasWorkflow(Workflowable workflowable) {
         return workflowable.getWorkflowSchemaURI() != null;
-    }
-
-    /**
-     * @see org.apache.lenya.workflow.WorkflowManager#getSituation()
-     */
-    public Situation getSituation() {
-        return new SituationImpl();
     }
 
 }

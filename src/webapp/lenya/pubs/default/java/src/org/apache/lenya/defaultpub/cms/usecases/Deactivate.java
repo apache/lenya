@@ -60,7 +60,11 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
             String event = getEvent();
             boolean allowSingle = true;
 
-            if (!WorkflowUtil.canInvoke(this.manager, getLogger(), getSourceDocument(), event)) {
+            if (!WorkflowUtil.canInvoke(this.manager,
+                    getSession(),
+                    getLogger(),
+                    getSourceDocument(),
+                    event)) {
                 allowSingle = false;
                 addInfoMessage("The single document cannot be deactivated because the workflow event cannot be invoked.");
             }
@@ -135,7 +139,11 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             documentManager.delete(liveDocument);
 
-            WorkflowUtil.invoke(this.manager, getLogger(), authoringDocument, getEvent());
+            WorkflowUtil.invoke(this.manager,
+                    getSession(),
+                    getLogger(),
+                    authoringDocument,
+                    getEvent());
             success = true;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -223,7 +231,11 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
         for (int i = 0; i < languages.length; i++) {
             Document version = document.getIdentityMap().getLanguageVersion(document, languages[i]);
             if (version.exists()
-                    && WorkflowUtil.canInvoke(this.manager, getLogger(), version, getEvent())) {
+                    && WorkflowUtil.canInvoke(this.manager,
+                            getSession(),
+                            getLogger(),
+                            version,
+                            getEvent())) {
                 deactivate(version);
             }
         }

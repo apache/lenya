@@ -80,10 +80,16 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
             try {
                 resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
                 Session session = RepositoryUtil.getSession(request, getLogger());
-                DocumentIdentityMap map = new DocumentIdentityMap(session, this.manager, getLogger());
+                DocumentIdentityMap map = new DocumentIdentityMap(session,
+                        this.manager,
+                        getLogger());
                 if (map.isDocument(webappUrl)) {
                     Document document = map.getFromURL(webappUrl);
-                    authorized = WorkflowUtil.canInvoke(this.manager, getLogger(), document, event);
+                    authorized = WorkflowUtil.canInvoke(this.manager,
+                            session,
+                            getLogger(),
+                            document,
+                            event);
                 }
             } catch (final Exception e) {
                 throw new AccessControlException(e);

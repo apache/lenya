@@ -54,7 +54,7 @@ public class SiteOverview extends AbstractUsecase {
     protected static final String DOCUMENTS = "documents";
     protected static final String FILTER_WORKFLOW_STATE_VALUES = "filterWorkflowStateValues";
     protected static final String FILTER_RESOURCE_TYPE_VALUES = "filterResourceTypeValues";
-    
+
     protected static final String KEY_DOCUMENT_ID = "keyDocumentId";
     protected static final String KEY_RESOURCE_TYPE = "keyResourceType";
     protected static final String KEY_WORKFLOW_STATE = "keyWorkflowState";
@@ -62,22 +62,20 @@ public class SiteOverview extends AbstractUsecase {
     protected static final String KEY_LAST_MODIFIED = "keyLastModified";
     protected static final String KEY_URL = "keyUrl";
     protected static final String PARAMETER_KEYS = "keys";
-    
-    protected static final String[] KEYS = {
-        KEY_DOCUMENT_ID, KEY_LANGUAGE, KEY_RESOURCE_TYPE, KEY_WORKFLOW_STATE, KEY_LAST_MODIFIED
-    };
-    
+
+    protected static final String[] KEYS = { KEY_DOCUMENT_ID, KEY_LANGUAGE, KEY_RESOURCE_TYPE,
+            KEY_WORKFLOW_STATE, KEY_LAST_MODIFIED };
+
     protected static final String FILTER_RESOURCE_TYPE = "filterResourceType";
     protected static final String FILTER_WORKFLOW_STATE = "filterWorkflowState";
     protected static final String FILTER_LANGUAGE = "filterLanguage";
     protected static final String PARAMETER_FILTERS = "filters";
-    
-    protected static final String[] FILTERS = {
-        FILTER_LANGUAGE, FILTER_RESOURCE_TYPE, FILTER_WORKFLOW_STATE
-    };
-    
+
+    protected static final String[] FILTERS = { FILTER_LANGUAGE, FILTER_RESOURCE_TYPE,
+            FILTER_WORKFLOW_STATE };
+
     protected static final String VALUE_ALL = "- all -";
-    
+
     protected static final String SORT = "sort";
 
     /**
@@ -87,48 +85,51 @@ public class SiteOverview extends AbstractUsecase {
         super.initParameters();
         try {
             Document[] documents = getDocuments();
-            
+
             List entries = new ArrayList();
             for (int i = 0; i < documents.length; i++) {
-                
+
                 Entry entry = new Entry();
                 entry.setValue(KEY_DOCUMENT_ID, documents[i].getId());
                 entry.setValue(KEY_RESOURCE_TYPE, documents[i].getResourceType().getName());
                 entry.setValue(KEY_LANGUAGE, documents[i].getLanguage());
                 entry.setValue(KEY_URL, documents[i].getCanonicalWebappURL());
-                
+
                 DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String lastModified = format.format(documents[i].getLastModified());
                 entry.setValue(KEY_LAST_MODIFIED, lastModified);
-                
-                
-                if (WorkflowUtil.hasWorkflow(this.manager, getLogger(), documents[i])) {
-                    DocumentWorkflowable workflowable = new DocumentWorkflowable(documents[i], getLogger());
+
+                if (WorkflowUtil.hasWorkflow(this.manager, getSession(), getLogger(), documents[i])) {
+                    DocumentWorkflowable workflowable = new DocumentWorkflowable(this.manager,
+                            getSession(),
+                            documents[i],
+                            getLogger());
                     Version latestVersion = workflowable.getLatestVersion();
                     String state;
                     if (latestVersion != null) {
                         state = latestVersion.getState();
-                    }
-                    else {
-                        Workflow workflow = WorkflowUtil.getWorkflowSchema(this.manager, getLogger(), documents[i]);
+                    } else {
+                        Workflow workflow = WorkflowUtil.getWorkflowSchema(this.manager,
+                                getSession(),
+                                getLogger(),
+                                documents[i]);
                         state = workflow.getInitialState();
                     }
                     entry.setValue(KEY_WORKFLOW_STATE, state);
-                }
-                else {
+                } else {
                     entry.setValue(KEY_WORKFLOW_STATE, "");
                 }
-                
+
                 entries.add(entry);
             }
-            
+
             for (int i = 0; i < FILTERS.length; i++) {
                 SortedSet filterValues = new TreeSet();
                 filterValues.add(VALUE_ALL);
-                
+
                 String key = "key" + FILTERS[i].substring("filter".length());
-                
-                for (Iterator docs = entries.iterator(); docs.hasNext(); ) {
+
+                for (Iterator docs = entries.iterator(); docs.hasNext();) {
                     Entry entry = (Entry) docs.next();
                     filterValues.add(entry.getValue(key));
                 }
@@ -136,12 +137,12 @@ public class SiteOverview extends AbstractUsecase {
                 setParameter(FILTERS[i], VALUE_ALL);
             }
             setParameter(PARAMETER_FILTERS, Arrays.asList(FILTERS));
-            
+
             setParameter(ALL_DOCUMENTS, new ArrayList(entries));
             setParameter(DOCUMENTS, entries);
-            
+
             setParameter(PARAMETER_KEYS, Arrays.asList(KEYS));
-            
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -192,10 +193,10 @@ public class SiteOverview extends AbstractUsecase {
      */
     public void advance() throws UsecaseException {
         super.advance();
-        
+
         List allDocuments = (List) getParameter(ALL_DOCUMENTS);
         List filteredDocuments = new ArrayList(allDocuments);
-        
+
         for (int i = 0; i < FILTERS.length; i++) {
             String key = "key" + FILTERS[i].substring("filter".length());
             String filterValue = getParameterAsString(FILTERS[i]);
@@ -208,23 +209,23 @@ public class SiteOverview extends AbstractUsecase {
                 }
             }
         }
-        
+
         String sort = getParameterAsString(SORT);
         if (sort != null) {
             Comparator comparator = new EntryComparator(sort);
             Collections.sort(filteredDocuments, comparator);
         }
-        
+
         setParameter(DOCUMENTS, filteredDocuments);
     }
-    
+
     /**
      * Comparator for entries.
      */
     public static class EntryComparator implements Comparator {
-        
+
         private String key;
-        
+
         /**
          * @param key The key to compare.
          */
@@ -238,20 +239,20 @@ public class SiteOverview extends AbstractUsecase {
         public int compare(Object arg0, Object arg1) {
             Entry e1 = (Entry) arg0;
             Entry e2 = (Entry) arg1;
-            
+
             String value1 = e1.getValue(this.key);
             String value2 = e2.getValue(this.key);
-            
+
             return value1.compareTo(value2);
         }
-        
+
     }
 
     /**
      * Stores document-related information.
      */
     public static class Entry {
-        
+
         private Map values = new HashMap();
 
         /**
@@ -259,7 +260,7 @@ public class SiteOverview extends AbstractUsecase {
          */
         public Entry() {
         }
-        
+
         /**
          * @param key The key.
          * @param value The value.
@@ -267,7 +268,7 @@ public class SiteOverview extends AbstractUsecase {
         public void setValue(String key, String value) {
             this.values.put(key, value);
         }
-        
+
         /**
          * @param key The key.
          * @return The value.
@@ -275,7 +276,6 @@ public class SiteOverview extends AbstractUsecase {
         public String getValue(String key) {
             return (String) this.values.get(key);
         }
-
 
     }
 

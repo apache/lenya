@@ -55,15 +55,17 @@ public class Overview extends SiteUsecase {
             // read parameters from Dublin Core meta-data
             MetaData dc = getSourceDocument().getMetaDataManager().getDublinCoreMetaData();
             setParameter(DublinCore.ELEMENT_TITLE, dc.getFirstValue(DublinCore.ELEMENT_TITLE));
-            setParameter(DublinCore.ELEMENT_DESCRIPTION, dc
-                    .getFirstValue(DublinCore.ELEMENT_DESCRIPTION));
+            setParameter(DublinCore.ELEMENT_DESCRIPTION,
+                    dc.getFirstValue(DublinCore.ELEMENT_DESCRIPTION));
 
             // read parameters from document attributes
             setParameter("languages", getSourceDocument().getLanguages());
             setParameter("lastmodified", getSourceDocument().getLastModified());
             setParameter("resourcetype", getSourceDocument().getResourceType());
 
-            DocumentWorkflowable workflowable = new DocumentWorkflowable(getSourceDocument(),
+            DocumentWorkflowable workflowable = new DocumentWorkflowable(this.manager,
+                    getSession(),
+                    getSourceDocument(),
                     getLogger());
             resolver = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
             if (resolver.hasWorkflow(workflowable)) {

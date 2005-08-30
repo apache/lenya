@@ -59,7 +59,11 @@ public class OneFormEditor extends DocumentUsecase {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        if (!WorkflowUtil.canInvoke(this.manager, getLogger(), getSourceDocument(), getEvent())) {
+        if (!WorkflowUtil.canInvoke(this.manager,
+                getSession(),
+                getLogger(),
+                getSourceDocument(),
+                getEvent())) {
             addErrorMessage("error-workflow-document", new String[] { getEvent(),
                     getSourceDocument().getId() });
         }
@@ -120,7 +124,11 @@ public class OneFormEditor extends DocumentUsecase {
                 }
 
                 if (!hasErrors()) {
-                    WorkflowUtil.invoke(this.manager, getLogger(), getSourceDocument(), getEvent());
+                    WorkflowUtil.invoke(this.manager,
+                            getSession(),
+                            getLogger(),
+                            getSourceDocument(),
+                            getEvent());
                 }
             }
 

@@ -37,9 +37,8 @@ public interface Workflowable {
      * Adds a new version.
      * @param workflow The workflow.
      * @param version The version.
-     * @param situation The situation in which the version was added.
      */
-    void newVersion(Workflow workflow, Version version, Situation situation);
+    void newVersion(Workflow workflow, Version version);
     
     /**
      * @return The URI to resolve the schema configuration from.

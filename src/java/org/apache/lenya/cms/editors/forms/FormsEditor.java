@@ -92,7 +92,7 @@ public class FormsEditor extends DocumentUsecase {
             this.tagID = _tagID;
         }
     }
-    
+
     protected static final String WORKFLOW_INVOKED = "private.workflowInvoked";
 
     /**
@@ -108,7 +108,11 @@ public class FormsEditor extends DocumentUsecase {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        if (!WorkflowUtil.canInvoke(this.manager, getLogger(), getSourceDocument(), getEvent())) {
+        if (!WorkflowUtil.canInvoke(this.manager,
+                getSession(),
+                getLogger(),
+                getSourceDocument(),
+                getEvent())) {
             addErrorMessage("error-workflow-document", new String[] { getEvent(),
                     getSourceDocument().getId() });
         }
@@ -148,12 +152,16 @@ public class FormsEditor extends DocumentUsecase {
             }
 
             save(resolver, xmlSource, schemaSource, unnumberTagsXslSource, numberTagsXslSource);
-            
+
             if (!getParameterAsBoolean(WORKFLOW_INVOKED, false)) {
-                WorkflowUtil.invoke(this.manager, getLogger(), getSourceDocument(), getEvent());
+                WorkflowUtil.invoke(this.manager,
+                        getSession(),
+                        getLogger(),
+                        getSourceDocument(),
+                        getEvent());
                 setParameter(WORKFLOW_INVOKED, Boolean.valueOf(true));
             }
-            
+
         } catch (final Exception e) {
             throw new UsecaseException(e);
         } finally {

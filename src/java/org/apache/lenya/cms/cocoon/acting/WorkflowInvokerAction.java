@@ -101,7 +101,7 @@ public class WorkflowInvokerAction extends ServiceableAction {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("    Invoking workflow event");
         }
-        WorkflowUtil.invoke(this.manager, getLogger(), document, eventName);
+        WorkflowUtil.invoke(this.manager, session, getLogger(), document, eventName);
 
         return Collections.EMPTY_MAP;
     }

@@ -122,7 +122,11 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
                 return;
             }
 
-            if (!WorkflowUtil.canInvoke(this.manager, getLogger(), getSourceDocument(), event)) {
+            if (!WorkflowUtil.canInvoke(this.manager,
+                    getSession(),
+                    getLogger(),
+                    getSourceDocument(),
+                    event)) {
                 setParameter(ALLOW_SINGLE_DOCUMENT, Boolean.toString(false));
                 addInfoMessage("The single document cannot be published because the workflow event cannot be invoked.");
             } else {
@@ -227,7 +231,11 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             documentManager.copyToArea(authoringDocument, Publication.LIVE_AREA);
-            WorkflowUtil.invoke(this.manager, getLogger(), authoringDocument, getEvent());
+            WorkflowUtil.invoke(this.manager,
+                    getSession(),
+                    getLogger(),
+                    authoringDocument,
+                    getEvent());
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -323,7 +331,11 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
                 Document version = document.getIdentityMap().getLanguageVersion(document,
                         languages[i]);
                 if (version.exists()) {
-                    if (WorkflowUtil.canInvoke(this.manager, getLogger(), version, getEvent())) {
+                    if (WorkflowUtil.canInvoke(this.manager,
+                            getSession(),
+                            getLogger(),
+                            version,
+                            getEvent())) {
                         publish(version);
                     }
                 }

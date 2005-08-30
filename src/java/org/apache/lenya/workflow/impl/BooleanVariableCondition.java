@@ -19,7 +19,6 @@
 
 package org.apache.lenya.workflow.impl;
 
-import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
@@ -71,19 +70,18 @@ public class BooleanVariableCondition extends AbstractCondition {
 
     /**
      * @see org.apache.lenya.workflow.Condition#isComplied(org.apache.lenya.workflow.Workflow,
-     *      org.apache.lenya.workflow.Situation,
      *      org.apache.lenya.workflow.Workflowable)
      */
-public boolean isComplied(Workflow workflow, Situation situation, Workflowable workflowable) throws WorkflowException {
+    public boolean isComplied(Workflow workflow, Workflowable workflowable)
+            throws WorkflowException {
         Version latestVersion = workflowable.getLatestVersion();
         boolean value = false;
         if (latestVersion == null) {
             value = workflow.getInitialValue(getVariableName());
-        }
-        else {
+        } else {
             value = latestVersion.getValue(getVariableName());
         }
-        
+
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Checking boolean variable condition");
             getLogger().debug("    Condition value: [" + getValue() + "]");

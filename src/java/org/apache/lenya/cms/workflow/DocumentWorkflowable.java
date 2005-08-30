@@ -25,12 +25,14 @@ import java.util.Map;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.ResourceType;
-import org.apache.lenya.workflow.Situation;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.Workflowable;
@@ -44,16 +46,38 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
 
     /**
      * Ctor.
+     * @param manager The service manager.
+     * @param session The repository session.
      * @param document The document.
      * @param logger The logger.
      */
-    public DocumentWorkflowable(Document document, Logger logger) {
+    public DocumentWorkflowable(ServiceManager manager, Session session, Document document, Logger logger) {
         this.document = document;
+        this.session = session;
+        this.manager = manager;
         ContainerUtil.enableLogging(this, logger);
     }
 
-    private Document document;
+    private Session session;
     
+    private ServiceManager manager;
+    
+    /**
+     * @return The service manager.
+     */
+    public ServiceManager getServiceManager() {
+        return this.manager;
+    }
+
+    /**
+     * @return The repository session.
+     */
+    public Session getSession() {
+        return session;
+    }
+
+    private Document document;
+
     protected Document getDocument() {
         return this.document;
     }
@@ -117,9 +141,9 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
 
     /**
      * @see org.apache.lenya.workflow.Workflowable#newVersion(org.apache.lenya.workflow.Workflow,
-     *      org.apache.lenya.workflow.Version, org.apache.lenya.workflow.Situation)
+     *      org.apache.lenya.workflow.Version)
      */
-    public void newVersion(Workflow workflow, Version version, Situation situation) {
+    public void newVersion(Workflow workflow, Version version) {
         Version[] newVersions = new Version[getVersions().length + 1];
         for (int i = 0; i < getVersions().length; i++) {
             newVersions[i] = getVersions()[i];
@@ -128,7 +152,7 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
         int number = newVersions.length - 1;
         newVersions[number] = version;
 
-        String string = number + " " + encodeVersion(workflow, version, (LenyaSituation) situation);
+        String string = number + " " + encodeVersion(workflow, version);
         try {
             MetaData meta = this.document.getMetaDataManager().getLenyaMetaData();
             meta.addValue(LenyaMetaData.ELEMENT_WORKFLOW_VERSION, string);
@@ -138,13 +162,14 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
         }
     }
 
-    protected String encodeVersion(Workflow workflow, Version version, LenyaSituation situation) {
+    protected String encodeVersion(Workflow workflow, Version version) {
 
         String string = "event:" + version.getEvent();
         string += " state:" + version.getState();
 
-        string += " user:" + situation.getUserId();
-        string += " machine:" + situation.getMachineIp();
+        Identity identity = getSession().getUnitOfWork().getIdentity();
+        string += " user:" + identity.getUser().getId();
+        string += " machine:" + identity.getMachine().getIp();
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
         string += " date:" + format.format(new Date());
@@ -190,14 +215,13 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
      * @see org.apache.lenya.workflow.Workflowable#getWorkflowSchemaURI()
      */
     public String getWorkflowSchemaURI() {
-	String uri = null;
-	String schema = getWorkflowSchema();
-	if (schema != null) {
-            uri = this.document.getPublication().getSourceURI() + "/config/workflow/"
-                + schema;
+        String uri = null;
+        String schema = getWorkflowSchema();
+        if (schema != null) {
+            uri = this.document.getPublication().getSourceURI() + "/config/workflow/" + schema;
             uri = uri.substring("lenya://".length());
             uri = "context://" + uri;
-	}
+        }
         return uri;
     }
 

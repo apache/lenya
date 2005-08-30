@@ -76,10 +76,4 @@ public interface WorkflowManager {
      */
     Workflow getWorkflowSchema(Workflowable workflowable) throws WorkflowException;
 
-    /**
-     * Resolves the current workflow situation.
-     * @return A situation object.
-     */
-    Situation getSituation();
-
 }

@@ -33,12 +33,11 @@ public interface Condition {
     /**
      * Returns if the condition is complied in a certain situation.
      * @param workflow The workflow to use.
-     * @param situation The situation to check.
      * @param workflowable The workflowable to check the condition on.
      * @return if the condition is complied.
      * @throws WorkflowException when the expression could not be evaluated.
      */
-    boolean isComplied(Workflow workflow, Situation situation, Workflowable workflowable) throws WorkflowException;
+    boolean isComplied(Workflow workflow, Workflowable workflowable) throws WorkflowException;
 
     /** Sets the expression for this condition.
      * @param expression The expression.
