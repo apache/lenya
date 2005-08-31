@@ -141,9 +141,6 @@ function executeUsecase() {
                           evalFunc(form);
                        }
 
-                       // form template
-                       form.showForm(viewUri, {"usecase" : proxy});
-                       
                        // form binding
                        if (view.getCformBinding() != null){
                           var viewBind = "fallback://lenya/"+ view.getCformBinding();
@@ -166,6 +163,9 @@ function executeUsecase() {
 	                          evalFunc = new Function ("form",scriptString);
                               evalFunc(form);
 	                      }
+	                      
+	                      // form template
+                          form.showForm(viewUri, {"usecase" : proxy});
                        }
                     }
                     else{
