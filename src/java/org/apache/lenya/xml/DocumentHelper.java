@@ -230,8 +230,10 @@ public class DocumentHelper {
         transformer.setOutputProperty(OutputKeys.METHOD, "xml");
 
         if (documentType != null) {
-            transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, documentType.getPublicId());
-            transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, documentType.getSystemId());
+            if (documentType.getPublicId() != null)
+                transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC, documentType.getPublicId());
+            if (documentType.getSystemId() != null)
+                transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM, documentType.getSystemId());
         }
 
         return transformer;
