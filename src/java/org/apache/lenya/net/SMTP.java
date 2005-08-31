@@ -30,7 +30,9 @@ import java.net.ConnectException;
 import java.net.Socket;
 import java.util.StringTokenizer;
 
+import org.apache.commons.codec.net.BCodec;
 import org.apache.log4j.Category;
+
 
 
 /**
@@ -38,7 +40,7 @@ import org.apache.log4j.Category;
  * @deprecated use cocoon mail block
  */
 public class SMTP {
-    static Category log = Category.getInstance(SMTP.class);
+    private static Category log = Category.getInstance(SMTP.class);
     String host = null;
     int port;
     String domain = null;
@@ -55,11 +57,13 @@ public class SMTP {
     String[] bccs = null;
     String subject = null;
     String data = null;
-
+    String charset ="UTF-8";
+    
     /**
      *
      */
     public SMTP() {
+
         Configuration conf = new Configuration();
         host = conf.smtpHost;
         port = new Integer(conf.smtpPort).intValue();
@@ -97,7 +101,7 @@ public class SMTP {
 
         try {
             socket = new Socket(host, port);
-            out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), "UTF-8")), true);
+            out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), charset)), true);
             in = new DataInputStream(socket.getInputStream());
             
             errlog = errlog + getResponse(220);
@@ -146,18 +150,20 @@ public class SMTP {
                 errlog = errlog + "Bcc: " + bcc + "\n";
                 out.println("Bcc: " + bcc);
             }
-
-            errlog = errlog + "Subject: " + subject + "\n";
-            out.println("Subject: " + subject);
-
+ 
+            BCodec encoder = new BCodec(charset);
+            String base64Subject = encoder.encode(subject);
+            errlog = errlog +"Subject: " + base64Subject + "\n";
+            out.println("Subject: " + base64Subject);
+            
             errlog = errlog + "MIME-Version: 1.0\n";
             out.println("MIME-Version: 1.0");
 
-            errlog = errlog + "Content-Type: text/plain; charset=UTF-8; format=flowed\n";
-            out.println("Content-Type: text/plain; charset=UTF-8; format=flowed");
+            errlog = errlog + "Content-Type: text/plain; charset=" + charset +"; format=flowed\n";
+            out.println("Content-Type: text/plain; charset=" + charset +"; format=flowed");
 
-            errlog = errlog + "Content-Transfer-Encoding: 8bit\n";
-            out.println("Content-Transfer-Encoding: 8bit");
+            errlog = errlog + "Content-Transfer-Encoding: quoted-printable\n";
+            out.println("Content-Transfer-Encoding: quoted-printable");
             
             errlog = errlog + data + "\n.\n";
             out.println(data + "\n.");
@@ -183,7 +189,7 @@ public class SMTP {
             log.error(this.getClass().getName() + ".send(): " + e);
         }
     }
-
+        
     private String getResponse(int value) throws IOException {
         try {
             Thread.sleep(200);
