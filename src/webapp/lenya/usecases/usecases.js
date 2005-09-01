@@ -17,7 +17,7 @@
 /* $Id$ */
  
  cocoon.load("resource://org/apache/cocoon/forms/flow/javascript/Form.js");
- cocoon.load("usecases-util.js");
+// cocoon.load("usecases-util.js");
 
 /* Helper method to add all request parameters to a usecase */
 function passRequestParameters(flowHelper, usecase) {
