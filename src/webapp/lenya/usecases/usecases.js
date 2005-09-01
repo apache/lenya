@@ -17,6 +17,7 @@
 /* $Id$ */
  
  cocoon.load("resource://org/apache/cocoon/forms/flow/javascript/Form.js");
+ cocoon.load("usecases-util.js");
 
 /* Helper method to add all request parameters to a usecase */
 function passRequestParameters(flowHelper, usecase) {
@@ -98,8 +99,6 @@ function executeUsecase() {
     var form;
     var scriptString;
     var evalFunc;
-    var genericDoc;
-
 
     /*
      * If the usecase has a view, this means we want to display something 
@@ -116,6 +115,11 @@ function executeUsecase() {
             try {
                 var templateUri = view.getTemplateURI();
                 if (templateUri) {
+                    /* Generic document variable that can be used in all funtions
+                      FIXME: The rhino evalFunc() is broken that makes it impossible to
+                      change this variable from a function. 
+                      We need to use the usecase java class for it!
+                    var genericDoc;*/
                     var viewUri = "view/" + menu + "/" + view.getTemplateURI();
                     if (cocoon.log.isDebugEnabled())
                         cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", creating view, calling Cocoon with viewUri = [" + viewUri + "]");
@@ -149,8 +153,8 @@ function executeUsecase() {
                              
                           // custom flowscript 
 	                      if (view.getCformBindingBefore()!=null){
-	                          scriptString= view.getCformBindingBefore();
-	                          evalFunc = new Function ("form",scriptString);
+                              scriptString= view.getCformBindingBefore();
+                              evalFunc = new Function ("form",scriptString);
                               evalFunc(form);
 	                      }
 	                      
@@ -159,13 +163,21 @@ function executeUsecase() {
 	                      
 	                      // custom flowscript 
 	                      if (view.getCformBindingAfter()!=null){
-	                          scriptString= view.getCformBindingAfter();
-	                          evalFunc = new Function ("form",scriptString);
+                              scriptString= view.getCformBindingAfter();
+                              evalFunc = new Function ("form",scriptString);
                               evalFunc(form);
 	                      }
 	                      
 	                      // form template
                           form.showForm(viewUri, {"usecase" : proxy});
+                          
+                          // custom flowscript 
+	                      if (view.getCformOutro()!=null){
+                              scriptString= view.getCformOutro();
+                              evalFunc = new Function ("form",scriptString);
+                              evalFunc(form);
+	                      }
+                          
                        }
                     }
                     else{

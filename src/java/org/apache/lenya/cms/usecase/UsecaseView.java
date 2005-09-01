@@ -48,6 +48,7 @@ public class UsecaseView implements Configurable, Serviceable {
     protected static final String ELEMENT_CFORM_BINDING = "binding";
     protected static final String ELEMENT_AFTER = "after";
     protected static final String ELEMENT_BEFORE = "before";
+    protected static final String ELEMENT_CFORM_OUTRO = "outro";
     
     protected static final String ATTRIBUTE_URI = "uri";
     protected static final String ATTRIBUTE_GROUP = "group";
@@ -99,6 +100,10 @@ public class UsecaseView implements Configurable, Serviceable {
                 this.cformBinding = cformBindingConfig.getAttribute(ATTRIBUTE_TEMPLATE_URI, null);
                 this.cformBindingBefore = cformBindingConfig.getChild(ELEMENT_BEFORE,false).getValue(null);
                 this.cformBindingAfter = cformBindingConfig.getChild(ELEMENT_AFTER,false).getValue(null);
+            }
+            Configuration cformOutroConfig = config.getChild(ELEMENT_CFORM_OUTRO, false);
+            if (cformOutroConfig!=null){
+                this.cformOutro = cformOutroConfig.getValue(null);
             }
         }
 
@@ -209,6 +214,8 @@ public class UsecaseView implements Configurable, Serviceable {
     private String cformBindingBefore =null;
     
     private String cformBindingAfter =null;
+    
+    private String cformOutro=null;
 
 	/**
      * @return Returns the cformBindingAfter.
@@ -294,6 +301,20 @@ public class UsecaseView implements Configurable, Serviceable {
      */
     public void setViewType(String viewType) {
         this.viewType = viewType;
+    }
+
+    /**
+     * @return Returns the cformOutro.
+     */
+    public String getCformOutro() {
+        return cformOutro;
+    }
+
+    /**
+     * @param cformOutro The cformOutro to set.
+     */
+    public void setCformOutro(String cformOutro) {
+        this.cformOutro = cformOutro;
     }
 
 }
