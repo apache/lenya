@@ -115,11 +115,17 @@ function executeUsecase() {
             try {
                 var templateUri = view.getTemplateURI();
                 if (templateUri) {
-                    /* Generic document variable that can be used in all funtions
-                      FIXME: The rhino evalFunc() is broken that makes it impossible to
-                      change this variable from a function. 
-                      We need to use the usecase java class for it!
-                    var genericDoc;*/
+                    /*
+                       var generic - Generic object that can be used in all custom flow code
+                       that is added by usecases. Right now it focus on document opertations
+                       but the properties should be extended through user/dev feedback.
+                       The intention of this var is to provide a generic global flow object
+                       (like in lots of cocoon examples) that can be accessed through out the different flow stages.
+                       Alternatively one can use the invoking java class by providing bean properties methods 
+                       (getter/setter methods) in this class and use them within the extensions (see usecase doc).
+                       FIXME: Add cforms integration howto to the documentation.
+                    */
+                    var generic={doc:null,uri:null,generic:null};
                     var viewUri = "view/" + menu + "/" + view.getTemplateURI();
                     if (cocoon.log.isDebugEnabled())
                         cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", creating view, calling Cocoon with viewUri = [" + viewUri + "]");
@@ -141,8 +147,8 @@ function executeUsecase() {
                        // custom flowscript 
                        if (view.getCformDefinitionAfter()!=null){
                           scriptString= view.getCformDefinitionAfter();
-                          evalFunc = new Function ("form",scriptString);
-                          evalFunc(form);
+                          evalFunc = new Function ("form","generic",scriptString);
+                          evalFunc(form,generic);
                        }
 
                        // form binding
@@ -154,8 +160,8 @@ function executeUsecase() {
                           // custom flowscript 
 	                      if (view.getCformBindingBefore()!=null){
                               scriptString= view.getCformBindingBefore();
-                              evalFunc = new Function ("form",scriptString);
-                              evalFunc(form);
+                              evalFunc = new Function ("form","generic",scriptString);
+                              evalFunc(form,generic);
 	                      }
 	                      
 	                      // form binding
@@ -164,8 +170,8 @@ function executeUsecase() {
 	                      // custom flowscript 
 	                      if (view.getCformBindingAfter()!=null){
                               scriptString= view.getCformBindingAfter();
-                              evalFunc = new Function ("form",scriptString);
-                              evalFunc(form);
+                              evalFunc = new Function ("form","generic",scriptString);
+                              evalFunc(form,generic);
 	                      }
 	                      
 	                      // form template
@@ -174,8 +180,8 @@ function executeUsecase() {
                           // custom flowscript 
 	                      if (view.getCformOutro()!=null){
                               scriptString= view.getCformOutro();
-                              evalFunc = new Function ("form",scriptString);
-                              evalFunc(form);
+                              evalFunc = new Function ("form","generic",scriptString);
+                              evalFunc(form,generic);
 	                      }
                           
                        }
