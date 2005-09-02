@@ -17,7 +17,7 @@
 /* $Id$ */
  
  cocoon.load("resource://org/apache/cocoon/forms/flow/javascript/Form.js");
-// cocoon.load("usecases-util.js");
+ cocoon.load("usecases-util.js");
 
 /* Helper method to add all request parameters to a usecase */
 function passRequestParameters(flowHelper, usecase) {
@@ -116,16 +116,18 @@ function executeUsecase() {
                 var templateUri = view.getTemplateURI();
                 if (templateUri) {
                     /*
-                       var generic - Generic object that can be used in all custom flow code
-                       that is added by usecases. Right now it focus on document opertations
-                       but the properties should be extended through user/dev feedback.
-                       The intention of this var is to provide a generic global flow object
-                       (like in lots of cocoon examples) that can be accessed through out the different flow stages.
-                       Alternatively one can use the invoking java class by providing bean properties methods 
-                       (getter/setter methods) in this class and use them within the extensions (see usecase doc).
-                       FIXME: Add cforms integration howto to the documentation.
-                    */
+                     * var generic - Generic object that can be used in all custom flow code
+                     * that is added by usecases. Right now it focus on document opertations
+                     *  but the properties should be extended through user/dev feedback.
+                     * The intention of this var is to provide a generic global flow object
+                     * (like in lots of cocoon examples) that can be accessed through out the different flow stages.
+                     * Alternatively one can use the invoking java class by providing bean properties methods 
+                     * (getter/setter methods) in this class and use them within the extensions (see usecase doc).
+                     * 
+                     * FIXME: Add cforms integration howto to the documentation.
+                     */
                     var generic={doc:null,uri:null,generic:null};
+
                     var viewUri = "view/" + menu + "/" + view.getTemplateURI();
                     if (cocoon.log.isDebugEnabled())
                         cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", creating view, calling Cocoon with viewUri = [" + viewUri + "]");
