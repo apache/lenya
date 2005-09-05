@@ -40,10 +40,11 @@ import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.cms.usecase.xml.UsecaseErrorHandler;
 import org.apache.lenya.workflow.WorkflowManager;
 import org.apache.excalibur.source.Source;
 import org.xml.sax.InputSource;
-import org.apache.lenya.xml.RelaxNG;
+import org.apache.lenya.xml.Validator;
 
 /**
  * Supports WebDAV PUT.
@@ -59,6 +60,7 @@ public class Put extends DocumentUsecase {
         super.doExecute();
         SourceResolver resolver = null;
         WorkflowManager wfManager = null;
+        Validator validator = null;
 
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
@@ -140,10 +142,10 @@ public class Put extends DocumentUsecase {
                 InputSource schemaInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(schemaSource);
                 InputSource xmlInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(tempSource);
 
-                String message = RelaxNG.validate(schemaInputSource, xmlInputSource);
-                if (message != null) {
-                    addErrorMessage("error-validation", new String[] { message });
-                }
+                validator = (Validator) this.manager.lookup(Validator.ROLE);
+                validator.validate(xmlInputSource,
+                        schemaInputSource,
+                        new UsecaseErrorHandler(this));
 
                 if (SourceUtil.exists(tempSourceUri, this.manager)) {
                     SourceUtil.copy(resolver, tempSourceUri, sourceUri, true);
@@ -158,6 +160,9 @@ public class Put extends DocumentUsecase {
             }
             if (wfManager != null) {
                 this.manager.release(wfManager);
+            }
+            if (validator != null) {
+                this.manager.release(validator);
             }
         }
     }
@@ -221,7 +226,8 @@ public class Put extends DocumentUsecase {
     protected Publication getPublication() {
         if (this.publication == null) {
             try {
-                this.publication = PublicationUtil.getPublicationFromUrl(this.manager, getSourceURL());
+                this.publication = PublicationUtil.getPublicationFromUrl(this.manager,
+                        getSourceURL());
             } catch (PublicationException e) {
                 throw new RuntimeException(e);
             }

@@ -30,12 +30,12 @@ import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.ResourceType;
-import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.cms.usecase.xml.UsecaseErrorHandler;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.xml.DocumentHelper;
-import org.apache.lenya.xml.RelaxNG;
+import org.apache.lenya.xml.Validator;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
@@ -48,7 +48,7 @@ public class OneFormEditor extends DocumentUsecase {
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
-     */    
+     */
     protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
         org.apache.lenya.cms.repository.Node[] objects = { getSourceDocument().getRepositoryNode() };
         return objects;
@@ -95,6 +95,7 @@ public class OneFormEditor extends DocumentUsecase {
         Source schemaSource = null;
         ModifiableSource xmlSource = null;
         SourceResolver resolver = null;
+        Validator validator = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             xmlSource = (ModifiableSource) resolver.resolveURI(getSourceDocument().getSourceURI());
@@ -118,10 +119,10 @@ public class OneFormEditor extends DocumentUsecase {
                 InputSource schemaInputSource = SourceUtil.getInputSource(schemaSource);
                 InputSource xmlInputSource = SourceUtil.getInputSource(xmlSource);
 
-                String message = RelaxNG.validate(schemaInputSource, xmlInputSource);
-                if (message != null) {
-                    addErrorMessage("error-validation", new String[] { message });
-                }
+                validator = (Validator) this.manager.lookup(Validator.ROLE);
+                validator.validate(xmlInputSource,
+                        schemaInputSource,
+                        new UsecaseErrorHandler(this));
 
                 if (!hasErrors()) {
                     WorkflowUtil.invoke(this.manager,
@@ -141,6 +142,9 @@ public class OneFormEditor extends DocumentUsecase {
                     resolver.release(xmlSource);
                 }
                 this.manager.release(resolver);
+            }
+            if (validator != null) {
+                this.manager.release(validator);
             }
         }
     }

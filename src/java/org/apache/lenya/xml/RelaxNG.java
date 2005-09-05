@@ -35,6 +35,10 @@ import com.thaiopensource.validate.ValidationDriver;
 import com.thaiopensource.validate.auto.AutoSchemaReader;
 import com.thaiopensource.xml.sax.ErrorHandlerImpl;
 
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.excalibur.xml.EntityResolver;
 import org.apache.log4j.Logger;
 
 /**
@@ -54,7 +58,7 @@ public class RelaxNG {
         }
 
         try {
-            String message = RelaxNG.validate(new File(args[0]), new File(args[1]));
+            String message = RelaxNG.validate(new File(args[0]), new File(args[1]), null);
             if (message == null) {
                 System.out.println("Document is valid");
             } else {
@@ -72,13 +76,13 @@ public class RelaxNG {
      * @return A string. FIXME: what does this mean?
      * @throws IOException if an error occurs.
      */
-    public static String validate(File schema, File xml) throws IOException {
+    public static String validate(File schema, File xml, ServiceManager manager) throws IOException {
 
         InputSource schemaInputSource = ValidationDriver.uriOrFileInputSource(schema
                 .getAbsolutePath());
         InputSource xmlInputSource = ValidationDriver.uriOrFileInputSource(xml.getAbsolutePath());
 
-        return validate(schemaInputSource, xmlInputSource);
+        return validate(schemaInputSource, xmlInputSource, manager);
     }
 
     /**
@@ -88,15 +92,22 @@ public class RelaxNG {
      * @return A string.
      * @throws IOException if an error occurs.
      */
-    public static String validate(InputSource schemaInputSource, InputSource xmlInputSource)
+    public static String validate(InputSource schemaInputSource, InputSource xmlInputSource, ServiceManager manager)
             throws IOException {
+        
         ByteArrayOutputStream error;
+        EntityResolver entityResolver = null;
         try {
+            
+            entityResolver = (EntityResolver) manager.lookup(Validator.ROLE);
             PropertyMapBuilder properties = new PropertyMapBuilder();
             error = new ByteArrayOutputStream();
             ErrorHandlerImpl eh = new ErrorHandlerImpl(
                     new BufferedWriter(new OutputStreamWriter(error)));
+            
             ValidateProperty.ERROR_HANDLER.put(properties, eh);
+            ValidateProperty.ENTITY_RESOLVER.put(properties, entityResolver);
+            
             SchemaReader schemaReader = new AutoSchemaReader();
             ValidationDriver driver = new ValidationDriver(properties.toPropertyMap(), schemaReader);
             if (driver.loadSchema(schemaInputSource)) {
@@ -108,12 +119,13 @@ public class RelaxNG {
             	return "" + error;
             }
             throw new IOException("Could not load schema!\n" + error);
-        } catch (final SAXException e) {
-            log.error("" +e.toString());
+        } catch (final Exception e) {
             throw new IOException("Could not load schema!\n" + e);
-        } catch (final IOException e) {
-            log.error("" +e.toString());
-            throw new IOException("Could not load schema!\n" + e);
+        }
+        finally {
+            if (entityResolver != null) {
+                manager.release(entityResolver);
+            }
         }
     }
 

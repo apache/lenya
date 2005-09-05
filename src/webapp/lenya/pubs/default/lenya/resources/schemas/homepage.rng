@@ -27,11 +27,11 @@
     +-->
 
 <grammar ns="http://www.w3.org/1999/xhtml"
-         xmlns="http://relaxng.org/ns/structure/1.0"
-         xmlns:xhtml="http://www.w3.org/1999/xhtml"
-         xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
-         >
+    xmlns="http://relaxng.org/ns/structure/1.0"
+    xmlns:xhtml="http://www.w3.org/1999/xhtml"
+    xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
+    >
 
-<include href="xhtml.rng"/>
+<include href="fallback://lenya/resources/schemas/xhtml.rng"/>
 
 </grammar>

@@ -23,6 +23,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 import java.net.MalformedURLException;
+import java.util.Iterator;
+import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -46,9 +48,11 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.cms.usecase.UsecaseMessage;
+import org.apache.lenya.cms.usecase.xml.UsecaseErrorHandler;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.xml.DocumentHelper;
-import org.apache.lenya.xml.RelaxNG;
+import org.apache.lenya.xml.Validator;
 import org.apache.lenya.xml.XPath;
 import org.apache.xml.utils.PrefixResolver;
 import org.apache.xml.utils.PrefixResolverDefault;
@@ -71,6 +75,8 @@ import org.xmldb.xupdate.lexus.XUpdateQueryImpl;
  * @version $Id$
  */
 public class FormsEditor extends DocumentUsecase {
+
+    protected static final String VALIDATION_ERRORS = "private.validationErrors";
 
     private static final class XUpdateAttributes {
         /**
@@ -153,7 +159,10 @@ public class FormsEditor extends DocumentUsecase {
 
             save(resolver, xmlSource, schemaSource, unnumberTagsXslSource, numberTagsXslSource);
 
-            if (!getParameterAsBoolean(WORKFLOW_INVOKED, false)) {
+            if (hasErrors()) {
+                setParameter(VALIDATION_ERRORS, getErrorMessages());
+            } else if (!getParameterAsBoolean(WORKFLOW_INVOKED, false)) {
+                deleteParameter(VALIDATION_ERRORS);
                 WorkflowUtil.invoke(this.manager,
                         getSession(),
                         getLogger(),
@@ -179,6 +188,18 @@ public class FormsEditor extends DocumentUsecase {
                     resolver.release(numberTagsXslSource);
                 }
                 this.manager.release(resolver);
+            }
+        }
+    }
+
+    protected void doExecute() throws Exception {
+        super.doExecute();
+        
+        List errors = (List) getParameter(VALIDATION_ERRORS);
+        if (errors != null) {
+            for (Iterator i = errors.iterator(); i.hasNext(); ) {
+                UsecaseMessage message = (UsecaseMessage) i.next();
+                addErrorMessage(message.getMessage(), message.getParameters());
             }
         }
     }
@@ -245,11 +266,8 @@ public class FormsEditor extends DocumentUsecase {
             unnumberTagsSource = resolver.resolveURI(unnumberTagsUri);
             checkModifiability(unnumberTagsSource);
 
-            String message = validateDocument(document, schemaSource, unnumberTagsXslSource);
+            validateDocument(document, schemaSource, unnumberTagsXslSource);
 
-            if (message != null) {
-                throw new UsecaseException("RELAX NG Validation failed: " + message);
-            }
         } finally {
             if (validationSource != null) {
                 resolver.release(validationSource);
@@ -614,12 +632,12 @@ public class FormsEditor extends DocumentUsecase {
      * @param document The document.
      * @param schema The schema source.
      * @param unnumberTagsXsl The source of the unnumber XSL stylesheet.
-     * @return A string. FIXME: return codes?
      * @throws UsecaseException if an error occurs.
      */
-    private String validateDocument(Document document, Source schema, Source unnumberTagsXsl)
+    private void validateDocument(Document document, Source schema, Source unnumberTagsXsl)
             throws UsecaseException {
 
+        Validator validator = null;
         try {
             javax.xml.transform.Source xmlSource = new DOMSource(document);
             javax.xml.transform.Source unnumberTagsXslSource = new StreamSource(unnumberTagsXsl.getInputStream());
@@ -635,10 +653,17 @@ public class FormsEditor extends DocumentUsecase {
             InputSource unnumberXmlInputSource = new InputSource(in);
             InputSource schemaInputSource = SourceUtil.getInputSource(schema);
 
-            return RelaxNG.validate(schemaInputSource, unnumberXmlInputSource);
+            validator = (Validator) this.manager.lookup(Validator.ROLE);
+            validator.validate(unnumberXmlInputSource,
+                    schemaInputSource,
+                    new UsecaseErrorHandler(this));
 
         } catch (Exception e) {
             throw new UsecaseException(e);
+        } finally {
+            if (validator != null) {
+                this.manager.release(validator);
+            }
         }
     }
 

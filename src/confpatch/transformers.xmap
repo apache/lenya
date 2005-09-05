@@ -29,4 +29,13 @@
        <untranslated-text>untranslated</untranslated-text>
        <cache-at-startup>true</cache-at-startup>
     </map:transformer>
+    <map:transformer name="jing"
+      logger="sitemap.transformer.jing"
+      src="org.apache.cocoon.transformation.JingTransformer">
+      <!--+ The enable-caching configuration element is optional
+            | (defaults to true) and defines whether compiled RelaxNG
+            | schemas should be stored in Cocoon's transient cache or not
+            +-->
+      <!-- <enable-caching>true</enable-caching> -->
+    </map:transformer>
 </xmap>
