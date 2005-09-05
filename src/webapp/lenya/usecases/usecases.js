@@ -137,8 +137,8 @@ function executeUsecase() {
                        cocoon.log.debug("usecases.js::executeUsecase()::cforms in usecase " + usecaseName + ", preparing formDefinition, calling Cocoon with viewUri = [" + viewDef + "]");
                        
                        // custom flowscript 
-                       if (view.getCformDefinitionBefore()!=null){
-                          scriptString= view.getCformDefinitionBefore();
+                       if (view.getCformIntro()!=null){
+                          scriptString= view.getCformIntro();
                           evalFunc = new Function (scriptString);
                           evalFunc();
                        }
@@ -147,8 +147,8 @@ function executeUsecase() {
                        form = new Form(viewDef);
                        
                        // custom flowscript 
-                       if (view.getCformDefinitionAfter()!=null){
-                          scriptString= view.getCformDefinitionAfter();
+                       if (view.getCformDefinitionBody()!=null){
+                          scriptString= view.getCformDefinitionBody();
                           evalFunc = new Function ("form","generic",scriptString);
                           evalFunc(form,generic);
                        }
@@ -158,20 +158,13 @@ function executeUsecase() {
                           var viewBind = "fallback://lenya/"+ view.getCformBinding();
                           if (cocoon.log.isDebugEnabled())
                              cocoon.log.debug("usecases.js::executeUsecase()::cforms in usecase " + usecaseName + ", preparing formDefinition, calling Cocoon with viewUri = [" + viewBind + "]");
-                             
-                          // custom flowscript 
-	                      if (view.getCformBindingBefore()!=null){
-                              scriptString= view.getCformBindingBefore();
-                              evalFunc = new Function ("form","generic",scriptString);
-                              evalFunc(form,generic);
-	                      }
 	                      
 	                      // form binding
 	                      form.createBinding(viewBind);
 	                      
 	                      // custom flowscript 
-	                      if (view.getCformBindingAfter()!=null){
-                              scriptString= view.getCformBindingAfter();
+	                      if (view.getCformBindingBody()!=null){
+                              scriptString= view.getCformBindingBody();
                               evalFunc = new Function ("form","generic",scriptString);
                               evalFunc(form,generic);
 	                      }

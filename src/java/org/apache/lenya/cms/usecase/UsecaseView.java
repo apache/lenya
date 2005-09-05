@@ -46,9 +46,8 @@ public class UsecaseView implements Configurable, Serviceable {
     
     protected static final String ELEMENT_CFORM_DEFINITION = "definition";
     protected static final String ELEMENT_CFORM_BINDING = "binding";
-    protected static final String ELEMENT_AFTER = "after";
-    protected static final String ELEMENT_BEFORE = "before";
     protected static final String ELEMENT_CFORM_OUTRO = "outro";
+    protected static final String ELEMENT_CFORM_INTRO = "intro";
     
     protected static final String ATTRIBUTE_URI = "uri";
     protected static final String ATTRIBUTE_GROUP = "group";
@@ -89,17 +88,19 @@ public class UsecaseView implements Configurable, Serviceable {
         this.viewType = config.getAttribute(ATTRIBUTE_TYPE, null);
         
         if (this.viewType!=null && this.viewType.equals(VIEW_CFORM)){
+            Configuration cformIntroConfig = config.getChild(ELEMENT_CFORM_INTRO, false);
+            if (cformIntroConfig!=null){
+                this.cformIntro = cformIntroConfig.getValue(null);
+            }
             Configuration cformDefinitionConfig = config.getChild(ELEMENT_CFORM_DEFINITION, false);
             if (cformDefinitionConfig!=null){
                 this.cformDefinition = cformDefinitionConfig.getAttribute(ATTRIBUTE_TEMPLATE_URI, null);
-                this.cformDefinitionBefore = cformDefinitionConfig.getChild(ELEMENT_BEFORE,false).getValue(null);
-                this.cformDefinitionAfter = cformDefinitionConfig.getChild(ELEMENT_AFTER,false).getValue(null);
+                this.cformDefinitionBody = cformDefinitionConfig.getValue(null);
             }
             Configuration cformBindingConfig = config.getChild(ELEMENT_CFORM_BINDING, false);
             if (cformBindingConfig!=null){
                 this.cformBinding = cformBindingConfig.getAttribute(ATTRIBUTE_TEMPLATE_URI, null);
-                this.cformBindingBefore = cformBindingConfig.getChild(ELEMENT_BEFORE,false).getValue(null);
-                this.cformBindingAfter = cformBindingConfig.getChild(ELEMENT_AFTER,false).getValue(null);
+                this.cformBindingBody = cformBindingConfig.getValue(null);
             }
             Configuration cformOutroConfig = config.getChild(ELEMENT_CFORM_OUTRO, false);
             if (cformOutroConfig!=null){
@@ -205,73 +206,16 @@ public class UsecaseView implements Configurable, Serviceable {
 		this.cformDefinition = cformDefinition;
 	}
 	
-    private String cformDefinitionBefore =null;
-    
-    private String cformDefinitionAfter =null;
     
 	private String cformBinding =null;
     
-    private String cformBindingBefore =null;
-    
-    private String cformBindingAfter =null;
-    
     private String cformOutro=null;
-
-	/**
-     * @return Returns the cformBindingAfter.
-     */
-    public String getCformBindingAfter() {
-        return cformBindingAfter;
-    }
-
-    /**
-     * @param cformBindingAfter The cformBindingAfter to set.
-     */
-    public void setCformBindingAfter(String cformBindingAfter) {
-        this.cformBindingAfter = cformBindingAfter;
-    }
-
-    /**
-     * @return Returns the cformBindingBefore.
-     */
-    public String getCformBindingBefore() {
-        return cformBindingBefore;
-    }
-
-    /**
-     * @param cformBindingBefore The cformBindingBefore to set.
-     */
-    public void setCformBindingBefore(String cformBindingBefore) {
-        this.cformBindingBefore = cformBindingBefore;
-    }
-
-    /**
-     * @return Returns the cformDefinitionAfter.
-     */
-    public String getCformDefinitionAfter() {
-        return cformDefinitionAfter;
-    }
-
-    /**
-     * @param cformDefinitionAfter The cformDefinitionAfter to set.
-     */
-    public void setCformDefinitionAfter(String cformDefinitionAfter) {
-        this.cformDefinitionAfter = cformDefinitionAfter;
-    }
-
-    /**
-     * @return Returns the cformDefinitionBefore.
-     */
-    public String getCformDefinitionBefore() {
-        return cformDefinitionBefore;
-    }
-
-    /**
-     * @param cformDefinitionBefore The cformDefinitionBefore to set.
-     */
-    public void setCformDefinitionBefore(String cformDefinitionBefore) {
-        this.cformDefinitionBefore = cformDefinitionBefore;
-    }
+    
+    private String cformIntro=null;
+    
+    private String cformDefinitionBody=null;
+    
+    private String cformBindingBody=null;
 
     /**
 	 * @return Returns the cformBinding.
@@ -315,6 +259,48 @@ public class UsecaseView implements Configurable, Serviceable {
      */
     public void setCformOutro(String cformOutro) {
         this.cformOutro = cformOutro;
+    }
+
+    /**
+     * @return Returns the cformIntro.
+     */
+    public String getCformIntro() {
+        return cformIntro;
+    }
+
+    /**
+     * @param cformIntro The cformIntro to set.
+     */
+    public void setCformIntro(String cformIntro) {
+        this.cformIntro = cformIntro;
+    }
+
+    /**
+     * @return Returns the cformBindingBody.
+     */
+    public String getCformBindingBody() {
+        return cformBindingBody;
+    }
+
+    /**
+     * @param cformBindingBody The cformBindingBody to set.
+     */
+    public void setCformBindingBody(String cformBindingBody) {
+        this.cformBindingBody = cformBindingBody;
+    }
+
+    /**
+     * @return Returns the cformDefinitionBody.
+     */
+    public String getCformDefinitionBody() {
+        return cformDefinitionBody;
+    }
+
+    /**
+     * @param cformDefinitionBody The cformDefinitionBody to set.
+     */
+    public void setCformDefinitionBody(String cformDefinitionBody) {
+        this.cformDefinitionBody = cformDefinitionBody;
     }
 
 }
