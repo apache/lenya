@@ -121,7 +121,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      * @return A boolean value.
      */
     public List getErrorMessages() {
-        return Collections.unmodifiableList(this.errorMessages);
+        return Collections.unmodifiableList(new ArrayList(this.errorMessages));
     }
 
     /**
@@ -129,7 +129,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      * @return An array of strings. Info messages do not prevent the operation from being executed.
      */
     public List getInfoMessages() {
-        return Collections.unmodifiableList(this.infoMessages);
+        return Collections.unmodifiableList(new ArrayList(this.infoMessages));
     }
 
     private List errorMessages = new ArrayList();
