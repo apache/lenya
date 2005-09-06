@@ -22,7 +22,7 @@
   <component-instance name="xhtml"
                       logger="lenya.resourcetypes.xhtml"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
-    <schema src="fallback://lenya/resources/schemas/xhtml.rng"/>
+    <schema src="fallback://lenya/modules/xhtml/schemas/xhtml.rng"/>
     <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
       <sample-name>fallback://lenya/modules/xhtml/samples/xhtml.xml</sample-name>
     </creator>

@@ -34,7 +34,7 @@
 
 
 <!-- include Lenya schema, for Lenya assets within xhtml -->
-<include href="lenya.rng"/>
+<include href="fallback://lenya/resources/schemas/lenya.rng"/>
 
 <!-- include original XHTML transitional schema -->
 <include href="xhtml/xhtml-basic.rng">

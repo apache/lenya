@@ -32,6 +32,6 @@
     xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
     >
 
-<include href="fallback://lenya/resources/schemas/xhtml.rng"/>
+<include href="fallback://lenya/modules/xhtml/schemas/xhtml.rng"/>
 
 </grammar>

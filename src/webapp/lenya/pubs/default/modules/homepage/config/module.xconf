@@ -22,7 +22,7 @@
   <component-instance name="homepage"
                       logger="lenya.resourcetypes.homepage"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
-    <schema src="fallback://lenya/resources/schemas/homepage.rng"/>
+    <schema src="fallback://lenya/modules/homepage/schemas/homepage.rng"/>
     <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
       <sample-name>homepage.xml</sample-name>
     </creator>
