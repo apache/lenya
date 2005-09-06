@@ -177,7 +177,7 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
     public void delete(Document document) throws SiteException {
         DocumentStore store = getStore(document);
         try {
-            if (!store.contains(document)) {
+            if (store.contains(document)) {
                 store.remove(document);
             }
         } catch (Exception e) {
