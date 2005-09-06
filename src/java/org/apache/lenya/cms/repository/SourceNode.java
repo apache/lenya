@@ -622,7 +622,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     public void registerRemoved() throws RepositoryException {
         try {
             getSession().getUnitOfWork().registerRemoved(this);
-        } catch (TransactionException e) {
+            SourceUtil.delete(getMetaSourceURI(), this.manager);
+        } catch (Exception e) {
             throw new RepositoryException(e);
         }
     }
