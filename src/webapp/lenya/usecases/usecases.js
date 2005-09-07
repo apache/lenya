@@ -126,7 +126,7 @@ function executeUsecase() {
                      * 
                      * FIXME: Add cforms integration howto to the documentation.
                      */
-                    var generic={doc:null,uri:null,generic:null};
+                    var generic={proxy:proxy,uri:null,doc:null,generic:null};
 
                     var viewUri = "view/" + menu + "/" + view.getTemplateURI();
                     if (cocoon.log.isDebugEnabled())
