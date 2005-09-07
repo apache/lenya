@@ -17,7 +17,10 @@
 package org.apache.lenya.cms.publication;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
@@ -29,6 +32,8 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.lenya.cms.authoring.DefaultBranchCreator;
 import org.apache.lenya.cms.authoring.NodeCreatorInterface;
+import org.apache.lenya.xml.Schema;
+import org.xml.sax.ErrorHandler;
 
 /**
  * Resource type.
@@ -44,8 +49,12 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     protected static final String ELEMENT_REWRITE_ATTRIBUTE = "link-attribute";
     protected static final String ATTRIBUTE_XPATH = "xpath";
     protected static final String SAMPLE_NAME = "sample-name";
+    protected static final String ELEMENT_FORMAT = "format";
+    protected static final String ATTRIBUTE_URI = "uri";
+    protected static final String ATTRIBUTE_NAME = "name";
+    protected static final String ATTRIBUTE_LANGUAGE = "language";
 
-    private String schemaUri = null;
+    private Schema schema = null;
     private String sampleUri = null;
     private String[] linkAttributeXPaths;
     private NodeCreatorInterface creator;
@@ -60,7 +69,9 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
             Configuration schemaConf = config.getChild(SCHEMA_ELEMENT, false);
 
             if (schemaConf != null) {
-                this.schemaUri = schemaConf.getAttribute(SRC_ATTRIBUTE);
+                String uri = schemaConf.getAttribute(SRC_ATTRIBUTE);
+                String language = schemaConf.getAttribute(ATTRIBUTE_LANGUAGE);
+                this.schema = new Schema(language, uri);
             }
 
             Configuration creatorConf = config.getChild(CREATOR_ELEMENT, false);
@@ -89,6 +100,14 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
                 xPaths.add(xPath);
             }
             this.linkAttributeXPaths = (String[]) xPaths.toArray(new String[xPaths.size()]);
+            
+            Configuration[] formatConfigs = config.getChildren(ELEMENT_FORMAT);
+            for (int i = 0; i < formatConfigs.length; i++) {
+                String name = formatConfigs[i].getAttribute(ATTRIBUTE_NAME);
+                String uri = formatConfigs[i].getAttribute(ATTRIBUTE_URI);
+                this.formats.put(name, new Format(uri));
+            }
+            
         } catch (Exception e) {
             throw new ConfigurationException("Configuring resource type failed: ", e);
         }
@@ -104,8 +123,8 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
         this.manager = manager;
     }
 
-    public String getSchemaDefinitionSourceURI() {
-        return this.schemaUri;
+    public Schema getSchema() {
+        return this.schema;
     }
 
     public String[] getLinkAttributeXPaths() {
@@ -128,6 +147,41 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
 
     public String getName() {
         return this.name;
+    }
+    
+    private Map formats = new HashMap();
+
+    public String[] getFormats() {
+        Set names = this.formats.keySet();
+        return (String[]) names.toArray(new String[names.size()]);
+    }
+
+    public String getFormatURI(String format) {
+        return ((Format) this.formats.get(format)).getURI();
+    }
+    
+    /**
+     * A format.
+     */
+    public static class Format {
+        
+        private String uri;
+        
+        /**
+         * Ctor.
+         * @param uri The uri.
+         */
+        public Format(String uri) {
+            this.uri = uri;
+        }
+        
+        /**
+         * @return The uri.
+         */
+        public String getURI() {
+            return this.uri;
+        }
+        
     }
 
 }

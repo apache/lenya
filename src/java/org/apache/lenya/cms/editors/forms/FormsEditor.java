@@ -45,14 +45,13 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.UsecaseMessage;
 import org.apache.lenya.cms.usecase.xml.UsecaseErrorHandler;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.xml.DocumentHelper;
-import org.apache.lenya.xml.Validator;
+import org.apache.lenya.xml.ValidationUtil;
 import org.apache.lenya.xml.XPath;
 import org.apache.xml.utils.PrefixResolver;
 import org.apache.xml.utils.PrefixResolverDefault;
@@ -144,10 +143,6 @@ public class FormsEditor extends DocumentUsecase {
 
             xmlSource = (ModifiableSource) resolver.resolveURI(getSourceDocument().getSourceURI());
 
-            ResourceType resourceType = getSourceDocument().getResourceType();
-            String schemaUri = resourceType.getSchemaDefinitionSourceURI();
-            schemaSource = resolver.resolveURI(schemaUri);
-
             unnumberTagsXslSource = resolver.resolveURI(unnumberTagsXslUri);
             numberTagsXslSource = resolver.resolveURI(numberTagsXslUri);
 
@@ -157,7 +152,7 @@ public class FormsEditor extends DocumentUsecase {
                 return;
             }
 
-            save(resolver, xmlSource, schemaSource, unnumberTagsXslSource, numberTagsXslSource);
+            save(resolver, xmlSource, unnumberTagsXslSource, numberTagsXslSource);
 
             if (hasErrors()) {
                 setParameter(VALIDATION_ERRORS, getErrorMessages());
@@ -194,10 +189,10 @@ public class FormsEditor extends DocumentUsecase {
 
     protected void doExecute() throws Exception {
         super.doExecute();
-        
+
         List errors = (List) getParameter(VALIDATION_ERRORS);
         if (errors != null) {
-            for (Iterator i = errors.iterator(); i.hasNext(); ) {
+            for (Iterator i = errors.iterator(); i.hasNext();) {
                 UsecaseMessage message = (UsecaseMessage) i.next();
                 addErrorMessage(message.getMessage(), message.getParameters());
             }
@@ -208,7 +203,6 @@ public class FormsEditor extends DocumentUsecase {
      * Save the Form
      * @param resolver
      * @param xmlSource
-     * @param schemaSource
      * @param unnumberTagsXslSource
      * @param numberTagsXslSource
      * @throws ProcessingException
@@ -222,7 +216,7 @@ public class FormsEditor extends DocumentUsecase {
      * @throws TransformerConfigurationException
      * @throws TransformerException
      */
-    private void save(SourceResolver resolver, ModifiableSource xmlSource, Source schemaSource,
+    private void save(SourceResolver resolver, ModifiableSource xmlSource,
             Source unnumberTagsXslSource, Source numberTagsXslSource) throws ProcessingException,
             FactoryConfigurationError, ParserConfigurationException, IOException, SAXException,
             XPathQueryConfigurationException, Exception, MalformedURLException,
@@ -249,11 +243,6 @@ public class FormsEditor extends DocumentUsecase {
         String editSelect = processElements(document, xUpdateQuery);
         setParameter("editSelect", editSelect);
 
-        // validate against relax ng after the updates
-        if (!schemaSource.exists()) {
-            throw new ProcessingException("Schema [" + schemaSource.getURI() + "] does not exist.");
-        }
-
         Source validationSource = null;
         Source unnumberTagsSource = null;
 
@@ -266,7 +255,21 @@ public class FormsEditor extends DocumentUsecase {
             unnumberTagsSource = resolver.resolveURI(unnumberTagsUri);
             checkModifiability(unnumberTagsSource);
 
-            validateDocument(document, schemaSource, unnumberTagsXslSource);
+            javax.xml.transform.Source transformXmlSource = new DOMSource(document);
+            javax.xml.transform.Source transformXslSource = new StreamSource(unnumberTagsXslSource.getInputStream());
+
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            StreamResult unnumberXmlResult = new StreamResult(out);
+
+            TransformerFactory factory = TransformerFactory.newInstance();
+            Transformer transformer = factory.newTransformer(transformXslSource);
+            transformer.transform(transformXmlSource, unnumberXmlResult);
+
+            ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
+            Document doc = DocumentHelper.readDocument(in);
+
+            ValidationUtil.validate(this.manager, doc, getSourceDocument().getResourceType()
+                    .getSchema(), new UsecaseErrorHandler(this));
 
         } finally {
             if (validationSource != null) {
@@ -625,46 +628,6 @@ public class FormsEditor extends DocumentUsecase {
         getLogger().debug(".remove() REMOVE Node: " + pname);
         return "<xupdate:modifications xmlns:xupdate=\"http://www.xmldb.org/xupdate\">" + pname
                 + "</xupdate:modifications>";
-    }
-
-    /**
-     * Validates a document.
-     * @param document The document.
-     * @param schema The schema source.
-     * @param unnumberTagsXsl The source of the unnumber XSL stylesheet.
-     * @throws UsecaseException if an error occurs.
-     */
-    private void validateDocument(Document document, Source schema, Source unnumberTagsXsl)
-            throws UsecaseException {
-
-        Validator validator = null;
-        try {
-            javax.xml.transform.Source xmlSource = new DOMSource(document);
-            javax.xml.transform.Source unnumberTagsXslSource = new StreamSource(unnumberTagsXsl.getInputStream());
-
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            StreamResult unnumberXmlResult = new StreamResult(out);
-
-            TransformerFactory factory = TransformerFactory.newInstance();
-            Transformer transformer = factory.newTransformer(unnumberTagsXslSource);
-            transformer.transform(xmlSource, unnumberXmlResult);
-
-            ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
-            InputSource unnumberXmlInputSource = new InputSource(in);
-            InputSource schemaInputSource = SourceUtil.getInputSource(schema);
-
-            validator = (Validator) this.manager.lookup(Validator.ROLE);
-            validator.validate(unnumberXmlInputSource,
-                    schemaInputSource,
-                    new UsecaseErrorHandler(this));
-
-        } catch (Exception e) {
-            throw new UsecaseException(e);
-        } finally {
-            if (validator != null) {
-                this.manager.release(validator);
-            }
-        }
     }
 
     /**

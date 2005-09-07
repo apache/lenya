@@ -37,6 +37,7 @@
   <module name="links"/>
   <module name="homepage"/>
   <module name="search"/>
+  <module name="blog"/>
   
   <!--
        For information about these settings, read 

@@ -174,10 +174,6 @@
         shorthand="publication-manager"
         default-class="org.apache.lenya.cms.publication.PublicationManagerImpl"/>
         
-  <role name="org.apache.lenya.xml.Validator"
-        shorthand="validator"
-        default-class="org.apache.lenya.xml.JingValidator"/>
-        
   <role name="org.apache.lenya.cms.repository.NodeFactory"
         shorthand="node-factory"
         default-class="org.apache.lenya.cms.repository.SourceNodeFactory"/>

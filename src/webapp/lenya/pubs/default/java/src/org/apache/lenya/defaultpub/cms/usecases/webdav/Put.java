@@ -22,6 +22,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
@@ -30,11 +31,11 @@ import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.publication.util.DocumentSet;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
@@ -42,9 +43,9 @@ import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.xml.UsecaseErrorHandler;
 import org.apache.lenya.workflow.WorkflowManager;
-import org.apache.excalibur.source.Source;
-import org.xml.sax.InputSource;
-import org.apache.lenya.xml.Validator;
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.lenya.xml.Schema;
+import org.apache.lenya.xml.ValidationUtil;
 
 /**
  * Supports WebDAV PUT.
@@ -60,7 +61,6 @@ public class Put extends DocumentUsecase {
         super.doExecute();
         SourceResolver resolver = null;
         WorkflowManager wfManager = null;
-        Validator validator = null;
 
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
@@ -132,20 +132,10 @@ public class Put extends DocumentUsecase {
 
                 // validity check
                 ResourceType resourceType = doc.getResourceType();
-                String schemaUri = resourceType.getSchemaDefinitionSourceURI();
-                Source schemaSource = resolver.resolveURI(schemaUri);
-                if (!schemaSource.exists()) {
-                    throw new IllegalArgumentException("The schema [" + schemaSource.getURI()
-                            + "] does not exist.");
-                }
-
-                InputSource schemaInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(schemaSource);
-                InputSource xmlInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(tempSource);
-
-                validator = (Validator) this.manager.lookup(Validator.ROLE);
-                validator.validate(xmlInputSource,
-                        schemaInputSource,
-                        new UsecaseErrorHandler(this));
+                Schema schema = resourceType.getSchema();
+                
+                org.w3c.dom.Document xmlDoc = DocumentHelper.readDocument(tempSource.getInputStream());
+                ValidationUtil.validate(this.manager, xmlDoc, schema, new UsecaseErrorHandler(this));
 
                 if (SourceUtil.exists(tempSourceUri, this.manager)) {
                     SourceUtil.copy(resolver, tempSourceUri, sourceUri, true);
@@ -160,9 +150,6 @@ public class Put extends DocumentUsecase {
             }
             if (wfManager != null) {
                 this.manager.release(wfManager);
-            }
-            if (validator != null) {
-                this.manager.release(validator);
             }
         }
     }

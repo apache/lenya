@@ -24,10 +24,8 @@ import java.io.UnsupportedEncodingException;
 import java.io.Writer;
 
 import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.components.source.SourceUtil;
 import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.ModifiableSource;
-import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
@@ -35,8 +33,9 @@ import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.xml.UsecaseErrorHandler;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.xml.DocumentHelper;
-import org.apache.lenya.xml.Validator;
-import org.xml.sax.InputSource;
+import org.apache.lenya.xml.Schema;
+import org.apache.lenya.xml.ValidationUtil;
+import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 /**
@@ -90,40 +89,27 @@ public class OneFormEditor extends DocumentUsecase {
 
         // Save file temporarily
 
-        ResourceType resourceType = getSourceDocument().getResourceType();
-        String schemaUri = resourceType.getSchemaDefinitionSourceURI();
-        Source schemaSource = null;
         ModifiableSource xmlSource = null;
         SourceResolver resolver = null;
-        Validator validator = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             xmlSource = (ModifiableSource) resolver.resolveURI(getSourceDocument().getSourceURI());
             saveXMLFile(encoding, content, xmlSource);
+            
+            Document xmlDoc = null;
 
-            boolean wellFormed = false;
             try {
-                DocumentHelper.readDocument(xmlSource.getInputStream());
-                wellFormed = true;
+                xmlDoc = DocumentHelper.readDocument(xmlSource.getInputStream());
             } catch (SAXException e) {
                 addErrorMessage("error-document-form", new String[] { e.getMessage() });
             }
 
-            if (wellFormed) {
-                schemaSource = resolver.resolveURI(schemaUri);
-                if (!schemaSource.exists()) {
-                    throw new IllegalArgumentException("The schema [" + schemaSource.getURI()
-                            + "] does not exist.");
-                }
-
-                InputSource schemaInputSource = SourceUtil.getInputSource(schemaSource);
-                InputSource xmlInputSource = SourceUtil.getInputSource(xmlSource);
-
-                validator = (Validator) this.manager.lookup(Validator.ROLE);
-                validator.validate(xmlInputSource,
-                        schemaInputSource,
-                        new UsecaseErrorHandler(this));
-
+            if (xmlDoc != null) {
+                ResourceType resourceType = getSourceDocument().getResourceType();
+                Schema schema = resourceType.getSchema();
+                
+                ValidationUtil.validate(this.manager, xmlDoc, schema, new UsecaseErrorHandler(this));
+                
                 if (!hasErrors()) {
                     WorkflowUtil.invoke(this.manager,
                             getSession(),
@@ -135,16 +121,10 @@ public class OneFormEditor extends DocumentUsecase {
 
         } finally {
             if (resolver != null) {
-                if (schemaSource != null) {
-                    resolver.release(schemaSource);
-                }
                 if (xmlSource != null) {
                     resolver.release(xmlSource);
                 }
                 this.manager.release(resolver);
-            }
-            if (validator != null) {
-                this.manager.release(validator);
             }
         }
     }

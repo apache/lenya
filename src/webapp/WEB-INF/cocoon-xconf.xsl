@@ -117,6 +117,9 @@
   <component-instance name="proxy-url" logger="sitemap.modules.input.proxy-url"
       class="org.apache.lenya.cms.cocoon.components.modules.input.ProxyUrlModule"/>
 
+    <component-instance name="resource-type" logger="sitemap.modules.input.resource-type"
+      class="org.apache.lenya.cms.cocoon.components.modules.input.ResourceTypeModule"/>
+    
   </xsl:copy>
 </xsl:template>
 

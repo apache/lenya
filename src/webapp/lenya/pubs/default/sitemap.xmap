@@ -128,7 +128,10 @@
           <map:part src="cocoon://modules/sitetree/{2}/{3}/tabs/{5}.xml"/>
           <map:part src="cocoon://modules/sitetree/{2}/{3}/menu/{5}.xml"/>
           <map:part src="cocoon://modules/sitetree/{2}/{3}/search/{5}.xml"/>
+          <!--
           <map:part src="cocoon://modules/{page-envelope:document-type}/{1}.xml"/>
+          -->
+          <map:part src="{resource-type:format-xhtml}"/>
         </map:aggregate>
         
         <map:select type="resource-exists">

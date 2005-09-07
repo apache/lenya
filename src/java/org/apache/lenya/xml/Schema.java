@@ -30,63 +30,42 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.publication;
-
-import org.apache.lenya.cms.authoring.NodeCreatorInterface;
-import org.apache.lenya.xml.Schema;
+package org.apache.lenya.xml;
 
 /**
- * @version $Id:$
+ * Validation schema.
  */
-public interface ResourceType {
-    
-    /**
-     * The Avalon service role.
-     */
-    String ROLE = ResourceType.class.getName();
-    
-    /**
-     * Returns the name of this document type.
-     * @return A string value.
-     */
-    String getName();
+public class Schema {
 
     /**
-     * @return The source URI of the RelaxNG schema.
+     * Ctor.
+     * @param language The language, as defined by
+     *            org.apache.cocoon.components.validation.Validator.
+     * @param schemaUri The schema URI.
+     * @see org.apache.cocoon.components.validation.Validator
      */
-    Schema getSchema();
+    public Schema(String language, String schemaUri) {
+        this.language = language;
+        this.uri = schemaUri;
+    }
+
+    private String language;
+
+    private String uri;
 
     /**
-     * Returns an array of XPaths representing attributes to be rewritten
-     * when a document URL has changed.
-     * @return An array of strings.
+     * @return The language.
+     * @see org.apache.cocoon.components.validation.Validator
      */
-    String[] getLinkAttributeXPaths();
+    public String getLanguage() {
+        return this.language;
+    }
 
     /**
-     * Returns the location of sample contents for this type
-     * @return A string value.
+     * @return The URI to read the schema from.
      */
-    String getSampleURI();
-    
-    /**
-     * @return The creator.
-     */
-    NodeCreatorInterface getCreator();
+    public String getURI() {
+        return this.uri;
+    }
 
-    /**
-     * @param name The name of the resource type.
-     */
-    void setName(String name);
-    
-    /**
-     * @return All supported formats.
-     */
-    String[] getFormats();
-    
-    /**
-     * @param format The format.
-     * @return The URI to get the formatted content at.
-     */
-    String getFormatURI(String format);
 }

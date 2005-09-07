@@ -22,11 +22,12 @@
   <component-instance name="homepage"
                       logger="lenya.resourcetypes.homepage"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
-    <schema src="fallback://lenya/modules/homepage/schemas/homepage.rng"/>
+    <schema src="fallback://lenya/modules/homepage/schemas/homepage.rng" language="http://relaxng.org/ns/structure/0.9"/>
     <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
       <sample-name>homepage.xml</sample-name>
     </creator>
     <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@href"/>
+    <format name="xhtml" uri="cocoon://modules/homepage/xhtml.xml"/>
   </component-instance>
 
 </xconf>
