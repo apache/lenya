@@ -28,6 +28,17 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.publication.util.DocumentSet;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.site.SiteUtil;
 
 
 /**
@@ -64,6 +75,26 @@ public class RollbackAction extends RevisionControllerAction {
         // Get parameters                                                                                                                       
         String rollbackTime = request.getParameter("rollbackTime");
 
+        //lock
+        Publication publication;
+        PageEnvelope envelope = null;
+        Document document = null;
+        Session session = RepositoryUtil.getSession(request, getLogger());
+        DocumentIdentityMap map = new DocumentIdentityMap(session, this.manager, getLogger());
+        try {
+            publication = PublicationUtil.getPublication(this.manager, objectModel);
+            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel, publication);
+            document = envelope.getDocument();
+        } catch (Exception e) {
+            getLogger().error("Resolving page envelope failed: ", e);
+            throw e;
+        }
+        DocumentSet set = SiteUtil.getSubSite(this.manager, document);
+        Document[] documents = set.getDocuments();
+        for (int i = 0; i < documents.length; i++) {
+            documents[i].getRepositoryNode().lock();
+        }
+        
         // Do the rollback to an earlier version
         long newtime = 0;
 
@@ -77,6 +108,11 @@ public class RollbackAction extends RevisionControllerAction {
             return null;
         }
 
+        //unlock
+        for (int i = 0; i < documents.length; i++) {
+            documents[i].getRepositoryNode().unlock();
+        }
+        
         getLogger().debug("rollback complete, old (and now current) time was " + rollbackTime +
             " backup time is " + newtime);
 
