@@ -99,6 +99,7 @@ function executeUsecase() {
     var form;
     var scriptString;
     var evalFunc;
+    var generic;
 
     /*
      * If the usecase has a view, this means we want to display something 
@@ -115,6 +116,10 @@ function executeUsecase() {
             try {
                 var templateUri = view.getTemplateURI();
                 if (templateUri) {
+                    var viewUri = "view/" + menu + "/" + view.getTemplateURI();
+                    if (cocoon.log.isDebugEnabled())
+                        cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", creating view, calling Cocoon with viewUri = [" + viewUri + "]");
+                    if (view.getViewType()=="cforms"){
                     /*
                      * var generic - Generic object that can be used in all custom flow code
                      * that is added by usecases. Right now it focus on document opertations
@@ -126,12 +131,7 @@ function executeUsecase() {
                      * 
                      * FIXME: Add cforms integration howto to the documentation.
                      */
-                    var generic={proxy:proxy,uri:null,doc:null,generic:null};
-
-                    var viewUri = "view/" + menu + "/" + view.getTemplateURI();
-                    if (cocoon.log.isDebugEnabled())
-                        cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", creating view, calling Cocoon with viewUri = [" + viewUri + "]");
-                    if (view.getViewType()=="cforms"){
+                      generic={proxy:proxy,uri:null,doc:null,generic:null};
                       var viewDef = "fallback://lenya/"+ view.getCformDefinition();
                       if (cocoon.log.isDebugEnabled())
                        cocoon.log.debug("usecases.js::executeUsecase()::cforms in usecase " + usecaseName + ", preparing formDefinition, calling Cocoon with viewUri = [" + viewDef + "]");
@@ -158,28 +158,19 @@ function executeUsecase() {
                           var viewBind = "fallback://lenya/"+ view.getCformBinding();
                           if (cocoon.log.isDebugEnabled())
                              cocoon.log.debug("usecases.js::executeUsecase()::cforms in usecase " + usecaseName + ", preparing formDefinition, calling Cocoon with viewUri = [" + viewBind + "]");
-	                      
-	                      // form binding
-	                      form.createBinding(viewBind);
-	                      
-	                      // custom flowscript 
-	                      if (view.getCformBindingBody()!=null){
+                          
+                          // form binding
+                          form.createBinding(viewBind);
+                          
+                          // custom flowscript 
+                          if (view.getCformBindingBody()!=null){
                               scriptString= view.getCformBindingBody();
                               evalFunc = new Function ("form","generic",scriptString);
                               evalFunc(form,generic);
-	                      }
-	                      
-	                      // form template
-                          form.showForm(viewUri, {"usecase" : proxy});
-                          
-                          // custom flowscript 
-	                      if (view.getCformOutro()!=null){
-                              scriptString= view.getCformOutro();
-                              evalFunc = new Function ("form","generic",scriptString);
-                              evalFunc(form,generic);
-	                      }
-                          
+                          }
                        }
+                        // form template
+                          form.showForm(viewUri, {"usecase" : proxy});
                     }
                     else{
                         cocoon.sendPageAndWait(viewUri, {
@@ -227,6 +218,14 @@ function executeUsecase() {
                 if (cocoon.request.getParameter("submit")) {
                     usecase.checkExecutionConditions();
                     if (! usecase.hasErrors()) {
+                       if (view.getViewType()=="cforms"){
+                       // custom flowscript 
+                         if (view.getCformOutro()!=null){
+                            scriptString= view.getCformOutro();
+                            evalFunc = new Function ("form","generic",scriptString);
+                            evalFunc(form,generic);
+                         }
+                       }
                         usecase.execute();
                         if (! usecase.hasErrors()) {
                             usecase.checkPostconditions();
