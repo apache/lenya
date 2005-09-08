@@ -20,9 +20,9 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.components.validation.SchemaParser;
 import org.apache.cocoon.components.validation.Validator;
 import org.apache.cocoon.xml.dom.DOMStreamer;
-import org.apache.excalibur.xml.sax.XMLConsumer;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
+import org.xml.sax.ContentHandler;
 import org.xml.sax.ErrorHandler;
 
 /**
@@ -60,9 +60,9 @@ public class ValidationUtil {
             validator = (Validator) manager.lookup(Validator.ROLE);
             parser = (SchemaParser) validator.select(schema.getLanguage());
             org.apache.cocoon.components.validation.Schema validationSchema = parser.getSchema(schema.getURI());
-            XMLConsumer consumer = validationSchema.newValidator(handler);
+            ContentHandler validatorHandler = validationSchema.newValidator(handler);
 
-            DOMStreamer streamer = new DOMStreamer(consumer);
+            DOMStreamer streamer = new DOMStreamer(validatorHandler);
             streamer.stream(xmlDoc);
 
         } finally {
