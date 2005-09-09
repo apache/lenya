@@ -63,7 +63,7 @@ public class Revisions extends SiteUsecase {
         
         Vector entries;
         try {
-            entries = this.rcml.getEntries();
+            entries = this.rcml.getBackupEntries(); 
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
