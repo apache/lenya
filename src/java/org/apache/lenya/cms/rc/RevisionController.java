@@ -378,7 +378,9 @@ public class RevisionController {
         // Try to check back in, this might cause
         // a backup of the current version to be created if
         // desired by the user.
-        long newtime = reservedCheckIn(destination, identity, backupFlag, false);
+        //XXX:  what is the use of a backup if doc isn't versioned, can't rollback?
+        //long newtime = reservedCheckIn(destination, identity, backupFlag, false);
+        long newtime = reservedCheckIn(destination, identity, backupFlag, backupFlag);
 
         return newtime;
     }
