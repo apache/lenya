@@ -324,6 +324,36 @@ public class RCML {
 
         return RCMLEntries;
     }
+    
+    /**
+     * get all backup entries
+     * @return Vector of all entries in this RCML-file with a backup
+     * @throws Exception if an error occurs
+     */
+    public Vector getBackupEntries() throws Exception {
+        Element parent = this.document.getDocumentElement();
+        NodeList entries = XPathAPI.selectNodeList(parent,
+                "/XPSRevisionControl/CheckOut["+ELEMENT_BACKUP+"]|/XPSRevisionControl/CheckIn["+ELEMENT_BACKUP+"]");
+        Vector RCMLEntries = new Vector();
+
+        for (int i = 0; i < entries.getLength(); i++) {
+            Element elem = (Element) entries.item(i);
+            String time = elem.getElementsByTagName("Time").item(0).getFirstChild().getNodeValue();
+            String identity = elem.getElementsByTagName("Identity").item(0).getFirstChild()
+                    .getNodeValue();
+
+            NodeList versionElements = elem.getElementsByTagName("Version");
+            int version = 0;
+            if (versionElements.getLength() > 0) {
+                String versionString = versionElements.item(0).getFirstChild().getNodeValue();
+                version = new Integer(versionString).intValue();
+            }
+
+            RCMLEntries.add(new CheckInEntry(identity, new Long(time).longValue(), version));
+        }
+
+        return RCMLEntries;
+    }
 
     /**
      * Prune the list of entries and delete the corresponding backups. Limit the number of entries
