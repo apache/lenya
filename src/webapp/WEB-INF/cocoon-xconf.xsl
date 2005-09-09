@@ -542,6 +542,11 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
       <transaction policy="pessimistic"/>
       <view template="usecases/edit/kupu/kupu.jx" menu="false"/>
     </component-instance>
+    
+    <component-instance name="rollback" logger="lenya.publication"
+                        class="org.apache.lenya.cms.site.usecases.Rollback">
+      <transaction policy="pessimistic"/>
+    </component-instance>
   </usecases>
   
   <resource-types/>

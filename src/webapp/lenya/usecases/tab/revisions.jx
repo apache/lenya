@@ -39,7 +39,7 @@
       <jx:forEach var="item" items="${usecase.getParameter('entries')}" begin="1">
           <tr>
             <td>
-              <a href="?lenya.usecase=rollback&amp;lenya.step=rollback&amp;rollbackTime=${item.time}">
+              <a href="?lenya.usecase=rollback&amp;rollbackTime=${item.time}&amp;lenya.exitUsecase=tab.revisions">
                 <i18n:text>Rollback to this version</i18n:text>
               </a>
             </td>
