@@ -24,10 +24,11 @@
        >
 
   <xsp:structure>
+    <xsp:include>java.io.File</xsp:include>
     <xsp:include>org.apache.lenya.cms.rc.RevisionController</xsp:include>
     <xsp:include>org.apache.lenya.cms.rc.RCEnvironment</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
-    <xsp:include>org.apache.lenya.xml.DOMParserFactory</xsp:include>
+    <xsp:include>org.apache.lenya.xml.DocumentHelper</xsp:include>
   </xsp:structure>                                                                                                                          
 
   <rc:backup xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0">
@@ -37,26 +38,23 @@
       String rollbackTime=request.getParameter("rollbackTime");
 
       Publication publication = (Publication)<input:get-attribute module="page-envelope" as="object" name="publication"/>;
-      String rootDir=publication.getEnvironment().getPublicationPath();
-      String servletContextPath = publication.getServletContext().getCanonicalPath();
-
+      String publicationPath = publication.getDirectory().getCanonicalPath();
+      RCEnvironment rcEnvironment = RCEnvironment.getInstance(publication.getServletContext().getCanonicalPath());
+      String rcmlDirectory = rcEnvironment.getRCMLDirectory(); 
+      rcmlDirectory = publicationPath + File.separator + rcmlDirectory; 
+      String backupDirectory = rcEnvironment.getBackupDirectory();
+      backupDirectory = publicationPath + File.separator + backupDirectory;
       String contextPath = "content";
       String area = <input:get-attribute module="page-envelope" as="string" name="area"/>;
       String documentPath = <input:get-attribute module="page-envelope" as="string" name="document-path"/>;
       String filename = "/" + contextPath + "/" + area + "/" + documentPath;    
-      RCEnvironment rcEnvironment = RCEnvironment.getInstance(publication.getServletContext().getAbsolutePath());
-      String rcmlDirectory = rcEnvironment.getRCMLDirectory();
-      rcmlDirectory=rootDir+rcmlDirectory;
-      String backupDirectory = rcEnvironment.getBackupDirectory();
-      backupDirectory=rootDir+backupDirectory;
 
-      RevisionController rc = new RevisionController(rcmlDirectory, backupDirectory, rootDir);
+      RevisionController rc = new RevisionController(rcmlDirectory, backupDirectory, publicationPath);
       String backupFilename = rc.getBackupFilename(new Long(rollbackTime).longValue(), filename);
 
-      DOMParserFactory dpf=new DOMParserFactory();
       org.w3c.dom.Document doc=null;
       try {
-        doc = dpf.getDocument(backupFilename);
+        doc = DocumentHelper.readDocument(backupFilename);
       } catch (Exception e) {
         <rc:exception>rollback: Unable to get view file, caught exception: <xsp:expr>e.toString()</xsp:expr></rc:exception>
       }                                                                                                                                       

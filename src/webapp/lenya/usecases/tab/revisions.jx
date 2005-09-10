@@ -44,7 +44,7 @@
               </a>
             </td>
             <td>
-              <a href="?lenya.usecase=rollback&amp;lenya.step=view&amp;rollbackTime=${item.time}" target="_blank">
+              <a href="?lenya.step=view-revision&amp;rollbackTime=${item.time}" target="_blank">              
                <i18n:text>View</i18n:text></a>
             </td>
             <td align="right"><jx:formatDate value="${item.time}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
