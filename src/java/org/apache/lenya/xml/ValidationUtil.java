@@ -17,7 +17,6 @@
 package org.apache.lenya.xml;
 
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.cocoon.components.validation.SchemaParser;
 import org.apache.cocoon.components.validation.Validator;
 import org.apache.cocoon.xml.dom.DOMStreamer;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
@@ -55,21 +54,15 @@ public class ValidationUtil {
             ErrorHandler handler) throws Exception {
 
         Validator validator = null;
-        SchemaParser parser = null;
         try {
             validator = (Validator) manager.lookup(Validator.ROLE);
-            parser = (SchemaParser) validator.select(schema.getLanguage());
-            org.apache.cocoon.components.validation.Schema validationSchema = parser.getSchema(schema.getURI());
-            ContentHandler validatorHandler = validationSchema.newValidator(handler);
+            ContentHandler validatorHandler = validator.getValidationHandler(schema.getURI());
 
             DOMStreamer streamer = new DOMStreamer(validatorHandler);
             streamer.stream(xmlDoc);
 
         } finally {
             if (validator != null) {
-                if (parser != null) {
-                    validator.release(parser);
-                }
                 manager.release(validator);
             }
         }
