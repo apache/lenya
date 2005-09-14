@@ -19,6 +19,7 @@
 
 package org.apache.lenya.workflow.impl;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,7 +47,59 @@ public class VersionImpl implements Version {
     public String getState() {
         return this.state;
     }
+    
+    private Date date;
+    private String userId;
+    private String ipAddress;
 
+    /**
+     * Returns the date.
+     * @return A string.
+     */
+    public Date getDate() {
+        return this.date;
+    }
+
+    /**
+     * Sets the date.
+     * @param _date A date.
+     */
+    public void setDate(Date _date) {
+        this.date = _date;
+    }
+
+    /**
+     * Returns the user ID.
+     * @return A string.
+     */
+    public String getUserId() {
+        return this.userId;
+    }
+
+    /**
+     * Sets the user ID.
+     * @param _userId A user ID.
+     */
+    public void setUserId(String _userId) {
+        this.userId = _userId;
+    }
+
+    /**
+     * Returns the ip address.
+     * @return A string.
+     */
+    public String getIPAddress() {
+    	return this.ipAddress;
+    }
+
+    /**
+     * Sets the ip address.
+     * @param _ipaddress A ip address.
+     */
+    public void setIPAddress(String _ipaddress){
+    	this.ipAddress = _ipaddress;
+    }
+    
     /**
      * Ctor.
      * @param _event The event that caused the version change.

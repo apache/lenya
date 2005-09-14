@@ -19,48 +19,12 @@
 
 package org.apache.lenya.cms.workflow;
 
-import java.util.Date;
-
 import org.apache.lenya.workflow.impl.VersionImpl;
 
 /**
  * A CMS version
  */
 public class LenyaVersion extends VersionImpl {
-    
-    private Date date;
-
-    /**
-     * Returns the date.
-     * @return A string.
-     */
-    public Date getDate() {
-        return this.date;
-    }
-
-    /**
-     * Sets the date.
-     * @param _date A date.
-     */
-    public void setDate(Date _date) {
-        this.date = _date;
-    }
-
-    /**
-     * Returns the user ID.
-     * @return A string.
-     */
-    public String getUserId() {
-        return this.userId;
-    }
-
-    /**
-     * Sets the user ID.
-     * @param _userId A user ID.
-     */
-    public void setUserId(String _userId) {
-        this.userId = _userId;
-    }
 
     /**
      * Ctor.
@@ -70,7 +34,5 @@ public class LenyaVersion extends VersionImpl {
     public LenyaVersion(String event, String state) {
         super(event, state);
     }
-    
-    private String userId;
 
 }

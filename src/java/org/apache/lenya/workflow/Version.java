@@ -16,10 +16,12 @@
  */
 package org.apache.lenya.workflow;
 
+import java.util.Date;
+
 /**
  * A version of the workflow history.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public interface Version {
     
@@ -34,6 +36,43 @@ public interface Version {
      * @return A state.
      */
     String getState();
+    
+
+    /**
+     * Returns the date.
+     * @return A string.
+     */
+    Date getDate();
+
+    /**
+     * Sets the date.
+     * @param _date A date.
+     */
+    void setDate(Date _date);
+
+    /**
+     * Returns the user ID.
+     * @return A string.
+     */
+    public String getUserId();
+
+    /**
+     * Sets the user ID.
+     * @param _userId A user ID.
+     */
+    public void setUserId(String _userId);
+
+    /**
+     * Returns the ip address.
+     * @return A string.
+     */
+    public String getIPAddress();
+
+    /**
+     * Sets the ip address.
+     * @param _ipaddress A ip address.
+     */
+    public void setIPAddress(String _ipaddress);
     
     /**
      * Returns the value of a variable.

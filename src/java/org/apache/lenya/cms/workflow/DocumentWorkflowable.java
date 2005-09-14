@@ -16,11 +16,13 @@
  */
 package org.apache.lenya.cms.workflow;
 
+import java.text.ParsePosition;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Locale;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
@@ -186,18 +188,31 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
 
         String event = null;
         String state = null;
+        String user = null;
+        String machine = null;
+        Date date = null;
         Map variables = new HashMap();
 
         String[] parts = string.split(" ");
         for (int i = 0; i < parts.length; i++) {
-            String[] steps = parts[i].split(":");
+            String[] steps = parts[i].split(":",2);
             if (steps[0].equals("event")) {
                 event = steps[1];
             }
-            if (steps[0].equals("state")) {
+            else if (steps[0].equals("state")) {
                 state = steps[1];
             }
-            if (steps[0].equals("var")) {
+            else if (steps[0].equals("user")) {
+            	user = steps[1];
+            }
+            else if (steps[0].equals("date")) {
+            	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.US);
+            	date = sdf.parse(steps[1],new ParsePosition(0));
+            }
+            else if (steps[0].equals("machine")) {
+            	machine = steps[1];
+            }
+            else if (steps[0].equals("var")) {
                 String[] nameValue = steps[1].split("=");
                 variables.put(nameValue[0], nameValue[1]);
             }
@@ -206,6 +221,9 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
         for (Iterator i = variables.keySet().iterator(); i.hasNext();) {
             String name = (String) i.next();
             String value = (String) variables.get(name);
+            version.setUserId(user);
+            version.setDate(date);
+            version.setIPAddress(machine);
             version.setValue(name, Boolean.valueOf(value).booleanValue());
         }
         return version;
