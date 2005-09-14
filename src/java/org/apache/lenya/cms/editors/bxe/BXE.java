@@ -23,6 +23,7 @@ import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.workflow.WorkflowManager;
 
 /**
@@ -56,6 +57,11 @@ public class BXE extends DocumentUsecase {
             if (SourceUtil.exists(tempSourceUri, this.manager)) {
                 SourceUtil.copy(resolver, tempSourceUri, sourceUri, true);
                 SourceUtil.delete(tempSourceUri, this.manager);
+                WorkflowUtil.invoke(this.manager,
+                        getSession(),
+                        getLogger(),
+                        getSourceDocument(),
+                        getEvent());
             }
 
         } finally {
@@ -76,4 +82,7 @@ public class BXE extends DocumentUsecase {
         return objects;
     }
 
+    protected String getEvent() {
+        return "edit";
+    }
 }
