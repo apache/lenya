@@ -14,11 +14,7 @@
 * limitations under the License.
 */
 
-importClass(Packages.org.apache.lenya.cms.cocoon.flow.FlowHelper);
-importClass(Packages.org.apache.lenya.cms.publication.DocumentIdentityMap);
-
 /* Helper method to add all request parameters to a usecase */
-/* Swiped from usecases.js :) */
 function passRequestParameters(flowHelper, usecase) {
     var names = cocoon.request.getParameterNames();
     while (names.hasMoreElements()) {
@@ -39,8 +35,8 @@ function passRequestParameters(flowHelper, usecase) {
             
         }
     }
-
 }
+
 
 function selectMethod() {
   var page = cocoon.parameters["page"];
@@ -123,7 +119,6 @@ function isOverwrite(header) {
   return overwrite;
 }
 
-
 function executeUsecase(usecaseName) {
     var view;
     var proxy;
@@ -131,23 +126,22 @@ function executeUsecase(usecaseName) {
     
     var usecaseResolver;
     var usecase;
+    var sourceUrl;
     
     if (cocoon.log.isDebugEnabled())
        cocoon.log.debug("usecases.js::executeUsecase() called, parameter lenya.usecase = [" + usecaseName + "]");
     
     try {
-        usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
-        usecase = usecaseResolver.resolve(usecaseName);
 
         var flowHelper = cocoon.getComponent("org.apache.lenya.cms.cocoon.flow.FlowHelper");
         var request = flowHelper.getRequest(cocoon);
-        var sourceUrl = Packages.org.apache.lenya.util.ServletHelper.getWebappURI(request);
+        sourceUrl = Packages.org.apache.lenya.util.ServletHelper.getWebappURI(request);
+        
+        usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
+        usecase = usecaseResolver.resolve(sourceUrl, usecaseName);
         usecase.setSourceURL(sourceUrl);
         usecase.setName(usecaseName);
         view = usecase.getView();
-        if (view && view.showMenu()) {
-            menu = "menu";
-        }
 
         passRequestParameters(flowHelper, usecase);
         usecase.checkPreconditions();
@@ -166,8 +160,11 @@ function executeUsecase(usecaseName) {
     }
     
     var success = false;
-    var targetUrl;
-
+    //var targetUrl;
+    var form;
+    var scriptString;
+    var evalFunc;
+    var generic;
 
     /*
      * If the usecase has a view, this means we want to display something 
@@ -182,27 +179,38 @@ function executeUsecase(usecaseName) {
         while (!ready) {
 
             try {
-                var viewUri = "view/" + menu + "/" + view.getTemplateURI();
-                if (cocoon.log.isDebugEnabled())
-                    cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", creating view, calling Cocoon with viewUri = [" + viewUri + "]");
-        
-                cocoon.sendPageAndWait(viewUri, {
-                    "usecase" : proxy
-                });
+                var templateUri = view.getTemplateURI();
+                if (templateUri) {
+                    var viewUri = "view/" + menu + "/" + view.getTemplateURI();
+                    if (cocoon.log.isDebugEnabled())
+                        cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", creating view, calling Cocoon with viewUri = [" + viewUri + "]");
+
+                    cocoon.sendPageAndWait(viewUri, {"usecase" : proxy});
+                    
+                }
+                else {
+                    var viewUri = view.getViewURI();
+                    cocoon.sendPage(viewUri);
+                    return;
+                }
             }
             catch (exception) {
                 /* if an exception was thrown by the view, allow the usecase to rollback the transition */
                 try {
                     usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
-                    usecase = usecaseResolver.resolve(usecaseName);
+                    usecase = usecaseResolver.resolve(sourceUrl, usecaseName);
                     proxy.setup(usecase);
                     usecase.cancel();
                     throw exception;
                 }
                 finally {
-                    usecaseResolver.release(usecase);
-                    usecase = undefined;
-                    cocoon.releaseComponent(usecaseResolver);
+                    if (usecaseResolver != null) {
+                        if (usecase != null) {
+                            usecaseResolver.release(usecase);
+                            usecase = undefined;
+                        }
+                        cocoon.releaseComponent(usecaseResolver);
+                    }
                 }
             }
             
@@ -211,7 +219,7 @@ function executeUsecase(usecaseName) {
         
             try {
                 usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
-                usecase = usecaseResolver.resolve(usecaseName);
+                usecase = usecaseResolver.resolve(sourceUrl, usecaseName);
                 proxy.setup(usecase);
             
                 passRequestParameters(flowHelper, usecase);
@@ -235,7 +243,6 @@ function executeUsecase(usecaseName) {
                     ready = true;
                 }
                 proxy = new Packages.org.apache.lenya.cms.usecase.UsecaseProxy(usecase);
-                targetUrl = usecase.getTargetURL(success);
             }
             catch (exception) {
                 /* allow usecase to rollback the transition */
@@ -243,16 +250,20 @@ function executeUsecase(usecaseName) {
                 throw exception;
             }
             finally {
-                usecaseResolver.release(usecase);
-                usecase = undefined;
-                cocoon.releaseComponent(usecaseResolver);
+                if (usecaseResolver != null) {
+                    if (usecase != null) {
+                        usecaseResolver.release(usecase);
+                        usecase = undefined;
+                    }
+                    cocoon.releaseComponent(usecaseResolver);
+                }
             }
         }
     }
     else {
         try {
             usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
-            usecase = usecaseResolver.resolve(usecaseName);
+            usecase = usecaseResolver.resolve(sourceUrl, usecaseName);
             proxy.setup(usecase);
                 
             usecase.execute();
@@ -262,7 +273,6 @@ function executeUsecase(usecaseName) {
                     success = true;
                 }
             }
-            targetUrl = usecase.getTargetURL(success);
         }
         catch (exception) {
             /* allow usecase to rollback the transition */
@@ -275,8 +285,6 @@ function executeUsecase(usecaseName) {
             cocoon.releaseComponent(usecaseResolver);
         }
     }
-    
-    var url = request.getContextPath() + targetUrl;
 
     if (cocoon.log.isDebugEnabled())
        cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", completed, redirecting to url = [" + url + "]");
