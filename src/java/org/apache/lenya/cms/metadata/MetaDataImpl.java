@@ -159,8 +159,8 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
                     } else {
                         Element[] elements = helper.getChildren(metaElement);
                         for (int i = 0; i < elements.length; i++) {
-                            loadElementValues(maps[type], elements[i].getTagName(), helper
-                                    .getChildren(metaElement, elements[i].getTagName()));
+                            loadElementValues(maps[type], elements[i].getTagName(),
+                                    helper.getChildren(metaElement, elements[i].getLocalName()));
                         }
                     }
                 }
@@ -352,13 +352,17 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
     protected String[] getElementOrTerm(String key) throws DocumentException {
         String[] values;
 
-        if (elementList.contains(key)) {
-            values = (String[]) this.elements.get(key);
-        } else if (termList.contains(key)) {
-            values = (String[]) this.terms.get(key);
+        if (useFixedElements()) {
+            if (elementList.contains(key)) {
+                values = (String[]) this.elements.get(key);
+            } else if (termList.contains(key)) {
+                values = (String[]) this.terms.get(key);
+            } else {
+                throw new DocumentException("The key [" + key
+                        + "] does not refer to a metadata element or term!");
+            }
         } else {
-            throw new DocumentException("The key [" + key
-                    + "] does not refer to a metadata element or term!");
+            values = (String[]) this.elements.get(key);
         }
         if (values == null) {
             values = new String[0];
@@ -447,7 +451,11 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
      * @return A boolean value.
      */
     public boolean isValidAttribute(String key) {
-        return termList.contains(key) || elementList.contains(key);
+        if (useFixedElements()) {
+            return termList.contains(key) || elementList.contains(key);
+        } else {
+            return this.elements.containsKey(key);
+        }
     }
 
     /**
@@ -459,13 +467,17 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
         list.add(value);
         String[] newValues = (String[]) list.toArray(new String[list.size()]);
 
-        if (elementList.contains(key)) {
-            this.elements.put(key, newValues);
-        } else if (termList.contains(key)) {
-            this.terms.put(key, newValues);
+        if (useFixedElements()) {
+            if (elementList.contains(key)) {
+                this.elements.put(key, newValues);
+            } else if (termList.contains(key)) {
+                this.terms.put(key, newValues);
+            } else {
+                throw new DocumentException("The key [" + key
+                        + "] does not refer to a metadata element or term!");
+            }
         } else {
-            throw new DocumentException("The key [" + key
-                    + "] does not refer to a metadata element or term!");
+            this.elements.put(key, newValues);
         }
     }
 
@@ -486,13 +498,17 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
      * @see org.apache.lenya.cms.metadata.MetaData#removeAllValues(java.lang.String)
      */
     private void removeAllValues(String key) throws DocumentException {
-        if (elementList.contains(key)) {
-            this.elements.put(key, new String[0]);
-        } else if (termList.contains(key)) {
-            this.terms.put(key, new String[0]);
+        if (useFixedElements()) {
+            if (elementList.contains(key)) {
+                this.elements.put(key, new String[0]);
+            } else if (termList.contains(key)) {
+                this.terms.put(key, new String[0]);
+            } else {
+                throw new DocumentException("The key [" + key
+                        + "] does not refer to a dublin core element or term!");
+            }
         } else {
-            throw new DocumentException("The key [" + key
-                    + "] does not refer to a dublin core element or term!");
+            this.elements.remove(key);
         }
     }
 
