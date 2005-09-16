@@ -90,6 +90,9 @@
     <component-instance logger="sitemap.modules.input.dublincore" name="dublincore"
         class="org.apache.lenya.cms.cocoon.components.modules.input.DublinCoreModule"/>
 
+    <component-instance logger="sitemap.modules.input.custom-metadata" name="custom-metadata"
+        class="org.apache.lenya.cms.cocoon.components.modules.input.CustomMetaDataModule"/>
+
     <component-instance logger="core.modules.input.access-control" name="access-control"
         class="org.apache.lenya.cms.cocoon.components.modules.input.AccessControlModule"/>
     
