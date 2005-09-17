@@ -50,7 +50,7 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
             }
 
             Document[] documents = set.getDocuments();
-            Arrays.sort(documents, new NodeComparator(map));
+            Arrays.sort(documents, new DocumentComparator(map));
             set.clear();
             for (int i = 0; i < documents.length; i++) {
                 set.add(documents[i]);
@@ -169,6 +169,48 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
                         result = 1;
                     }
                     if (AbstractSiteManager.this.requires(map, doc2, doc1)) {
+                        result = -1;
+                    }
+                } catch (SiteException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            return result;
+        }
+    }
+    
+    /**
+     * Compares documents according to the dependence relation.
+     */
+    public class DocumentComparator implements Comparator {
+
+        /**
+         * Ctor.
+         * 
+         * @param map The identity map to operate on.
+         */
+        public DocumentComparator(DocumentIdentityMap map) {
+            this.map = map;
+        }
+
+        private DocumentIdentityMap map;
+
+        /**
+         * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
+         */
+        public int compare(Object arg0, Object arg1) {
+            int result = 0;
+            if (arg0 instanceof Document && arg1 instanceof Document) {
+                Document doc1 = (Document) arg0;
+                Document doc2 = (Document) arg1;
+                Node node1 = NodeFactory.getNode(doc1);
+                Node node2 = NodeFactory.getNode(doc2);
+
+                try {
+                    if (AbstractSiteManager.this.requires(map, node1, node2)) {
+                        result = 1;
+                    }
+                    if (AbstractSiteManager.this.requires(map, node2, node1)) {
                         result = -1;
                     }
                 } catch (SiteException e) {
