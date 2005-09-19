@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document> 
+  <header> 
+    <title>lenyadoc: Protocol</title> 
+  </header>
+  <body>
+    <p>
+      The <code>lenyadoc:</code> protocol allows to access the source of a Lenya document without knowing the
+      underlying storage structure. If the relative syntax is used, only the language and the document id
+      is needed. If the absolute syntax is used, the publication id and the area has to be specified additionally.
+    </p>
+    <section>
+      <title>Relative Syntax</title>
+      <p>
+        The relative syntax is used to access Lenya documents in the current context, i.e. the
+        current publication and area is used to resolve the document's location.
+      </p>
+      <p>
+        <em>Syntax: </em><code>lenyadoc:/&lt;language&gt;/&lt;document-id&gt;</code>
+      </p>
+      <p>
+        <strong>Example</strong>
+      </p>
+<source xml:space="preserve"><![CDATA[
+<map:match pattern="*.xml">
+  <map:generate src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-id}"/>
+  ...
+</map:match>
+]]></source>
+    </section>
+    <section>
+      <title>Absolute Syntax</title>
+      <p>
+        The absolute syntax allows to specify the document's publication and the area.
+      </p>
+      <p>
+        <em>Syntax: </em><code>lenyadoc://&lt;publication&gt;/&lt;area&gt;/&lt;language&gt;/&lt;document-id&gt;</code>
+      </p>
+      <p><strong>Example</strong></p>
+<source><![CDATA[
+<map:match pattern="*.xml">
+  <map:generate src="lenyadoc://{page-envelope:publication-id}/{page-envelope:area}/
+                     {page-envelope:document-language}/{page-envelope:document-id}"/>
+  ...
+</map:match>
+]]></source>
+    </section>
+  </body>
+</document>

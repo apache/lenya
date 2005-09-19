@@ -66,6 +66,11 @@
       <publication-templating href="publication-templating/index.html" label="Publication Templating"/> 	 
       <resource-types href="resource-types.html" label="Resource Types"/> 	 
       <modules href="modules/index.html" label="Modules"/> 	 
+      <protocols href="protocols/" label="Protocols">
+        <protocols-overview href="index.html" label="Overview"/>
+        <lenya href="lenya.html" label="lenya:"/>
+        <lenyadoc href="lenyadoc.html" label="lenyadoc:"/>
+      </protocols>
     </reference>
 
     <javadoc1.4 href="../../../../apidocs/1.4/index.html" label="1.4 API (Javadoc)"/>
