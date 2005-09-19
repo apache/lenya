@@ -160,7 +160,13 @@
               let me insert a &lt;h1&gt; heading?</a></li>
             </ol>
           </li>
-        </ol>
+         <li>
+           <a href="#customization">Customization</a> 
+           <ol>
+             <li><a href="#customlogicsheets">How to Add Custom Logicsheets?</a></li>
+           </ol>
+         </li>
+       </ol>
 <section><title id="head-5db5277b98942661b1969971b6efc9174422a105">Errors</title>
         </section><section><title id="head-0373b4b0a56b6bc690e427f6fb5f2735d7069b27">I get an error or an
         exception, where can I look at, what should I do?</title>
@@ -451,6 +457,26 @@ file:/D:/build/Tomcat 4.1/webapps/lenya/lenya/pubs/blog/config/ac/passwd/
         a &lt;h1&gt; heading?</title>
         <p>This is a setting in <em>lenya/lenya/resources/misc/bxeng/contextmenu.xml</em>
         - all tags appearing there cannot be inserted by the BXE popup menu.</p>
+        </section>
+        <section>
+          <title id="customization">Customization</title>
+        </section>
+        <section>
+          <title id="customlogicsheets">How to Add Custom Logicsheets?</title>
+          <p>Custom logicsheets can be put in <code>&lt;yourpub&gt;/java/src</code>.</p>
+          <p>You have to add a patch file for <code>cocoon.xconf</code>, for instance <code>&lt;yourpub&gt;/config/logicsheets.xconf</code>:</p>
+<source xml:space="preserve"><![CDATA[<xconf xpath="/cocoon/markup-languages/xsp-language/target-language[@name = 'java']"
+       unless="/cocoon/markup-languages/xsp-language/target-language[@name = 'java']/builtin-logicsheet[parameter[@name = 'prefix' and @value = 'mylogicsheet']]">
+
+  <builtin-logicsheet>
+    <parameter name="prefix" value="mylogicsheet"/>
+    <parameter name="uri" value="http://foo/bar/mylogicsheet"/>
+    <parameter name="href" value="resource://org/myproject/mylogicsheet.xsl"/>
+  </builtin-logicsheet>
+
+  ... (more logicsheets)
+
+</xconf>]]></source>
         </section>
    </body>
 </document>
