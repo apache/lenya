@@ -21,7 +21,7 @@
   <lenya:name>Default Publication</lenya:name>
   <lenya:pub-version>@lenya.version@</lenya:pub-version>
   <lenya:lenya-version>@lenya.version@</lenya:lenya-version>
-  <lenya:cocoon-version>2.1.7</lenya:cocoon-version>
+  <lenya:cocoon-version>2.1.8-dev</lenya:cocoon-version>
   <lenya:description>This publication is a best practice, getting started publication.</lenya:description>
   <lenya:credits>Special thanks to </lenya:credits>
   <lenya:help></lenya:help>
