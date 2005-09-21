@@ -59,9 +59,9 @@
   <target name="check-blocks" if="cocoon.build.webapp.dir.exists">
     <property file="${cocoon.src.dir}/local.blocks.properties"/>
     <condition property="local.blocks.properties.in.sync">
-      <equals arg1="${lenya.blocks.properties.version}" arg2="220218"/>
+      <equals arg1="${lenya.blocks.properties.version}" arg2="290647"/>
     </condition>
-    <fail unless="local.blocks.properties.in.sync" message="It seems that your ${cocoon.src.dir}/local.blocks.properties is NOT in sync with ${src.cocoon.properties.dir}/local.blocks.properties! The file ${src.cocoon.properties.dir}/local.blocks.properties has probably been modified by some Apache Lenya developer. Re-build your Cocoon with the ${src.cocoon.properties.dir}/local.blocks.properties file. Please apologoize any inconvenience."/>
+    <fail unless="local.blocks.properties.in.sync" message="It seems that your ${cocoon.src.dir}/local.blocks.properties is NOT in sync with ${src.cocoon.properties.dir}/local.blocks.properties! The file ${src.cocoon.properties.dir}/local.blocks.properties has probably been modified by some Apache Lenya developer. Re-build your Cocoon with the ${src.cocoon.properties.dir}/local.blocks.properties file. Please apologize for any inconvenience."/>
   </target>
 
   <!-- Copy the bulk of the cocoon webapp to our destination -->
