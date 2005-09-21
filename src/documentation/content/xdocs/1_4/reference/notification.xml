@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+	<header>
+		<title>Notification</title>
+	</header>
+	<body>
+	  
+<section>
+	<title>How to Send Notification Messages</title>
+	
+	<p>To send notification messages, use the <code>Notifier</code> component which is provided by the
+	<code>notification</code> module. A shortcut to the <code>Notifier</code> functionality
+	is offered by the <code>NotificationUtil</code> utility class. Here's an example how to use it:</p>
+	
+<source xml:space="preserve"><![CDATA[
+protected void notify(User sender, User recipient, document) {
+
+    Identifiable[] recipients = { recipient };
+    
+    // compose message, using parameters for i18n
+    
+    String[] params = { document.getId() };
+    Message message = new Message("document-was-published", params);
+    
+    // send message
+    
+    NotificationUtil.notify(this.manager, recipients, sender, message);
+}
+]]></source>
+
+  <p>
+    The message is sent to each particular recipient, translated using the recipient's locale.
+  </p>
+  
+  <p>
+    The current implementation, <code>DefaultNotifier</code>, sends an email to each recipient.
+    Future implementations could include a message list which is managed by the CMS and is
+    presented to a user after she logs in.
+  </p>
+
+</section>
+
+	</body>
+</document>

@@ -71,6 +71,7 @@
         <lenya href="lenya.html" label="lenya:"/>
         <lenyadoc href="lenyadoc.html" label="lenyadoc:"/>
       </protocols>
+      <notification href="notification.html" label="Notification"/>
     </reference>
 
     <javadoc1.4 href="../../../../apidocs/1.4/index.html" label="1.4 API (Javadoc)"/>
