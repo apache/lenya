@@ -30,19 +30,14 @@ import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.mail.MailSender;
 import org.apache.cocoon.transformation.I18nTransformer;
-import org.apache.cocoon.transformation.Transformer;
-import org.apache.cocoon.xml.dom.DOMBuilder;
-import org.apache.cocoon.xml.dom.DOMStreamer;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.Group;
@@ -115,71 +110,6 @@ public class DefaultNotifier extends AbstractLogEnabled implements Notifier, Ser
     protected static final String NAMESPACE = "http://apache.org/lenya/notification/2.0";
 
     protected String translateMessage(String locale, Message message) throws NotificationException {
-
-        if (false) {
-            Transformer i18nTransformer = null;
-            ServiceSelector selector = null;
-            SourceResolver resolver = null;
-            try {
-
-                selector = (ServiceSelector) this.manager.lookup(Transformer.ROLE + "Selector");
-                i18nTransformer = (Transformer) selector.select("i18n");
-
-                Parameters parameters = new Parameters();
-                parameters.setParameter(I18nTransformer.I18N_LOCALE, locale);
-
-                resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-//                i18nTransformer.setup(resolver, new HashMap(), null, parameters);
-
-                DOMStreamer streamer = new DOMStreamer(i18nTransformer);
-
-                DOMBuilder builder = new DOMBuilder();
-                i18nTransformer.setConsumer(builder);
-
-                NamespaceHelper helper = new NamespaceHelper(NAMESPACE, "not", "message");
-                Document doc = helper.getDocument();
-                NamespaceHelper i18nHelper = new NamespaceHelper(I18nTransformer.I18N_NAMESPACE_URI,
-                        "i18n",
-                        doc);
-
-                Element docElement = doc.getDocumentElement();
-                Element bodyElement = helper.createElement("body");
-                docElement.appendChild(bodyElement);
-                Element i18nTranslateElement = i18nHelper.createElement("translate");
-                bodyElement.appendChild(i18nTranslateElement);
-                Element bodyI18nElement = i18nHelper.createElement("text", message.getMessage());
-                i18nTranslateElement.appendChild(bodyI18nElement);
-
-                String[] msgParams = message.getParameters();
-                for (int i = 0; i < msgParams.length; i++) {
-                    Element paramElement = i18nHelper.createElement("param", msgParams[i]);
-                    i18nTranslateElement.appendChild(paramElement);
-                }
-
-                streamer.stream(doc);
-
-                doc = builder.getDocument();
-                helper = new NamespaceHelper(NAMESPACE, "not", doc);
-                bodyElement = helper.getFirstChild(doc.getDocumentElement(), "body");
-                String body = DocumentHelper.getSimpleElementText(bodyElement);
-
-                return body;
-
-            } catch (Exception e) {
-                throw new NotificationException(e);
-            } finally {
-                if (selector != null) {
-                    if (i18nTransformer != null) {
-                        selector.release(i18nTransformer);
-                    }
-                    this.manager.release(selector);
-                }
-                if (resolver != null) {
-                    this.manager.release(resolver);
-                }
-            }
-        }
-
 
         SourceResolver resolver = null;
         Source source = null;
