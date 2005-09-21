@@ -19,7 +19,7 @@
 
 <xconf xpath="/cocoon/resource-types" unless="/cocoon/resource-types/component-instance[@name = 'entry']">
 
-  <component-instance name="entry-backup"
+  <component-instance name="entry"
                       logger="lenya.resourcetypes.entry"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
     <schema src="fallback://lenya/resources/schemas/entry.rng" language="http://relaxng.org/ns/structure/0.9"/>
