@@ -20,50 +20,72 @@ package org.apache.lenya.notification;
  * A notification message.
  */
 public class Message {
-    
-    private String message;
-    private String[] params;
+
+    private String subject;
+    private String[] subjectParams;
+    private String body;
+    private String[] bodyParams;
 
     /**
      * Ctor.
-     * @param message The message.
-     * @param params The parameters.
+     * @param subject The subject.
+     * @param subjectParams The subject parameters.
+     * @param body The body.
+     * @param bodyParams The body parameters.
      */
-    public Message(String message, String[] params) {
-        this.message = message;
-        this.params = params;
+    public Message(String subject, String[] subjectParams, String body, String[] bodyParams) {
+        this.subject = subject;
+        this.subjectParams = subjectParams;
+        this.body = body;
+        this.bodyParams = bodyParams;
     }
 
     /**
      * Determine if this message has parameters
      * @return true if the message has parameters
      */
-    public boolean hasParameters() {
-        return params != null && params.length > 0;
+    public boolean hasBodyParameters() {
+        return bodyParams != null && bodyParams.length > 0;
     }
 
     /**
      * Retrieve the message content
      * @return the message
      */
-    public String getMessage() {
-        return message;
+    public String getBody() {
+        return body;
     }
 
     /**
      * Retrieve the parameters for this message
      * @return the parameters
      */
-    public String[] getParameters() {
-        return params;
+    public String[] getBodyParameters() {
+        return bodyParams;
     }
 
-    /** 
-     * Accomodates scripts which do no care about parameters
-     * @return a string representation disregarding any parameters
+    /**
+     * Determine if this message has parameters
+     * @return true if the message has parameters
      */
-    public String toString() {
-        return message;
+    public boolean hasSubjectParameters() {
+        return subjectParams != null && subjectParams.length > 0;
+    }
+
+    /**
+     * Retrieve the message subject
+     * @return the subject
+     */
+    public String getSubject() {
+        return subject;
+    }
+
+    /**
+     * Retrieve the parameters for this message
+     * @return the parameters
+     */
+    public String[] getSubjectParameters() {
+        return subjectParams;
     }
 
 }

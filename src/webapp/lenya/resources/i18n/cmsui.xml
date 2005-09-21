@@ -307,6 +307,11 @@
   <message key="publish">publish</message>
   <message key="error-workflow-document">The event {0} is not executable on
   document {1}</message>
+  
+  <!-- Notification -->
+  <message key="notification-message">Lenya Notification</message>
+  <message key="notify-submitter">notify the sumbitter</message>
+  <message key="document-published">A document you submitted was published: {0}</message>
 
   <!-- Info asset  --> 
   <message key="New Asset">New Asset</message>

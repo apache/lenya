@@ -83,6 +83,20 @@
               </td>
             </tr>
             <tr>
+              <td/>
+              <td>
+                <jx:choose>
+                  <jx:when test="${usecase.getParameter('sendNotification').equals('true')}">
+                    <input name="sendNotification" type="checkbox"/>
+                  </jx:when>
+                  <jx:otherwise>
+                    <input name="sendNotification" type="checkbox" checked="checked"/>
+                  </jx:otherwise>
+                </jx:choose>
+                <i18n:text>notify-submitter</i18n:text>
+              </td>
+            </tr>
+            <tr>
               <td><i18n:text>Schedule</i18n:text>:</td>
               <td>
                 <input type="checkbox" name="schedule"/>

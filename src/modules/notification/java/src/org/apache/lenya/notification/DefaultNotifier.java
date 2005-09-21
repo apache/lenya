@@ -90,10 +90,11 @@ public class DefaultNotifier extends AbstractLogEnabled implements Notifier, Ser
                 mailer.setFrom(((User) sender).getEmail());
             }
 
-            mailer.setSubject("Lenya notification message");
 
-            String body = translateMessage(recipient.getDefaultMenuLocale(), message);
-            mailer.setBody(body);
+            Message translatedMessage = translateMessage(recipient.getDefaultMenuLocale(), message);
+            
+            mailer.setSubject(translatedMessage.getSubject());
+            mailer.setBody(translatedMessage.getBody());
             mailer.setCharset("UTF-8");
             mailer.send();
 
@@ -109,7 +110,7 @@ public class DefaultNotifier extends AbstractLogEnabled implements Notifier, Ser
 
     protected static final String NAMESPACE = "http://apache.org/lenya/notification/2.0";
 
-    protected String translateMessage(String locale, Message message) throws NotificationException {
+    protected Message translateMessage(String locale, Message message) throws NotificationException {
 
         SourceResolver resolver = null;
         Source source = null;
@@ -122,14 +123,28 @@ public class DefaultNotifier extends AbstractLogEnabled implements Notifier, Ser
                     doc);
 
             Element docElement = doc.getDocumentElement();
+            
+            Element subjectElement = helper.createElement("subject");
+            docElement.appendChild(subjectElement);
+            Element i18nTranslateSubjectElement = i18nHelper.createElement("translate");
+            subjectElement.appendChild(i18nTranslateSubjectElement);
+            Element subjectI18nElement = i18nHelper.createElement("text", message.getSubject());
+            i18nTranslateSubjectElement.appendChild(subjectI18nElement);
+
+            String[] subjectParams = message.getSubjectParameters();
+            for (int i = 0; i < subjectParams.length; i++) {
+                Element paramElement = i18nHelper.createElement("param", subjectParams[i]);
+                i18nTranslateSubjectElement.appendChild(paramElement);
+            }
+            
             Element bodyElement = helper.createElement("body");
             docElement.appendChild(bodyElement);
             Element i18nTranslateElement = i18nHelper.createElement("translate");
             bodyElement.appendChild(i18nTranslateElement);
-            Element bodyI18nElement = i18nHelper.createElement("text", message.getMessage());
+            Element bodyI18nElement = i18nHelper.createElement("text", message.getBody());
             i18nTranslateElement.appendChild(bodyI18nElement);
 
-            String[] msgParams = message.getParameters();
+            String[] msgParams = message.getBodyParameters();
             for (int i = 0; i < msgParams.length; i++) {
                 Element paramElement = i18nHelper.createElement("param", msgParams[i]);
                 i18nTranslateElement.appendChild(paramElement);
@@ -141,7 +156,6 @@ public class DefaultNotifier extends AbstractLogEnabled implements Notifier, Ser
             Map parameters = new HashMap();
 
             parameters.put("locale", locale);
-            parameters.put("body", message.getMessage());
             
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             source = resolver.resolveURI("cocoon://core/modules/notification/notification/message.xml",
@@ -151,13 +165,13 @@ public class DefaultNotifier extends AbstractLogEnabled implements Notifier, Ser
             doc = DocumentHelper.readDocument(source.getInputStream());
             helper = new NamespaceHelper(NAMESPACE, "not", doc);
 
-//            Element subjectElement = helper.getFirstChild(doc.getDocumentElement(), "subject");
-//            String subject = DocumentHelper.getSimpleElementText(subjectElement);
+            subjectElement = helper.getFirstChild(doc.getDocumentElement(), "subject");
+            String subject = DocumentHelper.getSimpleElementText(subjectElement);
 
             bodyElement = helper.getFirstChild(doc.getDocumentElement(), "body");
             String body = DocumentHelper.getSimpleElementText(bodyElement);
 
-            return body;
+            return new Message(subject, new String[0], body, new String[0]);
         } catch (Exception e) {
             throw new NotificationException(e);
         } finally {

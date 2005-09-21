@@ -26,13 +26,19 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.cocoon.components.ContextHelper;
+import org.apache.cocoon.environment.Request;
+import org.apache.lenya.ac.Identifiable;
+import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.publication.util.DocumentSet;
+import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.site.Node;
 import org.apache.lenya.cms.site.NodeFactory;
 import org.apache.lenya.cms.site.SiteManager;
@@ -42,6 +48,9 @@ import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
+import org.apache.lenya.notification.Message;
+import org.apache.lenya.notification.NotificationException;
+import org.apache.lenya.notification.NotificationUtil;
 import org.apache.lenya.workflow.WorkflowException;
 
 /**
@@ -51,11 +60,14 @@ import org.apache.lenya.workflow.WorkflowException;
  */
 public class Publish extends DocumentUsecase implements DocumentVisitor {
 
+    protected static final String MESSAGE_SUBJECT = "notification-message";
+    protected static final String MESSAGE_DOCUMENT_PUBLISHED = "document-published";
     protected static final String MISSING_DOCUMENTS = "missingDocuments";
     protected static final String SUBTREE = "subtree";
     protected static final String ALLOW_SINGLE_DOCUMENT = "allowSingleDocument";
     protected static final String SCHEDULE = "schedule";
     protected static final String SCHEDULE_TIME = "schedule.time";
+    protected static final String SEND_NOTIFICATION = "sendNotification";
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
@@ -66,6 +78,8 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
         Date now = new GregorianCalendar().getTime();
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         setParameter(SCHEDULE_TIME, format.format(now));
+
+        setParameter(SEND_NOTIFICATION, Boolean.TRUE);
     }
 
     /**
@@ -236,6 +250,13 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
                     getLogger(),
                     authoringDocument,
                     getEvent());
+
+            boolean notify = Boolean.valueOf(getBooleanCheckboxParameter(SEND_NOTIFICATION))
+                    .booleanValue();
+            if (notify) {
+                sendNotification(authoringDocument);
+            }
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -243,6 +264,34 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
                 this.manager.release(documentManager);
             }
         }
+    }
+
+    protected void sendNotification(Document authoringDocument) throws DocumentBuildException,
+            NotificationException {
+        User sender = getSession().getUnitOfWork().getIdentity().getUser();
+        Identifiable[] recipients = { sender };
+        Document liveVersion = getDocumentIdentityMap().getAreaVersion(authoringDocument,
+                Publication.LIVE_AREA);
+
+        String url;
+
+        Proxy proxy = liveVersion.getPublication().getProxy(liveVersion, false);
+        if (proxy != null) {
+            url = proxy.getURL(liveVersion);
+        } else {
+            Request request = ContextHelper.getRequest(this.context);
+            final String serverUrl = "http://" + request.getServerName() + ":"
+                    + request.getServerPort();
+            final String webappUrl = liveVersion.getCanonicalWebappURL();
+            url = serverUrl + request.getContextPath() + webappUrl;
+        }
+        String[] params = { url };
+        Message message = new Message(MESSAGE_SUBJECT,
+                new String[0],
+                MESSAGE_DOCUMENT_PUBLISHED,
+                params);
+
+        NotificationUtil.notify(this.manager, recipients, sender, message);
     }
 
     /**
