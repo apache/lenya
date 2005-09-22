@@ -32,6 +32,8 @@
  */
 package org.apache.lenya.cms.publication;
 
+import java.util.Set;
+
 import org.apache.lenya.cms.authoring.NodeCreatorInterface;
 import org.apache.lenya.xml.Schema;
 
@@ -64,10 +66,21 @@ public interface ResourceType {
     String[] getLinkAttributeXPaths();
 
     /**
+     * Returns the a sample contents and their names for this type
+     * @return A set of the sample names
+     */
+    String[] getSampleNames();
+    
+    /**
      * Returns the location of sample contents for this type
      * @return A string value.
      */
     String getSampleURI();
+    
+    /**
+     * @param name The name attrib of the sample 
+     */
+    void setSampleURI(String name);
     
     /**
      * @return The creator.

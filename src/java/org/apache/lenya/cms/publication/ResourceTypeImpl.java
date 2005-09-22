@@ -21,6 +21,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Iterator;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
@@ -33,7 +34,6 @@ import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.lenya.cms.authoring.DefaultBranchCreator;
 import org.apache.lenya.cms.authoring.NodeCreatorInterface;
 import org.apache.lenya.xml.Schema;
-import org.xml.sax.ErrorHandler;
 
 /**
  * Resource type.
@@ -49,6 +49,7 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     protected static final String ELEMENT_REWRITE_ATTRIBUTE = "link-attribute";
     protected static final String ATTRIBUTE_XPATH = "xpath";
     protected static final String SAMPLE_NAME = "sample-name";
+    protected static final String SAMPLE_NAME_ATTRIBUTE = "name";
     protected static final String ELEMENT_FORMAT = "format";
     protected static final String ATTRIBUTE_URI = "uri";
     protected static final String ATTRIBUTE_NAME = "name";
@@ -56,6 +57,8 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
 
     private Schema schema = null;
     private String sampleUri = null;
+    private String defaultSampleUri = null;
+    private Map sampleUris = new HashMap();
     private String[] linkAttributeXPaths;
     private NodeCreatorInterface creator;
 
@@ -85,11 +88,16 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
                 creator = new DefaultBranchCreator();
             }
 
-            // determine the sample content location.
+            // determine the sample content locations.
             if (creatorConf != null) {
-                Configuration sampleConf = creatorConf.getChild(SAMPLE_NAME, false);
-                if (sampleConf != null) {
-                    this.sampleUri = sampleConf.getValue();
+                Configuration[] samplesConf = creatorConf.getChildren(SAMPLE_NAME);
+                for(int i=0; i<samplesConf.length; i++) {
+                  if (samplesConf[i].getAttributeNames().length > 0)
+                    this.sampleUris.put(samplesConf[i].getAttribute(SAMPLE_NAME_ATTRIBUTE),samplesConf[i].getValue());                	  
+                  else { //default sample doesn't have name attribute
+                    this.sampleUri = samplesConf[i].getValue();
+                    this.defaultSampleUri = samplesConf[i].getValue();
+                  }
                 }
             }
 
@@ -131,6 +139,23 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
         return this.linkAttributeXPaths;
     }
 
+    public String[] getSampleNames() {
+    	String[] names = new String[this.sampleUris.size()];
+    	Iterator it = this.sampleUris.keySet().iterator();
+        int count=0;
+    	while (it.hasNext()) {
+            names[count++] = (String) it.next();
+        }
+    	return names;
+    }
+    
+    public void setSampleURI(String name) {
+        if (name.length() > 0 && this.sampleUris.containsKey(name)) 
+          this.sampleUri = (String) this.sampleUris.get(name);    		
+        else
+          this.sampleUri = new String(this.defaultSampleUri);
+    }
+    
     public String getSampleURI() {
         return this.sampleUri;
     }

@@ -59,6 +59,10 @@ public abstract class Create extends AbstractUsecase {
     protected static final String DOCUMENT_ID = "documentId";
     
     protected static final String VISIBLEINNAV = "visibleInNav";
+    
+    protected static final String SAMPLE = "sample";
+    protected static final String SAMPLES = "samples";
+    protected static final String SAMPLES_COUNT = "samplesCount";
 
     /**
      * Ctor.
@@ -123,9 +127,12 @@ public abstract class Create extends AbstractUsecase {
             Document initialDocument = getInitialDocument();
             if (initialDocument == null) {
                 selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
-                resourceType = (ResourceType) selector.select(getDocumentTypeName()); 
+                resourceType = (ResourceType) selector.select(getDocumentTypeName());  
+                if (getParameterAsString(SAMPLE)!=null && getParameterAsString(SAMPLE).length() > 0)
+                  resourceType.setSampleURI(getParameterAsString(SAMPLE));
                 documentManager.add(document, resourceType,
                         getParameterAsString(DublinCore.ELEMENT_TITLE), getVisibleInNav(), null);
+                resourceType.setSampleURI(""); //reset to default sample
             } else {
                 documentManager.add(document, initialDocument,
                         getParameterAsString(DublinCore.ELEMENT_TITLE), getVisibleInNav(), null);
@@ -223,6 +230,23 @@ public abstract class Create extends AbstractUsecase {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         setParameter(DublinCore.ELEMENT_DATE, format.format(new GregorianCalendar().getTime()));
 
+        ServiceSelector selector = null;
+        ResourceType resourceType = null;
+        try {
+                selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
+                resourceType = (ResourceType) selector.select(getDocumentTypeName());
+                setParameter(SAMPLES, resourceType.getSampleNames());
+                setParameter(SAMPLES_COUNT, new Integer(resourceType.getSampleNames().length));    
+        } catch(Exception e) {
+            throw new RuntimeException(e);
+        }  finally {
+            if (selector != null) {
+                if (resourceType != null) {
+                    selector.release(resourceType);
+                }
+                this.manager.release(selector);
+            }
+        }
     }
 
     /**

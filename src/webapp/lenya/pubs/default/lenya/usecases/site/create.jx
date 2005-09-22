@@ -142,6 +142,17 @@
                   <input class="lenya-form-element" type="text" name="rights" value="${usecase.getParameter('rights')}"/>
                 </td>
               </tr>
+              <jx:if test="${usecase.getParameter('samplesCount') &gt; 0}">
+                <tr>
+                  <td class="lenya-entry-caption">
+                    <label for="sample"><i18n:text>Page Layout</i18n:text>:</label></td>
+                  <td>
+                    <jx:forEach var="item" items="${usecase.getParameter('samples')}">
+                      <input type="radio" name="sample" value="${item}"/>${item}<br />
+                    </jx:forEach>
+                  </td>
+                </tr>
+              </jx:if>  
               <tr>
                 <td class="lenya-entry-caption">* <i18n:text>required fields</i18n:text>
                 </td>
