@@ -37,9 +37,6 @@
         <map:transform type="i18n">
           <map:parameter name="locale" value="{locale}"/>
         </map:transform>
-        <map:transform type="log">
-          <map:parameter name="logfile" value="/Users/nobby/temp/cocoon.log"/>
-        </map:transform>
         <map:serialize type="xml"/>
       </map:match>
       
