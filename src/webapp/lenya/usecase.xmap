@@ -54,7 +54,7 @@
     
     <map:pipeline>
       <map:match type="registered-usecase">
-        <map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/>
+        <map:mount src="{fallback://lenya/usecases/usecase.xmap}" uri-prefix="" check-reload="yes" reload-method="synchron"/>
       </map:match>
     </map:pipeline>
  

@@ -26,7 +26,7 @@
   <!-- =========================== FlowScript =============================== -->
 
   <map:flow language="javascript">
-    <map:script src="usecases.js"/>
+    <map:script src="fallback://lenya/usecases/usecases.js"/>
   </map:flow>
   
   <!-- =========================== Pipelines ================================ -->
@@ -35,8 +35,8 @@
     
     <map:pipeline type="noncaching">
       <map:match pattern="redirect">
-        <map:generate src="../content/admin/common/redirect.xsp" type="serverpages"/>
-        <map:transform src="../xslt/admin/common/redirect.xsl"/>
+        <map:generate src="context://lenya/content/admin/common/redirect.xsp" type="serverpages"/>
+        <map:transform src="context://lenya/xslt/admin/common/redirect.xsl"/>
         <map:serialize/>
       </map:match>
       
