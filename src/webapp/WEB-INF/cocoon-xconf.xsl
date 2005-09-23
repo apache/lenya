@@ -549,6 +549,7 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
     <component-instance name="rollback" logger="lenya.publication"
                         class="org.apache.lenya.cms.site.usecases.Rollback">
       <transaction policy="pessimistic"/>
+      <exit usecase="tab.revisions"/>
     </component-instance>
   </usecases>
   
