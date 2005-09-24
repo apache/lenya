@@ -148,7 +148,14 @@
                     <label for="sample"><i18n:text>Page Layout</i18n:text>:</label></td>
                   <td>
                     <jx:forEach var="item" items="${usecase.getParameter('samples')}">
-                      <input type="radio" name="sample" value="${item}"/>${item}<br />
+                      <jx:choose>
+                        <jx:when test="${usecase.getParameter('sample').equals(item)}">
+                          <input type="radio" name="sample" value="${item}" checked="checked"/>${item}<br />
+                        </jx:when>
+                        <jx:otherwise>
+                          <input type="radio" name="sample" value="${item}"/>${item}<br />
+                        </jx:otherwise>
+                      </jx:choose>
                     </jx:forEach>
                   </td>
                 </tr>
