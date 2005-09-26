@@ -32,7 +32,7 @@
         </i18n:translate>      
       </div>
 
-      <jx:import uri="templates/messages.jx"/>
+      <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
 
       <div class="lenya-box-body">
         <form>

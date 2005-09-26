@@ -23,13 +23,13 @@
   >
   
   <page:body>
-    <jx:import uri="templates/tabs.jx"/>
+    <jx:import uri="fallback://lenya/usecases/templates/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab">
     
       <table class="lenya-table-noborder">
         <tr>
           <td colspan="2">
-            <jx:import uri="templates/messages.jx"/>
+            <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
           </td>
         </tr>
       </table>

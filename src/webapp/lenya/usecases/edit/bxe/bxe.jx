@@ -23,7 +23,7 @@
   <jx:choose>
     <jx:when test="${usecase.hasErrors()}">
       <page:body>
-        <jx:import uri="templates/messages.jx"/>
+        <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
       </page:body>
     </jx:when>
     <jx:otherwise>

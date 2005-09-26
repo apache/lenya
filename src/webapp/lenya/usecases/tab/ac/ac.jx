@@ -20,22 +20,22 @@
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
   xmlns="http://www.w3.org/1999/xhtml" xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
   
-  <jx:import uri="tab/head.jx"/>
+  <jx:import uri="fallback://lenya/usecases/tab/head.jx"/>
   <page:body>
-    <jx:import uri="tab/sitetree.jx"/>
-    <jx:import uri="templates/tabs.jx"/>
+    <jx:import uri="fallback://lenya/usecases/tab/sitetree.jx"/>
+    <jx:import uri="fallback://lenya/usecases/templates/tabs.jx"/>
     
     <jx:set var="area" value="${usecase.getParameter('acArea')}"/>
     <div id="contentblock1" class="lenya-tab-sitetree">
       <table class="lenya-table">
         <tr>
           <td colspan="4">
-            <jx:import uri="templates/messages.jx"/>
+            <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
           </td>
         </tr>
         <tr>
           <th colspan="4">
-            <jx:import uri="tab/ac/ssl-form.jx"/>
+            <jx:import uri="fallback://lenya/usecases/tab/ac/ssl-form.jx"/>
           </th>
         </tr>
         <tr><td colspan="4">&#160;</td></tr>

@@ -38,7 +38,7 @@
       <div class="lenya-box-body">
         <jx:choose>
           <jx:when test="${usecase.hasErrors()}">		
-            <jx:import uri="templates/messages.jx"/>
+            <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
             <input type="button" class="lenya-form-element" onClick="location.href='${requesturi}';" value="Back"/>
           </jx:when>
           <jx:otherwise>

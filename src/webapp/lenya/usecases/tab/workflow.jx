@@ -21,10 +21,10 @@
            xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
            xmlns="http://www.w3.org/1999/xhtml" 
            xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
-  <jx:import uri="tab/head.jx"/>
+  <jx:import uri="fallback://lenya/usecases/tab/head.jx"/>
   <page:body>
-    <jx:import uri="tab/sitetree.jx"/>
-    <jx:import uri="templates/tabs.jx"/>
+    <jx:import uri="fallback://lenya/usecases/tab/sitetree.jx"/>
+    <jx:import uri="fallback://lenya/usecases/templates/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab-sitetree">
       <h2><i18n:text>Variables</i18n:text></h2>
       <table class="lenya-table">

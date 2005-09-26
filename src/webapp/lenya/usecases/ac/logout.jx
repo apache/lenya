@@ -34,7 +34,7 @@
         <i18n:text>Logout</i18n:text>
       </div>
 
-      <jx:import uri="templates/messages.jx"/>
+      <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
 
       <div class="lenya-box-body">
         <form>

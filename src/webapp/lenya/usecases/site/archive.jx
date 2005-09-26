@@ -48,7 +48,7 @@
             </tr>
             <tr>
               <td>
-                <jx:import uri="templates/messages.jx"/>
+                <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
               </td>
             </tr>
             <tr>

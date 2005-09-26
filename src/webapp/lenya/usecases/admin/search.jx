@@ -24,9 +24,9 @@
   >
   
   <page:body>
-    <jx:import uri="templates/tabs.jx"/>
+    <jx:import uri="fallback://lenya/usecases/templates/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab">
-      <jx:import uri="templates/messages.jx"/>
+      <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
       
       <cinclude:includexml>
         <cinclude:src>cocoon://core/admin/search.xml</cinclude:src>

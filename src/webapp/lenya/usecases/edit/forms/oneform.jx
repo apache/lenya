@@ -26,7 +26,7 @@
   <page:title><i18n:text>Edit</i18n:text></page:title>
   <page:body>
     
-    <jx:import uri="templates/messages.jx"/>
+    <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
 
     <form method="post">
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>

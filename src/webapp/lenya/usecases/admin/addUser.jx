@@ -23,7 +23,7 @@
   >
   
   <page:body>
-    <jx:import uri="templates/tabs.jx"/>
+    <jx:import uri="fallback://lenya/usecases/templates/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab">
     
     <h1><i18n:text>Add <jx:out value="${request.getParameter('userType')}"/></i18n:text></h1>
@@ -35,7 +35,7 @@
       <table class="lenya-table-noborder">
         <tr>
           <td colspan="2">
-            <jx:import uri="templates/messages.jx"/>
+            <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
           </td>
         </tr>
         <tr>

@@ -16,7 +16,7 @@
 -->
 
 <!-- $Id: ac.jx 156161 2005-03-04 15:23:21Z andreas $ -->
-<jx:import uri="tab/ac/ac.jx"
+<jx:import uri="fallback://lenya/usecases/tab/ac/ac.jx"
   xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
   xmlns="http://www.w3.org/1999/xhtml"
