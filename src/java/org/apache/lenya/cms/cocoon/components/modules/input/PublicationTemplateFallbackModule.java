@@ -84,10 +84,14 @@ public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModul
                             + "]");
                 }
             }
-            ExistingSourceResolver resolver = new ExistingSourceResolver();
-            templateManager.visit(publication, targetUri, resolver);
-            resolvedUri = resolver.getURI();
-
+            if (publication.exists()) {
+                ExistingSourceResolver resolver = new ExistingSourceResolver();
+                templateManager.visit(publication, targetUri, resolver);
+                resolvedUri = resolver.getURI();
+            } else {
+                //outside of a publication
+            	resolvedUri = "context://" + targetUri;
+            }
         } catch (final Exception e) {
             String message = "Resolving path [" + name + "] failed: ";
             getLogger().error(message, e);
