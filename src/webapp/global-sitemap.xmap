@@ -264,6 +264,14 @@
       </map:match>
       
     </map:pipeline>
+
+    <!-- Internal module requests -->
+    <map:pipeline internal-only="true">
+      <!-- Enter a module -->
+      <map:match pattern="modules/*/**">
+        <map:mount uri-prefix="modules/{1}/" src="lenya/modules/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+    </map:pipeline>
     
     <!-- Internal usecases -->
     <map:pipeline internal-only="true">
@@ -396,9 +404,6 @@
       </map:match>
 
       <!-- Enter a module -->
-      <map:match pattern="modules/*/**">
-        <map:mount uri-prefix="modules/{1}/" src="lenya/modules/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
-      </map:match>
       <map:match type="request-parameter" pattern="lenya.module">
         <map:mount uri-prefix="" src="lenya/modules/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
