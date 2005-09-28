@@ -382,9 +382,9 @@
         <map:call resource="style-cms-page"/>
       </map:match>
       
-      <!-- Enter the actual publication (url = "") -->
-      <map:match pattern="*/">
-        <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+      <!-- Enter a module -->
+      <map:match type="request-parameter" pattern="lenya.module">
+        <map:mount uri-prefix="" src="lenya/modules/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
       
       <!-- Resources -->
@@ -392,7 +392,7 @@
       <!-- {publication-id}/{area}/{file} -->
       <map:match pattern="*/*/**">
         <map:act type="resource-exists-enhanced">
-          <map:parameter name="url" value="fallback://resources/{2}/{3}"/>
+          <map:parameter name="url" value="fallback://resources/{3}"/>
           <map:parameter name="type" value="file"/>
           <map:mount uri-prefix="" src="{fallback://lenya/resources.xmap}" check-reload="true" reload-method="synchron"/>
         </map:act>
@@ -401,11 +401,6 @@
           <map:parameter name="type" value="file"/>
           <map:mount uri-prefix="" src="{fallback://lenya/resources-shared.xmap}" check-reload="true" reload-method="synchron"/>
         </map:act>
-      </map:match>
-
-      <!-- Enter a module -->
-      <map:match type="request-parameter" pattern="lenya.module">
-        <map:mount uri-prefix="" src="lenya/modules/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
       
       <!-- Enter the actual publication -->

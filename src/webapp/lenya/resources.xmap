@@ -25,90 +25,90 @@
       <!-- Lenya Publications -->      
           <!-- matches pub-id/area/css/*.css -->
           <map:match pattern="*/*/css/*.css">
-            <map:read src="pubs/{1}/resources/css/{3}.css" mime-type="text/css" />
+            <map:read src="fallback://resources/css/{3}.css" mime-type="text/css" />
           </map:match>
 
           <!-- matches pub-id/area/javascript/**.js -->
           <map:match pattern="*/*/javascript/**.js">
-            <map:read src="pubs/{1}/resources/javascript/{3}.js" mime-type="application/x-javascript" />
+            <map:read src="fallback://resources/javascript/{3}.js" mime-type="application/x-javascript" />
           </map:match>
 
           <!-- matches pub-id/area/**.* -->
           <map:match pattern="*/*/**.*">
            <map:match type="regexp" pattern="(.*\.)(jpg|JPG|Jpg|jpeg|Jpeg|JPEG)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="image/jpeg" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="image/jpeg" />
            </map:match> 
            <map:match type="regexp" pattern="(.*\.)(gif|GIF|Gif)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="image/gif" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="image/gif" />
            </map:match>
            <map:match type="regexp" pattern="(.*\.)(png|PNG|Png)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="image/png" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="image/png" />
            </map:match>
            <map:match type="regexp" pattern="(.*\.)(tar\.gz|tgz)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="application/x-gtar" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="application/x-gtar" />
            </map:match>
            <map:match type="regexp" pattern="(.*\.)(pdf|PDF|Pdf)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="image/pdf" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="image/pdf" />
            </map:match>
            <map:match type="regexp" pattern="(.*\.)(doc|DOC|Doc|dot|DOT|Dot)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="application/msword" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="application/msword" />
            </map:match> 
            <map:match type="regexp" pattern="(.*\.)(rtf|RTF|Rtf)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="application/rtf" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="application/rtf" />
            </map:match> 
            <map:match type="regexp" pattern="(.*\.)(txt|TXT|Txt|asc|ASC|Asc|ascii|ASCII|Ascii)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="text/plain" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="text/plain" />
            </map:match> 
            <map:match type="regexp" pattern="(.*\.)(xls|XLS|Xls|xlt|XLT|Xlt)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="application/vnd.ms-excel" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="application/vnd.ms-excel" />
            </map:match> 
            <map:match type="regexp" pattern="(.*\.)(ppt|PPT|Ppt|pot|POT|Pot)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="application/vnd.ms-powerpoint" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="application/vnd.ms-powerpoint" />
            </map:match>  
            <map:match type="regexp" pattern="(.*\.)(swf|SWF|Swf)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="application/x-shockwave-flash" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="application/x-shockwave-flash" />
            </map:match> 
            <map:match type="regexp" pattern="(.*\.)(tif|TIF|Tif)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="image/tiff" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="image/tiff" />
            </map:match> 
            <map:match type="regexp" pattern="(.*\.)(eps|EPS|Eps)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="application/postscript" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="application/postscript" />
            </map:match>  
            <map:match type="regexp" pattern="(.*\.)(m3u|M3U|M3u)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="application/x-mpegurl" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="application/x-mpegurl" />
            </map:match> 
            <map:match type="regexp" pattern="(.*\.)(kar|KAR|Kar|mid|MID|Mid)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="audio/midi" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="audio/midi" />
            </map:match>
            <map:match type="regexp" pattern="(.*\.)(smf|SMF|Smf)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="application/vnd.stardivision.math" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="application/vnd.stardivision.math" />
            </map:match>
            <map:match type="regexp" pattern="(.*\.)(mp3|MP3|Mp3)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="audio/mpeg" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="audio/mpeg" />
            </map:match> 
            <map:match type="regexp" pattern="(.*\.)(swa|SWA|Swa)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="audio/x-swa" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="audio/x-swa" />
            </map:match> 
            <map:match type="regexp" pattern="(.*\.)(mpg|MPG|Mpg|mpv|MPV|Mpv|mp4|MP4|Mp4)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="video/mpeg" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="video/mpeg" />
            </map:match>
            <map:match type="regexp" pattern="(.*\.)(mov|MOV|Mov)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="video/quicktime" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="video/quicktime" />
            </map:match>
            <map:match type="regexp" pattern="(.*\.)(bin|BIN|Bin|hqx|HQX|Hqx)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="application/mac-binhex40" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="application/mac-binhex40" />
            </map:match>
            <map:match type="regexp" pattern="(.*\.)(sea|SEA|Sea)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="application/sea" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="application/sea" />
            </map:match>
            <map:match type="regexp" pattern="(.*\.)(sit|SIT|Sit)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="application/x-stuffit" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="application/x-stuffit" />
            </map:match>
            <map:match type="regexp" pattern="(.*\.)(zip|ZIP|Zip)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="application/zip" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="application/zip" />
            </map:match>
            <map:match type="regexp" pattern="(.*\.)(pct|PCT|Pct|jmx|JMX|Jmx|jcl|JCL|Jcl|qz|QZ|Qz|jbc|JBC|Jbc|jmt|JMT|Jmt|cfg|CFG|Cfg)$"> 
-              <map:read src="pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="application/x-ms-word" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="application/x-ms-word" />
            </map:match>                                                
           </map:match>
 

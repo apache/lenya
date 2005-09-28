@@ -26,9 +26,10 @@
       
       <!-- matches pub-id/area/css/*.css -->
       <map:match pattern="*/*/css/*.css">
-        <map:act type="resource-exists" src="pubs/{1}/resources/shared/css/{3}.xml">
-          <map:generate src="pubs/{../1}/resources/shared/css/{../3}.xml"/>
-          <map:transform src="resources/css/css.xsl">
+        <!-- Only called if a {3}.css exists because of resource-exists-enhanced before -->
+        <map:act type="resource-exists" src="fallback://resources/shared/css/{3}.xml">
+          <map:generate src="fallback://resources/shared/css/{../3}.xml"/>
+          <map:transform src="fallback://resources/css/css.xsl">
             <map:parameter name="contextprefix" value="{request:contextPath}"/>
           </map:transform>
           <map:serialize type="text" mime-type="text/css"/>
@@ -36,94 +37,94 @@
         <map:read src="fallback://resources/shared/css/{3}.css" mime-type="text/css" />
       </map:match>
       
-          <!-- matches pub-id/area/javascript/**.js -->
-          <map:match pattern="*/*/javascript/**.js">
-            <map:read src="fallback://resources/shared/javascript/{3}.js" mime-type="application/x-javascript" />
-          </map:match>
+      <!-- matches pub-id/area/javascript/**.js -->
+      <map:match pattern="*/*/javascript/**.js">
+        <map:read src="fallback://resources/shared/javascript/{3}.js" mime-type="application/x-javascript" />
+      </map:match>
 
-          <!-- matches pub-id/area/**.* -->
-          <map:match pattern="*/*/**.*">
-           <map:match type="regexp" pattern="(.*\.)(jpg|JPG|Jpg|jpeg|Jpeg|JPEG)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="image/jpeg" />
-           </map:match> 
-           <map:match type="regexp" pattern="(.*\.)(gif|GIF|Gif)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="image/gif" />
-           </map:match>
-           <map:match type="regexp" pattern="(.*\.)(png|PNG|Png)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="image/png" />
-           </map:match>
-           <map:match type="regexp" pattern="(.*\.)(tar\.gz|tgz)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/x-gtar" />
-           </map:match>
-           <map:match type="regexp" pattern="(.*\.)(pdf|PDF|Pdf)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="image/pdf" />
-           </map:match>
-           <map:match type="regexp" pattern="(.*\.)(doc|DOC|Doc|dot|DOT|Dot)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/msword" />
-           </map:match> 
-           <map:match type="regexp" pattern="(.*\.)(rtf|RTF|Rtf)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/rtf" />
-           </map:match> 
-           <map:match type="regexp" pattern="(.*\.)(txt|TXT|Txt|asc|ASC|Asc|ascii|ASCII|Ascii)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="text/plain" />
-           </map:match> 
-           <map:match type="regexp" pattern="(.*\.)(xls|XLS|Xls|xlt|XLT|Xlt)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/vnd.ms-excel" />
-           </map:match> 
-           <map:match type="regexp" pattern="(.*\.)(ppt|PPT|Ppt|pot|POT|Pot)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/vnd.ms-powerpoint" />
-           </map:match>  
-           <map:match type="regexp" pattern="(.*\.)(swf|SWF|Swf)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/x-shockwave-flash" />
-           </map:match> 
-           <map:match type="regexp" pattern="(.*\.)(tif|TIF|Tif)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="image/tiff" />
-           </map:match> 
-           <map:match type="regexp" pattern="(.*\.)(eps|EPS|Eps)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/postscript" />
-           </map:match>  
-           <map:match type="regexp" pattern="(.*\.)(m3u|M3U|M3u)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/x-mpegurl" />
-           </map:match> 
-           <map:match type="regexp" pattern="(.*\.)(kar|KAR|Kar|mid|MID|Mid)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="audio/midi" />
-           </map:match>
-           <map:match type="regexp" pattern="(.*\.)(smf|SMF|Smf)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/vnd.stardivision.math" />
-           </map:match>
-           <map:match type="regexp" pattern="(.*\.)(mp3|MP3|Mp3)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="audio/mpeg" />
-           </map:match> 
-           <map:match type="regexp" pattern="(.*\.)(swa|SWA|Swa)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="audio/x-swa" />
-           </map:match> 
-           <map:match type="regexp" pattern="(.*\.)(mpg|MPG|Mpg|mpv|MPV|Mpv|mp4|MP4|Mp4)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="video/mpeg" />
-           </map:match>
-           <map:match type="regexp" pattern="(.*\.)(mov|MOV|Mov)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="video/quicktime" />
-           </map:match>
-           <map:match type="regexp" pattern="(.*\.)(bin|BIN|Bin|hqx|HQX|Hqx)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/mac-binhex40" />
-           </map:match>
-           <map:match type="regexp" pattern="(.*\.)(sea|SEA|Sea)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/sea" />
-           </map:match>
-           <map:match type="regexp" pattern="(.*\.)(sit|SIT|Sit)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/x-stuffit" />
-           </map:match>
-           <map:match type="regexp" pattern="(.*\.)(zip|ZIP|Zip)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/zip" />
-           </map:match>
-           <map:match type="regexp" pattern="(.*\.)(pct|PCT|Pct|jmx|JMX|Jmx|jcl|JCL|Jcl|qz|QZ|Qz|jbc|JBC|Jbc|jmt|JMT|Jmt|cfg|CFG|Cfg)$"> 
-              <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/x-ms-word" />
-           </map:match>                                                
-          </map:match>
-          
-          <!-- matches pub-id/area/**favicon.ico -->
-          <map:match pattern="*/*/**favicon.ico">
-            <map:read src="pubs/{1}/resources/shared/favicon.ico" mime-type="application/ico"/>
-          </map:match>
+      <!-- matches pub-id/area/**.* -->
+      <map:match pattern="*/*/**.*">
+        <map:match type="regexp" pattern="(.*\.)(jpg|JPG|Jpg|jpeg|Jpeg|JPEG)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="image/jpeg" />
+        </map:match> 
+        <map:match type="regexp" pattern="(.*\.)(gif|GIF|Gif)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="image/gif" />
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(png|PNG|Png)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="image/png" />
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(tar\.gz|tgz)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/x-gtar" />
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(pdf|PDF|Pdf)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="image/pdf" />
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(doc|DOC|Doc|dot|DOT|Dot)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/msword" />
+        </map:match> 
+        <map:match type="regexp" pattern="(.*\.)(rtf|RTF|Rtf)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/rtf" />
+        </map:match> 
+        <map:match type="regexp" pattern="(.*\.)(txt|TXT|Txt|asc|ASC|Asc|ascii|ASCII|Ascii)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="text/plain" />
+        </map:match> 
+        <map:match type="regexp" pattern="(.*\.)(xls|XLS|Xls|xlt|XLT|Xlt)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/vnd.ms-excel" />
+        </map:match> 
+        <map:match type="regexp" pattern="(.*\.)(ppt|PPT|Ppt|pot|POT|Pot)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/vnd.ms-powerpoint" />
+        </map:match>  
+        <map:match type="regexp" pattern="(.*\.)(swf|SWF|Swf)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/x-shockwave-flash" />
+        </map:match> 
+        <map:match type="regexp" pattern="(.*\.)(tif|TIF|Tif)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="image/tiff" />
+        </map:match> 
+        <map:match type="regexp" pattern="(.*\.)(eps|EPS|Eps)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/postscript" />
+        </map:match>  
+        <map:match type="regexp" pattern="(.*\.)(m3u|M3U|M3u)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/x-mpegurl" />
+        </map:match> 
+        <map:match type="regexp" pattern="(.*\.)(kar|KAR|Kar|mid|MID|Mid)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="audio/midi" />
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(smf|SMF|Smf)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/vnd.stardivision.math" />
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(mp3|MP3|Mp3)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="audio/mpeg" />
+        </map:match> 
+        <map:match type="regexp" pattern="(.*\.)(swa|SWA|Swa)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="audio/x-swa" />
+        </map:match> 
+        <map:match type="regexp" pattern="(.*\.)(mpg|MPG|Mpg|mpv|MPV|Mpv|mp4|MP4|Mp4)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="video/mpeg" />
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(mov|MOV|Mov)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="video/quicktime" />
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(bin|BIN|Bin|hqx|HQX|Hqx)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/mac-binhex40" />
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(sea|SEA|Sea)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/sea" />
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(sit|SIT|Sit)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/x-stuffit" />
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(zip|ZIP|Zip)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/zip" />
+        </map:match>
+        <map:match type="regexp" pattern="(.*\.)(pct|PCT|Pct|jmx|JMX|Jmx|jcl|JCL|Jcl|qz|QZ|Qz|jbc|JBC|Jbc|jmt|JMT|Jmt|cfg|CFG|Cfg)$"> 
+          <map:read src="fallback://resources/shared/{../3}.{../4}" mime-type="application/x-ms-word" />
+        </map:match>                                                
+      </map:match>
+      
+      <!-- matches pub-id/area/**favicon.ico -->
+      <map:match pattern="*/*/**favicon.ico">
+        <map:read src="fallback://resources/shared/favicon.ico" mime-type="application/ico"/>
+      </map:match>
 
     </map:pipeline>
   </map:pipelines>
