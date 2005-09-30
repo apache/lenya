@@ -25,19 +25,20 @@
     </map:view>
   </map:views>
   
-    <map:resources>
-      <map:resource name="style-cms-page">
+<!-- =========================== Resources ================================= -->
+
+  <map:resources>
+    <map:resource name="style-cms-page">
       <map:transform type="i18n">      
         <map:parameter name="locale" value="{request:locale}"/>
       </map:transform>    
       <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
-      <map:transform src="xslt/util/strip_namespaces.xsl"/>
-      <map:serialize type="xhtml"/>
+      <map:transform src="context://lenya/xslt/util/strip_namespaces.xsl"/>
     </map:resource>
-</map:resources>  
-
+  </map:resources>
+  
   <map:pipelines>
 
     <map:pipeline>
@@ -67,12 +68,13 @@
 
       <map:match pattern="*/search-*/lucene*">
         <map:generate src="cocoon:/{1}/search-{2}/lucene.xml{3}"/>
-        <map:transform src="fallback://lenya/xslt/search/search-and-results.xsl">
+        <map:transform src="fallback://lenya/modules/search/xslt/search-and-results.xsl">
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
           <map:parameter name="publicationid" value="{1}"/>
           <map:parameter name="area" value="{2}"/>
         </map:transform>
       <map:call resource="style-cms-page"/>
+      <map:serialize />
       </map:match>
     </map:pipeline>
    </map:pipelines>

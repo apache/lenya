@@ -25,19 +25,6 @@
     </map:generators>
   </map:components>
 
-  <map:resources>
-          <map:resource name="style-cms-page">
-      <map:transform type="i18n">      
-        <map:parameter name="locale" value="{request:locale}"/>
-      </map:transform>    
-      <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl">
-        <map:parameter name="contextprefix" value="{request:contextPath}"/>
-      </map:transform>
-      <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
-      <map:serialize/>
-    </map:resource>
- </map:resources>
-
   <map:pipelines>
     <!-- WebDAV -->
     <map:pipeline>

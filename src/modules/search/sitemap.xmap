@@ -56,6 +56,7 @@
         <map:serialize type="xml"/>
         <!--
       <map:call resource="style-cms-page"/>
+      <map:serialize />
       -->
       </map:match>
     

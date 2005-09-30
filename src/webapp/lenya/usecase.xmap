@@ -30,7 +30,8 @@
     </map:view>
   </map:views>
   
-  <!-- =========================== Resources ================================ -->
+  <!-- =========================== Resources ================================= -->
+
   <map:resources>
     <map:resource name="style-cms-page">
       <map:transform type="i18n">      
@@ -39,10 +40,8 @@
       <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
-      <map:transform src="xslt/util/strip_namespaces.xsl"/>
-      <map:serialize type="xhtml"/>
+      <map:transform src="context://lenya/xslt/util/strip_namespaces.xsl"/>
     </map:resource>
-    
   </map:resources>
   
   <!-- =========================== Pipelines ================================ -->
@@ -137,6 +136,7 @@
                   </map:generate>
                   <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
                   <map:call resource="style-cms-page"/>
+                  <map:serialize />
                 </map:act>
                 
                 <map:generate src="content/util/empty.xml"/>
@@ -154,6 +154,7 @@
               </map:act>
               <map:generate src="resources/misc/xopus/download.xhtml"/>
               <map:call resource="style-cms-page"/>
+              <map:serialize />
             </map:match>
           </map:match>
           
@@ -173,6 +174,7 @@
             	      </map:generate>
                 	  <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
         	          <map:call resource="style-cms-page"/>
+        	          <map:serialize />
                 	</map:act>
         
                   <map:generate type="stream"/>
@@ -222,6 +224,7 @@
               </map:generate>
               <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
               <map:call resource="style-cms-page"/>
+              <map:serialize />
             </map:act>
             <map:redirect-to session="true" uri="{request:requestURI}"/>
           </map:match>
@@ -243,6 +246,7 @@
               </map:generate>
               <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
               <map:call resource="style-cms-page"/>
+              <map:serialize />
             </map:act>
             <map:redirect-to session="true" uri="{request:requestURI}"/>
           </map:match>

@@ -24,7 +24,9 @@
       <map:serialize type="xml"/>
     </map:view>
   </map:views>
-  
+
+<!-- =========================== Resources ================================= -->
+
   <map:resources>
     <map:resource name="style-cms-page">
       <map:transform type="i18n">      
@@ -33,23 +35,10 @@
       <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
-      <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
-      <map:select type="parameter">
-        <map:parameter name="statusCode" value="{statusCode}"/>
-        <map:when test="">
-          <map:serialize/>
-        </map:when>
-        <!-- FIXME workaround for http://issues.apache.org/bugzilla/show_bug.cgi?id=32336 -->
-        <map:when test="404">
-          <map:serialize status-code="404"/>
-        </map:when>
-        <map:otherwise>
-          <map:serialize status-code="{statusCode}"/>
-        </map:otherwise>
-      </map:select>
+      <map:transform src="context://lenya/xslt/util/strip_namespaces.xsl"/>
     </map:resource>
   </map:resources>
-
+  
   <map:pipelines>
 
     <map:component-configurations>
@@ -180,56 +169,68 @@
       </map:match>
       
       <map:match pattern="*/**.html">
+      
         <map:act type="language-exists">
-          <map:select type="resource-exists">
-            <!-- Read from cache -->
-            <!-- If configured within Apache then mod_lenya will nevertheless read from cache -->
-            <map:when test="{global:cache-dir}/{../1}/{../2}.htmlDISABLED">
-              <map:read src="{global:cache-dir}/{../1}/{../2}.html" mime-type="text/html"/>
-            </map:when>
-            <!-- Write to cache and serialize -->
-            <map:otherwise>
-              
-          <map:generate src="cocoon:/lenyabody-view/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-url}"/>
+
+          <map:act type="set-header">
+            <map:parameter name="Last-Modified" value="{page-envelope:document-lastmodified}" />
+
+            <!-- HEAD request shouldn't have all the xslt overhead -->
+            <map:select type="request-method">
+              <map:when test="HEAD">
+                <map:generate src="context://lenya/content/util/empty.xml" />
+                <map:serialize type="xhtml"/>
+              </map:when>
+            </map:select>          
           
-          <map:select type="browser">
-            <map:when test="mozilla5DISABLED">
-              <map:match pattern="authoring/**.html">
-                <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../../1}/{../../2}.xml?doctype={page-envelope:document-type}&amp;uiml=xul"/>
-              </map:match>
-              <map:serialize type="xml" mime-type="application/vnd.mozilla.xul+xml"/>
-            </map:when>
-            <map:otherwise>
-              <map:match pattern="authoring/**.html">
-                <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../../1}/{../../2}.xml?doctype={page-envelope:document-type}"/>
-              </map:match>
-              <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
-              <!-- Write to cache for requests from live area -->
-              <map:select type="parameter">
-                <map:parameter name="parameter-selector-test" value="{../1}"/>
-                <map:when test="live">
-                  <map:transform src="fallback://lenya/xslt/authoring/edit/addSourceTags.xsl">
-                    <map:parameter name="source" value="{global:cache-dir}/{../1}/{../2}.html"/>
-                  </map:transform>
-                  <map:transform type="write-source">
-                    <map:parameter name="serializer" value="xhtml"/>
-                  </map:transform>
-                  <map:transform src="fallback://lenya/xslt/authoring/edit/removeSourceTags.xsl"/>
-                </map:when>
+            <map:select type="resource-exists">
+              <!-- Read from cache -->
+              <!-- If configured within Apache then mod_lenya will nevertheless read from cache -->
+              <map:when test="{global:cache-dir}/{../1}/{../2}.htmlDISABLED">
+                <map:read src="{global:cache-dir}/{../1}/{../2}.html" mime-type="text/html"/>
+              </map:when>
+              <!-- Write to cache and serialize -->
+              <map:otherwise>
+              
+            <map:generate src="cocoon:/lenyabody-view/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-url}"/>
+          
+            <map:select type="browser">
+              <map:when test="mozilla5DISABLED">
+                <map:match pattern="authoring/**.html">
+                  <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../../1}/{../../2}.xml?doctype={page-envelope:document-type}&amp;uiml=xul"/>
+                </map:match>
+                <map:serialize type="xml" mime-type="application/vnd.mozilla.xul+xml"/>
+              </map:when>
+              <map:otherwise>
+                <map:match pattern="authoring/**.html">
+                  <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../../1}/{../../2}.xml?doctype={page-envelope:document-type}"/>
+                </map:match>
+                <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
+                <!-- Write to cache for requests from live area -->
+                <map:select type="parameter">
+                  <map:parameter name="parameter-selector-test" value="{../1}"/>
+                  <map:when test="live">
+                    <map:transform src="fallback://lenya/xslt/authoring/edit/addSourceTags.xsl">
+                      <map:parameter name="source" value="{global:cache-dir}/{../1}/{../2}.html"/>
+                    </map:transform>
+                    <map:transform type="write-source">
+                      <map:parameter name="serializer" value="xhtml"/>
+                    </map:transform>
+                    <map:transform src="fallback://lenya/xslt/authoring/edit/removeSourceTags.xsl"/>
+                  </map:when>
+                </map:select>
+                <map:serialize type="xhtml"/>
+              </map:otherwise>
               </map:select>
-              <map:serialize type="xhtml"/>
-            </map:otherwise>
+              </map:otherwise>
             </map:select>
-            </map:otherwise>
-          </map:select>
+          </map:act>
         </map:act>
 
-        <!-- There is no version of the requested document-id for the
-             requested language. -->
         <map:generate type="serverpages" src="fallback://lenya/content/exception/missing-language.xsp"/>
         <map:transform src="fallback://lenya/xslt/exception/missing-language.xsl"/>
-        <map:call resource="style-cms-page"/>
-
+        <map:call resource="style-cms-page" />
+        <map:serialize status-code="404" />
       </map:match>
       
     </map:pipeline>

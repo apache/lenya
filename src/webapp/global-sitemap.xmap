@@ -27,21 +27,17 @@
       | pipelines, only that they are not accessible from outside.
       | Hence I will explain what's inside below for pipelines.
       +-->
-  <map:resources>
 
+  <map:resources>
     <map:resource name="style-cms-page">
-    <!-- FIXME: due to resolver issues, i18n can currently not be used outside
-        of a publication IF you do not make a hit into a publication context first.     
-         <map:transform type="i18n">      
+      <map:transform type="i18n">      
         <map:parameter name="locale" value="{request:locale}"/>
       </map:transform>    
--->      <map:transform src="lenya/xslt/util/page2xhtml.xsl">
+      <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl">
         <map:parameter name="contextprefix" value="{request:contextPath}"/>
       </map:transform>
-      <map:transform src="lenya/xslt/util/strip_namespaces.xsl"/>
-      <map:serialize type="xhtml"/>
-    </map:resource>
-   
+      <map:transform src="context://lenya/xslt/util/strip_namespaces.xsl"/>
+    </map:resource>  
     <map:resource name="i18n">
       <map:transform type="i18n">
         <map:parameter name="locale" value="{request:locale}"/>
@@ -325,10 +321,12 @@
         </map:aggregate>
         <map:transform src="lenya/xslt/util/welcome.xsl"/>
         <map:call resource="style-cms-page"/>
+        <map:serialize />
       </map:match>
       <map:match pattern="about.html">
         <map:generate src="lenya/content/about.xml"/>
         <map:call resource="style-cms-page"/>
+        <map:serialize />
       </map:match>
 
       <!-- Publications -->
@@ -374,12 +372,14 @@
         <map:generate src="lenya/pubs/{1}/publication.xml" />
         <map:transform src="lenya/xslt/util/publication.xsl"/>
         <map:call resource="style-cms-page"/>
+        <map:serialize />
       </map:match>
       <!-- Publication Tests-->
       <map:match pattern="*/tests.html">
         <map:generate src="lenya/pubs/{1}/publication-tests.xml" />
         <map:transform src="lenya/xslt/util/publication.xsl"/>
         <map:call resource="style-cms-page"/>
+        <map:serialize />
       </map:match>
       
       <!-- Enter a module -->
