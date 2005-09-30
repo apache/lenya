@@ -45,7 +45,7 @@
   <xsl:copy>
     <xsl:copy-of select="@*"/>
     <xsl:apply-templates/>
-    
+    <component-instance class="org.apache.lenya.cms.cocoon.source.ZipSourceFactory" logger="lenya.source.zip" name="zip"/>
     <component-instance class="org.apache.lenya.cms.cocoon.source.FallbackSourceFactory" logger="lenya.source.fallback" name="fallback"/>
     <component-instance class="org.apache.lenya.cms.cocoon.source.TemplateFallbackSourceFactory" logger="lenya.source.templatefallback" name="template-fallback"/>
     <component-instance class="org.apache.lenya.cms.cocoon.source.LenyaSourceFactory" logger="lenya.source.lenya" name="lenya" scheme="context:"/>
