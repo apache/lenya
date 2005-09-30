@@ -186,8 +186,8 @@
             <map:select type="resource-exists">
               <!-- Read from cache -->
               <!-- If configured within Apache then mod_lenya will nevertheless read from cache -->
-              <map:when test="{global:cache-dir}/{../1}/{../2}.htmlDISABLED">
-                <map:read src="{global:cache-dir}/{../1}/{../2}.html" mime-type="text/html"/>
+              <map:when test="{global:cache-dir}/{../../1}/{../../2}.htmlDISABLED">
+                <map:read src="{global:cache-dir}/{../../1}/{../../2}.html" mime-type="text/html"/>
               </map:when>
               <!-- Write to cache and serialize -->
               <map:otherwise>
@@ -197,21 +197,21 @@
                 <map:select type="browser">
                   <map:when test="mozilla5DISABLED">
                     <map:match pattern="authoring/**.html">
-                      <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../../1}/{../../2}.xml?doctype={page-envelope:document-type}&amp;uiml=xul"/>
+                      <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../../../1}/{../../../2}.xml?doctype={page-envelope:document-type}&amp;uiml=xul"/>
                     </map:match>
                     <map:serialize type="xml" mime-type="application/vnd.mozilla.xul+xml"/>
                   </map:when>
                   <map:otherwise>
                     <map:match pattern="authoring/**.html">
-                      <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../../1}/{../../2}.xml?doctype={page-envelope:document-type}"/>
+                      <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../../../1}/{../../../2}.xml?doctype={page-envelope:document-type}"/>
                     </map:match>
                     <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
                     <!-- Write to cache for requests from live area -->
                     <map:select type="parameter">
-                      <map:parameter name="parameter-selector-test" value="{../1}"/>
+                      <map:parameter name="parameter-selector-test" value="{../../1}"/>
                       <map:when test="live">
                         <map:transform src="fallback://lenya/xslt/authoring/edit/addSourceTags.xsl">
-                          <map:parameter name="source" value="{global:cache-dir}/{../1}/{../2}.html"/>
+                          <map:parameter name="source" value="{global:cache-dir}/{../../1}/{../../2}.html"/>
                         </map:transform>
                         <map:transform type="write-source">
                           <map:parameter name="serializer" value="xhtml"/>
