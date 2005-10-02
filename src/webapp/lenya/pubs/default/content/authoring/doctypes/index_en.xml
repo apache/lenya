@@ -26,12 +26,21 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
   <body>
     <h1>Document Type Examples</h1>
 
-    <p>The default publication comes with the <a href="doctypes/xhtml-document.html">XHTML Doctype</a>.</p>
+<p>
+The default publication comes with the <a href="doctypes/xhtml-document.html">XHTML Doctype</a> and the <a href="doctypes/links.html">Links Doctype</a>.
+</p>
     
-    <p>The XHTML Doctype is for situations where
-    users ask for complete freedom on what information can be inserted
-    into a document. While this approach doesn't restrict you, it also
-    looses some of the major benefits of well defined document types.</p>
+<p>
+The <strong>XHTML Doctype</strong> is for situations where
+users ask for complete freedom on what information can be inserted
+into a document. While this approach doesn't restrict you, it also
+looses some of the major benefits of well defined document types.
+</p>
+    
+<p>
+The <strong>Links Doctype</strong> is mainly to show that Lenya is able to handle
+arbitrary doctypes but can also be used for link-lists.
+</p>
 
   </body>
 </html>
