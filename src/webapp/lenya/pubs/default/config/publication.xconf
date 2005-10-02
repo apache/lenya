@@ -35,6 +35,7 @@
   
   <module name="xhtml"/>
   <module name="links"/>
+  <module name="opendocument"/>
   <module name="homepage"/>
   <module name="search"/>
   <module name="blog"/>
