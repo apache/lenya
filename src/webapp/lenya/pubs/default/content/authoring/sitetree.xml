@@ -38,7 +38,8 @@
   <node id="doctypes">
     <label xml:lang="en">Document Type Examples</label>
     <label xml:lang="de">Dokumenttyp Beispiele</label>
-     <node id="xhtml-document">
+
+    <node id="xhtml-document">
       <label xml:lang="en">XHTML Doctype</label>
       <label xml:lang="de">XHTML Dokumenttyp</label>
     </node>
@@ -46,6 +47,12 @@
     <node id="links">
       <label xml:lang="en">Links Doctype</label>
     </node>
+
+<!--
+    <node id="opendocument">
+      <label xml:lang="en">OpenDocument Doctype</label>
+    </node>
+-->
  </node>
   
 </site>
