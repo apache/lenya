@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<links xmlns="http://apache.org/lenya/pubs/default/1.0">
+  <title>The Links Document Doctype</title>
+  <link href="http://lenya.apache.org">Apache Lenya Website</link>
+  <link href="http://wiki.apache.org/lenya/">Apache Lenya Wiki</link>
+</links>
