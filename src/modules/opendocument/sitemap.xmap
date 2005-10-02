@@ -40,10 +40,7 @@
       <!-- parametrized doctype matcher -->
       <!-- pattern="{rendertype}" -->
       <map:match pattern="*.xml">
-      <!--
-        <map:generate src="lenya://lenya/pubs/{page-envelope:publication-id}/content/{page-envelope:area}/{page-envelope:document-path}"/>
-	-->
-        <map:generate src="zip://content.xml@../../pubs/{page-envelope:publication-id}/content/{page-envelope:area}/doctypes/opendocument/index.odt"/>
+        <map:generate src="zip://content.xml@../../pubs/{page-envelope:publication-id}/content/{page-envelope:area}/{page-envelope:document-id}/index_{page-envelope:document-language}.odt"/>
         <map:transform src="fallback://lenya/modules/opendocument/xslt/opendocument2xhtml.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
