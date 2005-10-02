@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lenya:document xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
+<lenya:meta>
+  <lenya:dc>
+    <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">OpenDocument</dc:title>
+    <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">lenya</dc:creator>
+    <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">de</dc:language>
+  </lenya:dc>
+
+  <lenya:internal>
+    <lenya:resourceType>opendocument</lenya:resourceType>
+    <lenya:contentType>odt</lenya:contentType>
+  </lenya:internal>
+</lenya:meta>
+</lenya:document>
