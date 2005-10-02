@@ -29,6 +29,10 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
 <p>
 The default publication comes with the <a href="doctypes/xhtml-document.html">XHTML Doctype</a> and the <a href="doctypes/links.html">Links Doctype</a>.
 </p>
+
+<p>
+A tutorial on creating/adding new doctypes can be found <a href="tutorial/new_doctype.html">here</a>.
+</p>
     
 <p>
 The <strong>XHTML Doctype</strong> is for situations where
