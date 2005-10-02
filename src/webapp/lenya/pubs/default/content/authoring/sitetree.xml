@@ -42,6 +42,10 @@
       <label xml:lang="en">XHTML Doctype</label>
       <label xml:lang="de">XHTML Dokumenttyp</label>
     </node>
+
+    <node id="links">
+      <label xml:lang="en">Links Doctype</label>
+    </node>
  </node>
   
 </site>
