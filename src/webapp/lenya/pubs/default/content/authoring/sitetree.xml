@@ -48,11 +48,10 @@
       <label xml:lang="en">Links Doctype</label>
     </node>
 
-<!--
     <node id="opendocument">
       <label xml:lang="en">OpenDocument Doctype</label>
+      <label xml:lang="de">OpenDocument Dokumenttyp</label>
     </node>
--->
  </node>
   
 </site>
