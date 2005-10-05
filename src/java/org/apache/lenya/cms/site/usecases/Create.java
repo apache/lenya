@@ -57,9 +57,9 @@ public abstract class Create extends AbstractUsecase {
     protected static final String LANGUAGES = "languages";
 
     protected static final String DOCUMENT_ID = "documentId";
-    
+
     protected static final String VISIBLEINNAV = "visibleInNav";
-    
+
     protected static final String SAMPLE = "sample";
     protected static final String SAMPLES = "samples";
     protected static final String SAMPLES_COUNT = "samplesCount";
@@ -121,21 +121,30 @@ public abstract class Create extends AbstractUsecase {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
             DocumentIdentityMap map = getDocumentIdentityMap();
-            Document document = map.get(getPublication(), getArea(), getNewDocumentId(),
+            Document document = map.get(getPublication(),
+                    getArea(),
+                    getNewDocumentId(),
                     getParameterAsString(LANGUAGE));
 
             Document initialDocument = getInitialDocument();
             if (initialDocument == null) {
                 selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
-                resourceType = (ResourceType) selector.select(getDocumentTypeName());  
-                if (getParameterAsString(SAMPLE)!=null && getParameterAsString(SAMPLE).length() > 0)
-                  resourceType.setSampleURI(getParameterAsString(SAMPLE));
-                documentManager.add(document, resourceType,
-                        getParameterAsString(DublinCore.ELEMENT_TITLE), getVisibleInNav(), null);
-                resourceType.setSampleURI(""); //reset to default sample
+                resourceType = (ResourceType) selector.select(getDocumentTypeName());
+                if (getParameterAsString(SAMPLE) != null
+                        && getParameterAsString(SAMPLE).length() > 0)
+                    resourceType.setSampleURI(getParameterAsString(SAMPLE));
+                documentManager.add(document,
+                        resourceType,
+                        getParameterAsString(DublinCore.ELEMENT_TITLE),
+                        getVisibleInNav(),
+                        null);
+                resourceType.setSampleURI(""); // reset to default sample
             } else {
-                documentManager.add(document, initialDocument,
-                        getParameterAsString(DublinCore.ELEMENT_TITLE), getVisibleInNav(), null);
+                documentManager.add(document,
+                        initialDocument,
+                        getParameterAsString(DublinCore.ELEMENT_TITLE),
+                        getVisibleInNav(),
+                        null);
             }
 
             setMetaData(document);
@@ -161,15 +170,15 @@ public abstract class Create extends AbstractUsecase {
      * @return the name of the document being created in the usecase
      */
     protected abstract String getNewDocumentName();
-    
+
     /**
      * @return the id of the new document being created in the usecase
      */
     protected abstract String getNewDocumentId();
 
     /**
-     * If the document created in the usecase shall have initial contents copied
-     * from an existing document, construct that document in this method.
+     * If the document created in the usecase shall have initial contents copied from an existing
+     * document, construct that document in this method.
      * 
      * @return A document.
      */
@@ -185,10 +194,8 @@ public abstract class Create extends AbstractUsecase {
     /**
      * Sets the meta data of the created document.
      * 
-     * @param document
-     *            The document.
-     * @throws DocumentException
-     *             if an error occurs.
+     * @param document The document.
+     * @throws DocumentException if an error occurs.
      */
     protected void setMetaData(Document document) throws DocumentException {
 
@@ -197,12 +204,10 @@ public abstract class Create extends AbstractUsecase {
 
         Map dcMetaData = new HashMap();
         dcMetaData.put(DublinCore.ELEMENT_TITLE, getParameterAsString(DublinCore.ELEMENT_TITLE));
-        dcMetaData
-                .put(DublinCore.ELEMENT_CREATOR, getParameterAsString(DublinCore.ELEMENT_CREATOR));
+        dcMetaData.put(DublinCore.ELEMENT_CREATOR, getParameterAsString(DublinCore.ELEMENT_CREATOR));
         dcMetaData.put(DublinCore.ELEMENT_PUBLISHER,
                 getParameterAsString(DublinCore.ELEMENT_PUBLISHER));
-        dcMetaData
-                .put(DublinCore.ELEMENT_SUBJECT, getParameterAsString(DublinCore.ELEMENT_SUBJECT));
+        dcMetaData.put(DublinCore.ELEMENT_SUBJECT, getParameterAsString(DublinCore.ELEMENT_SUBJECT));
         dcMetaData.put(DublinCore.ELEMENT_DATE, getParameterAsString(DublinCore.ELEMENT_DATE));
         dcMetaData.put(DublinCore.ELEMENT_RIGHTS, getParameterAsString(DublinCore.ELEMENT_RIGHTS));
         dcMetaData.put(DublinCore.ELEMENT_LANGUAGE, getParameterAsString(LANGUAGE));
@@ -233,13 +238,13 @@ public abstract class Create extends AbstractUsecase {
         ServiceSelector selector = null;
         ResourceType resourceType = null;
         try {
-                selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
-                resourceType = (ResourceType) selector.select(getDocumentTypeName());
-                setParameter(SAMPLES, resourceType.getSampleNames());
-                setParameter(SAMPLES_COUNT, new Integer(resourceType.getSampleNames().length));    
-        } catch(Exception e) {
+            selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
+            resourceType = (ResourceType) selector.select(getDocumentTypeName());
+            setParameter(SAMPLES, resourceType.getSampleNames());
+            setParameter(SAMPLES_COUNT, new Integer(resourceType.getSampleNames().length));
+        } catch (Exception e) {
             throw new RuntimeException(e);
-        }  finally {
+        } finally {
             if (selector != null) {
                 if (resourceType != null) {
                     selector.release(resourceType);
@@ -250,8 +255,8 @@ public abstract class Create extends AbstractUsecase {
     }
 
     /**
-     * @return The source document or <code>null</code> if the usecase was not
-     *         invoked on a document.
+     * @return The source document or <code>null</code> if the usecase was not invoked on a
+     *         document.
      */
     protected Document getSourceDocument() {
         Document document = null;
@@ -277,17 +282,17 @@ public abstract class Create extends AbstractUsecase {
     private Publication publication;
 
     /**
-     * Access to the current publication. Use this when the publication is not
-     * yet known in the usecase: e.g. when creating a global asset. When adding
-     * a resource or a child to a document, access the publication via that
-     * document's interface instead.
+     * Access to the current publication. Use this when the publication is not yet known in the
+     * usecase: e.g. when creating a global asset. When adding a resource or a child to a document,
+     * access the publication via that document's interface instead.
      * 
      * @return the publication in which the use-case is being executed
      */
     protected Publication getPublication() {
         if (this.publication == null) {
             try {
-                this.publication = PublicationUtil.getPublicationFromUrl(this.manager, getSourceURL());
+                this.publication = PublicationUtil.getPublicationFromUrl(this.manager,
+                        getSourceURL());
             } catch (PublicationException e) {
                 throw new RuntimeException(e);
             }
