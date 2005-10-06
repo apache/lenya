@@ -53,8 +53,7 @@ public class Instantiator extends AbstractLogEnabled implements
 
     protected static final String[] sourcesToCopy = { "publication.xml",
             "config/publication.xconf", "config/ac/passwd/", "config/ac/ac.xconf",
-            "config/ac/policies/", "config/ac/usecase-policies.xml",
-            "config/workflow/workflow.xml", "content/" };
+            "config/ac/policies/", "config/ac/usecase-policies.xml", "content/" };
 
     /**
      * @see org.apache.lenya.cms.publication.templating.Instantiator#instantiate(org.apache.lenya.cms.publication.Publication,
@@ -97,7 +96,8 @@ public class Instantiator extends AbstractLogEnabled implements
             configSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
                     + newPublicationId + "/config/publication.xconf");
             DefaultConfiguration config = (DefaultConfiguration) new DefaultConfigurationBuilder().build(configSource.getInputStream());
-            DefaultConfiguration templatesConfig = (DefaultConfiguration) config.getChild("templates", false);
+            DefaultConfiguration templatesConfig = (DefaultConfiguration) config.getChild("templates",
+                    false);
             if (templatesConfig == null) {
                 templatesConfig = new DefaultConfiguration("templates");
                 config.addChild(templatesConfig);

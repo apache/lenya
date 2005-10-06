@@ -53,7 +53,8 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
      * @param document The document.
      * @param logger The logger.
      */
-    public DocumentWorkflowable(ServiceManager manager, Session session, Document document, Logger logger) {
+    public DocumentWorkflowable(ServiceManager manager, Session session, Document document,
+            Logger logger) {
         this.document = document;
         this.session = session;
         this.manager = manager;
@@ -61,9 +62,9 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
     }
 
     private Session session;
-    
+
     private ServiceManager manager;
-    
+
     /**
      * @return The service manager.
      */
@@ -195,24 +196,19 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
 
         String[] parts = string.split(" ");
         for (int i = 0; i < parts.length; i++) {
-            String[] steps = parts[i].split(":",2);
+            String[] steps = parts[i].split(":", 2);
             if (steps[0].equals("event")) {
                 event = steps[1];
-            }
-            else if (steps[0].equals("state")) {
+            } else if (steps[0].equals("state")) {
                 state = steps[1];
-            }
-            else if (steps[0].equals("user")) {
-            	user = steps[1];
-            }
-            else if (steps[0].equals("date")) {
-            	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.US);
-            	date = sdf.parse(steps[1],new ParsePosition(0));
-            }
-            else if (steps[0].equals("machine")) {
-            	machine = steps[1];
-            }
-            else if (steps[0].equals("var")) {
+            } else if (steps[0].equals("user")) {
+                user = steps[1];
+            } else if (steps[0].equals("date")) {
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss", Locale.US);
+                date = sdf.parse(steps[1], new ParsePosition(0));
+            } else if (steps[0].equals("machine")) {
+                machine = steps[1];
+            } else if (steps[0].equals("var")) {
                 String[] nameValue = steps[1].split("=");
                 variables.put(nameValue[0], nameValue[1]);
             }
@@ -236,9 +232,14 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
         String uri = null;
         String schema = getWorkflowSchema();
         if (schema != null) {
-            uri = this.document.getPublication().getSourceURI() + "/config/workflow/" + schema;
-            uri = uri.substring("lenya://".length());
-            uri = "context://" + uri;
+
+            if (schema.indexOf("://") != -1) {
+                return schema;
+            } else {
+                uri = this.document.getPublication().getSourceURI() + "/config/workflow/" + schema;
+                uri = uri.substring("lenya://".length());
+                uri = "context://" + uri;
+            }
         }
         return uri;
     }

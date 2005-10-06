@@ -28,10 +28,10 @@
   <breadcrumb-prefix/>
   <site-manager name="tree"/>
   
-  <resource-type name="xhtml" workflow="workflow.xml"/>
-  <resource-type name="homepage" workflow="workflow.xml"/>
-  <resource-type name="links" workflow="workflow.xml"/>
-  <resource-type name="search" workflow="workflow.xml"/>
+  <resource-type name="xhtml" workflow="fallback://config/workflow/workflow.xml"/>
+  <resource-type name="homepage" workflow="fallback://config/workflow/workflow.xml"/>
+  <resource-type name="links" workflow="fallback://config/workflow/workflow.xml"/>
+  <resource-type name="search" workflow="fallback://config/workflow/workflow.xml"/>
   
   <module name="xhtml"/>
   <module name="links"/>
