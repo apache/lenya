@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id$ -->
+<!-- $Id: document-does-not-exist.xsl 180003 2005-06-04 16:40:42Z gregor $ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -27,24 +27,30 @@
   
   <xsl:param name="documentid"/>
   <xsl:param name="documenturl"/>
-
+  <xsl:param name="area"/>
+  
   <xsl:template match="/">
     
     <page:page>
       <page:title><i18n:text>error-404</i18n:text></page:title>
       <page:body>
-	<div class="lenya-box">
-	  <div class="lenya-box-title"><i18n:text>error-document-existance-short</i18n:text></div>
-	  <div class="lenya-box-body">
-	    <p>
-      <i18n:translate>
-        <i18n:text i18n:key="error-document-existance" />
-        <i18n:param>'<xsl:value-of select="$documenturl"/>'</i18n:param>
-        <i18n:param>'<xsl:value-of select="$documentid"/>'</i18n:param>
-      </i18n:translate>
-	    </p>
-	  </div>
-	</div>
+        <div class="lenya-box">
+          <div class="lenya-box-title"><i18n:text>error-document-existance-short</i18n:text></div>
+          <div class="lenya-box-body">
+            <p>
+              <i18n:translate>
+                <i18n:text i18n:key="error-document-existance" />
+                <i18n:param>'<xsl:value-of select="$documenturl"/>'</i18n:param>
+                <i18n:param>'<xsl:value-of select="$documentid"/>'</i18n:param>
+              </i18n:translate>
+            </p>
+            <xsl:if test="$area = 'authoring'">
+              <p>
+                <a href="?lenya.usecase=site.create&amp;documentId={$documentid}"><i18n:text>create-document</i18n:text></a>
+              </p>
+            </xsl:if>
+          </div>
+        </div>
       </page:body>
     </page:page>
   </xsl:template>

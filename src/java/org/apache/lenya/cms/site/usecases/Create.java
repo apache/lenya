@@ -17,8 +17,11 @@
 package org.apache.lenya.cms.site.usecases;
 
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceSelector;
@@ -52,6 +55,8 @@ import org.apache.lenya.cms.usecase.UsecaseException;
  */
 public abstract class Create extends AbstractUsecase {
 
+    protected static final String RESOURCE_TYPES = "resourceTypes";
+
     protected static final String LANGUAGE = "language";
 
     protected static final String LANGUAGES = "languages";
@@ -62,7 +67,6 @@ public abstract class Create extends AbstractUsecase {
 
     protected static final String SAMPLE = "sample";
     protected static final String SAMPLES = "samples";
-    protected static final String SAMPLES_COUNT = "samplesCount";
 
     /**
      * Ctor.
@@ -100,9 +104,19 @@ public abstract class Create extends AbstractUsecase {
      */
     protected void doCheckExecutionConditions() throws Exception {
         String navigationTitle = getParameterAsString(DublinCore.ELEMENT_TITLE);
-
         if (navigationTitle.equals("")) {
             addErrorMessage("The navigation title is required.");
+        }
+        
+        List samples = (List) getParameter(SAMPLES);
+        String sample = getParameterAsString(SAMPLE);
+        if (samples != null && samples.size() > 1 && (sample == null || sample.equals(""))) {
+            addErrorMessage("Please select a page layout.");
+        }
+        
+        String doctypeName = getDocumentTypeName();
+        if (doctypeName != null) {
+            initSampleParameters();
         }
     }
 
@@ -235,13 +249,24 @@ public abstract class Create extends AbstractUsecase {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         setParameter(DublinCore.ELEMENT_DATE, format.format(new GregorianCalendar().getTime()));
 
+        String doctypeName = getDocumentTypeName();
+        if (doctypeName != null) {
+            initSampleParameters();
+            setParameter(RESOURCE_TYPES, Collections.EMPTY_LIST);
+        }
+        else {
+            String[] resourceTypes = getPublication().getResourceTypeNames();
+            setParameter(RESOURCE_TYPES, Arrays.asList(resourceTypes));
+        }
+    }
+
+    protected void initSampleParameters() {
         ServiceSelector selector = null;
         ResourceType resourceType = null;
         try {
             selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
             resourceType = (ResourceType) selector.select(getDocumentTypeName());
-            setParameter(SAMPLES, resourceType.getSampleNames());
-            setParameter(SAMPLES_COUNT, new Integer(resourceType.getSampleNames().length));
+            setParameter(SAMPLES, Arrays.asList(resourceType.getSampleNames()));
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {

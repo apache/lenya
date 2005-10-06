@@ -63,6 +63,7 @@
   <message key="Back">Zurück</message>
   <message key="Add">Hinzufügen</message>
   <message key="Create">Erstellen</message>
+  <message key="create-document">Dieses Dokument erstellen</message>
   <message key="The Archive">Archiv</message>
   <message key="Trash">Papierkorb</message>
   <message key="Publisher">Herausgeber</message>
@@ -361,7 +362,9 @@
   <message key="error-document-form">Dokument ist nicht wohlgeformt: {0}</message>
   <message key="error-validation">Schema Validierung schlug fehl: {0}</message>
   <message key="error-missing-language">Das angeforderte Dokument ist nicht verfügbar in der Sprache: {0}</message>
+  <message key="error-document-existance-short">Dokument existiert nicht</message>
   <message key="error-document-existance">Das angeforderte Dokument {0} mit der ID {1} existiert nicht.</message>
   <message key="error-generic">Ein Fehler ist aufgetreten.</message>
+  <message key="error-404">404: Seite nicht gefunden</message>
 </catalogue>
 

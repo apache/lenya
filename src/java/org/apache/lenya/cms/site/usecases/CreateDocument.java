@@ -38,6 +38,7 @@ public class CreateDocument extends Create {
     protected static final String RELATION_CHILD = "child";
     protected static final String RELATION_BEFORE = "sibling before";
     protected static final String RELATION_AFTER = "sibling after";
+    protected static final String DOCUMENT_ID_PROVIDED = "documentIdProvided";
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
@@ -57,6 +58,10 @@ public class CreateDocument extends Create {
         String[] relations = { RELATION_CHILD, RELATION_AFTER };
         setParameter(RELATIONS, relations);
         setParameter(RELATION, RELATION_CHILD);
+
+        String documentId = getParameterAsString(DOCUMENT_ID);
+        boolean provided = documentId != null && !documentId.equals("");
+        setParameter(DOCUMENT_ID_PROVIDED, Boolean.valueOf(provided));
     }
 
     /**
@@ -104,7 +109,14 @@ public class CreateDocument extends Create {
      * @see Create#getNewDocumentName()
      */
     protected String getNewDocumentName() {
-        return getParameterAsString(DOCUMENT_ID);
+        final String documentId = getParameterAsString(DOCUMENT_ID);
+        String documentName;
+        if (getParameterAsBoolean(DOCUMENT_ID_PROVIDED, false)) {
+            documentName = documentId.substring(documentId.lastIndexOf("/") + 1);
+        } else {
+            documentName = documentId;
+        }
+        return documentName;
     }
 
     /**
@@ -118,20 +130,24 @@ public class CreateDocument extends Create {
      * @see Create#getNewDocumentId()
      */
     protected String getNewDocumentId() {
-        String relation = getRelation();
-        Document sourceDoc = getSourceDocument();
-        if (relation.equals(RELATION_CHILD)) {
-            return sourceDoc.getId() + "/" + getNewDocumentName();
-        } else if (relation.equals(RELATION_BEFORE)) {
-            return sourceDoc.getId().substring(0,
-                    sourceDoc.getId().lastIndexOf(sourceDoc.getName()))
-                    + getNewDocumentName();
-        } else if (relation.equals(RELATION_AFTER)) {
-            return sourceDoc.getId().substring(0,
-                    sourceDoc.getId().lastIndexOf(sourceDoc.getName()))
-                    + getNewDocumentName();
+        if (getParameterAsBoolean(DOCUMENT_ID_PROVIDED, false)) {
+            return getParameterAsString(DOCUMENT_ID);
         } else {
-            return getSourceDocument().getId() + "/" + getNewDocumentName();
+            String relation = getRelation();
+            Document sourceDoc = getSourceDocument();
+            if (relation.equals(RELATION_CHILD)) {
+                return sourceDoc.getId() + "/" + getNewDocumentName();
+            } else if (relation.equals(RELATION_BEFORE)) {
+                return sourceDoc.getId().substring(0,
+                        sourceDoc.getId().lastIndexOf(sourceDoc.getName()))
+                        + getNewDocumentName();
+            } else if (relation.equals(RELATION_AFTER)) {
+                return sourceDoc.getId().substring(0,
+                        sourceDoc.getId().lastIndexOf(sourceDoc.getName()))
+                        + getNewDocumentName();
+            } else {
+                return getSourceDocument().getId() + "/" + getNewDocumentName();
+            }
         }
     }
 

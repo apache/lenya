@@ -53,7 +53,7 @@ public class Instantiator extends AbstractLogEnabled implements
 
     protected static final String[] sourcesToCopy = { "publication.xml",
             "config/publication.xconf", "config/ac/passwd/", "config/ac/ac.xconf",
-            "config/ac/policies/", "config/ac/usecase-policies.xml", "content/" };
+            "config/ac/policies/", "config/ac/usecase-policies.xml" };
 
     /**
      * @see org.apache.lenya.cms.publication.templating.Instantiator#instantiate(org.apache.lenya.cms.publication.Publication,
