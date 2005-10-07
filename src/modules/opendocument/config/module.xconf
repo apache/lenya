@@ -22,15 +22,11 @@
   <component-instance name="opendocument"
                       logger="lenya.resourcetypes.opendocument"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
-<!--
-    <schema src="fallback://lenya/modules/links/schema/links.rng" language="http://relaxng.org/ns/structure/0.9"/>
--->
     <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
       <sample-name>fallback://lenya/modules/opendocument/samples/helloworld.odt</sample-name>
     </creator>
-<!--
-    <format name="xhtml" uri="cocoon://modules/links/xhtml.xml"/>
--->
+    <!-- NOTE: Will be matched within sitemap of this module (modules/opendocument/sitemap.xmap) -->
+    <format name="xhtml" uri="cocoon://modules/opendocument/xhtml.xml"/>
   </component-instance>
 
 </xconf>
