@@ -49,6 +49,14 @@ function sendStatus(sc) {
   cocoon.sendStatus(sc);
 }
  
+function mkcol() {
+  var status = executeUsecase("webdav.mkcol");
+  if(status)
+    cocoon.sendStatus(201);
+  else
+    sendStatus(403);
+}
+ 
 function put() {
   var status = executeUsecase("webdav.put");
   if(status)
@@ -285,9 +293,6 @@ function executeUsecase(usecaseName) {
             cocoon.releaseComponent(usecaseResolver);
         }
     }
-
-    if (cocoon.log.isDebugEnabled())
-       cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", completed, redirecting to url = [" + url + "]");
         
     return success;
     
