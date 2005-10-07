@@ -23,6 +23,8 @@
       <browser name="webdav" useragent="DAV"/>
       <browser name="webdav" useragent="dav"/>
       <browser name="webdav" useragent="Goliath"/>
+      <!-- cadaver -->
+      <browser name="webdav" useragent="gnome-vfs/2.10.0 neon/0.24.7"/>
       <browser name="explorer" useragent="MSIE"/>
       <browser name="mozilla5" useragent="Mozilla/5"/>
       <browser name="mozilla5" useragent="Netscape6/"/>
