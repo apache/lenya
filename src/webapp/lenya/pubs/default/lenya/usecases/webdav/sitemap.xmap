@@ -224,22 +224,36 @@
       <map:match pattern="PUT/**_*.html">
         <map:call function="put" />  
       </map:match> 
+      
+      
+      <map:match pattern="MKCOL/**">
+        <map:call function="mkcol" />
+      </map:match>
             
       <map:match pattern="DELETE/**">
         <map:call function="remove" />
       </map:match> 
                         
       <map:match pattern="LOCK/**">
-        <map:act type="reserved-checkout">
-          <map:generate src="dummy.xml"/>
-          <map:serialize type="xml"  status-code="423"/>
-        </map:act>
-        <map:generate src="dummy.xml"/>
-        <map:transform type="xslt" src="fallback://lenya/usecases/webdav/lock.xsl">
-          <map:parameter name="userid" value="{access-control:user-id}"/>
-          <map:parameter name="docid" value="{page-envelope:document-id}"/>
-        </map:transform>
-        <map:serialize type="xml" status-code="200" />
+        <map:select type="resource-exists">
+          <map:parameter name="prefix" value="lenya://"/>
+          <map:when test="lenya/pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}">
+            <map:act type="reserved-checkout">
+              <map:generate src="dummy.xml"/>
+              <map:serialize type="xml"  status-code="423"/>
+            </map:act>
+            <map:generate src="dummy.xml"/>
+            <map:transform type="xslt" src="fallback://lenya/usecases/webdav/lock.xsl">
+              <map:parameter name="userid" value="{access-control:user-id}"/>
+              <map:parameter name="docid" value="{page-envelope:document-id}"/>
+            </map:transform>
+            <map:serialize type="xml" status-code="200" />
+          </map:when>
+          <map:otherwise>
+            <map:generate src="dummy.xml"/>
+            <map:serialize type="xml" status-code="412"/>
+          </map:otherwise>
+        </map:select>
       </map:match>
 
       <map:match pattern="UNLOCK/**">
