@@ -27,7 +27,7 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
     <h1>Document Type Examples</h1>
 
 <p>
-The default publication comes with the <a href="doctypes/xhtml-document.html">XHTML Doctype</a> and the <a href="doctypes/links.html">Links Doctype</a>.
+The default publication comes with the <a href="doctypes/xhtml-document.html">XHTML Doctype</a>, the <a href="doctypes/links.html">Links Doctype</a> and the <a href="doctypes/opendocument.html">OpenDocument Doctype</a>.
 </p>
 
 <p>
@@ -44,6 +44,10 @@ looses some of the major benefits of well defined document types.
 <p>
 The <strong>Links Doctype</strong> is mainly to show that Lenya is able to handle
 arbitrary doctypes but can also be used for link-lists.
+</p>
+    
+<p>
+The <strong>OpenDocument Doctype</strong> is a standardized XML-based file format specification suitable for office applications and has been developed by <a href="http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=office">OASIS</a>.
 </p>
 
   </body>
