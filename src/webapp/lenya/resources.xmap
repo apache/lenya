@@ -48,7 +48,10 @@
               <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="application/x-gtar" />
            </map:match>
            <map:match type="regexp" pattern="(.*\.)(pdf|PDF|Pdf)$"> 
-              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="image/pdf" />
+              <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="image/pdf">
+                <!-- TODO: http://marc.theaimsgroup.com/?l=xml-cocoon-dev&amp;m=112496255207733&amp;w=2 -->
+                <map:parameter name="byte-ranges" value="false"/>
+              </map:read>
            </map:match>
            <map:match type="regexp" pattern="(.*\.)(doc|DOC|Doc|dot|DOT|Dot)$"> 
               <map:read src="fallback://resources/{../2}/{../3}.{../4}" mime-type="application/msword" />
