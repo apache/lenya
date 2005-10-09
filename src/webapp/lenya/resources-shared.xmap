@@ -67,7 +67,10 @@
 
           <!-- matches pub-id/area/**.pdf -->
           <map:match pattern="*/*/**.pdf">
-            <map:read src="pubs/{1}/resources/shared/{3}.pdf" mime-type="application/pdf" />
+            <map:read src="pubs/{1}/resources/shared/{3}.pdf" mime-type="application/pdf">
+              <!-- TODO: http://marc.theaimsgroup.com/?l=xml-cocoon-dev&amp;m=112496255207733&amp;w=2 -->
+              <map:parameter name="byte-ranges" value="false"/>
+            </map:read>
           </map:match>
 
           <!-- matches pub-id/area/**.doc -->
