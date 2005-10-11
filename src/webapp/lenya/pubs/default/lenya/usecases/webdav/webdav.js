@@ -52,7 +52,7 @@ function sendStatus(sc) {
 function mkcol() {
   var status = executeUsecase("webdav.mkcol");
   if(status)
-    cocoon.sendStatus(201);
+    sendStatus(201);
   else
     sendStatus(403);
 }
@@ -60,7 +60,7 @@ function mkcol() {
 function put() {
   var status = executeUsecase("webdav.put");
   if(status)
-    cocoon.sendPage("checkin",{});
+    sendStatus(201);
   else {
     sendStatus(415);
   }
