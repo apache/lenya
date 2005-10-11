@@ -26,8 +26,8 @@
   <xsl:include href="resource://org/apache/cocoon/forms/resources/forms-advanced-field-styling.xsl"/>
 
   <!-- Location of the resources directory, where JS libs and icons are stored -->
-  <xsl:param name="resources-uri">resources</xsl:param>
-  
+  <xsl:param name="resources-uri"/>
+
   <xsl:template match="head">
     <head>
       <xsl:apply-templates/>
@@ -46,5 +46,4 @@
       <xsl:apply-templates/>
     </body>
   </xsl:template>
-
 </xsl:stylesheet>

@@ -54,7 +54,12 @@
           <map:parameter name="locale" value="{request:locale}"/>
         </map:transform>
         <map:transform src="cocoon://lenya-screen.xsl"/>
-        <map:transform src="fallback://lenya/xslt/cforms/forms-samples-styling.xsl"/>
+        <!-- Strip xhtml namespace from <head> and <body> element -->
+        <map:transform src="fallback://lenya/xslt/cforms/strip-xhtml-namespace.xsl"/>
+        <map:transform src="fallback://lenya/xslt/cforms/forms-samples-styling.xsl">
+          <map:parameter name="resources-uri" value="/cforms"/>
+        </map:transform>
+        <map:transform src="fallback://lenya/xslt/cforms/add-xhtml-namespace.xsl"/>
         <map:match pattern="view/menu/**">
           <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{page-envelope:area}/default.xml"/>
         </map:match>

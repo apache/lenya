@@ -126,6 +126,13 @@
       </map:match>
     </map:pipeline>
 
+    <!-- cforms -->
+    <map:pipeline>
+      <map:match pattern="cforms/**">
+        <map:read src="resource://org/apache/cocoon/forms/resources/{1}"/>
+      </map:match>
+    </map:pipeline>
+
     <map:pipeline>
       <!-- Lenya GUI -->
       <map:match pattern="lenya/**">
