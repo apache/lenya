@@ -14,7 +14,8 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:fi="http://apache.org/cocoon/forms/1.0#instance">
 
   <!--+ Include styling stylesheets, one for the widgets, the other one for the
       | page. As 'forms-advanced-field-styling.xsl' is a specialization of
@@ -28,7 +29,7 @@
   <!-- Location of the resources directory, where JS libs and icons are stored -->
   <xsl:param name="resources-uri"/>
 
-  <xsl:template match="head">
+  <xsl:template match="head[//fi:*]">
     <head>
       <xsl:apply-templates/>
       <xsl:apply-templates select="." mode="forms-page"/>
@@ -36,7 +37,7 @@
     </head>
   </xsl:template>
 
-  <xsl:template match="body">
+  <xsl:template match="body[//fi:*]">
     <body>
       <!--+ !!! If template with mode 'forms-page' adds text or elements
           |        template with mode 'forms-field' can no longer add attributes!!!
