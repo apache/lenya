@@ -57,7 +57,7 @@ public class SMTP {
     String[] bccs = null;
     String subject = null;
     String data = null;
-    String charset ="UTF-8";
+    String charset ="ISO-8859-1";
     
     /**
      *
