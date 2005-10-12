@@ -64,5 +64,5 @@ the ways the Lenya community pays back.
 * Thomas Werschlein
 
 
-                                                  The Apache Lenya Community
-                                                  http://lenya.apache.org
+                                                 The Apache Lenya Community
+                                                 http://lenya.apache.org
