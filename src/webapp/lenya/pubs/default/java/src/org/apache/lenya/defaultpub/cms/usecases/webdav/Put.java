@@ -79,8 +79,7 @@ public class Put extends DocumentUsecase {
 
                     documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
-                    DocumentIdentityMap map = (DocumentIdentityMap) getSession().getUnitOfWork()
-                            .getIdentityMap();
+                    DocumentIdentityMap map = getDocumentIdentityMap();
                     Document document = map.get(getPublication(),
                             doc.getArea(),
                             doc.getId(),
