@@ -49,8 +49,7 @@
         </xsl:if>
         <xsl:if test="not(menu:tabs/menu:tab[@label='info']/@show='false')">
         <!--<xsl:if test="not(menu:tabs/menu:tab[@label='site']/@show='false') and $area='admin'">-->
-          <xsl:call-template name="area-tab">
-            <xsl:with-param name="tab-area">authoring</xsl:with-param>
+          <xsl:call-template name="site-area-tab">
           </xsl:call-template>
         </xsl:if>
         <xsl:call-template name="area-tab">
@@ -117,6 +116,24 @@
     <xul:tab label="{$tab-label}" onclick="window.location = '{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}';" id="lenya-xul-{$tab-area-prefix}-tab" selected="{$selected}"/>
   </xsl:template>
   
+  <xsl:template name="site-area-tab">
+    <xsl:param name="tab-area-prefix" select="authoring"/>
+    <xsl:param name="target" select="'_self'"/>
+
+    <xsl:variable name="tab-documenturl">
+      <xsl:value-of select="$documenturl"/>
+    </xsl:variable>
+
+    <xsl:variable name="selected">true</xsl:variable>
+
+    <xsl:variable name="tab-label">SITE</xsl:variable>
+
+    <xul:tab label="{$tab-label}" onclick="window.location = '{$contextprefix}/{$publicationid}/authoring{normalize-space($tab-documenturl)}?lenya.usecase=tab.overview';" id="lenya-xul-{$tab-area-prefix}-tab" selected="{$selected}"/>
+  </xsl:template>
+  
+
+
+
   <xsl:template name="workflow">
     <i18n:text>Workflow State</i18n:text>: <b class="lenya-menubar-highlight"><i18n:text><xsl:value-of select="$workflowstate"/></i18n:text></b>
     
