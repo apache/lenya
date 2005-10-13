@@ -118,12 +118,10 @@
   </xsl:template>
   
   <xsl:template name="workflow">
-    <i18n:text>Workflow StateHELLO</i18n:text>: <b class="lenya-menubar-highlight"><i18n:text><xsl:value-of select="$workflowstate"/></i18n:text> |</b>
+    <i18n:text>Workflow State</i18n:text>: <b class="lenya-menubar-highlight"><i18n:text><xsl:value-of select="$workflowstate"/></i18n:text></b>
     
-    <xsl:if test="$islive = 'false'">
-      <i18n:text>not</i18n:text>&#xA0;
-   </xsl:if>
-   <i18n:text>live</i18n:text>
+    (<xsl:if test="$islive = 'false'">
+      <i18n:text>not</i18n:text>&#xA0;</xsl:if><i18n:text>live</i18n:text>)
    
    <xsl:text>|</xsl:text>
   </xsl:template>
