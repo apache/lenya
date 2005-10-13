@@ -22,82 +22,41 @@
     @import url("chrome://global/skin/");
 -->
 
-<!--
-window, page, dialog, wizard { 
-	background-color: #C7D0D9;
-	font: message-box;
-}
--->
-
-#lenya-content-box {
-	background-color: white;
-	<!--font: caption; -->
-	font-size-adjust: 0.5;
+window {  
+ 
 }
 
-#lenya-logo {
-	width: 115px;
-	height: 36px;
-	margin-left: 25px;
-	margin-right: 5px;
+#lenya-xul-menubar vbox {
+ background-color: inherit;
 }
 
-#lenya-menubar {
-	padding-top: 5px;
-	background-image: url(<xsl:value-of select="concat($contextprefix, '/lenya/menu/images/grau-bg.gif')"/>);
+#lenya-info { 
+ float: right; 
+ margin: 9px 10px 0px 0px;
+ font-size: 11px; 
+ font-family: Arial, "Lucida Grande", Verdana, Helvetica, sans-serif; 
+ line-height: 1; 
 }
 
-#lenya-xul-menubar {
-	<!-- -moz-border-radius-topright: 1000px; -->
-	background-image: url(<xsl:value-of select="concat($contextprefix, '/lenya/menu/images/grau-bg2.gif')"/>);
-	background-color: red;
+tabbox {
+ padding-top: 3px;
+ background-color: #ababab;
+ color: #ffffff;
 }
 
-
-<!--tab {-->
-	<!--background-color: red;--> <!-- does not work - it only works in the real mozilla with the modern theme not with the classic theme -->
-<!--	font-family: Verdana, sans-serif;	
-	font-size: 80%;
-	font-weight: bold;
-	color: #838383;-->
-	<!--color: black;-->
-	
-	<!-- copy from modern theme -->
-<!--	margin: 0px;
-	border: 3px solid;
-	border-bottom-width: 3px;
-	-moz-border-top-colors: #B1B1B1 #CFCFCF #E4E4E4;
-	-moz-border-right-colors: #B1B1B1 #CFCFCF #E4E4E4;
-	-moz-border-bottom-colors: #B1B1B1 #CFCFCF #E4E4E4;>
-	-moz-border-left-colors: #000000 #90A0B0 #B1B1B1;
-	-moz-border-radius-topleft: 3px;
-	-moz-border-radius-topright: 3px;
-	padding: 1px 3px;
-	
-	
-	
-	background-color: #E5F5F8;
-	
-}-->
-
-<!--tab[selected="true"] {
-	-moz-border-top-colors: #000000 #DFE2E6 #D0D7DD;
-	-moz-border-right-colors: #000000 #BAC2CD #C1C9D3;
-	-moz-border-bottom-colors: #E5F5F8;
-	-moz-border-left-colors: #000000 #DFE2E6 #D0D7DD;
-	background-color: #E5F5F8;
-	color: red;
-}-->
-
-<!--
-menubar {
-	background-color: #E5F5F8;
-	border-bottom: solid 1px #B1B1B1;
+tab { 
+ vertical-align: middle;
+ font: bold 10px/1.0 Arial, Verdana, sans-serif; text-transform: uppercase; 
 }
 
-menupopup {
-	background-color: #E5F5F8;
+tabs {
+ 
+ margin-left: 3px;
 }
--->
+
+description {
+ 
+}
+
 
 </css>
