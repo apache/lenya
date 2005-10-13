@@ -3,7 +3,7 @@
 <xconf xpath="/cocoon/usecases" remove="/cocoon/usecases/component-instance[@name = 'edit.cforms']">
   <component-instance name="edit.cforms"
                       logger="lenya.site"
-                      class="org.apache.lenya.cms.usecase.CFormsUsecase">
+                      class="org.apache.lenya.cms.usecase.DummyCFormsUsecase">
     <view template="modules/cforms/usecases/dynamicrepeater_template.xml" type="cforms">
       <intro/>
       <definition template="modules/cforms/usecases/dynamicrepeater.xml">

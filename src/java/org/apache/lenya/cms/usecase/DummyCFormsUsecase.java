@@ -22,7 +22,7 @@ import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
 
-public class CFormsUsecase extends DocumentUsecase {
+public class DummyCFormsUsecase extends DocumentUsecase {
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
      */
@@ -68,10 +68,6 @@ public class CFormsUsecase extends DocumentUsecase {
         String pubId = doc.getPublication().getId();
         setParameter("pubId", pubId);
         String host="http://"+request.getServerName()+":"+request.getServerPort()  ;
-        /*
-         * + "/"+request.getServletPath()<- FIXME: need to check with tomcat! 
-         * Not have to be if contextprefix is working propably, needs testing!!!
-         */
         setParameter("host", host);
     }
 
