@@ -52,6 +52,10 @@
       <label xml:lang="en">OpenDocument Doctype</label>
       <label xml:lang="de">OpenDocument Dokumenttyp</label>
     </node>
+
+    <node id="cforms" visibleinnav="true">
+      <label xml:lang="en">CForms Doctype</label>
+    </node>
  </node>
   
 </site>

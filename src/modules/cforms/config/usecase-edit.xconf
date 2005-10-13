@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xconf xpath="/cocoon/usecases" remove="/cocoon/usecases/component-instance[@name = 'edit.cforms']">
+  <component-instance name="edit.cforms"
+                      logger="lenya.site"
+                      class="org.apache.lenya.cms.usecase.CFormsUsecase">
+    <view template="modules/cforms/usecases/dynamicrepeater_template.xml" type="cforms">
+      <intro/>
+      <definition template="modules/cforms/usecases/dynamicrepeater.xml">
+          form.setAttribute("counter", new java.lang.Integer(0));
+      </definition>
+      <binding template="modules/cforms/usecases/dynamicrepeater_binding.xml">
+          generic.doc = loadDocument(generic.proxy.getParameter('sourceUri'));
+          form.load(generic.doc);
+      </binding>
+      <outro>
+        form.save(generic.doc);
+        saveDocument(generic.doc, generic.proxy.getParameter('sourceUri'));
+      </outro>
+    </view>
+  </component-instance>
+</xconf>
+

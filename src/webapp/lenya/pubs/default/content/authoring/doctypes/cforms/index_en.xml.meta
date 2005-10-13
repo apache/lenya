@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lenya:document xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
+<lenya:meta>
+<lenya:dc>
+<dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">CForms Doctype</dc:title>
+<dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">lenya</dc:creator>
+<dc:subject xmlns:dc="http://purl.org/dc/elements/1.1/"/>
+<dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/"/>
+<dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">2005-10-13 11:19:30</dc:date>
+<dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">en</dc:language>
+<dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/"/>
+</lenya:dc>
+<lenya:internal>
+<lenya:resourceType>cforms</lenya:resourceType>
+<lenya:contentType>xml</lenya:contentType>
+</lenya:internal>
+</lenya:meta>
+</lenya:document>

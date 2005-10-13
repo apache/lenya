@@ -32,10 +32,12 @@
   <resource-type name="homepage" workflow="fallback://config/workflow/workflow.xml"/>
   <resource-type name="links" workflow="fallback://config/workflow/workflow.xml"/>
   <resource-type name="search" workflow="fallback://config/workflow/workflow.xml"/>
+  <resource-type name="cforms" workflow="fallback://config/workflow/workflow.xml"/>
   
   <module name="xhtml"/>
   <module name="links"/>
   <module name="opendocument"/>
+  <module name="cforms"/>
   <module name="homepage"/>
   <module name="search"/>
   <module name="blog"/>
