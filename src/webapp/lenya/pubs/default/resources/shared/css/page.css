@@ -333,3 +333,9 @@ table.search-table-noborder-nopadding th {
 	font-size: small;
 }
 
+/* Broken Internal Links in Authoring area */
+a.brokenlink {
+    background-color: yellow;
+    border: 1px dashed #000000;
+    text-decoration: none;
+}

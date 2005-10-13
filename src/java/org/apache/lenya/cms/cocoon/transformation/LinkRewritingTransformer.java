@@ -68,14 +68,19 @@ import org.xml.sax.helpers.AttributesImpl;
  * <ul>
  * <li>The area is replaced by the current area (obtained from the page envelope).</li>
  * <li>A URL prefix is added depending on the proxy configuration of the publication.</li>
- * <li>If the target document does not exist, the <code>&lt;a/&gt;</code> element is removed to
- * disable the link.</li>
+ * <li>If the target document does not exist and is in the authoring area, the href attribute is 
+ * removed and a class="brokenlink" attribute is added to the <code>&lt;a/&gt;</code> element</li>
+ * <li>If the target document does not exist and is in the live area, the <code>&lt;a/&gt;</code> 
+ * element is removed to disable the link.</li>
  * </ul>
  * 
  * $Id: LinkRewritingTransformer.java,v 1.7 2004/03/16 11:12:16 gregor
  */
 public class LinkRewritingTransformer extends AbstractSAXTransformer implements Disposable {
 
+    protected static final String BROKEN_ATTRIB = "class";
+    protected static final String BROKEN_VALUE = "brokenlink";
+    
     private boolean ignoreAElement = false;
     private ServiceSelector serviceSelector;
     private PolicyManager policyManager;
@@ -239,6 +244,8 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
 
                             if (targetDocument.exists()) {
                                 rewriteLink(newAttrs, targetDocument, anchor, queryString);
+                            } else if (getCurrentDocument().getArea().equals(Publication.AUTHORING_AREA)) {
+                                markBrokenLink(newAttrs, href);
                             } else {
                                 this.ignoreAElement = true;
                             }
@@ -271,6 +278,25 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                 getLogger().debug(this.indent + "<" + qname + "> sent");
             }
         }
+    }
+    
+    /**
+     * Marks a <code>&lt;a/&gt;</code> element as broken and removes href attribute.
+     * 
+     * @param newAttrs The new attributes.
+     * @throws AccessControlException when something went wrong.
+     */
+    protected void markBrokenLink(AttributesImpl newAttrs, String brokenHref)
+            throws AccessControlException {
+        if(newAttrs.getIndex(BROKEN_ATTRIB) > -1)
+            newAttrs.removeAttribute(newAttrs.getIndex(BROKEN_ATTRIB));
+        if(newAttrs.getIndex("title") > -1)
+            newAttrs.removeAttribute(newAttrs.getIndex("title"));
+        if(newAttrs.getIndex("href") > -1)
+            newAttrs.setAttribute(newAttrs.getIndex("href"),"","href","href","CDATA","");
+        String warning = "Broken Link: " + brokenHref;
+        newAttrs.addAttribute("","title","title","CDATA",warning);
+        newAttrs.addAttribute("",BROKEN_ATTRIB,BROKEN_ATTRIB,"CDATA",BROKEN_VALUE);
     }
 
     /**
