@@ -171,6 +171,8 @@ function executeUsecase() {
                        }
                         // form template
                           form.showForm(viewUri, {"usecase" : proxy});
+//DEBUG ajax="true"
+// print("form.showForm after");
                     }
                     else{
                         cocoon.sendPageAndWait(viewUri, {
@@ -215,7 +217,7 @@ function executeUsecase() {
                 passRequestParameters(flowHelper, usecase);
                 usecase.advance();
                 //HEADSUP: Cform do not allow id="submit" anymore. Use id="ok" for now (till it is settled on cocoon-dev).
-                if (cocoon.request.getParameter("submit")||cocoon.request.getParameter("ok")) {
+                if (cocoon.request.getParameter("submit")||cocoon.request.getParameter("lenya.submit")) {
                     usecase.checkExecutionConditions();
                     if (! usecase.hasErrors()) {
                        if (view.getViewType()=="cforms"){

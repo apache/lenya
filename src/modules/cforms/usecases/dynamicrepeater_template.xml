@@ -26,11 +26,11 @@
   </page:head>
 
   <page:body>
-    <ft:form-template method="POST" ajax="true">
+    <ft:form-template method="POST" ajax="false">
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
       <input type="hidden" name="lenya.usecase"
         value="${request.getParameter('lenya.usecase')}"/>
-    
+      <input type="hidden" name="lenya.submit" value="ok"/>
       <p>
         This is an example of how dynamic templates (using the JX macros) allow to change the
         page structure depending on the form contents. By adding or removing rows in the repeater
