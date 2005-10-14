@@ -311,7 +311,7 @@
   
   <!-- Notification -->
   <message key="notification-message">Lenya Notification</message>
-  <message key="notify-submitter">notify the sumbitter</message>
+  <message key="notify-submitter">notify the submitter</message>
   <message key="document-published">A document you submitted was published: {0}</message>
 
   <!-- Info asset  --> 
