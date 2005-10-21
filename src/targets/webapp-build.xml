@@ -215,10 +215,13 @@
 
     <!-- Copy endorsed libraries -->
     <copy todir="${tomcat.endorsed.dir}">
-      <fileset dir="${build.webapp}/WEB-INF/lib/endorsed">
-        <include name="*.jar"/>
-      </fileset>
+      <fileset dir="${build.webapp}/WEB-INF/lib/">
+        <include name="xercesImpl-*.jar"/>
+        <include name="xalan-*.jar"/>
+        <include name="jakarta-regexp-*.jar"/>
+        <include name="jakarta-bcel-*.jar"/>
     </copy>
+    <copy file="${build.webapp}/WEB-INF/lib/xml-apis.jar" todir="${tomcat.endorsed.dir}"/>
   </target>
 
   <!-- ============================================================ -->
