@@ -187,6 +187,11 @@
                   <map:serialize type="xml"/>
                 </map:when>
                 <map:otherwise> <!-- GET: Open -->
+                  <map:act type="set-header">
+                    <!-- prevent caching in the browser -->
+                    <map:parameter name="Cache-Control" value="pre-check=0" />
+                    <map:parameter name="Expires" value="-1" />
+                  </map:act>
                   <map:generate src="pubs/{1}/content/{2}/{page-envelope:document-path}"/>
                   <map:serialize type="xml"/>
                 </map:otherwise>
