@@ -23,8 +23,6 @@
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
   >
   
-  <xsl:import href="../util/page-util.xsl"/>
-  
   <xsl:param name="documentid"/>
   <xsl:param name="documenturl"/>
   <xsl:param name="area"/>
