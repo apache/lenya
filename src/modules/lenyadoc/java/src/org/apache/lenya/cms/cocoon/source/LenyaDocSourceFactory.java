@@ -37,6 +37,9 @@ import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceFactory;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
@@ -89,10 +92,10 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
     public Source getSource(String location, Map parameters) throws MalformedURLException,
             IOException, SourceException {
         String scheme = null;
-        String publicationId = null;
         String area = null;
         String language = null;
         String docId = null;
+        Publication pub;
 
         // Parse the url
         int start = 0;
@@ -120,7 +123,13 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
                 throw new MalformedURLException("Malformed lenyadoc: URI: publication part not found ["
                         + location + "]");
             }
-            publicationId = location.substring(start, end);
+            String publicationId = location.substring(start, end);
+            try {
+                pub = PublicationUtil.getPublication(this.manager, publicationId);
+            } catch (PublicationException e) {
+                throw new MalformedURLException("Malformed lenyadoc: Publication [" + publicationId
+                        + "] does not exist or could not be initialized");
+            }
 
             // Area
             start = end + 1;
@@ -136,7 +145,6 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
             // Relative: get publication id and area from page envelope
             Map objectModel = ContextHelper.getObjectModel(this.context);
             Request request = ObjectModelHelper.getRequest(objectModel);
-            Publication pub;
             try {
                 pub = PublicationUtil.getPublication(this.manager, objectModel);
             } catch (PublicationException e) {
@@ -144,7 +152,6 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
                         + location + "]");
             }
             if (pub != null && pub.exists()) {
-                publicationId = pub.getId();
                 String url = ServletHelper.getWebappURI(request);
                 area = new URLInformation(url).getArea();
             } else {
@@ -174,10 +181,15 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Creating repository source for URI [" + location + "]");
         }
+        DocumentIdentityMap map = new DocumentIdentityMap(session, this.manager, getLogger());
+        Document document;
+        try {
+            document = map.get(pub, area, docId, language);
+        } catch (DocumentBuildException e) {
+            throw new MalformedURLException("Malformed lenyadoc: Document [" + docId + "] could not be created.");
+        }
 
-        // TODO: Replace hardcoded Lenya document structure
-        String lenyaURL = "lenya://lenya/pubs/" + publicationId + "/content/" + area + docId
-                + "/index_" + language + ".xml";
+        String lenyaURL = document.getSourceURI();
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Mapping 'lenyadoc:' URL [" + location + "] to 'lenya:' URL ["
