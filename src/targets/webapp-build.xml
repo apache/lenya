@@ -219,7 +219,8 @@
         <include name="xercesImpl-*.jar"/>
         <include name="xalan-*.jar"/>
         <include name="jakarta-regexp-*.jar"/>
-        <include name="jakarta-bcel-*.jar"/>
+	<include name="jakarta-bcel-*.jar"/>
+      </fileset>
     </copy>
     <copy file="${build.webapp}/WEB-INF/lib/xml-apis.jar" todir="${tomcat.endorsed.dir}"/>
   </target>
