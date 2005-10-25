@@ -20,10 +20,13 @@
 -->
 
 <fb:context xmlns:fb="http://apache.org/cocoon/forms/1.0#binding"
+    xmlns:fd="http://apache.org/cocoon/forms/1.0#definition"
     path="/data">
     
   <fb:simple-repeater id="contacts" parent-path="contacts" row-path="contact">
-    <fb:value id="ID" path="@id"/>
+    <fb:value id="ID" path="@id">
+      <fd:convertor datatype="integer"/>
+    </fb:value>
     <fb:value id="firstname" path="firstname"/>
     <fb:value id="lastname" path="lastname"/>
   </fb:simple-repeater>
