@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2005 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- 
+  This sitemap handles the creation of link reports
+-->
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  
+  <map:components>
+    <map:generators default="file">
+      <map:generator name="linkStatus" src="org.apache.lenya.cms.cocoon.generation.LinkStatusGenerator">
+      </map:generator>
+    </map:generators>
+    
+    <map:selectors default="browser">
+      <map:selector logger="sitemap.selector.lastmod" name="last-mod" src="org.apache.lenya.cms.cocoon.selection.LastModSourceSelector"/>
+    </map:selectors>
+  </map:components>
+  
+	<!-- =========================== Pipelines ================================ -->
+	
+  <map:pipelines>
+  
+    <map:component-configurations>
+      <global-variables>
+        <cache-dir>work/cache</cache-dir>
+      </global-variables>
+    </map:component-configurations>  
+	  
+    <map:pipeline type="noncaching">
+
+      <map:match type="usecase" pattern="linkreport">
+         <map:select type="last-mod">
+            <map:parameter name="compare-to" value="lenya://lenya/pubs/{page-envelope:publication-id}/content/{page-envelope:area}/{page-envelope:document-path}"/>
+            <!-- Read from cache -->
+            <!-- If configured within Apache then mod_lenya will nevertheless read from cache -->
+            <map:when test="{global:cache-dir}/{page-envelope:area}/{page-envelope:document-id}.linkreport">
+                <map:read src="{global:cache-dir}/{page-envelope:area}/{page-envelope:document-id}.linkreport" mime-type="text/xml; charset=utf-8"/>
+            </map:when>
+            <!-- Write to cache and serialize -->
+            <map:otherwise>
+              <map:generate type="linkStatus" src="/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-id}.html">
+                <map:parameter name="depth" value="1"/>
+              </map:generate>
+              <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
+              <map:transform src="fallback://lenya/xslt/authoring/edit/addSourceTags.xsl">
+                <map:parameter name="source" value="{global:cache-dir}/{page-envelope:area}/{page-envelope:document-id}.linkreport"/>
+              </map:transform>
+              <map:transform type="write-source">
+                <map:parameter name="serializer" value="xml"/>
+              </map:transform>
+              <map:transform src="fallback://lenya/xslt/authoring/edit/removeSourceTags.xsl"/>
+              <map:serialize type="xml"/>
+            </map:otherwise>
+          </map:select>
+      </map:match>
+      
+    </map:pipeline>
+    
+	</map:pipelines>
+	
+</map:sitemap>

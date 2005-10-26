@@ -19,9 +19,18 @@
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
+  <map:components>
+    <map:serializers default="xhtml">
+      <map:serializer logger="sitemap.serializer.links" name="links" src="org.apache.lenya.cms.cocoon.serialization.LinkSerializer"/>
+    </map:serializers>
+  </map:components>
+
   <map:views>
     <map:view from-label="aggregation" name="aggregation">
       <map:serialize type="xml"/>
+    </map:view>
+    <map:view from-position="last" name="links">
+      <map:serialize type="links" />
     </map:view>
   </map:views>
 
@@ -204,6 +213,10 @@
                   <map:otherwise>
                     <map:match pattern="authoring/**.html">
                       <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../../../1}/{../../../2}.xml?doctype={page-envelope:document-type}"/>
+                      <!-- uncomment to turn on external broken link reporting -->
+                      <!--<map:transform src="fallback://lenya/xslt/authoring/addJavaScript.xsl">
+                        <map:parameter name="scriptSRC" value="/{page-envelope:publication-id}/authoring/javascript/linkreporter.js"/>
+                      </map:transform>-->
                     </map:match>
                     <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
                     <!-- Write to cache for requests from live area -->
