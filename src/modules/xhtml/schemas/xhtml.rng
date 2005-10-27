@@ -37,7 +37,7 @@
 <include href="fallback://lenya/resources/schemas/lenya.rng"/>
 
 <!-- include original XHTML transitional schema -->
-<include href="xhtml/xhtml-basic.rng">
+<include href="fallback://lenya/modules/xhtml/schemas/xhtml/xhtml-basic.rng">
 
   <define name="html">
     <element name="html">
