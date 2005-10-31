@@ -109,7 +109,7 @@
       </map:match>
       
       <map:match pattern="**/*-bxe.css">
-        <map:read mime-type="text/css" src="resources/misc/bxe/{2}-bxe.css"/>
+        <map:read mime-type="text/css" src="fallback://resources/misc/bxe/{2}-bxe.css"/>
       </map:match>
       </map:pipeline>
     <!-- /BX Editor: RNG Schema -->
