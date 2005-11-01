@@ -1,59 +1,59 @@
 ﻿<!--
-
-   The Contents of this file are made available subject to the terms of
-   either of the following licenses
-
-          - GNU Lesser General Public License Version 2.1
-          - Sun Industry Standards Source License Version 1.1
-
-   Sun Microsystems Inc., October, 2000
-
-   GNU Lesser General Public License Version 2.1
-   =============================================
-   Copyright 2000 by Sun Microsystems, Inc.
-   901 San Antonio Road, Palo Alto, CA 94303, USA
-
-   This library is free software; you can redistribute it and/or
-   modify it under the terms of the GNU Lesser General Public
-   License version 2.1, as published by the Free Software Foundation.
-
-   This library is distributed in the hope that it will be useful,
-   but WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-   Lesser General Public License for more details.
-
-   You should have received a copy of the GNU Lesser General Public
-   License along with this library; if not, write to the Free Software
-   Foundation, Inc., 59 Temple Place, Suite 330, Boston,
-   MA  02111-1307  USA
-
-
-   Sun Industry Standards Source License Version 1.1
-   =================================================
-   The contents of this file are subject to the Sun Industry Standards
-   Source License Version 1.1 (the "License"); You may not use this file
-   except in compliance with the License. You may obtain a copy of the
-   License at http://www.openoffice.org/license.html.
-
-   Software provided under this License is provided on an "AS IS" basis,
-   WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING,
-   WITHOUT LIMITATION, WARRANTIES THAT THE SOFTWARE IS FREE OF DEFECTS,
-   MERCHANTABLE, FIT FOR A PARTICULAR PURPOSE, OR NON-INFRINGING.
-   See the License for the specific provisions governing your rights and
-   obligations concerning the Software.
-
-   The Initial Developer of the Original Code is: Sun Microsystems, Inc.
-
-   Copyright © 2002 by Sun Microsystems, Inc.
-
-   All Rights Reserved.
-
-   Contributor(s): _______________________________________
+    The Contents of this file are made available subject to the terms of
+    either of the following licenses
+    
+    - GNU Lesser General Public License Version 2.1
+    - Sun Industry Standards Source License Version 1.1
+    
+    Sun Microsystems Inc., October, 2000
+    
+    GNU Lesser General Public License Version 2.1
+    =============================================
+    Copyright 2000 by Sun Microsystems, Inc.
+    901 San Antonio Road, Palo Alto, CA 94303, USA
+    
+    This library is free software; you can redistribute it and/or
+    modify it under the terms of the GNU Lesser General Public
+    License version 2.1, as published by the Free Software Foundation.
+    
+    This library is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+    Lesser General Public License for more details.
+    
+    You should have received a copy of the GNU Lesser General Public
+    License along with this library; if not, write to the Free Software
+    Foundation, Inc., 59 Temple Place, Suite 330, Boston,
+    MA  02111-1307  USA
+    
+    
+    Sun Industry Standards Source License Version 1.1
+    =================================================
+    The contents of this file are subject to the Sun Industry Standards
+    Source License Version 1.1 (the "License"); You may not use this file
+    except in compliance with the License. You may obtain a copy of the
+    License at http://www.openoffice.org/license.html.
+    
+    Software provided under this License is provided on an "AS IS" basis,
+    WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING,
+    WITHOUT LIMITATION, WARRANTIES THAT THE SOFTWARE IS FREE OF DEFECTS,
+    MERCHANTABLE, FIT FOR A PARTICULAR PURPOSE, OR NON-INFRINGING.
+    See the License for the specific provisions governing your rights and
+    obligations concerning the Software.
+    
+    The Initial Developer of the Original Code is: Sun Microsystems, Inc.
+    
+    Copyright © 2002 by Sun Microsystems, Inc.
+    
+    All Rights Reserved.
+    
+    Contributor(s): _______________________________________
 
 -->
 <xsl:stylesheet version="1.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-	xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0" 		xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" 
+	xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
+	xmlns:style="urn:oasis:names:tc:opendocument:xmlns:style:1.0" 
 	xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0" 
 	xmlns:table="urn:oasis:names:tc:opendocument:xmlns:table:1.0" 
 	xmlns:draw="urn:oasis:names:tc:opendocument:xmlns:drawing:1.0" 
@@ -67,7 +67,8 @@
 	xmlns:dr3d="urn:oasis:names:tc:opendocument:xmlns:dr3d:1.0" 
 	xmlns:math="http://www.w3.org/1998/Math/MathML" 
 	xmlns:form="urn:oasis:names:tc:opendocument:xmlns:form:1.0" 
-	xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0" 		xmlns:ooo="http://openoffice.org/2004/office" 
+	xmlns:script="urn:oasis:names:tc:opendocument:xmlns:script:1.0"
+	xmlns:ooo="http://openoffice.org/2004/office" 
 	xmlns:ooow="http://openoffice.org/2004/writer" 
 	xmlns:oooc="http://openoffice.org/2004/calc" 
 	xmlns:dom="http://www.w3.org/2001/xml-events" 
@@ -103,6 +104,7 @@
                 <xsl:text>
 
         </xsl:text>
+        
                 <xsl:call-template name="write-default-styles"/>
 
                 <!-- THE STYLE PROPERTIES OF THE FIRST WRITTEN STYLE (PARENT) IS GIVEN OUT -->
@@ -111,7 +113,6 @@
                      Therefore they are created first.
                      Beginning with the top-level parents (the styles without any parent). -->
                 <xsl:for-each select="$office:styles/style:style[not(@style:parent-style-name)]">
-
                     <xsl:call-template name="write-styleproperty-line"/>
                     <xsl:call-template name="write-styleproperty-lines-for-children"/>
                 </xsl:for-each>
@@ -139,6 +140,7 @@
 		border-style: outset;
 		font-family:arial,sans-serif; font-size:10pt; }
 	</xsl:text>
+       
             //</xsl:comment>
         </xsl:element>
     </xsl:template>
@@ -149,7 +151,7 @@
 
         <xsl:variable name="styleProperties">
             <xsl:call-template name="write-style-properties">
-                <xsl:with-param name="styleAttributePath"   select="current()/style:properties/@*"/>
+                <xsl:with-param name="styleAttributePath"   select="current()/style:*[substring(local-name(), string-length(local-name()) - string-length('-properties') +1) = '-properties']/@*"/>
             </xsl:call-template>
         </xsl:variable>
 
@@ -257,7 +259,7 @@
 
         <xsl:variable name="styleProperties">
             <xsl:call-template name="write-style-properties">
-                <xsl:with-param name="styleAttributePath"   select="current()/style:properties/@*"/>
+                <xsl:with-param name="styleAttributePath"   select="current()/style:*[substring(local-name(), string-length(local-name()) - string-length('-properties') +1) = '-properties']/@*"/>
             </xsl:call-template>
         </xsl:variable>
 
