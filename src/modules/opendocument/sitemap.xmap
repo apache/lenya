@@ -49,7 +49,9 @@
             <map:parameter name="metaFileURL" value="zip://meta.xml@context://lenya/pubs/{page-envelope:publication-id}/content/{page-envelope:area}{page-envelope:document-id}/index_{page-envelope:document-language}.odt"/>
             <map:parameter name="stylesFileURL" value="zip://styles.xml@context://lenya/pubs/{page-envelope:publication-id}/content/{page-envelope:area}{page-envelope:document-id}/index_{page-envelope:document-language}.odt"/>
         </map:transform>
+<!--
         <map:transform src="fallback://lenya/modules/opendocument/xslt/opendocument2xhtml.xsl"/>
+-->
         <map:serialize type="xml"/>
       </map:match>
 
