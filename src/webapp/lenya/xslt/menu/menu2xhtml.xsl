@@ -121,6 +121,7 @@
   
   <xsl:template name="area-tab">
     <xsl:param name="tab-area"/>
+    <xsl:param name="target"/>
     <xsl:param name="tab-area-prefix" select="$tab-area"/>
     
     <xsl:variable name="tab-documenturl">
@@ -146,7 +147,7 @@
         <li id="area-{$tab-area}-active"><a href="{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}"> <span><i18n:text><xsl:value-of select="$tab-name"/></i18n:text></span></a></li>
       </xsl:when>
       <xsl:otherwise>
-        <li id="area-{$tab-area}"><a href="{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}"><span><i18n:text><xsl:value-of select="$tab-name"/></i18n:text></span></a></li>
+        <li id="area-{$tab-area}"><a href="{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}" target="{$target}"><span><i18n:text><xsl:value-of select="$tab-name"/></i18n:text></span></a></li>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
