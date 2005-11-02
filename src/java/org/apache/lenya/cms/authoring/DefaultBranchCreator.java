@@ -21,6 +21,8 @@ package org.apache.lenya.cms.authoring;
 
 import org.apache.log4j.Category;
 
+import org.apache.lenya.cms.publication.Publication;
+
 import java.io.File;
 
 public class DefaultBranchCreator extends DefaultCreator {
@@ -44,19 +46,12 @@ public class DefaultBranchCreator extends DefaultCreator {
      * @see org.apache.lenya.cms.authoring.DefaultCreator#getChildFileName(java.io.File, java.lang.String)
      */
     protected String getChildFileName(
-        File parentDir,
+        Publication publication,
+        String area,
+        String parentId,
         String childId,
         String language) {
-
-        log.warn("This method has the filename creation hardcoded, resp. the DocumentIdToPathMapper should be used!");
-
-        return parentDir
-            + File.separator
-            + childId
-            + File.separator
-            + "index"
-            + getLanguageSuffix(language)
-            + ".xml";
+	return publication.getPathMapper().getFile(publication, area, parentId + "/" + childId, language).getAbsolutePath();
     }
 
     /** (non-Javadoc)

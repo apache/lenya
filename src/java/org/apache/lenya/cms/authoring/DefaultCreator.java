@@ -29,7 +29,7 @@ import org.apache.lenya.xml.DocumentHelper;
 import org.apache.log4j.Category;
 import org.w3c.dom.Document;
 
-public class DefaultCreator implements ParentChildCreatorInterface {
+public abstract class DefaultCreator implements ParentChildCreatorInterface {
     private static Category log = Category.getInstance(DefaultCreator.class);
     public static final String RESOURCE_NAME = "resource-name";
     public static final String RESOURCE_META_NAME = "resource-meta-name";
@@ -143,7 +143,7 @@ public class DefaultCreator implements ParentChildCreatorInterface {
         throws Exception {
         // Set filenames
         String id = generateTreeId(childId, childType);
-        String filename = publication.getPathMapper().getFile(publication, "authoring", parentId + "/" + id, language).getAbsolutePath();
+        String filename = getChildFileName(publication, "authoring", parentId, childId, language);
         log.debug("Filename: " + filename);
         String filenameMeta = getChildMetaFileName(parentDir, id, language);
 
@@ -211,6 +211,7 @@ public class DefaultCreator implements ParentChildCreatorInterface {
       *
       * @throws Exception DOCUMENT ME!
       */
+    /*
     public void create(
         File samplesDir,
         File parentDir,
@@ -223,6 +224,7 @@ public class DefaultCreator implements ParentChildCreatorInterface {
 
         log.warn("Deprecated!");
     }
+    */
 
     /**
      * Apply some transformation on the newly created child.
@@ -272,12 +274,12 @@ public class DefaultCreator implements ParentChildCreatorInterface {
      * 
      * @return the file name of the child
      */
-    protected String getChildFileName(
-        File parentDir,
+    protected abstract String getChildFileName(
+        Publication publication,
+        String area,
+        String parentId,
         String childId,
-        String language) {
-        return null;
-    }
+        String language);
 
     /**
      * Get the file name of the meta file

@@ -15,11 +15,13 @@
  *
  */
 
-/* $Id: DefaultLeafCreator.java,v 1.14 2004/03/03 12:56:32 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.authoring;
 
 import java.io.File;
+
+import org.apache.lenya.cms.publication.Publication;
 
 public class DefaultLeafCreator extends DefaultCreator {
     /**
@@ -39,10 +41,12 @@ public class DefaultLeafCreator extends DefaultCreator {
      * @see org.apache.lenya.cms.authoring.DefaultCreator#getChildFileName(java.io.File, java.lang.String)
      */
     protected String getChildFileName(
-        File parentDir,
+        Publication publication,
+        String area,
+        String parentId,
         String childId,
         String language) {
-        return parentDir + File.separator + childId + getLanguageSuffix(language) + ".xml";
+        return publication.getPathMapper().getFile(publication, area, parentId + "/" + childId, language).getAbsolutePath();
     }
 
     /** (non-Javadoc)

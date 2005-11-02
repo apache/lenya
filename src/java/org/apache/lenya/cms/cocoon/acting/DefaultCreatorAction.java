@@ -256,8 +256,8 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
         }
 
         try {
-            creator.create(new File(absoluteDoctypesPath + "samples"),
-                new File(publication.getDirectory(), docsPath + parentid), childid, childType,
+            creator.create(publication, new File(absoluteDoctypesPath + "samples"),
+                new File(publication.getDirectory(), docsPath + parentid), parentid, childid, childType,
                 childname, language, allParameters);
         } catch (Exception e) {
             log.error("Creator threw exception: " + e);

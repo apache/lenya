@@ -37,6 +37,8 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.excalibur.source.Source;
 
 import org.apache.lenya.cms.authoring.ParentChildCreatorInterface;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationFactory;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
@@ -175,8 +177,8 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
             creator = (ParentChildCreatorInterface) creatorClass.newInstance();
         } else {
             getLogger().warn("No creator found for \"" + doctype +
-                "\". DefaultParentChildreator will be taken.");
-            creator = new org.apache.lenya.cms.authoring.DefaultCreator();
+                "\". DefaultBranchCreator will be taken.");
+            creator = new org.apache.lenya.cms.authoring.DefaultBranchCreator();
         }
 
         getLogger().debug(".act(): Creator : " + creator.getClass().getName());
@@ -259,8 +261,9 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
         }
 
         try {
-            creator.create(new File(absoluteDoctypesPath + "samples"),
-                new File(sitemapParentPath + docsPath + parentid), childid, childType, childname, language,
+            Publication publication = PublicationFactory.getPublication(objectModel);
+            creator.create(publication, new File(absoluteDoctypesPath + "samples"),
+                new File(sitemapParentPath + docsPath + parentid), parentid, childid, childType, childname, language,
                 allParameters);
         } catch (Exception e) {
             getLogger().error("Creator threw exception: " + e);

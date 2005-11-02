@@ -123,6 +123,7 @@ public interface ParentChildCreatorInterface {
      * 
      * @exception Exception if an error occurs
      */
+/*
     void create(
         File samplesDir,
         File parentDir,
@@ -132,4 +133,5 @@ public interface ParentChildCreatorInterface {
         String language,
         Map parameters)
         throws Exception;
+*/
 }
