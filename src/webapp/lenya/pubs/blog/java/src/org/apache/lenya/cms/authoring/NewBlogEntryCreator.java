@@ -36,6 +36,11 @@ import java.util.GregorianCalendar;
 import java.util.Map;
 import java.util.Date;
 
+import org.apache.lenya.cms.publication.Publication;
+
+/**
+ * Create a blog entry
+ */
 public class NewBlogEntryCreator extends DefaultBranchCreator {
     private static Category log = Category.getInstance(NewBlogEntryCreator.class);
 
@@ -65,9 +70,9 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
     /**
      *
      */
-    protected String getChildFileName(File parentDir, String childId, String language) {
-        String newFilename = parentDir + File.separator + "entries" + File.separator + year + File.separator + month + "/" + day + "/" + childId + "/index.xml";
-        log.debug(".getChildFileName(): " + newFilename);
+    protected String getChildFileName(Publication publication, String area, String parentId, String childId, String language) {
+        String newFilename = publication.getPathMapper().getFile(publication, area, "eentries" + File.separator + year + File.separator + month + "/" + day + "/" + childId + "/index", null).getAbsolutePath();
+        log.debug(newFilename);
         return newFilename;
     }
 
