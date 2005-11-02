@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ParentChildCreatorInterface.java,v 1.14 2004/03/03 12:56:32 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.authoring;
 
@@ -23,6 +23,8 @@ import java.io.File;
 import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
+
+import org.apache.lenya.cms.publication.Publication;
 
 public interface ParentChildCreatorInterface {
     /**
@@ -80,6 +82,35 @@ public interface ParentChildCreatorInterface {
     String generateTreeId(String childId, short childType) throws Exception;
 
     /**
+     * Create a new document.
+     *
+     * @param publication the publication context.
+     * @param samplesDir the directory where the template file is located.
+     * @param parentDir in which directory the document is to be created.
+     * @param parentId the parent id of the new document
+     * @param childId the document id of the new document
+     * @param childType the type of the new document.
+     * @param childName the name of the new document.
+     * @param language for which the document is created.
+     * @param parameters additional parameters that can be used when creating the child
+     * 
+     * @exception Exception if an error occurs
+     */
+    void create(
+        Publication publication,
+        File samplesDir,
+        File parentDir,
+        String parentId,
+        String childId,
+        short childType,
+        String childName,
+        String language,
+        Map parameters)
+        throws Exception;
+
+    /**
+     * @deprecated replaced by create method with access to publication context
+     *
      * Create a new document.
      *
      * @param samplesDir the directory where the template file is located.

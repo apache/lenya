@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DocumentIdToPathMapper.java,v 1.10 2004/03/01 16:18:16 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -49,6 +49,23 @@ public interface DocumentIdToPathMapper {
         String language);
 
     /**
+     * Compute the document-path for a given publication, area and 
+     * document-id. As there are possibly multiple files for the same 
+     * document-id (for different languages) the return value is a directory.
+     *  
+     * @param publication The publication.
+     * @param area The area.
+     * @param documentId The document id.
+     * @param language The language of the document.
+     * 
+     * @return The directory where all the files with the same 
+     * document-id are located
+     */
+    File getDirectory(Publication publication, String area, String documentId, String language);
+
+    /**
+     * @deprecated replaced by getDirectory with access to the language
+     * 
      * Compute the document-path for a given publication, area and 
      * document-id. As there are possibly multiple files for the same 
      * document-id (for different languages) the return value is a directory.

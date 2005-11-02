@@ -24,6 +24,7 @@ import java.io.FileNotFoundException;
 import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.log4j.Category;
 import org.w3c.dom.Document;
@@ -130,8 +131,10 @@ public class DefaultCreator implements ParentChildCreatorInterface {
       * @throws Exception DOCUMENT ME!
       */
     public void create(
+        Publication publication,
         File samplesDir,
         File parentDir,
+        String parentId,
         String childId,
         short childType,
         String childName,
@@ -140,7 +143,8 @@ public class DefaultCreator implements ParentChildCreatorInterface {
         throws Exception {
         // Set filenames
         String id = generateTreeId(childId, childType);
-        String filename = getChildFileName(parentDir, id, language);
+        String filename = publication.getPathMapper().getFile(publication, "authoring", parentId + "/" + id, language).getAbsolutePath();
+        log.debug("Filename: " + filename);
         String filenameMeta = getChildMetaFileName(parentDir, id, language);
 
         String doctypeSample = samplesDir + File.separator + sampleResourceName;
@@ -169,10 +173,11 @@ public class DefaultCreator implements ParentChildCreatorInterface {
 
         if (!parent.exists()) {
             parent.mkdirs();
+            log.warn("Directory has been created: " + parent);
         }
 
         // Write file
-        log.debug("write file: " + filename);
+        log.debug("Write file: " + filename);
         DocumentHelper.writeDocument(doc, new File(filename));
 
         // now do the same thing for the meta document if the
@@ -190,6 +195,33 @@ public class DefaultCreator implements ParentChildCreatorInterface {
 
             DocumentHelper.writeDocument(doc, new File(filenameMeta));
         }
+    }
+
+    /**
+      * @deprecated replaced by create method with access to publication context
+      *
+      * @param samplesDir DOCUMENT ME!
+      * @param parentDir DOCUMENT ME!
+      * @param childId DOCUMENT ME!
+      * @param childType DOCUMENT ME!
+      * @param childName the name of the child
+      * @param language for which the document is created
+      * @param parameters additional parameters that can be considered when 
+      *  creating the child
+      *
+      * @throws Exception DOCUMENT ME!
+      */
+    public void create(
+        File samplesDir,
+        File parentDir,
+        String childId,
+        short childType,
+        String childName,
+        String language,
+        Map parameters)
+        throws Exception {
+
+        log.warn("Deprecated!");
     }
 
     /**
@@ -231,6 +263,7 @@ public class DefaultCreator implements ParentChildCreatorInterface {
         throws Exception {}
 
     /**
+     * @deprecated because it implies not to use the DocumentIdToPathMapper
      * Get the file name of the child
      * 
      * @param parentDir the parent directory

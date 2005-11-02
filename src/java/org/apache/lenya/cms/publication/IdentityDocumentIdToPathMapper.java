@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: IdentityDocumentIdToPathMapper.java,v 1.3 2004/03/01 16:18:17 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -34,6 +34,16 @@ public class IdentityDocumentIdToPathMapper implements DocumentIdToPathMapper {
     }
 
     /**
+     *  (non-Javadoc)
+     * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getDirectory(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String)
+     */
+    public File getDirectory(Publication publication, String area, String documentId, String language) {
+        return getDirectory(publication, area, documentId);
+    }
+
+    /**
+     * @deprecated because language is missing
+     * 
      *  (non-Javadoc)
      * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getDirectory(org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String)
      */

@@ -23,6 +23,7 @@ import java.io.File;
 import java.util.Collections;
 
 import org.apache.lenya.cms.publication.SiteTree;
+import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.publication.DocumentType;
 import org.apache.lenya.cms.publication.DocumentTypeBuildException;
 import org.apache.lenya.cms.publication.DocumentTypeBuilder;
@@ -126,9 +127,14 @@ public class DocumentCreator {
                 DocumentTypeBuilder.DOCTYPE_DIRECTORY);
 
         try {
+            DocumentIdToPathMapper mapper = publication.getPathMapper();
+            log.debug("Parent directory: " + mapper.getFile(publication, "authoring", parentId, language));
             creator.create(
+                publication,
                 new File(doctypesDirectory, "samples"),
-                new File(authoringDirectory, parentId),
+                mapper.getDirectory(publication, "authoring", parentId, language),
+                //new File(authoringDirectory, parentId),
+                parentId,
                 childId,
                 childType,
                 childName,

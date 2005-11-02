@@ -15,13 +15,17 @@
  *
  */
 
-/* $Id: DefaultBranchCreator.java,v 1.15 2004/03/01 16:18:27 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.authoring;
+
+import org.apache.log4j.Category;
 
 import java.io.File;
 
 public class DefaultBranchCreator extends DefaultCreator {
+    private Category log = Category.getInstance(DefaultBranchCreator.class);
+
     /**
      * Return the child type.
      *
@@ -36,12 +40,16 @@ public class DefaultBranchCreator extends DefaultCreator {
     }
 
     /** (non-Javadoc)
+     * @depracted because it does not the DocumentIdToPathMapper
      * @see org.apache.lenya.cms.authoring.DefaultCreator#getChildFileName(java.io.File, java.lang.String)
      */
     protected String getChildFileName(
         File parentDir,
         String childId,
         String language) {
+
+        log.warn("This method has the filename creation hardcoded, resp. the DocumentIdToPathMapper should be used!");
+
         return parentDir
             + File.separator
             + childId
