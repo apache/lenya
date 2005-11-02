@@ -50,13 +50,30 @@
       <isfalse value="${cocoon.xconf.isEqual}"/>
     </condition>
     <antcall target="copy-cocoon.xconf"/>
-<!--
-    <delete file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"/>
--->
   </target>
 
+  <target name="modules-patch-lenya-roles">
+    <copy file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles"
+      toFile="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles.ant_patch"/>
+    <xpatch file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles.ant_patch"
+      srcdir="${build.modules}"
+      includes="*/config/*.xroles"
+      addComments="true"/>
+    <checksum
+      file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles.ant_patch"
+      property="lenya.roles.md5"/>
+    <checksum
+      file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles"
+      property="${lenya.roles.md5}"
+      verifyProperty="lenya.roles.isEqual"/>
+    <condition property="lenya.roles.copy">
+      <isfalse value="${lenya.roles.isEqual}"/>
+    </condition>
+    <antcall target="copy-lenya.roles"/>
+  </target>
+  
   <target name="deploy-modules"
-          depends="copy-modules, modules-patch-cocoon-xconf">
+          depends="copy-modules, modules-patch-cocoon-xconf, modules-patch-lenya-roles">
   </target>
 
 </project>

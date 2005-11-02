@@ -68,6 +68,40 @@
     <antcall target="copy-cocoon.xconf"/>
     <delete file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch" failonerror="false"/>
 
+
+    <!--  copy properties, xml configuration files and roles -->
+    <copy todir="${build.webapp}/WEB-INF/classes">
+      <fileset dir="${build.src}">
+        <include name="**/*.properties"/>
+        <include name="**/*.roles"/>
+        <include name="**/*.xml"/>
+      </fileset>
+      <fileset dir="${java.dir}">
+        <include name="**/*.roles"/>
+      </fileset>
+    </copy>
+    
+    
+    <!-- Patch lenya.roles -->
+    <copy file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles"
+      toFile="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles.ant_patch"/>
+    <xpatch file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles.ant_patch"
+      srcdir="${build.webapp}/lenya/pubs" 
+      includes="*/config/*.xroles"
+      addComments="true"/>
+    <checksum
+      file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles.ant_patch"
+      property="lenya.roles.md5"/>
+    <checksum
+      file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles"
+      property="${lenya.roles.md5}"
+      verifyProperty="lenya.roles.isEqual"/>
+    <condition property="lenya.roles.copy">
+      <isfalse value="${lenya.roles.isEqual}"/>
+    </condition>
+    <antcall target="copy-lenya.roles"/>
+    <delete file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles.ant_patch" failonerror="false"/>
+    
     <!-- Patch web.xml -->
     <!--
     <xpatch file="${build.webapp}/WEB-INF/web.xml"
@@ -84,18 +118,6 @@
             srcdir="${build.webapp}/lenya/pubs" 
             includes="*/targets/test-build.xconf"
             addComments="true"/>
-
-    <!--  copy properties, xml configuration files and roles -->
-    <copy todir="${build.webapp}/WEB-INF/classes">
-      <fileset dir="${build.src}">
-        <include name="**/*.properties"/>
-        <include name="**/*.roles"/>
-        <include name="**/*.xml"/>
-      </fileset>
-        <fileset dir="${java.dir}">
-          <include name="**/*.roles"/>
-        </fileset>
-    </copy>
 
     <!-- now create logs directory, where log4j can write to -->
     <mkdir dir="${build.webapp}/WEB-INF/logs"/>
@@ -171,6 +193,14 @@
        overwrite="true"/>
   </target>
 
+  <!-- Copy lenya.roles -->
+  <target name="copy-lenya.roles" if="lenya.roles.copy">
+    <copy
+      file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles.ant_patch"
+      toFile="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles"
+      overwrite="true"/>
+  </target>
+  
   <!--
   The war target just packs up what was created in the webapp target
   (and triggers the javadoc target with the dependency)

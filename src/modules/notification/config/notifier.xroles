@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xroles xpath="/role-list" unless="/role-list/role[@name = 'org.apache.lenya.notification.Notifier']">
+
+  <role name="org.apache.lenya.notification.Notifier"
+    shorthand="notifier"
+    default-class="org.apache.lenya.notification.DefaultNotifier"/>
+  
+</xroles>
