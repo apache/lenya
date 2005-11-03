@@ -30,7 +30,7 @@
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
       <input type="hidden" name="lenya.usecase"
         value="${request.getParameter('lenya.usecase')}"/>
-      <input type="hidden" name="lenya.submit" value="ok"/>
+      <input type="hidden" id="lenya.submit" name="lenya.submit" value="ok"/>
       <p>
         This is an example of how dynamic templates (using the JX macros) allow to change the
         page structure depending on the form contents. By adding or removing rows in the repeater
@@ -101,7 +101,9 @@
       </div>
       </ft:repeater>
       <ft:widget id="ok"/>
+      <!-- If you want a cancel button you beware to change the lenya.submit value!!! like: -->
       <br/>
+      <input i18n:attr="value" type="submit" name="cancel" value="Cancel" onClick="document.getElementById('lenya.submit').value='cancel'"/>
     </ft:form-template>
   </page:body>
 </page:page>
