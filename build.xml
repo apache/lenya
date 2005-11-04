@@ -67,6 +67,8 @@
   <import file="src/targets/export-build.xml" />
   <!-- module targets          -->
   <import file="src/targets/modules-build.xml" />
+  <!-- migration targets          -->
+  <import file="src/targets/migration-build.xml" />
   <!-- Publication tests       -->
   <import file="src/targets/publication-test-build.xml" />
   <!-- Successfully Built Message       -->

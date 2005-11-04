@@ -30,7 +30,6 @@ import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.cocoon.jcr.source.JCRNodeSource;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -64,6 +63,7 @@ public class JCRMetaData extends AbstractLogEnabled implements MetaData {
 
         this.key2values = new HashMap();
         SourceResolver resolver = null;
+        /*
         JCRNodeSource source = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
@@ -102,10 +102,12 @@ public class JCRMetaData extends AbstractLogEnabled implements MetaData {
                 this.manager.release(resolver);
             }
         }
+        */
     }
 
     public void save() throws DocumentException {
         SourceResolver resolver = null;
+        /*
         JCRNodeSource source = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
@@ -143,6 +145,7 @@ public class JCRMetaData extends AbstractLogEnabled implements MetaData {
                 this.manager.release(resolver);
             }
         }
+        */
     }
 
     public String[] getValues(String key) throws DocumentException {

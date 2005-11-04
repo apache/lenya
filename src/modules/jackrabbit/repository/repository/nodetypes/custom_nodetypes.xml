@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  /*
+  * Copyright 2004-2005 The Apache Software Foundation or its licensors,
+  *                     as applicable.
+  *
+  * Licensed under the Apache License, Version 2.0 (the "License");
+  * you may not use this file except in compliance with the License.
+  * You may obtain a copy of the License at
+  *
+  *      http://www.apache.org/licenses/LICENSE-2.0
+  *
+  * Unless required by applicable law or agreed to in writing, software
+  * distributed under the License is distributed on an "AS IS" BASIS,
+  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  * See the License for the specific language governing permissions and
+  * limitations under the License.
+  */
+-->
+<nodeTypes xmlns:nt="http://www.jcp.org/jcr/nt/1.0" xmlns:jcr="http://www.jcp.org/jcr/1.0"
+  xmlns:rep="internal" xmlns:sv="http://www.jcp.org/jcr/sv/1.0"
+  xmlns:lnt="http://apache.org/cocoon/lenya/jcr/nodetype/1.0"
+  xmlns:lenya="http://apache.org/cocoon/lenya/jcr/1.0"
+  xmlns:mix="http://www.jcp.org/jcr/mix/1.0"
+  xmlns:xml="http://www.w3.org/XML/1998/namespace"
+  xmlns:dc="http://purl.org/dc/elements/1.1"
+  xmlns:dcterms="http://purl.org/dc/terms/">
+
+  <!--
+  General
+  -->  
+  <nodeType name="jcr:content" isMixin="false" hasOrderableChildNodes="false" primaryItemName="">
+    <supertypes>
+      <supertype>nt:resource</supertype>
+    </supertypes>
+  </nodeType>
+
+  <!--
+  Publication root node
+  -->  
+  <nodeType name="lnt:publication" isMixin="false" hasOrderableChildNodes="false" primaryItemName="">
+    <supertypes>
+      <supertype>nt:hierarchyNode</supertype>
+      <supertype>mix:referenceable</supertype>
+    </supertypes>
+    <propertyDef name="lenya:id" autoCreate="false" mandatory="true" onParentVersion="ABORT" protected="false"
+      multiple="false" requiredType="String"/>
+    <childNodeDef name="lenya:content" defaultPrimaryType="lnt:content" autoCreate="false" mandatory="false"
+      onParentVersion="ABORT" protected="false" sameNameSibs="false">
+      <requiredPrimaryTypes>
+        <requiredPrimaryType>lnt:content</requiredPrimaryType>
+      </requiredPrimaryTypes>
+    </childNodeDef>
+    <childNodeDef name="lenya:site" defaultPrimaryType="lnt:site" autoCreate="false" mandatory="false"
+      onParentVersion="ABORT" protected="false" sameNameSibs="false">
+      <requiredPrimaryTypes>
+        <requiredPrimaryType>lnt:site</requiredPrimaryType>
+      </requiredPrimaryTypes>
+    </childNodeDef>
+  </nodeType>
+  
+  <!--
+    Root node for content subtree
+  -->
+  <nodeType name="lnt:content" isMixin="false" hasOrderableChildNodes="true" primaryItemName="">
+    <supertypes>
+      <supertype>nt:hierarchyNode</supertype>
+      <supertype>mix:referenceable</supertype>
+      <supertype>mix:lockable</supertype>
+    </supertypes>
+    <childNodeDef name="lenya:node" defaultPrimaryType="lnt:node" autoCreate="false" mandatory="false"
+      onParentVersion="ABORT" protected="false" sameNameSibs="true">
+      <requiredPrimaryTypes>
+        <requiredPrimaryType>lnt:node</requiredPrimaryType>
+      </requiredPrimaryTypes>
+    </childNodeDef>
+  </nodeType>
+  
+  
+  <!-- node in content subtree -->
+  <nodeType name="lnt:node" isMixin="false" hasOrderableChildNodes="true" primaryItemName="">
+    <supertypes>
+      <supertype>nt:hierarchyNode</supertype>
+      <supertype>mix:referenceable</supertype>
+      <supertype>mix:lockable</supertype>
+    </supertypes>
+    <propertyDef name="*" requiredType="String" autoCreate="false" mandatory="false"
+      onParentVersion="ABORT" protected="false" multiple="false"/>
+    <propertyDef name="lenya:visibleinnav" requiredType="Boolean" autoCreate="false" mandatory="true"
+      onParentVersion="ABORT" protected="false" multiple="false"/>
+    <propertyDef name="lenya:href" requiredType="String" autoCreate="false" mandatory="false"
+      onParentVersion="ABORT" protected="false" multiple="false"/>
+    <propertyDef name="lenya:suffix" requiredType="String" autoCreate="false" mandatory="false"
+      onParentVersion="ABORT" protected="false" multiple="false"/>
+    <childNodeDef name="lenya:document" defaultPrimaryType="lnt:document" autoCreate="false"
+      mandatory="false" onParentVersion="ABORT" protected="false" sameNameSibs="true">
+      <requiredPrimaryTypes>
+        <requiredPrimaryType>lnt:document</requiredPrimaryType>
+      </requiredPrimaryTypes>
+    </childNodeDef>
+  </nodeType>
+  
+  <!--
+  document node in content subtree
+  -->
+  <nodeType name="lnt:document" isMixin="false" hasOrderableChildNodes="false" primaryItemName="jcr:content">
+    <supertypes>
+      <supertype>nt:file</supertype>
+      <supertype>mix:versionable</supertype>
+      <supertype>mix:lockable</supertype>
+    </supertypes>
+    <propertyDef name="xml:lang" requiredType="String" autoCreate="false" mandatory="true"
+      onParentVersion="COPY" protected="false" multiple="false"/>
+    <propertyDef name="lenya:label" requiredType="String" autoCreate="false" mandatory="true"
+      onParentVersion="COPY" protected="false" multiple="false"/>
+    <childNodeDef name="lenya:meta" defaultPrimaryType="lnt:meta" autoCreate="true" mandatory="true"
+      onParentVersion="COPY" protected="false" sameNameSibs="true">
+      <requiredPrimaryTypes>
+        <requiredPrimaryType>lnt:meta</requiredPrimaryType>
+      </requiredPrimaryTypes>
+    </childNodeDef>
+  </nodeType>
+  
+  <!--
+  meta data
+  -->
+  <nodeType name="lnt:meta" isMixin="false" hasOrderableChildNodes="false" primaryItemName="">
+    <supertypes>
+      <supertype>nt:unstructured</supertype>
+      <!--
+      <supertype>lps:dc</supertype>
+      <supertype>lps:dcterms</supertype>
+      -->
+    </supertypes>
+    <propertyDef name="lenya:namespace" requiredType="String" autoCreate="false" mandatory="true"
+      onParentVersion="ABORT" multiple="false" protected="false"/>
+  </nodeType>
+  
+  <!--
+  Root node for site subtree
+  -->
+  <nodeType name="lnt:site" isMixin="false" hasOrderableChildNodes="true" primaryItemName="">
+    <supertypes>
+      <supertype>nt:hierarchyNode</supertype>
+      <supertype>mix:referenceable</supertype>
+      <supertype>mix:lockable</supertype>
+    </supertypes>
+    <childNodeDef name="*" defaultPrimaryType="lnt:item" autoCreate="false" mandatory="false"
+      onParentVersion="ABORT" protected="false" sameNameSibs="false">
+      <requiredPrimaryTypes>
+        <requiredPrimaryType>lnt:item</requiredPrimaryType>
+      </requiredPrimaryTypes>
+    </childNodeDef>
+  </nodeType>
+  
+  <!--
+  Site structure item
+  -->
+  <nodeType name="lnt:item" isMixin="false" hasOrderableChildNodes="true" primaryItemName="">
+    <supertypes>
+      <supertype>nt:hierarchyNode</supertype>
+      <supertype>mix:referenceable</supertype>
+      <supertype>mix:lockable</supertype>
+    </supertypes>
+    <propertyDef name="lenya:node" mandatory="false" autoCreate="false" multiple="false" onParentVersion="ABORT"
+      protected="false" requiredType="Reference"/>
+    <childNodeDef name="*" defaultPrimaryType="lnt:item" autoCreate="false" mandatory="false"
+      onParentVersion="ABORT" protected="false" sameNameSibs="false">
+      <requiredPrimaryTypes>
+        <requiredPrimaryType>lnt:item</requiredPrimaryType>
+      </requiredPrimaryTypes>
+    </childNodeDef>
+  </nodeType>
+  
+</nodeTypes>
