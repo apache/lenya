@@ -18,28 +18,16 @@ package org.apache.lenya.cms.migration;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.util.Arrays;
 
-import javax.jcr.NamespaceRegistry;
-import javax.jcr.Node;
-import javax.jcr.PathNotFoundException;
-import javax.jcr.Repository;
-import javax.jcr.RepositoryException;
-import javax.jcr.Session;
-import javax.jcr.SimpleCredentials;
-import javax.jcr.query.Query;
-import javax.jcr.query.QueryResult;
-
-import org.apache.jackrabbit.core.security.SimpleLoginModule;
-import org.apache.lenya.cms.jcr.JCRArea;
-import org.apache.lenya.cms.jcr.JCRPublication;
-import org.apache.lenya.cms.jcr.RepositoryFacade;
-import org.apache.lenya.cms.jcr.RepositoryFactory;
-import org.apache.lenya.cms.jcr.RepositorySession;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationImpl;
+import org.apache.lenya.cms.repo.Area;
+import org.apache.lenya.cms.repo.ContentNode;
+import org.apache.lenya.cms.repo.Publication;
+import org.apache.lenya.cms.repo.Repository;
+import org.apache.lenya.cms.repo.RepositoryException;
+import org.apache.lenya.cms.repo.RepositoryManager;
+import org.apache.lenya.cms.repo.Session;
+import org.apache.lenya.cms.repo.SiteNode;
 import org.apache.tools.ant.BuildException;
-import org.apache.tools.ant.Task;
 
 /**
  * Migrate Lenya 1.4-dev content.
@@ -89,35 +77,41 @@ public class Migrate14 {
         this.repositoryFactory = repositoryFactory;
     }
 
-    private RepositoryFacade repo;
-    private RepositorySession session;
-    private Node contentNode;
+    private Repository repo;
+    private Session session;
 
-    protected RepositoryFacade getRepository() {
+    protected Repository getRepository() {
         return this.repo;
     }
 
-    protected RepositorySession getSession() {
+    protected Session getSession() {
         return this.session;
     }
+
+    static final String PUBLICATION_PREFIX = "lenya" + File.separator + "pubs";
+    static final String CONFIGURATION_PATH = "config";
+    static final String CONFIGURATION_FILE = CONFIGURATION_PATH + File.separator
+            + "publication.xconf";
 
     public void execute() throws BuildException {
 
         try {
-            this.repo = new RepositoryFacade(getWebappDirectory(), getRepositoryFactory());
+            this.repo = RepositoryManager.getRepository(getWebappDirectory(),
+                    getRepositoryFactory());
             this.session = this.repo.createSession();
 
-            File publicationsDirectory = new File(webappDirectory, Publication.PUBLICATION_PREFIX);
+            File publicationsDirectory = new File(webappDirectory, PUBLICATION_PREFIX);
             File[] pubDirs = publicationsDirectory.listFiles(new FileFilter() {
                 public boolean accept(File file) {
-                    return file.isDirectory()
-                            && new File(file, PublicationImpl.CONFIGURATION_FILE).exists();
+                    return file.isDirectory() && new File(file, CONFIGURATION_FILE).exists();
                 }
             });
 
             for (int i = 0; i < pubDirs.length; i++) {
                 importPublication(pubDirs[i]);
             }
+
+            getSession().save();
 
         } catch (Exception e) {
             e.printStackTrace(System.err);
@@ -137,7 +131,7 @@ public class Migrate14 {
 
     protected void importPublication(File pubDir) throws RepositoryException {
         String pubId = pubDir.getName();
-        JCRPublication pub = new JCRPublication(getSession(), pubId);
+        Publication pub = getSession().getPublication(pubId);
 
         File contentDir = new File(pubDir, "content");
         File[] areaDirs = contentDir.listFiles(directoryFilter);
@@ -146,32 +140,60 @@ public class Migrate14 {
         }
     }
 
-    protected void importContent(File contentDir, JCRPublication pub) throws RepositoryException {
+    protected void importContent(File contentDir, Publication pub) throws RepositoryException {
         String area = contentDir.getName();
-        JCRArea jcrArea = pub.getArea(area);
-        
-        System.out.println("pub node:  " + jcrArea.getPublicationNode().getPath());
-        System.out.println("site node: " + jcrArea.getSiteNode().getPath());
-        
-        importChildren(contentDir, jcrArea.getSiteNode());
+        Area repoArea = pub.getArea(area);
+        importChildren(contentDir, repoArea, null);
     }
 
-    protected void importDocument(File docDir, Node parent)
+    protected void importNode(File docDir, Area area, SiteNode parent)
             throws RepositoryException {
         String nodeId = docDir.getName();
-        String documentId = parent.getPath() + "/" + nodeId;
-        System.out.println("Importing [" + documentId + "]");
+        String parentPath = "";
+        if (parent != null) {
+            parentPath = parent.getPath();
+        }
+        String documentPath = parentPath + "/" + nodeId;
+        System.out.println("Importing [" + documentPath + "]");
 
-        Node node = parent.addNode(nodeId);
+        SiteNode siteNode;
+        ContentNode contentNode = area.getContent().addNode(nodeId);
+        if (parent == null) {
+            siteNode = area.getSite().addChild(nodeId, contentNode);
+        } else {
+            siteNode = parent.addChild(nodeId, contentNode);
+        }
 
-        importChildren(docDir, node);
+        importDocuments(docDir, contentNode);
+
+        importChildren(docDir, area, siteNode);
     }
 
-    protected void importChildren(File docDir, Node parent)
+    protected void importDocuments(File docDir, ContentNode contentNode) throws RepositoryException {
+        File[] files = docDir.listFiles(new FileFilter() {
+            public boolean accept(File file) {
+                return file.isFile() && file.getName().startsWith("index_")
+                        && file.getName().endsWith(".xml");
+            }
+        });
+        for (int i = 0; i < files.length; i++) {
+            importDocument(files[i], contentNode);
+        }
+    }
+
+    protected void importDocument(File file, ContentNode contentNode) throws RepositoryException {
+        String fileName = file.getName();
+        String suffix = fileName.substring("index_".length());
+        String language = suffix.substring(0, suffix.length() - ".xml".length());
+        contentNode.addDocument(language);
+        System.out.println(" language [" + language + "]");
+    }
+
+    protected void importChildren(File docDir, Area area, SiteNode parentNode)
             throws RepositoryException {
         File[] childDirs = docDir.listFiles(directoryFilter);
         for (int i = 0; i < childDirs.length; i++) {
-            importDocument(childDirs[i], parent);
+            importNode(childDirs[i], area, parentNode);
         }
     }
 }

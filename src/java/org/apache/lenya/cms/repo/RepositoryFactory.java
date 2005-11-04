@@ -14,13 +14,10 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.jcr;
-
-import javax.jcr.Repository;
-import javax.jcr.RepositoryException;
+package org.apache.lenya.cms.repo;
 
 /**
- * Factory for JCR repositories.
+ * Factory for repositories.
  */
 public interface RepositoryFactory {
 

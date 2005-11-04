@@ -18,12 +18,12 @@ package org.apache.lenya.cms.jcr.jackrabbit;
 
 import java.io.File;
 
-import javax.jcr.Repository;
-import javax.jcr.RepositoryException;
-
 import org.apache.jackrabbit.core.RepositoryImpl;
 import org.apache.jackrabbit.core.config.RepositoryConfig;
-import org.apache.lenya.cms.jcr.RepositoryFactory;
+import org.apache.lenya.cms.jcr.JCRRepository;
+import org.apache.lenya.cms.repo.Repository;
+import org.apache.lenya.cms.repo.RepositoryException;
+import org.apache.lenya.cms.repo.RepositoryFactory;
 
 /**
  * Jackrabbit-based repository factory.
@@ -35,14 +35,19 @@ public class JackrabbitRepositoryFactory implements RepositoryFactory {
     protected static final String configFilePath = "repository.xml";
 
     public Repository getRepository(String webappPath) throws RepositoryException {
-        File webappDirectory = new File(webappPath);
-        File repoDirectory = new File(webappDirectory, homePath);
-        File configFile = new File(repoDirectory, configFilePath);
-        RepositoryConfig repoConfig = RepositoryConfig.create(configFile.getAbsolutePath(),
-                repoDirectory.getAbsolutePath());
-        Repository repo = RepositoryImpl.create(repoConfig);
-        
-        return repo;
+
+        try {
+            File webappDirectory = new File(webappPath);
+            File repoDirectory = new File(webappDirectory, homePath);
+            File configFile = new File(repoDirectory, configFilePath);
+            RepositoryConfig repoConfig = RepositoryConfig.create(configFile.getAbsolutePath(),
+                    repoDirectory.getAbsolutePath());
+            JCRRepository repo = new JCRRepository(RepositoryImpl.create(repoConfig));
+
+            return repo;
+        } catch (Exception e) {
+            throw new RepositoryException(e);
+        }
     }
 
 }

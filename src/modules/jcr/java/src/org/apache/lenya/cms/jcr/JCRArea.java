@@ -17,20 +17,32 @@
 package org.apache.lenya.cms.jcr;
 
 import javax.jcr.Node;
-import javax.jcr.NodeIterator;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
-import javax.jcr.query.Query;
-import javax.jcr.query.QueryResult;
 
-public class JCRArea {
+import org.apache.lenya.cms.repo.Area;
+import org.apache.lenya.cms.repo.Content;
+import org.apache.lenya.cms.repo.Site;
+
+/**
+ * JCR area.
+ */
+public class JCRArea implements Area {
 
     private String area;
     private JCRPublication publication;
 
+    private NodeWrapperManager nodeManager;
+
+    /**
+     * Ctor.
+     * @param publication The publication.
+     * @param area The area ID.
+     */
     public JCRArea(JCRPublication publication, String area) {
         this.publication = publication;
         this.area = area;
+        this.nodeManager = new NodeWrapperManager(publication.getSession());
     }
 
     protected JCRPublication getPublication() {
@@ -41,29 +53,17 @@ public class JCRArea {
         return this.area;
     }
 
-    public Session getSession() throws RepositoryException {
+    protected Session getSession() throws RepositoryException {
         return getPublication().getSession().getSession(getArea());
     }
 
-    public Node getPublicationNode() throws RepositoryException {
-        Node rootNode = getSession().getRootNode();
-
-        Node pubNode = null;
-
-        for (NodeIterator pubNodes = rootNode.getNodes("lenya:publication"); pubNodes.hasNext();) {
-            Node node = pubNodes.nextNode();
-            if (node.getProperty("lenya:id")
-                    .getString()
-                    .equals(getPublication().getPublicationId())) {
-                pubNode = node;
-            }
-        }
-        if (pubNode == null) {
-            pubNode = rootNode.addNode("lenya:publication");
-            pubNode.setProperty("lenya:id", getPublication().getPublicationId());
-        }
-
-        return pubNode;
+    protected JCRPublicationNode getPublicationNode()
+            throws org.apache.lenya.cms.repo.RepositoryException {
+        JCRPublicationNodeBuilder builder = new JCRPublicationNodeBuilder(getPublication().getPublicationId(),
+                getArea());
+        return (JCRPublicationNode) this.nodeManager.getNode(JCRPublicationNodeBuilder.NODE_NAME,
+                builder,
+                true);
     }
 
     protected Node getSubNode(Node parent, String childName) throws RepositoryException {
@@ -76,12 +76,19 @@ public class JCRArea {
         return child;
     }
 
-    public Node getContentNode() throws RepositoryException {
-        return getSubNode(getPublicationNode(), "lenya:content");
+    public Content getContent() throws org.apache.lenya.cms.repo.RepositoryException {
+        NodeWrapperBuilder builder = new JCRContentBuilder(this);
+        return (Content) this.nodeManager.getNode(JCRContentBuilder.NODE_NAME, builder, true);
     }
 
-    public Node getSiteNode() throws RepositoryException {
-        return getSubNode(getPublicationNode(), "lenya:site");
+    public Site getSite() throws org.apache.lenya.cms.repo.RepositoryException {
+        NodeWrapperBuilder builder = new JCRSiteBuilder(this);
+        return (Site) this.nodeManager.getNode(JCRSiteBuilder.NODE_NAME, builder, true);
+    }
+
+    public void clear() throws org.apache.lenya.cms.repo.RepositoryException {
+        // TODO Auto-generated method stub
+
     }
 
 }

@@ -16,52 +16,35 @@
  */
 package org.apache.lenya.cms.jcr;
 
-import java.io.File;
-
 import javax.jcr.Node;
-import javax.jcr.NodeIterator;
 import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
-import javax.jcr.query.Query;
-import javax.jcr.query.QueryResult;
 
 /**
  * Facade to the JCR repository, providing Lenya-specific access.
  */
-public class RepositoryFacade {
+public class JCRRepository implements org.apache.lenya.cms.repo.Repository {
 
-    public RepositoryFacade(String webappDirectoryPath, String repositoryFactoryClass)
-            throws RepositoryException {
-        try {
-            Class repoFactoryClass = Class.forName(repositoryFactoryClass);
-            RepositoryFactory repoFactory = (RepositoryFactory) repoFactoryClass.newInstance();
-
-            File webappDirectory = new File(webappDirectoryPath);
-
-            String jaasPath = "lenya/modules/jackrabbit/repository/jaas.config";
-            System.setProperty("java.security.auth.login.config", new File(webappDirectory,
-                    jaasPath).getAbsolutePath());
-
-            this.repository = repoFactory.getRepository(webappDirectoryPath);
-        } catch (RepositoryException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new RepositoryException(e);
-        }
+    /**
+     * Ctor.
+     * @param repository The repository.
+     */
+    public JCRRepository(Repository repository) {
+        this.repository = repository;
     }
 
     private Repository repository;
 
-    public Repository getRepository() {
+    protected Repository getRepository() {
         return this.repository;
     }
 
     /**
      * @return The repository session.
      */
-    public RepositorySession createSession() {
-        return new RepositorySession(this);
+    public org.apache.lenya.cms.repo.Session createSession() {
+        return new JCRSession(this);
     }
 
     protected Node getSubNode(Session session, Node parent, String childName)

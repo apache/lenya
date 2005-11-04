@@ -19,19 +19,24 @@ package org.apache.lenya.cms.jcr;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.jcr.Node;
-import javax.jcr.NodeIterator;
-import javax.jcr.RepositoryException;
-import javax.jcr.Session;
-import javax.jcr.query.Query;
-import javax.jcr.query.QueryResult;
+import org.apache.lenya.cms.repo.Area;
+import org.apache.lenya.cms.repo.Publication;
+import org.apache.lenya.cms.repo.RepositoryException;
 
-public class JCRPublication {
+/**
+ * JCR publication.
+ */
+public class JCRPublication implements Publication {
 
     private String pubId;
-    private RepositorySession session;
+    private JCRSession session;
 
-    public JCRPublication(RepositorySession session, String pubId) {
+    /**
+     * Ctor.
+     * @param session The session.
+     * @param pubId The publication ID.
+     */
+    public JCRPublication(JCRSession session, String pubId) {
         this.pubId = pubId;
         this.session = session;
     }
@@ -40,13 +45,13 @@ public class JCRPublication {
         return this.pubId;
     }
 
-    protected RepositorySession getSession() {
+    protected JCRSession getSession() {
         return this.session;
     }
-    
+
     private Map areas = new HashMap();
-    
-    public JCRArea getArea(String area) {
+
+    public Area getArea(String area) throws RepositoryException {
         JCRArea jcrArea = (JCRArea) this.areas.get(area);
         if (jcrArea == null) {
             jcrArea = new JCRArea(this, area);

@@ -18,42 +18,39 @@ package org.apache.lenya.cms.jcr;
 
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
-import javax.jcr.LoginException;
 import javax.jcr.NamespaceRegistry;
-import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.SimpleCredentials;
-import javax.jcr.Workspace;
-import javax.jcr.query.Query;
-import javax.jcr.query.QueryResult;
 
 import org.apache.jackrabbit.core.WorkspaceImpl;
+import org.apache.lenya.cms.repo.Publication;
 
 /**
  * Repository session.
  */
-public class RepositorySession {
+public class JCRSession implements org.apache.lenya.cms.repo.Session {
 
     /**
      * Ctor.
      * @param repository The repository facade.
      */
-    public RepositorySession(RepositoryFacade repository) {
+    public JCRSession(JCRRepository repository) {
         this.repository = repository;
     }
 
-    private RepositoryFacade repository;
+    private JCRRepository repository;
 
-    protected RepositoryFacade getRepository() {
+    protected JCRRepository getRepository() {
         return this.repository;
     }
 
     private Map area2session = new HashMap();
-
-    public Session getSession(String area) throws RepositoryException {
+    
+    protected Session getSession(String area) throws RepositoryException {
         Session session = (Session) this.area2session.get(area);
         if (session == null) {
 
@@ -79,6 +76,30 @@ public class RepositorySession {
         }
 
         return session;
+    }
+
+    public void save() throws org.apache.lenya.cms.repo.RepositoryException {
+        try {
+            for (Iterator i = this.area2session.keySet().iterator(); i.hasNext();) {
+                String area = (String) i.next();
+                Session session = (Session) this.area2session.get(area);
+                session.save();
+            }
+        } catch (RepositoryException e) {
+            throw new org.apache.lenya.cms.repo.RepositoryException(e);
+        }
+    }
+
+    private Map publications = new HashMap();
+
+    public Publication getPublication(String id)
+            throws org.apache.lenya.cms.repo.RepositoryException {
+        Publication pub = (Publication) this.publications.get(id);
+        if (pub == null) {
+            pub = new JCRPublication(this, id);
+            this.publications.put(id, pub);
+        }
+        return pub;
     }
 
 }

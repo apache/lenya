@@ -68,17 +68,17 @@
       <supertype>mix:referenceable</supertype>
       <supertype>mix:lockable</supertype>
     </supertypes>
-    <childNodeDef name="lenya:node" defaultPrimaryType="lnt:node" autoCreate="false" mandatory="false"
+    <childNodeDef name="lenya:contentnode" defaultPrimaryType="lnt:contentnode" autoCreate="false" mandatory="false"
       onParentVersion="ABORT" protected="false" sameNameSibs="true">
       <requiredPrimaryTypes>
-        <requiredPrimaryType>lnt:node</requiredPrimaryType>
+        <requiredPrimaryType>lnt:contentnode</requiredPrimaryType>
       </requiredPrimaryTypes>
     </childNodeDef>
   </nodeType>
   
   
   <!-- node in content subtree -->
-  <nodeType name="lnt:node" isMixin="false" hasOrderableChildNodes="true" primaryItemName="">
+  <nodeType name="lnt:contentnode" isMixin="false" hasOrderableChildNodes="true" primaryItemName="">
     <supertypes>
       <supertype>nt:hierarchyNode</supertype>
       <supertype>mix:referenceable</supertype>
@@ -148,26 +148,26 @@
     <childNodeDef name="*" defaultPrimaryType="lnt:item" autoCreate="false" mandatory="false"
       onParentVersion="ABORT" protected="false" sameNameSibs="false">
       <requiredPrimaryTypes>
-        <requiredPrimaryType>lnt:item</requiredPrimaryType>
+        <requiredPrimaryType>lnt:sitenode</requiredPrimaryType>
       </requiredPrimaryTypes>
     </childNodeDef>
   </nodeType>
   
   <!--
-  Site structure item
+  Site structure node
   -->
-  <nodeType name="lnt:item" isMixin="false" hasOrderableChildNodes="true" primaryItemName="">
+  <nodeType name="lnt:sitenode" isMixin="false" hasOrderableChildNodes="true" primaryItemName="">
     <supertypes>
       <supertype>nt:hierarchyNode</supertype>
       <supertype>mix:referenceable</supertype>
       <supertype>mix:lockable</supertype>
     </supertypes>
-    <propertyDef name="lenya:node" mandatory="false" autoCreate="false" multiple="false" onParentVersion="ABORT"
+    <propertyDef name="lenya:contentnode" mandatory="false" autoCreate="false" multiple="false" onParentVersion="ABORT"
       protected="false" requiredType="Reference"/>
-    <childNodeDef name="*" defaultPrimaryType="lnt:item" autoCreate="false" mandatory="false"
+    <childNodeDef name="*" defaultPrimaryType="lnt:sitenode" autoCreate="false" mandatory="false"
       onParentVersion="ABORT" protected="false" sameNameSibs="false">
       <requiredPrimaryTypes>
-        <requiredPrimaryType>lnt:item</requiredPrimaryType>
+        <requiredPrimaryType>lnt:sitenode</requiredPrimaryType>
       </requiredPrimaryTypes>
     </childNodeDef>
   </nodeType>
