@@ -71,6 +71,7 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
      *
      */
     protected String getChildFileName(Publication publication, String area, String parentId, String childId, String language) {
+        // TODO: Somehow the first character is being cut off!
         String newFilename = publication.getPathMapper().getFile(publication, area, "eentries" + File.separator + year + File.separator + month + "/" + day + "/" + childId + "/index", null).getAbsolutePath();
         log.debug(newFilename);
         return newFilename;
