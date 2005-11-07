@@ -294,7 +294,9 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
       <view template="usecases/admin/userGroups.jx" menu="true">
         <tab group="admin" name="users"/>
       </view>
-      <exit usecase="admin.user"/>
+      <exit usecase="admin.user">
+        <parameter name="userId"/>
+      </exit>
     </component-instance>
     <component-instance name="admin.deleteUser" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.DeleteUser">
       <view template="usecases/admin/deleteUser.jx" menu="true">

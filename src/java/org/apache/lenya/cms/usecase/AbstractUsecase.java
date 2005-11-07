@@ -336,6 +336,10 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
             getLogger().debug("Setting parameter [" + name + "] = [" + value + "]");
         }
         this.parameters.put(name, value);
+        // set any exit parameters that are missing values 
+        if (this.exitUsecaseParameters.containsKey(name) && this.exitUsecaseParameters.get(name)==null) {
+            setExitParameter(name,value.toString());
+        }
     }
 
     private boolean parametersInitialized = false;
@@ -621,7 +625,12 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
             Configuration[] exitParameterConfigs = exitConfig.getChildren(ELEMENT_PARAMETER);
             for (int i = 0; i < exitParameterConfigs.length; i++) {
                 String name = exitParameterConfigs[i].getAttribute(ATTRIBUTE_NAME);
-                String value = exitParameterConfigs[i].getAttribute(ATTRIBUTE_VALUE);
+                String value = null;
+                String[] attributeNames = exitParameterConfigs[i].getAttributeNames();
+                for (int j=0; j < attributeNames.length; j++) {
+                    if (attributeNames[j].equals(ATTRIBUTE_VALUE))
+                        value = exitParameterConfigs[i].getAttribute(ATTRIBUTE_VALUE); 
+                }
                 setExitParameter(name, value);
             }
         }
