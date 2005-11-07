@@ -25,6 +25,13 @@
   <path-mapper>org.apache.lenya.cms.publication.DefaultDocumentIdToPathMapper</path-mapper>
   <document-builder>org.apache.lenya.cms.publication.DefaultDocumentBuilder</document-builder>
   <breadcrumb-prefix/>
+
+  <!-- NOTE: The configuration of content directories has NOT been fully tested yet and might lead to unexpected results. Use at own risk;-) -->
+  <content-authoring-dir>content/authoring</content-authoring-dir>
+  <!--
+  <authoring-dir>/home/USERNAME/data/lenya/author</authoring-dir>
+  -->
+  <content-live-dir>content/live</content-live-dir>
   
   <!-- 
        For information about these settings, read 
