@@ -237,6 +237,10 @@
       <!-- menu-xml/module/{module-id}/{area}.xml -->
       <map:match pattern="menu-xml/module/*/*.xml">
         <map:select type="resource-exists">
+          <map:when test="fallback://config/menus/{2}.xsp">
+            <map:generate type="serverpages" src="fallback://config/menus/{2}.xsp"/>
+            <map:serialize type="xml"/>
+          </map:when>
           <map:when test="lenya/modules/{2}/menus.xmap">
             <map:mount uri-prefix="menu-xml/module/{1}/" src="lenya/modules/{2}/menus.xmap" check-reload="true" reload-method="synchron"/>
           </map:when>
