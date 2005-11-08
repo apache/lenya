@@ -217,7 +217,7 @@ function executeUsecase() {
                 passRequestParameters(flowHelper, usecase);
                 usecase.advance();
                 //HEADSUP: Cform do not allow id="submit" anymore. Use id="ok" for now (till it is settled on cocoon-dev).
-                if (cocoon.request.getParameter("submit")||cocoon.request.getParameter("lenya.submit")!="cancel") {
+                if (cocoon.request.getParameter("submit")||cocoon.request.getParameter("lenya.submit")=="ok") {
                     usecase.checkExecutionConditions();
                     if (! usecase.hasErrors()) {
                        if (view.getViewType()=="cforms"){
