@@ -389,11 +389,7 @@
         
                   <map:generate type="stream"/>
                   <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
-                    <map:parameter name="source" value="pubs/{1}/content/{2}/{page-envelope:document-path}"/>
-<!-- TODO: Get content-dir from config/publication.xconf -->
-<!--
                     <map:parameter name="source" value="{content-dir:{1},{2}}/{page-envelope:document-path}"/>
--->
                     <!--<map:parameter name="source" value="pubs/{1}/test-xopus.xml"/>-->
                   </map:transform>
                   <map:transform type="write-source">
@@ -413,7 +409,7 @@
                     <map:parameter name="Cache-Control" value="pre-check=0" />
                     <map:parameter name="Expires" value="-1" />
                   </map:act>
-                  <map:generate src="pubs/{1}/content/{2}/{page-envelope:document-path}"/>
+                  <map:generate src="{content-dir:{1},{2}}/{page-envelope:document-path}"/>
                   <map:serialize type="xml"/>
                 </map:otherwise>
               </map:select>

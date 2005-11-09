@@ -27,9 +27,11 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceNotFoundException;
+import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationFactory;
 
 /**
  * Gets the content directory of a specific publication and specific area
@@ -42,25 +44,26 @@ public class PublicationContentDirModule extends AbstractInputModule implements 
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
         throws ConfigurationException {
 
-        String resourceURI = name;
-        
-        Source source = null;
-        boolean exists = false;
-        try {
-            source = resolver.resolveURI(resourceURI);
-            exists = source.exists();
-        } catch (SourceNotFoundException e) {
-            exists = false;
-        } catch (Exception e) {
-            getLogger().warn("Exception resolving resource [" + resourceURI + "]", e);
-            exists = false;
-        } finally {
-            if (source != null) {
-                resolver.release(source);
-            }
+    	if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Resolving directory path for [" + name + "]");
         }
-
-        return Boolean.toString(exists);
+    	String[] pubidAndArea = name.split(",");
+        if (pubidAndArea.length < 2) {
+            throw new ConfigurationException("Invalid number of parameters: " + pubidAndArea.length
+                    + ". Expected pub, area.");
+        }
+           
+        String id = pubidAndArea[0];
+        String area = pubidAndArea[1];
+    	String contextPath = ObjectModelHelper.getContext(objectModel).getRealPath("");
+    	
+    	try {
+			Publication pub = PublicationFactory.getPublication(id, contextPath);
+			return pub.getContentDirectory(area);
+		} catch (PublicationException e) {
+            throw new ConfigurationException("Obtaining value for [" + name + "] failed: ", e);
+		}
+    	
     }
 
     /* (non-Javadoc)

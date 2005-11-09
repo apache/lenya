@@ -104,8 +104,12 @@
       <format>yyyy-M-dd HH:mm:ss Z</format>
     </component-instance>
     
-  <component-instance name="proxy-url" logger="sitemap.modules.input.proxy-url"
+    <component-instance name="proxy-url" logger="sitemap.modules.input.proxy-url"
       class="org.apache.lenya.cms.cocoon.components.modules.input.ProxyUrlModule"/>
+
+    <component-instance logger="core.modules.input.content-dir" name="content-dir"
+      class="org.apache.lenya.cms.cocoon.components.modules.input.PublicationContentDirModule">
+    </component-instance>
 
   </xsl:copy>
 </xsl:template>
