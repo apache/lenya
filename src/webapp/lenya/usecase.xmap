@@ -390,6 +390,10 @@
                   <map:generate type="stream"/>
                   <map:transform src="xslt/authoring/edit/addSourceTags.xsl">
                     <map:parameter name="source" value="pubs/{1}/content/{2}/{page-envelope:document-path}"/>
+<!-- TODO: Get content-dir from config/publication.xconf -->
+<!--
+                    <map:parameter name="source" value="{content-dir:{1},{2}}/{page-envelope:document-path}"/>
+-->
                     <!--<map:parameter name="source" value="pubs/{1}/test-xopus.xml"/>-->
                   </map:transform>
                   <map:transform type="write-source">
