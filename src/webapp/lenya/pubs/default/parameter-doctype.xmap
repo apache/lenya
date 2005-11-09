@@ -26,7 +26,7 @@
     <map:serializers default="html"/>
     <map:matchers default="wildcard"/>
     <map:actions>
-      <map:action logger="sitemap.action.sourcetype" name="sourcetype" src="org.apache.cocoon.acting.sourcetype.SourceTypeAction">
+      <map:action logger="sitemap.action.sourcetype" name="sourcetype" src="org.apache.forrest.sourcetype.SourceTypeAction">
         <sourcetype name="xhtml">
           <document-element namespace="http://www.w3.org/1999/xhtml"/>
         </sourcetype>
