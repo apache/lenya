@@ -99,6 +99,10 @@
     <xpatch file="${build.webapp}/WEB-INF/logkit.xconf"
         includes="src/confpatch/logkit-*.xconf"/> 
     
+    <!-- patch log4j.xconf -->
+    <xpatch file="${build.webapp}/WEB-INF/log4j.xconf"
+        includes="src/confpatch/log4j-*.xconf"/> 
+    
     <!-- patch web.xml -->
     <xpatch file="${build.webapp}/WEB-INF/web.xml" 
             includes="src/confpatch/*.xweb"/> 
