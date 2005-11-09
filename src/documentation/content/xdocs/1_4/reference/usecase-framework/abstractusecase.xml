@@ -128,6 +128,10 @@
           reads the meta data from the document and puts them into the parameter map using
           <code>setParameter(String, Object)</code> to make them available to the JX template.
         </p>
+        <p>
+          Note that you can't access the request parameters in this method yet, because it
+          is executed before the request parameters are passed to the usecase.
+        </p>
         <br/>
       </li>
       

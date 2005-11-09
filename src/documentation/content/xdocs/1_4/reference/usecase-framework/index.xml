@@ -120,6 +120,25 @@ $PUB_HOME
           <p>Initialize the handler.</p>
           <br/>
         </li>
+        <li><code>Passing request parameters</code>
+          <br/>
+          <p>
+            In the next step, all request parameters are passed as parameters to the usecase,
+            except the following reserved parameters:
+          </p>
+          <ul>
+            <li><code>lenya.usecase</code></li>
+            <li><code>lenya.continutation</code></li>
+            <li><code>submit</code></li>
+          </ul>
+          <p>
+            If the request parameter value is a string, the value can be accessed inside the usecase
+            handler using <code>getParameterAsString(name)</code>. If the request parameter
+            is a part of a multipart request, e.g., in a file upload form, it will be available
+            using <code>getPart(name)</code>. 
+          </p>
+          <br/>
+        </li>
         <li><code>checkPreconditions()</code>
           <p>
             This method is called to check the pre-conditions of the usecase. The pre-conditions
