@@ -54,13 +54,14 @@ public abstract class AbstractPublication implements Publication {
     private HashMap siteTrees = new HashMap();
     private String[] rewriteAttributeXPaths = { };
     private boolean hasSitetree = true;
-
+    
     private static final String ELEMENT_PROXY = "proxy";
     private static final String ATTRIBUTE_AREA = "area";
     private static final String ATTRIBUTE_URL = "url";
     private static final String ATTRIBUTE_SSL = "ssl";
     private static final String ELEMENT_REWRITE_ATTRIBUTE = "link-attribute";
     private static final String ATTRIBUTE_XPATH = "xpath";
+	private static final String ELEMENT_CONTENT_DIR = "content-dir";
 
     /**
      * Creates a new instance of Publication
@@ -160,6 +161,16 @@ public abstract class AbstractPublication implements Publication {
             }
             this.rewriteAttributeXPaths = (String[]) xPaths.toArray(new String[xPaths.size()]);
 
+
+            Configuration[] contentDirConfigs = config.getChildren(ELEMENT_CONTENT_DIR);
+            for (int i = 0; i < contentDirConfigs.length; i++){
+            	String area = contentDirConfigs[i].getAttribute(ATTRIBUTE_AREA);
+            	String dir = contentDirConfigs[i].getValue();
+                Object key = getContentDirKey(area);
+            	this.areaContentDir.put(key, dir);
+            }
+
+            
         } catch (PublicationException e) {
             throw e;
         } catch (Exception e) {
@@ -218,7 +229,13 @@ public abstract class AbstractPublication implements Publication {
      * @return the directory of the given content area.
      */
     public File getContentDirectory(String area) {
-        return new File(getDirectory(), CONTENT_PATH + File.separator + area);
+    	Object key = getContentDirKey(area);
+    	String contentDir = (String) this.areaContentDir.get(key);
+        if (contentDir!= null) {
+        	return new File(contentDir);
+        } else {
+    		return new File(getDirectory(), CONTENT_PATH + File.separator + area);
+    	}
     }
 
     /**
@@ -632,5 +649,11 @@ public abstract class AbstractPublication implements Publication {
      */
     public String[] getRewriteAttributeXPaths() {
         return this.rewriteAttributeXPaths;
+    }
+
+    private Map areaContentDir = new HashMap();
+
+    protected Object getContentDirKey(String area) {
+        return area;
     }
 }
