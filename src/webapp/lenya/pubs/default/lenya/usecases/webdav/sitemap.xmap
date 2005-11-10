@@ -224,7 +224,7 @@
         <map:serialize type="xml" status-code="201" />
       </map:match>
 
-      <map:match pattern="PUT/**_*.html">
+      <map:match pattern="PUT/**.html">
         <map:call function="put" />  
       </map:match> 
       

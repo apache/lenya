@@ -121,7 +121,7 @@
                 <!-- Only used to display the document path of the edited doc  -->
                 <map:parameter name="document-path" value="{page-envelope:document-path}"/>
                 <map:parameter name="save-destination" 
-                  value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=save"/>
+                  value="{request:requestURI}"/>
                 <map:parameter name="exit-destination" 
                   value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=exit"/>
                 <map:parameter name="reload-after-save" value="1"/>
@@ -160,7 +160,7 @@
         
         <!-- Kupu Image Drawer -->
         <map:match pattern="*drawerxsl" type="step">
-          <map:generate type="jx" src="fallback://lenya/resources/kupu/apache-lenya/kupu/imagedrawer/{1}drawer.xsl">
+          <map:generate type="jx" src="fallback://lenya/resources/kupu/apache-lenya/lenya/drawers/{1}drawer.xsl">
             <!-- We need to use the hole uri scheme i.e. http://servername:port/, since IE xslt processor  
                  throws an access violation upon loading of xslts from the internet.
              -->

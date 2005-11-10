@@ -60,7 +60,7 @@ function mkcol() {
 function put() {
   var status = executeUsecase("webdav.put");
   if(status)
-    sendStatus(201);
+    sendStatus(200);
   else {
     sendStatus(415);
   }
