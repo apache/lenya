@@ -28,8 +28,12 @@
 
   <!-- NOTE: The configuration of content directories has NOT been fully tested yet and might lead to unexpected results. Use at own risk;-) -->
 
-  <content-dir area="autoring">/home/edith/data/authoring</content-dir>
-  <content-dir area="live">/home/edith/blabla/live</content-dir>
+  <content-dir area="autoring">content/authoring</content-dir>
+  <content-dir area="live">content/live</content-dir>
+<!--
+  <content-dir area="autoring">/home/USERNAME/data/default/authoring</content-dir>
+  <content-dir area="live">D:\tmp\default\live</content-dir>
+-->
   
   <!-- 
        For information about these settings, read 
