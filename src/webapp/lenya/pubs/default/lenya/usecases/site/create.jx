@@ -108,17 +108,30 @@
                 </td>
               </tr>
             </jx:if>
-            <tr>
-              <td class="lenya-entry-caption">
-                <label for="language"><i18n:text>Language</i18n:text>*: </label></td>
-              <td>
-                <select class="lenya-form-element" name="language">
-                  <jx:forEach var="language" items="${usecase.getParameter('languages')}">
-                    <option value="${language}">${language}</option>
-                  </jx:forEach>
-                </select>
-              </td>
-            </tr>
+            <jx:set var="languages" value="${usecase.getParameter('languages')}"/>
+            <jx:choose>
+              <jx:when test="${languages.size() &gt; 1}">            
+                <tr>
+                  <td class="lenya-entry-caption">
+                    <label for="language"><i18n:text>Language</i18n:text>*: </label></td>
+                  <td>
+                    <select class="lenya-form-element" name="language">
+                      <jx:forEach var="language" items="${usecase.getParameter('languages')}">
+                        <option value="${language}">${language}</option>
+                       </jx:forEach>
+                    </select>
+                  </td>
+                </tr>
+              </jx:when>
+              <jx:otherwise>
+                <tr>
+                  <td colspan="2">
+                    <jx:set var="language" value="${languages[0]}"/>
+                    <input type="hidden" name="language" value="${language}"/>
+                  </td>
+                </tr>
+              </jx:otherwise>
+            </jx:choose>
             <tr>
               <td class="lenya-entry-caption">
                 <label for="creator"><i18n:text>Creator</i18n:text>:</label></td>
