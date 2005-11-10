@@ -282,7 +282,9 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
       <view template="usecases/admin/userProfile.jx" menu="true">
         <tab group="admin" name="users"/>
       </view>
-      <exit usecase="admin.user"/>
+      <exit usecase="admin.user">
+        <parameter name="userId"/>
+      </exit>
     </component-instance>
     <component-instance name="admin.changePassword" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.UserPassword">
       <view template="usecases/admin/changePassword.jx" menu="true">
@@ -326,13 +328,17 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
       <view template="usecases/admin/groupProfile.jx" menu="true">
         <tab group="admin" name="groups"/>
       </view>
-      <exit usecase="admin.group"/>
+      <exit usecase="admin.group">
+        <parameter name="groupId"/>
+      </exit>
     </component-instance>
     <component-instance name="admin.groupMembers" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.GroupMembers">
       <view template="usecases/admin/groupMembers.jx" menu="true">
         <tab group="admin" name="groups"/>
       </view>
-      <exit usecase="admin.group"/>
+      <exit usecase="admin.group">
+        <parameter name="groupId"/>
+      </exit>
     </component-instance>
     <component-instance name="admin.deleteGroup" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.DeleteGroup">
       <view template="usecases/admin/deleteGroup.jx" menu="true">
@@ -362,13 +368,17 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
       <view template="usecases/admin/ipRangeProfile.jx" menu="true">
         <tab group="admin" name="ipRanges"/>
       </view>
-      <exit usecase="admin.ipRange"/>
+      <exit usecase="admin.ipRange">
+        <parameter name="ipRangeId"/>
+      </exit>
     </component-instance>
     <component-instance name="admin.ipRangeGroups" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.IPRangeGroups">
       <view template="usecases/admin/ipRangeGroups.jx" menu="true">
         <tab group="admin" name="ipRanges"/>
       </view>
-      <exit usecase="admin.ipRange"/>
+      <exit usecase="admin.ipRange">
+        <parameter name="ipRangeId"/>
+      </exit>
     </component-instance>
     <component-instance name="admin.deleteIPRange" logger="lenya.admin" class="org.apache.lenya.cms.ac.usecases.DeleteIPRange">
       <view template="usecases/admin/deleteIPRange.jx" menu="true">
