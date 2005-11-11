@@ -16,10 +16,23 @@
  */
 package org.apache.lenya.cms.repo;
 
+import java.io.InputStream;
+import java.io.OutputStream;
+
 public interface Document {
     
     String getLanguage() throws RepositoryException;
     
     void setLanguage(String language) throws RepositoryException;
+    
+    InputStream getInputStream() throws RepositoryException;
+    
+    OutputStream getOutputStream() throws RepositoryException;
+    
+    long getContentLength() throws RepositoryException;
+    
+    String getMimeType() throws RepositoryException;
+    
+    long getLastModified() throws RepositoryException;
 
 }

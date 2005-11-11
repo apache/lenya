@@ -25,7 +25,6 @@ import javax.jcr.NodeIterator;
 import org.apache.lenya.cms.repo.ContentNode;
 import org.apache.lenya.cms.repo.Document;
 import org.apache.lenya.cms.repo.RepositoryException;
-import org.apache.lenya.cms.repo.SiteNode;
 
 /**
  * JCR content node.
@@ -34,30 +33,47 @@ public class JCRContentNode extends NodeWrapper implements ContentNode {
 
     private NodeWrapperManager documentManager;
     private JCRContent content;
-    
+
     public JCRContentNode(JCRContent content, Node node) {
         super(node);
         this.content = content;
-        this.documentManager = new NodeWrapperManager(content.getArea().getPublication().getSession());
-    }
-    
-    public Document[] getDocuments() throws RepositoryException {
-        return null;
+        this.documentManager = new NodeWrapperManager(content.getArea()
+                .getPublication()
+                .getSession());
     }
 
-    public void addDocument(String language) throws RepositoryException {
-        // TODO Auto-generated method stub
-        
+    public Document[] getDocuments() throws RepositoryException {
+        try {
+            List documents = new ArrayList();
+            for (NodeIterator i = getNode().getNodes(JCRDocumentBuilder.NODE_NAME); i.hasNext();) {
+                Node node = i.nextNode();
+                documents.add(getDocument(node.getProperty(JCRDocumentBuilder.LANGUAGE_ATTRIBUTE)
+                        .getString()));
+            }
+            return (Document[]) documents.toArray(new Document[documents.size()]);
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
+
+    }
+
+    public Document addDocument(String language) throws RepositoryException {
+        NodeWrapperBuilder builder = new JCRDocumentBuilder(this, language);
+        return (Document) builder.buildNode(this.content.getArea().getPublication().getSession(),
+                true);
     }
 
     public void removeDocument(Document document) throws RepositoryException {
-        // TODO Auto-generated method stub
-        
+        try {
+            ((JCRDocument) document).getNode().remove();
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
     }
 
     public Document getDocument(String language) throws RepositoryException {
-        // TODO Auto-generated method stub
-        return null;
+        NodeWrapperBuilder builder = new JCRDocumentBuilder(this, language);
+        return (Document) builder.buildNode(this.content.getArea().getPublication().getSession(), false);
     }
-    
+
 }

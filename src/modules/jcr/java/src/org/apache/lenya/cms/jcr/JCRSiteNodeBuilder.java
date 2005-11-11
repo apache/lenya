@@ -58,7 +58,6 @@ public class JCRSiteNodeBuilder implements NodeWrapperBuilder {
 
     public NodeWrapper buildNode(JCRSession session, boolean create) throws RepositoryException {
         try {
-
             JCRSiteNode wrapper = null;
             Node siteNode = null;
             if (parent.hasNode(this.name)) {

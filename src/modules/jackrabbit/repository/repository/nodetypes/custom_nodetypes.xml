@@ -113,12 +113,23 @@
       onParentVersion="COPY" protected="false" multiple="false"/>
     <propertyDef name="lenya:label" requiredType="String" autoCreate="false" mandatory="true"
       onParentVersion="COPY" protected="false" multiple="false"/>
+    <childNodeDef name="lenya:resource" defaultPrimaryType="lnt:resource" autoCreate="true" mandatory="true">
+      <requiredPrimaryTypes>
+        <requiredPrimaryType>lnt:resource</requiredPrimaryType>
+      </requiredPrimaryTypes>
+    </childNodeDef>
     <childNodeDef name="lenya:meta" defaultPrimaryType="lnt:meta" autoCreate="true" mandatory="true"
       onParentVersion="COPY" protected="false" sameNameSibs="true">
       <requiredPrimaryTypes>
         <requiredPrimaryType>lnt:meta</requiredPrimaryType>
       </requiredPrimaryTypes>
     </childNodeDef>
+  </nodeType>
+  
+  <nodeType name="lnt:resource" isMixin="false" hasOrderableChildNodes="false" primaryItemName="">
+    <supertypes>
+      <supertype>nt:resource</supertype>
+    </supertypes>
   </nodeType>
   
   <!--

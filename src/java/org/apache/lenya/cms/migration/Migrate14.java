@@ -19,21 +19,39 @@ package org.apache.lenya.cms.migration;
 import java.io.File;
 import java.io.FileFilter;
 
+import javax.xml.parsers.SAXParser;
+import javax.xml.parsers.SAXParserFactory;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.stream.StreamSource;
+
 import org.apache.lenya.cms.repo.Area;
 import org.apache.lenya.cms.repo.ContentNode;
+import org.apache.lenya.cms.repo.Document;
 import org.apache.lenya.cms.repo.Publication;
 import org.apache.lenya.cms.repo.Repository;
 import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.cms.repo.RepositoryManager;
 import org.apache.lenya.cms.repo.Session;
 import org.apache.lenya.cms.repo.SiteNode;
+import org.apache.lenya.xml.DocumentHelper;
 import org.apache.tools.ant.BuildException;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.helpers.DefaultHandler;
 
 /**
  * Migrate Lenya 1.4-dev content.
  */
 public class Migrate14 {
 
+    /**
+     * Main method.
+     * @param args The command line arguments: &lt;webapp-directory&gt;
+     *            &lt;repository-factory-class&gt;
+     */
     public static void main(String[] args) {
 
         if (args.length != 2) {
@@ -146,8 +164,7 @@ public class Migrate14 {
         importChildren(contentDir, repoArea, null);
     }
 
-    protected void importNode(File docDir, Area area, SiteNode parent)
-            throws RepositoryException {
+    protected void importNode(File docDir, Area area, SiteNode parent) throws RepositoryException {
         String nodeId = docDir.getName();
         String parentPath = "";
         if (parent != null) {
@@ -185,8 +202,21 @@ public class Migrate14 {
         String fileName = file.getName();
         String suffix = fileName.substring("index_".length());
         String language = suffix.substring(0, suffix.length() - ".xml".length());
-        contentNode.addDocument(language);
         System.out.println(" language [" + language + "]");
+        
+        Document document = contentNode.addDocument(language);
+
+        try {
+            Transformer transformer = TransformerFactory.newInstance().newTransformer();
+            Source source = new StreamSource(file);
+            Result result = new StreamResult(document.getOutputStream());
+            transformer.transform(source, result);
+        } catch (RepositoryException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RepositoryException(e);
+        }
+
     }
 
     protected void importChildren(File docDir, Area area, SiteNode parentNode)

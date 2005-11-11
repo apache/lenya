@@ -20,7 +20,7 @@ public interface ContentNode {
     
     Document[] getDocuments() throws RepositoryException;
     
-    void addDocument(String language) throws RepositoryException;
+    Document addDocument(String language) throws RepositoryException;
     
     void removeDocument(Document document) throws RepositoryException;
     
