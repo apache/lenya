@@ -39,6 +39,7 @@ import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpState;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.excalibur.xml.sax.SAXParser;
+import org.apache.lenya.cms.cocoon.generation.Configuration;
 import org.apache.log4j.Category;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
@@ -47,7 +48,17 @@ import org.xml.sax.helpers.AttributesImpl;
 public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerator implements
         Parameterizable {
     private static Category log = Category.getInstance(ProxyGenerator.class);
-
+    
+    private static String trustStore = null;
+    private static String trustStorePassword = null;    
+    
+    public ProxyGenerator() {
+        Configuration conf = new Configuration();
+        trustStore = conf.trustStore;
+        trustStorePassword = conf.trustStorePassword;
+        log.debug("loaded ProxyGenerator Config: " + "trustStore="+trustStore + " trustStorePassword=" + trustStorePassword);
+    }
+    
     // The URI of the namespace of this generator
     private String URI = "http://apache.org/cocoon/lenya/proxygenerator/1.0";
 
@@ -63,7 +74,7 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
      */
     public void generate() throws SAXException {
         Request request = (Request) objectModel.get(ObjectModelHelper.REQUEST_OBJECT);
-
+        
         log.debug("\n----------------------------------------------------------------"
                 + "\n- Request: (" + request.getClass().getName() + ") at port "
                 + request.getServerPort()
@@ -140,14 +151,22 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
                 String name = (String) e.nextElement();
                 httpMethod.addRequestHeader(name, request.getHeader(name));
             }
+                        
             HostConfiguration hostConfiguration = new HostConfiguration();
-            hostConfiguration.setHost(url.getHost(), url.getPort());
+            hostConfiguration.setHost(url.getHost(), url.getPort(), url.getProtocol());
 
             log.debug("\n----------------------------------------------------------------"
                     + "\n- Starting session at URI: " + url + "\n- Host:                    "
                     + url.getHost() + "\n- Port:                    " + url.getPort()
                     + "\n----------------------------------------------------------------");
-
+            
+            if (trustStore != null) {
+            	System.setProperty("javax.net.ssl.trustStore", trustStore);
+            }            
+            if (trustStorePassword != null) {
+            	System.setProperty("javax.net.ssl.trustStorePassword", trustStorePassword);     
+            }
+            
             int result = httpClient.executeMethod(hostConfiguration, httpMethod);
 
             log.debug("\n----------------------------------------------------------------"
@@ -200,7 +219,7 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
             url = new URL(this.source);
             log.debug(".createURL(): " + url);
         } catch (MalformedURLException e) {
-            url = new URL("http://" + request.getServerName() + ":" + request.getServerPort() + this.source);
+            url = new URL(request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + this.source);
             log.debug(".createURL(): Add localhost and port: " + url);
         }
 
