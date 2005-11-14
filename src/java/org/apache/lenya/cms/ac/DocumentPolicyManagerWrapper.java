@@ -19,20 +19,20 @@
 
 package org.apache.lenya.cms.ac;
 
+import java.util.Map;
+
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.context.Context;
-import org.apache.avalon.framework.context.ContextException;
-import org.apache.avalon.framework.context.Contextualizable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
-import org.apache.cocoon.components.ContextHelper;
+import org.apache.cocoon.components.CocoonComponentManager;
+import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
@@ -42,6 +42,7 @@ import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.ac.impl.DefaultPolicy;
 import org.apache.lenya.ac.impl.InheritingPolicyManager;
+import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
@@ -54,7 +55,7 @@ import org.apache.lenya.cms.repository.Session;
  * URL, e.g. <code>/foo/bar_de.print.html</code> is mapped to <code>/foo/bar</code>.
  */
 public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
-        InheritingPolicyManager, Serviceable, Configurable, Disposable, Contextualizable {
+        InheritingPolicyManager, Serviceable, Configurable, Disposable {
 
     /**
      * Ctor.
@@ -77,11 +78,14 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Resolving policy for webapp URL [" + webappUrl + "]");
         }
-
+        
+        
         Publication publication = getPublication(webappUrl);
         String url = null;
+        ContextUtility contextUtility = null;
         try {
-            Session session = RepositoryUtil.getSession(this.request, getLogger());
+            contextUtility = (ContextUtility)serviceManager.lookup(ContextUtility.ROLE);
+            Session session = RepositoryUtil.getSession(contextUtility.getRequest(), getLogger());
             DocumentIdentityMap map = new DocumentIdentityMap(session,
                     getServiceManager(),
                     getLogger());
@@ -95,8 +99,14 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
                     }
                 }
             }
+        } catch (ServiceException e) {
+            throw new AccessControlException("Error looking up ContextUtility component", e);
         } catch (Exception e) {
             throw new AccessControlException(e);
+        } finally {
+            if (contextUtility != null) {
+                serviceManager.release(contextUtility);
+            }
         }
 
         if (url == null) {
@@ -290,11 +300,4 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
             throws AccessControlException {
         getPolicyManager().accreditableAdded(manager, accreditable);
     }
-
-    private Request request;
-
-    public void contextualize(Context context) throws ContextException {
-        this.request = ContextHelper.getRequest(context);
-    }
-
 }

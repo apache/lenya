@@ -571,6 +571,10 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
   <component role="org.apache.cocoon.components.cron.CronJob/usecase"
              class="org.apache.lenya.cms.usecase.scheduling.UsecaseCronJob"
              logger="cron.usecase"/>
+
+  <component role="org.apache.lenya.cms.cocoon.components.context.ContextUtility"
+             logger="lenya.cocoon.components"
+             class="org.apache.lenya.cms.cocoon.components.context.ContextUtility"/>
              
   <site-managers>
     <component-instance name="simple" logger="lenya.site"
