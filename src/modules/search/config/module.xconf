@@ -26,6 +26,7 @@
     <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
       <sample-name>fallback://lenya/modules/search/samples/search.xml</sample-name>
     </creator>
+    <format name="xhtml" uri="cocoon://modules/search/xhtml.xml"/>
   </component-instance>
 
 </xconf>
