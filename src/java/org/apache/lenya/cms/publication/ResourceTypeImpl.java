@@ -91,13 +91,14 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
             // determine the sample content locations.
             if (creatorConf != null) {
                 Configuration[] samplesConf = creatorConf.getChildren(SAMPLE_NAME);
-                for(int i=0; i<samplesConf.length; i++) {
-                  if (samplesConf[i].getAttributeNames().length > 0)
-                    this.sampleUris.put(samplesConf[i].getAttribute(SAMPLE_NAME_ATTRIBUTE),samplesConf[i].getValue());                	  
-                  else { //default sample doesn't have name attribute
-                    this.sampleUri = samplesConf[i].getValue();
-                    this.defaultSampleUri = samplesConf[i].getValue();
-                  }
+                for (int i = 0; i < samplesConf.length; i++) {
+                    if (samplesConf[i].getAttributeNames().length > 0)
+                        this.sampleUris.put(samplesConf[i].getAttribute(SAMPLE_NAME_ATTRIBUTE),
+                                samplesConf[i].getValue());
+                    else { // default sample doesn't have name attribute
+                        this.sampleUri = samplesConf[i].getValue();
+                        this.defaultSampleUri = samplesConf[i].getValue();
+                    }
                 }
             }
 
@@ -108,14 +109,14 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
                 xPaths.add(xPath);
             }
             this.linkAttributeXPaths = (String[]) xPaths.toArray(new String[xPaths.size()]);
-            
+
             Configuration[] formatConfigs = config.getChildren(ELEMENT_FORMAT);
             for (int i = 0; i < formatConfigs.length; i++) {
                 String name = formatConfigs[i].getAttribute(ATTRIBUTE_NAME);
                 String uri = formatConfigs[i].getAttribute(ATTRIBUTE_URI);
                 this.formats.put(name, new Format(uri));
             }
-            
+
         } catch (Exception e) {
             throw new ConfigurationException("Configuring resource type failed: ", e);
         }
@@ -140,22 +141,22 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     }
 
     public String[] getSampleNames() {
-    	String[] names = new String[this.sampleUris.size()];
-    	Iterator it = this.sampleUris.keySet().iterator();
-        int count=0;
-    	while (it.hasNext()) {
+        String[] names = new String[this.sampleUris.size()];
+        Iterator it = this.sampleUris.keySet().iterator();
+        int count = 0;
+        while (it.hasNext()) {
             names[count++] = (String) it.next();
         }
-    	return names;
+        return names;
     }
-    
+
     public void setSampleURI(String name) {
-        if (name.length() > 0 && this.sampleUris.containsKey(name)) 
-          this.sampleUri = (String) this.sampleUris.get(name);    		
+        if (name.length() > 0 && this.sampleUris.containsKey(name))
+            this.sampleUri = (String) this.sampleUris.get(name);
         else
-          this.sampleUri = new String(this.defaultSampleUri);
+            this.sampleUri = new String(this.defaultSampleUri);
     }
-    
+
     public String getSampleURI() {
         return this.sampleUri;
     }
@@ -173,7 +174,7 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     public String getName() {
         return this.name;
     }
-    
+
     private Map formats = new HashMap();
 
     public String[] getFormats() {
@@ -182,16 +183,22 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     }
 
     public String getFormatURI(String format) {
+
+        if (!this.formats.containsKey(format)) {
+            throw new RuntimeException("The resource type [" + getName()
+                    + "] does not support the format [" + format + "].");
+        }
+
         return ((Format) this.formats.get(format)).getURI();
     }
-    
+
     /**
      * A format.
      */
     public static class Format {
-        
+
         private String uri;
-        
+
         /**
          * Ctor.
          * @param uri The uri.
@@ -199,14 +206,14 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
         public Format(String uri) {
             this.uri = uri;
         }
-        
+
         /**
          * @return The uri.
          */
         public String getURI() {
             return this.uri;
         }
-        
+
     }
 
 }
