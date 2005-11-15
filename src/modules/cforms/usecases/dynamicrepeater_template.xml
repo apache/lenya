@@ -17,6 +17,7 @@
 <page:page xmlns:ft="http://apache.org/cocoon/forms/1.0#template"
       xmlns:fi="http://apache.org/cocoon/forms/1.0#instance"
       xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+      xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
       xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">
       
   <!-- Import the macros that define CForms template elements -->
