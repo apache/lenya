@@ -291,7 +291,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * @see org.apache.lenya.cms.publication.DocumentManager#isValidDocumentName(java.lang.String)
      */
     public boolean isValidDocumentName(String documentName) {
-        return !documentName.equals("") && documentName.indexOf("/") < 0;
+        return documentName.matches("[a-zA-Z0-9]+");
     }
 
     /**

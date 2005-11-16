@@ -89,14 +89,19 @@ public class CreateDocument extends Create {
         DocumentManager documentManager = null;
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            Document parent = getSourceDocument();
-            Publication publication = getSourceDocument().getPublication();
-            Document document = getSourceDocument().getIdentityMap().get(publication,
-                    getSourceDocument().getArea(),
-                    parent.getId() + "/" + documentName,
-                    language);
-            if (document.exists()) {
-                addErrorMessage("The document does already exist.");
+
+            if (!documentManager.isValidDocumentName(documentName)) {
+                addErrorMessage("The document ID may not contain any special characters.");
+            } else {
+                Document parent = getSourceDocument();
+                Publication publication = getSourceDocument().getPublication();
+                Document document = getSourceDocument().getIdentityMap().get(publication,
+                        getSourceDocument().getArea(),
+                        parent.getId() + "/" + documentName,
+                        language);
+                if (document.exists()) {
+                    addErrorMessage("The document does already exist.");
+                }
             }
         } finally {
             if (documentManager != null) {
