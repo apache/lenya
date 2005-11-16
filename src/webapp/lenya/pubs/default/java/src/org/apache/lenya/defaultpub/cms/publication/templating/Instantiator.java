@@ -22,6 +22,8 @@ import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.util.Collection;
 import java.util.Iterator;
+import java.text.SimpleDateFormat;
+import java.lang.Boolean;
 
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
@@ -43,6 +45,20 @@ import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import org.apache.cocoon.components.search.Index;
+import org.apache.cocoon.components.search.IndexException;
+import org.apache.cocoon.components.search.IndexStructure;
+import org.apache.cocoon.components.search.components.AnalyzerManager;
+import org.apache.cocoon.components.search.components.IndexManager;
+import org.apache.cocoon.components.search.fieldmodel.DateFieldDefinition;
+import org.apache.cocoon.components.search.fieldmodel.FieldDefinition;
+import org.apache.cocoon.components.search.utils.SourceHelper;
+
+import org.apache.avalon.framework.configuration.Configurable;
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
+
+
 /**
  * Instantiate the publication.
  * 
@@ -52,8 +68,9 @@ public class Instantiator extends AbstractLogEnabled implements
         org.apache.lenya.cms.publication.templating.Instantiator, Serviceable {
 
     protected static final String[] sourcesToCopy = { "publication.xml",
-            "config/publication.xconf", "config/ac/passwd/", "config/ac/ac.xconf",
-            "config/ac/policies/", "config/ac/usecase-policies.xml" };
+            "config/publication.xconf", "config/index_manager_index.xconf", "config/index_manager.xconf", "config/ac/passwd/", "config/ac/ac.xconf",
+            "config/ac/policies/", "config/ac/usecase-policies.xml",
+            "config/workflow/workflow.xml", "content/" };
 
     /**
      * @see org.apache.lenya.cms.publication.templating.Instantiator#instantiate(org.apache.lenya.cms.publication.Publication,
@@ -66,6 +83,8 @@ public class Instantiator extends AbstractLogEnabled implements
         Source publicationsSource = null;
         ModifiableSource metaSource = null;
         ModifiableSource configSource = null;
+        ModifiableSource indexSource = null;
+        ModifiableSource indexerSource = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             publicationsSource = resolver.resolveURI("context://"
@@ -92,6 +111,88 @@ public class Instantiator extends AbstractLogEnabled implements
             DocumentHelper.setSimpleElementText(nameElement, name);
 
             save(metaDoc, metaSource);
+
+	    // RGE: Soc addition
+	    // First, patch the xconf patchfile with the new publication name
+
+	    String indexDir = publicationsUri + newPublicationId + "/work/lucene/index";
+	    indexDir = indexDir.substring(5);
+		    
+	    indexSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/" + newPublicationId + "/config/index_manager_index.xconf");
+            Document indexDoc = DocumentHelper.readDocument(indexSource.getInputStream());
+	    NamespaceHelper indexHelper = new NamespaceHelper(null,"xconf",indexDoc);
+	    
+	    indexerSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/" + newPublicationId + "/config/index_manager.xconf");
+            Document indexerDoc = DocumentHelper.readDocument(indexerSource.getInputStream());
+	    NamespaceHelper indexerHelper = new NamespaceHelper(null,"xconf",indexerDoc);
+
+	    Element indexManagerElement = indexerHelper.getFirstChild(indexerDoc.getDocumentElement(),"index_manager");
+	    Element indexerElement = indexerHelper.getFirstChild(indexManagerElement,"indexer");
+
+	    Element xconfIndexElement = indexDoc.getDocumentElement();
+	    xconfIndexElement.setAttribute("unless","/cocoon/index_manager/indexes/index[@id = '" + newPublicationId  + "']");
+ 	    
+            Element indexElement = indexHelper.getFirstChild(indexDoc.getDocumentElement(), "index");
+	    
+	    indexElement.setAttribute("id",newPublicationId);
+    	    indexElement.setAttribute("directory", indexDir);
+
+            save(indexDoc, indexSource);
+
+	    // Second, configure the index and add it to the IndexManager
+
+	    IndexManager indexM = (IndexManager) manager.lookup(IndexManager.ROLE);
+	    
+	    Element structure = indexHelper.getFirstChild(indexElement, "structure");
+            Element[] fields = indexHelper.getChildren(structure, "field");
+	    
+            IndexStructure docdecl = new IndexStructure();
+
+	    for (int j = 0; j < fields.length; j++) {
+
+                FieldDefinition fielddecl = null;
+
+                // field id attribute
+                String id_field = fields[j].getAttribute("id");
+
+                // field type attribute
+                String typeS = fields[j].getAttribute("type");
+                int type = FieldDefinition.stringTotype(typeS);
+                try {
+                    fielddecl = FieldDefinition.create(id_field, type);
+                } catch (IllegalArgumentException e) {
+                    throw new ConfigurationException("field " + id_field + " type " + typeS, e);
+                }
+
+                // field store attribute
+                boolean store;
+		Boolean BoolStore = new Boolean(fields[j].getAttribute("storetext"));
+		store = BoolStore.booleanValue();
+		    
+                fielddecl.setStore(store);
+
+                // field dateformat attribute
+                if (fielddecl.getType() == FieldDefinition.DATE) {
+                    String dateformat_field = fields[j].getAttribute("dateformat");
+                    ((DateFieldDefinition) fielddecl).setDateFormat(new SimpleDateFormat(dateformat_field));
+                }
+
+                docdecl.addFieldDef(fielddecl);
+            }
+	    
+            Index index = new Index();
+            index.setID(newPublicationId);
+            index.setIndexer(indexerElement.getAttribute("role"));
+            index.setDirectory(indexDir);
+            index.setDefaultAnalyzerID(indexElement.getAttribute("analyzer"));
+            index.setManager(manager);
+            index.setStructure(docdecl);
+
+            indexM.addIndex(index);
+            manager.release(indexM);
+	    // TODO: release all objects!
+
+	    // RGE: End Soc addition
 
             configSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
                     + newPublicationId + "/config/publication.xconf");
@@ -131,6 +232,10 @@ public class Instantiator extends AbstractLogEnabled implements
                 if (configSource != null) {
                     resolver.release(configSource);
                 }
+                if (indexSource != null) {
+                    resolver.release(indexSource);
+                }
+
             }
         }
     }
