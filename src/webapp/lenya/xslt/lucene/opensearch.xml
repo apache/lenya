@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+  <rss xmlns:openSearch="http://a9.com/-/spec/opensearchrss/1.0/" >
+    <channel>
+      <title>history</title>
+      <link>history</link>
+      <description>Search A9.com</description>
+      <language>en-us</language>
+      <openSearch:totalResults>4230000</openSearch:totalResults>
+      <openSearch:startIndex>1</openSearch:startIndex>
+      <openSearch:itemsPerPage>10</openSearch:itemsPerPage>
+      <nutch:query xmlns:nutch="http://www.nutch.org/opensearchrss/1.0/">ofd</nutch:query>
+      <item>
+        <title>New York City History</title>
+        <link>http://www.columbia.edu/cu/lweb/eguides/amerihist/nyc.html</link>
+        <description>... Harlem.NYC - A virtual tour and information on 
+        businesses ...  with historic photos of Columbia's own New York 
+        neighborhood ... Internet Resources for the City's History. ...</description>
+      </item>
+      <item>
+        <title>Gotham Center for New York City History</title>
+        <link>http://www.gothamcenter.org/</link>
+        <description>... Submit Events Edit Your Submission. Main Neighborhood
+        Stories NYC History in the ... The Gotham Center for New York City History
+        is supported by The CUNY Graduate ...</description>
+      </item>
+      <item>
+        <title>Welcome to the Museum of the City of New York</title>
+        <link>http://www.mcny.org/</link>
+        <description>... a list with the event staff. Additional information
+        will be included in the confirming email.  Museum of the City
+        of New York.</description>
+      </item>
+    </channel>
+  </rss>
