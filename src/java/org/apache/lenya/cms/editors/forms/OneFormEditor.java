@@ -26,6 +26,7 @@ import java.io.Writer;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.ModifiableSource;
+import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
@@ -36,6 +37,7 @@ import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.Schema;
 import org.apache.lenya.xml.ValidationUtil;
 import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
@@ -91,6 +93,7 @@ public class OneFormEditor extends DocumentUsecase {
 
         ModifiableSource xmlSource = null;
         SourceResolver resolver = null;
+        Source indexSource = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             xmlSource = (ModifiableSource) resolver.resolveURI(getSourceDocument().getSourceURI());
@@ -116,6 +119,10 @@ public class OneFormEditor extends DocumentUsecase {
                             getLogger(),
                             getSourceDocument(),
                             getEvent());
+                    
+                    //re-index      
+                    indexSource = resolver.resolveURI("cocoon://core/lucene/index.xml");
+                    InputSource xmlInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(indexSource);
                 }
             }
 
@@ -123,6 +130,9 @@ public class OneFormEditor extends DocumentUsecase {
             if (resolver != null) {
                 if (xmlSource != null) {
                     resolver.release(xmlSource);
+                }
+                if (indexSource != null) {
+                    resolver.release(indexSource);
                 }
                 this.manager.release(resolver);
             }

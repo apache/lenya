@@ -180,4 +180,24 @@
         <!--
         default-class="org.apache.lenya.cms.jcr.JCRNodeFactory"/>
         -->
+
+
+<!-- RGE: inserted roles used by the Lucene2 block -->	
+
+    <!-- default indexer -->
+  <role name="org.apache.cocoon.components.search.components.Indexer/default" shorthand="default_indexer"
+default-class="org.apache.cocoon.components.search.components.impl.DefaultIndexerImpl"/>
+
+    <!-- parallel indexer -->
+  <role name="org.apache.cocoon.components.search.components.Indexer/parallel" shorthand="parallel_indexer"
+default-class="org.apache.cocoon.components.search.components.impl.ParallelIndexerImpl"/>
+
+	<!-- analyzer manager -->
+  <role name="org.apache.cocoon.components.search.components.AnalyzerManager" shorthand="analyzer_manager"
+default-class="org.apache.cocoon.components.search.components.impl.AnalyzerManagerImpl"/>
+
+	<!-- index manager -->
+  <role name="org.apache.cocoon.components.search.components.IndexManager" shorthand="index_manager"
+default-class="org.apache.cocoon.components.search.components.impl.IndexManagerImpl"/>
+
 </role-list>

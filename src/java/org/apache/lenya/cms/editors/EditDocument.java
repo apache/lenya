@@ -16,12 +16,14 @@
  */
 package org.apache.lenya.cms.editors;
 
+import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
+import org.xml.sax.InputSource;
 
 /**
  * Usecase to edit documents.
@@ -41,6 +43,7 @@ public class EditDocument extends DocumentUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
         SourceResolver resolver = null;
+        Source source = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             SourceUtil.copy(resolver,
@@ -52,9 +55,17 @@ public class EditDocument extends DocumentUsecase {
                     getLogger(),
                     getSourceDocument(),
                     "edit");
+            
+            //index
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);       
+            source = resolver.resolveURI("cocoon://core/lucene/index.xml");
+            InputSource xmlInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(source);
 
         } finally {
             if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
                 this.manager.release(resolver);
             }
         }
