@@ -1,0 +1,355 @@
+/**
+ * Copyright 2004 The Apache Software Foundation
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.cocoon.components.search.components.impl;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apache.avalon.framework.configuration.Configurable;
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.Serviceable;
+import org.apache.avalon.framework.thread.ThreadSafe;
+import org.apache.cocoon.components.search.Index;
+import org.apache.cocoon.components.search.IndexException;
+import org.apache.cocoon.components.search.IndexStructure;
+import org.apache.cocoon.components.search.components.AnalyzerManager;
+import org.apache.cocoon.components.search.components.IndexManager;
+import org.apache.cocoon.components.search.fieldmodel.DateFieldDefinition;
+import org.apache.cocoon.components.search.fieldmodel.FieldDefinition;
+import org.apache.cocoon.components.search.utils.SourceHelper;
+import org.apache.excalibur.source.Source;
+
+//import org.apache.excalibur.source.SourceResolver;
+
+/**
+ * Index Manager Component. Configure and Manage the differents indexes.
+ * 
+ * @author Maisonneuve Nicolas
+ * @version 1.0
+ */
+public class IndexManagerImpl extends AbstractLogEnabled implements
+        IndexManager, Serviceable, ThreadSafe, Configurable {
+
+   
+    /**
+     * indexer element 
+     */
+    public static final String INDEXER_ELEMENT = "indexer";
+    
+    /**
+     * indexer element 
+     */
+    public static final String INDEXER_ROLE_ATTRIBUTE = "role";
+    
+    /**
+     * set of indexes
+     */
+    public static final String INDEXES_ELEMENT = "indexes";
+
+    /**
+     * Index declaration element
+     */
+    public static final String INDEX_ELEMENT = "index";
+
+    /**
+     * default analyzer of a index
+     */
+    public static final String INDEX_DEFAULTANALZER_ATTRIBUTE = "analyzer";
+
+    /**
+     * directory where the index is stored
+     */
+    public static final String INDEX_DIRECTORY_ATTRIBUTE = "directory";
+
+    /**
+     * Index Structure element
+     */
+    public static final String STRUCTURE_ELEMENT = "structure";
+
+    /**
+     * Field declaration element
+     */
+    public static final String FIELD_ELEMENT = "field";
+
+    /**
+     * field name
+     */
+    public static final String ID_ATTRIBUTE = "id";
+
+    /**
+     * type of the field: "text, "keyword", "date" (see
+     * 
+     * @see org.apache.cocoon.components.search.fieldmodel.FieldDefinition
+     *      class)
+     */
+    public static final String TYPE_ATTRIBUTE = "type";
+
+    /**
+     * store information or not (true/false)
+     */
+    public static final String STORE_ATTRIBUTE = "storetext";
+
+    /**
+     * The date Format when the field type is a date
+     */
+    public static final String DATEFORMAT_ATTRIBUTE = "dateformat";
+
+    /**
+     * check the config file each time the getIndex is called to update if
+     * necessary the configuration
+     */
+    // public static final String CHECK_ATTRIBUTE = "check";
+    
+    /**
+     * Source of the index configuration file
+     */
+    // public static final String CONFIG_ATTRIBUTE = "config";
+    
+    /**
+     * Check or not the configuration file (automatic update if the file is
+     * changed)
+     */
+    // private boolean check;
+    
+    /**
+     * Index configuration file
+     */
+    // private Source configfile;
+    
+    private ServiceManager manager;
+
+    private Map indexes;
+
+    public IndexManagerImpl() {
+        indexes = new HashMap();
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.cocoon.components.search.components.IndexManager#contains(java.lang.String)
+     */
+    public boolean contains(String id) {
+        if (id != null) {
+            return this.indexes.get(id) != null;
+        }
+        return false;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.cocoon.components.search.components.IndexManager#getIndex(java.lang.String)
+     */
+    public Index getIndex(String id) throws IndexException {
+
+        if (id == null || id.equals("")) {
+            throw new IndexException(" index with no name was called");
+        }
+
+        // if (check) {
+        // // if the configuration file has changed , reload it
+        // if (!SourceHelper.checkSourceValidity(configfile)) {
+        // try {
+        // configureIndexManager(configfile);
+        // } catch (ConfigurationException e) {
+        // throw new IndexException(
+        // "Configuration Exception (index called: " + id, e);
+        // }
+        // this.getLogger().info(
+        // "Index Configuration file has changed. Index Configuration is
+        // reloading...");
+        // }
+        // }
+
+        Index index = (Index) this.indexes.get(id);
+        if (index == null) {
+            throw new IndexException("index " + id + " doesn't exist");
+        }
+
+        return index;
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.cocoon.components.search.components.IndexManager#addIndex(org.apache.cocoon.components.search.Index)
+     */
+    public void addIndex(Index base) {
+        this.indexes.put(base.getID(), base);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.cocoon.components.search.components.IndexManager#remove(java.lang.String)
+     */
+    public void remove(String id) {
+        this.indexes.remove(id);
+    }
+
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
+     */
+    public void configure(Configuration configuration)
+            throws ConfigurationException {
+
+        // // update the index if the config file changes 
+        // check = configuration.getAttributeAsBoolean(CHECK_ATTRIBUTE, false);
+        //
+        // // index config file  
+        // String sourceURI = configuration.getAttribute(CONFIG_ATTRIBUTE);
+        //
+        // try {
+        // SourceResolver resolver = (SourceResolver) manager
+        // .lookup(SourceResolver.ROLE);
+        // configfile = resolver.resolveURI(sourceURI);
+        // if (check) {
+        // SourceHelper.registerSource(configfile);
+        // }
+        // manager.release(resolver);
+        // } catch (Exception ex1) {
+        // throw new ConfigurationException("get source " + sourceURI
+        // + " error", ex1);
+        // }
+        // configureIndexManager(configfile);
+        ConfigureIndexManager(configuration);
+        System.out.println("Search Engine - Index Manager configured.");
+    }
+
+    private void configureIndexManager(Source source)
+            throws ConfigurationException {
+        Configuration configuration = SourceHelper.build(source);
+        ConfigureIndexManager(configuration);
+    }
+
+    private void ConfigureIndexManager(Configuration configuration)
+            throws ConfigurationException {
+        AnalyzerManager analyzerM = null;
+        String indexerRole = configuration.getChild(INDEXER_ELEMENT).getAttribute(INDEXER_ROLE_ATTRIBUTE);
+        Configuration[] confs = configuration.getChild(INDEXES_ELEMENT).getChildren(INDEX_ELEMENT);
+
+        if (confs.length == 0) {
+            throw new ConfigurationException("no index is defined !");
+        }
+        try {
+            analyzerM = (AnalyzerManager) this.manager
+                    .lookup(AnalyzerManager.ROLE);
+        } catch (ServiceException ex1) {
+            throw new ConfigurationException("AnalyzerManager lookup error",ex1);
+        }
+
+        // configure each index
+        for (int i = 0; i < confs.length; i++) {
+            String id = confs[i].getAttribute(ID_ATTRIBUTE);
+            String analyzerid = confs[i]
+                    .getAttribute(INDEX_DEFAULTANALZER_ATTRIBUTE);
+            String directory = confs[i].getAttribute(INDEX_DIRECTORY_ATTRIBUTE);
+            if (!analyzerM.exist(analyzerid)) {
+                throw new ConfigurationException("Analyzer " + analyzerid
+                        + " no found");
+            }
+
+            Configuration[] fields = confs[i].getChild(STRUCTURE_ELEMENT)
+                    .getChildren(FIELD_ELEMENT);
+
+            IndexStructure docdecl = new IndexStructure();
+            for (int j = 0; j < fields.length; j++) {
+
+                FieldDefinition fielddecl;
+
+                // field id attribute
+                String id_field = fields[j].getAttribute(ID_ATTRIBUTE);
+
+                // field type attribute
+                String typeS = fields[j].getAttribute(TYPE_ATTRIBUTE, "");
+                int type = FieldDefinition.stringTotype(typeS);
+                try {
+                    fielddecl = FieldDefinition.create(id_field, type);
+                } catch (IllegalArgumentException e) {
+                    throw new ConfigurationException("field " + id_field
+                            + " type " + typeS, e);
+                }
+
+                // field store attribute
+                boolean store;
+                if (fielddecl.getType() == FieldDefinition.TEXT) {
+                    store = fields[j].getAttributeAsBoolean(STORE_ATTRIBUTE,
+                            false);
+                } else {
+                    store = fields[j].getAttributeAsBoolean(STORE_ATTRIBUTE,
+                            true);
+                }
+                fielddecl.setStore(store);
+
+                // field dateformat attribute
+                if (fielddecl.getType() == FieldDefinition.DATE) {
+                    String dateformat_field = fields[j]
+                            .getAttribute(DATEFORMAT_ATTRIBUTE);
+                    ((DateFieldDefinition) fielddecl)
+                            .setDateFormat(new SimpleDateFormat(
+                                    dateformat_field));
+                }
+
+                this.getLogger().debug("field added: " + fielddecl);
+                docdecl.addFieldDef(fielddecl);
+            }
+            try {
+                Index index = new Index();
+                index.setID(id);
+                index.setIndexer(indexerRole);
+                
+                if (index.setDirectory(directory)) {
+                    this.getLogger().warn(
+                            "directory " + directory + " was locked ");
+                }
+                index.setDefaultAnalyzerID(analyzerid);
+                index.setStructure(docdecl);
+                index.setManager(manager);
+
+                this.addIndex(index);
+                this.getLogger().info("add index  " + index.getID());
+            } catch (IOException ex) {
+                throw new ConfigurationException(ex.getMessage(), ex);
+            }
+            this.manager.release(analyzerM);
+        }
+    }
+
+    /* (non-Javadoc)
+     * @see org.apache.cocoon.components.search.components.IndexManager#getIndex()
+     */
+    public Index[] getIndex() {
+        return (Index[]) this.indexes.values().toArray(
+                new Index[indexes.size()]);
+    }
+
+    /* (non-Javadoc)
+     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
+     */
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
+    }
+
+}
