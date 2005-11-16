@@ -20,16 +20,30 @@
     xmlns:xhtml="http://www.w3.org/1999/xhtml"
     >
 
+  <xsl:import href="fallback://lenya/resources/kupu/apache-lenya/lenya/kupusave.xsl"/>
+  <xsl:import href="fallback://lenya/xslt/bxe/change-object-path-back.xsl"/>
+
   <xsl:template match="@*|node()">
     <xsl:copy>
       <xsl:apply-templates select="@*|node()"/>
     </xsl:copy>
   </xsl:template>
   
+  <!-- Unsupported by the schema -->
+  <xsl:template match="@shape|@target|xhtml:u">
+    <xsl:apply-templates />
+  </xsl:template>
+  
   <xsl:template match="xhtml:b">
     <xhtml:strong>
       <xsl:apply-templates />
     </xhtml:strong>
+  </xsl:template>
+  
+  <xsl:template match="xhtml:i">
+    <xhtml:em>
+      <xsl:apply-templates />
+    </xhtml:em>
   </xsl:template>
   
 </xsl:stylesheet> 
