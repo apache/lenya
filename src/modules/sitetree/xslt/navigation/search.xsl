@@ -17,20 +17,28 @@
 
 <!-- $Id: search.xsl 76019 2004-11-16 20:13:32Z gregor $ -->
 
+
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:nav="http://apache.org/cocoon/lenya/navigation/1.0"
     xmlns="http://www.w3.org/1999/xhtml"
     exclude-result-prefixes="nav"
     >
-    
-<xsl:param name="area"/>
-<xsl:param name="root"/>
 
 <xsl:template match="nav:site">
   <div id="search">
-    <form action="{$root}../search-{$area}/lucene"><p><input class="searchfield" type="text" name="queryString" alt="Search field"/><input class="searchsubmit" type="submit" value="Search" name="find"/></p></form>
-      </div>
+    <form action="?">
+      <p>
+        <input class="searchfield" type="text" name="queryString" alt="Search field"/>
+	<select name="lenya.usecase">
+	  <option selected="true" value="lucene.search">Internal</option>
+	  <option value="lucene.externalOpensearch">External</option>
+	</select>
+        <input type="hidden" value="20" name="pageLength"/>
+        <input class="searchsubmit" type="submit" value="Go"/>
+      </p>
+    </form>
+  </div>
 </xsl:template>
 
 <xsl:template match="@*|node()">
