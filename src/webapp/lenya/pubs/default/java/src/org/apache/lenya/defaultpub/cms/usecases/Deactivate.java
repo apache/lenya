@@ -34,6 +34,9 @@ import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.workflow.WorkflowException;
 
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.excalibur.source.Source;
+import org.xml.sax.InputSource;
 /**
  * Deactivate usecase handler.
  * 
@@ -132,6 +135,8 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
         boolean success = false;
 
         DocumentManager documentManager = null;
+        SourceResolver resolver = null;	
+	Source source = null;
         try {
             Document liveDocument = authoringDocument.getIdentityMap()
                     .getAreaVersion(authoringDocument, Publication.LIVE_AREA);
@@ -144,10 +149,21 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
                     getLogger(),
                     authoringDocument,
                     getEvent());
+
+	    resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);	    
+	    source = resolver.resolveURI("cocoon://core/lucene/delete.xml");
+            InputSource xmlInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(source);
+
             success = true;
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
+	    if (resolver != null) {
+		    if (source != null) {
+			    resolver.release(source);
+		    }
+		    this.manager.release(resolver);
+	    }		
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Deactivate document [" + authoringDocument + "]. Success: ["
                         + success + "]");

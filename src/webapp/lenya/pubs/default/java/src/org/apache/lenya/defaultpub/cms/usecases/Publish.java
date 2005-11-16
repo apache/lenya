@@ -53,6 +53,9 @@ import org.apache.lenya.notification.NotificationException;
 import org.apache.lenya.notification.NotificationUtil;
 import org.apache.lenya.workflow.WorkflowException;
 
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.excalibur.source.Source;
+import org.xml.sax.InputSource;
 /**
  * Publish usecase handler.
  * 
@@ -242,6 +245,9 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
     protected void publish(Document authoringDocument) {
 
         DocumentManager documentManager = null;
+        SourceResolver resolver = null;	
+	Source source = null;
+
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             documentManager.copyToArea(authoringDocument, Publication.LIVE_AREA);
@@ -250,6 +256,10 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
                     getLogger(),
                     authoringDocument,
                     getEvent());
+
+	    resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);	    
+	    source = resolver.resolveURI("cocoon://core/lucene/index.xml");
+        InputSource xmlInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(source);
 
             boolean notify = Boolean.valueOf(getBooleanCheckboxParameter(SEND_NOTIFICATION))
                     .booleanValue();
@@ -260,6 +270,12 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
+	    if (resolver != null) {
+		    if (source != null) {
+			    resolver.release(source);
+		    }
+		    this.manager.release(resolver);
+	    }
             if (documentManager != null) {
                 this.manager.release(documentManager);
             }
