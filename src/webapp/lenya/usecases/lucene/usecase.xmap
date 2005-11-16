@@ -1,0 +1,157 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 1999-2005 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+<!-- =========================== Components ================================ -->
+   <map:components>
+   
+      <map:actions default="request">
+        <map:action name="request" src="org.apache.cocoon.acting.RequestParamAction"/>
+      </map:actions>
+
+      <map:transformers default="xslt">
+        <map:transformer name="index2" logger="sitemap.transformer.luceneindextransformer2" src="org.apache.cocoon.transformation.LuceneIndexTransformer2"/>
+        <map:transformer name="cinclude" src="org.apache.cocoon.transformation.CIncludeTransformer"/>
+      </map:transformers>
+      
+   </map:components>
+
+<!-- =========================== Pipelines ================================ -->
+
+  <map:pipelines>
+
+    <map:pipeline>  
+      <map:match pattern="modules/*/**">
+        <map:mount uri-prefix="modules/{1}/" src="context://lenya/modules/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+    </map:pipeline>  
+
+    <map:pipeline>
+      
+      <map:match pattern="opensearch.xml">
+          <!-- TODO: implement the opensearch results to make the search results available for an external app -->
+      	  <map:generate type="search">
+	     <map:parameter name="index" value="{realpath://lenya/pubs/{page-envelope:publication-id}/work/lucene/index}"/>
+	  </map:generate>
+
+          <map:transform src="fallback://lenya/xslt/lucene/search2opensearch.xsl">	  
+	    <map:parameter name="root" value="{page-envelope:context-prefix}/{page-envelope:publication-id}/{page-envelope:area}"/>
+            <map:parameter name="document-id" value="{page-envelope:document-id}"/>
+            <map:parameter name="publication-id" value="{page-envelope:publication-id}"/>
+            <map:parameter name="document-type" value="{page-envelope:document-type}"/>
+            <map:parameter name="language" value="{page-envelope:document-language}"/>
+            <map:parameter name="page-length" value="{pageLength}"/>
+	  </map:transform>
+	  
+	  <map:transform type="cinclude"/>
+	  <map:serialize type="xml"/>
+      </map:match>
+      
+      <map:match pattern="externalopensearch.xml">
+        <!-- TODO: the location of the searchengine should be configurable somewhere else -->	
+        <!-- TODO: use the queryString parameter: request action -->	
+	<map:generate src="fallback://lenya/xslt/lucene/opensearch.xml"/>
+
+          <map:transform src="fallback://lenya/xslt/lucene/opensearch2html.xsl">	  
+            <map:parameter name="url" value="{page-envelope:document-url}"/>
+            <map:parameter name="area" value="{page-envelope:area}"/>
+            <map:parameter name="pub" value="{page-envelope:publication-id}"/>
+            <map:parameter name="root" value="{page-envelope:context-prefix}/{page-envelope:publication-id}/{page-envelope:area}"/>
+            <map:parameter name="opensearch" value="opensearch.xml"/>
+	  </map:transform>
+	  
+	  <map:transform type="cinclude"/>
+	  
+          <map:transform src="fallback://xslt/page2xhtml-{page-envelope:document-type}.xsl">
+            <map:parameter name="root" value="{page-envelope:context-prefix}/{page-envelope:publication-id}/{page-envelope:area}"/>
+            <map:parameter name="document-id" value="{page-envelope:document-id}"/>
+            <map:parameter name="document-type" value="{page-envelope:document-type}"/>
+            <map:parameter name="language" value="{page-envelope:document-language}"/>
+            <map:parameter name="url" value="{page-envelope:document-url}"/>
+          </map:transform>
+
+          <map:serialize type="xml"/>
+      </map:match>
+      
+      <map:match pattern="search.xml">
+	  <map:generate type="search">
+	    <map:parameter name="index" value="{realpath://lenya/pubs/{page-envelope:publication-id}/work/lucene/index}"/>
+	  </map:generate>  
+ 
+          <map:transform src="fallback://lenya/xslt/lucene/search2html.xsl">	  
+            <map:parameter name="url" value="{page-envelope:document-url}"/>
+            <map:parameter name="area" value="{page-envelope:area}"/>
+            <map:parameter name="pub" value="{page-envelope:publication-id}"/>
+            <map:parameter name="root" value="{page-envelope:context-prefix}/{page-envelope:publication-id}/{page-envelope:area}"/>
+	  </map:transform>
+	  	  
+	  <map:transform type="cinclude"/>
+	  
+          <map:transform src="fallback://xslt/page2xhtml.xsl">
+            <map:parameter name="root" value="{page-envelope:context-prefix}/{page-envelope:publication-id}/{page-envelope:area}"/>
+            <map:parameter name="document-id" value="{page-envelope:document-id}"/>
+            <map:parameter name="document-type" value="homepage"/>
+            <map:parameter name="language" value="{page-envelope:document-language}"/>
+            <map:parameter name="url" value="{page-envelope:document-url}"/>
+          </map:transform>
+
+	  <map:transform type="link-rewrite"/>
+	  
+          <map:serialize type="xml"/>
+      </map:match>
+
+      <map:match pattern="index.xml">
+          <map:aggregate element="cmsbody">
+	    <!-- TODO Use the standard pipeline for retieving the document -->
+	    <!-- <map:part src="cocoon:/modules/{page-envelope:document-type}/view.xml"/> -->
+	    <map:part src="fallback://content/{page-envelope:area}/{page-envelope:document-id}/index_{page-envelope:document-language}.xml.meta"/>
+	    <map:part src="fallback://content/{page-envelope:area}/{page-envelope:document-id}/index_{page-envelope:document-language}.xml"/>
+          </map:aggregate>
+	  
+	  <map:transform src="fallback://lenya/xslt/lucene/{page-envelope:document-type}2index.xsl">
+	    <map:parameter name="index" value="{page-envelope:publication-id}"/>
+	    <map:parameter name="action" value="index"/>
+	    <map:parameter name="url" value="{request:requestURI}"/>
+	    <map:parameter name="id" value="{page-envelope:document-url}"/>
+	  </map:transform>
+	  
+	  <map:transform type="index2"/>
+	  <map:serialize type="xml"/>
+      </map:match>
+      
+      <map:match pattern="delete.xml">
+          <map:aggregate element="cmsbody">
+	    <!-- TODO Use the standard pipeline for retieving the document -->
+	    <!-- <map:part src="cocoon:/modules/{page-envelope:document-type}/view.xml"/> -->
+	    <map:part src="fallback://content/{page-envelope:area}/{page-envelope:document-id}/index_{page-envelope:document-language}.xml.meta"/>
+	    <map:part src="fallback://content/{page-envelope:area}/{page-envelope:document-id}/index_{page-envelope:document-language}.xml"/>
+          </map:aggregate>
+	  
+	  <map:transform src="fallback://lenya/xslt/lucene/{page-envelope:document-type}2index.xsl">
+	    <map:parameter name="index" value="{page-envelope:publication-id}"/>
+	    <map:parameter name="action" value="delete"/>
+	    <map:parameter name="url" value="{request:requestURI}"/>
+	    <map:parameter name="id" value="{page-envelope:document-url}"/>
+	  </map:transform>
+	  
+	  <map:transform type="index2"/>
+	  <map:serialize type="xml"/>
+      </map:match>
+
+    </map:pipeline>
+  </map:pipelines>
+</map:sitemap>
