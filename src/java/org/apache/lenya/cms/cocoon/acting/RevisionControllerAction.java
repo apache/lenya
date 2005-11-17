@@ -48,7 +48,8 @@ public class RevisionControllerAction extends AbstractAction {
     private RevisionController rc = null;
     private String username = null;
     private String filename = null;
-
+    private Document document = null;
+    
     /**
      * DOCUMENT ME!
      *
@@ -80,7 +81,6 @@ public class RevisionControllerAction extends AbstractAction {
 
         PageEnvelope envelope = null;
         Publication publication = null;
-        Document document = null;
 
         try {
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
@@ -173,6 +173,16 @@ public class RevisionControllerAction extends AbstractAction {
     }
 
     /**
+     * Get the Document
+     * 
+     * @return the document
+     */
+    protected Document getDocument() {
+        return document;
+    }
+
+    /**
+	 * @deprecated getDocument()
      * Get the filename.
      * 
      * @return the filename
