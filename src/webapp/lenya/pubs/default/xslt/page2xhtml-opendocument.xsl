@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0"?>
 <!--
   Copyright 1999-2004 The Apache Software Foundation
   
@@ -15,8 +15,6 @@
   limitations under the License.
 -->
 
-<!-- $Id: page2xhtml.xsl 162081 2005-04-20 21:49:03Z michi $ -->
-
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns="http://www.w3.org/1999/xhtml"
@@ -26,17 +24,17 @@
   xmlns:dc="http://purl.org/dc/elements/1.1/"
   exclude-result-prefixes="page xhtml dc lenya"
   >
+
+<xsl:import href="fallback://xslt/page2xhtml.xsl"/>
   
   
-  <!-- {context-prefix}/{publication-id}/{area} -->
+<!--
   <xsl:param name="root"/>
   
-  <!-- i.e. doctypes/xhtml-document -->
   <xsl:param name="document-type"/>
   
   <xsl:param name="document-id"/>
   
-  <!-- The rquest url i.e. /lenya/doctypes/xhtml-document_en.html -->
   <xsl:param name="url"/>
   
   <xsl:param name="language"/>
@@ -47,13 +45,11 @@
     <html>
       <head>
         <link rel="stylesheet" href="{$root}/css/page.css" type="text/css"/>
-        <!-- Load doctype-specific CSS -->
         <xsl:choose>
           <xsl:when test="$document-type">
             <link rel="stylesheet" href="{$root}/css/{$document-type}.css" type="text/css"/>
           </xsl:when>
           <xsl:otherwise>
-            <!-- do nothing -->
           </xsl:otherwise>
         </xsl:choose>
         <xsl:apply-templates select="html/head/*"/>
@@ -104,6 +100,7 @@
       <xsl:apply-templates select="@*|node()|comment()"/>
     </xsl:copy>
   </xsl:template>
+-->
   
   
 </xsl:stylesheet>
