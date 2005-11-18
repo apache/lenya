@@ -105,9 +105,9 @@
   <!--
   document node in content subtree
   -->
-  <nodeType name="lnt:document" isMixin="false" hasOrderableChildNodes="false" primaryItemName="jcr:content">
+  <nodeType name="lnt:document" isMixin="false" hasOrderableChildNodes="false" primaryItemName="">
     <supertypes>
-      <supertype>nt:file</supertype>
+      <supertype>nt:hierarchyNode</supertype>
       <supertype>mix:versionable</supertype>
       <supertype>mix:lockable</supertype>
     </supertypes>
@@ -121,7 +121,7 @@
         <requiredPrimaryType>lnt:resource</requiredPrimaryType>
       </requiredPrimaryTypes>
     </childNodeDefinition>
-    <childNodeDefinition name="lenya:meta" defaultPrimaryType="lnt:meta" autoCreate="true" mandatory="true"
+    <childNodeDefinition name="lenya:meta" defaultPrimaryType="lnt:meta" autoCreate="true" mandatory="false"
       onParentVersion="COPY" protected="false" sameNameSiblings="true">
       <requiredPrimaryTypes>
         <requiredPrimaryType>lnt:meta</requiredPrimaryType>

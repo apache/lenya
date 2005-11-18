@@ -254,7 +254,7 @@ public class Migrate14 {
         String language = suffix.substring(0, suffix.length() - ".xml".length());
         System.out.println(" language [" + language + "]");
 
-        Document document = contentNode.addDocument(language);
+        Document document = contentNode.addDocument(language, "Label");
 
         try {
             Transformer transformer = TransformerFactory.newInstance().newTransformer();

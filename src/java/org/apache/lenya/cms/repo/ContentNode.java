@@ -30,10 +30,11 @@ public interface ContentNode {
     /**
      * Adds a document.
      * @param language The language of the document.
+     * @param label The label.
      * @return the added document.
      * @throws RepositoryException if the language version already exists.
      */
-    Document addDocument(String language) throws RepositoryException;
+    Document addDocument(String language, String label) throws RepositoryException;
 
     /**
      * @param document The document.

@@ -60,7 +60,7 @@ public class JCRContentNode extends NodeWrapper implements ContentNode {
             List documents = new ArrayList();
             for (NodeIterator i = getNode().getNodes(JCRDocumentBuilder.NODE_NAME); i.hasNext();) {
                 Node node = i.nextNode();
-                documents.add(getDocument(node.getProperty(JCRDocumentBuilder.LANGUAGE_ATTRIBUTE)
+                documents.add(getDocument(node.getProperty(JCRDocumentBuilder.LANGUAGE_PROPERTY)
                         .getString()));
             }
             return (Document[]) documents.toArray(new Document[documents.size()]);
@@ -70,8 +70,8 @@ public class JCRContentNode extends NodeWrapper implements ContentNode {
 
     }
 
-    public Document addDocument(String language) throws RepositoryException {
-        BuilderParameters params = builder.createParameters(this, language);
+    public Document addDocument(String language, String label) throws RepositoryException {
+        BuilderParameters params = builder.createParameters(this, language, label);
         return (Document) this.documentManager.getNode(language, params, true);
     }
 
@@ -84,7 +84,7 @@ public class JCRContentNode extends NodeWrapper implements ContentNode {
     }
 
     public Document getDocument(String language) throws RepositoryException {
-        BuilderParameters params = builder.createParameters(this, language);
+        BuilderParameters params = builder.createParameters(this, language, null);
         return (Document) this.documentManager.getNode(language, params, false);
     }
 

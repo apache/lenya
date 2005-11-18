@@ -31,11 +31,14 @@ import org.apache.lenya.cms.repo.RepositoryException;
 public class JCRDocumentBuilder extends AbstractNodeWrapperBuilder implements
         ResolvingNodeWrapperBuilder {
 
-    protected static final String LANGUAGE_ATTRIBUTE = "xml:lang";
+    protected static final String LANGUAGE_PROPERTY = "xml:lang";
     protected static final String NODE_NAME = "lenya:document";
     protected static final String NODE_TYPE = "lnt:document";
     protected static final String RESOURCE_NODE_NAME = "lenya:resource";
     protected static final String RESOURCE_NODE_TYPE = "lnt:resource";
+    protected static final String META_NODE_NAME = "lenya:meta";
+    protected static final String META_NODE_TYPE = "lnt:meta";
+    protected static final String LABEL_PROPERTY = "lenya:label";
 
     /**
      * Parameters.
@@ -43,15 +46,18 @@ public class JCRDocumentBuilder extends AbstractNodeWrapperBuilder implements
     public static class JCRDocumentBuilderParameters implements BuilderParameters {
 
         private String language;
+        private String label;
         private JCRContentNode contentNode;
 
         /**
          * Ctor.
          * @param contentNode The content node.
          * @param language The language.
+         * @param label The label.
          */
-        public JCRDocumentBuilderParameters(JCRContentNode contentNode, String language) {
+        public JCRDocumentBuilderParameters(JCRContentNode contentNode, String language, String label) {
             this.contentNode = contentNode;
+            this.label = label;
             this.language = language;
         }
 
@@ -68,16 +74,24 @@ public class JCRDocumentBuilder extends AbstractNodeWrapperBuilder implements
         public String getLanguage() {
             return this.language;
         }
+        
+        /**
+         * @return The label.
+         */
+        public String getLabel() {
+            return this.label;
+        }
 
     }
 
     /**
      * @param contentNode The content node.
      * @param language The language.
+     * @param label The label.
      * @return The parameters object.
      */
-    public BuilderParameters createParameters(JCRContentNode contentNode, String language) {
-        return new JCRDocumentBuilderParameters(contentNode, language);
+    public BuilderParameters createParameters(JCRContentNode contentNode, String language, String label) {
+        return new JCRDocumentBuilderParameters(contentNode, language, label);
     }
 
     public NodeWrapper addNode(JCRSession session, BuilderParameters parameters)
@@ -93,13 +107,17 @@ public class JCRDocumentBuilder extends AbstractNodeWrapperBuilder implements
 
             if (documentNode == null) {
                 documentNode = contentNodeNode.addNode(NODE_NAME, NODE_TYPE);
-                documentNode.setProperty(LANGUAGE_ATTRIBUTE, params.getLanguage());
+                documentNode.setProperty(LANGUAGE_PROPERTY, params.getLanguage());
+                documentNode.setProperty(LABEL_PROPERTY, "Label");
+                
                 Node resourceNode = documentNode.addNode(RESOURCE_NODE_NAME, RESOURCE_NODE_TYPE);
                 resourceNode.setProperty("jcr:mimeType", params.getContentNode()
                         .getDocumentType()
                         .getMimeType());
                 resourceNode.setProperty("jcr:data", "");
                 resourceNode.setProperty("jcr:lastModified", new GregorianCalendar());
+                
+//                documentNode.addNode(META_NODE_NAME, META_NODE_TYPE);
             } else {
                 throw new RepositoryException("The node already exists!");
             }
@@ -158,7 +176,7 @@ public class JCRDocumentBuilder extends AbstractNodeWrapperBuilder implements
 
     public String getKey(Node node) throws RepositoryException {
         try {
-            return node.getProperty(LANGUAGE_ATTRIBUTE).getString();
+            return node.getProperty(LANGUAGE_PROPERTY).getString();
         } catch (javax.jcr.RepositoryException e) {
             throw new RepositoryException(e);
         }

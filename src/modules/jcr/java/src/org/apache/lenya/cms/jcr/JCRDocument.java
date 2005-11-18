@@ -42,7 +42,7 @@ public class JCRDocument extends NodeWrapper implements Document {
 
     public String getLanguage() throws RepositoryException {
         try {
-            return getNode().getProperty(JCRDocumentBuilder.LANGUAGE_ATTRIBUTE).getString();
+            return getNode().getProperty(JCRDocumentBuilder.LANGUAGE_PROPERTY).getString();
         } catch (Exception e) {
             throw new RepositoryException(e);
         }
@@ -50,7 +50,7 @@ public class JCRDocument extends NodeWrapper implements Document {
 
     public void setLanguage(String language) throws RepositoryException {
         try {
-            getNode().getProperty(JCRDocumentBuilder.LANGUAGE_ATTRIBUTE).setValue(language);
+            getNode().getProperty(JCRDocumentBuilder.LANGUAGE_PROPERTY).setValue(language);
         } catch (Exception e) {
             throw new RepositoryException(e);
         }

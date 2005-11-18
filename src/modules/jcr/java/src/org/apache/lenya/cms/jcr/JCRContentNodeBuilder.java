@@ -38,6 +38,7 @@ public class JCRContentNodeBuilder extends AbstractNodeWrapperBuilder implements
     protected static final String NODE_TYPE = "lnt:contentNode";
     protected static final String ID_PROPERTY = "lenya:id";
     protected static final String DOCUMENT_TYPE_PROPERTY = "lenya:documentType";
+    protected static final String VISIBLE_IN_NAV_PROPERTY = "lenya:visibleInNav";
 
     /**
      * Ctor.
@@ -67,6 +68,7 @@ public class JCRContentNodeBuilder extends AbstractNodeWrapperBuilder implements
                 contentNode = content.addNode(NODE_NAME, NODE_TYPE);
                 contentNode.setProperty(ID_PROPERTY, params.getId());
                 contentNode.setProperty(DOCUMENT_TYPE_PROPERTY, params.getDocumentType());
+                contentNode.setProperty(VISIBLE_IN_NAV_PROPERTY, true);
                 jcrContentNode = new JCRContentNode(session, params.getContent(), contentNode);
             } else {
                 throw new RepositoryException("The node already exists!");
