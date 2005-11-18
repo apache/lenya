@@ -43,20 +43,20 @@
       <supertype>nt:hierarchyNode</supertype>
       <supertype>mix:referenceable</supertype>
     </supertypes>
-    <propertyDef name="lenya:id" autoCreate="false" mandatory="true" onParentVersion="ABORT" protected="false"
+    <propertyDefinition name="lenya:id" autoCreate="false" mandatory="true" onParentVersion="ABORT" protected="false"
       multiple="false" requiredType="String"/>
-    <childNodeDef name="lenya:content" defaultPrimaryType="lnt:content" autoCreate="false" mandatory="false"
-      onParentVersion="ABORT" protected="false" sameNameSibs="false">
+    <childNodeDefinition name="lenya:content" defaultPrimaryType="lnt:content" autoCreate="false" mandatory="false"
+      onParentVersion="ABORT" protected="false" sameNameSiblings="false">
       <requiredPrimaryTypes>
         <requiredPrimaryType>lnt:content</requiredPrimaryType>
       </requiredPrimaryTypes>
-    </childNodeDef>
-    <childNodeDef name="lenya:site" defaultPrimaryType="lnt:site" autoCreate="false" mandatory="false"
-      onParentVersion="ABORT" protected="false" sameNameSibs="false">
+    </childNodeDefinition>
+    <childNodeDefinition name="lenya:site" defaultPrimaryType="lnt:site" autoCreate="false" mandatory="false"
+      onParentVersion="ABORT" protected="false" sameNameSiblings="false">
       <requiredPrimaryTypes>
         <requiredPrimaryType>lnt:site</requiredPrimaryType>
       </requiredPrimaryTypes>
-    </childNodeDef>
+    </childNodeDefinition>
   </nodeType>
   
   <!--
@@ -68,36 +68,38 @@
       <supertype>mix:referenceable</supertype>
       <supertype>mix:lockable</supertype>
     </supertypes>
-    <childNodeDef name="lenya:contentnode" defaultPrimaryType="lnt:contentnode" autoCreate="false" mandatory="false"
-      onParentVersion="ABORT" protected="false" sameNameSibs="true">
+    <childNodeDefinition name="lenya:contentNode" defaultPrimaryType="lnt:contentNode" autoCreate="false" mandatory="false"
+      onParentVersion="ABORT" protected="false" sameNameSiblings="true">
       <requiredPrimaryTypes>
-        <requiredPrimaryType>lnt:contentnode</requiredPrimaryType>
+        <requiredPrimaryType>lnt:contentNode</requiredPrimaryType>
       </requiredPrimaryTypes>
-    </childNodeDef>
+    </childNodeDefinition>
   </nodeType>
   
   
   <!-- node in content subtree -->
-  <nodeType name="lnt:contentnode" isMixin="false" hasOrderableChildNodes="true" primaryItemName="">
+  <nodeType name="lnt:contentNode" isMixin="false" hasOrderableChildNodes="true" primaryItemName="">
     <supertypes>
       <supertype>nt:hierarchyNode</supertype>
       <supertype>mix:referenceable</supertype>
       <supertype>mix:lockable</supertype>
     </supertypes>
-    <propertyDef name="*" requiredType="String" autoCreate="false" mandatory="false"
+    <propertyDefinition name="lenya:id" requiredType="String" autoCreate="false" mandatory="true"
       onParentVersion="ABORT" protected="false" multiple="false"/>
-    <propertyDef name="lenya:visibleinnav" requiredType="Boolean" autoCreate="false" mandatory="true"
+    <propertyDefinition name="lenya:visibleInNav" requiredType="Boolean" autoCreate="true" mandatory="true"
       onParentVersion="ABORT" protected="false" multiple="false"/>
-    <propertyDef name="lenya:href" requiredType="String" autoCreate="false" mandatory="false"
+    <propertyDefinition name="lenya:href" requiredType="String" autoCreate="false" mandatory="false"
       onParentVersion="ABORT" protected="false" multiple="false"/>
-    <propertyDef name="lenya:suffix" requiredType="String" autoCreate="false" mandatory="false"
+    <propertyDefinition name="lenya:suffix" requiredType="String" autoCreate="false" mandatory="false"
       onParentVersion="ABORT" protected="false" multiple="false"/>
-    <childNodeDef name="lenya:document" defaultPrimaryType="lnt:document" autoCreate="false"
-      mandatory="false" onParentVersion="ABORT" protected="false" sameNameSibs="true">
+    <propertyDefinition name="lenya:documentType" requiredType="String" autoCreate="true" mandatory="true"
+      onParentVersion="ABORT" protected="false" multiple="false"/>
+    <childNodeDefinition name="lenya:document" defaultPrimaryType="lnt:document" autoCreate="false"
+      mandatory="false" onParentVersion="ABORT" protected="false" sameNameSiblings="true">
       <requiredPrimaryTypes>
         <requiredPrimaryType>lnt:document</requiredPrimaryType>
       </requiredPrimaryTypes>
-    </childNodeDef>
+    </childNodeDefinition>
   </nodeType>
   
   <!--
@@ -109,21 +111,22 @@
       <supertype>mix:versionable</supertype>
       <supertype>mix:lockable</supertype>
     </supertypes>
-    <propertyDef name="xml:lang" requiredType="String" autoCreate="false" mandatory="true"
+    <propertyDefinition name="xml:lang" requiredType="String" autoCreate="false" mandatory="true"
       onParentVersion="COPY" protected="false" multiple="false"/>
-    <propertyDef name="lenya:label" requiredType="String" autoCreate="false" mandatory="true"
+    <propertyDefinition name="lenya:label" requiredType="String" autoCreate="false" mandatory="true"
       onParentVersion="COPY" protected="false" multiple="false"/>
-    <childNodeDef name="lenya:resource" defaultPrimaryType="lnt:resource" autoCreate="true" mandatory="true">
+    <childNodeDefinition name="lenya:resource" defaultPrimaryType="lnt:resource" autoCreate="true" mandatory="true"
+      onParentVersion="ABORT">
       <requiredPrimaryTypes>
         <requiredPrimaryType>lnt:resource</requiredPrimaryType>
       </requiredPrimaryTypes>
-    </childNodeDef>
-    <childNodeDef name="lenya:meta" defaultPrimaryType="lnt:meta" autoCreate="true" mandatory="true"
-      onParentVersion="COPY" protected="false" sameNameSibs="true">
+    </childNodeDefinition>
+    <childNodeDefinition name="lenya:meta" defaultPrimaryType="lnt:meta" autoCreate="true" mandatory="true"
+      onParentVersion="COPY" protected="false" sameNameSiblings="true">
       <requiredPrimaryTypes>
         <requiredPrimaryType>lnt:meta</requiredPrimaryType>
       </requiredPrimaryTypes>
-    </childNodeDef>
+    </childNodeDefinition>
   </nodeType>
   
   <nodeType name="lnt:resource" isMixin="false" hasOrderableChildNodes="false" primaryItemName="">
@@ -143,7 +146,7 @@
       <supertype>lps:dcterms</supertype>
       -->
     </supertypes>
-    <propertyDef name="lenya:namespace" requiredType="String" autoCreate="false" mandatory="true"
+    <propertyDefinition name="lenya:namespace" requiredType="String" autoCreate="false" mandatory="true"
       onParentVersion="ABORT" multiple="false" protected="false"/>
   </nodeType>
   
@@ -156,31 +159,31 @@
       <supertype>mix:referenceable</supertype>
       <supertype>mix:lockable</supertype>
     </supertypes>
-    <childNodeDef name="*" defaultPrimaryType="lnt:item" autoCreate="false" mandatory="false"
-      onParentVersion="ABORT" protected="false" sameNameSibs="false">
+    <childNodeDefinition name="*" defaultPrimaryType="lnt:siteNode" autoCreate="false" mandatory="false"
+      onParentVersion="ABORT" protected="false" sameNameSiblings="false">
       <requiredPrimaryTypes>
-        <requiredPrimaryType>lnt:sitenode</requiredPrimaryType>
+        <requiredPrimaryType>lnt:siteNode</requiredPrimaryType>
       </requiredPrimaryTypes>
-    </childNodeDef>
+    </childNodeDefinition>
   </nodeType>
   
   <!--
   Site structure node
   -->
-  <nodeType name="lnt:sitenode" isMixin="false" hasOrderableChildNodes="true" primaryItemName="">
+  <nodeType name="lnt:siteNode" isMixin="false" hasOrderableChildNodes="true" primaryItemName="">
     <supertypes>
       <supertype>nt:hierarchyNode</supertype>
       <supertype>mix:referenceable</supertype>
       <supertype>mix:lockable</supertype>
     </supertypes>
-    <propertyDef name="lenya:contentnode" mandatory="false" autoCreate="false" multiple="false" onParentVersion="ABORT"
+    <propertyDefinition name="lenya:contentNode" mandatory="false" autoCreate="false" multiple="false" onParentVersion="ABORT"
       protected="false" requiredType="Reference"/>
-    <childNodeDef name="*" defaultPrimaryType="lnt:sitenode" autoCreate="false" mandatory="false"
-      onParentVersion="ABORT" protected="false" sameNameSibs="false">
+    <childNodeDefinition name="*" defaultPrimaryType="lnt:siteNode" autoCreate="false" mandatory="false"
+      onParentVersion="ABORT" protected="false" sameNameSiblings="false">
       <requiredPrimaryTypes>
-        <requiredPrimaryType>lnt:sitenode</requiredPrimaryType>
+        <requiredPrimaryType>lnt:siteNode</requiredPrimaryType>
       </requiredPrimaryTypes>
-    </childNodeDef>
+    </childNodeDefinition>
   </nodeType>
   
 </nodeTypes>
