@@ -56,6 +56,7 @@
   <!-- =========================== Flow ===================================== -->
   <map:flow language="javascript">
     <map:script src="fallback://lenya/usecases/edit-document.js"/>
+    <map:script src="fallback://lenya/usecases/bxe/bxe.js"/>
   </map:flow>
 	<!-- =========================== Pipelines ================================ -->
 	
@@ -161,27 +162,33 @@
 	    +-->
 
         <map:match type="step" pattern="config">
-          <map:generate src="fallback://lenya/resources/misc/bxe/inc/config.xml"/>
-          <map:transform src="fallback://lenya/xslt/bxe/config-xml.xsl">
+          <map:select type="resource-exists">
+            <map:when test="fallback://lenya/modules/{page-envelope:document-type}/config/bxe.xml">
+              <map:generate src="fallback://lenya/modules/{page-envelope:document-type}/config/bxe.xml"/>
+            </map:when>
+            <map:otherwise>
+              <map:generate src="fallback://lenya/resources/misc/bxe/inc/config.xml"/>
+            </map:otherwise>
+          </map:select>
 
+          <map:transform src="fallback://lenya/xslt/bxe/config-xml.xsl">
             <!-- Parameter BX_xmlfile:
                  defines the Lenya URL with which BXE interacts, to
                  1. get the document contents (by issuing a GET to this URL),
                  2. save the changed contents (by issuing a PUT to this URL)
               -->
             <map:parameter name="BX_xmlfile" value="{request:requestURI}?lenya.usecase=bxe&amp;lenya.step=xml"/>
-
             <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
-            
-  <!--      Instead of an xsl we use the xhtml file to provide the basic layout
+          
+            <!-- Instead of an xsl we use the xhtml file to provide the basic layout
             <map:parameter name="BX_xslfile" value="{2}.xsl"/>
-  -->
+            -->
             <map:parameter name="BX_xhtmlfile" value="{../2}.bxe.html?rendertype=edit"/>
             <map:parameter name="BX_validationfile" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}/schemas/{page-envelope:document-type}.rng"/>
             <map:parameter name="css" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}/css/{page-envelope:document-type}-bxe.css"/>
-  <!--       The document is checked in when we exit from bx (in case of save&exit and in case of exit), so we use the usecase
-             for the checkin while we redirect to the document
-  -->
+            <!-- The document is checked in when we exit from bx (in case of save&exit and in case of exit), so we use the usecase
+                 for the checkin while we redirect to the document
+              -->
             <map:parameter name="BX_exitdestination" value="{request:requestURI}?lenya.usecase=edit.bxe&amp;lenya.continuation={request-param:lenya.continuation}&amp;submit=Submit"/>
             <map:parameter name="contextmenufile" value="fallback://lenya/resources/misc/bxe/contextmenu.xml"/>
           </map:transform>
@@ -209,16 +216,9 @@
              or in the change-object-path-back.xsl stylesheet.
            -->
           <map:when test="PUT">
-            <map:generate type="stream"/>
-            <map:transform src="fallback://lenya/xslt/bxe/change-object-path-back.xsl">
-              <map:parameter name="documentid" value="{page-envelope:document-id}"/>
-            </map:transform>
-            <map:transform src="fallback://lenya/usecases/edit/bxe/addSourceTags.xsl">
+            <map:call function="saveXML">
               <map:parameter name="source" value="context://lenya/pubs/{page-envelope:publication-id}/work/bxe/content/{page-envelope:area}/{page-envelope:document-path}.tmp"/>
-            </map:transform>
-            <map:transform type="write-source"/>
-            <map:transform src="fallback://lenya/usecases/edit/bxe/removeSourceTags.xsl"/>
-            <map:serialize type="xml" status-code="204"/>
+            </map:call>
           </map:when>
 
           <map:otherwise> <!-- GET -->
@@ -236,6 +236,14 @@
       </map:match> <!-- uri pattern -->
             
       </map:match> <!-- usecase -->
+
+      <map:match pattern="saveXML">
+        <map:generate type="stream"/>
+        <map:transform src="fallback://lenya/xslt/bxe/change-object-path-back.xsl">
+          <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
     </map:pipeline>
     
 	</map:pipelines>
