@@ -16,14 +16,43 @@
  */
 package org.apache.lenya.cms.repo;
 
+/**
+ * Content node.
+ */
 public interface ContentNode {
-    
+
+    /**
+     * @return The documents belonging to this node.
+     * @throws RepositoryException if an error occurs.
+     */
     Document[] getDocuments() throws RepositoryException;
-    
+
+    /**
+     * Adds a document.
+     * @param language The language of the document.
+     * @return the added document.
+     * @throws RepositoryException if the language version already exists.
+     */
     Document addDocument(String language) throws RepositoryException;
-    
+
+    /**
+     * @param document The document.
+     * @throws RepositoryException
+     */
     void removeDocument(Document document) throws RepositoryException;
-    
+
+    /**
+     * Returns a document of a specific language.
+     * @param language The document's language.
+     * @return A document.
+     * @throws RepositoryException if the language version does not exist.
+     */
     Document getDocument(String language) throws RepositoryException;
 
+    /**
+     * @return The document type which this node's documents belong to.
+     * @throws RepositoryException if an error occurs.
+     */
+    DocumentType getDocumentType() throws RepositoryException;
+    
 }

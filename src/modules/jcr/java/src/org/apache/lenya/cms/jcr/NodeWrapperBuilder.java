@@ -16,12 +16,38 @@
  */
 package org.apache.lenya.cms.jcr;
 
-import javax.jcr.Node;
-
 import org.apache.lenya.cms.repo.RepositoryException;
 
+/**
+ * Node wrapper builder.
+ */
 public interface NodeWrapperBuilder {
 
-    NodeWrapper buildNode(JCRSession session, boolean create) throws RepositoryException;
+    /**
+     * @param session The session.
+     * @param parameters The parameters.
+     * @return A node wrapper.
+     * @throws RepositoryException if the node does not exist.
+     */
+    NodeWrapper getNode(JCRSession session, BuilderParameters parameters)
+            throws RepositoryException;
+
+    /**
+     * @param session The session.
+     * @param parameters The parameters.
+     * @return A node wrapper.
+     * @throws RepositoryException if the node already exists.
+     */
+    NodeWrapper addNode(JCRSession session, BuilderParameters parameters)
+            throws RepositoryException;
+
+    /**
+     * @param session The session.
+     * @param parameters The parameters.
+     * @return A node wrapper.
+     * @throws RepositoryException if the node does not exist.
+     */
+    boolean existsNode(JCRSession session, BuilderParameters parameters)
+            throws RepositoryException;
 
 }

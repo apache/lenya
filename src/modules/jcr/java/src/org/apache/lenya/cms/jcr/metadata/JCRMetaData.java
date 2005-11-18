@@ -16,15 +16,10 @@
  */
 package org.apache.lenya.cms.jcr.metadata;
 
-import java.io.OutputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import javax.jcr.Node;
-import javax.jcr.Property;
-import javax.jcr.Value;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;

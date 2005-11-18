@@ -14,33 +14,30 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.repo;
+package org.apache.lenya.cms.jcr;
+
+import javax.jcr.Node;
+
+import org.apache.lenya.cms.repo.RepositoryException;
 
 /**
- * The content of an area.
+ * Resolving node wrapper builder.
  */
-public interface Content {
+public interface ResolvingNodeWrapperBuilder extends NodeWrapperBuilder {
 
     /**
-     * @param id The node ID.
-     * @return A node with a specific ID.
+     * @param session The JCR session.
+     * @param reference The reference node.
+     * @return All existing node keys.
      * @throws RepositoryException if an error occurs.
      */
-    ContentNode getNode(String id) throws RepositoryException;
-
+    String[] getKeys(JCRSession session, Node reference) throws RepositoryException;
+    
     /**
-     * @return All content nodes in this area.
+     * @param node The node.
+     * @return The key for this node.
      * @throws RepositoryException if an error occurs.
      */
-    ContentNode[] getNodes() throws RepositoryException;
-
-    /**
-     * @param id The node ID.
-     * @param documentType The document type.
-     * @return The added node.
-     * @throws RepositoryException if a node with this ID already exists or the document type is not
-     *             registered.
-     */
-    ContentNode addNode(String id, DocumentType documentType) throws RepositoryException;
-
+    String getKey(Node node) throws RepositoryException;
+    
 }

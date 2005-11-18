@@ -16,25 +16,9 @@
  */
 package org.apache.lenya.cms.jcr;
 
-import javax.jcr.Node;
-
 /**
- * A JCR node wrapper.
+ * Marker interface. See parameter object pattern.
  */
-public abstract class NodeWrapper {
-
-    /**
-     * Ctor.
-     * @param node The node.
-     */
-    public NodeWrapper(Node node) {
-        this.node = node;
-    }
-
-    private Node node;
-
-    protected Node getNode() {
-        return this.node;
-    }
+public interface BuilderParameters {
 
 }

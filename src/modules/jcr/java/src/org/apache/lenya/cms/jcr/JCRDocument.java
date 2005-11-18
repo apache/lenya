@@ -89,7 +89,7 @@ public class JCRDocument extends NodeWrapper implements Document {
         }
     }
 
-    public String getMimeType() throws RepositoryException {
+    protected String getMimeType() throws RepositoryException {
         try {
             return getResourceNode().getProperty("jcr:mimeType").getString();
         } catch (javax.jcr.RepositoryException e) {

@@ -23,38 +23,78 @@ import org.apache.lenya.cms.repo.RepositoryException;
 /**
  * JCR content builder.
  */
-public class JCRContentBuilder implements NodeWrapperBuilder {
-    
-    private JCRArea area;
-    
+public class JCRContentBuilder extends AbstractNodeWrapperBuilder {
+
     /**
      * Ctor.
-     * @param area The area.
      */
-    public JCRContentBuilder(JCRArea area) {
-        this.area = area;
+    public JCRContentBuilder() {
     }
 
     protected static final String NODE_NAME = "lenya:content";
 
-    public NodeWrapper buildNode(JCRSession session, boolean create) throws RepositoryException {
+    public NodeWrapper addNode(JCRSession session, BuilderParameters parameters) throws RepositoryException {
         try {
-            
-            Node pubNode = this.area.getPublicationNode().getNode();
+
+            JCRContentBuilderParameters params = (JCRContentBuilderParameters) parameters;
+            Node pubNode = params.getArea().getNode();
+            JCRContent wrapper = null;
+            Node contentNode;
+            if (pubNode.hasNode(NODE_NAME)) {
+                throw new RepositoryException("The node [" + params.getArea() + "] already exists.");
+            } else {
+                contentNode = pubNode.addNode(NODE_NAME);
+                wrapper = new JCRContent(session, contentNode, params.getArea());
+            }
+            return wrapper;
+        } catch (Exception e) {
+            throw new RepositoryException(e);
+        }
+    }
+
+    protected NodeWrapper getNodeInternal(JCRSession session, BuilderParameters parameters) throws RepositoryException {
+        try {
+            JCRContentBuilderParameters params = (JCRContentBuilderParameters) parameters;
+            Node pubNode = params.getArea().getNode();
             JCRContent wrapper = null;
             Node contentNode;
             if (pubNode.hasNode(NODE_NAME)) {
                 contentNode = pubNode.getNode(NODE_NAME);
-                wrapper = new JCRContent(contentNode, area);
-            }
-            else if (create) {
-                contentNode = pubNode.addNode(NODE_NAME);
-                wrapper = new JCRContent(contentNode, area);
-            }
-            
+                wrapper = new JCRContent(session, contentNode, params.getArea());
+            } 
             return wrapper;
         } catch (Exception e) {
             throw new RepositoryException(e);
+        }
+    }
+
+    /**
+     * @param area The area.
+     * @return A parameters object.
+     */
+    public BuilderParameters createParameters(JCRPublicationNode area) {
+        return new JCRContentBuilderParameters(area);
+    }
+
+    /**
+     * Parameter object.
+     */
+    public static class JCRContentBuilderParameters implements BuilderParameters {
+        private JCRPublicationNode area;
+
+        /**
+         * Ctor.
+         * @param area The area.
+         */
+        public JCRContentBuilderParameters(JCRPublicationNode area) {
+            this.area = area;
+        }
+
+        /**
+         * @return The area.
+         */
+        public JCRPublicationNode getArea() {
+            return this.area;
         }
     }
 

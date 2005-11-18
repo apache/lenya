@@ -32,24 +32,27 @@ import org.apache.lenya.cms.repo.SiteNode;
  */
 public class JCRSite extends NodeWrapper implements Site {
 
-    private JCRArea area;
+    private JCRPublicationNode area;
 
     /**
      * Ctor.
+     * @param session The session.
      * @param node The node.
      * @param area The area.
      */
-    public JCRSite(Node node, JCRArea area) {
+    public JCRSite(JCRSession session, Node node, JCRPublicationNode area) {
         super(node);
         this.area = area;
-        this.childManager = new NodeWrapperManager(area.getPublication().getSession());
+        this.builder = new JCRSiteNodeBuilder(this);
+        this.childManager = new NodeWrapperManager(session, this.builder);
     }
 
-    protected JCRArea getArea() {
+    protected JCRPublicationNode getArea() {
         return this.area;
     }
 
     private NodeWrapperManager childManager;
+    private JCRSiteNodeBuilder builder;
 
     public SiteNode[] getChildren() throws RepositoryException {
         try {
@@ -66,22 +69,26 @@ public class JCRSite extends NodeWrapper implements Site {
     }
 
     public SiteNode getChild(String name) throws RepositoryException {
-        JCRSiteNodeBuilder builder = new JCRSiteNodeBuilder(this, getNode(), name);
-        SiteNode child = (SiteNode) this.childManager.getNode(name, builder, false);
-        if (child == null) {
-            throw new RepositoryException("The node [" + name + "] does not exist!");
-        }
-        return child;
+        BuilderParameters params = builder.createParameters(getNode(), name, null);
+        return (SiteNode) this.childManager.getNode(name, params);
     }
 
     public SiteNode[] getNodes() throws RepositoryException {
-        // TODO Auto-generated method stub
-        return null;
+        String[] keys = this.childManager.getKeys(getNode());
+        SiteNode[] nodes = new SiteNode[keys.length];
+        for (int i = 0; i < keys.length; i++) {
+            BuilderParameters params = this.builder.createParameters(getNode(), keys[i], null);
+            nodes[i] = (SiteNode) this.childManager.getNode(keys[i], params);
+        }
+        return nodes;
     }
 
     public SiteNode addChild(String name, ContentNode contentNode) throws RepositoryException {
-        JCRSiteNodeBuilder builder = new JCRSiteNodeBuilder(this, getNode(), name);
-        return (SiteNode) this.childManager.getNode(name, builder, false);
+        BuilderParameters params = builder.createParameters(getNode(),
+                name,
+                (JCRContentNode) contentNode,
+                null);
+        return (SiteNode) this.childManager.addNode(name, params);
     }
 
 }

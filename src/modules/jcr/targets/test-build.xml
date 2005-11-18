@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: test-build.xml 209293 2005-07-05 16:19:18Z andreas $ -->
+
+<project name="module-jcr-test">
+  
+  <target name="test">
+    <junit printsummary="yes" showoutput="true">
+      <classpath>
+        <fileset dir="${build.webapp}/WEB-INF/lib" includes="*.jar"/>
+        <path location="${build.webapp}/WEB-INF/classes"/>
+      </classpath>
+      <formatter type="plain"/>
+      <sysproperty key="test.repo.webappDirectory" value="${build.webapp}"/>
+      <sysproperty key="test.repo.repositoryFactory" value="${repository.factory}"/>
+      <test name="org.apache.lenya.cms.jcr.JCRRepositoryTest"/>
+    </junit>
+  </target>
+  
+</project>
+  

@@ -16,9 +16,6 @@
  */
 package org.apache.lenya.cms.jcr;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.lenya.cms.repo.Area;
 import org.apache.lenya.cms.repo.Publication;
 import org.apache.lenya.cms.repo.RepositoryException;
@@ -41,7 +38,7 @@ public class JCRPublication implements Publication {
         this.session = session;
     }
 
-    protected String getPublicationId() {
+    public String getPublicationId() {
         return this.pubId;
     }
 
@@ -49,15 +46,16 @@ public class JCRPublication implements Publication {
         return this.session;
     }
 
-    private Map areas = new HashMap();
-
     public Area getArea(String area) throws RepositoryException {
-        JCRArea jcrArea = (JCRArea) this.areas.get(area);
-        if (jcrArea == null) {
-            jcrArea = new JCRArea(this, area);
-            this.areas.put(area, jcrArea);
-        }
-        return jcrArea;
+        return getSession().getArea(this, area);
+    }
+
+    public Area addArea(String area) throws RepositoryException {
+        return getSession().addArea(this, area);
+    }
+
+    public boolean existsArea(String area) throws RepositoryException {
+        return getSession().existsArea(this, area);
     }
 
 }

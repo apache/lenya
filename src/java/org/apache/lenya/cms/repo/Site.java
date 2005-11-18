@@ -37,8 +37,15 @@ public interface Site {
      * @param name The name.
      * @param contentNode The content node which the site node refers to.
      * @return a site node.
-     * @throws RepositoryException if an error occurs.
+     * @throws RepositoryException if a child with this name already exists.
      */
     SiteNode addChild(String name, ContentNode contentNode) throws RepositoryException;
+    
+    /**
+     * @param name The name.
+     * @return a site node.
+     * @throws RepositoryException if the child does not exist.
+     */
+    SiteNode getChild(String name) throws RepositoryException;
     
 }

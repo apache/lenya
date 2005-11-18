@@ -21,6 +21,9 @@ import javax.jcr.Repository;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 
+import org.apache.lenya.cms.repo.DocumentTypeRegistry;
+import org.apache.lenya.cms.repo.impl.DocumentTypeRegistryImpl;
+
 /**
  * Facade to the JCR repository, providing Lenya-specific access.
  */
@@ -57,6 +60,15 @@ public class JCRRepository implements org.apache.lenya.cms.repo.Repository {
             child = parent.addNode(childName);
         }
         return child;
+    }
+    
+    private DocumentTypeRegistry documentTypeRegistry;
+
+    public DocumentTypeRegistry getDocumentTypeRegistry() throws org.apache.lenya.cms.repo.RepositoryException {
+        if (this.documentTypeRegistry == null) {
+            this.documentTypeRegistry = new DocumentTypeRegistryImpl();
+        }
+        return this.documentTypeRegistry;
     }
 
 }

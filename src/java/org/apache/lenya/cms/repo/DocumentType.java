@@ -16,21 +16,33 @@
  */
 package org.apache.lenya.cms.repo;
 
+import org.apache.lenya.xml.Schema;
+
 /**
- * Repository.
+ * @version $Id:$
  */
-public interface Repository {
+public interface DocumentType {
 
     /**
-     * @return A session.
-     * @throws RepositoryException if an error occurs.
+     * Returns the name of this document type.
+     * @return A string value.
      */
-    Session createSession() throws RepositoryException;
+    String getName();
+
+    /**
+     * @return The source URI of the RelaxNG schema.
+     */
+    Schema getSchema();
+
+    /**
+     * @return If documents belonging to this document type should be validated upon writing.
+     */
+    boolean isValidating();
     
     /**
-     * @return The document type registry.
+     * @return The mime type of the document type.
      * @throws RepositoryException if an error occurs.
      */
-    DocumentTypeRegistry getDocumentTypeRegistry() throws RepositoryException;
+    String getMimeType() throws RepositoryException;
     
 }

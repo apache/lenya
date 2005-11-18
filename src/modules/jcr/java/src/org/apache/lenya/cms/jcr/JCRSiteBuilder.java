@@ -23,36 +23,70 @@ import org.apache.lenya.cms.repo.RepositoryException;
 /**
  * JCR site builder.
  */
-public class JCRSiteBuilder implements NodeWrapperBuilder {
-    
-    private JCRArea area;
-    
+public class JCRSiteBuilder extends AbstractNodeWrapperBuilder {
+
     /**
-     * Ctor.
-     * @param area The area.
+     * Parameters.
      */
-    public JCRSiteBuilder(JCRArea area) {
-        this.area = area;
+    public static class JCRSiteBuilderParameters implements BuilderParameters {
+
+        private JCRPublicationNode area;
+
+        /**
+         * Ctor.
+         * @param area The area.
+         */
+        public JCRSiteBuilderParameters(JCRPublicationNode area) {
+            this.area = area;
+        }
+
+        /**
+         * @return The area.
+         */
+        public JCRPublicationNode getArea() {
+            return this.area;
+        }
+    }
+
+    /**
+     * @param area The area.
+     * @return A parameters object.
+     */
+    public BuilderParameters createParameters(JCRPublicationNode area) {
+        return new JCRSiteBuilderParameters(area);
     }
 
     protected static final String NODE_NAME = "lenya:site";
+    protected static final String NODE_TYPE = "lnt:site";
 
-    public NodeWrapper buildNode(JCRSession session, boolean create) throws RepositoryException {
+    public NodeWrapper addNode(JCRSession session, BuilderParameters parameters) throws RepositoryException {
         try {
-            
-            Node pubNode = this.area.getPublicationNode().getNode();
+            JCRSiteBuilderParameters params = (JCRSiteBuilderParameters) parameters;
+            Node pubNode = params.getArea().getNode();
+            JCRSite wrapper = null;
+            Node siteNode = null;
+            if (pubNode.hasNode(NODE_NAME)) {
+                throw new RepositoryException("The node already exists!");
+            } else {
+                siteNode = pubNode.addNode(NODE_NAME, NODE_TYPE);
+                wrapper = new JCRSite(session, siteNode, params.getArea());
+            }
+            return wrapper;
+        } catch (Exception e) {
+            throw new RepositoryException(e);
+        }
+    }
+
+    public NodeWrapper getNodeInternal(JCRSession session, BuilderParameters parameters) throws RepositoryException {
+        try {
+            JCRSiteBuilderParameters params = (JCRSiteBuilderParameters) parameters;
+            Node pubNode = params.getArea().getNode();
             JCRSite wrapper = null;
             Node siteNode = null;
             if (pubNode.hasNode(NODE_NAME)) {
                 siteNode = pubNode.getNode(NODE_NAME);
+                wrapper = new JCRSite(session, siteNode, params.getArea());
             }
-            else if (create) {
-                siteNode = pubNode.addNode(NODE_NAME);
-            }
-            if (siteNode != null) {
-                wrapper = new JCRSite(siteNode, area);
-            }
-            
             return wrapper;
         } catch (Exception e) {
             throw new RepositoryException(e);

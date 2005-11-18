@@ -53,4 +53,16 @@ public interface SiteNode {
      * @throws RepositoryException if an error occurs.
      */
     String getPath() throws RepositoryException;
+    
+    /**
+     * @return The referenced content node.
+     * @throws RepositoryException if an error occurs.
+     */
+    ContentNode getContentNode() throws RepositoryException;
+    
+    /**
+     * @return The parent node or <code>null</code> if this is a top-level node.
+     * @throws RepositoryException if an error occurs.
+     */
+    SiteNode getParent() throws RepositoryException;
 }

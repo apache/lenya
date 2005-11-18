@@ -16,31 +16,33 @@
  */
 package org.apache.lenya.cms.repo;
 
+/**
+ * Repository exception.
+ */
 public class RepositoryException extends Exception {
 
     /**
-     * 
+     * Ctor.
      */
     public RepositoryException() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
     /**
-     * @param arg0
-     * @param arg1
+     * Ctor.
+     * @param arg0 The message.
+     * @param arg1 The cause.
      */
     public RepositoryException(String arg0, Throwable arg1) {
         super(arg0, arg1);
-        // TODO Auto-generated constructor stub
     }
 
     /**
-     * @param arg0
+     * Ctor.
+     * @param arg0 The message.
      */
     public RepositoryException(String arg0) {
         super(arg0);
-        // TODO Auto-generated constructor stub
     }
 
     /**

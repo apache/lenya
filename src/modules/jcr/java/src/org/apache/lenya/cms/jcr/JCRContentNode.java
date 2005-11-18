@@ -24,6 +24,8 @@ import javax.jcr.NodeIterator;
 
 import org.apache.lenya.cms.repo.ContentNode;
 import org.apache.lenya.cms.repo.Document;
+import org.apache.lenya.cms.repo.DocumentType;
+import org.apache.lenya.cms.repo.Repository;
 import org.apache.lenya.cms.repo.RepositoryException;
 
 /**
@@ -32,14 +34,25 @@ import org.apache.lenya.cms.repo.RepositoryException;
 public class JCRContentNode extends NodeWrapper implements ContentNode {
 
     private NodeWrapperManager documentManager;
+    private JCRDocumentBuilder builder = new JCRDocumentBuilder();
     private JCRContent content;
+    private JCRSession session;
 
-    public JCRContentNode(JCRContent content, Node node) {
+    /**
+     * Ctor.
+     * @param session The session.
+     * @param content The content object.
+     * @param node The JCR node.
+     */
+    public JCRContentNode(JCRSession session, JCRContent content, Node node) {
         super(node);
+        this.session = session;
         this.content = content;
-        this.documentManager = new NodeWrapperManager(content.getArea()
-                .getPublication()
-                .getSession());
+        this.documentManager = new NodeWrapperManager(session, this.builder);
+    }
+
+    protected JCRContent getContent() {
+        return this.content;
     }
 
     public Document[] getDocuments() throws RepositoryException {
@@ -58,9 +71,8 @@ public class JCRContentNode extends NodeWrapper implements ContentNode {
     }
 
     public Document addDocument(String language) throws RepositoryException {
-        NodeWrapperBuilder builder = new JCRDocumentBuilder(this, language);
-        return (Document) builder.buildNode(this.content.getArea().getPublication().getSession(),
-                true);
+        BuilderParameters params = builder.createParameters(this, language);
+        return (Document) this.documentManager.getNode(language, params, true);
     }
 
     public void removeDocument(Document document) throws RepositoryException {
@@ -72,8 +84,20 @@ public class JCRContentNode extends NodeWrapper implements ContentNode {
     }
 
     public Document getDocument(String language) throws RepositoryException {
-        NodeWrapperBuilder builder = new JCRDocumentBuilder(this, language);
-        return (Document) builder.buildNode(this.content.getArea().getPublication().getSession(), false);
+        BuilderParameters params = builder.createParameters(this, language);
+        return (Document) this.documentManager.getNode(language, params, false);
+    }
+
+    public DocumentType getDocumentType() throws RepositoryException {
+        Repository repo = this.session.getRepository();
+        String doctypeName;
+        try {
+            doctypeName = getNode().getProperty(JCRContentNodeBuilder.DOCUMENT_TYPE_PROPERTY)
+                    .getString();
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
+        return repo.getDocumentTypeRegistry().getDocumentType(doctypeName);
     }
 
 }

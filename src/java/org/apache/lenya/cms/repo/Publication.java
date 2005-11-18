@@ -16,8 +16,37 @@
  */
 package org.apache.lenya.cms.repo;
 
+/**
+ * A publication.
+ */
 public interface Publication {
 
+    /**
+     * @param area The area ID.
+     * @return The area object.
+     * @throws RepositoryException if the area does not exist.
+     */
     Area getArea(String area) throws RepositoryException;
+    
+    /**
+     * @param area The area ID.
+     * @return The area object.
+     * @throws RepositoryException if the area already exists.
+     */
+    Area addArea(String area) throws RepositoryException;
+    
+    /**
+     * Checks if an area exists in this publication.
+     * @param area The area.
+     * @return A boolean value.
+     * @throws RepositoryException of an error occurs.
+     */
+    boolean existsArea(String area) throws RepositoryException;
+    
+    /**
+     * @return The publication ID.
+     * @throws RepositoryException if an error occurs.
+     */
+    String getPublicationId() throws RepositoryException;
     
 }

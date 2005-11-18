@@ -16,6 +16,10 @@
  */
 package org.apache.lenya.cms.jcr;
 
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.List;
+
 import javax.jcr.Node;
 import javax.jcr.NodeIterator;
 
@@ -24,42 +28,80 @@ import org.apache.lenya.cms.repo.RepositoryException;
 /**
  * JCR document builder.
  */
-public class JCRDocumentBuilder implements NodeWrapperBuilder {
+public class JCRDocumentBuilder extends AbstractNodeWrapperBuilder implements
+        ResolvingNodeWrapperBuilder {
 
     protected static final String LANGUAGE_ATTRIBUTE = "xml:lang";
     protected static final String NODE_NAME = "lenya:document";
+    protected static final String NODE_TYPE = "lnt:document";
     protected static final String RESOURCE_NODE_NAME = "lenya:resource";
-
-    private String language;
-    private JCRContentNode contentNode;
+    protected static final String RESOURCE_NODE_TYPE = "lnt:resource";
 
     /**
-     * Ctor.
-     * @param contentNode The content node.
-     * @param language The language.
+     * Parameters.
      */
-    public JCRDocumentBuilder(JCRContentNode contentNode, String language) {
-        this.contentNode = contentNode;
-        this.language = language;
+    public static class JCRDocumentBuilderParameters implements BuilderParameters {
+
+        private String language;
+        private JCRContentNode contentNode;
+
+        /**
+         * Ctor.
+         * @param contentNode The content node.
+         * @param language The language.
+         */
+        public JCRDocumentBuilderParameters(JCRContentNode contentNode, String language) {
+            this.contentNode = contentNode;
+            this.language = language;
+        }
+
+        /**
+         * @return The content node.
+         */
+        public JCRContentNode getContentNode() {
+            return this.contentNode;
+        }
+
+        /**
+         * @return The language.
+         */
+        public String getLanguage() {
+            return this.language;
+        }
+
     }
 
-    public NodeWrapper buildNode(JCRSession session, boolean create) throws RepositoryException {
+    /**
+     * @param contentNode The content node.
+     * @param language The language.
+     * @return The parameters object.
+     */
+    public BuilderParameters createParameters(JCRContentNode contentNode, String language) {
+        return new JCRDocumentBuilderParameters(contentNode, language);
+    }
+
+    public NodeWrapper addNode(JCRSession session, BuilderParameters parameters)
+            throws RepositoryException {
         try {
+
+            JCRDocumentBuilderParameters params = (JCRDocumentBuilderParameters) parameters;
+
             JCRDocument document = null;
-            Node contentNodeNode = this.contentNode.getNode();
+            Node contentNodeNode = params.getContentNode().getNode();
 
-            Node documentNode = null;
-            for (NodeIterator i = contentNodeNode.getNodes(NODE_NAME); i.hasNext();) {
-                Node node = i.nextNode();
-                if (node.getProperty(LANGUAGE_ATTRIBUTE).getString().equals(this.language)) {
-                    documentNode = node;
-                }
-            }
+            Node documentNode = getNode(params, contentNodeNode);
 
-            if (documentNode == null && create) {
-                documentNode = contentNodeNode.addNode(NODE_NAME);
-                documentNode.setProperty(LANGUAGE_ATTRIBUTE, this.language);
-                documentNode.addNode(RESOURCE_NODE_NAME);
+            if (documentNode == null) {
+                documentNode = contentNodeNode.addNode(NODE_NAME, NODE_TYPE);
+                documentNode.setProperty(LANGUAGE_ATTRIBUTE, params.getLanguage());
+                Node resourceNode = documentNode.addNode(RESOURCE_NODE_NAME, RESOURCE_NODE_TYPE);
+                resourceNode.setProperty("jcr:mimeType", params.getContentNode()
+                        .getDocumentType()
+                        .getMimeType());
+                resourceNode.setProperty("jcr:data", "");
+                resourceNode.setProperty("jcr:lastModified", new GregorianCalendar());
+            } else {
+                throw new RepositoryException("The node already exists!");
             }
 
             if (documentNode != null) {
@@ -67,6 +109,57 @@ public class JCRDocumentBuilder implements NodeWrapperBuilder {
             }
             return document;
         } catch (Exception e) {
+            throw new RepositoryException(e);
+        }
+    }
+
+    protected Node getNode(JCRDocumentBuilderParameters params, Node contentNodeNode)
+            throws javax.jcr.RepositoryException, RepositoryException {
+        Node documentNode = null;
+        for (NodeIterator i = contentNodeNode.getNodes(NODE_NAME); i.hasNext();) {
+            Node node = i.nextNode();
+            if (getKey(node).equals(params.getLanguage())) {
+                documentNode = node;
+            }
+        }
+        return documentNode;
+    }
+
+    protected NodeWrapper getNodeInternal(JCRSession session, BuilderParameters parameters)
+            throws RepositoryException {
+        try {
+
+            JCRDocumentBuilderParameters params = (JCRDocumentBuilderParameters) parameters;
+
+            JCRDocument document = null;
+            Node contentNodeNode = params.getContentNode().getNode();
+            Node documentNode = getNode(params, contentNodeNode);
+            if (documentNode != null) {
+                document = new JCRDocument(documentNode);
+            }
+            return document;
+        } catch (Exception e) {
+            throw new RepositoryException(e);
+        }
+    }
+
+    public String[] getKeys(JCRSession session, Node reference) throws RepositoryException {
+        List keys = new ArrayList();
+        try {
+            for (NodeIterator i = reference.getNodes(NODE_NAME); i.hasNext();) {
+                Node node = i.nextNode();
+                keys.add(getKey(node));
+            }
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
+        return (String[]) keys.toArray(new String[keys.size()]);
+    }
+
+    public String getKey(Node node) throws RepositoryException {
+        try {
+            return node.getProperty(LANGUAGE_ATTRIBUTE).getString();
+        } catch (javax.jcr.RepositoryException e) {
             throw new RepositoryException(e);
         }
     }

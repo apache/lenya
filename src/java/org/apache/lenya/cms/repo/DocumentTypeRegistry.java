@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,27 +14,24 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.jcr;
-
-import javax.jcr.Node;
+package org.apache.lenya.cms.repo;
 
 /**
- * A JCR node wrapper.
+ * Document type registry.
  */
-public abstract class NodeWrapper {
+public interface DocumentTypeRegistry {
 
     /**
-     * Ctor.
-     * @param node The node.
+     * @return All available document type names.
+     * @throws RepositoryException if an error occurs.
      */
-    public NodeWrapper(Node node) {
-        this.node = node;
-    }
-
-    private Node node;
-
-    protected Node getNode() {
-        return this.node;
-    }
-
+    String[] getDocumentTypeNames() throws RepositoryException;
+    
+    /**
+     * @param name The name of the document type.
+     * @return The document type.
+     * @throws RepositoryException if no document type exists with this name.
+     */
+    DocumentType getDocumentType(String name) throws RepositoryException;
+    
 }

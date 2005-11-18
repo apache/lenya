@@ -18,9 +18,8 @@ package org.apache.lenya.cms.migration;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.util.Arrays;
 
-import javax.xml.parsers.SAXParser;
-import javax.xml.parsers.SAXParserFactory;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -28,19 +27,23 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.repo.Area;
 import org.apache.lenya.cms.repo.ContentNode;
 import org.apache.lenya.cms.repo.Document;
+import org.apache.lenya.cms.repo.DocumentType;
 import org.apache.lenya.cms.repo.Publication;
 import org.apache.lenya.cms.repo.Repository;
 import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.cms.repo.RepositoryManager;
 import org.apache.lenya.cms.repo.Session;
 import org.apache.lenya.cms.repo.SiteNode;
+import org.apache.lenya.cms.repo.impl.DocumentTypeImpl;
+import org.apache.lenya.cms.repo.impl.DocumentTypeRegistryImpl;
 import org.apache.lenya.xml.DocumentHelper;
+import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.tools.ant.BuildException;
-import org.xml.sax.ContentHandler;
-import org.xml.sax.helpers.DefaultHandler;
+import org.w3c.dom.Element;
 
 /**
  * Migrate Lenya 1.4-dev content.
@@ -111,6 +114,10 @@ public class Migrate14 {
     static final String CONFIGURATION_FILE = CONFIGURATION_PATH + File.separator
             + "publication.xconf";
 
+    /**
+     * Executes the migration.
+     * @throws BuildException if an error occurs.
+     */
     public void execute() throws BuildException {
 
         try {
@@ -149,7 +156,12 @@ public class Migrate14 {
 
     protected void importPublication(File pubDir) throws RepositoryException {
         String pubId = pubDir.getName();
-        Publication pub = getSession().getPublication(pubId);
+        Publication pub;
+        if (getSession().existsPublication(pubId)) {
+            pub = getSession().getPublication(pubId);
+        } else {
+            pub = getSession().addPublication(pubId);
+        }
 
         File contentDir = new File(pubDir, "content");
         File[] areaDirs = contentDir.listFiles(directoryFilter);
@@ -160,7 +172,12 @@ public class Migrate14 {
 
     protected void importContent(File contentDir, Publication pub) throws RepositoryException {
         String area = contentDir.getName();
-        Area repoArea = pub.getArea(area);
+        Area repoArea;
+        if (pub.existsArea(area)) {
+            repoArea = pub.getArea(area);
+        } else {
+            repoArea = pub.addArea(area);
+        }
         importChildren(contentDir, repoArea, null);
     }
 
@@ -171,19 +188,52 @@ public class Migrate14 {
             parentPath = parent.getPath();
         }
         String documentPath = parentPath + "/" + nodeId;
-        System.out.println("Importing [" + documentPath + "]");
+        System.out.println("Importing [" + area + "] - [" + documentPath + "]");
 
-        SiteNode siteNode;
-        ContentNode contentNode = area.getContent().addNode(nodeId);
-        if (parent == null) {
-            siteNode = area.getSite().addChild(nodeId, contentNode);
-        } else {
-            siteNode = parent.addChild(nodeId, contentNode);
+        File[] metaFiles = docDir.listFiles(new FileFilter() {
+            public boolean accept(File file) {
+                return file.isFile() && file.getName().startsWith("index_")
+                        && file.getName().endsWith(".xml.meta");
+            }
+        });
+        if (metaFiles.length > 0) {
+
+            File metaFile = metaFiles[0];
+            org.w3c.dom.Document xmlDoc;
+            try {
+                xmlDoc = DocumentHelper.readDocument(metaFile);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            NamespaceHelper helper = new NamespaceHelper(LenyaMetaData.NAMESPACE, "", xmlDoc);
+            Element metaElement = helper.getFirstChild(xmlDoc.getDocumentElement(), "meta");
+            Element internalElement = helper.getFirstChild(metaElement, "internal");
+            Element resourceTypeElement = helper.getFirstChild(internalElement,
+                    LenyaMetaData.ELEMENT_RESOURCE_TYPE);
+            String resourceType = DocumentHelper.getSimpleElementText(resourceTypeElement);
+            DocumentType doctype;
+
+            DocumentTypeRegistryImpl registry = (DocumentTypeRegistryImpl) getRepository().getDocumentTypeRegistry();
+            String[] names = registry.getDocumentTypeNames();
+            if (!Arrays.asList(names).contains(resourceType)) {
+                doctype = new DocumentTypeImpl(resourceType, null, false, "application/xml");
+                registry.register(doctype);
+            } else {
+                doctype = registry.getDocumentType(resourceType);
+            }
+
+            SiteNode siteNode;
+            String contentNodeId = documentPath.replace('/', '_');
+            ContentNode contentNode = area.getContent().addNode(contentNodeId, doctype);
+            if (parent == null) {
+                siteNode = area.getSite().addChild(nodeId, contentNode);
+            } else {
+                siteNode = parent.addChild(nodeId, contentNode);
+            }
+
+            importDocuments(docDir, contentNode);
+            importChildren(docDir, area, siteNode);
         }
-
-        importDocuments(docDir, contentNode);
-
-        importChildren(docDir, area, siteNode);
     }
 
     protected void importDocuments(File docDir, ContentNode contentNode) throws RepositoryException {
@@ -203,7 +253,7 @@ public class Migrate14 {
         String suffix = fileName.substring("index_".length());
         String language = suffix.substring(0, suffix.length() - ".xml".length());
         System.out.println(" language [" + language + "]");
-        
+
         Document document = contentNode.addDocument(language);
 
         try {

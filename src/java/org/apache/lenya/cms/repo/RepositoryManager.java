@@ -18,8 +18,17 @@ package org.apache.lenya.cms.repo;
 
 import java.io.File;
 
+/**
+ * Repository manager.
+ */
 public class RepositoryManager {
 
+    /**
+     * @param webappPath The directory of the web application.
+     * @param repositoryFactoryClass The class of the repository factory.
+     * @return A repository.
+     * @throws RepositoryException if the repository object could not be generated.
+     */
     public static Repository getRepository(String webappPath, String repositoryFactoryClass)
             throws RepositoryException {
         try {

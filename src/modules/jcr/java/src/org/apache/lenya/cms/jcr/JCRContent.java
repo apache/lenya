@@ -20,6 +20,7 @@ import javax.jcr.Node;
 
 import org.apache.lenya.cms.repo.Content;
 import org.apache.lenya.cms.repo.ContentNode;
+import org.apache.lenya.cms.repo.DocumentType;
 import org.apache.lenya.cms.repo.RepositoryException;
 
 /**
@@ -29,40 +30,49 @@ public class JCRContent extends NodeWrapper implements Content {
 
     /**
      * Ctor.
+     * @param session The session.
      * @param node The JCR node.
      * @param area The area.
      */
-    public JCRContent(Node node, JCRArea area) {
+    public JCRContent(JCRSession session, Node node, JCRPublicationNode area) {
         super(node);
         this.area = area;
-        this.nodeManager = new NodeWrapperManager(area.getPublication().getSession());
+        this.nodeManager = new NodeWrapperManager(session, this.builder);
     }
 
-    private JCRArea area;
+    private JCRPublicationNode area;
 
-    protected JCRArea getArea() {
+    protected JCRPublicationNode getArea() {
         return this.area;
     }
 
     private NodeWrapperManager nodeManager;
+    private JCRContentNodeBuilder builder = new JCRContentNodeBuilder();
 
     public ContentNode getNode(String id) throws RepositoryException {
-        NodeWrapperBuilder builder = new JCRContentNodeBuilder(this, id);
-        ContentNode node = (ContentNode) this.nodeManager.getNode(id, builder, false);
+        BuilderParameters params =  builder.createParameters(this, id);
+        ContentNode node = (ContentNode) this.nodeManager.getNode(id, params, false);
         if (node == null) {
             throw new RepositoryException("The content node [" + id + "]Êdoes not exist.");
         }
         return node;
     }
 
-    public ContentNode[] getNodes() {
-        // TODO Auto-generated method stub
-        return null;
+    public ContentNode[] getNodes() throws RepositoryException {
+        
+        String[] keys = this.nodeManager.getKeys(getNode());
+        ContentNode[] contentNodes = new ContentNode[keys.length];
+        for (int i = 0; i < contentNodes.length; i++) {
+            BuilderParameters params = this.builder.createParameters(this, keys[i]);
+            contentNodes[i] = (ContentNode) this.nodeManager.getNode(keys[i], params);
+        }
+        
+        return contentNodes;
     }
 
-    public ContentNode addNode(String id) throws RepositoryException {
-        NodeWrapperBuilder builder = new JCRContentNodeBuilder(this, id);
-        return (ContentNode) this.nodeManager.getNode(id, builder, true);
+    public ContentNode addNode(String id, DocumentType documentType) throws RepositoryException {
+        BuilderParameters params = builder.createParameters(this, id, documentType);
+        return (ContentNode) this.nodeManager.addNode(id, params);
     }
 
 }
