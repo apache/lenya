@@ -73,7 +73,18 @@
   </target>
   
   <target name="deploy-modules"
-          depends="copy-modules, modules-patch-cocoon-xconf, modules-patch-lenya-roles">
+          depends="init, copy-modules, modules-patch-cocoon-xconf, modules-patch-lenya-roles">
   </target>
 
+  <!-- ================================================ -->
+  <!-- Module tests -->
+  <!-- ================================================ -->
+  
+  <target name="modules.test" depends="deploy-modules">
+    <subant target="test" inheritall="true">
+      <property name="build.webapp" value="${build.webapp}"/>
+      <fileset dir="${build.webapp}/lenya/modules" includes="*/targets/test-build.xml"/>
+    </subant>
+  </target>
+  
 </project>
