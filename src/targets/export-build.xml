@@ -47,7 +47,7 @@
     <pathelement location="${build.webapp}/WEB-INF/classes"/>
     <fileset dir="${build.webapp}/WEB-INF/lib" includes="*.jar"/>
     <fileset dir="tools/jetty/lib">
-      <include name="servlet-2.3.jar"/>
+      <include name="servlet-*.jar"/>
     </fileset>
   </classpath>
   

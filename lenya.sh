@@ -136,7 +136,7 @@ LOADER_LIB="${LENYA_HOME}/tools/loader"
 CLI=-Dloader.main.class=org.apache.lenya.Main
 CLI_LIBRARIES="-Dloader.jar.repositories=$LENYA_LIB"
 
-JETTY=-Dloader.main.class=org.mortbay.jetty.Server
+JETTY=-Dloader.main.class=org.mortbay.jetty.plus.Server
 JETTY_CONF="$LENYA_HOME/tools/jetty/conf"
 JETTY_MAIN="$JETTY_CONF/main.xml"
 JETTY_ADMIN="$JETTY_CONF/admin.xml"
@@ -144,7 +144,7 @@ JETTY_WEBAPP="-Dwebapp=$LENYA_WEBAPP_HOME"
 JETTY_HOME="-Dhome=$LENYA_HOME"
 JETTY_PORT_ARGS="-Djetty.port=$JETTY_PORT"
 JETTY_ADMIN_ARGS="-Djetty.admin.port=$JETTY_ADMIN_PORT"
-JETTY_LIBRARIES="-Dloader.jar.repositories=$LENYA_HOME/tools/jetty/lib${PATHSEP}${ENDORSED_LIBS}"
+JETTY_LIBRARIES="-Dloader.jar.repositories=$LENYA_HOME/tools/jetty/lib${PATHSEP}$LENYA_HOME/tools/jetty/extra/lib${PATHSEP}$LENYA_HOME/tools/jetty/extra/ext${PATHSEP}$LENYA_HOME/tools/jetty/ext${PATHSEP}$LENYA_HOME/tools/jetty/extra/resources${PATHSEP}${ENDORSED_LIBS}"
 
 # ----- Do the action ----------------------------------------------------------
 

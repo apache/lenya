@@ -69,7 +69,7 @@
           <include name="*.jar"/>
         </fileset>
         <fileset dir="tools/jetty/lib">
-          <include name="servlet-2.3.jar"/>
+          <include name="servlet-*.jar"/>
         </fileset>
         <fileset dir="tools/lib">
           <include name="*.jar"/>
