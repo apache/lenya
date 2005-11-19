@@ -73,7 +73,9 @@ public class DocumentUsecase extends AbstractUsecase {
      * @return A document.
      */
     protected Document getSourceDocument() {
-        return (Document) getParameter(DOCUMENT);
+      String url = super.getSourceURL();
+      setSourceURL(url);
+      return (Document) getParameter(DOCUMENT);
     }
 
     /**
