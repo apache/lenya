@@ -109,9 +109,11 @@ public class RevisionController {
      * @throws IOException if an error occurs
      * @throws Exception if an error occurs
      */
+/*
     public RCML getRCML(Document doc) throws FileNotFoundException, IOException, Exception {
         return new RCML(rcmlDir, doc.getDocumentAreaPath(), rootDir);
     }
+*/
 
     /**
      * @deprecated please use getRCML(Document doc)
@@ -137,6 +139,7 @@ public class RevisionController {
      * @return File File to check out
      * @throws Exception if an error occurs
      */
+/*
     public File reservedCheckOut(Document doc, String identity) throws Exception {
 
         RCML rcml = new RCML(rcmlDir, doc.getDocumentAreaPath(), rootDir);
@@ -162,6 +165,7 @@ public class RevisionController {
 
         return doc.getFile();
     }
+*/
 
     /**
      * @deprecated reservedCheckOut(Document, String)
@@ -212,6 +216,7 @@ public class RevisionController {
      * @return A boolean value.
      * @throws Exception when something went wrong.
      */
+/*
     public boolean canCheckOut(Document doc, String identity) throws Exception {
                 
         RCML rcml = new RCML(rcmlDir, doc.getDocumentAreaPath(), rootDir);
@@ -232,6 +237,7 @@ public class RevisionController {
 
         return !checkedOutByOther;
     }
+*/
 
     /**
      * @deprecated please use canCheckOut(Document, String)
@@ -275,6 +281,7 @@ public class RevisionController {
      *            because it is already checked out by someone other ...)
      * @exception Exception if other problems occur
      */
+/*
     public long reservedCheckIn(Document doc, String identity, boolean backup)
         throws FileReservedCheckInException, Exception {
         
@@ -291,26 +298,6 @@ public class RevisionController {
         // rules inside this if clause:
         //
         if (!((coe == null) || identity.equals(RevisionController.systemUsername))) {
-            /*
-             * Possible cases and rules:
-             *
-             * 1.) we were able to read the latest checkin and it is later than latest checkout
-             *     (i.e. there is no open checkout to match this checkin, an unusual case)
-             *     1.1.) identity of latest checkin is equal to current user
-             *           -> checkin allowed, same user may check in repeatedly
-             *     1.2.) identity of latest checkin is not equal to current user
-             *           -> checkin rejected, may not overwrite the revision which
-             *              another user checked in previously
-             * 2.) there was no checkin or the latest checkout is later than latest checkin
-             *     (i.e. there is an open checkout)
-             *     2.1.) identity of latest checkout is equal to current user
-             *           -> checkin allowed, user checked out and may check in again
-             *              (the most common case)
-             *     2.2.) identity of latest checkout is not equal to current user
-             *           -> checkin rejected, may not check in while another
-             *              user is working on this document
-             *
-             */
             if ((cie != null) && (cie.getTime() > coe.getTime())) {
                 // We have case 1
                 if (!cie.getIdentity().equals(identity)) {
@@ -369,6 +356,7 @@ public class RevisionController {
         // 					     "reservedCheckIn");
         return time;
     }
+*/
 
     /**
      * @deprecated please use reservedCheckIn(Document, String, boolean)
@@ -501,10 +489,12 @@ public class RevisionController {
      *
      * @return File The file of the backup version
      */
+/*
     public File getBackupFile(long time, Document doc) {        
         File backup = new File(backupDir, doc.getDocumentAreaPath() + ".bak." + time);
         return backup;
     }
+*/
 
     /**
      * @deprecated getBackupFile(long, Document)
@@ -536,6 +526,7 @@ public class RevisionController {
      * @exception FileNotFoundException if a file couldn't be found
      * @exception Exception if another problem occurs
      */
+/*
     public long rollback(Document doc, String identity, boolean backupFlag, long time)
         throws
             FileReservedCheckInException,
@@ -582,6 +573,7 @@ public class RevisionController {
 
         return newtime;
     }
+*/
 
     /**
      * @deprecated please use rollback(Document, String, boolean, long)
@@ -689,6 +681,7 @@ public class RevisionController {
      * @param filename of the document
      * @throws RevisionControlException when somthing went wrong
      */
+/*
     public void deleteRevisions(Document doc) throws RevisionControlException{
         try {
             RCML rcml = this.getRCML(doc);
@@ -713,6 +706,7 @@ public class RevisionController {
             throw new RevisionControlException(e);
 		}
     }
+*/
 
     /**
      * @deprecated please use deleteRevisions(Document)
@@ -750,6 +744,7 @@ public class RevisionController {
      * @param filename of the document
      * @throws RevisionControlException if something went wrong
      */
+/*
     public void deleteRCML(Document doc) throws RevisionControlException{
         try {
             RCML rcml = this.getRCML(doc);
@@ -761,6 +756,7 @@ public class RevisionController {
             throw new RevisionControlException(e);
         }
     }
+*/
     
     /**
      * @deprecated please use deleteRCML(Document)
