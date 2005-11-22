@@ -15,5 +15,5 @@
 -->
 
 <cinclude:includexml xmlns:cinclude="http://apache.org/cocoon/include/1.0">
-  <cinclude:src>cocoon://core/lucene/search.xml</cinclude:src>
+  <cinclude:src>cocoon://core/modules/lucene/lucene/search.xml</cinclude:src>
 </cinclude:includexml>

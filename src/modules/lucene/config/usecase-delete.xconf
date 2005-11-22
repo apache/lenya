@@ -20,7 +20,7 @@
 <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'lucene.delete']">
 
     <component-instance name="lucene.delete" logger="lenya.lucene" class="org.apache.lenya.cms.usecase.DummyUsecase">
-      <view template="usecases/lucene/delete.jx"/>
+      <view template="modules/lucene/usecases/lucene/delete.jx"/>
       <exit usecase="lucene.delete"/>
     </component-instance>
 

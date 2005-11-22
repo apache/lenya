@@ -20,7 +20,7 @@
 <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'lucene.index']">
 
     <component-instance name="lucene.index" logger="lenya.lucene" class="org.apache.lenya.cms.usecase.DummyUsecase">
-      <view template="usecases/lucene/index.jx"/>
+      <view template="modules/lucene/usecases/lucene/index.jx"/>
       <exit usecase="lucene.index"/>
     </component-instance>
 

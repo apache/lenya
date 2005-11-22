@@ -13,7 +13,6 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-
 <cinclude:includexml xmlns:cinclude="http://apache.org/cocoon/include/1.0">
-  <cinclude:src>cocoon://core/lucene/index.xml</cinclude:src>
+  <cinclude:src>cocoon://core/modules/lucene/lucene/opensearch.xml</cinclude:src>
 </cinclude:includexml>

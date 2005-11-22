@@ -121,7 +121,7 @@ public class OneFormEditor extends DocumentUsecase {
                             getEvent());
                     
                     //re-index      
-                    indexSource = resolver.resolveURI("cocoon://core/lucene/index.xml");
+                    indexSource = resolver.resolveURI("cocoon://core/modules/lucene/lucene/index.xml");
                     InputSource xmlInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(indexSource);
                 }
             }
