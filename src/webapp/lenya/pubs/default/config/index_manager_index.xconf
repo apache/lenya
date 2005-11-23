@@ -15,14 +15,25 @@
   limitations under the License.
 -->
 
-  <xconf xpath="/cocoon/index_manager/indexes" remove="/cocoon/index_manager/indexes/index" unless="/cocoon/index_manager/indexes/index[@id = 'default']">
-	<index id="default" analyzer="stopword_en" directory="${basedir}/${build.webapp}/lenya/pubs/default/work/lucene/index" >
-		<structure>
-			<field id="url" type="keyword" />
-			<field id="title" type="text" storetext="true"/>
-			<field id="description" type="text" storetext="true"/>
-			<field id="subject" type="keyword" storetext="true" />					
-			<field id="body" type="text" storetext="true"/>
-		</structure>
-	</index>
+  <xconf xpath="/cocoon/index_manager/indexes" remove="/cocoon/index_manager/indexes/index" unless="/cocoon/index_manager/indexes/index[@id = 'default-live' or @id = 'default-authoring']">
+	
+    <index id="default-live" analyzer="stopword_en" directory="${basedir}/${build.webapp}/lenya/pubs/default/work/lucene/index/live/index" >
+        <structure>
+            <field id="url" type="keyword" />
+            <field id="title" type="text" storetext="true"/>
+            <field id="description" type="text" storetext="true"/>
+            <field id="subject" type="keyword" storetext="true" />					
+            <field id="body" type="text" storetext="true"/>
+        </structure>
+    </index>
+    
+    <index id="default-authoring" analyzer="stopword_en" directory="${basedir}/${build.webapp}/lenya/pubs/default/work/lucene/index/authoring/index" >
+        <structure>
+            <field id="url" type="keyword" />
+            <field id="title" type="text" storetext="true"/>
+            <field id="description" type="text" storetext="true"/>
+            <field id="subject" type="keyword" storetext="true" />					
+            <field id="body" type="text" storetext="true"/>
+        </structure>
+    </index>	
   </xconf>

@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.editors;
+package org.apache.lenya.cms.lucene;
 
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
@@ -23,18 +23,22 @@ import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
+import org.xml.sax.InputSource;
 
 /**
- * Usecase to edit documents.
- * 
- * @version $Id$
+ * Usecase to maintain lucene index.
  */
-public class EditDocument extends DocumentUsecase {
+public class IndexDocument extends DocumentUsecase {
 
     /**
      * The URI to copy the document source from.
      */
     public static final String SOURCE_URI = "sourceUri";
+    
+    public static final String INDEX_ACTION = "indexAction";
+    public static final String INDEX = "index";
+    public static final String DELETE = "delete";
+    public static final String INDEX_AREA = "indexArea";
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
@@ -43,17 +47,22 @@ public class EditDocument extends DocumentUsecase {
         super.doExecute();
         SourceResolver resolver = null;
         Source source = null;
+        
+        String action = super.getParameterAsString(INDEX_ACTION);
+        String area = super.getParameterAsString(INDEX_AREA);
+        
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            SourceUtil.copy(resolver,
-                    getParameterAsString(SOURCE_URI),
-                    getSourceDocument().getSourceURI());
-
-            WorkflowUtil.invoke(this.manager,
-                    getSession(),
-                    getLogger(),
-                    getSourceDocument(),
-                    "edit");
+            if (action.equals(INDEX)) {
+                //index
+                source = resolver.resolveURI("cocoon://core/modules/lucene/lucene/index-"+area+".xml");
+                InputSource xmlInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(source);
+            }
+            else if (action.equals(DELETE)) {
+                //delete
+                source = resolver.resolveURI("cocoon://core/modules/lucene/lucene/delete-"+area+".xml");
+                InputSource xmlInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(source);                
+            }
         } finally {
             if (resolver != null) {
                 if (source != null) {
@@ -69,7 +78,7 @@ public class EditDocument extends DocumentUsecase {
      */
     protected Node[] getNodesToLock() throws UsecaseException {
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("EditDocument::getObjectsToLock() called on source document ["
+            getLogger().debug("IndexDocument::getObjectsToLock() called on source document ["
                     + getSourceDocument().getId() + "]");
         }
 

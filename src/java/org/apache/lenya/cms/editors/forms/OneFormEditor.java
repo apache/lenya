@@ -37,7 +37,6 @@ import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.Schema;
 import org.apache.lenya.xml.ValidationUtil;
 import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 
 /**
@@ -119,10 +118,6 @@ public class OneFormEditor extends DocumentUsecase {
                             getLogger(),
                             getSourceDocument(),
                             getEvent());
-                    
-                    //re-index      
-                    indexSource = resolver.resolveURI("cocoon://core/modules/lucene/lucene/index.xml");
-                    InputSource xmlInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(indexSource);
                 }
             }
 

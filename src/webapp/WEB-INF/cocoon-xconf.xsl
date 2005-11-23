@@ -423,9 +423,19 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
     </component-instance>
     <component-instance name="site.delete" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Delete">
       <view template="usecases/site/delete.jx"/>
+      <exit usecase="lucene.index">
+        <parameter name="indexAction" value="delete"/>
+        <parameter name="indexArea" value="authoring"/>
+        <parameter name="lenya.exitUsecase" value="tab.overview"/>
+      </exit>
     </component-instance>
     <component-instance name="site.deleteLanguage" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.DeleteLanguage">
       <view template="usecases/site/deleteLanguage.jx"/>
+      <exit usecase="lucene.index">
+        <parameter name="indexAction" value="delete"/>
+        <parameter name="indexArea" value="authoring"/>
+        <parameter name="lenya.exitUsecase" value="tab.overview"/>
+      </exit>
     </component-instance>
     <component-instance name="site.changeLabel" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.ChangeLabel">
       <view template="usecases/site/changeLabel.jx"/>
@@ -435,6 +445,11 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
     </component-instance>
     <component-instance name="site.cut" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Cut">
       <view template="usecases/site/cut.jx"/>
+      <exit usecase="lucene.index">
+        <parameter name="indexAction" value="delete"/>
+        <parameter name="indexArea" value="authoring"/>
+        <parameter name="lenya.exitUsecase" value="tab.overview"/>
+      </exit>     
     </component-instance>
     <component-instance name="site.copy" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Copy">
       <view template="usecases/site/copy.jx"/>
@@ -444,9 +459,19 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
     </component-instance>
     <component-instance name="site.archive" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Archive">
       <view template="usecases/site/archive.jx"/>
+      <exit usecase="lucene.index">
+        <parameter name="indexAction" value="delete"/>
+        <parameter name="indexArea" value="authoring"/>
+        <parameter name="lenya.exitUsecase" value="tab.overview"/>
+      </exit>      
     </component-instance>
     <component-instance name="site.restore" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Restore">
       <view template="usecases/site/restore.jx"/>
+      <exit usecase="lucene.index">
+        <parameter name="indexAction" value="index"/>
+        <parameter name="indexArea" value="authoring"/>
+        <parameter name="lenya.exitUsecase" value="tab.overview"/>
+      </exit>
     </component-instance>
     
     <component-instance name="tab.acArchive" logger="lenya.site" class="org.apache.lenya.cms.ac.usecases.AccessControl">
@@ -485,7 +510,11 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
       <view template="usecases/tab/meta.jx" menu="true">
         <tab group="site" name="meta"/>
       </view>
-      <exit usecase="tab.meta"/>
+      <exit usecase="lucene.index">
+        <parameter name="indexAction" value="index"/>
+        <parameter name="indexArea" value="authoring"/>
+        <parameter name="lenya.exitUsecase" value="tab.meta"/>
+      </exit>
     </component-instance>
     <component-instance name="tab.overview" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Overview">
       <view template="usecases/tab/overview.jx" menu="true">
@@ -540,23 +569,39 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
                         class="org.apache.lenya.cms.editors.forms.FormsEditor">
       <transaction policy="pessimistic"/>
       <view template="usecases/edit/forms/forms.jx" menu="false"/>
+      <exit usecase="lucene.index">
+        <parameter name="indexAction" value="index"/>
+        <parameter name="indexArea" value="authoring"/>
+      </exit>
     </component-instance>
     <component-instance name="edit.oneform" logger="lenya.publication"
                         class="org.apache.lenya.cms.editors.forms.OneFormEditor">
       <transaction policy="pessimistic"/>
       <view template="usecases/edit/forms/oneform.jx" menu="false"/>
+      <exit usecase="lucene.index">
+        <parameter name="indexAction" value="index"/>
+        <parameter name="indexArea" value="authoring"/>
+      </exit>
     </component-instance>
 
     <component-instance name="edit.bxe" logger="lenya.publication"
                         class="org.apache.lenya.cms.editors.bxe.BXE">
       <transaction policy="pessimistic"/>
       <view template="usecases/edit/bxe/bxe.jx" menu="false"/>
+      <exit usecase="lucene.index">
+        <parameter name="indexAction" value="index"/>
+        <parameter name="indexArea" value="authoring"/>
+      </exit>
     </component-instance>
 
     <component-instance name="edit.kupu" logger="lenya.publication"
                         class="org.apache.lenya.cms.editors.kupu.Kupu">
       <transaction policy="pessimistic"/>
       <view template="usecases/edit/kupu/kupu.jx" menu="false"/>
+      <exit usecase="lucene.index">
+        <parameter name="indexAction" value="index"/>
+        <parameter name="indexArea" value="authoring"/>
+      </exit>
     </component-instance>
     
     <component-instance name="rollback" logger="lenya.publication"

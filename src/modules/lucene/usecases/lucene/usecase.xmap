@@ -89,7 +89,7 @@
       
       <map:match pattern="search.xml">
 	  <map:generate type="search">
-	    <map:parameter name="index" value="{realpath://lenya/pubs/{page-envelope:publication-id}/work/lucene/index}"/>
+	    <map:parameter name="index" value="{realpath://lenya/pubs/{page-envelope:publication-id}/work/lucene/index/{page-envelope:area}/index}"/>
 	  </map:generate>  
  
           <map:transform src="fallback://lenya/modules/lucene/xslt/search2html.xsl">	  
@@ -114,7 +114,7 @@
           <map:serialize type="xml"/>
       </map:match>
 
-      <map:match pattern="index.xml">
+      <map:match pattern="index-*.xml">
           <map:aggregate element="cmsbody">
 	    <!-- TODO Use the standard pipeline for retieving the document -->
 	    <!-- <map:part src="cocoon:/modules/{page-envelope:document-type}/view.xml"/> -->
@@ -123,7 +123,7 @@
           </map:aggregate>
 	  
 	  <map:transform src="fallback://lenya/modules/lucene/xslt/{page-envelope:document-type}2index.xsl">
-	    <map:parameter name="index" value="{page-envelope:publication-id}"/>
+	    <map:parameter name="index" value="{page-envelope:publication-id}-{1}"/>
 	    <map:parameter name="action" value="index"/>
 	    <map:parameter name="url" value="{request:requestURI}"/>
 	    <map:parameter name="id" value="{page-envelope:document-url}"/>
@@ -133,7 +133,7 @@
 	  <map:serialize type="xml"/>
       </map:match>
       
-      <map:match pattern="delete.xml">
+      <map:match pattern="delete-*.xml">
           <map:aggregate element="cmsbody">
 	    <!-- TODO Use the standard pipeline for retieving the document -->
 	    <!-- <map:part src="cocoon:/modules/{page-envelope:document-type}/view.xml"/> -->
@@ -142,7 +142,7 @@
           </map:aggregate>
 	  
 	  <map:transform src="fallback://lenya/modules/lucene/xslt/{page-envelope:document-type}2index.xsl">
-	    <map:parameter name="index" value="{page-envelope:publication-id}"/>
+	    <map:parameter name="index" value="{page-envelope:publication-id}-{1}"/>
 	    <map:parameter name="action" value="delete"/>
 	    <map:parameter name="url" value="{request:requestURI}"/>
 	    <map:parameter name="id" value="{page-envelope:document-url}"/>

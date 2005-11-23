@@ -150,10 +150,6 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
                     authoringDocument,
                     getEvent());
 
-	    resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);	    
-	    source = resolver.resolveURI("cocoon://core/modules/lucene/lucene/delete.xml");
-            InputSource xmlInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(source);
-
             success = true;
         } catch (Exception e) {
             throw new RuntimeException(e);

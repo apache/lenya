@@ -26,6 +26,10 @@
                         logger="lenya.usecases.workflow"
                         class="org.apache.lenya.defaultpub.cms.usecases.Deactivate">
       <view template="usecases/workflow/deactivate.jx"/>
+      <exit usecase="lucene.index">
+        <parameter name="indexAction" value="delete"/>
+        <parameter name="indexArea" value="live"/>
+      </exit>
     </component-instance>
 
   </xconf>
