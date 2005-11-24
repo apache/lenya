@@ -26,7 +26,7 @@
   exclude-result-prefixes="xhtml lucene lenya"
 >
 
-<xsl:import href="fallback://lenya/modules/lucene/xslt/xhtml2index.xsl"/>
+<xsl:import href="fallback://lenya/modules/xhtml/xslt/xhtml2index.xsl"/>
 
 </xsl:stylesheet>
 
