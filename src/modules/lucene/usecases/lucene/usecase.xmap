@@ -122,7 +122,7 @@
 	    <map:part src="fallback://content/{page-envelope:area}/{page-envelope:document-id}/index_{page-envelope:document-language}.xml"/>
           </map:aggregate>
 	  
-	  <map:transform src="fallback://lenya/modules/lucene/xslt/{page-envelope:document-type}2index.xsl">
+	  <map:transform src="fallback://lenya/modules/{page-envelope:document-type}/xslt/{page-envelope:document-type}2index.xsl">
 	    <map:parameter name="index" value="{page-envelope:publication-id}-{1}"/>
 	    <map:parameter name="action" value="index"/>
 	    <map:parameter name="url" value="{request:requestURI}"/>
@@ -141,7 +141,7 @@
 	    <map:part src="fallback://content/{page-envelope:area}/{page-envelope:document-id}/index_{page-envelope:document-language}.xml"/>
           </map:aggregate>
 	  
-	  <map:transform src="fallback://lenya/modules/lucene/xslt/{page-envelope:document-type}2index.xsl">
+	  <map:transform src="fallback://lenya/modules/{page-envelope:document-type}/xslt/{page-envelope:document-type}2index.xsl">
 	    <map:parameter name="index" value="{page-envelope:publication-id}-{1}"/>
 	    <map:parameter name="action" value="delete"/>
 	    <map:parameter name="url" value="{request:requestURI}"/>
