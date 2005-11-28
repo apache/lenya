@@ -21,9 +21,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns="http://www.w3.org/1999/xhtml"
   >
-
-  <xsl:import href="../util/waitScreen.xsl"/>
-
+  
   <xsl:param name="contextprefix"/>
   <xsl:param name="publicationid"/>
   <xsl:param name="area"/>
@@ -43,9 +41,10 @@
       <head>
         
         <link href="{$contextprefix}/lenya/css/default.css" rel="stylesheet" type="text/css"/>
+        
         <!-- These three scripts define the tree, do not remove-->
-        <script src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/tree.js" type="text/javascript" />
-        <script src="{$contextprefix}/{$publicationid}/{$area}/info-sitetree/navtree.js" type="text/javascript" />
+        <script src="{$contextprefix}/{$publicationid}/info-authoring/info-sitetree/tree.js" type="text/javascript" />
+        <script src="{$contextprefix}/{$publicationid}/info-authoring/info-sitetree/navtree.js" type="text/javascript" />
         <script type="text/javascript" >
           CONTEXT_PREFIX = "<xsl:value-of select="$contextprefix"/>";
           PUBLICATION_ID = "<xsl:value-of select="$publicationid"/>";
@@ -54,7 +53,7 @@
           IMAGE_PATH = "<xsl:value-of select="$contextprefix"/>/lenya/images/tree/";
           CUT_DOCUMENT_ID = "<xsl:value-of select="$cutdocumentid"/>";
           ALL_AREAS = "authoring,trash,archive"
-          PIPELINE_PATH = '/authoring/info-sitetree/sitetree-fragment.xml'
+          PIPELINE_PATH = '/info-authoring/info-sitetree/sitetree-fragment.xml'
           
           function buildTree() {
             var placeholder = document.getElementById('tree');
@@ -65,7 +64,6 @@
           };
        
          </script>
-         <xsl:call-template name="wait_script"/>   
 
       </head>
 
@@ -104,7 +102,6 @@
             </tr>
           </table>
         </div>
-        <xsl:call-template name="wait_screen"/>   
       </body>
     </html>
   </xsl:template>
