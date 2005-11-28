@@ -21,7 +21,9 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns="http://www.w3.org/1999/xhtml"
   >
-  
+
+  <xsl:import href="../util/waitScreen.xsl"/>
+
   <xsl:param name="contextprefix"/>
   <xsl:param name="publicationid"/>
   <xsl:param name="area"/>
@@ -41,7 +43,6 @@
       <head>
         
         <link href="{$contextprefix}/lenya/css/default.css" rel="stylesheet" type="text/css"/>
-        
         <!-- These three scripts define the tree, do not remove-->
         <script src="{$contextprefix}/{$publicationid}/info-authoring/info-sitetree/tree.js" type="text/javascript" />
         <script src="{$contextprefix}/{$publicationid}/info-authoring/info-sitetree/navtree.js" type="text/javascript" />
@@ -64,6 +65,7 @@
           };
        
          </script>
+         <xsl:call-template name="wait_script"/>   
 
       </head>
 
@@ -102,6 +104,7 @@
             </tr>
           </table>
         </div>
+        <xsl:call-template name="wait_screen"/>   
       </body>
     </html>
   </xsl:template>
