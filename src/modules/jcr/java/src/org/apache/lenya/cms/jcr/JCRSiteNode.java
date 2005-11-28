@@ -22,6 +22,7 @@ import java.util.List;
 import javax.jcr.Node;
 import javax.jcr.NodeIterator;
 
+import org.apache.lenya.cms.jcr.util.Assertion;
 import org.apache.lenya.cms.repo.ContentNode;
 import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.cms.repo.SiteNode;
@@ -38,14 +39,19 @@ public class JCRSiteNode extends NodeWrapper implements SiteNode {
      * @param session The session.
      * @param node The JCR node.
      * @param site The site.
-     * @param parent The parent.
+     * @param parent The parent or <code>null</code> if this is a top-level node.
      */
     public JCRSiteNode(JCRSession session, Node node, JCRSite site, JCRSiteNode parent) {
         super(node);
+        
+        Assertion.notNull(session, "session");
+        Assertion.notNull(site, "site");
+        
         this.site = site;
+        this.parent = parent;
+        
         this.builder = new JCRSiteNodeBuilder(site);
         this.childManager = new NodeWrapperManager(session, this.builder);
-        this.parent = parent;
     }
 
     public String getName() throws RepositoryException {

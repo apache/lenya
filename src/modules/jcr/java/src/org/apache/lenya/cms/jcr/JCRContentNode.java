@@ -72,7 +72,7 @@ public class JCRContentNode extends NodeWrapper implements ContentNode {
 
     public Document addDocument(String language, String label) throws RepositoryException {
         BuilderParameters params = builder.createParameters(this, language, label);
-        return (Document) this.documentManager.getNode(language, params, true);
+        return (Document) this.documentManager.addNode(language, params);
     }
 
     public void removeDocument(Document document) throws RepositoryException {
@@ -85,7 +85,7 @@ public class JCRContentNode extends NodeWrapper implements ContentNode {
 
     public Document getDocument(String language) throws RepositoryException {
         BuilderParameters params = builder.createParameters(this, language, null);
-        return (Document) this.documentManager.getNode(language, params, false);
+        return (Document) this.documentManager.getNode(language, params);
     }
 
     public DocumentType getDocumentType() throws RepositoryException {

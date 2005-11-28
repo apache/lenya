@@ -14,30 +14,21 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.jcr;
-
-import javax.jcr.Node;
-
-import org.apache.lenya.cms.jcr.util.Assertion;
+package org.apache.lenya.cms.jcr.util;
 
 /**
- * A JCR node wrapper.
+ * Utility class for assertions.
  */
-public abstract class NodeWrapper {
+public class Assertion {
 
     /**
-     * Ctor.
-     * @param node The node.
+     * @param obj The object to check.
+     * @param name The name of the parameter.
      */
-    public NodeWrapper(Node node) {
-        Assertion.notNull(node, "node");
-        this.node = node;
-    }
-
-    private Node node;
-
-    protected Node getNode() {
-        return this.node;
+    public static void notNull(Object obj, String name) {
+        if (obj == null) {
+            throw new RuntimeException("The parameter [" + name + "] must not be null!");
+        }
     }
 
 }

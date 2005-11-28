@@ -48,37 +48,38 @@ public class NodeWrapperManager {
 
     protected NodeWrapper getNode(String key, BuilderParameters parameters)
             throws org.apache.lenya.cms.repo.RepositoryException {
-
-        NodeWrapper wrapper = (NodeWrapper) this.key2node.get(key);
-        if (wrapper == null) {
-            wrapper = builder.getNode(this.session, parameters);
-            this.key2node.put(key, wrapper);
-        }
-
-        return wrapper;
+        return getNode(key, parameters, false);
     }
 
     protected NodeWrapper getNode(String key, BuilderParameters parameters, boolean create)
             throws org.apache.lenya.cms.repo.RepositoryException {
-        
-        if (builder.existsNode(this.session, parameters)) {
-            return builder.getNode(this.session, parameters);
+
+        NodeWrapper wrapper = (NodeWrapper) this.key2node.get(key);
+
+        if (wrapper == null) {
+            if (builder.existsNode(this.session, parameters)) {
+                wrapper = builder.getNode(this.session, parameters);
+            } else if (create) {
+                wrapper = builder.addNode(this.session, parameters);
+            } else {
+                throw new org.apache.lenya.cms.repo.RepositoryException("The node does not exist!");
+            }
+            this.key2node.put(key, wrapper);
         }
-        else if (create) {
-            return builder.addNode(this.session, parameters);
-        }
-        else {
-            throw new org.apache.lenya.cms.repo.RepositoryException("The node does not exist!");
-        }
+        return wrapper;
     }
 
     protected NodeWrapper addNode(String key, BuilderParameters parameters)
             throws org.apache.lenya.cms.repo.RepositoryException {
 
         NodeWrapper wrapper = (NodeWrapper) this.key2node.get(key);
+
         if (wrapper == null) {
             wrapper = builder.addNode(this.session, parameters);
             this.key2node.put(key, wrapper);
+        } else {
+            throw new org.apache.lenya.cms.repo.RepositoryException("The node for key [" + key
+                    + "] already exists!");
         }
 
         return wrapper;

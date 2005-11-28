@@ -51,7 +51,7 @@ public class JCRContent extends NodeWrapper implements Content {
 
     public ContentNode getNode(String id) throws RepositoryException {
         BuilderParameters params =  builder.createParameters(this, id);
-        ContentNode node = (ContentNode) this.nodeManager.getNode(id, params, false);
+        ContentNode node = (ContentNode) this.nodeManager.getNode(id, params);
         if (node == null) {
             throw new RepositoryException("The content node [" + id + "]Êdoes not exist.");
         }

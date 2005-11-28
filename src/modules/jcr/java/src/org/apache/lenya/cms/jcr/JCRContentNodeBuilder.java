@@ -25,6 +25,7 @@ import javax.jcr.NodeIterator;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.ValueFormatException;
 
+import org.apache.lenya.cms.jcr.util.Assertion;
 import org.apache.lenya.cms.repo.DocumentType;
 import org.apache.lenya.cms.repo.RepositoryException;
 
@@ -67,8 +68,12 @@ public class JCRContentNodeBuilder extends AbstractNodeWrapperBuilder implements
 
                 contentNode = content.addNode(NODE_NAME, NODE_TYPE);
                 contentNode.setProperty(ID_PROPERTY, params.getId());
-                contentNode.setProperty(DOCUMENT_TYPE_PROPERTY, params.getDocumentType());
                 contentNode.setProperty(VISIBLE_IN_NAV_PROPERTY, true);
+                
+                if (params.getDocumentType() != null) {
+                    contentNode.setProperty(DOCUMENT_TYPE_PROPERTY, params.getDocumentType());
+                }
+                
                 jcrContentNode = new JCRContentNode(session, params.getContent(), contentNode);
             } else {
                 throw new RepositoryException("The node already exists!");
@@ -153,9 +158,15 @@ public class JCRContentNodeBuilder extends AbstractNodeWrapperBuilder implements
          */
         public JCRContentNodeBuilderParameters(JCRContent content, String id,
                 DocumentType documentType) {
+
+            Assertion.notNull(content, "JCR content");
+            Assertion.notNull(id, "ID");
+
             this.content = content;
             this.id = id;
-            this.documentType = documentType.getName();
+            if (documentType != null) {
+                this.documentType = documentType.getName();
+            }
         }
 
         /**
