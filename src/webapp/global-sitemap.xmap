@@ -413,6 +413,15 @@
           <map:parameter name="type" value="file"/>
           <map:mount uri-prefix="" src="{fallback://lenya/resources-shared.xmap}" check-reload="true" reload-method="synchron"/>
         </map:act>
+        <!-- Ancestors resources, css, js, etc... -->
+        <!-- {publication-id}/{area}/{filename}.inherited.{extention} -->
+        <map:match pattern="*/*/**.inherited.*">
+          <map:act type="resource-exists-enhanced">
+            <map:parameter name="url" value="template-fallback://resources/shared/{3}.{4}"/>
+            <map:parameter name="type" value="file"/>
+            <map:mount uri-prefix="" src="{fallback://lenya/resources-shared.xmap}" check-reload="true" reload-method="synchron"/>
+          </map:act>
+        </map:match>
       </map:match>
       
       <!-- Enter the actual publication -->

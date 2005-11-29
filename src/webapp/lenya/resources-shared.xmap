@@ -24,6 +24,19 @@
       
       <!-- Lenya Publications -->
       
+      <!-- only look for inherited css ex: default.css -> @import url(default.inherited.css); -->
+      <!-- matches pub-id/area/css/*.inherited.css -->
+      <map:match pattern="*/*/css/*.inherited.css">
+        <map:act type="resource-exists" src="template-fallback://resources/shared/css/{3}.xml">
+          <map:generate src="template-fallback://resources/shared/css/{../3}.xml"/>
+          <map:transform src="template-fallback://resources/css/css.xsl">
+            <map:parameter name="contextprefix" value="{request:contextPath}"/>
+          </map:transform>
+          <map:serialize type="text" mime-type="text/css"/>
+        </map:act>
+        <map:read src="template-fallback://resources/shared/css/{3}.css" mime-type="text/css" />      
+      </map:match>
+      
       <!-- matches pub-id/area/css/*.css -->
       <map:match pattern="*/*/css/*.css">
         <!-- Only called if a {3}.css exists because of resource-exists-enhanced before -->
@@ -35,6 +48,11 @@
           <map:serialize type="text" mime-type="text/css"/>
         </map:act>
         <map:read src="fallback://resources/shared/css/{3}.css" mime-type="text/css" />
+      </map:match>
+
+      <!-- matches pub-id/area/javascript/**.inherited.js -->
+      <map:match pattern="*/*/javascript/**.inherited.js">
+        <map:read src="template-fallback://resources/shared/javascript/{3}.js" mime-type="application/x-javascript" />
       </map:match>
       
       <!-- matches pub-id/area/javascript/**.js -->
