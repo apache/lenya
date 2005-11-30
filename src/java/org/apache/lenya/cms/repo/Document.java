@@ -31,12 +31,6 @@ public interface Document {
     String getLanguage() throws RepositoryException;
     
     /**
-     * @param language The document's language code.
-     * @throws RepositoryException if an error occurs.
-     */
-    void setLanguage(String language) throws RepositoryException;
-    
-    /**
      * @return The input stream to obtain the document's content from.
      * @throws RepositoryException if an error occurs.
      */
@@ -67,4 +61,22 @@ public interface Document {
      */
     long getLastModified() throws RepositoryException;
 
+    /**
+     * @return The document's label.
+     * @throws RepositoryException if an error occurs.
+     */
+    String getLabel() throws RepositoryException;
+    
+    /**
+     * @param label The document's label.
+     * @throws RepositoryException if an error occurs.
+     */
+    void setLabel(String label) throws RepositoryException;
+    
+    /**
+     * @return The content node this document belongs to.
+     * @throws RepositoryException if an error occurs.
+     */
+    ContentNode getContentNode() throws RepositoryException;
+    
 }

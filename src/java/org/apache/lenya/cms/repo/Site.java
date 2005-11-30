@@ -28,10 +28,10 @@ public interface Site {
     SiteNode[] getChildren() throws RepositoryException;
     
     /**
-     * @return The nodes of this site.
+     * @return The nodes of this site in preorder.
      * @throws RepositoryException if an error occurs.
      */
-    SiteNode[] getNodes() throws RepositoryException;
+    SiteNode[] preOrder() throws RepositoryException;
     
     /**
      * @param name The name.
@@ -47,5 +47,18 @@ public interface Site {
      * @throws RepositoryException if the child does not exist.
      */
     SiteNode getChild(String name) throws RepositoryException;
+    
+    /**
+     * @param path The path of the node.
+     * @return A site node.
+     * @throws RepositoryException if the node does not exist.
+     */
+    SiteNode getNode(String path) throws RepositoryException;
+    
+    /**
+     * @return The area this site belongs to.
+     * @throws RepositoryException if an error occurs.
+     */
+    Area getArea() throws RepositoryException;
     
 }

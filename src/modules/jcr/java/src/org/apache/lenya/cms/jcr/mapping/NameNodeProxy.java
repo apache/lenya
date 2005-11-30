@@ -14,30 +14,17 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.jcr;
+package org.apache.lenya.cms.jcr.mapping;
 
-import javax.jcr.Node;
-
-import org.apache.lenya.cms.jcr.util.Assertion;
+import org.apache.lenya.cms.repo.RepositoryException;
 
 /**
- * A JCR node wrapper.
+ * Node proxy which is identified by its name.
  */
-public abstract class NodeWrapper {
+public class NameNodeProxy extends AbstractNodeProxy {
 
-    /**
-     * Ctor.
-     * @param node The node.
-     */
-    public NodeWrapper(Node node) {
-        Assertion.notNull(node, "node");
-        this.node = node;
-    }
-
-    private Node node;
-
-    protected Node getNode() {
-        return this.node;
+    public PathElement getPathElement() throws RepositoryException {
+        return getPathElement(getName());
     }
 
 }

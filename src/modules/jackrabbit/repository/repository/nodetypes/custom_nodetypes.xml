@@ -34,6 +34,11 @@
       <supertype>nt:resource</supertype>
     </supertypes>
   </nodeType>
+  
+  <nodeType name="lnt:mappable" isMixin="true">
+    <propertyDefinition name="lnt:className" autoCreate="false" mandatory="true" onParentVersion="ABORT" protected="false"
+      multiple="false" requiredType="String"/>
+  </nodeType>
 
   <!--
   Publication root node
@@ -42,6 +47,7 @@
     <supertypes>
       <supertype>nt:hierarchyNode</supertype>
       <supertype>mix:referenceable</supertype>
+      <supertype>lnt:mappable</supertype>
     </supertypes>
     <propertyDefinition name="lenya:id" autoCreate="false" mandatory="true" onParentVersion="ABORT" protected="false"
       multiple="false" requiredType="String"/>
@@ -67,6 +73,7 @@
       <supertype>nt:hierarchyNode</supertype>
       <supertype>mix:referenceable</supertype>
       <supertype>mix:lockable</supertype>
+      <supertype>lnt:mappable</supertype>
     </supertypes>
     <childNodeDefinition name="lenya:contentNode" defaultPrimaryType="lnt:contentNode" autoCreate="false" mandatory="false"
       onParentVersion="ABORT" protected="false" sameNameSiblings="true">
@@ -83,6 +90,7 @@
       <supertype>nt:hierarchyNode</supertype>
       <supertype>mix:referenceable</supertype>
       <supertype>mix:lockable</supertype>
+      <supertype>lnt:mappable</supertype>
     </supertypes>
     <propertyDefinition name="lenya:id" requiredType="String" autoCreate="false" mandatory="true"
       onParentVersion="ABORT" protected="false" multiple="false"/>
@@ -110,6 +118,7 @@
       <supertype>nt:hierarchyNode</supertype>
       <supertype>mix:versionable</supertype>
       <supertype>mix:lockable</supertype>
+      <supertype>lnt:mappable</supertype>
     </supertypes>
     <propertyDefinition name="xml:lang" requiredType="String" autoCreate="false" mandatory="true"
       onParentVersion="COPY" protected="false" multiple="false"/>
@@ -132,6 +141,7 @@
   <nodeType name="lnt:resource" isMixin="false" hasOrderableChildNodes="false" primaryItemName="">
     <supertypes>
       <supertype>nt:resource</supertype>
+      <supertype>lnt:mappable</supertype>
     </supertypes>
   </nodeType>
   
@@ -141,6 +151,7 @@
   <nodeType name="lnt:meta" isMixin="false" hasOrderableChildNodes="false" primaryItemName="">
     <supertypes>
       <supertype>nt:unstructured</supertype>
+      <supertype>lnt:mappable</supertype>
       <!--
       <supertype>lps:dc</supertype>
       <supertype>lps:dcterms</supertype>
@@ -158,6 +169,7 @@
       <supertype>nt:hierarchyNode</supertype>
       <supertype>mix:referenceable</supertype>
       <supertype>mix:lockable</supertype>
+      <supertype>lnt:mappable</supertype>
     </supertypes>
     <childNodeDefinition name="*" defaultPrimaryType="lnt:siteNode" autoCreate="false" mandatory="false"
       onParentVersion="ABORT" protected="false" sameNameSiblings="false">
@@ -175,6 +187,7 @@
       <supertype>nt:hierarchyNode</supertype>
       <supertype>mix:referenceable</supertype>
       <supertype>mix:lockable</supertype>
+      <supertype>lnt:mappable</supertype>
     </supertypes>
     <propertyDefinition name="lenya:contentNode" mandatory="false" autoCreate="false" multiple="false" onParentVersion="ABORT"
       protected="false" requiredType="Reference"/>

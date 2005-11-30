@@ -14,11 +14,23 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.jcr;
+package org.apache.lenya.cms.jcr.mapping;
+
+import org.apache.lenya.cms.repo.RepositoryException;
 
 /**
- * Marker interface. See parameter object pattern.
+ * Proxy for a node which is identified using a property value.
  */
-public interface BuilderParameters {
+public abstract class PropertyNodeProxy extends AbstractNodeProxy {
+    
+    /**
+     * @return The name of the property identifying the node.
+     */
+    protected abstract String getPropertyName();
+
+    public PathElement getPathElement() throws RepositoryException {
+        return new PropertyPathElement(getName(), getPropertyName(), getPropertyString(getPropertyName()));
+    }
+
 
 }

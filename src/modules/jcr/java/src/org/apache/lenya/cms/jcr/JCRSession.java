@@ -27,12 +27,14 @@ import javax.jcr.LoginException;
 import javax.jcr.NamespaceRegistry;
 import javax.jcr.Node;
 import javax.jcr.NodeIterator;
-import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.SimpleCredentials;
 
 import org.apache.jackrabbit.core.WorkspaceImpl;
+import org.apache.lenya.cms.jcr.mapping.Path;
+import org.apache.lenya.cms.jcr.mapping.RepositoryFacade;
 import org.apache.lenya.cms.repo.Publication;
+import org.apache.lenya.cms.repo.RepositoryException;
 
 /**
  * Repository session.
@@ -45,9 +47,6 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
      */
     public JCRSession(JCRRepository repository) {
         this.repository = repository;
-
-        this.publicationNodeBuilder = new JCRPublicationNodeBuilder(this);
-        this.publicationNodeManager = new NodeWrapperManager(this, this.publicationNodeBuilder);
     }
 
     private JCRRepository repository;
@@ -56,62 +55,69 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
         return this.repository;
     }
 
-    private Map area2session = new HashMap();
+    private Map area2facade = new HashMap();
 
-    private NodeWrapperManager publicationNodeManager;
-    private JCRPublicationNodeBuilder publicationNodeBuilder;
+    protected RepositoryFacade getRepositoryFacade(String area) throws RepositoryException {
+        RepositoryFacade facade = (RepositoryFacade) this.area2facade.get(area);
+        if (facade == null) {
 
-    protected Session getSession(String area) throws RepositoryException {
-        Session session = (Session) this.area2session.get(area);
-        if (session == null) {
+            try {
 
-            boolean create = false;
+                boolean create = false;
 
-            WorkspaceImpl defaultWorkspace = getDefaultWorkspace();
-            String[] workspaces = defaultWorkspace.getAccessibleWorkspaceNames();
-            if (!Arrays.asList(workspaces).contains(area)) {
-                defaultWorkspace.createWorkspace(area);
-                create = true;
-            }
-
-            session = getRepository().getRepository().login(new SimpleCredentials("john",
-                    "".toCharArray()),
-                    area);
-
-            if (create) {
-                NamespaceRegistry registry = session.getWorkspace().getNamespaceRegistry();
-                String uri = "http://apache.org/cocoon/lenya/jcr/1.0";
-                if (!Arrays.asList(registry.getURIs()).contains(uri)) {
-                    registry.registerNamespace("lenya", uri);
+                WorkspaceImpl defaultWorkspace = getDefaultWorkspace();
+                String[] workspaces = defaultWorkspace.getAccessibleWorkspaceNames();
+                if (!Arrays.asList(workspaces).contains(area)) {
+                    defaultWorkspace.createWorkspace(area);
+                    create = true;
                 }
-                uri = "http://apache.org/cocoon/lenya/jcr/nodetype/1.0";
-                if (!Arrays.asList(registry.getURIs()).contains(uri)) {
-                    registry.registerNamespace("lnt", uri);
+
+                Session session = getRepository().getRepository()
+                        .login(new SimpleCredentials("john", "".toCharArray()), area);
+                facade = new RepositoryFacade(session, getRepository().getDocumentTypeRegistry());
+
+                if (create) {
+                    NamespaceRegistry registry = session.getWorkspace().getNamespaceRegistry();
+                    String uri = "http://apache.org/cocoon/lenya/jcr/1.0";
+                    if (!Arrays.asList(registry.getURIs()).contains(uri)) {
+                        registry.registerNamespace("lenya", uri);
+                    }
+                    uri = "http://apache.org/cocoon/lenya/jcr/nodetype/1.0";
+                    if (!Arrays.asList(registry.getURIs()).contains(uri)) {
+                        registry.registerNamespace("lnt", uri);
+                    }
                 }
+                this.area2facade.put(area, facade);
+            } catch (javax.jcr.RepositoryException e) {
+                throw new RepositoryException(e);
             }
-            this.area2session.put(area, session);
         }
 
-        return session;
+        return facade;
     }
 
     protected WorkspaceImpl getDefaultWorkspace() throws LoginException, RepositoryException {
-        Session defaultWorkspaceSession = getRepository().getRepository()
-                .login(new SimpleCredentials("john", "".toCharArray()));
+        WorkspaceImpl defaultWorkspace;
+        try {
+            Session defaultWorkspaceSession = getRepository().getRepository()
+                    .login(new SimpleCredentials("john", "".toCharArray()));
+            defaultWorkspace = (WorkspaceImpl) defaultWorkspaceSession.getWorkspace();
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
 
-        WorkspaceImpl defaultWorkspace = (WorkspaceImpl) defaultWorkspaceSession.getWorkspace();
         return defaultWorkspace;
     }
 
     public void save() throws org.apache.lenya.cms.repo.RepositoryException {
         try {
-            for (Iterator i = this.area2session.keySet().iterator(); i.hasNext();) {
+            for (Iterator i = this.area2facade.keySet().iterator(); i.hasNext();) {
                 String area = (String) i.next();
-                Session session = (Session) this.area2session.get(area);
-                session.save();
+                RepositoryFacade facade = (RepositoryFacade) this.area2facade.get(area);
+                facade.getSession().save();
             }
-        } catch (RepositoryException e) {
-            throw new org.apache.lenya.cms.repo.RepositoryException(e);
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
         }
     }
 
@@ -127,14 +133,12 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
 
                 for (int i = 0; i < workspaces.length; i++) {
 
-                    Session session = getSession(workspaces[i]);
+                    Session session = getRepositoryFacade(workspaces[i]).getSession();
                     Node rootNode = session.getRootNode();
 
-                    for (NodeIterator pubNodes = rootNode.getNodes(JCRPublicationNodeBuilder.NODE_NAME); pubNodes.hasNext();) {
+                    for (NodeIterator pubNodes = rootNode.getNodes(AreaProxy.NODE_NAME); pubNodes.hasNext();) {
                         Node node = pubNodes.nextNode();
-
-                        String pubId = node.getProperty(JCRPublicationNodeBuilder.ID_ATTRIBUTE)
-                                .getString();
+                        String pubId = node.getProperty(AreaProxy.ID_PROPERTY).getString();
                         Publication pub = (Publication) this.publications.get(pubId);
                         if (pub == null) {
                             pub = new JCRPublication(this, pubId);
@@ -144,8 +148,8 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
                     }
                 }
 
-            } catch (RepositoryException e) {
-                throw new org.apache.lenya.cms.repo.RepositoryException(e);
+            } catch (javax.jcr.RepositoryException e) {
+                throw new RepositoryException(e);
             }
         }
     }
@@ -163,7 +167,7 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
                     + "] does not exist.");
         }
     }
-    
+
     public Publication addPublication(String id)
             throws org.apache.lenya.cms.repo.RepositoryException {
         initPublications();
@@ -177,53 +181,54 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
         }
     }
 
-    protected JCRPublicationNode addArea(JCRPublication publication, String area)
+    protected AreaProxy addArea(JCRPublication publication, String area)
             throws org.apache.lenya.cms.repo.RepositoryException {
 
-        BuilderParameters params = this.publicationNodeBuilder.createParameters(publication.getPublicationId(),
-                area);
-        if (this.publicationNodeBuilder.existsNode(this, params)) {
-            throw new org.apache.lenya.cms.repo.RepositoryException("The node already exists!");
-        } else {
-            return (JCRPublicationNode) this.publicationNodeManager.addNode(publication.getPublicationId()
-                    + ":" + area,
-                    params);
-        }
+        RepositoryFacade facade = getRepositoryFacade(area);
+        return (AreaProxy) facade.addByProperty(new Path(),
+                AreaProxy.NODE_TYPE,
+                AreaProxy.class.getName(),
+                AreaProxy.NODE_NAME,
+                AreaProxy.ID_PROPERTY,
+                publication.getPublicationId());
     }
-    
-    protected JCRPublicationNode[] getAreas(Publication publication)
-            throws org.apache.lenya.cms.repo.RepositoryException {
 
-        Set pubNodes = new HashSet();
-        String[] keys = this.publicationNodeManager.getKeys(null);
-        for (int i = 0; i < keys.length; i++) {
-            String[] steps = keys[i].split(":");
-            String pubId = steps[0];
-            if (pubId.equals(publication.getPublicationId())) {
-                String area = steps[1];
-                BuilderParameters params = this.publicationNodeBuilder.createParameters(publication.getPublicationId(),
-                        area);
-                pubNodes.add(this.publicationNodeManager.getNode(keys[i], params));
+    protected AreaProxy[] getAreas(Publication publication) throws RepositoryException {
+
+        Set areas = new HashSet();
+        String[] workspaces;
+        try {
+            workspaces = getDefaultWorkspace().getAccessibleWorkspaceNames();
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
+        for (int i = 0; i < workspaces.length; i++) {
+            RepositoryFacade facade = getRepositoryFacade(workspaces[i]);
+            Path path = AreaProxy.getPath(publication.getPublicationId());
+            if (facade.containsProxy(path)) {
+                AreaProxy area = (AreaProxy) facade.getProxy(path);
+                areas.add(area);
             }
         }
-        return (JCRPublicationNode[]) pubNodes.toArray(new JCRPublicationNode[pubNodes.size()]);
+        return (AreaProxy[]) areas.toArray(new AreaProxy[areas.size()]);
     }
 
-    protected JCRPublicationNode getArea(Publication publication, String area)
+    protected AreaProxy getArea(Publication publication, String area)
+            throws RepositoryException {
+        RepositoryFacade facade = getRepositoryFacade(area);
+        Path path = AreaProxy.getPath(publication.getPublicationId());
+        return (AreaProxy) facade.getProxy(path);
+    }
+
+    protected boolean existsArea(Publication publication, String area)
             throws org.apache.lenya.cms.repo.RepositoryException {
-        BuilderParameters params = this.publicationNodeBuilder.createParameters(publication.getPublicationId(),
-                area);
-        return (JCRPublicationNode) this.publicationNodeManager.getNode(publication.getPublicationId(),
-                params);
-    }
-    
-    protected boolean existsArea(Publication publication, String area) throws org.apache.lenya.cms.repo.RepositoryException {
-        BuilderParameters params = this.publicationNodeBuilder.createParameters(publication.getPublicationId(),
-                area);
-        return this.publicationNodeBuilder.existsNode(this, params);
+        RepositoryFacade facade = getRepositoryFacade(area);
+        Path path = AreaProxy.getPath(publication.getPublicationId());
+        return facade.containsProxy(path);
     }
 
-    public boolean existsPublication(String id) throws org.apache.lenya.cms.repo.RepositoryException {
+    public boolean existsPublication(String id)
+            throws org.apache.lenya.cms.repo.RepositoryException {
         initPublications();
         return this.publications.containsKey(id);
     }

@@ -115,6 +115,7 @@ public class JCRRepositoryTest extends TestCase {
         SiteNode parent = site.addChild("parent", node1);
         SiteNode child = parent.addChild("child", node2);
         assertSame(node2, child.getContentNode());
+        
     }
 
 }

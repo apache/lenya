@@ -56,4 +56,22 @@ public interface ContentNode {
      */
     DocumentType getDocumentType() throws RepositoryException;
     
+    /**
+     * @return The ID of this node.
+     * @throws RepositoryException if an error occurs.
+     */
+    String getNodeId() throws RepositoryException;
+    
+    /**
+     * @return If the node should be visible in the navigation.
+     * @throws RepositoryException if an error occurs.
+     */
+    boolean isVisibleInNav() throws RepositoryException;
+    
+    /**
+     * @param visible If the node should be visible in the navigation.
+     * @throws RepositoryException if an error occurs.
+     */
+    void setVisibleInNav(boolean visible) throws RepositoryException;
+    
 }

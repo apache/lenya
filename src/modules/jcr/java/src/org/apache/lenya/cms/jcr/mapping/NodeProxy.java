@@ -14,30 +14,41 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.jcr;
+package org.apache.lenya.cms.jcr.mapping;
 
 import javax.jcr.Node;
 
 import org.apache.lenya.cms.repo.RepositoryException;
 
 /**
- * Resolving node wrapper builder.
+ * Proxy for JCR nodes. 
  */
-public interface ResolvingNodeWrapperBuilder extends NodeWrapperBuilder {
-
-    /**
-     * @param session The JCR session.
-     * @param reference The reference node.
-     * @return All existing node keys.
-     * @throws RepositoryException if an error occurs.
-     */
-    String[] getKeys(JCRSession session, Node reference) throws RepositoryException;
+public interface NodeProxy {
     
     /**
-     * @param node The node.
-     * @return The key for this node.
+     * @return The repository this node belongs to.
      * @throws RepositoryException if an error occurs.
      */
-    String getKey(Node node) throws RepositoryException;
+    RepositoryFacade getRepository() throws RepositoryException;
+    
+    /**
+     * @return The JCR node.
+     * @throws RepositoryException if an error occurs.
+     */
+    Node getNode() throws RepositoryException;
+
+    /**
+     * Initializes the proxy.
+     * @param facade The repository.
+     * @param node The JCR node.
+     * @throws RepositoryException if an error occurs.
+     */
+    void setup(RepositoryFacade facade, Node node) throws RepositoryException;
+    
+    /**
+     * @return The absolute path of this node.
+     * @throws RepositoryException if an error occurs.
+     */
+    Path getAbsolutePath() throws RepositoryException;
     
 }

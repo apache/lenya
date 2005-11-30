@@ -34,6 +34,12 @@ public interface SiteNode {
     SiteNode[] getChildren() throws RepositoryException;
     
     /**
+     * @return All nodes in this subtree, including the node itself.
+     * @throws RepositoryException if an error occurs.
+     */
+    SiteNode[] preOrder() throws RepositoryException;
+    
+    /**
      * @param name The name.
      * @return A child node.
      * @throws RepositoryException if an error occurs.
@@ -65,4 +71,10 @@ public interface SiteNode {
      * @throws RepositoryException if an error occurs.
      */
     SiteNode getParent() throws RepositoryException;
+    
+    /**
+     * @return The site this node belongs to.
+     * @throws RepositoryException if an error occurs.
+     */
+    Site getSite() throws RepositoryException;
 }

@@ -42,5 +42,11 @@ public interface Content {
      *             registered.
      */
     ContentNode addNode(String id, DocumentType documentType) throws RepositoryException;
+    
+    /**
+     * @return The area this content belongs to.
+     * @throws RepositoryException if an error occurs.
+     */
+    Area getArea() throws RepositoryException;
 
 }
