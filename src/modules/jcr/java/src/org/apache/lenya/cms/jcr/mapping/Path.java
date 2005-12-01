@@ -172,7 +172,7 @@ public class Path {
      * @return The resulting path.
      */
     public Path append(Path path) {
-        List elements = Arrays.asList(getElements());
+        List elements = new ArrayList(Arrays.asList(getElements()));
         elements.addAll(Arrays.asList(path.getElements()));
         return new Path((PathElement[]) elements.toArray(new PathElement[elements.size()]));
     }
