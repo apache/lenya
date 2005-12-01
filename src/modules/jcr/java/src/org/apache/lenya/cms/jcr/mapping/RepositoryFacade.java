@@ -29,6 +29,7 @@ import javax.jcr.query.InvalidQueryException;
 import org.apache.lenya.cms.jcr.util.Assertion;
 import org.apache.lenya.cms.repo.DocumentTypeRegistry;
 import org.apache.lenya.cms.repo.RepositoryException;
+import org.apache.lenya.cms.repo.metadata.MetaDataRegistry;
 
 /**
  * Repository facade.
@@ -39,10 +40,13 @@ public class RepositoryFacade {
      * Ctor.
      * @param session The JCR session.
      * @param doctypeRegistry The document type registry.
+     * @param metaDataRegistry The meta data registry.
      */
-    public RepositoryFacade(Session session, DocumentTypeRegistry doctypeRegistry) {
+    public RepositoryFacade(Session session, DocumentTypeRegistry doctypeRegistry,
+            MetaDataRegistry metaDataRegistry) {
         this.session = session;
         this.doctypeRegistry = doctypeRegistry;
+        this.metaDataRegistry = metaDataRegistry;
     }
 
     private Map node2proxy = new HashMap();
@@ -148,7 +152,7 @@ public class RepositoryFacade {
             String name) throws RepositoryException {
         try {
             Node parent = getNode(parentPath);
-            
+
             if (parent.hasNode(name)) {
                 throw new RepositoryException("The node [" + getProxy(parent) + "/" + name
                         + "] already exists!");
@@ -204,6 +208,12 @@ public class RepositoryFacade {
 
     public DocumentTypeRegistry getDocumentTypeRegistry() {
         return this.doctypeRegistry;
+    }
+
+    private MetaDataRegistry metaDataRegistry;
+
+    public MetaDataRegistry getMetaDataRegistry() {
+        return this.metaDataRegistry;
     }
 
 }

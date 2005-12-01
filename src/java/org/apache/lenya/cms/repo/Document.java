@@ -19,42 +19,44 @@ package org.apache.lenya.cms.repo;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.apache.lenya.cms.repo.metadata.MetaData;
+
 /**
  * Document.
  */
 public interface Document {
-    
+
     /**
      * @return The document's language code.
      * @throws RepositoryException if an error occurs.
      */
     String getLanguage() throws RepositoryException;
-    
+
     /**
      * @return The input stream to obtain the document's content from.
      * @throws RepositoryException if an error occurs.
      */
     InputStream getInputStream() throws RepositoryException;
-    
+
     /**
      * <p>
      * Returns an output stream which can be used to write content to the document.
      * </p>
      * <p>
-     * If the content node's document type is validating and has a schema attached,
-     * the content is validated after it has been written.
+     * If the content node's document type is validating and has a schema attached, the content is
+     * validated after it has been written.
      * </p>
      * @return The output stream to write the document's content to.
      * @throws RepositoryException if an error occurs.
      */
     OutputStream getOutputStream() throws RepositoryException;
-    
+
     /**
      * @return The content length.
      * @throws RepositoryException if an error occurs.
      */
     long getContentLength() throws RepositoryException;
-    
+
     /**
      * @return The last modification date of the document.
      * @throws RepositoryException if an error occurs.
@@ -66,17 +68,25 @@ public interface Document {
      * @throws RepositoryException if an error occurs.
      */
     String getLabel() throws RepositoryException;
-    
+
     /**
      * @param label The document's label.
      * @throws RepositoryException if an error occurs.
      */
     void setLabel(String label) throws RepositoryException;
-    
+
     /**
      * @return The content node this document belongs to.
      * @throws RepositoryException if an error occurs.
      */
     ContentNode getContentNode() throws RepositoryException;
-    
+
+    /**
+     * @param elementSet The name of the element set. The element set must be registered in the
+     *            repository's meta data registry.
+     * @return The meta data.
+     * @throws RepositoryException if an error occurs.
+     */
+    MetaData getMetaData(String elementSet) throws RepositoryException;
+
 }

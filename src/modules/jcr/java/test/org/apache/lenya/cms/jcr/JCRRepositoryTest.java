@@ -24,6 +24,7 @@ import java.io.Writer;
 import junit.framework.TestCase;
 
 import org.apache.cocoon.components.validation.Validator;
+import org.apache.lenya.cms.jcr.mock.TestElementSet;
 import org.apache.lenya.cms.repo.Area;
 import org.apache.lenya.cms.repo.Content;
 import org.apache.lenya.cms.repo.ContentNode;
@@ -31,12 +32,16 @@ import org.apache.lenya.cms.repo.Document;
 import org.apache.lenya.cms.repo.DocumentType;
 import org.apache.lenya.cms.repo.Publication;
 import org.apache.lenya.cms.repo.Repository;
+import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.cms.repo.RepositoryManager;
 import org.apache.lenya.cms.repo.Session;
 import org.apache.lenya.cms.repo.Site;
 import org.apache.lenya.cms.repo.SiteNode;
 import org.apache.lenya.cms.repo.impl.DocumentTypeImpl;
 import org.apache.lenya.cms.repo.impl.DocumentTypeRegistryImpl;
+import org.apache.lenya.cms.repo.metadata.ElementSet;
+import org.apache.lenya.cms.repo.metadata.MetaData;
+import org.apache.lenya.cms.repo.metadata.impl.MetaDataRegistryImpl;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.lenya.xml.Schema;
@@ -85,6 +90,8 @@ public class JCRRepositoryTest extends TestCase {
         this.repositoryFactory = repositoryFactory;
     }
 
+    private Repository repo;
+
     /**
      * Test.
      * @throws Exception if an error occurs.
@@ -93,8 +100,7 @@ public class JCRRepositoryTest extends TestCase {
 
         System.out.println("Starting test");
 
-        Repository repo = RepositoryManager.getRepository(getWebappDirectory(),
-                getRepositoryFactory());
+        this.repo = RepositoryManager.getRepository(getWebappDirectory(), getRepositoryFactory());
         Session session = repo.createSession();
 
         File webappDir = new File(getWebappDirectory());
@@ -146,6 +152,36 @@ public class JCRRepositoryTest extends TestCase {
 
         org.w3c.dom.Document xmlDoc = DocumentHelper.readDocument(doc.getInputStream());
         assertEquals(xmlDoc.getDocumentElement().getLocalName(), localName);
+
+        doTestMetaData(doc);
+    }
+
+    protected void doTestMetaData(Document doc) throws Exception {
+        MetaDataRegistryImpl registry = (MetaDataRegistryImpl) this.repo.getMetaDataRegistry();
+        ElementSet testSet = new TestElementSet();
+        registry.registerElementSet(TestElementSet.NAME, testSet);
+
+        MetaData meta = doc.getMetaData(TestElementSet.NAME);
+        RepositoryException ex = null;
+        try {
+            meta.setValue(TestElementSet.MULTIPLE_ELEMENT, "hello");
+        } catch (RepositoryException e) {
+            ex = e;
+        }
+        assertNotNull(ex);
+        meta.addValue(TestElementSet.MULTIPLE_ELEMENT, "hello");
+        meta.addValue(TestElementSet.MULTIPLE_ELEMENT, "world");
+        assertTrue(meta.getValues(TestElementSet.MULTIPLE_ELEMENT).length == 2);
+        
+        try {
+            meta.addValue(TestElementSet.SINGLE_ELEMENT, "hello");
+        } catch (RepositoryException e) {
+            ex = e;
+        }
+        assertNotNull(ex);
+        meta.setValue(TestElementSet.SINGLE_ELEMENT, "hello");
+        assertEquals(meta.getValue(TestElementSet.SINGLE_ELEMENT), "hello");
+        
     }
 
 }

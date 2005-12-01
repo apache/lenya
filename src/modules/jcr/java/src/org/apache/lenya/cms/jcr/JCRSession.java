@@ -62,30 +62,32 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
         if (facade == null) {
 
             try {
-                boolean create = false;
+                // boolean create = false;
 
                 WorkspaceImpl defaultWorkspace = getDefaultWorkspace();
                 String[] workspaces = defaultWorkspace.getAccessibleWorkspaceNames();
                 if (!Arrays.asList(workspaces).contains(area)) {
                     defaultWorkspace.createWorkspace(area);
-                    create = true;
+                    // create = true;
                 }
 
                 Session session = getRepository().getRepository()
                         .login(new SimpleCredentials("john", "".toCharArray()), area);
-                facade = new RepositoryFacade(session, getRepository().getDocumentTypeRegistry());
+                facade = new RepositoryFacade(session,
+                        getRepository().getDocumentTypeRegistry(),
+                        getRepository().getMetaDataRegistry());
 
-//                if (create) {
-                    NamespaceRegistry registry = session.getWorkspace().getNamespaceRegistry();
-                    String uri = "http://apache.org/cocoon/lenya/jcr/1.0";
-                    if (!Arrays.asList(registry.getURIs()).contains(uri)) {
-                        registry.registerNamespace("lenya", uri);
-                    }
-                    uri = "http://apache.org/cocoon/lenya/jcr/nodetype/1.0";
-                    if (!Arrays.asList(registry.getURIs()).contains(uri)) {
-                        registry.registerNamespace("lnt", uri);
-                    }
-//                }
+                // if (create) {
+                NamespaceRegistry registry = session.getWorkspace().getNamespaceRegistry();
+                String uri = "http://apache.org/cocoon/lenya/jcr/1.0";
+                if (!Arrays.asList(registry.getURIs()).contains(uri)) {
+                    registry.registerNamespace("lenya", uri);
+                }
+                uri = "http://apache.org/cocoon/lenya/jcr/nodetype/1.0";
+                if (!Arrays.asList(registry.getURIs()).contains(uri)) {
+                    registry.registerNamespace("lnt", uri);
+                }
+                // }
                 this.area2facade.put(area, facade);
             } catch (javax.jcr.RepositoryException e) {
                 throw new RepositoryException(e);
@@ -212,8 +214,7 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
         return (AreaProxy[]) areas.toArray(new AreaProxy[areas.size()]);
     }
 
-    protected AreaProxy getArea(Publication publication, String area)
-            throws RepositoryException {
+    protected AreaProxy getArea(Publication publication, String area) throws RepositoryException {
         RepositoryFacade facade = getRepositoryFacade(area);
         Path path = AreaProxy.getPath(publication.getPublicationId());
         return (AreaProxy) facade.getProxy(path);

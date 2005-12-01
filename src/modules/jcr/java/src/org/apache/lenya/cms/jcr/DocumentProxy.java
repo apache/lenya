@@ -25,6 +25,7 @@ import org.apache.lenya.cms.jcr.mapping.PathElement;
 import org.apache.lenya.cms.repo.ContentNode;
 import org.apache.lenya.cms.repo.Document;
 import org.apache.lenya.cms.repo.RepositoryException;
+import org.apache.lenya.cms.repo.metadata.MetaData;
 
 /**
  * Document proxy.
@@ -54,7 +55,9 @@ public class DocumentProxy extends AbstractNodeProxy implements Document {
 
     protected static Path getPath(ContentNodeProxy contentNodeProxy, String language)
             throws RepositoryException {
-        return contentNodeProxy.getAbsolutePath().append(getPathElement(NODE_NAME, LANGUAGE_PROPERTY, language));
+        return contentNodeProxy.getAbsolutePath().append(getPathElement(NODE_NAME,
+                LANGUAGE_PROPERTY,
+                language));
     }
 
     protected ResourceProxy getResourceProxy() throws RepositoryException {
@@ -85,5 +88,21 @@ public class DocumentProxy extends AbstractNodeProxy implements Document {
     public PathElement getPathElement() throws RepositoryException {
         return getPathElement(NODE_NAME, LANGUAGE_PROPERTY, getLanguage());
     }
-    
+
+    public MetaData getMetaData(String elementSet) throws RepositoryException {
+        Path path = getAbsolutePath().append(getPathElement(MetaDataProxy.NODE_NAME,
+                MetaDataProxy.ELEMENT_SET_PROPERTY,
+                elementSet));
+        if (getRepository().containsProxy(path)) {
+            return (MetaData) getRepository().getProxy(path);
+        } else {
+            return (MetaData) getRepository().addByProperty(getAbsolutePath(),
+                    MetaDataProxy.NODE_TYPE,
+                    MetaDataProxy.class.getName(),
+                    MetaDataProxy.NODE_NAME,
+                    MetaDataProxy.ELEMENT_SET_PROPERTY,
+                    elementSet);
+        }
+    }
+
 }

@@ -14,30 +14,26 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.repo;
+package org.apache.lenya.cms.repo.metadata;
 
-import org.apache.lenya.cms.repo.metadata.MetaDataRegistry;
+import org.apache.lenya.cms.repo.RepositoryException;
 
 /**
- * Repository.
+ * Meta data registry.
  */
-public interface Repository {
+public interface MetaDataRegistry {
 
     /**
-     * @return A session.
+     * @return All available element sets.
      * @throws RepositoryException if an error occurs.
      */
-    Session createSession() throws RepositoryException;
-    
+    String[] getElementSetNames() throws RepositoryException;
+
     /**
-     * @return The document type registry.
-     * @throws RepositoryException if an error occurs.
+     * @param name The name of the element set.
+     * @return the element set.
+     * @throws RepositoryException if an error occurs. 
      */
-    DocumentTypeRegistry getDocumentTypeRegistry() throws RepositoryException;
-    
-    /**
-     * @return The meta data registry.
-     * @throws RepositoryException if an error occurs.
-     */
-    MetaDataRegistry getMetaDataRegistry() throws RepositoryException;
+    ElementSet getElementSet(String name) throws RepositoryException;
+
 }

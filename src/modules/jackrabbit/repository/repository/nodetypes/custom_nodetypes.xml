@@ -152,13 +152,11 @@
     <supertypes>
       <supertype>nt:unstructured</supertype>
       <supertype>lnt:mappable</supertype>
-      <!--
-      <supertype>lps:dc</supertype>
-      <supertype>lps:dcterms</supertype>
-      -->
     </supertypes>
-    <propertyDefinition name="lenya:namespace" requiredType="String" autoCreate="false" mandatory="true"
+    <propertyDefinition name="lenya:elementSet" requiredType="String" autoCreate="false" mandatory="true"
       onParentVersion="ABORT" multiple="false" protected="false"/>
+    <propertyDefinition name="*" requiredType="String" autoCreate="false" mandatory="false"
+      onParentVersion="ABORT" multiple="true" protected="false"/>
   </nodeType>
   
   <!--

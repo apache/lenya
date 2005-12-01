@@ -99,14 +99,11 @@ public class ResourceProxy extends AbstractNodeProxy {
          * @param proxy The resource proxy.
          */
         public JCROutputStream(ResourceProxy proxy) {
-            System.out.println("create stream");
             this.proxy = proxy;
         }
 
         public void close() throws IOException {
-            System.out.println("close stream?");
             if (!isClosed) {
-                System.out.println("closing stream");
                 super.close();
                 this.isClosed = true;
                 try {

@@ -19,7 +19,10 @@ package org.apache.lenya.cms.jcr;
 import javax.jcr.Repository;
 
 import org.apache.lenya.cms.repo.DocumentTypeRegistry;
+import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.cms.repo.impl.DocumentTypeRegistryImpl;
+import org.apache.lenya.cms.repo.metadata.MetaDataRegistry;
+import org.apache.lenya.cms.repo.metadata.impl.MetaDataRegistryImpl;
 
 /**
  * Facade to the JCR repository, providing Lenya-specific access.
@@ -54,6 +57,15 @@ public class JCRRepository implements org.apache.lenya.cms.repo.Repository {
             this.documentTypeRegistry = new DocumentTypeRegistryImpl();
         }
         return this.documentTypeRegistry;
+    }
+    
+    private MetaDataRegistry metaDataRegistry;
+
+    public MetaDataRegistry getMetaDataRegistry() throws RepositoryException {
+        if (this.metaDataRegistry == null) {
+            this.metaDataRegistry = new MetaDataRegistryImpl();
+        }
+        return this.metaDataRegistry;
     }
 
 }
