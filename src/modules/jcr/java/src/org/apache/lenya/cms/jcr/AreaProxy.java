@@ -86,5 +86,9 @@ public class AreaProxy extends AbstractNodeProxy implements Area {
     public PathElement getPathElement() throws RepositoryException {
         return new PropertyPathElement(NODE_NAME, ID_PROPERTY, getPublicationId());
     }
+    
+    public String getAreaID() throws RepositoryException {
+        return getPropertyString(ID_PROPERTY);
+    }
 
 }

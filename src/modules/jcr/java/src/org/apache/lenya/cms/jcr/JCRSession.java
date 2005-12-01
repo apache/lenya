@@ -62,7 +62,6 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
         if (facade == null) {
 
             try {
-
                 boolean create = false;
 
                 WorkspaceImpl defaultWorkspace = getDefaultWorkspace();
@@ -76,7 +75,7 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
                         .login(new SimpleCredentials("john", "".toCharArray()), area);
                 facade = new RepositoryFacade(session, getRepository().getDocumentTypeRegistry());
 
-                if (create) {
+//                if (create) {
                     NamespaceRegistry registry = session.getWorkspace().getNamespaceRegistry();
                     String uri = "http://apache.org/cocoon/lenya/jcr/1.0";
                     if (!Arrays.asList(registry.getURIs()).contains(uri)) {
@@ -86,7 +85,7 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
                     if (!Arrays.asList(registry.getURIs()).contains(uri)) {
                         registry.registerNamespace("lnt", uri);
                     }
-                }
+//                }
                 this.area2facade.put(area, facade);
             } catch (javax.jcr.RepositoryException e) {
                 throw new RepositoryException(e);

@@ -188,4 +188,14 @@ public abstract class AbstractNodeProxy implements NodeProxy {
         }
     }
 
+    public String toString() {
+        try {
+            return getNode().getSession().getWorkspace().getName() + "::" + getAbsolutePath();
+        } catch (RepositoryException e) {
+            throw new RuntimeException(e);
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

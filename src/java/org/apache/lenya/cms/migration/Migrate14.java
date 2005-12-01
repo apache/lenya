@@ -18,6 +18,8 @@ package org.apache.lenya.cms.migration;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Arrays;
 
 import javax.xml.transform.Result;
@@ -185,9 +187,9 @@ public class Migrate14 {
         String nodeId = docDir.getName();
         String parentPath = "";
         if (parent != null) {
-            parentPath = parent.getPath();
+            parentPath = parent.getPath() + "/";
         }
-        String documentPath = parentPath + "/" + nodeId;
+        String documentPath = parentPath + nodeId;
         System.out.println("Importing [" + area + "] - [" + documentPath + "]");
 
         File[] metaFiles = docDir.listFiles(new FileFilter() {
@@ -256,17 +258,24 @@ public class Migrate14 {
 
         Document document = contentNode.addDocument(language, "Label");
 
+        OutputStream out = document.getOutputStream();
         try {
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
             Source source = new StreamSource(file);
-            Result result = new StreamResult(document.getOutputStream());
+            Result result = new StreamResult(out);
             transformer.transform(source, result);
-        } catch (RepositoryException e) {
-            throw e;
         } catch (Exception e) {
             throw new RepositoryException(e);
         }
-
+        finally {
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {
+                    throw new RepositoryException(e);
+                }
+            }
+        }
     }
 
     protected void importChildren(File docDir, Area area, SiteNode parentNode)

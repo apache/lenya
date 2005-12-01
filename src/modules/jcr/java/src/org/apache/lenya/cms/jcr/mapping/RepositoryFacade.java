@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.jcr.Node;
+import javax.jcr.NodeIterator;
 import javax.jcr.PathNotFoundException;
 import javax.jcr.Session;
 import javax.jcr.ValueFormatException;
@@ -34,6 +35,11 @@ import org.apache.lenya.cms.repo.RepositoryException;
  */
 public class RepositoryFacade {
 
+    /**
+     * Ctor.
+     * @param session The JCR session.
+     * @param doctypeRegistry The document type registry.
+     */
     public RepositoryFacade(Session session, DocumentTypeRegistry doctypeRegistry) {
         this.session = session;
         this.doctypeRegistry = doctypeRegistry;
@@ -45,10 +51,18 @@ public class RepositoryFacade {
 
     protected String CLASS_PROPERTY = "lnt:className";
 
+    /**
+     * @return The JCR session.
+     */
     public Session getSession() {
         return this.session;
     }
 
+    /**
+     * @param path The path.
+     * @return All proxies identified by this path.
+     * @throws RepositoryException if an error occurs.
+     */
     public NodeProxy[] getProxies(Path path) throws RepositoryException {
         try {
             Node[] nodes = getNodes(path);
@@ -67,6 +81,11 @@ public class RepositoryFacade {
         }
     }
 
+    /**
+     * @param path A path.
+     * @return The node identified by this path.
+     * @throws RepositoryException if not exactly one node is found.
+     */
     public NodeProxy getProxy(Path path) throws RepositoryException {
         try {
             Node node = getNode(path);
@@ -78,6 +97,11 @@ public class RepositoryFacade {
         }
     }
 
+    /**
+     * @param path A path.
+     * @return if the node identified by the path exists.
+     * @throws RepositoryException if an error occurs.
+     */
     public boolean containsProxy(Path path) throws RepositoryException {
         try {
             return path.existsNode(getSession());
@@ -124,13 +148,15 @@ public class RepositoryFacade {
             String name) throws RepositoryException {
         try {
             Node parent = getNode(parentPath);
+            
             if (parent.hasNode(name)) {
-                throw new RepositoryException("The node [" + parentPath + "/" + name
+                throw new RepositoryException("The node [" + getProxy(parent) + "/" + name
                         + "] already exists!");
             } else {
                 Node child = parent.addNode(name, primaryNodeType);
                 child.setProperty(CLASS_PROPERTY, className);
-                return createProxy(child);
+                NodeProxy proxy = createProxy(child);
+                return proxy;
             }
         } catch (RepositoryException e) {
             throw e;
@@ -146,15 +172,18 @@ public class RepositoryFacade {
             Assertion.notNull(parentPath, "parentPath");
             Node parent = getNode(parentPath);
 
-            Path path = parentPath.append(new PropertyPathElement(name, propertyName, propertyValue));
+            PathElement element = new PropertyPathElement(name, propertyName, propertyValue);
+            Path path = parentPath.append(element);
             if (path.existsNode(getSession())) {
-                throw new RepositoryException("The node [" + path + "] already exists!");
+                throw new RepositoryException("The node [" + getProxy(parent) + "/" + element
+                        + "] already exists!");
             }
 
             Node child = parent.addNode(name, primaryNodeType);
             child.setProperty(CLASS_PROPERTY, className);
             child.setProperty(propertyName, propertyValue);
-            return createProxy(child);
+            NodeProxy proxy = createProxy(child);
+            return proxy;
         } catch (RepositoryException e) {
             throw e;
         } catch (Exception e) {

@@ -39,4 +39,10 @@ public interface Area {
      */
     void clear() throws RepositoryException;
     
+    /**
+     * @return The ID of the area.
+     * @throws RepositoryException if an error occurs.
+     */
+    String getAreaID() throws RepositoryException;
+    
 }

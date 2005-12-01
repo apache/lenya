@@ -69,8 +69,8 @@ public class SiteNodeProxy extends AbstractNodeProxy implements SiteNode {
     }
 
     public String getPath() throws RepositoryException {
-        // TODO Auto-generated method stub
-        return null;
+        String sitePath = ((SiteProxy) getSite()).getAbsolutePath().toString();
+        return getAbsolutePath().toString().substring(0, sitePath.length());
     }
 
     public Path getAbsolutePath() throws RepositoryException {
@@ -128,5 +128,5 @@ public class SiteNodeProxy extends AbstractNodeProxy implements SiteNode {
             throw new RepositoryException(e);
         }
     }
-
+    
 }
