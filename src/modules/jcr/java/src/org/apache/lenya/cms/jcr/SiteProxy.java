@@ -20,6 +20,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.jcr.Session;
+
 import org.apache.lenya.cms.jcr.mapping.AbstractNodeProxy;
 import org.apache.lenya.cms.jcr.mapping.NamePathElement;
 import org.apache.lenya.cms.jcr.mapping.Path;
@@ -51,7 +53,7 @@ public class SiteProxy extends AbstractNodeProxy implements Site {
         }
         return (SiteNode[]) nodes.toArray(new SiteNode[nodes.size()]);
     }
-    
+
     public SiteNode addChild(String name, ContentNode contentNode) throws RepositoryException {
         SiteNodeProxy proxy = (SiteNodeProxy) getRepository().addByName(getAbsolutePath(),
                 SiteNodeProxy.NODE_TYPE,
@@ -79,7 +81,7 @@ public class SiteProxy extends AbstractNodeProxy implements Site {
     public Path getAbsolutePath() throws RepositoryException {
         return SiteProxy.getPath((AreaProxy) getParentProxy());
     }
-    
+
     protected static Path getPath(AreaProxy area) throws RepositoryException {
         return area.getAbsolutePath().append(getPathElement(NODE_NAME));
     }
@@ -90,6 +92,17 @@ public class SiteProxy extends AbstractNodeProxy implements Site {
 
     public PathElement getPathElement() throws RepositoryException {
         return getPathElement(getName());
+    }
+
+    public void move(String srcAbsPath, String destAbsPath) throws RepositoryException {
+        try {
+            String srcPath = getNode().getPath() + srcAbsPath;
+            String destPath = getNode().getPath() + destAbsPath;
+            Session session = getNode().getSession();
+            session.move(srcPath, destPath);
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
     }
 
 }

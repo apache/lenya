@@ -26,39 +26,48 @@ public interface Site {
      * @throws RepositoryException if an error occurs.
      */
     SiteNode[] getChildren() throws RepositoryException;
-    
+
     /**
      * @return The nodes of this site in preorder.
      * @throws RepositoryException if an error occurs.
      */
     SiteNode[] preOrder() throws RepositoryException;
-    
+
     /**
      * @param name The name.
      * @param contentNode The content node which the site node refers to.
      * @return a site node.
-     * @throws RepositoryException if a child with this name already exists.
+     * @throws RepositoryException if a node with this path already exists.
      */
     SiteNode addChild(String name, ContentNode contentNode) throws RepositoryException;
-    
+
     /**
      * @param name The name.
      * @return a site node.
-     * @throws RepositoryException if the child does not exist.
+     * @throws RepositoryException if the node does not exist.
      */
     SiteNode getChild(String name) throws RepositoryException;
-    
+
     /**
      * @param path The path of the node.
      * @return A site node.
      * @throws RepositoryException if the node does not exist.
      */
     SiteNode getNode(String path) throws RepositoryException;
-    
+
     /**
      * @return The area this site belongs to.
      * @throws RepositoryException if an error occurs.
      */
     Area getArea() throws RepositoryException;
-    
+
+    /**
+     * Moves a subtree to another location.
+     * @param srcAbsPath The path of the node to move.
+     * @param destAbsPath The destination path.
+     * @throws RepositoryException if the destination node already exists or the destination parent
+     *             does not exist.
+     */
+    void move(String srcAbsPath, String destAbsPath) throws RepositoryException;
+
 }

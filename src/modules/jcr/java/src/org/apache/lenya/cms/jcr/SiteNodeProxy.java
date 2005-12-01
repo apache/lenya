@@ -70,7 +70,7 @@ public class SiteNodeProxy extends AbstractNodeProxy implements SiteNode {
 
     public String getPath() throws RepositoryException {
         String sitePath = ((SiteProxy) getSite()).getAbsolutePath().toString();
-        return getAbsolutePath().toString().substring(0, sitePath.length());
+        return getAbsolutePath().toString().substring(sitePath.length());
     }
 
     public Path getAbsolutePath() throws RepositoryException {
@@ -127,6 +127,10 @@ public class SiteNodeProxy extends AbstractNodeProxy implements SiteNode {
         } catch (javax.jcr.RepositoryException e) {
             throw new RepositoryException(e);
         }
+    }
+
+    public void remove() throws RepositoryException {
+        getRepository().removeProxy(this);
     }
     
 }

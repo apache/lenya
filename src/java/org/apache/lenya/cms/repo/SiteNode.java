@@ -77,4 +77,10 @@ public interface SiteNode {
      * @throws RepositoryException if an error occurs.
      */
     Site getSite() throws RepositoryException;
+    
+    /**
+     * Removes the node and all its child nodes.
+     * @throws RepositoryException if an error occurs.
+     */
+    void remove() throws RepositoryException;
 }

@@ -16,14 +16,9 @@
  */
 package org.apache.lenya.cms.jcr.mapping;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.jcr.Node;
 import javax.jcr.NodeIterator;
-import javax.jcr.PathNotFoundException;
 import javax.jcr.Session;
-import javax.jcr.ValueFormatException;
 import javax.jcr.query.InvalidQueryException;
 
 import org.apache.lenya.cms.jcr.util.Assertion;
@@ -49,7 +44,6 @@ public class RepositoryFacade {
         this.metaDataRegistry = metaDataRegistry;
     }
 
-    private Map node2proxy = new HashMap();
     private Session session;
     private DocumentTypeRegistry doctypeRegistry;
 
@@ -72,7 +66,7 @@ public class RepositoryFacade {
             Node[] nodes = getNodes(path);
             NodeProxy[] proxies = new NodeProxy[nodes.length];
             for (int i = 0; i < nodes.length; i++) {
-                proxies[i] = (NodeProxy) this.node2proxy.get(nodes[i]);
+                proxies[i] = getProxy(nodes[i]);
                 if (proxies[i] == null) {
                     proxies[i] = createProxy(nodes[i]);
                 }
@@ -114,21 +108,26 @@ public class RepositoryFacade {
         }
     }
 
-    protected NodeProxy createProxy(Node node) throws ValueFormatException,
-            javax.jcr.RepositoryException, PathNotFoundException, ClassNotFoundException,
-            InstantiationException, IllegalAccessException, RepositoryException {
-        String className = node.getProperty(CLASS_PROPERTY).getString();
+    protected NodeProxy createProxy(Node node) throws RepositoryException {
+        String className;
+        try {
+            className = node.getProperty(CLASS_PROPERTY).getString();
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
         NodeProxy proxy = createProxy(className);
         proxy.setup(this, node);
-        this.node2proxy.put(node, proxy);
         return proxy;
     }
 
-    protected NodeProxy createProxy(String className) throws ClassNotFoundException,
-            InstantiationException, IllegalAccessException {
+    protected NodeProxy createProxy(String className) throws RepositoryException {
         NodeProxy proxy;
-        Class clazz = Class.forName(className);
-        proxy = (NodeProxy) clazz.newInstance();
+        try {
+            Class clazz = Class.forName(className);
+            proxy = (NodeProxy) clazz.newInstance();
+        } catch (Exception e) {
+            throw new RepositoryException(e);
+        }
         return proxy;
     }
 
@@ -196,14 +195,8 @@ public class RepositoryFacade {
 
     }
 
-    protected NodeProxy getProxy(Node parentNode) throws ValueFormatException,
-            javax.jcr.RepositoryException, PathNotFoundException, ClassNotFoundException,
-            InstantiationException, IllegalAccessException, RepositoryException {
-        NodeProxy parentProxy = (NodeProxy) this.node2proxy.get(parentNode);
-        if (parentProxy == null) {
-            parentProxy = createProxy(parentNode);
-        }
-        return parentProxy;
+    protected NodeProxy getProxy(Node node) throws RepositoryException {
+        return createProxy(node);
     }
 
     public DocumentTypeRegistry getDocumentTypeRegistry() {
@@ -216,4 +209,19 @@ public class RepositoryFacade {
         return this.metaDataRegistry;
     }
 
+    public void removeProxy(NodeProxy proxy) throws RepositoryException {
+
+        try {
+            for (NodeIterator i = proxy.getNode().getNodes(); i.hasNext();) {
+                Node node = i.nextNode();
+                removeProxy(getProxy(node));
+            }
+
+            Node node = proxy.getNode();
+            node.remove();
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
+
+    }
 }

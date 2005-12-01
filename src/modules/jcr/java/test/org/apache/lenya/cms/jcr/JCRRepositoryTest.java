@@ -21,6 +21,8 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
+import javax.jcr.ItemExistsException;
+
 import junit.framework.TestCase;
 
 import org.apache.cocoon.components.validation.Validator;
@@ -126,9 +128,30 @@ public class JCRRepositoryTest extends TestCase {
         assertNotNull(node2);
         SiteNode parent = site.addChild("parent", node1);
         SiteNode child = parent.addChild("child", node2);
-        assertSame(node2, child.getContentNode());
+        assertSame(node2.getNodeId(), child.getContentNode().getNodeId());
+
+        doTestSite(site, node1);
 
         doTestDocument(node1);
+
+    }
+
+    protected void doTestSite(Site site, ContentNode contentNode) throws RepositoryException {
+        SiteNode foo = site.addChild("foo", contentNode);
+        SiteNode bar = site.addChild("bar", contentNode);
+        
+        
+        RepositoryException ex = null;
+        try {
+            site.move(foo.getPath(), bar.getPath());
+        } catch (RepositoryException e) {
+            ex = e;
+        }
+        assertTrue(ex.getCause() instanceof ItemExistsException);
+        site.move("/foo", "/bar/baz");
+        
+        SiteNode barBaz = bar.getChild("baz");
+        assertSame(foo.getContentNode().getNodeId(), barBaz.getContentNode().getNodeId());
 
     }
 
@@ -172,7 +195,7 @@ public class JCRRepositoryTest extends TestCase {
         meta.addValue(TestElementSet.MULTIPLE_ELEMENT, "hello");
         meta.addValue(TestElementSet.MULTIPLE_ELEMENT, "world");
         assertTrue(meta.getValues(TestElementSet.MULTIPLE_ELEMENT).length == 2);
-        
+
         try {
             meta.addValue(TestElementSet.SINGLE_ELEMENT, "hello");
         } catch (RepositoryException e) {
@@ -181,7 +204,7 @@ public class JCRRepositoryTest extends TestCase {
         assertNotNull(ex);
         meta.setValue(TestElementSet.SINGLE_ELEMENT, "hello");
         assertEquals(meta.getValue(TestElementSet.SINGLE_ELEMENT), "hello");
-        
+
     }
 
 }

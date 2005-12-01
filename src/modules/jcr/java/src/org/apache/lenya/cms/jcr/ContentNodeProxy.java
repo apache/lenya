@@ -115,4 +115,8 @@ public class ContentNodeProxy extends AbstractNodeProxy implements ContentNode {
         setProperty(DOCUMENT_TYPE_PROPERTY, documentType);
     }
 
+    public void remove() throws RepositoryException {
+        getRepository().removeProxy(this);
+    }
+
 }
