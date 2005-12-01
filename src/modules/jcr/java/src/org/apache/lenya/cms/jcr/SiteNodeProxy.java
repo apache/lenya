@@ -129,8 +129,4 @@ public class SiteNodeProxy extends AbstractNodeProxy implements SiteNode {
         }
     }
 
-    public void remove() throws RepositoryException {
-        getRepository().removeProxy(this);
-    }
-    
 }

@@ -198,4 +198,16 @@ public abstract class AbstractNodeProxy implements NodeProxy {
         }
     }
 
+    /**
+     * Removes the node.
+     * @throws RepositoryException if an error occurs.
+     */
+    public void remove() throws RepositoryException {
+        try {
+            getNode().remove();
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
+
+    }
 }

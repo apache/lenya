@@ -17,7 +17,6 @@
 package org.apache.lenya.cms.jcr.mapping;
 
 import javax.jcr.Node;
-import javax.jcr.NodeIterator;
 import javax.jcr.Session;
 import javax.jcr.query.InvalidQueryException;
 
@@ -147,6 +146,15 @@ public class RepositoryFacade {
         return path.getNodes(getSession());
     }
 
+    /**
+     * Adds a node by name.
+     * @param parentPath The parent path.
+     * @param primaryNodeType The primary node type of the new node.
+     * @param className The class name.
+     * @param name The name of the node.
+     * @return The created node.
+     * @throws RepositoryException if the node already exists.
+     */
     public NodeProxy addByName(Path parentPath, String primaryNodeType, String className,
             String name) throws RepositoryException {
         try {
@@ -169,6 +177,17 @@ public class RepositoryFacade {
 
     }
 
+    /**
+     * Adds a node by property.
+     * @param parentPath The parent path.
+     * @param primaryNodeType The primary node type of the new node.
+     * @param className The class name of the proxy.
+     * @param name The node name.
+     * @param propertyName The name of the identifying property.
+     * @param propertyValue The identifying property value.
+     * @return The new node.
+     * @throws RepositoryException if the node already exists.
+     */
     public NodeProxy addByProperty(Path parentPath, String primaryNodeType, String className,
             String name, String propertyName, String propertyValue) throws RepositoryException {
         try {
@@ -199,29 +218,20 @@ public class RepositoryFacade {
         return createProxy(node);
     }
 
+    /**
+     * @return The document type registry.
+     */
     public DocumentTypeRegistry getDocumentTypeRegistry() {
         return this.doctypeRegistry;
     }
 
     private MetaDataRegistry metaDataRegistry;
 
+    /**
+     * @return The meta data registry.
+     */
     public MetaDataRegistry getMetaDataRegistry() {
         return this.metaDataRegistry;
     }
 
-    public void removeProxy(NodeProxy proxy) throws RepositoryException {
-
-        try {
-            for (NodeIterator i = proxy.getNode().getNodes(); i.hasNext();) {
-                Node node = i.nextNode();
-                removeProxy(getProxy(node));
-            }
-
-            Node node = proxy.getNode();
-            node.remove();
-        } catch (javax.jcr.RepositoryException e) {
-            throw new RepositoryException(e);
-        }
-
-    }
 }
