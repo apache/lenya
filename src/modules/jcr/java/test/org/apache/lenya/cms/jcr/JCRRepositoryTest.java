@@ -17,6 +17,9 @@
 package org.apache.lenya.cms.jcr;
 
 import java.io.File;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 
 import junit.framework.TestCase;
 
@@ -24,6 +27,7 @@ import org.apache.cocoon.components.validation.Validator;
 import org.apache.lenya.cms.repo.Area;
 import org.apache.lenya.cms.repo.Content;
 import org.apache.lenya.cms.repo.ContentNode;
+import org.apache.lenya.cms.repo.Document;
 import org.apache.lenya.cms.repo.DocumentType;
 import org.apache.lenya.cms.repo.Publication;
 import org.apache.lenya.cms.repo.Repository;
@@ -33,6 +37,8 @@ import org.apache.lenya.cms.repo.Site;
 import org.apache.lenya.cms.repo.SiteNode;
 import org.apache.lenya.cms.repo.impl.DocumentTypeImpl;
 import org.apache.lenya.cms.repo.impl.DocumentTypeRegistryImpl;
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.lenya.xml.Schema;
 
 /**
@@ -84,13 +90,13 @@ public class JCRRepositoryTest extends TestCase {
      * @throws Exception if an error occurs.
      */
     public void testRepository() throws Exception {
-        
+
         System.out.println("Starting test");
 
         Repository repo = RepositoryManager.getRepository(getWebappDirectory(),
                 getRepositoryFactory());
         Session session = repo.createSession();
-        
+
         File webappDir = new File(getWebappDirectory());
         String path = "lenya/modules/xhtml/schemas/xhtml.rng".replace('/', File.separatorChar);
         File schemaFile = new File(webappDir, path);
@@ -104,10 +110,10 @@ public class JCRRepositoryTest extends TestCase {
 
         assertFalse(pub.existsArea("authoring"));
         Area area = pub.addArea("authoring");
-        
+
         Content content = area.getContent();
         Site site = area.getSite();
-        
+
         ContentNode node1 = content.addNode("hello", doctype);
         assertNotNull(node1);
         ContentNode node2 = content.addNode("world", doctype);
@@ -115,7 +121,31 @@ public class JCRRepositoryTest extends TestCase {
         SiteNode parent = site.addChild("parent", node1);
         SiteNode child = parent.addChild("child", node2);
         assertSame(node2, child.getContentNode());
-        
+
+        doTestDocument(node1);
+
+    }
+
+    protected void doTestDocument(ContentNode node1) throws Exception {
+        Document doc = node1.addDocument("de", "hello");
+
+        String localName = "test";
+        NamespaceHelper helper = new NamespaceHelper("http://foo.bar", "", localName);
+        OutputStream out = doc.getOutputStream();
+        Writer writer = new OutputStreamWriter(out);
+
+        try {
+            DocumentHelper.writeDocument(helper.getDocument(), writer);
+        } finally {
+            if (out != null) {
+                out.close();
+            }
+        }
+
+        assertTrue(doc.getContentLength() > 0);
+
+        org.w3c.dom.Document xmlDoc = DocumentHelper.readDocument(doc.getInputStream());
+        assertEquals(xmlDoc.getDocumentElement().getLocalName(), localName);
     }
 
 }

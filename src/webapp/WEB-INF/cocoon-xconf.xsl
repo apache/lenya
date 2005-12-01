@@ -49,6 +49,7 @@
     <component-instance class="org.apache.lenya.cms.cocoon.source.FallbackSourceFactory" logger="lenya.source.fallback" name="fallback"/>
     <component-instance class="org.apache.lenya.cms.cocoon.source.TemplateFallbackSourceFactory" logger="lenya.source.templatefallback" name="template-fallback"/>
     <component-instance class="org.apache.lenya.cms.cocoon.source.LenyaSourceFactory" logger="lenya.source.lenya" name="lenya" scheme="context:"/>
+    <component-instance class="org.apache.lenya.cms.cocoon.source.ContentSourceFactory" logger="lenya.source.content" name="content"/>
   </xsl:copy>
 </xsl:template>
 
@@ -610,6 +611,10 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
       <exit usecase="tab.revisions"/>
     </component-instance>
   </usecases>
+  
+    <repository-factory>
+      <repository-factory class="org.apache.lenya.cms.jcr.jackrabbit.JackrabbitRepositoryFactory"/>
+    </repository-factory>
   
   <resource-types/>
 

@@ -181,6 +181,9 @@
         default-class="org.apache.lenya.cms.jcr.JCRNodeFactory"/>
         -->
 
+  <role name="org.apache.lenya.cms.repo.avalon.RepositoryFactory"
+        shorthand="repository-factory"
+        default-class="org.apache.lenya.cms.repo.avalon.RepositoryFactoryImpl"/>
 
 <!-- RGE: inserted roles used by the Lucene2 block -->	
 

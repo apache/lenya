@@ -35,7 +35,6 @@ public class ResourceProxy extends AbstractNodeProxy {
     protected static final String NODE_NAME = "lenya:resource";
     protected static final String NODE_TYPE = "lnt:resource";
     protected static final String DATA_PROPERTY = "jcr:data";
-    protected static final String CONTENT_LENGTH_PROPERTY = "jcr:contentLength";
     protected static final String LAST_MODIFIED_PROPERTY = "jcr:lastModified";
     protected static final String MIME_TYPE_PROPERTY = "jcr:mimeType";
 
@@ -60,7 +59,11 @@ public class ResourceProxy extends AbstractNodeProxy {
      * @throws RepositoryException if an error occurs.
      */
     public long getContentLength() throws RepositoryException {
-        return getPropertyLong(CONTENT_LENGTH_PROPERTY);
+        try {
+            return getNode().getProperty(DATA_PROPERTY).getLength();
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
     }
 
     /**
@@ -96,18 +99,20 @@ public class ResourceProxy extends AbstractNodeProxy {
          * @param proxy The resource proxy.
          */
         public JCROutputStream(ResourceProxy proxy) {
+            System.out.println("create stream");
             this.proxy = proxy;
         }
 
         public void close() throws IOException {
+            System.out.println("close stream?");
             if (!isClosed) {
+                System.out.println("closing stream");
                 super.close();
                 this.isClosed = true;
                 try {
                     byte[] bytes = this.toByteArray();
                     InputStream stream = new ByteArrayInputStream(bytes);
                     this.proxy.setProperty(ResourceProxy.DATA_PROPERTY, stream);
-                    this.proxy.setProperty(ResourceProxy.CONTENT_LENGTH_PROPERTY, bytes.length);
                     this.proxy.setProperty(ResourceProxy.LAST_MODIFIED_PROPERTY,
                             new GregorianCalendar());
                 } catch (RepositoryException e) {
