@@ -75,6 +75,7 @@
         <include name="**/*.properties"/>
         <include name="**/*.roles"/>
         <include name="**/*.xml"/>
+        <include name="**/*.rng"/>
       </fileset>
       <fileset dir="${java.dir}">
         <include name="**/*.roles"/>

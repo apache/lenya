@@ -16,10 +16,10 @@
  */
 package org.apache.lenya.cms.jcr;
 
-import java.io.File;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
+import java.net.URL;
 
 import javax.jcr.ItemExistsException;
 
@@ -45,7 +45,6 @@ import org.apache.lenya.cms.repo.metadata.ElementSet;
 import org.apache.lenya.cms.repo.metadata.MetaData;
 import org.apache.lenya.cms.repo.metadata.impl.MetaDataRegistryImpl;
 import org.apache.lenya.xml.DocumentHelper;
-import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.lenya.xml.Schema;
 
 /**
@@ -105,10 +104,8 @@ public class JCRRepositoryTest extends TestCase {
         this.repo = RepositoryManager.getRepository(getWebappDirectory(), getRepositoryFactory());
         Session session = repo.createSession();
 
-        File webappDir = new File(getWebappDirectory());
-        String path = "lenya/modules/xhtml/schemas/xhtml.rng".replace('/', File.separatorChar);
-        File schemaFile = new File(webappDir, path);
-        Schema schema = new Schema(Validator.GRAMMAR_RELAX_NG, schemaFile.toURI().toString());
+        URL schemaUrl = getClass().getResource("schema.xml");
+        Schema schema = new Schema(Validator.GRAMMAR_RELAX_NG, schemaUrl.toString());
         DocumentType doctype = new DocumentTypeImpl("xhtml", schema, true, "application/xhtml+xml");
         DocumentTypeRegistryImpl registry = (DocumentTypeRegistryImpl) repo.getDocumentTypeRegistry();
         registry.register(doctype);
@@ -139,8 +136,7 @@ public class JCRRepositoryTest extends TestCase {
     protected void doTestSite(Site site, ContentNode contentNode) throws RepositoryException {
         SiteNode foo = site.addChild("foo", contentNode);
         SiteNode bar = site.addChild("bar", contentNode);
-        
-        
+
         RepositoryException ex = null;
         try {
             site.move(foo.getPath(), bar.getPath());
@@ -149,7 +145,7 @@ public class JCRRepositoryTest extends TestCase {
         }
         assertTrue(ex.getCause() instanceof ItemExistsException);
         site.move("/foo", "/bar/baz");
-        
+
         SiteNode barBaz = bar.getChild("baz");
         assertSame(foo.getContentNode().getNodeId(), barBaz.getContentNode().getNodeId());
 
@@ -158,13 +154,35 @@ public class JCRRepositoryTest extends TestCase {
     protected void doTestDocument(ContentNode node1) throws Exception {
         Document doc = node1.addDocument("de", "hello");
 
+        String validXmlResource = "valid.xml";
+        String invalidXmlResource = "invalid.xml";
         String localName = "test";
-        NamespaceHelper helper = new NamespaceHelper("http://foo.bar", "", localName);
+
+        org.w3c.dom.Document validXml = DocumentHelper.readDocument(getClass().getResourceAsStream(validXmlResource));
+        org.w3c.dom.Document invalidXml = DocumentHelper.readDocument(getClass().getResourceAsStream(invalidXmlResource));
+
         OutputStream out = doc.getOutputStream();
         Writer writer = new OutputStreamWriter(out);
 
         try {
-            DocumentHelper.writeDocument(helper.getDocument(), writer);
+            DocumentHelper.writeDocument(invalidXml, writer);
+        } finally {
+            if (out != null) {
+                Exception ex = null;
+                try {
+                    out.close();
+                } catch (Exception e) {
+                    ex = e;
+                }
+                assertNotNull(ex);
+            }
+        }
+
+        out = doc.getOutputStream();
+        writer = new OutputStreamWriter(out);
+
+        try {
+            DocumentHelper.writeDocument(validXml, writer);
         } finally {
             if (out != null) {
                 out.close();

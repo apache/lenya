@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<grammar 
+  xmlns="http://relaxng.org/ns/structure/1.0"
+  xmlns:xsp="http://apache.org/xsp/core/v1"
+  xmlns:s="http://www.ascc.net/xml/schematron"
+  xmlns:a="http://relaxng.org/ns/compatibility/annotations/1.0"
+  xmlns:f="http://axkit.org/NS/xsp/perform/v1"
+  ns="http://apache.org/lenya/jcr/test"
+  datatypeLibrary="http://www.w3.org/2001/XMLSchema-datatypes">
+  <start>
+    <element name="test">
+      <empty/>
+    </element>
+  </start>
+</grammar>
