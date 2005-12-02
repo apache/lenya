@@ -225,8 +225,9 @@ public class Migrate14 {
             }
 
             SiteNode siteNode;
-            String contentNodeId = documentPath.replace('/', '_');
-            ContentNode contentNode = area.getContent().addNode(contentNodeId, doctype);
+            // String contentNodeId = documentPath.replace('/', '_');
+            
+            ContentNode contentNode = area.getContent().addNode(doctype);
             if (parent == null) {
                 siteNode = area.getSite().addChild(nodeId, contentNode);
             } else {

@@ -35,13 +35,12 @@ public interface Content {
     ContentNode[] getNodes() throws RepositoryException;
 
     /**
-     * @param id The node ID.
      * @param documentType The document type.
      * @return The added node.
      * @throws RepositoryException if a node with this ID already exists or the document type is not
      *             registered.
      */
-    ContentNode addNode(String id, DocumentType documentType) throws RepositoryException;
+    ContentNode addNode(DocumentType documentType) throws RepositoryException;
     
     /**
      * @return The area this content belongs to.

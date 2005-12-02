@@ -45,13 +45,11 @@ public class ContentProxy extends AbstractNodeProxy implements Content {
         return (ContentNode[]) getRepository().getProxies(path);
     }
 
-    public ContentNode addNode(String id, DocumentType documentType) throws RepositoryException {
-        ContentNodeProxy proxy = (ContentNodeProxy) getRepository().addByProperty(getAbsolutePath(),
+    public ContentNode addNode(DocumentType documentType) throws RepositoryException {
+        ContentNodeProxy proxy = (ContentNodeProxy) getRepository().addByNameWithoutCheck(getAbsolutePath(),
                 ContentNodeProxy.NODE_TYPE,
                 ContentNodeProxy.class.getName(),
-                ContentNodeProxy.NODE_NAME,
-                ContentNodeProxy.ID_PROPERTY,
-                id);
+                ContentNodeProxy.NODE_NAME);
         proxy.setVisibleInNav(true);
         proxy.setDocumentType(documentType.getName());
         return proxy;

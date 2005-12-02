@@ -92,8 +92,6 @@
       <supertype>mix:lockable</supertype>
       <supertype>lnt:mappable</supertype>
     </supertypes>
-    <propertyDefinition name="lenya:id" requiredType="String" autoCreate="false" mandatory="true"
-      onParentVersion="ABORT" protected="false" multiple="false"/>
     <propertyDefinition name="lenya:visibleInNav" requiredType="Boolean" autoCreate="true" mandatory="true"
       onParentVersion="ABORT" protected="false" multiple="false"/>
     <propertyDefinition name="lenya:href" requiredType="String" autoCreate="false" mandatory="false"

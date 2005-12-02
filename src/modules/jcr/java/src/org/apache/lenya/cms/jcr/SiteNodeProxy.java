@@ -81,7 +81,7 @@ public class SiteNodeProxy extends AbstractNodeProxy implements SiteNode {
     public ContentNode getContentNode() throws RepositoryException {
         try {
             Node node = getPropertyNode(CONTENT_NODE_PROPERTY);
-            String id = node.getProperty(ContentNodeProxy.ID_PROPERTY).getString();
+            String id = node.getUUID();
             return getSite().getArea().getContent().getNode(id);
         } catch (javax.jcr.RepositoryException e) {
             throw new RepositoryException(e);

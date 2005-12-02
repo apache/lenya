@@ -57,7 +57,8 @@ public interface ContentNode {
     DocumentType getDocumentType() throws RepositoryException;
 
     /**
-     * @return The ID of this node.
+     * @return The ID of this node. The ID is unique among all content nodes in this area.
+     *         Corresponding content nodes in other areas have the same ID.
      * @throws RepositoryException if an error occurs.
      */
     String getNodeId() throws RepositoryException;

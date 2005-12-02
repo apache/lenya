@@ -32,7 +32,7 @@ public class ContentNodeProxy extends AbstractNodeProxy implements ContentNode {
 
     protected static final String NODE_TYPE = "lnt:contentNode";
     protected static final String NODE_NAME = "lenya:contentNode";
-    protected static final String ID_PROPERTY = "lenya:id";
+    protected static final String ID_PROPERTY = "jcr:uuid";
     protected static final String DOCUMENT_TYPE_PROPERTY = "lenya:documentType";
     protected static final String VISIBLE_IN_NAV_PROPERTY = "lenya:visibleInNav";
 
@@ -79,7 +79,7 @@ public class ContentNodeProxy extends AbstractNodeProxy implements ContentNode {
 
     public String getNodeId() throws RepositoryException {
         try {
-            return getNode().getProperty(ID_PROPERTY).getString();
+            return getNode().getUUID();
         } catch (javax.jcr.RepositoryException e) {
             throw new RepositoryException(e);
         }

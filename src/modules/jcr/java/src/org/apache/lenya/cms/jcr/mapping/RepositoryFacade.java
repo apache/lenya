@@ -178,6 +178,31 @@ public class RepositoryFacade {
     }
 
     /**
+     * Adds a node by name without checking for duplicates.
+     * @param parentPath The parent path.
+     * @param primaryNodeType The primary node type of the new node.
+     * @param className The class name.
+     * @param name The name of the node.
+     * @return The created node.
+     * @throws RepositoryException if an error occurs.
+     */
+    public NodeProxy addByNameWithoutCheck(Path parentPath, String primaryNodeType,
+            String className, String name) throws RepositoryException {
+        try {
+            Node parent = getNode(parentPath);
+            Node child = parent.addNode(name, primaryNodeType);
+            child.setProperty(CLASS_PROPERTY, className);
+            NodeProxy proxy = createProxy(child);
+            return proxy;
+        } catch (RepositoryException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RepositoryException(e);
+        }
+
+    }
+
+    /**
      * Adds a node by property.
      * @param parentPath The parent path.
      * @param primaryNodeType The primary node type of the new node.

@@ -119,9 +119,9 @@ public class JCRRepositoryTest extends TestCase {
         Content content = area.getContent();
         Site site = area.getSite();
 
-        ContentNode node1 = content.addNode("hello", doctype);
+        ContentNode node1 = content.addNode(doctype);
         assertNotNull(node1);
-        ContentNode node2 = content.addNode("world", doctype);
+        ContentNode node2 = content.addNode(doctype);
         assertNotNull(node2);
         SiteNode parent = site.addChild("parent", node1);
         SiteNode child = parent.addChild("child", node2);
