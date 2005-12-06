@@ -135,7 +135,27 @@
         <include name="**/*"/>
       </fileset>
     </copy>
-  	
+
+    <!-- now create directory for endorsed libraries -->
+    <mkdir dir="${build.webapp}/WEB-INF/lib/endorsed"/>
+
+    <!-- Copy libraries from ${endorsed.lib.dir} and ${cocoon.endorsed.lib.dir} to ${build.webapp}/WEB-INF/lib/endorsed -->
+    <copy todir="${build.webapp}/WEB-INF/lib/endorsed">
+      <fileset dir="${endorsed.lib.dir}">
+        <include name="**/*"/>
+      </fileset>
+      <fileset dir="${cocoon.endorsed.lib.dir}">
+        <include name="**/*"/>
+      </fileset>
+    </copy>
+
+    <!-- Delete endorsed libraries from common webapp lib directory -->
+    <delete>
+      <fileset dir="${build.webapp}/WEB-INF/lib">
+        <present present="both" targetdir="${cocoon.endorsed.lib.dir}"/>
+      </fileset>
+    </delete>
+
   	<!-- Replace version placeholder with build version -->
   	<replace dir="${build.webapp}">
 	  <include name="**/publication.xml"/>
@@ -213,16 +233,24 @@
       <fileset dir="${build.webapp}" excludes="${target.install.excludes}"/>
     </copy>
 
+    <!-- tomcat 5.0.28 already contains some endorsed libs, but
+         they cause conflicts with lenya's endorsed libs,
+         so we move them to the 'old' directory -->
+    <mkdir dir="${tomcat.endorsed.dir}/old"/>
+    <move todir="${tomcat.endorsed.dir}/old">
+      <fileset dir="${tomcat.endorsed.dir}">
+        <include name="xml-apis.jar"/>
+        <include name="xercesImpl.jar"/>
+      </fileset>
+    </move>
+    
     <!-- Copy endorsed libraries -->
     <copy todir="${tomcat.endorsed.dir}">
-      <fileset dir="${build.webapp}/WEB-INF/lib/">
-        <include name="xercesImpl-*.jar"/>
-        <include name="xalan-*.jar"/>
-        <include name="jakarta-regexp-*.jar"/>
-	<include name="jakarta-bcel-*.jar"/>
+      <fileset dir="${build.webapp}/WEB-INF/lib/endorsed">
+        <include name="*.jar"/>
       </fileset>
     </copy>
-    <copy file="${build.webapp}/WEB-INF/lib/xml-apis.jar" todir="${tomcat.endorsed.dir}"/>
+    
   </target>
 
   <!-- ============================================================ -->
