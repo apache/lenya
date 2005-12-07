@@ -68,7 +68,7 @@ function executeUsecase() {
         var flowHelper = cocoon.getComponent("org.apache.lenya.cms.cocoon.flow.FlowHelper");
         var request = flowHelper.getRequest(cocoon);
         sourceUrl = Packages.org.apache.lenya.util.ServletHelper.getWebappURI(request);
-        
+
         usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
         usecase = usecaseResolver.resolve(sourceUrl, usecaseName);
         usecase.setSourceURL(sourceUrl);
@@ -287,8 +287,7 @@ function executeUsecase() {
             cocoon.releaseComponent(usecaseResolver);
         }
     }
-    
-    var url = request.getContextPath() + targetUrl;
+    var url = flowHelper.getRequest(cocoon).getContextPath() + targetUrl;
 
     if (cocoon.log.isDebugEnabled())
        cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", completed, redirecting to url = [" + url + "]");
