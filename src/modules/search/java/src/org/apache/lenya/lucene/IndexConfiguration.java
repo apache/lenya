@@ -20,10 +20,10 @@ package org.apache.lenya.lucene;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 
@@ -155,9 +155,11 @@ public class IndexConfiguration {
      * @return A string.
      */
     public String resolvePath(String path) {
-        if (path.indexOf(File.separator) == 0) {
-            return path;
+        File pathName = new File(path);
+        if (pathName.isAbsolute()) {
+            return pathName.getAbsolutePath();
+        } else {
+            return FilenameUtils.concat(this.configurationFilePath, path);
         }
-        return FileUtil.catPath(this.configurationFilePath, path);
     }
 }
