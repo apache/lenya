@@ -75,6 +75,21 @@ public class BXE extends DocumentUsecase {
     }
 
     /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
+     */
+    protected void doCheckPreconditions() throws Exception {
+        super.doCheckPreconditions();
+        if (!WorkflowUtil.canInvoke(this.manager,
+                getSession(),
+                getLogger(),
+                getSourceDocument(),
+                getEvent())) {
+            addErrorMessage("error-workflow-document", new String[] { getEvent(),
+                    getSourceDocument().getId() });
+        }
+    }
+
+    /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
     protected Node[] getNodesToLock() throws UsecaseException {

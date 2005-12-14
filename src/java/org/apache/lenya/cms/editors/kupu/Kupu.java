@@ -23,6 +23,7 @@ import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.workflow.WorkflowManager;
 
 /**
@@ -67,6 +68,21 @@ public class Kupu extends DocumentUsecase {
             }
         }
     }
+    /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
+     */
+    protected void doCheckPreconditions() throws Exception {
+        super.doCheckPreconditions();
+        if (!WorkflowUtil.canInvoke(this.manager,
+                getSession(),
+                getLogger(),
+                getSourceDocument(),
+                getEvent())) {
+            addErrorMessage("error-workflow-document", new String[] { getEvent(),
+                    getSourceDocument().getId() });
+        }
+    }
+
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
@@ -76,4 +92,8 @@ public class Kupu extends DocumentUsecase {
         return objects;
     }
 
+    protected String getEvent() {
+        return "edit";
+    }
+    
 }

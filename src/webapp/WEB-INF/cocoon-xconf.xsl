@@ -595,7 +595,7 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
       </exit>
     </component-instance>
 
-    <component-instance name="edit.kupu" logger="lenya.publication"
+    <component-instance name="kupu" logger="lenya.publication"
                         class="org.apache.lenya.cms.editors.kupu.Kupu">
       <transaction policy="pessimistic"/>
       <view template="usecases/edit/kupu/kupu.jx" menu="false"/>
