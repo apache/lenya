@@ -63,10 +63,17 @@ usage()
     exit 1
 }
 
-[ $# -gt 0 ] || usage
+#[ $# -gt 0 ] || usage
 
+DEFAULT_ACTION="servlet"
 ACTION=$1
-shift
+if [ -n "$ACTION" ]
+then
+  shift
+else
+  ACTION=$DEFAULT_ACTION
+  echo "$0: executing default action '$ACTION', use -h to see other actions"
+fi
 ARGS="$*"
 
 # ----- Verify and Set Required Environment Variables -------------------------
