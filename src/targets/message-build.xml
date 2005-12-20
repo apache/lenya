@@ -31,7 +31,7 @@
     <echo message="*      Cocoon (${cocoon.src.dir})"/>
     <echo message="*"/>
     <echo message="* Start using ${Name} with Jetty by typing"/>
-    <echo message="*      Linux/UNIX: ./lenya.sh servlet"/>
+    <echo message="*      Linux/UNIX: ./lenya.sh"/>
     <echo message="*      Windows:      lenya"/>
     <echo message="*"/>
     <echo message="* and browse to "/>
