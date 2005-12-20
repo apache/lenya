@@ -85,4 +85,14 @@ reportlinks = function() {
 }
 
 //  assign reportlinks function to onload
-window.onload = reportlinks;
+
+function addOnLoad(newFunction) { 
+    var oldOnload = window.onload; 
+    if (typeof window.onload != 'function') { 
+      window.onload = newFunction; 
+    } else { 
+      window.onload = function() { oldOnload(); newFunction(); } 
+    } 
+} 
+
+addOnLoad(reportlinks); 
