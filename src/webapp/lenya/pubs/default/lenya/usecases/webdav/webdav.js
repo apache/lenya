@@ -37,6 +37,22 @@ function passRequestParameters(flowHelper, usecase) {
     }
 }
 
+/* Helper method to add all request headers to a usecase */
+function passRequestHeaders(flowHelper, usecase) {
+    var names = cocoon.request.getHeaderNames();
+    while (names.hasMoreElements()) {
+        var name = names.nextElement();
+        var value = flowHelper.getRequest(cocoon).getHeader(name);
+            
+        var string = new Packages.java.lang.String();
+        if (string.getClass().isInstance(value)) {
+            usecase.setParameter("header-"+name, value);
+        }
+        else {
+            usecase.setPart("header-"+name, value);
+        }
+    }
+}
 
 function selectMethod() {
   var page = cocoon.parameters["page"];
@@ -152,6 +168,7 @@ function executeUsecase(usecaseName) {
         view = usecase.getView();
 
         passRequestParameters(flowHelper, usecase);
+        passRequestHeaders(flowHelper, usecase);
         usecase.checkPreconditions();
         usecase.lockInvolvedObjects();
         proxy = new Packages.org.apache.lenya.cms.usecase.UsecaseProxy(usecase);
