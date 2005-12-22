@@ -144,6 +144,10 @@
       <map:match pattern="GET/**">
         <map:act type="set-header">
           <map:parameter name="Last-Modified" value="{page-envelope:document-lastmodified}" />
+          <map:match pattern="GET/**_*.html">
+            <map:generate src="context://lenya/pubs/{page-envelope:publication-id}/content/authoring/{1}/index_{page-envelope:document-language}.xml"/>
+            <map:serialize type="xml-get"/>
+          </map:match>
           <map:match pattern="GET/**.html">
             <map:generate src="context://lenya/pubs/{page-envelope:publication-id}/content/authoring/{1}/index_{page-envelope:document-language}.xml"/>
             <map:serialize type="xml-get"/>
@@ -152,6 +156,13 @@
       </map:match>
 
       <map:match pattern="PROPFIND/**.html">
+        <map:match pattern="PROPFIND/**_*.html">
+          <map:act type="resource-exists" src="context://lenya/pubs/{page-envelope:publication-id}/content/authoring/{1}/index_{page-envelope:document-language}.xml">
+            <map:call function="filePropfind" >
+              <map:parameter name="last-modified" value="{page-envelope:document-lastmodified}"/>
+            </map:call>
+          </map:act>
+        </map:match>
         <map:match pattern="PROPFIND/**.html">
           <map:act type="resource-exists" src="context://lenya/pubs/{page-envelope:publication-id}/content/authoring/{1}/index_{page-envelope:document-language}.xml">
             <map:call function="filePropfind" >
@@ -175,6 +186,14 @@
       </map:match>
 
       <map:match pattern="HEAD/**.html">
+        <map:match pattern="HEAD/**_*.html">
+          <map:act type="resource-exists" src="context://lenya/pubs/{page-envelope:publication-id}/content/authoring/{1}/index_{page-envelope:document-language}.xml">
+            <map:act type="set-header">
+              <map:parameter name="Last-Modified" value="{page-envelope:document-lastmodified}" />
+              <map:call function="filePropfind" />
+            </map:act>
+          </map:act>
+        </map:match>      
         <map:match pattern="HEAD/**.html">
           <map:act type="resource-exists" src="context://lenya/pubs/{page-envelope:publication-id}/content/authoring/{1}/index_{page-envelope:document-language}.xml">
             <map:act type="set-header">
