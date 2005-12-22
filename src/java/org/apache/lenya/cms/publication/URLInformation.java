@@ -85,6 +85,8 @@ public class URLInformation {
 
                 if (this.completeArea.startsWith(Publication.SEARCH_AREA_PREFIX)) {
                     this.area = this.completeArea.substring(Publication.SEARCH_AREA_PREFIX.length());
+                } else if (this.completeArea.equals(Publication.DAV_AREA)) {
+                    this.area = Publication.AUTHORING_AREA;
                 } else {
                     this.area = this.completeArea;
                 }

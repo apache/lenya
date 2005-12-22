@@ -31,6 +31,10 @@ public interface Publication {
      */
     String AUTHORING_AREA = "authoring";
     /**
+     * <code>DAV_AREA</code> The webDAV authoring area
+     */
+    String DAV_AREA = "webdav";
+    /**
      * <code>STAGING_AREA</code> The staging area
      */
     String STAGING_AREA = "staging";

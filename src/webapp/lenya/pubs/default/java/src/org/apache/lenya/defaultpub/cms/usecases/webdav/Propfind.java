@@ -80,6 +80,9 @@ public class Propfind extends SiteUsecase {
             request = request.substring(0, request.indexOf(".html"));
         if (!request.endsWith("/"))
             request = request + "/";
+        if (request.indexOf("webdav") > -1) {
+            request = request.replaceFirst("webdav","authoring");
+        }
         try {
             // get Parameters for RC
             String publicationPath = _publication.getDirectory().getCanonicalPath();
@@ -100,7 +103,7 @@ public class Propfind extends SiteUsecase {
             siteManager = (SiteManager) siteManagerSelector.select(_publication.getSiteManagerHint());
             Document[] documents = siteManager.getDocuments(getDocumentIdentityMap(),
                     _publication,
-                    this.getArea());
+                    Publication.AUTHORING_AREA);
 
             docBuilderSelector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE
                     + "Selector");
@@ -187,8 +190,7 @@ public class Propfind extends SiteUsecase {
      * @return The area without the "info-" prefix.
      */
     public String getArea() {
-        URLInformation info = new URLInformation(getSourceURL());
-        return info.getArea();
+        return Publication.AUTHORING_AREA;
     }
 
     private Publication publication;

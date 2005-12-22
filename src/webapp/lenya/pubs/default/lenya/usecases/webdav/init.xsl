@@ -30,11 +30,11 @@
            </D:response>
 
            <D:response>
-              <D:href>/<xsl:value-of select="$pubid" />/authoring</D:href>
+              <D:href>/<xsl:value-of select="$pubid" />/webdav</D:href>
 
               <D:propstat>
                  <D:prop>
-                    <D:displayname>authoring</D:displayname>
+                    <D:displayname>webdav</D:displayname>
 
                     <D:getlastmodified></D:getlastmodified>
 

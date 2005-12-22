@@ -35,7 +35,7 @@ import org.apache.lenya.cms.repository.Node;
  */
 public class PublicationImpl extends AbstractLogEnabled implements Publication {
 
-    private static final String[] areas = { AUTHORING_AREA, STAGING_AREA, LIVE_AREA, ADMIN_AREA,
+    private static final String[] areas = { AUTHORING_AREA, DAV_AREA, STAGING_AREA, LIVE_AREA, ADMIN_AREA,
             ARCHIVE_AREA, TRASH_AREA };
 
     private String id;
