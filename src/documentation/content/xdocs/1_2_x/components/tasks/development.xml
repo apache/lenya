@@ -28,7 +28,8 @@
      
 </header> 
 <body> 
-
+<section>
+  <title>org.lenya.cms.task.Task</title>
 <p>
 Every task must implement the <code>org.lenya.cms.task.Task</code> interface.
 </p>
@@ -45,11 +46,7 @@ able to access the Lenya CMS directory, even if it is not created by a <code>Tas
 or a <code>TaskJob</code>. Furthermore, if you enter a task in the <code>jobs.xml</code>
 file manually, you won't have to provide a hard-coded <code>servlet-context</code> parameter.
 </p>
-<p>
-<strong>This feature may be subject to changes. If you have any suggestions to improve
-the task implementation, just contact me (Andreas Hartmann) at</strong>
-<a href="mailto:andreas@apache.org">andreas@apache.org</a>.
-</p>
+</section>
 
 </body>
 </document>
