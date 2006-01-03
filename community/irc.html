@@ -1,9 +1,9 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="Apache Forrest" name="Generator">
-<meta name="Forrest-version" content="0.6">
+<meta name="Forrest-version" content="0.8-dev">
 <meta name="Forrest-skin-name" content="pelt">
 <title>Apache Lenya on IRC (Internet Relay Chat)</title>
 <link type="text/css" href="../skin/basic.css" rel="stylesheet">
@@ -49,7 +49,7 @@
     +-->
 <div class="searchbox">
 <form action="http://www.google.com/search" method="get" class="roundtopsmall">
-<input value="lenya.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with :');" value="Search the site with :" size="25" name="q" id="query" type="text">&nbsp; 
+<input value="lenya.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with ');" size="25" name="q" id="query" type="text" value="Search the site with ">&nbsp; 
                     <input name="Search" value="Search" type="submit">
 </form>
 </div>
@@ -87,9 +87,9 @@
 <!--+
     |end Endtabs
     +-->
-<script type="text/javascript" language="JavaScript"><!--
-              document.write("Published: " + document.lastModified);
-              //  --></script>
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
 </div>
 <!--+
     |breadtrail
@@ -108,35 +108,34 @@
 <div onclick="SwitchMenu('menu_selected_1.1', '../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../skin/images/chapter_open.gif');">Community</div>
 <div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
 <div class="menuitem">
-<a title="" href="../community/index.html">Contributing</a>
+<a href="../community/index.html">Contributing</a>
 </div>
 <div class="menuitem">
-<a title="" href="http://wiki.apache.org/lenya/">Lenya Wiki</a>
+<a href="http://wiki.apache.org/lenya/">Lenya Wiki</a>
 </div>
 <div class="menuitem">
-<a title="" href="../community/translations.html">Translations</a>
+<a href="../community/translations.html">Translations</a>
 </div>
 <div class="menuitem">
-<a title="" href="../community/acknowledgements.html">Credits</a>
+<a href="../community/acknowledgements.html">Credits</a>
 </div>
 <div class="menuitem">
-<a title="" href="http://svn.apache.org/viewcvs.cgi/lenya/#dirlist">SVN Web</a>
+<a href="http://svn.apache.org/viewcvs.cgi/lenya/#dirlist">SVN Web</a>
 </div>
 <div class="menuitem">
-<a title="" href="http://issues.apache.org/bugzilla/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&bugidtype=include&bug_id=&changedin=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&product=Lenya&short_desc=&short_desc_type=allwordssubstr&long_desc=&long_desc_type=allwordssubstr&bug_file_loc=&bug_file_loc_type=allwordssubstr&keywords=&keywords_type=anywords&field0-0-0=noop&type0-0-0=noop&value0-0-0=&cmdtype=doit&order=Importance">Bug Tracker</a>
+<a href="http://issues.apache.org/bugzilla/buglist.cgi?bug_status=NEW&bug_status=ASSIGNED&bug_status=REOPENED&email1=&emailtype1=substring&emailassigned_to1=1&email2=&emailtype2=substring&emailreporter2=1&bugidtype=include&bug_id=&changedin=&votes=&chfieldfrom=&chfieldto=Now&chfieldvalue=&product=Lenya&short_desc=&short_desc_type=allwordssubstr&long_desc=&long_desc_type=allwordssubstr&bug_file_loc=&bug_file_loc_type=allwordssubstr&keywords=&keywords_type=anywords&field0-0-0=noop&type0-0-0=noop&value0-0-0=&cmdtype=doit&order=Importance">Bug Tracker</a>
 </div>
 <div class="menuitem">
-<a title="" href="../community/mailing-lists.html">Mailing Lists</a>
+<a href="../community/mailing-lists.html">Mailing Lists</a>
 </div>
 <div class="menupage">
 <div class="menupagetitle">IRC</div>
-<div class="menupageitemgroup"></div>
 </div>
 <div class="menuitem">
-<a title="" href="../community/live-sites.html">Live Sites</a>
+<a href="../community/live-sites.html">Live Sites</a>
 </div>
 <div class="menuitem">
-<a title="" href="../community/website-update.html">Website Update</a>
+<a href="../community/website-update.html">Website Update</a>
 </div>
 </div>
 <div id="credit"></div>
@@ -145,6 +144,7 @@
 <!--+
   |alternative credits
   +-->
+<div id="credit2"></div>
 </div>
 <!--+
     |end Menu
@@ -153,7 +153,6 @@
     |start content
     +-->
 <div id="content">
-<div id="skinconf-txtlink"></div>
 <div title="Portable Document Format" class="pdflink">
 <a class="dida" href="irc.pdf"><img alt="PDF -icon" src="../skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
@@ -188,7 +187,9 @@ document.write("Last Published: " + document.lastModified);
 //  --></script>
 </div>
 <div class="copyright">
- Copyright &copy; 2002-2005 The Apache Software Foundation.</div>
+        Copyright &copy;
+         2002-2005 <a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software Foundation.</a>
+</div>
 <div id="feedback">
     Send feedback about the website to:
   <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A0community/irc.html">dev@lenya.apache.org</a>

@@ -1,9 +1,9 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="Apache Forrest" name="Generator">
-<meta name="Forrest-version" content="0.6">
+<meta name="Forrest-version" content="0.8-dev">
 <meta name="Forrest-skin-name" content="pelt">
 <title>Apache Lenya: License</title>
 <link type="text/css" href="skin/basic.css" rel="stylesheet">
@@ -49,7 +49,7 @@
     +-->
 <div class="searchbox">
 <form action="http://www.google.com/search" method="get" class="roundtopsmall">
-<input value="lenya.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with :');" value="Search the site with :" size="25" name="q" id="query" type="text">&nbsp; 
+<input value="lenya.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with ');" size="25" name="q" id="query" type="text" value="Search the site with ">&nbsp; 
                     <input name="Search" value="Search" type="submit">
 </form>
 </div>
@@ -87,9 +87,9 @@
 <!--+
     |end Endtabs
     +-->
-<script type="text/javascript" language="JavaScript"><!--
-              document.write("Published: " + document.lastModified);
-              //  --></script>
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
 </div>
 <!--+
     |breadtrail
@@ -108,22 +108,22 @@
 <div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Project</div>
 <div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
 <div class="menuitem">
-<a title="" href="index.html">About</a>
+<a href="index.html">About</a>
 </div>
 <div class="menuitem">
-<a title="" href="changes.html">Changes</a>
+<a href="changes.html">Changes</a>
 </div>
 <div class="menuitem">
-<a title="" href="charter.html">Charter</a>
+<a href="charter.html">Charter</a>
 </div>
 <div class="menuitem">
-<a title="" href="history.html">History</a>
+<a href="history.html">History</a>
 </div>
 <div class="menuitem">
-<a title="" href="screenshots.html">Screenshots</a>
+<a href="screenshots.html">Screenshots</a>
 </div>
 <div class="menuitem">
-<a title="" href="roadmap.html">Roadmap</a>
+<a href="roadmap.html">Roadmap</a>
 </div>
 <div class="menupage">
 <div class="menupagetitle">License</div>
@@ -161,10 +161,10 @@
 </div>
 </div>
 <div class="menuitem">
-<a title="" href="resolution.html">Resolution</a>
+<a href="resolution.html">Resolution</a>
 </div>
 <div class="menuitem">
-<a title="" href="related-projects.html">Related Projects</a>
+<a href="related-projects.html">Related Projects</a>
 </div>
 </div>
 <div id="credit"></div>
@@ -173,6 +173,7 @@
 <!--+
   |alternative credits
   +-->
+<div id="credit2"></div>
 </div>
 <!--+
     |end Menu
@@ -181,7 +182,6 @@
     |start content
     +-->
 <div id="content">
-<div id="skinconf-txtlink"></div>
 <div title="Portable Document Format" class="pdflink">
 <a class="dida" href="license.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
@@ -465,7 +465,9 @@ document.write("Last Published: " + document.lastModified);
 //  --></script>
 </div>
 <div class="copyright">
- Copyright &copy; 2002-2005 The Apache Software Foundation.</div>
+        Copyright &copy;
+         2002-2005 <a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software Foundation.</a>
+</div>
 <div id="feedback">
     Send feedback about the website to:
   <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A0license.html">dev@lenya.apache.org</a>

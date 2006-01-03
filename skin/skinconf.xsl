@@ -1,6 +1,7 @@
 <?xml version="1.0"?>
 <!--
-  Copyright 2002-2004 The Apache Software Foundation
+  Copyright 2002-2005 The Apache Software Foundation or its licensors,
+  as applicable.
 
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
@@ -90,7 +91,7 @@
      <xsl:if test="not(color[@name='subheading'])">
       <color name="subheading" value="#E5E4D9"/>
      </xsl:if>
-      <xsl:if test="not(color[@name='published'])">
+      <xsl:if test="not(color[@name='feedback'])">
 		<color name="feedback" value="#4C6C8F" font="#FFFFFF" align="center"/>
      </xsl:if> 
      <xsl:if test="not(color[@name='published'])">

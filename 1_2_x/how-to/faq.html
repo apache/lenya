@@ -1,9 +1,9 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="Apache Forrest" name="Generator">
-<meta name="Forrest-version" content="0.6">
+<meta name="Forrest-version" content="0.8-dev">
 <meta name="Forrest-skin-name" content="pelt">
 <title>Frequently Asked Questions</title>
 <link type="text/css" href="../../skin/basic.css" rel="stylesheet">
@@ -49,7 +49,7 @@
     +-->
 <div class="searchbox">
 <form action="http://www.google.com/search" method="get" class="roundtopsmall">
-<input value="lenya.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with :');" value="Search the site with :" size="25" name="q" id="query" type="text">&nbsp; 
+<input value="lenya.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with ');" size="25" name="q" id="query" type="text" value="Search the site with ">&nbsp; 
                     <input name="Search" value="Search" type="submit">
 </form>
 </div>
@@ -87,9 +87,9 @@
 <!--+
     |end Endtabs
     +-->
-<script type="text/javascript" language="JavaScript"><!--
-              document.write("Published: " + document.lastModified);
-              //  --></script>
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
 </div>
 <!--+
     |breadtrail
@@ -108,45 +108,45 @@
 <div onclick="SwitchMenu('menu_selected_1.1', '../../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../../skin/images/chapter_open.gif');">Version 1.2</div>
 <div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
 <div class="menuitem">
-<a title="" href="../../1_2_x/index.html">Index</a>
+<a href="../../1_2_x/index.html">Index</a>
 </div>
 <div onclick="SwitchMenu('menu_1.1.2', '../../skin/')" id="menu_1.1.2Title" class="menutitle">Installation</div>
 <div id="menu_1.1.2" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../1_2_x/installation/index.html">Download</a>
+<a href="../../1_2_x/installation/index.html">Download</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/installation/subversion.html">Subversion Access</a>
+<a href="../../1_2_x/installation/subversion.html">Subversion Access</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/installation/source_version.html">Install Instructions</a>
+<a href="../../1_2_x/installation/source_version.html">Install Instructions</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.3', '../../skin/')" id="menu_1.1.3Title" class="menutitle">Tutorial</div>
 <div id="menu_1.1.3" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../1_2_x/tutorial/index.html">Introduction</a>
+<a href="../../1_2_x/tutorial/index.html">Introduction</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/tutorial/understanding_lenya.html">1. Understanding Lenya</a>
+<a href="../../1_2_x/tutorial/understanding_lenya.html">1. Understanding Lenya</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/tutorial/installing_lenya.html">2. Installing Lenya</a>
+<a href="../../1_2_x/tutorial/installing_lenya.html">2. Installing Lenya</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/tutorial/anatomy_of_the_pipeline.html">3. Anatomy of the Pipeline</a>
+<a href="../../1_2_x/tutorial/anatomy_of_the_pipeline.html">3. Anatomy of the Pipeline</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/tutorial/editing_in_lenya.html">4. Editing in Lenya</a>
+<a href="../../1_2_x/tutorial/editing_in_lenya.html">4. Editing in Lenya</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/tutorial/custom_navigation.html">5. Custom Navigation in Lenya</a>
+<a href="../../1_2_x/tutorial/custom_navigation.html">5. Custom Navigation in Lenya</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/tutorial/mod_proxy_and_lenya.html">6a. Mod Proxy and Lenya</a>
+<a href="../../1_2_x/tutorial/mod_proxy_and_lenya.html">6a. Mod Proxy and Lenya</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/tutorial/mod_proxy_and_lenya_continued.html">6b. Mod Proxy and Lenya</a>
+<a href="../../1_2_x/tutorial/mod_proxy_and_lenya_continued.html">6b. Mod Proxy and Lenya</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_selected_1.1.4', '../../skin/')" id="menu_selected_1.1.4Title" class="menutitle" style="background-image: url('../../skin/images/chapter_open.gif');">How-To</div>
@@ -308,40 +308,46 @@
 <a title="BXE doesn't let me insert
         a <h1> heading?" href="#BXE+doesn%27t+let+me+insert%0A++++++++a+%3Ch1%3E+heading%3F">BXE doesn't let me ...</a>
 </div>
+<div class="menupageitem">
+<a href="#Customization">Customization</a>
+</div>
+<div class="menupageitem">
+<a title="How to Add Custom Logicsheets?" href="#How+to+Add+Custom+Logicsheets%3F">How to Add Custom L...</a>
 </div>
 </div>
-<div class="menuitem">
-<a title="" href="../../1_2_x/how-to/new_publication.html">New Publication</a>
-</div>
-<div class="menuitem">
-<a title="" href="../../1_2_x/how-to/deploy_publication.html">Deploy Publication</a>
-</div>
-<div class="menuitem">
-<a title="" href="../../1_2_x/how-to/look_and_feel.html">Look and Feel</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/how-to/custom_resourcetype.html">Custom Resource Type</a>
+<a href="../../1_2_x/how-to/new_publication.html">New Publication</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/how-to/new_mime_type.html">Adding Mime Types</a>
+<a href="../../1_2_x/how-to/deploy_publication.html">Deploy Publication</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/how-to/site_navigation.html">Site Navigation</a>
+<a href="../../1_2_x/how-to/look_and_feel.html">Look and Feel</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/how-to/ldap_authentication.html">LDAP Authentication</a>
+<a href="../../1_2_x/how-to/custom_resourcetype.html">Custom Resource Type</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/how-to/cms_menus.html">CMS Menus</a>
+<a href="../../1_2_x/how-to/new_mime_type.html">Adding Mime Types</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/how-to/cms_screens.html">CMS Screens</a>
+<a href="../../1_2_x/how-to/site_navigation.html">Site Navigation</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/how-to/search.html">Search Publications</a>
+<a href="../../1_2_x/how-to/ldap_authentication.html">LDAP Authentication</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/how-to/external_data.html">External Data</a>
+<a href="../../1_2_x/how-to/cms_menus.html">CMS Menus</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/cms_screens.html">CMS Screens</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/search.html">Search Publications</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/external_data.html">External Data</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5', '../../skin/')" id="menu_1.1.5Title" class="menutitle">Components</div>
@@ -349,264 +355,264 @@
 <div onclick="SwitchMenu('menu_1.1.5.1', '../../skin/')" id="menu_1.1.5.1Title" class="menutitle">Access&nbsp;Control</div>
 <div id="menu_1.1.5.1" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/accesscontrol/terms.html">Basic Terms</a>
+<a href="../../1_2_x/components/accesscontrol/terms.html">Basic Terms</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/accesscontrol/accesscontrollers.html">Access&nbsp;Controllers</a>
+<a href="../../1_2_x/components/accesscontrol/accesscontrollers.html">Access&nbsp;Controllers</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/accesscontrol/accesscontrollerresolvers.html">Access Controller Resolvers</a>
+<a href="../../1_2_x/components/accesscontrol/accesscontrollerresolvers.html">Access Controller Resolvers</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/accesscontrol/authenticators.html">Authenticators</a>
+<a href="../../1_2_x/components/accesscontrol/authenticators.html">Authenticators</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/accesscontrol/authorizers.html">Authorizers</a>
+<a href="../../1_2_x/components/accesscontrol/authorizers.html">Authorizers</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/accesscontrol/policymanagers.html">Policies and Policy&nbsp;Managers</a>
+<a href="../../1_2_x/components/accesscontrol/policymanagers.html">Policies and Policy&nbsp;Managers</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/accesscontrol/accreditablemanagers.html">Accreditable&nbsp;Managers</a>
+<a href="../../1_2_x/components/accesscontrol/accreditablemanagers.html">Accreditable&nbsp;Managers</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/accesscontrol/ssl.html">SSL Encryption</a>
+<a href="../../1_2_x/components/accesscontrol/ssl.html">SSL Encryption</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5.2', '../../skin/')" id="menu_1.1.5.2Title" class="menutitle">Authoring</div>
 <div id="menu_1.1.5.2" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/authoring/adding-document-creator.html">Adding a new document creator</a>
+<a href="../../1_2_x/components/authoring/adding-document-creator.html">Adding a new document creator</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/authoring/image-upload.html">Image Upload</a>
+<a href="../../1_2_x/components/authoring/image-upload.html">Image Upload</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/authoring/openoffice.html">OpenOffice</a>
+<a href="../../1_2_x/components/authoring/openoffice.html">OpenOffice</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5.3', '../../skin/')" id="menu_1.1.5.3Title" class="menutitle">Deployment</div>
 <div id="menu_1.1.5.3" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/deployment/proxying.html">Proxying</a>
+<a href="../../1_2_x/components/deployment/proxying.html">Proxying</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5.4', '../../skin/')" id="menu_1.1.5.4Title" class="menutitle">Editors</div>
 <div id="menu_1.1.5.4" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/editors/htmlform.html">HTML Form Editor</a>
+<a href="../../1_2_x/components/editors/htmlform.html">HTML Form Editor</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/editors/1form.html">HTML One Form Editor</a>
+<a href="../../1_2_x/components/editors/1form.html">HTML One Form Editor</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/editors/bxe.html">Bitflux Editor</a>
+<a href="../../1_2_x/components/editors/bxe.html">Bitflux Editor</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/editors/kupu.html">Kupu</a>
+<a href="../../1_2_x/components/editors/kupu.html">Kupu</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/editors/xopus.html">Xopus</a>
+<a href="../../1_2_x/components/editors/xopus.html">Xopus</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5.5', '../../skin/')" id="menu_1.1.5.5Title" class="menutitle">Layout</div>
 <div id="menu_1.1.5.5" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/layout/navigation.html">Navigation</a>
+<a href="../../1_2_x/components/layout/navigation.html">Navigation</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/layout/xhtml-templating.html">XHTML templating</a>
+<a href="../../1_2_x/components/layout/xhtml-templating.html">XHTML templating</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/layout/static-resources.html">Serving static resources</a>
+<a href="../../1_2_x/components/layout/static-resources.html">Serving static resources</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/layout/lenya-menubar.html">Lenya Menubar</a>
+<a href="../../1_2_x/components/layout/lenya-menubar.html">Lenya Menubar</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5.6', '../../skin/')" id="menu_1.1.5.6Title" class="menutitle">Publication</div>
 <div id="menu_1.1.5.6" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/publication/pageenvelopemodule.html">PageEnvelopeModule</a>
+<a href="../../1_2_x/components/publication/pageenvelopemodule.html">PageEnvelopeModule</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/publication/siteTree.html">Site tree</a>
+<a href="../../1_2_x/components/publication/siteTree.html">Site tree</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5.7', '../../skin/')" id="menu_1.1.5.7Title" class="menutitle">Resource&nbsp;Types</div>
 <div id="menu_1.1.5.7" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/resource-types/resource-types.html">Resource&nbsp;Types</a>
+<a href="../../1_2_x/components/resource-types/resource-types.html">Resource&nbsp;Types</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5.8', '../../skin/')" id="menu_1.1.5.8Title" class="menutitle">Revision Control</div>
 <div id="menu_1.1.5.8" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/revisioncontrol/revisioncontroller.html">Revision Controller</a>
+<a href="../../1_2_x/components/revisioncontrol/revisioncontroller.html">Revision Controller</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/revisioncontrol/rcml.html">RCML</a>
+<a href="../../1_2_x/components/revisioncontrol/rcml.html">RCML</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/revisioncontrol/checkin.html">Check In</a>
+<a href="../../1_2_x/components/revisioncontrol/checkin.html">Check In</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/revisioncontrol/checkout.html">Check Out</a>
+<a href="../../1_2_x/components/revisioncontrol/checkout.html">Check Out</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/revisioncontrol/version.html">Revisions</a>
+<a href="../../1_2_x/components/revisioncontrol/version.html">Revisions</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/revisioncontrol/rollback.html">Rollback</a>
+<a href="../../1_2_x/components/revisioncontrol/rollback.html">Rollback</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5.9', '../../skin/')" id="menu_1.1.5.9Title" class="menutitle">Repository</div>
 <div id="menu_1.1.5.9" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/repository/webdav.html">WebDAV Servers</a>
+<a href="../../1_2_x/components/repository/webdav.html">WebDAV Servers</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5.10', '../../skin/')" id="menu_1.1.5.10Title" class="menutitle">Search</div>
 <div id="menu_1.1.5.10" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/search/lucene.html">Searching with Lucene</a>
+<a href="../../1_2_x/components/search/lucene.html">Searching with Lucene</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5.11', '../../skin/')" id="menu_1.1.5.11Title" class="menutitle">URI Handling</div>
 <div id="menu_1.1.5.11" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/uri-handling/URIParametrizer.html">URI Parametrizer</a>
+<a href="../../1_2_x/components/uri-handling/URIParametrizer.html">URI Parametrizer</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/uri-handling/standardURI.html">URI Scheme</a>
+<a href="../../1_2_x/components/uri-handling/standardURI.html">URI Scheme</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/uri-handling/usecases.html">Usecases</a>
+<a href="../../1_2_x/components/uri-handling/usecases.html">Usecases</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5.12', '../../skin/')" id="menu_1.1.5.12Title" class="menutitle">Asset Management</div>
 <div id="menu_1.1.5.12" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/asset-management/management.html">Asset Management</a>
+<a href="../../1_2_x/components/asset-management/management.html">Asset Management</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5.13', '../../skin/')" id="menu_1.1.5.13Title" class="menutitle">Link Management</div>
 <div id="menu_1.1.5.13" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/link-management/link-management.html">Link Management</a>
+<a href="../../1_2_x/components/link-management/link-management.html">Link Management</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5.14', '../../skin/')" id="menu_1.1.5.14Title" class="menutitle">Meta Data</div>
 <div id="menu_1.1.5.14" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/metadata/metadata.html">Meta Data Handling</a>
+<a href="../../1_2_x/components/metadata/metadata.html">Meta Data Handling</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5.15', '../../skin/')" id="menu_1.1.5.15Title" class="menutitle">Multilingual Documents</div>
 <div id="menu_1.1.5.15" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/multilingual/multilingual.html">Multilingual Document Handling</a>
+<a href="../../1_2_x/components/multilingual/multilingual.html">Multilingual Document Handling</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5.16', '../../skin/')" id="menu_1.1.5.16Title" class="menutitle">Tasks</div>
 <div id="menu_1.1.5.16" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/tasks/concept.html">The Task Concept</a>
+<a href="../../1_2_x/components/tasks/concept.html">The Task Concept</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/tasks/defining.html">Defining Tasks</a>
+<a href="../../1_2_x/components/tasks/defining.html">Defining Tasks</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/tasks/taskaction.html">The TaskAction</a>
+<a href="../../1_2_x/components/tasks/taskaction.html">The TaskAction</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/tasks/scheduling.html">Scheduling a Task</a>
+<a href="../../1_2_x/components/tasks/scheduling.html">Scheduling a Task</a>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5.16.5', '../../skin/')" id="menu_1.1.5.16.5Title" class="menutitle">Included tasks</div>
 <div id="menu_1.1.5.16.5" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/tasks/anttask.html">AntTask</a>
+<a href="../../1_2_x/components/tasks/anttask.html">AntTask</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/tasks/publisher.html">DefaultFilePublisher</a>
+<a href="../../1_2_x/components/tasks/publisher.html">DefaultFilePublisher</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/tasks/exporter.html">StaticHTMLExporter</a>
+<a href="../../1_2_x/components/tasks/exporter.html">StaticHTMLExporter</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/tasks/mailtask.html">MailTask</a>
+<a href="../../1_2_x/components/tasks/mailtask.html">MailTask</a>
 </div>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/tasks/development.html">Developing Tasks</a>
+<a href="../../1_2_x/components/tasks/development.html">Developing Tasks</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5.17', '../../skin/')" id="menu_1.1.5.17Title" class="menutitle">Workflow</div>
 <div id="menu_1.1.5.17" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/workflow/terms.html">Terms</a>
+<a href="../../1_2_x/components/workflow/terms.html">Terms</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/workflow/state-machine.html">The State Machine</a>
+<a href="../../1_2_x/components/workflow/state-machine.html">The State Machine</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/workflow/configuration.html">Configuration</a>
+<a href="../../1_2_x/components/workflow/configuration.html">Configuration</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/workflow/implementation.html">Implementation</a>
+<a href="../../1_2_x/components/workflow/implementation.html">Implementation</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5.18', '../../skin/')" id="menu_1.1.5.18Title" class="menutitle">Site Management</div>
 <div id="menu_1.1.5.18" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/sitemanagement/archive.html">Archive</a>
+<a href="../../1_2_x/components/sitemanagement/archive.html">Archive</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/sitemanagement/copy.html">Copy</a>
+<a href="../../1_2_x/components/sitemanagement/copy.html">Copy</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/sitemanagement/deactivate.html">Deactivate</a>
+<a href="../../1_2_x/components/sitemanagement/deactivate.html">Deactivate</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/sitemanagement/delete.html">Delete</a>
+<a href="../../1_2_x/components/sitemanagement/delete.html">Delete</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/sitemanagement/deletetrash.html">Delete the trash</a>
+<a href="../../1_2_x/components/sitemanagement/deletetrash.html">Delete the trash</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/sitemanagement/move.html">Move</a>
+<a href="../../1_2_x/components/sitemanagement/move.html">Move</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/sitemanagement/moveupdown.html">Move Up/Down</a>
+<a href="../../1_2_x/components/sitemanagement/moveupdown.html">Move Up/Down</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/sitemanagement/rename.html">Rename</a>
+<a href="../../1_2_x/components/sitemanagement/rename.html">Rename</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/components/sitemanagement/restore.html">Restore</a>
+<a href="../../1_2_x/components/sitemanagement/restore.html">Restore</a>
 </div>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.6', '../../skin/')" id="menu_1.1.6Title" class="menutitle">Miscellaneous</div>
 <div id="menu_1.1.6" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../1_2_x/misc/namespaces.html">Namespaces</a>
+<a href="../../1_2_x/misc/namespaces.html">Namespaces</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/misc/coding-guidelines.html">Coding Guidelines</a>
+<a href="../../1_2_x/misc/coding-guidelines.html">Coding Guidelines</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/misc/reserved_names.html">Reserved Names</a>
+<a href="../../1_2_x/misc/reserved_names.html">Reserved Names</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/misc/unittests.html">Unit Tests</a>
+<a href="../../1_2_x/misc/unittests.html">Unit Tests</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../1_2_x/misc/xinclude-processor.html">XInclude Processor</a>
+<a href="../../1_2_x/misc/xinclude-processor.html">XInclude Processor</a>
 </div>
 </div>
 <div class="menuitem">
-<a title="" href="../../../apidocs/1.2/index.html">1.2 API (Javadoc)</a>
+<a href="../../../apidocs/1.2/index.html">1.2 API (Javadoc)</a>
 </div>
 </div>
 <div id="credit"></div>
@@ -615,6 +621,7 @@
 <!--+
   |alternative credits
   +-->
+<div id="credit2"></div>
 </div>
 <!--+
     |end Menu
@@ -623,7 +630,6 @@
     |start content
     +-->
 <div id="content">
-<div id="skinconf-txtlink"></div>
 <div title="Portable Document Format" class="pdflink">
 <a class="dida" href="faq.pdf"><img alt="PDF -icon" src="../../skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
@@ -910,13 +916,27 @@
 </ol>
           
 </li>
-        
+         
+<li>
+           
+<a href="#customization">Customization</a> 
+           
+<ol>
+             
+<li>
+<a href="#customlogicsheets">How to Add Custom Logicsheets?</a>
+</li>
+           
+</ol>
+         
+</li>
+       
 </ol>
 
-<a name="N1011A"></a><a name="Errors"></a>
+<a name="N10129"></a><a name="Errors"></a>
 <h2 class="h3">Errors</h2>
 <div class="section"></div>
-<a name="N10120"></a><a name="I+get+an+error+or+an%0A++++++++exception%2C+where+can+I+look+at%2C+what+should+I+do%3F"></a>
+<a name="N1012F"></a><a name="I+get+an+error+or+an%0A++++++++exception%2C+where+can+I+look+at%2C+what+should+I+do%3F"></a>
 <h2 class="h3">I get an error or an
         exception, where can I look at, what should I do?</h2>
 <div class="section">
@@ -991,11 +1011,11 @@
         
 </ol>
 </div>
-<a name="N1016B"></a><a name="General+Lenya%0A++++++++capabilities"></a>
+<a name="N1017A"></a><a name="General+Lenya%0A++++++++capabilities"></a>
 <h2 class="h3">General Lenya
         capabilities</h2>
 <div class="section"></div>
-<a name="N10171"></a><a name="Can+a+local+Lenya+instance%0A++++++++generate+a+site+that+is+deployed+on+a+remote+hosting+service%3F"></a>
+<a name="N10180"></a><a name="Can+a+local+Lenya+instance%0A++++++++generate+a+site+that+is+deployed+on+a+remote+hosting+service%3F"></a>
 <h2 class="h3">Can a local Lenya instance
         generate a site that is deployed on a remote hosting service?</h2>
 <div class="section">
@@ -1026,17 +1046,17 @@
         CLI</a> as there may be some issues with the StaticHTMLExporter, or to call WGet
         directly outside of lenya.</p>
 </div>
-<a name="N10198"></a><a name="Installation%2C+Setup%2C%0A++++++++Virtual+hosts+etc."></a>
+<a name="N101A7"></a><a name="Installation%2C+Setup%2C%0A++++++++Virtual+hosts+etc."></a>
 <h2 class="h3">Installation, Setup,
         Virtual hosts etc.</h2>
 <div class="section"></div>
-<a name="N1019E"></a><a name="I+have+already+deployed%0A++++++++cocoon+in+my+servlet+engine.+Can+I+install+Lenya+in+parallel%3F"></a>
+<a name="N101AD"></a><a name="I+have+already+deployed%0A++++++++cocoon+in+my+servlet+engine.+Can+I+install+Lenya+in+parallel%3F"></a>
 <h2 class="h3">I have already deployed
         cocoon in my servlet engine. Can I install Lenya in parallel?</h2>
 <div class="section">
 <p>Yes you can.</p>
 </div>
-<a name="N101A7"></a><a name="Can+lenya+be+integrated%0A++++++++into+a+virtual+hosting+environment%3F"></a>
+<a name="N101B6"></a><a name="Can+lenya+be+integrated%0A++++++++into+a+virtual+hosting+environment%3F"></a>
 <h2 class="h3">Can lenya be integrated
         into a virtual hosting environment?</h2>
 <div class="section">
@@ -1044,7 +1064,7 @@
         webserver with mod_proxy and then connect the various "URL prefixes" to the
         various other servers. See the <a href="../../1_2_x/tutorial/mod_proxy_and_lenya.html">Mod Proxy tutorial</a> for reference.</p>
 </div>
-<a name="N101B4"></a><a name="Do+I+need+to+create+a%0A++++++++Lenya+install+for+each+virtual+server%3F"></a>
+<a name="N101C3"></a><a name="Do+I+need+to+create+a%0A++++++++Lenya+install+for+each+virtual+server%3F"></a>
 <h2 class="h3">Do I need to create a
         Lenya install for each virtual server?</h2>
 <div class="section">
@@ -1053,14 +1073,14 @@
         
 </p>
 </div>
-<a name="N101BF"></a><a name="Is+there+a+way+to+create%0A++++++++multiple+sites+accessible+via+various+methods+of+access+control+%28based+on+who%0A++++++++owns+them%29%3F"></a>
+<a name="N101CE"></a><a name="Is+there+a+way+to+create%0A++++++++multiple+sites+accessible+via+various+methods+of+access+control+%28based+on+who%0A++++++++owns+them%29%3F"></a>
 <h2 class="h3">Is there a way to create
         multiple sites accessible via various methods of access control (based on who
         owns them)?</h2>
 <div class="section">
 <p>Yes, with the Lenya access control framework this is no problem.</p>
 </div>
-<a name="N101C8"></a><a name="How+do+I+enable+email%0A++++++++notifications%3F"></a>
+<a name="N101D7"></a><a name="How+do+I+enable+email%0A++++++++notifications%3F"></a>
 <h2 class="h3">How do I enable email
         notifications?</h2>
 <div class="section">
@@ -1068,17 +1088,17 @@
 <p>Set the property in pubname/config/tasks/targets.xml to your smtp server
         &lt;property name="mail.mailhost" value="localhost"/&gt;</p>
 </div>
-<a name="N101D4"></a><a name="Running+Lenya"></a>
+<a name="N101E3"></a><a name="Running+Lenya"></a>
 <h2 class="h3">Running Lenya</h2>
 <div class="section"></div>
-<a name="N101DA"></a><a name="Lenya+CMS+ui+tabs+are+not%0A++++++++displayed%2C+whats+wrong%3F"></a>
+<a name="N101E9"></a><a name="Lenya+CMS+ui+tabs+are+not%0A++++++++displayed%2C+whats+wrong%3F"></a>
 <h2 class="h3">Lenya CMS ui tabs are not
         displayed, whats wrong?</h2>
 <div class="section">
 <p>As of Lenya 1.2, this is no longer a problem. It used to be a problem with
         Xalan.</p>
 </div>
-<a name="N101E3"></a><a name="I+can%27t+run+the+lenya.sh%0A++++++++script+in+a+linux+shell."></a>
+<a name="N101F2"></a><a name="I+can%27t+run+the+lenya.sh%0A++++++++script+in+a+linux+shell."></a>
 <h2 class="h3">I can't run the lenya.sh
         script in a linux shell.</h2>
 <div class="section">
@@ -1106,7 +1126,7 @@
 </ul>
 <p>...and lenya will work like a charm </p>
 </div>
-<a name="N10204"></a><a name="Why+do+I+get+an+%22illegal%0A++++++++cookie%22+warning+with+all+the+lenya+reference+sites+using+Opera%3F"></a>
+<a name="N10213"></a><a name="Why+do+I+get+an+%22illegal%0A++++++++cookie%22+warning+with+all+the+lenya+reference+sites+using+Opera%3F"></a>
 <h2 class="h3">Why do I get an "illegal
         cookie" warning with all the lenya reference sites using Opera?</h2>
 <div class="section">
@@ -1114,7 +1134,7 @@
         publication does conflict with the cookie-path, Opera will (rightfully)
         complain.</p>
 </div>
-<a name="N10210"></a><a name="I+get+a%0A++++++++%7B%7B%7Bjava.net.URISyntaxException%7D%7D%7D+error%3A"></a>
+<a name="N1021F"></a><a name="I+get+a%0A++++++++%7B%7B%7Bjava.net.URISyntaxException%7D%7D%7D+error%3A"></a>
 <h2 class="h3">I get a
         {{{java.net.URISyntaxException}}} error:</h2>
 <div class="section">
@@ -1126,7 +1146,7 @@ file:/D:/build/Tomcat 4.1/webapps/lenya/lenya/pubs/blog/config/ac/passwd/
         Installation Instructions</a>
 </p>
 </div>
-<a name="N10220"></a><a name="How+can+I+create+new%0A++++++++users%3F"></a>
+<a name="N1022F"></a><a name="How+can+I+create+new%0A++++++++users%3F"></a>
 <h2 class="h3">How can I create new
         users?</h2>
 <div class="section">
@@ -1134,7 +1154,7 @@ file:/D:/build/Tomcat 4.1/webapps/lenya/lenya/pubs/blog/config/ac/passwd/
         you'll see a link for users. You can then add new users and delete existing
         ones.</p>
 </div>
-<a name="N10229"></a><a name="When+using+Lenya%2C+a+blank%0A++++++++page+occurs."></a>
+<a name="N10238"></a><a name="When+using+Lenya%2C+a+blank%0A++++++++page+occurs."></a>
 <h2 class="h3">When using Lenya, a blank
         page occurs.</h2>
 <div class="section">
@@ -1142,7 +1162,7 @@ file:/D:/build/Tomcat 4.1/webapps/lenya/lenya/pubs/blog/config/ac/passwd/
         the log files of your servlet container (Tomcat) or the command line if logging
         is not enabled.</p>
 </div>
-<a name="N10232"></a><a name="I+get+a+%22Connection+timed%0A++++++++out%22+errors+such+as+%22org.apache.cocoon.ProcessingException%3A+Unable+to+get%0A++++++++transformer+handler+for+cocoon%3A%2F%2Fscheduler%2Fdefault%2Fxxx%22"></a>
+<a name="N10241"></a><a name="I+get+a+%22Connection+timed%0A++++++++out%22+errors+such+as+%22org.apache.cocoon.ProcessingException%3A+Unable+to+get%0A++++++++transformer+handler+for+cocoon%3A%2F%2Fscheduler%2Fdefault%2Fxxx%22"></a>
 <h2 class="h3">I get a "Connection timed
         out" errors such as "org.apache.cocoon.ProcessingException: Unable to get
         transformer handler for cocoon://scheduler/default/xxx"</h2>
@@ -1150,11 +1170,11 @@ file:/D:/build/Tomcat 4.1/webapps/lenya/lenya/pubs/blog/config/ac/passwd/
 <p>Make sure your machine can get a connection to itself under all its hostnames.
         Test by pinging all hostnames. Edit your hosts file if necessary.</p>
 </div>
-<a name="N1023B"></a><a name="Document+Types+%28short%3A%0A++++++++Doctypes%29"></a>
+<a name="N1024A"></a><a name="Document+Types+%28short%3A%0A++++++++Doctypes%29"></a>
 <h2 class="h3">Document Types (short:
         Doctypes)</h2>
 <div class="section"></div>
-<a name="N10241"></a><a name="Where+can+I+find%0A++++++++lenya-documentation+about+the+exact+meaning+of%3A"></a>
+<a name="N10250"></a><a name="Where+can+I+find%0A++++++++lenya-documentation+about+the+exact+meaning+of%3A"></a>
 <h2 class="h3">Where can I find
         lenya-documentation about the exact meaning of:</h2>
 <div class="section">
@@ -1194,13 +1214,13 @@ file:/D:/build/Tomcat 4.1/webapps/lenya/lenya/pubs/blog/config/ac/passwd/
 <p>see <a href="../../1_2_x/components/publication/pageenvelopemodule.html">Page envelope module</a>
 </p>
 </div>
-<a name="N1026E"></a><a name="How+to+create+a+new%0A++++++++document+type%3F"></a>
+<a name="N1027D"></a><a name="How+to+create+a+new%0A++++++++document+type%3F"></a>
 <h2 class="h3">How to create a new
         document type?</h2>
 <div class="section">
 <p>See <a href="../../1_2_x/how-to/custom_resourcetype.html">Adding Custom Resource Type</a>.</p>
 </div>
-<a name="N1027B"></a><a name="How+to+to+use+my+own+Relax%0A++++++++NG+schema+for+editing+documents+with+Bitflux+in+Lenya%3F"></a>
+<a name="N1028A"></a><a name="How+to+to+use+my+own+Relax%0A++++++++NG+schema+for+editing+documents+with+Bitflux+in+Lenya%3F"></a>
 <h2 class="h3">How to to use my own Relax
         NG schema for editing documents with Bitflux in Lenya?</h2>
 <div class="section">
@@ -1220,10 +1240,10 @@ file:/D:/build/Tomcat 4.1/webapps/lenya/lenya/pubs/blog/config/ac/passwd/
         
 </ul>
 </div>
-<a name="N10290"></a><a name="File-upload"></a>
+<a name="N1029F"></a><a name="File-upload"></a>
 <h2 class="h3">File-upload</h2>
 <div class="section"></div>
-<a name="N10296"></a><a name="How+can+I+Upload+XML%0A++++++++Files%3F"></a>
+<a name="N102A5"></a><a name="How+can+I+Upload+XML%0A++++++++Files%3F"></a>
 <h2 class="h3">How can I Upload XML
         Files?</h2>
 <div class="section">
@@ -1232,11 +1252,11 @@ file:/D:/build/Tomcat 4.1/webapps/lenya/lenya/pubs/blog/config/ac/passwd/
 <p>There is the one form editor (a big text area to edit XML in). Another
         possibility is to use WebDAV to import XML files.</p>
 </div>
-<a name="N102A2"></a><a name="Compliance+to%0A++++++++standards"></a>
+<a name="N102B1"></a><a name="Compliance+to%0A++++++++standards"></a>
 <h2 class="h3">Compliance to
         standards</h2>
 <div class="section"></div>
-<a name="N102A8"></a><a name="How+to+port+the+default%0A++++++++pub+to+XHTML%3F"></a>
+<a name="N102B7"></a><a name="How+to+port+the+default%0A++++++++pub+to+XHTML%3F"></a>
 <h2 class="h3">How to port the default
         pub to XHTML?</h2>
 <div class="section">
@@ -1245,10 +1265,10 @@ file:/D:/build/Tomcat 4.1/webapps/lenya/lenya/pubs/blog/config/ac/passwd/
 <p>The final serialization done in pipeline is to HTML (publication-sitemap.xmap
         line 154 ATM). You can change it to XHTML there.</p>
 </div>
-<a name="N102B4"></a><a name="Revision+Control"></a>
+<a name="N102C3"></a><a name="Revision+Control"></a>
 <h2 class="h3">Revision Control</h2>
 <div class="section"></div>
-<a name="N102BA"></a><a name="How+do+I+break+a+lock+on+a%0A++++++++document%3F"></a>
+<a name="N102C9"></a><a name="How+do+I+break+a+lock+on+a%0A++++++++document%3F"></a>
 <h2 class="h3">How do I break a lock on a
         document?</h2>
 <div class="section">
@@ -1267,7 +1287,7 @@ file:/D:/build/Tomcat 4.1/webapps/lenya/lenya/pubs/blog/config/ac/passwd/
 <p>if the most recent (the ones on top) are CheckOut and no corresponding CheckIn
         you have a lock. you can break the lock by removing the CheckOut line.</p>
 </div>
-<a name="N102CD"></a><a name="Background%3A"></a>
+<a name="N102DC"></a><a name="Background%3A"></a>
 <h2 class="h3">Background:</h2>
 <div class="section">
 <p>If you edit a document, it gets checked out. This means you telling lenya that
@@ -1280,10 +1300,10 @@ file:/D:/build/Tomcat 4.1/webapps/lenya/lenya/pubs/blog/config/ac/passwd/
         "alice" with password "levi". Try to open the document (e.g. with the forms
         editor) and hit CANCEL. Then it should be checked-in again.</p>
 </div>
-<a name="N102D6"></a><a name="Edit+documents"></a>
+<a name="N102E5"></a><a name="Edit+documents"></a>
 <h2 class="h3">Edit documents</h2>
 <div class="section"></div>
-<a name="N102DC"></a><a name="How+can+I+delete+a%0A++++++++document%3F"></a>
+<a name="N102EB"></a><a name="How+can+I+delete+a%0A++++++++document%3F"></a>
 <h2 class="h3">How can I delete a
         document?</h2>
 <div class="section">
@@ -1307,10 +1327,10 @@ file:/D:/build/Tomcat 4.1/webapps/lenya/lenya/pubs/blog/config/ac/passwd/
         
 </ol>
 </div>
-<a name="N102F6"></a><a name="Asset+management"></a>
+<a name="N10305"></a><a name="Asset+management"></a>
 <h2 class="h3">Asset management</h2>
 <div class="section"></div>
-<a name="N102FC"></a><a name="Asset+upload+does+not%0A++++++++work.+How+do+I+enable+asset+uploads%3F"></a>
+<a name="N1030B"></a><a name="Asset+upload+does+not%0A++++++++work.+How+do+I+enable+asset+uploads%3F"></a>
 <h2 class="h3">Asset upload does not
         work. How do I enable asset uploads?</h2>
 <div class="section">
@@ -1318,10 +1338,10 @@ file:/D:/build/Tomcat 4.1/webapps/lenya/lenya/pubs/blog/config/ac/passwd/
         param-value to "true". This is also a build option you can set in
         local.build.properties.</p>
 </div>
-<a name="N10305"></a><a name="Fallback"></a>
+<a name="N10314"></a><a name="Fallback"></a>
 <h2 class="h3">Fallback</h2>
 <div class="section"></div>
-<a name="N1030B"></a><a name="How+can+I+provide+a%0A++++++++different+authoring+login+page+for+my+publication%3F"></a>
+<a name="N1031A"></a><a name="How+can+I+provide+a%0A++++++++different+authoring+login+page+for+my+publication%3F"></a>
 <h2 class="h3">How can I provide a
         different authoring login page for my publication?</h2>
 <div class="section">
@@ -1338,26 +1358,49 @@ file:/D:/build/Tomcat 4.1/webapps/lenya/lenya/pubs/blog/config/ac/passwd/
 <p>And now write your alternative login.xsl in the publication filesystem, under
         config/ac (webapps/lenya/lenya/pubs/[pubName]/config/ac)</p>
 </div>
-<a name="N1031B"></a><a name="Internationalization%0A++++++++%28i18n%29"></a>
+<a name="N1032A"></a><a name="Internationalization%0A++++++++%28i18n%29"></a>
 <h2 class="h3">Internationalization
         (i18n)</h2>
 <div class="section"></div>
-<a name="N10321"></a><a name="How+do+I+switch+the%0A++++++++default+language+for+an+existing+publication%3F"></a>
+<a name="N10330"></a><a name="How+do+I+switch+the%0A++++++++default+language+for+an+existing+publication%3F"></a>
 <h2 class="h3">How do I switch the
         default language for an existing publication?</h2>
 <div class="section">
 <p>Go to <em>lenya/pubs/&lt;youpubname&gt;/config/publication.xconf</em> and move
         the <em>default="true"</em> attribute to your default language.</p>
 </div>
-<a name="N10330"></a><a name="Editors"></a>
+<a name="N1033F"></a><a name="Editors"></a>
 <h2 class="h3">Editors</h2>
 <div class="section"></div>
-<a name="N10336"></a><a name="BXE+doesn%27t+let+me+insert%0A++++++++a+%3Ch1%3E+heading%3F"></a>
+<a name="N10345"></a><a name="BXE+doesn%27t+let+me+insert%0A++++++++a+%3Ch1%3E+heading%3F"></a>
 <h2 class="h3">BXE doesn't let me insert
         a &lt;h1&gt; heading?</h2>
 <div class="section">
 <p>This is a setting in <em>lenya/lenya/resources/misc/bxeng/contextmenu.xml</em>
         - all tags appearing there cannot be inserted by the BXE popup menu.</p>
+</div>
+        
+<a name="N10352"></a><a name="Customization"></a>
+<h2 class="h3">Customization</h2>
+<div class="section"></div>
+        
+<a name="N1035A"></a><a name="How+to+Add+Custom+Logicsheets%3F"></a>
+<h2 class="h3">How to Add Custom Logicsheets?</h2>
+<div class="section">
+<p>Custom logicsheets can be put in <span class="codefrag">&lt;yourpub&gt;/java/src</span>.</p>
+<p>You have to add a patch file for <span class="codefrag">cocoon.xconf</span>, for instance <span class="codefrag">&lt;yourpub&gt;/config/logicsheets.xconf</span>:</p>
+<pre class="code">&lt;xconf xpath="/cocoon/markup-languages/xsp-language/target-language[@name = 'java']"
+       unless="/cocoon/markup-languages/xsp-language/target-language[@name = 'java']/builtin-logicsheet[parameter[@name = 'prefix' and @value = 'mylogicsheet']]"&gt;
+
+  &lt;builtin-logicsheet&gt;
+    &lt;parameter name="prefix" value="mylogicsheet"/&gt;
+    &lt;parameter name="uri" value="http://foo/bar/mylogicsheet"/&gt;
+    &lt;parameter name="href" value="resource://org/myproject/mylogicsheet.xsl"/&gt;
+  &lt;/builtin-logicsheet&gt;
+
+  ... (more logicsheets)
+
+&lt;/xconf&gt;</pre>
 </div>
    
 </div>
@@ -1376,7 +1419,9 @@ document.write("Last Published: " + document.lastModified);
 //  --></script>
 </div>
 <div class="copyright">
- Copyright &copy; 2002-2005 The Apache Software Foundation.</div>
+        Copyright &copy;
+         2002-2005 <a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software Foundation.</a>
+</div>
 <div id="feedback">
     Send feedback about the website to:
   <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A01_2_x/how-to/faq.html">dev@lenya.apache.org</a>

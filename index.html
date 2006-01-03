@@ -1,9 +1,9 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="Apache Forrest" name="Generator">
-<meta name="Forrest-version" content="0.6">
+<meta name="Forrest-version" content="0.8-dev">
 <meta name="Forrest-skin-name" content="pelt">
 <title>Apache Lenya - Open Source Content Management (Java/XML)</title>
 <link type="text/css" href="skin/basic.css" rel="stylesheet">
@@ -49,7 +49,7 @@
     +-->
 <div class="searchbox">
 <form action="http://www.google.com/search" method="get" class="roundtopsmall">
-<input value="lenya.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with :');" value="Search the site with :" size="25" name="q" id="query" type="text">&nbsp; 
+<input value="lenya.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with ');" size="25" name="q" id="query" type="text" value="Search the site with ">&nbsp; 
                     <input name="Search" value="Search" type="submit">
 </form>
 </div>
@@ -87,9 +87,9 @@
 <!--+
     |end Endtabs
     +-->
-<script type="text/javascript" language="JavaScript"><!--
-              document.write("Published: " + document.lastModified);
-              //  --></script>
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
 </div>
 <!--+
     |breadtrail
@@ -119,43 +119,47 @@
 <div class="menupageitem">
 <a title="
 				Features
-			" href="#%0A%09%09%09%09">
+			" href="#">
 				Features
 			...</a>
 </div>
 </div>
 </div>
 <div class="menuitem">
-<a title="" href="changes.html">Changes</a>
+<a href="changes.html">Changes</a>
 </div>
 <div class="menuitem">
-<a title="" href="charter.html">Charter</a>
+<a href="charter.html">Charter</a>
 </div>
 <div class="menuitem">
-<a title="" href="history.html">History</a>
+<a href="history.html">History</a>
 </div>
 <div class="menuitem">
-<a title="" href="screenshots.html">Screenshots</a>
+<a href="screenshots.html">Screenshots</a>
 </div>
 <div class="menuitem">
-<a title="" href="roadmap.html">Roadmap</a>
+<a href="roadmap.html">Roadmap</a>
 </div>
 <div class="menuitem">
-<a title="" href="license.html">License</a>
+<a href="license.html">License</a>
 </div>
 <div class="menuitem">
-<a title="" href="resolution.html">Resolution</a>
+<a href="resolution.html">Resolution</a>
 </div>
 <div class="menuitem">
-<a title="" href="related-projects.html">Related Projects</a>
+<a href="related-projects.html">Related Projects</a>
 </div>
 </div>
-<div id="credit"><a href="http://apachecon.com/"><img title="ApacheCon Europe 2005" alt="ApacheCon Europe 2005 - logo" src="http://apache.org/images/ac2005eu_135x50.gif" style="width: 135px; height: 50px;" border="0"></a></div>
+<div id="credit">
+<hr>
+<a href="http://forrest.apache.org/"><img border="0" title="Built with Apache Forrest" alt="Built with Apache Forrest - logo" src="images/built-with-forrest-button.png" style="width: 88px;height: 31px;"></a>
+</div>
 <div id="roundbottom">
 <img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
 <!--+
   |alternative credits
   +-->
+<div id="credit2"></div>
 </div>
 <!--+
     |end Menu
@@ -164,7 +168,6 @@
     |start content
     +-->
 <div id="content">
-<div id="skinconf-txtlink"></div>
 <div title="Portable Document Format" class="pdflink">
 <a class="dida" href="index.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
@@ -187,7 +190,7 @@ Please see some <a href="screenshots.html">screenshots</a> or try the <a href="h
 18-22 July 2005)</li>
         
 <li>
-<a href="1_2/installation/index.html">Lenya 1.2.4 released</a> (June 25, 2005)</li>
+<a href="1_2_x/installation/index.html">Lenya 1.2.4 released</a> (June 25, 2005)</li>
         
 <li>
 <a href="1_4/installation/index.html">Lenya 1.4alpha1 released</a> (June 12, 2005)</li>
@@ -228,14 +231,14 @@ Please see some <a href="screenshots.html">screenshots</a> or try the <a href="h
 </div>
 		
 		
-<a name="N100B4"></a><a name="%0A%09%09%09%09"></a>
+<a name="N100B4"></a>
 <h2 class="h3">
 				Features
 			</h2>
 <div class="section">
 <p>If you have additional requirements beyond the 
 features listed below, you have access to all <a href="http://cocoon.apache.org/2.1/features.html">Apache Cocoon features</a> to develop them.</p>
-<a name="N100C4"></a><a name="%0A%09%09%09%09-N100C4"></a>
+<a name="N100C4"></a><a name="-N100C4"></a>
 <h3 class="h4">
 				Authoring
 			</h3>
@@ -260,7 +263,7 @@ and link management are integrated into BXE and Kupu.
 </li>
 		 
 </ul>
-<a name="N100E5"></a><a name="%0A%09%09%09%09-N100E5"></a>
+<a name="N100E5"></a><a name="-N100E5"></a>
 <h3 class="h4">
 				Workflow
 			</h3>
@@ -281,7 +284,7 @@ and link management are integrated into BXE and Kupu.
 </li>
 
 </ul>
-<a name="N100FE"></a><a name="%0A%09%09%09%09-N100FE"></a>
+<a name="N100FE"></a><a name="-N100FE"></a>
 <h3 class="h4">
 				Internationalization
 			</h3>
@@ -295,7 +298,7 @@ and link management are integrated into BXE and Kupu.
 </li>
 
 </ul>
-<a name="N10111"></a><a name="%0A%09%09%09%09-N10111"></a>
+<a name="N10111"></a><a name="-N10111"></a>
 <h3 class="h4">
 				Layout
 			</h3>
@@ -323,7 +326,7 @@ and link management are integrated into BXE and Kupu.
 </li>
 
 </ul>
-<a name="N1012D"></a><a name="%0A%09%09%09%09-N1012D"></a>
+<a name="N1012D"></a><a name="-N1012D"></a>
 <h3 class="h4">
 				Site Management
 			</h3>
@@ -367,7 +370,7 @@ and link management are integrated into BXE and Kupu.
 </li>
 
 </ul>
-<a name="N10158"></a><a name="%0A%09%09%09%09-N10158"></a>
+<a name="N10158"></a><a name="-N10158"></a>
 <h3 class="h4">
 				Security
 			</h3>
@@ -390,7 +393,7 @@ and link management are integrated into BXE and Kupu.
 </li>
 
 </ul>
-<a name="N10171"></a><a name="%0A%09%09%09%09-N10171"></a>
+<a name="N10171"></a><a name="-N10171"></a>
 <h3 class="h4">
 				Misc
 			</h3>
@@ -404,7 +407,7 @@ and link management are integrated into BXE and Kupu.
 </li>
 
 </ul>
-<a name="N10184"></a><a name="%0A%09%09%09%09-N10184"></a>
+<a name="N10184"></a><a name="-N10184"></a>
 <h3 class="h4">
 				Under the Hood
 			</h3>
@@ -446,7 +449,9 @@ document.write("Last Published: " + document.lastModified);
 //  --></script>
 </div>
 <div class="copyright">
- Copyright &copy; 2002-2005 The Apache Software Foundation.</div>
+        Copyright &copy;
+         2002-2005 <a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software Foundation.</a>
+</div>
 <div id="logos"></div>
 <div id="feedback">
     Send feedback about the website to:

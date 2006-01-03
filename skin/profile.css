@@ -34,10 +34,6 @@ a.external  {
 	background-image: url(images/external-link.gif);
 }
   
-  
-    
-
-  
 #top          { background-color: #ffffff;}  
  
 #top .header .current { background-color: #E5E4D9;} 
@@ -97,10 +93,10 @@ background-color: #CFDCED;
 color: #000000;
 } 
 #menu .menupageitem a:link {  color: #0000ff;} 
-#menu .menupageitem a:visited {  color: #0000ff;} 
+#menu .menupageitem a:visited {  color: #009999;} 
 #menu .menupageitem a:hover {  
 background-color: #CFDCED;
-color: #0000ff;
+color: #6587ff;
 }
 
 body{ 
@@ -108,8 +104,8 @@ background-color: #ffffff;
 color: #000000;
 } 
 a:link { color:#0000ff} 
-a:visited { color:#0000ff} 
-a:hover { color:#0000ff} 
+a:visited { color:#009999} 
+a:hover { color:#6587ff} 
 
  
 .ForrestTable      { background-color: #ccc;} 
@@ -127,6 +123,15 @@ a:hover { color:#0000ff}
 .code         { border-color: #003366;} 
  
 #footer       { background-color: #E5E4D9;} 
+    
+#feedback {
+color: #FFFFFF;
+background: #4C6C8F;
+text-align: center;
+}
+#feedback #feedbackto {
+color: #FFFFFF;
+}   
 
 #menu h1 {
 color: #000000;
@@ -137,3 +142,8 @@ background-color: #cfdced;
 background-color: #E5E4D9 ;
 color: #000000; 
 } 
+/* extra-css */
+  
+    
+
+  

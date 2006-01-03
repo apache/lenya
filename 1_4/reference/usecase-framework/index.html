@@ -1,9 +1,9 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta content="Apache Forrest" name="Generator">
-<meta name="Forrest-version" content="0.6">
+<meta name="Forrest-version" content="0.8-dev">
 <meta name="Forrest-skin-name" content="pelt">
 <title>The Usecase Framework</title>
 <link type="text/css" href="../../../skin/basic.css" rel="stylesheet">
@@ -49,7 +49,7 @@
     +-->
 <div class="searchbox">
 <form action="http://www.google.com/search" method="get" class="roundtopsmall">
-<input value="lenya.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with :');" value="Search the site with :" size="25" name="q" id="query" type="text">&nbsp; 
+<input value="lenya.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with ');" size="25" name="q" id="query" type="text" value="Search the site with ">&nbsp; 
                     <input name="Search" value="Search" type="submit">
 </form>
 </div>
@@ -87,9 +87,9 @@
 <!--+
     |end Endtabs
     +-->
-<script type="text/javascript" language="JavaScript"><!--
-              document.write("Published: " + document.lastModified);
-              //  --></script>
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
 </div>
 <!--+
     |breadtrail
@@ -108,36 +108,36 @@
 <div onclick="SwitchMenu('menu_selected_1.1', '../../../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Version 1.4</div>
 <div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
 <div class="menuitem">
-<a title="" href="../../../1_4/index.html">Index</a>
+<a href="../../../1_4/index.html">Index</a>
 </div>
 <div onclick="SwitchMenu('menu_1.1.2', '../../../skin/')" id="menu_1.1.2Title" class="menutitle">Installation</div>
 <div id="menu_1.1.2" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../../1_4/installation/index.html">Download</a>
+<a href="../../../1_4/installation/index.html">Download</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../../1_4/installation/subversion.html">Subversion Access</a>
+<a href="../../../1_4/installation/subversion.html">Subversion Access</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../../1_4/installation/source_version.html">Install Instructions</a>
+<a href="../../../1_4/installation/source_version.html">Install Instructions</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.3', '../../../skin/')" id="menu_1.1.3Title" class="menutitle">Concepts</div>
 <div id="menu_1.1.3" class="menuitemgroup">
 <div class="menuitem">
-<a title="" href="../../../1_4/concepts/publication.html">Publication</a>
+<a href="../../../1_4/concepts/publication.html">Publication</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../../1_4/concepts/authoring_live.html">Authoring and Live mode</a>
+<a href="../../../1_4/concepts/authoring_live.html">Authoring and Live mode</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../../1_4/concepts/wysiwyg.html">WYSIWYG</a>
+<a href="../../../1_4/concepts/wysiwyg.html">WYSIWYG</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_selected_1.1.4', '../../../skin/')" id="menu_selected_1.1.4Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Technical Reference</div>
 <div id="menu_selected_1.1.4" class="selectedmenuitemgroup" style="display: block;">
 <div class="menuitem">
-<a title="" href="../../../1_4/reference/lenya-sitemaps.html">Overview of Lenya Sitemaps</a>
+<a href="../../../1_4/reference/lenya-sitemaps.html">Overview of Lenya Sitemaps</a>
 </div>
 <div onclick="SwitchMenu('menu_selected_1.1.4.2', '../../../skin/')" id="menu_selected_1.1.4.2Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Usecase Framework</div>
 <div id="menu_selected_1.1.4.2" class="selectedmenuitemgroup" style="display: block;">
@@ -165,21 +165,43 @@
 </div>
 </div>
 <div class="menuitem">
-<a title="" href="../../../1_4/reference/usecase-framework/abstractusecase.html">AbstractUsecase</a>
+<a href="../../../1_4/reference/usecase-framework/abstractusecase.html">AbstractUsecase</a>
 </div>
 </div>
 <div class="menuitem">
-<a title="" href="../../../1_4/reference/publication-templating/index.html">Publication Templating</a>
+<a href="../../../1_4/reference/publication-templating/index.html">Publication Templating</a>
 </div>
 <div class="menuitem">
-<a title="" href="../../../1_4/reference/resource-types.html">Resource Types</a>
+<a href="../../../1_4/reference/resource-types.html">Resource Types</a>
+</div>
+<div class="menuitem">
+<a href="../../../1_4/reference/modules/index.html">Modules</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4.6', '../../../skin/')" id="menu_1.1.4.6Title" class="menutitle">Protocols</div>
+<div id="menu_1.1.4.6" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../1_4/reference/protocols/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../1_4/reference/protocols/lenya.html">lenya:</a>
+</div>
+<div class="menuitem">
+<a href="../../../1_4/reference/protocols/lenyadoc.html">lenyadoc:</a>
 </div>
 </div>
 <div class="menuitem">
-<a title="" href="../../../../apidocs/1.4/index.html">1.4 API (Javadoc)</a>
+<a href="../../../1_4/reference/notification.html">Notification</a>
+</div>
+<div class="menuitem">
+<a href="../../../1_4/reference/repository/index.html">Repository</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/index.html">1.4 API (Javadoc)</a>
 </div>
 </div>
 <div id="credit">
+<hr>
 <a href="http://forrest.apache.org/"><img border="0" title="Built with Apache Forrest" alt="Built with Apache Forrest - logo" src="../../../images/built-with-forrest-button.png" style="width: 88px;height: 31px;"></a>
 </div>
 <div id="roundbottom">
@@ -187,6 +209,7 @@
 <!--+
   |alternative credits
   +-->
+<div id="credit2"></div>
 </div>
 <!--+
     |end Menu
@@ -195,7 +218,6 @@
     |start content
     +-->
 <div id="content">
-<div id="skinconf-txtlink"></div>
 <div title="Portable Document Format" class="pdflink">
 <a class="dida" href="index.pdf"><img alt="PDF -icon" src="../../../skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
@@ -243,7 +265,7 @@
         The <em>usecase framework</em> in Lenya 1.4 is a simple framework to implement usecases using JX templates and Java.
         This approach is an "85% solution". It enables the user to implement a big range of common usecases.
       </p>
-<div class="frame note">
+<div class="note">
 <div class="label">Note</div>
 <div class="content">
         Some special complex usecases might require a custom flowscript, in this case you can't use this framework.
@@ -289,8 +311,8 @@ $PUB_HOME
         The flowscript <span class="codefrag">usecases.js</span> determines the usecase handler class using the <span class="codefrag">org.apache.lenya.cms.usecase.UsecaseResolver</span>.
         All business code operations are delegated to the usecase handler class.
       </p>
-<div style="text-align: center;">
-<img class="figure" alt="Usecase framework architecture" src="../../../images/live/usecase-framework-architecture.png"></div>
+<div id="" style="text-align: center;">
+<img id="" class="figure" alt="Usecase framework architecture" src="../../../images/live/usecase-framework-architecture.png"></div>
 </div>
     
     
@@ -311,6 +333,43 @@ $PUB_HOME
 <span class="codefrag">setName(String)</span>
           
 <p>Initialize the handler.</p>
+          
+<br>
+        
+</li>
+        
+<li>
+<span class="codefrag">Passing request parameters</span>
+          
+<br>
+          
+<p>
+            In the next step, all request parameters are passed as parameters to the usecase,
+            except the following reserved parameters:
+          </p>
+          
+<ul>
+            
+<li>
+<span class="codefrag">lenya.usecase</span>
+</li>
+            
+<li>
+<span class="codefrag">lenya.continutation</span>
+</li>
+            
+<li>
+<span class="codefrag">submit</span>
+</li>
+          
+</ul>
+          
+<p>
+            If the request parameter value is a string, the value can be accessed inside the usecase
+            handler using <span class="codefrag">getParameterAsString(name)</span>. If the request parameter
+            is a part of a multipart request, e.g., in a file upload form, it will be available
+            using <span class="codefrag">getPart(name)</span>. 
+          </p>
           
 <br>
         
@@ -430,10 +489,10 @@ $PUB_HOME
 </div>
     
     
-<a name="N10134"></a><a name="Implementing+a+Custom+Usecase"></a>
+<a name="N10158"></a><a name="Implementing+a+Custom+Usecase"></a>
 <h2 class="h3">Implementing a Custom Usecase</h2>
 <div class="section">
-<a name="N1013A"></a><a name="Prerequisites"></a>
+<a name="N1015E"></a><a name="Prerequisites"></a>
 <h3 class="h4">Prerequisites</h3>
 <ol>
           
@@ -442,9 +501,9 @@ $PUB_HOME
           </li>
         
 </ol>
-<a name="N1014A"></a><a name="Add+a+Menu+Item"></a>
+<a name="N1016E"></a><a name="Add+a+Menu+Item"></a>
 <h3 class="h4">Add a Menu Item</h3>
-<div class="frame note">
+<div class="note">
 <div class="label">Note</div>
 <div class="content">
           This step is necessary if you want to call the usecase from the Lenya menubar.
@@ -458,7 +517,7 @@ $PUB_HOME
 </li>
         
 </ol>
-<a name="N1015E"></a><a name="Implement+the+Usecase+Handler+Class"></a>
+<a name="N10182"></a><a name="Implement+the+Usecase+Handler+Class"></a>
 <h3 class="h4">Implement the Usecase Handler Class</h3>
 <ol>
           
@@ -499,14 +558,14 @@ $PUB_HOME
 </li>
         
 </ol>
-<a name="N10191"></a><a name="Implement+the+View"></a>
+<a name="N101B5"></a><a name="Implement+the+View"></a>
 <h3 class="h4">Implement the View</h3>
 <p>
             The view of a usecase is optional. If you omit the view declaration, no screen is presented
             to the user. The view is declared in the usecase configuration:
           </p>
 <pre class="code">  &lt;component-instance ...&gt;
-    &lt;view template="article/editHeadline" menu="false"&gt;
+    &lt;view template="usecases/article/editHeadline.jx" menu="false"&gt;
       &lt;parameter name="title" value="Edit Headline"/&gt;
       &lt;parameter name="..." value="..."/&gt;
     &lt;/view&gt;
@@ -525,8 +584,8 @@ $PUB_HOME
 <p>
           The view for a usecase is implemented using a JX template. The location of the
           JX template is defined using the <span class="codefrag">&lt;view&gt;</span> element's <span class="codefrag">template</span>
-          attribute (relatively to the <span class="codefrag">usecases</span> directory, the suffix <span class="codefrag">.jx</span>
-          is appended). The output of the view has to be a Lenya page:
+          attribute (relatively to the <span class="codefrag">context://lenya</span> directory).
+          The output of the view has to be a Lenya page:
         </p>
 <pre class="code">&lt;page:page
   xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
@@ -553,13 +612,45 @@ $PUB_HOME
 <p>
           Take care of adding the hidden <span class="codefrag">lenya.usecase</span> and <span class="codefrag">lenya.continuation</span> fields as shown above.
           </p>
+<a name="N101F9"></a><a name="Displaying+Usecases+in+Tabs"></a>
+<h4>Displaying Usecases in Tabs</h4>
+<p>
+              It is possible to use a tab-based layout to assemble a set of usecases.
+              The admin and site areas are displayed using this style.
+              To add a tab-based usecase to a tab set, two steps are required: 
+            </p>
+<ol>
+              
+<li>
+                Add the tab to the GUI manager configuration:
+<pre class="code">&lt;xconf xpath="/cocoon/gui-manager/tab-group[@name = 'admin']"
+       unless="/cocoon/gui-manager/tab-group[@name = 'admin']/tab[@name = 'search']"&gt;
+
+  &lt;tab name="search" label="Search" usecase="admin.search"/&gt;
+  
+&lt;/xconf&gt;</pre>
+              
+</li>
+              
+<li>
+                Add the tab configuration to the usecase view declaration:
+<pre class="code">&lt;component-instance name="admin.search" logger="lenya.admin" class="org.apache.lenya.cms.usecase.DummyUsecase"&gt;
+  &lt;view template="usecases/admin/search.jx" menu="true"&gt;
+    &lt;tab group="admin" name="search"/&gt;
+  &lt;/view&gt;
+  &lt;exit usecase="admin.search"/&gt;
+&lt;/component-instance&gt;</pre>
+              
+</li>
+            
+</ol>
 </div>
     
     
-<a name="N101DA"></a><a name="Overriding+Core+Usecases+in+Publications"></a>
+<a name="N10216"></a><a name="Overriding+Core+Usecases+in+Publications"></a>
 <h2 class="h3">Overriding Core Usecases in Publications</h2>
 <div class="section">
-<a name="N101E0"></a><a name="Overriding+Usecase+Handler+Classes"></a>
+<a name="N1021C"></a><a name="Overriding+Usecase+Handler+Classes"></a>
 <h3 class="h4">Overriding Usecase Handler Classes</h3>
 <p>
           The usecase resolver, which is responsible for obtaining the handler class for a usecase,
@@ -588,7 +679,7 @@ $PUB_HOME
           Now, when the usecase is invoked from inside the publication mypub, the custom
           handler class will be used.
         </p>
-<a name="N10209"></a><a name="Overriding+JX+Templates"></a>
+<a name="N10245"></a><a name="Overriding+JX+Templates"></a>
 <h3 class="h4">Overriding JX Templates</h3>
 <p>
           Overriding the JX template of a usecase follows the
@@ -615,7 +706,9 @@ document.write("Last Published: " + document.lastModified);
 //  --></script>
 </div>
 <div class="copyright">
- Copyright &copy; 2002-2005 The Apache Software Foundation.</div>
+        Copyright &copy;
+         2002-2005 <a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software Foundation.</a>
+</div>
 <div id="logos"></div>
 <div id="feedback">
     Send feedback about the website to:
