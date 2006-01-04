@@ -72,7 +72,14 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
     you're done with all your changes, press
     <code>Save&amp;Exit</code> to get back. You'll see your changes in
     the document.</p>
-
+    
+    <h2>Lenya Meta Data</h2>
+    
+    <p>The LenyaMetaDataGenerator lets you receive the metada for any given document. In
+      this pub there is an example in the sitemap.xmap (pattern="meta") it only should
+      demonstrate one possible usage (you would need to edit this match for your own use case).
+      See the meta data from this page with <a href="meta?docid=/tutorial"> meta?docid=/tutorial</a>.</p>
+    
     <h2>Publishing a document</h2>
 
     <p>Once you are satisfied with the content of the document you

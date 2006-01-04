@@ -16,6 +16,8 @@
  */
 package org.apache.lenya.cms.metadata;
 
+import java.util.HashMap;
+
 import org.apache.lenya.cms.publication.DocumentException;
 
 /**
@@ -47,7 +49,13 @@ public interface MetaData {
      * @throws DocumentException if an error occurs.
      */
     String getFirstValue(String key) throws DocumentException;
-
+    
+    /**
+     * Get all available keys.
+     * @return The keys available in this MetaData object.
+     */
+    String[] getAvailableKeys();
+    
     /**
      * Sets the value for a certain key. All existing values will be removed.
      * @param key The key.
@@ -75,6 +83,12 @@ public interface MetaData {
      * @return All keys that can be used.
      */
     String[] getPossibleKeys();
+    
+    /**
+     * @return All keys and values that exist in the metadata doc.
+     * @throws DocumentException
+     */
+    HashMap getAvailableKey2Value();
 
     /**
      * Checks if a key represents a valid metadata attribute.
@@ -82,5 +96,10 @@ public interface MetaData {
      * @return A boolean value.
      */
     boolean isValidAttribute(String key);
-
+    
+    /**
+     * Get last modification date.
+     * @return last modification date
+     */
+     long getLastModified() throws DocumentException;
 }

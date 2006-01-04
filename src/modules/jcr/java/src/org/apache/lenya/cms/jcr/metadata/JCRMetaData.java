@@ -24,6 +24,7 @@ import java.util.Map;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.metadata.MetaData;
@@ -194,4 +195,28 @@ public class JCRMetaData extends AbstractLogEnabled implements MetaData {
         return Arrays.asList(keys).contains(key);
     }
 
+    public HashMap getAvailableKey2Value() {
+      // TODO We need to implement this Method!
+      return null;
+    }
+
+    public long getLastModified() throws DocumentException {
+        long lastModified = 0;
+	throw new DocumentException("Not implemented yet");
+        /*
+        try {
+            SourceResolver resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            JCRNodeSource source = (JCRNodeSource) resolver.resolveURI(this.sourceUri);
+            lastModified = source.getLastModified();
+        } catch (Exception e) {
+            throw new DocumentException("Error resolving meta data source", e);
+        }
+        return lastModified;
+	*/
+    }
+    
+    public String[] getAvailableKeys() {
+        // FIXME: Not implemented yet.
+        return null;
+    }
 }

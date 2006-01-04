@@ -20,6 +20,11 @@
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
   <map:components>
+    <map:generators default="file">
+      <map:generator label="content" logger="sitemap.generator.directory"
+        name="lenyaMetaData" pool-max="16"
+        src="org.apache.lenya.cms.cocoon.generation.LenyaMetaDataGenerator"/>
+    </map:generators>
     <map:serializers default="xhtml">
       <map:serializer logger="sitemap.serializer.links" name="links" src="org.apache.lenya.cms.cocoon.serialization.LinkSerializer"/>
     </map:serializers>
@@ -112,11 +117,18 @@
       </map:pipeline>
     <!-- /BX Editor: RNG Schema -->
 
-    
     <!-- This is the pipeline that builds the page. It aggregates all
     the navigational elements (breadcrumb, tabs, menu) with the actual
     content of the document. -->
     <map:pipeline>
+      <!-- pattern="meta?docid={docid}" -->
+      <map:match pattern="**meta">
+        <map:generate type="lenyaMetaData">
+          <map:parameter name="docid" value="{request-param:docid}"/>
+          <map:parameter name="lang" value="en"/>
+        </map:generate>
+        <map:serialize type="xml"/>
+      </map:match>
       <!-- /lenyabody-{rendertype}/{publication-id}/{area}/{doctype}/{url} -->
       <map:match pattern="lenyabody-*/*/*/*/**">
         <map:aggregate element="cmsbody">
