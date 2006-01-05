@@ -16,6 +16,7 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -36,6 +37,11 @@ import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.rc.RCEnvironment;
+import org.apache.lenya.cms.rc.RCML;
+import org.apache.lenya.cms.rc.RCMLEntry;
+import org.apache.lenya.cms.rc.RevisionController;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
@@ -61,10 +67,11 @@ public class SiteOverview extends AbstractUsecase {
     protected static final String KEY_LANGUAGE = "keyLanguage";
     protected static final String KEY_LAST_MODIFIED = "keyLastModified";
     protected static final String KEY_URL = "keyUrl";
+    protected static final String KEY_CHECKED_OUT = "keyCheckedOut";
     protected static final String PARAMETER_KEYS = "keys";
 
     protected static final String[] KEYS = { KEY_DOCUMENT_ID, KEY_LANGUAGE, KEY_RESOURCE_TYPE,
-            KEY_WORKFLOW_STATE, KEY_LAST_MODIFIED };
+            KEY_WORKFLOW_STATE, KEY_LAST_MODIFIED, KEY_CHECKED_OUT };
 
     protected static final String FILTER_RESOURCE_TYPE = "filterResourceType";
     protected static final String FILTER_WORKFLOW_STATE = "filterWorkflowState";
@@ -120,6 +127,25 @@ public class SiteOverview extends AbstractUsecase {
                     entry.setValue(KEY_WORKFLOW_STATE, "");
                 }
 
+                if (documents[i].getRepositoryNode().isCheckedOut()) {
+
+                    RevisionController controller = getRevisionController();
+                    String sourceUri = documents[i].getSourceURI();
+
+                    String pubBase = Node.LENYA_PROTOCOL + Publication.PUBLICATION_PREFIX_URI + "/";
+                    String publicationsPath = sourceUri.substring(pubBase.length());
+                    String publicationId = publicationsPath.split("/")[0];
+                    String path = pubBase + publicationId + "/";
+                    String rcmlPath = sourceUri.substring(path.length());
+
+                    RCML rcml = controller.getRCML(rcmlPath);
+                    RCMLEntry lastEntry = rcml.getLatestCheckOutEntry();
+                    String userId = lastEntry.getIdentity();
+                    entry.setValue(KEY_CHECKED_OUT, userId);
+                }
+                else {
+                    entry.setValue(KEY_CHECKED_OUT, "");
+                }
                 entries.add(entry);
             }
 
@@ -142,6 +168,25 @@ public class SiteOverview extends AbstractUsecase {
             setParameter(DOCUMENTS, entries);
 
             setParameter(PARAMETER_KEYS, Arrays.asList(KEYS));
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected RevisionController getRevisionController() {
+        try {
+
+            Publication pub = getPublication();
+
+            String publicationPath = pub.getDirectory().getCanonicalPath();
+            RCEnvironment rcEnvironment = RCEnvironment.getInstance(pub.getServletContext()
+                    .getCanonicalPath());
+            String rcmlDirectory = publicationPath + File.separator
+                    + rcEnvironment.getRCMLDirectory();
+            String backupDirectory = publicationPath + File.separator
+                    + rcEnvironment.getBackupDirectory();
+            return new RevisionController(rcmlDirectory, backupDirectory, publicationPath);
 
         } catch (Exception e) {
             throw new RuntimeException(e);

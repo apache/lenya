@@ -222,6 +222,7 @@
   <message key="keyLanguage">Language</message>
   <message key="keyLastModified">Last Modified</message>
   <message key="keyDocumentId">Document ID</message>
+  <message key="keyCheckedOut">Checked Out By</message>
   <message key="Update">Update</message>
   
   <!-- Site tab (info screens) -->
