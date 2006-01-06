@@ -23,7 +23,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 
-import org.apache.avalon.excalibur.io.FileUtil;
+import org.apache.commons.io.FileUtils;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeNode;
@@ -87,7 +87,7 @@ public class DeletePoliciesTask extends TwoDocumentsOperationTask {
 		}
 		for (int i = 0; i < authoringPolicies.length; i++) {
             try {
-            FileUtil.forceDelete(authoringPolicies[i]);
+            FileUtils.forceDelete(authoringPolicies[i]);
             } catch (IOException e) {
                 //FIXME: catch Exception because of window's delete problem 
                 log("exception " +e);
@@ -96,7 +96,7 @@ public class DeletePoliciesTask extends TwoDocumentsOperationTask {
 		}
         if (srcDir.exists() && srcDir.isDirectory() && srcDir.listFiles().length == 0) {  
             try {
-          FileUtil.forceDelete(srcDir);
+          FileUtils.forceDelete(srcDir);
             } catch (IOException e) {
 				//FIXME: catch Exception because of window's delete problem 
                 log("exception " +e);

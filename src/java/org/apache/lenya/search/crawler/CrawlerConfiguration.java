@@ -22,7 +22,6 @@ package org.apache.lenya.search.crawler;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.lenya.xml.DOMUtil;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.XPath;

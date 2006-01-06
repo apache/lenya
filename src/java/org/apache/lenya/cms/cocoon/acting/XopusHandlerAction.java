@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: XopusHandlerAction.java,v 1.39 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -25,7 +25,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.avalon.excalibur.io.FileUtil;
+import org.apache.commons.io.FileUtils;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
@@ -200,7 +200,7 @@ public class XopusHandlerAction extends ConfigurableServiceableAction {
 
         // make a temporary copy of the file to be edited
         if ("xml".equals(fileType) && "open".equals(reqType)) {
-            FileUtil.copyFile(permFile, tempFile);
+            FileUtils.copyFile(permFile, tempFile);
             getLogger().debug(".act(): PERMANENT FILE: " + permFile.getAbsolutePath());
             getLogger().debug(".act(): TEMPORARY FILE: " + tempFile.getAbsolutePath());
         }
@@ -283,7 +283,7 @@ public class XopusHandlerAction extends ConfigurableServiceableAction {
                 }
                 getLogger().debug(".act(): Checkin: " + reqFile + "::" + username);
                 rc.reservedCheckIn(xmlRoot + reqFile, username, true);
-                FileUtil.copyFile(tempFile, permFile);
+                FileUtils.copyFile(tempFile, permFile);
             } catch (Exception e) {
                 getLogger().error(".act(): Exception during checkin of " + xmlRoot + reqFile, e);
                 return null;

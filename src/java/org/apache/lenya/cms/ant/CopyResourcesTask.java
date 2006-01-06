@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: CopyResourcesTask.java,v 1.7 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.avalon.excalibur.io.FileUtil;
+import org.apache.commons.io.FileUtils;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
@@ -116,7 +116,7 @@ public class CopyResourcesTask extends TwoDocumentsOperationTask {
 						+ srcFiles[i].getAbsolutePath()
 						+ "to file "
 						+ resourcesMgr.getPath().getCanonicalPath());
-				FileUtil.copyFileToDirectory(
+				FileUtils.copyFileToDirectory(
 					srcFiles[i],
 					resourcesMgr.getPath());
 			} catch (IOException e) {

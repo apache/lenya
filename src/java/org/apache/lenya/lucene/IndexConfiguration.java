@@ -21,7 +21,6 @@ package org.apache.lenya.lucene;
 
 import java.io.File;
 
-import org.apache.avalon.excalibur.io.FileUtil;
 import org.apache.lenya.xml.DOMUtil;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.XPath;

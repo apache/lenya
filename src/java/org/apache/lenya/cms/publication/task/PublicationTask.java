@@ -25,7 +25,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.avalon.excalibur.io.FileUtil;
+import org.apache.commons.io.FileUtils;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
@@ -108,7 +108,7 @@ public abstract class PublicationTask extends AbstractTask {
                         + "]");
             }
             try {
-                FileUtil.copyFile(resources[i], destinationResource);
+                FileUtils.copyFile(resources[i], destinationResource);
             } catch (IOException e) {
                 throw new ExecutionException(e);
             }

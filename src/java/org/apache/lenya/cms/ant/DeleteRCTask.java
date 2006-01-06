@@ -22,7 +22,7 @@ package org.apache.lenya.cms.ant;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.avalon.excalibur.io.FileUtil;
+import org.apache.commons.io.FileUtils;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.SiteTreeNode;
@@ -75,7 +75,7 @@ public class DeleteRCTask extends TwoDocumentsOperationTask {
 
 		if (srcRcmlDir.exists()) {
 			try {
-				FileUtil.forceDelete(srcRcmlDir);
+				FileUtils.forceDelete(srcRcmlDir);
 			} catch (IOException e) {
 				//FIXME: catch Exception because of window's delete problem 
 				log("exception " + e);
@@ -89,7 +89,7 @@ public class DeleteRCTask extends TwoDocumentsOperationTask {
 
 		if (srcRcbakDir.exists()) {
 			try {
-				FileUtil.forceDelete(srcRcbakDir);
+				FileUtils.forceDelete(srcRcbakDir);
 			} catch (IOException e) {
 				//FIXME: catch Exception because of window's delete problem 
 				log("exception " + e);

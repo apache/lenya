@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: CopyPoliciesTask.java,v 1.4 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
@@ -23,7 +23,7 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 
-import org.apache.avalon.excalibur.io.FileUtil;
+import org.apache.commons.io.FileUtils;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.SiteTreeNode;
 import org.apache.tools.ant.BuildException;
@@ -89,7 +89,7 @@ public class CopyPoliciesTask extends TwoDocumentsOperationTask {
 				srcPath = authoringPolicies[i].getCanonicalPath();
                 String policyPath = srcPath.substring(srcDir.getCanonicalPath().length());
 				File destFile = new File(destDir, policyPath);
-				FileUtil.copyFile(authoringPolicies[i], destFile);
+				FileUtils.copyFile(authoringPolicies[i], destFile);
 			} catch (IOException e) {
 				throw new BuildException(e);
 			}

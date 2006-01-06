@@ -22,7 +22,7 @@ package org.apache.lenya.cms.ant;
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.avalon.excalibur.io.FileUtil;
+import org.apache.commons.io.FileUtils;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
@@ -80,7 +80,7 @@ public class DeleteContentTask extends TwoDocumentsOperationTask {
 			}
 			File directory = srcFile.getParentFile();
 			try {
-				FileUtil.forceDelete(srcFile);
+				FileUtils.forceDelete(srcFile);
 			} catch (IOException e) {
 				//FIXME: catch Exception because of window's delete problem 
 				log("exception " + e);
@@ -89,7 +89,7 @@ public class DeleteContentTask extends TwoDocumentsOperationTask {
 				&& directory.isDirectory()
 				&& directory.listFiles().length == 0) {
 				try {
-					FileUtil.forceDelete(directory);
+					FileUtils.forceDelete(directory);
 				} catch (IOException e) {
 					//FIXME: catch Exception because of window's delete problem 
 					log("exception " + e);

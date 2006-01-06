@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: XPSFileOutputStream.java,v 1.13 2004/03/01 16:18:14 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.util;
 
@@ -24,7 +24,7 @@ import java.io.FileDescriptor;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.apache.avalon.excalibur.io.FileUtil;
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Category;
 
 
@@ -124,7 +124,7 @@ public class XPSFileOutputStream extends FileOutputStream {
         super.close();
         File temp =  new File(getTempFilename(getRealFilename()));
 		File file =  new File(getRealFilename());
-        FileUtil.copyFile(temp, file);
+        FileUtils.copyFile(temp, file);
         boolean deleted = temp.delete();
         if (deleted) {
         	log.debug("The temporary file "+temp.getAbsolutePath() +"is deleted");

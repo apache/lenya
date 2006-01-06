@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ResourceFilePublisher.java,v 1.9 2004/08/16 13:05:40 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publishing;
 
@@ -24,7 +24,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.StringTokenizer;
 
-import org.apache.avalon.excalibur.io.FileUtil;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.log4j.Category;
@@ -64,9 +65,9 @@ public class ResourceFilePublisher extends DefaultFilePublisher {
 
         for (int index = 0; index < sources.length; index++) {
             File sourceDir = new File(absoluteResourceAuthoringPath +
-                    FileUtil.getPath(sources[index]));
+                    FilenameUtils.getPath(sources[index]));
             File destinationDir = new File(absoluteResourceLivePath +
-                    FileUtil.getPath(sources[index]));
+                    FilenameUtils.getPath(sources[index]));
 
             if (!sourceDir.isDirectory()) {
                 // Hmm, the source dir doesn't exist. Ok, this
@@ -83,7 +84,7 @@ public class ResourceFilePublisher extends DefaultFilePublisher {
                 if (resourceSources[j].isFile()) {
                     try {
                         // only copy resources that are files
-                        FileUtil.copyFileToDirectory(resourceSources[j], destinationDir);
+                        FileUtils.copyFileToDirectory(resourceSources[j], destinationDir);
                         log.debug("COPY\nresource: " + resourceSources[j] + "\nto " +
                             destinationDir);
                     } catch (FileNotFoundException fnfe) {

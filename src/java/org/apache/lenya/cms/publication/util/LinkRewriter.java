@@ -26,7 +26,7 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.avalon.excalibur.io.FileUtil;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Publication;
@@ -55,7 +55,7 @@ public class LinkRewriter {
     private FileFilter xmlFileFilter = new FileFilter() {
 
         public boolean accept(File file) {
-            return file.isFile() && FileUtil.getExtension(file.getName()).equals("xml");
+            return file.isFile() && FilenameUtils.getExtension(file.getName()).equals("xml");
         }
     };
 

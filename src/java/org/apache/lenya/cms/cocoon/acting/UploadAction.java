@@ -33,7 +33,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 
-import org.apache.avalon.excalibur.io.FileUtil;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.acting.AbstractConfigurableAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -117,7 +117,7 @@ public class UploadAction extends AbstractConfigurableAction {
         Part part = (Part) request.get(UPLOADASSET_PARAM_NAME);
 
         String fileName = part.getFileName();
-        if (!fileName.matches(FILE_NAME_REGEXP) || FileUtil.getExtension(fileName).equals("")) {
+        if (!fileName.matches(FILE_NAME_REGEXP) || FilenameUtils.getExtension(fileName).equals("")) {
             // the file name contains characters which mean trouble
             // and are therefore not allowed.
             getLogger().warn("The filename [" + fileName + "] is not valid for an asset.");

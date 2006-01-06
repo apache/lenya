@@ -146,7 +146,7 @@ public final class FileUtil {
 
         dest.getParentFile().mkdirs();
         dest.createNewFile();
-        org.apache.avalon.excalibur.io.FileUtil.copyFile(src, dest);
+        org.apache.commons.io.FileUtils.copyFile(src, dest);
     }
 
     /**

@@ -15,14 +15,14 @@
  *
  */
 
-/* $Id: FilePublication.java,v 1.8 2004/03/01 16:18:27 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication.file;
 
 import java.io.File;
 import java.io.IOException;
 
-import org.apache.avalon.excalibur.io.FileUtil;
+import org.apache.commons.io.FileUtils;
 import org.apache.lenya.cms.publication.AbstractPublication;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentSet;
@@ -73,7 +73,7 @@ public class FilePublication extends AbstractPublication {
             if (!destinationDirectory.isDirectory()) {
                 destinationDirectory.mkdirs();
             }
-            FileUtil.copyFileToDirectory(file, destinationDirectory);
+            FileUtils.copyFileToDirectory(file, destinationDirectory);
             destinationDocument.getDublinCore().replaceBy(sourceDocument.getDublinCore());
         } catch (IOException e) {
             throw new PublicationException(e);

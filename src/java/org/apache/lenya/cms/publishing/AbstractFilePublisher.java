@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractFilePublisher.java,v 1.10 2004/03/01 16:18:18 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publishing;
 
@@ -49,6 +49,6 @@ public abstract class AbstractFilePublisher extends AbstractPublisher {
             parentDestination.mkdirs();
         }
 
-        org.apache.avalon.excalibur.io.FileUtil.copyFile(source, destination);
+        org.apache.commons.io.FileUtils.copyFile(source, destination);
     }
 }
