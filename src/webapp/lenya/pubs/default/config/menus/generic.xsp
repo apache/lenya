@@ -198,6 +198,12 @@
           else {
             <item>Change node visibility</item>
           }
+          if (isDocument &amp;&amp; !(area.equals(Publication.TRASH_AREA) || area.equals(Publication.ARCHIVE_AREA))) {
+             <item uc:usecase="forcecheckin" uc:step="showscreen" href="?">Checkin</item>
+          }
+          else {
+            <item>Checkin</item>
+          }
         </xsp:logic>
       </block>
       <block authoring="false">
