@@ -32,4 +32,10 @@ public interface ElementSet {
      */
     Element getElement(String name);
     
+    /**
+     * @param name The name.
+     * @return If an element with this name is contained.
+     */
+    boolean contains(String name);
+    
 }

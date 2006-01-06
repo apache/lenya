@@ -45,4 +45,14 @@ public interface DocumentType {
      */
     String getMimeType() throws RepositoryException;
     
+    /**
+     * @return All supported formats.
+     */
+    String[] getFormats();
+    
+    /**
+     * @param format The format.
+     * @return The URI to get the formatted content at.
+     */
+    String getFormatURI(String format);
 }

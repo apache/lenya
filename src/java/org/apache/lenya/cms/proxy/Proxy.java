@@ -14,7 +14,12 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.proxy;
+
+import org.apache.lenya.cms.repo.Document;
+import org.apache.lenya.cms.repo.RepositoryException;
+import org.apache.lenya.cms.repo.Site;
+import org.apache.lenya.cms.repo.SiteNode;
 
 /**
  * <p>
@@ -23,11 +28,12 @@ package org.apache.lenya.cms.publication;
  * <p>
  * Configuration example:
  * </p>
+ * 
  * <pre>
- * &lt;proxy area="live" ssl="true" url="https://www.host.com/ssl/default"/&gt;
- * &lt;proxy area="live" ssl="false" url="http://www.host.com/default"/&gt;
- * &lt;proxy area="authoring" ssl="true" url="https://www.host.com/lenya/default/authoring"/&gt;
- * &lt;proxy area="authoring" ssl="false" url="http://www.host.com/lenya/default/authoring"/&gt;
+ *  &lt;proxy area=&quot;live&quot; ssl=&quot;true&quot; url=&quot;https://www.host.com/ssl/default&quot;/&gt;
+ *  &lt;proxy area=&quot;live&quot; ssl=&quot;false&quot; url=&quot;http://www.host.com/default&quot;/&gt;
+ *  &lt;proxy area=&quot;authoring&quot; ssl=&quot;true&quot; url=&quot;https://www.host.com/lenya/default/authoring&quot;/&gt;
+ *  &lt;proxy area=&quot;authoring&quot; ssl=&quot;false&quot; url=&quot;http://www.host.com/lenya/default/authoring&quot;/&gt;
  * </pre>
  * 
  * @version $Id$
@@ -42,7 +48,13 @@ public class Proxy {
      * @return A string.
      */
     public String getURL(Document document) {
-        return getUrl() + document.getCanonicalDocumentURL();
+        try {
+            Site site = document.getContentNode().getContent().getArea().getSite();
+            SiteNode siteNode = site.getFirstReference(document);
+            return getUrl() + siteNode.getPath();
+        } catch (RepositoryException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

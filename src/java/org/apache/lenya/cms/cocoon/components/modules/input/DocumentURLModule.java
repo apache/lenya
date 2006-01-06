@@ -36,7 +36,7 @@ import org.apache.lenya.cms.publication.util.DocumentHelper;
  * </p>
  * @version $Id$
  */
-public class DocumentURLModule extends AbstractPageEnvelopeModule {
+public class DocumentURLModule extends AbstractServiceableInputModule {
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,

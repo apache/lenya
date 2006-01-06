@@ -25,15 +25,19 @@ import org.apache.avalon.framework.activity.Initializable;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.impl.AbstractAccessControllerResolver;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repo.Publication;
+import org.apache.lenya.cms.repo.RepositoryException;
+import org.apache.lenya.cms.repo.Session;
+import org.apache.lenya.cms.repo.impl.RepositoryUtil;
 
 /**
  * Resolves the access controller according to the <code>ac.xconf</code> file of a publication.
@@ -41,8 +45,7 @@ import org.apache.lenya.cms.publication.URLInformation;
 public class PublicationAccessControllerResolver extends AbstractAccessControllerResolver implements
         Initializable {
 
-    protected static final String CONFIGURATION_FILE = "config/ac/ac.xconf".replace('/',
-            File.separatorChar);
+    protected static final String CONFIGURATION_FILE = "/config/ac/ac.xconf";
     protected static final String TYPE_ATTRIBUTE = "type";
 
     /**
@@ -76,8 +79,12 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
         Publication publication = getPublication(webappUrl);
 
         if (publication != null) {
-            String publicationUrl = webappUrl.substring(("/" + publication.getId()).length());
-            controller = resolveAccessController(publication, publicationUrl);
+            try {
+                String publicationUrl = webappUrl.substring(("/" + publication.getPublicationId()).length());
+                controller = resolveAccessController(publication, publicationUrl);
+            } catch (RepositoryException e) {
+                throw new AccessControlException(e);
+            }
         }
         return controller;
     }
@@ -90,30 +97,32 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
      * @throws AccessControlException when something went wrong.
      */
     protected Publication getPublication(String webappUrl) throws AccessControlException {
-        Publication publication = null;
 
-        assert webappUrl.startsWith("/");
-        // remove leading slash
-        String url = webappUrl.substring(1);
-
-        if (url.length() > 0) {
-
-            URLInformation info = new URLInformation(webappUrl);
-            String publicationId = info.getPublicationId();
-
-            try {
-                publication = PublicationUtil.getPublicationFromUrl(this.manager, webappUrl);
-            } catch (Exception e) {
-                throw new AccessControlException(e);
-            }
-            if (publication.exists()) {
-                getLogger().debug("Publication [" + publicationId + "] exists.");
+        ContextUtility contextUtility = null;
+        try {
+            contextUtility = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
+            Session session = RepositoryUtil.getSession(this.manager,
+                    contextUtility.getRequest(),
+                    getLogger());
+            String pubId = new URLInformation(webappUrl).getPublicationId();
+            if (session.existsPublication(pubId)) {
+                getLogger().debug("Publication [" + pubId + "] exists.");
+                return session.getPublication(pubId);
             } else {
-                getLogger().debug("Publication [" + publicationId + "] does not exist.");
-                publication = null;
+                getLogger().debug("Publication [" + pubId + "] does not exist.");
+                return null;
+            }
+
+        } catch (ServiceException e) {
+            throw new AccessControlException("Error looking up ContextUtility component", e);
+        } catch (Exception e) {
+            throw new AccessControlException(e);
+        } finally {
+            if (contextUtility != null) {
+                this.manager.release(contextUtility);
             }
         }
-        return publication;
+
     }
 
     /**
@@ -139,23 +148,21 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
         assert publication != null;
 
         AccessController accessController = null;
-        File configurationFile = new File(publication.getDirectory(), CONFIGURATION_FILE);
+        try {
+            String configUrl = "context://lenya/pubs/" + publication.getPublicationId()
+                    + CONFIGURATION_FILE;
+            Configuration configuration = new DefaultConfigurationBuilder().build(configUrl);
+            String type = configuration.getAttribute(TYPE_ATTRIBUTE);
 
-        if (configurationFile.isFile()) {
-            try {
-                Configuration configuration = new DefaultConfigurationBuilder().buildFromFile(configurationFile);
-                String type = configuration.getAttribute(TYPE_ATTRIBUTE);
+            accessController = (AccessController) getManager().lookup(AccessController.ROLE + "/"
+                    + type);
 
-                accessController = (AccessController) getManager().lookup(AccessController.ROLE
-                        + "/" + type);
-
-                if (accessController instanceof Configurable) {
-                    ((Configurable) accessController).configure(configuration);
-                }
-
-            } catch (Exception e) {
-                throw new AccessControlException(e);
+            if (accessController instanceof Configurable) {
+                ((Configurable) accessController).configure(configuration);
             }
+
+        } catch (Exception e) {
+            throw new AccessControlException(e);
         }
 
         return accessController;

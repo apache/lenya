@@ -17,6 +17,7 @@
 
 package org.apache.lenya.cms.cocoon.source;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -37,7 +38,6 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.xml.DocumentHelper;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
@@ -214,6 +214,32 @@ public final class SourceUtil {
     }
 
     /**
+     * Writes a DOM to an output stream.
+     * @param document The document.
+     * @param oStream The output stream.
+     * @param manager The service manager.
+     * @throws TransformerConfigurationException if an error occurs.
+     * @throws TransformerException if an error occurs.
+     * @throws ServiceException if the source resolver could not be obtained.
+     * @throws MalformedURLException if the source URI is not valid.
+     * @throws IOException if an error occurs.
+     */
+    public static void writeDOM(Document document, OutputStream oStream, ServiceManager manager)
+            throws TransformerConfigurationException, TransformerException, ServiceException,
+            MalformedURLException, IOException {
+        Writer writer = new OutputStreamWriter(oStream);
+        DocumentHelper.writeDocument(document, writer);
+        if (oStream != null) {
+            oStream.flush();
+            try {
+                oStream.close();
+            } catch (Throwable t) {
+                throw new RuntimeException("Could not write document: ", t);
+            }
+        }
+    }
+
+    /**
      * Deletes a source if it exists.
      * @param sourceUri The source URI.
      * @param manager The service manager.
@@ -272,25 +298,23 @@ public final class SourceUtil {
     }
 
     /**
-     * Checks out a repository source.
-     * @param sourceUri The source URI.
      * @param manager The service manager.
-     * @throws RepositoryException If an error occurs.
-     * @throws ServiceException If an error occurs.
-     * @throws MalformedURLException If an error occurs.
-     * @throws IOException If an error occurs.
+     * @param contextPath The relative path inside the context.
+     * @return The file system path.
+     * @throws IOException if an error occurs.
+     * @throws MalformedURLException if an error occurs. 
+     * @throws ServiceException  if an error occurs.
      */
-    public static void checkout(String sourceUri, ServiceManager manager)
-            throws RepositoryException, ServiceException, MalformedURLException, IOException {
+    public static String getRealPath(ServiceManager manager, String contextPath)
+            throws MalformedURLException, IOException, ServiceException {
         SourceResolver resolver = null;
-        RepositorySource source = null;
+        Source source = null;
         try {
-
             resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-            source = (RepositorySource) resolver.resolveURI(sourceUri);
-
-            source.getNode().checkout();
-
+            source = resolver.resolveURI("context://");
+            File contextFile = org.apache.excalibur.source.SourceUtil.getFile(source);
+            File file = new File(contextFile, contextPath.replace('/', File.separatorChar));
+            return file.getAbsolutePath();
         } finally {
             if (resolver != null) {
                 if (source != null) {
@@ -299,121 +323,6 @@ public final class SourceUtil {
                 manager.release(resolver);
             }
         }
-    }
 
-    /**
-     * Checks in a transactionable source.
-     * @param sourceUri The source URI.
-     * @param manager The service manager.
-     * @throws RepositoryException If an error occurs.
-     * @throws ServiceException If an error occurs.
-     * @throws MalformedURLException If an error occurs.
-     * @throws IOException If an error occurs.
-     */
-    public static void checkin(String sourceUri, ServiceManager manager)
-            throws RepositoryException, ServiceException, MalformedURLException, IOException {
-        SourceResolver resolver = null;
-        RepositorySource source = null;
-        try {
-
-            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-            source = (RepositorySource) resolver.resolveURI(sourceUri);
-
-            source.getNode().checkin();
-
-        } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                manager.release(resolver);
-            }
-        }
-    }
-
-    /**
-     * Locks a transactionable source.
-     * @param sourceUri The source URI.
-     * @param manager The service manager.
-     * @throws RepositoryException If an error occurs.
-     */
-    public static void lock(String sourceUri, ServiceManager manager) throws RepositoryException {
-        SourceResolver resolver = null;
-        RepositorySource source = null;
-        try {
-
-            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-            source = (RepositorySource) resolver.resolveURI(sourceUri);
-
-            source.getNode().lock();
-
-        } catch (RepositoryException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new RepositoryException(e);
-        } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                manager.release(resolver);
-            }
-        }
-    }
-
-    /**
-     * Unlocks a transactionable source.
-     * @param sourceUri The source URI.
-     * @param manager The service manager.
-     * @throws RepositoryException If an error occurs.
-     */
-    public static void unlock(String sourceUri, ServiceManager manager) throws RepositoryException {
-        SourceResolver resolver = null;
-        RepositorySource source = null;
-        try {
-
-            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-            source = (RepositorySource) resolver.resolveURI(sourceUri);
-
-            source.getNode().unlock();
-
-        } catch (RepositoryException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new RepositoryException(e);
-        } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                manager.release(resolver);
-            }
-        }
-    }
-
-    /**
-     * Registers a source as dirty.
-     * @param sourceUri The source URI.
-     * @param manager The service manager.
-     */
-    public static void registerDirty(String sourceUri, ServiceManager manager) {
-        SourceResolver resolver = null;
-        RepositorySource source = null;
-        try {
-
-            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-            source = (RepositorySource) resolver.resolveURI(sourceUri);
-            source.getNode().registerDirty();
-            
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                manager.release(resolver);
-            }
-        }
     }
 }

@@ -48,11 +48,11 @@ public interface SiteNode {
 
     /**
      * @param name The name.
-     * @param contentNode The content node which the site node refers to.
+     * @param document The document which the site node refers to.
      * @return a site node.
      * @throws RepositoryException if an error occurs.
      */
-    SiteNode addChild(String name, ContentNode contentNode) throws RepositoryException;
+    SiteNode addChild(String name, Document document) throws RepositoryException;
     
     /**
      * @return The path of the node, relative to the area.
@@ -61,10 +61,10 @@ public interface SiteNode {
     String getPath() throws RepositoryException;
     
     /**
-     * @return The referenced content node.
+     * @return The referenced document.
      * @throws RepositoryException if an error occurs.
      */
-    ContentNode getContentNode() throws RepositoryException;
+    Document getDocument() throws RepositoryException;
     
     /**
      * @return The parent node or <code>null</code> if this is a top-level node.

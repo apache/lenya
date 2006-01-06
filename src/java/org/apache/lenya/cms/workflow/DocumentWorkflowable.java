@@ -29,12 +29,14 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.cms.metadata.LenyaMetaData;
-import org.apache.lenya.cms.metadata.MetaData;
-import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.ResourceType;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.repo.ContentNode;
+import org.apache.lenya.cms.repo.Document;
+import org.apache.lenya.cms.repo.DocumentType;
+import org.apache.lenya.cms.repo.RepositoryException;
+import org.apache.lenya.cms.repo.Session;
+import org.apache.lenya.cms.repo.metadata.MetaData;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.Workflowable;
@@ -49,19 +51,14 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
     /**
      * Ctor.
      * @param manager The service manager.
-     * @param session The repository session.
      * @param document The document.
      * @param logger The logger.
      */
-    public DocumentWorkflowable(ServiceManager manager, Session session, Document document,
-            Logger logger) {
+    public DocumentWorkflowable(ServiceManager manager, Document document, Logger logger) {
         this.document = document;
-        this.session = session;
         this.manager = manager;
         ContainerUtil.enableLogging(this, logger);
     }
-
-    private Session session;
 
     private ServiceManager manager;
 
@@ -76,7 +73,15 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
      * @return The repository session.
      */
     public Session getSession() {
-        return session;
+        try {
+            return getDocument().getContentNode()
+                    .getContent()
+                    .getArea()
+                    .getPublication()
+                    .getSession();
+        } catch (RepositoryException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private Document document;
@@ -91,9 +96,13 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
     protected String getWorkflowSchema() {
         String workflowName = null;
         try {
-            ResourceType doctype = document.getResourceType();
+            ContentNode node = document.getContentNode();
+            DocumentType doctype = node.getDocumentType();
             if (doctype != null) {
-                workflowName = document.getPublication().getWorkflowSchema(doctype);
+                workflowName = node.getContent()
+                        .getArea()
+                        .getPublication()
+                        .getWorkflowSchema(doctype);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -109,9 +118,9 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
     public Version[] getVersions() {
         if (this.versions == null) {
             try {
-                MetaData meta = this.document.getMetaDataManager().getLenyaMetaData();
+                MetaData meta = this.document.getMetaData("workflow");
 
-                String[] versionStrings = meta.getValues(LenyaMetaData.ELEMENT_WORKFLOW_VERSION);
+                String[] versionStrings = meta.getValues("version");
                 this.versions = new Version[versionStrings.length];
                 for (int i = 0; i < versionStrings.length; i++) {
                     String string = versionStrings[i];
@@ -123,7 +132,7 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
                     this.versions[number] = version;
                 }
 
-            } catch (DocumentException e) {
+            } catch (RepositoryException e) {
                 throw new RuntimeException();
             }
         }
@@ -157,10 +166,9 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
 
         String string = number + " " + encodeVersion(workflow, version);
         try {
-            MetaData meta = this.document.getMetaDataManager().getLenyaMetaData();
-            meta.addValue(LenyaMetaData.ELEMENT_WORKFLOW_VERSION, string);
-            meta.save();
-        } catch (DocumentException e) {
+            MetaData meta = this.document.getMetaData("workflow");
+            meta.addValue("version", string);
+        } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
     }

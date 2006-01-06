@@ -25,10 +25,10 @@ import java.util.Map;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.cocoon.environment.Request;
+import org.apache.lenya.cms.repo.Document;
+import org.apache.lenya.cms.repo.Session;
+import org.apache.lenya.cms.repo.impl.RepositoryUtil;
 import org.apache.lenya.cms.workflow.DocumentWorkflowable;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
@@ -39,7 +39,7 @@ import org.apache.lenya.workflow.WorkflowManager;
  * 
  * @version $Id$
  */
-public class WorkflowModule extends AbstractPageEnvelopeModule {
+public class WorkflowModule extends AbstractServiceableInputModule {
 
     /**
      * <code>STATE</code> The state
@@ -68,12 +68,11 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
         WorkflowManager wfManager = null;
 
         try {
-            PageEnvelope envelope = getEnvelope(objectModel, name);
-            Document document = envelope.getDocument();
-            if (document != null && document.exists()) {
+            Request request = ObjectModelHelper.getRequest(objectModel);
+            Document document = RepositoryUtil.getDocument(this.manager, request, getLogger());
+            if (document != null) {
                 wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-                Session session = RepositoryUtil.getSession(ObjectModelHelper.getRequest(objectModel),
-                        getLogger());
+                Session session = RepositoryUtil.getSession(this.manager, request, getLogger());
                 DocumentWorkflowable workflowable = new DocumentWorkflowable(this.manager,
                         session,
                         document,

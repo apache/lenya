@@ -18,7 +18,7 @@ package org.apache.lenya.cms.publication.templating;
 
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.repo.Publication;
 
 /**
  * <p>

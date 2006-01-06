@@ -48,6 +48,12 @@ public interface Session {
      * Saves the session.
      * @throws RepositoryException if an error occurs.
      */
-    public void save() throws RepositoryException;
+    void save() throws RepositoryException;
+    
+    /**
+     * @return The repository this session belongs to.
+     * @throws RepositoryException if an error occurs.
+     */
+    Repository getRepository() throws RepositoryException;
     
 }

@@ -21,8 +21,7 @@ import java.util.Map;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.usecase.UsecaseException;
 
 /**
@@ -40,13 +39,10 @@ public class Login extends AccessControlUsecase {
      */
     protected void initParameters() {
         super.initParameters();
-
-        Publication publication;
-
         try {
-            publication = PublicationUtil.getPublicationFromUrl(this.manager, getSourceURL());
-            if (publication.exists()) {
-                setParameter(PUBLICATION_ID, publication.getId());
+            String pubId = new URLInformation(getSourceURL()).getPublicationId();
+            if (getSession().existsPublication(pubId)) {
+                setParameter(PUBLICATION_ID, pubId);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);

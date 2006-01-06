@@ -19,9 +19,6 @@
 
 package org.apache.lenya.cms.cocoon.acting;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
@@ -30,11 +27,10 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentDoesNotExistException;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.repo.Document;
+import org.apache.lenya.cms.repo.Session;
+import org.apache.lenya.cms.repo.impl.RepositoryUtil;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -67,21 +63,14 @@ public class LanguageExistsAction extends ServiceableAction {
             Parameters parameters) throws Exception {
 
         Request request = ObjectModelHelper.getRequest(objectModel);
-        Session session = RepositoryUtil.getSession(request, getLogger());
-        DocumentIdentityMap map = new DocumentIdentityMap(session, this.manager, getLogger());
+        Session session = RepositoryUtil.getSession(this.manager, request, getLogger());
 
         String url = ServletHelper.getWebappURI(request);
-        Document doc = map.getFromURL(url);
-        String language = doc.getLanguage();
+        Document doc = RepositoryUtil.getDocument(session, url);
 
-        if (!doc.existsInAnyLanguage()) {
-            throw new DocumentDoesNotExistException("Document " + doc.getId()
+        if (doc == null) {
+            throw new DocumentDoesNotExistException("Document for URL " + url
                     + " does not exist. Check sitetree, it might need to be reloaded.");
-        }
-        List availableLanguages = Arrays.asList(doc.getLanguages());
-
-        if (availableLanguages.contains(language)) {
-            return Collections.unmodifiableMap(Collections.EMPTY_MAP);
         }
         return null;
     }

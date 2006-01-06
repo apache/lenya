@@ -22,11 +22,7 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.AccessController;
@@ -37,13 +33,11 @@ import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.ac.impl.PolicyAuthorizer;
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.publication.Proxy;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.proxy.Proxy;
+import org.apache.lenya.cms.repo.Document;
+import org.apache.lenya.cms.repo.Publication;
+import org.apache.lenya.cms.repo.impl.RepositoryUtil;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * Input module for getting the proxied URL of a document.
@@ -59,9 +53,7 @@ import org.apache.lenya.cms.repository.Session;
  * 
  * @version $Id:$
  */
-public class ProxyUrlModule extends AbstractInputModule implements Serviceable {
-
-    private ServiceManager manager;
+public class ProxyUrlModule extends AbstractServiceableInputModule {
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
@@ -90,19 +82,21 @@ public class ProxyUrlModule extends AbstractInputModule implements Serviceable {
         String value = null;
         try {
             Request request = ObjectModelHelper.getRequest(objectModel);
-            Session session = RepositoryUtil.getSession(request, getLogger());
-            DocumentIdentityMap map = new DocumentIdentityMap(session, this.manager, getLogger());
-            Publication publication = PublicationUtil.getPublication(this.manager, request);
+            Publication publication = RepositoryUtil.getPublication(this.manager,
+                    request,
+                    getLogger());
 
-            Document doc = map.get(publication, area, documentId, language);
+            Document doc = publication.getArea(area)
+                    .getContent()
+                    .getNode(documentId)
+                    .getDocument(language);
 
             // Get proxy for document
             serviceSelector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
                     + "Selector");
-            acResolver = (AccessControllerResolver) serviceSelector
-                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
+            acResolver = (AccessControllerResolver) serviceSelector.select(AccessControllerResolver.DEFAULT_RESOLVER);
 
-            String url = doc.getCanonicalWebappURL();
+            String url = ServletHelper.getWebappURI(request);
             AccessController accessController = acResolver.resolveAccessController(url);
             if (accessController instanceof DefaultAccessController) {
                 DefaultAccessController defaultAccessController = (DefaultAccessController) accessController;
@@ -118,14 +112,14 @@ public class ProxyUrlModule extends AbstractInputModule implements Serviceable {
 
             Policy policy = policyManager.getPolicy(accreditableManager, url);
 
-            Proxy proxy = doc.getPublication().getProxy(doc, policy.isSSLProtected());
+            Proxy proxy = publication.getProxy(doc, policy.isSSLProtected());
 
             if (proxy != null) {
                 value = proxy.getURL(doc);
             } else {
                 // Take server name and port from request.
                 value = "http://" + request.getServerName() + ":" + request.getServerPort()
-                        + request.getContextPath() + doc.getCanonicalWebappURL();
+                        + request.getContextPath() + url;
             }
 
         } catch (Exception e) {
@@ -153,10 +147,4 @@ public class ProxyUrlModule extends AbstractInputModule implements Serviceable {
         return objects;
     }
 
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
-    }
 }

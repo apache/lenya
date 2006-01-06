@@ -16,14 +16,17 @@
  */
 package org.apache.lenya.cms.jcr;
 
+import java.io.File;
+
 import org.apache.lenya.cms.repo.Area;
-import org.apache.lenya.cms.repo.Publication;
 import org.apache.lenya.cms.repo.RepositoryException;
+import org.apache.lenya.cms.repo.Session;
+import org.apache.lenya.cms.repo.impl.AbstractPublication;
 
 /**
  * JCR publication.
  */
-public class JCRPublication implements Publication {
+public class JCRPublication extends AbstractPublication {
 
     private String pubId;
     private JCRSession session;
@@ -42,20 +45,44 @@ public class JCRPublication implements Publication {
         return this.pubId;
     }
 
-    protected JCRSession getSession() {
+    public Session getSession() {
+        return this.session;
+    }
+
+    protected JCRSession getJCRSession() {
         return this.session;
     }
 
     public Area getArea(String area) throws RepositoryException {
-        return getSession().getArea(this, area);
+        return getJCRSession().getArea(this, area);
     }
 
     public Area addArea(String area) throws RepositoryException {
-        return getSession().addArea(this, area);
+        return getJCRSession().addArea(this, area);
     }
 
     public boolean existsArea(String area) throws RepositoryException {
-        return getSession().existsArea(this, area);
+        return getJCRSession().existsArea(this, area);
+    }
+
+    public Area[] getAreas() throws RepositoryException {
+        return getJCRSession().getAreas(this);
+    }
+
+    /**
+     * @return The configuration file (publication.xconf).
+     */
+    public File getConfigurationFile() {
+        JCRRepository repo;
+        try {
+            repo = (JCRRepository) getSession().getRepository();
+        } catch (RepositoryException e) {
+            throw new RuntimeException(e);
+        }
+        String pubPath = ("lenya/pubs/" + getPublicationId()).replace('/', File.separatorChar);
+        File pubDir = new File(repo.getWebappDirectory(), pubPath);
+        File configFile = new File(pubDir, CONFIGURATION_FILE);
+        return configFile;
     }
 
 }

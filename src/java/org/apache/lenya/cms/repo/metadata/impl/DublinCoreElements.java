@@ -14,24 +14,16 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.repository;
-
-import org.apache.lenya.transaction.IdentifiableFactory;
+package org.apache.lenya.cms.repo.metadata.impl;
 
 /**
- * Factory to produce repository nodes.
- * @version $Id:$
+ * Dublin core elements.
  */
-public interface NodeFactory extends IdentifiableFactory {
-
-    /**
-     * The role of the service.
-     */
-    String ROLE = NodeFactory.class.getName();
+public interface DublinCoreElements {
     
     /**
-     * @param session The session.
+     * The name.
      */
-    void setSession(Session session);
+    String NAME = "DublinCoreElements";
 
 }

@@ -29,9 +29,8 @@ import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.repo.Publication;
+import org.apache.lenya.cms.repo.RepositoryException;
 
 /**
  * Manager for publication templates.
@@ -48,7 +47,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.templating.PublicationTemplateManager#visit(org.apache.lenya.cms.publication.Publication,
+     * @see org.apache.lenya.cms.publication.templating.PublicationTemplateManager#visit(org.apache.lenya.cms.repo.Publication,
      *      java.lang.String, org.apache.lenya.cms.publication.templating.SourceVisitor)
      */
     public void visit(Publication publication, String path, SourceVisitor visitor) {
@@ -129,13 +128,15 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
      * @return A string.
      */
     public static String getBaseURI(Publication publication) {
-        String publicationUri = "context://" + Publication.PUBLICATION_PREFIX_URI + "/"
-                + publication.getId();
-        return publicationUri;
+        try {
+            return "context://lenya/pubs/" + publication.getPublicationId();
+        } catch (RepositoryException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.templating.PublicationTemplateManager#visit(org.apache.lenya.cms.publication.Publication,
+     * @see org.apache.lenya.cms.publication.templating.PublicationTemplateManager#visit(org.apache.lenya.cms.repo.Publication,
      *      org.apache.lenya.cms.publication.templating.PublicationVisitor)
      */
     public void visit(Publication publication, PublicationVisitor visitor) {
@@ -175,10 +176,10 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
         String[] templateIds = publication.getTemplateIds();
         for (int i = 0; i < templateIds.length; i++) {
             try {
-                Publication template = PublicationUtil.getPublication(this.manager, templateIds[i]);
+                Publication template = publication.getSession().getPublication(templateIds[i]);
                 Publication[] templateTemplates = getPublications(template);
                 publications.addAll(Arrays.asList(templateTemplates));
-            } catch (PublicationException e) {
+            } catch (RepositoryException e) {
                 throw new RuntimeException(e);
             }
         }
@@ -187,7 +188,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.templating.PublicationTemplateManager#getSelectableHint(org.apache.lenya.cms.publication.Publication,
+     * @see org.apache.lenya.cms.publication.templating.PublicationTemplateManager#getSelectableHint(org.apache.lenya.cms.repo.Publication,
      *      org.apache.avalon.framework.service.ServiceSelector, java.lang.String)
      */
     public Object getSelectableHint(Publication publication, ServiceSelector selector,
@@ -196,7 +197,8 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
         Object selectableHint = null;
 
         try {
-            ExistingServiceVisitor resolver = new ExistingServiceVisitor(selector, originalHint,
+            ExistingServiceVisitor resolver = new ExistingServiceVisitor(selector,
+                    originalHint,
                     getLogger());
             visit(publication, resolver);
             selectableHint = resolver.getSelectableHint();
@@ -239,10 +241,15 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
         private Logger logger;
 
         /**
-         * @see org.apache.lenya.cms.publication.templating.PublicationVisitor#visit(org.apache.lenya.cms.publication.Publication)
+         * @see org.apache.lenya.cms.publication.templating.PublicationVisitor#visit(org.apache.lenya.cms.repo.Publication)
          */
         public void visit(Publication publication) {
-            String publicationHint = publication.getId() + "/" + this.hint;
+            String publicationHint;
+            try {
+                publicationHint = publication.getPublicationId() + "/" + this.hint;
+            } catch (RepositoryException e) {
+                throw new RuntimeException(e);
+            }
             boolean success = false;
             if (this.selector.isSelectable(publicationHint)) {
                 this.selectableHint = publicationHint;

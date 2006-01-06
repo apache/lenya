@@ -35,11 +35,11 @@ public interface Site {
 
     /**
      * @param name The name.
-     * @param contentNode The content node which the site node refers to.
+     * @param document The document which the site node refers to.
      * @return a site node.
      * @throws RepositoryException if a node with this path already exists.
      */
-    SiteNode addChild(String name, ContentNode contentNode) throws RepositoryException;
+    SiteNode addChild(String name, Document document) throws RepositoryException;
 
     /**
      * @param name The name.
@@ -69,5 +69,19 @@ public interface Site {
      *             does not exist.
      */
     void move(String srcAbsPath, String destAbsPath) throws RepositoryException;
+    
+    /**
+     * @param document A document.
+     * @return The nodes referencing the document.
+     * @throws RepositoryException if an error occurs.
+     */
+    SiteNode[] getReferences(Document document) throws RepositoryException;
+    
+    /**
+     * @param document A document.
+     * @return The first node referencing the document or <code>null</code> if the document is not referenced.
+     * @throws RepositoryException if an error occurs.
+     */
+    SiteNode getFirstReference(Document document) throws RepositoryException;
 
 }

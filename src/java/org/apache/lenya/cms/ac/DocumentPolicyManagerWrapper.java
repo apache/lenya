@@ -19,8 +19,6 @@
 
 package org.apache.lenya.cms.ac;
 
-import java.util.Map;
-
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
@@ -31,9 +29,6 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
-import org.apache.cocoon.components.CocoonComponentManager;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.AccreditableManager;
@@ -43,12 +38,14 @@ import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.ac.impl.DefaultPolicy;
 import org.apache.lenya.ac.impl.InheritingPolicyManager;
 import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.publication.URLUtil;
+import org.apache.lenya.cms.repo.Area;
+import org.apache.lenya.cms.repo.Document;
+import org.apache.lenya.cms.repo.Publication;
+import org.apache.lenya.cms.repo.Session;
+import org.apache.lenya.cms.repo.SiteNode;
+import org.apache.lenya.cms.repo.impl.RepositoryUtil;
 
 /**
  * A PolicyManager which is capable of mapping all URLs of a document to the appropriate canonical
@@ -78,27 +75,36 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Resolving policy for webapp URL [" + webappUrl + "]");
         }
-        
-        
-        Publication publication = getPublication(webappUrl);
+
         String url = null;
         ContextUtility contextUtility = null;
         try {
-            contextUtility = (ContextUtility)serviceManager.lookup(ContextUtility.ROLE);
-            Session session = RepositoryUtil.getSession(contextUtility.getRequest(), getLogger());
-            DocumentIdentityMap map = new DocumentIdentityMap(session,
-                    getServiceManager(),
+            contextUtility = (ContextUtility) serviceManager.lookup(ContextUtility.ROLE);
+            Session session = RepositoryUtil.getSession(serviceManager,
+                    contextUtility.getRequest(),
                     getLogger());
-            if (map.isDocument(webappUrl)) {
-                Document document = map.getFromURL(webappUrl);
-                if (document.existsInAnyLanguage()) {
-                    url = "/" + document.getArea() + document.getId();
-                    if (getLogger().isDebugEnabled()) {
-                        getLogger().debug("    Document exists");
-                        getLogger().debug("    Document ID: [" + document.getId() + "]");
-                    }
+            
+            String pubId = new URLInformation(webappUrl).getPublicationId();
+            Publication pub = session.getPublication(pubId);
+            
+            if (URLUtil.existsDocument(session, webappUrl)) {
+                Document document = URLUtil.getDocument(session, webappUrl);
+                Area area = document.getContentNode().getContent().getArea();
+                SiteNode siteNode = area.getSite().getFirstReference(document);
+                url = "/" + area + siteNode.getPath();
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("    Document exists");
+                    getLogger().debug("    URL: [" + url + "]");
                 }
             }
+
+            if (url == null) {
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("    Document does not exist.");
+                }
+                url = webappUrl.substring(("/" + pub.getPublicationId()).length());
+            }
+
         } catch (ServiceException e) {
             throw new AccessControlException("Error looking up ContextUtility component", e);
         } catch (Exception e) {
@@ -109,33 +115,10 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
             }
         }
 
-        if (url == null) {
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("    Document does not exist.");
-            }
-            url = webappUrl.substring(("/" + publication.getId()).length());
-        }
-
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("    Using URL: [" + url + "]");
         }
         return url;
-    }
-
-    /**
-     * Returns the publication for a certain URL.
-     * @param url The webapp url.
-     * @return A publication.
-     * @throws AccessControlException when the publication could not be created.
-     */
-    protected Publication getPublication(String url) throws AccessControlException {
-        getLogger().debug("Building publication");
-
-        try {
-            return PublicationUtil.getPublicationFromUrl(this.serviceManager, url);
-        } catch (Exception e) {
-            throw new AccessControlException(e);
-        }
     }
 
     private ServiceManager serviceManager;

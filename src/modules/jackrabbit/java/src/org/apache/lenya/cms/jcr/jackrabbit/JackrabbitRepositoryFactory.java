@@ -42,7 +42,7 @@ public class JackrabbitRepositoryFactory implements RepositoryFactory {
             File configFile = new File(repoDirectory, configFilePath);
             RepositoryConfig repoConfig = RepositoryConfig.create(configFile.getAbsolutePath(),
                     repoDirectory.getAbsolutePath());
-            JCRRepository repo = new JCRRepository(RepositoryImpl.create(repoConfig));
+            JCRRepository repo = new JCRRepository(RepositoryImpl.create(repoConfig), webappDirectory);
 
             return repo;
         } catch (Exception e) {

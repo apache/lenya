@@ -20,10 +20,14 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.templating.ExistingSourceResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
+import org.apache.lenya.cms.repo.Publication;
+import org.apache.lenya.cms.repo.RepositoryException;
+import org.apache.lenya.cms.repo.Session;
+import org.apache.lenya.cms.repo.impl.RepositoryUtil;
 
 /**
  * This module uses publication templating to resolve the real path for a resource. The current
@@ -33,7 +37,7 @@ import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
  * 
  * @version $Id$
  */
-public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModule {
+public class PublicationTemplateFallbackModule extends AbstractServiceableInputModule {
 
     /**
      * Ctor.
@@ -57,8 +61,11 @@ public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModul
         PublicationTemplateManager templateManager = null;
 
         try {
+
+            Request request = ObjectModelHelper.getRequest(objectModel);
+
             templateManager = (PublicationTemplateManager) this.manager.lookup(PublicationTemplateManager.ROLE);
-            Publication publication;
+            Publication publication = null;
             String targetUri = null;
 
             // check if publication ID is provided in attribute name
@@ -75,22 +82,25 @@ public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModul
                             + "]");
                 }
 
-                publication = PublicationUtil.getPublication(this.manager, publicationId);
+                Session session = RepositoryUtil.getSession(this.manager, request, getLogger());
+                if (session.existsPublication(publicationId)) {
+                    publication = session.getPublication(publicationId);
+                }
             } else {
-                publication = PublicationUtil.getPublication(this.manager, objectModel);
+                publication = RepositoryUtil.getPublication(this.manager, request, getLogger());
                 targetUri = name;
                 if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("Publication resolved from request: [" + publication.getId()
-                            + "]");
+                    getLogger().debug("Publication resolved from request: ["
+                            + publication.getPublicationId() + "]");
                 }
             }
-            if (publication.exists()) {
+            if (publication != null) {
                 ExistingSourceResolver resolver = new ExistingSourceResolver();
                 templateManager.visit(publication, targetUri, resolver);
                 resolvedUri = resolver.getURI();
             } else {
-                //outside of a publication
-            	resolvedUri = "context://" + targetUri;
+                // outside of a publication
+                resolvedUri = "context://" + targetUri;
             }
         } catch (final Exception e) {
             String message = "Resolving path [" + name + "] failed: ";
@@ -110,9 +120,11 @@ public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModul
      * @return A string.
      */
     public static String getBaseURI(Publication publication) {
-        String publicationUri = "context://" + Publication.PUBLICATION_PREFIX_URI + "/"
-                + publication.getId();
-        return publicationUri;
+        try {
+            return "context://lenya/pubs/" + publication.getPublicationId();
+        } catch (RepositoryException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -121,9 +133,7 @@ public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModul
      * @return A string.
      */
     protected String getLenyaBaseURI(Publication publication) {
-        String publicationUri = "context://" + Publication.PUBLICATION_PREFIX_URI + "/"
-                + publication.getId() + "/lenya";
-        return publicationUri;
+        return getBaseURI(publication) + "/lenya";
     }
 
 }

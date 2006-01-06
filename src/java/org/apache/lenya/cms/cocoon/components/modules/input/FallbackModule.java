@@ -42,7 +42,7 @@ import org.apache.excalibur.source.SourceUtil;
  * 
  * @version $Id$
  */
-public class FallbackModule extends AbstractPageEnvelopeModule {
+public class FallbackModule extends AbstractServiceableInputModule {
 
     private String[] baseUris;
 

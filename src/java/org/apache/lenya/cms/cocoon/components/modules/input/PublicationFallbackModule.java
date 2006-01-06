@@ -20,8 +20,10 @@ package org.apache.lenya.cms.cocoon.components.modules.input;
 import java.util.Map;
 
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.Publication;
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
+import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * Publication Fallback Module
@@ -43,11 +45,11 @@ public class PublicationFallbackModule extends FallbackModule {
         String[] superUris = super.getBaseURIs(objectModel, name);
         String[] uris = new String[superUris.length + 1];
 
-        PageEnvelope envelope = getEnvelope(objectModel, name);
-        String publicationId = envelope.getPublication().getId();
+        Request request = ObjectModelHelper.getRequest(objectModel);
+        String url = ServletHelper.getWebappURI(request);
+        String publicationId = new URLInformation(url).getPublicationId();
 
-        String publicationUri = "context://" + Publication.PUBLICATION_PREFIX_URI + "/"
-                + publicationId + "/lenya";
+        String publicationUri = "context://lenya/pubs/" + publicationId + "/lenya";
         uris[0] = publicationUri;
 
         for (int i = 0; i < superUris.length; i++) {

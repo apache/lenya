@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.jcr.Node;
+import javax.jcr.Property;
+import javax.jcr.PropertyIterator;
 import javax.jcr.Session;
 
 import org.apache.lenya.cms.jcr.mapping.AbstractNodeProxy;
@@ -27,7 +30,7 @@ import org.apache.lenya.cms.jcr.mapping.NamePathElement;
 import org.apache.lenya.cms.jcr.mapping.Path;
 import org.apache.lenya.cms.jcr.mapping.PathElement;
 import org.apache.lenya.cms.repo.Area;
-import org.apache.lenya.cms.repo.ContentNode;
+import org.apache.lenya.cms.repo.Document;
 import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.cms.repo.Site;
 import org.apache.lenya.cms.repo.SiteNode;
@@ -54,12 +57,12 @@ public class SiteProxy extends AbstractNodeProxy implements Site {
         return (SiteNode[]) nodes.toArray(new SiteNode[nodes.size()]);
     }
 
-    public SiteNode addChild(String name, ContentNode contentNode) throws RepositoryException {
+    public SiteNode addChild(String name, Document document) throws RepositoryException {
         SiteNodeProxy proxy = (SiteNodeProxy) getRepository().addByName(getAbsolutePath(),
                 SiteNodeProxy.NODE_TYPE,
                 SiteNodeProxy.class.getName(),
                 name);
-        proxy.setContentNode((ContentNodeProxy) contentNode);
+        proxy.setDocument((DocumentProxy) document);
         return proxy;
     }
 
@@ -102,6 +105,36 @@ public class SiteProxy extends AbstractNodeProxy implements Site {
             session.move(srcPath, destPath);
         } catch (javax.jcr.RepositoryException e) {
             throw new RepositoryException(e);
+        }
+    }
+
+    public SiteNode[] getReferences(Document document) throws RepositoryException {
+        List siteNodes = new ArrayList();
+        DocumentProxy proxy = (DocumentProxy) document;
+
+        try {
+            for (PropertyIterator references = proxy.getNode().getReferences(); references.hasNext();) {
+                Property property = references.nextProperty();
+                Node node = property.getParent();
+                if (node.isNodeType(SiteNodeProxy.NODE_TYPE)) {
+                    SiteNode siteNode = (SiteNode) getRepository().getProxy(node);
+                    siteNodes.add(siteNode);
+                }
+            }
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
+
+        return (SiteNode[]) siteNodes.toArray(new SiteNode[siteNodes.size()]);
+    }
+
+    public SiteNode getFirstReference(Document document) throws RepositoryException {
+        SiteNode[] nodes = getReferences(document);
+        if (nodes.length > 0) {
+            return nodes[0];
+        }
+        else {
+            return null;
         }
     }
 

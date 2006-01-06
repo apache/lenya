@@ -20,6 +20,7 @@ import javax.jcr.Node;
 import javax.jcr.Session;
 import javax.jcr.query.InvalidQueryException;
 
+import org.apache.lenya.cms.jcr.JCRSession;
 import org.apache.lenya.cms.jcr.util.Assertion;
 import org.apache.lenya.cms.repo.DocumentTypeRegistry;
 import org.apache.lenya.cms.repo.RepositoryException;
@@ -32,21 +33,31 @@ public class RepositoryFacade {
 
     /**
      * Ctor.
+     * @param jcrSession The repo session.
      * @param session The JCR session.
      * @param doctypeRegistry The document type registry.
      * @param metaDataRegistry The meta data registry.
      */
-    public RepositoryFacade(Session session, DocumentTypeRegistry doctypeRegistry,
+    public RepositoryFacade(JCRSession jcrSession, Session session, DocumentTypeRegistry doctypeRegistry,
             MetaDataRegistry metaDataRegistry) {
         this.session = session;
+        this.jcrSession = jcrSession;
         this.doctypeRegistry = doctypeRegistry;
         this.metaDataRegistry = metaDataRegistry;
     }
 
+    private JCRSession jcrSession;
     private Session session;
     private DocumentTypeRegistry doctypeRegistry;
 
     protected String CLASS_PROPERTY = "lnt:className";
+    
+    /**
+     * @return The repo session.
+     */
+    public JCRSession getRepositorySession() {
+        return this.jcrSession;
+    }
 
     /**
      * @return The JCR session.
@@ -239,7 +250,12 @@ public class RepositoryFacade {
 
     }
 
-    protected NodeProxy getProxy(Node node) throws RepositoryException {
+    /**
+     * @param node A JCR node.
+     * @return The corresponding proxy.
+     * @throws RepositoryException if an error occurs.
+     */
+    public NodeProxy getProxy(Node node) throws RepositoryException {
         return createProxy(node);
     }
 

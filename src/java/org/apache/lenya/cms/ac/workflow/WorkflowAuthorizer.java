@@ -27,10 +27,9 @@ import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Authorizer;
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.repo.Document;
+import org.apache.lenya.cms.repo.Session;
+import org.apache.lenya.cms.repo.impl.RepositoryUtil;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.util.ServletHelper;
 
@@ -79,12 +78,10 @@ public class WorkflowAuthorizer extends AbstractLogEnabled implements Authorizer
 
             try {
                 resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-                Session session = RepositoryUtil.getSession(request, getLogger());
-                DocumentIdentityMap map = new DocumentIdentityMap(session,
-                        this.manager,
-                        getLogger());
-                if (map.isDocument(webappUrl)) {
-                    Document document = map.getFromURL(webappUrl);
+                Session session = RepositoryUtil.getSession(this.manager, request, getLogger());
+                
+                Document document = RepositoryUtil.getDocument(session, webappUrl);
+                if (document != null) {
                     authorized = WorkflowUtil.canInvoke(this.manager,
                             session,
                             getLogger(),

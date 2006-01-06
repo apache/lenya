@@ -20,6 +20,7 @@ import org.apache.lenya.cms.jcr.mapping.AbstractNodeProxy;
 import org.apache.lenya.cms.jcr.mapping.NamePathElement;
 import org.apache.lenya.cms.jcr.mapping.Path;
 import org.apache.lenya.cms.jcr.mapping.PathElement;
+import org.apache.lenya.cms.repo.Content;
 import org.apache.lenya.cms.repo.ContentNode;
 import org.apache.lenya.cms.repo.Document;
 import org.apache.lenya.cms.repo.DocumentType;
@@ -113,6 +114,10 @@ public class ContentNodeProxy extends AbstractNodeProxy implements ContentNode {
      */
     public void setDocumentType(String documentType) throws RepositoryException {
         setProperty(DOCUMENT_TYPE_PROPERTY, documentType);
+    }
+
+    public Content getContent() throws RepositoryException {
+        return (Content) getParentProxy();
     }
 
 }

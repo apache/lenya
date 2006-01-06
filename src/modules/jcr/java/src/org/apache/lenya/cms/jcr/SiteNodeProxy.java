@@ -27,7 +27,7 @@ import org.apache.lenya.cms.jcr.mapping.AbstractNodeProxy;
 import org.apache.lenya.cms.jcr.mapping.NodeProxy;
 import org.apache.lenya.cms.jcr.mapping.Path;
 import org.apache.lenya.cms.jcr.mapping.PathElement;
-import org.apache.lenya.cms.repo.ContentNode;
+import org.apache.lenya.cms.repo.Document;
 import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.cms.repo.Site;
 import org.apache.lenya.cms.repo.SiteNode;
@@ -39,7 +39,7 @@ public class SiteNodeProxy extends AbstractNodeProxy implements SiteNode {
 
     protected static final String NODE_NAME = "lenya:siteNode";
     protected static final String NODE_TYPE = "lnt:siteNode";
-    protected static final String CONTENT_NODE_PROPERTY = "lenya:contentNode";
+    protected static final String DOCUMENT_PROPERTY = "lenya:document";
 
     public SiteNode[] getChildren() throws RepositoryException {
         try {
@@ -59,12 +59,12 @@ public class SiteNodeProxy extends AbstractNodeProxy implements SiteNode {
         return (SiteNode) getRepository().getProxy(path);
     }
 
-    public SiteNode addChild(String name, ContentNode contentNode) throws RepositoryException {
+    public SiteNode addChild(String name, Document document) throws RepositoryException {
         SiteNodeProxy proxy = (SiteNodeProxy) getRepository().addByName(getAbsolutePath(),
                 SiteNodeProxy.NODE_TYPE,
                 SiteNodeProxy.class.getName(),
                 name);
-        proxy.setContentNode((ContentNodeProxy) contentNode);
+        proxy.setDocument((DocumentProxy) document);
         return proxy;
     }
 
@@ -78,18 +78,13 @@ public class SiteNodeProxy extends AbstractNodeProxy implements SiteNode {
         return site.getAbsolutePath().append(getPathElement(getName()));
     }
 
-    public ContentNode getContentNode() throws RepositoryException {
-        try {
-            Node node = getPropertyNode(CONTENT_NODE_PROPERTY);
-            String id = node.getUUID();
-            return getSite().getArea().getContent().getNode(id);
-        } catch (javax.jcr.RepositoryException e) {
-            throw new RepositoryException(e);
-        }
+    public Document getDocument() throws RepositoryException {
+        Node node = getPropertyNode(DOCUMENT_PROPERTY);
+        return (Document) getRepository().getProxy(node);
     }
 
-    protected void setContentNode(ContentNodeProxy proxy) throws RepositoryException {
-        setProperty(CONTENT_NODE_PROPERTY, proxy.getNode());
+    protected void setDocument(DocumentProxy proxy) throws RepositoryException {
+        setProperty(DOCUMENT_PROPERTY, proxy.getNode());
     }
 
     public SiteNode getParent() throws RepositoryException {

@@ -28,13 +28,10 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.lenya.ac.AccessControlException;
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.repo.Document;
+import org.apache.lenya.cms.repo.Publication;
+import org.apache.lenya.cms.repo.Session;
+import org.apache.lenya.cms.repo.impl.RepositoryUtil;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 
 /**
@@ -86,17 +83,12 @@ public class WorkflowInvokerAction extends ServiceableAction {
             getLogger().debug("    Event:       [" + eventName + "]");
         }
 
-        Publication pub;
         Request request = ObjectModelHelper.getRequest(objectModel);
 
-        try {
-            pub = PublicationUtil.getPublication(this.manager, request);
-        } catch (Exception e) {
-            throw new AccessControlException(e);
-        }
-        Session session = RepositoryUtil.getSession(request, getLogger());
-        DocumentIdentityMap map = new DocumentIdentityMap(session, this.manager, getLogger());
-        Document document = map.get(pub, area, documentId, language);
+        Session session = RepositoryUtil.getSession(this.manager, request, getLogger());
+        
+        Publication pub = RepositoryUtil.getPublication(this.manager, request, getLogger());
+        Document document = pub.getArea(area).getContent().getNode(documentId).getDocument(language);
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("    Invoking workflow event");

@@ -22,10 +22,9 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.cocoon.ProcessingException;
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repo.Document;
+import org.apache.lenya.cms.repo.impl.RepositoryUtil;
 import org.apache.lenya.cms.usecase.UsecaseException;
 
 import org.apache.lenya.ac.AccessControlException;
@@ -89,9 +88,8 @@ public class AccessControl extends AccessControlUsecase {
         try {
             URLInformation info = new URLInformation(getSourceURL());
             setParameter(COMPLETE_AREA, info.getCompleteArea());
-
-            DocumentIdentityMap map = getDocumentIdentityMap();
-            Document sourceDocument = map.getFromURL(getSourceURL());
+            
+            Document sourceDocument = RepositoryUtil.getDocument(getSession(), getSourceURL());
             setParameter(DOCUMENT, sourceDocument);
 
             setParameter(SSL, Boolean.toString(isSSLProtected()));
@@ -151,7 +149,7 @@ public class AccessControl extends AccessControlUsecase {
         super.doCheckPreconditions();
         URLInformation info = new URLInformation(getSourceURL());
         String acArea = getParameterAsString(AC_AREA);
-        if (!acArea.equals(Publication.LIVE_AREA) && !info.getArea().equals(acArea)) {
+        if (!acArea.equals("live") && !info.getArea().equals(acArea)) {
             addErrorMessage("This usecase can only be invoked in the configured area.");
         }
     }

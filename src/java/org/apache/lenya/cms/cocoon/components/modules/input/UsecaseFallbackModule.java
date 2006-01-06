@@ -23,19 +23,18 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.Publication;
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.templating.ExistingUsecaseResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManagerImpl;
+import org.apache.lenya.cms.repo.Publication;
+import org.apache.lenya.cms.repo.impl.RepositoryUtil;
 
 /**
  * Input module to resolve fallback usecases
  */
-public class UsecaseFallbackModule extends AbstractPageEnvelopeModule implements Serviceable {
+public class UsecaseFallbackModule extends AbstractServiceableInputModule {
 
     /**
      * Ctor.
@@ -56,12 +55,14 @@ public class UsecaseFallbackModule extends AbstractPageEnvelopeModule implements
         String resolvedSitemapUri = null;
 
         try {
-            PublicationTemplateManager templateManager = (PublicationTemplateManager) this._manager
+            PublicationTemplateManager templateManager = (PublicationTemplateManager) this.manager
                     .lookup(PublicationTemplateManager.ROLE);
-            PageEnvelope envelope = getEnvelope(objectModel, name);
-
+            
+            Request request = ObjectModelHelper.getRequest(objectModel);
+            Publication pub = RepositoryUtil.getPublication(this.manager, request, getLogger());
+            
             ExistingUsecaseResolver resolver = new ExistingUsecaseResolver(name);
-            templateManager.visit(envelope.getPublication(), resolver);
+            templateManager.visit(pub, resolver);
 
             Publication publication = resolver.getPublication();
             if (publication != null) {
@@ -77,13 +78,4 @@ public class UsecaseFallbackModule extends AbstractPageEnvelopeModule implements
         return resolvedSitemapUri;
     }
  
-    private ServiceManager _manager;
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager mymanager) throws ServiceException {
-        this._manager = mymanager;
-    }
-
 }

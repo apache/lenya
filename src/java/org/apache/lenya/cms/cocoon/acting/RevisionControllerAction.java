@@ -27,18 +27,16 @@ import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RevisionController;
-import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repo.Document;
+import org.apache.lenya.cms.repo.Publication;
+import org.apache.lenya.cms.repo.impl.RepositoryUtil;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * Revision controller action.
@@ -51,7 +49,6 @@ public class RevisionControllerAction extends ServiceableAction {
     private String backupDirectory = null;
     private RevisionController rc = null;
     private String username = null;
-    private String filename = null;
 
     /**
      * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector,
@@ -69,39 +66,27 @@ public class RevisionControllerAction extends ServiceableAction {
             return null;
         }
 
-        PageEnvelope envelope = null;
         Publication publication;
-
-        try {
-            publication = PublicationUtil.getPublication(this.manager, request);
-        } catch (Exception e) {
-            throw new AccessControlException(e);
-        }
-        org.apache.lenya.cms.repository.Session repoSession = RepositoryUtil.getSession(request,
+        org.apache.lenya.cms.repo.Session repoSession = RepositoryUtil.getSession(this.manager,
+                request,
                 getLogger());
-        DocumentIdentityMap map = new DocumentIdentityMap(repoSession, this.manager, getLogger());
-        Document document = null;
 
-        try {
-            publication = PublicationUtil.getPublication(this.manager, objectModel);
-            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel, publication);
-            document = envelope.getDocument();
-        } catch (Exception e) {
-            getLogger().error("Resolving page envelope failed: ", e);
-            throw e;
-        }
+        String url = ServletHelper.getWebappURI(request);
+        String pubId = new URLInformation(url).getPublicationId();
+        publication = repoSession.getPublication(pubId);
+        Document document = RepositoryUtil.getDocument(repoSession, url);
 
         // get Parameters for RC
-        String publicationPath = publication.getDirectory().getCanonicalPath();
-        RCEnvironment rcEnvironment = RCEnvironment.getInstance(publication.getServletContext()
-                .getCanonicalPath());
+        String contextPath = SourceUtil.getRealPath(this.manager, "");
+        String pubPath = SourceUtil.getRealPath(this.manager, "lenya/pubs/" + pubId);
+        RCEnvironment rcEnvironment = RCEnvironment.getInstance(contextPath);
         this.rcmlDirectory = rcEnvironment.getRCMLDirectory();
-        this.rcmlDirectory = publicationPath + File.separator + this.rcmlDirectory;
+        this.rcmlDirectory = pubPath + File.separator + this.rcmlDirectory;
         this.backupDirectory = rcEnvironment.getBackupDirectory();
-        this.backupDirectory = publicationPath + File.separator + this.backupDirectory;
+        this.backupDirectory = pubPath + File.separator + this.backupDirectory;
 
         // Initialize Revision Controller
-        this.rc = new RevisionController(this.rcmlDirectory, this.backupDirectory, publicationPath);
+        this.rc = new RevisionController(this.rcmlDirectory, this.backupDirectory, pubPath);
         getLogger().debug("revision controller" + this.rc);
 
         // /Initialize Revision Controller
@@ -121,36 +106,35 @@ public class RevisionControllerAction extends ServiceableAction {
         // cannot be get from
         // the page-envelope
 
-        String documentid = document.getId();
-        int bx = documentid.lastIndexOf("-bxe");
+        int bx = url.lastIndexOf("-bxe");
 
         if (bx > 0) {
             String language = document.getLanguage();
 
-            int l = documentid.length();
+            int l = url.length();
             int bxLength = "-bxe".length();
-            int lang = documentid.lastIndexOf("_", bx);
+            int lang = url.lastIndexOf("_", bx);
             int langLength = bx - lang;
 
             if (bx > 0 && bx + bxLength <= l) {
-                documentid = documentid.substring(0, bx) + documentid.substring(bx + bxLength, l);
+                url = url.substring(0, bx) + url.substring(bx + bxLength, l);
 
                 if (lang > 0 && langLength + lang < l) {
-                    language = documentid.substring(lang + 1, lang + langLength);
-                    documentid = documentid.substring(0, lang)
-                            + documentid.substring(lang + langLength, l - bxLength);
+                    language = url.substring(lang + 1, lang + langLength);
+                    url = url.substring(0, lang)
+                            + url.substring(lang + langLength, l - bxLength);
                 }
             }
 
-            Document srcDoc = map.get(publication, document.getArea(), documentid, language);
-            File newFile = srcDoc.getFile();
-            this.filename = newFile.getCanonicalPath();
+            Document srcDoc = document.getContentNode().getDocument(language);
+            // TODO File newFile = srcDoc.getFile();
+            // TODO this.filename = newFile.getCanonicalPath();
 
         } else {
-            this.filename = document.getFile().getCanonicalPath();
+            // TODO this.filename = document.getFile().getCanonicalPath();
         }
 
-        this.filename = this.filename.substring(publicationPath.length());
+        this.filename = this.filename.substring(pubPath.length());
 
         this.username = null;
 
@@ -167,6 +151,8 @@ public class RevisionControllerAction extends ServiceableAction {
 
         return null;
     }
+    
+    private String filename;
 
     /**
      * Get the filename.

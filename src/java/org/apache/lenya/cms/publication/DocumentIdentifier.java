@@ -21,20 +21,20 @@ package org.apache.lenya.cms.publication;
  */
 public class DocumentIdentifier {
 
-    private Publication publication;
+    private String publicationId;
     private String area;
     private String id;
     private String language;
     
     /**
      * Ctor.
-     * @param publication The publication.
+     * @param publicationId The publication ID.
      * @param area The area.
-     * @param id The document ID.
+     * @param id The node ID.
      * @param language The language.
      */
-    public DocumentIdentifier(Publication publication, String area, String id, String language) {
-        this.publication = publication;
+    public DocumentIdentifier(String publicationId, String area, String id, String language) {
+        this.publicationId = publicationId;
         this.area = area;
         this.id = id;
         this.language = language;
@@ -48,9 +48,9 @@ public class DocumentIdentifier {
     }
 
     /**
-     * @return The document ID.
+     * @return The node ID.
      */
-    public String getId() {
+    public String getNodeId() {
         return id;
     }
 
@@ -64,8 +64,8 @@ public class DocumentIdentifier {
     /**
      * @return The publication.
      */
-    public Publication getPublication() {
-        return publication;
+    public String getPublicationId() {
+        return publicationId;
     }
     
     public boolean equals(Object obj) {
@@ -77,6 +77,6 @@ public class DocumentIdentifier {
     }
     
     protected String getKey() {
-        return this.publication.getId() + ":" + this.area + ":" + this.id + ":" + this.language;
+        return this.publicationId + ":" + this.area + ":" + this.id + ":" + this.language;
     }
 }

@@ -45,4 +45,10 @@ public interface Area {
      */
     String getAreaID() throws RepositoryException;
     
+    /**
+     * @return The publication the area belongs to.
+     * @throws RepositoryException if an error occurs.
+     */
+    Publication getPublication() throws RepositoryException;
+    
 }

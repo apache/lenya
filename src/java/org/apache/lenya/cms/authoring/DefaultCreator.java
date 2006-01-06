@@ -25,7 +25,6 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.w3c.dom.Document;
 
@@ -64,8 +63,7 @@ public abstract class DefaultCreator extends AbstractLogEnabled implements NodeC
     /**
      * @see NodeCreatorInterface#create(String, org.apache.lenya.cms.publication.Document, Map)
      */
-    public void create(String initialContentsURI,
-            org.apache.lenya.cms.publication.Document document,
+    public void create(String initialContentsURI, org.apache.lenya.cms.repo.Document document,
             Map parameters) throws Exception {
 
         if (getLogger().isDebugEnabled())
@@ -93,12 +91,7 @@ public abstract class DefaultCreator extends AbstractLogEnabled implements NodeC
         transformXML(xmlDoc, document, parameters);
 
         // write the document
-        try {
-            SourceUtil.writeDOM(xmlDoc, document.getSourceURI(), manager);
-        } catch (Exception e) {
-            throw new DocumentBuildException("could not write document [" + document
-                    + "], exception " + e.toString(), e);
-        }
+        SourceUtil.writeDOM(xmlDoc, document.getOutputStream(), manager);
     }
 
     /**
@@ -117,8 +110,7 @@ public abstract class DefaultCreator extends AbstractLogEnabled implements NodeC
      * @param parameters additional parameters that can be used in the transformation
      * @throws Exception if the transformation fails
      */
-    protected void transformXML(Document doc,
-            org.apache.lenya.cms.publication.Document document,
+    protected void transformXML(Document doc, org.apache.lenya.cms.repo.Document document,
             Map parameters) throws Exception {
     }
 

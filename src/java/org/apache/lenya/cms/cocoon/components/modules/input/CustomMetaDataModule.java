@@ -22,16 +22,24 @@ package org.apache.lenya.cms.cocoon.components.modules.input;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
+
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.lenya.cms.metadata.MetaData;
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.Serviceable;
+import org.apache.cocoon.components.modules.input.AbstractInputModule;
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
+import org.apache.lenya.cms.repo.Document;
+import org.apache.lenya.cms.repo.RepositoryException;
+import org.apache.lenya.cms.repo.impl.RepositoryUtil;
+import org.apache.lenya.cms.repo.metadata.MetaData;
 
 /**
  * Input module to access custom meta data values.
  */
-public class CustomMetaDataModule extends AbstractPageEnvelopeModule {
+public class CustomMetaDataModule extends AbstractInputModule implements Serviceable {
 
     final static String NS_PREFIX = "lenya:";
 
@@ -43,15 +51,13 @@ public class CustomMetaDataModule extends AbstractPageEnvelopeModule {
             throws ConfigurationException {
         Object value;
 
-        MetaData metaData = getCustomMetaData(objectModel);
-
-        if (!metaData.isValidAttribute(NS_PREFIX + name)) {
-            throw new ConfigurationException("The attribute [" + name + "] is not supported!");
-        }
-
         try {
-            value = metaData.getFirstValue(NS_PREFIX + name);
-        } catch (DocumentException e) {
+            MetaData metaData = getCustomMetaData(objectModel);
+            if (!metaData.getElementSet().contains(NS_PREFIX + name)) {
+                throw new ConfigurationException("The attribute [" + name + "] is not supported!");
+            }
+            value = metaData.getValue(NS_PREFIX + name);
+        } catch (RepositoryException e) {
             throw new ConfigurationException("Obtaining custom meta data value for [" + name
                     + "] failed: ", e);
         }
@@ -77,15 +83,15 @@ public class CustomMetaDataModule extends AbstractPageEnvelopeModule {
     public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
         Object[] values;
-        MetaData metaData = getCustomMetaData(objectModel);
-
-        if (!metaData.isValidAttribute(NS_PREFIX + name)) {
-            throw new ConfigurationException("The attribute [" + name + "] is not supported!");
-        }
 
         try {
+            MetaData metaData = getCustomMetaData(objectModel);
+            if (!metaData.getElementSet().contains(NS_PREFIX + name)) {
+                throw new ConfigurationException("The attribute [" + name + "] is not supported!");
+            }
+
             values = metaData.getValues(NS_PREFIX + name);
-        } catch (DocumentException e) {
+        } catch (RepositoryException e) {
             throw new ConfigurationException("Obtaining custom meta data value for [" + name
                     + "] failed: ", e);
         }
@@ -95,17 +101,24 @@ public class CustomMetaDataModule extends AbstractPageEnvelopeModule {
 
     protected MetaData getCustomMetaData(Map objectModel) throws ConfigurationException {
         // FIXME: There seems to be no reason to pass the attribute name to get the page envelope.
-        Document document = getEnvelope(objectModel, "").getDocument();
-        if (document == null) {
-            throw new ConfigurationException("There is no document for this page envelope!");
-        }
         MetaData metaData = null;
         try {
-            metaData = document.getMetaDataManager().getCustomMetaData();
-        } catch (DocumentException e) {
-            throw new ConfigurationException("Obtaining custom meta data value for ["
-                    + document.getSourceURI() + "] failed: ", e);
+            Request request = ObjectModelHelper.getRequest(objectModel);
+            Document document = RepositoryUtil.getDocument(this.manager, request, getLogger());
+            if (document == null) {
+                throw new ConfigurationException("There is no document for this page envelope!");
+            }
+            metaData = document.getMetaData("custom");
+        } catch (RepositoryException e) {
+            throw new ConfigurationException("Obtaining custom meta data value failed: ", e);
         }
         return metaData;
+    }
+
+    protected ServiceManager manager;
+
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
+
     }
 }

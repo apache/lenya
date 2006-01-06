@@ -36,9 +36,12 @@ import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.cache.CachingException;
 import org.apache.lenya.ac.cache.SourceCache;
 import org.apache.lenya.ac.impl.PolicyAuthorizer;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repo.Publication;
+import org.apache.lenya.cms.repo.RepositoryException;
+import org.apache.lenya.cms.repo.Session;
+import org.apache.lenya.cms.repo.impl.RepositoryUtil;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * Authorizer for usecases.
@@ -68,8 +71,11 @@ public class UsecaseAuthorizer extends AbstractLogEnabled implements Authorizer,
      * @return A string representing a URI.
      */
     protected String getConfigurationURI(Publication publication) {
-        return "context:///" + Publication.PUBLICATION_PREFIX_URI + "/" + publication.getId()
-                + CONFIGURATION_FILE;
+        try {
+            return "context://lenya/pubs/" + publication.getPublicationId() + CONFIGURATION_FILE;
+        } catch (RepositoryException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -90,7 +96,10 @@ public class UsecaseAuthorizer extends AbstractLogEnabled implements Authorizer,
                 if (getConfigurationURI() != null) {
                     _configurationUri = getConfigurationURI();
                 } else {
-                    Publication publication = PublicationUtil.getPublication(this.manager, request);
+                    Session session = RepositoryUtil.getSession(this.manager, request, getLogger());
+                    String url = ServletHelper.getWebappURI(request);
+                    String pubId = new URLInformation(url).getPublicationId();
+                    Publication publication = session.getPublication(pubId);
                     _configurationUri = getConfigurationURI(publication);
                 }
 
@@ -101,9 +110,7 @@ public class UsecaseAuthorizer extends AbstractLogEnabled implements Authorizer,
             }
         } catch (final ServiceException e) {
             throw new AccessControlException(e);
-        } catch (final PublicationException e) {
-            throw new AccessControlException(e);
-        } catch (final AccessControlException e) {
+        } catch (final Exception e) {
             throw new AccessControlException(e);
         } finally {
             if (resolver != null) {

@@ -20,23 +20,16 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.publication.ResourceType;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.cms.repo.Document;
+import org.apache.lenya.cms.repo.DocumentType;
+import org.apache.lenya.cms.repo.impl.RepositoryUtil;
 
 /**
  * Resource type module.
  */
-public class ResourceTypeModule extends AbstractInputModule implements Serviceable {
+public class ResourceTypeModule extends AbstractServiceableInputModule {
 
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
@@ -44,18 +37,13 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
 
         try {
             Request request = ObjectModelHelper.getRequest(objectModel);
-            Session session = RepositoryUtil.getSession(request, getLogger());
-            DocumentIdentityMap docFactory = new DocumentIdentityMap(session,
-                    this.manager,
-                    getLogger());
-            String webappUrl = ServletHelper.getWebappURI(request);
-            Document document = docFactory.getFromURL(webappUrl);
-            ResourceType resourceType = document.getResourceType();
+            Document document = RepositoryUtil.getDocument(this.manager, request, getLogger());
+            DocumentType docType = document.getContentNode().getDocumentType();
 
             if (name.startsWith("format-")) {
                 String[] steps = name.split("-");
                 String format = steps[1];
-                value = resourceType.getFormatURI(format);
+                value = docType.getFormatURI(format);
             }
             else {
                 throw new ConfigurationException("Attribute [" + name + "] not supported!");
@@ -67,12 +55,6 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
         }
 
         return value;
-    }
-
-    protected ServiceManager manager;
-
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
     }
 
 }

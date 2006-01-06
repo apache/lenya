@@ -25,11 +25,7 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
@@ -48,7 +44,7 @@ import org.apache.lenya.ac.impl.PolicyAuthorizer;
 /**
  * Input module for access control attributes.
  */
-public class AccessControlModule extends AbstractInputModule implements Serviceable {
+public class AccessControlModule extends AbstractServiceableInputModule {
 
     /**
      * <code>USER_ID</code> The user id
@@ -245,15 +241,6 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
         }
 
         return itemManager;
-    }
-
-    private ServiceManager manager;
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager _manager) throws ServiceException {
-        this.manager = _manager;
     }
 
 }

@@ -23,18 +23,52 @@ import org.apache.lenya.cms.repo.RepositoryException;
  */
 public interface MetaData {
     
+    /**
+     * @return The element set these meta data belong to.
+     * @throws RepositoryException if an error occurs.
+     */
     ElementSet getElementSet() throws RepositoryException;
 
+    /**
+     * @param name The element's name.
+     * @return The value.
+     * @throws RepositoryException if an error occurs.
+     */
     String getValue(String name) throws RepositoryException;
     
+    /**
+     * @param name The element's name.
+     * @return The values.
+     * @throws RepositoryException if an error occurs.
+     */
     String[] getValues(String name) throws RepositoryException;
     
+    /**
+     * @param name The element's name.
+     * @param value The value.
+     * @throws RepositoryException if an error occurs.
+     */
     void setValue(String name, String value) throws RepositoryException;
     
+    /**
+     * @param name The element's name.
+     * @param value The value.
+     * @throws RepositoryException if an error occurs.
+     */
     void addValue(String name, String value) throws RepositoryException;
     
+    /**
+     * Removes all values.
+     * @param name The element's name.
+     * @throws RepositoryException if an error occurs.
+     */
     void clear(String name) throws RepositoryException;
     
+    /**
+     * @param name The element's name.
+     * @param value The value.
+     * @throws RepositoryException if an error occurs.
+     */
     void removeValue(String name, String value) throws RepositoryException;
     
 }

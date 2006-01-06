@@ -16,6 +16,8 @@
  */
 package org.apache.lenya.cms.jcr;
 
+import java.io.File;
+
 import javax.jcr.Repository;
 
 import org.apache.lenya.cms.repo.DocumentTypeRegistry;
@@ -29,12 +31,16 @@ import org.apache.lenya.cms.repo.metadata.impl.MetaDataRegistryImpl;
  */
 public class JCRRepository implements org.apache.lenya.cms.repo.Repository {
 
+    private File webappDirectory;
+    
     /**
      * Ctor.
      * @param repository The repository.
+     * @param webappDirectory The web application directory.
      */
-    public JCRRepository(Repository repository) {
+    public JCRRepository(Repository repository, File webappDirectory) {
         this.repository = repository;
+        this.webappDirectory = webappDirectory;
     }
 
     private Repository repository;
@@ -66,6 +72,10 @@ public class JCRRepository implements org.apache.lenya.cms.repo.Repository {
             this.metaDataRegistry = new MetaDataRegistryImpl();
         }
         return this.metaDataRegistry;
+    }
+    
+    protected File getWebappDirectory() {
+        return this.webappDirectory;
     }
 
 }

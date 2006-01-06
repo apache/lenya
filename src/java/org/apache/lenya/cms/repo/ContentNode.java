@@ -80,5 +80,11 @@ public interface ContentNode {
      * @throws RepositoryException if the node is still referenced from the site structure.
      */
     void remove() throws RepositoryException;
-
+    
+    /**
+     * @return The content the node belongs to.
+     * @throws RepositoryException
+     */
+    Content getContent() throws RepositoryException;
+    
 }

@@ -14,30 +14,16 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.publication;
-
+package org.apache.lenya.cms.repo.metadata.impl;
 
 /**
- * Publication manager.
+ * Dublin core terms.
  */
-public interface PublicationManager {
+public interface DublinCoreTerms {
+    
+    /**
+     * The name.
+     */
+    String NAME = "DublinCoreTerms";
 
-    /**
-     * The service's role.
-     */
-    String ROLE = PublicationManager.class.getName();
-    
-    /**
-     * @return All publications.
-     * @throws PublicationException if an error occurrs.
-     */
-    Publication[] getPublications() throws PublicationException;
-    
-    /**
-     * @param id The publication ID.
-     * @return A publication.
-     * @throws PublicationException if an error occurs.
-     */
-    Publication getPublication(String id) throws PublicationException;
-    
 }
