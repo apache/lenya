@@ -16,7 +16,9 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
@@ -29,7 +31,9 @@ import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
+import org.apache.lenya.cms.usecase.UsecaseException;
 
 /**
  * Empty the trash.
@@ -54,6 +58,47 @@ public class EmptyTrash extends AbstractUsecase {
             throw new RuntimeException(e);
         }
     }
+    
+    /**
+     * Lock the following objects:
+     * <ul>
+     * <li>all involved documents in the trash area</li>
+     * <li>the document trash site structure</li>
+     * </ul>
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
+     */
+    protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
+        List nodes = new ArrayList();        
+        ServiceSelector selector = null;
+        SiteManager siteManager = null;
+ 
+        try {
+            Publication publication = PublicationUtil.getPublicationFromUrl(this.manager, getSourceURL());
+            DocumentIdentityMap identityMap = getDocumentIdentityMap();
+            Document[] docs = getTrashDocuments();
+            for (int i = 0; i < docs.length; i++) {
+                nodes.add(docs[i].getRepositoryNode());
+                nodes.addAll(AssetUtil.getAssetNodes(docs[i], this.manager, getLogger()));
+            }
+           
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(publication
+                    .getSiteManagerHint());
+            SiteStructure structure = siteManager.getSiteStructure(identityMap, publication, Publication.TRASH_AREA);
+            nodes.add(structure.getRepositoryNode());
+        } catch (Exception e) {
+            throw new UsecaseException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
+        }
+        return (org.apache.lenya.cms.repository.Node[]) nodes.toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
+    }
+
     
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
