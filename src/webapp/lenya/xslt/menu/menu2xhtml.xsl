@@ -121,7 +121,7 @@
   
   <xsl:template name="area-tab">
     <xsl:param name="tab-area"/>
-    <xsl:param name="target"/>
+    <xsl:param name="target">_self</xsl:param>
     <xsl:param name="tab-area-prefix" select="$tab-area"/>
     
     <xsl:variable name="tab-documenturl">
