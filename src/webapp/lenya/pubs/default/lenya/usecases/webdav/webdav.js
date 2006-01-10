@@ -97,11 +97,14 @@ function propfind() {
   sendStatus(500);
 }
 
-function options() {
+function options(type) {
   cocoon.response.setHeader("DAV","1");
-  var options = "OPTIONS,GET,PUT,LOCK,PROPFIND,DELETE";
-//  var options = "OPTIONS,GET,HEAD,POST,DELETE,TRACE,PUT,LOCK" 
-//              + ",MKCOL,PROPFIND,PROPPATCH,COPY,MOVE";
+  var options = "";
+  if (type == "file") {
+    options = "OPTIONS,GET,HEAD,POST,DELETE,TRACE,PROPFIND,PROPPATCH,COPY,MOVE,PUT,LOCK,UNLOCK";
+  } else {
+    options = "OPTIONS,GET,HEAD,POST,DELETE,TRACE,PROPFIND,PROPPATCH,COPY,MOVE,LOCK,UNLOCK";
+  }
   cocoon.response.setHeader("Allow",options);
 
   //interoperability with Windows 2000

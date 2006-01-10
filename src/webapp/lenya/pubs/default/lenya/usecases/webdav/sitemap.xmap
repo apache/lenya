@@ -51,6 +51,12 @@
   <map:pipelines>
     
     <map:pipeline type="noncaching">
+
+      <map:match pattern="limitResponse.xsl">
+        <map:generate type="file" src="cocoon:/request/generate"/>
+        <map:transform src="limitResponse.xsl"/>
+        <map:serialize type="xml" status-code="200"/>
+      </map:match>
       
       <!-- 
         This internal sitemap fragment renders the usecase, once the
@@ -67,6 +73,7 @@
         <map:transform type="xslt" src="NSclean.xsl"/>
         <map:select type="request-method">
           <map:when test="PROPFIND">
+            <map:transform src="cocoon:/limitResponse.xsl" />
             <map:serialize type="xml" status-code="207"/>
           </map:when>
           <map:otherwise>

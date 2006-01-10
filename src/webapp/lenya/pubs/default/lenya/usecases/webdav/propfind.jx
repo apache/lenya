@@ -52,10 +52,10 @@
       <jx:forEach var="doc" items="${usecase.getParameter('documents')}" varStatus="status">
         <jx:if test="${doc.getId()}">
           <D:response>
-              <D:href>/${doc.getPublication().getId()}/webdav${doc.getId()}_${doc.getLanguage()}.html</D:href>
+              <D:href>/${doc.getPublication().getId()}/webdav${doc.getId()}_${doc.getLanguage()}.${doc.getExtension()}</D:href>
               <D:propstat>
                 <D:prop>
-                  <D:displayname>${doc.getName()}_${doc.getLanguage()}.html</D:displayname>
+                  <D:displayname>${doc.getName()}_${doc.getLanguage()}.${doc.getExtension()}</D:displayname>
                   <D:getlastmodified>${dateFormat.format(doc.getLastModified())}</D:getlastmodified>
                   <D:creationdate />
                   <D:getcontenttype>application/xml</D:getcontenttype>
