@@ -51,8 +51,9 @@
 				<li>run <code>svn log -v --xml http://svn.apache.org/repos/asf/lenya > log.xml</code> in the root of the docu branch. This might take a while as the log file is several MB in size.</li>
 				<li>run <code>java -jar saxon8.jar -o status.xml log.xml tools/svn2changes.xsl</code>
 				</li>
-				<li>run <code>forrest</code> (You may have to increase <code>forrest.maxmemory</code> in forrest.properties to get around out of memory exceptions.) Forrest will take a LONG TIME to generate changes.html.</li>
+				<li>run <code>forrest</code> - Forrest will take a LONG TIME to generate changes.html.</li>
 			</ul>
+      <note>You may have to increase <code>forrest.maxmemory</code> in forrest.properties to get around out of memory exceptions.</note>
 			<p>If everything went alright, you will find changes.html, changes.pdf and changes.rss inside your xdocs directory.</p>
 
 		</section>
