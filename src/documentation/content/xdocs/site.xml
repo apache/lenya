@@ -41,6 +41,10 @@
   
   <docu1.4 href="1_4/" label="Version 1.4" target="1.4" tab="1_4">
     <index_pm href="index.html" label="Index"/>
+     <faq label="FAQs" href="faq.html">
+          <i18n href="#i18n"/>
+          <bxe-css href="#bxe-css"/>
+        </faq>
     
     <!--          <whole_docu href="../documentation-1-4.pdf" label="1.4 PDF docs (all in one)" />
       <whole_docu href="../documentation-1-4.html" label="1.4 HTML docs (all in one)" />
