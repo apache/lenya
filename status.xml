@@ -1,4 +1,37 @@
-<?xml version="1.0" encoding="UTF-8"?><status><changes><release version="2006-01"><action dev="michi" type="" context="">[] 
+<?xml version="1.0" encoding="UTF-8"?><status><changes><release version="2006-01"><action dev="andreas" type="update" context="Site">[Site] 
+            Paste usecase locks assets. This fixes bug #17378. Thanks to Gregor Imboden. <link href="http://svn.apache.org/viewcvs.cgi?rev=368022&amp;view=rev">Diff</link></action><action dev="andreas" type="update" context="">[] 
+            InvokeWorkflow.configure() calls super.configure(). This ensures that the view configuration is loaded. <link href="http://svn.apache.org/viewcvs.cgi?rev=368021&amp;view=rev">Diff</link></action><action dev="chestnut" type="update" context="">[] 
+            webDAV fixes <link href="http://svn.apache.org/viewcvs.cgi?rev=367514&amp;view=rev">Diff</link></action><action dev="chestnut" type="update" context="">[] 
+            fixes Bug 38201: Deactivate usecase does not lock document resources
+thanks to a patch by Gregor Imboden
+ <link href="http://svn.apache.org/viewcvs.cgi?rev=367356&amp;view=rev">Diff</link></action><action dev="chestnut" type="update" context="Site">[Site] 
+            fixes ability to delete trash, was getting an error that the sitetree wasn't locked <link href="http://svn.apache.org/viewcvs.cgi?rev=367350&amp;view=rev">Diff</link></action><action dev="josias" type="update" context="1.2">[1.2] 
+            added default target for the tabs in the lenya menu to prevent an xhtml validation warning (attribute 'target' cannot be empty) <link href="http://svn.apache.org/viewcvs.cgi?rev=367299&amp;view=rev">Diff</link></action><action dev="michi" type="update" context="Docs">[Docs] 
+            some more links added <link href="http://svn.apache.org/viewcvs.cgi?rev=367105&amp;view=rev">Diff</link></action><action dev="michi" type="update" context="">[] 
+            lenya version and local build properties version added <link href="http://svn.apache.org/viewcvs.cgi?rev=367098&amp;view=rev">Diff</link></action><action dev="michi" type="update" context="">[] 
+            lenya version number added such that no conflict may arise with other lenya versions <link href="http://svn.apache.org/viewcvs.cgi?rev=367097&amp;view=rev">Diff</link></action><action dev="thorsten" type="add" context="Docs">[Docs] 
+            Added documentation about the url mapping in lenya. <link href="http://svn.apache.org/viewcvs.cgi?rev=366525&amp;view=rev">Diff</link></action><action dev="andreas" type="update" context="">[] 
+            Starting to update the code according to the new repository API <link href="http://svn.apache.org/viewcvs.cgi?rev=366518&amp;view=rev">Diff</link></action><action dev="josias" type="update" context="1.2">[1.2] 
+            replaced deprecated library excalibur-io 1.1 by commons-io 1.1 and updated all occurrences in the java code. commons-io-1.1.jar is added to lenya because this jar is not included in cocoon 2.1.8 and older. fixes bug http://issues.apache.org/bugzilla/show_bug.cgi?id=38126 <link href="http://svn.apache.org/viewcvs.cgi?rev=366498&amp;view=rev">Diff</link></action><action dev="jann" type="update" context="1.2">[1.2] 
+            Adding the force-checkin usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=366455&amp;view=rev">Diff</link></action><action dev="jann" type="add" context="1.2">[1.2] 
+            xsl for the force-checkin usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=366453&amp;view=rev">Diff</link></action><action dev="jann" type="add" context="1.2">[1.2] 
+            Action for the force-checkin usecase <link href="http://svn.apache.org/viewcvs.cgi?rev=366452&amp;view=rev">Diff</link></action><action dev="andreas" type="update" context="">[] 
+            Added 'checked out by' column to SiteOverview usecase (admin area) <link href="http://svn.apache.org/viewcvs.cgi?rev=366143&amp;view=rev">Diff</link></action><action dev="michi" type="update" context="1.2">[1.2] 
+            Cocoon 2.1.8 set as default <link href="http://svn.apache.org/viewcvs.cgi?rev=366023&amp;view=rev">Diff</link></action><action dev="michi" type="update" context="1.2">[1.2] 
+            Cocoon versions added <link href="http://svn.apache.org/viewcvs.cgi?rev=366022&amp;view=rev">Diff</link></action><action dev="michi" type="add" context="1.2">[1.2] 
+            excalibur-io has been removed from Cocoon-2.1.8 upwards <link href="http://svn.apache.org/viewcvs.cgi?rev=366020&amp;view=rev">Diff</link></action><action dev="thorsten" type="add" context="">[] 
+            added the lenya meta data generator. It is an abstract generator that can produce the metadata to any given docid. Added an example how one can use it within the tutorial.html (only in english). <link href="http://svn.apache.org/viewcvs.cgi?rev=365905&amp;view=rev">Diff</link></action><action dev="thorsten" type="update" context="Site">[Site] 
+            Update webpage.
+
+I am using 0.8-dev, that is the reason that all files have changed. I recomment to use the forrest trunk for building the site.
+ <link href="http://svn.apache.org/viewcvs.cgi?rev=365490&amp;view=rev">Diff</link></action><action dev="thorsten" type="update" context="Docs">[Docs] 
+            updated properties to build with forrest 0.7 and 0.8-dev.
+ <link href="http://svn.apache.org/viewcvs.cgi?rev=365488&amp;view=rev">Diff</link></action><action dev="thorsten" type="update" context="Docs">[Docs] 
+            updated status.xml
+ <link href="http://svn.apache.org/viewcvs.cgi?rev=365486&amp;view=rev">Diff</link></action><action dev="thorsten" type="update" context="Docs">[Docs] 
+            removed contact notice.
+
+ <link href="http://svn.apache.org/viewcvs.cgi?rev=365485&amp;view=rev">Diff</link></action><action dev="michi" type="" context="">[] 
             obsolete <link href="http://svn.apache.org/viewcvs.cgi?rev=360570&amp;view=rev">Diff</link></action></release><release version="2005-12"><action dev="chestnut" type="" context="1.4">[1.4] 
             removed due to licensing <link href="http://svn.apache.org/viewcvs.cgi?rev=360020&amp;view=rev">Diff</link></action><action dev="chestnut" type="update" context="1.4">[1.4] 
              <link href="http://svn.apache.org/viewcvs.cgi?rev=358615&amp;view=rev">Diff</link></action><action dev="chestnut" type="update" context="1.4">[1.4] 
