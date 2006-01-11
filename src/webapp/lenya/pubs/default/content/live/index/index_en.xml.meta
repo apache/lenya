@@ -17,6 +17,7 @@
 <!-- $Id: index_en.xml.meta 169304 2005-05-09 12:31:39Z jwkaltz $ -->
 <lenya:document xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
 <lenya:meta>
+<lenya:custom/>
 <lenya:internal>
 <lenya:resourceType>homepage</lenya:resourceType>
 <lenya:contentType>xml</lenya:contentType>
