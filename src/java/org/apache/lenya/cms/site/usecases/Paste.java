@@ -104,10 +104,12 @@ public class Paste extends DocumentUsecase {
             for (int i = 0; i < subsiteDocs.length; i++) {
                 if (clipboard.getMethod() == Clipboard.METHOD_CUT) {
                     nodes.add(subsiteDocs[i].getRepositoryNode());
+                    nodes.addAll(AssetUtil.getAssetNodes(subsiteDocs[i], this.manager, getLogger()));
                 }
                 String id = subsiteDocs[i].getId().substring(clippedBase.length());
                 Document targetSubsiteDoc = map.get(pub, area, targetBase + id, subsiteDocs[i].getLanguage());
                 nodes.add(targetSubsiteDoc.getRepositoryNode());
+                nodes.addAll(AssetUtil.getCopiedAssetNodes(subsiteDocs[i], targetSubsiteDoc, this.manager, getLogger()));
             }
 
         } catch (Exception e) {
