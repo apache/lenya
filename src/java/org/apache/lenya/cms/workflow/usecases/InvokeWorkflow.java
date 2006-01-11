@@ -28,19 +28,11 @@ import org.apache.lenya.cms.workflow.WorkflowUtil;
  * Invoke a workflow event on the current document. The event is obtained from the configuration in
  * <code>cocoon.xconf</code>:<code>
  * <pre>
- *   
- *    
- *     
- *      
- *         &lt;component-instance name=&quot;default/workflow.submit&quot;
- *                             logger=&quot;lenya.usecases.workflow&quot;
- *                             class=&quot;org.apache.lenya.cms.workflow.usecases.InvokeWorkflow&quot;&gt;
- *           &lt;event id=&quot;submit&quot;/&gt;
- *         &lt;/component-instance&gt;
- *       
- *      
- *     
- *    
+ * &lt;component-instance name=&quot;default/workflow.submit&quot;
+ *                        logger=&quot;lenya.usecases.workflow&quot;
+ *                        class=&quot;org.apache.lenya.cms.workflow.usecases.InvokeWorkflow&quot;&gt;
+ *   &lt;event id=&quot;submit&quot;/&gt;
+ * &lt;/component-instance&gt;
  * </pre>
  * </code>
  * 
@@ -104,6 +96,7 @@ public class InvokeWorkflow extends DocumentUsecase implements Configurable {
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
     public void configure(Configuration config) throws ConfigurationException {
+        super.configure(config);
         this.event = config.getChild(ELEMENT_EVENT).getAttribute(ATTRIBUTE_ID);
     }
 
