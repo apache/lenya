@@ -118,6 +118,11 @@
           <xsl:attribute name="width">
             <xsl:value-of select="@width"/>
           </xsl:attribute>
+        </xsl:if>
+        <xsl:if test="@class">
+          <xsl:attribute name="class">
+            <xsl:value-of select="@class"/>
+          </xsl:attribute>
         </xsl:if>         
       </img>
    </xsl:template>
