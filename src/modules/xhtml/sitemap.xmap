@@ -19,6 +19,19 @@
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
+<!-- =========================== Components ================================ -->
+
+  <map:components>
+  
+    <map:serializers default="xhtml"> 
+      <map:serializer name="xml-get" src="org.apache.cocoon.serialization.XMLSerializer" mime-type="text/xml">
+        <encoding>utf-8</encoding>
+        <omit-xml-declaration>yes</omit-xml-declaration>
+      </map:serializer>
+    </map:serializers>
+ 
+  </map:components>
+
   <map:pipelines>
 
     <map:pipeline>
@@ -35,6 +48,15 @@
           </map:transform>
           <map:serialize type="xml"/>
         </map:match>
+      </map:match>
+
+      <!-- webdav GET matcher -->
+      <map:match pattern="davget.xml">
+        <map:act type="set-header">
+          <map:parameter name="Last-Modified" value="{page-envelope:document-lastmodified}" />
+          <map:generate src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-id}"/>
+          <map:serialize type="xml-get"/>
+        </map:act>
       </map:match>
 
       <!-- parametrized doctype matcher -->

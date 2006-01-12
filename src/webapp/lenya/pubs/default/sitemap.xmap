@@ -64,12 +64,12 @@
     <map:pipeline>
       <map:match pattern="**">
         <map:match pattern="webdav**">
-          <map:mount uri-prefix="" src="{fallback:lenya/usecases/webdav/sitemap.xmap}" check-reload="true" reload-method="synchron"/>    
+          <map:mount uri-prefix="" src="{fallback:lenya/modules/webdav/sitemap.xmap}" check-reload="true" reload-method="synchron"/>    
         </map:match>
         <map:select type="request-method">
           <!-- many client editors like to PUT changes -->
           <map:when test="PUT">
-            <map:mount uri-prefix="" src="{fallback:lenya/usecases/webdav/sitemap.xmap}" check-reload="true" reload-method="synchron"/>
+            <map:mount uri-prefix="" src="{fallback:lenya/modules/webdav/sitemap.xmap}" check-reload="true" reload-method="synchron"/>
           </map:when>
         </map:select>
       </map:match>

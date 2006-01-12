@@ -17,15 +17,6 @@
 
 <xmap xpath="/sitemap/components/selectors">
     <map:selector logger="sitemap.selector.browser" name="client" src="org.apache.cocoon.selection.BrowserSelector">
-      <browser name="webdav" useragent="UCI DAV Explorer/0.91 RPT-HTTPClient/0.3-3E"/>
-      <browser name="webdav" useragent="Microsoft Data Access Internet Publishing Provider Protocol Discovery"/>
-      <browser name="webdav" useragent="UCI"/>
-      <browser name="webdav" useragent="DAV"/>
-      <browser name="webdav" useragent="dav"/>
-      <browser name="webdav" useragent="Goliath"/>
-      <browser name="webdav" useragent="Contribute"/>
-      <!-- cadaver -->
-      <browser name="webdav" useragent="gnome-vfs/2.10.0 neon/0.24.7"/>
       <browser name="explorer" useragent="MSIE"/>
       <browser name="mozilla5" useragent="Mozilla/5"/>
       <browser name="mozilla5" useragent="Netscape6/"/>

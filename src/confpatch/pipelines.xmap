@@ -68,13 +68,23 @@
           </map:act>
           <map:act type="set-header">
             <map:parameter name="WWW-Authenticate" value="Basic Realm=lenya" />
-            <map:generate type="html" src="fallback://lenya/usecases/webdav/401error.html"/>
+            <map:generate src="context://lenya/content/util/empty.xml" />
+            <map:transform src="fallback://lenya/xslt/exception/forbidden.xsl">
+              <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+              <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
+              <map:parameter name="area" value="{page-envelope:area}"/>
+            </map:transform>
             <map:serialize type="xhtml" status-code="401"/>
           </map:act>
         </map:act>
         <map:act type="set-header">
           <map:parameter name="WWW-Authenticate" value="Basic Realm=lenya" />
-          <map:generate type="html" src="fallback://lenya/usecases/webdav/401error.html"/>
+          <map:generate src="context://lenya/content/util/empty.xml" />
+          <map:transform src="fallback://lenya/xslt/exception/forbidden.xsl">
+              <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+              <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
+              <map:parameter name="area" value="{page-envelope:area}"/>
+          </map:transform>
           <map:serialize type="xhtml" status-code="401"/>
         </map:act>
       </map:match>

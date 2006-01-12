@@ -303,23 +303,7 @@
 
     <map:pipeline>
       <map:match pattern="">
-        <map:select type="request-method">
-          <map:when test="PROPFIND">
-            <map:generate src="lenya/content/util/empty.xml" />
-            <map:transform src="lenya/xslt/exception/document-does-not-exist.xsl"/>
-            <map:transform src="lenya/xslt/util/page2xhtml.xsl" />
-            <map:serialize type="xhtml" status-code="404"/>            
-          </map:when>
-          <map:when test="OPTIONS">
-            <map:generate src="lenya/content/util/empty.xml" />
-            <map:transform src="lenya/xslt/exception/document-does-not-exist.xsl"/>
-            <map:transform src="lenya/xslt/util/page2xhtml.xsl" />
-            <map:serialize type="xhtml" status-code="404"/> 
-          </map:when>
-          <map:otherwise>
-            <map:redirect-to uri="index.html"/>
-          </map:otherwise>
-        </map:select>
+        <map:redirect-to uri="index.html"/>
       </map:match>
 
       <map:match pattern="index.html">
@@ -341,14 +325,14 @@
       <map:match pattern="*">
         <map:select type="request-method">
           <map:when test="PROPFIND">
-            <map:generate type="file" src="fallback://lenya/usecases/webdav/dummy.xml"/>
-            <map:transform src="fallback://lenya/usecases/webdav/init.xsl">
+            <map:generate type="file" src="context://lenya/content/util/empty.xml"/>
+            <map:transform src="fallback://lenya/modules/webdav/xslt/init.xsl">
               <map:parameter name="pubid" value="{page-envelope:publication-id}"/>
             </map:transform>
             <map:serialize type="xml" status-code="207"/>
           </map:when>
           <map:when test="OPTIONS">
-            <map:mount uri-prefix="" src="{fallback://lenya/usecases/webdav/sitemap.xmap}" check-reload="true" reload-method="synchron"/>
+            <map:mount uri-prefix="" src="{fallback://lenya/modules/webdav/sitemap.xmap}" check-reload="true" reload-method="synchron"/>
           </map:when>
         </map:select>
       </map:match> 
@@ -356,14 +340,14 @@
       <map:match pattern="{page-envelope:publication-id}/">
         <map:select type="request-method">
           <map:when test="PROPFIND">
-           <map:generate type="file" src="fallback://lenya/usecases/webdav/dummy.xml"/>
-            <map:transform src="fallback://lenya/usecases/webdav/init.xsl">
+           <map:generate type="file" src="context://lenya/content/util/empty.xml"/>
+            <map:transform src="fallback://lenya/modules/webdav/xslt/init.xsl">
               <map:parameter name="pubid" value="{page-envelope:publication-id}"/>            
             </map:transform>
             <map:serialize type="xml" status-code="207"/>
           </map:when>
           <map:when test="OPTIONS">
-            <map:mount uri-prefix="" src="{fallback://lenya/usecases/webdav/sitemap.xmap}" check-reload="true" reload-method="synchron"/>
+            <map:mount uri-prefix="" src="{fallback://lenya/modules/webdav/sitemap.xmap}" check-reload="true" reload-method="synchron"/>
           </map:when>
         </map:select>
       </map:match>
