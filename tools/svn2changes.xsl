@@ -44,6 +44,7 @@
                     <xsl:when test="contains(paths/path[1]/@action, 'A')">add</xsl:when>
                     <xsl:when test="contains(paths/path[1]/@action, 'M')">update</xsl:when>
                     <xsl:when test="contains(paths/path[1]/@action, 'R')">update</xsl:when>
+                    <xsl:when test="contains(paths/path[1]/@action, 'D')">remove</xsl:when>
                 </xsl:choose>
             </xsl:variable>
             <xsl:attribute name="type"><xsl:value-of select="$type"/></xsl:attribute>
@@ -61,7 +62,7 @@
             <xsl:attribute name="context">
                 <xsl:value-of select="$version"/>
             </xsl:attribute>[<xsl:value-of select="$version"/>] 
-            <xsl:value-of select="msg"/><xsl:text> </xsl:text><link href="http://svn.apache.org/viewcvs.cgi?rev={@revision}&amp;view=rev">Diff</link>
+            <xsl:value-of select="msg"/><xsl:text> </xsl:text><link href="http://svn.apache.org/viewcvs.cgi?rev={@revision}&amp;view=rev">Diff</link><xsl:text> </xsl:text>
         </action>
     </xsl:template>
     
