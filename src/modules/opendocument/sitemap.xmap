@@ -35,6 +35,14 @@
         </map:match>
       </map:match>
 
+      <!-- webdav GET matcher -->
+      <map:match pattern="davget.xml">
+        <map:act type="set-header">
+          <map:parameter name="Last-Modified" value="{page-envelope:document-lastmodified}" />
+          <map:read src="context://lenya/pubs/{page-envelope:publication-id}/content/{page-envelope:area}/{page-envelope:document-id}/index_{page-envelope:document-language}.odt" mime-type="application/vnd.oasis.opendocument.text"/>
+        </map:act>
+      </map:match>
+
       <!-- parametrized doctype matcher -->
       <!-- pattern="{rendertype}" -->
 
