@@ -182,7 +182,7 @@ document.write("Last Published: " + document.lastModified);
 <p>Before you try to update the Lenya website, make sure you meet the following requirements:</p>
 <ul>
 			
-<li>You have <a href="http://forrest.apache.org">Apache Forrest</a> installed on your machine. This means you have your environment set up
+<li>You have <a href="http://forrest.apache.org">Apache Forrest</a> installed on your machine (v 0.7 or greater). This means you have your environment set up
 			in a way that you can call <span class="codefrag">forrest</span> in any directory.</li>
 			
 <li>You are an active Lenya committer with write access to SVN.</li>
@@ -229,14 +229,18 @@ document.write("Last Published: " + document.lastModified);
 				
 </li>
 				
-<li>run <span class="codefrag">forrest</span> (You may have to increase <span class="codefrag">forrest.maxmemory</span> in forrest.properties to get around out of memory exceptions.) Forrest will take a LONG TIME to generate changes.html.</li>
+<li>run <span class="codefrag">forrest</span> - Forrest will take a LONG TIME to generate changes.html.</li>
 			
 </ul>
+<div class="note">
+<div class="label">Note</div>
+<div class="content">You may have to increase <span class="codefrag">forrest.maxmemory</span> in forrest.properties to get around out of memory exceptions.</div>
+</div>
 <p>If everything went alright, you will find changes.html, changes.pdf and changes.rss inside your xdocs directory.</p>
 </div>
 
 		
-<a name="N10085"></a><a name="Understanding+the+Apache+infrastructure"></a>
+<a name="N10088"></a><a name="Understanding+the+Apache+infrastructure"></a>
 <h2 class="h3">Understanding the Apache infrastructure</h2>
 <div class="section">
 <p>The Website at <span class="codefrag">http://lenya.apache.org/</span> is a static site, which is served from the checkout dir <span class="codefrag">lenya.apache.org</span> on the server based on
@@ -249,7 +253,7 @@ document.write("Last Published: " + document.lastModified);
 		</p>
 </div>
 		
-<a name="N100B3"></a><a name="Roundtrip+website+update"></a>
+<a name="N100B6"></a><a name="Roundtrip+website+update"></a>
 <h2 class="h3">Roundtrip website update</h2>
 <div class="section">
 <p>The typical roundtrip process to update the website has the following steps.</p>
