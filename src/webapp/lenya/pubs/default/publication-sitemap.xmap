@@ -37,7 +37,7 @@
       </map:transform>
       <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
       <map:select type="parameter">
-        <map:parameter name="statusCode" value="{statusCode}"/>
+        <map:parameter name="parameter-selector-test" value="{statusCode}"/>
         <map:when test="">
           <map:serialize/>
         </map:when>
