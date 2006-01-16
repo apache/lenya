@@ -58,7 +58,6 @@ import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 
-
 /**
  * Instantiate the publication.
  * 
@@ -68,9 +67,9 @@ public class Instantiator extends AbstractLogEnabled implements
         org.apache.lenya.cms.publication.templating.Instantiator, Serviceable {
 
     protected static final String[] sourcesToCopy = { "publication.xml",
-            "config/publication.xconf", "config/index_manager_index.xconf", "config/index_manager.xconf", "config/ac/passwd/", "config/ac/ac.xconf",
-            "config/ac/policies/", "config/ac/usecase-policies.xml",
-            "config/workflow/workflow.xml", "content/" };
+            "config/publication.xconf", "config/index_manager_index.xconf",
+            "config/index_manager.xconf", "config/ac/passwd/", "config/ac/ac.xconf",
+            "config/ac/policies/", "config/ac/usecase-policies.xml", "config/workflow/workflow.xml" };
 
     /**
      * @see org.apache.lenya.cms.publication.templating.Instantiator#instantiate(org.apache.lenya.cms.publication.Publication,
@@ -117,37 +116,41 @@ public class Instantiator extends AbstractLogEnabled implements
 
             String indexDir = publicationsUri + newPublicationId + "/work/lucene/index";
             indexDir = indexDir.substring(5);
-		    
-            indexSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/" + newPublicationId + "/config/index_manager_index.xconf");
-            Document indexDoc = DocumentHelper.readDocument(indexSource.getInputStream());
-            NamespaceHelper indexHelper = new NamespaceHelper(null,"xconf",indexDoc);
-	    
-            indexerSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/" + newPublicationId + "/config/index_manager.xconf");
-            Document indexerDoc = DocumentHelper.readDocument(indexerSource.getInputStream());
-            NamespaceHelper indexerHelper = new NamespaceHelper(null,"xconf",indexerDoc);
 
-            Element indexManagerElement = indexerHelper.getFirstChild(indexerDoc.getDocumentElement(),"index_manager");
-            Element indexerElement = indexerHelper.getFirstChild(indexManagerElement,"indexer");
+            indexSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
+                    + newPublicationId + "/config/index_manager_index.xconf");
+            Document indexDoc = DocumentHelper.readDocument(indexSource.getInputStream());
+            NamespaceHelper indexHelper = new NamespaceHelper(null, "xconf", indexDoc);
+
+            indexerSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
+                    + newPublicationId + "/config/index_manager.xconf");
+            Document indexerDoc = DocumentHelper.readDocument(indexerSource.getInputStream());
+            NamespaceHelper indexerHelper = new NamespaceHelper(null, "xconf", indexerDoc);
+
+            Element indexManagerElement = indexerHelper.getFirstChild(indexerDoc.getDocumentElement(),
+                    "index_manager");
+            Element indexerElement = indexerHelper.getFirstChild(indexManagerElement, "indexer");
 
             Element xconfIndexElement = indexDoc.getDocumentElement();
-            xconfIndexElement.setAttribute("unless","/cocoon/index_manager/indexes/index[@id = '"+newPublicationId+"-live' or @id = '"+newPublicationId+"-authoring']");
- 	    
+            xconfIndexElement.setAttribute("unless", "/cocoon/index_manager/indexes/index[@id = '"
+                    + newPublicationId + "-live' or @id = '" + newPublicationId + "-authoring']");
+
             Element[] indexElement = indexHelper.getChildren(indexDoc.getDocumentElement(), "index");
-	    
-            indexElement[0].setAttribute("id",newPublicationId+"-live");
-            indexElement[0].setAttribute("directory", indexDir+"/live/index");
-            indexElement[1].setAttribute("id",newPublicationId+"-authoring");
-            indexElement[1].setAttribute("directory", indexDir+"/authoring/index");
+
+            indexElement[0].setAttribute("id", newPublicationId + "-live");
+            indexElement[0].setAttribute("directory", indexDir + "/live/index");
+            indexElement[1].setAttribute("id", newPublicationId + "-authoring");
+            indexElement[1].setAttribute("directory", indexDir + "/authoring/index");
 
             save(indexDoc, indexSource);
-            
+
             // Second, configure the index and add it to the IndexManager
 
             IndexManager indexM = (IndexManager) manager.lookup(IndexManager.ROLE);
-	    
+
             Element structure = indexHelper.getFirstChild(indexElement[0], "structure");
             Element[] fields = indexHelper.getChildren(structure, "field");
-	    
+
             IndexStructure docdecl = new IndexStructure();
 
             for (int j = 0; j < fields.length; j++) {
@@ -170,7 +173,7 @@ public class Instantiator extends AbstractLogEnabled implements
                 boolean store;
                 Boolean BoolStore = new Boolean(fields[j].getAttribute("storetext"));
                 store = BoolStore.booleanValue();
-		    
+
                 fielddecl.setStore(store);
 
                 // field dateformat attribute
@@ -181,15 +184,15 @@ public class Instantiator extends AbstractLogEnabled implements
 
                 docdecl.addFieldDef(fielddecl);
             }
-	    
+
             Index indexLive = new Index();
             Index indexAuthoring = new Index();
-            indexLive.setID(newPublicationId+"-live");
-            indexAuthoring.setID(newPublicationId+"-authoring");
+            indexLive.setID(newPublicationId + "-live");
+            indexAuthoring.setID(newPublicationId + "-authoring");
             indexLive.setIndexer(indexerElement.getAttribute("role"));
             indexAuthoring.setIndexer(indexerElement.getAttribute("role"));
-            indexLive.setDirectory(indexDir+"/live/index");
-            indexAuthoring.setDirectory(indexDir+"/authoring/index");
+            indexLive.setDirectory(indexDir + "/live/index");
+            indexAuthoring.setDirectory(indexDir + "/authoring/index");
             indexLive.setDefaultAnalyzerID(indexElement[0].getAttribute("analyzer"));
             indexAuthoring.setDefaultAnalyzerID(indexElement[1].getAttribute("analyzer"));
             indexLive.setManager(manager);
@@ -200,9 +203,9 @@ public class Instantiator extends AbstractLogEnabled implements
             indexM.addIndex(indexLive);
             indexM.addIndex(indexAuthoring);
             manager.release(indexM);
-	    // TODO: release all objects!
+            // TODO: release all objects!
 
-	    // RGE: End Soc addition
+            // RGE: End Soc addition
 
             configSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
                     + newPublicationId + "/config/publication.xconf");
