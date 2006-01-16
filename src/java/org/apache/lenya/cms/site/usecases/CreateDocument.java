@@ -90,7 +90,8 @@ public class CreateDocument extends Create {
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
-            if (!documentManager.isValidDocumentName(documentName)) {
+            boolean provided = getParameterAsBoolean(DOCUMENT_ID_PROVIDED, false);
+            if (!provided && !documentManager.isValidDocumentName(documentName)) {
                 addErrorMessage("The document ID may not contain any special characters.");
             } else {
                 Document parent = getSourceDocument();
