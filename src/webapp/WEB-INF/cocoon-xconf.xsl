@@ -95,6 +95,9 @@
     <component-instance logger="sitemap.modules.input.custom-metadata" name="custom-metadata"
         class="org.apache.lenya.cms.cocoon.components.modules.input.CustomMetaDataModule"/>
 
+    <component-instance logger="sitemap.modules.input.doc-info" name="doc-info"
+        class="org.apache.lenya.cms.cocoon.components.modules.input.DocumentInfoModule"/>
+
     <component-instance logger="core.modules.input.access-control" name="access-control"
         class="org.apache.lenya.cms.cocoon.components.modules.input.AccessControlModule"/>
     
