@@ -126,7 +126,17 @@ Password: (like sended to you)</source>
 lenya-for-forrest.pid
 lenya-trunk.pid
           </source>
-          <p></p>
+          <p><strong>cron</strong> - The user <code>lenya</code> is owner of 
+            all cron jobs running on zones. If you want to add another cron 
+            please edit mycrons.cron (zone/bin) - follow the <a 
+            href="http://www.scrounge.org/linux/cron.html">useful 
+            reference</a>. Then commit and ssh to the server:</p>
+            <source>ssh -l lenya lenya.zones.apache.org
+-bash-3.00$ cd bin/
+-bash-3.00$ svn up
+-bash-3.00$ crontab mycrons.cron #loads the actual cron jobs
+-bash-3.00$ crontab -l #check to see if it was loaded
+            </source>
       </section>
     </section>
   </body>
