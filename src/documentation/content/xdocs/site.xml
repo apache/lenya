@@ -260,6 +260,7 @@
     <irc href="irc.html" label="IRC"/>
     <live-sites href="live-sites.html" label="Live Sites"/>
     <website-update href="website-update.html" label="Website Update"/>
+    <zone href="zone.html" label="Zone notes"/>
   </community>
   
   <images href="images/">
@@ -284,6 +285,7 @@
       <mirror href="mirror.cgi"/>
     </cocoon>
     <lenya href="http://lenya.apache.org"/>
+    <lenya-zone href="http://lenya.zones.apache.org"/>
     <lenya.demo href="http://lenya.zones.apache.org:8888/"/>
     <lenya.dist href="http://www.apache.org/dyn/closer.cgi/lenya"/>
     <lenya.archive.user href="http://mail-archives.apache.org/mod_mbox/lenya-user/"/>

@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 2002-2006 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" 
+  "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Notes for lenya.zones.apache.org.</title>
+  </header>
+  <body>
+    <section>
+      <title>Overview</title>
+      <p> The server <a href="ext:lenya-zone">lenya.zones.apache.org</a> 
+        provides our testing and demonstration area. It is managed by Apache 
+        Lenya committers. </p>
+    </section>
+    <section id="configuration">
+      <title>Configuration</title>
+      <warning> We are not finished setting up our zone server (better said 
+        still in a very early stage), if something is not working it is maybe 
+        because it is not set up yet. ;-) Besides the directory structure may 
+        change. </warning>
+      <p> Bin files and site structure are stored in SVN at 
+        <code>https://svn.apache.org/repos/asf/lenya/zone</code>. Please make 
+        sure you have a local copy which you can edit. You should not edit our 
+        zone files directly on the server. To update them just do <code>svn 
+        update</code>. For more information about the scripts please read the 
+        source code.</p>
+      <note>Till now we only had one user <code>lenya</code>. Further to 
+        understand what is going on read the source code.</note>
+      <p> <strong>bin</strong> - svn-checkout@zone: /export/home/lenya/bin </p>
+      <dl>
+        <dt>killer</dt>
+        <dd>kill all processes containing specified strings.</dd>
+        <dt>lenya-for-forrest.sh</dt>
+        <dd>Will update, build clean, build and start the forrest docu instance 
+          (not in use ATM)</dd>
+        <dt>mycrons.cron</dt>
+        <dd>Shows the currently configured schedule. If you change it, make 
+          sure to as well apply it.</dd>
+        <dt>nightlies.sh</dt>
+        <dd>This script will build lenya trunk 
+          http://lenya.zones.apache.org:9999/index.html and lenya-1.2.x 
+          http://lenya.zones.apache.org:8888/index.html Further you can 
+          invoke/prevent "svn update" and the building of cocoon/lenya. FIXME: 
+          I will split this script apart for each lenya version.</dd>
+        <dt>setenv*.sh</dt>
+        <dd>set the environment (NOTE: Till now it is a non verified copy from 
+          forrest)</dd>
+      </dl>
+      <p> <strong>htdocs</strong> - svn-checkout@zone: 
+        /export/home/lenya/htdocs </p>
+      <p>Containing src and build of our zones website. Here you can find 
+        various forrestbot configuration files (publish-website-preview.xml and 
+        publish-zone.xml) which are deploying the zones site and the lenya 
+        staging docu.</p>
+      <p>All files are owned in the group "other" so any one of us can 
+        edit/update. Make sure that your 'umask' is set properly so that new 
+        files have group write permissions. See the <a 
+        href="#admin-user">notes</a> about user administration. FIXME: Add a 
+        proper group. </p>
+    </section>
+    <section id="software">
+      <title>Software</title>
+      <p> Global zone software is as described in <a 
+        href="http://www.apache.org/dev/solaris-zones.html">zone 
+        administration</a>. </p>
+      <p> Various local software is installed in <code>/export/opt/</code> (not 
+        managed with SVN) ... </p>
+      <p>Till now we have installed all additional software in <code> 
+        /export/home/lenya/src</code>. They are mostly svn checkouts of lenya, 
+        cocoon and forrest.</p>
+      <fixme author="thorsten">Add more information.</fixme>
+    </section>
+    <section id="admin">
+      <title>Administration</title>
+      <p> See the general notes for the <a 
+        href="http://www.apache.org/dev/solaris-zones.html">zone 
+        administration</a>. </p>
+      <p> The project chair is the root user. Committers can ask on the dev 
+        list to get a user account added or modified. </p>
+      <p> Follow Leo's config ideas at <a 
+        href="http://wiki.apache.org/gump/GumpZonesConfig">GumpZonesConfig</a>. 
+        </p>
+      <p> FIXME: Start apache2 on boot (using new Solaris init.d replacement 
+        called smf). At the moment we need to realise that it is down and 
+        manually restart as per http://www.apache.org/dev/solaris-zones.html 
+        Also it seems that /var/run/apache2 is wiped out on reboot, so need to 
+        mkdir again. </p>
+      <section id="admin-user">
+        <title>User administration</title>
+        <p>After receiving your account, please be sure to configure it 
+          properly.</p>
+        <p>See some notes at <a 
+          href="http://www.apache.org/dev/solaris-zones.html">zone 
+          administration</a> and the general notes for <a 
+          href="http://www.apache.org/dev/new-committers-guide.html#shell">new 
+          committers</a> (especially the part about 'umask'). </p>
+        <p> Look at the setup of some other users on our zone. </p>
+      </section>
+      <section id="tips">
+        <title>Tips and tricks</title>
+        <p><strong>lenya user</strong> - Till now we have used only the user 
+          <code>lenya</code> to start all scripts and manage the cronjobs. 
+          Doing the following you are save to do your work.</p>
+        <source>su lenya 
+Password: (like sended to you)</source>
+        <p><strong>restarting services</strong> - You should not restart 
+          manually the instances, it is better to use  
+          <code>/export/home/lenya/bin/nightlies.sh</code>. If you do please store the pid in 
+          <code>/export/home/lenya/bin</code> in one of the following files:</p>
+          <source>lenya-1_2.pid
+lenya-for-forrest.pid
+lenya-trunk.pid
+          </source>
+          <p></p>
+      </section>
+    </section>
+  </body>
+</document>
