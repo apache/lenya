@@ -17,6 +17,7 @@
 
 package org.apache.lenya.cms.publication;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.FileNotFoundException;
@@ -24,8 +25,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
@@ -127,7 +131,6 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
 
             String mimeType = part.getMimeType();
             int fileSize = part.getSize();
-
             /*
              * complement and create the meta description for the resource.
              */
@@ -135,6 +138,15 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
             metadata.put("extent", Integer.toString(fileSize));
             Map lenyaMetaData = new HashMap(1);
             lenyaMetaData.put(LenyaMetaData.ELEMENT_CONTENT_TYPE, "asset");
+
+            if (canReadMimeType(mimeType)) {
+                BufferedImage input = ImageIO.read(part.getInputStream());
+                String width = Integer.toString(input.getWidth());
+                String height = Integer.toString(input.getHeight());
+                lenyaMetaData.put(LenyaMetaData.ELEMENT_WIDTH, width);
+                lenyaMetaData.put(LenyaMetaData.ELEMENTE_HEIGHT, height);
+            }    
+
             resource.getMetaDataManager().setMetaData(metadata, lenyaMetaData, null);
 
             saveResource(resource, part);
@@ -150,6 +162,10 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
             getLogger().debug("DefaultResourcesManager::addResource() done.");
     }
 
+    public static boolean canReadMimeType(String mimeType) {
+        Iterator iter = ImageIO.getImageReadersByMIMEType(mimeType);
+        return iter.hasNext();
+    } 
     /**
      * Saves the resource to a file.
      * @param resource The resource.

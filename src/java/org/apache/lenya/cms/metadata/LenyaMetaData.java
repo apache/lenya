@@ -60,11 +60,16 @@ public class LenyaMetaData extends MetaDataImpl {
      */
     public static final String ELEMENT_PLACEHOLDER = "placeholder";
 
+    public static final String ELEMENTE_HEIGHT = "height";
+    public static final String ELEMENT_WIDTH = "width";
+
     public static final String[] ELEMENTS = {
        ELEMENT_RESOURCE_TYPE,
        ELEMENT_CONTENT_TYPE,
        ELEMENT_WORKFLOW_VERSION,
-       ELEMENT_PLACEHOLDER
+       ELEMENT_PLACEHOLDER,
+       ELEMENTE_HEIGHT,
+       ELEMENT_WIDTH
     };
 
     /**
