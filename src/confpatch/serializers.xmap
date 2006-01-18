@@ -52,12 +52,7 @@
      <encoding>ASCII</encoding>
      <omit-xml-declaration>yes</omit-xml-declaration>
     </map:serializer>
-    
-    <map:serializer name="svgxml" logger="sitemap.serializer.svgxml" mime-type="image/svg-xml" src="org.apache.cocoon.serialization.XMLSerializer">
-     <doctype-public>-//W3C//DTD SVG 20000303 Stylable//EN</doctype-public>
-     <doctype-system>http://www.w3.org/TR/2000/03/WD-SVG-20000303/</doctype-system>
-    </map:serializer>
-    
+
     <map:serializer name="text" logger="sitemap.serializer.text" mime-type="text/plain" src="org.apache.cocoon.serialization.TextSerializer">
       <encoding>UTF-8</encoding>
     </map:serializer>
@@ -73,5 +68,6 @@
       <parameter name="quality" type="float" value="0.9"/>
     </map:serializer>
     <map:serializer name="svg2png" logger="sitemap.serializer.svg2png" mime-type="image/png" src="org.apache.cocoon.serialization.SVGSerializer"/>
+    <map:serializer name="svg2tiff" logger="sitemap.serializer.svg2tiff" mime-type="image/tiff" src="org.apache.cocoon.serialization.SVGSerializer"/>
 
   </map:serializers></xmap>
