@@ -147,10 +147,19 @@ public interface SiteManager {
      * It is meant to hide specific nodes within the "public" navigation whereas the node is visible within the info/site area.
      * 
      * @param document The document.
-     * @param label The label.
+     * @param visibleInNav The visibility.
      * @throws SiteException if an error occurs.
      */
     void setVisibleInNav(Document document, boolean visibleInNav) throws SiteException;
+    
+    /**
+     * Returns the visibility of a node in the navigation. 
+     * 
+     * @param document The document.
+     * @return A boolean value.
+     * @throws SiteException if an error occurs.
+     */
+    boolean isVisibleInNav(Document document) throws SiteException;
 
     /**
      * Returns all documents in a certain area.

@@ -302,10 +302,9 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
 
     /**
      * @see org.apache.lenya.cms.site.SiteManager#setVisibleInNav(org.apache.lenya.cms.publication.Document,
-     *      java.lang.String)
+     *      boolean)
      */
     public void setVisibleInNav(Document document, boolean visibleInNav) throws SiteException {
-
         SiteTree tree = getTree(document);
         tree.setVisibleInNav(document.getId(), visibleInNav);
     }
@@ -468,5 +467,10 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         }
 
         return documentId;
+    }
+
+    public boolean isVisibleInNav(Document document) throws SiteException {
+        SiteTree tree = getTree(document);
+        return tree.isVisibleInNav(document.getId());
     }
 }

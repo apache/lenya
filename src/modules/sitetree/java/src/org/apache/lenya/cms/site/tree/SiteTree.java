@@ -158,9 +158,19 @@ public interface SiteTree extends SiteStructure {
      * Sets the visibility in the navigation of an existing node. 
      * 
      * @param documentId the document-id to which the visibility is to be added.
-     * @param visiblieInNav 
+     * @param visibleInNav The visibility. 
+     * @throws SiteException if an error occurs.
      */
-    void setVisibleInNav (String documentId, boolean visibleInNav) throws SiteException;
+    void setVisibleInNav(String documentId, boolean visibleInNav) throws SiteException;
+    
+    /**
+     * Returns the visibility in the navigation of an existing node.
+     *  
+     * @param documentId The document ID.
+     * @return A boolean value.
+     * @throws SiteException
+     */
+    boolean isVisibleInNav(String documentId) throws SiteException;
 
     /**
      * Remove a label from a node

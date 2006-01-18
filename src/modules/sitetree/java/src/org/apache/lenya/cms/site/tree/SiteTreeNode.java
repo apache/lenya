@@ -205,6 +205,14 @@ public interface SiteTreeNode {
     void setNodeAttribute (String attributeName, String attributeValue);
 
     /**
+     * Returns an attribute of this node.
+     *
+     * @param attributeName name of the attribute
+     * @return The value.
+     */
+    String getNodeAttribute (String attributeName);
+
+    /**
      * Give a list of the children and this node in a pre order way
      * @return The list
      */

@@ -490,4 +490,9 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         return list;
     }
 
+    public String getNodeAttribute(String attributeName) {
+        Element element = (Element) this.node;
+        return element.getAttribute(attributeName);
+    }
+
 }

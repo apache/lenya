@@ -120,9 +120,8 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
 
         Element root = document.getDocumentElement();
         root.setAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-        root
-                .setAttribute("xsi:schemaLocation",
-                        "http://apache.org/cocoon/lenya/sitetree/1.0  ../../../../resources/entities/sitetree.xsd");
+        root.setAttribute("xsi:schemaLocation",
+                "http://apache.org/cocoon/lenya/sitetree/1.0  ../../../../resources/entities/sitetree.xsd");
 
         return document;
     }
@@ -177,8 +176,8 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String, java.lang.String,
      *      org.apache.lenya.cms.site.Label[], boolean)
      */
-    public synchronized void addNode(String parentid, String id, Label[] labels, boolean visibleInNav)
-            throws SiteException {
+    public synchronized void addNode(String parentid, String id, Label[] labels,
+            boolean visibleInNav) throws SiteException {
         addNode(parentid, id, labels, visibleInNav, null, null, false);
     }
 
@@ -194,8 +193,8 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      *      org.apache.lenya.cms.site.Label[], boolean, java.lang.String, java.lang.String, boolean,
      *      java.lang.String)
      */
-    public synchronized void addNode(String documentid, Label[] labels, boolean visibleInNav, String href, String suffix,
-            boolean link, String refDocumentId) throws SiteException {
+    public synchronized void addNode(String documentid, Label[] labels, boolean visibleInNav,
+            String href, String suffix, boolean link, String refDocumentId) throws SiteException {
         StringBuffer buf = new StringBuffer();
         StringTokenizer st = new StringTokenizer(documentid, "/");
         int length = st.countTokens();
@@ -212,8 +211,8 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String,
      *      org.apache.lenya.cms.site.Label[], boolean, java.lang.String, java.lang.String, boolean)
      */
-    public synchronized void addNode(String documentid, Label[] labels, boolean visibleInNav, String href, String suffix,
-            boolean link) throws SiteException {
+    public synchronized void addNode(String documentid, Label[] labels, boolean visibleInNav,
+            String href, String suffix, boolean link) throws SiteException {
         addNode(documentid, labels, visibleInNav, href, suffix, link, null);
     }
 
@@ -221,8 +220,8 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String, java.lang.String,
      *      org.apache.lenya.cms.site.Label[], boolean, java.lang.String, java.lang.String, boolean)
      */
-    public synchronized void addNode(String parentid, String id, Label[] labels, boolean visibleInNav, String href,
-            String suffix, boolean link) throws SiteException {
+    public synchronized void addNode(String parentid, String id, Label[] labels,
+            boolean visibleInNav, String href, String suffix, boolean link) throws SiteException {
         addNode(parentid, id, labels, visibleInNav, href, suffix, link, null);
     }
 
@@ -231,8 +230,9 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      *      org.apache.lenya.cms.site.Label[], boolean, java.lang.String, java.lang.String, boolean,
      *      java.lang.String)
      */
-    public synchronized void addNode(String parentid, String id, Label[] labels, boolean visibleInNav, String href,
-            String suffix, boolean link, String refDocumentId) throws SiteException {
+    public synchronized void addNode(String parentid, String id, Label[] labels,
+            boolean visibleInNav, String href, String suffix, boolean link, String refDocumentId)
+            throws SiteException {
 
         Node parentNode = getNodeInternal(parentid);
 
@@ -263,7 +263,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         } else {
             child.setAttribute(SiteTreeNodeImpl.VISIBLEINNAV_ATTRIBUTE_NAME, "false");
         }
-        
+
         if ((href != null) && (href.length() > 0)) {
             child.setAttribute(SiteTreeNodeImpl.HREF_ATTRIBUTE_NAME, href);
         }
@@ -514,8 +514,14 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         String parentId = newParent.getAbsoluteId();
         String id = newid;
 
-        this.addNode(parentId, id, subtreeRoot.getLabels(), subtreeRoot.visibleInNav(), subtreeRoot.getHref(), subtreeRoot
-                .getSuffix(), subtreeRoot.hasLink(), refDocumentId);
+        this.addNode(parentId,
+                id,
+                subtreeRoot.getLabels(),
+                subtreeRoot.visibleInNav(),
+                subtreeRoot.getHref(),
+                subtreeRoot.getSuffix(),
+                subtreeRoot.hasLink(),
+                refDocumentId);
         newParent = this.getNode(parentId + "/" + id);
         if (newParent == null) {
             throw new SiteException("The added node was not found.");
@@ -546,11 +552,12 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
             throw new RuntimeException(e);
         }
     }
-    
+
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTree#setVisibleInNav(java.lang.String, boolean)
      */
-    public synchronized void setVisibleInNav(String documentId, boolean visibleInNav)  throws SiteException {
+    public synchronized void setVisibleInNav(String documentId, boolean visibleInNav)
+            throws SiteException {
         SiteTreeNode node = getNode(documentId);
         if (visibleInNav) {
             node.setNodeAttribute(SiteTreeNodeImpl.VISIBLEINNAV_ATTRIBUTE_NAME, "true");
@@ -599,6 +606,16 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      */
     public void save() throws SiteException {
         saveDocument();
+    }
+
+    public boolean isVisibleInNav(String documentId) throws SiteException {
+        SiteTreeNode node = getNode(documentId);
+        String value = node.getNodeAttribute(SiteTreeNodeImpl.VISIBLEINNAV_ATTRIBUTE_NAME);
+        if (value != null && !value.equals("")) {
+            return Boolean.valueOf(value).booleanValue();
+        } else {
+            return true;
+        }
     }
 
 }

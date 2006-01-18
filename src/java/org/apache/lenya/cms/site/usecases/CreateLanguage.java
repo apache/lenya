@@ -19,12 +19,14 @@ package org.apache.lenya.cms.site.usecases;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.ResourceType;
+import org.apache.lenya.cms.site.SiteManager;
 
 /**
  * Usecase to create a new language version of a resource.
@@ -88,6 +90,7 @@ public class CreateLanguage extends Create {
 
         Document source = getSourceDocument();
         if (source != null) {
+            setParameter(DOCUMENT_ID, source.getId());
             try {
                 List nonExistingLanguages = getNonExistingLanguages();
                 setParameter(LANGUAGES, nonExistingLanguages
@@ -140,6 +143,27 @@ public class CreateLanguage extends Create {
             }
         }
         return this.documentTypeName;
+    }
+
+    protected boolean getVisibleInNav() {
+        Document source = getSourceDocument();
+        ServiceSelector selector = null;
+        SiteManager siteManager = null;
+        try {
+            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(source.getPublication()
+                    .getSiteManagerHint());
+            return siteManager.isVisibleInNav(source);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                manager.release(selector);
+            }
+        }
     }
 
 }
