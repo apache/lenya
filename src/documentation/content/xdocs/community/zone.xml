@@ -50,7 +50,7 @@
           (not in use ATM)</dd>
         <dt>mycrons.cron</dt>
         <dd>Shows the currently configured schedule. If you change it, make 
-          sure to as well apply it.</dd>
+          sure to as well apply it (see <a href="#tips">tips and tricks)</a>.</dd>
         <dt>nightlies.sh</dt>
         <dd>This script will build lenya trunk 
           http://lenya.zones.apache.org:9999/index.html and lenya-1.2.x 
