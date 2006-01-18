@@ -84,6 +84,11 @@
   <message key="Creation Date">Date de création</message>
   <message key="File Size">Taille</message>
   <message key="Image">Image</message>
+  <message key="Link">Lien</message>
+  <message key="Caption">Légende</message>
+  <message key="Dimension (w x h)">Dimension (l&#160;x&#160;h)</message>
+  <message key="Height">Hauteur</message>
+  <message key="Width">Largeur</message>
 
   <!-- submit screen -->
   <message key="submit-for-approval">Soumettre {0} pour approbation</message>
@@ -173,6 +178,7 @@
   <message key="Group Administration">Administration des groupes</message>
   <message key="Add Group">Ajouter un groupe</message>
   <message key="Group Data">Détail du groupe</message>
+  <message key="group_no_such_entry">Le groupe {0} n'existe pas.</message>
 
     <!-- User Administration -->
   <message key="User Data">Détail&#160;de&#160;l'utilisateur</message>
@@ -188,6 +194,8 @@
   <message key="Group Affiliation">Affiliation aux groupes</message>
   <message key="Change Password">Changer le mot de passe</message>
   <message key="Edit Group Affiliation">Editer l'affiliation</message>
+  <message key="user_no_such_user">L'utilisateur {0} n'existe pas.</message>
+  <message key="ldap_no_such_user">L'utilisateur {0} ne figure pas dans l'annuaire LDAP.</message>
 
     <!-- IP Range Administration -->
   <message key="IP Range">Plage&#160;IP</message>
@@ -197,6 +205,19 @@
   <message key="IP Range Administration">Administrer&#160;plage&#160;IP</message>
   <message key="Add IP Range">Ajouter&#160;une&#160;plage&#160;IP</message>
   <message key="IP Range Profile">Profil&#160;de&#160;plage&#160;IP</message>
+
+  <message key="filterResourceType">Type de resource</message>
+  <message key="filterWorkflowState">Statut</message>
+  <message key="filterLanguage">Langue</message>
+  <message key="filterLastModified">Dernière&#160;mise&#160;à&#160;jour</message>
+  <message key="filterDocumentId">ID du document</message>
+  <message key="keyResourceType">Type de resource</message>
+  <message key="keyWorkflowState">Statut</message>
+  <message key="keyLanguage">Langue</message>
+  <message key="keyLastModified">Dernière&#160;mise&#160;à&#160;jour</message>
+  <message key="keyDocumentId">ID du document</message>
+  <message key="keyCheckedOut">Extrait par</message>
+  <message key="Update">Actualisation</message>
 
   <!-- Site tab (info screens) -->
   <message key="Available Languages">Langues disponibles</message>
@@ -233,6 +254,7 @@
   <message key="delete-doc">Supprimer le document {0}</message>
   <message key="cannot-deactivate-unless-children-deactivated">Ce document ne peut pas &#234;tre désactivé tant que les documents subordonnés suivants n'auront pas été également désactivés</message>
   <message key="delete-language-versions?">Voulez-vous vraiment supprimer toutes les traductions du document {0}?</message>
+  <message key="delete-doc-live">Le document {0} ne peut &#234;tre supprimé, car il est en ligne!</message>
       <!-- Archive document -->
   <message key="Archive Document">Archiver le document</message>
   <message key="archive-doc">Archiver le document {0}</message>
@@ -240,6 +262,7 @@
       <!-- Rename document -->
   <message key="Rename Document">Renommer le document</message>
   <message key="rename-doc">Renommer le document {0}</message>
+  <message key="rename-label-doc">Changer le titre de navigation du document {0}</message>
       <!-- Copy document -->
   <message key="Copy Document">Copier le document</message>
   <message key="copy-doc">Copier le document {0}</message>
@@ -252,6 +275,11 @@
   <message key="Cut Document">Couper le document</message>
   <message key="cut-doc">Couper le document {0}</message>
   <message key="cut-doc-to-clip?">Voulez-vous couper le document {0} vers le presse-papiers? Vous pourrez le coller ultérieurement à l'endroit de votre choix.</message>
+
+      <!-- Nudge document -->
+  <message key="nudge-error-direction-unknown">La direction {0} n'est pas soutenue!</message>
+  <message key="nudge-error-direction">Le nouyau ne peut pas &#234;tre déplacé dans cette direction.</message>
+  <message key="nudge-error-area">Cette opération ne peut &#234;tre invoquée que sur une arborescence du site (Site tree).</message>
 
   <!-- Info Asset -->
   <message key="Insert Image">Insérer une Image</message>
@@ -271,12 +299,18 @@
   <message key="submit">soumettre</message>
   <message key="reject">rejeter</message>
   <message key="publish">publier</message>
+  <message key="error-workflow-document">L'événement {0} n'est pas exécutable pour le document {1}</message>
+
+ <!-- Notification -->
+  <message key="notification-message">Notification de Lenya</message>
+  <message key="notify-submitter">Notifier le soumetteur</message>
+  <message key="document-published">Un document que vous avez soumis pour approbation a été publié: {0}</message>
 
   <!-- Info asset  -->
   <message key="New Asset">Nouvel Actif</message>
 
   <!-- Info RC  -->
-  <message key="Current Version">Version courante</message>
+  <message key="Current Version">Version actuelle</message>
   <message key="Rollback to this revision">Restaurer cette version</message>
 
   <!-- Info AC  -->
@@ -308,5 +342,29 @@
   <message key="Asset Library">Librairie des actifs</message>
   <message key="No assets available">Pas d'actifs disponibles</message>
   <message key="Insert Asset">Ajouter un actif</message>
+
+  <!-- Image Upload/Insert Dialog -->
+  <message key="lenya.imageupload.title">Insérer une Image</message>
+  <message key="lenya.imageupload.selectimage.label">Sélectionner une Image</message>
+  <message key="lenya.imageupload.info.noimages">Aucune image disponible.</message>  
+  <message key="lenya.imageupload.links.hint">Les liens externes doivent commencer par 'http://', les liens internes doivent commencer par '/'</message>  
+
+  <!-- Revision Controller -->
+  <message key="Reason">Cause</message>
+  <message key="Filename">Nom du fichier</message>
+  <message key="lenya.rc.nocheckout">La resource ne peut pas &#234;tre extraite</message>
+  <message key="lenya.rc.checkedoutalready">La resource a déjà été extraite par un autre utilisateur.</message>
+  <message key="lenya.rc.nocheckin">La resource ne peut pas &#234;tre enregistrée</message>
+  <message key="Generic Exception">Exception générique</message>
+  <message key="Check the log files.">Consultez les journaux d'exécution (log files).</message>
+
+  <!-- Error messages of a general nature -->
+  <message key="error-document-form">Le document n'est pas bien formé: {0}</message>
+  <message key="error-validation">La validation avec le schéma a échoué: {0}</message>
+  <message key="error-missing-language">Le document demandé n'est pas disponible pour la langue: {0}</message>
+  <message key="error-document-existance-short">Le doument n'existe pas</message>
+  <message key="error-document-existance">Le document demandé {0} avec comme id {1} n'existe pas.</message>
+  <message key="error-generic">Une erreur est survenue.</message>
+  <message key="error-404">404: Page non trouvée</message>
 
 </catalogue>

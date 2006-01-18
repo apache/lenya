@@ -33,6 +33,7 @@
           <th><i18n:text>Preview</i18n:text></th>
           <th><i18n:text>Title</i18n:text></th>
           <th><i18n:text>File Size</i18n:text></th>
+          <th><i18n:text>Dimension (w x h)</i18n:text></th>
           <th><i18n:text>Creation Date</i18n:text></th>
           <th></th>
         </tr>
@@ -49,6 +50,11 @@
             </td>
             <td><jx:out value="${asset.getMetaDataManager().getDublinCoreMetaData().getFirstValue('title')}"/></td>
             <td align="right"><jx:out value="${asset.getContentLength() / 1000}"/> kB</td>
+            <td align="right">
+              <jx:if test="${mimeType.startsWith('image/')}">
+                <jx:out value="${asset.getMetaDataManager().getLenyaMetaData().getFirstValue('width')}"/> x <jx:out value="${asset.getMetaDataManager().getLenyaMetaData().getFirstValue('height')}"/>
+              </jx:if>
+            </td>
             <td align="right"><jx:out value="${java.text.DateFormat.getDateInstance().format(asset.getLastModified())}"/></td>
             <td>
               <form method="POST">

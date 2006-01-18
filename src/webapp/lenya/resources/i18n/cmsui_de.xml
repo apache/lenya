@@ -87,6 +87,10 @@
   <message key="All rights reserved">Alle Rechte vorbehalten.</message>
   <message key="show">Anzeigen</message>
   <message key="hide">Verbergen</message>
+  <message key="Dimension (w x h)">Abmessung (B&#160;x&#160;H)</message>
+  <message key="Height">Höhe</message>
+  <message key="Width">Breite</message>
+  
 
   <!-- submit screen -->
   <message key="submit-for-approval">Dokument {0} einreichen</message>

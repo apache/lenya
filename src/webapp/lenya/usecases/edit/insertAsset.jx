@@ -37,12 +37,13 @@
           <th><i18n:text>Preview</i18n:text></th>
           <th><i18n:text>Title</i18n:text></th>
           <th><i18n:text>File Size</i18n:text></th>
+          <th><i18n:text>Dimension (w x h)</i18n:text></th>
           <th><i18n:text>Creation Date</i18n:text></th>
         </tr>
         <jx:forEach var="asset" items="${usecase.getParameter('assets')}">
           <tr>
             <td><input type="radio" name="asset" value="${asset.getName()}"
-                       onClick="javascript:insertCaption('${asset.getName()}', '${asset.getMetaDataManager().getDublinCoreMetaData().getFirstValue('title')}', '${asset.getMimeType()}', '${asset.getContentLength() / 1000}')"/></td>
+                       onClick="javascript:insertData('${asset.getName()}', '${asset.getMetaDataManager().getDublinCoreMetaData().getFirstValue('title')}', '${asset.getMimeType()}', '${asset.getContentLength() / 1000}', '${asset.getMetaDataManager().getLenyaMetaData().getFirstValue('height')}', '${asset.getMetaDataManager().getLenyaMetaData().getFirstValue('width')}')"/></td>
             <td><jx:out value="${asset.getName()}"/></td>
             <td>        
               <jx:set var="mimeType" value="${asset.getMimeType()}"/>
@@ -54,24 +55,41 @@
             </td>
             <td><jx:out value="${asset.getMetaDataManager().getDublinCoreMetaData().getFirstValue('title')}"/></td>
             <td align="right"><jx:out value="${asset.getContentLength() / 1000}"/> kB</td>
+            <td align="right"><jx:if test="${mimeType.startsWith('image/')}"><jx:out value="${asset.getMetaDataManager().getLenyaMetaData().getFirstValue('width')}"/> x <jx:out value="${asset.getMetaDataManager().getLenyaMetaData().getFirstValue('height')}"/></jx:if></td>
             <td align="right"><jx:out value="${java.text.DateFormat.getDateInstance().format(asset.getLastModified())}"/></td>
           </tr>
         </jx:forEach>
         <tr>
           <td colspan="6">
-            <div style="margin: 10px">
-              <label for="caption"><i18n:text>Caption</i18n:text></label>: <input class="lenya-form-element" type="text" name="caption"/>
-              <input type="hidden" name="type" value=""/>
-              <input type="hidden" name="assetName" value=""/>
-              <input type="hidden" name="assetSize" value=""/>
-            </div>
-            <div style="margin: 10px">
-              <input i18n:attr="value" type="submit" name="submit" value="Submit"
+            <input type="hidden" name="type" value=""/>
+            <input type="hidden" name="assetName" value=""/>
+            <input type="hidden" name="assetSize" value=""/>
+            <input type="hidden" name="ratio" value=""/>
+            <table class="lenya-table-noborder">
+              <tr>
+                <td class="lenya-entry-caption"><label for="caption"><i18n:text>Caption</i18n:text></label>:</td>
+                <td><input class="lenya-form-element" type="text" name="caption"/></td>
+              </tr>
+              <jx:if test="${usecase.getName().equals('edit.insertImage')}">
+              <tr>
+                <td class="lenya-entry-caption"><label for="width"><i18n:text>width</i18n:text></label>:</td>
+                <td><input class="lenya-form-element" type="text" name="width" onchange="javascript:scaleHeight(this.value)"/></td>
+              </tr>
+              <tr>
+                <td class="lenya-entry-caption"><label for="height"><i18n:text>height</i18n:text></label>:</td>
+                <td><input class="lenya-form-element" type="text" name="height" onchange="javascript:scaleWidth(this.value)"/></td>
+              </tr>
+              </jx:if>
+              <tr>
+                <td colspan="2">
+                  <input i18n:attr="value" type="submit" name="submit" value="Submit"
                      onClick="javascript:${usecase.getView().getParameter('callbackFunction')}('${usecase.getParameter('document').getName()}');" />
-              &#160;
-              <input i18n:attr="value" type="submit" name="cancel" value="Cancel"
+                  &#160;
+                  <input i18n:attr="value" type="submit" name="cancel" value="Cancel"
                      onClick="location.href='javascript:window.close();';" />
-            </div>
+                </td>
+              </tr>
+            </table>
           </td>
         </tr>
       </table>

@@ -84,6 +84,9 @@
   <message key="Image">Image</message>
   <message key="Link">Link</message>
   <message key="Caption">Caption</message>
+  <message key="Dimension (w x h)">Dimension (w&#160;x&#160;h)</message>
+  <message key="Height">Height</message>
+  <message key="Width">Width</message>
   <message key="All rights reserved">All rights reserved.</message>
   <message key="show">Show</message>
   <message key="hide">Hide</message>
