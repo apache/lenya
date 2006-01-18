@@ -141,7 +141,7 @@
           -->
           <map:part src="{resource-type:format-xhtml}"/>
         </map:aggregate>
-        
+        <map:transform src="fallback://lenya/modules/svg/xslt/image2svg.xsl"/>
         <map:select type="resource-exists">
           <map:parameter name="prefix" value="fallback://"/>
           <map:when test="xslt/page2xhtml-{4}.xsl">
