@@ -30,7 +30,7 @@ import javax.xml.transform.TransformerException;
 
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.commons.io.CopyUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
@@ -75,10 +75,10 @@ public final class SourceUtil {
 
             if (useBuffer) {
                 final ByteArrayOutputStream sourceBos = new ByteArrayOutputStream();
-                CopyUtils.copy(sourceInputStream, sourceBos);
-                CopyUtils.copy(sourceBos.toByteArray(), destOutputStream);
+                IOUtils.copy(sourceInputStream, sourceBos);
+                IOUtils.write(sourceBos.toByteArray(), destOutputStream);
             } else {
-                CopyUtils.copy(sourceInputStream, destOutputStream);
+                IOUtils.copy(sourceInputStream, destOutputStream);
             }
         } finally {
             if (destOutputStream != null) {
