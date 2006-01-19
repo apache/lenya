@@ -62,6 +62,12 @@ public interface Document {
      * @throws RepositoryException if an error occurs.
      */
     long getLastModified() throws RepositoryException;
+    
+    /**
+     * @return The MIME type of the document.
+     * @throws RepositoryException if an error occurs.
+     */
+    String getMimeType() throws RepositoryException;
 
     /**
      * @return The document's label.

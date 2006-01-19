@@ -97,9 +97,6 @@ public class ResourceProxy extends AbstractNodeProxy {
      * @throws RepositoryException if an error occurs.
      */
     public void init() throws RepositoryException {
-        DocumentProxy docProxy = (DocumentProxy) getParentProxy();
-        String mimeType = docProxy.getContentNode().getDocumentType().getMimeType();
-        setProperty(MIME_TYPE_PROPERTY, mimeType);
         setProperty(DATA_PROPERTY, "");
         setProperty(LAST_MODIFIED_PROPERTY, new GregorianCalendar());
     }
@@ -188,5 +185,13 @@ public class ResourceProxy extends AbstractNodeProxy {
 
     public PathElement getPathElement() throws RepositoryException {
         return getPathElement(NODE_NAME);
+    }
+
+    /**
+     * @return The MIME type of this resource node.
+     * @throws RepositoryException if an error occurs.
+     */
+    public String getMimeType() throws RepositoryException {
+        return getPropertyString(MIME_TYPE_PROPERTY);
     }
 }

@@ -105,4 +105,8 @@ public class DocumentProxy extends AbstractNodeProxy implements Document {
         }
     }
 
+    public String getMimeType() throws RepositoryException {
+        return getResourceProxy().getMimeType();
+    }
+
 }

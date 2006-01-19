@@ -39,10 +39,4 @@ public interface DocumentType {
      */
     boolean isValidating();
     
-    /**
-     * @return The mime type of the document type.
-     * @throws RepositoryException if an error occurs.
-     */
-    String getMimeType() throws RepositoryException;
-    
 }

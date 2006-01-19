@@ -149,7 +149,7 @@ public class ContentSource extends AbstractSource implements LogEnabled {
      */
     public String getMimeType() {
         try {
-            return this.document.getContentNode().getDocumentType().getMimeType();
+            return this.document.getMimeType();
         } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
