@@ -15,8 +15,6 @@
   limitations under the License.
 -->
 
-<!-- $Id: lenya.iml,v 1.3 2004/03/13 12:31:31 gregor Exp $ -->
-
 <identity id="lenya" class="org.apache.lenya.ac.file.FileUser">
   <name>Levi Vanya</name>
   <description></description>
