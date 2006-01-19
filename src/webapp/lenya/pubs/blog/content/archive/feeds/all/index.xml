@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://purl.org/atom/ns#" version="0.3">
+  <title>Archive</title>
+  <link href="http://lenya.apache.org" rel="alternate" type="text/xml"/>  
+  <modified>2005-09-02T11:45:38+02:00</modified>
+</feed>

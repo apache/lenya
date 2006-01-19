@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lenya:document xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
+<lenya:meta>
+<lenya:internal>
+<lenya:resourceType>sidebar</lenya:resourceType>
+<lenya:contentType>xml</lenya:contentType>
+</lenya:internal>
+</lenya:meta>
+</lenya:document>

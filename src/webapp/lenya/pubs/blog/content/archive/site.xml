@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<col:collection xmlns:col="http://apache.org/cocoon/lenya/collection/1.0" id="/site">
+<col:document id="/feeds/all/index" xml:lang="en"/>
+<col:document id="/sidebar" xml:lang="en"/>
+</col:collection>
