@@ -32,7 +32,7 @@
         <tr>
           <td><i18n:text>Current Version</i18n:text></td>
           <td>&#160;</td>
-          <td align="right"><jx:formatDate value="${item.time}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+          <td align="right"><jx:formatDate value="${item.time}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
           <td><jx:out value="${item.identity}"/></td>
         </tr>
       </jx:forEach>
@@ -47,7 +47,7 @@
               <a href="?lenya.step=view-revision&amp;rollbackTime=${item.time}" target="_blank">              
                <i18n:text>View</i18n:text></a>
             </td>
-            <td align="right"><jx:formatDate value="${item.time}" pattern="yyyy-MM-dd hh:mm:ss"/></td>
+            <td align="right"><jx:formatDate value="${item.time}" pattern="yyyy-MM-dd HH:mm:ss"/></td>
             <td><jx:out value="${item.identity}"/></td>
           </tr>
       </jx:forEach>

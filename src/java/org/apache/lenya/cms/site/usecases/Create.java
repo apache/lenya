@@ -246,7 +246,7 @@ public abstract class Create extends AbstractUsecase {
             setParameter(DublinCore.ELEMENT_CREATOR, "");
         }
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         setParameter(DublinCore.ELEMENT_DATE, format.format(new GregorianCalendar().getTime()));
 
         String doctypeName = getDocumentTypeName();

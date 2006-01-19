@@ -79,7 +79,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
         super.initParameters();
 
         Date now = new GregorianCalendar().getTime();
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         setParameter(SCHEDULE_TIME, format.format(now));
 
         setParameter(SEND_NOTIFICATION, Boolean.TRUE);
@@ -209,14 +209,14 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
         if (schedule) {
             deleteParameter(SCHEDULE);
             String dateString = getParameterAsString(SCHEDULE_TIME);
-            DateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+            DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             UsecaseScheduler scheduler = null;
             try {
                 Date date = null;
                 try {
                     date = format.parse(dateString);
                 } catch (ParseException e) {
-                    addErrorMessage("The scheduler date must be of the form 'yyyy-MM-dd hh:mm:ss'.");
+                    addErrorMessage("The scheduler date must be of the form 'yyyy-MM-dd HH:mm:ss'.");
                 }
                 if (date != null) {
                     scheduler = (UsecaseScheduler) this.manager.lookup(UsecaseScheduler.ROLE);
