@@ -193,8 +193,7 @@ public final class SourceUtil {
             source = (ModifiableSource) resolver.resolveURI(sourceUri);
 
             OutputStream oStream = source.getOutputStream();
-            Writer writer = new OutputStreamWriter(oStream);
-            DocumentHelper.writeDocument(document, writer);
+            DocumentHelper.writeDocument(document, oStream);
             if (oStream != null) {
                 oStream.flush();
                 try {

@@ -32,6 +32,8 @@ function passRequestParameters(flowHelper, usecase) {
             
             var string = new Packages.java.lang.String();
             if (string.getClass().isInstance(value)) {
+                // use getParameter() to avoid character encoding problems
+                value = flowHelper.getRequest(cocoon).getParameter(name);
                 usecase.setParameter(name, value);
             }
             else {

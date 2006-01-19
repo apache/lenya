@@ -20,6 +20,7 @@ package org.apache.lenya.xml;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.Writer;
 import java.net.URI;
 import java.net.URL;
@@ -213,6 +214,25 @@ public class DocumentHelper {
 
         DOMSource source = new DOMSource(document);
         StreamResult result = new StreamResult(writer);
+        getTransformer(document.getDoctype()).transform(source, result);
+    }
+
+    /**
+     * Writes a document to an output stream.
+     * @param document The document to write.
+     * @param outputStream The stream to write the document to.
+     * @throws TransformerConfigurationException if an error occurs
+     * @throws TransformerException if an error occurs
+     */
+    public static void writeDocument(Document document, OutputStream outputStream)
+            throws TransformerConfigurationException, TransformerException {
+
+        // sanity checks
+        if (document == null)
+            throw new IllegalArgumentException("illegal usage of DocumentHelper::writeDocument(), parameter document may not be null");
+
+        DOMSource source = new DOMSource(document);
+        StreamResult result = new StreamResult(outputStream);
         getTransformer(document.getDoctype()).transform(source, result);
     }
 
