@@ -18,7 +18,9 @@ package org.apache.lenya.cms.site.usecases;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 import java.util.HashMap;
 
@@ -34,8 +36,13 @@ import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourceType;
+import org.apache.lenya.cms.publication.util.DocumentSet;
+import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.cms.usecase.UsecaseException;
 
 /**
  * Usecase to create a Blog entry.
@@ -58,6 +65,7 @@ public class CreateBlogEntry extends DocumentUsecase {
         setParameter(PARENT_ID, parent.getId());
     }
 
+        
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
      */

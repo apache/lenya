@@ -63,8 +63,8 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
         String month = steps[3];
         String day = steps[4];
 
-        DocumentHelper.setSimpleElementText(element, "tag:bob.blog," + year + ":" + month + ":"
-                + day + ":" + nodeId);
+        DocumentHelper.setSimpleElementText(element, year + "/" + month + "/"
+                + day + "/" + nodeId);
 
         // Replace title
         element = (Element) XPathAPI.selectSingleNode(parent,
@@ -94,8 +94,7 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
 
         DocumentHelper.setSimpleElementText(element, identity.getUser().getId());
 
-        // Replace date created (and issued and modified, FIXME: issued should be set during first
-        // time publishing, modified should be set during re-publishing)
+        // Replace date created, issued and modified
         DateFormat datefmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         DateFormat ofsfmt = new SimpleDateFormat("Z");
         Date date = new Date();

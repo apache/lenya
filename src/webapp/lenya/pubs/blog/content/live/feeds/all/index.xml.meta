@@ -18,25 +18,8 @@
 <lenya:document xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
 <lenya:meta>
 <lenya:internal>
-<lenya:resourceType>entry</lenya:resourceType>
+<lenya:resourceType>feed</lenya:resourceType>
 <lenya:contentType>xml</lenya:contentType>
 </lenya:internal>
-<lenya:dc>
-        <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Lenya Konzepte kurz erklärt</dc:title>
-        <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/">Lenya Development Team</dc:creator>
-        <dc:subject xmlns:dc="http://purl.org/dc/elements/1.1/">Lenya Konzepte</dc:subject>
-        <dc:description xmlns:dc="http://purl.org/dc/elements/1.1/">Erklärt Lenya Konzepte.</dc:description>
-        <dc:publisher xmlns:dc="http://purl.org/dc/elements/1.1/">Apache Software Foundation</dc:publisher>
-        <dc:contributor xmlns:dc="http://purl.org/dc/elements/1.1/" />
-        <dc:date xmlns:dc="http://purl.org/dc/elements/1.1/">2005-01-31</dc:date>
-        <dc:type xmlns:dc="http://purl.org/dc/elements/1.1/" />
-        <dc:format xmlns:dc="http://purl.org/dc/elements/1.1/" />
-        <dc:identifier xmlns:dc="http://purl.org/dc/elements/1.1/" />
-        <dc:source xmlns:dc="http://purl.org/dc/elements/1.1/" />
-        <dc:language xmlns:dc="http://purl.org/dc/elements/1.1/">de</dc:language>
-        <dc:relation xmlns:dc="http://purl.org/dc/elements/1.1/" />
-        <dc:coverage xmlns:dc="http://purl.org/dc/elements/1.1/" />
-        <dc:rights xmlns:dc="http://purl.org/dc/elements/1.1/">Alle Rechte vorbehalten</dc:rights>
-</lenya:dc>
 </lenya:meta>
 </lenya:document>

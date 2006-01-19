@@ -27,35 +27,28 @@
   xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
 >
-
 <menu>
-
   <xsp:logic>
     String source = <input:get-attribute module="page-envelope" as="string" name="document-id"/>;
     source = source.substring(1); // Remove leading slash
     String uri = source + ".html";
     source = source + ".xml";
   </xsp:logic>
-
   <tabs>
     <tab label="info" show="false"/>
   </tabs>
-
   <menus>
     <menu i18n:attr="name" name="File">
       <block>
-        <item uc:usecase="edit.forms" href="?&amp;form=entry">Edit&#160;with&#160;Forms</item>
         <item href="index-bxe.html">Edit&#160;with&#160;BXE</item>
         <item uc:usecase="edit.oneform" href="?">Edit&#160;with&#160;one&#160;Form</item>
+         <item uc:usecase="edit.forms" href="?&amp;form=entry">Edit&#160;with&#160;Forms</item>
       </block>
       <block>
-          <item uc:usecase="workflow.publish" href="?"><i18n:text>Publish</i18n:text></item>
+        <item uc:usecase="workflow.publish" href="?"><i18n:text>Publish</i18n:text></item>
+        <item uc:usecase="workflow.deactivate" href="?"><i18n:text>Deactivate</i18n:text></item>
+        <item uc:usecase="workflow.delete" href="?"><i18n:text>Delete</i18n:text></item>
       </block>
-      <!--
-      <block>
-        <item uc:usecase="rollback" uc:step="showscreen" href="?">Revisions</item>
-      </block>
-      -->
       <block>
         <item uc:usecase="ac.logout" href="?"><i18n:text>Logout</i18n:text></item>
       </block>
@@ -63,7 +56,7 @@
 
     <menu i18n:attr="name" name="Help">
       <block>
-        <item href="http://lenya.apache.org/docs/index.html"><i18n:text>Documentation</i18n:text></item>
+        <item href="http://lenya.apache.org/1_4/index.html"><i18n:text>Documentation</i18n:text></item>
         <item href="http://wiki.apache.org/lenya/"><i18n:text>Wiki</i18n:text></item>
       </block>
       <block>
@@ -74,11 +67,9 @@
 
     <menu i18n:attr="name" name="Debug">
       <block>
-        <item href="index.xml"><i18n:text>Feed</i18n:text></item>
+        <item href="index.xml"><i18n:text>Atom Feed</i18n:text></item>
+        <item href="index.rss"><i18n:text>RSS Feed</i18n:text></item>      
         <item href="lenya-page-body.xml"><i18n:text>Body</i18n:text></item>
-      </block>
-      <block>
-        <item href="http://www.feedvalidator.org">Feed Validator</item>
       </block>
       <block>
         <item href="index-bxe.html">HTML&#160;for&#160;BXE</item>
@@ -89,7 +80,5 @@
       </block>
     </menu>
   </menus>
-
 </menu>
-
 </xsp:page>

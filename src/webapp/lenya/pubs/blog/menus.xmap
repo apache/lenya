@@ -30,8 +30,12 @@
         <map:generate type="serverpages" src="config/menus/feed.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
-      <map:match pattern="authoring/archive.xml">
-        <map:generate type="serverpages" src="config/menus/archive.xsp"/>
+      <map:match pattern="archive/feed.xml">
+        <map:generate type="serverpages" src="config/menus/feed.xsp"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="archive/entry.xml">
+        <map:generate type="serverpages" src="config/menus/entry.xsp"/>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="live/**.xml">
@@ -39,7 +43,7 @@
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
-
-
+    
   </map:pipelines>
+
 </map:sitemap>

@@ -17,15 +17,37 @@
 
 <!-- $Id: doctypes.xconf 164635 2005-04-25 20:01:43Z tschlabach $ -->
 
-<xconf xpath="/cocoon/resource-types" unless="/cocoon/resource-types/component-instance[@name = 'entry']">
+<xconf xpath="/cocoon/resource-types" 
+	unless="/cocoon/resource-types/component-instance[@name = 'entry' or @name = 'sidebar' or @name = 'feed']"
+	>
 
   <component-instance name="entry"
                       logger="lenya.resourcetypes.entry"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
-    <schema src="fallback://lenya/resources/schemas/entry.rng" language="http://relaxng.org/ns/structure/0.9"/>
+    <schema language="http://relaxng.org/ns/structure/0.9" src="fallback://lenya/resources/schemas/entry.rng"/>
     <creator src="org.apache.lenya.cms.authoring.NewBlogEntryCreator">
       <sample-name>fallback://lenya/resources/samples/entry.xml</sample-name>
     </creator>
   </component-instance>
+  
+  <component-instance name="sidebar"
+                      logger="lenya.resourcetypes.sidebar"
+                      class="org.apache.lenya.cms.publication.ResourceTypeImpl">
+    <schema language="http://relaxng.org/ns/structure/0.9" src="fallback://lenya/resources/schemas/sidebar.rng"/>
+    <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
+      <sample-name>fallback://lenya/resources/samples/sidebar.xml</sample-name>
+    </creator>
+  </component-instance>
 
+  <component-instance name="feed"
+                      logger="lenya.resourcetypes.feed"
+                      class="org.apache.lenya.cms.publication.ResourceTypeImpl">
+    <schema language="http://relaxng.org/ns/structure/0.9" src="fallback://lenya/resources/schemas/feed.rng"/>
+    <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
+      <sample-name>fallback://lenya/resources/samples/feed.xml</sample-name>
+    </creator>
+  </component-instance>
+  
 </xconf>
+
+

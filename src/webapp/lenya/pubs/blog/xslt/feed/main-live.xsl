@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: main-live.xsl,v 1.5 2004/03/13 12:31:33 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"

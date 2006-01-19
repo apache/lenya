@@ -21,8 +21,9 @@
 <block>
 <title>Feeds</title>
 <content>
-<a href="index.xml">Echo/Atom Feed</a>
-<br />RSS Feed
+<a href="recentlink-atom">Echo/Atom Feed</a>
+<br />
+<a href="recentlink-rss">RSS Feed</a>
 </content>
 </block>
 

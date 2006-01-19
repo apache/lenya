@@ -15,10 +15,11 @@
   limitations under the License.
 -->
 
-<!-- $Id: aggregate.xsl,v 1.5 2004/03/13 12:31:30 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:blog="http://apache.org/cocoon/blog/1.0"	
 >
 
 <xsl:template match="/">
@@ -33,6 +34,7 @@
 <xsl:copy-of select="echo:feed/echo:modified"/>
 <xsl:copy-of select="echo:entry"/>
 </feed>
+<xsl:copy-of select="blog:overview"/>
 </xsl:template>
  
 </xsl:stylesheet>  

@@ -28,38 +28,14 @@
 
 <xsl:template match="echo:title">
   <xsl:param name="id"/>
-
-  <xsl:variable name="lenyaEntryID">
-    <xsl:call-template name="get-lenya-id">
-      <xsl:with-param name="entry-id" select="$id"/>
-    </xsl:call-template>
-  </xsl:variable>
-
+  <xsl:variable name="lenyaEntryID">../../entries/<xsl:value-of select="$id"/>/index.html</xsl:variable>
   <div class="title"><a href="{$lenyaEntryID}"><xsl:apply-templates/></a></div>
 </xsl:template>
 
-
 <xsl:template name="permalink">
   <xsl:param name="id"/>
-
-  <xsl:variable name="lenyaEntryID">
-    <xsl:call-template name="get-lenya-id">
-      <xsl:with-param name="entry-id" select="$id"/>
-    </xsl:call-template>
-  </xsl:variable>
-
+  <xsl:variable name="lenyaEntryID">../../entries/<xsl:value-of select="$id"/>/index.html</xsl:variable>
   <a href="{$lenyaEntryID}">Permalink</a>
-</xsl:template>
-
-
-<xsl:template name="get-lenya-id">
-  <xsl:param name="entry-id"/>
-
-  <xsl:variable name="id" select="substring-after($entry-id,',')"/>
-
-  <xsl:variable name="bar">../../entries/<xsl:value-of select="translate($id,':','/')"/>/index.html</xsl:variable>
-  <xsl:value-of select="$bar"/>
- 
 </xsl:template>
 
 </xsl:stylesheet>  

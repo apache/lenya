@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: introspection.xml,v 1.6 2004/03/13 12:31:31 gregor Exp $ -->
+<!-- $Id$ -->
 
 <introspection xmlns="http://purl.org/atom/ns#">
   <create-entry>http://127.0.0.1:8080/lenya/blog/authoring/feeds/all/index.html?doctype=entry&amp;lenya.usecase=create&amp;lenya.step=showscreen</create-entry>

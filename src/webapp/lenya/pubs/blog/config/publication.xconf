@@ -28,4 +28,7 @@
   <ssl-prefix/>
   <site-manager name="simple"/>
   <resource-type name="entry" workflow="workflow.xml"/>
+  <resource-type name="sidebar" workflow="workflow.xml"/>
+  <module name="entry"/>
+  <module name="sidebar"/>
 </publication>

@@ -46,7 +46,7 @@
 </xsl:template>
 
 <xsl:template match="echo:content[@type='application/xhtml+xml']">
-  <xsl:apply-templates/>
+  <xsl:copy-of select="."/>	
 </xsl:template>
 
 <xsl:template match="echo:content">

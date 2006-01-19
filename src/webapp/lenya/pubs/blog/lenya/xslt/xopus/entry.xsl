@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: entry.xsl,v 1.2 2004/03/13 12:31:33 gregor Exp $ -->
+<!-- $Id$ -->
     
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0">
 

@@ -15,6 +15,6 @@
   limitations under the License.
 -->
 
-<!-- $Id: admin.gml,v 1.3 2004/03/13 12:31:31 gregor Exp $ -->
+<!-- $Id$ -->
 
 <group class="org.apache.lenya.ac.file.FileGroup" id="admin"/>

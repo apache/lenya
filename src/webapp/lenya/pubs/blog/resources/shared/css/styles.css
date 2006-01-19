@@ -162,3 +162,72 @@ div.subtitle {
   font-weight: bold;
   /*border: 1pt solid red;*/
 }
+
+div.overview-year-sidebar {
+  float:left;
+}
+
+ul.overview-year {
+  margin: 0px;
+  padding: 0px;
+  list-style: none;
+  font-size: small;
+}
+
+ul.overview-month {
+  list-style: none;
+}
+
+ul.overview-day {
+  list-style: none;
+}
+
+li.overview-year {
+  padding-left: 0px;
+}
+
+li.overview-month {
+  padding-left: 0px;
+  margin-top: -3px;
+  margin-left: -30px;
+}
+
+li.overview-day {
+  padding-left: 0px;
+  margin-top: -3px;
+  margin-left: -30px;
+}
+
+div.overview {
+  border-left: 1px solid #b1b1b1;
+  border-right: 1px solid #b1b1b1;
+  border-bottom: 1px solid #b1b1b1;
+}
+
+div.overview-year {
+  margin-top: 20px;
+  border-top: 1px solid #b1b1b1;
+  border-bottom: 1px solid #b1b1b1;
+  font-style: verdana, sans-serif;
+  font-weight: bold;
+  font-size: 150%;
+  background-color: #dddccf;
+}
+
+div.overview-month {
+  font-style: verdana, sans-serif;
+  font-weight: bold;
+  font-size: 150%;
+  margin-left: 20px;
+  margin-top: 0px;
+}
+div.overview-day {
+  font-style: verdana, sans-serif;
+  font-weight: bold;
+  font-size: 150%;
+  margin-left: 40px;
+}
+
+div.overview-entry {
+  margin-left: 60px;
+}

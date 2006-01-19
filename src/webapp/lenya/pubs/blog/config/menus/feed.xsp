@@ -40,27 +40,33 @@
         <item uc:usecase="site.create" href="?">Add&#160;new&#160;Entry</item>
       </block>
       <block>
-        <item wf:event="edit" uc:usecase="edit.forms" href="../../sidebar.html?form=sidebar">Edit&#160;Sidebar&#160;with&#160;Forms</item>
-        <item wf:event="publish" uc:usecase="publish" uc:step="showscreen" href="../../sidebar.html?sources=sidebar.xml&amp;uris=feeds/all/index.html"><i18n:text>Publish Sidebar</i18n:text></item>
+        <item uc:usecase="edit.oneform" href="../../sidebar.html">Edit Sidebar (one Form)</item>
+        <item wf:event="edit" uc:usecase="edit.forms" href="../../sidebar.html?form=sidebar">Edit&#160;Sidebar&#160;(with&#160;Forms)</item>
+	<item uc:usecase="edit.oneform" href="index.html"><i18n:text>Edit Blog Meta (one Form)</i18n:text></item>
+      </block>
+      <block>
+	 <item uc:usecase="workflow.publish" uc:step="showscreen" href="../../sidebar.html"><i18n:text>Publish Sidebar</i18n:text></item>
+	 <item uc:usecase="workflow.publish" uc:step="showscreen" href="index.html"><i18n:text>Publish Blog Meta</i18n:text></item>
       </block>
       <block>
           <item uc:usecase="ac.logout" href="?"><i18n:text>Logout</i18n:text></item>
       </block>
     </menu>
- 
+
     <menu i18n:attr="name" name="Help">
       <block>
-        <item href="http://lenya.apache.org/docs/index.html"><i18n:text>Documentation</i18n:text></item>
+        <item href="http://lenya.apache.org/1_4/index.html"><i18n:text>Documentation</i18n:text></item>
         <item href="http://wiki.apache.org/lenya/"><i18n:text>Wiki</i18n:text></item>
       </block>
       <block>
           <item><xsp:attribute name="href"><xsp-request:get-context-path/>/about.html</xsp:attribute>About&#160;Apache&#160;Lenya</item>
       </block>
     </menu>
- 
+
     <menu i18n:attr="name" name="Debug">
       <block>
-        <item href="index.xml"><i18n:text>Feed</i18n:text></item>
+        <item href="index.xml"><i18n:text>Echo/Atom Feed</i18n:text></item>
+        <item href="index.rss"><i18n:text>RSS Feed</i18n:text></item>
         <item href="lenya-page-body.xml"><i18n:text>Body</i18n:text></item>
       </block>
       <block>
@@ -68,6 +74,7 @@
         <item href="/lenya/blog/atomapi/search?atom-all">atom-all</item>
       </block>
     </menu>
+
   </menus>
  
 </menu>

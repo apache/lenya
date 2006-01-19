@@ -15,11 +15,12 @@
   limitations under the License.
 -->
 
-<!-- $Id: global.xsl,v 1.18 2004/04/24 20:59:15 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:echo="http://purl.org/atom/ns#"
+  xmlns:blog="http://apache.org/cocoon/blog/1.0"
 >
 
 <xsl:param name="relative2root"/>
@@ -52,7 +53,8 @@
 
 <tr>
 <td valign="top" id="content" width="70%">
-    <xsl:if test="not(echo:feed/echo:entry)">
+  <xsl:choose>
+    <xsl:when test="not(echo:feed/echo:entry) and count(blog:overview)=1">
     <p>
     No entries yet!
     </p>
@@ -68,20 +70,26 @@
     <p>
     To publish an entry click on the <strong>File</strong> menu and select the menu item <strong>Publish</strong>.
     </p>
-    </xsl:if>
-
-    <xsl:apply-templates select="echo:feed/echo:entry"/>
+    </xsl:when>
+    <xsl:when test="echo:feed/echo:entry">
+      <xsl:apply-templates select="echo:feed/echo:entry"/>
+    </xsl:when>
+    <xsl:otherwise>
+      <xsl:apply-templates select="blog:overview[not(@structure)]" mode="overview"/>
+    </xsl:otherwise>
+  </xsl:choose>
 </td>
 
 <td valign="top" id="sidebar" width="30%">
 
 <xsl:apply-templates select="sidebar/block" mode="atom"/>
+<xsl:apply-templates select="blog:overview[@structure]" mode="sidebar"/>	
 </td>
 </tr>
 
 <tr>
 <td colspan="2" id="footer">
-Copyright &#169; 2003 The Apache Software Foundation. All rights reserved.
+Copyright &#169; 2006 The Apache Software Foundation. All rights reserved.
 </td>
 </tr>
 </table>
@@ -99,5 +107,38 @@ Copyright &#169; 2003 The Apache Software Foundation. All rights reserved.
 <xsl:copy-of select="@*|node()"/>
 </div>
 </xsl:template>
- 
+
+<xsl:template match="blog:overview" mode="sidebar"> 
+<div class="sidebar-title"><a href="{$relative2root}/overview.html">Archive</a></div>
+<div class="sidebar-content">
+<xsl:apply-templates select="blog:year" mode="sidebar"/>
+</div>	
+</xsl:template>
+
+<xsl:template match="blog:year" mode="sidebar">
+<div class="overview-year-sidebar">
+<ul class="overview-year">
+  <li class="overview-year-li"><a href="{$relative2root}/overview.html?year={@id}"><xsl:value-of select="@id"/></a></li>
+  <ul class="overview-month">
+    <xsl:apply-templates select="blog:month" mode="sidebar"/>
+  </ul>
+</ul>
+</div>
+</xsl:template>
+
+<xsl:template match="blog:month" mode="sidebar">
+<li class="overview-month">
+  <a href="{$relative2root}/overview.html?year={../@id}&#38;month={@id}"><xsl:value-of select="@id"/></a>
+  <ul class="overview-day">
+    <xsl:apply-templates select="blog:day" mode="sidebar"/>
+  </ul>
+</li>
+</xsl:template>
+
+<xsl:template match="blog:day" mode="sidebar">
+<li class="overview-day">
+  <a href="{$relative2root}/overview.html?year={../../@id}&#38;month={../@id}&#38;day={@id}"><xsl:value-of select="@id"/></a>
+</li>
+</xsl:template>
+
 </xsl:stylesheet>
