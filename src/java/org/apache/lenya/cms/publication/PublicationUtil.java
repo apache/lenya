@@ -107,5 +107,15 @@ public class PublicationUtil {
             }
         }
     }
+    
+    /**
+     * Checks if a publication id is valid.
+     * @param id
+     * @return true if the id contains only lowercase letters and/or numbers,
+     *         and is not an empty string.
+     */
+    public static boolean isValidPublicationID(String id) {
+        return id.matches("[a-z0-9]+");
+    }
 
 }

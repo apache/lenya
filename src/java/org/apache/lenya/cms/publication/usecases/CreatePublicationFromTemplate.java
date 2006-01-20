@@ -68,10 +68,10 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
     protected void doCheckExecutionConditions() throws Exception {
         super.doCheckExecutionConditions();
 
-        String publicationId = getParameterAsString(PUBLICATION_ID);
+        String publicationId = getParameterAsString(PUBLICATION_ID).trim();
 
-        if (publicationId.trim().equals("")) {
-            addErrorMessage("Please enter a publication ID!");
+        if (!PublicationUtil.isValidPublicationID(publicationId)){
+            addErrorMessage("Please enter a valid publication ID!");
         } else {
             Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
             if (publication.exists()) {
