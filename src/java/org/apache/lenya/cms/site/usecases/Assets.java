@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.cocoon.servlet.multipart.Part;
+import org.apache.cocoon.servlet.multipart.RejectedPart;
 
 import org.apache.lenya.cms.publication.Resource;
 import org.apache.lenya.cms.publication.ResourcesManager;
@@ -102,17 +103,16 @@ public class Assets extends SiteUsecase {
         try {
 
             // Retrieve the resource instance via the ResourcesManager
-            resourcesManager = (ResourcesManager) 
-                this.manager.lookup(ResourcesManager.ROLE);
-            Resource theResource = 
-                resourcesManager.getResource(getSourceDocument(), assetName);
+            resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
+            Resource theResource = resourcesManager.getResource(getSourceDocument(), assetName);
             if (theResource == null)
-                throw new Exception("no such resource [" + assetName + "] exists for document [ " + getSourceDocument().getId() + "]");
+                throw new Exception("no such resource [" + assetName + "] exists for document [ "
+                        + getSourceDocument().getId() + "]");
 
             // Lock the resource nodes
             List nodes = new ArrayList();
             nodes.addAll(Arrays.asList(theResource.getRepositoryNodes()));
-            lockInvolvedObjects((Node[])nodes.toArray(new Node[nodes.size()]));
+            lockInvolvedObjects((Node[]) nodes.toArray(new Node[nodes.size()]));
 
             // Delete the resource
             resourcesManager.deleteResource(theResource);
@@ -128,17 +128,31 @@ public class Assets extends SiteUsecase {
     }
 
     /**
-     * Adds an asset.
+     * Adds an asset. If asset upload is not enabled, an error message is added.
      */
     protected void addAsset() {
 
         if (getLogger().isDebugEnabled())
             getLogger().debug("Assets::addAsset() called");
 
+        Part file = getPart("file");
+
+        if (file.isRejected()) {
+            String[] params = { Integer.toString(file.getSize()) };
+            addErrorMessage("upload-size-exceeded", params);
+        } else {
+            addAsset(file);
+        }
+    }
+
+    /**
+     * Adds an asset.
+     * @param file The part.
+     */
+    protected void addAsset(Part file) {
         String title = getParameterAsString("title");
         String creator = getParameterAsString("creator");
         String rights = getParameterAsString("rights");
-        Part file = getPart("file");
 
         Map metadata = new HashMap();
         metadata.put("title", title);
@@ -159,7 +173,6 @@ public class Assets extends SiteUsecase {
 
         if (getLogger().isDebugEnabled())
             getLogger().debug("Assets::addAsset() done.");
-
     }
 
 }

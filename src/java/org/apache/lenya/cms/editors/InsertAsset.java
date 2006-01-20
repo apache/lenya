@@ -17,6 +17,7 @@
 package org.apache.lenya.cms.editors;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import org.apache.lenya.cms.publication.Resource;
@@ -24,6 +25,7 @@ import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.UsecaseInvoker;
+import org.apache.lenya.cms.usecase.UsecaseMessage;
 
 /**
  * Usecase to insert an image into a document.
@@ -86,7 +88,16 @@ public class InsertAsset extends DocumentUsecase {
                 if (getLogger().isDebugEnabled())
                     getLogger().debug("InsertAsset::advance() calling invoker with usecaseName [" + usecaseName + "]");
                 invoker.invoke(getSourceURL(), usecaseName, getParameters());
-                loadResources();
+                if (invoker.getResult() == UsecaseInvoker.SUCCESS) {
+                    loadResources();
+                }
+                else {
+                    List messages = invoker.getErrorMessages();
+                    for (Iterator i = messages.iterator(); i.hasNext(); ) {
+                        UsecaseMessage message = (UsecaseMessage) i.next();
+                        addErrorMessage(message.getMessage());
+                    }
+                }
             }
             catch (Exception e) {
                 throw new UsecaseException(e);
