@@ -22,13 +22,12 @@ import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
 
+/**
+ * Dummy CForms usecase.
+ */
 public class DummyCFormsUsecase extends DocumentUsecase {
+    
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
-     */
-    /*
-     * (non-Javadoc)
-     * 
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
      */
     protected void initParameters() {

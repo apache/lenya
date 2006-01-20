@@ -16,6 +16,8 @@
  */
 package org.apache.lenya.cms.usecase;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -27,17 +29,24 @@ import org.apache.avalon.framework.service.Serviceable;
 
 /**
  * Usecase invoker implementation.
- *
+ * 
  * @version $Id$
  */
 public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInvoker, Serviceable {
 
     /**
-     * @see org.apache.lenya.cms.usecase.UsecaseInvoker#invoke(java.lang.String, java.lang.String, java.util.Map)
+     * @see org.apache.lenya.cms.usecase.UsecaseInvoker#invoke(java.lang.String, java.lang.String,
+     *      java.util.Map)
      */
-    public void invoke(String webappUrl, String usecaseName, Map parameters) throws UsecaseException {
+    public void invoke(String webappUrl, String usecaseName, Map parameters)
+            throws UsecaseException {
+
+        this.errorMessages.clear();
+        this.infoMessages.clear();
+
         UsecaseResolver resolver = null;
         Usecase usecase = null;
+        this.result = SUCCESS;
         try {
 
             resolver = (UsecaseResolver) this.manager.lookup(UsecaseResolver.ROLE);
@@ -49,20 +58,20 @@ public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInv
             passParameters(usecase, parameters);
 
             usecase.checkPreconditions();
-            List errorMessages = usecase.getErrorMessages();
-            if (!errorMessages.isEmpty()) {
-                logErrorMessages(usecaseName, "Pre condition messages:", errorMessages);
-            } else {
+
+            if (succeeded(PRECONDITIONS_FAILED, usecase)) {
+                
                 usecase.lockInvolvedObjects();
                 usecase.checkExecutionConditions();
-                errorMessages = usecase.getErrorMessages();
-                if (!errorMessages.isEmpty()) {
-                    logErrorMessages(usecaseName, "Execution condition messages:", errorMessages);
-                } else {
+
+                if (succeeded(EXECUTION_CONDITIONS_FAILED, usecase)) {
                     usecase.execute();
-                    logErrorMessages(usecaseName, "Execution messages:", usecase.getErrorMessages());
-                    usecase.checkPostconditions();
-                    logErrorMessages(usecaseName, "Post condition messages:", usecase.getErrorMessages());
+                    
+                    if (succeeded(EXECUTION_FAILED, usecase)) {
+                        usecase.checkPostconditions();
+                        
+                        succeeded(POSTCONDITIONS_FAILED, usecase);
+                    }
                 }
             }
 
@@ -81,7 +90,36 @@ public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInv
             }
         }
     }
-    
+
+    protected boolean succeeded(int result, Usecase usecase) {
+        
+        this.errorMessages.addAll(usecase.getErrorMessages());
+        this.infoMessages.addAll(usecase.getInfoMessages());
+        
+        if (usecase.getErrorMessages().isEmpty()) {
+            return true;
+        } else {
+            this.result = result;
+            String message = null;
+            switch (result) {
+            case PRECONDITIONS_FAILED:
+                message = "Precondition messages:";
+                break;
+            case EXECUTION_CONDITIONS_FAILED:
+                message = "Execution condition messages:";
+                break;
+            case EXECUTION_FAILED:
+                message = "Execution messages:";
+                break;
+            case POSTCONDITIONS_FAILED:
+                message = "Postcondition messages:";
+                break;
+            }
+            logErrorMessages(usecase.getName(), message, usecase.getErrorMessages());
+            return false;
+        }
+    }
+
     /**
      * @param usecase The usecase to pass the parameters to.
      * @param parameters The parameters.
@@ -102,7 +140,7 @@ public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInv
     protected void logErrorMessages(String usecaseName, String headline, List errorMessages) {
         getLogger().error("Usecase [" + usecaseName + "] - " + headline);
         for (Iterator i = errorMessages.iterator(); i.hasNext();) {
-            getLogger().error((String) i.next());
+            getLogger().error("" + (UsecaseMessage) i.next());
         }
     }
 
@@ -113,6 +151,23 @@ public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInv
      */
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
+    }
+
+    private List errorMessages = new ArrayList();
+    private List infoMessages = new ArrayList();
+
+    public List getErrorMessages() {
+        return Collections.unmodifiableList(this.errorMessages);
+    }
+
+    public List getInfoMessages() {
+        return Collections.unmodifiableList(this.infoMessages);
+    }
+
+    private int result = SUCCESS;
+
+    public int getResult() {
+        return this.result;
     }
 
 }

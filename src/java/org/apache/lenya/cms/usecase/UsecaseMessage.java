@@ -31,6 +31,16 @@ public class UsecaseMessage {
 
     /**
      * Ctor.
+     * @param _message The message.
+     */
+    public UsecaseMessage(String _message) {
+        this.message = _message;
+    }
+
+    /**
+     * Ctor.
+     * @param _message The message.
+     * @param _params The parameters.
      */
     public UsecaseMessage(String _message, String[] _params) {
         this.message = _message;

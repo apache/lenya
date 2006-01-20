@@ -116,14 +116,14 @@ public interface Usecase {
     /**
      * Returns the error messages from the previous operation. Error messages
      * prevent the operation from being executed.
-     * @return A list of strings.
+     * @return A list of {@link UsecaseMessage} objects.
      */
     List getErrorMessages();
 
     /**
      * Returns the info messages from the previous operation. Info messages do
      * not prevent the operation from being executed.
-     * @return A list of strings.
+     * @return A list of {@link UsecaseMessage} objects.
      */
     List getInfoMessages();
 

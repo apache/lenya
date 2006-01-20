@@ -140,7 +140,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      * @param message The message.
      */
     public void addErrorMessage(String message) {
-        addErrorMessage(message, null);
+        this.errorMessages.add(new UsecaseMessage(message));
     }
 
     /**
@@ -336,13 +336,12 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
             getLogger().debug("Setting parameter [" + name + "] = [" + value + "]");
         }
         this.parameters.put(name, value);
-        // set any exit parameters that are missing values 
-        if (this.exitUsecaseParameters.containsKey(name) && this.exitUsecaseParameters.get(name)==null) {
-            setExitParameter(name,value.toString());
+        // set any exit parameters that are missing values
+        if (this.exitUsecaseParameters.containsKey(name)
+                && this.exitUsecaseParameters.get(name) == null) {
+            setExitParameter(name, value.toString());
         }
     }
-
-    private boolean parametersInitialized = false;
 
     /**
      * @see org.apache.lenya.cms.usecase.Usecase#getParameter(java.lang.String)
@@ -627,9 +626,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
                 String name = exitParameterConfigs[i].getAttribute(ATTRIBUTE_NAME);
                 String value = null;
                 String[] attributeNames = exitParameterConfigs[i].getAttributeNames();
-                for (int j=0; j < attributeNames.length; j++) {
+                for (int j = 0; j < attributeNames.length; j++) {
                     if (attributeNames[j].equals(ATTRIBUTE_VALUE))
-                        value = exitParameterConfigs[i].getAttribute(ATTRIBUTE_VALUE); 
+                        value = exitParameterConfigs[i].getAttribute(ATTRIBUTE_VALUE);
                 }
                 setExitParameter(name, value);
             }

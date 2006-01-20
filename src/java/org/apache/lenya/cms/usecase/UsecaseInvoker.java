@@ -16,6 +16,7 @@
  */
 package org.apache.lenya.cms.usecase;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -38,5 +39,49 @@ public interface UsecaseInvoker {
      * @throws UsecaseException if an error occurs.
      */
     void invoke(String webappUrl, String usecaseName, Map parameters) throws UsecaseException;
+    
+    /**
+     * @return The result of the invocation.
+     */
+    int getResult();
+    
+    /**
+     * The invocation was successful.
+     */
+    int SUCCESS = 0;
+    
+    /**
+     * The precondition check failed.
+     */
+    int PRECONDITIONS_FAILED = 1;
+    
+    /**
+     * The execution condition check failed.
+     */
+    int EXECUTION_CONDITIONS_FAILED = 2;
+    
+    /**
+     * The execution itself failed.
+     */
+    int EXECUTION_FAILED = 3;
+    
+    /**
+     * The postcondition check failed.
+     */
+    int POSTCONDITIONS_FAILED = 4;
+    
+    /**
+     * Returns the error messages from the previous operation. Error messages
+     * prevent the operation from being executed.
+     * @return A list of {@link UsecaseMessage} objects.
+     */
+    List getErrorMessages();
+
+    /**
+     * Returns the info messages from the previous operation. Info messages do
+     * not prevent the operation from being executed.
+     * @return A list of {@link UsecaseMessage} objects.
+     */
+    List getInfoMessages();
 
 }
