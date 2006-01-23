@@ -165,29 +165,29 @@
     </map:pipeline>
 
     <!-- BX Editor: Entries -->
+    
     <map:pipeline>
       <map:match pattern="*/entries/*/*/*/*/index-bxe.html">
-        <!-- Check for BXE -->
-        <map:act type="resource-exists" src="fallback://lenya/resources/bxe/bxeLoader.js">
+        <map:act type="resource-exists" src="fallback://lenya/modules/bxe/resources/bxe/bxeLoader.js">
           <map:aggregate element="bxe">
-            <map:part src="fallback://lenya/resources/misc/bxe/index.xhtml"/>
+            <map:part src="fallback://lenya/modules/bxe/resources/misc/index.xhtml"/>
             <map:part src="resources/misc/bxe/entry-namespaces.xml"/>
           </map:aggregate>
-          <map:transform src="fallback://lenya/xslt/bxe/aggregate.xsl"/>
-          <map:transform src="fallback://lenya/xslt/bxe/index-xhtml.xsl">
+          <map:transform src="fallback://lenya/modules/bxe/xslt/aggregate.xsl"/>
+          <map:transform src="fallback://lenya/modules/bxe/xslt/index-xhtml.xsl">
             <map:parameter name="configfile" value="./config-bxe.xml"/>
             <map:parameter name="context" value="{request:contextPath}"/>
           </map:transform>
           <map:serialize type="xhtml"/>
         </map:act>
-        <map:generate src="fallback://lenya/resources/misc/bxe/download.xhtml"/>
+        <map:generate src="fallback://lenya/modules/bxe/resources/misc/download.xhtml"/>
         <map:serialize type="xhtml"/>
       </map:match>
     </map:pipeline>
     <map:pipeline>
       <map:match pattern="*/entries/*/*/*/*/config-bxe.xml">
-        <map:generate src="fallback://lenya/resources/misc/bxe/inc/config.xml"/>
-        <map:transform src="fallback://lenya/xslt/bxe/config-xml.xsl">
+        <map:generate src="fallback://lenya/modules/bxe/resources/misc/inc/config.xml"/>
+        <map:transform src="fallback://lenya/modules/bxe/xslt/config-xml.xsl">
           <map:parameter name="BX_xmlfile" value="../../../../../../webdav/entries/{2}/{3}/{4}/{5}/index.xml"/>
           <map:parameter name="BX_xslfile" value="entry-bxe.xsl"/>
           <map:parameter name="css" value="entry-bxe.css"/>
