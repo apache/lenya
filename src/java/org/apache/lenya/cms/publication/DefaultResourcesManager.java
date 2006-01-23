@@ -118,7 +118,7 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
             if (!fileName.matches(FILE_NAME_REGEXP)) {
                 // the file name contains characters which mean trouble
                 // and are therefore not allowed.
-                getLogger().warn("The filename [" + fileName + "]� is not valid for an asset.");
+                getLogger().warn("The filename [" + fileName + "] is not valid for an asset.");
             }
             // convert spaces in the file name to underscores
             fileName = fileName.replace(' ', '_');
