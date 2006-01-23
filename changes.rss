@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN" "http://my.netscape.com/publish/formats/rss-0.91.dtd">
-<rss version="0.91"><channel><title> (2006-01) Changes</title><link>changes.html</link><description> (2006-01) Changes</description><language>en-us</language><item><title> update</title><link>changes.html</link><description> update
+<rss version="0.91"><channel><title> (2006-01) Changes</title><link>changes.html</link><description> (2006-01) Changes</description><language>en-us</language><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         thorsten
         :
-        [] 
+        [1.4] 
             Bugfix 38229. Reported and patch submitted by renaud richardet. Thx renaud. :) Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
         by
         thorsten
@@ -24,63 +24,63 @@
         thorsten
         :
         [Docs] 
-            added note that patches are welcome Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+            added note that patches are welcome Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         andreas
         :
-        [Site] 
-            Paste usecase locks assets. This fixes bug #17378. Thanks to Gregor Imboden. Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        [1.4] 
+            Paste usecase locks assets. This fixes bug #17378. Thanks to Gregor Imboden. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         andreas
         :
-        [] 
-            InvokeWorkflow.configure() calls super.configure(). This ensures that the view configuration is loaded. Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        [1.4] 
+            InvokeWorkflow.configure() calls super.configure(). This ensures that the view configuration is loaded. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         chestnut
         :
-        [] 
-            webDAV fixes Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        [1.4] 
+            webDAV fixes Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         chestnut
         :
-        [] 
+        [1.4] 
             fixes Bug 38201: Deactivate usecase does not lock document resources
 thanks to a patch by Gregor Imboden
- Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+ Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         chestnut
         :
-        [Site] 
+        [1.4] 
             fixes ability to delete trash, was getting an error that the sitetree wasn't locked Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
         josias
         :
         [1.2] 
-            added default target for the tabs in the lenya menu to prevent an xhtml validation warning (attribute 'target' cannot be empty) Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+            added default target for the tabs in the lenya menu to prevent an xhtml validation warning (attribute 'target' cannot be empty) Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         michi
         :
-        [Docs] 
-            some more links added Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        [1.4] 
+            some more links added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         michi
         :
-        [] 
-            lenya version and local build properties version added Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        [1.4] 
+            lenya version and local build properties version added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         michi
         :
-        [] 
+        [1.4] 
             lenya version number added such that no conflict may arise with other lenya versions Diff </description></item><item><title>Docs add</title><link>changes.html</link><description>Docs add
         by
         thorsten
         :
         [Docs] 
-            Added documentation about the url mapping in lenya. Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+            Added documentation about the url mapping in lenya. Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         andreas
         :
-        [] 
+        [Sandbox] 
             Starting to update the code according to the new repository API Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
         josias
@@ -101,11 +101,11 @@ thanks to a patch by Gregor Imboden
         jann
         :
         [1.2] 
-            Action for the force-checkin usecase Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+            Action for the force-checkin usecase Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         andreas
         :
-        [] 
+        [1.4] 
             Added 'checked out by' column to SiteOverview usecase (admin area) Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
         michi
@@ -121,11 +121,11 @@ thanks to a patch by Gregor Imboden
         michi
         :
         [1.2] 
-            excalibur-io has been removed from Cocoon-2.1.8 upwards Diff </description></item><item><title> add</title><link>changes.html</link><description> add
+            excalibur-io has been removed from Cocoon-2.1.8 upwards Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
         by
         thorsten
         :
-        [] 
+        [1.4] 
             added the lenya meta data generator. It is an abstract generator that can produce the metadata to any given docid. Added an example how one can use it within the tutorial.html (only in english). Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
         by
         thorsten
@@ -153,11 +153,11 @@ I am using 0.8-dev, that is the reason that all files have changed. I recomment 
         [Docs] 
             removed contact notice.
 
- Diff </description></item><item><title> remove</title><link>changes.html</link><description> remove
+ Diff </description></item><item><title>Sandbox remove</title><link>changes.html</link><description>Sandbox remove
         by
         michi
         :
-        [] 
+        [Sandbox] 
             obsolete Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
         by
         chestnut
@@ -219,11 +219,11 @@ useragent header to determine dav clients Diff </description></item><item><title
         chestnut
         :
         [1.4] 
-            add linkcheck function to window.onload so we don't override previously assigned functions Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+            add linkcheck function to window.onload so we don't override previously assigned functions Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [] 
+        [Sandbox] 
             RewriteRules added Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
         michi
@@ -234,16 +234,16 @@ useragent header to determine dav clients Diff </description></item><item><title
         michi
         :
         [1.2] 
-            another note about WLS added Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+            another note about WLS added Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [] 
-            TODOs added Diff </description></item><item><title> add</title><link>changes.html</link><description> add
+        [Sandbox] 
+            TODOs added Diff </description></item><item><title>Sandbox add</title><link>changes.html</link><description>Sandbox add
         by
         andreas
         :
-        [] 
+        [Sandbox] 
             Created repository integration working copy in the sandbox
  Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
@@ -909,11 +909,11 @@ This fixes Bug 37362 Diff </description></item><item><title>1.4 update</title><l
         michi
         :
         [Docs] 
-            double entry of Reunion removed and HCI Lab of University of Udine added Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+            double entry of Reunion removed and HCI Lab of University of Udine added Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [] 
+        [Sandbox] 
             installation clarified Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         chestnut
@@ -977,11 +977,11 @@ fixes Bug 37221 Diff </description></item><item><title>1.4 update</title><link>c
         :
         [1.4] 
             Thanks to a patch from Felix Röthenbacher
-fixes bug Bug 37216 Diff </description></item><item><title> remove</title><link>changes.html</link><description> remove
+fixes bug Bug 37216 Diff </description></item><item><title>Sandbox remove</title><link>changes.html</link><description>Sandbox remove
         by
         michi
         :
-        [] 
+        [Sandbox] 
             suffix txt added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         andreas
@@ -1233,11 +1233,11 @@ started working on MKCOL method Diff </description></item><item><title>1.4 updat
         andreas
         :
         [1.4] 
-            [minor change] code formatting Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+            [minor change] code formatting Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         chestnut
         :
-        [] 
+        [Sandbox] 
             made some updates to get search working,
 separated index into live and authoring indexes
  Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
@@ -1690,11 +1690,11 @@ fixes bug 36539 Diff </description></item><item><title>1.4 update</title><link>c
         andreas
         :
         [1.4] 
-            [minor change] added ASF header Diff </description></item><item><title> add</title><link>changes.html</link><description> add
+            [minor change] added ASF header Diff </description></item><item><title>Sandbox add</title><link>changes.html</link><description>Sandbox add
         by
         gregor
         :
-        [] 
+        [Sandbox] 
             committed soc work from robert goene Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         thorsten
@@ -3125,26 +3125,26 @@ and added fallback:// to shared resources for pub templating Diff </description>
         chestnut
         :
         [1.4] 
-            Added validation and ability to create a new document Diff </description></item><item><title> add</title><link>changes.html</link><description> add
+            Added validation and ability to create a new document Diff </description></item><item><title>Sandbox add</title><link>changes.html</link><description>Sandbox add
         by
         michi
         :
-        [] 
-            README added Diff </description></item><item><title> remove</title><link>changes.html</link><description> remove
+        [Sandbox] 
+            README added Diff </description></item><item><title>Sandbox remove</title><link>changes.html</link><description>Sandbox remove
         by
         michi
         :
-        [] 
-            obsolete Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+        [Sandbox] 
+            obsolete Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
-            obsolete pipeline removed Diff </description></item><item><title> add</title><link>changes.html</link><description> add
+        [Sandbox] 
+            obsolete pipeline removed Diff </description></item><item><title>Sandbox add</title><link>changes.html</link><description>Sandbox add
         by
         michi
         :
-        [] 
+        [Sandbox] 
             cforms within default publication Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
         gregor
@@ -3251,16 +3251,16 @@ Bug: http://issues.apache.org/bugzilla/show_bug.cgi?id=35394, Patch supplied by 
         jwkaltz
         :
         [1.2] 
-            [minor change] added sanity checks for clearer error message in the case of a missing configuration item Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+            [minor change] added sanity checks for clearer error message in the case of a missing configuration item Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [] 
-            code link added Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        [Sandbox] 
+            code link added Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [] 
+        [Sandbox] 
             link to JCR and Blogs article added Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
         by
         gregor
@@ -3882,11 +3882,11 @@ Bug: http://issues.apache.org/bugzilla/show_bug.cgi?id=35394, Patch supplied by 
         gregor
         :
         [1.4] 
-            Applied patch by Doug Chestnut to support basic authentication. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=34964 and paves the way for WebDAV support. Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+            Applied patch by Doug Chestnut to support basic authentication. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=34964 and paves the way for WebDAV support. Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         gregor
         :
-        [] 
+        [Sandbox] 
             Added cforms cleanup patch by Maxim Wasiliev. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=34562 Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         andreas
@@ -5412,11 +5412,11 @@ tabs
         michi
         :
         [1.2] 
-            thanks to Olivier Lustenberger the Javascript error within Firefox should be gone Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+            thanks to Olivier Lustenberger the Javascript error within Firefox should be gone Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
+        [Sandbox] 
             thanks to Felix the classpath is set correctly such that flowscript works properly Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         jwkaltz
@@ -5442,26 +5442,26 @@ tabs
         andreas
         :
         [1.4] 
-            added support for non-XML repository sources Diff </description></item><item><title>Site remove</title><link>changes.html</link><description>Site remove
+            added support for non-XML repository sources Diff </description></item><item><title>Sandbox remove</title><link>changes.html</link><description>Sandbox remove
         by
         michi
         :
-        [Site] 
+        [Sandbox] 
             obsolete Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
         michi
         :
         [1.2] 
-            note about mod_jk added Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+            note about mod_jk added Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
-            webapp.dir introduced Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+        [Sandbox] 
+            webapp.dir introduced Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
+        [Sandbox] 
             thanks to Felix Roethenbacher it's now independent of the default publication Diff </description></item><item><title>1.2 remove</title><link>changes.html</link><description>1.2 remove
         by
         michi
@@ -5641,11 +5641,11 @@ tabs
         gregor
         :
         [1.4] 
-            Moved XSPPrecompileWrapper to test sources Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+            Moved XSPPrecompileWrapper to test sources Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
+        [Sandbox] 
             thanks to Felix archive, etc. has been implemented Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
         by
         andreas
@@ -5671,16 +5671,16 @@ tabs
         michi
         :
         [1.2] 
-            last modified for sitetree implementation added Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+            last modified for sitetree implementation added Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
-            note about view-workspace added Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+        [Sandbox] 
+            note about view-workspace added Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
+        [Sandbox] 
             patch of Felix Roethenbacher added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         andreas
@@ -5961,36 +5961,36 @@ tabs
         michi
         :
         [1.2] 
-            replication to multiple servers by ssh resp. scp added Diff </description></item><item><title>Site remove</title><link>changes.html</link><description>Site remove
+            replication to multiple servers by ssh resp. scp added Diff </description></item><item><title>Sandbox remove</title><link>changes.html</link><description>Sandbox remove
         by
         michi
         :
-        [Site] 
-            replaced by most recent version Diff </description></item><item><title>Site add</title><link>changes.html</link><description>Site add
+        [Sandbox] 
+            replaced by most recent version Diff </description></item><item><title>Sandbox add</title><link>changes.html</link><description>Sandbox add
         by
         michi
         :
-        [Site] 
-            jaas based implementation added Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+        [Sandbox] 
+            jaas based implementation added Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
-            upgraded to jaas based version Diff </description></item><item><title>Site add</title><link>changes.html</link><description>Site add
+        [Sandbox] 
+            upgraded to jaas based version Diff </description></item><item><title>Sandbox add</title><link>changes.html</link><description>Sandbox add
         by
         michi
         :
-        [Site] 
+        [Sandbox] 
             patched Xalan added Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
         edith
         :
         [1.2] 
-            Copy the different attrs of the site tree nodes. Bugs #34298. Thanks to Felix Roethenbacher (Patch http://issues.apache.org/bugzilla/attachment.cgi?id=14618&amp;action=view)  Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+            Copy the different attrs of the site tree nodes. Bugs #34298. Thanks to Felix Roethenbacher (Patch http://issues.apache.org/bugzilla/attachment.cgi?id=14618&amp;action=view)  Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
+        [Sandbox] 
             deprecated getSiteTree replaced by getTree Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
         michi
@@ -6041,26 +6041,26 @@ tabs
         michi
         :
         [1.2] 
-            Javadoc added about the link argument Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+            Javadoc added about the link argument Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
-            thanks to Felix the import works now Diff </description></item><item><title>Site remove</title><link>changes.html</link><description>Site remove
+        [Sandbox] 
+            thanks to Felix the import works now Diff </description></item><item><title>Sandbox remove</title><link>changes.html</link><description>Sandbox remove
         by
         michi
         :
-        [Site] 
-            obsolete Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+        [Sandbox] 
+            obsolete Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
-            improved version of JCRSiteTree Diff </description></item><item><title>Site remove</title><link>changes.html</link><description>Site remove
+        [Sandbox] 
+            improved version of JCRSiteTree Diff </description></item><item><title>Sandbox remove</title><link>changes.html</link><description>Sandbox remove
         by
         michi
         :
-        [Site] 
+        [Sandbox] 
             moved into Lenya 1.2 itself Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
         michi
@@ -6250,17 +6250,17 @@ tabs
         gregor
         :
         [Docs] 
-            More live sites added Diff </description></item><item><title> add</title><link>changes.html</link><description> add
+            More live sites added Diff </description></item><item><title>Sandbox add</title><link>changes.html</link><description>Sandbox add
         by
         tschlabach
         :
-        [] 
+        [Sandbox] 
             Fixing directory structure
- Diff </description></item><item><title> remove</title><link>changes.html</link><description> remove
+ Diff </description></item><item><title>Sandbox remove</title><link>changes.html</link><description>Sandbox remove
         by
         tschlabach
         :
-        [] 
+        [Sandbox] 
             Fixing direcory structure
  Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
         by
@@ -6272,17 +6272,17 @@ tabs
         gregor
         :
         [Docs] 
-            Java Concepts added to live sites Diff </description></item><item><title> add</title><link>changes.html</link><description> add
+            Java Concepts added to live sites Diff </description></item><item><title>Sandbox add</title><link>changes.html</link><description>Sandbox add
         by
         tschlabach
         :
-        [] 
+        [Sandbox] 
             Fixing directory structure. (Sorry)
- Diff </description></item><item><title> add</title><link>changes.html</link><description> add
+ Diff </description></item><item><title>Sandbox add</title><link>changes.html</link><description>Sandbox add
         by
         tschlabach
         :
-        [] 
+        [Sandbox] 
             Sharing the experimental CForm edit usecase (see README.txt)
  Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
@@ -6328,11 +6328,11 @@ tabs
         :
         [1.4] 
             [minor change] added docs
- Diff </description></item><item><title> add</title><link>changes.html</link><description> add
+ Diff </description></item><item><title>Sandbox add</title><link>changes.html</link><description>Sandbox add
         by
         michi
         :
-        [] 
+        [Sandbox] 
             repository started Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         jwkaltz
@@ -6349,46 +6349,46 @@ tabs
         jwkaltz
         :
         [1.4] 
-            [minor change] release flowHelper component after usage Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+            [minor change] release flowHelper component after usage Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
-            typo fixed Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+        [Sandbox] 
+            typo fixed Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
-            userId and password added Diff </description></item><item><title>Site add</title><link>changes.html</link><description>Site add
+        [Sandbox] 
+            userId and password added Diff </description></item><item><title>Sandbox add</title><link>changes.html</link><description>Sandbox add
         by
         michi
         :
-        [Site] 
-            sitetree generator added to get rid of filesystem dependency Diff </description></item><item><title>Site add</title><link>changes.html</link><description>Site add
+        [Sandbox] 
+            sitetree generator added to get rid of filesystem dependency Diff </description></item><item><title>Sandbox add</title><link>changes.html</link><description>Sandbox add
         by
         michi
         :
-        [Site] 
-            unit tests added Diff </description></item><item><title>Site add</title><link>changes.html</link><description>Site add
+        [Sandbox] 
+            unit tests added Diff </description></item><item><title>Sandbox add</title><link>changes.html</link><description>Sandbox add
         by
         michi
         :
-        [Site] 
-            config for sitetree factory added Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+        [Sandbox] 
+            config for sitetree factory added Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
-            XSLT for import added Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+        [Sandbox] 
+            XSLT for import added Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
-            accessing the repository directly Diff </description></item><item><title>Site add</title><link>changes.html</link><description>Site add
+        [Sandbox] 
+            accessing the repository directly Diff </description></item><item><title>Sandbox add</title><link>changes.html</link><description>Sandbox add
         by
         michi
         :
-        [Site] 
+        [Sandbox] 
             helper classes added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         tschlabach
@@ -6477,11 +6477,11 @@ tabs
         andreas
         :
         [1.4] 
-            redirect to tab.overview usecase in info sitemap Diff </description></item><item><title> add</title><link>changes.html</link><description> add
+            redirect to tab.overview usecase in info sitemap Diff </description></item><item><title>Sandbox add</title><link>changes.html</link><description>Sandbox add
         by
         michi
         :
-        [] 
+        [Sandbox] 
             very first steps of a repository model added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         andreas
@@ -6547,16 +6547,16 @@ tabs
         andreas
         :
         [1.4] 
-            introduced usecase view configuration Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+            introduced usecase view configuration Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
-            note about trunk added Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+        [Sandbox] 
+            note about trunk added Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         tschlabach
         :
-        [Site] 
+        [Sandbox] 
             Made the README a bit more verbose; especially put in that this is a patch
 for 1.2.x, not for trunk.
  Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
@@ -6854,31 +6854,31 @@ user never completes second step in interactive use cases)
         michi
         :
         [1.2] 
-            Filename definition moved back into specific DefaultSiteTree implementation Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+            Filename definition moved back into specific DefaultSiteTree implementation Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
-            ignore local.build.properties Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+        [Sandbox] 
+            ignore local.build.properties Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
-            clear target added Diff </description></item><item><title>Site add</title><link>changes.html</link><description>Site add
+        [Sandbox] 
+            clear target added Diff </description></item><item><title>Sandbox add</title><link>changes.html</link><description>Sandbox add
         by
         michi
         :
-        [Site] 
-            README added on how to patch Lenya with the JCRSiteTree Diff </description></item><item><title>Site add</title><link>changes.html</link><description>Site add
+        [Sandbox] 
+            README added on how to patch Lenya with the JCRSiteTree Diff </description></item><item><title>Sandbox add</title><link>changes.html</link><description>Sandbox add
         by
         michi
         :
-        [Site] 
-            Thanks to Felix Roethenbacher the JCRSiteTree is now using workspaces Diff </description></item><item><title>Site remove</title><link>changes.html</link><description>Site remove
+        [Sandbox] 
+            Thanks to Felix Roethenbacher the JCRSiteTree is now using workspaces Diff </description></item><item><title>Sandbox remove</title><link>changes.html</link><description>Sandbox remove
         by
         michi
         :
-        [Site] 
+        [Sandbox] 
             cleaned within Lenya and hence obsolete Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
         michi
@@ -6920,11 +6920,11 @@ user never completes second step in interactive use cases)
         andreas
         :
         [1.4] 
-            removed obsolete (Request, webappUrl) methods from AccessController and Authorizer Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+            removed obsolete (Request, webappUrl) methods from AccessController and Authorizer Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
+        [Sandbox] 
             namespace from registry added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         andreas
@@ -6985,11 +6985,11 @@ user never completes second step in interactive use cases)
         gregor
         :
         [1.4] 
-            Removed info messages from build and put it into comments in the build file instead.  Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+            Removed info messages from build and put it into comments in the build file instead.  Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
+        [Sandbox] 
             resolve prefix of specific namespace Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
         by
         andreas
@@ -7221,16 +7221,16 @@ reflect this.
         :
         [1.4] 
             Applied some formatting and fixed encoding to UTF-8 (see bug #28448)
- Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+ Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
-            read sitetree through JCR instead from filesystem Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+        [Sandbox] 
+            read sitetree through JCR instead from filesystem Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
+        [Sandbox] 
             load sitetree through JCR Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
         by
         andreas
@@ -7315,16 +7315,16 @@ field
         :
         [1.4] 
             call new use-case for "change group memberships"
- Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+ Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
-            touch added to make sure everything is really compiled Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+        [Sandbox] 
+            touch added to make sure everything is really compiled Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
+        [Sandbox] 
             getRepo added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         jwkaltz
@@ -7354,31 +7354,31 @@ field
         michi
         :
         [1.2] 
-            concrete default implementation replaced by interface Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+            concrete default implementation replaced by interface Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
-            extra to ignore Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+        [Sandbox] 
+            extra to ignore Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [Site] 
-            download target added Diff </description></item><item><title>Site remove</title><link>changes.html</link><description>Site remove
+        [Sandbox] 
+            download target added Diff </description></item><item><title>Sandbox remove</title><link>changes.html</link><description>Sandbox remove
         by
         michi
         :
-        [Site] 
-            extra will be created during build process Diff </description></item><item><title>Site add</title><link>changes.html</link><description>Site add
+        [Sandbox] 
+            extra will be created during build process Diff </description></item><item><title>Sandbox add</title><link>changes.html</link><description>Sandbox add
         by
         michi
         :
-        [Site] 
-            download libs added Diff </description></item><item><title>Site add</title><link>changes.html</link><description>Site add
+        [Sandbox] 
+            download libs added Diff </description></item><item><title>Sandbox add</title><link>changes.html</link><description>Sandbox add
         by
         michi
         :
-        [Site] 
+        [Sandbox] 
             JCRSiteTree implementation added Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
         michi
@@ -11163,16 +11163,16 @@ Guido Wesdorp created it yesterday from trunk.
         gregor
         :
         [1.2] 
-            Fixed undeclared variables in flowscript. Thanks to Doug Chestnut and Jeremy Torres. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=32544 Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+            Fixed undeclared variables in flowscript. Thanks to Doug Chestnut and Jeremy Torres. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=32544 Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [] 
-            debugging improved Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        [Sandbox] 
+            debugging improved Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         michi
         :
-        [] 
+        [Sandbox] 
             logging off added Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
         edith
@@ -12276,11 +12276,11 @@ sync trunk with 1.2 for validation.xml Diff </description></item><item><title>1.
         thorsten
         :
         [Docs] 
-            renamed dir to solve a bug ;-) Diff </description></item><item><title> add</title><link>changes.html</link><description> add
+            renamed dir to solve a bug ;-) Diff </description></item><item><title>Sandbox add</title><link>changes.html</link><description>Sandbox add
         by
         michi
         :
-        [] 
+        [Sandbox] 
             mod_lenya and sandbox added Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
         by
         thorsten
@@ -49380,11 +49380,11 @@ These actions are used in the html-form-editor.xmap sitemap
         
         :
         [0.8] 
-            New repository initialized by cvs2svn. Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+            New repository initialized by cvs2svn. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         thorsten
         :
-        [] 
+        [1.4] 
             Bugfix 38229. Reported and patch submitted by renaud richardet. Thx renaud. :) Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
         by
         thorsten
@@ -49405,63 +49405,63 @@ These actions are used in the html-form-editor.xmap sitemap
         thorsten
         :
         [Docs] 
-            added note that patches are welcome Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+            added note that patches are welcome Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         andreas
         :
-        [Site] 
-            Paste usecase locks assets. This fixes bug #17378. Thanks to Gregor Imboden. Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        [1.4] 
+            Paste usecase locks assets. This fixes bug #17378. Thanks to Gregor Imboden. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         andreas
         :
-        [] 
-            InvokeWorkflow.configure() calls super.configure(). This ensures that the view configuration is loaded. Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        [1.4] 
+            InvokeWorkflow.configure() calls super.configure(). This ensures that the view configuration is loaded. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         chestnut
         :
-        [] 
-            webDAV fixes Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        [1.4] 
+            webDAV fixes Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         chestnut
         :
-        [] 
+        [1.4] 
             fixes Bug 38201: Deactivate usecase does not lock document resources
 thanks to a patch by Gregor Imboden
- Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+ Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         chestnut
         :
-        [Site] 
+        [1.4] 
             fixes ability to delete trash, was getting an error that the sitetree wasn't locked Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
         josias
         :
         [1.2] 
-            added default target for the tabs in the lenya menu to prevent an xhtml validation warning (attribute 'target' cannot be empty) Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+            added default target for the tabs in the lenya menu to prevent an xhtml validation warning (attribute 'target' cannot be empty) Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         michi
         :
-        [Docs] 
-            some more links added Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        [1.4] 
+            some more links added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         michi
         :
-        [] 
-            lenya version and local build properties version added Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        [1.4] 
+            lenya version and local build properties version added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         michi
         :
-        [] 
+        [1.4] 
             lenya version number added such that no conflict may arise with other lenya versions Diff </description></item><item><title>Docs add</title><link>changes.html</link><description>Docs add
         by
         thorsten
         :
         [Docs] 
-            Added documentation about the url mapping in lenya. Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+            Added documentation about the url mapping in lenya. Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
         by
         andreas
         :
-        [] 
+        [Sandbox] 
             Starting to update the code according to the new repository API Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
         josias
@@ -49482,11 +49482,11 @@ thanks to a patch by Gregor Imboden
         jann
         :
         [1.2] 
-            Action for the force-checkin usecase Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+            Action for the force-checkin usecase Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         andreas
         :
-        [] 
+        [1.4] 
             Added 'checked out by' column to SiteOverview usecase (admin area) Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
         michi
@@ -49502,11 +49502,11 @@ thanks to a patch by Gregor Imboden
         michi
         :
         [1.2] 
-            excalibur-io has been removed from Cocoon-2.1.8 upwards Diff </description></item><item><title> add</title><link>changes.html</link><description> add
+            excalibur-io has been removed from Cocoon-2.1.8 upwards Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
         by
         thorsten
         :
-        [] 
+        [1.4] 
             added the lenya meta data generator. It is an abstract generator that can produce the metadata to any given docid. Added an example how one can use it within the tutorial.html (only in english). Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
         by
         thorsten
@@ -49534,9 +49534,9 @@ I am using 0.8-dev, that is the reason that all files have changed. I recomment 
         [Docs] 
             removed contact notice.
 
- Diff </description></item><item><title> remove</title><link>changes.html</link><description> remove
+ Diff </description></item><item><title>Sandbox remove</title><link>changes.html</link><description>Sandbox remove
         by
         michi
         :
-        [] 
+        [Sandbox] 
             obsolete Diff </description></item></channel></rss>
