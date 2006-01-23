@@ -115,7 +115,7 @@
     <!-- Editor BXE -->
     <map:pipeline>
       <map:match pattern="bxe/**">
-        <map:read src="lenya/resources/bxe/{1}"/>
+        <map:read src="lenya/modules/bxe/resources/bxe/{1}"/>
       </map:match>
     </map:pipeline>
 

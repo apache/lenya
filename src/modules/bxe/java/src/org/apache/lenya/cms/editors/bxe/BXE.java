@@ -29,7 +29,7 @@ import org.apache.lenya.workflow.WorkflowManager;
 /**
  * BXE usecase handler.
  * 
- * @version $Id$
+ * @version $Id: BXE.java 356755 2005-12-14 09:00:59Z edith $
  */
 public class BXE extends DocumentUsecase {
 
