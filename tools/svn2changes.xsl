@@ -57,6 +57,7 @@
                     <xsl:when test="contains(date, '2003')">1.0</xsl:when>
                     <xsl:when test="contains(date, '2002')">0.8</xsl:when>
                     <xsl:when test="contains(paths/path[1], 'docu')">Docs</xsl:when>
+                    <xsl:when test="contains(paths/path[1], 'lenya/sandbox')">Sandbox</xsl:when>
                     <xsl:when test="contains(paths/path[1], 'site')">Site</xsl:when>
                     <xsl:when test="contains(paths/path[1], 'zone')">Zone</xsl:when>
                 </xsl:choose>
