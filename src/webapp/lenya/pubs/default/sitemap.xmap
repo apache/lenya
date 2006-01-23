@@ -95,7 +95,7 @@
       
       <map:match pattern="*/schemas/fallback/**.rng">
         <map:generate src="fallback://{2}.rng"/>
-        <map:transform src="fallback://lenya/xslt/bxe/translate-rng-includes.xsl">
+        <map:transform src="fallback://lenya/modules/bxe/xslt/translate-rng-includes.xsl">
           <map:parameter name="root" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}/schemas/"/>
           <map:parameter name="uri" value="{request:requestURI}"/>
         </map:transform>
@@ -104,7 +104,7 @@
       
       <map:match pattern="*/schemas/**.rng">
         <map:generate src="fallback://lenya/modules/{2}/schemas/{2}.rng"/>
-        <map:transform src="fallback://lenya/xslt/bxe/translate-rng-includes.xsl">
+        <map:transform src="fallback://lenya/modules/bxe/xslt/translate-rng-includes.xsl">
           <map:parameter name="root" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}/schemas/"/>
           <map:parameter name="uri" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}/schemas/fallback/lenya/modules/{2}/schemas/{2}.rng"/>
         </map:transform>

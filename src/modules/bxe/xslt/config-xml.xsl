@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: config-xml.xsl,v 1.9 2004/04/29 08:14:57 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0" 
   xmlns:cinclude="http://apache.org/cocoon/include/1.0"

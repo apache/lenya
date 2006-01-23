@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2005 The Apache Software Foundation
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: usecase-bxe.xmap 345495 2005-11-18 15:11:30Z chestnut $ -->
+<!-- 
+  This sitemap handles the interaction between the Bitflux Editor and Lenya
+-->
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  
+  <!-- =========================== Resources ================================ -->
+  <map:resources>
+    
+    <map:resource name="style-cms-page">
+      <map:transform type="i18n">      
+        <map:parameter name="locale" value="{request:locale}"/>
+      </map:transform>    
+      <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl">
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:transform src="context://lenya/xslt/util/strip_namespaces.xsl"/>
+    </map:resource>
+    
+    <map:resource name="cms-screen-xml">
+      <map:generate src="fallback://lenya/content/{serverpage}" type="serverpages"/>
+      <map:transform src="fallback://lenya/xslt/{stylesheet}">
+        <map:parameter name="use-request-parameters" value="true"/>
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+      </map:transform>      
+    </map:resource>
+    
+    <map:resource name="cms-screen">
+      <map:call resource="cms-screen-xml">
+        <map:parameter name="serverpage" value="{serverpage}"/>
+        <map:parameter name="stylesheet" value="{stylesheet}"/>
+      </map:call>
+      <map:call resource="style-cms-page"/>
+      <map:serialize />
+    </map:resource>
+    
+    
+  </map:resources>
+  <!-- =========================== Flow ===================================== -->
+  <map:flow language="javascript">
+    <map:script src="fallback://lenya/usecases/edit-document.js"/>
+    <map:script src="fallback://lenya/modules/bxe/usecases/bxe.js"/>
+  </map:flow>
+  <!-- =========================== Pipelines ================================ -->
+  
+  <map:pipelines>
+    
+    <map:pipeline type="noncaching">
+      
+      <map:match type="step" pattern="open">
+        
+        <!--+
+          | Check if BXE is installed 
+          +-->
+        <map:act type="resource-exists" src="fallback://lenya/modules/bxe/resources/bxe/bxeLoader.js">
+          
+          <map:act type="reserved-checkout">
+            <map:generate type="serverpages" src="fallback://lenya/content/rc/{exception}.xsp">
+              <map:parameter name="user" value="{user}"/>
+              <map:parameter name="filename" value="{filename}"/>
+              <map:parameter name="date" value="{date}"/>
+              <map:parameter name="message" value="{message}"/>
+            </map:generate>
+            <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
+            <map:call resource="style-cms-page"/>
+            <map:serialize />
+          </map:act>
+          
+          <map:aggregate element="bxe">
+            <map:part src="fallback://lenya/modules/bxe/resources/misc/index.xhtml"/>
+            <map:part src="fallback://lenya/modules/bxe/resources/misc/content-namespaces.xml"/>
+          </map:aggregate>
+          <map:transform src="fallback://lenya/modules/bxe/xslt/aggregate.xsl"/>
+          <map:transform src="fallback://lenya/modules/bxe/xslt/index-xhtml.xsl">
+            <map:parameter name="configfile" value="{request:requestURI}?lenya.module=bxe&amp;lenya.step=config"/>
+            <map:parameter name="context" value="{request:contextPath}"/>
+          </map:transform>
+          <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
+          <map:serialize type="xhtml"/>
+        </map:act>
+        
+        <!--+
+          | BXE is not installed - generate info page for the user 
+          +-->
+        <map:generate src="fallback://lenya/modules/bxe/resources/misc/download.xhtml"/>
+        <map:call resource="style-cms-page"/>
+        <map:serialize />
+        
+      </map:match>
+      
+      <map:match pattern="image-upload-show" type="step">
+        <map:call resource="cms-screen">
+          <map:parameter name="serverpage" value="info/assets.xsp"/>
+          <map:parameter name="stylesheet" value="bxe/image.xsl"/>
+        </map:call>
+      </map:match>
+      
+      <map:match pattern="asset-upload-show" type="step">
+        <map:call resource="cms-screen">
+          <map:parameter name="serverpage" value="info/assets.xsp"/>
+          <map:parameter name="stylesheet" value="bxe/asset.xsl"/>
+        </map:call>
+      </map:match> 
+      
+      <map:match type="step" pattern="asset-upload">
+        <map:call resource="cms-screen">
+          <map:parameter name="serverpage" value="info/assets.xsp"/>
+          <map:parameter name="stylesheet" value="bxe/asset.xsl"/>
+        </map:call>
+      </map:match>
+      
+      <map:match type="step" pattern="image-upload">
+        <map:call resource="cms-screen">
+          <map:parameter name="serverpage" value="info/assets.xsp"/>
+          <map:parameter name="stylesheet" value="bxe/image.xsl"/>
+        </map:call>
+      </map:match>
+      
+      <map:match pattern="link-show" type="step">
+        <!-- just a dummy xsp since we call the info area directly -->
+        <map:generate src="context://lenya/content/util/empty.xml"/>
+        <map:transform src="fallback://lenya/modules/bxe/xslt/link.xsl" label="content">
+          <map:parameter name="infoarea" value="true"/>
+          <map:parameter name="contextprefix" value="{request:contextPath}"/>
+          <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
+          <map:parameter name="area" value="authoring"/>
+          <map:parameter name="tab" value="en"/>
+          <map:parameter name="chosenlanguage" value="{page-envelope:document-language}"/>
+          <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+          <map:parameter name="documenturl" value="/{page-envelope:document-url}"/>
+          <map:parameter name="documentextension" value="{page-envelope:document-extension}"/>
+          <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+          <map:parameter name="languages" value="{page-envelope:publication-languages-csv}"/>
+        </map:transform>
+        <map:call resource="style-cms-page"/>
+        <map:serialize />
+      </map:match>
+      
+      <map:match pattern="**/*.html">
+        
+        <!--+
+          | Build the BXE configuration
+          +-->
+        
+        <map:match type="step" pattern="config">
+          <map:select type="resource-exists">
+            <map:when test="fallback://lenya/modules/{page-envelope:document-type}/config/bxe.xml">
+              <map:generate src="fallback://lenya/modules/{page-envelope:document-type}/config/bxe.xml"/>
+            </map:when>
+            <map:otherwise>
+              <map:generate src="fallback://lenya/modules/bxe/resources/misc/inc/config.xml"/>
+            </map:otherwise>
+          </map:select>
+          
+          <map:transform src="fallback://lenya/modules/bxe/xslt/config-xml.xsl">
+            <!-- Parameter BX_xmlfile:
+              defines the Lenya URL with which BXE interacts, to
+              1. get the document contents (by issuing a GET to this URL),
+              2. save the changed contents (by issuing a PUT to this URL)
+            -->
+            <map:parameter name="BX_xmlfile" value="{request:requestURI}?lenya.module=bxe&amp;lenya.step=xml"/>
+            <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
+            
+            <!-- Instead of an xsl we use the xhtml file to provide the basic layout
+              <map:parameter name="BX_xslfile" value="{2}.xsl"/>
+            -->
+            <map:parameter name="BX_xhtmlfile" value="{../2}.bxe.html?rendertype=edit"/>
+            <map:parameter name="BX_validationfile" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}/schemas/{page-envelope:document-type}.rng"/>
+            <map:parameter name="css" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}/css/{page-envelope:document-type}-bxe.css"/>
+            <!-- The document is checked in when we exit from bx (in case of save&exit and in case of exit), so we use the usecase
+              for the checkin while we redirect to the document
+            -->
+            <map:parameter name="BX_exitdestination" value="{request:requestURI}?lenya.usecase=edit.bxe&amp;lenya.continuation={request-param:lenya.continuation}&amp;submit=Submit"/>
+            <map:parameter name="contextmenufile" value="fallback://lenya/modules/bxe/resources/misc/contextmenu.xml"/>
+          </map:transform>
+          <map:transform type="cinclude"/>
+          <map:serialize type="xml"/>
+        </map:match>
+        
+      </map:match>
+      
+      <map:match pattern="*/**.html">
+        
+        <map:match type="step" pattern="xml">      
+          <!--+
+            | This step handles the exchange of XML contents between BXE and Lenya.
+            | When BXE sends a GET request, it is requesting the contents of the
+            | document. When BXE sends a PUT request, it is sending the contents
+            | back to Lenya.
+            +-->
+          <map:select type="request-method">
+            
+            <!--
+              This reads the data that BXE posts when the user saves changes,      
+              applies a transformation and provides the data as XML
+              TODO: document why the special transformation is needed, either here
+              or in the change-object-path-back.xsl stylesheet.
+            -->
+            <map:when test="PUT">
+              <map:call function="saveXML">
+                <map:parameter name="source" value="context://lenya/pubs/{page-envelope:publication-id}/work/bxe/content/{page-envelope:area}/{page-envelope:document-path}.tmp"/>
+              </map:call>
+            </map:when>
+            
+            <map:otherwise> <!-- GET -->
+              <map:generate src="lenya://lenya/pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
+              <map:transform src="fallback://lenya/modules/bxe/xslt/change-object-path.xsl">
+                <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+              </map:transform>
+              <map:serialize type="xml"/>
+            </map:otherwise>
+            
+          </map:select>
+        </map:match>
+        <!-- step xml -->
+        
+      </map:match> <!-- uri pattern -->
+      
+      <map:match pattern="saveXML">
+        <map:generate type="stream"/>
+        <map:transform src="fallback://lenya/modules/bxe/xslt/change-object-path-back.xsl">
+          <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+    
+  </map:pipelines>
+  
+</map:sitemap>

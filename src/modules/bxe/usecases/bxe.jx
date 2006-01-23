@@ -27,7 +27,7 @@
       </page:body>
     </jx:when>
     <jx:otherwise>
-      <page:body onload="bxe_start('${configFile}?lenya.usecase=bxe&amp;lenya.step=config&amp;lenya.continuation=${continuation.id}')">
+      <page:body onload="bxe_start('${configFile}?lenya.module=bxe&amp;lenya.step=config&amp;lenya.continuation=${continuation.id}')">
     
         <!-- everything in the following div element will be replaced -->
         <div id="bxe_area">

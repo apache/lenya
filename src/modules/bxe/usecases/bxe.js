@@ -29,7 +29,7 @@ function saveXML() {
     cocoon.processPipelineTo("saveXML", null, outputStream);
 
   } catch (error) {
-    log.cocoon.error("Error saving document: " + error);
+    cocoon.log.error("Error saving document: " + error);
     cocoon.sendStatus(500);
   } finally {
     if (source != null)

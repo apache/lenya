@@ -588,17 +588,6 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
       </exit>
     </component-instance>
 
-    <component-instance name="edit.bxe" logger="lenya.publication"
-                        class="org.apache.lenya.cms.editors.bxe.BXE">
-      <transaction policy="pessimistic"/>
-      <view template="usecases/edit/bxe/bxe.jx" menu="false"/>
-      <exit usecase="lucene.index">
-        <parameter name="indexAction" value="index"/>
-        <parameter name="indexArea" value="authoring"/>
-      </exit>
-    </component-instance>
-
-    
     <component-instance name="edit.kupu" logger="lenya.publication"
                         class="org.apache.lenya.cms.editors.kupu.Kupu">
       <transaction policy="pessimistic"/>
