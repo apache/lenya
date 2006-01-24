@@ -89,15 +89,6 @@
     </map:pipeline>
 
 
-
-    <!-- BX Editor: CSS -->
-    <map:pipeline type="noncaching">
-      <map:match pattern="**/*-bxe.css">
-        <map:read mime-type="text/css" src="fallback://resources/misc/bxe/{2}-bxe.css"/>
-      </map:match>
-    </map:pipeline>
-    <!-- /BX Editor: RNG Schema -->
-
     <!-- This is the pipeline that builds the page. It aggregates all
     the navigational elements (breadcrumb, tabs, menu) with the actual
     content of the document. -->

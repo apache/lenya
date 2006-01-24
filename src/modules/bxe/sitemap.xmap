@@ -183,7 +183,10 @@
             -->
             <map:parameter name="BX_xhtmlfile" value="{../2}.bxe.html?rendertype=edit"/>
             <map:parameter name="BX_validationfile" value="{resource-type:httpSchemaUri}"/>
+            <!--
             <map:parameter name="css" value="{request:contextPath}/{page-envelope:publication-id}/{page-envelope:area}/css/{page-envelope:document-type}-bxe.css"/>
+            -->
+            <map:parameter name="css" value="{request:contextPath}/lenya/css/default.css"/>
             <!-- The document is checked in when we exit from bx (in case of save&exit and in case of exit), so we use the usecase
               for the checkin while we redirect to the document
             -->
