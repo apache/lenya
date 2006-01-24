@@ -22,6 +22,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -34,9 +35,18 @@ import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
 
 /**
+ * <p>
  * Resource type module.
+ * </p>
+ * <p>
+ * The syntax is either <code>{resource-type:&lt;attribute&gt;}</code> or
+ * <code>{resource-type:&lt;name&gt;:&lt;attribute&gt;}</code>.
+ * </p>
  */
 public class ResourceTypeModule extends AbstractInputModule implements Serviceable {
+
+    protected static final String SCHEMA_URI = "schemaUri";
+    protected static final String HTTP_SCHEMA_URI = "httpSchemaUri";
 
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
@@ -45,25 +55,48 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
         try {
             Request request = ObjectModelHelper.getRequest(objectModel);
             Session session = RepositoryUtil.getSession(request, getLogger());
-            DocumentIdentityMap docFactory = new DocumentIdentityMap(session,
-                    this.manager,
-                    getLogger());
-            String webappUrl = ServletHelper.getWebappURI(request);
-            Document document = docFactory.getFromURL(webappUrl);
-            ResourceType resourceType = document.getResourceType();
 
-            if (name.startsWith("format-")) {
-                String[] steps = name.split("-");
-                String format = steps[1];
-                value = resourceType.getFormatURI(format);
+            ResourceType resourceType;
+            String attribute;
+
+            String[] steps = name.split(":");
+            if (steps.length == 1) {
+                attribute = name;
+                DocumentIdentityMap docFactory = new DocumentIdentityMap(session,
+                        this.manager,
+                        getLogger());
+                String webappUrl = ServletHelper.getWebappURI(request);
+                Document document = docFactory.getFromURL(webappUrl);
+                resourceType = document.getResourceType();
+            } else {
+                attribute = steps[1];
+                String resourceTypeName = steps[0];
+
+                ServiceSelector selector = null;
+                try {
+                    selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
+                    resourceType = (ResourceType) selector.select(resourceTypeName);
+                } finally {
+                    this.manager.release(selector);
+                }
             }
-            else {
+
+            if (attribute.startsWith("format-")) {
+                String[] formatSteps = name.split("-");
+                String format = formatSteps[1];
+                value = resourceType.getFormatURI(format);
+            } else if (attribute.equals(SCHEMA_URI)) {
+                value = resourceType.getSchema().getURI();
+            } else if (attribute.equals(HTTP_SCHEMA_URI)) {
+                String uri = resourceType.getSchema().getURI();
+                String path = uri.substring("lallback://".length());
+                value = request.getContextPath() + "/fallback/" + path;
+            } else {
                 throw new ConfigurationException("Attribute [" + name + "] not supported!");
             }
 
         } catch (Exception e) {
             throw new ConfigurationException("Resolving attribute [" + name + "] failed: ", e);
-        } finally {
         }
 
         return value;

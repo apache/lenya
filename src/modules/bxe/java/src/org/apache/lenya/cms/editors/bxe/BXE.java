@@ -100,4 +100,5 @@ public class BXE extends DocumentUsecase {
     protected String getEvent() {
         return "edit";
     }
+    
 }

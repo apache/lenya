@@ -7,8 +7,8 @@
   >
   
   <page:head>
-    <link rel="stylesheet" href="${request.getContextPath()}/bxe/css/editor.css" type="text/css"/>
-    <script src="${request.getContextPath()}/bxe/bxeLoader.js" type="text/javascript"/>
+    <link rel="stylesheet" href="${request.getContextPath()}/modules/bxe/bxe/css/editor.css" type="text/css"/>
+    <script src="${request.getContextPath()}/modules/bxe/bxe/bxeLoader.js" type="text/javascript"/>
     
     <meta name="bxeNS" content="xhtml=http://www.w3.org/1999/xhtml"/>
     <meta name="bxeNS" content="lenya=http://apache.org/cocoon/lenya/page-envelope/1.0"/>

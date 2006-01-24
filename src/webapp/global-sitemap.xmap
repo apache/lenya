@@ -112,13 +112,6 @@
       </map:match>
     </map:pipeline>
 
-    <!-- Editor BXE -->
-    <map:pipeline>
-      <map:match pattern="bxe/**">
-        <map:read src="lenya/modules/bxe/resources/bxe/{1}"/>
-      </map:match>
-    </map:pipeline>
-
     <!-- Editor Kupu -->
     <map:pipeline>
       <map:match pattern="kupu/**">
@@ -270,16 +263,35 @@
       </map:match>
       
     </map:pipeline>
-
-    <!-- Internal module requests -->
-    <map:pipeline internal-only="true">
-      <!-- Enter a module -->
+    
+    <map:pipeline>
+      
+      <!-- RNG fallback requests -->
+      <map:match pattern="fallback/**.rng">
+        <map:generate src="fallback://{1}.rng"/>
+        <map:transform src="lenya/xslt/util/translate-rng-includes.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+      <!-- Module requests -->
       <map:match pattern="modules/*/**">
-        <map:mount uri-prefix="modules/{1}/" src="lenya/modules/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+        <map:select type="resource-exists">
+          
+          <!-- resource exists - serve statically -->
+          <map:when test="lenya/modules/{1}/resources/{2}">
+            <map:mount uri-prefix="modules/" src="lenya/module-resources.xmap" check-reload="true" reload-method="synchron"/>
+          </map:when>
+          
+          <!-- resource doesn't exist - delegate to module -->
+          <map:otherwise>
+            <map:mount uri-prefix="modules/{1}/" src="lenya/modules/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+          </map:otherwise>
+          
+        </map:select>
       </map:match>
     </map:pipeline>
     
-    <!-- Internal usecases -->
+   <!-- Internal usecases -->
     <map:pipeline internal-only="true">
       <map:match pattern="core/modules/*/*/**">
         <map:mount uri-prefix="core/modules/{1}/{2}" src="lenya/modules/{1}/usecases/{2}/usecase.xmap"/>

@@ -32,8 +32,6 @@
  */
 package org.apache.lenya.cms.publication;
 
-import java.util.Set;
-
 import org.apache.lenya.cms.authoring.NodeCreatorInterface;
 import org.apache.lenya.xml.Schema;
 
