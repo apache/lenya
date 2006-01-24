@@ -94,14 +94,14 @@ public class CreateDocument extends Create {
             if (!provided && !documentManager.isValidDocumentName(documentName)) {
                 addErrorMessage("The document ID may not contain any special characters.");
             } else {
-                Document parent = getSourceDocument();
                 Publication publication = getSourceDocument().getPublication();
+                String newDocumentId = getNewDocumentId(); 
                 Document document = getSourceDocument().getIdentityMap().get(publication,
                         getSourceDocument().getArea(),
-                        parent.getId() + "/" + documentName,
+                        newDocumentId,
                         language);
                 if (document.exists()) {
-                    addErrorMessage("The document does already exist.");
+                    addErrorMessage("The document with ID " + newDocumentId + " already exists.");
                 }
             }
         } finally {
