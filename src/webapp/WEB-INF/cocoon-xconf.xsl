@@ -554,21 +554,6 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
                         class="org.apache.lenya.cms.editors.EditDocument">
       <parameter name="sourceUri" value="cocoon:/request2document"/>
     </component-instance>
-    <component-instance name="edit.insertImage" logger="lenya.publication"
-                        class="org.apache.lenya.cms.editors.InsertAsset">
-      <view template="usecases/edit/insertAsset.jx" menu="false">
-        <parameter name="callbackFunction" value="insertImage"/>
-      </view>
-      <parameter name="mimeTypePrefix" value="image/"/>
-      <parameter name="asset-usecase" value="tab.assets"/>
-    </component-instance>
-    <component-instance name="edit.insertAsset" logger="lenya.publication"
-                        class="org.apache.lenya.cms.editors.InsertAsset">
-      <view template="usecases/edit/insertAsset.jx" menu="false">
-        <parameter name="callbackFunction" value="insertAsset"/>
-      </view>
-      <parameter name="asset-usecase" value="tab.assets"/>
-    </component-instance>
     <component-instance name="edit.forms" logger="lenya.publication"
                         class="org.apache.lenya.cms.editors.forms.FormsEditor">
       <transaction policy="pessimistic"/>

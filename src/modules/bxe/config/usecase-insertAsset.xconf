@@ -20,16 +20,14 @@
     This file defines the publication specific use-cases
 -->
 
-  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'edit.bxe']">
+  <xconf xpath="/cocoon/usecases" remove="/cocoon/usecases/component-instance[@name = 'edit.insertAsset']">
 
-   <component-instance name="edit.bxe" logger="lenya.publication"
-      class="org.apache.lenya.cms.editors.bxe.BXE">
-      <transaction policy="pessimistic"/>
-      <view template="modules/bxe/usecases/bxe.jx" menu="false"/>
-      <exit usecase="lucene.index">
-        <parameter name="indexAction" value="index"/>
-        <parameter name="indexArea" value="authoring"/>
-      </exit>
+    <component-instance name="edit.insertAsset" logger="lenya.publication"
+      class="org.apache.lenya.cms.editors.InsertAsset">
+      <view template="modules/bxe/usecases/insertAsset.jx" menu="false">
+        <parameter name="callbackFunction" value="insertAsset"/>
+      </view>
+      <parameter name="asset-usecase" value="tab.assets"/>
     </component-instance>
     
   </xconf>

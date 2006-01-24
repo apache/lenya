@@ -23,7 +23,7 @@
            xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
            
   <page:head>
-    <script src="${request.contextPath}/lenya/javascript/usecases/edit/insertAsset.js"/>
+    <script src="${request.contextPath}/modules/bxe/javascript/insertAsset.js"/>
   </page:head>
 
   <page:body>
