@@ -142,7 +142,7 @@
         <element name="img" ns="http://www.w3.org/1999/xhtml" type="popup">?lenya.usecase=edit.insertImage</element>
         <element name="table" ns="http://www.w3.org/1999/xhtml" type="function">bxe_InsertTableCallback</element>
         <element name="asset" ns="http://apache.org/cocoon/lenya/page-envelope/1.0" type="popup">?lenya.usecase=edit.insertAsset</element>
-        <element name="a" ns="http://www.w3.org/1999/xhtml" precheck="bxe_checkIfNotALink" type="popup">?lenya.usecase=bxe&amp;lenya.step=link-show</element>
+        <element name="a" ns="http://www.w3.org/1999/xhtml" precheck="bxe_checkIfNotALink" type="popup">?lenya.module=bxe&amp;lenya.step=link-show</element>
     </callbacks>
     <options>
      <option name="autoParaElementName">p</option>
