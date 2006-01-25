@@ -46,6 +46,15 @@
         <map:serialize type="xml"/>
       </map:match>
     
+      <map:match pattern="search.xml">
+        <map:generate type="xpathdirectory" src="fallback://lenya/pubs/{page-envelope:publication-id}/config/search">
+          <map:parameter name="xpath" value="/crawler|/lucene"/>
+          <map:parameter name="xmlFiles" value="\.x.*$"/>
+        </map:generate>
+        <map:transform src="fallback://lenya/modules/search/usecases/admin.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      
       <map:match pattern="*.xml">
         <map:generate src="cocoon:/search-form/{page-envelope:publication-id}/{page-envelope:area}"/>
         <map:transform src="fallback://lenya/modules/search/xslt/search-and-results.xsl">

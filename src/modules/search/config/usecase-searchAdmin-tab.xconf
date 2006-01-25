@@ -18,7 +18,7 @@
 <!-- $Id: doctypes.xconf 164635 2005-04-25 20:01:43Z tschlabach $ -->
 
 <xconf xpath="/cocoon/gui-manager/tab-group[@name = 'admin']"
-       unless="/cocoon/gui-manager/tab-group[@name = 'admin']/tab[@name = 'search']">
+       remove="/cocoon/gui-manager/tab-group[@name = 'admin']/tab[@name = 'search']">
 
   <tab name="search" label="Search" usecase="admin.search"/>
   

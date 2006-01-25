@@ -17,10 +17,10 @@
 
 <!-- $Id: doctypes.xconf 164635 2005-04-25 20:01:43Z tschlabach $ -->
 
-<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'admin.search']">
+<xconf xpath="/cocoon/usecases" remove="/cocoon/usecases/component-instance[@name = 'admin.search']">
 
   <component-instance name="admin.search" logger="lenya.admin" class="org.apache.lenya.cms.usecase.DummyUsecase">
-    <view template="usecases/admin/search.jx" menu="true">
+    <view template="modules/search/usecases/search.jx" menu="true">
       <tab group="admin" name="search"/>
     </view>
     <exit usecase="admin.search"/>

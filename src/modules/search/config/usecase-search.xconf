@@ -17,7 +17,7 @@
 
 <!-- $Id: doctypes.xconf 164635 2005-04-25 20:01:43Z tschlabach $ -->
 
-<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'search.search']">
+<xconf xpath="/cocoon/usecases" remove="/cocoon/usecases/component-instance[@name = 'search.search']">
 
   <component-instance name="search.search" logger="lenya.search" class="org.apache.lenya.cms.search.usecases.Search">
     <view template="usecases/search/search.jx"/>

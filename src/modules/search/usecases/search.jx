@@ -29,7 +29,7 @@
       <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
       
       <cinclude:includexml>
-        <cinclude:src>cocoon://core/admin/search.xml</cinclude:src>
+        <cinclude:src>cocoon://modules/search/search.xml</cinclude:src>
       </cinclude:includexml>
       
     </div>

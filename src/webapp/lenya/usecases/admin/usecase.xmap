@@ -30,15 +30,6 @@
         <map:serialize type="xml"/>
       </map:match>
     
-      <map:match pattern="search.xml">
-        <map:generate type="xpathdirectory" src="fallback://lenya/pubs/{page-envelope:publication-id}/config/search">
-          <map:parameter name="xpath" value="/crawler|/lucene"/>
-          <map:parameter name="xmlFiles" value="\.x.*$"/>
-        </map:generate>
-        <map:transform src="fallback://lenya/modules/search/xslt/admin.xsl"/>
-        <map:serialize type="xml"/>
-      </map:match>
-    
     </map:pipeline>
   </map:pipelines>
   
