@@ -235,7 +235,7 @@ public class IndexManagerImpl extends AbstractLogEnabled implements
         // }
         // configureIndexManager(configfile);
         ConfigureIndexManager(configuration);
-        System.out.println("Search Engine - Index Manager configured.");
+        getLogger().info("Search Engine - Index Manager configured.");
     }
 
     private void configureIndexManager(Source source)

@@ -270,7 +270,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements
     public void startElement(String namespaceURI, String localName,
             String qName, Attributes atts) throws SAXException {
 
-        // System.out.println("START processing: "+processing+" "+localName);
+        // getLogger().debug("START processing: "+processing+" "+localName);
 
         if (LUCENE_URI.equals(namespaceURI)) {
             switch (processing) {
@@ -368,7 +368,7 @@ public class LuceneIndexTransformer2 extends AbstractTransformer implements
     public void endElement(String namespaceURI, String localName, String qName)
             throws SAXException {
 
-        // System.out.println("END processing: "+processing+" "+localName);
+        // getLogger().debug("END processing: "+processing+" "+localName);
 
         if (LUCENE_URI.equals(namespaceURI)) {
             switch (processing) {

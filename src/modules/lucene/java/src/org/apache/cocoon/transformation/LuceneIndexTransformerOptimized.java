@@ -448,7 +448,7 @@ public class LuceneIndexTransformerOptimized extends AbstractTransformer impleme
     }
 
     private void openWriter() throws IndexException {
-        System.out.println("use luceneIndexTransformer with indexer component");
+        getLogger().debug("use luceneIndexTransformer with indexer component");
         // lookup the indexer
         try {
             indexer = (Indexer) this.manager.lookup(Indexer.ROLE+"/default");

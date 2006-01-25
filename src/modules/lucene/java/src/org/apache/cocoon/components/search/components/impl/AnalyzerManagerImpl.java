@@ -158,7 +158,6 @@ public class AnalyzerManagerImpl extends AbstractLogEnabled implements
 
         manager.release(resolver);
         getLogger().info("AnalyzerManager configured.");
-        System.out.println("Search Engine - AnalyzerManager configured.");
 
     }
 
