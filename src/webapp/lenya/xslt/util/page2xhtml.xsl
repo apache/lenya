@@ -35,7 +35,9 @@
       <link rel="stylesheet" type="text/css" href="{$contextprefix}/lenya/css/default.css" title="default css"/>
       <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
       <xsl:if test="count(xhtml:script) &gt; 0">
-       <script><xsl:value-of select="xhtml:script" /> </script>
+        <xsl:for-each select="xhtml:script">
+          <xsl:copy-of select="." />
+        </xsl:for-each>
       </xsl:if>
       <xsl:copy-of select="page:head/*"/>
     </head>
