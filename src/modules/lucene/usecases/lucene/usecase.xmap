@@ -64,7 +64,7 @@
       <map:match pattern="externalopensearch.xml">
         <!-- TODO: the location of the searchengine should be configurable somewhere else -->	
         <!-- TODO: use the queryString parameter: request action -->	
-	<map:generate src="fallback://lenya/xslt/lucene/opensearch.xml"/>
+	<map:generate src="fallback://lenya/modules/lucene/xslt/opensearch.xml"/>
 
           <map:transform src="fallback://lenya/modules/lucene/xslt/opensearch2html.xsl">	  
             <map:parameter name="url" value="{page-envelope:document-url}"/>
