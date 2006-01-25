@@ -15,101 +15,101 @@
 */
 /* Styles for tabs in Site / Meta Area */
 
-.lenya-tab {
-	font-family: verdana, sans-serif;
-	font-size: small;
-	background-color: #F5F4E9; 
-	padding: 20px;
-	color: black;
-	border: solid 1px #CCCCCC;
-
-	position: relative;
-	top: 1px;
-}
-
-.lenya-tab-sitetree {
-	font-family: verdana, sans-serif;
-	font-size: small;
-	background-color: #F5F4E9; 
-	padding: 20px;
-	color: black;
-	border: solid 1px #CCCCCC;
-
-	position: relative;
-	top: 1px;
-	margin-left: 270px;
+.lenya-tab, .lenya-tab-sitetree {
+  font-family: verdana, sans-serif;
+  font-size: small;
+  background-color: #F5F4E9; 
+  color: black;
+  border: solid 1px #CCCCCC;
+  float: left;
+  padding: 10px;
+  min-height: 400px;
 }
 
 .lenya-tabs {
-	margin-left: 270px;
+  float: left;
 }
 
-.lenya-tabs-sitetree {
-    margin-left: 270px;
+#lenya-info-treecanvas .lenya-tablink,
+#lenya-info-treecanvas .lenya-tablink-active {
+  position: relative;
+  left: 0px;
+  top: 1px;
+  float: left;
+  margin: 0em .5em 0em 0em;
+  padding: 0em .5em;
+  border: solid 1px #CCCCCC;
+}
+
+#lenya-info-treecanvas .lenya-tablink {
+  background-color: #DDDCCF;
+}
+
+#lenya-info-treecanvas .lenya-tablink:hover {
+  text-decoration: none;
+}
+
+#lenya-info-treecanvas .lenya-tablink-active {
+  border-bottom: solid 1px #F5F4E9;
+}
+
+.lenya-tablink, .lenya-tablink-active {
+  position: relative;
+  left: 1px;
+  font-size: 10pt;
+  display: block;
+  margin-bottom: .2em;
+  padding: .2em 1em .2em .3em;
+  text-decoration: none;
+  border: solid 1px #CCCCCC;
+  border-right: none;
 }
 
 .lenya-tablink {
-	color: #666666;
-	font-size: 10pt;
-	display: inline; /*mandatory*/
-	margin-right: .5em;
-	padding: 0px 1em;
-	
-	position: relative;
-	top: 1px;
-	
-	text-decoration: none;
-	
-	background-color: #DDDCCF; 
-	border: solid 1px #CCCCCC;
+  color: #666666;
+  border: solid 1px white; 
+  border-right: solid 1px #CCCCCC;
+  background-color: white;
+}
+
+.lenya-tablink:hover {
+  text-decoration: underline;
 }
 
 .lenya-tablink-active {
-	color: black;
-	font-size: 10pt;
-	display: inline; /*mandatory*/
-	margin-right: .5em;
-	padding: 0px 1em;
-
-	position: relative;
-	top: 1px;
-	
-	text-decoration: none;
-	
-	background-color: #F5F4E9; 
-	border: solid 1px #CCCCCC;
-	border-bottom: solid 1px #F5F4E9;
-	z-index: 1;
+  color: black;
+  font-weight: normal;
+  background-color: #F5F4E9; 
+  z-index: 1;
 }
 
 #lenya-info-body {
-	padding: 20px;
+  padding: 20px;
 }
 
 #lenya-info-treecanvas {
-	font-size: 8pt;
+  font-size: 8pt;
+  float: left;
+  padding-right: 20px;
+  width: 20%;
 }
-	
+  
 #lenya-info-tree {
-	padding: 10px;
-	background-color: #F5F4E9; 
-	border: solid 1px #CCCCCC;
-    font-family: verdana,helvetica, sans-serif; 
-    text-decoration: none;
-    color: black;	
-
-	position: relative;
-	top: 1px;
-
-    width: 230px;
-    float: left;
+  clear: left;
+  padding: 10px;
+  background-color: #F5F4E9; 
+  border: solid 1px #CCCCCC;
+  font-family: verdana,helvetica, sans-serif; 
+  text-decoration: none;
+  color: black;  
 }
 
 #lenya-info-tree span {
-    font-family: verdana, helvetica, sans-serif;
-    font-size: small;
-    color: #333333; text-decoration: none;
-    cursor: pointer;
+  font-family: verdana, helvetica, sans-serif;
+  font-size: small;
+  color: #333333;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 #lenya-info-treecanvas .lenya-info-root { font-weight: bold; cursor: default; }
@@ -122,11 +122,13 @@
   border-spacing: 0px;
   border-collapse: collapse;
 }
+
 #lenya-info-tree td {
   vertical-align: top;
   margin: 0px;
   padding: 0px; 
 }
+
 #lenya-info-tree td.lenya-info-label-td {
   vertical-align: top;
   margin: 0px;
@@ -138,7 +140,8 @@
 #lenya-info-treecanvas .treenode_sign { vertical-align: top; padding: 0px; }
 
 #lenya-info-content {
-	float: left;
-	margin: 0px 20px;
-	font-size: small;
+  clear: both;
+  float: left;
+/*  margin: 0px 20px; */
+  font-size: small;
 }
