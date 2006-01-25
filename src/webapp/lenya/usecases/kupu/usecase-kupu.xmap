@@ -55,8 +55,6 @@
     
     <map:component-configurations>
       <global-variables>
-        <!-- To access core resources -->
-        <basedir>../..</basedir>
         <resourceIconUrl>kupu/apache-lenya/kupu/images/right_arrow.png</resourceIconUrl>
       </global-variables>
     </map:component-configurations>
@@ -85,7 +83,7 @@
         <map:aggregate element="edit-envelope">
           <map:part element="edited" src="cocoon:/kupu-stream"/>
           <map:part element="original" 
-              src="{global:basedir}/pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
+              src="lenya://lenya/pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
         </map:aggregate>              
         <map:transform src="fallback://lenya/resources/kupu/apache-lenya/lenya/kupusave.xsl"/>
         <map:serialize type="xml"/>
@@ -99,16 +97,16 @@
           <map:match pattern="*/authoring/**.html">
             <!-- Check if Kupu is installed -->
             <map:act type="resource-exists" 
-              src="{global:basedir}/resources/kupu/apache-lenya/kupu/kupumacros.html">
+              src="fallback://lenya/resources/kupu/apache-lenya/kupu/kupumacros.html">
               <map:act type="reserved-checkout">
                 <map:generate type="serverpages" 
-                  src="{global:basedir}/content/rc/{exception}.xsp">
+                  src="fallback://lenya/content/rc/{exception}.xsp">
                   <map:parameter name="user" value="{user}"/>
                   <map:parameter name="filename" value="{filename}"/>
                   <map:parameter name="date" value="{date}"/>
                   <map:parameter name="message" value="{message}"/>
                 </map:generate>
-                <map:transform src="{global:basedir}/xslt/rc/rco-exception.xsl"/>
+                <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
                 <map:call resource="style-cms-page"/>
                 <map:serialize />
               </map:act>
@@ -138,7 +136,7 @@
               <map:serialize type="xhtml"/>
             </map:act>
             <!-- If Kupu is not installed; Action failed -->
-            <map:generate src="{global:basedir}/resources/misc/kupu/download.xhtml"/>
+            <map:generate src="fallback://lenya/resources/misc/kupu/download.xhtml"/>
             <map:call resource="style-cms-page"/>
             <map:serialize />
           </map:match>
@@ -146,14 +144,14 @@
         <!-- Requested by Kupu to load the document into the editor -->    
         <map:match pattern="content" type="step">
           <map:match pattern="*/authoring/**">
-            <map:generate src="{global:basedir}/pubs/{1}/content/authoring/{page-envelope:document-path}"/>
+            <map:generate src="lenya://lenya/pubs/{1}/content/authoring/{page-envelope:document-path}"/>
             <map:transform 
               src="fallback://lenya/resources/kupu/apache-lenya/lenya/content2edit.xsl">
               <map:parameter name="css" 
                 value="{page-envelope:context-prefix}/{1}/authoring/css/page.css"/>
               <map:parameter name="nodeid" value="{page-envelope:document-name}"/>
             </map:transform>
-            <map:transform src="{global:basedir}/xslt/util/strip_namespaces.xsl"/>
+            <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
               <map:serialize type="xhtml"/>
           </map:match>            
         </map:match>
@@ -214,14 +212,14 @@
         <!-- Checkin document on exit and trigger workflow -->
         <map:match pattern="exit" type="step">
           <map:act type="reserved-checkin">
-            <map:generate src="{global:basedir}/content/rc/{exception}.xsp" type="serverpages">
+            <map:generate src="fallback://lenya/content/rc/{exception}.xsp" type="serverpages">
               <map:parameter name="user" value="{user}"/>
               <map:parameter name="filename" value="{filename}"/>
               <map:parameter name="checkType" value="{checkType}"/>
               <map:parameter name="date" value="{date}"/>
               <map:parameter name="message" value="{message}"/>
             </map:generate>
-            <map:transform src="{global:basedir}/xslt/rc/rco-exception.xsl"/>
+            <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
             <map:call resource="style-cms-page"/>
             <map:serialize />
           </map:act>
