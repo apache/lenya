@@ -8,8 +8,4 @@
      ../../../../resources/entities/sitetree.xsd"
 >
     
-  <node id="index">
-    <label xml:lang="en">Home</label>
-  </node>
-  
 </site>
