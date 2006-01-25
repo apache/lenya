@@ -447,6 +447,7 @@ Enable this authenticator and disable the UserAuthenticator for anonymous authen
     <component-instance name="site.changeNodeID" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.ChangeNodeID">
       <view template="usecases/site/changeNodeID.jx"/>
     </component-instance>
+    <component-instance name="site.changeVisibility" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.ChangeVisibility"/>
     <component-instance name="site.cut" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Cut">
       <view template="usecases/site/cut.jx"/>
       <exit usecase="lucene.index">

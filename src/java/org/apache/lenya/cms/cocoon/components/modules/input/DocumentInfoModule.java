@@ -39,21 +39,23 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.SiteUtil;
 
 /**
  * Input module to get document information.
- * {doc-info:{publication-id}:{area}:{document-id}:{document-language}:{property}}
- * where {property} may be:
+ * {doc-info:{publication-id}:{area}:{document-id}:{document-language}:{property}} where {property}
+ * may be:
  * <ul>
- *   <li>resourceType</li>
- *   <li>lastModified</li>
- *   <li>mimeType</li>
+ * <li>resourceType</li>
+ * <li>lastModified</li>
+ * <li>mimeType</li>
  * </ul>
  */
 public class DocumentInfoModule extends AbstractInputModule implements Serviceable {
 
     protected ServiceManager manager;
-    
+
     // Input module parameters:
     protected final static String PARAM_PUBLICATION_ID = "publication-id";
     protected final static String PARAM_AREA = "area";
@@ -61,31 +63,34 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
     protected final static String PARAM_DOCUMENT_LANGUAGE = "document-language";
     protected final static String PARAM_PROPERTY = "property";
     protected final static int MIN_MANDATORY_PARAMS = 5;
-    
+
     protected final static String RESOURCE_TYPE = "resourceType";
     protected final static String LAST_MODIFIED = "lastModified";
     protected final static String MIME_TYPE = "mimeType";
-    
-    protected final static String[] PARAMS = {PARAM_PUBLICATION_ID, PARAM_AREA,
-        PARAM_DOCUMENT_ID, PARAM_DOCUMENT_LANGUAGE, PARAM_PROPERTY};
-    
+    protected final static String VISIBLE_IN_NAVIGATION = "visibleInNav";
+
+    protected final static String[] PARAMS = { PARAM_PUBLICATION_ID, PARAM_AREA, PARAM_DOCUMENT_ID,
+            PARAM_DOCUMENT_LANGUAGE, PARAM_PROPERTY, VISIBLE_IN_NAVIGATION };
+
     protected final static String META_RESOURCE_TYPE = "resourceType";
-    
+
     /**
      * Parse the parameters and return a document.
+     * @param publicationId The publication ID.
+     * @param area The area.
+     * @param docId The document ID.
+     * @param docLang The document language.
+     * @param objectModel The object model.
      * @return The document object created.
      * @throws ConfigurationException
      */
-    protected Document getDocument(String publicationId, String area, String docId, String docLang, Map objectModel)
-    throws ConfigurationException
-    {
+    protected Document getDocument(String publicationId, String area, String docId, String docLang,
+            Map objectModel) throws ConfigurationException {
         Document document = null;
-        
+
         Request request = ObjectModelHelper.getRequest(objectModel);
         Session session = RepositoryUtil.getSession(request, getLogger());
-        DocumentIdentityMap docFactory = new DocumentIdentityMap(session,
-                this.manager,
-                getLogger());
+        DocumentIdentityMap docFactory = new DocumentIdentityMap(session, this.manager, getLogger());
 
         try {
             Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
@@ -96,26 +101,25 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
         }
         return document;
     }
-    
+
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
      *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
-    throws ConfigurationException
-    {
+            throws ConfigurationException {
         Object value = null;
-        
-        InputModuleParameters params =
-            new InputModuleParameters(name, PARAMS, MIN_MANDATORY_PARAMS);
+
+        InputModuleParameters params = new InputModuleParameters(name, PARAMS, MIN_MANDATORY_PARAMS);
 
         try {
-            Document document = getDocument(params.getParameter(PARAM_PUBLICATION_ID), 
+            Document document = getDocument(params.getParameter(PARAM_PUBLICATION_ID),
                     params.getParameter(PARAM_AREA),
                     params.getParameter(PARAM_DOCUMENT_ID),
-                    params.getParameter(PARAM_DOCUMENT_LANGUAGE), objectModel);
+                    params.getParameter(PARAM_DOCUMENT_LANGUAGE),
+                    objectModel);
             String attribute = params.getParameter(PARAM_PROPERTY);
-            
+
             if (attribute.equals(RESOURCE_TYPE)) {
                 value = getResourceType(document);
             } else if (attribute.equals(LAST_MODIFIED)) {
@@ -123,22 +127,32 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
             } else if (attribute.equals(MIME_TYPE)) {
                 value = getMimeType(document);
                 if (value == null)
-                    throw new ConfigurationException("Attribute '" + attribute + "' not defined [" +
-                            name + "]");
+                    throw new ConfigurationException("Attribute '" + attribute + "' not defined ["
+                            + name + "]");
+            } else if (attribute.equals(VISIBLE_IN_NAVIGATION)) {
+                value = Boolean.toString(isVisibleInNavigation(document));
             } else {
-                throw new ConfigurationException("Attribute '" + attribute + "' not supported [" +
-                        name + "]");
+                throw new ConfigurationException("Attribute '" + attribute + "' not supported ["
+                        + name + "]");
             }
         } catch (ParameterException e) {
             throw new ConfigurationException("Error getting input module parameters.", e);
         }
-        
+
         return value;
     }
-    
-    protected String getResourceType(Document document)
-    throws ConfigurationException
-    {
+
+    protected boolean isVisibleInNavigation(Document document) throws ConfigurationException {
+        try {
+            return SiteUtil.isVisibleInNavigation(this.manager, document);
+        } catch (SiteException e) {
+            throw new ConfigurationException("Obtaining navigation visibility failed ["
+                    + document.getId() + "]: " + e.getMessage(), e);
+        }
+
+    }
+
+    protected String getResourceType(Document document) throws ConfigurationException {
         String resourceType = null;
         MetaData metaData = null;
         try {
@@ -147,7 +161,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
             throw new ConfigurationException("Obtaining custom meta data value for ["
                     + document.getSourceURI() + "] failed: " + e.getMessage(), e);
         }
-        
+
         try {
             resourceType = metaData.getFirstValue(META_RESOURCE_TYPE);
         } catch (DocumentException e) {
@@ -163,9 +177,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
      * @return Formatted HTTP date string.
      * @throws ConfigurationException
      */
-    protected String getLastModified(Document document)
-    throws ConfigurationException
-    {
+    protected String getLastModified(Document document) throws ConfigurationException {
         SimpleDateFormat httpDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
         return httpDateFormat.format(document.getLastModified());
     }
@@ -176,9 +188,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
      * @return Mime-type of document.
      * @throws ConfigurationException
      */
-    protected String getMimeType(Document document)
-    throws ConfigurationException
-    {
+    protected String getMimeType(Document document) throws ConfigurationException {
         String mimeType = null;
         MetaData metaData = null;
         try {
@@ -187,7 +197,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
             throw new ConfigurationException("Obtaining custom meta data value failed ["
                     + document.getSourceURI() + "]: " + e.getMessage(), e);
         }
-        
+
         try {
             mimeType = metaData.getFirstValue(DublinCore.ELEMENT_FORMAT);
         } catch (DocumentException e) {

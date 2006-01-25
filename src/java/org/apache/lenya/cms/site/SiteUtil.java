@@ -81,8 +81,10 @@ public class SiteUtil {
      */
     public static SiteStructure getSiteStructure(ServiceManager manager, Document document)
             throws SiteException {
-        return SiteUtil.getSiteStructure(manager, document.getIdentityMap(), document
-                .getPublication(), document.getArea());
+        return SiteUtil.getSiteStructure(manager,
+                document.getIdentityMap(),
+                document.getPublication(),
+                document.getArea());
     }
 
     /**
@@ -227,8 +229,11 @@ public class SiteUtil {
             DocumentSet subSite = SiteUtil.getSubSite(manager, source);
             Document[] docs = subSite.getDocuments();
             for (int i = 0; i < docs.length; i++) {
-                Document targetDoc = SiteUtil.getTransferedDocument(siteManager, docs[i], source,
-                        target, mode);
+                Document targetDoc = SiteUtil.getTransferedDocument(siteManager,
+                        docs[i],
+                        source,
+                        target,
+                        mode);
                 if (targetDoc != null) {
                     map.put(docs[i], targetDoc);
                 }
@@ -257,8 +262,10 @@ public class SiteUtil {
         String suffix = source.getId().substring(sourceId.length());
         String targetId = baseTarget.getId() + suffix;
 
-        Document target = source.getIdentityMap().get(baseTarget.getPublication(), targetArea,
-                targetId, source.getLanguage());
+        Document target = source.getIdentityMap().get(baseTarget.getPublication(),
+                targetArea,
+                targetId,
+                source.getLanguage());
         switch (mode) {
         case MODE_REPLACE:
             break;
@@ -298,7 +305,9 @@ public class SiteUtil {
             DocumentSet subSite = SiteUtil.getSubSite(manager, source);
             Document[] docs = subSite.getDocuments();
             for (int i = 0; i < docs.length; i++) {
-                Document target = SiteUtil.getTransferedDocument(siteManager, docs[i], targetArea,
+                Document target = SiteUtil.getTransferedDocument(siteManager,
+                        docs[i],
+                        targetArea,
                         mode);
                 if (target != null) {
                     map.put(docs[i], target);
@@ -354,6 +363,34 @@ public class SiteUtil {
                     .getSiteManagerHint());
 
             return siteManager.getAvailableDocument(document);
+        } catch (Exception e) {
+            throw new SiteException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                manager.release(selector);
+            }
+        }
+    }
+
+    /**
+     * @param manager The site manager.
+     * @param document The document.
+     * @return If the document is visible in the navigation.
+     * @throws SiteException if an error occurs.
+     */
+    public static boolean isVisibleInNavigation(ServiceManager manager, Document document)
+            throws SiteException {
+        ServiceSelector selector = null;
+        SiteManager siteManager = null;
+        try {
+            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(document.getPublication()
+                    .getSiteManagerHint());
+
+            return siteManager.isVisibleInNav(document);
         } catch (Exception e) {
             throw new SiteException(e);
         } finally {
