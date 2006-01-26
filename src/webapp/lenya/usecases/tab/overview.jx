@@ -87,6 +87,12 @@
                 <jx:out value="${usecase.getParameter('resourcetype').getName()}"/>
               </td>
             </tr>
+            <tr>
+              <td class="lenya-entry-caption"><i18n:text>Visible in Navigation</i18n:text>:</td>
+              <td>
+                <i18n:text><jx:out value="${usecase.getParameter('visibleInNav')}"/></i18n:text>
+              </td>
+            </tr>
           </table>
         </jx:when>
         <jx:when test="${usecase.getParameter('languageexists').equals('false')}">

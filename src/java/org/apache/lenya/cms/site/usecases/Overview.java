@@ -20,6 +20,8 @@ import java.util.Arrays;
 
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.DocumentWorkflowable;
@@ -34,8 +36,12 @@ import org.apache.lenya.workflow.WorkflowManager;
  */
 public class Overview extends SiteUsecase {
 
+    protected static final String RESOURCE_TYPE = "resourcetype";
+    protected static final String LASTMODIFIED = "lastmodified";
+    protected static final String LANGUAGES = "languages";
     protected static final String STATE = "state";
     protected static final String ISLIVE = "isLive";
+    protected static final String VISIBLE_IN_NAVIGATION = "visibleInNav";
 
     /**
      * Ctor.
@@ -52,20 +58,24 @@ public class Overview extends SiteUsecase {
 
         WorkflowManager resolver = null;
         try {
+            Document doc = getSourceDocument();
+
             // read parameters from Dublin Core meta-data
-            MetaData dc = getSourceDocument().getMetaDataManager().getDublinCoreMetaData();
+            MetaData dc = doc.getMetaDataManager().getDublinCoreMetaData();
             setParameter(DublinCore.ELEMENT_TITLE, dc.getFirstValue(DublinCore.ELEMENT_TITLE));
             setParameter(DublinCore.ELEMENT_DESCRIPTION,
                     dc.getFirstValue(DublinCore.ELEMENT_DESCRIPTION));
 
             // read parameters from document attributes
-            setParameter("languages", getSourceDocument().getLanguages());
-            setParameter("lastmodified", getSourceDocument().getLastModified());
-            setParameter("resourcetype", getSourceDocument().getResourceType());
+            setParameter(LANGUAGES, doc.getLanguages());
+            setParameter(LASTMODIFIED, doc.getLastModified());
+            setParameter(RESOURCE_TYPE, doc.getResourceType());
+            boolean visible = SiteUtil.isVisibleInNavigation(this.manager, doc);
+            setParameter(VISIBLE_IN_NAVIGATION, Boolean.toString(visible));
 
             DocumentWorkflowable workflowable = new DocumentWorkflowable(this.manager,
                     getSession(),
-                    getSourceDocument(),
+                    doc,
                     getLogger());
             resolver = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
             if (resolver.hasWorkflow(workflowable)) {
