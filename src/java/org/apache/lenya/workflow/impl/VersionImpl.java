@@ -115,6 +115,9 @@ public class VersionImpl implements Version {
      */
     public boolean getValue(String variableName) {
         Boolean value = (Boolean) this.variableValues.get(variableName);
+        if (value == null) {
+            throw new RuntimeException("No value set for variable [" + variableName + "]");
+        }
         return value.booleanValue();
     }
 
