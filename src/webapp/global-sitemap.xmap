@@ -96,15 +96,6 @@
       </map:match>
     </map:pipeline>
 
-
-    <!-- Search with Lucene -->
-    <map:pipeline>
-      <map:match pattern="*/search-*/lucene*">
-        <map:mount uri-prefix="" src="{fallback:lenya/lucene.xmap}" check-reload="true" reload-method="synchron"/>
-      </map:match>
-    </map:pipeline>
-    <!-- /Search with Lucene -->
-
     <!-- Editor Xopus -->
     <map:pipeline>
       <map:match pattern="xopus/**">
