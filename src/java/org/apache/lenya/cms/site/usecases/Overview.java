@@ -16,6 +16,7 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
 import org.apache.lenya.cms.metadata.MetaData;
@@ -68,7 +69,9 @@ public class Overview extends SiteUsecase {
 
             // read parameters from document attributes
             setParameter(LANGUAGES, doc.getLanguages());
-            setParameter(LASTMODIFIED, doc.getLastModified());
+            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+            String lastModified = format.format(getSourceDocument().getLastModified());
+            setParameter(LASTMODIFIED, lastModified);
             setParameter(RESOURCE_TYPE, doc.getResourceType());
             boolean visible = SiteUtil.isVisibleInNavigation(this.manager, doc);
             setParameter(VISIBLE_IN_NAVIGATION, Boolean.toString(visible));
