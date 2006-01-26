@@ -73,9 +73,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
         <i18n:text>Login</i18n:text>
       </div>
       <div class="lenya-box-body">
-        <form method="get">
-          <input type="hidden" name="lenya.usecase" value="login" />
-          <input type="hidden" name="lenya.step" value="login" />
+        <form method="post" action="?lenya.usecase=login&amp;lenya.step=login">
           <table class="lenya-table-noborder">
             <tr>
               <td>
