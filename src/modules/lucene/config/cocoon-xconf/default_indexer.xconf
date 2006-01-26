@@ -18,16 +18,12 @@
 <!-- $Id: doctypes.xconf 164635 2005-04-25 20:01:43Z tschlabach $ -->
 
 <xconf xpath="/cocoon"
-  remove="/cocoon/index_manager"
-  unless="/cocoon/index_manager[@logger = 'core.search.index_manager']">
+  unless="/cocoon/default_indexer[@logger = 'core.search.default_indexer']">
 
-	<index_manager logger="core.search.index_manager">
-		
-		<indexer role="org.apache.cocoon.components.search.components.Indexer/default" />
-		
-		<indexes>
-		<!-- publication-specific index_manager_index.xpatch will place their indexes here -->		
-		</indexes>
-	</index_manager>
-
+<!-- default indexer component -->	
+	<default_indexer logger="core.search.default_indexer">
+		<!-- number of lucene documents in the buffer -->
+		<buffersize>200</buffersize>
+	</default_indexer>
+	
 </xconf>

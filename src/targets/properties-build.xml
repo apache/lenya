@@ -70,6 +70,7 @@
   <property name="build.src" value="${build.dir}/src"/>
   <!-- Destination for temporary files during the build  -->
   <property name="build.temp" value="${build.dir}/temp"/>
+  <property name="build.patch" value="${build.temp}/patch"/>
   <!-- This is where we assemble the webapp directory in the "webapp" task -->
   <property name="build.webapp" value="${build.dir}/webapp"/>
   <!-- This is where we do the tests -->

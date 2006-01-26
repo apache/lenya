@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xconf xpath="/cocoon/usecases" remove="/cocoon/usecases/component-instance[@name = 'edit.cforms']">
+<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'edit.cforms']">
   <component-instance name="edit.cforms"
                       logger="lenya.site"
                       class="org.apache.lenya.cms.usecase.DummyCFormsUsecase">

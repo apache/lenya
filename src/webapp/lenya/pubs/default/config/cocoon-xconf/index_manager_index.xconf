@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-  <xconf xpath="/cocoon/index_manager/indexes" remove="/cocoon/index_manager/indexes/index" unless="/cocoon/index_manager/indexes/index[@id = 'default-live' or @id = 'default-authoring']">
+  <xconf xpath="/cocoon/index_manager/indexes" unless="/cocoon/index_manager/indexes/index[@id = 'default-live' or @id = 'default-authoring']">
 	
     <index id="default-live" analyzer="stopword_en" directory="${basedir}/${build.webapp}/lenya/pubs/default/work/lucene/index/live/index" >
         <structure>

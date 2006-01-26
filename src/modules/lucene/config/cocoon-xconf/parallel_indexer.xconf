@@ -18,17 +18,12 @@
 <!-- $Id: doctypes.xconf 164635 2005-04-25 20:01:43Z tschlabach $ -->
 
 <xconf xpath="/cocoon"
-  remove="/cocoon/index_manager"
-  unless="/cocoon/index_manager[@logger = 'core.search.index_manager']">
+  unless="/cocoon/parallel_indexer[@logger = 'core.search.parallel_indexer']">
 
-	<index_manager logger="core.search.index_manager">
-		
-		<indexer role="org.apache.cocoon.components.search.components.Indexer/default" />
-		
-		<!-- ALL indexes (BE CAREFUL: 	Change the directory attribute) 		-->
-		<indexes>
-		
-		</indexes>
-	</index_manager>
-
+<!-- parallel indexer component -->		
+	<parallel_indexer logger="core.search.parallel_indexer">
+		<!-- number of thread (normaly = number of CPUs) -->
+		<numthread>2</numthread>
+	</parallel_indexer>
+	
 </xconf>

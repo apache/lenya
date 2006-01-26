@@ -45,30 +45,16 @@
     </copy>
 
     <!-- Copy publications -->
-    <copyPubs todir="${build.webapp}/lenya/pubs" pubsrootdirs="${pubs.root.dirs}" excludes="CVS,.svn"/>
-
-    <!-- Patch cocoon.xconf -->
-    <copy file="${build.webapp}/WEB-INF/cocoon.xconf"
-          toFile="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"/>
-    <xpatch file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
-             srcdir="${build.webapp}/lenya/pubs" 
-             includes="*/config/*.xconf"
-             excludes="*/config/publication.xconf"
-             addComments="true"/>
-    <checksum
-        file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
-        property="cocoon.xconf.md5"/>
-    <checksum
-        file="${build.webapp}/WEB-INF/cocoon.xconf"
-        property="${cocoon.xconf.md5}"
-        verifyProperty="cocoon.xconf.isEqual"/>
-    <condition property="cocoon.xconf.copy">
-       <isfalse value="${cocoon.xconf.isEqual}"/>
-    </condition>
-    <antcall target="copy-cocoon.xconf"/>
-    <delete file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch" failonerror="false"/>
-
-
+    <copyPubs todir="${build.webapp}/lenya/pubs" pubsrootdirs="${pubs.root.dirs}" excludes="CVS,.svn,cocoon-xconf"/>
+    
+    <bulkCopy 
+      sourcedirs="${pubs.root.dirs}" 
+      todir="${build.patch}/cocoon-xconf/pubs"
+      flatten="false">
+      <fileset includes="config/cocoon-xconf/**.xconf"/>
+      <fileset includes="*/config/cocoon-xconf/**.xconf"/>
+    </bulkCopy>
+    
     <!--  copy properties, xml configuration files and roles -->
     <copy todir="${build.webapp}/WEB-INF/classes">
       <fileset dir="${build.src}">
@@ -79,6 +65,13 @@
       </fileset>
       <fileset dir="${java.dir}">
         <include name="**/*.roles"/>
+      </fileset>
+    </copy>
+    
+    <!-- copy patch files for cocoon.xconf -->
+    <copy todir="${build.patch}/cocoon-xconf" flatten="false">
+      <fileset dir="${src.webapp.dir}/lenya/config/cocoon-xconf">
+        <include name="**/*.xconf"/>
       </fileset>
     </copy>
     
@@ -158,6 +151,27 @@
 
     <antcall target="deploy-modules"/>
 
+    <!-- Patch cocoon.xconf -->
+    <copy file="${build.webapp}/WEB-INF/cocoon.xconf"
+      toFile="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"/>
+    <xpatch file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
+      srcdir="${build.patch}/cocoon-xconf" 
+      includes="**/*.xconf"
+      addComments="true"/>
+    <checksum
+      file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
+      property="cocoon.xconf.md5"/>
+    <checksum
+      file="${build.webapp}/WEB-INF/cocoon.xconf"
+      property="${cocoon.xconf.md5}"
+      verifyProperty="cocoon.xconf.isEqual"/>
+    <condition property="cocoon.xconf.copy">
+      <isfalse value="${cocoon.xconf.isEqual}"/>
+    </condition>
+    <antcall target="copy-cocoon.xconf"/>
+    <delete file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch" failonerror="false"/>
+    
+    
     <!-- Copy database files to ${build.webapp}/WEB-INF/db -->
     <copy todir="${build.webapp}/WEB-INF/db">
       <fileset dir="${src.database.dir}">
@@ -234,7 +248,7 @@
   <target name="install-tomcat" description="Install the webapp into Tomcat servlet engine context" if="servlet.engine.tomcat">
     <!-- Copy From build.webapp=${build.webapp} To tomcat.webapps.dir=${tomcat.webapps.dir} -->
     <copy todir="${tomcat.webapps.dir}" filtering="off">
-      <fileset dir="${build.webapp}" excludes="${target.install.excludes}"/>
+      <fileset dir="${build.webapp}"/>
     </copy>
 
     <!-- Copy endorsed libraries -->

@@ -29,7 +29,14 @@
   <target name="copy-modules">
     <copyPubs todir="${build.webapp}/lenya/modules"
               pubsrootdirs="${modules.root.dirs}"
-              excludes="CVS,.svn"/>
+              excludes="CVS,.svn,cocoon-xconf"/>
+    <bulkCopy 
+      sourcedirs="${modules.root.dirs}" 
+      todir="${build.patch}/cocoon-xconf/modules"
+      flatten="false">
+      <fileset includes="config/cocoon-xconf/**.xconf"/>
+      <fileset includes="*/config/cocoon-xconf/**.xconf"/>
+    </bulkCopy>
   </target>
   
   <target name="modules-patch-cocoon-xconf">
@@ -37,7 +44,7 @@
           toFile="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"/>
     <xpatch file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
             srcdir="${build.modules}"
-            includes="*/config/*.xconf"
+            includes="*/config/cocoon-xconf/*.xconf"
             addComments="true"/>
     <checksum
         file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"

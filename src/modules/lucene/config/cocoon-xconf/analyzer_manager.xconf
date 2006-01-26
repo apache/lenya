@@ -16,7 +16,6 @@
 -->
 
 <xconf xpath="/cocoon"
-  remove="/cocoon/analyzer_manager"
   unless="/cocoon/analyzer_manager[@logger = 'core.search.analyzer_manager']">
 
 	<analyzer_manager logger="core.search.analyzer_manager">
