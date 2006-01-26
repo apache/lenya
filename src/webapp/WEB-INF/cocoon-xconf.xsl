@@ -41,100 +41,21 @@
 </xsl:template>
 
 
-<xsl:template match="source-factories">
-  <xsl:copy>
-    <xsl:copy-of select="@*"/>
-    <xsl:apply-templates/>
-    <component-instance class="org.apache.lenya.cms.cocoon.source.ZipSourceFactory" logger="lenya.source.zip" name="zip"/>
-    <component-instance class="org.apache.lenya.cms.cocoon.source.FallbackSourceFactory" logger="lenya.source.fallback" name="fallback"/>
-    <component-instance class="org.apache.lenya.cms.cocoon.source.TemplateFallbackSourceFactory" logger="lenya.source.templatefallback" name="template-fallback"/>
-    <component-instance class="org.apache.lenya.cms.cocoon.source.LenyaSourceFactory" logger="lenya.source.lenya" name="lenya" scheme="context:"/>
-    <component-instance class="org.apache.lenya.cms.cocoon.source.ContentSourceFactory" logger="lenya.source.content" name="content"/>
-  </xsl:copy>
-</xsl:template>
-
-
 <xsl:template match="input-modules">
      
   <xsl:copy>
     <xsl:copy-of select="@*"/>
     <xsl:apply-templates/>
-    
-    <component-instance name="defaults" class="org.apache.cocoon.components.modules.input.DefaultsModule">
-      <values>
-        <skin>lenya-site</skin>
-      </values>
-    </component-instance>
 
     <component-instance name="xopus" class="org.apache.cocoon.components.modules.input.DefaultsModule">
       <values>
         <context><xsl:value-of select="$xopus-context"/></context>
       </values>
     </component-instance>
-
-    <component-instance logger="core.modules.input" name="forrest"
-      class="org.apache.cocoon.components.modules.input.ChainMetaModule">
-      <input-module name="request-param"/>
-      <input-module name="request-attr"/>
-      <input-module name="session-attr"/>
-      <input-module name="defaults"/>
-      <input-module name="page-envelope"/>
-      <input-module name="access-control"/>
-    </component-instance>
-      
-    <component-instance
-      class="org.apache.cocoon.components.modules.input.RealPathModule"
-      logger="core.modules.input" name="realpath"/>
-      
-    <component-instance logger="sitemap.modules.input.page-envelope" name="page-envelope"
-        class="org.apache.lenya.cms.cocoon.components.modules.input.PageEnvelopeModule"/>
-
-    <component-instance logger="sitemap.modules.input.dublincore" name="dublincore"
-        class="org.apache.lenya.cms.cocoon.components.modules.input.DublinCoreModule"/>
-
-    <component-instance logger="sitemap.modules.input.custom-metadata" name="custom-metadata"
-        class="org.apache.lenya.cms.cocoon.components.modules.input.CustomMetaDataModule"/>
-
-    <component-instance logger="sitemap.modules.input.doc-info" name="doc-info"
-        class="org.apache.lenya.cms.cocoon.components.modules.input.DocumentInfoModule"/>
-
-    <component-instance logger="core.modules.input.access-control" name="access-control"
-        class="org.apache.lenya.cms.cocoon.components.modules.input.AccessControlModule"/>
-    
-    <component-instance logger="core.modules.input.workflow" name="workflow"
-        class="org.apache.lenya.cms.cocoon.components.modules.input.WorkflowModule"/>
-        
-    <component-instance logger="core.modules.input.fallback" name="fallback"
-        class="org.apache.lenya.cms.cocoon.components.modules.input.PublicationTemplateFallbackModule">
-      <directory src="context:///lenya"/>
-    </component-instance>
-
-    <component-instance logger="core.modules.input.usecase-fallback" name="usecase-fallback"
-        class="org.apache.lenya.cms.cocoon.components.modules.input.UsecaseFallbackModule"/>
-
-	<component-instance logger="core.modules.input.document-url" name="document-url"
-        class="org.apache.lenya.cms.cocoon.components.modules.input.DocumentURLModule"/>
-                       
-    <component-instance logger="core.modules.input.resourceexists" name="resource-exists"
-        class="org.apache.lenya.cms.cocoon.components.modules.input.ResourceExistsModule"/>
-                
-    <component-instance name="date-i18n" logger="core.modules.input" class="org.apache.cocoon.components.modules.input.DateInputModule">
-      <format>yyyy-MM-dd HH:mm:ss Z</format>
-    </component-instance>
-    
-    <component-instance name="date-iso8601-rfc822" logger="core.modules.input" class="org.apache.lenya.cms.cocoon.components.modules.input.DateConverterModule">
-      <src-pattern>yyyy-MM-dd HH:mm:ss Z</src-pattern>
-      <pattern>EEE, dd MMM yyyy HH:mm:ss Z</pattern>
-    </component-instance>
-    
-  <component-instance name="proxy-url" logger="sitemap.modules.input.proxy-url"
-      class="org.apache.lenya.cms.cocoon.components.modules.input.ProxyUrlModule"/>
-
-    <component-instance name="resource-type" logger="sitemap.modules.input.resource-type"
-      class="org.apache.lenya.cms.cocoon.components.modules.input.ResourceTypeModule"/>
     
   </xsl:copy>
 </xsl:template>
+
 
 <xsl:template match="cocoon">
   <xsl:copy>
