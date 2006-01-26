@@ -94,8 +94,7 @@ xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
             <tr>
               <td />
               <td>
-                <input i18n:attr="value" type="submit"
-                value="Login" />
+                <input i18n:attr="value" type="submit" value="Login" name="submit"/>
               </td>
             </tr>
           </table>
