@@ -43,6 +43,7 @@ public class Overview extends SiteUsecase {
     protected static final String STATE = "state";
     protected static final String ISLIVE = "isLive";
     protected static final String VISIBLE_IN_NAVIGATION = "visibleInNav";
+    protected static final String WORKFLOW_VARIABLE_ISLIVE = "is_live";
 
     /**
      * Ctor.
@@ -74,7 +75,7 @@ public class Overview extends SiteUsecase {
             setParameter(LASTMODIFIED, lastModified);
             setParameter(RESOURCE_TYPE, doc.getResourceType());
             boolean visible = SiteUtil.isVisibleInNavigation(this.manager, doc);
-            setParameter(VISIBLE_IN_NAVIGATION, Boolean.toString(visible));
+            setParameter(VISIBLE_IN_NAVIGATION, Boolean.valueOf(visible));
 
             DocumentWorkflowable workflowable = new DocumentWorkflowable(this.manager,
                     getSession(),
@@ -88,13 +89,13 @@ public class Overview extends SiteUsecase {
                 Boolean isLive = null;
                 if (latestVersion != null) {
                     setParameter(STATE, latestVersion.getState());
-                    if (Arrays.asList(variableNames).contains(ISLIVE)) {
-                        isLive = Boolean.valueOf(latestVersion.getValue(ISLIVE));
+                    if (Arrays.asList(variableNames).contains(WORKFLOW_VARIABLE_ISLIVE)) {
+                        isLive = Boolean.valueOf(latestVersion.getValue(WORKFLOW_VARIABLE_ISLIVE));
                     }
                 } else {
                     setParameter(STATE, workflow.getInitialState());
-                    if (Arrays.asList(variableNames).contains(ISLIVE)) {
-                        isLive = Boolean.valueOf(workflow.getInitialValue(ISLIVE));
+                    if (Arrays.asList(variableNames).contains(WORKFLOW_VARIABLE_ISLIVE)) {
+                        isLive = Boolean.valueOf(workflow.getInitialValue(WORKFLOW_VARIABLE_ISLIVE));
                     }
                 }
                 setParameter(ISLIVE, isLive);
