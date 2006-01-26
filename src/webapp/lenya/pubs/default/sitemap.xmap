@@ -165,7 +165,7 @@
         <map:act type="language-exists">
 
           <map:act type="set-header">
-            <map:parameter name="Last-Modified" value="{page-envelope:document-lastmodified}" />
+            <map:parameter name="Last-Modified" value="{date-iso8601-rfc822:{page-envelope:document-lastmodified}}" />
 
             <!-- HEAD request shouldn't have all the xslt overhead -->
             <map:select type="request-method">

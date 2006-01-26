@@ -122,6 +122,11 @@
       <format>yyyy-MM-dd HH:mm:ss Z</format>
     </component-instance>
     
+    <component-instance name="date-iso8601-rfc822" logger="core.modules.input" class="org.apache.lenya.cms.cocoon.components.modules.input.DateConverterModule">
+      <src-pattern>yyyy-MM-dd HH:mm:ss Z</src-pattern>
+      <pattern>EEE, dd MMM yyyy HH:mm:ss Z</pattern>
+    </component-instance>
+    
   <component-instance name="proxy-url" logger="sitemap.modules.input.proxy-url"
       class="org.apache.lenya.cms.cocoon.components.modules.input.ProxyUrlModule"/>
 

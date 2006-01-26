@@ -131,7 +131,7 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
     /**
      * <code>DATE_FORMAT</code> The date format
      */
-    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
+    public static final String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss Z";
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration,

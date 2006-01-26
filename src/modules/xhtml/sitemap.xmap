@@ -53,7 +53,7 @@
       <!-- webdav GET matcher -->
       <map:match pattern="davget.xml">
         <map:act type="set-header">
-          <map:parameter name="Last-Modified" value="{page-envelope:document-lastmodified}" />
+          <map:parameter name="Last-Modified" value="{date-iso8601-rfc822:{page-envelope:document-lastmodified}}" />
           <map:generate src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-id}"/>
           <map:serialize type="xml-get"/>
         </map:act>
