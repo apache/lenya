@@ -39,23 +39,6 @@
   </xsl:template>
   
   
-  <xsl:template match="cocoon">
-    <xsl:copy>
-      <xsl:copy-of select="@*"/>
-      
-      <xsl:apply-templates select="*"/>
-      
-      <resource-types/>
-      <usecases/>
-      <template-instantiators/>
-      <gui-manager/>
-      
-    </xsl:copy>
-    
-  </xsl:template>
-  
-  
-  
   <xsl:template match="@*|node()">
     <xsl:copy>
       <xsl:apply-templates select="@*|node()"/>

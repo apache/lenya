@@ -156,7 +156,12 @@
       toFile="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"/>
     <xpatch file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
       srcdir="${build.patch}/cocoon-xconf" 
+      includes="prepare/*.xconf"
+      addComments="true"/>
+    <xpatch file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
+      srcdir="${build.patch}/cocoon-xconf" 
       includes="**/*.xconf"
+      excludes="prepare/*.xconf"
       addComments="true"/>
     <checksum
       file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
