@@ -37,10 +37,14 @@ import org.apache.lenya.cms.repo.Document;
 import org.apache.lenya.cms.repo.RepositoryException;
 
 /**
- * Repository source.
+ * This source provides read-only access to a document's content.
  */
 public class ContentSource extends AbstractSource implements LogEnabled {
 
+    /**
+     * @param document The document.
+     * @param logger The logger.
+     */
     public ContentSource(Document document, Logger logger) {
         ContainerUtil.enableLogging(this, logger);
         this.document = document;
@@ -156,7 +160,7 @@ public class ContentSource extends AbstractSource implements LogEnabled {
     }
 
     /**
-     * 
+     * @return The parent.
      */
     public Source getParent() {
         getLogger().warn("getParent() not implemented yet!");
@@ -171,7 +175,7 @@ public class ContentSource extends AbstractSource implements LogEnabled {
     }
 
     /**
-     * 
+     * @return The name of the source.
      */
     public String getName() {
         // Quick and dirty
