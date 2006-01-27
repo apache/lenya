@@ -20,8 +20,6 @@ package org.apache.lenya.cms.cocoon.source;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.net.MalformedURLException;
 
 import javax.xml.parsers.ParserConfigurationException;
