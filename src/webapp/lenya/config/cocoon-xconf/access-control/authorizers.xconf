@@ -25,9 +25,6 @@
       <component-instance name="policy"
         class="org.apache.lenya.ac.impl.PolicyAuthorizer"
         logger="lenya.ac.authorizer.policy"/>
-      <component-instance name="workflow"
-        class="org.apache.lenya.cms.ac.workflow.WorkflowAuthorizer"
-        logger="lenya.ac.authorizer.workflow"/>
       <component-instance name="usecase"
         class="org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer"
         logger="lenya.ac.authorizer.usecase"/>

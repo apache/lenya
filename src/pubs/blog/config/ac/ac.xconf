@@ -33,6 +33,4 @@
   <authorizer type="usecase">
         <parameter name="configuration" value="context:///lenya/pubs/blog/config/ac/usecase-policies.xml"/>
   </authorizer>
-
-  <authorizer type="workflow"/>
 </access-controller>
