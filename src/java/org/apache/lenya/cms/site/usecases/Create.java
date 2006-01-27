@@ -108,10 +108,12 @@ public abstract class Create extends AbstractUsecase {
             addErrorMessage("The navigation title is required.");
         }
         
-        List samples = (List) getParameter(SAMPLES);
-        String sample = getParameterAsString(SAMPLE);
-        if (samples != null && samples.size() > 1 && (sample == null || sample.equals(""))) {
-            addErrorMessage("Please select a page layout.");
+        if (getInitialDocument() == null) {
+            List samples = (List) getParameter(SAMPLES);
+            String sample = getParameterAsString(SAMPLE);
+            if (samples != null && samples.size() > 1 && (sample == null || sample.equals(""))) {
+                addErrorMessage("Please select a page layout.");
+            }
         }
         
         String doctypeName = getDocumentTypeName();
