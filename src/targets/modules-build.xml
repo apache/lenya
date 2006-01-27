@@ -29,7 +29,7 @@
   <target name="copy-modules">
     <copyPubs todir="${build.webapp}/lenya/modules"
               pubsrootdirs="${modules.root.dirs}"
-              excludes="CVS,.svn,cocoon-xconf"/>
+              excludes="CVS,.svn,cocoon-xconf,lenya-roles"/>
     <bulkCopy 
       sourcedirs="${modules.root.dirs}" 
       todir="${build.patch}/cocoon-xconf/modules"
@@ -37,31 +37,17 @@
       <fileset includes="config/cocoon-xconf/**.xconf"/>
       <fileset includes="*/config/cocoon-xconf/**.xconf"/>
     </bulkCopy>
-  </target>
-  
-
-  <target name="modules-patch-lenya-roles">
-    <copy file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles"
-      toFile="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles.ant_patch"/>
-    <xpatch file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles.ant_patch"
-      srcdir="${build.modules}"
-      includes="*/config/*.xroles"
-      addComments="true"/>
-    <checksum
-      file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles.ant_patch"
-      property="lenya.roles.md5"/>
-    <checksum
-      file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles"
-      property="${lenya.roles.md5}"
-      verifyProperty="lenya.roles.isEqual"/>
-    <condition property="lenya.roles.copy">
-      <isfalse value="${lenya.roles.isEqual}"/>
-    </condition>
-    <antcall target="copy-lenya.roles"/>
+    <bulkCopy 
+      sourcedirs="${modules.root.dirs}" 
+      todir="${build.patch}/lenya-roles/modules"
+      flatten="false">
+      <fileset includes="config/lenya-roles/**.xroles"/>
+      <fileset includes="*/config/lenya-roles/**.xroles"/>
+    </bulkCopy>
   </target>
   
   <target name="deploy-modules"
-          depends="init, copy-modules, modules-patch-lenya-roles">
+          depends="init, copy-modules">
   </target>
 
   <!-- ================================================ -->

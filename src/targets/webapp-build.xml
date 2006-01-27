@@ -45,7 +45,9 @@
     </copy>
 
     <!-- Copy publications -->
-    <copyPubs todir="${build.webapp}/lenya/pubs" pubsrootdirs="${pubs.root.dirs}" excludes="CVS,.svn,cocoon-xconf"/>
+    <copyPubs todir="${build.webapp}/lenya/pubs"
+      pubsrootdirs="${pubs.root.dirs}"
+      excludes="CVS,.svn,cocoon-xconf,lenya-roles"/>
     
     <bulkCopy 
       sourcedirs="${pubs.root.dirs}" 
@@ -53,6 +55,14 @@
       flatten="false">
       <fileset includes="config/cocoon-xconf/**.xconf"/>
       <fileset includes="*/config/cocoon-xconf/**.xconf"/>
+    </bulkCopy>
+    
+    <bulkCopy 
+      sourcedirs="${pubs.root.dirs}" 
+      todir="${build.patch}/lenya-roles/pubs"
+      flatten="false">
+      <fileset includes="config/lenya-roles/**.xroles"/>
+      <fileset includes="*/config/lenya-roles/**.xroles"/>
     </bulkCopy>
     
     <!--  copy properties, xml configuration files and roles -->
@@ -75,26 +85,6 @@
       </fileset>
     </copy>
     
-    
-    <!-- Patch lenya.roles -->
-    <copy file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles"
-      toFile="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles.ant_patch"/>
-    <xpatch file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles.ant_patch"
-      srcdir="${build.webapp}/lenya/pubs" 
-      includes="*/config/*.xroles"
-      addComments="true"/>
-    <checksum
-      file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles.ant_patch"
-      property="lenya.roles.md5"/>
-    <checksum
-      file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles"
-      property="${lenya.roles.md5}"
-      verifyProperty="lenya.roles.isEqual"/>
-    <condition property="lenya.roles.copy">
-      <isfalse value="${lenya.roles.isEqual}"/>
-    </condition>
-    <antcall target="copy-lenya.roles"/>
-    <delete file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles.ant_patch" failonerror="false"/>
     
     <!-- Patch web.xml -->
     <!--
@@ -162,6 +152,11 @@
       excludes="prepare/*.xconf"
       addComments="true"/>
     
+    <!-- Patch lenya.roles -->
+    <xpatch file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles"
+      srcdir="${build.patch}/lenya-roles"
+      includes="**/*.xroles"
+      addComments="true"/>
     
     <!-- Copy database files to ${build.webapp}/WEB-INF/db -->
     <copy todir="${build.webapp}/WEB-INF/db">
