@@ -76,7 +76,6 @@
         <exclude name="legal/**"/>
         <exclude name="WEB-INF/db/**"/>
         <exclude name="WEB-INF/xconf/**"/>
-        <exclude name="WEB-INF/cocoon.xconf"/>
         <exclude name="**/javac.jar"/>
       </fileset>
     </copy>
@@ -85,16 +84,6 @@
     <xpatch file="${build.webapp}/sitemap.xmap" 
             includes="src/confpatch/*.xmap"/> 
 
-    <!-- patch cocoon.xconf -->
-  	<xslt
-        in="${cocoon.webapp.dir}/WEB-INF/cocoon.xconf"
-        out="${build.webapp}/WEB-INF/cocoon.xconf"
-        style="${src.webapp.dir}/WEB-INF/cocoon-xconf.xsl"
-        >
-      <param name="xopus-context" expression="${xopus.context}"/>
-      <outputproperty name="indent" value="yes"/>
-    </xslt>
-    
     <!-- patch logkit.xconf -->
     <xpatch file="${build.webapp}/WEB-INF/logkit.xconf"
         includes="src/confpatch/logkit-*.xconf"/> 

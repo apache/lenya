@@ -152,29 +152,15 @@
     <antcall target="deploy-modules"/>
 
     <!-- Patch cocoon.xconf -->
-    <copy file="${build.webapp}/WEB-INF/cocoon.xconf"
-      toFile="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"/>
-    <xpatch file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
+    <xpatch file="${build.webapp}/WEB-INF/cocoon.xconf"
       srcdir="${build.patch}/cocoon-xconf" 
       includes="prepare/*.xconf"
       addComments="true"/>
-    <xpatch file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
+    <xpatch file="${build.webapp}/WEB-INF/cocoon.xconf"
       srcdir="${build.patch}/cocoon-xconf" 
       includes="**/*.xconf"
       excludes="prepare/*.xconf"
       addComments="true"/>
-    <checksum
-      file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
-      property="cocoon.xconf.md5"/>
-    <checksum
-      file="${build.webapp}/WEB-INF/cocoon.xconf"
-      property="${cocoon.xconf.md5}"
-      verifyProperty="cocoon.xconf.isEqual"/>
-    <condition property="cocoon.xconf.copy">
-      <isfalse value="${cocoon.xconf.isEqual}"/>
-    </condition>
-    <antcall target="copy-cocoon.xconf"/>
-    <delete file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch" failonerror="false"/>
     
     
     <!-- Copy database files to ${build.webapp}/WEB-INF/db -->
@@ -203,14 +189,6 @@
     </condition>
     <antcall target="successfully-built-message-jetty"/>
 
-  </target>
-
-  <!-- Copy cocoon.xconf -->
-  <target name="copy-cocoon.xconf" if="cocoon.xconf.copy">
-    <copy
-       file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
-       toFile="${build.webapp}/WEB-INF/cocoon.xconf"
-       overwrite="true"/>
   </target>
 
   <!-- Copy lenya.roles -->

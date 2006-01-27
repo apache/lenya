@@ -17,13 +17,13 @@
 
 <!-- $Id: usecases-workflow-deactivate.xconf 348547 2005-11-23 20:13:01Z chestnut $ -->
 <!--
-    This file defines the publication specific use-cases
+    This file defines the Xopus context path.
 -->
 
   <xconf xpath="/cocoon/input-modules" unless="/cocoon/input-modules/component-instance[@name = 'xopus']">
     <component-instance name="xopus" class="org.apache.cocoon.components.modules.input.DefaultsModule">
       <values>
-        <context><xsl:value-of select="$xopus-context"/></context>
+        <context>Xopus2.1.64</context>
       </values>
     </component-instance>
   </xconf>

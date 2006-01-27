@@ -39,25 +39,6 @@
     </bulkCopy>
   </target>
   
-  <target name="modules-patch-cocoon-xconf">
-    <copy file="${build.webapp}/WEB-INF/cocoon.xconf"
-          toFile="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"/>
-    <xpatch file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
-            srcdir="${build.modules}"
-            includes="*/config/cocoon-xconf/*.xconf"
-            addComments="true"/>
-    <checksum
-        file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
-        property="cocoon.xconf.md5"/>
-    <checksum
-        file="${build.webapp}/WEB-INF/cocoon.xconf"
-        property="${cocoon.xconf.md5}"
-        verifyProperty="cocoon.xconf.isEqual"/>
-    <condition property="cocoon.xconf.copy">
-      <isfalse value="${cocoon.xconf.isEqual}"/>
-    </condition>
-    <antcall target="copy-cocoon.xconf"/>
-  </target>
 
   <target name="modules-patch-lenya-roles">
     <copy file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles"
@@ -80,7 +61,7 @@
   </target>
   
   <target name="deploy-modules"
-          depends="init, copy-modules, modules-patch-cocoon-xconf, modules-patch-lenya-roles">
+          depends="init, copy-modules, modules-patch-lenya-roles">
   </target>
 
   <!-- ================================================ -->
