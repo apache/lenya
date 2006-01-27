@@ -25,6 +25,7 @@ import java.util.Iterator;
 import java.text.SimpleDateFormat;
 import java.lang.Boolean;
 
+import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 
@@ -37,6 +38,7 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.impl.FileSource;
 import org.apache.lenya.cms.publication.Publication;
@@ -44,6 +46,7 @@ import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 import org.apache.cocoon.components.search.Index;
 import org.apache.cocoon.components.search.IndexException;
@@ -67,9 +70,12 @@ public class Instantiator extends AbstractLogEnabled implements
         org.apache.lenya.cms.publication.templating.Instantiator, Serviceable {
 
     protected static final String[] sourcesToCopy = { "publication.xml",
-            "config/publication.xconf", "config/index_manager_index.xconf",
-            "config/index_manager.xconf", "config/ac/passwd/", "config/ac/ac.xconf",
+            "config/publication.xconf", "config/ac/passwd/", "config/ac/ac.xconf",
             "config/ac/policies/", "config/ac/usecase-policies.xml", "config/workflow/workflow.xml" };
+
+    /*
+     * "config/cocoon-xconf/index_manager_index.xconf", "config/cocoon-xconf/index_manager.xconf",
+     */
 
     /**
      * @see org.apache.lenya.cms.publication.templating.Instantiator#instantiate(org.apache.lenya.cms.publication.Publication,
@@ -80,12 +86,9 @@ public class Instantiator extends AbstractLogEnabled implements
 
         SourceResolver resolver = null;
         Source publicationsSource = null;
-        ModifiableSource metaSource = null;
-        ModifiableSource configSource = null;
-        ModifiableSource indexSource = null;
-        ModifiableSource indexerSource = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+
             publicationsSource = resolver.resolveURI("context://"
                     + Publication.PUBLICATION_PREFIX_URI);
             String publicationsUri = publicationsSource.getURI();
@@ -100,6 +103,29 @@ public class Instantiator extends AbstractLogEnabled implements
                 }
             }
 
+            updateMetaData(resolver, newPublicationId, name, publicationsUri);
+
+            // configureSearchIndex(resolver, template, newPublicationId, publicationsUri);
+
+            updateConfiguration(resolver, template, newPublicationId, publicationsUri);
+
+        } finally {
+            if (resolver != null) {
+                this.manager.release(resolver);
+                if (publicationsSource != null) {
+                    resolver.release(publicationsSource);
+                }
+            }
+        }
+
+    }
+
+    protected void updateMetaData(SourceResolver resolver, String newPublicationId, String name,
+            String publicationsUri) throws MalformedURLException, IOException,
+            ParserConfigurationException, SAXException, SourceNotFoundException,
+            TransformerConfigurationException, TransformerException {
+        ModifiableSource metaSource = null;
+        try {
             metaSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
                     + newPublicationId + "/publication.xml");
             Document metaDoc = DocumentHelper.readDocument(metaSource.getInputStream());
@@ -110,6 +136,68 @@ public class Instantiator extends AbstractLogEnabled implements
             DocumentHelper.setSimpleElementText(nameElement, name);
 
             save(metaDoc, metaSource);
+        } finally {
+            if (resolver != null) {
+                if (metaSource != null) {
+                    resolver.release(metaSource);
+                }
+            }
+        }
+    }
+
+    protected void updateConfiguration(SourceResolver resolver, Publication template,
+            String newPublicationId, String publicationsUri) throws MalformedURLException,
+            IOException, SAXException, ConfigurationException, SourceNotFoundException {
+        ModifiableSource configSource = null;
+        try {
+
+            configSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
+                    + newPublicationId + "/config/publication.xconf");
+            DefaultConfiguration config = (DefaultConfiguration) new DefaultConfigurationBuilder().build(configSource.getInputStream());
+            DefaultConfiguration templatesConfig = (DefaultConfiguration) config.getChild("templates",
+                    false);
+            if (templatesConfig == null) {
+                templatesConfig = new DefaultConfiguration("templates");
+                config.addChild(templatesConfig);
+            } else {
+                Configuration[] templateConfigs = templatesConfig.getChildren("template");
+                for (int i = 0; i < templateConfigs.length; i++) {
+                    templatesConfig.removeChild(templateConfigs[i]);
+                }
+            }
+            DefaultConfiguration templateConfig = new DefaultConfiguration("template");
+            templateConfig.setAttribute("id", template.getId());
+            templatesConfig.addChild(templateConfig);
+            OutputStream oStream = configSource.getOutputStream();
+            new DefaultConfigurationSerializer().serialize(oStream, config);
+            if (oStream != null) {
+                oStream.flush();
+                try {
+                    oStream.close();
+                } catch (Throwable t) {
+                    if (getLogger().isDebugEnabled()) {
+                        getLogger().debug("Exception closing output stream: ", t);
+                    }
+                    throw new RuntimeException("Could not write document: ", t);
+                }
+            }
+        } finally {
+            if (resolver != null) {
+                if (configSource != null) {
+                    resolver.release(configSource);
+                }
+            }
+        }
+    }
+
+    protected void configureSearchIndex(SourceResolver resolver, Publication template,
+            String newPublicationId, String publicationsUri) throws MalformedURLException,
+            IOException, ParserConfigurationException, SAXException, SourceNotFoundException,
+            TransformerConfigurationException, TransformerException, ServiceException,
+            ConfigurationException {
+        ModifiableSource indexSource = null;
+        ModifiableSource indexerSource = null;
+        try {
 
             // RGE: Soc addition
             // First, patch the xconf patchfile with the new publication name
@@ -118,12 +206,12 @@ public class Instantiator extends AbstractLogEnabled implements
             indexDir = indexDir.substring(5);
 
             indexSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
-                    + newPublicationId + "/config/index_manager_index.xconf");
+                    + newPublicationId + "/config/cocoon-xconf/index_manager_index.xconf");
             Document indexDoc = DocumentHelper.readDocument(indexSource.getInputStream());
             NamespaceHelper indexHelper = new NamespaceHelper(null, "xconf", indexDoc);
 
             indexerSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
-                    + newPublicationId + "/config/index_manager.xconf");
+                    + newPublicationId + "/config/cocoon-xconf/index_manager.xconf");
             Document indexerDoc = DocumentHelper.readDocument(indexerSource.getInputStream());
             NamespaceHelper indexerHelper = new NamespaceHelper(null, "xconf", indexerDoc);
 
@@ -207,48 +295,15 @@ public class Instantiator extends AbstractLogEnabled implements
 
             // RGE: End Soc addition
 
-            configSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
-                    + newPublicationId + "/config/publication.xconf");
-            DefaultConfiguration config = (DefaultConfiguration) new DefaultConfigurationBuilder().build(configSource.getInputStream());
-            DefaultConfiguration templatesConfig = (DefaultConfiguration) config.getChild("templates",
-                    false);
-            if (templatesConfig == null) {
-                templatesConfig = new DefaultConfiguration("templates");
-                config.addChild(templatesConfig);
-            }
-            DefaultConfiguration templateConfig = new DefaultConfiguration("template");
-            templateConfig.setAttribute("id", template.getId());
-            templatesConfig.addChild(templateConfig);
-            OutputStream oStream = configSource.getOutputStream();
-            new DefaultConfigurationSerializer().serialize(oStream, config);
-            if (oStream != null) {
-                oStream.flush();
-                try {
-                    oStream.close();
-                } catch (Throwable t) {
-                    if (getLogger().isDebugEnabled()) {
-                        getLogger().debug("Exception closing output stream: ", t);
-                    }
-                    throw new RuntimeException("Could not write document: ", t);
-                }
-            }
-
         } finally {
             if (resolver != null) {
                 this.manager.release(resolver);
-                if (publicationsSource != null) {
-                    resolver.release(publicationsSource);
-                }
-                if (metaSource != null) {
-                    resolver.release(metaSource);
-                }
-                if (configSource != null) {
-                    resolver.release(configSource);
-                }
                 if (indexSource != null) {
                     resolver.release(indexSource);
                 }
-
+                if (indexerSource != null) {
+                    resolver.release(indexerSource);
+                }
             }
         }
     }
