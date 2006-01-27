@@ -24,36 +24,84 @@
 
         <map:match type="regexp" pattern="(.*\.)(jpg|JPG|Jpg|jpeg|Jpeg|JPEG)$"> 
           <map:generate src="dummy.xml"/>
-          <map:transform src="xslt/scale.xsl">
-            <map:parameter name="url" value="context://lenya/pubs/{../1}/resources/{../2}/{../3}.{../4}"/>
-            <map:parameter name="width" value="{request-param:width}"/>
-            <map:parameter name="height" value="{request-param:height}"/>
-          </map:transform>         
+          <map:act type="resource-exists-enhanced">
+            <map:parameter name="url" value="fallback://resources/{../2}/{../3}.{../4}"/>
+            <map:parameter name="type" value="file"/>
+            <map:transform src="xslt/scale.xsl">
+              <map:parameter name="url" value="fallback://resources/{../../2}/{../../3}.{../../4}"/>
+              <map:parameter name="width" value="{request-param:width}"/>
+              <map:parameter name="height" value="{request-param:height}"/>
+            </map:transform>
+          </map:act>
+          <map:act type="resource-exists-enhanced">
+            <map:parameter name="url" value="fallback://resources/shared/{../3}.{../4}"/>
+            <map:parameter name="type" value="file"/>
+            <map:transform src="xslt/scale.xsl">
+              <map:parameter name="url" value="fallback://resources/shared/{../../3}.{../../4}"/>
+              <map:parameter name="width" value="{request-param:width}"/>
+              <map:parameter name="height" value="{request-param:height}"/>
+            </map:transform>
+          </map:act>         
           <map:serialize type="svg2jpeg"/>
         </map:match> 
 
         <map:match type="regexp" pattern="(.*\.)(png|PNG|Png)$"> 
           <map:generate src="dummy.xml"/>
-          <map:transform src="xslt/scale.xsl">
-            <map:parameter name="url" value="context://lenya/pubs/{../1}/resources/{../2}/{../3}.{../4}"/>
-            <map:parameter name="width" value="{request-param:width}"/>
-            <map:parameter name="height" value="{request-param:height}"/>
-          </map:transform>         
+          <map:act type="resource-exists-enhanced">
+            <map:parameter name="url" value="fallback://resources/{../2}/{../3}.{../4}"/>
+            <map:parameter name="type" value="file"/>
+            <map:transform src="xslt/scale.xsl">
+              <map:parameter name="url" value="fallback://resources/{../../2}/{../../3}.{../../4}"/>
+              <map:parameter name="width" value="{request-param:width}"/>
+              <map:parameter name="height" value="{request-param:height}"/>
+            </map:transform>
+          </map:act>
+          <map:act type="resource-exists-enhanced">
+            <map:parameter name="url" value="fallback://resources/shared/{../3}.{../4}"/>
+            <map:parameter name="type" value="file"/>
+            <map:transform src="xslt/scale.xsl">
+              <map:parameter name="url" value="fallback://resources/shared/{../../3}.{../../4}"/>
+              <map:parameter name="width" value="{request-param:width}"/>
+              <map:parameter name="height" value="{request-param:height}"/>
+            </map:transform>
+          </map:act>           
           <map:serialize type="svg2png"/>
         </map:match>
 
         <map:match type="regexp" pattern="(.*\.)(tif|TIF|Tif)$"> 
           <map:generate src="dummy.xml"/>
-          <map:transform src="xslt/scale.xsl">
-            <map:parameter name="url" value="context://lenya/pubs/{../1}/resources/{../2}/{../3}.{../4}"/>
-            <map:parameter name="width" value="{request-param:width}"/>
-            <map:parameter name="height" value="{request-param:height}"/>
-          </map:transform>         
+          <map:act type="resource-exists-enhanced">
+            <map:parameter name="url" value="fallback://resources/{../2}/{../3}.{../4}"/>
+            <map:parameter name="type" value="file"/>
+            <map:transform src="xslt/scale.xsl">
+              <map:parameter name="url" value="fallback://resources/{../../2}/{../../3}.{../../4}"/>
+              <map:parameter name="width" value="{request-param:width}"/>
+              <map:parameter name="height" value="{request-param:height}"/>
+            </map:transform>
+          </map:act>
+          <map:act type="resource-exists-enhanced">
+            <map:parameter name="url" value="fallback://resources/shared/{../3}.{../4}"/>
+            <map:parameter name="type" value="file"/>
+            <map:transform src="xslt/scale.xsl">
+              <map:parameter name="url" value="fallback://resources/shared/{../../3}.{../../4}"/>
+              <map:parameter name="width" value="{request-param:width}"/>
+              <map:parameter name="height" value="{request-param:height}"/>
+            </map:transform>
+          </map:act>              
           <map:serialize type="svg2tiff"/>
         </map:match> 
 
         <map:match type="regexp" pattern="(.*\.)(gif|GIF|Gif)$"> 
-           <map:read src="fallback://lenya/pubs/{../1}/resources/{../2}/{../3}.{../4}" mime-type="image/gif" />
+          <map:act type="resource-exists-enhanced">
+            <map:parameter name="url" value="fallback://resources/{../2}/{../3}.{../4}"/>
+            <map:parameter name="type" value="file"/>
+            <map:read src="fallback://resources/{../../2}/{../../3}.{../../4}" mime-type="image/gif" />
+          </map:act>
+          <map:act type="resource-exists-enhanced">
+            <map:parameter name="url" value="fallback://resources/shared/{../3}.{../4}"/>
+            <map:parameter name="type" value="file"/>
+            <map:read src="fallback://resources/shared/{../../3}.{../../4}" mime-type="image/gif" />
+          </map:act>        
         </map:match>
       </map:match>
 
