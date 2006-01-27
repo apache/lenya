@@ -22,24 +22,6 @@
 
 <xsl:param name="xopus-context"/>
 
-<xsl:template match="markup-languages/xsp-language/target-language[@name = 'java']">
-  <xsl:copy>
-    <xsl:copy-of select="@*"/>
-    <xsl:apply-templates/>
-    
-    <xsl:comment>Lenya Logicsheets</xsl:comment>
-        
-    <builtin-logicsheet>
-      <parameter name="prefix" value="xsp-scheduler"/>
-      <parameter name="uri" value="http://apache.org/cocoon/lenya/xsp/scheduler/1.0"/>
-      <parameter name="href" value="resource://org/apache/lenya/cms/cocoon/logicsheets/scheduler.xsl"/>
-    </builtin-logicsheet>
-    
-    <xsl:comment>/ Lenya Logicsheets</xsl:comment>
-    
-  </xsl:copy>
-</xsl:template>
-
 
 <xsl:template match="input-modules">
      
