@@ -25,75 +25,81 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
-
-public class LinkSerializer 
-extends ExtendedXLinkPipe 
-implements Serializer {
-
-private PrintStream out;
-
 /**
- * Set the {@link OutputStream} where the requested resource should
- * be serialized.
+ * Link serializer.
+ * TODO: add meaningful javadocs
  */
-public void setOutputStream(OutputStream out) throws IOException {
-    this.out = new PrintStream(out);
-}
+public class LinkSerializer extends ExtendedXLinkPipe implements Serializer {
 
-/**
- * Get the mime-type of the output of this <code>Component</code>.
- */
-public String getMimeType() {
-    return Constants.LINK_CONTENT_TYPE;
-}
+    private PrintStream out;
 
-public void simpleLink(String href, String role, String arcrole, String title, String show, String actuate, String uri, String name, String raw, Attributes attr)
-throws SAXException {
-    print(href);
-    super.simpleLink(href, role, arcrole, title, show, actuate, uri, name, raw, attr);
-}
+    /**
+     * Set the {@link OutputStream} where the requested resource should be serialized.
+     */
+    public void setOutputStream(OutputStream out) throws IOException {
+        this.out = new PrintStream(out);
+    }
 
-public void startLocator(String href, String role, String title, String label, String uri, String name, String raw, Attributes attr)
-throws SAXException {
-    if (traversable(href)) {
+    /**
+     * Get the mime-type of the output of this <code>Component</code>.
+     */
+    public String getMimeType() {
+        return Constants.LINK_CONTENT_TYPE;
+    }
+
+    public void simpleLink(String href, String role, String arcrole, String title, String show,
+            String actuate, String uri, String name, String raw, Attributes attr)
+            throws SAXException {
         print(href);
+        super.simpleLink(href, role, arcrole, title, show, actuate, uri, name, raw, attr);
     }
-    super.startLocator(href, role, title, label, uri, name, raw, attr);
-}
 
-private boolean traversable(String href) {
-    if (href.length() == 0) return false;
-    if (href.charAt(0) == '#') return false;
-    if (href.indexOf("://") != -1) return false;
-    if (href.startsWith("mailto:")) return false;
-    if (href.startsWith("news:")) return false;
-    if (href.startsWith("javascript:")) return false;
-    return true;
-}
+    public void startLocator(String href, String role, String title, String label, String uri,
+            String name, String raw, Attributes attr) throws SAXException {
+        if (traversable(href)) {
+            print(href);
+        }
+        super.startLocator(href, role, title, label, uri, name, raw, attr);
+    }
 
-private void print(String href) {
-    int ankerPos = href.indexOf('#');
-    if (ankerPos == -1) {
-        // TODO: Xalan encodes international characters into URL encoding
-        out.println(href);
-    } else {
-        out.println(href.substring(0, ankerPos));
+    private boolean traversable(String href) {
+        if (href.length() == 0)
+            return false;
+        if (href.charAt(0) == '#')
+            return false;
+        if (href.indexOf("://") != -1)
+            return false;
+        if (href.startsWith("mailto:"))
+            return false;
+        if (href.startsWith("news:"))
+            return false;
+        if (href.startsWith("javascript:"))
+            return false;
+        return true;
+    }
+
+    private void print(String href) {
+        int ankerPos = href.indexOf('#');
+        if (ankerPos == -1) {
+            // TODO: Xalan encodes international characters into URL encoding
+            out.println(href);
+        } else {
+            out.println(href.substring(0, ankerPos));
+        }
+    }
+
+    /**
+     * Test if the component wants to set the content length
+     */
+    public boolean shouldSetContentLength() {
+        return false;
+    }
+
+    /**
+     * Recyclable
+     */
+    public void recycle() {
+        super.recycle();
+        this.out = null;
     }
 }
-
-/**
- * Test if the component wants to set the content length
- */
-public boolean shouldSetContentLength() {
-    return false;
-}
-
-/**
- * Recyclable
- */
-public void recycle() {
-    super.recycle();
-    this.out = null;
-}
-}
-
