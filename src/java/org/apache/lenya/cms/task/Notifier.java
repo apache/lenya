@@ -29,6 +29,7 @@ import org.apache.log4j.Logger;
 
 /**
  * Task Notification
+ * @deprecated Use the usecase framework instead.
  */
 public class Notifier extends ParameterWrapper {
 
@@ -74,22 +75,17 @@ public class Notifier extends ParameterWrapper {
             log.info("Not sending notification: no parameters provided.");
         } else if ("".equals(get(PARAMETER_TO).trim())) {
             log.info("Not sending notification: empty notification.tolist parameter.");
-        }
-        else {
+        } else {
             log.info("Sending notification");
-            
+
             Task task = this.taskManager.getTask(TaskManager.ANT_TASK);
 
             Parameters params = new Parameters();
 
             params.setParameter(AntTask.TARGET, TARGET);
-            
-            String[] keys =
-                {
-                    Task.PARAMETER_PUBLICATION_ID,
-                    Task.PARAMETER_CONTEXT_PREFIX,
-                    Task.PARAMETER_SERVER_PORT,
-                    Task.PARAMETER_SERVER_URI,
+
+            String[] keys = { Task.PARAMETER_PUBLICATION_ID, Task.PARAMETER_CONTEXT_PREFIX,
+                    Task.PARAMETER_SERVER_PORT, Task.PARAMETER_SERVER_URI,
                     Task.PARAMETER_SERVLET_CONTEXT };
 
             for (int i = 0; i < keys.length; i++) {
@@ -102,19 +98,20 @@ public class Notifier extends ParameterWrapper {
             propertiesMap.putAll(mailMap.getPrefixedMap());
 
             Map prefixMap = propertiesMap.getPrefixedMap();
-			String		key;
-			String		value;
-			Map.Entry	entry;
+            String key;
+            String value;
+            Map.Entry entry;
 
-			for (Iterator iter = prefixMap.entrySet().iterator(); iter.hasNext();) {
-				entry 	= (Map.Entry)iter.next();
-				key 	= (String)entry.getKey();
-				value 	= (String)entry.getValue();
+            for (Iterator iter = prefixMap.entrySet().iterator(); iter.hasNext();) {
+                entry = (Map.Entry) iter.next();
+                key = (String) entry.getKey();
+                value = (String) entry.getValue();
                 String trimmedValue = value.replace((char) 160, ' ');
                 trimmedValue = trimmedValue.trim();
                 if (log.isDebugEnabled()) {
                     log.debug("Trimming value [" + value + "] to [" + trimmedValue + "]");
-                    log.debug("First character: [" + value.charAt(0) + "] = [" + (int) value.charAt(0) + "]");
+                    log.debug("First character: [" + value.charAt(0) + "] = ["
+                            + (int) value.charAt(0) + "]");
                 }
                 params.setParameter(key, trimmedValue);
             }
@@ -127,8 +124,7 @@ public class Notifier extends ParameterWrapper {
             log.info("    Executing notification target ...");
             try {
                 task.execute(taskParameters.get(Task.PARAMETER_SERVLET_CONTEXT));
-            }
-            catch (Exception e) {
+            } catch (Exception e) {
                 log.error("Error during notification: ", e);
             }
             log.info("    Notification target executed.");
@@ -154,7 +150,7 @@ public class Notifier extends ParameterWrapper {
      * @see org.apache.lenya.cms.task.ParameterWrapper#getRequiredKeys()
      */
     protected String[] getRequiredKeys() {
-        String[] requiredKeys = { };
+        String[] requiredKeys = {};
         return requiredKeys;
     }
 

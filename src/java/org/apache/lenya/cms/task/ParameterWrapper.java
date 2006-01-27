@@ -29,12 +29,13 @@ import org.apache.log4j.Logger;
 
 /**
  * Parameter wrapper class
+ * @deprecated Use the usecase framework instead.
  */
 public abstract class ParameterWrapper {
-    
+
     private static Logger log = Logger.getLogger(ParameterWrapper.class);
     private NamespaceMap parameters;
-    
+
     /**
      * Returns the un-prefixed parameters.
      * @return A map.
@@ -50,13 +51,13 @@ public abstract class ParameterWrapper {
     public ParameterWrapper(Map prefixedParameters) {
         this.parameters = new NamespaceMap(prefixedParameters, getPrefix());
     }
-    
+
     /**
      * Returns the namespace prefix.
      * @return A string.
      */
     public abstract String getPrefix();
-    
+
     /**
      * Adds a key-value pair. If the value is null, no pair is added.
      * @param key The key.
@@ -66,12 +67,11 @@ public abstract class ParameterWrapper {
         if (value != null) {
             log.debug("Setting parameter: [" + key + "] = [" + value + "]");
             this.parameters.put(key, value);
-        }
-        else {
+        } else {
             log.debug("Not setting parameter: [" + key + "] = [" + value + "]");
         }
     }
-    
+
     /**
      * Returns the value for a key.
      * @param key The key.
@@ -80,13 +80,13 @@ public abstract class ParameterWrapper {
     public String get(String key) {
         return (String) this.parameters.get(key);
     }
-    
+
     /**
      * Returns the required keys.
      * @return A string array.
      */
     protected abstract String[] getRequiredKeys();
-    
+
     /**
      * Checks if this parameters object contains all necessary parameters.
      * @return A boolean value.
@@ -120,7 +120,7 @@ public abstract class ParameterWrapper {
         }
         return (String[]) keyList.toArray(new String[keyList.size()]);
     }
-    
+
     /**
      * Parameterizes this wrapper with un-prefixed parameters.
      * @param _parameters A parameters object.
@@ -131,5 +131,5 @@ public abstract class ParameterWrapper {
             put(keys[i], _parameters.getParameter(keys[i], null));
         }
     }
-    
+
 }

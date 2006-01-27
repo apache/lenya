@@ -25,35 +25,36 @@ import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Element;
 
 /**
- * A TaskWrapper encapsulates all information that is needed to execute a
- * certain task, including e.g. workflow and notification parameters.
+ * A TaskWrapper encapsulates all information that is needed to execute a certain task, including
+ * e.g. workflow and notification parameters.
+ * @deprecated Use the usecase framework instead.
  */
 public interface TaskWrapper {
-    
+
     /**
      * Executes the task.
      * @throws ExecutionException when something went wrong.
      */
     void execute() throws ExecutionException;
-    
+
     /**
      * Saves the wrapper parameters to an XML element.
      * @param helper The namespace helper of the document.
      * @return An XML element.
      */
     Element save(NamespaceHelper helper);
-    
+
     /**
-     * @param helper The namespace helper of the document.
-     * Restores the wrapper parameters from an XML element.
+     * @param helper The namespace helper of the document. Restores the wrapper parameters from an
+     *            XML element.
      * @param element An XML element.
      */
     void restore(NamespaceHelper helper, Element element);
-    
+
     /**
      * Returns the task wrapper parameters.
      * @return A map.
      */
     Map getParameters();
-    
+
 }

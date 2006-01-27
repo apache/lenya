@@ -62,6 +62,11 @@ public class CIFSUser extends FileUser {
 
     /**
     * Create a CIFSUser
+     * @param configurationDirectory The configuration directory
+     * @param id The user ID.
+     * @param fullName The user's name.
+     * @param email The e-mail address.
+     * @param password The password.
     */
     public CIFSUser(File configurationDirectory, String id,
                     String fullName,String email,String password) {
@@ -131,6 +136,7 @@ public class CIFSUser extends FileUser {
 
     /**
      * Read the properties
+     * @param configurationDirectory The configuration directory.
      * @throws IOException if the properties cannot be found.
      */
     private void readProperties(File configurationDirectory) throws IOException {

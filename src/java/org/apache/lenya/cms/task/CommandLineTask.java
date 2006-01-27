@@ -21,10 +21,11 @@ package org.apache.lenya.cms.task;
 
 /**
  * A command line task
+ * @deprecated Use the usecase framework instead.
  */
 public class CommandLineTask extends AbstractTask {
 
-    /** 
+    /**
      * Execute the task. All parameters must have been set with parameterize().
      * @see org.apache.lenya.cms.task.Task#execute(java.lang.String)
      */
@@ -45,8 +46,8 @@ public class CommandLineTask extends AbstractTask {
             }
 
             if (baout.toString().length() > 0) {
-                throw new ExecutionException("%%%InputStream:S" + baout.toString() +
-                    "END:InputStream%%%");
+                throw new ExecutionException("%%%InputStream:S" + baout.toString()
+                        + "END:InputStream%%%");
             }
 
             java.io.InputStream in_e = process.getErrorStream();
@@ -57,8 +58,8 @@ public class CommandLineTask extends AbstractTask {
             }
 
             if (baout_e.toString().length() > 0) {
-                throw new ExecutionException("###ErrorStream:START" + baout_e.toString() +
-                    "END:ErrorStream###");
+                throw new ExecutionException("###ErrorStream:START" + baout_e.toString()
+                        + "END:ErrorStream###");
             }
         } catch (java.io.IOException e) {
             throw new ExecutionException(e);

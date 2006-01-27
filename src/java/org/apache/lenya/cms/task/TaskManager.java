@@ -34,6 +34,7 @@ import org.xml.sax.SAXException;
 
 /**
  * The task manager
+ * @deprecated Use the usecase framework instead.
  */
 public class TaskManager implements Configurable {
     private static Logger log = Logger.getLogger(TaskManager.class);
@@ -48,13 +49,8 @@ public class TaskManager implements Configurable {
     /**
      * <code>CONFIGURATION_FILE</code> The path to the configuration file
      */
-    public static final String CONFIGURATION_FILE =
-        File.separator
-            + "config"
-            + File.separator
-            + "tasks"
-            + File.separator
-            + "tasks.xconf";
+    public static final String CONFIGURATION_FILE = File.separator + "config" + File.separator
+            + "tasks" + File.separator + "tasks.xconf";
 
     /**
      * <code>EMTPY_TASK</code> Constant for an empty task
@@ -67,7 +63,7 @@ public class TaskManager implements Configurable {
 
     // maps task-ids to tasks
     private Map tasks = new HashMap();
-    
+
     private ServiceManager manager;
 
     /**
@@ -87,32 +83,28 @@ public class TaskManager implements Configurable {
      * @throws IOException when an I/O error occured.
      */
     public TaskManager(String publicationPath, ServiceManager manager)
-        throws ConfigurationException, SAXException, IOException {
+            throws ConfigurationException, SAXException, IOException {
         this(manager);
-        
+
         String configurationFilePath = publicationPath + CONFIGURATION_FILE;
         log.debug("Loading tasks: " + configurationFilePath);
 
         File configurationFile = new File(configurationFilePath);
 
         if (configurationFile.isFile()) {
-            DefaultConfigurationBuilder builder =
-                new DefaultConfigurationBuilder();
-            Configuration configuration =
-                builder.buildFromFile(configurationFile);
+            DefaultConfigurationBuilder builder = new DefaultConfigurationBuilder();
+            Configuration configuration = builder.buildFromFile(configurationFile);
             configure(configuration);
 
         } else {
-            log.info(
-                "Task configuration not loaded - file ["
-                    + configurationFile.getAbsolutePath()
+            log.info("Task configuration not loaded - file [" + configurationFile.getAbsolutePath()
                     + "] does not exist.");
         }
-        
+
         Task empty = new EmptyTask();
         empty.service(this.manager);
         this.tasks.put(EMTPY_TASK, empty);
-        
+
         Task ant = new AntTask();
         ant.service(this.manager);
         this.tasks.put(ANT_TASK, ant);
@@ -121,22 +113,18 @@ public class TaskManager implements Configurable {
     /**
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
-    public void configure(Configuration configuration)
-        throws ConfigurationException {
+    public void configure(Configuration configuration) throws ConfigurationException {
         log.debug("Creating tasks:");
 
         // create task list
-        Configuration[] taskConfigurations =
-            configuration.getChildren(TASK_ELEMENT);
+        Configuration[] taskConfigurations = configuration.getChildren(TASK_ELEMENT);
 
         // set task IDs
         for (int i = 0; i < taskConfigurations.length; i++) {
-            String taskId =
-                taskConfigurations[i].getAttribute(TASK_ID_ATTRIBUTE);
+            String taskId = taskConfigurations[i].getAttribute(TASK_ID_ATTRIBUTE);
             log.debug("Creating task '" + taskId + "'");
 
-            Task task =
-                TaskFactory.getInstance().createTask(taskConfigurations[i]);
+            Task task = TaskFactory.getInstance().createTask(taskConfigurations[i]);
             task.service(this.manager);
             this.tasks.put(taskId, task);
         }
@@ -158,8 +146,7 @@ public class TaskManager implements Configurable {
      */
     public Task getTask(String taskId) throws ExecutionException {
         if (!this.tasks.containsKey(taskId)) {
-            throw new ExecutionException(
-                "Task with ID '" + taskId + "' not found!");
+            throw new ExecutionException("Task with ID '" + taskId + "' not found!");
         }
 
         return (Task) this.tasks.get(taskId);

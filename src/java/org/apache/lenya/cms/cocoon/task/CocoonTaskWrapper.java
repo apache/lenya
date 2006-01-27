@@ -45,6 +45,8 @@ import org.apache.log4j.Logger;
 
 /**
  * Task wrapper to be used from Cocoon components.
+ * 
+ * @deprecated Use the usecase framework instead.
  */
 public class CocoonTaskWrapper extends DefaultTaskWrapper {
 

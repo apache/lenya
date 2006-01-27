@@ -152,11 +152,7 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
         return roles;
     }
 
-    /**
-     * FIXME: Should this be exposed publically now that this method signature has been removed
-     * from Authorizer?
-     */
-    public boolean authorize(Request request, String webappUrl) throws AccessControlException {
+    protected boolean authorize(Request request, String webappUrl) throws AccessControlException {
         Session session = request.getSession(true);
         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
 

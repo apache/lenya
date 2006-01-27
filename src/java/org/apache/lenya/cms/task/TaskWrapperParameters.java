@@ -23,6 +23,7 @@ import java.util.Map;
 
 /**
  * The task wrapper parameters
+ * @deprecated Use the usecase framework instead.
  */
 public class TaskWrapperParameters extends ParameterWrapper {
 
@@ -40,7 +41,6 @@ public class TaskWrapperParameters extends ParameterWrapper {
     public static final String PREFIX = "wrapper";
 
     protected static final String[] REQUIRED_KEYS = { TASK_ID, WEBAPP_URL };
-
 
     /**
      * Ctor.
@@ -96,5 +96,5 @@ public class TaskWrapperParameters extends ParameterWrapper {
     public String getPrefix() {
         return PREFIX;
     }
-    
+
 }

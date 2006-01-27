@@ -28,6 +28,7 @@ import org.apache.lenya.cms.publication.PublicationUtil;
 
 /**
  * Task Parameters
+ * @deprecated Use the usecase framework instead.
  */
 public class TaskParameters extends ParameterWrapper {
     /**
@@ -74,7 +75,8 @@ public class TaskParameters extends ParameterWrapper {
     public Publication getPublication() throws ExecutionException {
         Publication publication;
         try {
-            publication = PublicationUtil.getPublication(this.manager, get(Task.PARAMETER_PUBLICATION_ID));
+            publication = PublicationUtil.getPublication(this.manager,
+                    get(Task.PARAMETER_PUBLICATION_ID));
         } catch (PublicationException e) {
             throw new ExecutionException(e);
         }

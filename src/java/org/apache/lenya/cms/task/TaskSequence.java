@@ -25,9 +25,9 @@ import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.log4j.Logger;
 
-
 /**
  * A TaskSequence contains of multiple tasks that are executed successively.
+ * @deprecated Use the usecase framework instead.
  */
 public class TaskSequence extends AbstractTask {
     private static Logger log = Logger.getLogger(TaskSequence.class);

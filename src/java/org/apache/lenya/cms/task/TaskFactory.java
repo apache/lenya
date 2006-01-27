@@ -27,12 +27,13 @@ import org.apache.log4j.Logger;
 
 /**
  * A Task factory
+ * @deprecated Use the usecase framework instead.
  */
 public class TaskFactory {
-	
-	/**
-	 * Create a new instance of <code>TaskFactory</code>
-	 */
+
+    /**
+     * Create a new instance of <code>TaskFactory</code>
+     */
     protected TaskFactory() {
         // do nothing
     }

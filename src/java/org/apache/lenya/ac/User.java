@@ -50,6 +50,7 @@ public interface User extends Identifiable, Item, Groupable {
      * The locale can either be a 2 letter country code 
      * (de, en) or a locale code according to RFC 1766 /
      * ISO 639 / ISO 3166 (de_DE, de_CH, de_AT, en_US, ...)  
+     * @return The locale.
      */
     String getDefaultMenuLocale();
     
@@ -60,6 +61,7 @@ public interface User extends Identifiable, Item, Groupable {
      * The locale can either be a 2 letter country code 
      * (de, en) or a locale code according to RFC 1766 /
      * ISO 639 / ISO 3166 (de_DE, de_CH, de_AT, en_US, ...)
+     * @param menuLocale The locale.
      */
     void setDefaultMenuLocale(String menuLocale);
     
@@ -70,6 +72,7 @@ public interface User extends Identifiable, Item, Groupable {
      * The locale can either be a 2 letter country code 
      * (de, en) or a locale code according to RFC 1766 /
      * ISO 639 / ISO 3166 (de_DE, de_CH, de_AT, en_US, ...)
+     * @return The locale.
      */
     String getDefaultDocumentLocale();
     
@@ -80,6 +83,7 @@ public interface User extends Identifiable, Item, Groupable {
      * The locale can either be a 2 letter country code 
      * (de, en) or a locale code according to RFC 1766 /
      * ISO 639 / ISO 3166 (de_DE, de_CH, de_AT, en_US, ...)
+     * @param documentLocale The locale.
      */
     void setDefaultDocumentLocale(String documentLocale); 
     

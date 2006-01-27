@@ -21,13 +21,14 @@ package org.apache.lenya.cms.task;
 
 /**
  * The empty task
+ * @deprecated Use the usecase framework instead.
  */
 public class EmptyTask extends AbstractTask {
 
-    /** 
+    /**
      * @see org.apache.lenya.cms.task.Task#execute(java.lang.String)
      */
     public void execute(String servletContextPath) throws ExecutionException {
-	    // do nothing
+        // do nothing
     }
 }

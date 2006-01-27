@@ -26,22 +26,22 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.log4j.Logger;
 
-
 /**
  * A class that holds various publishing parameters
+ * @deprecated Use the usecase framework instead.
  */
 public class PublishingEnvironment implements Configurable {
     private static Logger log = Logger.getLogger(PublishingEnvironment.class);
     /**
      * <code>CONFIGURATION_FILE</code> The path to the publisher configuration file
      */
-    public static final String CONFIGURATION_FILE = "config" + File.separator + "publishing" +
-        File.separator + "publisher.xconf";
+    public static final String CONFIGURATION_FILE = "config" + File.separator + "publishing"
+            + File.separator + "publisher.xconf";
     /**
      * <code>PUBLICATION_PREFIX</code> The path to the publications from the webapp root
      */
-    public static final String PUBLICATION_PREFIX = "lenya" + File.separator + "pubs" +
-        File.separator;
+    public static final String PUBLICATION_PREFIX = "lenya" + File.separator + "pubs"
+            + File.separator;
     /**
      * <code>PUBLICATION_PATH</code> The publication path
      */
@@ -75,7 +75,8 @@ public class PublishingEnvironment implements Configurable {
      */
     public static final String PARAMETER_SUBSTITUTE_REGEXP = "substitute-regexp";
     /**
-     * <code>PARAMETER_SUBSTITUTE_REPLACEMENT</code> The replacement value for the regular expression
+     * <code>PARAMETER_SUBSTITUTE_REPLACEMENT</code> The replacement value for the regular
+     * expression
      */
     public static final String PARAMETER_SUBSTITUTE_REPLACEMENT = "substitute-replacement";
     private String publicationPath;
@@ -90,7 +91,7 @@ public class PublishingEnvironment implements Configurable {
 
     /**
      * Creates a new PublishingEnvironment object.
-     *
+     * 
      * @param contextPath The context path
      * @param publicationId The publication id
      */
@@ -101,7 +102,7 @@ public class PublishingEnvironment implements Configurable {
 
     /**
      * Creates a new PublishingEnvironment object.
-     *
+     * 
      * @param _publicationPath The publication path
      */
     public PublishingEnvironment(String _publicationPath) {
@@ -116,45 +117,55 @@ public class PublishingEnvironment implements Configurable {
             Configuration configuration = builder.buildFromFile(configurationFile);
             configure(configuration);
         } catch (Exception e) {
-            log.info(
-                "Did not load publishing configuration from publisher.xconf (No such file or directory: " + configurationFile  + "). " +
-                "That means you can't access all PublishingEnvironment parameters and you should only " +
-                "use the AntTask. But don't panic, this file has been DEPRECATED.");
+            log.info("Did not load publishing configuration from publisher.xconf (No such file or directory: "
+                    + configurationFile
+                    + "). "
+                    + "That means you can't access all PublishingEnvironment parameters and you should only "
+                    + "use the AntTask. But don't panic, this file has been DEPRECATED.");
         }
     }
 
     /**
      * Initializes the class from a configuration file
-     *
+     * 
      * @param configuration The configuration file
-     *
+     * 
      * @throws org.apache.avalon.framework.configuration.ConfigurationException if an error occurs
      */
     public void configure(org.apache.avalon.framework.configuration.Configuration configuration)
-        throws org.apache.avalon.framework.configuration.ConfigurationException {
+            throws org.apache.avalon.framework.configuration.ConfigurationException {
         // authoring
-        setAuthoringPath(configuration.getChild("authoring").getChild("documents").getAttribute("href"));
-        setTreeAuthoringPath(configuration.getChild("authoring").getChild("tree").getAttribute("href"));
+        setAuthoringPath(configuration.getChild("authoring")
+                .getChild("documents")
+                .getAttribute("href"));
+        setTreeAuthoringPath(configuration.getChild("authoring")
+                .getChild("tree")
+                .getAttribute("href"));
 
         // replication
-        setReplicationDirectory(configuration.getChild("replication").getChild("pending-documents")
-                                             .getAttribute("href"));
+        setReplicationDirectory(configuration.getChild("replication")
+                .getChild("pending-documents")
+                .getAttribute("href"));
 
         // live
         setLivePath(configuration.getChild("live").getChild("documents").getAttribute("href"));
         setTreeLivePath(configuration.getChild("live").getChild("tree").getAttribute("href"));
 
         // export
-        setExportDirectory(configuration.getChild("export").getChild("destination").getAttribute("href"));
-        setSubstituteExpression(configuration.getChild("export").getChild("substitution")
-                                             .getAttribute("regexp"));
-        setSubstituteReplacementExpression(configuration.getChild("export").getChild("substitution")
-                                                        .getAttribute("replacement"));
+        setExportDirectory(configuration.getChild("export")
+                .getChild("destination")
+                .getAttribute("href"));
+        setSubstituteExpression(configuration.getChild("export")
+                .getChild("substitution")
+                .getAttribute("regexp"));
+        setSubstituteReplacementExpression(configuration.getChild("export")
+                .getChild("substitution")
+                .getAttribute("replacement"));
 
-        log.debug("CONFIGURATION:\nauthoring path=" + getAuthoringPath() + "\nlive path=" +
-            getLivePath());
-        log.debug("CONFIGURATION:\ntree authoring path=" + getTreeAuthoringPath() +
-            "\ntree live path=" + getTreeLivePath());
+        log.debug("CONFIGURATION:\nauthoring path=" + getAuthoringPath() + "\nlive path="
+                + getLivePath());
+        log.debug("CONFIGURATION:\ntree authoring path=" + getTreeAuthoringPath()
+                + "\ntree live path=" + getTreeLivePath());
 
         log.debug("CONFIGURATION:\nDirectory Prefix: href=" + getExportDirectory());
         log.debug("CONFIGURATION:\nPrefix Substitute: href=" + getSubstituteExpression());
@@ -164,7 +175,7 @@ public class PublishingEnvironment implements Configurable {
 
     /**
      * Returns the publication path.
-     *
+     * 
      * @return The publication path
      */
     public String getPublicationPath() {
@@ -185,7 +196,7 @@ public class PublishingEnvironment implements Configurable {
 
     /**
      * Returns the authoring path
-     *
+     * 
      * @return The authoring path
      */
     public String getAuthoringPath() {
@@ -198,7 +209,7 @@ public class PublishingEnvironment implements Configurable {
 
     /**
      * Returns the live path
-     *
+     * 
      * @return The live path
      */
     public String getLivePath() {
@@ -211,7 +222,7 @@ public class PublishingEnvironment implements Configurable {
 
     /**
      * Returns the path to the authoring tree
-     *
+     * 
      * @return The path to the authoring tree
      */
     public String getTreeAuthoringPath() {
@@ -224,7 +235,7 @@ public class PublishingEnvironment implements Configurable {
 
     /**
      * Returns the path to the live tree
-     *
+     * 
      * @return The path to the live tree
      */
     public String getTreeLivePath() {
@@ -237,7 +248,7 @@ public class PublishingEnvironment implements Configurable {
 
     /**
      * Returns the path to the replication directory
-     *
+     * 
      * @return The path to the replication directory
      */
     public String getReplicationDirectory() {
@@ -250,7 +261,7 @@ public class PublishingEnvironment implements Configurable {
 
     /**
      * Returns the path to the export directory
-     *
+     * 
      * @return The path to the export directory
      */
     public String getExportDirectory() {
@@ -263,7 +274,7 @@ public class PublishingEnvironment implements Configurable {
 
     /**
      * Returns the substitution regular expression used in the export
-     *
+     * 
      * @return The substitution regular expression
      */
     public String getSubstituteExpression() {
@@ -284,7 +295,7 @@ public class PublishingEnvironment implements Configurable {
 
     /**
      * Get the replacement string, which was read from publisher.xconf
-     *
+     * 
      * @return The replacement string
      */
     public String getSubstituteReplacement() {
@@ -293,10 +304,10 @@ public class PublishingEnvironment implements Configurable {
 
     /**
      * Returns the path to the publication given the servlet context path and the publication id
-     *
+     * 
      * @param servletContextPath The servlet context path
      * @param publicationId The publication id
-     *
+     * 
      * @return The path to the publication
      */
     public static String getPublicationPath(String servletContextPath, String publicationId) {

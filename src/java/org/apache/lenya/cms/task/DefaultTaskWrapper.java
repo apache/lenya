@@ -45,18 +45,18 @@ import org.xml.sax.SAXException;
 
 /**
  * The default task wrapper
+ * @deprecated Use the usecase framework instead.
  */
 public class DefaultTaskWrapper implements TaskWrapper {
 
     private static Logger log = Logger.getLogger(DefaultTaskWrapper.class);
 
     private Map parameters = new HashMap();
-    private TaskWrapperParameters wrapperParameters =
-        new TaskWrapperParameters(getParameterObject());
+    private TaskWrapperParameters wrapperParameters = new TaskWrapperParameters(getParameterObject());
     private TaskParameters taskParameters;
 
     private ServiceManager manager;
-    
+
     /**
      * Default ctor for subclasses.
      * @param manager The service manager to use.
@@ -67,8 +67,8 @@ public class DefaultTaskWrapper implements TaskWrapper {
     }
 
     /**
-     * Ctor to be called when all task wrapper parameters are known.
-     * All keys and values must be strings or string arrays.
+     * Ctor to be called when all task wrapper parameters are known. All keys and values must be
+     * strings or string arrays.
      * @param _parameters The prefixed parameters.
      * @param manager The service manager to use.
      */
@@ -113,8 +113,7 @@ public class DefaultTaskWrapper implements TaskWrapper {
     }
 
     /**
-     * Ctor.
-     * Restores the wrapper parameters from an XML element.
+     * Ctor. Restores the wrapper parameters from an XML element.
      * @param parent The parent of the task wrapper element.
      * @param helper The namespace helper of the document.
      */
@@ -131,15 +130,12 @@ public class DefaultTaskWrapper implements TaskWrapper {
      * @param _parameters The task parameters.
      * @throws ExecutionException when the task ID is null.
      */
-    protected void initialize(
-        String taskId,
-        Publication publication,
-        String webappUrl,
-        Parameters _parameters)
-        throws ExecutionException {
+    protected void initialize(String taskId, Publication publication, String webappUrl,
+            Parameters _parameters) throws ExecutionException {
         log.debug("Initializing");
 
-        if (taskId.equals("")) throw new ExecutionException();
+        if (taskId.equals(""))
+            throw new ExecutionException();
 
         getTaskParameters().setPublication(publication);
         getWrapperParameters().setWebappUrl(webappUrl);
@@ -155,18 +151,14 @@ public class DefaultTaskWrapper implements TaskWrapper {
      * @param request A request.
      * @return A parameters object.
      */
-    protected Parameters extractTaskParameters(
-        Parameters _parameters,
-        Publication publication,
-        Request request) {
+    protected Parameters extractTaskParameters(Parameters _parameters, Publication publication,
+            Request request) {
         Parameters _taskParameters = new Parameters();
-        _taskParameters.setParameter(
-            Task.PARAMETER_SERVLET_CONTEXT,
-            publication.getServletContext().getAbsolutePath());
+        _taskParameters.setParameter(Task.PARAMETER_SERVLET_CONTEXT,
+                publication.getServletContext().getAbsolutePath());
         _taskParameters.setParameter(Task.PARAMETER_CONTEXT_PREFIX, request.getContextPath());
-        _taskParameters.setParameter(
-            Task.PARAMETER_SERVER_PORT,
-            Integer.toString(request.getServerPort()));
+        _taskParameters.setParameter(Task.PARAMETER_SERVER_PORT,
+                Integer.toString(request.getServerPort()));
         _taskParameters.setParameter(Task.PARAMETER_SERVER_URI, "http://" + request.getServerName());
         _taskParameters.setParameter(Task.PARAMETER_PUBLICATION_ID, publication.getId());
 
@@ -196,8 +188,9 @@ public class DefaultTaskWrapper implements TaskWrapper {
      * @param roles The roles of the identity.
      */
     public void setWorkflowAware(String eventName, Identity identity, Role[] roles) {
-        NamespaceMap workflowParameters =
-            WorkflowInvoker.extractParameters(eventName, identity, roles);
+        NamespaceMap workflowParameters = WorkflowInvoker.extractParameters(eventName,
+                identity,
+                roles);
         getParameterObject().putAll(workflowParameters.getPrefixedMap());
     }
 
@@ -259,29 +252,29 @@ public class DefaultTaskWrapper implements TaskWrapper {
             throw e;
         }
 
-		log.debug("-----------------------------------");
-		log.debug(" Triggering workflow");
-		log.debug("-----------------------------------");
-		
-        //FIXME The new workflow is set before the end of the transition because the document id
-        // and so the document are sometimes changing during the transition (ex archiving , ...) 
+        log.debug("-----------------------------------");
+        log.debug(" Triggering workflow");
+        log.debug("-----------------------------------");
+
+        // FIXME The new workflow is set before the end of the transition because the document id
+        // and so the document are sometimes changing during the transition (ex archiving , ...)
         workflowInvoker.invokeTransition();
 
-		log.debug("-----------------------------------");
-		log.debug(" Triggering task");
-		log.debug("-----------------------------------");
-		
+        log.debug("-----------------------------------");
+        log.debug(" Triggering task");
+        log.debug("-----------------------------------");
+
         task.execute(publication.getServletContext().getAbsolutePath());
 
-		log.debug("-----------------------------------");
-		log.debug(" Triggering notification");
-		log.debug("-----------------------------------");
+        log.debug("-----------------------------------");
+        log.debug(" Triggering notification");
+        log.debug("-----------------------------------");
         Notifier notifier = new Notifier(manager, getParameters());
         notifier.sendNotification(getTaskParameters());
 
-		log.debug("-----------------------------------");
-		log.debug(" Executing task finished.");
-		log.debug("===================================\n\n");
+        log.debug("-----------------------------------");
+        log.debug(" Executing task finished.");
+        log.debug("===================================\n\n");
     }
 
     /**
@@ -312,10 +305,11 @@ public class DefaultTaskWrapper implements TaskWrapper {
      */
     public Element save(NamespaceHelper helper) {
         org.w3c.dom.Document document = helper.getDocument();
-        NamespaceHelper taskHelper =
-            new NamespaceHelper(Task.NAMESPACE, Task.DEFAULT_PREFIX, document);
+        NamespaceHelper taskHelper = new NamespaceHelper(Task.NAMESPACE,
+                Task.DEFAULT_PREFIX,
+                document);
         Element element = taskHelper.createElement(ELEMENT_TASK);
-        
+
         List keys = new ArrayList(getParameters().keySet());
         Collections.sort(keys);
 
@@ -337,8 +331,9 @@ public class DefaultTaskWrapper implements TaskWrapper {
      */
     public void restore(NamespaceHelper helper, Element parent) {
         org.w3c.dom.Document document = helper.getDocument();
-        NamespaceHelper taskHelper =
-            new NamespaceHelper(Task.NAMESPACE, Task.DEFAULT_PREFIX, document);
+        NamespaceHelper taskHelper = new NamespaceHelper(Task.NAMESPACE,
+                Task.DEFAULT_PREFIX,
+                document);
         Element taskElement = taskHelper.getFirstChild(parent, ELEMENT_TASK);
         Element[] parameterElements = taskHelper.getChildren(taskElement, ELEMENT_PARAMETER);
         for (int i = 0; i < parameterElements.length; i++) {

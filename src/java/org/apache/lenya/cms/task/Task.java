@@ -26,6 +26,8 @@ import org.apache.avalon.framework.service.ServiceManager;
  * A Task is a command that can be executed. <br/>
  * When a Task is executed from a TaskAction or initialized from a TaskJob, the default
  * parameters are provided. <strong>This is not a contract!</strong>
+ * 
+ * @deprecated Use the usecase framework instead.
  */
 public interface Task extends Parameterizable {
     

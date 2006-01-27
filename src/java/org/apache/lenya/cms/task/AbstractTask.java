@@ -23,28 +23,28 @@ import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceManager;
 
-
 /**
  * Abstract baseclass for Task
+ * @deprecated Use the usecase framework instead.
  */
 public abstract class AbstractTask implements Task {
     private Parameters parameters = new Parameters();
-    
+
     private ServiceManager manager;
-    
+
     /**
      * Ctor.
      */
     public AbstractTask() {
     }
-    
+
     /**
      * @param manager The service manager to use.
      */
     public void service(ServiceManager manager) {
         this.manager = manager;
     }
-    
+
     protected ServiceManager getServiceManager() {
         return this.manager;
     }
@@ -74,9 +74,9 @@ public abstract class AbstractTask implements Task {
      * @param label The label
      */
     public void setLabel(String label) {
-	    // do nothing
+        // do nothing
     }
-    
+
     private int result = SUCCESS;
 
     /**
@@ -85,7 +85,7 @@ public abstract class AbstractTask implements Task {
     public int getResult() {
         return this.result;
     }
-    
+
     /**
      * Sets the result of this task.
      * @param _result An integer ({@link Task#SUCCESS}, {@link Task#FAILURE}).

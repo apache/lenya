@@ -19,29 +19,31 @@
 
 package org.apache.lenya.cms.task;
 
-
 /**
  * An Exception that is thrown when an error occurs during a task execution.
+ * @deprecated Use the usecase framework instead.
  */
 public class ExecutionException extends Exception {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+     * 
+     */
+    private static final long serialVersionUID = 1L;
 
-	/** Creates a new instance of ExecutionException */
+    /** Creates a new instance of ExecutionException */
     public ExecutionException() {
-	    // do nothing
+        // do nothing
     }
 
-    /** Creates a new instance of ExecutionException 
-     * @param message the exception message 
+    /**
+     * Creates a new instance of ExecutionException
+     * @param message the exception message
      */
     public ExecutionException(String message) {
         super(message);
     }
 
-    /** Creates a new instance of ExecutionException 
+    /**
+     * Creates a new instance of ExecutionException
      * @param message the exception message
      * @param cause the exception cause
      */
@@ -49,7 +51,8 @@ public class ExecutionException extends Exception {
         super(message, cause);
     }
 
-    /** Creates a new instance of ExecutionException
+    /**
+     * Creates a new instance of ExecutionException
      * @param cause the exception cause
      */
     public ExecutionException(Throwable cause) {

@@ -19,19 +19,18 @@
 
 package org.apache.lenya.cms.task;
 
-
 /**
  * A simple task to demonstrate the task behaviour. It outputs a string to the log4j log file. The
- * following parameter can be provided:<br/
- * ><code><strong>text</strong></code>: the string to be printed<br/
- * > If the parameter is omitted, "Hello World" is printed.
+ * following parameter can be provided:<br/ ><code><strong>text</strong></code>: the string to
+ * be printed<br/ > If the parameter is omitted, "Hello World" is printed.
+ * @deprecated Use the usecase framework instead.
  */
 public class HelloWorldTask extends AbstractTask {
     /**
      * Creates a new instance of HelloWorldTask
      */
     public HelloWorldTask() {
-	    // do nothing
+        // do nothing
     }
 
     /**

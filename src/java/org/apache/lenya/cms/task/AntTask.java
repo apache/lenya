@@ -51,6 +51,7 @@ import org.apache.tools.ant.XmlLogger;
  * implemented yet!) </strong></li>
  * <li><code><strong>properties.*</strong></code>: the project properties</li>
  * </ul>
+ * @deprecated Use the usecase framework instead.
  */
 public class AntTask extends AbstractTask {
     

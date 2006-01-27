@@ -37,6 +37,7 @@ import org.apache.log4j.Logger;
 
 /**
  * The workflow invoker
+ * @deprecated Use the usecase framework instead.
  */
 public class WorkflowInvoker extends ParameterWrapper {
 
@@ -214,7 +215,11 @@ public class WorkflowInvoker extends ParameterWrapper {
         try {
             org.apache.avalon.framework.logger.Logger logger = new ConsoleLogger();
             Session session = new Session(new IdentityMapImpl(logger), null, logger);
-            WorkflowUtil.invoke(this.manager, session, new ConsoleLogger(), this.document, getEventName());
+            WorkflowUtil.invoke(this.manager,
+                    session,
+                    new ConsoleLogger(),
+                    this.document,
+                    getEventName());
         } catch (Exception e) {
             throw new ExecutionException(e);
         }
