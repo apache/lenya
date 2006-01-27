@@ -33,13 +33,17 @@
     
     <page:page>
       <page:title>Apache Lenya: <i18n:text i18n:key="error-generic" /></page:title>
+      <page:head>
         <style>
           h1 { color: #336699; text-align: left; margin: 0px 0px 30px 0px; padding: 0px; border-width: 0px 0px 1px 0px; border-style: solid; border-color: #336699;}
           p.message { padding: 10px 30px 10px 30px; font-weight: bold; font-size: 130%; border-width: 1px; border-style: dashed; border-color: #336699; }
           p.description { padding: 10px 30px 20px 30px; border-width: 0px 0px 1px 0px; border-style: solid; border-color: #336699;}
           p.topped { padding-top: 10px; border-width: 1px 0px 0px 0px; border-style: solid; border-color: #336699; }
           pre { font-size: 120%; }
+          span.description { color: #336699; font-weight: bold; }
+          span.switch { cursor: pointer; margin-left: 5px; text-decoration: underline; }
         </style>
+      </page:head>
       <page:body>
         <xsl:apply-templates select="." mode="onload"/>
         <script>
