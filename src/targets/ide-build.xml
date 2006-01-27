@@ -31,7 +31,7 @@
       <pathelement path="${src.java.dir}"/>
       <!-- test source dir -->
       <pathelement path="${src.test.dir}"/>
-      <dirset dir="src/webapp/lenya/pubs">
+      <dirset dir="src/pubs">
         <include name="*/java/src"/>
       </dirset>
       <dirset dir="src/modules">
