@@ -342,7 +342,6 @@ public class LinkStatusGenerator extends ServiceableGenerator
 
         //this first node should be handled as a cocoon source
         String root = this.src;
-        URL tempurl = null;
         linksToProcess.add(new Link(root, "", 0));
 
         if (getLogger().isDebugEnabled()) {
@@ -504,7 +503,6 @@ public class LinkStatusGenerator extends ServiceableGenerator
     /**
      * Generate xml attributes of a url, calculate url for retrieving links
      *
-     * @param url to process
      * @param referrer of the url
      * @return String url for retrieving links, or null if url is an excluded-url,
      *   and not an included-url.
@@ -514,8 +512,6 @@ public class LinkStatusGenerator extends ServiceableGenerator
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("getLinks URL " + uri);
         }
-
-        String result = null;
 
         // don't try to investigate a url which has been crawled already
         if (crawled.contains(uri)) {

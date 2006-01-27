@@ -215,11 +215,7 @@ public class UsecaseAuthorizer extends AbstractLogEnabled implements Authorizer,
         return authorizeUsecase(usecase, roles, getConfigurationURI(publication));
     }
 
-    /**
-     * FIXME: Should this be exposed publically now that this method signature has been removed from
-     * Authorizer?
-     */
-    public boolean authorize(Request request, String webappUrl) throws AccessControlException {
+    protected boolean authorize(Request request, String webappUrl) throws AccessControlException {
         return authorize(request);
     }
 

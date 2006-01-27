@@ -49,54 +49,57 @@ import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
+/**
+ * Meta data generator.
+ */
 public class LenyaMetaDataGenerator extends ServiceableGenerator implements
-CacheableProcessingComponent {
-    
+        CacheableProcessingComponent {
+
     /** The corresponding lenya document */
     protected Document document;
-    
+
     /** Node and attribute names */
     protected AttributesImpl attributes;
-    
+
     /** Metadata */
     protected static final String ROOT_META_NODE_NAME = "meta";
-    
+
     /** The URI of the namespace of the metadata */
     protected static final String URI_META = "http://apache.org/cocoon/lenya/page-envelope/1.0";
-    
+
     /** The namespace prefix for this namespace */
     protected static final String PREFIX_META = "lenya";
-    
+
     /** Custom metadata */
     protected static final String ROOT_CUSTOM_META_NODE_NAME = "custom";
-    
+
     /** Internal metadata */
     protected static final String ROOT_INTERNAL_META_NODE_NAME = "internal";
-    
+
     /** Dublin Core metadata */
     protected static final String ROOT_DC_META_NODE_NAME = "dc";
-    
+
     /** Namespace prefix for the dublin core */
     protected static final String PREFIX_META_DC = "dc";
-    
+
     /** The URI of the namespace of the dublin core metadata */
     protected static final String URI_META_DC = "http://purl.org/dc/elements/1.1/";
-    
+
     /** The parser for the XML snippets to be included. */
     protected DOMParser parser = null;
-    
+
     /** The document that should be parsed and (partly) included. */
     protected org.w3c.dom.Document doc = null;
-    
+
     /** Helper for lenya document retrival */
     protected String publicationId = null;
-    
+
     protected String area = null;
-    
+
     protected String language = null;
-    
+
     protected String docId = null;
-    
+
     /**
      * Recycle this component. All instance variables are set to <code>null</code>.
      */
@@ -107,65 +110,59 @@ CacheableProcessingComponent {
         this.area = null;
         this.publicationId = null;
         this.doc = null;
-        this.parser=null;
+        this.parser = null;
         super.recycle();
     }
-    
+
     /**
      * Serviceable
      * 
-     * @param manager
-     *          the ComponentManager
+     * @param manager the ComponentManager
      * 
-     * @throws ServiceException
-     *           in case a component could not be found
+     * @throws ServiceException in case a component could not be found
      */
     public void service(ServiceManager manager) throws ServiceException {
         super.service(manager);
         this.parser = (DOMParser) manager.lookup(DOMParser.ROLE);
         this.attributes = new AttributesImpl();
     }
-    
+
     /**
-     * Setup the file generator. Try to get the last modification date of the
-     * source for caching.
+     * Setup the file generator. Try to get the last modification date of the source for caching.
      */
-    public void setup(SourceResolver resolver, Map objectModel, String src,
-            Parameters par) throws ProcessingException, SAXException, IOException
-    {
-        
+    public void setup(SourceResolver resolver, Map objectModel, String src, Parameters par)
+            throws ProcessingException, SAXException, IOException {
+
         super.setup(resolver, objectModel, src, par);
-        
+
         docId = par.getParameter("docid", null);
         if (this.docId == null) {
-            throw new ProcessingException(
-            "The docid is not set! Please set like e.g. <map:parameter name='docid' value='{request-param:docid}'/>");
+            throw new ProcessingException("The docid is not set! Please set like e.g. <map:parameter name='docid' value='{request-param:docid}'/>");
         }
-        
+
         language = par.getParameter("lang", null);
         if (language == null)
             throw new ProcessingException("The 'lang' parameter is not set.");
-        
+
         try {
             prepareLenyaDoc(objectModel);
         } catch (DocumentBuildException e) {
             throw new ProcessingException(src + " threw DocumentBuildException: " + e);
         }
-        
+
     }
-    
-    protected void prepareLenyaDoc(Map objectModel)
-        throws DocumentBuildException, ProcessingException
-    {
-        
+
+    protected void prepareLenyaDoc(Map objectModel) throws DocumentBuildException,
+            ProcessingException {
+
         Request request = ObjectModelHelper.getRequest(objectModel);
         Session session = RepositoryUtil.getSession(request, getLogger());
         Publication pub;
         try {
             pub = PublicationUtil.getPublication(this.manager, objectModel);
         } catch (PublicationException e) {
-            throw new ProcessingException(
-                    "Error geting publication id / area from page envelope", e);
+            throw new ProcessingException("Error geting publication id / area from page envelope",
+                    e);
         }
         if (pub != null && pub.exists()) {
             this.publicationId = pub.getId();
@@ -175,27 +172,25 @@ CacheableProcessingComponent {
                 this.language = pub.getDefaultLanguage();
             }
         }
-        
-        DocumentIdentityMap map = new DocumentIdentityMap(session, this.manager,
-                getLogger());
+
+        DocumentIdentityMap map = new DocumentIdentityMap(session, this.manager, getLogger());
         this.document = map.get(pub, area, docId, language);
     }
-    
+
     /**
-     * Generate the unique key. This key must be unique inside the space of this
-     * component.
+     * Generate the unique key. This key must be unique inside the space of this component.
      * 
      * @return The generated key hashes the src
      */
     public Serializable getKey() {
         return language + "$$" + docId;
     }
-    
+
     /**
      * Generate the validity object.
      * 
-     * @return The generated validity object or <code>null</code> if the
-     *         component is currently not cacheable.
+     * @return The generated validity object or <code>null</code> if the component is currently
+     *         not cacheable.
      */
     public SourceValidity getValidity() {
         long lastModified = 0;
@@ -213,19 +208,19 @@ CacheableProcessingComponent {
         }
         return new TimeStampValidity(lastModified);
     }
-    
+
     /**
      * Generate XML data.
      */
     public void generate() throws IOException, SAXException, ProcessingException {
         // START metadata
         startNodeRoot(ROOT_META_NODE_NAME);
-        // lenya document meta 
+        // lenya document meta
         performIncludesMeta();
         // END metadata
         endNodeRoot(ROOT_META_NODE_NAME);
     }
-    
+
     private void performIncludesMeta() throws SAXException, ProcessingException {
         // custom metadata
         startNodeMeta(ROOT_CUSTOM_META_NODE_NAME);
@@ -240,7 +235,7 @@ CacheableProcessingComponent {
         parseMetaData("dc");
         endNodeMeta(ROOT_DC_META_NODE_NAME);
     }
-    
+
     private void parseMetaData(String type) throws ProcessingException, SAXException {
         MetaData metaData = getMetaData(type);
         HashMap elementMap;
@@ -269,37 +264,41 @@ CacheableProcessingComponent {
             }
         }
     }
-    
+
     private void endNodeRoot(String nodeName) throws SAXException {
         endNodeMeta(nodeName);
         this.contentHandler.endPrefixMapping(PREFIX_META);
         this.contentHandler.endDocument();
     }
-    
+
     private void startNodeRoot(String nodeName) throws SAXException {
         this.contentHandler.startDocument();
         this.contentHandler.startPrefixMapping(PREFIX_META, URI_META);
         startNodeMeta(nodeName);
     }
-    
+
     private void startNodeMeta(String nodeName) throws SAXException {
-        this.contentHandler.startElement(URI_META, nodeName, PREFIX_META + ":"
-                + nodeName, attributes);
+        this.contentHandler.startElement(URI_META,
+                nodeName,
+                PREFIX_META + ":" + nodeName,
+                attributes);
     }
-    
+
     private void endNodeMeta(String nodeName) throws SAXException {
-        this.contentHandler.endElement(URI_META, nodeName, PREFIX_META + ":"
-                + nodeName);
+        this.contentHandler.endElement(URI_META, nodeName, PREFIX_META + ":" + nodeName);
     }
+
     private void startNodeMetaDC(String nodeName) throws SAXException {
-        this.contentHandler.startElement(URI_META_DC, nodeName, PREFIX_META_DC + ":"
-                + nodeName, attributes);
+        this.contentHandler.startElement(URI_META_DC,
+                nodeName,
+                PREFIX_META_DC + ":" + nodeName,
+                attributes);
     }
-    
+
     private void endNodeMetaDC(String nodeName) throws SAXException {
-        this.contentHandler.endElement(URI_META_DC, nodeName, PREFIX_META_DC + ":"
-                + nodeName);
+        this.contentHandler.endElement(URI_META_DC, nodeName, PREFIX_META_DC + ":" + nodeName);
     }
+
     protected MetaData getMetaData(String type) throws ProcessingException {
         MetaData metaData = null;
         try {

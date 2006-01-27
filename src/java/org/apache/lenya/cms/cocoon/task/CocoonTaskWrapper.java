@@ -78,6 +78,7 @@ public class CocoonTaskWrapper extends DefaultTaskWrapper {
 
     /**
      * Ctor.
+     * @param manager The service manager.
      */
     protected CocoonTaskWrapper(ServiceManager manager) {
         super(manager);

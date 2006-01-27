@@ -35,7 +35,6 @@ import org.w3c.dom.Document;
  */
 public abstract class DefaultCreator extends AbstractLogEnabled implements NodeCreatorInterface {
 
-    private String sampleResourceName = null;
     private ServiceManager manager;
 
     /**

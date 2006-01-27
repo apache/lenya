@@ -16,8 +16,6 @@
  */
 package org.apache.lenya.cms.usecase.gui;
 
-import org.apache.lenya.cms.usecase.UsecaseMessage;
-
 /**
  * Usecase GUI manager.
  */

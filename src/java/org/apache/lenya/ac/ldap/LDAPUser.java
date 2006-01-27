@@ -105,6 +105,7 @@ public class LDAPUser extends FileUser {
      * @param id user id of LDAPUser
      * @param email of LDAPUser
      * @param _ldapId of LDAPUser
+     * @param _logger The logger.
      * @throws ConfigurationException if the properties could not be read
      */
     public LDAPUser(File configurationDirectory, String id, String email, String _ldapId, Logger _logger)

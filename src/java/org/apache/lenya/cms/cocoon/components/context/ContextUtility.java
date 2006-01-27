@@ -32,6 +32,9 @@ import org.apache.cocoon.environment.Response;
  */
 public class ContextUtility extends AbstractLogEnabled implements
         Component, Contextualizable {
+    /**
+     * The component's role.
+     */
     public static final String ROLE = ContextUtility.class.getName();
 
     protected Context context;
