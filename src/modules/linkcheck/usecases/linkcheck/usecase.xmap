@@ -34,31 +34,25 @@
 	<!-- =========================== Pipelines ================================ -->
 	
   <map:pipelines>
-  
-    <map:component-configurations>
-      <global-variables>
-        <cache-dir>work/cache</cache-dir>
-      </global-variables>
-    </map:component-configurations>  
 	  
     <map:pipeline type="noncaching">
-
-      <map:match type="usecase" pattern="linkreport">
+      <map:match pattern="getLinks.xml">
          <map:select type="last-mod">
             <map:parameter name="compare-to" value="lenya://lenya/pubs/{page-envelope:publication-id}/content/{page-envelope:area}/{page-envelope:document-path}"/>
             <!-- Read from cache -->
             <!-- If configured within Apache then mod_lenya will nevertheless read from cache -->
-            <map:when test="{global:cache-dir}/{page-envelope:area}/{page-envelope:document-id}.linkreport">
-                <map:read src="{global:cache-dir}/{page-envelope:area}/{page-envelope:document-id}.linkreport" mime-type="text/xml; charset=utf-8"/>
+            <map:when test="context://lenya/pubs/{page-envelope:publication-id}/work/cache/{page-envelope:area}/{page-envelope:document-id}.linkreport">
+                <map:generate src="context://lenya/pubs/{page-envelope:publication-id}/work/cache/{page-envelope:area}/{page-envelope:document-id}.linkreport" mime-type="text/xml; charset=utf-8"/>
+                <map:serialize type="xml"/>
             </map:when>
             <!-- Write to cache and serialize -->
-            <map:otherwise>
+            <map:otherwise>  
               <map:generate type="linkStatus" src="/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-id}.html">
                 <map:parameter name="depth" value="1"/>
               </map:generate>
               <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
               <map:transform src="fallback://lenya/xslt/authoring/edit/addSourceTags.xsl">
-                <map:parameter name="source" value="{global:cache-dir}/{page-envelope:area}/{page-envelope:document-id}.linkreport"/>
+                <map:parameter name="source" value="context://lenya/pubs/{page-envelope:publication-id}/work/cache/{page-envelope:area}/{page-envelope:document-id}.linkreport"/>
               </map:transform>
               <map:transform type="write-source">
                 <map:parameter name="serializer" value="xml"/>

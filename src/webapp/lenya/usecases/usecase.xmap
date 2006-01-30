@@ -75,11 +75,16 @@
           <map:when test="true">
             <map:serialize type="xml"/>
           </map:when>
-          <map:otherwise>
-           <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
-            <map:serialize type="xhtml"/>
-          </map:otherwise>
         </map:select>
+        <map:select type="request-parameter">
+          <map:parameter name="parameter-name" value="asXML"/>
+          <map:when test="true">
+            <map:serialize type="xml"/>
+          </map:when>
+        </map:select>
+        
+        <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
+        <map:serialize type="xhtml"/>
 
      </map:match>
       

@@ -196,9 +196,10 @@
                   <map:otherwise>
                     <map:match pattern="authoring/**.html">
                       <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../../../1}/{../../../2}.xml?doctype={page-envelope:document-type}"/>
+                      <!-- TODO: External Links checking should be optional on a document by document basis -->
                       <!-- uncomment to turn on external broken link reporting -->
                       <!--<map:transform src="fallback://lenya/xslt/authoring/addJavaScript.xsl">
-                        <map:parameter name="scriptSRC" value="/{page-envelope:publication-id}/authoring/javascript/linkreporter.js"/>
+                        <map:parameter name="scriptSRC" value="/modules/linkcheck/linkreporter.js"/>
                       </map:transform>-->
                     </map:match>
                     <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>

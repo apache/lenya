@@ -81,7 +81,7 @@ function loadXMLDoc(url) {
 
 reportlinks = function() {
   //get link report
-  loadXMLDoc("?lenya.usecase=linkreport");
+  loadXMLDoc("?lenya.usecase=linkcheck.getLinks&asXML=true");
 }
 
 //  assign reportlinks function to onload
