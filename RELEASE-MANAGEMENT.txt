@@ -1,0 +1,22 @@
+
+    RELEASE MANAGEMENT
+    ==================
+
+    # Browse to http://svn.apache.org/repos/asf/lenya/branches/BRANCH_1_2_X
+    # http://svnbook.red-bean.com/en/1.1/ch04s06.html
+
+    svn co -r 373588 https://svn.apache.org/repos/asf/lenya/branches/BRANCH_1_2_X
+    cd branches/BRANCH_1_2_X
+    svn copy branches/BRANCH_1_2_X tags/RELEASE_1_2_5
+    svn ci -m "Release 1_2_5 added" tags/RELEASE_1_2_5
+
+
+    # Add release notes (SVN URL, SVN Revision, What's new, etc.):
+
+    svn add RELEASE-NOTES.txt
+    svn ci -m "release notes added" RELEASE-NOTES.txt
+    
+
+    # Lock tagged version (Is this really necessary or just a project policy)
+
+    #??? svn lock .
