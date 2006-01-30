@@ -2,12 +2,22 @@
     RELEASE MANAGEMENT
     ==================
 
-    # Announce the freeze 7 days ahead of the actual freeze (maybe a vote is necessary if there are complaints) on dev mailing list
+   0)
+    # Optional: Do a vote if a release shall be done
+    # Send email to dev@lenya.apache.org with Subject: [VOTE] Release 1.2.5
 
 
-    # Announce the freeze (shouldn't take more than two days) on dev mailing list
+   1)
+    # Announce the freeze 7 days ahead of the actual freeze:
+    # Send email to dev@lenya.apache.org with subject: [FREEZE-ANNOUNCEMENT]
+
+   
+   2)
+    # Remind of the actual freeze:
+    # Send email to dev@lenya.apache.org with subject: [FREEZE-REMINDER]
 
 
+   3)
     # Create tagged version
     # Browse to http://svn.apache.org/repos/asf/lenya/branches/BRANCH_1_2_X
     # http://svnbook.red-bean.com/en/1.1/ch04s06.html
@@ -18,21 +28,27 @@
     svn ci -m "Release 1_2_5 added" tags/RELEASE_1_2_5
 
 
+   4)
     # Add release notes (SVN URL, SVN Revision, What's new, Cocoon version 2.1.8, etc.):
 
     svn add RELEASE-NOTES.txt
     svn ci -m "release notes added" RELEASE-NOTES.txt
     
 
+   5)
     # Lock tagged version (Is this really necessary or just a project policy)
 
     #??? svn lock tags/RELEASE_1_2_5
 
 
+   6)
     # Start testing this tagged version (based on the specified Cocoon version, e.g. 2.1.8)
-    Use Test-Suite: http://wiki.apache.org/lenya/TestCases
+    # Use Test-Suite: http://wiki.apache.org/lenya/TestCases
+    # Maybe do a sprint over IRC irc.freenode.org#lenya
 
     # If tests are successfull, then freeze can be canceled
     # If tests fail, then ...
 
+
+   7)
     # Release source and binary versions based on this tagged version
