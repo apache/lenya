@@ -91,7 +91,7 @@
         <item uc:usecase="site.changeLabel" href="?"><i18n:text>Edit Navigation Title</i18n:text></item>
         <item uc:usecase="site.changeVisibility" href="?">
           <xsp:attribute name="checked"><xsp:expr>visible</xsp:expr></xsp:attribute>
-          <i18n:text>Visible in Navigation</i18n:text> asdf asdf asssssss
+          <i18n:text>Visible in Navigation</i18n:text>
         </item>
       </block>
       <block authoring="false">
