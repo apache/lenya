@@ -206,6 +206,22 @@
       <xsl:apply-templates select="node()"/>
     </li>
   </xsl:template>
+  
+  
+  <xsl:template name="checkItem">
+    <xsl:choose>
+      <xsl:when test="@checked = 'true'">
+        <img src="{$contextprefix}/lenya/menu/images/checked.png" alt="checked"/>
+      </xsl:when>
+      <xsl:when test="@checked = 'false'">
+        <img src="{$contextprefix}/lenya/menu/images/unchecked.png" alt="unchecked"/>
+      </xsl:when>
+      <xsl:otherwise>
+        <img src="{$contextprefix}/lenya/menu/images/checkedPlaceholder.png" alt=""/>
+      </xsl:otherwise>
+    </xsl:choose>
+  </xsl:template>
+  
   	
   <!-- match items with not area='false' -->
   <xsl:template match="menu:item">
@@ -227,7 +243,8 @@
               </xsl:choose>
             </xsl:if>
           </xsl:attribute>
-          <span><xsl:value-of select="."/></span>
+          <xsl:call-template name="checkItem"/>
+          <span><xsl:value-of select="normalize-space(.)"/></span>
         </a></li>
       </xsl:when>
       <xsl:otherwise>
@@ -238,11 +255,12 @@
                 <i18n:translate>
                   <i18n:text><xsl:value-of select="text()"/></i18n:text>
                   <xsl:for-each select="menu:parameter">
-                    <i18n:param><xsl:value-of select="text()"/></i18n:param>
+                    <i18n:param><xsl:value-of select="normalize-space(text())"/></i18n:param>
                   </xsl:for-each>
                 </i18n:translate>
               </xsl:copy>
             </xsl:for-each>
+            <xsl:call-template name="checkItem"/>
             <span><xsl:value-of select="text()"/></span>
           </a>
         </li>

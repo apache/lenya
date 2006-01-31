@@ -55,16 +55,9 @@
           throw new ProcessingException(e);
       }
       
-      String visibilityChar;
       String visible = <input:get-attribute module="doc-info" as="string">
         <input:param name="name"><xsp:expr>document.getPublication().getId() + ":" + document.getArea() + ":" + document.getId() + ":" + document.getLanguage() + ":visibleInNav"</xsp:expr></input:param>
       </input:get-attribute>;
-      if (Boolean.valueOf(visible).booleanValue()) {
-          visibilityChar = "&#x2713;&#160;";
-      }
-      else {
-          visibilityChar = "&#x2717;&#160;";
-      }
       
     </xsp:logic>
     
@@ -96,7 +89,10 @@
       <block authoring="false">
         <item uc:usecase="site.changeNodeID" href="?"><i18n:text>Rename URL</i18n:text></item>
         <item uc:usecase="site.changeLabel" href="?"><i18n:text>Edit Navigation Title</i18n:text></item>
-        <item uc:usecase="site.changeVisibility" href="?"><xsp:expr>visibilityChar</xsp:expr><i18n:text>Visible in Navigation</i18n:text></item>
+        <item uc:usecase="site.changeVisibility" href="?">
+          <xsp:attribute name="checked"><xsp:expr>visible</xsp:expr></xsp:attribute>
+          <i18n:text>Visible in Navigation</i18n:text> asdf asdf asssssss
+        </item>
       </block>
       <block authoring="false">
         <item uc:usecase="site.nudge" href="?direction=up"><i18n:text>Move Up</i18n:text></item>
