@@ -59,6 +59,7 @@ public class CrawlerConfiguration {
             configure(document.getDocumentElement());
         } catch (Exception e) {
             log.error("Cannot load publishing configuration! ", e);
+            throw new RuntimeException(e);
         }
     }
 
