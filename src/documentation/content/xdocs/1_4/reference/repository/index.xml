@@ -24,18 +24,61 @@
     <note>This document is a draft. It does not reflect the current implementation, but will evolve alongside the code.</note>
     
     <section>
-      <title>Introduction</title>
-      
+      <title>The Lenya Repository API</title>
       <p>
-        The Lenya content repository is based on the <a href="http://www.jcp.org/aboutJava/communityprocess/final/jsr170/">Java Content Repository</a> API.
+        The Lenya repository API comprises the following interfaces:
       </p>
-      
+      <dl>
+        <dt><strong>Repository</strong></dt>
+        <dd>The repository object is the entry point to the Lenya repository. It provides access to
+        the document type registry and allows to create sessions.</dd>
+        <dt><strong>Session</strong></dt>
+        <dd>A session provides access to the publications and methods for transaction handling. Pending
+        changes are not written to the repository until the session is saved.</dd>
+        <dt><strong>Publication</strong></dt>
+        <dd>A publication consists of an arbitrary set of areas.</dd>
+        <dt><strong>Area</strong></dt>
+        <dd>An area consists of a set of content nodes with a site structure associated to them.</dd>
+        <dt><strong>Content</strong></dt>
+        <dd>The content object provides access to the content nodes.</dd>
+        <dt><strong>ContentNode</strong></dt>
+        <dd>A content node holds several language versions of a content item. Each content node
+          has an ID which is unique in its area. Each content node has a <em>document type</em>,
+          which applies to all language versions of the node. When a content node is added, the
+          document type must be specified. Only document types which are registered in the
+          repository's document type registry are supported.</dd>
+        <dt><strong>Document</strong></dt>
+        <dd>A document is a language version of a content item. Each document has the following properties:
+          <ul>
+            <li>the language,</li>
+            <li>the content length, and</li>
+            <li>the last modification date.</li>
+          </ul>
+          The document provides access to its content via the methods <code>getInputStream()</code>
+          and <code>getOutputStream()</code>.
+        </dd>
+        <dt><strong>DocumentType</strong></dt>
+        <dd>The document type of a content node denotes the type of contents which may be stored
+          in its documents. A document type is identified by a unique name. It may provide a
+          schema, which can be used to validate XML contents upon saving. Furthermore, the mime type
+          of documents is defined by the document type.</dd>
+        <dt><strong>MetaData</strong></dt>
+        <dd>...</dd>
+        <dt><strong>Site</strong></dt>
+        <dd>The site object provides access to the site structure.</dd>
+        <dt><strong>SiteNode</strong></dt>
+        <dd>The site structure is a tree consisting of site nodes. Each site node has an ID which
+          is unique among its siblings. Thus, a site node can be located using a unique path
+          of the form <code>/sections/news/message003</code>.</dd>
+      </dl>
     </section>
     
     <section>
       <title>Repository Layout</title>
       
       <p>
+        Lenya ships with a content repository implementation which is based on the
+        <a href="http://www.jcp.org/aboutJava/communityprocess/final/jsr170/">Java Content Repository</a> API.
         The JCR repository used by Lenya comprises a set of workspaces, each of which represent an area
         of the document structure. For each area that is declared by a publication, a repository workspace
         is created.
@@ -47,8 +90,17 @@
       <figure src="site:repositoryWorkspaces.img" alt="Repository Workspaces"/>
       
       <p>
-        
+        The children of the root node of a workspace are called <em>publication JCR nodes</em>. Each publication JCR node
+        has two children:
       </p>
+      <ul>
+        <li>the <em>content</em> JCR node, and</li>
+        <li>the <em>site</em> JCR node</li>.
+      </ul>
+      <p>
+        The content JCR node can have an arbitrary number of child nodes, which are called <em>content </em>
+      </p>
+      
       
     </section>
     
