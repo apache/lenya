@@ -65,7 +65,7 @@ public class IterativeHTMLCrawler {
                 System.err.println("Usage: IterativeHTMLCrawler crawler.xconf");
             }
         } catch (MalformedURLException e) {
-            log.error("" + e);
+            log.error("Malformed URL: ", e);
         }
     }
 
@@ -135,7 +135,7 @@ public class IterativeHTMLCrawler {
                 log.warn("Start URL has not been dumped: " + start);
             }
         } catch (MalformedURLException e) {
-            log.error("" + e);
+            log.error("Malformed URL: ", e);
         }
 
         int currentPosition = 0;
@@ -162,7 +162,7 @@ public class IterativeHTMLCrawler {
                             dumpHTDoc(urlToCrawl);
                         }
                     } catch (MalformedURLException e) {
-                        log.warn("" + e + " " + urlCandidate);
+                        log.warn(e + " " + urlCandidate);
                     }
                 }
             }
@@ -189,7 +189,7 @@ public class IterativeHTMLCrawler {
 
             out.close();
         } catch (java.io.FileNotFoundException e) {
-            log.error("" + e);
+            log.error("File not found: ", e);
         }
     }
 
