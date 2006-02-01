@@ -47,34 +47,17 @@
 	</p>
 </section>
 
-<section>
-  <title>Configuring Resource Types</title>
-  
+<section><title>Choose a Unique Resource Type Name</title>
   <p>
-    Resource types are configured in <code>cocoon.xconf</code>.
-    Typically the configuration is added using an XPatch file:
+    You should choose a reasonable name for your resource type.
   </p>
-  
-<source xml:space="preserve"><![CDATA[<xconf xpath="/cocoon/resource-types"
-       unless="/cocoon/resource-types/component-instance[@name = 'xhtml']">
-
-  <component-instance name="xhtml"
-                      logger="lenya.resourcetypes.xhtml"
-                      class="org.apache.lenya.cms.publication.ResourceTypeImpl">
-    <schema src="fallback://lenya/resources/schemas/xhtml.rng"/>
-    <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
-      <sample-name>fallback://lenya/publets/xhtml/samples/xhtml.xml</sample-name>
-    </creator>
-    <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@href"/>
-    <format name="xhtml" uri="cocoon://modules/xhtml/xhtml.xml"/>
-  </component-instance>
-
-</xconf>]]></source>
-
+  <note>
+    In the examples, we use the name <em>profile</em> (page with information about a person).
+  </note>
 </section>
-
+	  
 <section>
-  <title>Adding Resource Types to a Publication</title>
+  <title>Adding the Resource Type to a Publication</title>
   
   <p>
     The resource types used by a publication are declared in <code>publication.xconf</code>,
@@ -86,6 +69,7 @@
   <resource-type name="xhtml" workflow="workflow.xml"/>
   <resource-type name="homepage" workflow="workflow.xml"/>
   <resource-type name="links" workflow="workflow.xml"/>
+  <resource-type name="profile" workflow="workflow.xml"/>
   ...
 </publication>
 ]]></source>
@@ -106,13 +90,6 @@
     Adding a custom resource type to your publication includes the following steps:
   </p>
   
-  <section><title>Choose a Unique Resource Type Name</title>
-  <p>
-    You should choose a reasonable name for your resource type.
-    In the examples, we use <em>profile</em> (page with information about a person).
-  </p>
-  </section>
-  
   <section><title>Providing a Sample XML Document</title>
     <p>
       If you want to enable users to create new resources belonging to
@@ -123,7 +100,7 @@
     </p>
     <p>
       The sample document is typically placed in
-      <code>{publication}/lenya/resources/samples/</code>.
+      <code>&lt;publication&gt;/lenya/resources/samples/</code>.
       You can choose an arbitrary filename, but it is recommended to
       use the resource type name (e.g., <code>profile.xml</code>).
     </p>
@@ -141,7 +118,7 @@
       editor requires a Relax NG document.
     </p>
     <p>The structure definition document is typically placed in the directory
-      <code>{publication}/lenya/resources/schemas/</code>. The name
+      <code>&lt;publication&gt;/lenya/resources/schemas/</code>. The name
       of the file is arbitrary, but it is recommended to use the
       resource type name (e.g., <code>profile.rng</code>).
     </p>
@@ -162,7 +139,7 @@
     <p>
     To declare a custom resource type and assign the creator, schema etc. to it,
 	  add the component instance to an XPatch file (e.g.,
-	  <code>{publication}/config/cocoon-xconf/resourcetypes.xconf</code>):
+	  <code>&lt;publication&gt;/config/cocoon-xconf/resourcetype-profile.xconf</code>):
     </p>
     <source><![CDATA[<xconf xpath="/cocoon/resource-types"
        unless="/cocoon/resource-types/component-instance[@name = 'profile']">
@@ -170,7 +147,8 @@
   <component-instance name="profile"
                       logger="lenya.resourcetypes.profile"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
-    <schema src="fallback://lenya/resources/schemas/profile.rng"/>
+    <schema src="fallback://lenya/resources/schemas/profile.rng"
+            language="http://relaxng.org/ns/structure/0.9"/>
     <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
       <sample-name>fallback://lenya/resources/samples/profile.xml</sample-name>
     </creator>
@@ -214,14 +192,18 @@
       sitemap (in our case, <code>modules/profile/sitemap.xmap</code>). Typically, an XSLT is applied
       to the content document to transform it into another format (XHTML, XSL-FO, ...):
     </p>
+    <note>
+      In the following snippet, the module name <code>pe</code> is used as a shortcut fo
+      <code>page-envelope</code>. You have to change it if you copy &amp; paste the code.
+    </note>
     <source xml:space="preserve"><![CDATA[
   <!-- apply a format -->
   <map:match pattern="*.xml">
     <map:generate src="lenya://lenya/pubs/{pe:publication-id}/content/{pe:area}/{pe:document-path}"/>
     <map:transform src="fallback://lenya/modules/profile/xslt/profile2xhtml.xsl">
       <map:parameter name="rendertype" value="{request-param:rendertype}"/>
-      <map:parameter name="nodeid" value="{page-envelope:document-name}"/>
-      <map:parameter name="language" value="{page-envelope:document-language}"/>
+      <map:parameter name="nodeid" value="{pe:document-name}"/>
+      <map:parameter name="language" value="{pe:document-language}"/>
     </map:transform>
     <map:serialize type="xml"/>
   </map:match>
@@ -254,8 +236,8 @@
     <p>
       If you derive your publication from the default publication,
       the pipelines have to be placed in
-      <code>{publication}/doctypes.xmap</code>. The stylesheets are located in
-      <code>{publication}/xslt/</code> and are named <code>{resource-type}2xhtml.xsl</code>
+      <code>&lt;publication&gt;/doctypes.xmap</code>. The stylesheets are located in
+      <code>&lt;publication&gt;/xslt/</code> and are named <code>&lt;resource-type&gt;2xhtml.xsl</code>
       (e.g., <code>profile2xhtml.xsl</code>). The stylesheet is supposed to generate
       a valid XHTML fragment (in the XHTML namespace) with <code>&lt;div id="body"&gt;</code>
       as the document element.
