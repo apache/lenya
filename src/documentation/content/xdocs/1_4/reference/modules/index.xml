@@ -56,15 +56,16 @@
     
 <source xml:space="preserve">
 mymodule/
-    config/                  configuration files
-        components.xconf     patch for cocoon.xconf
+    config/                    configuration files
+        cocoon-xconf/          patches for cocoon.xconf
+            components.xconf     
     usecases/
-        mymodule.jx          usecase view
+        mymodule.jx            usecase view
     java/
-        src/                 Java source files
-        lib/                 Java libraries
-    xslt/                    XSLT stylesheets
-    sitemap.xmap             main module sitemap
+        src/                   Java source files
+        lib/                   Java libraries
+    xslt/                      XSLT stylesheets
+    sitemap.xmap               main module sitemap
 </source>
 
       <p>To add a module to your Lenya installation, declare it in <code>local.build.properties</code>:</p>
@@ -86,7 +87,7 @@ modules.root.dirs=src/modules:src/webapp/lenya/pubs/default/modules:/home/john/m
     <section>
       <title>Implementing Usecases in Modules</title>
       <p>
-        To declare usecases, add a patch file for <code>cocoon.xconf</code>, for instance <code>module/config/usecases.xconf</code>:
+        To declare usecases, add a patch file for <code>cocoon.xconf</code>, for instance <code>module/config/cocoon-xconf/usecases.xconf</code>:
       </p>
 <source xml:space="preserve"><![CDATA[<xconf xpath="/cocoon/usecases"
        unless="/cocoon/usecases/component-instance[@name = 'mymodule.edit']">
