@@ -83,9 +83,9 @@
             <tr>
               <td/>
               <td>
-				        <form method="GET">
+				        <form method="GET" name="userChangeProfile-form">
 				          <input type="hidden" name="lenya.usecase" value="userChangeProfile"/>
-				          <input i18n:attr="value" type="submit" value="Edit Profile"/>
+				          <input i18n:attr="value" type="submit" value="Edit Profile" name="EditProfile"/>
 				        </form>
               </td>
             </tr>
@@ -112,9 +112,9 @@
             <tr>
               <td/>
               <td>
-				        <form method="GET">
+				        <form method="GET" name="userChangeGroups-form">
 				          <input type="hidden" name="lenya.usecase" value="userChangeGroups"/>
-				          <input i18n:attr="value" type="submit" value="Edit Group Affiliation"/>
+				          <input i18n:attr="value" type="submit" value="Edit Group Affiliation" name="EditGroupAffiliation"/>
 				        </form>
               </td>
             </tr>
@@ -157,18 +157,18 @@
             <tr>
               <td class="lenya-entry-caption"><i18n:text>User</i18n:text>:</td>
               <td>
-				        <form method="GET">
+				        <form method="GET" name="userChangePasswordUser-form">
 				          <input type="hidden" name="lenya.usecase" value="userChangePasswordUser"/>
-				          <input i18n:attr="value" type="submit" value="Change Password"/>
+				          <input i18n:attr="value" type="submit" value="Change Password" name="ChangePassword"/>
 				        </form>
 				      </td>
 				    </tr>
             <tr>
               <td class="lenya-entry-caption"><i18n:text>Admin</i18n:text>:</td>
               <td>
-				        <form method="GET">
+				        <form method="GET" name="userChangePasswordAdmin">
 				          <input type="hidden" name="lenya.usecase" value="userChangePasswordAdmin"/>
-				          <input i18n:attr="value" type="submit" value="Change Password"/>
+				          <input i18n:attr="value" type="submit" value="Change Password" name="ChangeAdminPassword"/>
 				        </form>
               </td>
             </tr>

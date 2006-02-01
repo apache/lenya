@@ -65,7 +65,7 @@
         </i18n:translate>
       </div>
       <div class="lenya-box-body">
-        <form method="get">
+        <form method="get" name="paste-form">
           <xsl:attribute name="action"></xsl:attribute>
           <input type="hidden" name="lenya.usecase" value="paste"/>
           <input type="hidden" name="lenya.step" value="paste"/>
@@ -88,8 +88,8 @@
           	<tr>
           		<td>
           			<br/>
-                    <input i18n:attr="value" type="submit" value="Paste" onclick="wait()"/>&#160;
-					<input i18n:attr="value" type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
+                    <input i18n:attr="value" type="submit" value="Paste" onclick="wait()" name="Paste"/>&#160;
+					<input i18n:attr="value" type="button" onClick="location.href='{$request-uri}';" value="Cancel"  name="Cancel"/>
           		</td>
           	</tr>
           </table>

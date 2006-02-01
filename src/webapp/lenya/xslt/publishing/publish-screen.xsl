@@ -84,7 +84,7 @@
                 <tr>
                   <td/>
                   <td>
-                    <input type="button" onClick="location.href='{$referer}';" value="Cancel"/>
+                    <input type="button" onClick="location.href='{$referer}';" value="Cancel" name="Cancel"/>
                   </td>
                 </tr>
               </table>
@@ -164,8 +164,8 @@
                 <tr>
                   <td/>
                   <td>
-                    <input i18n:attr="value" type="submit" value="Publish" onclick="wait()"/>&#160;
-                    <input i18n:attr="value" type="button" onClick="location.href='{$referer}';" value="Cancel"/>
+                    <input i18n:attr="value" type="submit" value="Publish" onclick="wait()" name="Publish"/>&#160;
+                    <input i18n:attr="value" type="button" onClick="location.href='{$referer}';" value="Cancel" name="Cancel"/>
                   </td>
                 </tr>
               </table>

@@ -155,7 +155,7 @@
 
 
   <xsl:template match="lenya-info:meta">
-    <form>
+    <form name="meta-form">
       <table class="lenya-table-noborder">
 	<xsl:if test="lenya-info:exception-user != ''">
 	  <tr><td colspan="2" class="lenya-form-message-error">Could not update the meta data as the document has been checked out by <xsl:value-of select="lenya-info:exception-user"/> since <xsl:value-of select="lenya-info:exception-date"/>.</td></tr>
@@ -169,8 +169,8 @@
         <tr><td class="lenya-entry-caption"><i18n:text>Creator</i18n:text>:</td><td><input type="hidden" id="dc:creator" name="properties.save.meta.creator" class="lenya-form-element"><xsl:attribute name="value"><xsl:value-of select="dc:creator"/></xsl:attribute></input><xsl:value-of select="dc:creator"/></td></tr>
         <tr><td/><td><br/>
               <xsl:choose>
-                <xsl:when test="$area = 'authoring'"><input i18n:attr="value" type="submit" value="Save"/></xsl:when>
-                <xsl:otherwise><input i18n:attr="value" type="submit" disabled="disabled" value="Save"/></xsl:otherwise>
+                <xsl:when test="$area = 'authoring'"><input i18n:attr="value" type="submit" value="Save" name="Save"/></xsl:when>
+                <xsl:otherwise><input i18n:attr="value" type="submit" disabled="disabled" value="Save" name="Save"/></xsl:otherwise>
               </xsl:choose>              
         </td></tr>
       </table>
@@ -207,7 +207,7 @@
           <td align="right"><xsl:value-of select="dc:extent"/> kB</td>
           <td align="right"><xsl:value-of select="dc:date"/></td>
           <td>
-            <form>
+            <form name="asset-form">
               <input type="hidden" name="lenya.usecase" value="asset"/>
               <input type="hidden" name="lenya.step" value="remove"/>
               <input type="hidden" name="task-id" value="remove-asset"/>
@@ -222,15 +222,15 @@
                 </xsl:attribute>
               </input>
               <xsl:choose>
-                <xsl:when test="$area = 'authoring'"><input i18n:attr="value" type="submit" value="Delete"/></xsl:when>
-                <xsl:otherwise><input i18n:attr="value" type="submit" disabled="disabled" value="Delete"/></xsl:otherwise>
+                <xsl:when test="$area = 'authoring'"><input i18n:attr="value" type="submit" value="Delete" name="Delete"/></xsl:when>
+                <xsl:otherwise><input i18n:attr="value" type="submit" disabled="disabled" value="Delete" name="Delete"/></xsl:otherwise>
               </xsl:choose>              
             </form>
           </td>
         </tr> 
       </xsl:for-each>
     </table>
-    <form>
+    <form name="new-asset-form">
       <input type="hidden" name="lenya.usecase" value="asset"/>
       <input type="hidden" name="lenya.step" value="showscreen"/>
       <input type="hidden" name="insert" value="false"/>
@@ -240,8 +240,8 @@
         </xsl:attribute>
       </input>
       <xsl:choose>
-         <xsl:when test="$area = 'authoring'"><input i18n:attr="value" type="submit" value="New Asset"/></xsl:when>
-         <xsl:otherwise><input i18n:attr="value" type="submit" disabled="disabled" value="New Asset"/></xsl:otherwise>
+         <xsl:when test="$area = 'authoring'"><input i18n:attr="value" type="submit" value="New Asset" name="NewAsset" /></xsl:when>
+         <xsl:otherwise><input i18n:attr="value" type="submit" disabled="disabled" value="New Asset" name="NewAsset"/></xsl:otherwise>
        </xsl:choose>              
     </form>
   </xsl:template>
@@ -371,7 +371,7 @@
 	<xsl:variable name="visitor-role" select="//lenya-info:visitor-role"/>
 	<xsl:choose>
   	<xsl:when test="$visitor-role">
-    	<form method="get">
+    	<form method="get" name="add-credential-form">
     	<input type="hidden" name="lenya.usecase" value="info-ac-{$larea}"/>
     	<input type="hidden" name="lenya.step" value="showscreen"/>
     	<td><i18n:text><xsl:value-of select="$title"/></i18n:text>:</td>
@@ -454,7 +454,7 @@
   	</td>
   	<td>
   		<xsl:if test="not(@type = 'parent')">
-  		<form>
+  		<form name="info-credential-form">
 				<input type="hidden" name="lenya.usecase" value="info-ac-{$larea}"/>
 				<input type="hidden" name="lenya.step" value="showscreen"/>
   			<input type="hidden" name="accreditable_id" value="{@accreditable-id}"/>

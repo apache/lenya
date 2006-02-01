@@ -49,7 +49,7 @@
           <i18n:text>New language for existing Document</i18n:text>
         </div>
         <div class="lenya-box-body">
-          <form method="GET" action="{/parent-child/referer}">
+          <form method="GET" action="{/parent-child/referer}" name="create-language-all-exists-form">
             <table class="lenya-table-noborder">
               <tr>
                 <td>
@@ -89,7 +89,7 @@ function validateForm(theForm)
 }
           </script>
           <form method="GET"
-              action="{/parent-child/referer}" onsubmit="return validateForm(this)">
+              action="{/parent-child/referer}" onsubmit="return validateForm(this)" name="create-language-form">
             <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
             <input type="hidden" name="lenya.step" value="create"/>
             <input type="hidden" name="properties.create.document-id" value="{/parent-child/document-id}"/>
@@ -164,8 +164,8 @@ function validateForm(theForm)
               <tr>
                 <td/>
                 <td>
-                  <input i18n:attr="value" type="submit" value="Create"/>&#160;
-                  <input i18n:attr="value" type="button" onClick="location.href='{/parent-child/referer}';" value="Cancel"/>
+                  <input i18n:attr="value" type="submit" value="Create" name="Create"/>&#160;
+                  <input i18n:attr="value" type="button" onClick="location.href='{/parent-child/referer}';" value="Cancel" name="Cancel"/>
                 </td>
               </tr>
             </table>

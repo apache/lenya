@@ -44,7 +44,7 @@
           </i18n:translate>
         </div>     
       <div class="lenya-box-body">
-        <form method="GET" action="">
+        <form method="GET" action="" name="reject-form">
           <table class="lenya-table-noborder">
             <tr>
               <td class="lenya-entry-caption" valign="top">
@@ -65,8 +65,8 @@
           <td/>
           <td>
             <input i18n:attr="value" type="submit" value="Reject"
-          onclick="elements['notification.tolist'].value = document.getElementById('notification.tolist.preset').value"/>
-            <input i18n:attr="value" type="button" onClick="location.href='{usecase:referer}';" value="Cancel"/>
+          onclick="elements['notification.tolist'].value = document.getElementById('notification.tolist.preset').value" name="Reject"/>
+            <input i18n:attr="value" type="button" onClick="location.href='{usecase:referer}';" value="Cancel" name="Cancel"/>
           </td>
           </tr>
             <tr>

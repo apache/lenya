@@ -178,7 +178,7 @@
                 </div>
 				 <div class="lenya-box">
 				    <div class="lenya-box-title"><i18n:text>Asset Library</i18n:text></div>
-				      <form id="image" action="" method="post">
+				      <form id="image" action="" method="post" name="asset-library-form">
 				        <table class="lenya-table-noborder">
 				        <xsl:choose>
 				        <xsl:when test="not(lenya-info:asset)">
@@ -219,8 +219,8 @@
 				            <td/>
 				            <td colspan="4">
 								 <input i18n:attr="value" type="button"
-				      		   onClick="javascript:insertImage(document.getElementById('imageSource').value, escape(document.getElementById('imageFormat').value));" value="Submit"/>&#160;
-				 			 <input i18n:attr="value" type="button" onClick="location.href='javascript:window.close();';" value="Cancel"/>
+				      		   onClick="javascript:insertImage(document.getElementById('imageSource').value, escape(document.getElementById('imageFormat').value));" value="Submit" name="submit"/>&#160;
+				 			 <input i18n:attr="value" type="button" onClick="location.href='javascript:window.close();';" value="Cancel" name="cancel"/>
 				            </td>
 				          </tr>
 				          </xsl:otherwise>

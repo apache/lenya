@@ -6,7 +6,7 @@
   <xsl:import href="upload-generic.xsl"/>
   
 <xsl:template name="fields">
-  <form method="POST" enctype="multipart/form-data">
+  <form method="POST" enctype="multipart/form-data" name="upload-document-form">
 
     <input name="lenya.usecase" type="hidden" value="{$lenya.usecase}"/>
     <input name="lenya.continuation" type="hidden" value="{uc:continuation}"/>
@@ -27,7 +27,7 @@
       <td>
         <input type="submit" name="submit" value="Upload"/>
         <xsl:text> </xsl:text>
-        <input type="submit" value="Cancel"/>
+        <input type="submit" value="Cancel" name="cancel"/>
       </td>
     </tr>
     </table>

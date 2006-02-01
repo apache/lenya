@@ -37,7 +37,7 @@
 	<div class="lenya-box">
 	  <div class="lenya-box-title"><i18n:text>Change document visibility in navigation</i18n:text></div>
 	  <div class="lenya-box-body">
-	    <form method="get">
+	    <form method="get" name="change-visibility-form">
 	      <xsl:attribute name="action"></xsl:attribute>
 	      <input type="hidden" name="task-id" value="{$taskid}"/>
 	      <input type="hidden" name="properties.change.visibility.document-id" value="{$documentid}"/>
@@ -51,8 +51,8 @@
 		  <td/>
 		  <td>
 		    <br/>
-		    <input i18n:attr="value" type="submit" value="Change"/>&#160;
-		    <input i18n:attr="value" type="button" onClick="location.href='{$requesturi}';" value="Cancel"/>
+		    <input i18n:attr="value" type="submit" value="Change" name="Change"/>&#160;
+		    <input i18n:attr="value" type="button" onClick="location.href='{$requesturi}';" value="Cancel" name="Cancel"/>
 		  </td>
 		</tr>
 	      </table>

@@ -54,7 +54,7 @@
       <div class="lenya-box-title"><i18n:text>User Data</i18n:text></div>
       <div class="lenya-box-body">
         
-        <form method="GET" accept-charset="UTF-8">
+        <form method="GET" accept-charset="UTF-8" name="userprofile-form">
           <input type="hidden" name="lenya.continuation" value="{/page/continuation}"/>
           <table class="lenya-table-noborder">
             

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: oneform.xsl,v 1.14 2004/04/26 14:57:25 michi Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -87,7 +87,7 @@
         </div>
         <div class="lenya-box">
           <div class="lenya-box-body">
-            <form method="post" action="?lenya.usecase=1formedit&amp;lenya.step=close">
+            <form method="post" action="?lenya.usecase=1formedit&amp;lenya.step=close" name="oneform-editor-form">
 	      <input type="hidden" name="namespaces"><xsl:attribute name="value"><xsl:apply-templates mode="namespaces" /></xsl:attribute></input>
               <table border="0">
                 <tr>

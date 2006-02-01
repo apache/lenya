@@ -175,7 +175,7 @@
                             <tr>
                                 <td/>
                                 <td> <input type="submit" 
-                                    value="Insert"/>
+                                    value="Insert" name="Insert"/>
                                 </td>
                             </tr>
                         </table>

@@ -54,7 +54,7 @@
       <div class="lenya-box-title"><i18n:text>IP Range Profile</i18n:text></div>
       <div class="lenya-box-body">
         
-        <form method="GET">
+        <form method="GET" name="iprangeprofile-form">
           <input type="hidden" name="lenya.continuation" value="{/page/continuation}"/>
           <table class="lenya-table-noborder">
             

@@ -45,7 +45,7 @@
             <xsl:if test="$state = 'co'">
                <p> Do you really want to check-in the document?</p>
             </xsl:if>
-	    <form method="get">
+	    <form method="get" name="forcecheckin-form">
 	      <xsl:attribute name="action"></xsl:attribute>
 	      <input type="hidden" name="lenya.usecase" value="forcecheckin"/>
 	      <input type="hidden" name="lenya.step" value="forcecheckin"/>
@@ -56,11 +56,11 @@
 		  <td>
 		    <br/>
                     <xsl:if test="$state ='co'">
-		      <input type="submit" value="Ok"/>&#160;
-		      <input i18n:attr="value" type="button" onClick="location.href='{$requesturi}';" value="Cancel"/>
+		      <input type="submit" value="Ok" name="Ok"/>&#160;
+		      <input i18n:attr="value" type="button" onClick="location.href='{$requesturi}';" value="Cancel" name="Cancel"/>
                     </xsl:if>
                     <xsl:if test="$state = 'ci'">
-		      <input type="button" onClick="location.href='{$requesturi}';" value="Ok"/>
+		      <input type="button" onClick="location.href='{$requesturi}';" value="Ok" name="Ok"/>
                     </xsl:if>
 		  </td>
 		</tr>

@@ -31,7 +31,7 @@
 
 <xsl:template match="nav:site">
   <div id="search">
-    <form><input type="hidden" name="lenya.usecase" value="search"/><input type="hidden" name="language" value="{$chosenlanguage}"/><input class="searchfield" type="text" name="query" alt="Search field"/><input class="searchsubmit" i18n:attr="value" type="submit" value="Search" name="find"/></form>
+    <form name="nav-search-form"><input type="hidden" name="lenya.usecase" value="search"/><input type="hidden" name="language" value="{$chosenlanguage}"/><input class="searchfield" type="text" name="query" alt="Search field"/><input class="searchsubmit" i18n:attr="value" type="submit" value="Search" name="find"/></form>
   </div>
 </xsl:template>
 

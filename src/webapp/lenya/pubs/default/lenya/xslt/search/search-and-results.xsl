@@ -39,7 +39,7 @@
 <H2><i18n:text key="search-pagetitle">Search</i18n:text></H2>
                 <div class="lenya-box">
                     <div class="lenya-box-body">
-                        <form id="searchvalues"><input type="hidden" name="lenya.usecase" value="search"/>
+                        <form id="searchvalues" name="search-form"><input type="hidden" name="lenya.usecase" value="search"/>
                             <table class="lenya-table-noborder">
                                 <tr>
                                     <td><i18n:text key="search-fieldlabel">Search</i18n:text></td>
@@ -70,7 +70,7 @@
                                     </td>
                                 </tr>
                             </table>
-                             <input i18n:attr="value" type="submit" value="Search"/>
+                             <input i18n:attr="value" type="submit" value="Search" name="find"/>
                         </form>
 
                         <xsl:apply-templates select="search/exception"/>

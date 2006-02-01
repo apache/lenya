@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: confirm-delete.xsl,v 1.5 2004/04/28 15:00:07 andreas Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet
     version="1.0"
@@ -53,7 +53,7 @@
         </i18n:translate>
       </div>
       <div class="lenya-box-body">
-          <form method="GET">
+          <form method="GET" name="delete-form">
             <input type="hidden" name="lenya.continuation" value="{/page/continuation}"/>
             <input i18n:attr="value" type="submit" name="submit" value="Yes"/>
             <input i18n:attr="value" type="submit" name="cancel" value="No"/>

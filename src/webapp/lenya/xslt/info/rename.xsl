@@ -64,7 +64,7 @@ if (!validContent(theForm["properties.node.secdocumentid"],"New Document ID")) r
 return true;
 }
 </script>
-           <form method="get" onsubmit="return validateForm(this)">
+           <form method="get" onsubmit="return validateForm(this)" name="rename-form">
           <xsl:attribute name="action"></xsl:attribute>
           <input type="hidden" name="task-id" value="{$task-id}"/>
           <xsl:call-template name="task-parameters">
@@ -85,8 +85,8 @@ return true;
               <td/>
               <td>
                 <br/>
-                <input i18n:attr="value" type="submit" value="Rename"/>&#160;
-                <input i18n:attr="value" type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
+                <input i18n:attr="value" type="submit" value="Rename" name="Rename"/>&#160;
+                <input i18n:attr="value" type="button" onClick="location.href='{$request-uri}';" value="Cancel" name="Cancel"/>
               </td>
             </tr>
           </table>

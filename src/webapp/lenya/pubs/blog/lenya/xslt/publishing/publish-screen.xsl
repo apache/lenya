@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: publish-screen.xsl,v 1.3 2004/03/13 12:31:33 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -79,7 +79,7 @@
                 <tr>
                   <td/>
                   <td>
-                    <input type="button" onClick="location.href='{$referer}';" value="Cancel"/>
+                    <input type="button" onClick="location.href='{$referer}';" value="Cancel" name="Cancel"/>
                   </td>
                 </tr>
               </table>
@@ -145,7 +145,7 @@
                   <td>
                     <input type="submit" name="lenya.usecase" value="publish"/>
                     &#160;&#160;&#160;
-                    <input type="button" onClick="location.href='{$referer}';" value="Cancel"/>
+                    <input type="button" onClick="location.href='{$referer}';" value="Cancel" name="cancel"/>
                   </td>
                 </tr>
               </table>
@@ -163,7 +163,7 @@
         </form>
         
         <div style="text-align: right">
-        <form action="{$referer}"><input type="submit" value="Back to Page"/></form>
+        <form action="{$referer}" name="backtopage-form"><input type="submit" value="Back to Page" name="BackToPage"/></form>
         </div>
         </td>
         </tr>

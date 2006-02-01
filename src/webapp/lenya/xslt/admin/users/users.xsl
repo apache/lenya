@@ -72,10 +72,10 @@
       </td>
       <xsl:apply-templates select="groups"/>
       <td style="vertical-align: middle">
-        <form method="GET">
+        <form method="GET" name="user-form">
           <input type="hidden" name="lenya.usecase" value="userDeleteUser"/>
           <input name="user-id" type="hidden" value="{id}"/>
-          <input i18n:attr="value" type="submit" value="Delete">
+          <input i18n:attr="value" type="submit" value="Delete" name="Delete">
             <xsl:if test="@deletable = 'false'">
               <xsl:attribute name="disabled">disabled</xsl:attribute>
             </xsl:if>
@@ -108,12 +108,12 @@
 	    </td>
 	    <xsl:for-each select="types/type">
 	      <td>
-	        <form method="GET">
+	        <form method="GET" name="add-user-form">
               <input type="hidden" name="lenya.usecase">
 		        <xsl:attribute name="value"><xsl:value-of
 		          select="@create-use-case"/></xsl:attribute>
 		      </input>
-              <input i18n:attr="value" type="submit">
+              <input i18n:attr="value" type="submit" name="submit">
 		        <xsl:attribute name="value"><xsl:value-of
 		          select="normalize-space(.)"/></xsl:attribute>
 		      </input>

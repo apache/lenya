@@ -67,8 +67,8 @@
   <input i18n:attr="value" type="button"
          onClick="insertAsset(document.getElementById('assetSource').value,
                               document.getElementById('assetExtent').value,
-                              document.getElementById('assetTitle').value);" value="Submit"/>&#160;
-  <input i18n:attr="value" type="button" onClick="location.href='javascript:window.close();';" value="Cancel"/>
+                              document.getElementById('assetTitle').value);" value="Submit" name="Submit"/>&#160;
+  <input i18n:attr="value" type="button" onClick="location.href='javascript:window.close();';" value="Cancel" name="Cancel"/>
 </xsl:template>
 
 

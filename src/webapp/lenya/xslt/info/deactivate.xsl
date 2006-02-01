@@ -69,7 +69,7 @@
   
   
   <xsl:template match="info[not(message)]">
-    <form method="get">
+    <form method="get" name="deactivate-form">
       <div class="lenya-box">
         <div class="lenya-box-title">
           <i18n:translate>
@@ -100,8 +100,8 @@
             <tr>
               <td/>
               <td>
-                <input i18n:attr="value" type="submit" value="Yes" onclick="wait()"/> &#160;
-                <input i18n:attr="value" onClick="location.href='{$request-uri}';" type="button" value="Cancel"/>
+                <input i18n:attr="value" type="submit" value="Yes" onclick="wait()" name="Yes"/> &#160;
+                <input i18n:attr="value" onClick="location.href='{$request-uri}';" type="button" value="Cancel" name="Cancel"/>
               </td>
             </tr>
           </table>
@@ -130,7 +130,7 @@
   
   
   <xsl:template match="info[message]">
-    <form method="get">
+    <form method="get" name="deactivate-error-form">
       <div class="lenya-box">
         <div class="lenya-box-title"><i18n:text>Deactivate Document</i18n:text></div>
         <div class="lenya-box-body">
@@ -151,7 +151,7 @@
           </table>
         </div>
       </div>
-      <input onClick="location.href='{$request-uri}';" type="button" value="Cancel"/>
+      <input onClick="location.href='{$request-uri}';" type="button" value="Cancel" name="Cancel"/>
     </form>
   </xsl:template>
   

@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: groups.xsl,v 1.6 2004/04/28 15:00:05 andreas Exp $ -->
+<!-- $Id$ -->
 <xsl:stylesheet version="1.0" xmlns="http://www.w3.org/1999/xhtml"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
@@ -44,7 +44,7 @@
                   <i18n:text>Group Affiliation</i18n:text>
                 </div>
                 <div class="lenya-box-body">
-                  <form method="GET">
+                  <form method="GET" name="group-affiliation-form">
                     <input type="hidden" name="lenya.continuation" value="{continuation}"/>
                     <table class="lenya-table-noborder-nopadding">
                       <tr>

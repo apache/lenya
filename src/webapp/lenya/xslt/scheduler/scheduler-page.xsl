@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: scheduler-page.xsl,v 1.12 2004/03/13 12:42:07 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -89,7 +89,7 @@
 
 <xsl:template match="sch:job">
   <tr>
-    <form method="GET">
+    <form method="GET" name="scheduler-form">
     	
    		<td><xsl:value-of select="substring-after(@url, concat('/', ../@name))"/></td>
     	

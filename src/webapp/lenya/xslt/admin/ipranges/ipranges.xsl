@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: ipranges.xsl,v 1.5 2004/06/01 14:29:22 andreas Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet
     version="1.0"
@@ -72,10 +72,10 @@
       </td>
       <xsl:apply-templates select="groups"/>
       <td style="vertical-align: middle">
-        <form method="GET">
+        <form method="GET" name="iprange-form">
           <input type="hidden" name="lenya.usecase" value="iprangeDeleteIPRange"/>
           <input name="iprange-id" type="hidden" value="{id}"/>
-          <input i18n:attr="value" type="submit" value="Delete"/>
+          <input i18n:attr="value" type="submit" value="Delete" name="Delete"/>
         </form>
       </td>
     </tr>
@@ -97,9 +97,9 @@
   
   
   <xsl:template name="add-iprange">
-    <form method="GET">
+    <form method="GET" name="add-iprange-form">
       <input type="hidden" name="lenya.usecase" value="iprangeAddIPRange"/>
-      <input i18n:attr="value" type="submit" value="Add IP Range"/>
+      <input i18n:attr="value" type="submit" value="Add IP Range" name="AddIPRange"/>
     </form>
   </xsl:template>
   

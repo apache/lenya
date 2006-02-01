@@ -60,7 +60,7 @@
         </i18n:translate>
       </div>
       <div class="lenya-box-body">
-        <form method="get">
+        <form method="get" name="copy-form">
         <xsl:attribute name="action"></xsl:attribute>
           <input type="hidden" name="documentid" value="{$document-id}"/>
           <input type="hidden" name="area" value="{$area}"/>
@@ -80,8 +80,8 @@
           	<tr>
           		<td>
           			<br/>
-                    <input i18n:attr="value" type="submit" value="Copy" onclick="wait()"/>&#160;
-                    <input i18n:attr="value" type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
+                    <input i18n:attr="value" type="submit" value="Copy" onclick="wait()" name="Copy"/>&#160;
+                    <input i18n:attr="value" type="button" onClick="location.href='{$request-uri}';" value="Cancel" name="Cancel"/>
                   </td>
           	</tr>
           </table>

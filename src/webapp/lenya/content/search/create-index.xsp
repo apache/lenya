@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: create-index.xsp,v 1.4 2004/03/13 12:31:34 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsp:page language="java"
           xmlns:xsp="http://apache.org/xsp"
@@ -115,7 +115,7 @@
       </xsp:logic>
         This process might take some time (follow the tail of your logfiles
         to see the indexer in progress).
-        <form action="">
+        <form action="" name="create-index-form">
         <table class="lenya-table-noborder">
           <tr>
             <td>BaseURL</td>

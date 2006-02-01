@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: rename-label.xsl,v 1.5 2004/03/13 12:42:06 gregor Exp $ -->
+<!-- $Id$ -->
 
  <xsl:stylesheet version="1.0"
    xmlns="http://www.w3.org/1999/xhtml"
@@ -39,7 +39,7 @@
 	<div class="lenya-box">
 	  <div class="lenya-box-title"><i18n:text>Edit Navigation Title</i18n:text></div>
 	  <div class="lenya-box-body">
-	    <form method="get">
+	    <form method="get" name="rename-label-form">
 	      <xsl:attribute name="action"></xsl:attribute>
 	      <input type="hidden" name="task-id" value="{$taskid}"/>
 	      <input type="hidden" name="properties.rename.label.document-id" value="{$documentid}"/>
@@ -58,8 +58,8 @@
 		  <td/>
 		  <td>
 		    <br/>
-		    <input i18n:attr="value" type="submit" value="Save"/>&#160;
-		    <input i18n:attr="value" type="button" onClick="location.href='{$requesturi}';" value="Cancel"/>
+		    <input i18n:attr="value" type="submit" value="Save" name="Save"/>&#160;
+		    <input i18n:attr="value" type="button" onClick="location.href='{$requesturi}';" value="Cancel" name="Cancel"/>
 		  </td>
 		</tr>
 	      </table>

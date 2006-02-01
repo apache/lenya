@@ -71,8 +71,8 @@
         </sch:scheduler-form>
         
         <div style="text-align: right">
-        <form action="{$referer}">
-          <input i18n:attr="value" type="submit" value="Back"/>
+        <form action="{$referer}" name="back-form">
+          <input i18n:attr="value" type="submit" value="Back" name="Back"/>
         </form>
         </div>
         </td>

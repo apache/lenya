@@ -53,7 +53,7 @@
       <div class="lenya-box-title">Change Password</div>
       <div class="lenya-box-body">
         
-        <form method="GET">
+        <form method="GET"  name="change-password-form">
           <input type="hidden" name="lenya.continuation" value="{/page/continuation}"/>
           <table class="lenya-table-noborder">
             

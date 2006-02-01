@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: groups.xsl,v 1.7 2004/04/28 15:00:08 andreas Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet
     version="1.0"
@@ -70,19 +70,19 @@
         <xsl:value-of select="name"/>
       </td>
       <td style="vertical-align: middle">
-        <form method="GET">
+        <form method="GET" name="groups-form">
           <input type="hidden" name="lenya.usecase" value="groupDeleteGroup"/>
           <input name="group-id" type="hidden" value="{id}"/>
-          <input i18n:attr="value" type="submit" value="Delete"/>
+          <input i18n:attr="value" type="submit" value="Delete" name="Delete"/>
         </form>
       </td>
     </tr>
   </xsl:template>
   
   <xsl:template name="add-group">
-    <form method="GET">
+    <form method="GET" name="addgroup-form">
           <input type="hidden" name="lenya.usecase" value="groupAddGroup"/>
-      <input i18n:attr="value" type="submit" value="Add Group"/>
+      <input i18n:attr="value" type="submit" value="Add Group" name="AddGroup"/>
     </form>
   </xsl:template>
   

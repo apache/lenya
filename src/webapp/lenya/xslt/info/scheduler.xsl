@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: scheduler.xsl,v 1.4 2004/03/13 12:42:06 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -81,7 +81,7 @@
 	</xsl:if>
       
   <tr>
-    <form method="GET">
+    <form method="GET" name="scheduler-form">
     	
 			<td>
         <!-- hidden input fields for parameters -->

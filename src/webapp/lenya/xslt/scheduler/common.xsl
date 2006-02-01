@@ -122,7 +122,7 @@
             elements['notification.subject'].value = document.getElementById('notification.subject').value;
             elements['notification.message'].value = document.getElementById('notification.message').value;
             elements['notification.tolist'].value = document.getElementById('notification.tolist').value.replace(/[^a-zA-Z0-9_,.@%-]/g, '')+','+document.getElementById('notification.tolist.preset').value;
-          "/>
+          " name="Add"/>
       </td>
     </tr>
   </xsl:template>

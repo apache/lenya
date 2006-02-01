@@ -62,10 +62,10 @@
           <p>
            The document <xsl:value-of select="document-id"/> cannot be restored because <xsl:value-of select="exception"/>
           </p> 
-          <input type="button" class="lenya-form-element" onClick="location.href='{$request-uri}';" value="Back"/>
+          <input type="button" class="lenya-form-element" onClick="location.href='{$request-uri}';" value="Back" name="Back"/>
       	</xsl:when>
       	<xsl:otherwise>
-        <form method="get">
+        <form method="get" name="restore-form">
           <xsl:attribute name="action"></xsl:attribute>
           <input type="hidden" name="lenya.usecase" value="restore"/>
           <input type="hidden" name="lenya.step" value="restore"/>
@@ -77,8 +77,8 @@
           <p>
  	      Do you really want to restore <xsl:value-of select="document-id"/>?
           </p>
-          <input type="submit" value="Restore" onclick="wait()"/>&#160;
-          <input type="button" onClick="location.href='{$request-uri}';" value="Cancel"/>
+          <input type="submit" value="Restore" onclick="wait()" name="Restore"/>&#160;
+          <input type="button" onClick="location.href='{$request-uri}';" value="Cancel" name="Cancel"/>
         </form>
     	</xsl:otherwise>
 	  </xsl:choose>	

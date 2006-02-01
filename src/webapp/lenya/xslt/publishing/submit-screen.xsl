@@ -55,7 +55,7 @@
         
       </div>
       <div class="lenya-box-body">
-            <form method="GET" action="">
+            <form method="GET" action="" name="submit-form">
                 <table class="lenya-table-noborder">
                     <tr>
                         <td class="lenya-entry-caption" valign="top">
@@ -75,7 +75,7 @@
                         <td/>
                         <td>
                             <input i18n:attr="value" type="submit" name="submit" value="Submit" onclick="wait()"/> &#160;
-                            <input i18n:attr="value" type="button" onClick="location.href='{usecase:referer}';" value="Cancel"/>
+                            <input i18n:attr="value" type="button" onClick="location.href='{usecase:referer}';" value="Cancel" name="cancel"/>
                         </td>
                     </tr>
                     <tr>

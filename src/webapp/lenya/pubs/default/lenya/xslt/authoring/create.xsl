@@ -71,7 +71,7 @@ function validateForm(theForm)
           </script>
 
           <form method="GET"
-              action="{/parent-child/referer}" onsubmit="return validateForm(this)">
+              action="{/parent-child/referer}" onsubmit="return validateForm(this)" name="create-form">
             <input type="hidden" name="properties.create.parent-id" value="{/parent-child/parentid}"/>
             <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
             <input type="hidden" name="lenya.step" value="create"/>
@@ -153,8 +153,8 @@ function validateForm(theForm)
               <tr>
                 <td/>
                 <td>
-                  <input i18n:attr="value" type="submit" value="Create"/>&#160;
-            <input i18n:attr="value" type="button" onClick="location.href='{/parent-child/referer}';" value="Cancel"/>
+                  <input i18n:attr="value" type="submit" value="Create" name="Create"/>&#160;
+            <input i18n:attr="value" type="button" onClick="location.href='{/parent-child/referer}';" value="Cancel" name="Cancel"/>
                 </td>
               </tr>
             </table>

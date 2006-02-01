@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: create.xsl,v 1.1 2004/03/24 20:46:20 gregor Exp $ -->
+<!-- $Id$ -->
 
  <xsl:stylesheet version="1.0"
    xmlns="http://www.w3.org/1999/xhtml"
@@ -44,7 +44,7 @@
     
     <xsl:if test="not(exception)">
       <p>
-	<form method="POST" action="{/parent-child/referer}">
+	<form method="POST" action="{/parent-child/referer}" name="create-form">
 	  <input type="hidden" name="parentid" value="{/parent-child/parentid}"/>
 	  <input type="hidden" name="lenya.usecase" value="create"/>
 	  <input type="hidden" name="lenya.step" value="execute"/>
@@ -59,8 +59,8 @@
 	      <td>title:</td><td><input type="text" name="title"/></td>
 	    </tr>
 	  </table>
-	  <input type="submit" value="Create"/>&#160;&#160;&#160;
-	  <input type="button" onClick="location.href='{/parent-child/referer}';" value="Cancel"/>
+	  <input type="submit" value="Create" name="Create"/>&#160;&#160;&#160;
+	  <input type="button" onClick="location.href='{/parent-child/referer}';" value="Cancel" name="Cancel"/>
 	</form>
       </p>
     </xsl:if>

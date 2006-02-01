@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: overview.xsl,v 1.7 2004/06/01 14:29:22 andreas Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet
     version="1.0"
@@ -81,9 +81,9 @@
             <tr>
               <td/>
               <td>
-				        <form method="GET">
+				        <form method="GET" name="iprangeChangeProfile-form">
 				          <input type="hidden" name="lenya.usecase" value="iprangeChangeProfile"/>
-				          <input i18n:attr="value" type="submit" value="Edit Profile"/>
+				          <input i18n:attr="value" type="submit" value="Edit Profile" name="EditProfile"/>
 				        </form>
               </td>
             </tr>
@@ -116,9 +116,9 @@
             <tr>
               <td/>
               <td>
-				        <form method="GET">
+				        <form method="GET" name="iprangeChangeGroups-form">
 				          <input type="hidden" name="lenya.usecase" value="iprangeChangeGroups"/>
-				          <input i18n:attr="value" type="submit" value="Edit Group Affiliation"/>
+				          <input i18n:attr="value" type="submit" value="Edit Group Affiliation" name="EditGroupAffiliation"/>
 				        </form>
               </td>
             </tr>

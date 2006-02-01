@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: removelabel.xsl,v 1.6 2004/03/13 12:53:30 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -37,7 +37,7 @@
       <page:title>Remove Language</page:title>
       <page:body>
 	<p>
-	  <form action="">
+	  <form action="" name="remove-language-form">
 	    
 	    <input type="hidden" name="lenya.usecase" value="removelabel"/>
 	    <input type="hidden" name="lenya.step" value="removelabel"/>
@@ -66,9 +66,9 @@
 	        <td/>
 	        <td>
 	          <br/>
-      	    <input type="submit" value="Remove"/>
+      	    <input type="submit" value="Remove" name="Remove"/>
             &#160;
-            <input type="button" onClick="location.href='{$referer}';" value="Cancel"/>
+            <input type="button" onClick="location.href='{$referer}';" value="Cancel" name="Cancel"/>
 	        </td>
 	      </tr>
 	    </table>

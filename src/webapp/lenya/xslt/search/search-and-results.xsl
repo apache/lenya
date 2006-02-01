@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: search-and-results.xsl,v 1.32 2004/05/26 22:23:37 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0" 
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
@@ -34,7 +34,7 @@
                 <div class="lenya-box">
                     <div class="lenya-box-title">Search <xsl:value-of select="search/publication-name"/></div>
                     <div class="lenya-box-body">
-                        <form>
+                        <form name="search-form">
                             <table class="lenya-table-noborder">
                                 <tr>
                                     <td>Search</td>

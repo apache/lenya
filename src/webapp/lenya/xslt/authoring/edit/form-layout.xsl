@@ -83,7 +83,7 @@
 </div>
 </div>
 
-<form method="post" action="?lenya.usecase=edit&amp;lenya.step=close&amp;form={ftype}">
+<form method="post" action="?lenya.usecase=edit&amp;lenya.step=close&amp;form={ftype}" name="workflow-form">
   <xsl:choose>
     <xsl:when test="$wfevent = '' or $wfevent = 'null'">
       <xsl:comment>No workflow event</xsl:comment>

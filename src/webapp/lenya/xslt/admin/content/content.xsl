@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: content.xsl,v 1.6 2004/03/13 12:42:10 gregor Exp $ -->
+<!-- $Id$ -->
 
  <xsl:stylesheet version="1.0"
    xmlns="http://www.w3.org/1999/xhtml"
@@ -48,13 +48,13 @@
     <div class="lenya-box">
       <div class="lenya-box-title"><i18n:text>Do you really want to delete the trash ?</i18n:text></div>
       <div class="lenya-box-body">
-        <form method="get" action="index.html">
+        <form method="get" action="index.html" name="delete-trash-form">
           <input type="hidden" name="lenya.usecase" value="deleteTrash"/>
           <input type="hidden" name="lenya.step" value="deleteTrash"/>
           <input type="hidden" name="task-id" value="{$task-id}"/>          
-          <input i18n:attr="value" type="submit" value="Yes"/>
+          <input i18n:attr="value" type="submit" value="Yes" name="Yes"/>
           &#160;
-          <input i18n:attr="value" type="button" onClick="location.href='{$request-uri}/../';" value="No"/>
+          <input i18n:attr="value" type="button" onClick="location.href='{$request-uri}/../';" value="No" name="No"/>
         </form>
       </div>
     </div>
