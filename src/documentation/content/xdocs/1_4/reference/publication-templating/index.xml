@@ -216,7 +216,7 @@ public class MyInstantiator extends AbstractLogEnabled implements Instantiator {
         <title>Add it to <code>cocoon.xconf</code> Using a Patch File</title>
         
         <p>
-          For instance <code>my-pub/config/instantiator.xconf</code>:
+          For instance <code>my-pub/config/cocoon-xconf/instantiator.xconf</code>:
         </p>
         
 <source xml:space="preserve"><![CDATA[<xconf xpath="/cocoon/template-instantiators"

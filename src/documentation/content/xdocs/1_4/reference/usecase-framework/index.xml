@@ -262,7 +262,8 @@ $PUB_HOME
             supposed to be used with, e.g. the site area.
           </li>
           <li>
-            Add the usecase handler class declaration to an XPatch file, e.g. <code>$PUB_HOME/config/usecases.xconf</code>:
+            Add the usecase handler class declaration to an XPatch file, e.g.
+            <code>$PUB_HOME/config/cocoon-xconf/usecases.xconf</code>:
 <source xml:space="preserve"><![CDATA[<xconf xpath="/cocoon/usecases"
        unless="/cocoon/usecases/component-instance[@name = 'article.editHeadline']">
   <component-instance name="article.editHeadline"
@@ -380,7 +381,8 @@ $PUB_HOME
           <li>Implement the handler class and put it in <code>$PUB_HOME/java/src</code>.
           In most cases, you will extend the core usecase handler class to inherit the basic functionality.</li>
           <li>
-            Declare it in an <em>xpatch</em> file, for instance <code>$PUB_HOME/config/usecases.xconf</code>:
+            Declare it in an <em>xpatch</em> file, for instance
+            <code>$PUB_HOME/config/cocoon-xconf/usecases.xconf</code>:
 <source xml:space="preserve"><![CDATA[<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'mypub/admin.addUser']">
   <component-instance name="mypub/admin.addUser"
                       logger="lenya.usecases.editHeadline"

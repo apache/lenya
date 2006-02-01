@@ -161,7 +161,8 @@
   <section><title>The Resource Type Definition</title>
     <p>
     To declare a custom resource type and assign the creator, schema etc. to it,
-	  add the component instance to an XPatch file (e.g., <code>{publication}/config/resourcetypes.xconf</code>):
+	  add the component instance to an XPatch file (e.g.,
+	  <code>{publication}/config/cocoon-xconf/resourcetypes.xconf</code>):
     </p>
     <source><![CDATA[<xconf xpath="/cocoon/resource-types"
        unless="/cocoon/resource-types/component-instance[@name = 'profile']">
