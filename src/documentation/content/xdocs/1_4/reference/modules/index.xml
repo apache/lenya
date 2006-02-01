@@ -36,7 +36,7 @@
         Some modules are included in the Lenya distribution:
       </p>
       <ul>
-        <li><strong>search</strong> - search functionality</li>
+        <li><strong>lucene</strong> - search functionality</li>
         <li><strong>sitetree</strong> - manage documents in a tree-like structure</li>
         <li><strong>jcr</strong> - store content in a <a href="http://www.jcp.org/en/jsr/detail?id=170">JCR</a> repository</li>
         <li><strong>xhtml</strong> - XHTML-based resource type</li>
