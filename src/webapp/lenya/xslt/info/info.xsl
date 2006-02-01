@@ -112,6 +112,11 @@
    <tr><td class="lenya-entry-caption"><i18n:text>Document ID</i18n:text>:</td><td><xsl:value-of select="lenya-info:documentid"/></td></tr>
    <tr><td class="lenya-entry-caption"><i18n:text>Resource Type</i18n:text>:</td><td><xsl:value-of select="lenya-info:resource-type"/></td></tr>
    <tr><td class="lenya-entry-caption"><i18n:text>Visibility in navigation</i18n:text>:</td><td><i18n:text><xsl:value-of select="lenya-info:visibleinnav"/></i18n:text></td></tr>
+
+   <xsl:if test="$area='trash'">
+     <tr><td class="lenya-entry-caption"><i18n:text>Original Path</i18n:text>:</td><td><xsl:value-of select="lenya-info:identifier"/></td></tr>
+   </xsl:if>
+
    </table>
   </xsl:when>
   <xsl:when test="$languageexists = 'false'">
