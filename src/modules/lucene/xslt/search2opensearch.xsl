@@ -93,7 +93,7 @@
     <xsl:param name="next-index"/>
 
     <xsl:if test="$has-previous = 'true'">
-      <form action="findIt">
+      <form action="findIt" id="form-opensearch_previous">
         <input type="hidden" name="startIndex" value="{$previous-index}"/>
         <input type="hidden" name="queryString" value="{$query-string}"/>
         <input type="hidden" name="pageLength" value="{$page-length}"/>
@@ -102,7 +102,7 @@
     </xsl:if>
     
     <xsl:if test="$has-next = 'true'">
-      <form action="findIt">
+      <form action="findIt" id="form-opensearch_next">
         <input type="hidden" name="startIndex" value="{$next-index}"/>
         <input type="hidden" name="queryString" value="{$query-string}"/>
         <input type="hidden" name="pageLength" value="{$page-length}"/>

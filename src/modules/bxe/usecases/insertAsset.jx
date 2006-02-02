@@ -27,7 +27,7 @@
   </page:head>
 
   <page:body>
-    <form method="POST" name="image">
+    <form method="POST" name="image" id="image">
       <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
       <table class="lenya-table">
@@ -95,7 +95,7 @@
       </table>
     </form>
      <jx:if test="${usecase.getParameter('document').getArea().equals('authoring')}">
-      <form method="POST" enctype="multipart/form-data">
+      <form method="POST" enctype="multipart/form-data" id="form-new_asset">
         <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
         <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
         <table class="lenya-table-noborder">
@@ -123,7 +123,7 @@
           <tr>
             <td/>
             <td>
-              <input i18n:attr="value" type="submit" value="New Asset"/>
+              <input i18n:attr="value" type="submit" value="New Asset" name="input-new_asset"/>
             </td>
           </tr>
         </table>

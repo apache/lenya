@@ -38,9 +38,9 @@
         <table class="lenya-table-noborder">
       	  <tr>
       	    <td>
-              <form method="GET">
+              <form method="GET" id="form-add_iprange">
                 <input type="hidden" name="lenya.usecase" value="admin.addIPRange"/>
-                <input i18n:attr="value" type="submit" value="Add IP Range"/>
+                <input i18n:attr="value" type="submit" value="Add IP Range" name="input-add_iprange"/>
               </form>
             </td>
           </tr>
@@ -68,10 +68,10 @@
               </jx:forEach>
             </td>
             <td style="vertical-align: middle">
-              <form method="GET">
+              <form method="GET" id="form-delete_iprange">
                 <input type="hidden" name="lenya.usecase" value="admin.deleteIPRange"/>
                 <input name="ipRangeId" type="hidden" value="${ipRange.getId()}"/>
-                <input i18n:attr="value" type="submit" value="Delete"/>
+                <input i18n:attr="value" type="submit" value="Delete" name="input-delete_iprange"/>
               </form>
             </td>
           </tr>

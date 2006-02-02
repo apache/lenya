@@ -38,7 +38,7 @@
       <div class="lenya-box-body">
         <jx:choose>
           <jx:when test="${not(empty(usecase.getParameter('message')))}"> <!-- there is a warning -->
-            <form method="get">
+            <form method="get" id="form-deactivate">
               <div class="lenya-box">
                 <div class="lenya-box-title"><i18n:text>Deactivate Document</i18n:text></div>
                 <div class="lenya-box-body">
@@ -61,7 +61,7 @@
                   </table>
                 </div>
               </div>
-              <input onClick="location.href='{$request-uri}';" type="button" value="Cancel"/>
+              <input onClick="location.href='{$request-uri}';" type="button" value="Cancel" name="input-cancel"/>
             </form>
           </jx:when>
           <jx:otherwise> <!-- no warning -->
@@ -95,8 +95,8 @@
                 </tr>
                 <tr>
                   <td>
-                    <br/><input i18n:attr="value" type="submit" value="Deactivate"/>&#160; 
-                    <input i18n:attr="value" type="button" onClick="location.href='${requesturi}';" value="Cancel"/> 
+                    <br/><input i18n:attr="value" type="submit" value="Deactivate" name="input-deactivate"/>&#160; 
+                    <input i18n:attr="value" type="button" onClick="location.href='${requesturi}';" value="Cancel" name="input-cancel"/> 
                   </td>
                 </tr>
               </table>

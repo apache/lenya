@@ -57,7 +57,7 @@
             </td>
             <td align="right"><jx:out value="${java.text.DateFormat.getDateInstance().format(asset.getLastModified())}"/></td>
             <td>
-              <form method="POST">
+              <form method="POST" id="form-assets">
                 <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
                 <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
                 <input type="hidden" name="delete" value="${asset.getName()}"/>
@@ -71,7 +71,7 @@
         </jx:forEach>
       </table>
      <jx:if test="${usecase.getParameter('document').getArea().equals('authoring')}">
-      <form method="POST" enctype="multipart/form-data">
+      <form method="POST" enctype="multipart/form-data" id="form-add_asset">
         <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
         <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
         <table class="lenya-table-noborder">

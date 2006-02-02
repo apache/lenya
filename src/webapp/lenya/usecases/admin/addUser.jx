@@ -28,7 +28,7 @@
     
     <h1><i18n:text>Add <jx:out value="${request.getParameter('userType')}"/></i18n:text></h1>
     
-    <form>
+    <form id="form-add_user">
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
       <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
 

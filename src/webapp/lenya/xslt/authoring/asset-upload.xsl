@@ -64,7 +64,7 @@ Override this template to add scripts etc.
   <div class="lenya-box">
     <div class="lenya-box-title"><i18n:text key="lenya.assetupload.subtitle"/></div>
     <div class="lenya-box-body">
-      <form name="fileinput" action="" method="post" enctype="multipart/form-data" onsubmit="return check_upload(fileinput, ext)">
+      <form name="fileinput" id="fileinput" action="" method="post" enctype="multipart/form-data" onsubmit="return check_upload(fileinput, ext)">
         <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
         <input type="hidden" name="lenya.step" value="asset-upload"/>
         <input type="hidden" name="task-id" value="insert-asset"/>
@@ -101,8 +101,8 @@ Override this template to add scripts etc.
           <tr>
             <td/>
             <td>
-              <input i18n:attr="value" type="submit" value="Add" />&#160;
-              <input i18n:attr="value" type="button" onClick="location.href='javascript:window.close();';" value="Cancel"/>
+              <input i18n:attr="value" type="submit" value="Add" name="input-add"/>&#160;
+              <input i18n:attr="value" type="button" onClick="location.href='javascript:window.close();';" value="Cancel" name="input-cancel"/>
             </td>
           </tr>
         </table>
@@ -116,7 +116,7 @@ Override this template to add scripts etc.
   <div class="lenya-box">
     <div class="lenya-box-title"><i18n:text>Asset Library</i18n:text></div>
     <div class="lenya-box-body">
-      <form name="assetlibrary" action="">
+      <form name="assetlibrary" id="assetlibrary" action="">
         <table class="lenya-table-noborder">
           <xsl:if test="not(lenya-info:asset)">
             <tr><td colspan="5" class="lenya-form-caption"><i18n:text>No assets available</i18n:text></td></tr>

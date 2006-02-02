@@ -61,10 +61,10 @@
         <tr>
           <td/>
           <td>
-            <form>
+            <form id="form-iprange_edit_profile">
               <input type="hidden" name="lenya.usecase" value="admin.ipRangeProfile"/>
               <input type="hidden" name="ipRangeId" value="${ipRange.getId()}"/>
-              <input i18n:attr="value" type="submit" value="Edit Profile"/>
+              <input i18n:attr="value" type="submit" value="Edit Profile" name="input-iprange_edit_profile"/>
             </form>
           </td>
         </tr>
@@ -81,10 +81,10 @@
         <tr>
           <td/>
           <td>
-            <form>
+            <form id="form-iprange_edit_group_affiliation">
               <input type="hidden" name="lenya.usecase" value="admin.ipRangeGroups"/>
               <input type="hidden" name="ipRangeId" value="${ipRange.getId()}"/>
-              <input i18n:attr="value" type="submit" value="Edit Group Affiliation"/>
+              <input i18n:attr="value" type="submit" value="Edit Group Affiliation" name="input-iprange_edit_group_affiliation"/>
             </form>
           </td>
         </tr>
@@ -92,7 +92,7 @@
         <tr>
           <td/>
           <td>
-            <form>
+            <form id="form-iprange_cancel">
               <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
               <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
               <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>

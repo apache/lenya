@@ -52,7 +52,7 @@
         </tr>
         <tr>
           
-          <form method="get">
+          <form method="get" id="form-addCredential_user">
             <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
             <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
             <td><i18n:text>user</i18n:text></td>
@@ -71,13 +71,13 @@
               </select>
             </td>
             <td>
-              <input i18n:attr="value" type="submit" name="addCredential_user" value="Add"/>
+              <input i18n:attr="value" type="submit" name="addCredential_user" value="Add" name="input-add"/>
             </td>
           </form>
                     
         </tr>
         <tr>
-          <form method="get">
+          <form method="get" id="form-addCredential_group">
             <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
             <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
             <td><i18n:text>group</i18n:text></td>
@@ -96,13 +96,13 @@
               </select>
             </td>
             <td>
-              <input i18n:attr="value" type="submit" name="addCredential_group" value="Add"/>
+              <input i18n:attr="value" type="submit" name="addCredential_group" value="Add" name="input-add"/>
             </td>
           </form>
         </tr>
         <jx:if test="${area.equals('live')}">
           <tr>
-            <form method="get">
+            <form method="get" id="form-addCredential_ipRange">
               <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
               <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
               <td><i18n:text>IP Range</i18n:text></td>
@@ -121,7 +121,7 @@
                 </select>
               </td>
               <td>
-                <input i18n:attr="value" type="submit" name="addCredential_ipRange" value="Add"/>
+                <input i18n:attr="value" type="submit" name="addCredential_ipRange" value="Add" name="input-add"/>
               </td>
             </form>
           </tr>
@@ -134,7 +134,7 @@
           </th>
         </tr>
         <jx:forEach var="credential" items="${usecase.getParameter('urlCredentials')}">
-          <form method="get">
+          <form method="get" id="form-deleteCredential">
             <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
             <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
             <tr>
@@ -150,7 +150,7 @@
                 <jx:out value="${credential.getRoleId()}"/>
               </td>
               <td>
-                <input type="submit" name="deleteCredential_${credential.getType()}" i18n:attr="value" value="Delete"/>
+                <input type="submit" name="deleteCredential_${credential.getType()}" i18n:attr="value" value="Delete" name="input-delete"/>
               </td>
             </tr>
           </form>

@@ -43,7 +43,7 @@
         </jx:otherwise>
       </jx:choose>
     </p>
-    <form>
+    <form id="form-delete_trash">
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
       <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
       <jx:choose>

@@ -33,8 +33,8 @@ Apache Lenya includes software developed by the <a href="http://www.apache.org/"
 <br /><br /> 
 Copyright (C) 1999-2004 The Apache Software Foundation. All rights reserved.
 </p>
-<form>
-<input type="button" value="Back" onClick="history.go(-1)"/>
+<form id="form-about-back">
+<input type="button" value="Back" onClick="history.go(-1)" name="input-back"/>
 </form>		
 </div>
       </page:body>

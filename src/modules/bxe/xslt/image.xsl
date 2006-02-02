@@ -70,7 +70,7 @@
                 </script>
                 <div class="lenya-box">
                     <div class="lenya-box-title"><i18n:text key="lenya.assetupload.subtitle"/></div>
-                    <form name="fileinput" 
+                    <form name="fileinput" id="fileinput"
                         action="" 
                         method="post" enctype="multipart/form-data" 
                         onsubmit="return check_upload(fileinput, ext)">
@@ -133,10 +133,10 @@
                                 <td/>
                                 <td> <input type="submit" 
                                     i18n:attr="value"
-                                    value="Add"/>&#160; <input type="button" 
+                                    value="Add" name="input-add"/>&#160; <input type="button" 
                                     i18n:attr="value"
                                     onClick="location.href='javascript:window.close();';" 
-                                    value="Cancel"/> </td>
+                                    value="Cancel" name="input-cancel"/> </td>
                             </tr>
                         </table>
                     </form>

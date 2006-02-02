@@ -27,7 +27,7 @@
     <div id="contentblock1" class="lenya-tab">
     <h1><i18n:text>Delete Group</i18n:text></h1>
     
-    <form>
+    <form id="form-delete_group">
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
       <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
 

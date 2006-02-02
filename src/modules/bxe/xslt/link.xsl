@@ -85,7 +85,7 @@
 </div>
 </td>
 <td>
- <form action="" name="link" onsubmit="insertLink()">
+ <form action="" name="link" id="link" onsubmit="insertLink()">
                         <table class="lenya-table-noborder">
                                 <tr>
                                 <td colspan="2" class="lenya-form-caption">You can either click on a node in the tree for an internal link or enter a link in the URL field. </td>
@@ -123,7 +123,7 @@
                             <tr>
                                 <td/>
                                 <td> <input type="submit" 
-                                    value="Insert"/>
+                                    value="Insert" name="input-insert"/>
                                 </td>
                             </tr>
                         </table>

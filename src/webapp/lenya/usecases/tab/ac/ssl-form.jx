@@ -22,7 +22,7 @@
   xmlns="http://www.w3.org/1999/xhtml"
   name="">
 <jx:set var="area" value="${usecase.getParameter('document').getArea()}"/>
-<form method="get" name="form_ssl_${area}">
+<form method="get" name="form_ssl_${area}" id="form_ssl_${area}">
   <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
   <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
   <input type="hidden" name="change_ssl" value="true"/>

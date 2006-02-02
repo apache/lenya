@@ -37,7 +37,7 @@
       <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
 
       <div class="lenya-box-body">
-        <form>
+        <form id="form-logout">
           <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
           <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
           <table class="lenya-table-noborder">

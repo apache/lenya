@@ -91,7 +91,7 @@
     <script>
       var ext = '<xsl:value-of select="$extensions"/>';
     </script>  
-        <form name="fileinput" action="{/lenya-info:info/lenya-info:assets/lenya-info:request-uri}" method="post" enctype="multipart/form-data" onsubmit="return check_upload(fileinput, ext)">
+        <form name="fileinput" id="fileinput" action="{/lenya-info:info/lenya-info:assets/lenya-info:request-uri}" method="post" enctype="multipart/form-data" onsubmit="return check_upload(fileinput, ext)">
           <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
           <input type="hidden" name="lenya.event" value="edit"/>
           <xsl:choose>
@@ -171,8 +171,8 @@
             <tr>
               <td/>
               <td>
-                <input i18n:attr="value" type="submit" value="Submit"/>&#160;
-                <input i18n:attr="value" type="button" onClick="location.href='{/lenya-info:info/lenya-info:assets/lenya-info:request-uri}?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=false';" value="Cancel"/>
+                <input i18n:attr="value" type="submit" value="Submit" name="input-submit"/>&#160;
+                <input i18n:attr="value" type="button" onClick="location.href='{/lenya-info:info/lenya-info:assets/lenya-info:request-uri}?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=false';" value="Cancel" name="input-cancel"/>
               </td>
             </tr>
           </table>
@@ -193,7 +193,7 @@
           </xsl:choose>
           <div class="lenya-box-body">
             <form method="GET"
-              action="">
+              action="" id="form-add_existing">
               <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
               <input type="hidden" name="lenya.step" value="insert"/>
               <input type="hidden" name="lenya.event" value="edit"/>
@@ -238,8 +238,8 @@
                 <tr>
                   <td/>
                   <td colspan="4">
-                    <input i18n:attr="value" type="submit" value="Submit"/>&#160;
-                    <input i18n:attr="value" type="button" onClick="location.href='{/lenya-info:info/lenya-info:assets/lenya-info:request-uri}?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=false';" value="Cancel"/>
+                    <input i18n:attr="value" type="submit" value="Submit" name="input-submit"/>&#160;
+                    <input i18n:attr="value" type="button" onClick="location.href='{/lenya-info:info/lenya-info:assets/lenya-info:request-uri}?lenya.usecase=checkin&amp;lenya.step=checkin&amp;backup=false';" value="Cancel" name="input-cancel"/>
                   </td>
                 </tr>
               </table>

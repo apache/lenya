@@ -31,7 +31,7 @@
         <i18n:text>Import Publication into JCR</i18n:text>
       </div>
       <div class="lenya-box-body">
-        <form method="get" action="">
+        <form method="get" action="" id="form-import_pub_into_jcr">
           <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
           <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
           <table class="lenya-table-noborder">

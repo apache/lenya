@@ -70,10 +70,10 @@
         <tr>
           <td/>
           <td>
-            <form>
+            <form id="form-edit_user_profile">
               <input type="hidden" name="lenya.usecase" value="admin.userProfile"/>
               <input type="hidden" name="userId" value="${user.getId()}"/>
-              <input i18n:attr="value" type="submit" value="Edit Profile"/>
+              <input i18n:attr="value" type="submit" value="Edit Profile" name="input-edit_user_profile"/>
             </form>
           </td>
         </tr>
@@ -90,10 +90,10 @@
         <tr>
           <td/>
           <td>
-            <form>
+            <form id="form-edit_group_affiliation">
               <input type="hidden" name="lenya.usecase" value="admin.userGroups"/>
               <input type="hidden" name="userId" value="${user.getId()}"/>
-              <input i18n:attr="value" type="submit" value="Edit Group Affiliation"/>
+              <input i18n:attr="value" type="submit" value="Edit Group Affiliation" name="input-edit_group_affiliation"/>
             </form>
           </td>
         </tr>
@@ -101,7 +101,7 @@
         <tr>
           <td/>
           <td>
-            <form>
+            <form id="form-user_profile_cancel">
               <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
               <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
               <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>

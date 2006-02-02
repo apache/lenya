@@ -46,8 +46,8 @@
               <tr><td><i18n:text>Date</i18n:text>:</td><td><xsl:value-of select="rc:date"/></td></tr>
               <tr><td><i18n:text>Filename</i18n:text>:</td><td><xsl:value-of select="rc:filename"/></td></tr>
             </table>
-            <form>
-              <input type="button" value="OK" onClick="history.go(-1)"/>
+            <form id="form-back">
+              <input type="button" value="OK" onClick="history.go(-1)" name="input-ok"/>
             </form>		
   	      </div>
   	    </div>
@@ -68,8 +68,8 @@
               <tr><td><i18n:text>Date</i18n:text>:</td><td><xsl:value-of select="rc:date"/></td></tr>
               <tr><td><i18n:text>Filename</i18n:text>:</td><td><xsl:value-of select="rc:filename"/></td></tr>
             </table>
-            <form>
-              <input type="button" value="OK" onClick="history.go(-1)"/>
+            <form id="form-back">
+              <input type="button" value="OK" onClick="history.go(-1)" name="input-ok"/>
             </form>		
   	      </div>
   	    </div>
@@ -91,8 +91,8 @@
             <table>
               <tr><td><i18n:text>Filename</i18n:text>:</td><td><xsl:value-of select="rc:filename"/></td></tr>
             </table>
-            <form>
-              <input type="button" value="OK" onClick="history.go(-1)"/>
+            <form id="form-back">
+              <input type="button" value="OK" onClick="history.go(-1)" name="input-ok"/>
             </form>		
        	  </div>
   	    </div>

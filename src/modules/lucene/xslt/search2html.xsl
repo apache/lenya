@@ -107,7 +107,7 @@
     <xsl:param name="next-index"/>
 
     <xsl:if test="$has-previous = 'true'">
-      <form action="">
+      <form action="" id="form-previous">
         <input type="hidden" name="lenya.usecase" value="search"/>
         <input type="hidden" name="startIndex" value="{$previous-index}"/>
         <input type="hidden" name="queryString" value="{$query-string}"/>
@@ -117,7 +117,7 @@
     </xsl:if>
     
     <xsl:if test="$has-next = 'true'">
-      <form action="">
+      <form action="" id="form-next">
         <input type="hidden" name="lenya.usecase" value="search"/>
         <input type="hidden" name="startIndex" value="{$next-index}"/>
         <input type="hidden" name="queryString" value="{$query-string}"/>

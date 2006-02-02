@@ -42,7 +42,7 @@
             <input type="button" class="lenya-form-element" onClick="location.href='${requesturi}';" value="Back"/>
           </jx:when>
           <jx:otherwise>
-            <form method="get">
+            <form method="get" id="form-restore">
               <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
               <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
               <i18n:translate>

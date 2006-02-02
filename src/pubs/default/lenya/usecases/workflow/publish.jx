@@ -29,7 +29,7 @@
         <i18n:text>Publish</i18n:text>
       </div>
       <div class="lenya-box-body">
-        <form>
+        <form id="form-publish">
           <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
           <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
           <table class="lenya-table-noborder">

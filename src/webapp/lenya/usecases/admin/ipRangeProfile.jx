@@ -26,7 +26,7 @@
       
     <h1><i18n:text>IP Range Profile</i18n:text></h1>
     
-    <form>
+    <form id="form-iprange_profile">
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
       <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
       

@@ -27,7 +27,7 @@
 
 <xsl:template match="nav:site">
   <div id="search">
-    <form action="?">
+    <form action="?" id="form-search">
       <p>
         <input class="searchfield" type="text" name="queryString" alt="Search field"/>
 	<select name="lenya.usecase">
@@ -35,7 +35,7 @@
 	  <option value="lucene.externalOpensearch">External</option>
 	</select>
         <input type="hidden" value="20" name="pageLength"/>
-        <input class="searchsubmit" type="submit" value="Go"/>
+        <input class="searchsubmit" type="submit" value="Go" name="input-go"/>
       </p>
     </form>
   </div>

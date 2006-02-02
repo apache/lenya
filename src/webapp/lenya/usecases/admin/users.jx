@@ -40,11 +40,11 @@
     	    </td>
     	    <jx:forEach var="type" items="${usecase.getParameter('userTypes')}">
     	      <td>
-    	        <form method="GET">
+    	        <form method="GET" id="form-add_user">
                 <input type="hidden" name="lenya.usecase" value="admin.addUser"/>
                 <input type="hidden" name="className" value="${type.getClassName()}"/>
                 <input type="hidden" name="userType" value="${type.getKey()}"/>
-                <input i18n:attr="value" type="submit" value="${type.getKey()}"/>
+                <input i18n:attr="value" type="submit" value="${type.getKey()}" name="input-add_user"/>
               </form>
     	      </td>
     	    </jx:forEach>
@@ -73,15 +73,15 @@
               </jx:forEach>
             </td>
             <td style="vertical-align: middle">
-              <form method="GET">
+              <form method="GET" id="form-delete_user">
                 <input type="hidden" name="lenya.usecase" value="admin.deleteUser"/>
                 <input name="userId" type="hidden" value="${user.getId()}"/>
                 <jx:choose>
                   <jx:when test="${user.equals(usecase.getParameter('currentUser'))}">
-                    <input i18n:attr="value" type="submit" value="Delete" disabled="disabled"/>
+                    <input i18n:attr="value" type="submit" value="Delete" disabled="disabled" name="input-delete_user"/>
                   </jx:when>
                   <jx:otherwise>
-                    <input i18n:attr="value" type="submit" value="Delete"/>
+                    <input i18n:attr="value" type="submit" value="Delete" name="input-delete_user"/>
                   </jx:otherwise>
                 </jx:choose>
               </form>

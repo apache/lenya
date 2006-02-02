@@ -47,7 +47,7 @@
       <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
 
       <div class="lenya-box-body">
-        <form name="login" method="post" action="?lenya.continuation=${continuation.id}&amp;lenya.usecase=${request.getParameter('lenya.usecase')}">
+        <form name="login" id="login" method="post" action="?lenya.continuation=${continuation.id}&amp;lenya.usecase=${request.getParameter('lenya.usecase')}">
 <!--
           <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
           <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
