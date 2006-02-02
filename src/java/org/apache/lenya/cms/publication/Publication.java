@@ -179,6 +179,14 @@ public interface Publication {
     Proxy getProxy(Document document, boolean isSslProtected);
 
     /**
+     * Returns the proxy which is used for the given area and the ssl parameter.
+     * @param area area
+     * @param isSslProtected A boolean value.
+     * @return A proxy or <code>null</code> if no proxy is defined for these parameters.
+     */
+    Proxy getProxy(String area, boolean isSslProtected);
+
+    /**
      * @return The templates of the publication.
      */
     String[] getTemplateIds();

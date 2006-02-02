@@ -359,15 +359,23 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
      *      boolean)
      */
     public Proxy getProxy(Document document, boolean isSslProtected) {
-        loadConfiguration();
-        Object key = getProxyKey(document.getArea(), isSslProtected);
-        Proxy proxy = (Proxy) this.areaSsl2proxy.get(key);
+        Proxy proxy = getProxy(document.getArea(), isSslProtected);
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Resolving proxy for [" + document + "] SSL=[" + isSslProtected + "]");
             getLogger().debug("Resolved proxy: [" + proxy + "]");
         }
 
+        return proxy;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Publication#getProxy(java.lang.String, boolean)
+     */
+    public Proxy getProxy(String area, boolean isSslProtected) {
+        loadConfiguration();
+        Object key = getProxyKey(area, isSslProtected);
+        Proxy proxy = (Proxy) this.areaSsl2proxy.get(key);
         return proxy;
     }
 

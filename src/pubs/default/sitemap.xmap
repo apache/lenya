@@ -118,7 +118,7 @@
           <map:parameter name="prefix" value="fallback://"/>
           <map:when test="xslt/page2xhtml-{4}.xsl">
             <map:transform src="fallback://xslt/page2xhtml-{4}.xsl">
-              <map:parameter name="root" value="{page-envelope:context-prefix}/{2}/{3}"/>
+              <map:parameter name="root" value="{base-url:{2}:{3}}"/>
               <map:parameter name="url" value="{5}"/>
               <map:parameter name="document-id" value="{page-envelope:document-id}"/>
               <map:parameter name="document-type" value="{page-envelope:document-type}"/>
@@ -128,7 +128,7 @@
           </map:when>
           <map:otherwise>
             <map:transform src="fallback://xslt/page2xhtml-xhtml.xsl">
-              <map:parameter name="root" value="{page-envelope:context-prefix}/{2}/{3}"/>
+              <map:parameter name="root" value="{base-url:{2}:{3}}"/>
               <map:parameter name="url" value="{5}"/>
               <map:parameter name="document-id" value="{page-envelope:document-id}"/>
               <map:parameter name="document-type" value="{page-envelope:document-type}"/>
