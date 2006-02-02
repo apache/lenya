@@ -24,8 +24,8 @@
   <xsl:param name="width"/>
   
   <xsl:template match="/">
-    <svg xmlns="http://www.w3.org/2000/svg" width="{$width}" height="{$height}" version="1.1">
-      <image xmlns:xlink="http://www.w3.org/1999/xlink" x="0" y="0" width="{$width}" height="{$height}" xlink:href="{$url}"/>        
+    <svg width="{$width}" height="{$height}" version="1.1">
+      <image x="0" y="0" width="{$width}" height="{$height}" xlink:href="{$url}"/>        
     </svg>
   </xsl:template>
 </xsl:stylesheet>
