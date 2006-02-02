@@ -64,7 +64,7 @@
         <!-- Strip xhtml namespace from <head> and <body> element -->
         <map:transform src="fallback://lenya/xslt/cforms/strip-xhtml-namespace.xsl"/>
         <map:transform src="fallback://lenya/xslt/cforms/forms-samples-styling.xsl">
-          <map:parameter name="resources-uri" value="/cforms"/>
+          <map:parameter name="resources-uri" value="{page-envelope:context-prefix}/cforms"/>
         </map:transform>
         <map:transform src="fallback://lenya/xslt/cforms/add-xhtml-namespace.xsl"/>
         <map:match pattern="view/menu/**">
