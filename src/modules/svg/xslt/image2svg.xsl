@@ -25,7 +25,7 @@
     </xsl:copy>
   </xsl:template>
   
-  <xsl:template match="@src">
+  <xsl:template match="xhtml:img/@src">
     <xsl:attribute name="src">
       <xsl:value-of select="."/>
       <xsl:text>?</xsl:text>
