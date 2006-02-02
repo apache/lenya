@@ -28,7 +28,7 @@
             <map:parameter name="url" value="fallback://resources/{../2}/{../3}.{../4}"/>
             <map:parameter name="type" value="file"/>
             <map:transform src="xslt/scale.xsl">
-              <map:parameter name="url" value="fallback://resources/{../../2}/{../../3}.{../../4}"/>
+              <map:parameter name="url" value="{fallback:resources/{../../2}/{../../3}.{../../4}}"/>
               <map:parameter name="width" value="{request-param:width}"/>
               <map:parameter name="height" value="{request-param:height}"/>
             </map:transform>
@@ -37,11 +37,11 @@
             <map:parameter name="url" value="fallback://resources/shared/{../3}.{../4}"/>
             <map:parameter name="type" value="file"/>
             <map:transform src="xslt/scale.xsl">
-              <map:parameter name="url" value="fallback://resources/shared/{../../3}.{../../4}"/>
+              <map:parameter name="url" value="{fallback:resources/shared/{../../3}.{../../4}}"/>
               <map:parameter name="width" value="{request-param:width}"/>
               <map:parameter name="height" value="{request-param:height}"/>
             </map:transform>
-          </map:act>         
+          </map:act>
           <map:serialize type="svg2jpeg"/>
         </map:match> 
 
