@@ -95,7 +95,7 @@
       </p>
       <ul>
         <li>the <em>content</em> JCR node, and</li>
-        <li>the <em>site</em> JCR node</li>.
+        <li>the <em>site</em> JCR node.</li>
       </ul>
       <p>
         The content JCR node can have an arbitrary number of child nodes, which are called <em>content </em>

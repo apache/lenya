@@ -330,7 +330,8 @@ $PUB_HOME
           Take care of adding the hidden <code>lenya.usecase</code> and <code>lenya.continuation</code> fields as shown above.
           </p>
           
-          <section>
+      </section>
+      <section>
             <title>Displaying Usecases in Tabs</title>
             <p>
               It is possible to use a tab-based layout to assemble a set of usecases.
@@ -359,9 +360,35 @@ $PUB_HOME
               </li>
             </ol>
           </section>
-          
-      </section>
-      
+            <section id="dyn_exit">
+              <title>Dynamically setting exit url</title>
+              <p> Like you see above you can specify the "exit" URL of the 
+                usecase via the component configuration, however this is 
+                sometimes not enough because you may need to set the exit url 
+                of a usecase dynamically.</p>
+              <p>Consider the use case is that you have a form and you need two 
+                possibilities to exit the usecase. </p>
+              <ol>
+                <li>Pressing on "submit" will save and exit to the same page in 
+                  the authoring area. </li>
+                <li>The other exit point could be a dynamic link based on a <![CDATA[<a href=""/>]]>
+                   where the user get redirected after submitting the form (e.g. to edit the linked doc with BXE).</li>
+              </ol>
+              <p>First you need to add another request parameter (e.g., 
+                "TRANSFER_FIELD") denoting that the user clicked the link. This 
+                could be e.g. a hidden field which contains the url to transfer 
+                the request. Further you need to override 
+                Usecase.getTargetURL() to return the BXE usecase URL if the 
+                "TRANSFER_FIELD" parameter is set, and super.getTargetURL() 
+                otherwise.</p>
+              <source><![CDATA[public String getTargetURL(boolean success) {
+  String tmpTransfer = getParameterAsString("TRANSFER_FIELD", null);
+   if (!tmpTransfer.equals("") & tmpTransfer != null)
+     return tmpTransfer;
+   else
+     return super.getTargetURL(success);
+}]]></source>
+            </section>
     </section>
     
     <section>
