@@ -196,11 +196,9 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                         getLogger().debug(this.indent + "href URL: [" + href + "]");
                     }
 
-                    String _context = this.request.getContextPath();
+                    if (href.startsWith("/" + publication.getId())) {
 
-                    if (href.startsWith(_context + "/" + publication.getId())) {
-
-                        final String webappUrlWithQueryString = href.substring(_context.length());
+                        final String webappUrlWithQueryString = href;
                         String webappUrlWithAnchor;
                         
                         String queryString = null;
