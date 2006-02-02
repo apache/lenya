@@ -43,6 +43,12 @@
       <!-- matches modules/*/**.* -->
       <map:match pattern="*/**.*">
         
+        <map:match type="regexp" pattern="(.*\.)(html|HTML|htm|HTM)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="text/html"/>
+        </map:match> 
+        <map:match type="regexp" pattern="(.*\.)(xml)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="text/xml"/>
+        </map:match>        
         <map:match type="regexp" pattern="(.*\.)(rng)$"> 
           <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="application/xml"/>
         </map:match> 
