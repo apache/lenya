@@ -76,6 +76,7 @@
         <lenya href="lenya.html" label="lenya:"/>
         <lenyadoc href="lenyadoc.html" label="lenyadoc:"/>
       </protocols>
+      <link-management href="link-management.html" label="Link Management"/>
       <notification href="notification.html" label="Notification"/>
       <repository href="repository/index.html" label="Repository"/>
     </reference>
