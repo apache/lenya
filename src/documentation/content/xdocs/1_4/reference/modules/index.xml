@@ -108,25 +108,22 @@ modules.root.dirs=src/modules:src/webapp/lenya/pubs/default/modules:/home/john/m
         directory. The Java source files go into the <code>&lt;module&gt;/java/src</code> directory, they are compiled
         automatically by the Lenya build process.
       </p>
-      </section>
       
-      <section>
-        <title>Sitemaps for Module Usecases</title>
+    </section>
+    
+    <section>
+      <title>Calling the Module Sitemap</title>
       
       <p>
-        Module-specific usecase sitemaps must be located at
+        The following URL syntax is used to make a call to a module sitemap:
       </p>
-<source><![CDATA[<module>/usecases/<usecase-name>/usecase.xmap]]></source>
-      <p>
-        To make a call into a usecase sitemap, use a request of the following form:
-      </p>
-<source><![CDATA[cocoon://core/modules/<module>/usecases/<usecase-name>/<request>]]></source>
+<source><![CDATA[cocoon://modules/<module>/**]]></source>
       
       <p>
-        The usecase sitemap is located at <code>newsletter/usecases/send/usecase.xmap</code>. To request
+        The module sitemap is located at <code>newsletter/sitemap.xmap</code>. To request
         the latest newsletter and display it on the confirmation screen using the CInclude approach
         (for more information, see documentation about the usecase framework), you could for instance use
-        the URI <code>cocoon://core/modules/newsletter/usecases/send/latestNewsletter.xml</code>:
+        the URI <code>cocoon://modules/newsletter/latestNewsletter.xml</code>:
       </p>
       
 <source xml:space="preserve"><![CDATA[<page:page
@@ -144,15 +141,29 @@ modules.root.dirs=src/modules:src/webapp/lenya/pubs/default/modules:/home/john/m
       <jx:import uri="templates/messages.jx"/>
       
       <cinclude:includexml>
-        <cinclude:src>cocoon://core/modules/newsletter/usecases/send/latestNewsletter.xml</cinclude:src>
+        <cinclude:src>cocoon://modules/newsletter/latestNewsletter.xml</cinclude:src>
       </cinclude:includexml>
       
       <input name="submit" type="submit" value="Send Newsletter"/>
     </form>
   </page:body>
 </page:page>]]></source>
+
+        <p>
+        Another useful option is to use a module URL as the usecase view, e.g. to export some XML.
+        Note that the attribute <code>uri</code> is used instead of <code>template</code>.
+        The usecase class <code>DummyUsecase</code> can be used because no Java code shall be
+        executed.
+        </p>
       
-      
+        <source xml:space="preserve"><![CDATA[<xconf xpath="/cocoon/usecases"
+       unless="/cocoon/usecases/component-instance[@name = 'newsletter.download']">
+  <component-instance name="newsletter.send"
+                      logger="lenya.usecases.newsletter.send"
+                      class="org.apache.lenya.cms.usecase.DummyUsecase">
+    <view uri="cocoon://modules/newsletter/downloadNewsletter.xml"/>
+  </component-instance>
+</xconf>]]></source>
       </section>
     
       <section>
