@@ -200,10 +200,6 @@
       sitemap (in our case, <code>modules/profile/sitemap.xmap</code>). Typically, an XSLT is applied
       to the content document to transform it into another format (XHTML, XSL-FO, ...):
     </p>
-    <note>
-      In the following snippet, the module name <code>pe</code> is used as a shortcut fo
-      <code>page-envelope</code>. You have to change it if you copy &amp; paste the code.
-    </note>
     <source xml:space="preserve"><![CDATA[
   <!-- apply a format -->
   <map:match pattern="*.xml">
