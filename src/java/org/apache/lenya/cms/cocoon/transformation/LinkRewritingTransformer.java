@@ -60,7 +60,7 @@ import org.xml.sax.helpers.AttributesImpl;
  * <code>&lt;xhtml:a href="..."&gt;</code> attributes of the following form:
  * </p>
  * <p>
- * <code>{context-prefix}/{publication-id}/{area}{document-url}</code>
+ * <code>/{publication-id}/{area}{document-url}</code>
  * </p>
  * <p>
  * These links are rewritten using the following rules:
