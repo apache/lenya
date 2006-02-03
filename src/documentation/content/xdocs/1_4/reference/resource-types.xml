@@ -76,12 +76,13 @@
 
   
   <p>
-    You can add references to any resource types configured in <code>cocoon.xconf</code>,
+    You can add references to any resource types configured in
+    <code><![CDATA[<lenya-webapp>/WEB-INF/cocoon.xconf]]></code>,
     containing
   </p>
   
   <ul>
-    <li>resource types provided by publets,</li>
+    <li>resource types provided by modules,</li>
     <li>resource types of template publications, and</li>
     <li>resource types of the publication itself.</li>
   </ul>
@@ -100,7 +101,7 @@
     </p>
     <p>
       The sample document is typically placed in
-      <code>&lt;publication&gt;/lenya/resources/samples/</code>.
+      <code><![CDATA[<publication>/lenya/resources/samples/]]></code>.
       You can choose an arbitrary filename, but it is recommended to
       use the resource type name (e.g., <code>profile.xml</code>).
     </p>
@@ -157,6 +158,13 @@
   </component-instance>
 
 </xconf>]]></source>
+
+    <p>
+      This XPatch file will be used when the publication is deployed (e.g., when you issue
+      a <code>./build</code> command). Its contents will be patched into
+      <code><![CDATA[<lenya-webapp>/WEB-INF/cocoon.xconf]]></code>.
+    </p>
+
   </section>
   
   <section><title>Define a Custom Menubar</title>
