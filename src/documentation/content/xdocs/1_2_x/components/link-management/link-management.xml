@@ -94,6 +94,13 @@
       (SimpleLinkRewritingTransformer) is used to rewrite the internal
       links in the live area.</p>
 
+      <note>
+        The <code>DocumentReferencesHelper</code> mimics the knowledge of
+        the <code>DefaultDocumentBuilder</code>, therefore the reference check
+        doesn't work with arbitrary <code>DocumentBuilder</code> implementations
+        (see <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=37718">bug 37718</a>)
+      </note>
+      
       <section>
 	<title>A document is not yet live</title>
 
