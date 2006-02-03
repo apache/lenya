@@ -77,7 +77,7 @@
   
   <p>
     You can add references to any resource types configured in
-    <code><![CDATA[<lenya-webapp>/WEB-INF/cocoon.xconf]]></code>,
+    <code><![CDATA[<lenya-webapp>/WEB-INF/cocoon.xconf]]></code> (see below),
     containing
   </p>
   
