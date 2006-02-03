@@ -17,11 +17,11 @@
 
 <!-- $Id: doctypes.xconf 164635 2005-04-25 20:01:43Z tschlabach $ -->
 
-<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'jcr.export']">
-
-  <component-instance name="jcr.export" logger="lenya.jcr"
-    class="org.apache.lenya.cms.usecase.DummyUsecase">
-    <view uri="/core/modules/jcr/importExport/lenya-repository-content.xml" menu="false"/>
+<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'jcr.import']">
+  
+  <component-instance name="jcr.import" logger="lenya.jcr"
+    class="org.apache.lenya.cms.jcr.usecases.Import">
+    <view template="modules/jcrsource/usecases/import.jx" menu="false"/>
   </component-instance>
   
 </xconf>

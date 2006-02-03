@@ -81,7 +81,9 @@ public class Import extends AbstractUsecase {
                     final String lenyaUri = docs[j].getSourceURI();
                     final String sourcePath = lenyaUri.substring("lenya://".length());
                     final String contextUri = "context://" + sourcePath + ".meta";
-                    MetaDataManager meta = new MetaDataManager(contextUri, this.manager, getLogger());
+                    MetaDataManager meta = new MetaDataManager(contextUri,
+                            this.manager,
+                            getLogger());
                     uri2meta.put(docs[j].getSourceURI(), meta);
                 }
                 nodes.add(siteManager.getSiteStructure(map, pub, areas[i]).getRepositoryNode());
@@ -93,14 +95,18 @@ public class Import extends AbstractUsecase {
                 final String sourcePath = lenyaUri.substring("lenya://".length());
                 final String contextUri = "context://" + sourcePath;
                 final String jcrUri = "jcr://" + sourcePath;
-                SourceUtil.copy(resolver, contextUri, jcrUri);
+                if (SourceUtil.exists(contextUri, this.manager)) {
+                    SourceUtil.copy(resolver, contextUri, jcrUri);
 
-                MetaDataManager sourceMgr = (MetaDataManager) uri2meta.get(lenyaUri);
-                if (sourceMgr != null) {
-                    MetaDataManager jcrMgr = new JCRMetaDataManager(jcrUri,
-                            this.manager,
-                            getLogger());
-                    jcrMgr.replaceMetaData(sourceMgr);
+                    MetaDataManager sourceMgr = (MetaDataManager) uri2meta.get(lenyaUri);
+                    if (sourceMgr != null) {
+                        MetaDataManager jcrMgr = new JCRMetaDataManager(jcrUri,
+                                this.manager,
+                                getLogger());
+                        jcrMgr.replaceMetaData(sourceMgr);
+                    }
+                } else {
+                    addInfoMessage("The source [" + contextUri + "] does not exist.");
                 }
             }
 
