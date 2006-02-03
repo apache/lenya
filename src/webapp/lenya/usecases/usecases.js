@@ -184,6 +184,9 @@ function executeUsecase() {
                 }
                 else {
                     var viewUri = view.getViewURI();
+                    if (viewUri.startsWith("cocoon:/")) {
+                        viewUri = viewUri.substring(new Packages.java.lang.String("cocoon:/").length());
+                    }
                     cocoon.sendPage(viewUri);
                     return;
                 }
