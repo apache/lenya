@@ -299,10 +299,10 @@ $PUB_HOME
           <code>${usecase.getView().getParameter('...')}</code>.
         </p>
         <p>
-          The view for a usecase is implemented using a JX template. The location of the
+          One option is to implement view for a usecase as a JX template. The location of the
           JX template is defined using the <code>&lt;view&gt;</code> element's <code>template</code>
           attribute (relatively to the <code>context://lenya</code> directory).
-          The output of the view has to be a Lenya page:
+          The output of the template has to be a Lenya page:
         </p>
 <source xml:space="preserve"><![CDATA[<page:page
   xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
@@ -329,6 +329,17 @@ $PUB_HOME
           <p>
           Take care of adding the hidden <code>lenya.usecase</code> and <code>lenya.continuation</code> fields as shown above.
           </p>
+          
+        <p>
+          If you don't want to display a form, but output arbitrary XML, text, an SVG-generated image
+          or something like that, you can use a <code>uri</code> attribute instead of the <code>template</code>
+          attribute. In this case, the <code>menu</code> attribute can be omitted.
+        </p>
+        
+        <source xml:space="preserve"><![CDATA[  <component-instance ...>
+    <view uri="cocoon://modules/reports/generateReport.pdf" />
+  </component-instance>]]></source>
+        
           
       </section>
       <section>
