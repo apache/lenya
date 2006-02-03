@@ -22,17 +22,24 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.net.MalformedURLException;
 
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.xml.UsecaseErrorHandler;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
+import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.Schema;
 import org.apache.lenya.xml.ValidationUtil;
@@ -88,8 +95,18 @@ public class OneFormEditor extends DocumentUsecase {
         String content = "<?xml version=\"1.0\" encoding=\"" + encoding + "\"?>\n"
                 + addNamespaces(namespaces, getParameterAsString("content"));
 
-        // Save file temporarily
+        saveDocument(encoding, content);
+    }
 
+    /**
+     * Save the content to the document source. After saving, the XML is validated. If validation
+     * errors occur, the usecase transaction is rolled back, so the changes are not persistent. If
+     * the validation succeeded, the workflow event is invoked.
+     * @param encoding The encoding to use.
+     * @param content The content to save.
+     * @throws Exception if an error occurs.
+     */
+    protected void saveDocument(String encoding, String content) throws Exception {
         ModifiableSource xmlSource = null;
         SourceResolver resolver = null;
         Source indexSource = null;
@@ -97,7 +114,7 @@ public class OneFormEditor extends DocumentUsecase {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             xmlSource = (ModifiableSource) resolver.resolveURI(getSourceDocument().getSourceURI());
             saveXMLFile(encoding, content, xmlSource);
-            
+
             Document xmlDoc = null;
 
             try {
@@ -109,9 +126,9 @@ public class OneFormEditor extends DocumentUsecase {
             if (xmlDoc != null) {
                 ResourceType resourceType = getSourceDocument().getResourceType();
                 Schema schema = resourceType.getSchema();
-                
+
                 ValidationUtil.validate(this.manager, xmlDoc, schema, new UsecaseErrorHandler(this));
-                
+
                 if (!hasErrors()) {
                     WorkflowUtil.invoke(this.manager,
                             getSession(),
