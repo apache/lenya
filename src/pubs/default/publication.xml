@@ -33,9 +33,22 @@
       <li><a href="authoring/index.html">Editor`s View</a> (Authoring)</li>
     </ol>
 
-    <h4>Import Content into JCR Repository</h4>
-    <a href="../index.html?lenya.usecase=jcr.import">../index.html?lenya.usecase=jcr.import</a>
-    <br/>
-    Switch the NodeFactory within <i>build/lenya/webapp/WEB-INF/classes/org/apache/lenya/lenya.roles</i> and restart Lenya
+    <h4>Enable JCR</h4>
+    <ul>
+      <li>Build Lenya and start it</li>
+      <li>Import content from filesystem into JCR Repository by executing: <a href="../index.html?lenya.usecase=jcr.import">../index.html?lenya.usecase=jcr.import</a>
+      </li>
+      <li>Stop Lenya</li>
+      <li>Switch the NodeFactory within <i>build/lenya/webapp/WEB-INF/classes/org/apache/lenya/lenya.roles</i> to <i>org.apache.lenya.cms.jcr.JCRNodeFactory</i>
+      </li>
+      <li>Optional: The JCR implementation can be configured within local.build.properties resp. build.properties</li>
+      <li>Start Lenya</li>
+    </ul>
+
+    <h4>JCR Tests and content migration</h4>
+    <ul>
+      <li>./build.sh modules.test</li>
+      <li>./build.sh migrate-14</li>
+    </ul>
   </lenya:readme>
 </lenya:publication>
