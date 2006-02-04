@@ -25,24 +25,24 @@ function insertText() {
     focus(); 
 }
 
-function LinkRoot(doc, rootElement) {
+function LinkTree(doc, treeElement) {
     this.doc = doc;
-    this.rootElement = rootElement;
+    this.treeElement = treeElement;
     this.selected = null;
 }
 
-LinkRoot.prototype = new NavRoot;
+LinkTree.prototype = new NavTree;
 
-LinkRoot.prototype.handleItemClick = function(item, event) {
+LinkTree.prototype.handleItemClick = function(item, event) {
     setLink('/' + item.href);
 }
 
 function buildTree() {
     var placeholder = document.getElementById('tree');
-    var root = new LinkRoot(document, placeholder);
-    root.init(PUBLICATION_ID);
-    root.render();
-    root.loadInitialTree(AREA, DOCUMENT_ID);
+    var tree = new LinkTree(document, placeholder);
+    tree.init(PUBLICATION_ID);
+    tree.render();
+    tree.loadInitialTree(AREA, DOCUMENT_ID);
 }
 
 var url;

@@ -56,12 +56,13 @@
           IMAGE_PATH = '<jx:out value="${request.contextPath + '/lenya/images/tree/'}"/>';
           CUT_DOCUMENT_ID = '<jx:out value="${request.getSession().getAttribute('org.apache.lenya.cms.info.cutdocumentid')}"/>';
           ALL_AREAS = 'authoring,trash,archive';
-          PIPELINE_PATH = '/authoring/sitetree-fragment.xml'
+          PIPELINE_PATH = '/authoring/sitetree-fragment.xml';
+          SHOW_LOADING_HINT = true;
           
-          var root = new NavRoot(document, document.getElementById('tree'));
-          root.init(PUBLICATION_ID);
-          root.render();
-          root.loadInitialTree('<jx:out value="${area}"/>', '<jx:out value="${document.getId()}"/>');
+          var tree = new NavTree(document, document.getElementById('tree'));
+          tree.init(PUBLICATION_ID);
+          tree.render();
+          tree.loadInitialTree('<jx:out value="${area}"/>', '<jx:out value="${document.getId()}"/>');
         </script>
       </div>
     </div>

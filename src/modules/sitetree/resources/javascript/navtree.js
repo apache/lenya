@@ -14,44 +14,140 @@
   limitations under the License.
 */
 
-var xmlhttp;
+/******************************************
+ *  NavNode 
+ ******************************************/
 
-function NavRoot(doc, rootElement) {
+function NavNode(id, parent) {
+    this.id = id;
+    this.parent = parent;
+    this.items = {};
+    this.isfolder = false;
+    this.href = '';
+    this.label = '';
+    this.area = '';
+    this.documentid = '';
+    this.isprotected = true;
+    this.existsChosenLanguage = true;
+    this.langSuffix = '';
+};
+
+NavNode.prototype = new LenyaNode;
+
+NavNode.prototype.createNewNode = function(node)
+{
+    var newItem = new NavNode(node.getAttribute('id'), this);
+    newItem.init();
+  
+    newItem.isfolder = isNodeFolder(node);
+    newItem.area = this.area;
+    newItem.documentid = '/' + node.getAttribute('basic-url');
+    newItem.isprotected = isNodeProtected(node);
+    newItem.href = node.getAttribute('href');
+    newItem.label = getLabel(node);
+    newItem.existsChosenLanguage = existsChosenLanguage(node);
+    newItem.langSuffix = node.getAttribute('language-suffix');
+  
+    return newItem;
+}
+
+NavNode.prototype.getLoadSubTreeURL = function() {
+    area = this.area;
+    documentid = this.documentid;  
+    return encodeURI(CONTEXT_PREFIX + '/' + PUBLICATION_ID + PIPELINE_PATH + '?area='+area+'&documentid='+documentid+'&language='+CHOSEN_LANGUAGE+'&areas='+ALL_AREAS+'&lenya.module=sitetree');
+}
+
+NavNode.prototype.getStyle = function() {
+    if (this.tree.root == this) {
+        return 'lenya-info-root';
+    } else if (this.isprotected) {
+        return 'lenya-info-protected';
+    } else if (this.documentid == CUT_DOCUMENT_ID) {
+        return 'lenya-info-cut';
+    } else if (!this.existsChosenLanguage) {
+        return 'lenya-info-nolanguage';
+    } else {
+        return 'treenode_label';
+    }
+}
+
+function getLabel(node) {
+    var cs = node.childNodes;
+    var l = cs.length;
+    // lenya generates the xml and is responsible to insert the label
+    // of the correct language
+    for (var i = 0; i < l; i++) {
+       if (getTagName(cs[i]) =='nav:label') {
+          return cs[i].firstChild.nodeValue;
+       } 
+    }
+    return '';
+}
+
+function isNodeProtected(node) {
+    var prot = node.getAttribute('protected');
+    if (prot == 'true') return true;
+    return false;
+}
+
+function isNodeFolder(node) {
+    var isfolder = node.getAttribute('folder');
+    if (isfolder == 'true') return true;
+    return false;
+}
+
+// check if the node has a label of the chosen language
+function existsChosenLanguage(node) {
+    var children = node.childNodes;
+    for (var i = 0; i < children.length; i++) {
+       if (getTagName(children[i]) =='nav:label' && children[i].getAttribute('xml:lang')==CHOSEN_LANGUAGE) {
+          return true;
+       } 
+    }
+    return false;
+}
+
+/******************************************
+ *  NavTree 
+ ******************************************/
+ 
+function NavTree(doc, treeElement) {
     this.doc = doc;
-    this.rootElement = rootElement;
+    this.treeElement = treeElement;
     this.selected = null;
 };
 
-NavRoot.prototype = new Root;
+NavTree.prototype = new LenyaTree;
 
-NavRoot.prototype.getItems = function(item, handler, allow_cache) {
-  if (item.root == item) {
-    alert('getTtems() of root called. This should not happen, loadInitialTree should be called first.');
-  } else {
-    item.loadSubTree(handler);
-  }
+NavTree.prototype.init = function(id) {
+    this.root = new NavNode(id);
+    this.root.tree = this;
+    this.root.depth = 0;
+    this.root.reopen = false;
+    this.root.isprotected = false;
+    this.root.isfolder = true;
+    this._currentId = 0;
 };
 
-NavRoot.prototype.loadInitialTree = function(area, documentid) {
-  var url = CONTEXT_PREFIX + '/' + PUBLICATION_ID + PIPELINE_PATH + '?area='+area+'&documentid='+documentid+'&language='+CHOSEN_LANGUAGE+'&initial=true&areas='+ALL_AREAS+'&lenya.module=sitetree';  
-  var fragment = loadSitetreeFragment(url);
-  if (fragment!=null) {
-    this.initialTreeLoaded(fragment);
-    this.select(this.getItemByPath(PUBLICATION_ID+'/'+area+documentid)); // FIXME: is the path always correct?
-  }
+NavTree.prototype.loadInitialTree = function(area, documentid) {
+    var url = encodeURI(CONTEXT_PREFIX + '/' + PUBLICATION_ID + PIPELINE_PATH + '?area='+area+'&documentid='+documentid+'&language='+CHOSEN_LANGUAGE+'&initial=true&areas='+ALL_AREAS+'&lenya.module=sitetree');
+    
+    callback = function(fragment, param) {
+        var tree = param[0];
+        var area = param[1];
+        var documentid = param[2];
+        tree.initialTreeLoaded(fragment);
+        var selectedItem = tree.getItemByPath(PUBLICATION_ID+'/'+area+documentid)
+        if (selectedItem != false) {
+            tree.select(selectedItem);
+        }
+    }
+    
+    var param = new Array(this, area, documentid);
+    loadAsyncXML(url, callback, param);
 };
 
-NavRoot.prototype.addItems = function(items) {
-    this.items = {};
-    this.itemids = [];
-    for (var i = items.length - 1; i >= 0; i--) {
-        var item = items[i];
-        this.items[item.id] = item;
-        this.itemids.unshift(item.id);
-    };
-};
-
-NavRoot.prototype.initialTreeLoaded = function(xml)
+NavTree.prototype.initialTreeLoaded = function(xml)
 {
   var root = xml.documentElement;
   var children = root.childNodes;
@@ -64,17 +160,17 @@ NavRoot.prototype.initialTreeLoaded = function(xml)
         item.addNodesRec(children[i]);
      }
   }
-  this.addItems(items);
-  this.open();
+  this.root.addItems(items);
+  this.root.open();
 }
 
-NavRoot.prototype.addLoadedSite = function(site)
+NavTree.prototype.addLoadedSite = function(site)
 {
   var langSuffix = '';
   if (CHOSEN_LANGUAGE!=DEFAULT_LANGUAGE) langSuffix = '_'+CHOSEN_LANGUAGE;
 
   var siteArea = site.getAttribute('area');
-  var newSite = new NavNode(siteArea, this);
+  var newSite = new NavNode(siteArea, this.root);
   newSite.init();
   
   newSite.isfolder = isNodeFolder(site);
@@ -88,50 +184,20 @@ NavRoot.prototype.addLoadedSite = function(site)
   return newSite;
 }
 
-/* NavRoot.prototype.getIcon = function(item) {
-    // don't use an icon for root and area nodes
-    if (item.depth<2) return this.doc.createTextNode('');
-
-    var img = this.doc.createElement('img');
-    img.setAttribute('src', IMAGE_PATH + 'document.gif');
-    return img;
-}; */
-
-/* return an img object that represents the file type */
-NavRoot.prototype.getIcon = function(item) {
-    return this.doc.createTextNode('');
-};
-
-/* creates the item name and any icons and such */
-NavRoot.prototype.createItemLine = function(item) {
-    var span = this.doc.createElement('span');
-    var icon = this.getIcon(item);
-    if (icon.nodeType == 1) {
-        icon.className = 'treenode_icon';
-    };
-    span.appendChild(icon);
-    
-    var text = this.doc.createTextNode(item.label ? item.label : item.id);
-    
-    if (item.root==item) {
-        span.className = 'lenya-info-root';
-    } else {
-        if (item.isprotected) {
-            span.className = 'lenya-info-protected';
-        } else if (item.documentid == CUT_DOCUMENT_ID) {
-            span.className = 'lenya-info-cut';
-        } else if (!item.existsChosenLanguage) {
-            span.className = 'lenya-info-nolanguage';
-        } else {
-            span.className = 'treenode_label';
-        }
+NavTree.prototype.handleItemClick = function(item, event) {
+    if (!item.isprotected && item.root!=item) {
+        var itemhref = item.href.replace(/^\//, "");
+        href = encodeURI(CONTEXT_PREFIX+'/'+PUBLICATION_ID+"/"+item.area+"/"+itemhref+"?lenya.usecase=tab.overview"); 
+        window.location = href;
     }
-    span.appendChild(text);
-    
-    return span;
 };
 
-NavRoot.prototype.createItemHtml = function(item) {
+/*
+  overriding this function because of a bug in lenya:
+  the area cannot be clickable because lenya expects
+  a document for the area.
+*/
+NavTree.prototype.createItemHtml = function(item) {
     var div = this.doc.createElement('div');
     div.className = 'treenode';
 
@@ -185,319 +251,3 @@ NavRoot.prototype.createItemHtml = function(item) {
     return div;
 };
 
-/* decide if the [+] or [-] sign is 'L' or '|-' type */
-Root.prototype.getSignType = function(item) {
-    if (item.root != item) {
-        if (isLastChild(item.parent, item)) {
-            return 'L';
-        } else {
-            return 'T';
-        }
-    }
-    return 'X';  // invalid type
-};
-
-/* get the [+] sign for a collection or resource */
-Root.prototype.getCloseSign = function(item) {
-    var opensign = this.doc.createElement('img');
-    opensign.className = 'treenode_sign';
-    
-    if (item.root == item) {
-        // the root needs no opensign
-        opensign.setAttribute('src', IMAGE_PATH+'empty.gif');
-        opensign.setAttribute('width', '0');
-    } else {
-        var suffix = this.getSignType(item);
-        if (item.isCollection()) {
-            opensign.setAttribute('src', IMAGE_PATH+'closed-collection-'+suffix+'.gif');
-        } else {
-            opensign.setAttribute('src', IMAGE_PATH+'non-collection-'+suffix+'.gif');
-        };
-    }
-    return opensign;
-};
-
-/* get the [-] sign for a collection */
-Root.prototype.getOpenSign = function(item) {
-    var opensign = this.doc.createElement('img');
-    opensign.className = 'treenode_sign';
-
-    if (item.root == item) {
-        // the root needs no opensign
-        opensign.setAttribute('src', IMAGE_PATH+'empty.gif');
-        opensign.setAttribute('width', '0');
-    } else {
-        var suffix = this.getSignType(item);
-        opensign.setAttribute('src', IMAGE_PATH+'opened-collection-'+suffix+'.gif');
-    }
-    return opensign;
-};
-
-/* add the lines of an item (the edges of the tree) */
-NavRoot.prototype.addLines = function(item, parentElement) {
-    var linesStr = this.computeLinesString(item);
-    // linesStr is in the reverse order
-    for (var i=linesStr.length-1; i>0; i--) {
-        var td = this.doc.createElement('td');
-        var img = this.doc.createElement('img');
-        
-        var imageName = '';
-        if (linesStr.charAt(i)=='I') {
-            imageName = 'vertical-line.gif';
-            // if the label of this item is too long the line will wrap
-            // by setting the background image we get a continuos line
-            td.style.backgroundImage = 'url('+IMAGE_PATH+'vertical-line.gif)';
-        } else {
-            imageName = 'empty.gif';
-        }
-        img.setAttribute('src', IMAGE_PATH+imageName);
-        img.className = 'treenode_sign';
-
-        td.appendChild(img);
-        parentElement.appendChild(td);
-    }
-}
-
-/* computes the lines of an item as a string (the edges of the tree)
-     E: ' ' empty
-     I: '|' vertical line
-     L: 'L' 
-     T: '|-'
-*/
-NavRoot.prototype.computeLinesString = function(item) {
-    var lines = ''
-    
-    if (item.root == item) return lines;
-    
-    // first level, decide T or L
-    if (isLastChild(item.parent, item)) {
-        lines += 'L';
-    } else {
-        lines += 'T';
-    }
-    item = item.parent;
-
-    // subsequent levels, decide I or E
-    while (item.root != item) {
-        if (isLastChild(item.parent, item)) {
-            lines += 'E'; // empty
-        } else {
-            lines += 'I'; // vertical line
-        }
-        item = item.parent;
-    }
-    
-    return lines;
-}
-
-function isLastChild(parent, child) {
-    // this should be a method of Node
-    for (var i=0; i<parent.itemids.length-1; i++) {
-        if (parent.itemids[i] == child.id) return false;
-    };
-    return true;
-}
-
-NavRoot.prototype.handleItemClick = function(item, event) {
-    if (!item.isprotected && item.root!=item) {
-        var itemhref = item.href.replace(/^\//, "");
-        href = CONTEXT_PREFIX+'/'+PUBLICATION_ID+"/"+item.area+"/"+itemhref+"?lenya.usecase=tab.overview"; 
-        window.location = href;
-    }
-};
-
-/******************************************
- *  NavNode 
- ******************************************/
-
-function NavNode(id, parent) {
-    this.id = id;
-    this.parent = parent;
-    this.items = {};
-    this.isfolder = false;
-    this.href = '';
-    this.label = '';
-    this.area = '';
-    this.documentid = '';
-    this.isprotected = true;
-    this.existsChosenLanguage = true;
-    this.langSuffix = '';
-};
-
-NavNode.prototype = new Node;
-
-NavNode.prototype.addItems = function(items) {
-    this.items = {};
-    this.itemids = [];
-    for (var i = items.length - 1; i >= 0; i--) {
-        var item = items[i];
-        this.items[item.id] = item;
-        this.itemids.unshift(item.id);
-    };
-};
-
-NavNode.prototype.isCollection = function() {
-    return this.isfolder;
-};
-
-NavNode.prototype.loadSubTree = function(handler) 
-{
-  area = this.area;
-  documentid = this.documentid;  
-  
-  var url = CONTEXT_PREFIX + '/' + PUBLICATION_ID + PIPELINE_PATH + '?area='+area+'&documentid='+documentid+'&language='+CHOSEN_LANGUAGE+'&areas='+ALL_AREAS+'&lenya.module=sitetree';
-
-  var xml = loadSitetreeFragment(url);
-  if (xml!=null) this.subTreeLoaded(xml, handler);
-}
-
-NavNode.prototype.subTreeLoaded = function(xml, handler)
-{
-  var root = xml.documentElement;
-
-  var children = root.childNodes;
-  var items=[];
-  for (var i = 0; i < children.length; i++) {
-     if (getTagName(children[i]) == "nav:node") {
-        items.push(this.addLoadedNode(children[i]));
-     } 
-  }
-  //handler(items);
-  this._continueOpen(items);
-
-}
-
-NavNode.prototype.addNodesRec = function(parentNode)
-{
-    var children = parentNode.childNodes;
-    var items = [];
-    var nodes = [];
-    var item;
-    for (var i = 0; i < children.length; i++) {
-       if (getTagName(children[i]) == "nav:node") {
-          this.reopen = true; // this causes the parent to unfold
-          item = this.addLoadedNode(children[i]);
-          items.push(item);
-          item.addNodesRec(children[i]); 
-       } 
-    }
-    this.addItems(items);
-}
-
-NavNode.prototype.addLoadedNode = function(node)
-{
-    var newItem = new NavNode(node.getAttribute('id'), this);
-    newItem.init();
-  
-    newItem.isfolder = isNodeFolder(node);
-    newItem.area = this.area;
-    newItem.documentid = '/' + node.getAttribute('basic-url');
-    newItem.isprotected = isNodeProtected(node);
-    newItem.href = node.getAttribute('href');
-    newItem.label = getLabel(node);
-    newItem.existsChosenLanguage = existsChosenLanguage(node);
-    newItem.langSuffix = node.getAttribute('language-suffix');
-  
-    return newItem;
-}
-
-
-
-/******************************************
- *  Dynamic loading and helper functions 
- ******************************************/
-
-
-function loadSitetreeFragment(url)
-{
-  if (xmlhttp==null) createXMLHttp();
-  
-  //alert('load subtree for '+url);
-  // do synchronous loading 
-  xmlhttp.open("GET",url,false);  
-  xmlhttp.setRequestHeader('Accept','text/xml');
-  xmlhttp.send(null);
-  
-  //alert('result: '+xmlhttp.responseText);
-  
-  var xml = xmlhttp.responseXML;
-  if( xml == null || xml.documentElement == null) {
-    alert('Error: could not load sitetree xml');
-    return null;
-  } 
-  return xml;
-}
-
-function getLabel(node) 
-{
-    var cs = node.childNodes;
-    var l = cs.length;
-    // lenya generates the xml and is responsible to insert the label
-    // of the correct language
-    for (var i = 0; i < l; i++) {
-       if (getTagName(cs[i]) =='nav:label') {
-          return cs[i].firstChild.nodeValue;
-       } 
-    }
-    return '';
-}
-
-function isNodeProtected(node) 
-{
-  var prot = node.getAttribute('protected');
-  if (prot == 'true') return true;
-  return false;
-}
-
-function isNodeFolder(node) 
-{
-  var isfolder = node.getAttribute('folder');
-  if (isfolder == 'true') return true;
-  return false;
-}
-
-// check if the node has a label of the chosen language
-function existsChosenLanguage(node) 
-{
-    var children = node.childNodes;
-    for (var i = 0; i < children.length; i++) {
-       if (getTagName(children[i]) =='nav:label' && children[i].getAttribute('xml:lang')==CHOSEN_LANGUAGE) {
-          return true;
-       } 
-    }
-    return false;
-}
-
-// create the xmlhttp object
-function createXMLHttp() 
-{
-    /*@cc_on @*/
-    /*@if (@_jscript_version >= 5)
-    // JScript gives us Conditional compilation, we can cope with old IE versions.
-    // and security blocked creation of the objects.
-     try {
-      xmlhttp = new ActiveXObject("Msxml2.XMLHTTP");
-     } catch (e) {
-      try {
-       xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-      } catch (E) {
-       xmlhttp = false;
-      }
-     }
-    @end @*/
-    if (!xmlhttp && typeof XMLHttpRequest!='undefined') {
-      xmlhttp = new XMLHttpRequest();
-    }
-}
-    
-//workaround for http://issues.apache.org/bugzilla/show_bug.cgi?id=35227
-function getTagName(element) 
-{
-  var tagName = element.tagName;
-  var prefix = element.prefix;
-
-  if(tagName.indexOf(prefix + ':') == -1) {
-    tagName = prefix + ':' + tagName;
-  }
-  return tagName;
-}

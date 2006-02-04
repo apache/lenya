@@ -51,9 +51,8 @@ function Node(id, parent) {
 };
 
 Node.prototype.init = function() {
-    this.doc = this.parent.doc;
     this.depth = this.parent.depth + 1;
-    this.root = this.parent.root;
+    this.tree = this.parent.tree;
     this.reopen = false;
     this.items = {};
 };
@@ -69,16 +68,16 @@ Node.prototype.open = function(reload, endhandler) {
         return;
     };
     this.opened = true;
-    var newopensign = this.root.getOpenSign(this);
+    var newopensign = this.tree.getOpenSign(this);
     this.opensign.parentNode.replaceChild(newopensign, this.opensign);
     this.opensign = newopensign;
-    addEventHandler(this.opensign, 'click', this.root.handleItemSignClick, 
-                    this.root, this);
+    addEventHandler(this.opensign, 'click', this.tree.handleItemSignClick, 
+                    this.tree, this);
     if (!this.itemids || this.itemids.length==0) {
         // get the items, getItems() should be defined on the subclass
-        this.doc.getElementsByTagName('body')[0].style.cursor = 'wait';
+        this.tree.doc.getElementsByTagName('body')[0].style.cursor = 'wait';
         this.element.className = this.element.className;
-        this.root.getItems(this, this._continueOpen, !reload, endhandler);
+        this.tree.getItems(this, this._continueOpen, !reload, endhandler);
     } else {
       
         for (var itemid in this.items) {
@@ -107,7 +106,7 @@ Node.prototype._continueOpen = function(items, endhandler) {
         };
     };
 
-    this.doc.getElementsByTagName('body')[0].style.cursor = 'default';
+    this.tree.doc.getElementsByTagName('body')[0].style.cursor = 'default';
     if (endhandler) {
         endhandler();
     };
@@ -125,23 +124,23 @@ Node.prototype.close = function(reopen_when_opening_parent) {
         return;
     };
     this.reopen = reopen_when_opening_parent;
-    var newopensign = this.root.getCloseSign(this);
+    var newopensign = this.tree.getCloseSign(this);
     this.opensign.parentNode.replaceChild(newopensign, this.opensign);
     this.opensign = newopensign;
     this.opened = false;
-    addEventHandler(this.opensign, 'click', this.root.handleItemSignClick, 
-                    this.root, this);
+    addEventHandler(this.opensign, 'click', this.tree.handleItemSignClick, 
+                    this.tree, this);
     for (var itemid in this.items) {
         var item = this.items[itemid];
         item.close(true);
-        this.root.unrenderItem(item);
+        this.tree.unrenderItem(item);
     };
 };
 
 Node.prototype.reload = function() {
     this.itemids = null;
     var currel = this.element;
-    this.element = this.root.createItemHtml(this);
+    this.element = this.tree.createItemHtml(this);
     currel.parentNode.replaceChild(this.element, currel);
     if (this.opened) {
         this.close();
@@ -150,7 +149,7 @@ Node.prototype.reload = function() {
 };
 
 Node.prototype.render = function() {
-    this.root.renderItem(this);
+    this.tree.renderItem(this);
 };
 
 Node.prototype.isCollection = function() {
@@ -158,15 +157,13 @@ Node.prototype.isCollection = function() {
 };
 
 Node.prototype.getPath = function() {
-    var parentpath = this.parent.getPath();
-    if (parentpath.charAt(parentpath.length - 1) != '/') {
-        parentpath += '/';
-    };
-    var id = this.id;
-    if (id.charAt(0) == '/') {
-        id = id.substr(1);
-    };
-    return parentpath + id;
+    var parentpath;
+    if (this.parent) {
+        parentpath = this.parent.getPath();
+    } else {
+        parentpath =  '';
+    }
+    return parentpath + '/' + this.id;
 };
 
 Node.prototype.setSelectClass = function() {
@@ -187,25 +184,6 @@ Node.prototype.getItemByPath = function(path) {
         path should be relative from the current item, excluding 
         the current item's id
     */
-    // if the path starts with a slash, remove it
-    if (path.charAt(0) == '/') {
-        return this.root.getItemByPath(path);
-    };
-    // the path must start with our own id
-    var ownid = this.id;
-    var startswith = (path.indexOf(ownid) == 0);
-    if (!startswith) {
-        return false;
-    };
-    path = path.substr(ownid.length);
-    // remove slash again if there (the item can have an id that ends with
-    // a / too, in that case we don't have one here)
-    if (path.charAt(0) == '/') {
-        path = path.substr(1);
-    };
-    if (path.strip() == '') {
-        return this;
-    };
     var item = null;
     for (var itemid in this.items) {
         // see if the path starts with the next item id
@@ -217,33 +195,32 @@ Node.prototype.getItemByPath = function(path) {
     if (!item) {
         return false;
     };
-    if (path.length == 0 || (path.length == 1 && path == '/')) {
+    if (path == item.id) {
         return item;
     } else {
-        return item.getItemByPath(path);
+        return item.getItemByPath(path.substr(item.id.length+1));
     };
     return false;
 };
 
-function Root(doc, rootElement) {
+function Tree(doc, treeElement) {
     this.doc = doc;
-    this.rootElement = rootElement;
+    this.treeElement = treeElement;
     this.selected = null;
 };
 
-Root.prototype = new Node;
-
-Root.prototype.init = function(id) {
-    this.id = id;
-    this.depth = 0;
-    this.root = this;
+Tree.prototype.init = function(id) {
+    this.root = new Node(id);
+    this.root.tree = this;
+    this.root.depth = 0;
+    this.root.reopen = false;
     this._currentId = 0;
     // addEventHandler(this.doc, 'contextmenu', 
     //        this.createContextMenu, this);
-    addEventHandler(this.doc, 'mouseup', this.removeContextMenu, this);
+    //addEventHandler(this.doc, 'mouseup', this.removeContextMenu, this);
 };
 
-Root.prototype.getItems = function(item, handler, reload, endhandler) {
+Tree.prototype.getItems = function(item, handler, reload, endhandler) {
     /* this should be overridden in subclasses */
     var items = [];
     var ids = ['foo', 'bar', 'baz'];
@@ -255,15 +232,15 @@ Root.prototype.getItems = function(item, handler, reload, endhandler) {
     handler.call(item, items, endhandler);
 };
 
-Root.prototype.render = function() {
-    var element = this.createItemHtml(this);
-    this.element = element;
-    element.tree_item = this;
+Tree.prototype.render = function() {
+    var element = this.createItemHtml(this.root);
+    this.root.element = element;
+    element.tree_item = this.root;
     this.doc.getElementsByTagName('body')[0].style.cursor = 'default';
-    this.rootElement.appendChild(element);
+    this.treeElement.appendChild(element);
 };
 
-Root.prototype.renderItem = function(item) {
+Tree.prototype.renderItem = function(item) {
     var element = this.createItemHtml(item);
     this.doc.getElementsByTagName('body')[0].style.cursor = 'default';
     item.element = element;
@@ -276,7 +253,7 @@ Root.prototype.renderItem = function(item) {
     };
 };
 
-Root.prototype.createItemHtml = function(item) {
+Tree.prototype.createItemHtml = function(item) {
     /* you may want to override this */
     var div = this.doc.createElement('div');
     div.style.whiteSpace = 'nowrap';
@@ -314,7 +291,7 @@ Root.prototype.createItemHtml = function(item) {
     return div;
 };
 
-Root.prototype.createItemLine = function(item) {
+Tree.prototype.createItemLine = function(item) {
     /* creates the item name and any icons and such */
     var span = this.doc.createElement('span');
     var icon = this.getIcon(item);
@@ -330,14 +307,14 @@ Root.prototype.createItemLine = function(item) {
     return span;
 };
 
-Root.prototype.unrenderItem = function(item) {
+Tree.prototype.unrenderItem = function(item) {
     if (item.element) {
         item.element.parentNode.removeChild(item.element);
         delete item.element;
     };
 };
 
-Root.prototype.handleItemClick = function(item, event) {
+Tree.prototype.handleItemClick = function(item, event) {
     if (item.skip_next_click) {
         item.skip_next_click = false;
         return;
@@ -353,20 +330,20 @@ Root.prototype.handleItemClick = function(item, event) {
     };
 };
 
-Root.prototype.select = function(item) {
+Tree.prototype.select = function(item) {
     this.unselect();
     this.selected = item.getPath();
     item.setSelectClass();
 };
 
-Root.prototype.unselect = function() {
+Tree.prototype.unselect = function() {
     if (typeof(this.selected) == 'string') {
         var item = this.getItemByPath(this.selected);
         item.unsetSelectClass();
     };
 };
 
-Root.prototype.handleItemSignClick = function(item, event) {
+Tree.prototype.handleItemSignClick = function(item, event) {
     if (!item.opened) {
         item.open();
     } else {
@@ -379,12 +356,12 @@ Root.prototype.handleItemSignClick = function(item, event) {
     };
 };
 
-Root.prototype.createUniqueId = function() {
+Tree.prototype.createUniqueId = function() {
     this._currentId++;
     return this._currentId.toString();
 };
 
-Root.prototype.createContextMenu = function(event) {
+Tree.prototype.createContextMenu = function(event) {
     var clickel = event.target;
     var item = clickel.tree_item;
     if (!item) {
@@ -402,7 +379,7 @@ Root.prototype.createContextMenu = function(event) {
     return false;
 };
 
-Root.prototype.getContextMenuElements = function() {
+Tree.prototype.getContextMenuElements = function() {
     /* you will probably want to override this
 
         this should return a mapping (object) from context menu
@@ -414,7 +391,7 @@ Root.prototype.getContextMenuElements = function() {
             'close': 'close'};
 };
 
-Root.prototype.renderContextMenu = function(item, elements, event) {
+Tree.prototype.renderContextMenu = function(item, elements, event) {
     /* you may want to override this 
         
         item is the item clicked on
@@ -438,7 +415,7 @@ Root.prototype.renderContextMenu = function(item, elements, event) {
     this.contextmenu = menu;
 };
 
-Root.prototype.removeContextMenu = function() {
+Tree.prototype.removeContextMenu = function() {
     if (!this.contextmenu) {
         return;
     };
@@ -446,7 +423,7 @@ Root.prototype.removeContextMenu = function() {
     delete this.contextmenu;
 };
 
-Root.prototype.getCloseSign = function(item) {
+Tree.prototype.getCloseSign = function(item) {
     /* get the open sign for a collection or resource */
     var opensign = this.doc.createElement('img');
     if (item.isCollection()) {
@@ -457,30 +434,30 @@ Root.prototype.getCloseSign = function(item) {
     return opensign;
 };
 
-Root.prototype.getOpenSign = function(item) {
+Tree.prototype.getOpenSign = function(item) {
     /* get the close sign for a collection */
     var opensign = this.doc.createElement('img');
     opensign.setAttribute('src', 'images/opened-collection.png');
     return opensign;
 };
 
-Root.prototype.getIcon = function(item) {
+Tree.prototype.getIcon = function(item) {
     /* return an img object that represents the file type */
     return this.doc.createTextNode('\xa0');
 };
 
-Root.prototype.getPath = function() {
-    return '/' + this.id;
-};
+//Root.prototype.getPath = function() {
+//    return '/' + this.id;  // FIXME
+//};
 
-Root.prototype._positionMenu = function(event, menu) {
+Tree.prototype._positionMenu = function(event, menu) {
     var left = event.layerX;
     var top = event.layerY;
     menu.style.left = left + 'px';
     menu.style.top = top + 'px';
 };
 
-Root.prototype.getItemByPath = function(path) {
+Tree.prototype.getItemByPath = function(path) {
     /* return an item by its path 
     
         path should be relative from the current item, excluding 
@@ -490,38 +467,15 @@ Root.prototype.getItemByPath = function(path) {
     if (path.charAt(0) == '/') {
         path = path.substr(1);
     };
-    // the path must start with our own id
-    var ownid = this.id;
-    var startswith = (path.indexOf(ownid) == 0);
-    if (!startswith) {
-        return false;
-    };
-    path = path.substr(ownid.length);
-    // remove slash again if there (the item can have an id that ends with
-    // a / too, in that case we don't have one here)
-    if (path.charAt(0) == '/') {
-        path = path.substr(1);
-    };
-    if (path == '') {
-        return this;
-    };
-    var item = null;
-    for (var itemid in this.items) {
-        // see if the path starts with the next item id
-        if (path.indexOf(itemid) == 0) {
-            item = this.items[itemid];
-            break;
-        };
-    };
-    if (!item) {
-        return;
-    };
-    if (path.length == 0) {
-        return item;
+    if (path == this.root.id) {
+        return this.root;
+    }
+    if (path.indexOf(this.root.id) == 0) {
+        path = path.substr(this.root.id.length+1);
+        return this.root.getItemByPath(path);
     } else {
-        return item.getItemByPath(path);
-    };
-    return false;
+        return false;
+    }
 };
 
 // Copied from helpers.js to not have a dependency
