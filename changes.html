@@ -114,6 +114,9 @@ document.write("Last Published: " + document.lastModified);
 <div class="menupagetitle">Changes</div>
 <div class="menupageitemgroup">
 <div class="menupageitem">
+<a title="Version 2006-02 ()" href="#version_2006-02">Version 2006-02 ()...</a>
+</div>
+<div class="menupageitem">
 <a title="Version 2006-01 ()" href="#version_2006-01">Version 2006-01 ()...</a>
 </div>
 <div class="menupageitem">
@@ -307,12 +310,219 @@ document.write("Last Published: " + document.lastModified);
 <p>
 <a href="changes.rss"><img alt="RSS" src="images/rss.png"></a>
 </p>
-<a name="N1000D"></a><a name="version_2006-01"></a>
-<h2 class="h3">Version 2006-01 ()</h2>
+<a name="N1000D"></a><a name="version_2006-02"></a>
+<h2 class="h3">Version 2006-02 ()</h2>
 <div class="section">
 <a name="N10011"></a><a name="1.2"></a>
 <h3 class="h4">1.2</h3>
 <ul>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.2] 
+            Showing the original path of a deleted document <a href="http://svn.apache.org/viewcvs.cgi?rev=374060&view=rev">Diff</a> (jann)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.2] 
+            Adding an identifier string which can be used within the trash area in order to show the original path of a deleted document <a href="http://svn.apache.org/viewcvs.cgi?rev=374059&view=rev">Diff</a> (jann)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.2] 
+            Add name attributes to form elements. This fixes bug #38471. Thanks to Simon Litwan for the patch. <a href="http://svn.apache.org/viewcvs.cgi?rev=374032&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.2] 
+            Don't swallow exception in crawler configuration <a href="http://svn.apache.org/viewcvs.cgi?rev=374028&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.2] 
+            Improved error logging (message, stack trace) <a href="http://svn.apache.org/viewcvs.cgi?rev=374027&view=rev">Diff</a> (andreas)</li>
+</ul>
+<a name="N10043"></a><a name="1.4"></a>
+<h3 class="h4">1.4</h3>
+<ul>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[1.4] 
+            refactored sitetree script: now it always uses asynchronous requests and it should be easier to extend. <a href="http://svn.apache.org/viewcvs.cgi?rev=374836&view=rev">Diff</a> (josias)</li>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[1.4] 
+            One Form Editor Module
+-Simply uses the One Form Editor usecase
+-You need to add the FCKeditor directory to the resources directory due to license
+-I have only tested the ability to open, slight edit, and save of the tutorial page of the default pub (it worked :) )
+-http://localhost:8888/default/authoring/tutorial.html?lenya.usecase=edit.fckeditor <a href="http://svn.apache.org/viewcvs.cgi?rev=374765&view=rev">Diff</a> (chestnut)</li>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[1.4] 
+            Added JCRMetaData java file. <a href="http://svn.apache.org/viewcvs.cgi?rev=374698&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[1.4] 
+            added BaseURLModule which may be used to get the base url to prepend to urls in order to construct internal links. If the publication uses proxying, it returns the proxy url. Otherwise, it returns /context-path/pubid/area <a href="http://svn.apache.org/viewcvs.cgi?rev=374414&view=rev">Diff</a> (josias)</li>
+<li>
+<img class="icon" alt="remove" src="images/remove.jpg">[1.4] 
+            Moved JCRSourceNode related code to jcrsource module, restored JCRSourceNode related classes <a href="http://svn.apache.org/viewcvs.cgi?rev=374695&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="remove" src="images/remove.jpg">[1.4] 
+            [minor change] removed empty menus directory <a href="http://svn.apache.org/viewcvs.cgi?rev=374087&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            Enabled JCR block again to make the JCRSourceNode work. <a href="http://svn.apache.org/viewcvs.cgi?rev=374707&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            Removed handling of core/modules URLs, since it is now possible to call modules using an URL prefix. <a href="http://svn.apache.org/viewcvs.cgi?rev=374699&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            more docu about current JCR integration added <a href="http://svn.apache.org/viewcvs.cgi?rev=374687&view=rev">Diff</a> (michi)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            use base-url module to get the root parameter in order to get the correct urls if proxying is used. <a href="http://svn.apache.org/viewcvs.cgi?rev=374675&view=rev">Diff</a> (josias)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            [minor] removed unused imports <a href="http://svn.apache.org/viewcvs.cgi?rev=374640&view=rev">Diff</a> (josias)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            [minor change] OneFormEditor: refactoring, javadocs <a href="http://svn.apache.org/viewcvs.cgi?rev=374613&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            SVG module: use fallback input module instead of protocol for Batik image references (Batik can't access the source resolver) <a href="http://svn.apache.org/viewcvs.cgi?rev=374612&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            Fixed javadoc. Thanks to Bob Harner for spotting this. <a href="http://svn.apache.org/viewcvs.cgi?rev=374601&view=rev">Diff</a> (josias)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            Added context prefix for cforms resources.
+ <a href="http://svn.apache.org/viewcvs.cgi?rev=374437&view=rev">Diff</a> (froethenbacher)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            don't assume that internal links start with the context prefix. internal links should look like /pubid/area/doc-url (see also bug #31157) <a href="http://svn.apache.org/viewcvs.cgi?rev=374412&view=rev">Diff</a> (josias)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            Mount module-resources.xmap with pass-through. This allows the module to serve resources if module-resources.xmap doesn't contain an appropriate pipeline. Added HTML and XHTML pipelines to module-resources.xmap. This fixes bug #38455, thanks to Simon Litwan for the patch. <a href="http://svn.apache.org/viewcvs.cgi?rev=374394&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            Adds id attribut to form elements and name attributes to buttons. This fixes bug #38471. Thanks to Simon Litwan for the patch. <a href="http://svn.apache.org/viewcvs.cgi?rev=374391&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            match only on img src attributes so that it doesn't interfere other elements such as script. <a href="http://svn.apache.org/viewcvs.cgi?rev=374374&view=rev">Diff</a> (chestnut)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            For SVG image xlinks, use fallback input module instead of fallback protocol because Batik can't access the source resolver. <a href="http://svn.apache.org/viewcvs.cgi?rev=374332&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            [minor change] removed unnecessary namespace declarations <a href="http://svn.apache.org/viewcvs.cgi?rev=374331&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            [minor] removed tabs and fixed indenting <a href="http://svn.apache.org/viewcvs.cgi?rev=374057&view=rev">Diff</a> (josias)</li>
+</ul>
+<a name="N1010E"></a><a name="Docs"></a>
+<h3 class="h4">Docs</h3>
+<ul>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[Docs] 
+            Added documentation about link management in 1.4 <a href="http://svn.apache.org/viewcvs.cgi?rev=374619&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Docs] 
+            Added option to use arbitrary usecase views to documentation <a href="http://svn.apache.org/viewcvs.cgi?rev=374709&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Docs] 
+            Updated resource type docs (see bug 38466). Thanks to Joern Nettingsmeier for the comments. <a href="http://svn.apache.org/viewcvs.cgi?rev=374705&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Docs] 
+            Updated resource type docs (see bug 38466). Thanks to Joern Nettingsmeier for the comments. <a href="http://svn.apache.org/viewcvs.cgi?rev=374704&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Docs] 
+            Updated resource type docs (see bug 38466). Thanks to Joern Nettingsmeier for the comments. <a href="http://svn.apache.org/viewcvs.cgi?rev=374703&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Docs] 
+            Updated resource type docs (see bug 38466). Thanks to Joern Nettingsmeier for the comments. <a href="http://svn.apache.org/viewcvs.cgi?rev=374702&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Docs] 
+            Updated module docs: /core/modules/... is replaced by cocoon://modules/... <a href="http://svn.apache.org/viewcvs.cgi?rev=374700&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Docs] 
+            [minor change] improved wording <a href="http://svn.apache.org/viewcvs.cgi?rev=374618&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Docs] 
+            Added note about DocumentReferencesHelper bug <a href="http://svn.apache.org/viewcvs.cgi?rev=374617&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Docs] 
+            Added myself :-)
+ <a href="http://svn.apache.org/viewcvs.cgi?rev=374417&view=rev">Diff</a> (froethenbacher)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Docs] 
+            Minor formatting and lower-/uppercase changes. <a href="http://svn.apache.org/viewcvs.cgi?rev=374385&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Docs] 
+            Renamed bxe element to bitfluxeditor. This avoids the clash with the external URL http://bxe.oscom.org. <a href="http://svn.apache.org/viewcvs.cgi?rev=374384&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Docs] 
+            Fixed faulty r374107 and added information to generate a dynamic exit URL <a href="http://svn.apache.org/viewcvs.cgi?rev=374378&view=rev">Diff</a> (thorsten)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Docs] 
+            Updated resource type docs. This fixes bug #38466, thanks to Joern Nettingsmeier for the report. <a href="http://svn.apache.org/viewcvs.cgi?rev=374116&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Docs] 
+            Renamed search module to lucene in docs <a href="http://svn.apache.org/viewcvs.cgi?rev=374109&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Docs] 
+            Added some paragraphs to the repo doc draft <a href="http://svn.apache.org/viewcvs.cgi?rev=374107&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Docs] 
+            Updated patch file paths to config/cocoon-xconf/* <a href="http://svn.apache.org/viewcvs.cgi?rev=374106&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Docs] 
+            Adding docs about module menus <a href="http://svn.apache.org/viewcvs.cgi?rev=374104&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Docs] 
+            Replaced config/*.xconf with config/cocoon-xconf/*.xconf in module docs <a href="http://svn.apache.org/viewcvs.cgi?rev=374084&view=rev">Diff</a> (andreas)</li>
+</ul>
+<a name="N101BE"></a><a name="Site"></a>
+<h3 class="h4">Site</h3>
+<ul>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[Site] 
+            testing whether .htaccess is enabled on our server <a href="http://svn.apache.org/viewcvs.cgi?rev=373951&view=rev">Diff</a> (thorsten)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Site] 
+            Adding notification on failure for the staging docu build. <a href="http://svn.apache.org/viewcvs.cgi?rev=374381&view=rev">Diff</a> (thorsten)</li>
+</ul>
+<a name="N101D5"></a><a name="Zone"></a>
+<h3 class="h4">Zone</h3>
+<ul>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Zone] 
+            Removing the cocoon build dir before building lenya this let lenya build cocoon again. <a href="http://svn.apache.org/viewcvs.cgi?rev=375080&view=rev">Diff</a> (thorsten)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Zone] 
+            fixing condition matching for notification and added to remove local.b* properties for trunk. <a href="http://svn.apache.org/viewcvs.cgi?rev=375071&view=rev">Diff</a> (thorsten)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Zone] 
+            fixing check conditions <a href="http://svn.apache.org/viewcvs.cgi?rev=375048&view=rev">Diff</a> (thorsten)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Zone] 
+            Activating notification when build fails for the branch as well. <a href="http://svn.apache.org/viewcvs.cgi?rev=375044&view=rev">Diff</a> (thorsten)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Zone] 
+            Fixing web logfile location <a href="http://svn.apache.org/viewcvs.cgi?rev=375039&view=rev">Diff</a> (thorsten)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Zone] 
+            Activating notification when build fails <a href="http://svn.apache.org/viewcvs.cgi?rev=375034&view=rev">Diff</a> (thorsten)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Zone] 
+            Adding status to the log <a href="http://svn.apache.org/viewcvs.cgi?rev=375016&view=rev">Diff</a> (thorsten)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Zone] 
+            Adding enhanced error handling through notification <a href="http://svn.apache.org/viewcvs.cgi?rev=375008&view=rev">Diff</a> (thorsten)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Zone] 
+            Activating notification to the forrestbot that deploys our zone site and the staging docu <a href="http://svn.apache.org/viewcvs.cgi?rev=374460&view=rev">Diff</a> (thorsten)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Zone] 
+            Adding notification to the forrestbot that deploys our zone site <a href="http://svn.apache.org/viewcvs.cgi?rev=374458&view=rev">Diff</a> (thorsten)</li>
+</ul>
+</div>
+<a name="N10234"></a><a name="version_2006-01"></a>
+<h2 class="h3">Version 2006-01 ()</h2>
+<div class="section">
+<a name="N10238"></a><a name="1.2-N10238"></a>
+<h3 class="h4">1.2</h3>
+<ul>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[1.2] 
+            release management step by step added <a href="http://svn.apache.org/viewcvs.cgi?rev=373607&view=rev">Diff</a> (michi)</li>
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[1.2] 
             this library is needed because of backwards compatibility <a href="http://svn.apache.org/viewcvs.cgi?rev=368340&view=rev">Diff</a> (michi)</li>
@@ -325,6 +535,12 @@ document.write("Last Published: " + document.lastModified);
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[1.2] 
             excalibur-io has been removed from Cocoon-2.1.8 upwards <a href="http://svn.apache.org/viewcvs.cgi?rev=366020&view=rev">Diff</a> (michi)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.2] 
+            more details added <a href="http://svn.apache.org/viewcvs.cgi?rev=373617&view=rev">Diff</a> (michi)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.2] 
+            more notes added <a href="http://svn.apache.org/viewcvs.cgi?rev=373610&view=rev">Diff</a> (michi)</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.2] 
             name added in order to allow testing <a href="http://svn.apache.org/viewcvs.cgi?rev=372483&view=rev">Diff</a> (michi)</li>
@@ -353,9 +569,27 @@ document.write("Last Published: " + document.lastModified);
 <img class="icon" alt="update" src="images/update.jpg">[1.2] 
             Cocoon versions added <a href="http://svn.apache.org/viewcvs.cgi?rev=366022&view=rev">Diff</a> (michi)</li>
 </ul>
-<a name="N1008B"></a><a name="1.4"></a>
+<a name="N102CD"></a><a name="1.4-N102CD"></a>
 <h3 class="h4">1.4</h3>
 <ul>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[1.4] 
+            moved external linkcheck functionality to a module <a href="http://svn.apache.org/viewcvs.cgi?rev=373570&view=rev">Diff</a> (chestnut)</li>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[1.4] 
+            Continued splitting up cocoon-xconf.xsl into dedicated xpatch files <a href="http://svn.apache.org/viewcvs.cgi?rev=372818&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[1.4] 
+            Continued splitting up cocoon-xconf.xsl into dedicated xpatch files <a href="http://svn.apache.org/viewcvs.cgi?rev=372814&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[1.4] 
+            Use Xpatch for source factories and input modules <a href="http://svn.apache.org/viewcvs.cgi?rev=372574&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[1.4] 
+            Moved xconf files to cocoon-xconf for homepage module <a href="http://svn.apache.org/viewcvs.cgi?rev=372573&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[1.4] 
+            Refactored patch system for cocoon.xconf. Patch files are now gathered in build/temp/patch and not copied to the build directory. Usecase patches were removed from cocoon-xconf.xsl. I have replaced remove=... with unless=... to reduce build time, feel free to complain. <a href="http://svn.apache.org/viewcvs.cgi?rev=372569&view=rev">Diff</a> (andreas)</li>
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[1.4] 
             removed jars due to licensing issues, added licenses for jetty-plus jar files <a href="http://svn.apache.org/viewcvs.cgi?rev=372456&view=rev">Diff</a> (chestnut)</li>
@@ -397,6 +631,30 @@ document.write("Last Published: " + document.lastModified);
             added the lenya meta data generator. It is an abstract generator that can produce the metadata to any given docid. Added an example how one can use it within the tutorial.html (only in english). <a href="http://svn.apache.org/viewcvs.cgi?rev=365905&view=rev">Diff</a> (thorsten)</li>
 <li>
 <img class="icon" alt="remove" src="images/remove.jpg">[1.4] 
+            Removed obsolete WorkflowAuthorizer <a href="http://svn.apache.org/viewcvs.cgi?rev=372892&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="remove" src="images/remove.jpg">[1.4] 
+            [minor change] removed empty search directory <a href="http://svn.apache.org/viewcvs.cgi?rev=372857&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="remove" src="images/remove.jpg">[1.4] 
+            [minor change] removed empty bxe directory <a href="http://svn.apache.org/viewcvs.cgi?rev=372856&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="remove" src="images/remove.jpg">[1.4] 
+            Moving publications from /src/webapp/lenya/pubs to /src/pubs. <a href="http://svn.apache.org/viewcvs.cgi?rev=372797&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="remove" src="images/remove.jpg">[1.4] 
+            removed search module and related files <a href="http://svn.apache.org/viewcvs.cgi?rev=372558&view=rev">Diff</a> (chestnut)</li>
+<li>
+<img class="icon" alt="remove" src="images/remove.jpg">[1.4] 
+            removed search module and related files <a href="http://svn.apache.org/viewcvs.cgi?rev=372557&view=rev">Diff</a> (chestnut)</li>
+<li>
+<img class="icon" alt="remove" src="images/remove.jpg">[1.4] 
+            [minor change] removed obsolete notification configuration file <a href="http://svn.apache.org/viewcvs.cgi?rev=372551&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="remove" src="images/remove.jpg">[1.4] 
+            accidental commit <a href="http://svn.apache.org/viewcvs.cgi?rev=372549&view=rev">Diff</a> (chestnut)</li>
+<li>
+<img class="icon" alt="remove" src="images/remove.jpg">[1.4] 
             Moved admin.search usecase to search module. <a href="http://svn.apache.org/viewcvs.cgi?rev=372254&view=rev">Diff</a> (andreas)</li>
 <li>
 <img class="icon" alt="remove" src="images/remove.jpg">[1.4] 
@@ -419,6 +677,81 @@ document.write("Last Published: " + document.lastModified);
 <li>
 <img class="icon" alt="remove" src="images/remove.jpg">[1.4] 
             webdav moved to a module <a href="http://svn.apache.org/viewcvs.cgi?rev=368248&view=rev">Diff</a> (chestnut)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            [minor change] removed junk characters that were used for indentation testing <a href="http://svn.apache.org/viewcvs.cgi?rev=373877&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            Use images to show menu item state (checked/unchecked) <a href="http://svn.apache.org/viewcvs.cgi?rev=373875&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            the svg module needs to handle shared images if they are processed (image2svg.xsl) <a href="http://svn.apache.org/viewcvs.cgi?rev=372987&view=rev">Diff</a> (chestnut)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            [minor change] fixed some java warnings <a href="http://svn.apache.org/viewcvs.cgi?rev=372908&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            Add deprecation note to task javadocs, added some javadocs. <a href="http://svn.apache.org/viewcvs.cgi?rev=372906&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            [minor change] removed unused imports <a href="http://svn.apache.org/viewcvs.cgi?rev=372901&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            [minor change] added javadocs <a href="http://svn.apache.org/viewcvs.cgi?rev=372900&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            [minor change] code formatting, javadoc TODO comment <a href="http://svn.apache.org/viewcvs.cgi?rev=372897&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            [minor change] code formatting <a href="http://svn.apache.org/viewcvs.cgi?rev=372891&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            fixed a bug with create new language version if the resource type has multiple samples (only need a sample if there is no initial document). <a href="http://svn.apache.org/viewcvs.cgi?rev=372873&view=rev">Diff</a> (josias)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            Instantiator deletes all previous templates before setting the template of the new publication. This fixes bug #38417. The change includes some refactoring. Updating the search index configuration is disabled, because it violates SoC by working with cocoon.xconf patch files - this doesn't work anymore since the patch files aren't copied to the build directory. <a href="http://svn.apache.org/viewcvs.cgi?rev=372870&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            Updated path to publication java files for eclipse-project build target <a href="http://svn.apache.org/viewcvs.cgi?rev=372858&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            Use temp/patch directory for lenya.roles patches <a href="http://svn.apache.org/viewcvs.cgi?rev=372853&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            Removed cocoon-xconf.xsl. This raises the issue that the Xopus context path defined in local.build.properties is not set. This will be taken care of when Xopus is moved to a module. <a href="http://svn.apache.org/viewcvs.cgi?rev=372847&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            Added option to prepare cocoon.xconf with initial patches, e.g., to add selector configurations <a href="http://svn.apache.org/viewcvs.cgi?rev=372845&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            [minor change] removed obsolete reference to scheduler logicsheet (doesn't exist anymore) <a href="http://svn.apache.org/viewcvs.cgi?rev=372803&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            Updated paths to publications and modules in build.properties after moving publications <a href="http://svn.apache.org/viewcvs.cgi?rev=372798&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            fixed the style of the exception page: show hand cursor on stacktrace toggle link. <a href="http://svn.apache.org/viewcvs.cgi?rev=372792&view=rev">Diff</a> (josias)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            Throw appropriate exception if workflow variable does not exist <a href="http://svn.apache.org/viewcvs.cgi?rev=372568&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            Fixed handling of is_live workflow variable in Overview usecase <a href="http://svn.apache.org/viewcvs.cgi?rev=372566&view=rev">Diff</a> (andreas)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            removed search module and related files <a href="http://svn.apache.org/viewcvs.cgi?rev=372559&view=rev">Diff</a> (chestnut)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            [minor] added xml declaration, converted line endings to unix, and set svn eol property <a href="http://svn.apache.org/viewcvs.cgi?rev=372547&view=rev">Diff</a> (josias)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            display the last modified date in iso-8601 format <a href="http://svn.apache.org/viewcvs.cgi?rev=372538&view=rev">Diff</a> (josias)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            added date-converter input module. it is used to set the correct last-modified http header. <a href="http://svn.apache.org/viewcvs.cgi?rev=372534&view=rev">Diff</a> (josias)</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] 
+            Show navigation visibility on overview tab <a href="http://svn.apache.org/viewcvs.cgi?rev=372524&view=rev">Diff</a> (andreas)</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] 
             GET replaced by POST <a href="http://svn.apache.org/viewcvs.cgi?rev=372484&view=rev">Diff</a> (michi)</li>
@@ -573,9 +906,12 @@ thanks to a patch by Gregor Imboden
 <img class="icon" alt="update" src="images/update.jpg">[1.4] 
             Added 'checked out by' column to SiteOverview usecase (admin area) <a href="http://svn.apache.org/viewcvs.cgi?rev=366143&view=rev">Diff</a> (andreas)</li>
 </ul>
-<a name="N1030F"></a><a name="Docs"></a>
+<a name="N106B0"></a><a name="Docs-N106B0"></a>
 <h3 class="h4">Docs</h3>
 <ul>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[Docs] 
+            Added the 'Release Management Howto' into the official docs <a href="http://svn.apache.org/viewcvs.cgi?rev=373657&view=rev">Diff</a> (thorsten)</li>
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[Docs] 
             moving logs to the docroot to see them online. Added overview page to the zone documentation. <a href="http://svn.apache.org/viewcvs.cgi?rev=371421&view=rev">Diff</a> (thorsten)</li>
@@ -689,7 +1025,7 @@ thanks to a patch by Gregor Imboden
 
  <a href="http://svn.apache.org/viewcvs.cgi?rev=365485&view=rev">Diff</a> (thorsten)</li>
 </ul>
-<a name="N10458"></a><a name="Sandbox"></a>
+<a name="N10802"></a><a name="Sandbox"></a>
 <h3 class="h4">Sandbox</h3>
 <ul>
 <li>
@@ -699,9 +1035,12 @@ thanks to a patch by Gregor Imboden
 <img class="icon" alt="update" src="images/update.jpg">[Sandbox] 
             Starting to update the code according to the new repository API <a href="http://svn.apache.org/viewcvs.cgi?rev=366518&view=rev">Diff</a> (andreas)</li>
 </ul>
-<a name="N1046F"></a><a name="Site"></a>
+<a name="N10819"></a><a name="Site-N10819"></a>
 <h3 class="h4">Site</h3>
 <ul>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Site] 
+            Updating changes pages to reflect current development <a href="http://svn.apache.org/viewcvs.cgi?rev=372605&view=rev">Diff</a> (thorsten)</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[Site] 
             Website update with recent changes <a href="http://svn.apache.org/viewcvs.cgi?rev=371675&view=rev">Diff</a> (thorsten)</li>
@@ -715,9 +1054,12 @@ thanks to a patch by Gregor Imboden
 I am using 0.8-dev, that is the reason that all files have changed. I recomment to use the forrest trunk for building the site.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=365490&view=rev">Diff</a> (thorsten)</li>
 </ul>
-<a name="N1048F"></a><a name="Zone"></a>
+<a name="N10842"></a><a name="Zone-N10842"></a>
 <h3 class="h4">Zone</h3>
 <ul>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[Zone] 
+            Added initial release script from the 'Release Management' notes. <a href="http://svn.apache.org/viewcvs.cgi?rev=373658&view=rev">Diff</a> (thorsten)</li>
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[Zone] 
             initial version of the mail script <a href="http://svn.apache.org/viewcvs.cgi?rev=371667&view=rev">Diff</a> (thorsten)</li>
@@ -815,10 +1157,10 @@ Exception in thread "main" java.lang.InternalError: Can't connect to X11 window 
             Fixed pid bug <a href="http://svn.apache.org/viewcvs.cgi?rev=368960&view=rev">Diff</a> (thorsten)</li>
 </ul>
 </div>
-<a name="N105AB"></a><a name="version_2005-12"></a>
+<a name="N10967"></a><a name="version_2005-12"></a>
 <h2 class="h3">Version 2005-12 ()</h2>
 <div class="section">
-<a name="N105AF"></a><a name="1.2-N105AF"></a>
+<a name="N1096B"></a><a name="1.2-N1096B"></a>
 <h3 class="h4">1.2</h3>
 <ul>
 <li>
@@ -846,7 +1188,7 @@ Exception in thread "main" java.lang.InternalError: Can't connect to X11 window 
 <img class="icon" alt="update" src="images/update.jpg">[1.2] 
             Applied a patch by Felix Roethenbacher, s.t. Lenya also works with Cocoon 2.1.8 (see bug #36382). Thanks Felix. <a href="http://svn.apache.org/viewcvs.cgi?rev=354395&view=rev">Diff</a> (josias)</li>
 </ul>
-<a name="N105FC"></a><a name="1.4-N105FC"></a>
+<a name="N109B8"></a><a name="1.4-N109B8"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -938,7 +1280,7 @@ Thanks to Felix R&ouml;thenbacher for the patch
 <img class="icon" alt="update" src="images/update.jpg">[1.4] 
             JCR integration: fixed Path.append(Path) - avoid changing UnmodifiableList <a href="http://svn.apache.org/viewcvs.cgi?rev=350228&view=rev">Diff</a> (andreas)</li>
 </ul>
-<a name="N106FD"></a><a name="Docs-N106FD"></a>
+<a name="N10AB9"></a><a name="Docs-N10AB9"></a>
 <h3 class="h4">Docs</h3>
 <ul>
 <li>
@@ -948,7 +1290,7 @@ Thanks to Felix R&ouml;thenbacher for the patch
 <img class="icon" alt="update" src="images/update.jpg">[Docs] 
             Furphys added <a href="http://svn.apache.org/viewcvs.cgi?rev=357937&view=rev">Diff</a> (michi)</li>
 </ul>
-<a name="N10714"></a><a name="Sandbox-N10714"></a>
+<a name="N10AD0"></a><a name="Sandbox-N10AD0"></a>
 <h3 class="h4">Sandbox</h3>
 <ul>
 <li>
@@ -963,10 +1305,10 @@ Thanks to Felix R&ouml;thenbacher for the patch
             TODOs added <a href="http://svn.apache.org/viewcvs.cgi?rev=357508&view=rev">Diff</a> (michi)</li>
 </ul>
 </div>
-<a name="N10734"></a><a name="version_2005-11"></a>
+<a name="N10AF0"></a><a name="version_2005-11"></a>
 <h2 class="h3">Version 2005-11 ()</h2>
 <div class="section">
-<a name="N10738"></a><a name="1.2-N10738"></a>
+<a name="N10AF4"></a><a name="1.2-N10AF4"></a>
 <h3 class="h4">1.2</h3>
 <ul>
 <li>
@@ -1054,7 +1396,7 @@ Thanks to Felix R&ouml;thenbacher for the patch
 <img class="icon" alt="update" src="images/update.jpg">[1.2] 
             Open live page in a new window <a href="http://svn.apache.org/viewcvs.cgi?rev=330213&view=rev">Diff</a> (jann)</li>
 </ul>
-<a name="N10839"></a><a name="1.4-N10839"></a>
+<a name="N10BF5"></a><a name="1.4-N10BF5"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -1288,7 +1630,7 @@ This fixes Bug 37362 <a href="http://svn.apache.org/viewcvs.cgi?rev=331627&view=
 <img class="icon" alt="update" src="images/update.jpg">[1.4] 
             Don't call opendocument2xhtml.xsl: the transformation is replaced by the xslt of art rhyno <a href="http://svn.apache.org/viewcvs.cgi?rev=330006&view=rev">Diff</a> (edith)</li>
 </ul>
-<a name="N10AA2"></a><a name="Docs-N10AA2"></a>
+<a name="N10E5E"></a><a name="Docs-N10E5E"></a>
 <h3 class="h4">Docs</h3>
 <ul>
 <li>
@@ -1301,7 +1643,7 @@ This fixes Bug 37362 <a href="http://svn.apache.org/viewcvs.cgi?rev=331627&view=
 <img class="icon" alt="update" src="images/update.jpg">[Docs] 
             added documentation about usecase parameters <a href="http://svn.apache.org/viewcvs.cgi?rev=332040&view=rev">Diff</a> (andreas)</li>
 </ul>
-<a name="N10AC2"></a><a name="Site-N10AC2"></a>
+<a name="N10E7E"></a><a name="Site-N10E7E"></a>
 <h3 class="h4">Site</h3>
 <ul>
 <li>
@@ -1312,10 +1654,10 @@ This fixes Bug 37362 <a href="http://svn.apache.org/viewcvs.cgi?rev=331627&view=
             Adding Uni Zuerich to the live websites <a href="http://svn.apache.org/viewcvs.cgi?rev=348525&view=rev">Diff</a> (jann)</li>
 </ul>
 </div>
-<a name="N10AD9"></a><a name="version_2005-10"></a>
+<a name="N10E95"></a><a name="version_2005-10"></a>
 <h2 class="h3">Version 2005-10 ()</h2>
 <div class="section">
-<a name="N10ADD"></a><a name="1.2-N10ADD"></a>
+<a name="N10E99"></a><a name="1.2-N10E99"></a>
 <h3 class="h4">1.2</h3>
 <ul>
 <li>
@@ -1346,7 +1688,7 @@ This fixes Bug 37362 <a href="http://svn.apache.org/viewcvs.cgi?rev=331627&view=
 <img class="icon" alt="update" src="images/update.jpg">[1.2] 
             byte-ranges set to false <a href="http://svn.apache.org/viewcvs.cgi?rev=307384&view=rev">Diff</a> (michi)</li>
 </ul>
-<a name="N10B33"></a><a name="1.4-N10B33"></a>
+<a name="N10EEF"></a><a name="1.4-N10EEF"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -1574,7 +1916,7 @@ started working on MKCOL method <a href="http://svn.apache.org/viewcvs.cgi?rev=3
 <img class="icon" alt="update" src="images/update.jpg">[1.4] 
             links doctype sample to navigation added <a href="http://svn.apache.org/viewcvs.cgi?rev=293089&view=rev">Diff</a> (michi)</li>
 </ul>
-<a name="N10D81"></a><a name="Docs-N10D81"></a>
+<a name="N1113D"></a><a name="Docs-N1113D"></a>
 <h3 class="h4">Docs</h3>
 <ul>
 <li>
@@ -1587,7 +1929,7 @@ started working on MKCOL method <a href="http://svn.apache.org/viewcvs.cgi?rev=3
 <img class="icon" alt="update" src="images/update.jpg">[Docs] 
             Added docs about resource type formats. <a href="http://svn.apache.org/viewcvs.cgi?rev=293277&view=rev">Diff</a> (andreas)</li>
 </ul>
-<a name="N10DA1"></a><a name="Sandbox-N10DA1"></a>
+<a name="N1115D"></a><a name="Sandbox-N1115D"></a>
 <h3 class="h4">Sandbox</h3>
 <ul>
 <li>
@@ -1603,10 +1945,10 @@ separated index into live and authoring indexes
  <a href="http://svn.apache.org/viewcvs.cgi?rev=294903&view=rev">Diff</a> (chestnut)</li>
 </ul>
 </div>
-<a name="N10DC1"></a><a name="version_2005-09"></a>
+<a name="N1117D"></a><a name="version_2005-09"></a>
 <h2 class="h3">Version 2005-09 ()</h2>
 <div class="section">
-<a name="N10DC5"></a><a name="1.4-N10DC5"></a>
+<a name="N11181"></a><a name="1.4-N11181"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -1822,7 +2164,7 @@ fixes bug 36539 <a href="http://svn.apache.org/viewcvs.cgi?rev=279307&view=rev">
 <img class="icon" alt="update" src="images/update.jpg">[1.4] 
             [minor change] added ASF header <a href="http://svn.apache.org/viewcvs.cgi?rev=265683&view=rev">Diff</a> (andreas)</li>
 </ul>
-<a name="N1100A"></a><a name="Docs-N1100A"></a>
+<a name="N113C6"></a><a name="Docs-N113C6"></a>
 <h3 class="h4">Docs</h3>
 <ul>
 <li>
@@ -1839,10 +2181,10 @@ fixes bug 36539 <a href="http://svn.apache.org/viewcvs.cgi?rev=279307&view=rev">
             Added FAQ entry about custom logicsheets <a href="http://svn.apache.org/viewcvs.cgi?rev=290091&view=rev">Diff</a> (andreas)</li>
 </ul>
 </div>
-<a name="N11033"></a><a name="version_2005-08"></a>
+<a name="N113EF"></a><a name="version_2005-08"></a>
 <h2 class="h3">Version 2005-08 ()</h2>
 <div class="section">
-<a name="N11037"></a><a name="1.2-N11037"></a>
+<a name="N113F3"></a><a name="1.2-N113F3"></a>
 <h3 class="h4">1.2</h3>
 <ul>
 <li>
@@ -1870,7 +2212,7 @@ fixes bug 36539 <a href="http://svn.apache.org/viewcvs.cgi?rev=279307&view=rev">
 <img class="icon" alt="update" src="images/update.jpg">[1.2] 
             initialize() should not throw exception; removed unused method; added logging statements <a href="http://svn.apache.org/viewcvs.cgi?rev=227235&view=rev">Diff</a> (jwkaltz)</li>
 </ul>
-<a name="N11084"></a><a name="1.4-N11084"></a>
+<a name="N11440"></a><a name="1.4-N11440"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -2149,7 +2491,7 @@ screen
 <img class="icon" alt="update" src="images/update.jpg">[1.4] 
             DocumentWorkflowable.getWorkflowSchemaURI() returns null when workflow schema is null (no wf schema assigned to resource type) <a href="http://svn.apache.org/viewcvs.cgi?rev=227201&view=rev">Diff</a> (michi)</li>
 </ul>
-<a name="N113AA"></a><a name="Docs-N113AA"></a>
+<a name="N11766"></a><a name="Docs-N11766"></a>
 <h3 class="h4">Docs</h3>
 <ul>
 <li>
@@ -2174,7 +2516,7 @@ screen
 <img class="icon" alt="update" src="images/update.jpg">[Docs] 
             Updated usecase framework template definition docs <a href="http://svn.apache.org/viewcvs.cgi?rev=231205&view=rev">Diff</a> (andreas)</li>
 </ul>
-<a name="N113EE"></a><a name="Sandbox-N113EE"></a>
+<a name="N117AA"></a><a name="Sandbox-N117AA"></a>
 <h3 class="h4">Sandbox</h3>
 <ul>
 <li>
@@ -2182,10 +2524,10 @@ screen
             committed soc work from robert goene <a href="http://svn.apache.org/viewcvs.cgi?rev=265566&view=rev">Diff</a> (gregor)</li>
 </ul>
 </div>
-<a name="N113FC"></a><a name="version_2005-07"></a>
+<a name="N117B8"></a><a name="version_2005-07"></a>
 <h2 class="h3">Version 2005-07 ()</h2>
 <div class="section">
-<a name="N11400"></a><a name="1.2-N11400"></a>
+<a name="N117BC"></a><a name="1.2-N117BC"></a>
 <h3 class="h4">1.2</h3>
 <ul>
 <li>
@@ -2249,7 +2591,7 @@ screen
 <img class="icon" alt="update" src="images/update.jpg">[1.2] 
             Search was not using i18n properly. Fix by Paul Ercolino, this resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35589 <a href="http://svn.apache.org/viewcvs.cgi?rev=208943&view=rev">Diff</a> (gregor)</li>
 </ul>
-<a name="N114B9"></a><a name="1.4-N114B9"></a>
+<a name="N11875"></a><a name="1.4-N11875"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -2514,7 +2856,7 @@ webapp.
 <img class="icon" alt="update" src="images/update.jpg">[1.4] 
             fixes the problems of not being able to edit with one form editor and not being able to PUT documents via webDAV <a href="http://svn.apache.org/viewcvs.cgi?rev=208757&view=rev">Diff</a> (chestnut)</li>
 </ul>
-<a name="N117BB"></a><a name="Docs-N117BB"></a>
+<a name="N11B77"></a><a name="Docs-N11B77"></a>
 <h3 class="h4">Docs</h3>
 <ul>
 <li>
@@ -2530,7 +2872,7 @@ webapp.
 <img class="icon" alt="update" src="images/update.jpg">[Docs] 
             x removed <a href="http://svn.apache.org/viewcvs.cgi?rev=208788&view=rev">Diff</a> (michi)</li>
 </ul>
-<a name="N117E4"></a><a name="Site-N117E4"></a>
+<a name="N11BA0"></a><a name="Site-N11BA0"></a>
 <h3 class="h4">Site</h3>
 <ul>
 <li>
@@ -2538,10 +2880,10 @@ webapp.
             Fixed two small typos <a href="http://svn.apache.org/viewcvs.cgi?rev=208970&view=rev">Diff</a> (gregor)</li>
 </ul>
 </div>
-<a name="N117F2"></a><a name="version_2005-06"></a>
+<a name="N11BAE"></a><a name="version_2005-06"></a>
 <h2 class="h3">Version 2005-06 ()</h2>
 <div class="section">
-<a name="N117F6"></a>
+<a name="N11BB2"></a>
 <h3 class="h4"></h3>
 <ul>
 <li>
@@ -2554,7 +2896,7 @@ webapp.
 <img class="icon" alt="add" src="images/add.jpg">[] 
             Tagging 1.4alpha1 <a href="http://svn.apache.org/viewcvs.cgi?rev=190268&view=rev">Diff</a> (gregor)</li>
 </ul>
-<a name="N11815"></a><a name="1.2-N11815"></a>
+<a name="N11BD1"></a><a name="1.2-N11BD1"></a>
 <h3 class="h4">1.2</h3>
 <ul>
 <li>
@@ -2706,7 +3048,7 @@ Bug: http://issues.apache.org/bugzilla/show_bug.cgi?id=35394, Patch supplied by 
 <img class="icon" alt="update" src="images/update.jpg">[1.2] 
             No longer check the live area when deleting a document. Patch by Felix Roethenbacher, this resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35190 <a href="http://svn.apache.org/viewcvs.cgi?rev=179603&view=rev">Diff</a> (gregor)</li>
 </ul>
-<a name="N119D3"></a><a name="1.4-N119D3"></a>
+<a name="N11D8F"></a><a name="1.4-N11D8F"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -3091,7 +3433,7 @@ urlPrefix value, so that the Search tab also works if you use tomcat.
 <img class="icon" alt="update" src="images/update.jpg">[1.4] 
             Allow to set the relation of a new document to an existing one, thanks to a patch by Doug Chestnut. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=35130  <a href="http://svn.apache.org/viewcvs.cgi?rev=179343&view=rev">Diff</a> (gregor)</li>
 </ul>
-<a name="N11E2B"></a><a name="Docs-N11E2B"></a>
+<a name="N121E7"></a><a name="Docs-N121E7"></a>
 <h3 class="h4">Docs</h3>
 <ul>
 <li>
@@ -3155,7 +3497,7 @@ urlPrefix value, so that the Search tab also works if you use tomcat.
 <img class="icon" alt="update" src="images/update.jpg">[Docs] 
             Added new japanese live site <a href="http://svn.apache.org/viewcvs.cgi?rev=179701&view=rev">Diff</a> (gregor)</li>
 </ul>
-<a name="N11EE4"></a><a name="Sandbox-N11EE4"></a>
+<a name="N122A0"></a><a name="Sandbox-N122A0"></a>
 <h3 class="h4">Sandbox</h3>
 <ul>
 <li>
@@ -3177,7 +3519,7 @@ urlPrefix value, so that the Search tab also works if you use tomcat.
 <img class="icon" alt="update" src="images/update.jpg">[Sandbox] 
             link to JCR and Blogs article added <a href="http://svn.apache.org/viewcvs.cgi?rev=190885&view=rev">Diff</a> (michi)</li>
 </ul>
-<a name="N11F1F"></a><a name="Site-N11F1F"></a>
+<a name="N122DB"></a><a name="Site-N122DB"></a>
 <h3 class="h4">Site</h3>
 <ul>
 <li>
@@ -3191,17 +3533,17 @@ urlPrefix value, so that the Search tab also works if you use tomcat.
             Added link to ApacheCon Europe 2005 <a href="http://svn.apache.org/viewcvs.cgi?rev=179719&view=rev">Diff</a> (gregor)</li>
 </ul>
 </div>
-<a name="N11F3F"></a><a name="version_2005-05"></a>
+<a name="N122FB"></a><a name="version_2005-05"></a>
 <h2 class="h3">Version 2005-05 ()</h2>
 <div class="section">
-<a name="N11F43"></a><a name="-N11F43"></a>
+<a name="N122FF"></a><a name="-N122FF"></a>
 <h3 class="h4"></h3>
 <ul>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[] 
             Tagging release 1.2.3 <a href="http://svn.apache.org/viewcvs.cgi?rev=165549&view=rev">Diff</a> (gregor)</li>
 </ul>
-<a name="N11F50"></a><a name="1.2-N11F50"></a>
+<a name="N1230C"></a><a name="1.2-N1230C"></a>
 <h3 class="h4">1.2</h3>
 <ul>
 <li>
@@ -3316,7 +3658,7 @@ urlPrefix value, so that the Search tab also works if you use tomcat.
 <img class="icon" alt="update" src="images/update.jpg">[1.2] 
             Explicitly exclude build directories from dist-src target <a href="http://svn.apache.org/viewcvs.cgi?rev=165545&view=rev">Diff</a> (gregor)</li>
 </ul>
-<a name="N120A2"></a><a name="1.4-N120A2"></a>
+<a name="N1245E"></a><a name="1.4-N1245E"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -3848,7 +4190,7 @@ urlPrefix value, so that the Search tab also works if you use tomcat.
 <img class="icon" alt="update" src="images/update.jpg">[1.4] 
             Added Gregor's PGP key <a href="http://svn.apache.org/viewcvs.cgi?rev=165544&view=rev">Diff</a> (gregor)</li>
 </ul>
-<a name="N126CE"></a><a name="Docs-N126CE"></a>
+<a name="N12A8A"></a><a name="Docs-N12A8A"></a>
 <h3 class="h4">Docs</h3>
 <ul>
 <li>
@@ -3934,14 +4276,14 @@ urlPrefix value, so that the Search tab also works if you use tomcat.
 <img class="icon" alt="update" src="images/update.jpg">[Docs] 
             updated front page and changes <a href="http://svn.apache.org/viewcvs.cgi?rev=165560&view=rev">Diff</a> (gregor)</li>
 </ul>
-<a name="N127C6"></a><a name="Sandbox-N127C6"></a>
+<a name="N12B82"></a><a name="Sandbox-N12B82"></a>
 <h3 class="h4">Sandbox</h3>
 <ul>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[Sandbox] 
             Added cforms cleanup patch by Maxim Wasiliev. This resolves http://issues.apache.org/bugzilla/show_bug.cgi?id=34562 <a href="http://svn.apache.org/viewcvs.cgi?rev=178723&view=rev">Diff</a> (gregor)</li>
 </ul>
-<a name="N127D4"></a><a name="Site-N127D4"></a>
+<a name="N12B90"></a><a name="Site-N12B90"></a>
 <h3 class="h4">Site</h3>
 <ul>
 <li>
@@ -3964,10 +4306,10 @@ urlPrefix value, so that the Search tab also works if you use tomcat.
             updated index and changes <a href="http://svn.apache.org/viewcvs.cgi?rev=165564&view=rev">Diff</a> (gregor)</li>
 </ul>
 </div>
-<a name="N1280F"></a><a name="version_2005-04"></a>
+<a name="N12BCB"></a><a name="version_2005-04"></a>
 <h2 class="h3">Version 2005-04 ()</h2>
 <div class="section">
-<a name="N12813"></a><a name="1.2-N12813"></a>
+<a name="N12BCF"></a><a name="1.2-N12BCF"></a>
 <h3 class="h4">1.2</h3>
 <ul>
 <li>
@@ -4160,7 +4502,7 @@ urlPrefix value, so that the Search tab also works if you use tomcat.
 <img class="icon" alt="update" src="images/update.jpg">[1.2] 
             sitetree generator declared <a href="http://svn.apache.org/viewcvs.cgi?rev=160018&view=rev">Diff</a> (michi)</li>
 </ul>
-<a name="N12A4F"></a><a name="1.4-N12A4F"></a>
+<a name="N12E0B"></a><a name="1.4-N12E0B"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -4512,7 +4854,7 @@ tabs
 <img class="icon" alt="update" src="images/update.jpg">[1.4] 
             avoid NPE when calling TreeSiteManager methods for non-existing tree nodes <a href="http://svn.apache.org/viewcvs.cgi?rev=159698&view=rev">Diff</a> (andreas)</li>
 </ul>
-<a name="N12E56"></a><a name="Docs-N12E56"></a>
+<a name="N13212"></a><a name="Docs-N13212"></a>
 <h3 class="h4">Docs</h3>
 <ul>
 <li>
@@ -4548,7 +4890,7 @@ tabs
 <img class="icon" alt="update" src="images/update.jpg">[Docs] 
             More live sites added <a href="http://svn.apache.org/viewcvs.cgi?rev=160370&view=rev">Diff</a> (gregor)</li>
 </ul>
-<a name="N12EB5"></a><a name="Sandbox-N12EB5"></a>
+<a name="N13271"></a><a name="Sandbox-N13271"></a>
 <h3 class="h4">Sandbox</h3>
 <ul>
 <li>
@@ -4600,7 +4942,7 @@ tabs
 <img class="icon" alt="update" src="images/update.jpg">[Sandbox] 
             improved version of JCRSiteTree <a href="http://svn.apache.org/viewcvs.cgi?rev=160032&view=rev">Diff</a> (michi)</li>
 </ul>
-<a name="N12F4A"></a><a name="Site-N12F4A"></a>
+<a name="N13306"></a><a name="Site-N13306"></a>
 <h3 class="h4">Site</h3>
 <ul>
 <li>
@@ -4631,10 +4973,10 @@ tabs
             Removed duplicate description <a href="http://svn.apache.org/viewcvs.cgi?rev=164532&view=rev">Diff</a> (gregor)</li>
 </ul>
 </div>
-<a name="N12F97"></a><a name="version_2005-03"></a>
+<a name="N13353"></a><a name="version_2005-03"></a>
 <h2 class="h3">Version 2005-03 ()</h2>
 <div class="section">
-<a name="N12F9B"></a><a name="1.2-N12F9B"></a>
+<a name="N13357"></a><a name="1.2-N13357"></a>
 <h3 class="h4">1.2</h3>
 <ul>
 <li>
@@ -4795,7 +5137,7 @@ tabs
             Fixing bug 33661 with patch supplied by Miguel Martin (required a patch to /apache-lenya directory in kupu as well)
  <a href="http://svn.apache.org/viewcvs.cgi?rev=155802&view=rev">Diff</a> (tschlabach)</li>
 </ul>
-<a name="N13162"></a><a name="1.4-N13162"></a>
+<a name="N1351E"></a><a name="1.4-N1351E"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -5444,7 +5786,7 @@ field
 <img class="icon" alt="update" src="images/update.jpg">[1.4] 
             Tried to refactor the spaghetti code that is the search usecase <a href="http://svn.apache.org/viewcvs.cgi?rev=155739&view=rev">Diff</a> (gregor)</li>
 </ul>
-<a name="N13854"></a><a name="Docs-N13854"></a>
+<a name="N13C10"></a><a name="Docs-N13C10"></a>
 <h3 class="h4">Docs</h3>
 <ul>
 <li>
@@ -5533,7 +5875,7 @@ field
 <img class="icon" alt="update" src="images/update.jpg">[Docs] 
             News updated with 1.2.2 release <a href="http://svn.apache.org/viewcvs.cgi?rev=155751&view=rev">Diff</a> (gregor)</li>
 </ul>
-<a name="N1393A"></a><a name="Sandbox-N1393A"></a>
+<a name="N13CF6"></a><a name="Sandbox-N13CF6"></a>
 <h3 class="h4">Sandbox</h3>
 <ul>
 <li>
@@ -5639,7 +5981,7 @@ for 1.2.x, not for trunk.
 <img class="icon" alt="update" src="images/update.jpg">[Sandbox] 
             download target added <a href="http://svn.apache.org/viewcvs.cgi?rev=156708&view=rev">Diff</a> (michi)</li>
 </ul>
-<a name="N13A5F"></a><a name="Site-N13A5F"></a>
+<a name="N13E1B"></a><a name="Site-N13E1B"></a>
 <h3 class="h4">Site</h3>
 <ul>
 <li>
@@ -5712,10 +6054,10 @@ for 1.2.x, not for trunk.
             News updated with 1.2.2 release <a href="http://svn.apache.org/viewcvs.cgi?rev=155750&view=rev">Diff</a> (gregor)</li>
 </ul>
 </div>
-<a name="N13B0F"></a><a name="version_2005-02"></a>
+<a name="N13ECB"></a><a name="version_2005-02"></a>
 <h2 class="h3">Version 2005-02 ()</h2>
 <div class="section">
-<a name="N13B13"></a><a name="-N13B13"></a>
+<a name="N13ECF"></a><a name="-N13ECF"></a>
 <h3 class="h4"></h3>
 <ul>
 <li>
@@ -5739,7 +6081,7 @@ for 1.2.x, not for trunk.
             Preparing re-tagging
  <a href="http://svn.apache.org/viewcvs.cgi?rev=154529&view=rev">Diff</a> (roku)</li>
 </ul>
-<a name="N13B44"></a><a name="1.2-N13B44"></a>
+<a name="N13F00"></a><a name="1.2-N13F00"></a>
 <h3 class="h4">1.2</h3>
 <ul>
 <li>
@@ -5961,7 +6303,7 @@ Next step would be to offer all links to the available languages.
 <img class="icon" alt="update" src="images/update.jpg">[1.2] 
              <a href="http://svn.apache.org/viewcvs.cgi?rev=149325&view=rev">Diff</a> (gregor)</li>
 </ul>
-<a name="N13DAD"></a><a name="1.4-N13DAD"></a>
+<a name="N14169"></a><a name="1.4-N14169"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -6347,7 +6689,7 @@ Next step would be to offer all links to the available languages.
 <img class="icon" alt="update" src="images/update.jpg">[1.4] 
             Improved sample documents in the default publication with metadata. <a href="http://svn.apache.org/viewcvs.cgi?rev=149361&view=rev">Diff</a> (gregor)</li>
 </ul>
-<a name="N14217"></a><a name="Docs-N14217"></a>
+<a name="N145D3"></a><a name="Docs-N145D3"></a>
 <h3 class="h4">Docs</h3>
 <ul>
 <li>
@@ -6414,7 +6756,7 @@ Next step would be to offer all links to the available languages.
 <img class="icon" alt="update" src="images/update.jpg">[Docs] 
             Updated proxying instructions with notes about Jetty <a href="http://svn.apache.org/viewcvs.cgi?rev=149445&view=rev">Diff</a> (gregor)</li>
 </ul>
-<a name="N142D0"></a><a name="Site-N142D0"></a>
+<a name="N1468C"></a><a name="Site-N1468C"></a>
 <h3 class="h4">Site</h3>
 <ul>
 <li>
@@ -6453,10 +6795,10 @@ Next step would be to offer all links to the available languages.
             Site restructured to distinguish between Lenya 1.2 and 1.4, roadmap updated with progress <a href="http://svn.apache.org/viewcvs.cgi?rev=154739&view=rev">Diff</a> (gregor)</li>
 </ul>
 </div>
-<a name="N14338"></a><a name="version_2005-01"></a>
+<a name="N146F4"></a><a name="version_2005-01"></a>
 <h2 class="h3">Version 2005-01 ()</h2>
 <div class="section">
-<a name="N1433C"></a><a name="1.2-N1433C"></a>
+<a name="N146F8"></a><a name="1.2-N146F8"></a>
 <h3 class="h4">1.2</h3>
 <ul>
 <li>
@@ -6608,7 +6950,7 @@ Directory
 <img class="icon" alt="update" src="images/update.jpg">[1.2] 
             view task log usecase doesn't seem to work or link might be wrong <a href="http://svn.apache.org/viewcvs.cgi?rev=123953&view=rev">Diff</a> (michi)</li>
 </ul>
-<a name="N144F1"></a><a name="1.4-N144F1"></a>
+<a name="N148AD"></a><a name="1.4-N148AD"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -7146,7 +7488,7 @@ Directory
 <img class="icon" alt="update" src="images/update.jpg">[1.4] 
             removed unused imports, replace strings with pre-defined fields <a href="http://svn.apache.org/viewcvs.cgi?rev=123957&view=rev">Diff</a> (andreas)</li>
 </ul>
-<a name="N14B1D"></a><a name="Docs-N14B1D"></a>
+<a name="N14ED9"></a><a name="Docs-N14ED9"></a>
 <h3 class="h4">Docs</h3>
 <ul>
 <li>
@@ -7160,7 +7502,7 @@ Directory
             updated the link to our live site
  <a href="http://svn.apache.org/viewcvs.cgi?rev=125177&view=rev">Diff</a> (jwkaltz)</li>
 </ul>
-<a name="N14B3D"></a><a name="Site-N14B3D"></a>
+<a name="N14EF9"></a><a name="Site-N14EF9"></a>
 <h3 class="h4">Site</h3>
 <ul>
 <li>
@@ -7198,10 +7540,10 @@ Directory
             Updated site with latest documentation changes <a href="http://svn.apache.org/viewcvs.cgi?rev=123925&view=rev">Diff</a> (gregor)</li>
 </ul>
 </div>
-<a name="N14BA5"></a><a name="version_2004-12"></a>
+<a name="N14F61"></a><a name="version_2004-12"></a>
 <h2 class="h3">Version 2004-12 ()</h2>
 <div class="section">
-<a name="N14BA9"></a><a name="-N14BA9"></a>
+<a name="N14F65"></a><a name="-N14F65"></a>
 <h3 class="h4"></h3>
 <ul>
 <li>
@@ -7215,7 +7557,7 @@ Directory
             removing: used wrong kupu and bxe revs
  <a href="http://svn.apache.org/viewcvs.cgi?rev=123666&view=rev">Diff</a> (roku)</li>
 </ul>
-<a name="N14BC8"></a><a name="1.2-N14BC8"></a>
+<a name="N14F84"></a><a name="1.2-N14F84"></a>
 <h3 class="h4">1.2</h3>
 <ul>
 <li>
@@ -7463,7 +7805,7 @@ Guido Wesdorp created it yesterday from trunk.
 <img class="icon" alt="update" src="images/update.jpg">[1.2] 
             fixed XLink namespace URI <a href="http://svn.apache.org/viewcvs.cgi?rev=109334&view=rev">Diff</a> (andreas)</li>
 </ul>
-<a name="N14E82"></a><a name="1.4-N14E82"></a>
+<a name="N1523E"></a><a name="1.4-N1523E"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -7910,7 +8252,7 @@ See bug http://issues.apache.org/bugzilla/show_bug.cgi?id=32610 <a href="http://
 <img class="icon" alt="update" src="images/update.jpg">[1.4] 
             fixed XLink namespace URI <a href="http://svn.apache.org/viewcvs.cgi?rev=109341&view=rev">Diff</a> (andreas)</li>
 </ul>
-<a name="N153A0"></a><a name="Docs-N153A0"></a>
+<a name="N1575C"></a><a name="Docs-N1575C"></a>
 <h3 class="h4">Docs</h3>
 <ul>
 <li>
@@ -8005,7 +8347,7 @@ See bug http://issues.apache.org/bugzilla/show_bug.cgi?id=32610 <a href="http://
 <img class="icon" alt="update" src="images/update.jpg">[Docs] 
             Expanded the Xopus integration documentation. <a href="http://svn.apache.org/viewcvs.cgi?rev=109425&view=rev">Diff</a> (gregor)</li>
 </ul>
-<a name="N154B3"></a><a name="Sandbox-N154B3"></a>
+<a name="N1586F"></a><a name="Sandbox-N1586F"></a>
 <h3 class="h4">Sandbox</h3>
 <ul>
 <li>
@@ -8015,7 +8357,7 @@ See bug http://issues.apache.org/bugzilla/show_bug.cgi?id=32610 <a href="http://
 <img class="icon" alt="update" src="images/update.jpg">[Sandbox] 
             logging off added <a href="http://svn.apache.org/viewcvs.cgi?rev=110037&view=rev">Diff</a> (michi)</li>
 </ul>
-<a name="N154CA"></a><a name="Site-N154CA"></a>
+<a name="N15886"></a><a name="Site-N15886"></a>
 <h3 class="h4">Site</h3>
 <ul>
 <li>
@@ -8044,10 +8386,10 @@ See bug http://issues.apache.org/bugzilla/show_bug.cgi?id=32610 <a href="http://
             deployed changes that have been done by committers that not have deployed the site afterwards <a href="http://svn.apache.org/viewcvs.cgi?rev=111244&view=rev">Diff</a> (thorsten)</li>
 </ul>
 </div>
-<a name="N15517"></a><a name="version_2004-11"></a>
+<a name="N158D3"></a><a name="version_2004-11"></a>
 <h2 class="h3">Version 2004-11 ()</h2>
 <div class="section">
-<a name="N1551B"></a><a name="-N1551B"></a>
+<a name="N158D7"></a><a name="-N158D7"></a>
 <h3 class="h4"></h3>
 <ul>
 <li>
@@ -8055,7 +8397,7 @@ See bug http://issues.apache.org/bugzilla/show_bug.cgi?id=32610 <a href="http://
             Migrate lenya to TLP
  <a href="http://svn.apache.org/viewcvs.cgi?rev=56820&view=rev">Diff</a> (blautenb)</li>
 </ul>
-<a name="N15528"></a><a name="1.2-N15528"></a>
+<a name="N158E4"></a><a name="1.2-N158E4"></a>
 <h3 class="h4">1.2</h3>
 <ul>
 <li>
@@ -8299,7 +8641,7 @@ we should really migrate to the rng for xhtml 2 <a href="http://svn.apache.org/v
 <img class="icon" alt="update" src="images/update.jpg">[1.2] 
             update lenya 1.2.1 issues <a href="http://svn.apache.org/viewcvs.cgi?rev=56186&view=rev">Diff</a> (gregor)</li>
 </ul>
-<a name="N157C7"></a><a name="1.4-N157C7"></a>
+<a name="N15B83"></a><a name="1.4-N15B83"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -8513,7 +8855,7 @@ we should really migrate to the rng for xhtml 2 <a href="http://svn.apache.org/v
 <img class="icon" alt="update" src="images/update.jpg">[1.4] 
             DocumentReferencesHelper signature changed <a href="http://svn.apache.org/viewcvs.cgi?rev=56172&view=rev">Diff</a> (gregor)</li>
 </ul>
-<a name="N15A0C"></a><a name="Docs-N15A0C"></a>
+<a name="N15DC8"></a><a name="Docs-N15DC8"></a>
 <h3 class="h4">Docs</h3>
 <ul>
 <li>
@@ -8635,14 +8977,14 @@ Increase Forrest memory allocation to handle status.xml <a href="http://svn.apac
 <img class="icon" alt="update" src="images/update.jpg">[Docs] 
             another live site <a href="http://svn.apache.org/viewcvs.cgi?rev=56800&view=rev">Diff</a> (gregor)</li>
 </ul>
-<a name="N15B67"></a><a name="Sandbox-N15B67"></a>
+<a name="N15F23"></a><a name="Sandbox-N15F23"></a>
 <h3 class="h4">Sandbox</h3>
 <ul>
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[Sandbox] 
             mod_lenya and sandbox added <a href="http://svn.apache.org/viewcvs.cgi?rev=57152&view=rev">Diff</a> (michi)</li>
 </ul>
-<a name="N15B75"></a><a name="Site-N15B75"></a>
+<a name="N15F31"></a><a name="Site-N15F31"></a>
 <h3 class="h4">Site</h3>
 <ul>
 <li>
@@ -8784,10 +9126,10 @@ Added changes.rss <a href="http://svn.apache.org/viewcvs.cgi?rev=105940&view=rev
             TLP clean up <a href="http://svn.apache.org/viewcvs.cgi?rev=56934&view=rev">Diff</a> (thorsten)</li>
 </ul>
 </div>
-<a name="N15CE2"></a><a name="version_2004-10"></a>
+<a name="N1609E"></a><a name="version_2004-10"></a>
 <h2 class="h3">Version 2004-10 ()</h2>
 <div class="section">
-<a name="N15CE6"></a><a name="1.2-N15CE6"></a>
+<a name="N160A2"></a><a name="1.2-N160A2"></a>
 <h3 class="h4">1.2</h3>
 <ul>
 <li>
@@ -9086,7 +9428,7 @@ BTW: I will now make some tests re switching Lenya completely to UTF-8, or is th
 <img class="icon" alt="update" src="images/update.jpg">[1.2] 
             upper case suffix for JPG added <a href="http://svn.apache.org/viewcvs.cgi?rev=53856&view=rev">Diff</a> (michi)</li>
 </ul>
-<a name="N15FDF"></a><a name="1.4-N15FDF"></a>
+<a name="N1639B"></a><a name="1.4-N1639B"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -9386,7 +9728,7 @@ BTW: I will now make some tests re switching Lenya completely to UTF-8, or is th
 <img class="icon" alt="update" src="images/update.jpg">[1.4] 
             change "NCName" text in tags to 'text' to allow any text in &lt;strong&gt; amd &lt;em&gt; tags. <a href="http://svn.apache.org/viewcvs.cgi?rev=54637&view=rev">Diff</a> (bigdog)</li>
 </ul>
-<a name="N16287"></a><a name="Docs-N16287"></a>
+<a name="N16643"></a><a name="Docs-N16643"></a>
 <h3 class="h4">Docs</h3>
 <ul>
 <li>
@@ -9418,7 +9760,7 @@ It should read
 <img class="icon" alt="update" src="images/update.jpg">[Docs] 
             new live site <a href="http://svn.apache.org/viewcvs.cgi?rev=55861&view=rev">Diff</a> (gregor)</li>
 </ul>
-<a name="N162CB"></a><a name="Site-N162CB"></a>
+<a name="N16687"></a><a name="Site-N16687"></a>
 <h3 class="h4">Site</h3>
 <ul>
 <li>
@@ -9444,17 +9786,17 @@ It should read
             create site branch <a href="http://svn.apache.org/viewcvs.cgi?rev=55642&view=rev">Diff</a> (gregor)</li>
 </ul>
 </div>
-<a name="N1630F"></a><a name="version_2004-09"></a>
+<a name="N166CB"></a><a name="version_2004-09"></a>
 <h2 class="h3">Version 2004-09 ()</h2>
 <div class="section">
-<a name="N16313"></a><a name="-N16313"></a>
+<a name="N166CF"></a><a name="-N166CF"></a>
 <h3 class="h4"></h3>
 <ul>
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[] 
             Import Lenya into Subversion <a href="http://svn.apache.org/viewcvs.cgi?rev=37790&view=rev">Diff</a> (jerenkrantz)</li>
 </ul>
-<a name="N16320"></a><a name="1.2-N16320"></a>
+<a name="N166DC"></a><a name="1.2-N166DC"></a>
 <h3 class="h4">1.2</h3>
 <ul>
 <li>
@@ -9633,7 +9975,7 @@ which can be useful together with a SourceResolver. <a href="http://svn.apache.o
 <img class="icon" alt="update" src="images/update.jpg">[1.2] 
             applied patch: http://issues.apache.org/bugzilla/show_bug.cgi?id=30231 <a href="http://svn.apache.org/viewcvs.cgi?rev=43666&view=rev">Diff</a> (andreas)</li>
 </ul>
-<a name="N1652F"></a><a name="1.4-N1652F"></a>
+<a name="N168EB"></a><a name="1.4-N168EB"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -10133,10 +10475,10 @@ Deleted author tags. We agreed not to use them!
  <a href="http://svn.apache.org/viewcvs.cgi?rev=43299&view=rev">Diff</a> (michi)</li>
 </ul>
 </div>
-<a name="N16AD4"></a><a name="version_2004-08"></a>
+<a name="N16E90"></a><a name="version_2004-08"></a>
 <h2 class="h3">Version 2004-08 ()</h2>
 <div class="section">
-<a name="N16AD8"></a><a name="1.4-N16AD8"></a>
+<a name="N16E94"></a><a name="1.4-N16E94"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -10702,10 +11044,10 @@ log.error() is not there for debugging purposes..
  <a href="http://svn.apache.org/viewcvs.cgi?rev=43167&view=rev">Diff</a> (gregor)</li>
 </ul>
 </div>
-<a name="N16F81"></a><a name="version_2004-07"></a>
+<a name="N1733D"></a><a name="version_2004-07"></a>
 <h2 class="h3">Version 2004-07 ()</h2>
 <div class="section">
-<a name="N16F85"></a><a name="1.4-N16F85"></a>
+<a name="N17341"></a><a name="1.4-N17341"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -10971,10 +11313,10 @@ insert link popup, it will have to be reinstated.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=43103&view=rev">Diff</a> (gregor)</li>
 </ul>
 </div>
-<a name="N171CA"></a><a name="version_2004-06"></a>
+<a name="N17586"></a><a name="version_2004-06"></a>
 <h2 class="h3">Version 2004-06 ()</h2>
 <div class="section">
-<a name="N171CE"></a><a name="-N171CE"></a>
+<a name="N1758A"></a><a name="-N1758A"></a>
 <h3 class="h4"></h3>
 <ul>
 <li>
@@ -10984,7 +11326,7 @@ insert link popup, it will have to be reinstated.
 <img class="icon" alt="update" src="images/update.jpg">[] 
             This commit was manufactured by cvs2svn to create tag 'RELEASE_1_2'. <a href="http://svn.apache.org/viewcvs.cgi?rev=43085&view=rev">Diff</a> ()</li>
 </ul>
-<a name="N171E4"></a><a name="1.4-N171E4"></a>
+<a name="N175A0"></a><a name="1.4-N175A0"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -11176,10 +11518,10 @@ Feel free to update them. I hope I put it at the right place.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=43059&view=rev">Diff</a> (andreas)</li>
 </ul>
 </div>
-<a name="N1736C"></a><a name="version_2004-05"></a>
+<a name="N17728"></a><a name="version_2004-05"></a>
 <h2 class="h3">Version 2004-05 ()</h2>
 <div class="section">
-<a name="N17370"></a><a name="-N17370"></a>
+<a name="N1772C"></a><a name="-N1772C"></a>
 <h3 class="h4"></h3>
 <ul>
 <li>
@@ -11201,7 +11543,7 @@ LenyaSourceFactory and lenya protocol integration
             This commit was manufactured by cvs2svn to create tag
 'Root-of-Lenya_Sprint_2004_5_13'. <a href="http://svn.apache.org/viewcvs.cgi?rev=42996&view=rev">Diff</a> ()</li>
 </ul>
-<a name="N17398"></a><a name="1.4-N17398"></a>
+<a name="N17754"></a><a name="1.4-N17754"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -11655,10 +11997,10 @@ button was pressed.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=42952&view=rev">Diff</a> (roku)</li>
 </ul>
 </div>
-<a name="N17733"></a><a name="version_2004-04"></a>
+<a name="N17AEF"></a><a name="version_2004-04"></a>
 <h2 class="h3">Version 2004-04 ()</h2>
 <div class="section">
-<a name="N17737"></a><a name="-N17737"></a>
+<a name="N17AF3"></a><a name="-N17AF3"></a>
 <h3 class="h4"></h3>
 <ul>
 <li>
@@ -11666,7 +12008,7 @@ button was pressed.
             This commit was manufactured by cvs2svn to create tag
 'RELEASE_1_2_RC_3'. <a href="http://svn.apache.org/viewcvs.cgi?rev=42828&view=rev">Diff</a> ()</li>
 </ul>
-<a name="N17744"></a><a name="1.4-N17744"></a>
+<a name="N17B00"></a><a name="1.4-N17B00"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -12386,10 +12728,10 @@ Changes:
  <a href="http://svn.apache.org/viewcvs.cgi?rev=42789&view=rev">Diff</a> (roku)</li>
 </ul>
 </div>
-<a name="N17D04"></a><a name="version_2004-03"></a>
+<a name="N180C0"></a><a name="version_2004-03"></a>
 <h2 class="h3">Version 2004-03 ()</h2>
 <div class="section">
-<a name="N17D08"></a><a name="1.4-N17D08"></a>
+<a name="N180C4"></a><a name="1.4-N180C4"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -13317,10 +13659,10 @@ publication using a html form select.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=42585&view=rev">Diff</a> (michi)</li>
 </ul>
 </div>
-<a name="N18430"></a><a name="version_2004-02"></a>
+<a name="N187EC"></a><a name="version_2004-02"></a>
 <h2 class="h3">Version 2004-02 ()</h2>
 <div class="section">
-<a name="N18434"></a><a name="1.4-N18434"></a>
+<a name="N187F0"></a><a name="1.4-N187F0"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -14736,10 +15078,10 @@ String srcDocumentid = node.getAbsoluteId();
  <a href="http://svn.apache.org/viewcvs.cgi?rev=42251&view=rev">Diff</a> (stefano)</li>
 </ul>
 </div>
-<a name="N18FF7"></a><a name="version_2004-01"></a>
+<a name="N193B3"></a><a name="version_2004-01"></a>
 <h2 class="h3">Version 2004-01 ()</h2>
 <div class="section">
-<a name="N18FFB"></a><a name="-N18FFB"></a>
+<a name="N193B7"></a><a name="-N193B7"></a>
 <h3 class="h4"></h3>
 <ul>
 <li>
@@ -14747,7 +15089,7 @@ String srcDocumentid = node.getAbsoluteId();
             This commit was manufactured by cvs2svn to create tag
 'RELEASE_1_2_RC_2'. <a href="http://svn.apache.org/viewcvs.cgi?rev=42250&view=rev">Diff</a> ()</li>
 </ul>
-<a name="N19008"></a><a name="1.4-N19008"></a>
+<a name="N193C4"></a><a name="1.4-N193C4"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
@@ -15723,10 +16065,10 @@ now never be null.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=42022&view=rev">Diff</a> (andreas)</li>
 </ul>
 </div>
-<a name="N19811"></a><a name="version_2003-12"></a>
+<a name="N19BCD"></a><a name="version_2003-12"></a>
 <h2 class="h3">Version 2003-12 ()</h2>
 <div class="section">
-<a name="N19815"></a><a name="1.0"></a>
+<a name="N19BD1"></a><a name="1.0"></a>
 <h3 class="h4">1.0</h3>
 <ul>
 <li>
@@ -16368,10 +16710,10 @@ etc
  <a href="http://svn.apache.org/viewcvs.cgi?rev=41875&view=rev">Diff</a> (michi)</li>
 </ul>
 </div>
-<a name="N19D45"></a><a name="version_2003-11"></a>
+<a name="N1A101"></a><a name="version_2003-11"></a>
 <h2 class="h3">Version 2003-11 ()</h2>
 <div class="section">
-<a name="N19D49"></a><a name="1.0-N19D49"></a>
+<a name="N1A105"></a><a name="1.0-N1A105"></a>
 <h3 class="h4">1.0</h3>
 <ul>
 <li>
@@ -17186,10 +17528,10 @@ migrated from unizh to the core.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=41681&view=rev">Diff</a> (michi)</li>
 </ul>
 </div>
-<a name="N1A420"></a><a name="version_2003-10"></a>
+<a name="N1A7DC"></a><a name="version_2003-10"></a>
 <h2 class="h3">Version 2003-10 ()</h2>
 <div class="section">
-<a name="N1A424"></a><a name="1.0-N1A424"></a>
+<a name="N1A7E0"></a><a name="1.0-N1A7E0"></a>
 <h3 class="h4">1.0</h3>
 <ul>
 <li>
@@ -18474,10 +18816,10 @@ non-published documents which are referenced in the current document.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=41377&view=rev">Diff</a> (edith)</li>
 </ul>
 </div>
-<a name="N1AED9"></a><a name="version_2003-09"></a>
+<a name="N1B295"></a><a name="version_2003-09"></a>
 <h2 class="h3">Version 2003-09 ()</h2>
 <div class="section">
-<a name="N1AEDD"></a><a name="1.0-N1AEDD"></a>
+<a name="N1B299"></a><a name="1.0-N1B299"></a>
 <h3 class="h4">1.0</h3>
 <ul>
 <li>
@@ -19820,10 +20162,10 @@ fetch the dublin core meta data (which would lead to an exception)
  <a href="http://svn.apache.org/viewcvs.cgi?rev=41064&view=rev">Diff</a> (michi)</li>
 </ul>
 </div>
-<a name="N1B9E3"></a><a name="version_2003-08"></a>
+<a name="N1BD9F"></a><a name="version_2003-08"></a>
 <h2 class="h3">Version 2003-08 ()</h2>
 <div class="section">
-<a name="N1B9E7"></a><a name="1.0-N1B9E7"></a>
+<a name="N1BDA3"></a><a name="1.0-N1BDA3"></a>
 <h3 class="h4">1.0</h3>
 <ul>
 <li>
@@ -22002,10 +22344,10 @@ this means that also the authenticator initializes the identity
  <a href="http://svn.apache.org/viewcvs.cgi?rev=40559&view=rev">Diff</a> (egli)</li>
 </ul>
 </div>
-<a name="N1CBA4"></a><a name="version_2003-07"></a>
+<a name="N1CF60"></a><a name="version_2003-07"></a>
 <h2 class="h3">Version 2003-07 ()</h2>
 <div class="section">
-<a name="N1CBA8"></a><a name="1.0-N1CBA8"></a>
+<a name="N1CF64"></a><a name="1.0-N1CF64"></a>
 <h3 class="h4">1.0</h3>
 <ul>
 <li>
@@ -23954,10 +24296,10 @@ stripped request parameters from document id for the cookie
  <a href="http://svn.apache.org/viewcvs.cgi?rev=40111&view=rev">Diff</a> (andreas)</li>
 </ul>
 </div>
-<a name="N1DB6D"></a><a name="version_2003-06"></a>
+<a name="N1DF29"></a><a name="version_2003-06"></a>
 <h2 class="h3">Version 2003-06 ()</h2>
 <div class="section">
-<a name="N1DB71"></a><a name="1.0-N1DB71"></a>
+<a name="N1DF2D"></a><a name="1.0-N1DF2D"></a>
 <h3 class="h4">1.0</h3>
 <ul>
 <li>
@@ -25484,10 +25826,10 @@ in the derived class.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=39761&view=rev">Diff</a> (michi)</li>
 </ul>
 </div>
-<a name="N1E7C4"></a><a name="version_2003-05"></a>
+<a name="N1EB80"></a><a name="version_2003-05"></a>
 <h2 class="h3">Version 2003-05 ()</h2>
 <div class="section">
-<a name="N1E7C8"></a><a name="1.0-N1E7C8"></a>
+<a name="N1EB84"></a><a name="1.0-N1EB84"></a>
 <h3 class="h4">1.0</h3>
 <ul>
 <li>
@@ -27155,10 +27497,10 @@ NamespaceHelper classes.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=39393&view=rev">Diff</a> (michi)</li>
 </ul>
 </div>
-<a name="N1F4C6"></a><a name="version_2003-04"></a>
+<a name="N1F882"></a><a name="version_2003-04"></a>
 <h2 class="h3">Version 2003-04 ()</h2>
 <div class="section">
-<a name="N1F4CA"></a><a name="1.0-N1F4CA"></a>
+<a name="N1F886"></a><a name="1.0-N1F886"></a>
 <h3 class="h4">1.0</h3>
 <ul>
 <li>
@@ -28546,10 +28888,10 @@ purged dead code from menus
  <a href="http://svn.apache.org/viewcvs.cgi?rev=39065&view=rev">Diff</a> (gregor)</li>
 </ul>
 </div>
-<a name="N2004E"></a><a name="version_2003-03"></a>
+<a name="N2040A"></a><a name="version_2003-03"></a>
 <h2 class="h3">Version 2003-03 ()</h2>
 <div class="section">
-<a name="N20052"></a><a name="1.0-N20052"></a>
+<a name="N2040E"></a><a name="1.0-N2040E"></a>
 <h3 class="h4">1.0</h3>
 <ul>
 <li>
@@ -29214,10 +29556,10 @@ step 2) adjust build files for new lenya root
  <a href="http://svn.apache.org/viewcvs.cgi?rev=38921&view=rev">Diff</a> (michi)</li>
 </ul>
 </div>
-<a name="N20579"></a><a name="version_2003-02"></a>
+<a name="N20935"></a><a name="version_2003-02"></a>
 <h2 class="h3">Version 2003-02 ()</h2>
 <div class="section">
-<a name="N2057D"></a><a name="1.0-N2057D"></a>
+<a name="N20939"></a><a name="1.0-N20939"></a>
 <h3 class="h4">1.0</h3>
 <ul>
 <li>
@@ -29830,10 +30172,10 @@ signature.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=38787&view=rev">Diff</a> (gregorcms)</li>
 </ul>
 </div>
-<a name="N20A26"></a><a name="version_2003-01"></a>
+<a name="N20DE2"></a><a name="version_2003-01"></a>
 <h2 class="h3">Version 2003-01 ()</h2>
 <div class="section">
-<a name="N20A2A"></a><a name="1.0-N20A2A"></a>
+<a name="N20DE6"></a><a name="1.0-N20DE6"></a>
 <h3 class="h4">1.0</h3>
 <ul>
 <li>
@@ -30489,10 +30831,10 @@ similar way as the image path is calculated. This fixes #15.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=38625&view=rev">Diff</a> (michicms)</li>
 </ul>
 </div>
-<a name="N20FD8"></a><a name="version_2002-12"></a>
+<a name="N21394"></a><a name="version_2002-12"></a>
 <h2 class="h3">Version 2002-12 ()</h2>
 <div class="section">
-<a name="N20FDC"></a><a name="0.8"></a>
+<a name="N21398"></a><a name="0.8"></a>
 <h3 class="h4">0.8</h3>
 <ul>
 <li>
@@ -30830,10 +31172,10 @@ a accept-charset in the form, hoping this will fix the problem.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=38542&view=rev">Diff</a> (michicms)</li>
 </ul>
 </div>
-<a name="N212CC"></a><a name="version_2002-11"></a>
+<a name="N21688"></a><a name="version_2002-11"></a>
 <h2 class="h3">Version 2002-11 ()</h2>
 <div class="section">
-<a name="N212D0"></a><a name="0.8-N212D0"></a>
+<a name="N2168C"></a><a name="0.8-N2168C"></a>
 <h3 class="h4">0.8</h3>
 <ul>
 <li>
@@ -31414,10 +31756,10 @@ This implies quite a few changes in the stylesheets.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=38407&view=rev">Diff</a> (michicms)</li>
 </ul>
 </div>
-<a name="N217A6"></a><a name="version_2002-10"></a>
+<a name="N21B62"></a><a name="version_2002-10"></a>
 <h2 class="h3">Version 2002-10 ()</h2>
 <div class="section">
-<a name="N217AA"></a><a name="0.8-N217AA"></a>
+<a name="N21B66"></a><a name="0.8-N21B66"></a>
 <h3 class="h4">0.8</h3>
 <ul>
 <li>
@@ -31726,10 +32068,10 @@ This implies quite a few changes in the stylesheets.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=38329&view=rev">Diff</a> (michicms)</li>
 </ul>
 </div>
-<a name="N21A5B"></a><a name="version_2002-09"></a>
+<a name="N21E17"></a><a name="version_2002-09"></a>
 <h2 class="h3">Version 2002-09 ()</h2>
 <div class="section">
-<a name="N21A5F"></a><a name="0.8-N21A5F"></a>
+<a name="N21E1B"></a><a name="0.8-N21E1B"></a>
 <h3 class="h4">0.8</h3>
 <ul>
 <li>
@@ -32079,10 +32421,10 @@ simple and plain formatter that leaves the xml intact as it was.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=38245&view=rev">Diff</a> (michicms)</li>
 </ul>
 </div>
-<a name="N21D58"></a><a name="version_2002-08"></a>
+<a name="N22114"></a><a name="version_2002-08"></a>
 <h2 class="h3">Version 2002-08 ()</h2>
 <div class="section">
-<a name="N21D5C"></a><a name="0.8-N21D5C"></a>
+<a name="N22118"></a><a name="0.8-N22118"></a>
 <h3 class="h4">0.8</h3>
 <ul>
 <li>
@@ -32429,10 +32771,10 @@ The file is uploaded with the name of the "identifier" parameter.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=38166&view=rev">Diff</a> (edithcms)</li>
 </ul>
 </div>
-<a name="N22028"></a><a name="version_2002-07"></a>
+<a name="N223E4"></a><a name="version_2002-07"></a>
 <h2 class="h3">Version 2002-07 ()</h2>
 <div class="section">
-<a name="N2202C"></a><a name="0.8-N2202C"></a>
+<a name="N223E8"></a><a name="0.8-N223E8"></a>
 <h3 class="h4">0.8</h3>
 <ul>
 <li>
@@ -32648,10 +32990,10 @@ building the javadocs with jdk 1.4.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=38115&view=rev">Diff</a> (michicms)</li>
 </ul>
 </div>
-<a name="N22205"></a><a name="version_2002-06"></a>
+<a name="N225C1"></a><a name="version_2002-06"></a>
 <h2 class="h3">Version 2002-06 ()</h2>
 <div class="section">
-<a name="N22209"></a><a name="0.8-N22209"></a>
+<a name="N225C5"></a><a name="0.8-N225C5"></a>
 <h3 class="h4">0.8</h3>
 <ul>
 <li>
@@ -32909,10 +33251,10 @@ of ip numbers.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=38051&view=rev">Diff</a> (michicms)</li>
 </ul>
 </div>
-<a name="N22445"></a><a name="version_2002-05"></a>
+<a name="N22801"></a><a name="version_2002-05"></a>
 <h2 class="h3">Version 2002-05 ()</h2>
 <div class="section">
-<a name="N22449"></a><a name="0.8-N22449"></a>
+<a name="N22805"></a><a name="0.8-N22805"></a>
 <h3 class="h4">0.8</h3>
 <ul>
 <li>
@@ -33181,10 +33523,10 @@ of ip numbers.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=37986&view=rev">Diff</a> (michicms)</li>
 </ul>
 </div>
-<a name="N226A0"></a><a name="version_2002-04"></a>
+<a name="N22A5C"></a><a name="version_2002-04"></a>
 <h2 class="h3">Version 2002-04 ()</h2>
 <div class="section">
-<a name="N226A4"></a><a name="0.8-N226A4"></a>
+<a name="N22A60"></a><a name="0.8-N22A60"></a>
 <h3 class="h4">0.8</h3>
 <ul>
 <li>
@@ -33473,10 +33815,10 @@ of ip numbers.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=37914&view=rev">Diff</a> (michicms)</li>
 </ul>
 </div>
-<a name="N22928"></a><a name="version_2002-03"></a>
+<a name="N22CE4"></a><a name="version_2002-03"></a>
 <h2 class="h3">Version 2002-03 ()</h2>
 <div class="section">
-<a name="N2292C"></a><a name="0.8-N2292C"></a>
+<a name="N22CE8"></a><a name="0.8-N22CE8"></a>
 <h3 class="h4">0.8</h3>
 <ul>
 <li>
@@ -33531,10 +33873,10 @@ See also: the developer documentation on the HTML Editor.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=37902&view=rev">Diff</a> (memo)</li>
 </ul>
 </div>
-<a name="N2299D"></a><a name="version_2002-02"></a>
+<a name="N22D59"></a><a name="version_2002-02"></a>
 <h2 class="h3">Version 2002-02 ()</h2>
 <div class="section">
-<a name="N229A1"></a><a name="0.8-N229A1"></a>
+<a name="N22D5D"></a><a name="0.8-N22D5D"></a>
 <h3 class="h4">0.8</h3>
 <ul>
 <li>
@@ -33674,10 +34016,10 @@ i.e. no file are stored with XSLT
  <a href="http://svn.apache.org/viewcvs.cgi?rev=37869&view=rev">Diff</a> (uid523)</li>
 </ul>
 </div>
-<a name="N22ACF"></a><a name="version_2002-01"></a>
+<a name="N22E8B"></a><a name="version_2002-01"></a>
 <h2 class="h3">Version 2002-01 ()</h2>
 <div class="section">
-<a name="N22AD3"></a><a name="0.8-N22AD3"></a>
+<a name="N22E8F"></a><a name="0.8-N22E8F"></a>
 <h3 class="h4">0.8</h3>
 <ul>
 <li>

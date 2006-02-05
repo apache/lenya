@@ -1,5 +1,526 @@
 <?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN" "http://my.netscape.com/publish/formats/rss-0.91.dtd">
-<rss version="0.91"><channel><title> (2006-01) Changes</title><link>changes.html</link><description> (2006-01) Changes</description><language>en-us</language><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+<rss version="0.91"><channel><title> (2006-02) Changes</title><link>changes.html</link><description> (2006-02) Changes</description><language>en-us</language><item><title>Zone update</title><link>changes.html</link><description>Zone update
+        by
+        thorsten
+        :
+        [Zone] 
+            Removing the cocoon build dir before building lenya this let lenya build cocoon again. Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
+        by
+        thorsten
+        :
+        [Zone] 
+            fixing condition matching for notification and added to remove local.b* properties for trunk. Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
+        by
+        thorsten
+        :
+        [Zone] 
+            fixing check conditions Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
+        by
+        thorsten
+        :
+        [Zone] 
+            Activating notification when build fails for the branch as well. Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
+        by
+        thorsten
+        :
+        [Zone] 
+            Fixing web logfile location Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
+        by
+        thorsten
+        :
+        [Zone] 
+            Activating notification when build fails Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
+        by
+        thorsten
+        :
+        [Zone] 
+            Adding status to the log Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
+        by
+        thorsten
+        :
+        [Zone] 
+            Adding enhanced error handling through notification Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        josias
+        :
+        [1.4] 
+            refactored sitetree script: now it always uses asynchronous requests and it should be easier to extend. Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        chestnut
+        :
+        [1.4] 
+            One Form Editor Module
+-Simply uses the One Form Editor usecase
+-You need to add the FCKeditor directory to the resources directory due to license
+-I have only tested the ability to open, slight edit, and save of the tutorial page of the default pub (it worked :) )
+-http://localhost:8888/default/authoring/tutorial.html?lenya.usecase=edit.fckeditor Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Added option to use arbitrary usecase views to documentation Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Enabled JCR block again to make the JCRSourceNode work. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Updated resource type docs (see bug 38466). Thanks to Joern Nettingsmeier for the comments. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Updated resource type docs (see bug 38466). Thanks to Joern Nettingsmeier for the comments. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Updated resource type docs (see bug 38466). Thanks to Joern Nettingsmeier for the comments. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Updated resource type docs (see bug 38466). Thanks to Joern Nettingsmeier for the comments. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Updated module docs: /core/modules/... is replaced by cocoon://modules/... Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Removed handling of core/modules URLs, since it is now possible to call modules using an URL prefix. Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Added JCRMetaData java file. Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Moved JCRSourceNode related code to jcrsource module, restored JCRSourceNode related classes Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            more docu about current JCR integration added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            use base-url module to get the root parameter in order to get the correct urls if proxying is used. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            [minor] removed unused imports Diff </description></item><item><title>Docs add</title><link>changes.html</link><description>Docs add
+        by
+        andreas
+        :
+        [Docs] 
+            Added documentation about link management in 1.4 Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            [minor change] improved wording Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Added note about DocumentReferencesHelper bug Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] OneFormEditor: refactoring, javadocs Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            SVG module: use fallback input module instead of protocol for Batik image references (Batik can't access the source resolver) Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            Fixed javadoc. Thanks to Bob Harner for spotting this. Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
+        by
+        thorsten
+        :
+        [Zone] 
+            Activating notification to the forrestbot that deploys our zone site and the staging docu Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
+        by
+        thorsten
+        :
+        [Zone] 
+            Adding notification to the forrestbot that deploys our zone site Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        froethenbacher
+        :
+        [1.4] 
+            Added context prefix for cforms resources.
+ Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        froethenbacher
+        :
+        [Docs] 
+            Added myself :-)
+ Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        josias
+        :
+        [1.4] 
+            added BaseURLModule which may be used to get the base url to prepend to urls in order to construct internal links. If the publication uses proxying, it returns the proxy url. Otherwise, it returns /context-path/pubid/area Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            don't assume that internal links start with the context prefix. internal links should look like /pubid/area/doc-url (see also bug #31157) Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Mount module-resources.xmap with pass-through. This allows the module to serve resources if module-resources.xmap doesn't contain an appropriate pipeline. Added HTML and XHTML pipelines to module-resources.xmap. This fixes bug #38455, thanks to Simon Litwan for the patch. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Adds id attribut to form elements and name attributes to buttons. This fixes bug #38471. Thanks to Simon Litwan for the patch. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Minor formatting and lower-/uppercase changes. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Renamed bxe element to bitfluxeditor. This avoids the clash with the external URL http://bxe.oscom.org. Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+        by
+        thorsten
+        :
+        [Site] 
+            Adding notification on failure for the staging docu build. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        thorsten
+        :
+        [Docs] 
+            Fixed faulty r374107 and added information to generate a dynamic exit URL Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            match only on img src attributes so that it doesn't interfere other elements such as script. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            For SVG image xlinks, use fallback input module instead of fallback protocol because Batik can't access the source resolver. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed unnecessary namespace declarations Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Updated resource type docs. This fixes bug #38466, thanks to Joern Nettingsmeier for the report. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Renamed search module to lucene in docs Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Added some paragraphs to the repo doc draft Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Updated patch file paths to config/cocoon-xconf/* Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Adding docs about module menus Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed empty menus directory Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Replaced config/*.xconf with config/cocoon-xconf/*.xconf in module docs Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        jann
+        :
+        [1.2] 
+            Showing the original path of a deleted document Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        jann
+        :
+        [1.2] 
+            Adding an identifier string which can be used within the trash area in order to show the original path of a deleted document Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            [minor] removed tabs and fixed indenting Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        andreas
+        :
+        [1.2] 
+            Add name attributes to form elements. This fixes bug #38471. Thanks to Simon Litwan for the patch. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        andreas
+        :
+        [1.2] 
+            Don't swallow exception in crawler configuration Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        andreas
+        :
+        [1.2] 
+            Improved error logging (message, stack trace) Diff </description></item><item><title>Site add</title><link>changes.html</link><description>Site add
+        by
+        thorsten
+        :
+        [Site] 
+            testing whether .htaccess is enabled on our server Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed junk characters that were used for indentation testing Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Use images to show menu item state (checked/unchecked) Diff </description></item><item><title>Zone add</title><link>changes.html</link><description>Zone add
+        by
+        thorsten
+        :
+        [Zone] 
+            Added initial release script from the 'Release Management' notes. Diff </description></item><item><title>Docs add</title><link>changes.html</link><description>Docs add
+        by
+        thorsten
+        :
+        [Docs] 
+            Added the 'Release Management Howto' into the official docs Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        michi
+        :
+        [1.2] 
+            more details added Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        michi
+        :
+        [1.2] 
+            more notes added Diff </description></item><item><title>1.2 add</title><link>changes.html</link><description>1.2 add
+        by
+        michi
+        :
+        [1.2] 
+            release management step by step added Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        chestnut
+        :
+        [1.4] 
+            moved external linkcheck functionality to a module Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            the svg module needs to handle shared images if they are processed (image2svg.xsl) Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] fixed some java warnings Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Add deprecation note to task javadocs, added some javadocs. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed unused imports Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] added javadocs Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] code formatting, javadoc TODO comment Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Removed obsolete WorkflowAuthorizer Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] code formatting Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            fixed a bug with create new language version if the resource type has multiple samples (only need a sample if there is no initial document). Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Instantiator deletes all previous templates before setting the template of the new publication. This fixes bug #38417. The change includes some refactoring. Updating the search index configuration is disabled, because it violates SoC by working with cocoon.xconf patch files - this doesn't work anymore since the patch files aren't copied to the build directory. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Updated path to publication java files for eclipse-project build target Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed empty search directory Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed empty bxe directory Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Use temp/patch directory for lenya.roles patches Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Removed cocoon-xconf.xsl. This raises the issue that the Xopus context path defined in local.build.properties is not set. This will be taken care of when Xopus is moved to a module. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Added option to prepare cocoon.xconf with initial patches, e.g., to add selector configurations Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Continued splitting up cocoon-xconf.xsl into dedicated xpatch files Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Continued splitting up cocoon-xconf.xsl into dedicated xpatch files Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed obsolete reference to scheduler logicsheet (doesn't exist anymore) Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Updated paths to publications and modules in build.properties after moving publications Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Moving publications from /src/webapp/lenya/pubs to /src/pubs. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            fixed the style of the exception page: show hand cursor on stacktrace toggle link. Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+        by
+        thorsten
+        :
+        [Site] 
+            Updating changes pages to reflect current development Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Use Xpatch for source factories and input modules Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved xconf files to cocoon-xconf for homepage module Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Refactored patch system for cocoon.xconf. Patch files are now gathered in build/temp/patch and not copied to the build directory. Usecase patches were removed from cocoon-xconf.xsl. I have replaced remove=... with unless=... to reduce build time, feel free to complain. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Throw appropriate exception if workflow variable does not exist Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Fixed handling of is_live workflow variable in Overview usecase Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            removed search module and related files Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        chestnut
+        :
+        [1.4] 
+            removed search module and related files Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        chestnut
+        :
+        [1.4] 
+            removed search module and related files Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed obsolete notification configuration file Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        chestnut
+        :
+        [1.4] 
+            accidental commit Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            [minor] added xml declaration, converted line endings to unix, and set svn eol property Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            display the last modified date in iso-8601 format Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            added date-converter input module. it is used to set the correct last-modified http header. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Show navigation visibility on overview tab Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         michi
         :
@@ -50013,796 +50534,300 @@ These actions are used in the html-form-editor.xmap sitemap
         
         :
         [0.8] 
-            New repository initialized by cvs2svn. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            GET replaced by POST Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-        by
-        michi
-        :
-        [1.2] 
-            name added in order to allow testing Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-        by
-        michi
-        :
-        [1.2] 
-            form name added in order to allow testing Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-        by
-        michi
-        :
-        [1.2] 
-            thanks to Bob Harner GET by POST replaced Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        chestnut
-        :
-        [1.4] 
-            removed jars due to licensing issues, added licenses for jetty-plus jar files Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        chestnut
-        :
-        [1.4] 
-            use fallback:// and lenya:// sources instead of ../.. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        chestnut
-        :
-        [1.4] 
-            example external opensearch moved into lucene module Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        chestnut
-        :
-        [1.4] 
-            relative include is broken when xhtml.rng is included in other .rng schemas (try to edit and save the homepage) Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
-        by
-        andreas
-        :
-        [1.4] 
-            Moved admin.search usecase to search module. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            Removed System.out.println Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            Modified site + admin area layout. Removed HTML tables, tabs are arranged vertically now. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        chestnut
-        :
-        [1.4] 
-            added ability to have more than one script element in the head Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
-        by
-        andreas
-        :
-        [1.4] 
-            [minor change] removed empty directory Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            Removed index page from live area. This fixes bug #38380. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            Added menu item to switch navigation visibility Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
+            New repository initialized by cvs2svn. Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
         by
         thorsten
         :
         [Zone] 
-            Fixing bug line 14: $logfile: ambiguous redirect Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+            Removing the cocoon build dir before building lenya this let lenya build cocoon again. Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
         by
-        andreas
+        thorsten
         :
-        [1.4] 
-            [default pub] use meta data to display page title Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        [Zone] 
+            fixing condition matching for notification and added to remove local.b* properties for trunk. Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
         by
-        andreas
+        thorsten
         :
-        [1.4] 
-            Moved insertAsset and insertImage usecases to BXE module Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        [Zone] 
+            fixing check conditions Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
         by
-        andreas
+        thorsten
         :
-        [1.4] 
-            [minor change] removed dead code Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        [Zone] 
+            Activating notification when build fails for the branch as well. Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
         by
-        andreas
+        thorsten
         :
-        [1.4] 
-            [BXE] Changed lenya.usecase=bxe to lenya.module=bxe for insert-link screen Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        [Zone] 
+            Fixing web logfile location Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
         by
-        andreas
+        thorsten
         :
-        [1.4] 
-            [BXE] Use Lenya CSS (dummy) instead of obsolete resource-type specific CSS for BXE. That never worked anyway, because the resource-type specific CSS was just not there. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        [Zone] 
+            Activating notification when build fails Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
         by
-        andreas
+        thorsten
         :
-        [1.4] 
-            Reverted accidential commit (BXE menu item in blog publication) Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        [Zone] 
+            Adding status to the log Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
         by
-        andreas
+        thorsten
         :
-        [1.4] 
-            Added module-resources.xmap to serve module resources directly. RNG schemas are now served in a generic way, see pipeline in global-sitemap.xmap (there is still room for improvement). Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        [Zone] 
+            Adding enhanced error handling through notification Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
         by
         josias
         :
         [1.4] 
-            use the correct document id in the existance-check in the case of a sibling-after relation: use the method getNewDocumentId() because it takes the relation (child, sibling-after) into account. Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
+            refactored sitetree script: now it always uses asynchronous requests and it should be easier to extend. Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        chestnut
+        :
+        [1.4] 
+            One Form Editor Module
+-Simply uses the One Form Editor usecase
+-You need to add the FCKeditor directory to the resources directory due to license
+-I have only tested the ability to open, slight edit, and save of the tutorial page of the default pub (it worked :) )
+-http://localhost:8888/default/authoring/tutorial.html?lenya.usecase=edit.fckeditor Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Added option to use arbitrary usecase views to documentation Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Enabled JCR block again to make the JCRSourceNode work. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Updated resource type docs (see bug 38466). Thanks to Joern Nettingsmeier for the comments. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Updated resource type docs (see bug 38466). Thanks to Joern Nettingsmeier for the comments. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Updated resource type docs (see bug 38466). Thanks to Joern Nettingsmeier for the comments. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Updated resource type docs (see bug 38466). Thanks to Joern Nettingsmeier for the comments. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Updated module docs: /core/modules/... is replaced by cocoon://modules/... Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Removed handling of core/modules URLs, since it is now possible to call modules using an URL prefix. Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Added JCRMetaData java file. Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Moved JCRSourceNode related code to jcrsource module, restored JCRSourceNode related classes Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            more docu about current JCR integration added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            use base-url module to get the root parameter in order to get the correct urls if proxying is used. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            [minor] removed unused imports Diff </description></item><item><title>Docs add</title><link>changes.html</link><description>Docs add
+        by
+        andreas
+        :
+        [Docs] 
+            Added documentation about link management in 1.4 Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            [minor change] improved wording Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Added note about DocumentReferencesHelper bug Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] OneFormEditor: refactoring, javadocs Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            SVG module: use fallback input module instead of protocol for Batik image references (Batik can't access the source resolver) Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            Fixed javadoc. Thanks to Bob Harner for spotting this. Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
         by
         thorsten
         :
         [Zone] 
-            Added myself as recipient till testing is over. fixed script that waiting for interrupt signal which caused hanging.  Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+            Activating notification to the forrestbot that deploys our zone site and the staging docu Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
+        by
+        thorsten
+        :
+        [Zone] 
+            Adding notification to the forrestbot that deploys our zone site Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        froethenbacher
+        :
+        [1.4] 
+            Added context prefix for cforms resources.
+ Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        froethenbacher
+        :
+        [Docs] 
+            Added myself :-)
+ Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        josias
+        :
+        [1.4] 
+            added BaseURLModule which may be used to get the base url to prepend to urls in order to construct internal links. If the publication uses proxying, it returns the proxy url. Otherwise, it returns /context-path/pubid/area Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            don't assume that internal links start with the context prefix. internal links should look like /pubid/area/doc-url (see also bug #31157) Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Mount module-resources.xmap with pass-through. This allows the module to serve resources if module-resources.xmap doesn't contain an appropriate pipeline. Added HTML and XHTML pipelines to module-resources.xmap. This fixes bug #38455, thanks to Simon Litwan for the patch. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Adds id attribut to form elements and name attributes to buttons. This fixes bug #38471. Thanks to Simon Litwan for the patch. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Minor formatting and lower-/uppercase changes. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Renamed bxe element to bitfluxeditor. This avoids the clash with the external URL http://bxe.oscom.org. Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
         by
         thorsten
         :
         [Site] 
-            Website update with recent changes Diff </description></item><item><title>Zone add</title><link>changes.html</link><description>Zone add
+            Adding notification on failure for the staging docu build. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
         by
         thorsten
         :
-        [Zone] 
-            initial version of the mail script Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        [Docs] 
+            Fixed faulty r374107 and added information to generate a dynamic exit URL Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            match only on img src attributes so that it doesn't interfere other elements such as script. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         andreas
         :
         [1.4] 
-            Fixed BXE resource paths in blog publication Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+            For SVG image xlinks, use fallback input module instead of fallback protocol because Batik can't access the source resolver. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         andreas
         :
         [1.4] 
-            Removed empty BXE directory Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+            [minor change] removed unnecessary namespace declarations Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Updated resource type docs. This fixes bug #38466, thanks to Joern Nettingsmeier for the report. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Renamed search module to lucene in docs Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Added some paragraphs to the repo doc draft Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Updated patch file paths to config/cocoon-xconf/* Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Adding docs about module menus Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
         by
         andreas
         :
         [1.4] 
-            Moved java class to BXE module, added missing resources Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+            [minor change] removed empty menus directory Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
         by
         andreas
         :
-        [1.4] 
-            Moving BXE to a dedicated module Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            [minor change] code formatting Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
         [Docs] 
-            formating change Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+            Replaced config/*.xconf with config/cocoon-xconf/*.xconf in module docs Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
-        thorsten
-        :
-        [Docs] 
-            formating change Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        josias
-        :
-        [1.4] 
-            [minor] removed invalid character Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            Added sandbox to the sorting criteria Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            Added .htaccess file, new theme and the logs for the forrest update Diff </description></item><item><title>Zone add</title><link>changes.html</link><description>Zone add
-        by
-        thorsten
-        :
-        [Zone] 
-            Adding update script to update forrest to trunk version, build clean and build of forrest and the dispatcher Diff </description></item><item><title>Docs add</title><link>changes.html</link><description>Docs add
-        by
-        thorsten
-        :
-        [Docs] 
-            moving logs to the docroot to see them online. Added overview page to the zone documentation. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            moving logs to the docroot to see them online Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
-        by
-        thorsten
-        :
-        [Zone] 
-            moving logs to the docroot to see them online Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            Fixed the nightlies script - warning obsolete Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
-        by
-        thorsten
-        :
-        [Zone] 
-            Using all env variables from the env script to overcome the problem decsribed in http://www.experts-exchange.com/Programming/Programming_Platforms/Unix_Programming/Q_21698553.html Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
-        by
-        thorsten
-        :
-        [Zone] 
-            Extracting all env variables to the script to overcome the problem decsribed in http://www.experts-exchange.com/Programming/Programming_Platforms/Unix_Programming/Q_21698553.html Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            Removing unused contract and adding the theme switcher contract. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            enhanced our theme definition file (=structurer). Adding demo links to left navigation and updated the css. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            minor changes in documentation Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
-        by
-        thorsten
-        :
-        [Zone] 
-            minor changes for the log Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            Updated the svn2changes.xsl to add 2006 as another trunk year and zone to the sorting criteria. Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
-        by
-        thorsten
-        :
-        [Zone] 
-            Further enhancement of loging for all script that build instances of lenya Diff </description></item><item><title>Zone add</title><link>changes.html</link><description>Zone add
-        by
-        thorsten
-        :
-        [Zone] 
-            splitted nightlies script apart for trunk and branch. nightlies now just calls both scripts. Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
-        by
-        thorsten
-        :
-        [Zone] 
-            Enhanced logging for the zone update script Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            README refined Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            minor docu change Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
-        by
-        thorsten
-        :
-        [Zone] 
-            refactored the zone update script to be runnable in cron and added basic loging Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
-        by
-        thorsten
-        :
-        [Zone] 
-            refactored the staging script to be runnable in cron and added basic loging Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
-        by
-        thorsten
-        :
-        [Zone] 
-            minor comment change Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            Show appropriate error message if max upload size is exceeded Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            Added status check capabilities to UsecaseInvoker Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            [minor change] code formatting Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        josias
-        :
-        [1.4] 
-            added check for the publication id: allow no special characters Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
-        by
-        antonio
-        :
-        [1.4] 
-            Remove empty dir. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            Removed DocumentType.getMimeType(), added Document.getMimeType(). This allows different MIME types for documents of the same DocumentType (e.g., image/gif and image/jpeg for image documents). Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        michi
-        :
-        [1.4] 
-            thanks to Greggor Imboden the blog publication now has an archive and a lot of bugs have been fixed Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        michi
-        :
-        [1.4] 
-            thanks to Greggor Imboden the blog publication now has an archive and a lot of bugs have been fixed Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        michi
-        :
-        [1.4] 
-            thanks to Greggor Imboden the blog publication now has an archive and a lot of bugs have been fixed Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        michi
-        :
-        [1.4] 
-            thanks to Greggor Imboden the blog publication now has an archive and a lot of bugs have been fixed Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        michi
-        :
-        [1.4] 
-            thanks to Greggor Imboden the blog publication now has an archive and a lot of bugs have been fixed Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        michi
-        :
-        [1.4] 
-            thanks to Greggor Imboden the blog publication now has an archive and a lot of bugs have been fixed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            thanks to Greggor Imboden the blog publication now has an archive and a lot of bugs have been fixed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        josias
-        :
-        [1.4] 
-            use 24 hours date format instead of 12 hours, according to ISO-8601 Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            id tag removed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        josias
-        :
-        [1.4] 
-            use standard ISO-8601 date format with two digits for the month. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        josias
-        :
-        [1.4] 
-            Use IOUtils instead of deprecated CopyUtils. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        josias
-        :
-        [1.4] 
-            Fixed some character encoding problems: don't use OutputStreamWriter because it changes the encoding of the stream. Use getParameter() instead of get() for cocoon's HttpRequest class because it fixes the encoding. Changed the default uri encoding of jetty to ISO-8859-1 so it is equal to tomcats default encoding. fixes bug #36341 Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            Link from mycrons.cron describtion to tips Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            Added some description about how to work with cron on our zone Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            Added isVisibleInNav() method to SiteManager. This allows to fix an NPE in the CreateLanguage usecase. Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
-        by
-        thorsten
-        :
-        [Zone] 
-            added the forrestbots to the cron Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        edith
-        :
-        [1.4] 
-            Call the svg module to scale the images Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        edith
-        :
-        [1.4] 
-            Added svg2tiff serializer Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        edith
-        :
-        [1.4] 
-            Scaling of images when they are inserted in a doc. With the call of svg module, the scaling will be made with svg. Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        edith
-        :
-        [1.4] 
-            Added svg module Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        edith
-        :
-        [1.4] 
-            Set the width and the height of the uploaded image in the lenya meta data Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            Added link to the staging docu. Diff </description></item><item><title>Zone add</title><link>changes.html</link><description>Zone add
-        by
-        thorsten
-        :
-        [Zone] 
-            Added two new script related to the forrestbot which deploys the staging docu and the zones site. Diff </description></item><item><title>Zone add</title><link>changes.html</link><description>Zone add
-        by
-        thorsten
-        :
-        [Zone] 
-            added a create status script which will be used for the changes.html of our documentation Diff </description></item><item><title>Docs add</title><link>changes.html</link><description>Docs add
-        by
-        thorsten
-        :
-        [Docs] 
-            Added initial version about zone notes Diff </description></item><item><title>Zone remove</title><link>changes.html</link><description>Zone remove
-        by
-        thorsten
-        :
-        [Zone] 
-            removed unused script Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
-        by
-        thorsten
-        :
-        [Zone] 
-            Made forrestbot build files more generic Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        andreas
-        :
-        [1.4] 
-            Added DocumentInfoModule (see bug #38300), thanks to Felix Roethenbacher Diff </description></item><item><title>Zone add</title><link>changes.html</link><description>Zone add
-        by
-        thorsten
-        :
-        [Zone] 
-            Copied environment script from forrest zones Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            changed the properties to use headless server Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            CreateDocument usecase: don't complain about non-valid document ID if the parameter documentId has been provided to the usecase Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            Don't copy content when the default publication is instanciated Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            Added more information about installed services on zones and updated resource due to current changes Diff </description></item><item><title>Docs remove</title><link>changes.html</link><description>Docs remove
-        by
-        thorsten
-        :
-        [Docs] 
-            removed not needed resources Diff </description></item><item><title>Zone add</title><link>changes.html</link><description>Zone add
-        by
-        thorsten
-        :
-        [Zone] 
-            Added configuration files for the forrest bot. Diff </description></item><item><title>Docs add</title><link>changes.html</link><description>Docs add
-        by
-        thorsten
-        :
-        [Docs] 
-            Added favicon. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-        by
-        josias
+        jann
         :
         [1.2] 
-            fixed select such that the correct http status code is set. Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
+            Showing the original path of a deleted document Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
-        thorsten
-        :
-        [Zone] 
-            Enhanced logging for the nightly script. Diff </description></item><item><title>Docs add</title><link>changes.html</link><description>Docs add
-        by
-        thorsten
-        :
-        [Docs] 
-            Added more documentation for zones server Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
-        by
-        thorsten
-        :
-        [Zone] 
-            fixed
-Exception in thread "main" java.lang.InternalError: Can't connect to X11 window server using ':0.0' as the value of the DISPLAY variable.
- Diff </description></item><item><title>Docs add</title><link>changes.html</link><description>Docs add
-        by
-        thorsten
-        :
-        [Docs] 
-            Started our zone site. I am using forrest for it. Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
-        by
-        thorsten
-        :
-        [Zone] 
-            formating change Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
-        by
-        thorsten
-        :
-        [Zone] 
-            Enhanced the forrest nightly script by allowing parameter -u (true|false). Added script echos for telling what we are doing and how. Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
-        by
-        thorsten
-        :
-        [Zone] 
-            Enhanced the nightly script by allowing parameter like -u (true|false) and -c (true|false) and added script echos for telling what we are doing and how. Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
-        by
-        thorsten
-        :
-        [Zone] 
-            Fixed pid bug Diff </description></item><item><title>Zone add</title><link>changes.html</link><description>Zone add
-        by
-        thorsten
-        :
-        [Zone] 
-            added all files from the zones bin to the rep Diff </description></item><item><title>Zone add</title><link>changes.html</link><description>Zone add
-        by
-        thorsten
-        :
-        [Zone] 
-            Initial bin directory for our zone Diff </description></item><item><title>Zone add</title><link>changes.html</link><description>Zone add
-        by
-        thorsten
-        :
-        [Zone] 
-            added basic readme file Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        thorsten
-        :
-        [1.4] 
-            Allowed @class in the object element since it is in the xhtml2 common module Diff </description></item><item><title>Zone add</title><link>changes.html</link><description>Zone add
-        by
-        thorsten
-        :
-        [Zone] 
-            Initial directory for resources such as configurations, bash scripts, etc Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        chestnut
-        :
-        [1.4] 
-            HEAD request shouldn't contain message-body in response Diff </description></item><item><title>1.2 add</title><link>changes.html</link><description>1.2 add
-        by
-        michi
+        jann
         :
         [1.2] 
-            this library is needed because of backwards compatibility Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+            Adding an identifier string which can be used within the trash area in order to show the original path of a deleted document Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
-        michi
+        josias
         :
         [1.4] 
-            Cocoon contains a newer version Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+            [minor] removed tabs and fixed indenting Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
-        chestnut
+        andreas
         :
-        [1.4] 
-            added webDAV GET format to opendocument
-see http://localhost:8888/default/webdav/doctypes/opendocument.odt Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        [1.2] 
+            Add name attributes to form elements. This fixes bug #38471. Thanks to Simon Litwan for the patch. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
-        chestnut
+        andreas
         :
-        [1.4] 
-            webdav moved to a module Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        [1.2] 
+            Don't swallow exception in crawler configuration Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
-        chestnut
+        andreas
         :
-        [1.4] 
-            cleaned up webDAV, moving it to a module Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+        [1.2] 
+            Improved error logging (message, stack trace) Diff </description></item><item><title>Site add</title><link>changes.html</link><description>Site add
         by
         thorsten
         :
         [Site] 
-            Update for recent changes like adding faq to 1.4, updating website-update, adding license,... Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            site:faq is not unique anymore Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            Fixed the image bug and added space before committer name in the svn2changes.xsl. Updated status file afterwards. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            Added note about forrest version Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            Added missing copyright notice to files Diff </description></item><item><title>Docs remove</title><link>changes.html</link><description>Docs remove
-        by
-        thorsten
-        :
-        [Docs] 
-            Updated forrest to 0.7 and had to move raw data http://forrest.apache.org/docs_0_70/upgrading_07.html#raw Diff </description></item><item><title>Docs add</title><link>changes.html</link><description>Docs add
-        by
-        thorsten
-        :
-        [Docs] 
-            Updated forrest to 0.7 and had to move raw data http://forrest.apache.org/docs_0_70/upgrading_07.html#raw Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        thorsten
-        :
-        [1.4] 
-            Bugfix 38229. Reported and patch submitted by renaud richardet. Thx renaud. :) Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            Updated status.xml Diff </description></item><item><title>Docs add</title><link>changes.html</link><description>Docs add
-        by
-        thorsten
-        :
-        [Docs] 
-            Added faq document to 1.4.. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            Extracted max mem note Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            added note that patches are welcome Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            Paste usecase locks assets. This fixes bug #17378. Thanks to Gregor Imboden. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            InvokeWorkflow.configure() calls super.configure(). This ensures that the view configuration is loaded. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        chestnut
-        :
-        [1.4] 
-            webDAV fixes Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        chestnut
-        :
-        [1.4] 
-            fixes Bug 38201: Deactivate usecase does not lock document resources
-thanks to a patch by Gregor Imboden
- Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        chestnut
-        :
-        [1.4] 
-            fixes ability to delete trash, was getting an error that the sitetree wasn't locked Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-        by
-        josias
-        :
-        [1.2] 
-            added default target for the tabs in the lenya menu to prevent an xhtml validation warning (attribute 'target' cannot be empty) Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            some more links added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            lenya version and local build properties version added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            lenya version number added such that no conflict may arise with other lenya versions Diff </description></item><item><title>Docs add</title><link>changes.html</link><description>Docs add
-        by
-        thorsten
-        :
-        [Docs] 
-            Added documentation about the url mapping in lenya. Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
-        by
-        andreas
-        :
-        [Sandbox] 
-            Starting to update the code according to the new repository API Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-        by
-        josias
-        :
-        [1.2] 
-            replaced deprecated library excalibur-io 1.1 by commons-io 1.1 and updated all occurrences in the java code. commons-io-1.1.jar is added to lenya because this jar is not included in cocoon 2.1.8 and older. fixes bug http://issues.apache.org/bugzilla/show_bug.cgi?id=38126 Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-        by
-        jann
-        :
-        [1.2] 
-            Adding the force-checkin usecase Diff </description></item><item><title>1.2 add</title><link>changes.html</link><description>1.2 add
-        by
-        jann
-        :
-        [1.2] 
-            xsl for the force-checkin usecase Diff </description></item><item><title>1.2 add</title><link>changes.html</link><description>1.2 add
-        by
-        jann
-        :
-        [1.2] 
-            Action for the force-checkin usecase Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            Added 'checked out by' column to SiteOverview usecase (admin area) Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-        by
-        michi
-        :
-        [1.2] 
-            Cocoon 2.1.8 set as default Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-        by
-        michi
-        :
-        [1.2] 
-            Cocoon versions added Diff </description></item><item><title>1.2 add</title><link>changes.html</link><description>1.2 add
-        by
-        michi
-        :
-        [1.2] 
-            excalibur-io has been removed from Cocoon-2.1.8 upwards Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        thorsten
-        :
-        [1.4] 
-            added the lenya meta data generator. It is an abstract generator that can produce the metadata to any given docid. Added an example how one can use it within the tutorial.html (only in english). Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
-        by
-        thorsten
-        :
-        [Site] 
-            Update webpage.
-
-I am using 0.8-dev, that is the reason that all files have changed. I recomment to use the forrest trunk for building the site.
- Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            updated properties to build with forrest 0.7 and 0.8-dev.
- Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            updated status.xml
- Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            removed contact notice.
-
- Diff </description></item><item><title>Sandbox remove</title><link>changes.html</link><description>Sandbox remove
-        by
-        michi
-        :
-        [Sandbox] 
-            obsolete Diff </description></item></channel></rss>
+            testing whether .htaccess is enabled on our server Diff </description></item></channel></rss>
