@@ -1,5 +1,7 @@
+org.apache.cocoon.acting.sourcetype
 org.apache.lenya.ac
 org.apache.lenya.ac.cache
+org.apache.lenya.ac.cifs
 org.apache.lenya.ac.file
 org.apache.lenya.ac.impl
 org.apache.lenya.ac.ldap
@@ -10,7 +12,6 @@ org.apache.lenya.cms.ac.workflow
 org.apache.lenya.cms.ant
 org.apache.lenya.cms.authoring
 org.apache.lenya.cms.cocoon.acting
-org.apache.lenya.cms.cocoon.bean
 org.apache.lenya.cms.cocoon.components.modules.input
 org.apache.lenya.cms.cocoon.flow
 org.apache.lenya.cms.cocoon.generation
