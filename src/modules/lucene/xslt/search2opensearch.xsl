@@ -19,7 +19,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:search="http://apache.org/cocoon/search/1.0"
   xmlns:openSearch="http://a9.com/-/spec/opensearchrss/1.0/"
-  exclude-prefix="openSearch"
+  exclude-result-prefixes="openSearch"
 >
 
 <xsl:param name="language"/>
