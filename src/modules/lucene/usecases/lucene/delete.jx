@@ -15,5 +15,5 @@
   limitations under the License.
 -->
 <cinclude:includexml xmlns:cinclude="http://apache.org/cocoon/include/1.0">
-  <cinclude:src>cocoon://core/modules/lucene/lucene/delete.xml</cinclude:src>
+  <cinclude:src>cocoon://modules/lucene/delete.xml</cinclude:src>
 </cinclude:includexml>

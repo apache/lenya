@@ -32,7 +32,7 @@ public class IndexDocument extends DocumentUsecase {
      * The URI to copy the document source from.
      */
     public static final String SOURCE_URI = "sourceUri";
-    
+
     public static final String INDEX_ACTION = "indexAction";
     public static final String INDEX = "index";
     public static final String DELETE = "delete";
@@ -45,21 +45,20 @@ public class IndexDocument extends DocumentUsecase {
         super.doExecute();
         SourceResolver resolver = null;
         Source source = null;
-        
+
         String action = super.getParameterAsString(INDEX_ACTION);
         String area = super.getParameterAsString(INDEX_AREA);
-        
+
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             if (action.equals(INDEX)) {
-                //index
-                source = resolver.resolveURI("cocoon://core/modules/lucene/lucene/index-"+area+".xml");
+                // index
+                source = resolver.resolveURI("cocoon://modules/lucene/index-" + area + ".xml");
                 InputSource xmlInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(source);
-            }
-            else if (action.equals(DELETE)) {
-                //delete
-                source = resolver.resolveURI("cocoon://core/modules/lucene/lucene/delete-"+area+".xml");
-                InputSource xmlInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(source);                
+            } else if (action.equals(DELETE)) {
+                // delete
+                source = resolver.resolveURI("cocoon://modules/lucene/delete-" + area + ".xml");
+                InputSource xmlInputSource = org.apache.cocoon.components.source.SourceUtil.getInputSource(source);
             }
         } finally {
             if (resolver != null) {
