@@ -125,7 +125,7 @@ public class JCRRepositoryTest extends TestCase {
         assertNotNull(asset2);
         SiteNode parent = site.addChild("parent", asset1);
         SiteNode child = parent.addChild("child", asset2);
-        assertSame(asset2.getAssetId(), child.getContentNode().getAssetId());
+        assertSame(asset2.getAssetId(), child.getAsset().getAssetId());
 
         doTestSite(site, asset1);
 
@@ -147,7 +147,7 @@ public class JCRRepositoryTest extends TestCase {
         site.move("/foo", "/bar/baz");
 
         SiteNode barBaz = bar.getChild("baz");
-        assertSame(foo.getContentNode().getAssetId(), barBaz.getContentNode().getAssetId());
+        assertSame(foo.getAsset().getAssetId(), barBaz.getAsset().getAssetId());
 
     }
 

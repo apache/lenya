@@ -78,7 +78,7 @@ public class SiteNodeProxy extends AbstractNodeProxy implements SiteNode {
         return site.getAbsolutePath().append(getPathElement(getName()));
     }
 
-    public Asset getContentNode() throws RepositoryException {
+    public Asset getAsset() throws RepositoryException {
         try {
             Node node = getPropertyNode(CONTENT_NODE_PROPERTY);
             String id = node.getUUID();

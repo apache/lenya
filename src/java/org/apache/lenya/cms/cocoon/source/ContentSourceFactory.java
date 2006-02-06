@@ -79,7 +79,7 @@ public class ContentSourceFactory extends AbstractLogEnabled implements SourceFa
                 Publication pub = session.getPublication(pubId);
                 Area area = pub.getArea(areaId);
                 SiteNode siteNode = area.getSite().getNode(path);
-                Asset contentNode = siteNode.getContentNode();
+                Asset contentNode = siteNode.getAsset();
                 Translation document = contentNode.getTranslation(language);
                 source = new ContentSource(document, getLogger());
             } else if (locator.startsWith("/")) {

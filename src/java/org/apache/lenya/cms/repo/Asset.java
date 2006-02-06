@@ -82,4 +82,10 @@ public interface Asset {
      */
     void remove() throws RepositoryException;
 
+    /**
+     * @return The content this asset belongs to.
+     * @throws RepositoryException if an error occurs.
+     */
+    Content getContent() throws RepositoryException;
+    
 }

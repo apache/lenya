@@ -73,7 +73,8 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
 
                 Session session = getRepository().getRepository()
                         .login(new SimpleCredentials("john", "".toCharArray()), area);
-                facade = new RepositoryFacade(session,
+                facade = new RepositoryFacade(this,
+                        session,
                         getRepository().getDocumentTypeRegistry(),
                         getRepository().getMetaDataRegistry());
 

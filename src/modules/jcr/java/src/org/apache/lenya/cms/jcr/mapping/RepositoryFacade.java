@@ -20,6 +20,7 @@ import javax.jcr.Node;
 import javax.jcr.Session;
 import javax.jcr.query.InvalidQueryException;
 
+import org.apache.lenya.cms.jcr.JCRSession;
 import org.apache.lenya.cms.jcr.util.Assertion;
 import org.apache.lenya.cms.repo.AssetTypeRegistry;
 import org.apache.lenya.cms.repo.RepositoryException;
@@ -32,17 +33,19 @@ public class RepositoryFacade {
 
     /**
      * Ctor.
+     * @param jcrSession The repo session.
      * @param session The JCR session.
      * @param doctypeRegistry The document type registry.
      * @param metaDataRegistry The meta data registry.
      */
-    public RepositoryFacade(Session session, AssetTypeRegistry doctypeRegistry,
+    public RepositoryFacade(JCRSession jcrSession, Session session, AssetTypeRegistry doctypeRegistry,
             MetaDataRegistry metaDataRegistry) {
         this.session = session;
         this.doctypeRegistry = doctypeRegistry;
         this.metaDataRegistry = metaDataRegistry;
     }
 
+    private JCRSession jcrSession;
     private Session session;
     private AssetTypeRegistry doctypeRegistry;
 
@@ -239,7 +242,7 @@ public class RepositoryFacade {
 
     }
 
-    protected NodeProxy getProxy(Node node) throws RepositoryException {
+    public NodeProxy getProxy(Node node) throws RepositoryException {
         return createProxy(node);
     }
 
@@ -257,6 +260,13 @@ public class RepositoryFacade {
      */
     public MetaDataRegistry getMetaDataRegistry() {
         return this.metaDataRegistry;
+    }
+
+    /**
+     * @return The repo session.
+     */
+    public JCRSession getRepositorySession() {
+        return this.jcrSession;
     }
 
 }

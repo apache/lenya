@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.jcr.Node;
+import javax.jcr.Property;
+import javax.jcr.PropertyIterator;
 import javax.jcr.Session;
 
 import org.apache.lenya.cms.jcr.mapping.AbstractNodeProxy;
@@ -102,6 +105,36 @@ public class SiteProxy extends AbstractNodeProxy implements Site {
             session.move(srcPath, destPath);
         } catch (javax.jcr.RepositoryException e) {
             throw new RepositoryException(e);
+        }
+    }
+
+    public SiteNode[] getReferences(Asset asset) throws RepositoryException {
+        List siteNodes = new ArrayList();
+        AssetProxy proxy = (AssetProxy) asset;
+
+        try {
+            for (PropertyIterator references = proxy.getNode().getReferences(); references.hasNext();) {
+                Property property = references.nextProperty();
+                Node node = property.getParent();
+                if (node.isNodeType(SiteNodeProxy.NODE_TYPE)) {
+                    SiteNode siteNode = (SiteNode) getRepository().getProxy(node);
+                    siteNodes.add(siteNode);
+                }
+            }
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
+
+        return (SiteNode[]) siteNodes.toArray(new SiteNode[siteNodes.size()]);
+    }
+
+    public SiteNode getFirstReference(Asset asset) throws RepositoryException {
+        SiteNode[] nodes = getReferences(asset);
+        if (nodes.length > 0) {
+            return nodes[0];
+        }
+        else {
+            return null;
         }
     }
 

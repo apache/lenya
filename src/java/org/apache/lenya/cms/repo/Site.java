@@ -70,4 +70,18 @@ public interface Site {
      */
     void move(String srcAbsPath, String destAbsPath) throws RepositoryException;
 
+    /**
+     * @param asset An asset.
+     * @return The nodes referencing the asset.
+     * @throws RepositoryException if an error occurs.
+     */
+    SiteNode[] getReferences(Asset asset) throws RepositoryException;
+    
+    /**
+     * @param asset An asset.
+     * @return The first node referencing the document or <code>null</code> if the asset is not referenced.
+     * @throws RepositoryException if an error occurs.
+     */
+    SiteNode getFirstReference(Asset asset) throws RepositoryException;
+
 }

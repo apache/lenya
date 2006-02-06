@@ -64,7 +64,7 @@ public interface SiteNode {
      * @return The referenced content node.
      * @throws RepositoryException if an error occurs.
      */
-    Asset getContentNode() throws RepositoryException;
+    Asset getAsset() throws RepositoryException;
     
     /**
      * @return The parent node or <code>null</code> if this is a top-level node.
