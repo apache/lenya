@@ -260,7 +260,9 @@
       <!-- RNG fallback requests -->
       <map:match pattern="fallback/**.rng">
         <map:generate src="fallback://{1}.rng"/>
-        <map:transform src="lenya/xslt/util/translate-rng-includes.xsl"/>
+        <map:transform src="lenya/xslt/util/translate-rng-includes.xsl">
+          <map:parameter name="contextprefix" value="{request:contextPath}"/>
+        </map:transform>
         <map:serialize type="xml"/>
       </map:match>
       

@@ -2,11 +2,11 @@
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
   xmlns:rng="http://relaxng.org/ns/structure/1.0">
   
+  <xsl:param name="contextprefix"/>
   
   <xsl:template match="rng:include/@href[starts-with(., 'fallback://')]">
     <xsl:attribute name="href">
-      <xsl:text>/fallback/</xsl:text>
-      <xsl:value-of select="substring-after(., 'fallback://')"/>
+      <xsl:value-of select="concat($contextprefix, '/fallback/', substring-after(., 'fallback://'))"/>
     </xsl:attribute>
   </xsl:template>
 
