@@ -13,9 +13,10 @@
     {
     	var oFCKeditor = new FCKeditor( 'content' ) ;
     	oFCKeditor.BasePath	= '/modules/fckeditor/FCKeditor/' ;
-    	oFCKeditor.Width="100%";
-    	oFCKeditor.Height="100%";
+    	oFCKeditor.Width="800";
+    	oFCKeditor.Height="700";
     	oFCKeditor.Config[ "FullPage" ] = true ;
+    	oFCKeditor.Config[ "EditorAreaCSS" ] = '/default/authoring/css/page.css' ;
     	oFCKeditor.ReplaceTextarea() ;
 
     }
