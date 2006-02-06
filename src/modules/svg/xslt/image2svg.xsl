@@ -18,14 +18,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
-  
-  <xsl:template match="xhtml:img">
-    <xsl:copy>
-      <xsl:apply-templates select="@*|node()"/>
-    </xsl:copy>
-  </xsl:template>
-  
-  <xsl:template match="xhtml:img/@src">
+  <xsl:template match="xhtml:img[@height and @width]/@src">
     <xsl:attribute name="src">
       <xsl:value-of select="."/>
       <xsl:text>?</xsl:text>
