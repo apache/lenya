@@ -57,12 +57,12 @@ public class SiteProxy extends AbstractNodeProxy implements Site {
         return (SiteNode[]) nodes.toArray(new SiteNode[nodes.size()]);
     }
 
-    public SiteNode addChild(String name, Asset contentNode) throws RepositoryException {
+    public SiteNode addChild(String name, Asset asset) throws RepositoryException {
         SiteNodeProxy proxy = (SiteNodeProxy) getRepository().addByName(getAbsolutePath(),
                 SiteNodeProxy.NODE_TYPE,
                 SiteNodeProxy.class.getName(),
                 name);
-        proxy.setContentNode((AssetProxy) contentNode);
+        proxy.setAsset((AssetProxy) asset);
         return proxy;
     }
 

@@ -19,12 +19,12 @@ package org.apache.lenya.cms.repo;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.apache.lenya.cms.repo.metadata.MetaData;
+import org.apache.lenya.cms.repo.metadata.MetaDataOwner;
 
 /**
  * Document.
  */
-public interface Translation {
+public interface Translation extends MetaDataOwner {
 
     /**
      * @return The document's language code.
@@ -86,13 +86,5 @@ public interface Translation {
      * @throws RepositoryException if an error occurs.
      */
     Asset getAsset() throws RepositoryException;
-
-    /**
-     * @param elementSet The name of the element set. The element set must be registered in the
-     *            repository's meta data registry.
-     * @return The meta data.
-     * @throws RepositoryException if an error occurs.
-     */
-    MetaData getMetaData(String elementSet) throws RepositoryException;
 
 }

@@ -19,6 +19,7 @@ package org.apache.lenya.cms.jcr;
 import org.apache.lenya.cms.repo.Area;
 import org.apache.lenya.cms.repo.Publication;
 import org.apache.lenya.cms.repo.RepositoryException;
+import org.apache.lenya.cms.repo.metadata.MetaData;
 
 /**
  * JCR publication.
@@ -56,6 +57,20 @@ public class JCRPublication implements Publication {
 
     public boolean existsArea(String area) throws RepositoryException {
         return getSession().existsArea(this, area);
+    }
+    
+    protected static final String INTERNAL_AREA = "internal";
+    
+    protected Area getInternalArea() throws RepositoryException {
+        if (!existsArea(INTERNAL_AREA)) {
+            addArea(INTERNAL_AREA);
+        }
+        return getArea(INTERNAL_AREA);
+    }
+
+    public MetaData getMetaData(String elementSet) throws RepositoryException {
+        AreaProxy internalArea = (AreaProxy) getInternalArea();
+        return internalArea.getMetaData(elementSet);
     }
 
 }

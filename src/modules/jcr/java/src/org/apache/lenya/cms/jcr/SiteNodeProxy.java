@@ -39,7 +39,7 @@ public class SiteNodeProxy extends AbstractNodeProxy implements SiteNode {
 
     protected static final String NODE_NAME = "lenya:siteNode";
     protected static final String NODE_TYPE = "lnt:siteNode";
-    protected static final String CONTENT_NODE_PROPERTY = "lenya:contentNode";
+    protected static final String ASSET_PROPERTY = "lenya:asset";
 
     public SiteNode[] getChildren() throws RepositoryException {
         try {
@@ -64,7 +64,7 @@ public class SiteNodeProxy extends AbstractNodeProxy implements SiteNode {
                 SiteNodeProxy.NODE_TYPE,
                 SiteNodeProxy.class.getName(),
                 name);
-        proxy.setContentNode((AssetProxy) contentNode);
+        proxy.setAsset((AssetProxy) contentNode);
         return proxy;
     }
 
@@ -80,7 +80,7 @@ public class SiteNodeProxy extends AbstractNodeProxy implements SiteNode {
 
     public Asset getAsset() throws RepositoryException {
         try {
-            Node node = getPropertyNode(CONTENT_NODE_PROPERTY);
+            Node node = getPropertyNode(ASSET_PROPERTY);
             String id = node.getUUID();
             return getSite().getArea().getContent().getAsset(id);
         } catch (javax.jcr.RepositoryException e) {
@@ -88,8 +88,8 @@ public class SiteNodeProxy extends AbstractNodeProxy implements SiteNode {
         }
     }
 
-    protected void setContentNode(AssetProxy proxy) throws RepositoryException {
-        setProperty(CONTENT_NODE_PROPERTY, proxy.getNode());
+    protected void setAsset(AssetProxy proxy) throws RepositoryException {
+        setProperty(ASSET_PROPERTY, proxy.getNode());
     }
 
     public SiteNode getParent() throws RepositoryException {

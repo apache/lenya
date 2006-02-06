@@ -56,4 +56,13 @@ public class MetaDataRegistryImpl implements MetaDataRegistry {
         }
         this.elementSets.put(name, elementSet);
     }
+    
+    /**
+     * @param name The name.
+     * @return if an element set with this name is registered.
+     * @throws RepositoryException if an error occurs.
+     */
+    public boolean isRegistered(String name) throws RepositoryException {
+        return this.elementSets.containsKey(name);
+    }
 }

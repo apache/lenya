@@ -63,6 +63,12 @@
         <requiredPrimaryType>lnt:site</requiredPrimaryType>
       </requiredPrimaryTypes>
     </childNodeDefinition>
+    <childNodeDefinition name="lenya:meta" defaultPrimaryType="lnt:meta" autoCreate="true" mandatory="false"
+      onParentVersion="COPY" protected="false" sameNameSiblings="true">
+      <requiredPrimaryTypes>
+        <requiredPrimaryType>lnt:meta</requiredPrimaryType>
+      </requiredPrimaryTypes>
+    </childNodeDefinition>
   </nodeType>
   
   <!--
@@ -75,17 +81,17 @@
       <supertype>mix:lockable</supertype>
       <supertype>lnt:mappable</supertype>
     </supertypes>
-    <childNodeDefinition name="lenya:contentNode" defaultPrimaryType="lnt:contentNode" autoCreate="false" mandatory="false"
+    <childNodeDefinition name="lenya:asset" defaultPrimaryType="lnt:asset" autoCreate="false" mandatory="false"
       onParentVersion="ABORT" protected="false" sameNameSiblings="true">
       <requiredPrimaryTypes>
-        <requiredPrimaryType>lnt:contentNode</requiredPrimaryType>
+        <requiredPrimaryType>lnt:asset</requiredPrimaryType>
       </requiredPrimaryTypes>
     </childNodeDefinition>
   </nodeType>
   
   
   <!-- node in content subtree -->
-  <nodeType name="lnt:contentNode" isMixin="false" hasOrderableChildNodes="true" primaryItemName="">
+  <nodeType name="lnt:asset" isMixin="false" hasOrderableChildNodes="true" primaryItemName="">
     <supertypes>
       <supertype>nt:hierarchyNode</supertype>
       <supertype>mix:referenceable</supertype>
@@ -98,12 +104,18 @@
       onParentVersion="ABORT" protected="false" multiple="false"/>
     <propertyDefinition name="lenya:suffix" requiredType="String" autoCreate="false" mandatory="false"
       onParentVersion="ABORT" protected="false" multiple="false"/>
-    <propertyDefinition name="lenya:documentType" requiredType="String" autoCreate="true" mandatory="true"
+    <propertyDefinition name="lenya:assetType" requiredType="String" autoCreate="true" mandatory="true"
       onParentVersion="ABORT" protected="false" multiple="false"/>
-    <childNodeDefinition name="lenya:document" defaultPrimaryType="lnt:document" autoCreate="false"
+    <childNodeDefinition name="lenya:translation" defaultPrimaryType="lnt:translation" autoCreate="false"
       mandatory="false" onParentVersion="ABORT" protected="false" sameNameSiblings="true">
       <requiredPrimaryTypes>
-        <requiredPrimaryType>lnt:document</requiredPrimaryType>
+        <requiredPrimaryType>lnt:translation</requiredPrimaryType>
+      </requiredPrimaryTypes>
+    </childNodeDefinition>
+    <childNodeDefinition name="lenya:meta" defaultPrimaryType="lnt:meta" autoCreate="true" mandatory="false"
+      onParentVersion="COPY" protected="false" sameNameSiblings="true">
+      <requiredPrimaryTypes>
+        <requiredPrimaryType>lnt:meta</requiredPrimaryType>
       </requiredPrimaryTypes>
     </childNodeDefinition>
   </nodeType>
@@ -111,7 +123,7 @@
   <!--
   document node in content subtree
   -->
-  <nodeType name="lnt:document" isMixin="false" hasOrderableChildNodes="false" primaryItemName="">
+  <nodeType name="lnt:translation" isMixin="false" hasOrderableChildNodes="false" primaryItemName="">
     <supertypes>
       <supertype>nt:hierarchyNode</supertype>
       <supertype>mix:versionable</supertype>
@@ -185,7 +197,7 @@
       <supertype>mix:lockable</supertype>
       <supertype>lnt:mappable</supertype>
     </supertypes>
-    <propertyDefinition name="lenya:contentNode" mandatory="false" autoCreate="false" multiple="false" onParentVersion="ABORT"
+    <propertyDefinition name="lenya:asset" mandatory="false" autoCreate="false" multiple="false" onParentVersion="ABORT"
       protected="false" requiredType="Reference"/>
     <childNodeDefinition name="*" defaultPrimaryType="lnt:siteNode" autoCreate="false" mandatory="false"
       onParentVersion="ABORT" protected="false" sameNameSiblings="false">

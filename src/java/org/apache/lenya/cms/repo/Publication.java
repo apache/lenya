@@ -16,10 +16,12 @@
  */
 package org.apache.lenya.cms.repo;
 
+import org.apache.lenya.cms.repo.metadata.MetaDataOwner;
+
 /**
  * A publication.
  */
-public interface Publication {
+public interface Publication extends MetaDataOwner {
 
     /**
      * @param area The area ID.

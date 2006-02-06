@@ -32,8 +32,8 @@ import org.apache.lenya.cms.repo.metadata.MetaData;
  */
 public class TranslationProxy extends AbstractNodeProxy implements Translation {
 
-    protected static final String NODE_NAME = "lenya:document";
-    protected static final String NODE_TYPE = "lnt:document";
+    protected static final String NODE_NAME = "lenya:translation";
+    protected static final String NODE_TYPE = "lnt:translation";
     protected static final String LANGUAGE_PROPERTY = "xml:lang";
     protected static final String LABEL_PROPERTY = "lenya:label";
 
@@ -53,9 +53,9 @@ public class TranslationProxy extends AbstractNodeProxy implements Translation {
         return TranslationProxy.getPath((AssetProxy) getAsset(), getLanguage());
     }
 
-    protected static Path getPath(AssetProxy contentNodeProxy, String language)
+    protected static Path getPath(AssetProxy assetProxy, String language)
             throws RepositoryException {
-        return contentNodeProxy.getAbsolutePath().append(getPathElement(NODE_NAME,
+        return assetProxy.getAbsolutePath().append(getPathElement(NODE_NAME,
                 LANGUAGE_PROPERTY,
                 language));
     }

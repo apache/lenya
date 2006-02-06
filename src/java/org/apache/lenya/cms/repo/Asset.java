@@ -16,10 +16,12 @@
  */
 package org.apache.lenya.cms.repo;
 
+import org.apache.lenya.cms.repo.metadata.MetaDataOwner;
+
 /**
  * Content node.
  */
-public interface Asset {
+public interface Asset extends MetaDataOwner {
 
     /**
      * @return The documents belonging to this node.

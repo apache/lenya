@@ -242,6 +242,11 @@ public class RepositoryFacade {
 
     }
 
+    /**
+     * @param node A node.
+     * @return The proxy representing this node.
+     * @throws RepositoryException if an error occurs.
+     */
     public NodeProxy getProxy(Node node) throws RepositoryException {
         return createProxy(node);
     }

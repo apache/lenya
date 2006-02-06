@@ -25,6 +25,7 @@ import org.apache.lenya.cms.repo.Content;
 import org.apache.lenya.cms.repo.Publication;
 import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.cms.repo.Site;
+import org.apache.lenya.cms.repo.metadata.MetaData;
 
 /**
  * Area proxy.
@@ -94,6 +95,27 @@ public class AreaProxy extends AbstractNodeProxy implements Area {
 
     public Publication getPublication() throws RepositoryException {
         return getRepository().getRepositorySession().getPublication(getPublicationId());
+    }
+
+    /**
+     * @param elementSet The element set.
+     * @return The meta data for this element set.
+     * @throws RepositoryException if an error occurs.
+     */
+    public MetaData getMetaData(String elementSet) throws RepositoryException {
+        Path path = getAbsolutePath().append(getPathElement(MetaDataProxy.NODE_NAME,
+                MetaDataProxy.ELEMENT_SET_PROPERTY,
+                elementSet));
+        if (getRepository().containsProxy(path)) {
+            return (MetaData) getRepository().getProxy(path);
+        } else {
+            return (MetaData) getRepository().addByProperty(getAbsolutePath(),
+                    MetaDataProxy.NODE_TYPE,
+                    MetaDataProxy.class.getName(),
+                    MetaDataProxy.NODE_NAME,
+                    MetaDataProxy.ELEMENT_SET_PROPERTY,
+                    elementSet);
+        }
     }
 
 }

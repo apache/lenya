@@ -25,16 +25,17 @@ import org.apache.lenya.cms.repo.Content;
 import org.apache.lenya.cms.repo.Translation;
 import org.apache.lenya.cms.repo.AssetType;
 import org.apache.lenya.cms.repo.RepositoryException;
+import org.apache.lenya.cms.repo.metadata.MetaData;
 
 /**
  * Content node proxy.
  */
 public class AssetProxy extends AbstractNodeProxy implements Asset {
 
-    protected static final String NODE_TYPE = "lnt:contentNode";
-    protected static final String NODE_NAME = "lenya:contentNode";
+    protected static final String NODE_TYPE = "lnt:asset";
+    protected static final String NODE_NAME = "lenya:asset";
     protected static final String ID_PROPERTY = "jcr:uuid";
-    protected static final String DOCUMENT_TYPE_PROPERTY = "lenya:documentType";
+    protected static final String DOCUMENT_TYPE_PROPERTY = "lenya:assetType";
     protected static final String VISIBLE_IN_NAV_PROPERTY = "lenya:visibleInNav";
 
     public Translation[] getTranslations() throws RepositoryException {
@@ -119,6 +120,22 @@ public class AssetProxy extends AbstractNodeProxy implements Asset {
 
     public Content getContent() throws RepositoryException {
         return (Content) getParentProxy();
+    }
+
+    public MetaData getMetaData(String elementSet) throws RepositoryException {
+        Path path = getAbsolutePath().append(getPathElement(MetaDataProxy.NODE_NAME,
+                MetaDataProxy.ELEMENT_SET_PROPERTY,
+                elementSet));
+        if (getRepository().containsProxy(path)) {
+            return (MetaData) getRepository().getProxy(path);
+        } else {
+            return (MetaData) getRepository().addByProperty(getAbsolutePath(),
+                    MetaDataProxy.NODE_TYPE,
+                    MetaDataProxy.class.getName(),
+                    MetaDataProxy.NODE_NAME,
+                    MetaDataProxy.ELEMENT_SET_PROPERTY,
+                    elementSet);
+        }
     }
 
 }

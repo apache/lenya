@@ -43,6 +43,7 @@ import org.apache.lenya.cms.repo.impl.AssetTypeImpl;
 import org.apache.lenya.cms.repo.impl.AssetTypeRegistryImpl;
 import org.apache.lenya.cms.repo.metadata.ElementSet;
 import org.apache.lenya.cms.repo.metadata.MetaData;
+import org.apache.lenya.cms.repo.metadata.MetaDataOwner;
 import org.apache.lenya.cms.repo.metadata.impl.MetaDataRegistryImpl;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.Schema;
@@ -113,6 +114,8 @@ public class JCRRepositoryTest extends TestCase {
         Publication pub = session.addPublication("test");
         assertSame(pub, session.getPublication("test"));
 
+        doTestMetaData(pub);
+
         assertFalse(pub.existsArea("authoring"));
         Area area = pub.addArea("authoring");
 
@@ -121,6 +124,8 @@ public class JCRRepositoryTest extends TestCase {
 
         Asset asset1 = content.addAsset(doctype);
         assertNotNull(asset1);
+        doTestMetaData(asset1);
+
         Asset asset2 = content.addAsset(doctype);
         assertNotNull(asset2);
         SiteNode parent = site.addChild("parent", asset1);
@@ -129,7 +134,7 @@ public class JCRRepositoryTest extends TestCase {
 
         doTestSite(site, asset1);
 
-        doTestDocument(asset1);
+        doTestTranslation(asset1);
 
     }
 
@@ -151,7 +156,7 @@ public class JCRRepositoryTest extends TestCase {
 
     }
 
-    protected void doTestDocument(Asset asset) throws Exception {
+    protected void doTestTranslation(Asset asset) throws Exception {
         Translation trans = asset.addTranslation("de", "hello", "application/xml");
 
         String validXmlResource = "valid.xml";
@@ -197,12 +202,14 @@ public class JCRRepositoryTest extends TestCase {
         doTestMetaData(trans);
     }
 
-    protected void doTestMetaData(Translation doc) throws Exception {
+    protected void doTestMetaData(MetaDataOwner owner) throws Exception {
         MetaDataRegistryImpl registry = (MetaDataRegistryImpl) this.repo.getMetaDataRegistry();
-        ElementSet testSet = new TestElementSet();
-        registry.registerElementSet(TestElementSet.NAME, testSet);
+        if (!registry.isRegistered(TestElementSet.NAME)) {
+            ElementSet testSet = new TestElementSet();
+            registry.registerElementSet(TestElementSet.NAME, testSet);
+        }
 
-        MetaData meta = doc.getMetaData(TestElementSet.NAME);
+        MetaData meta = owner.getMetaData(TestElementSet.NAME);
         RepositoryException ex = null;
         try {
             meta.setValue(TestElementSet.MULTIPLE_ELEMENT, "hello");
