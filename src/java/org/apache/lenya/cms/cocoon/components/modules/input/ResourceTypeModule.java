@@ -89,7 +89,7 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
                 value = resourceType.getSchema().getURI();
             } else if (attribute.equals(HTTP_SCHEMA_URI)) {
                 String uri = resourceType.getSchema().getURI();
-                String path = uri.substring("lallback://".length());
+                String path = uri.substring("fallback://".length());
                 value = request.getContextPath() + "/fallback/" + path;
             } else {
                 throw new ConfigurationException("Attribute [" + name + "] not supported!");
