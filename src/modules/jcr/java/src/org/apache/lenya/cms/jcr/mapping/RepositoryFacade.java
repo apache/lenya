@@ -21,7 +21,7 @@ import javax.jcr.Session;
 import javax.jcr.query.InvalidQueryException;
 
 import org.apache.lenya.cms.jcr.util.Assertion;
-import org.apache.lenya.cms.repo.DocumentTypeRegistry;
+import org.apache.lenya.cms.repo.AssetTypeRegistry;
 import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.cms.repo.metadata.MetaDataRegistry;
 
@@ -36,7 +36,7 @@ public class RepositoryFacade {
      * @param doctypeRegistry The document type registry.
      * @param metaDataRegistry The meta data registry.
      */
-    public RepositoryFacade(Session session, DocumentTypeRegistry doctypeRegistry,
+    public RepositoryFacade(Session session, AssetTypeRegistry doctypeRegistry,
             MetaDataRegistry metaDataRegistry) {
         this.session = session;
         this.doctypeRegistry = doctypeRegistry;
@@ -44,7 +44,7 @@ public class RepositoryFacade {
     }
 
     private Session session;
-    private DocumentTypeRegistry doctypeRegistry;
+    private AssetTypeRegistry doctypeRegistry;
 
     protected String CLASS_PROPERTY = "lnt:className";
 
@@ -246,7 +246,7 @@ public class RepositoryFacade {
     /**
      * @return The document type registry.
      */
-    public DocumentTypeRegistry getDocumentTypeRegistry() {
+    public AssetTypeRegistry getDocumentTypeRegistry() {
         return this.doctypeRegistry;
     }
 

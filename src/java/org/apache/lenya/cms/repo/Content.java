@@ -26,21 +26,21 @@ public interface Content {
      * @return A node with a specific ID.
      * @throws RepositoryException if an error occurs.
      */
-    ContentNode getNode(String id) throws RepositoryException;
+    Asset getAsset(String id) throws RepositoryException;
 
     /**
      * @return All content nodes in this area.
      * @throws RepositoryException if an error occurs.
      */
-    ContentNode[] getNodes() throws RepositoryException;
+    Asset[] getAssets() throws RepositoryException;
 
     /**
-     * @param documentType The document type.
+     * @param type The asset type.
      * @return The added node.
      * @throws RepositoryException if a node with this ID already exists or the document type is not
      *             registered.
      */
-    ContentNode addNode(DocumentType documentType) throws RepositoryException;
+    Asset addAsset(AssetType type) throws RepositoryException;
     
     /**
      * @return The area this content belongs to.

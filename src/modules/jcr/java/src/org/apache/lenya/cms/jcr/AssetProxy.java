@@ -20,15 +20,15 @@ import org.apache.lenya.cms.jcr.mapping.AbstractNodeProxy;
 import org.apache.lenya.cms.jcr.mapping.NamePathElement;
 import org.apache.lenya.cms.jcr.mapping.Path;
 import org.apache.lenya.cms.jcr.mapping.PathElement;
-import org.apache.lenya.cms.repo.ContentNode;
-import org.apache.lenya.cms.repo.Document;
-import org.apache.lenya.cms.repo.DocumentType;
+import org.apache.lenya.cms.repo.Asset;
+import org.apache.lenya.cms.repo.Translation;
+import org.apache.lenya.cms.repo.AssetType;
 import org.apache.lenya.cms.repo.RepositoryException;
 
 /**
  * Content node proxy.
  */
-public class ContentNodeProxy extends AbstractNodeProxy implements ContentNode {
+public class AssetProxy extends AbstractNodeProxy implements Asset {
 
     protected static final String NODE_TYPE = "lnt:contentNode";
     protected static final String NODE_NAME = "lenya:contentNode";
@@ -36,20 +36,21 @@ public class ContentNodeProxy extends AbstractNodeProxy implements ContentNode {
     protected static final String DOCUMENT_TYPE_PROPERTY = "lenya:documentType";
     protected static final String VISIBLE_IN_NAV_PROPERTY = "lenya:visibleInNav";
 
-    public Document[] getDocuments() throws RepositoryException {
+    public Translation[] getTranslations() throws RepositoryException {
         ContentProxy contentProxy = (ContentProxy) getParentProxy();
         Path path = contentProxy.getAbsolutePath()
-                .append(new NamePathElement(DocumentProxy.NODE_NAME));
-        return (Document[]) getRepository().getProxies(path);
+                .append(new NamePathElement(TranslationProxy.NODE_NAME));
+        return (Translation[]) getRepository().getProxies(path);
     }
 
-    public Document addDocument(String language, String label) throws RepositoryException {
+    public Translation addTranslation(String language, String label, String mimeType)
+            throws RepositoryException {
 
-        DocumentProxy proxy = (DocumentProxy) getRepository().addByProperty(getAbsolutePath(),
-                DocumentProxy.NODE_TYPE,
-                DocumentProxy.class.getName(),
-                DocumentProxy.NODE_NAME,
-                DocumentProxy.LANGUAGE_PROPERTY,
+        TranslationProxy proxy = (TranslationProxy) getRepository().addByProperty(getAbsolutePath(),
+                TranslationProxy.NODE_TYPE,
+                TranslationProxy.class.getName(),
+                TranslationProxy.NODE_NAME,
+                TranslationProxy.LANGUAGE_PROPERTY,
                 language);
         proxy.setLabel(label);
 
@@ -57,27 +58,27 @@ public class ContentNodeProxy extends AbstractNodeProxy implements ContentNode {
                 ResourceProxy.NODE_TYPE,
                 ResourceProxy.class.getName(),
                 ResourceProxy.NODE_NAME);
-        resourceProxy.init();
+        resourceProxy.init(mimeType);
 
         return proxy;
     }
 
-    public void removeDocument(Document document) throws RepositoryException {
+    public void removeTranslation(Translation document) throws RepositoryException {
         // TODO Auto-generated method stub
 
     }
 
-    public Document getDocument(String language) throws RepositoryException {
-        Path path = DocumentProxy.getPath(this, language);
-        return (Document) getRepository().getProxy(path);
+    public Translation getTranslation(String language) throws RepositoryException {
+        Path path = TranslationProxy.getPath(this, language);
+        return (Translation) getRepository().getProxy(path);
     }
 
-    public DocumentType getDocumentType() throws RepositoryException {
+    public AssetType getAssetType() throws RepositoryException {
         String name = getPropertyString(DOCUMENT_TYPE_PROPERTY);
         return getRepository().getDocumentTypeRegistry().getDocumentType(name);
     }
 
-    public String getNodeId() throws RepositoryException {
+    public String getAssetId() throws RepositoryException {
         try {
             return getNode().getUUID();
         } catch (javax.jcr.RepositoryException e) {
@@ -86,7 +87,7 @@ public class ContentNodeProxy extends AbstractNodeProxy implements ContentNode {
     }
 
     public Path getAbsolutePath() throws RepositoryException {
-        return ContentNodeProxy.getPath((ContentProxy) getParentProxy(), getNodeId());
+        return AssetProxy.getPath((ContentProxy) getParentProxy(), getAssetId());
     }
 
     protected static Path getPath(ContentProxy contentProxy, String nodeId)
@@ -96,7 +97,7 @@ public class ContentNodeProxy extends AbstractNodeProxy implements ContentNode {
     }
 
     public PathElement getPathElement() throws RepositoryException {
-        return getPathElement(NODE_NAME, ID_PROPERTY, getNodeId());
+        return getPathElement(NODE_NAME, ID_PROPERTY, getAssetId());
     }
 
     public boolean isVisibleInNav() throws RepositoryException {
@@ -106,7 +107,7 @@ public class ContentNodeProxy extends AbstractNodeProxy implements ContentNode {
     public void setVisibleInNav(boolean visible) throws RepositoryException {
         setProperty(VISIBLE_IN_NAV_PROPERTY, visible);
     }
-    
+
     /**
      * @param documentType The document type's name.
      * @throws RepositoryException if an error occurs.

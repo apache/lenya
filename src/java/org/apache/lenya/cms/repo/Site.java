@@ -39,7 +39,7 @@ public interface Site {
      * @return a site node.
      * @throws RepositoryException if a node with this path already exists.
      */
-    SiteNode addChild(String name, ContentNode contentNode) throws RepositoryException;
+    SiteNode addChild(String name, Asset contentNode) throws RepositoryException;
 
     /**
      * @param name The name.

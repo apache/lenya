@@ -52,7 +52,7 @@ public interface SiteNode {
      * @return a site node.
      * @throws RepositoryException if an error occurs.
      */
-    SiteNode addChild(String name, ContentNode contentNode) throws RepositoryException;
+    SiteNode addChild(String name, Asset contentNode) throws RepositoryException;
     
     /**
      * @return The path of the node, relative to the area.
@@ -64,7 +64,7 @@ public interface SiteNode {
      * @return The referenced content node.
      * @throws RepositoryException if an error occurs.
      */
-    ContentNode getContentNode() throws RepositoryException;
+    Asset getContentNode() throws RepositoryException;
     
     /**
      * @return The parent node or <code>null</code> if this is a top-level node.

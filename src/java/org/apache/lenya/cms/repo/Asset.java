@@ -19,28 +19,29 @@ package org.apache.lenya.cms.repo;
 /**
  * Content node.
  */
-public interface ContentNode {
+public interface Asset {
 
     /**
      * @return The documents belonging to this node.
      * @throws RepositoryException if an error occurs.
      */
-    Document[] getDocuments() throws RepositoryException;
+    Translation[] getTranslations() throws RepositoryException;
 
     /**
      * Adds a document.
      * @param language The language of the document.
      * @param label The label.
+     * @param mimeType The mime type.
      * @return the added document.
      * @throws RepositoryException if the language version already exists.
      */
-    Document addDocument(String language, String label) throws RepositoryException;
+    Translation addTranslation(String language, String label, String mimeType) throws RepositoryException;
 
     /**
      * @param document The document.
      * @throws RepositoryException
      */
-    void removeDocument(Document document) throws RepositoryException;
+    void removeTranslation(Translation document) throws RepositoryException;
 
     /**
      * Returns a document of a specific language.
@@ -48,20 +49,20 @@ public interface ContentNode {
      * @return A document.
      * @throws RepositoryException if the language version does not exist.
      */
-    Document getDocument(String language) throws RepositoryException;
+    Translation getTranslation(String language) throws RepositoryException;
 
     /**
      * @return The document type which this node's documents belong to.
      * @throws RepositoryException if an error occurs.
      */
-    DocumentType getDocumentType() throws RepositoryException;
+    AssetType getAssetType() throws RepositoryException;
 
     /**
      * @return The ID of this node. The ID is unique among all content nodes in this area.
      *         Corresponding content nodes in other areas have the same ID.
      * @throws RepositoryException if an error occurs.
      */
-    String getNodeId() throws RepositoryException;
+    String getAssetId() throws RepositoryException;
 
     /**
      * @return If the node should be visible in the navigation.

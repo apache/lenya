@@ -21,7 +21,7 @@ import org.apache.lenya.xml.Schema;
 /**
  * @version $Id:$
  */
-public interface DocumentType {
+public interface AssetType {
 
     /**
      * Returns the name of this document type.

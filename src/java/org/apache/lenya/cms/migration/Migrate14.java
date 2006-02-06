@@ -31,17 +31,17 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.repo.Area;
-import org.apache.lenya.cms.repo.ContentNode;
-import org.apache.lenya.cms.repo.Document;
-import org.apache.lenya.cms.repo.DocumentType;
+import org.apache.lenya.cms.repo.Asset;
+import org.apache.lenya.cms.repo.Translation;
+import org.apache.lenya.cms.repo.AssetType;
 import org.apache.lenya.cms.repo.Publication;
 import org.apache.lenya.cms.repo.Repository;
 import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.cms.repo.RepositoryManager;
 import org.apache.lenya.cms.repo.Session;
 import org.apache.lenya.cms.repo.SiteNode;
-import org.apache.lenya.cms.repo.impl.DocumentTypeImpl;
-import org.apache.lenya.cms.repo.impl.DocumentTypeRegistryImpl;
+import org.apache.lenya.cms.repo.impl.AssetTypeImpl;
+import org.apache.lenya.cms.repo.impl.AssetTypeRegistryImpl;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.tools.ant.BuildException;
@@ -213,12 +213,12 @@ public class Migrate14 {
             Element resourceTypeElement = helper.getFirstChild(internalElement,
                     LenyaMetaData.ELEMENT_RESOURCE_TYPE);
             String resourceType = DocumentHelper.getSimpleElementText(resourceTypeElement);
-            DocumentType doctype;
+            AssetType doctype;
 
-            DocumentTypeRegistryImpl registry = (DocumentTypeRegistryImpl) getRepository().getDocumentTypeRegistry();
+            AssetTypeRegistryImpl registry = (AssetTypeRegistryImpl) getRepository().getDocumentTypeRegistry();
             String[] names = registry.getDocumentTypeNames();
             if (!Arrays.asList(names).contains(resourceType)) {
-                doctype = new DocumentTypeImpl(resourceType, null, false, "application/xml");
+                doctype = new AssetTypeImpl(resourceType, null, false);
                 registry.register(doctype);
             } else {
                 doctype = registry.getDocumentType(resourceType);
@@ -227,7 +227,7 @@ public class Migrate14 {
             SiteNode siteNode;
             // String contentNodeId = documentPath.replace('/', '_');
             
-            ContentNode contentNode = area.getContent().addNode(doctype);
+            Asset contentNode = area.getContent().addAsset(doctype);
             if (parent == null) {
                 siteNode = area.getSite().addChild(nodeId, contentNode);
             } else {
@@ -239,7 +239,7 @@ public class Migrate14 {
         }
     }
 
-    protected void importDocuments(File docDir, ContentNode contentNode) throws RepositoryException {
+    protected void importDocuments(File docDir, Asset contentNode) throws RepositoryException {
         File[] files = docDir.listFiles(new FileFilter() {
             public boolean accept(File file) {
                 return file.isFile() && file.getName().startsWith("index_")
@@ -251,13 +251,13 @@ public class Migrate14 {
         }
     }
 
-    protected void importDocument(File file, ContentNode contentNode) throws RepositoryException {
+    protected void importDocument(File file, Asset contentNode) throws RepositoryException {
         String fileName = file.getName();
         String suffix = fileName.substring("index_".length());
         String language = suffix.substring(0, suffix.length() - ".xml".length());
         System.out.println(" language [" + language + "]");
 
-        Document document = contentNode.addDocument(language, "Label");
+        Translation document = contentNode.addTranslation(language, "Label", "application/xml");
 
         OutputStream out = document.getOutputStream();
         try {

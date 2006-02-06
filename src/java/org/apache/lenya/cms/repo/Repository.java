@@ -33,7 +33,7 @@ public interface Repository {
      * @return The document type registry.
      * @throws RepositoryException if an error occurs.
      */
-    DocumentTypeRegistry getDocumentTypeRegistry() throws RepositoryException;
+    AssetTypeRegistry getDocumentTypeRegistry() throws RepositoryException;
     
     /**
      * @return The meta data registry.

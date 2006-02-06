@@ -27,7 +27,7 @@ import org.apache.lenya.cms.jcr.mapping.NamePathElement;
 import org.apache.lenya.cms.jcr.mapping.Path;
 import org.apache.lenya.cms.jcr.mapping.PathElement;
 import org.apache.lenya.cms.repo.Area;
-import org.apache.lenya.cms.repo.ContentNode;
+import org.apache.lenya.cms.repo.Asset;
 import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.cms.repo.Site;
 import org.apache.lenya.cms.repo.SiteNode;
@@ -54,12 +54,12 @@ public class SiteProxy extends AbstractNodeProxy implements Site {
         return (SiteNode[]) nodes.toArray(new SiteNode[nodes.size()]);
     }
 
-    public SiteNode addChild(String name, ContentNode contentNode) throws RepositoryException {
+    public SiteNode addChild(String name, Asset contentNode) throws RepositoryException {
         SiteNodeProxy proxy = (SiteNodeProxy) getRepository().addByName(getAbsolutePath(),
                 SiteNodeProxy.NODE_TYPE,
                 SiteNodeProxy.class.getName(),
                 name);
-        proxy.setContentNode((ContentNodeProxy) contentNode);
+        proxy.setContentNode((AssetProxy) contentNode);
         return proxy;
     }
 

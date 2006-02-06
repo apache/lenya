@@ -20,14 +20,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.lenya.cms.repo.DocumentType;
-import org.apache.lenya.cms.repo.DocumentTypeRegistry;
+import org.apache.lenya.cms.repo.AssetType;
+import org.apache.lenya.cms.repo.AssetTypeRegistry;
 import org.apache.lenya.cms.repo.RepositoryException;
 
 /**
  * Document type registry implementation.
  */
-public class DocumentTypeRegistryImpl implements DocumentTypeRegistry {
+public class AssetTypeRegistryImpl implements AssetTypeRegistry {
 
     private Map documentTypes = new HashMap();
 
@@ -36,7 +36,7 @@ public class DocumentTypeRegistryImpl implements DocumentTypeRegistry {
      * @param type The document type.
      * @throws RepositoryException if the document type is already registered.
      */
-    public void register(DocumentType type) throws RepositoryException {
+    public void register(AssetType type) throws RepositoryException {
         if (this.documentTypes.containsKey(type.getName())) {
             throw new RepositoryException("The document type [" + type.getName()
                     + "] is already registered.");
@@ -49,9 +49,9 @@ public class DocumentTypeRegistryImpl implements DocumentTypeRegistry {
         return (String[]) names.toArray(new String[names.size()]);
     }
 
-    public DocumentType getDocumentType(String name) throws RepositoryException {
+    public AssetType getDocumentType(String name) throws RepositoryException {
         if (this.documentTypes.containsKey(name)) {
-            return (DocumentType) this.documentTypes.get(name);
+            return (AssetType) this.documentTypes.get(name);
         } else {
             throw new RepositoryException("The document type [" + name + "] is not registered.");
         }

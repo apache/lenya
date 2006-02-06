@@ -19,7 +19,7 @@ package org.apache.lenya.cms.repo;
 /**
  * Document type registry.
  */
-public interface DocumentTypeRegistry {
+public interface AssetTypeRegistry {
 
     /**
      * @return All available document type names.
@@ -32,6 +32,6 @@ public interface DocumentTypeRegistry {
      * @return The document type.
      * @throws RepositoryException if no document type exists with this name.
      */
-    DocumentType getDocumentType(String name) throws RepositoryException;
+    AssetType getDocumentType(String name) throws RepositoryException;
     
 }

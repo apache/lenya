@@ -30,10 +30,9 @@ import javax.xml.transform.stream.StreamResult;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.LogEnabled;
 import org.apache.avalon.framework.logger.Logger;
-import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.impl.AbstractSource;
-import org.apache.lenya.cms.repo.Document;
+import org.apache.lenya.cms.repo.Translation;
 import org.apache.lenya.cms.repo.RepositoryException;
 
 /**
@@ -45,12 +44,12 @@ public class ContentSource extends AbstractSource implements LogEnabled {
      * @param document The document.
      * @param logger The logger.
      */
-    public ContentSource(Document document, Logger logger) {
+    public ContentSource(Translation document, Logger logger) {
         ContainerUtil.enableLogging(this, logger);
         this.document = document;
     }
 
-    private Document document;
+    private Translation document;
 
     private Logger logger;
 
@@ -123,7 +122,6 @@ public class ContentSource extends AbstractSource implements LogEnabled {
         transformer.setOutputProperty("indent", "yes");
 
         transformer.transform(new DOMSource(edoc), new StreamResult(pos));
-
     }
 
     /**
@@ -157,21 +155,6 @@ public class ContentSource extends AbstractSource implements LogEnabled {
         } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * @return The parent.
-     */
-    public Source getParent() {
-        getLogger().warn("getParent() not implemented yet!");
-        return null;
-    }
-
-    /**
-     * 
-     */
-    public void makeCollection() {
-        getLogger().warn("RepositorySource().makeCollection() not implemented yet!");
     }
 
     /**

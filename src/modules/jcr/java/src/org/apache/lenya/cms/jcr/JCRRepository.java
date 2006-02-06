@@ -18,9 +18,9 @@ package org.apache.lenya.cms.jcr;
 
 import javax.jcr.Repository;
 
-import org.apache.lenya.cms.repo.DocumentTypeRegistry;
+import org.apache.lenya.cms.repo.AssetTypeRegistry;
 import org.apache.lenya.cms.repo.RepositoryException;
-import org.apache.lenya.cms.repo.impl.DocumentTypeRegistryImpl;
+import org.apache.lenya.cms.repo.impl.AssetTypeRegistryImpl;
 import org.apache.lenya.cms.repo.metadata.MetaDataRegistry;
 import org.apache.lenya.cms.repo.metadata.impl.MetaDataRegistryImpl;
 
@@ -50,11 +50,11 @@ public class JCRRepository implements org.apache.lenya.cms.repo.Repository {
         return new JCRSession(this);
     }
 
-    private DocumentTypeRegistry documentTypeRegistry;
+    private AssetTypeRegistry documentTypeRegistry;
 
-    public DocumentTypeRegistry getDocumentTypeRegistry() throws org.apache.lenya.cms.repo.RepositoryException {
+    public AssetTypeRegistry getDocumentTypeRegistry() throws org.apache.lenya.cms.repo.RepositoryException {
         if (this.documentTypeRegistry == null) {
-            this.documentTypeRegistry = new DocumentTypeRegistryImpl();
+            this.documentTypeRegistry = new AssetTypeRegistryImpl();
         }
         return this.documentTypeRegistry;
     }

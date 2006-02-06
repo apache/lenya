@@ -24,7 +24,7 @@ import org.apache.lenya.cms.repo.metadata.MetaData;
 /**
  * Document.
  */
-public interface Document {
+public interface Translation {
 
     /**
      * @return The document's language code.
@@ -85,7 +85,7 @@ public interface Document {
      * @return The content node this document belongs to.
      * @throws RepositoryException if an error occurs.
      */
-    ContentNode getContentNode() throws RepositoryException;
+    Asset getAsset() throws RepositoryException;
 
     /**
      * @param elementSet The name of the element set. The element set must be registered in the

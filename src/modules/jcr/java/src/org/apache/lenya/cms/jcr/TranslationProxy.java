@@ -22,15 +22,15 @@ import java.io.OutputStream;
 import org.apache.lenya.cms.jcr.mapping.AbstractNodeProxy;
 import org.apache.lenya.cms.jcr.mapping.Path;
 import org.apache.lenya.cms.jcr.mapping.PathElement;
-import org.apache.lenya.cms.repo.ContentNode;
-import org.apache.lenya.cms.repo.Document;
+import org.apache.lenya.cms.repo.Asset;
+import org.apache.lenya.cms.repo.Translation;
 import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.cms.repo.metadata.MetaData;
 
 /**
  * Document proxy.
  */
-public class DocumentProxy extends AbstractNodeProxy implements Document {
+public class TranslationProxy extends AbstractNodeProxy implements Translation {
 
     protected static final String NODE_NAME = "lenya:document";
     protected static final String NODE_TYPE = "lnt:document";
@@ -50,10 +50,10 @@ public class DocumentProxy extends AbstractNodeProxy implements Document {
     }
 
     protected Path getXPath() throws RepositoryException {
-        return DocumentProxy.getPath((ContentNodeProxy) getContentNode(), getLanguage());
+        return TranslationProxy.getPath((AssetProxy) getAsset(), getLanguage());
     }
 
-    protected static Path getPath(ContentNodeProxy contentNodeProxy, String language)
+    protected static Path getPath(AssetProxy contentNodeProxy, String language)
             throws RepositoryException {
         return contentNodeProxy.getAbsolutePath().append(getPathElement(NODE_NAME,
                 LANGUAGE_PROPERTY,
@@ -81,8 +81,8 @@ public class DocumentProxy extends AbstractNodeProxy implements Document {
         return getResourceProxy().getLastModified();
     }
 
-    public ContentNode getContentNode() throws RepositoryException {
-        return (ContentNodeProxy) getParentProxy();
+    public Asset getAsset() throws RepositoryException {
+        return (AssetProxy) getParentProxy();
     }
 
     public PathElement getPathElement() throws RepositoryException {

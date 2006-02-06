@@ -27,7 +27,7 @@ import org.apache.lenya.cms.jcr.mapping.AbstractNodeProxy;
 import org.apache.lenya.cms.jcr.mapping.NodeProxy;
 import org.apache.lenya.cms.jcr.mapping.Path;
 import org.apache.lenya.cms.jcr.mapping.PathElement;
-import org.apache.lenya.cms.repo.ContentNode;
+import org.apache.lenya.cms.repo.Asset;
 import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.cms.repo.Site;
 import org.apache.lenya.cms.repo.SiteNode;
@@ -59,12 +59,12 @@ public class SiteNodeProxy extends AbstractNodeProxy implements SiteNode {
         return (SiteNode) getRepository().getProxy(path);
     }
 
-    public SiteNode addChild(String name, ContentNode contentNode) throws RepositoryException {
+    public SiteNode addChild(String name, Asset contentNode) throws RepositoryException {
         SiteNodeProxy proxy = (SiteNodeProxy) getRepository().addByName(getAbsolutePath(),
                 SiteNodeProxy.NODE_TYPE,
                 SiteNodeProxy.class.getName(),
                 name);
-        proxy.setContentNode((ContentNodeProxy) contentNode);
+        proxy.setContentNode((AssetProxy) contentNode);
         return proxy;
     }
 
@@ -78,17 +78,17 @@ public class SiteNodeProxy extends AbstractNodeProxy implements SiteNode {
         return site.getAbsolutePath().append(getPathElement(getName()));
     }
 
-    public ContentNode getContentNode() throws RepositoryException {
+    public Asset getContentNode() throws RepositoryException {
         try {
             Node node = getPropertyNode(CONTENT_NODE_PROPERTY);
             String id = node.getUUID();
-            return getSite().getArea().getContent().getNode(id);
+            return getSite().getArea().getContent().getAsset(id);
         } catch (javax.jcr.RepositoryException e) {
             throw new RepositoryException(e);
         }
     }
 
-    protected void setContentNode(ContentNodeProxy proxy) throws RepositoryException {
+    protected void setContentNode(AssetProxy proxy) throws RepositoryException {
         setProperty(CONTENT_NODE_PROPERTY, proxy.getNode());
     }
 

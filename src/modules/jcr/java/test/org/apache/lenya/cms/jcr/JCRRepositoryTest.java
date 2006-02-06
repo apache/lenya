@@ -28,10 +28,9 @@ import junit.framework.TestCase;
 import org.apache.cocoon.components.validation.Validator;
 import org.apache.lenya.cms.jcr.mock.TestElementSet;
 import org.apache.lenya.cms.repo.Area;
+import org.apache.lenya.cms.repo.Asset;
+import org.apache.lenya.cms.repo.AssetType;
 import org.apache.lenya.cms.repo.Content;
-import org.apache.lenya.cms.repo.ContentNode;
-import org.apache.lenya.cms.repo.Document;
-import org.apache.lenya.cms.repo.DocumentType;
 import org.apache.lenya.cms.repo.Publication;
 import org.apache.lenya.cms.repo.Repository;
 import org.apache.lenya.cms.repo.RepositoryException;
@@ -39,8 +38,9 @@ import org.apache.lenya.cms.repo.RepositoryManager;
 import org.apache.lenya.cms.repo.Session;
 import org.apache.lenya.cms.repo.Site;
 import org.apache.lenya.cms.repo.SiteNode;
-import org.apache.lenya.cms.repo.impl.DocumentTypeImpl;
-import org.apache.lenya.cms.repo.impl.DocumentTypeRegistryImpl;
+import org.apache.lenya.cms.repo.Translation;
+import org.apache.lenya.cms.repo.impl.AssetTypeImpl;
+import org.apache.lenya.cms.repo.impl.AssetTypeRegistryImpl;
 import org.apache.lenya.cms.repo.metadata.ElementSet;
 import org.apache.lenya.cms.repo.metadata.MetaData;
 import org.apache.lenya.cms.repo.metadata.impl.MetaDataRegistryImpl;
@@ -106,8 +106,8 @@ public class JCRRepositoryTest extends TestCase {
 
         URL schemaUrl = getClass().getResource("schema.xml");
         Schema schema = new Schema(Validator.GRAMMAR_RELAX_NG, schemaUrl.toString());
-        DocumentType doctype = new DocumentTypeImpl("xhtml", schema, true, "application/xhtml+xml");
-        DocumentTypeRegistryImpl registry = (DocumentTypeRegistryImpl) repo.getDocumentTypeRegistry();
+        AssetType doctype = new AssetTypeImpl("xhtml", schema, true);
+        AssetTypeRegistryImpl registry = (AssetTypeRegistryImpl) repo.getDocumentTypeRegistry();
         registry.register(doctype);
 
         Publication pub = session.addPublication("test");
@@ -119,23 +119,23 @@ public class JCRRepositoryTest extends TestCase {
         Content content = area.getContent();
         Site site = area.getSite();
 
-        ContentNode node1 = content.addNode(doctype);
-        assertNotNull(node1);
-        ContentNode node2 = content.addNode(doctype);
-        assertNotNull(node2);
-        SiteNode parent = site.addChild("parent", node1);
-        SiteNode child = parent.addChild("child", node2);
-        assertSame(node2.getNodeId(), child.getContentNode().getNodeId());
+        Asset asset1 = content.addAsset(doctype);
+        assertNotNull(asset1);
+        Asset asset2 = content.addAsset(doctype);
+        assertNotNull(asset2);
+        SiteNode parent = site.addChild("parent", asset1);
+        SiteNode child = parent.addChild("child", asset2);
+        assertSame(asset2.getAssetId(), child.getContentNode().getAssetId());
 
-        doTestSite(site, node1);
+        doTestSite(site, asset1);
 
-        doTestDocument(node1);
+        doTestDocument(asset1);
 
     }
 
-    protected void doTestSite(Site site, ContentNode contentNode) throws RepositoryException {
-        SiteNode foo = site.addChild("foo", contentNode);
-        SiteNode bar = site.addChild("bar", contentNode);
+    protected void doTestSite(Site site, Asset asset) throws RepositoryException {
+        SiteNode foo = site.addChild("foo", asset);
+        SiteNode bar = site.addChild("bar", asset);
 
         RepositoryException ex = null;
         try {
@@ -147,12 +147,12 @@ public class JCRRepositoryTest extends TestCase {
         site.move("/foo", "/bar/baz");
 
         SiteNode barBaz = bar.getChild("baz");
-        assertSame(foo.getContentNode().getNodeId(), barBaz.getContentNode().getNodeId());
+        assertSame(foo.getContentNode().getAssetId(), barBaz.getContentNode().getAssetId());
 
     }
 
-    protected void doTestDocument(ContentNode node1) throws Exception {
-        Document doc = node1.addDocument("de", "hello");
+    protected void doTestDocument(Asset asset) throws Exception {
+        Translation trans = asset.addTranslation("de", "hello", "application/xml");
 
         String validXmlResource = "valid.xml";
         String invalidXmlResource = "invalid.xml";
@@ -161,7 +161,7 @@ public class JCRRepositoryTest extends TestCase {
         org.w3c.dom.Document validXml = DocumentHelper.readDocument(getClass().getResourceAsStream(validXmlResource));
         org.w3c.dom.Document invalidXml = DocumentHelper.readDocument(getClass().getResourceAsStream(invalidXmlResource));
 
-        OutputStream out = doc.getOutputStream();
+        OutputStream out = trans.getOutputStream();
         Writer writer = new OutputStreamWriter(out);
 
         try {
@@ -178,7 +178,7 @@ public class JCRRepositoryTest extends TestCase {
             }
         }
 
-        out = doc.getOutputStream();
+        out = trans.getOutputStream();
         writer = new OutputStreamWriter(out);
 
         try {
@@ -189,15 +189,15 @@ public class JCRRepositoryTest extends TestCase {
             }
         }
 
-        assertTrue(doc.getContentLength() > 0);
+        assertTrue(trans.getContentLength() > 0);
 
-        org.w3c.dom.Document xmlDoc = DocumentHelper.readDocument(doc.getInputStream());
+        org.w3c.dom.Document xmlDoc = DocumentHelper.readDocument(trans.getInputStream());
         assertEquals(xmlDoc.getDocumentElement().getLocalName(), localName);
 
-        doTestMetaData(doc);
+        doTestMetaData(trans);
     }
 
-    protected void doTestMetaData(Document doc) throws Exception {
+    protected void doTestMetaData(Translation doc) throws Exception {
         MetaDataRegistryImpl registry = (MetaDataRegistryImpl) this.repo.getMetaDataRegistry();
         ElementSet testSet = new TestElementSet();
         registry.registerElementSet(TestElementSet.NAME, testSet);

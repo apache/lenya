@@ -27,8 +27,8 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceFactory;
 import org.apache.lenya.cms.repo.Area;
-import org.apache.lenya.cms.repo.ContentNode;
-import org.apache.lenya.cms.repo.Document;
+import org.apache.lenya.cms.repo.Asset;
+import org.apache.lenya.cms.repo.Translation;
 import org.apache.lenya.cms.repo.Publication;
 import org.apache.lenya.cms.repo.Repository;
 import org.apache.lenya.cms.repo.Session;
@@ -79,8 +79,8 @@ public class ContentSourceFactory extends AbstractLogEnabled implements SourceFa
                 Publication pub = session.getPublication(pubId);
                 Area area = pub.getArea(areaId);
                 SiteNode siteNode = area.getSite().getNode(path);
-                ContentNode contentNode = siteNode.getContentNode();
-                Document document = contentNode.getDocument(language);
+                Asset contentNode = siteNode.getContentNode();
+                Translation document = contentNode.getTranslation(language);
                 source = new ContentSource(document, getLogger());
             } else if (locator.startsWith("/")) {
                 throw new MalformedURLException("Only absolute locations are supported!");

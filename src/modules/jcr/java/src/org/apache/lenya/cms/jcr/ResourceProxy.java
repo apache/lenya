@@ -27,8 +27,8 @@ import java.util.GregorianCalendar;
 
 import org.apache.lenya.cms.jcr.mapping.AbstractNodeProxy;
 import org.apache.lenya.cms.jcr.mapping.PathElement;
-import org.apache.lenya.cms.repo.Document;
-import org.apache.lenya.cms.repo.DocumentType;
+import org.apache.lenya.cms.repo.Translation;
+import org.apache.lenya.cms.repo.AssetType;
 import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.xml.Schema;
 import org.xml.sax.InputSource;
@@ -52,8 +52,8 @@ public class ResourceProxy extends AbstractNodeProxy {
     protected static final String LAST_MODIFIED_PROPERTY = "jcr:lastModified";
     protected static final String MIME_TYPE_PROPERTY = "jcr:mimeType";
 
-    protected DocumentProxy getDocumentProxy() throws RepositoryException {
-        return (DocumentProxy) getParentProxy();
+    protected TranslationProxy getDocumentProxy() throws RepositoryException {
+        return (TranslationProxy) getParentProxy();
     }
 
     /**
@@ -94,11 +94,13 @@ public class ResourceProxy extends AbstractNodeProxy {
 
     /**
      * Initializes the node after it has been created.
+     * @param mimeType The mime type.
      * @throws RepositoryException if an error occurs.
      */
-    public void init() throws RepositoryException {
+    public void init(String mimeType) throws RepositoryException {
         setProperty(DATA_PROPERTY, "");
         setProperty(LAST_MODIFIED_PROPERTY, new GregorianCalendar());
+        setProperty(MIME_TYPE_PROPERTY, mimeType);
     }
 
     /**
@@ -145,8 +147,8 @@ public class ResourceProxy extends AbstractNodeProxy {
         }
 
         protected boolean validate(InputStream stream) throws RepositoryException, IOException {
-            Document doc = this.proxy.getDocumentProxy();
-            DocumentType doctype = doc.getContentNode().getDocumentType();
+            Translation doc = this.proxy.getDocumentProxy();
+            AssetType doctype = doc.getAsset().getAssetType();
             if (doctype.isValidating()) {
                 Schema schema = doctype.getSchema();
                 if (schema == null) {

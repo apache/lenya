@@ -21,8 +21,8 @@ import org.apache.lenya.cms.jcr.mapping.Path;
 import org.apache.lenya.cms.jcr.mapping.PathElement;
 import org.apache.lenya.cms.repo.Area;
 import org.apache.lenya.cms.repo.Content;
-import org.apache.lenya.cms.repo.ContentNode;
-import org.apache.lenya.cms.repo.DocumentType;
+import org.apache.lenya.cms.repo.Asset;
+import org.apache.lenya.cms.repo.AssetType;
 import org.apache.lenya.cms.repo.RepositoryException;
 
 /**
@@ -33,23 +33,23 @@ public class ContentProxy extends AbstractNodeProxy implements Content {
     protected static final String NODE_NAME = "lenya:content";
     protected static final String NODE_TYPE = "lnt:content";
 
-    public ContentNode getNode(String id) throws RepositoryException {
-        Path path = getAbsolutePath().append(getPathElement(ContentNodeProxy.NODE_NAME,
-                ContentNodeProxy.ID_PROPERTY,
+    public Asset getAsset(String id) throws RepositoryException {
+        Path path = getAbsolutePath().append(getPathElement(AssetProxy.NODE_NAME,
+                AssetProxy.ID_PROPERTY,
                 id));
-        return (ContentNode) getRepository().getProxy(path);
+        return (Asset) getRepository().getProxy(path);
     }
 
-    public ContentNode[] getNodes() throws RepositoryException {
-        Path path = getAbsolutePath().append(getPathElement(ContentNodeProxy.NODE_NAME));
-        return (ContentNode[]) getRepository().getProxies(path);
+    public Asset[] getAssets() throws RepositoryException {
+        Path path = getAbsolutePath().append(getPathElement(AssetProxy.NODE_NAME));
+        return (Asset[]) getRepository().getProxies(path);
     }
 
-    public ContentNode addNode(DocumentType documentType) throws RepositoryException {
-        ContentNodeProxy proxy = (ContentNodeProxy) getRepository().addByNameWithoutCheck(getAbsolutePath(),
-                ContentNodeProxy.NODE_TYPE,
-                ContentNodeProxy.class.getName(),
-                ContentNodeProxy.NODE_NAME);
+    public Asset addAsset(AssetType documentType) throws RepositoryException {
+        AssetProxy proxy = (AssetProxy) getRepository().addByNameWithoutCheck(getAbsolutePath(),
+                AssetProxy.NODE_TYPE,
+                AssetProxy.class.getName(),
+                AssetProxy.NODE_NAME);
         proxy.setVisibleInNav(true);
         proxy.setDocumentType(documentType.getName());
         return proxy;
