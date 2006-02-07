@@ -72,7 +72,12 @@ public class SiteProxy extends AbstractNodeProxy implements Site {
     }
 
     public SiteNode getNode(String path) throws RepositoryException {
-        String[] snippets = path.split("/");
+
+        if (!path.startsWith("/")) {
+            throw new RepositoryException("The path [" + path + "] doesn't start with a slash!");
+        }
+
+        String[] snippets = path.substring(1).split("/");
         PathElement[] elements = new PathElement[snippets.length];
         for (int i = 0; i < elements.length; i++) {
             elements[i] = new NamePathElement(snippets[i]);
@@ -132,8 +137,7 @@ public class SiteProxy extends AbstractNodeProxy implements Site {
         SiteNode[] nodes = getReferences(asset);
         if (nodes.length > 0) {
             return nodes[0];
-        }
-        else {
+        } else {
             return null;
         }
     }
