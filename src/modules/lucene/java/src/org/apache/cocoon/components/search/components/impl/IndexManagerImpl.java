@@ -15,6 +15,7 @@
  */
 package org.apache.cocoon.components.search.components.impl;
 
+import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
@@ -37,6 +38,8 @@ import org.apache.cocoon.components.search.fieldmodel.DateFieldDefinition;
 import org.apache.cocoon.components.search.fieldmodel.FieldDefinition;
 import org.apache.cocoon.components.search.utils.SourceHelper;
 import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.excalibur.source.SourceUtil;
 
 //import org.apache.excalibur.source.SourceResolver;
 
@@ -320,6 +323,11 @@ public class IndexManagerImpl extends AbstractLogEnabled implements
                 index.setID(id);
                 index.setIndexer(indexerRole);
                 
+                // if the directory path is relative, prepend context path:
+                if (!directory.startsWith(File.separator)) {
+                    directory = getServletContextPath() + File.separator + directory;
+                }
+                
                 if (index.setDirectory(directory)) {
                     this.getLogger().warn(
                             "directory " + directory + " was locked ");
@@ -329,14 +337,31 @@ public class IndexManagerImpl extends AbstractLogEnabled implements
                 index.setManager(manager);
 
                 this.addIndex(index);
-                this.getLogger().info("add index  " + index.getID());
-            } catch (IOException ex) {
+                this.getLogger().info("add index  " + index.getID() + " for directory " + directory);
+            } catch (Exception ex) {
                 throw new ConfigurationException(ex.getMessage(), ex);
             }
             this.manager.release(analyzerM);
         }
     }
 
+    public String getServletContextPath() throws Exception {
+        SourceResolver resolver = null;
+        Source source = null;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI("context:///");
+            return SourceUtil.getFile(source).getCanonicalPath();
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                this.manager.release(resolver);
+            }
+        }
+    }
+    
     /* (non-Javadoc)
      * @see org.apache.cocoon.components.search.components.IndexManager#getIndex()
      */
