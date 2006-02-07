@@ -22,24 +22,17 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
-import java.net.MalformedURLException;
 
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.apache.avalon.framework.service.ServiceException;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.xml.UsecaseErrorHandler;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
-import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.Schema;
 import org.apache.lenya.xml.ValidationUtil;
