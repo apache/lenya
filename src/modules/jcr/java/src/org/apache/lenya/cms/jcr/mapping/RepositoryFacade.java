@@ -40,6 +40,7 @@ public class RepositoryFacade {
      */
     public RepositoryFacade(JCRSession jcrSession, Session session, AssetTypeRegistry doctypeRegistry,
             MetaDataRegistry metaDataRegistry) {
+        this.jcrSession = jcrSession;
         this.session = session;
         this.doctypeRegistry = doctypeRegistry;
         this.metaDataRegistry = metaDataRegistry;
