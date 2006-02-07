@@ -21,6 +21,7 @@ import org.apache.lenya.cms.jcr.mapping.Path;
 import org.apache.lenya.cms.jcr.mapping.PathElement;
 import org.apache.lenya.cms.jcr.mapping.PropertyPathElement;
 import org.apache.lenya.cms.jcr.mapping.RepositoryFacade;
+import org.apache.lenya.cms.jcr.metadata.MetaDataProxy;
 import org.apache.lenya.cms.repo.Area;
 import org.apache.lenya.cms.repo.Content;
 import org.apache.lenya.cms.repo.Publication;

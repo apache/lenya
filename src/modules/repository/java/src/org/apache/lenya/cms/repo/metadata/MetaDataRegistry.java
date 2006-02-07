@@ -36,4 +36,19 @@ public interface MetaDataRegistry {
      */
     ElementSet getElementSet(String name) throws RepositoryException;
 
+    /**
+     * Registers an array of elements.
+     * @param name The name.
+     * @param elements The elements.
+     * @throws RepositoryException if the name is already registered.
+     */
+    void register(String name, Element[] elements) throws RepositoryException;
+    
+    /**
+     * Checks if an element set is registered.
+     * @param name The name.
+     * @return A boolean value.
+     * @throws RepositoryException if an error occurs.
+     */
+    boolean isRegistered(String name) throws RepositoryException;
 }

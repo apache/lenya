@@ -79,7 +79,9 @@ public class PropertyPathElement extends NamePathElement {
                 }
             }
             if (node == null) {
-                throw new RepositoryException("Node [" + this + "] does not exist!");
+                String workspace = parent.getSession().getWorkspace().getName();
+                throw new RepositoryException("Node [" + this + "] does not exist in area ["
+                        + workspace + "]!");
             }
             return node;
         } catch (javax.jcr.RepositoryException e) {

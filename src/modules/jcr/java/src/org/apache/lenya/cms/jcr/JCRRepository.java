@@ -16,18 +16,29 @@
  */
 package org.apache.lenya.cms.jcr;
 
-import javax.jcr.Repository;
+import java.util.Arrays;
 
+import javax.jcr.Repository;
+import javax.jcr.Session;
+import javax.jcr.SimpleCredentials;
+
+import org.apache.jackrabbit.core.RepositoryImpl;
+import org.apache.jackrabbit.core.WorkspaceImpl;
+import org.apache.lenya.cms.jcr.metadata.JCRMetaDataRegistry;
 import org.apache.lenya.cms.repo.AssetTypeRegistry;
 import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.cms.repo.impl.AssetTypeRegistryImpl;
 import org.apache.lenya.cms.repo.metadata.MetaDataRegistry;
-import org.apache.lenya.cms.repo.metadata.impl.MetaDataRegistryImpl;
 
 /**
  * Facade to the JCR repository, providing Lenya-specific access.
  */
 public class JCRRepository implements org.apache.lenya.cms.repo.Repository {
+
+    /**
+     * The workspace to store internal data.
+     */
+    public static final String INTERNAL_WORKSPACE = "internal";
 
     /**
      * Ctor.
@@ -50,22 +61,54 @@ public class JCRRepository implements org.apache.lenya.cms.repo.Repository {
         return new JCRSession(this);
     }
 
-    private AssetTypeRegistry documentTypeRegistry;
+    private AssetTypeRegistry typeRegistry;
 
-    public AssetTypeRegistry getDocumentTypeRegistry() throws org.apache.lenya.cms.repo.RepositoryException {
-        if (this.documentTypeRegistry == null) {
-            this.documentTypeRegistry = new AssetTypeRegistryImpl();
+    public AssetTypeRegistry getAssetTypeRegistry()
+            throws org.apache.lenya.cms.repo.RepositoryException {
+        if (this.typeRegistry == null) {
+            this.typeRegistry = new AssetTypeRegistryImpl();
         }
-        return this.documentTypeRegistry;
+        return this.typeRegistry;
     }
-    
+
     private MetaDataRegistry metaDataRegistry;
 
     public MetaDataRegistry getMetaDataRegistry() throws RepositoryException {
         if (this.metaDataRegistry == null) {
-            this.metaDataRegistry = new MetaDataRegistryImpl();
+            this.metaDataRegistry = new JCRMetaDataRegistry(getInternalSession());
         }
         return this.metaDataRegistry;
+    }
+
+    private Session internalSession;
+
+    protected Session getInternalSession() throws RepositoryException {
+        if (this.internalSession == null) {
+            try {
+                Session defaultWorkspaceSession = getRepository().login(new SimpleCredentials("john",
+                        "".toCharArray()));
+                WorkspaceImpl defaultWorkspace = (WorkspaceImpl) defaultWorkspaceSession.getWorkspace();
+                String[] workspaces = defaultWorkspace.getAccessibleWorkspaceNames();
+                if (!Arrays.asList(workspaces).contains(INTERNAL_WORKSPACE)) {
+                    defaultWorkspace.createWorkspace(INTERNAL_WORKSPACE);
+                    // create = true;
+                }
+
+                this.internalSession = getRepository().login(new SimpleCredentials("john",
+                        "".toCharArray()),
+                        INTERNAL_WORKSPACE);
+            } catch (javax.jcr.RepositoryException e) {
+                throw new RepositoryException(e);
+            }
+        }
+        return this.internalSession;
+    }
+
+    public void shutdown() throws RepositoryException {
+        if (this.internalSession != null) {
+            this.internalSession.logout();
+        }
+        ((RepositoryImpl) this.repository).shutdown();
     }
 
 }

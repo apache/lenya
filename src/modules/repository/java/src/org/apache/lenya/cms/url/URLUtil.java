@@ -28,7 +28,7 @@ import org.apache.lenya.cms.repo.Session;
 import org.apache.lenya.cms.repo.Translation;
 import org.apache.lenya.cms.repo.avalon.RepositoryFactory;
 import org.apache.lenya.cms.repo.metadata.MetaData;
-import org.apache.lenya.cms.repo.metadata.impl.MetaDataRegistryImpl;
+import org.apache.lenya.cms.repo.metadata.MetaDataRegistry;
 import org.apache.lenya.cms.url.impl.LanguageSuffixMapper;
 import org.apache.lenya.util.ServletHelper;
 
@@ -81,26 +81,29 @@ public class URLUtil {
     }
 
     /**
-     * @param pub The publication. 
+     * @param session The session.
      * @param webappUrl The web application URL.
      * @param logger The logger.
      * @return A translation or <code>null</code> if the request doesn't point to a translation.
      * @throws RepositoryException if an error occurs.
      */
-    public static Translation getTranslation(Publication pub, String webappUrl, Logger logger)
+    public static Translation getTranslation(Session session, String webappUrl, Logger logger)
             throws RepositoryException {
-        
+
+        String pubId = webappUrl.substring(1).split("/")[0];
+        Publication pub = session.getPublication(pubId);
+
         String prefix = "/" + pub.getPublicationId() + "/";
         final String pubUrl = webappUrl.substring(prefix.length());
-        
+
         String areaId = pubUrl.split("/")[0];
-        
+
         if (!pub.existsArea(areaId)) {
             throw new RepositoryException("The area [" + areaId + "] does not exist!");
         }
-        
+
         Area area = pub.getArea(areaId);
-        
+
         String translationUrl = pubUrl.substring(areaId.length());
 
         URLMapper mapper = getURLMapper(pub);
@@ -124,7 +127,7 @@ public class URLUtil {
             throw new RepositoryException("The translation URL must not be null!");
         }
         return "/" + pub.getPublicationId() + "/" + area.getAreaID() + transUrl;
-        
+
     }
 
     /**
@@ -132,14 +135,11 @@ public class URLUtil {
      * @return An URL mapper.
      * @throws RepositoryException if an error occurs.
      */
-    public static URLMapper getURLMapper(Publication pub)
-            throws RepositoryException {
+    public static URLMapper getURLMapper(Publication pub) throws RepositoryException {
 
-        MetaDataRegistryImpl registry = (MetaDataRegistryImpl) pub.getSession()
-                .getRepository()
-                .getMetaDataRegistry();
+        MetaDataRegistry registry = pub.getSession().getRepository().getMetaDataRegistry();
         if (!registry.isRegistered(URLMapperElements.ELEMENT_SET)) {
-            registry.registerElementSet(URLMapperElements.ELEMENT_SET, new URLMapperElements());
+            registry.register(URLMapperElements.ELEMENT_SET, URLMapperElements.ELEMENTS);
         }
 
         MetaData metaData = pub.getMetaData(URLMapperElements.ELEMENT_SET);
@@ -148,7 +148,7 @@ public class URLUtil {
             className = LanguageSuffixMapper.class.getName();
             metaData.setValue(URLMapperElements.URL_MAPPER, className);
         }
-        
+
         URLMapper mapper;
         try {
             Class klass = Class.forName(className);
@@ -158,5 +158,5 @@ public class URLUtil {
         }
         return mapper;
     }
-    
+
 }

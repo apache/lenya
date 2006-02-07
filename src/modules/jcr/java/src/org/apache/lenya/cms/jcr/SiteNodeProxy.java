@@ -124,4 +124,12 @@ public class SiteNodeProxy extends AbstractNodeProxy implements SiteNode {
         return (SiteNode[]) proxies.toArray(new SiteNode[proxies.size()]);
     }
 
+    public boolean hasChild(String name) throws RepositoryException {
+        try {
+            return getNode().hasNode(name);
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
+    }
+
 }

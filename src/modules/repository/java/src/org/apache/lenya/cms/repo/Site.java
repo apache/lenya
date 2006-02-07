@@ -84,4 +84,12 @@ public interface Site {
      */
     SiteNode getFirstReference(Asset asset) throws RepositoryException;
 
+    /**
+     * Checks if the site has a certain child.
+     * @param name The child name.
+     * @return A boolean value.
+     * @throws RepositoryException if an error occurs.
+     */
+    boolean hasChild(String name) throws RepositoryException;
+    
 }

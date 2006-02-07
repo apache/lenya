@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.jcr;
+package org.apache.lenya.cms.jcr.metadata;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -32,9 +32,18 @@ import org.apache.lenya.cms.repo.metadata.MetaData;
  */
 public class MetaDataProxy extends PropertyNodeProxy implements MetaData {
 
-    protected static final String NODE_NAME = "lenya:meta";
-    protected static final String NODE_TYPE = "lnt:meta";
-    protected static final String ELEMENT_SET_PROPERTY = "lenya:elementSet";
+    /**
+     * The node name.
+     */
+    public static final String NODE_NAME = "lenya:meta";
+    /**
+     * The node type.
+     */
+    public static final String NODE_TYPE = "lnt:meta";
+    /**
+     * The element set property.
+     */
+    public static final String ELEMENT_SET_PROPERTY = "lenya:elementSet";
 
     protected String getPropertyName() {
         return ELEMENT_SET_PROPERTY;

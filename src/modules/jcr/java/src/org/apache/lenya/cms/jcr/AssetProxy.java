@@ -20,6 +20,7 @@ import org.apache.lenya.cms.jcr.mapping.AbstractNodeProxy;
 import org.apache.lenya.cms.jcr.mapping.NamePathElement;
 import org.apache.lenya.cms.jcr.mapping.Path;
 import org.apache.lenya.cms.jcr.mapping.PathElement;
+import org.apache.lenya.cms.jcr.metadata.MetaDataProxy;
 import org.apache.lenya.cms.repo.Asset;
 import org.apache.lenya.cms.repo.Content;
 import org.apache.lenya.cms.repo.Translation;

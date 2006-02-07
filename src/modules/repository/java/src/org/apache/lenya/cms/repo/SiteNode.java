@@ -83,4 +83,12 @@ public interface SiteNode {
      * @throws RepositoryException if an error occurs.
      */
     void remove() throws RepositoryException;
+    
+    /**
+     * Checks if the node has a certain child.
+     * @param name The child name.
+     * @return A boolean value.
+     * @throws RepositoryException if an error occurs.
+     */
+    boolean hasChild(String name) throws RepositoryException;
 }

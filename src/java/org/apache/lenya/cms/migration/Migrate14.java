@@ -139,6 +139,9 @@ public class Migrate14 {
             }
 
             getSession().save();
+            getSession().logout();
+
+            this.repo.shutdown();
 
         } catch (Exception e) {
             e.printStackTrace(System.err);
@@ -157,11 +160,18 @@ public class Migrate14 {
     };
 
     protected void importPublication(File pubDir) throws RepositoryException {
+
         String pubId = pubDir.getName();
+        System.out.println("-----------------------------");
+        System.out.println(" Importing publication [" + pubId + "]");
+        System.out.println("-----------------------------");
+
         Publication pub;
         if (getSession().existsPublication(pubId)) {
+            System.out.println("Publication already exists.");
             pub = getSession().getPublication(pubId);
         } else {
+            System.out.println("Creating publication.");
             pub = getSession().addPublication(pubId);
         }
 
@@ -215,7 +225,7 @@ public class Migrate14 {
             String resourceType = DocumentHelper.getSimpleElementText(resourceTypeElement);
             AssetType doctype;
 
-            AssetTypeRegistryImpl registry = (AssetTypeRegistryImpl) getRepository().getDocumentTypeRegistry();
+            AssetTypeRegistryImpl registry = (AssetTypeRegistryImpl) getRepository().getAssetTypeRegistry();
             String[] names = registry.getDocumentTypeNames();
             if (!Arrays.asList(names).contains(resourceType)) {
                 doctype = new AssetTypeImpl(resourceType, null, false);
@@ -224,18 +234,32 @@ public class Migrate14 {
                 doctype = registry.getDocumentType(resourceType);
             }
 
-            SiteNode siteNode;
-            // String contentNodeId = documentPath.replace('/', '_');
-            
+            SiteNode siteNode = null;
+
             Asset contentNode = area.getContent().addAsset(doctype);
             if (parent == null) {
-                siteNode = area.getSite().addChild(nodeId, contentNode);
+                if (area.getSite().hasChild(nodeId)) {
+                    System.out.println("Site node [" + nodeId + "] already exists.");
+                } else {
+                    System.out.println("Adding site node [" + nodeId + "].");
+                    siteNode = area.getSite().addChild(nodeId, contentNode);
+                }
             } else {
-                siteNode = parent.addChild(nodeId, contentNode);
+                if (parent.hasChild(nodeId)) {
+                    System.out.println("Site node [" + parent.getPath() + "/" + nodeId
+                            + "] already exists.");
+                } else {
+                    System.out.println("Adding site node [" + parent.getPath() + "/" + nodeId
+                            + "].");
+                    siteNode = parent.addChild(nodeId, contentNode);
+                }
             }
 
             importDocuments(docDir, contentNode);
-            importChildren(docDir, area, siteNode);
+            
+            if (siteNode != null) {
+                importChildren(docDir, area, siteNode);
+            }
         }
     }
 
@@ -267,8 +291,7 @@ public class Migrate14 {
             transformer.transform(source, result);
         } catch (Exception e) {
             throw new RepositoryException(e);
-        }
-        finally {
+        } finally {
             if (out != null) {
                 try {
                     out.close();

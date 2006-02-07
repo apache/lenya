@@ -141,4 +141,12 @@ public class SiteProxy extends AbstractNodeProxy implements Site {
         }
     }
 
+    public boolean hasChild(String name) throws RepositoryException {
+        try {
+            return getNode().hasNode(name);
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
+    }
+
 }

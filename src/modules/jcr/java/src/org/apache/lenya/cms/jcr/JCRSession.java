@@ -17,6 +17,7 @@
 package org.apache.lenya.cms.jcr;
 
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -80,7 +81,7 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
                         .login(new SimpleCredentials("john", "".toCharArray()), area);
                 facade = new RepositoryFacade(this,
                         session,
-                        getRepository().getDocumentTypeRegistry(),
+                        getRepository().getAssetTypeRegistry(),
                         getRepository().getMetaDataRegistry());
 
                 // if (create) {
@@ -237,6 +238,14 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
             throws org.apache.lenya.cms.repo.RepositoryException {
         initPublications();
         return this.publications.containsKey(id);
+    }
+
+    public void logout() throws RepositoryException {
+        Collection facades = this.area2facade.values();
+        for (Iterator i = facades.iterator(); i.hasNext(); ) {
+            RepositoryFacade facade = (RepositoryFacade) i.next();
+            facade.getSession().logout();
+        }
     }
 
 }

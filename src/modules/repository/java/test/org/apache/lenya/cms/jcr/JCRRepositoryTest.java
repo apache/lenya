@@ -45,7 +45,7 @@ import org.apache.lenya.cms.repo.impl.AssetTypeRegistryImpl;
 import org.apache.lenya.cms.repo.metadata.ElementSet;
 import org.apache.lenya.cms.repo.metadata.MetaData;
 import org.apache.lenya.cms.repo.metadata.MetaDataOwner;
-import org.apache.lenya.cms.repo.metadata.impl.MetaDataRegistryImpl;
+import org.apache.lenya.cms.repo.metadata.MetaDataRegistry;
 import org.apache.lenya.cms.url.URLUtil;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.Schema;
@@ -114,7 +114,7 @@ public class JCRRepositoryTest extends TestCase {
         URL schemaUrl = getClass().getResource("schema.xml");
         Schema schema = new Schema(Validator.GRAMMAR_RELAX_NG, schemaUrl.toString());
         AssetType doctype = new AssetTypeImpl("xhtml", schema, true);
-        AssetTypeRegistryImpl registry = (AssetTypeRegistryImpl) repo.getDocumentTypeRegistry();
+        AssetTypeRegistryImpl registry = (AssetTypeRegistryImpl) repo.getAssetTypeRegistry();
         registry.register(doctype);
 
         Publication pub = session.addPublication(PUBLICATION_ID);
@@ -212,10 +212,9 @@ public class JCRRepositoryTest extends TestCase {
     }
 
     protected void doTestMetaData(MetaDataOwner owner) throws Exception {
-        MetaDataRegistryImpl registry = (MetaDataRegistryImpl) this.repo.getMetaDataRegistry();
+        MetaDataRegistry registry = this.repo.getMetaDataRegistry();
         if (!registry.isRegistered(TestElementSet.NAME)) {
-            ElementSet testSet = new TestElementSet();
-            registry.registerElementSet(TestElementSet.NAME, testSet);
+            registry.register(TestElementSet.NAME, TestElementSet.ELEMENTS);
         }
 
         MetaData meta = owner.getMetaData(TestElementSet.NAME);
@@ -257,13 +256,13 @@ public class JCRRepositoryTest extends TestCase {
                 + parent.getName() + "/" + child.getName() + "_" + LANGUAGE_DE;
 
         Translation childTrans = child.getAsset().getTranslation(LANGUAGE_DE);
-        Translation trans = URLUtil.getTranslation(pub, webappUrl, new ConsoleLogger());
+        Translation trans = URLUtil.getTranslation(pub.getSession(), webappUrl, new ConsoleLogger());
 
         assertSame(trans.getAsset().getAssetId(), childTrans.getAsset().getAssetId());
         assertSame(trans.getLanguage(), childTrans.getLanguage());
 
         String derivedUrl = URLUtil.getWebappURL(pub, trans, new ConsoleLogger());
-        Translation derivedTrans = URLUtil.getTranslation(pub, derivedUrl, new ConsoleLogger());
+        Translation derivedTrans = URLUtil.getTranslation(pub.getSession(), derivedUrl, new ConsoleLogger());
 
         assertSame(trans.getAsset().getAssetId(), derivedTrans.getAsset().getAssetId());
         assertSame(trans.getLanguage(), derivedTrans.getLanguage());

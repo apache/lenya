@@ -207,4 +207,41 @@
     </childNodeDefinition>
   </nodeType>
   
+  <!-- node types for repository properties -->
+  <nodeType name="lnt:metaDataRegistry" isMixin="false" hasOrderableChildNodes="false" primaryItemName="">
+    <supertypes>
+      <supertype>nt:hierarchyNode</supertype>
+    </supertypes>
+    <childNodeDefinition name="lenya:elementSet" mandatory="false" autoCreate="false" sameNameSiblings="true"
+      defaultPrimaryType="lnt:elementSet" onParentVersion="ABORT" protected="false">
+      <requiredPrimaryTypes>
+        <requiredPrimaryType>lnt:elementSet</requiredPrimaryType>
+      </requiredPrimaryTypes>
+    </childNodeDefinition>
+  </nodeType>
+  
+  <nodeType name="lnt:elementSet" isMixin="false" hasOrderableChildNodes="false" primaryItemName="">
+    <supertypes>
+      <supertype>nt:hierarchyNode</supertype>
+    </supertypes>
+    <propertyDefinition name="lenya:name" mandatory="true" autoCreate="false" multiple="false" requiredType="String"
+      onParentVersion="ABORT" protected="false"/>
+    <childNodeDefinition name="lenya:element" mandatory="false" autoCreate="false" sameNameSiblings="true"
+      onParentVersion="ABORT" protected="false" defaultPrimaryType="lnt:element">
+      <requiredPrimaryTypes>
+        <requiredPrimaryType>lnt:element</requiredPrimaryType>
+      </requiredPrimaryTypes>
+    </childNodeDefinition>
+  </nodeType>
+  
+  <nodeType name="lnt:element" isMixin="false" hasOrderableChildNodes="false" primaryItemName="">
+    <supertypes>
+      <supertype>nt:hierarchyNode</supertype>
+    </supertypes>
+    <propertyDefinition name="lenya:name" mandatory="true" autoCreate="false" requiredType="String"
+      onParentVersion="ABORT" multiple="false" protected="false"/>
+    <propertyDefinition name="lenya:isMultiple" mandatory="true" autoCreate="false" requiredType="Boolean"
+      multiple="false" onParentVersion="ABORT" protected="false"/>
+  </nodeType>
+  
 </nodeTypes>

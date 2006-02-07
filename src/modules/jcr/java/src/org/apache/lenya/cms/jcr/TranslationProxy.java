@@ -22,6 +22,7 @@ import java.io.OutputStream;
 import org.apache.lenya.cms.jcr.mapping.AbstractNodeProxy;
 import org.apache.lenya.cms.jcr.mapping.Path;
 import org.apache.lenya.cms.jcr.mapping.PathElement;
+import org.apache.lenya.cms.jcr.metadata.MetaDataProxy;
 import org.apache.lenya.cms.repo.Asset;
 import org.apache.lenya.cms.repo.Translation;
 import org.apache.lenya.cms.repo.RepositoryException;

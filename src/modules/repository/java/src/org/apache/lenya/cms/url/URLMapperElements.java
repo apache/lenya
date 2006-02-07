@@ -16,37 +16,27 @@
  */
 package org.apache.lenya.cms.url;
 
-import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.cms.repo.metadata.Element;
-import org.apache.lenya.cms.repo.metadata.ElementSet;
 import org.apache.lenya.cms.repo.metadata.impl.ElementImpl;
 
 /**
  * Element set to store the URL mapper attribute.
  */
-public class URLMapperElements implements ElementSet {
+public interface URLMapperElements {
     
     /**
      * The URL mapper element set name.
      */
-    public static final String ELEMENT_SET = URLMapperElements.class.getName();
+    String ELEMENT_SET = URLMapperElements.class.getName();
 
     /**
      * The URL mapper attribute.
      */
-    public static final String URL_MAPPER = "urlMapper";
+    String URL_MAPPER = "urlMapper";
 
-    protected static final Element[] ELEMENTS = { new ElementImpl(URL_MAPPER, false) };
-
-    public Element[] getElements() {
-        return ELEMENTS;
-    }
-
-    public Element getElement(String name) throws RepositoryException {
-        if (!name.equals(URL_MAPPER)) {
-            throw new RepositoryException("The name [" + name + "] is not contained!");
-        }
-        return ELEMENTS[0];
-    }
+    /**
+     * The elements.
+     */
+    Element[] ELEMENTS = { new ElementImpl(URL_MAPPER, false) };
 
 }

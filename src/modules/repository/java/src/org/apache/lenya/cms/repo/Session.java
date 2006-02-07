@@ -55,5 +55,11 @@ public interface Session {
      * @throws RepositoryException if an error occurs.
      */
     Repository getRepository() throws RepositoryException;
+
+    /**
+     * Closes the session.
+     * @throws RepositoryException if an error occurs.
+     */
+    void logout() throws RepositoryException;
     
 }

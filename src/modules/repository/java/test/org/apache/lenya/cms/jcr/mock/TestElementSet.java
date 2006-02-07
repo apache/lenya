@@ -16,34 +16,16 @@
  */
 package org.apache.lenya.cms.jcr.mock;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.lenya.cms.repo.metadata.Element;
-import org.apache.lenya.cms.repo.metadata.ElementSet;
 import org.apache.lenya.cms.repo.metadata.impl.ElementImpl;
 
-public class TestElementSet implements ElementSet {
-
-    private Map elements = new HashMap();
+public interface TestElementSet {
 
     public static final String NAME = "test";
     public static final String MULTIPLE_ELEMENT = "a";
     public static final String SINGLE_ELEMENT = "b";
 
-    public TestElementSet() {
-        this.elements.put(MULTIPLE_ELEMENT, new ElementImpl(MULTIPLE_ELEMENT, true));
-        this.elements.put(SINGLE_ELEMENT, new ElementImpl(SINGLE_ELEMENT, false));
-    }
-
-    public Element[] getElements() {
-        Collection values = this.elements.values();
-        return (Element[]) values.toArray(new Element[values.size()]);
-    }
-
-    public Element getElement(String name) {
-        return (Element) this.elements.get(name);
-    }
+    Element[] ELEMENTS = { new ElementImpl(MULTIPLE_ELEMENT, true),
+            new ElementImpl(SINGLE_ELEMENT, false) };
 
 }
