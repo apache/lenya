@@ -20,10 +20,12 @@ import org.apache.lenya.cms.jcr.mapping.AbstractNodeProxy;
 import org.apache.lenya.cms.jcr.mapping.Path;
 import org.apache.lenya.cms.jcr.mapping.PathElement;
 import org.apache.lenya.cms.jcr.mapping.PropertyPathElement;
+import org.apache.lenya.cms.jcr.mapping.RepositoryFacade;
 import org.apache.lenya.cms.repo.Area;
 import org.apache.lenya.cms.repo.Content;
 import org.apache.lenya.cms.repo.Publication;
 import org.apache.lenya.cms.repo.RepositoryException;
+import org.apache.lenya.cms.repo.Session;
 import org.apache.lenya.cms.repo.Site;
 import org.apache.lenya.cms.repo.metadata.MetaData;
 
@@ -90,11 +92,17 @@ public class AreaProxy extends AbstractNodeProxy implements Area {
     }
     
     public String getAreaID() throws RepositoryException {
-        return getPropertyString(ID_PROPERTY);
+        try {
+            return getNode().getSession().getWorkspace().getName();
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
     }
 
     public Publication getPublication() throws RepositoryException {
-        return getRepository().getRepositorySession().getPublication(getPublicationId());
+        RepositoryFacade repo = getRepository();
+        Session session = repo.getRepositorySession();
+        return session.getPublication(getPublicationId());
     }
 
     /**
