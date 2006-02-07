@@ -49,7 +49,7 @@ public interface Site {
     SiteNode getChild(String name) throws RepositoryException;
 
     /**
-     * @param path The path of the node.
+     * @param path The absolute path of the node, starting with a slash.
      * @return A site node.
      * @throws RepositoryException if the node does not exist.
      */
