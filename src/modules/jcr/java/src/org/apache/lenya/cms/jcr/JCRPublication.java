@@ -64,13 +64,11 @@ public class JCRPublication implements Publication {
         return getJcrSession().existsArea(this, area);
     }
     
-    protected static final String INTERNAL_AREA = "internal";
-    
     protected Area getInternalArea() throws RepositoryException {
-        if (!existsArea(INTERNAL_AREA)) {
-            addArea(INTERNAL_AREA);
+        if (!existsArea(JCRRepository.INTERNAL_WORKSPACE)) {
+            addArea(JCRRepository.INTERNAL_WORKSPACE);
         }
-        return getArea(INTERNAL_AREA);
+        return getArea(JCRRepository.INTERNAL_WORKSPACE);
     }
 
     public MetaData getMetaData(String elementSet) throws RepositoryException {
