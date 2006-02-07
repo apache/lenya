@@ -29,14 +29,18 @@ public interface DocumentBuilder {
      */
     String ROLE = DocumentBuilder.class.getName();
     
+    /**
+     * Returns a document identifier for a web application URL.
+     * @param webappUrl The web application URL.
+     * @return A document identifier.
+     * @throws DocumentBuildException if an error occurs.
+     */
     DocumentIdentifier getIdentitfier(String webappUrl) throws DocumentBuildException;
 
     /**
      * Builds a document.
      * @param map The identity map the document belongs to.
-     * @param publication The publication.
-     * @param url The URL of the form
-     *            /{publication-id}/{area}/{document-id}{language-suffix}.{extension}.
+     * @param identifier The document identifier.
      * @return A document.
      * @throws DocumentBuildException when something went wrong.
      */
@@ -45,7 +49,6 @@ public interface DocumentBuilder {
 
     /**
      * Checks if an URL corresponds to a CMS document.
-     * @param publication The publication the document belongs to.
      * @param url The URL of the form /{publication-id}/...
      * @return A boolean value.
      * @throws DocumentBuildException when something went wrong.
@@ -53,14 +56,17 @@ public interface DocumentBuilder {
     boolean isDocument(String url) throws DocumentBuildException;
 
     /**
-     * Builds an URL corresponding to a cms document from the publication, the area, the document id
-     * and the language
-     * @param publication The publication the document belongs to.
-     * @param area The area the document belongs to.
-     * @param documentid The document id of the document.
-     * @param language The language of the document.
-     * @return a String The builded url
+     * Builds an URL corresponding to a CMS document.
+     * @param identifier The document identifier.
+     * @return a String The corresponding URL.
      */
     String buildCanonicalUrl(DocumentIdentifier identifier);
+
+    /**
+     * Checks if a document name is valid.
+     * @param documentName The document name.
+     * @return A boolean value.
+     */
+    boolean isValidDocumentName(String documentName);
 
 }

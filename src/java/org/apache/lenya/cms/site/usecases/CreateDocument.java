@@ -18,8 +18,9 @@ package org.apache.lenya.cms.site.usecases;
 
 import java.util.Arrays;
 
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Publication;
 
 /**
@@ -86,16 +87,19 @@ public class CreateDocument extends Create {
             addErrorMessage("The relation '" + relation + "' is not supported.");
         }
 
-        DocumentManager documentManager = null;
+        ServiceSelector selector = null;
+        DocumentBuilder builder = null;
         try {
-            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
+            selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
+            String hint = getSourceDocument().getPublication().getDocumentBuilderHint();
+            builder = (DocumentBuilder) selector.select(hint);
 
             boolean provided = getParameterAsBoolean(DOCUMENT_ID_PROVIDED, false);
-            if (!provided && !documentManager.isValidDocumentName(documentName)) {
+            if (!provided && !builder.isValidDocumentName(documentName)) {
                 addErrorMessage("The document ID may not contain any special characters.");
             } else {
                 Publication publication = getSourceDocument().getPublication();
-                String newDocumentId = getNewDocumentId(); 
+                String newDocumentId = getNewDocumentId();
                 Document document = getSourceDocument().getIdentityMap().get(publication,
                         getSourceDocument().getArea(),
                         newDocumentId,
@@ -105,8 +109,11 @@ public class CreateDocument extends Create {
                 }
             }
         } finally {
-            if (documentManager != null) {
-                this.manager.release(documentManager);
+            if (selector != null) {
+                if (builder != null) {
+                    selector.release(builder);
+                }
+                this.manager.release(selector);
             }
         }
     }

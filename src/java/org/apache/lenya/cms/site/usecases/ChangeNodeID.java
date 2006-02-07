@@ -21,8 +21,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
@@ -121,10 +123,13 @@ public class ChangeNodeID extends DocumentUsecase {
         super.doCheckExecutionConditions();
 
         String nodeId = getParameterAsString(NODE_ID);
-        DocumentManager documentManager = null;
+        ServiceSelector selector = null;
+        DocumentBuilder builder = null;
         try {
-            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            if (!documentManager.isValidDocumentName(nodeId)) {
+            selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
+            String hint = getSourceDocument().getPublication().getDocumentBuilderHint();
+            builder = (DocumentBuilder) selector.select(hint);
+            if (!builder.isValidDocumentName(nodeId)) {
                 addErrorMessage("The document ID is not valid.");
             } else {
                 Document document = getTargetDocument();
@@ -133,8 +138,11 @@ public class ChangeNodeID extends DocumentUsecase {
                 }
             }
         } finally {
-            if (documentManager != null) {
-                this.manager.release(documentManager);
+            if (selector != null) {
+                if (builder != null) {
+                    selector.release(builder);
+                }
+                this.manager.release(selector);
             }
         }
     }

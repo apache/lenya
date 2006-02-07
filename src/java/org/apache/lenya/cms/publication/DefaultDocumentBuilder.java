@@ -194,9 +194,7 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
         }
 
         String documentURL = info.getDocumentUrl();
-        String originalURL = documentURL;
 
-        String extension = getExtension(documentURL);
         documentURL = removeExtensions(documentURL);
 
         String language = getLanguage(documentURL);
@@ -219,6 +217,13 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
                 documentId,
                 language);
         return identifier;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.DocumentBuilder#isValidDocumentName(java.lang.String)
+     */
+    public boolean isValidDocumentName(String documentName) {
+        return documentName.matches("[a-zA-Z0-9\\-]+");
     }
 
 }

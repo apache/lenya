@@ -133,13 +133,6 @@ public interface DocumentManager {
     void copy(DocumentSet sources, DocumentSet destinations) throws PublicationException;
     
     /**
-     * Checks if a document name is valid.
-     * @param documentName The document name.
-     * @return A boolean value.
-     */
-    boolean isValidDocumentName(String documentName);
-
-    /**
      * Moves a document to another location, incl. all requiring documents. If a sitetree is used,
      * this means that the whole subtree is moved.
      * @param source The source document.
