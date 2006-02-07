@@ -16,6 +16,8 @@
  */
 package org.apache.lenya.cms.repo.metadata;
 
+import org.apache.lenya.cms.repo.RepositoryException;
+
 /**
  * Definition of a set of meta data elements.
  */
@@ -29,7 +31,8 @@ public interface ElementSet {
     /**
      * @param name The name.
      * @return The element.
+     * @throws RepositoryException if the element with this name does not exist.
      */
-    Element getElement(String name);
+    Element getElement(String name) throws RepositoryException;
     
 }
