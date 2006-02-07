@@ -34,6 +34,7 @@ import org.apache.jackrabbit.core.WorkspaceImpl;
 import org.apache.lenya.cms.jcr.mapping.Path;
 import org.apache.lenya.cms.jcr.mapping.RepositoryFacade;
 import org.apache.lenya.cms.repo.Publication;
+import org.apache.lenya.cms.repo.Repository;
 import org.apache.lenya.cms.repo.RepositoryException;
 
 /**
@@ -51,8 +52,12 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
 
     private JCRRepository repository;
 
-    protected JCRRepository getRepository() {
+    protected JCRRepository getJcrRepository() {
         return this.repository;
+    }
+    
+    public Repository getRepository() {
+        return getJcrRepository();
     }
 
     private Map area2facade = new HashMap();
@@ -71,7 +76,7 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
                     // create = true;
                 }
 
-                Session session = getRepository().getRepository()
+                Session session = getJcrRepository().getRepository()
                         .login(new SimpleCredentials("john", "".toCharArray()), area);
                 facade = new RepositoryFacade(this,
                         session,
@@ -101,7 +106,7 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
     protected WorkspaceImpl getDefaultWorkspace() throws LoginException, RepositoryException {
         WorkspaceImpl defaultWorkspace;
         try {
-            Session defaultWorkspaceSession = getRepository().getRepository()
+            Session defaultWorkspaceSession = getJcrRepository().getRepository()
                     .login(new SimpleCredentials("john", "".toCharArray()));
             defaultWorkspace = (WorkspaceImpl) defaultWorkspaceSession.getWorkspace();
         } catch (javax.jcr.RepositoryException e) {

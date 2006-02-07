@@ -51,4 +51,10 @@ public interface Publication extends MetaDataOwner {
      */
     String getPublicationId() throws RepositoryException;
     
+    /**
+     * @return The session this publication belongs to.
+     * @throws RepositoryException if an error occurs.
+     */
+    Session getSession() throws RepositoryException;
+    
 }

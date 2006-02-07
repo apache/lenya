@@ -50,4 +50,10 @@ public interface Session {
      */
     public void save() throws RepositoryException;
     
+    /**
+     * @return The repository this session belongs to.
+     * @throws RepositoryException if an error occurs.
+     */
+    Repository getRepository() throws RepositoryException;
+    
 }
