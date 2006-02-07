@@ -70,9 +70,6 @@ public class RepositoryFacade {
             NodeProxy[] proxies = new NodeProxy[nodes.length];
             for (int i = 0; i < nodes.length; i++) {
                 proxies[i] = getProxy(nodes[i]);
-                if (proxies[i] == null) {
-                    proxies[i] = createProxy(nodes[i]);
-                }
             }
             return proxies;
         } catch (RepositoryException e) {

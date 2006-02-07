@@ -94,12 +94,37 @@ public class URLUtil {
         final String pubUrl = webappUrl.substring(prefix.length());
         
         String areaId = pubUrl.split("/")[0];
+        
+        if (!pub.existsArea(areaId)) {
+            throw new RepositoryException("The area [" + areaId + "] does not exist!");
+        }
+        
         Area area = pub.getArea(areaId);
         
         String translationUrl = pubUrl.substring(areaId.length());
 
         URLMapper mapper = getURLMapper(pub);
         return mapper.getTranslation(area, translationUrl);
+    }
+
+    /**
+     * Returns the URL of a translation.
+     * @param pub The publication.
+     * @param trans The translation.
+     * @param logger The logger.
+     * @return A string.
+     * @throws RepositoryException if an error occurs.
+     */
+    public static String getWebappURL(Publication pub, Translation trans, Logger logger)
+            throws RepositoryException {
+        URLMapper mapper = getURLMapper(pub);
+        Area area = trans.getAsset().getContent().getArea();
+        String transUrl = mapper.getURL(trans);
+        if (transUrl == null) {
+            throw new RepositoryException("The translation URL must not be null!");
+        }
+        return "/" + pub.getPublicationId() + "/" + area.getAreaID() + transUrl;
+        
     }
 
     /**
@@ -133,5 +158,5 @@ public class URLUtil {
         }
         return mapper;
     }
-
+    
 }

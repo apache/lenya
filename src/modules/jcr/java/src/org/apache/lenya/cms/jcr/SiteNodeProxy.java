@@ -74,8 +74,8 @@ public class SiteNodeProxy extends AbstractNodeProxy implements SiteNode {
     }
 
     public Path getAbsolutePath() throws RepositoryException {
-        SiteProxy site = (SiteProxy) getSite();
-        return site.getAbsolutePath().append(getPathElement(getName()));
+        NodeProxy parent = getParentProxy();
+        return parent.getAbsolutePath().append(getPathElement(getName()));
     }
 
     public Asset getAsset() throws RepositoryException {
@@ -115,18 +115,13 @@ public class SiteNodeProxy extends AbstractNodeProxy implements SiteNode {
     }
 
     public SiteNode[] preOrder() throws RepositoryException {
-        try {
-            List proxies = new ArrayList();
-            proxies.add(this);
-            for (NodeIterator i = getNode().getNodes(); i.hasNext();) {
-                Node node = i.nextNode();
-                SiteNode child = getChild(node.getName());
-                proxies.addAll(Arrays.asList(child.preOrder()));
-            }
-            return (SiteNode[]) proxies.toArray(new SiteNode[proxies.size()]);
-        } catch (javax.jcr.RepositoryException e) {
-            throw new RepositoryException(e);
+        List proxies = new ArrayList();
+        proxies.add(this);
+        SiteNode[] children = getChildren();
+        for (int i = 0; i < children.length; i++) {
+            proxies.addAll(Arrays.asList(children[i].preOrder()));
         }
+        return (SiteNode[]) proxies.toArray(new SiteNode[proxies.size()]);
     }
 
 }

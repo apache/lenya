@@ -261,5 +261,12 @@ public class JCRRepositoryTest extends TestCase {
 
         assertSame(trans.getAsset().getAssetId(), childTrans.getAsset().getAssetId());
         assertSame(trans.getLanguage(), childTrans.getLanguage());
+
+        String derivedUrl = URLUtil.getWebappURL(pub, trans, new ConsoleLogger());
+        Translation derivedTrans = URLUtil.getTranslation(pub, derivedUrl, new ConsoleLogger());
+
+        assertSame(trans.getAsset().getAssetId(), derivedTrans.getAsset().getAssetId());
+        assertSame(trans.getLanguage(), derivedTrans.getLanguage());
+
     }
 }

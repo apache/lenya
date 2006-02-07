@@ -16,10 +16,6 @@
  */
 package org.apache.lenya.cms.url.impl;
 
-import org.apache.avalon.framework.configuration.Configurable;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.cms.repo.Area;
 import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.cms.repo.Site;
@@ -30,12 +26,21 @@ import org.apache.lenya.cms.url.URLMapper;
 /**
  * URL mapper which uses a language suffix.
  */
-public class LanguageSuffixMapper extends AbstractLogEnabled implements URLMapper, Configurable {
+public class LanguageSuffixMapper implements URLMapper {
 
     /**
      * Ctor.
+     * @param separator The string to be used to separate the suffix from the rest of the URL.
+     */
+    public LanguageSuffixMapper(String separator) {
+        this.separator = separator;
+    }
+
+    /**
+     * Ctor. The default separator is used.
      */
     public LanguageSuffixMapper() {
+        this(DEFAULT_SEPARATOR);
     }
 
     public Translation getTranslation(Area area, final String url) throws RepositoryException {
@@ -100,7 +105,10 @@ public class LanguageSuffixMapper extends AbstractLogEnabled implements URLMappe
     public String getURL(Translation translation) throws RepositoryException {
         Site site = translation.getAsset().getContent().getArea().getSite();
         SiteNode node = site.getFirstReference(translation.getAsset());
-        String url = node.getPath() + getSeparator() + translation.getLanguage() + ".html";
+        String url = null;
+        if (node != null) {
+            url = node.getPath() + getSeparator() + translation.getLanguage() + ".html";
+        }
         return url;
     }
 
@@ -110,13 +118,6 @@ public class LanguageSuffixMapper extends AbstractLogEnabled implements URLMappe
 
     protected String getSeparator() {
         return this.separator;
-    }
-
-    public void configure(Configuration config) throws ConfigurationException {
-        Configuration separatorConfig = config.getChild("separator", false);
-        if (separatorConfig != null) {
-            this.separator = separatorConfig.getValue();
-        }
     }
 
 }

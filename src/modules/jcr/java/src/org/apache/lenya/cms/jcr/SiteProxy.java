@@ -21,8 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import javax.jcr.Node;
-import javax.jcr.Property;
-import javax.jcr.PropertyIterator;
+import javax.jcr.NodeIterator;
 import javax.jcr.Session;
 
 import org.apache.lenya.cms.jcr.mapping.AbstractNodeProxy;
@@ -44,8 +43,17 @@ public class SiteProxy extends AbstractNodeProxy implements Site {
     protected static final String NODE_TYPE = "lnt:site";
 
     public SiteNode[] getChildren() throws RepositoryException {
-        Path path = getAbsolutePath().append(getPathElement(SiteNodeProxy.NODE_NAME));
-        return (SiteNode[]) getRepository().getProxies(path);
+        List nodes = new ArrayList();
+        try {
+            for (NodeIterator i = getNode().getNodes(); i.hasNext(); ) {
+                Node node = i.nextNode();
+                SiteNodeProxy proxy = (SiteNodeProxy) getRepository().getProxy(node);
+                nodes.add(proxy);
+            }
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
+        return (SiteNode[]) nodes.toArray(new SiteNode[nodes.size()]);
     }
 
     public SiteNode[] preOrder() throws RepositoryException {
@@ -72,7 +80,6 @@ public class SiteProxy extends AbstractNodeProxy implements Site {
     }
 
     public SiteNode getNode(String path) throws RepositoryException {
-
         if (!path.startsWith("/")) {
             throw new RepositoryException("The path [" + path + "] doesn't start with a slash!");
         }
@@ -116,20 +123,12 @@ public class SiteProxy extends AbstractNodeProxy implements Site {
     public SiteNode[] getReferences(Asset asset) throws RepositoryException {
         List siteNodes = new ArrayList();
         AssetProxy proxy = (AssetProxy) asset;
-
-        try {
-            for (PropertyIterator references = proxy.getNode().getReferences(); references.hasNext();) {
-                Property property = references.nextProperty();
-                Node node = property.getParent();
-                if (node.isNodeType(SiteNodeProxy.NODE_TYPE)) {
-                    SiteNode siteNode = (SiteNode) getRepository().getProxy(node);
-                    siteNodes.add(siteNode);
-                }
+        SiteNode[] nodes = preOrder();
+        for (int i = 0; i < nodes.length; i++) {
+            if (nodes[i].getAsset().getAssetId() == proxy.getAssetId()) {
+                siteNodes.add(nodes[i]);
             }
-        } catch (javax.jcr.RepositoryException e) {
-            throw new RepositoryException(e);
         }
-
         return (SiteNode[]) siteNodes.toArray(new SiteNode[siteNodes.size()]);
     }
 
