@@ -25,6 +25,7 @@ import javax.jcr.ItemExistsException;
 
 import junit.framework.TestCase;
 
+import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.cocoon.components.validation.Validator;
 import org.apache.lenya.cms.jcr.mock.TestElementSet;
 import org.apache.lenya.cms.repo.Area;
@@ -45,6 +46,7 @@ import org.apache.lenya.cms.repo.metadata.ElementSet;
 import org.apache.lenya.cms.repo.metadata.MetaData;
 import org.apache.lenya.cms.repo.metadata.MetaDataOwner;
 import org.apache.lenya.cms.repo.metadata.impl.MetaDataRegistryImpl;
+import org.apache.lenya.cms.url.URLUtil;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.Schema;
 
@@ -52,6 +54,10 @@ import org.apache.lenya.xml.Schema;
  * JCR repository test.
  */
 public class JCRRepositoryTest extends TestCase {
+
+    protected static final String AREA_ID = "authoring";
+    protected static final String PUBLICATION_ID = "test";
+    protected static final String LANGUAGE_DE = "de";
 
     /**
      * Ctor.
@@ -111,13 +117,13 @@ public class JCRRepositoryTest extends TestCase {
         AssetTypeRegistryImpl registry = (AssetTypeRegistryImpl) repo.getDocumentTypeRegistry();
         registry.register(doctype);
 
-        Publication pub = session.addPublication("test");
-        assertSame(pub, session.getPublication("test"));
+        Publication pub = session.addPublication(PUBLICATION_ID);
+        assertSame(pub, session.getPublication(PUBLICATION_ID));
 
         doTestMetaData(pub);
 
-        assertFalse(pub.existsArea("authoring"));
-        Area area = pub.addArea("authoring");
+        assertFalse(pub.existsArea(AREA_ID));
+        Area area = pub.addArea(AREA_ID);
 
         Content content = area.getContent();
         Site site = area.getSite();
@@ -135,6 +141,9 @@ public class JCRRepositoryTest extends TestCase {
         doTestSite(site, asset1);
 
         doTestTranslation(asset1);
+        doTestTranslation(asset2);
+
+        doTestUrlMapping(child);
 
     }
 
@@ -157,11 +166,11 @@ public class JCRRepositoryTest extends TestCase {
     }
 
     protected void doTestTranslation(Asset asset) throws Exception {
-        Translation trans = asset.addTranslation("de", "hello", "application/xml");
+        Translation trans = asset.addTranslation(LANGUAGE_DE, "hello", "application/xml");
 
         String validXmlResource = "valid.xml";
         String invalidXmlResource = "invalid.xml";
-        String localName = "test";
+        String localName = PUBLICATION_ID;
 
         org.w3c.dom.Document validXml = DocumentHelper.readDocument(getClass().getResourceAsStream(validXmlResource));
         org.w3c.dom.Document invalidXml = DocumentHelper.readDocument(getClass().getResourceAsStream(invalidXmlResource));
@@ -232,4 +241,25 @@ public class JCRRepositoryTest extends TestCase {
 
     }
 
+    /**
+     * Test the URL mapping.
+     * @param child The child site node.
+     * @throws RepositoryException if an error occurs.
+     */
+    public void doTestUrlMapping(SiteNode child) throws RepositoryException {
+
+        SiteNode parent = child.getParent();
+
+        Area area = parent.getAsset().getContent().getArea();
+        Publication pub = area.getPublication();
+
+        String webappUrl = "/" + pub.getPublicationId() + "/" + area.getAreaID() + "/"
+                + parent.getName() + "/" + child.getName() + "_" + LANGUAGE_DE;
+
+        Translation childTrans = child.getAsset().getTranslation(LANGUAGE_DE);
+        Translation trans = URLUtil.getTranslation(pub, webappUrl, new ConsoleLogger());
+
+        assertSame(trans.getAsset().getAssetId(), childTrans.getAsset().getAssetId());
+        assertSame(trans.getLanguage(), childTrans.getLanguage());
+    }
 }
