@@ -71,7 +71,7 @@
               </select>
             </td>
             <td>
-              <input i18n:attr="value" type="submit" name="addCredential_user" value="Add" name="input-add"/>
+              <input i18n:attr="value" type="submit" name="addCredential_user" value="Add"/>
             </td>
           </form>
                     
@@ -96,7 +96,7 @@
               </select>
             </td>
             <td>
-              <input i18n:attr="value" type="submit" name="addCredential_group" value="Add" name="input-add"/>
+              <input i18n:attr="value" type="submit" name="addCredential_group" value="Add" />
             </td>
           </form>
         </tr>
@@ -121,7 +121,7 @@
                 </select>
               </td>
               <td>
-                <input i18n:attr="value" type="submit" name="addCredential_ipRange" value="Add" name="input-add"/>
+                <input i18n:attr="value" type="submit" name="addCredential_ipRange" value="Add"/>
               </td>
             </form>
           </tr>
@@ -150,7 +150,7 @@
                 <jx:out value="${credential.getRoleId()}"/>
               </td>
               <td>
-                <input type="submit" name="deleteCredential_${credential.getType()}" i18n:attr="value" value="Delete" name="input-delete"/>
+                <input type="submit" name="deleteCredential_${credential.getType()}" i18n:attr="value" value="Delete"/>
               </td>
             </tr>
           </form>
