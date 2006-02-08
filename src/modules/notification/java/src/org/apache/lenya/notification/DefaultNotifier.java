@@ -158,7 +158,7 @@ public class DefaultNotifier extends AbstractLogEnabled implements Notifier, Ser
             parameters.put("locale", locale);
             
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI("cocoon://core/modules/notification/notification/message.xml",
+            source = resolver.resolveURI("cocoon://modules/notification/message.xml",
                     null,
                     parameters);
 
