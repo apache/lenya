@@ -25,9 +25,8 @@ import javax.jcr.SimpleCredentials;
 import org.apache.jackrabbit.core.RepositoryImpl;
 import org.apache.jackrabbit.core.WorkspaceImpl;
 import org.apache.lenya.cms.jcr.metadata.JCRMetaDataRegistry;
-import org.apache.lenya.cms.repo.AssetTypeRegistry;
+import org.apache.lenya.cms.repo.AssetTypeResolver;
 import org.apache.lenya.cms.repo.RepositoryException;
-import org.apache.lenya.cms.repo.impl.AssetTypeRegistryImpl;
 import org.apache.lenya.cms.repo.metadata.MetaDataRegistry;
 
 /**
@@ -61,14 +60,15 @@ public class JCRRepository implements org.apache.lenya.cms.repo.Repository {
         return new JCRSession(this);
     }
 
-    private AssetTypeRegistry typeRegistry;
+    private AssetTypeResolver typeResolver;
 
-    public AssetTypeRegistry getAssetTypeRegistry()
+    public AssetTypeResolver getAssetTypeResolver()
             throws org.apache.lenya.cms.repo.RepositoryException {
-        if (this.typeRegistry == null) {
-            this.typeRegistry = new AssetTypeRegistryImpl();
-        }
-        return this.typeRegistry;
+        return this.typeResolver;
+    }
+    
+    public void setAssetTypeResolver(AssetTypeResolver resolver) {
+        this.typeResolver = resolver;
     }
 
     private MetaDataRegistry metaDataRegistry;

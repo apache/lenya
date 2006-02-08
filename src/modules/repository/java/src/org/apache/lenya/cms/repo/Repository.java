@@ -28,22 +28,30 @@ public interface Repository {
      * @throws RepositoryException if an error occurs.
      */
     Session createSession() throws RepositoryException;
-    
-    /**
-     * @return The document type registry.
-     * @throws RepositoryException if an error occurs.
-     */
-    AssetTypeRegistry getAssetTypeRegistry() throws RepositoryException;
-    
+
     /**
      * @return The meta data registry.
      * @throws RepositoryException if an error occurs.
      */
     MetaDataRegistry getMetaDataRegistry() throws RepositoryException;
-    
+
     /**
      * Shuts down the repository.
      * @throws RepositoryException if an error occurs.
      */
     void shutdown() throws RepositoryException;
+
+    /**
+     * Sets the asset type resolver to use. This method has to be invoked before the content is
+     * accessed.
+     * @param resolver A resolver.
+     * @throws RepositoryException if an error occurs.
+     */
+    void setAssetTypeResolver(AssetTypeResolver resolver) throws RepositoryException;
+    
+    /**
+     * @return The asset type resolver.
+     * @throws RepositoryException if no asset type resolver is registered.
+     */
+    AssetTypeResolver getAssetTypeResolver() throws RepositoryException;
 }

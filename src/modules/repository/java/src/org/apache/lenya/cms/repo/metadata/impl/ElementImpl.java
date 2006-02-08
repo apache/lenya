@@ -25,6 +25,7 @@ public class ElementImpl implements Element {
     
     private String name;
     private boolean multiple;
+    private String description = "";
     
     /**
      * Ctor.
@@ -36,12 +37,28 @@ public class ElementImpl implements Element {
         this.multiple = isMultiple;
     }
 
+    /**
+     * Ctor.
+     * @param name The name.
+     * @param isMultiple if the element can have multiple values.
+     * @param description The description of the element.
+     */
+    public ElementImpl(String name, boolean isMultiple, String description) {
+        this.name = name;
+        this.multiple = isMultiple;
+        this.description = description;
+    }
+
     public String getName() {
         return this.name;
     }
 
     public boolean isMultiple() {
         return this.multiple;
+    }
+
+    public String getDescription() {
+        return this.description;
     }
 
 }

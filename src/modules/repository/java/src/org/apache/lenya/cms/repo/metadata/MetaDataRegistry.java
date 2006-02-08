@@ -19,7 +19,14 @@ package org.apache.lenya.cms.repo.metadata;
 import org.apache.lenya.cms.repo.RepositoryException;
 
 /**
- * Meta data registry.
+ * <p>
+ * This interface defines the methods to register and access meta data element sets.
+ * The registry concept ensures that meta data specifications can be stored together
+ * with documents.
+ * </p>
+ * <p>
+ * Once a set of elements is registered, it is stored in the repository.
+ * </p>
  */
 public interface MetaDataRegistry {
 

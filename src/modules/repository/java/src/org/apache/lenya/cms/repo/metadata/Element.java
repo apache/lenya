@@ -22,7 +22,7 @@ package org.apache.lenya.cms.repo.metadata;
 public interface Element {
     
     /**
-     * @return The name of the element.
+     * @return the name of the element.
      */
     String getName();
     
@@ -30,5 +30,10 @@ public interface Element {
      * @return if the element can have multiple values.
      */
     boolean isMultiple();
+    
+    /**
+     * @return the description of the element.
+     */
+    String getDescription();
 
 }

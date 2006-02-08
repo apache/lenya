@@ -27,6 +27,7 @@ import junit.framework.TestCase;
 
 import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.cocoon.components.validation.Validator;
+import org.apache.lenya.cms.jcr.mock.AssetTypeResolverImpl;
 import org.apache.lenya.cms.jcr.mock.TestElementSet;
 import org.apache.lenya.cms.repo.Area;
 import org.apache.lenya.cms.repo.Asset;
@@ -41,8 +42,6 @@ import org.apache.lenya.cms.repo.Site;
 import org.apache.lenya.cms.repo.SiteNode;
 import org.apache.lenya.cms.repo.Translation;
 import org.apache.lenya.cms.repo.impl.AssetTypeImpl;
-import org.apache.lenya.cms.repo.impl.AssetTypeRegistryImpl;
-import org.apache.lenya.cms.repo.metadata.ElementSet;
 import org.apache.lenya.cms.repo.metadata.MetaData;
 import org.apache.lenya.cms.repo.metadata.MetaDataOwner;
 import org.apache.lenya.cms.repo.metadata.MetaDataRegistry;
@@ -114,8 +113,9 @@ public class JCRRepositoryTest extends TestCase {
         URL schemaUrl = getClass().getResource("schema.xml");
         Schema schema = new Schema(Validator.GRAMMAR_RELAX_NG, schemaUrl.toString());
         AssetType doctype = new AssetTypeImpl("xhtml", schema, true);
-        AssetTypeRegistryImpl registry = (AssetTypeRegistryImpl) repo.getAssetTypeRegistry();
-        registry.register(doctype);
+        AssetTypeResolverImpl resolver = new AssetTypeResolverImpl();
+        resolver.register(doctype);
+        repo.setAssetTypeResolver(resolver);
 
         Publication pub = session.addPublication(PUBLICATION_ID);
         assertSame(pub, session.getPublication(PUBLICATION_ID));

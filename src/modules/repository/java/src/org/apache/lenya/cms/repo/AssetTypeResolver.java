@@ -17,21 +17,24 @@
 package org.apache.lenya.cms.repo;
 
 /**
- * Document type registry.
+ * A class implementing this interface can be used by the repository for resolving asset types.
  */
-public interface AssetTypeRegistry {
+public interface AssetTypeResolver {
 
     /**
-     * @return All available document type names.
-     * @throws RepositoryException if an error occurs.
+     * Resolves an asset type.
+     * @param name The asset type name.
+     * @return The asset type.
+     * @throws RepositoryException if the asset type could not be resolved.
      */
-    String[] getDocumentTypeNames() throws RepositoryException;
+    AssetType resolve(String name) throws RepositoryException;
     
     /**
-     * @param name The name of the document type.
-     * @return The document type.
-     * @throws RepositoryException if no document type exists with this name.
+     * Checks if an asset type can be resolved.
+     * @param name The asset type name.
+     * @return a boolean value.
+     * @throws RepositoryException if an error occurs.
      */
-    AssetType getDocumentType(String name) throws RepositoryException;
+    boolean canResolve(String name) throws RepositoryException;
     
 }

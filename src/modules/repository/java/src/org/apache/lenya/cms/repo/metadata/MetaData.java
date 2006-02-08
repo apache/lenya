@@ -23,18 +23,58 @@ import org.apache.lenya.cms.repo.RepositoryException;
  */
 public interface MetaData {
     
+    /**
+     * Returns the element set this meta data object belongs to.
+     * @return the element set.
+     * @throws RepositoryException if an error occurs.
+     */
     ElementSet getElementSet() throws RepositoryException;
 
+    /**
+     * Returns the value of a non-multiple element.
+     * @param name The element name.
+     * @return The value of the element.
+     * @throws RepositoryException if the element is multiple.
+     */
     String getValue(String name) throws RepositoryException;
     
+    /**
+     * Returns all values of a multiple element.
+     * @param name The element name.
+     * @return The element values.
+     * @throws RepositoryException if the element is not multiple.
+     */
     String[] getValues(String name) throws RepositoryException;
     
+    /**
+     * Sets the value of a non-multiple element.
+     * @param name The element name.
+     * @param value The value to set.
+     * @throws RepositoryException if the element is multiple.
+     */
     void setValue(String name, String value) throws RepositoryException;
     
+    /**
+     * Adds a value to a multiple element.
+     * @param name The element name.
+     * @param value The value to add.
+     * @throws RepositoryException if the element is not multiple.
+     */
     void addValue(String name, String value) throws RepositoryException;
     
+    /**
+     * Removes all values. For non-multiple elements, the value is set to <code>null</code>.
+     * @param name The element name.
+     * @throws RepositoryException if an error occurs.
+     */
     void clear(String name) throws RepositoryException;
     
+    /**
+     * Removes a value from a multiple element.
+     * @param name The element name.
+     * @param value The value to remove.
+     * @throws RepositoryException if the element is not multiple.
+     */
     void removeValue(String name, String value) throws RepositoryException;
     
 }

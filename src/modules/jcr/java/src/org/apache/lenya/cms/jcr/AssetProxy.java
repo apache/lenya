@@ -78,7 +78,7 @@ public class AssetProxy extends AbstractNodeProxy implements Asset {
 
     public AssetType getAssetType() throws RepositoryException {
         String name = getPropertyString(DOCUMENT_TYPE_PROPERTY);
-        return getRepository().getDocumentTypeRegistry().getDocumentType(name);
+        return getRepository().getAssetTypeResolver().resolve(name);
     }
 
     public String getAssetId() throws RepositoryException {

@@ -22,7 +22,7 @@ import javax.jcr.query.InvalidQueryException;
 
 import org.apache.lenya.cms.jcr.JCRSession;
 import org.apache.lenya.cms.jcr.util.Assertion;
-import org.apache.lenya.cms.repo.AssetTypeRegistry;
+import org.apache.lenya.cms.repo.AssetTypeResolver;
 import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.cms.repo.metadata.MetaDataRegistry;
 
@@ -35,20 +35,20 @@ public class RepositoryFacade {
      * Ctor.
      * @param jcrSession The repo session.
      * @param session The JCR session.
-     * @param doctypeRegistry The document type registry.
+     * @param typeResolver The asset type resolver.
      * @param metaDataRegistry The meta data registry.
      */
-    public RepositoryFacade(JCRSession jcrSession, Session session, AssetTypeRegistry doctypeRegistry,
+    public RepositoryFacade(JCRSession jcrSession, Session session, AssetTypeResolver typeResolver,
             MetaDataRegistry metaDataRegistry) {
         this.jcrSession = jcrSession;
         this.session = session;
-        this.doctypeRegistry = doctypeRegistry;
+        this.typeResolver = typeResolver;
         this.metaDataRegistry = metaDataRegistry;
     }
 
     private JCRSession jcrSession;
     private Session session;
-    private AssetTypeRegistry doctypeRegistry;
+    private AssetTypeResolver typeResolver;
 
     protected String CLASS_PROPERTY = "lnt:className";
 
@@ -252,8 +252,8 @@ public class RepositoryFacade {
     /**
      * @return The document type registry.
      */
-    public AssetTypeRegistry getDocumentTypeRegistry() {
-        return this.doctypeRegistry;
+    public AssetTypeResolver getAssetTypeResolver() {
+        return this.typeResolver;
     }
 
     private MetaDataRegistry metaDataRegistry;

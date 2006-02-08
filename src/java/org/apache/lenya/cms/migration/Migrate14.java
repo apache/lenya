@@ -20,7 +20,6 @@ import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Arrays;
 
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
@@ -29,6 +28,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
+import org.apache.lenya.cms.jcr.mock.AssetTypeResolverImpl;
 import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.repo.Area;
 import org.apache.lenya.cms.repo.Asset;
@@ -41,7 +41,6 @@ import org.apache.lenya.cms.repo.RepositoryManager;
 import org.apache.lenya.cms.repo.Session;
 import org.apache.lenya.cms.repo.SiteNode;
 import org.apache.lenya.cms.repo.impl.AssetTypeImpl;
-import org.apache.lenya.cms.repo.impl.AssetTypeRegistryImpl;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.tools.ant.BuildException;
@@ -225,13 +224,12 @@ public class Migrate14 {
             String resourceType = DocumentHelper.getSimpleElementText(resourceTypeElement);
             AssetType doctype;
 
-            AssetTypeRegistryImpl registry = (AssetTypeRegistryImpl) getRepository().getAssetTypeRegistry();
-            String[] names = registry.getDocumentTypeNames();
-            if (!Arrays.asList(names).contains(resourceType)) {
+            AssetTypeResolverImpl resolver = new AssetTypeResolverImpl();
+            if (!resolver.canResolve(resourceType)) {
                 doctype = new AssetTypeImpl(resourceType, null, false);
-                registry.register(doctype);
+                resolver.register(doctype);
             } else {
-                doctype = registry.getDocumentType(resourceType);
+                doctype = resolver.resolve(resourceType);
             }
 
             SiteNode siteNode = null;
