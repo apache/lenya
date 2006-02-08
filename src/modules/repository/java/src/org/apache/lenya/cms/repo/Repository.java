@@ -50,8 +50,8 @@ public interface Repository {
     void setAssetTypeResolver(AssetTypeResolver resolver) throws RepositoryException;
     
     /**
-     * @return The asset type resolver.
-     * @throws RepositoryException if no asset type resolver is registered.
+     * @return The asset type resolver or <code>null</code> if no resolver is registered.
+     * @throws RepositoryException if an error occurs.
      */
     AssetTypeResolver getAssetTypeResolver() throws RepositoryException;
 }

@@ -144,6 +144,9 @@ public class JCRRepositoryTest extends TestCase {
         doTestTranslation(asset2);
 
         doTestUrlMapping(child);
+        
+        session.logout();
+        this.repo.shutdown();
 
     }
 

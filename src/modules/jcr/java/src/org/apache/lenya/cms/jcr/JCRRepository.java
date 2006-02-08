@@ -16,14 +16,9 @@
  */
 package org.apache.lenya.cms.jcr;
 
-import java.util.Arrays;
-
 import javax.jcr.Repository;
 import javax.jcr.Session;
-import javax.jcr.SimpleCredentials;
 
-import org.apache.jackrabbit.core.RepositoryImpl;
-import org.apache.jackrabbit.core.WorkspaceImpl;
 import org.apache.lenya.cms.jcr.metadata.JCRMetaDataRegistry;
 import org.apache.lenya.cms.repo.AssetTypeResolver;
 import org.apache.lenya.cms.repo.RepositoryException;
@@ -32,7 +27,7 @@ import org.apache.lenya.cms.repo.metadata.MetaDataRegistry;
 /**
  * Facade to the JCR repository, providing Lenya-specific access.
  */
-public class JCRRepository implements org.apache.lenya.cms.repo.Repository {
+public abstract class JCRRepository implements org.apache.lenya.cms.repo.Repository {
 
     /**
      * The workspace to store internal data.
@@ -66,12 +61,13 @@ public class JCRRepository implements org.apache.lenya.cms.repo.Repository {
             throws org.apache.lenya.cms.repo.RepositoryException {
         return this.typeResolver;
     }
-    
+
     public void setAssetTypeResolver(AssetTypeResolver resolver) {
         this.typeResolver = resolver;
     }
 
     private MetaDataRegistry metaDataRegistry;
+    protected Session internalSession;
 
     public MetaDataRegistry getMetaDataRegistry() throws RepositoryException {
         if (this.metaDataRegistry == null) {
@@ -80,35 +76,12 @@ public class JCRRepository implements org.apache.lenya.cms.repo.Repository {
         return this.metaDataRegistry;
     }
 
-    private Session internalSession;
+    protected abstract Session getSession(String workspaceName) throws RepositoryException;
 
     protected Session getInternalSession() throws RepositoryException {
         if (this.internalSession == null) {
-            try {
-                Session defaultWorkspaceSession = getRepository().login(new SimpleCredentials("john",
-                        "".toCharArray()));
-                WorkspaceImpl defaultWorkspace = (WorkspaceImpl) defaultWorkspaceSession.getWorkspace();
-                String[] workspaces = defaultWorkspace.getAccessibleWorkspaceNames();
-                if (!Arrays.asList(workspaces).contains(INTERNAL_WORKSPACE)) {
-                    defaultWorkspace.createWorkspace(INTERNAL_WORKSPACE);
-                    // create = true;
-                }
-
-                this.internalSession = getRepository().login(new SimpleCredentials("john",
-                        "".toCharArray()),
-                        INTERNAL_WORKSPACE);
-            } catch (javax.jcr.RepositoryException e) {
-                throw new RepositoryException(e);
-            }
+            this.internalSession = getSession(INTERNAL_WORKSPACE);
         }
         return this.internalSession;
     }
-
-    public void shutdown() throws RepositoryException {
-        if (this.internalSession != null) {
-            this.internalSession.logout();
-        }
-        ((RepositoryImpl) this.repository).shutdown();
-    }
-
 }

@@ -20,7 +20,6 @@ import java.io.File;
 
 import org.apache.jackrabbit.core.RepositoryImpl;
 import org.apache.jackrabbit.core.config.RepositoryConfig;
-import org.apache.lenya.cms.jcr.JCRRepository;
 import org.apache.lenya.cms.repo.Repository;
 import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.cms.repo.RepositoryFactory;
@@ -42,9 +41,7 @@ public class JackrabbitRepositoryFactory implements RepositoryFactory {
             File configFile = new File(repoDirectory, configFilePath);
             RepositoryConfig repoConfig = RepositoryConfig.create(configFile.getAbsolutePath(),
                     repoDirectory.getAbsolutePath());
-            JCRRepository repo = new JCRRepository(RepositoryImpl.create(repoConfig));
-
-            return repo;
+            return new JackrabbitRepository(RepositoryImpl.create(repoConfig));
         } catch (Exception e) {
             throw new RepositoryException(e);
         }

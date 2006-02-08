@@ -24,14 +24,11 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-import javax.jcr.LoginException;
 import javax.jcr.NamespaceRegistry;
 import javax.jcr.Node;
 import javax.jcr.NodeIterator;
 import javax.jcr.Session;
-import javax.jcr.SimpleCredentials;
 
-import org.apache.jackrabbit.core.WorkspaceImpl;
 import org.apache.lenya.cms.jcr.mapping.Path;
 import org.apache.lenya.cms.jcr.mapping.RepositoryFacade;
 import org.apache.lenya.cms.repo.Publication;
@@ -70,15 +67,7 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
             try {
                 // boolean create = false;
 
-                WorkspaceImpl defaultWorkspace = getDefaultWorkspace();
-                String[] workspaces = defaultWorkspace.getAccessibleWorkspaceNames();
-                if (!Arrays.asList(workspaces).contains(area)) {
-                    defaultWorkspace.createWorkspace(area);
-                    // create = true;
-                }
-
-                Session session = getJcrRepository().getRepository()
-                        .login(new SimpleCredentials("john", "".toCharArray()), area);
+                Session session = getJcrRepository().getSession(area);
                 facade = new RepositoryFacade(this,
                         session,
                         getRepository().getAssetTypeResolver(),
@@ -104,19 +93,6 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
         return facade;
     }
 
-    protected WorkspaceImpl getDefaultWorkspace() throws LoginException, RepositoryException {
-        WorkspaceImpl defaultWorkspace;
-        try {
-            Session defaultWorkspaceSession = getJcrRepository().getRepository()
-                    .login(new SimpleCredentials("john", "".toCharArray()));
-            defaultWorkspace = (WorkspaceImpl) defaultWorkspaceSession.getWorkspace();
-        } catch (javax.jcr.RepositoryException e) {
-            throw new RepositoryException(e);
-        }
-
-        return defaultWorkspace;
-    }
-
     public void save() throws org.apache.lenya.cms.repo.RepositoryException {
         try {
             for (Iterator i = this.area2facade.keySet().iterator(); i.hasNext();) {
@@ -136,8 +112,8 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
             try {
                 Set pubIds = new HashSet();
 
-                WorkspaceImpl defaultWorkspace = getDefaultWorkspace();
-                String[] workspaces = defaultWorkspace.getAccessibleWorkspaceNames();
+                Session defaultSession = getJcrRepository().getInternalSession();
+                String[] workspaces = defaultSession.getWorkspace().getAccessibleWorkspaceNames();
 
                 for (int i = 0; i < workspaces.length; i++) {
 
@@ -206,7 +182,8 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
         Set areas = new HashSet();
         String[] workspaces;
         try {
-            workspaces = getDefaultWorkspace().getAccessibleWorkspaceNames();
+            Session defaultSession = getJcrRepository().getInternalSession();
+            workspaces = defaultSession.getWorkspace().getAccessibleWorkspaceNames();
         } catch (javax.jcr.RepositoryException e) {
             throw new RepositoryException(e);
         }
