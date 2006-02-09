@@ -178,6 +178,7 @@
         shorthand="node-factory"
         default-class="org.apache.lenya.cms.repository.SourceNodeFactory"/>
         <!--
+        default-class="org.apache.lenya.cms.repo.adapter.RepoNodeFactory"/>
         default-class="org.apache.lenya.cms.jcr.JCRNodeFactory"/>
         -->
 
