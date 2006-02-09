@@ -209,7 +209,7 @@ Node.prototype.getItemByPath = function(path) {
     var item = null;
     for (var itemid in this.items) {
         // see if the path starts with the next item id
-        if (path.indexOf(itemid) == 0) {
+        if (path.indexOf(itemid + '/') == 0 || path == itemid) {
             item = this.items[itemid];
             break;
         };
