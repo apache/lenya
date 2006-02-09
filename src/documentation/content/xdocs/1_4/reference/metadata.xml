@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2006 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- $Id: metadata.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" 
+  "http://forrest.apache.org/dtd/document-v20.dtd">
+<document>
+  <header>
+    <title>Meta Data</title>
+  </header>
+  <body>
+    <section>
+      <title>Introduction</title>
+      <p>In 1.4.x meta data is kept apart from the xml document but in the same 
+        directory (index_{lang}.xml.meta). There are differnt types of meta 
+        data. </p>
+        <ol>
+          <li>The default is based on the <a 
+            href="http://dublincore.org">Dublin Core</a> standard (like in 
+            1.2.x).</li>
+          <li>Besides we introduced internal (used by lenya internally and not 
+            exposed to the user)</li>
+          <li>and custom metadata (added from the developer to enable user to 
+            maintain their extra informations about the document)</li>
+        </ol>
+      <p>There are basically two use cases as example:</p>
+      <ol>
+        <li>Create meta data</li>
+        <li>Display/modify meta data</li>
+      </ol>
+    </section>
+    <section>
+      <title>Example</title>
+      <p>A typical sample for meta data may be the following:</p>
+      <source><![CDATA[<lenya:document xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" 
+  xmlns:dc="http://purl.org/dc/elements/1.1/">
+  <lenya:meta>
+    <lenya:custom>
+      <lenya:myCustom>My custom metadata</lenya:myCustom>
+    </lenya:custom>
+    <lenya:internal>
+      <lenya:resourceType>xhtml</lenya:resourceType>
+      <lenya:contentType>xml</lenya:contentType>
+    </lenya:internal>
+    <lenya:dc>
+      <dc:title>Some Lenya Features quickly explained</dc:title>
+      <dc:creator>Lenya Development Team</dc:creator>
+      <dc:subject>Lenya Features</dc:subject>
+      <dc:description>Explains some Lenya features</dc:description>
+      <dc:publisher>Apache Software Foundation</dc:publisher>
+      <dc:contributor/>
+      <dc:date>2005-01-31</dc:date>
+      <dc:type/>
+      <dc:format/>
+      <dc:identifier/>
+      <dc:source/>
+      <dc:language>en</dc:language>
+      <dc:relation/>
+      <dc:coverage/>
+      <dc:rights>All rights reserved</dc:rights>
+    </lenya:dc>
+  </lenya:meta>
+</lenya:document>]]>
+      </source>
+    </section>
+    <section>
+      <title>Implementation</title>
+      <p>Like nearly all new modules/functionality the meta data usecases are 
+        following the new fallback concept. Meaning you are using the core 
+        contracts as long you are *not* overriding them with your own 
+        implementation.</p>
+      <section>
+        <title>Create meta data</title>
+        <p>Upon creation of a document a sample is copied from the sample 
+          doctype directory. This sample already contains some sample meta 
+          data. This values are partially filled in by the user (subject, 
+          desciption, etc.) and partly by the system (creator, creation data). 
+          This is done in the <code>site.create</code> usecase 
+          (lenya.usecase=site.create).</p>
+        <fixme author="thorsten">Add more information about extending the 
+          create.jx file with custom meta data</fixme>
+      </section>
+      <section>
+        <title>Display/modify meta data</title>
+        <p>The display of meta data is handled by the usecase 
+          <code>tab.meta</code>. We activated that all custom meta data </p>
+      </section>
+    </section>
+  </body>
+</document>
