@@ -52,7 +52,7 @@ import org.apache.lenya.xml.Schema;
 /**
  * JCR repository test.
  */
-public class JCRRepositoryTest extends TestCase {
+public class RepositoryTest extends TestCase {
 
     protected static final String AREA_ID = "authoring";
     protected static final String PUBLICATION_ID = "test";
@@ -61,7 +61,7 @@ public class JCRRepositoryTest extends TestCase {
     /**
      * Ctor.
      */
-    public JCRRepositoryTest() {
+    public RepositoryTest() {
         setWebappDirectory(System.getProperty("test.repo.webappDirectory"));
         setRepositoryFactory(System.getProperty("test.repo.repositoryFactory"));
     }
