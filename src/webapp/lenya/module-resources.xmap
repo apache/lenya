@@ -20,6 +20,13 @@
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
   <map:pipelines>
+    <map:pipeline internal-only="true">
+      <map:match pattern="*/**.*">
+        <map:match type="regexp" pattern="(.*\.)(rng)$"> 
+          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="application/xml"/>
+        </map:match> 
+      </map:match>
+    </map:pipeline>
     <map:pipeline>
       
       <!-- matches modules/*/**.css -->
@@ -49,9 +56,13 @@
         <map:match type="regexp" pattern="(.*\.)(xml)$"> 
           <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="text/xml"/>
         </map:match>        
-        <map:match type="regexp" pattern="(.*\.)(rng)$"> 
-          <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="application/xml"/>
-        </map:match> 
+        <map:match type="regexp" pattern="(.*\.)(rng)$">
+          <map:generate src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}"/>
+          <map:transform src="fallback://lenya/xslt/resources/external-relax.xsl">
+            <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
+          </map:transform>
+          <map:serialize type="xml"/>
+        </map:match>
         <map:match type="regexp" pattern="(.*\.)(jpg|JPG|Jpg|jpeg|Jpeg|JPEG)$"> 
           <map:read src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}" mime-type="image/jpeg" />
         </map:match> 

@@ -27,6 +27,7 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.ResourceType;
@@ -57,6 +58,7 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
             Session session = RepositoryUtil.getSession(request, getLogger());
 
             ResourceType resourceType;
+            Publication pub = null;
             String attribute;
 
             String[] steps = name.split(":");
@@ -68,6 +70,7 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
                 String webappUrl = ServletHelper.getWebappURI(request);
                 Document document = docFactory.getFromURL(webappUrl);
                 resourceType = document.getResourceType();
+                pub = document.getPublication();
             } else {
                 attribute = steps[1];
                 String resourceTypeName = steps[0];
@@ -89,8 +92,8 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
                 value = resourceType.getSchema().getURI();
             } else if (attribute.equals(HTTP_SCHEMA_URI)) {
                 String uri = resourceType.getSchema().getURI();
-                String path = uri.substring("fallback://".length());
-                value = request.getContextPath() + "/fallback/" + path;
+                String path = uri.substring(uri.indexOf("/schemas"));
+                value = request.getContextPath() + "/" + pub.getId() + "/modules/" + resourceType.getName() + path;
             } else {
                 throw new ConfigurationException("Attribute [" + name + "] not supported!");
             }
