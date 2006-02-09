@@ -56,9 +56,9 @@
       </title>
       <link>
         <xsl:choose>
-          <xsl:when test="echo:link/@href='self'">
-            <xsl:value-of select="$url"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="echo:id"/>/index.html
-          </xsl:when>	
+          <xsl:when test="echo:link/@href=''">
+        <xsl:value-of select="concat($url, '/', $area, '/entries/', echo:id, '/index.html')"/>
+          </xsl:when>
           <xsl:otherwise>
             <xsl:value-of select="echo:link/@href"/>
           </xsl:otherwise>
@@ -71,7 +71,7 @@
         <xsl:value-of select="echo:content"/>
       </description>
       <guid isPermaLink="true">
-        <xsl:value-of select="$url"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="echo:id"/>/index.html
+        <xsl:value-of select="concat($url, '/', $area, '/entries/', echo:id, '/index.html')"/>
       </guid>
     </item>
   </xsl:template>
