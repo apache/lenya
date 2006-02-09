@@ -86,7 +86,7 @@
             </tr>
             <tr>
               <td class="lenya-entry-caption"><label for="myMeta"><i18n:text>My
-                custom metada</i18n:text>:</label></td>
+                custom metadata</i18n:text>:</label></td>
               <td>
                 <input type="text" id="myMeta" name="meta.custom.myMeta"
                   class="lenya-form-element"
