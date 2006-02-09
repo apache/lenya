@@ -21,6 +21,23 @@
 	</header>
 	<body>
 	  
+	<section>
+	  <title>Setup</title>
+	  
+	  <p>
+	    To enable notification by e-mail, you have to download the JavaMail and JavaBeans Activation
+	    Framework libraries from the <a href="http://java.sun.com/products/javamail/">JavaMail website</a>
+	    and place them in the <code>&lt;lenya-webapp&gt;/WEB-INF/lib</code> directory.
+	  </p>
+	  
+	  <note>
+	    Currently, you have to remove <code>geronimo-spec-*.jar</code> from
+	    <code>&lt;lenya-webapp&gt;/WEB-INF/lib</code> to enable e-mail notification
+	    (see <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=38587">bug 38587</a>).
+	  </note>
+	  
+	</section>
+	  
 <section>
 	<title>How to Send Notification Messages</title>
 	
