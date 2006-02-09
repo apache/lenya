@@ -16,6 +16,9 @@
  */
 package org.apache.lenya.cms.metadata.usecases;
 
+import java.util.HashMap;
+import java.util.Iterator;
+
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
@@ -57,7 +60,7 @@ public class Metadata extends SiteUsecase {
       for (int i = 0; i < keys.length; i++) {
         String value = meta.getFirstValue(keys[i]);
         if (value != null) {
-          setParameter(keys[i], value);
+          setParameter("meta.dc." + keys[i], value);
         }
       }
 
@@ -95,7 +98,7 @@ public class Metadata extends SiteUsecase {
 
     String[] keys = meta.getPossibleKeys();
     for (int i = 0; i < keys.length; i++) {
-      String value = getParameterAsString(keys[i]);
+      String value = getParameterAsString("meta.dc." + keys[i]);
       if (value != null) {
         meta.setValue(keys[i], value);
       }
