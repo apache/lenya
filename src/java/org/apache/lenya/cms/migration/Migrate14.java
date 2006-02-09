@@ -18,7 +18,10 @@ package org.apache.lenya.cms.migration;
 
 import java.io.File;
 import java.io.FileFilter;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.OutputStream;
 
 import javax.xml.transform.Result;
@@ -32,7 +35,6 @@ import org.apache.lenya.cms.jcr.mock.AssetTypeResolverImpl;
 import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.repo.Area;
 import org.apache.lenya.cms.repo.Asset;
-import org.apache.lenya.cms.repo.Translation;
 import org.apache.lenya.cms.repo.AssetType;
 import org.apache.lenya.cms.repo.Publication;
 import org.apache.lenya.cms.repo.Repository;
@@ -40,6 +42,7 @@ import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.cms.repo.RepositoryManager;
 import org.apache.lenya.cms.repo.Session;
 import org.apache.lenya.cms.repo.SiteNode;
+import org.apache.lenya.cms.repo.Translation;
 import org.apache.lenya.cms.repo.impl.AssetTypeImpl;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
@@ -124,6 +127,8 @@ public class Migrate14 {
         try {
             this.repo = RepositoryManager.getRepository(getWebappDirectory(),
                     getRepositoryFactory());
+            repo.setAssetTypeResolver(new AssetTypeResolverImpl());
+
             this.session = this.repo.createSession();
 
             File publicationsDirectory = new File(webappDirectory, PUBLICATION_PREFIX);
@@ -224,7 +229,7 @@ public class Migrate14 {
             String resourceType = DocumentHelper.getSimpleElementText(resourceTypeElement);
             AssetType doctype;
 
-            AssetTypeResolverImpl resolver = new AssetTypeResolverImpl();
+            AssetTypeResolverImpl resolver = (AssetTypeResolverImpl) repo.getAssetTypeResolver();
             if (!resolver.canResolve(resourceType)) {
                 doctype = new AssetTypeImpl(resourceType, null, false);
                 resolver.register(doctype);
@@ -254,7 +259,7 @@ public class Migrate14 {
             }
 
             importDocuments(docDir, contentNode);
-            
+
             if (siteNode != null) {
                 importChildren(docDir, area, siteNode);
             }
@@ -282,6 +287,14 @@ public class Migrate14 {
         Translation document = contentNode.addTranslation(language, "Label", "application/xml");
 
         OutputStream out = document.getOutputStream();
+        FileInputStream in;
+        try {
+            in = new FileInputStream(file);
+        } catch (FileNotFoundException e) {
+            throw new RepositoryException(e);
+        }
+        copy(in, out);
+        /*
         try {
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
             Source source = new StreamSource(file);
@@ -296,6 +309,33 @@ public class Migrate14 {
                 } catch (IOException e) {
                     throw new RepositoryException(e);
                 }
+            }
+        }
+        */
+    }
+
+    static void copy(InputStream fis, OutputStream fos) {
+        try {
+            byte buffer[] = new byte[0xffff];
+            int nbytes;
+
+            while ((nbytes = fis.read(buffer)) != -1)
+                fos.write(buffer, 0, nbytes);
+        } catch (IOException e) {
+            System.out.println(e);
+        } finally {
+            if (fis != null)
+                try {
+                    fis.close();
+                } catch (IOException e) {
+                    System.out.println(e);
+                }
+
+            try {
+                if (fos != null)
+                    fos.close();
+            } catch (IOException e) {
+                System.out.println(e);
             }
         }
     }

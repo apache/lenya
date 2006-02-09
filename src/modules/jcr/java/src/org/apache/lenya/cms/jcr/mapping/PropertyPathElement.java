@@ -74,14 +74,15 @@ public class PropertyPathElement extends NamePathElement {
                     if (node == null) {
                         node = aNode;
                     } else {
-                        throw new RepositoryException("More than 1 node [" + this + "] exists!");
+                        throw new RepositoryException("More than 1 node [" + parent.getPath()
+                                + this + "] exists!");
                     }
                 }
             }
             if (node == null) {
                 String workspace = parent.getSession().getWorkspace().getName();
-                throw new RepositoryException("Node [" + this + "] does not exist in area ["
-                        + workspace + "]!");
+                throw new RepositoryException("Node [" + parent.getPath() + this
+                        + "] does not exist in area [" + workspace + "]!");
             }
             return node;
         } catch (javax.jcr.RepositoryException e) {

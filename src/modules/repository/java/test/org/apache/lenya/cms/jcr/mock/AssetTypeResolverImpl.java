@@ -38,6 +38,9 @@ public class AssetTypeResolverImpl implements AssetTypeResolver {
     }
     
     public AssetType resolve(String name) throws RepositoryException {
+        if (!types.containsKey(name)) {
+            throw new RepositoryException("The asset type [" + name + "] is not registered!");
+        }
         return (AssetType) types.get(name);
     }
 

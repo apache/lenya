@@ -18,10 +18,12 @@ package org.apache.lenya.cms.jcr;
 
 import org.apache.lenya.cms.jcr.mapping.AbstractNodeProxy;
 import org.apache.lenya.cms.jcr.mapping.NamePathElement;
+import org.apache.lenya.cms.jcr.mapping.NodeProxy;
 import org.apache.lenya.cms.jcr.mapping.Path;
 import org.apache.lenya.cms.jcr.mapping.PathElement;
 import org.apache.lenya.cms.jcr.metadata.MetaDataProxy;
 import org.apache.lenya.cms.repo.Asset;
+import org.apache.lenya.cms.repo.AssetTypeResolver;
 import org.apache.lenya.cms.repo.Content;
 import org.apache.lenya.cms.repo.Translation;
 import org.apache.lenya.cms.repo.AssetType;
@@ -40,10 +42,13 @@ public class AssetProxy extends AbstractNodeProxy implements Asset {
     protected static final String VISIBLE_IN_NAV_PROPERTY = "lenya:visibleInNav";
 
     public Translation[] getTranslations() throws RepositoryException {
-        ContentProxy contentProxy = (ContentProxy) getParentProxy();
-        Path path = contentProxy.getAbsolutePath()
-                .append(new NamePathElement(TranslationProxy.NODE_NAME));
-        return (Translation[]) getRepository().getProxies(path);
+        Path path = getAbsolutePath().append(new NamePathElement(TranslationProxy.NODE_NAME));
+        NodeProxy[] proxies = getRepository().getProxies(path);
+        Translation[] translations = new Translation[proxies.length];
+        for (int i = 0; i < proxies.length; i++) {
+            translations[i] = (Translation) proxies[i];
+        }
+        return translations;
     }
 
     public Translation addTranslation(String language, String label, String mimeType)
@@ -67,8 +72,7 @@ public class AssetProxy extends AbstractNodeProxy implements Asset {
     }
 
     public void removeTranslation(Translation document) throws RepositoryException {
-        // TODO Auto-generated method stub
-
+        ((TranslationProxy) document).remove();
     }
 
     public Translation getTranslation(String language) throws RepositoryException {
@@ -78,7 +82,11 @@ public class AssetProxy extends AbstractNodeProxy implements Asset {
 
     public AssetType getAssetType() throws RepositoryException {
         String name = getPropertyString(DOCUMENT_TYPE_PROPERTY);
-        return getRepository().getAssetTypeResolver().resolve(name);
+        AssetTypeResolver resolver = getRepository().getAssetTypeResolver();
+        if (resolver == null) {
+            throw new RepositoryException("The asset type resolver of the repository is not set.");
+        }
+        return resolver.resolve(name);
     }
 
     public String getAssetId() throws RepositoryException {

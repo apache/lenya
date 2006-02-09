@@ -170,6 +170,12 @@ public class JCRRepositoryTest extends TestCase {
 
     protected void doTestTranslation(Asset asset) throws Exception {
         Translation trans = asset.addTranslation(LANGUAGE_DE, "hello", "application/xml");
+        assertTrue(asset.getTranslations().length == 1);
+        
+        asset.removeTranslation(trans);
+        assertTrue(asset.getTranslations().length == 0);
+        
+        trans = asset.addTranslation(LANGUAGE_DE, "hello", "application/xml");
 
         String validXmlResource = "valid.xml";
         String invalidXmlResource = "invalid.xml";
