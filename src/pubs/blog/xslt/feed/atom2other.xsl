@@ -14,7 +14,7 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
-<xsl:stylesheet xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:echo="http://purl.org/atom/ns#" xmlns:rss="http://purl.org/rss/" xmlns:ent="http://www.purl.org/NET/ENT/1.0/" xmlns="http://www.w3.org/1999/xhtml" version="1.0">
+<xsl:stylesheet xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:echo="http://purl.org/atom/ns#" xmlns:rss="http://purl.org/rss/" xmlns:ent="http://www.purl.org/NET/ENT/1.0/" version="1.0">
   <xsl:param name="type"/>
   <xsl:param name="url"/>
   <xsl:param name="area"/>
@@ -22,27 +22,27 @@
   <xsl:template match="/echo:feed">
     <xsl:choose>
       <xsl:when test="$type='rss'">
-        <rss:rss version="2.0">
-          <rss:channel>
-            <rss:title>
+        <rss version="2.0">
+          <channel>
+            <title>
               <xsl:value-of select="./echo:title/text()"/>
-            </rss:title>
-            <rss:link>
+            </title>
+            <link>
               <xsl:value-of select="./echo:link/@href"/>
-            </rss:link>
-            <rss:description>
+            </link>
+            <description>
               <xsl:value-of select="./echo:title/text()"/>
-            </rss:description>
-            <rss:language>en-us</rss:language>
-            <rss:pubDate>
+            </description>
+            <language>en-us</language>
+            <pubDate>
               <xsl:value-of select="./echo:issued/text()"/>
-            </rss:pubDate>
-            <rss:lastBuildDate>
+            </pubDate>
+            <lastBuildDate>
               <xsl:value-of select="./echo:modified/text()"/>
-            </rss:lastBuildDate>
+            </lastBuildDate>
             <xsl:apply-templates select="echo:entry"/>
-          </rss:channel>
-        </rss:rss>
+          </channel>
+        </rss>
       </xsl:when>
       <xsl:otherwise>
         <xsl:copy-of select="."/>
@@ -50,11 +50,11 @@
     </xsl:choose>
   </xsl:template>
   <xsl:template match="echo:entry">
-    <rss:item>
-      <rss:title>
+    <item>
+      <title>
         <xsl:value-of select="echo:title"/>
-      </rss:title>
-      <rss:link>
+      </title>
+      <link>
         <xsl:choose>
           <xsl:when test="echo:link/@href='self'">
             <xsl:value-of select="$url"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="echo:id"/>/index.html
@@ -63,17 +63,17 @@
             <xsl:value-of select="echo:link/@href"/>
           </xsl:otherwise>
         </xsl:choose>
-      </rss:link>
-      <rss:pubDate>
+      </link>
+      <pubDate>
         <xsl:value-of select="echo:issued"/>
-      </rss:pubDate>
-      <rss:description>
+      </pubDate>
+      <description>
         <xsl:value-of select="echo:content"/>
-      </rss:description>
-      <rss:guid isPermaLink="true">
+      </description>
+      <guid isPermaLink="true">
         <xsl:value-of select="$url"/>/<xsl:value-of select="$area"/>/<xsl:value-of select="echo:id"/>/index.html
-      </rss:guid>
-    </rss:item>
+      </guid>
+    </item>
   </xsl:template>
   <xsl:template match="@*|node()">
   </xsl:template>
