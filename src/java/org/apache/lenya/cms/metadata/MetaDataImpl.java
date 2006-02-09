@@ -143,14 +143,18 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements
   protected boolean useFixedElements() {
     return true;
   }
-  /* (non-Javadoc)
+
+  /*
+   * (non-Javadoc)
+   * 
    * @see org.apache.lenya.cms.metadata.MetaData#getAvailableKeys()
    */
   public String[] getAvailableKeys() {
-      String[] availableKeys = new String[elements.size()];
-      availableKeys = (String[])elements.keySet().toArray(availableKeys);
-      return availableKeys;
+    String[] availableKeys = new String[elements.size()];
+    availableKeys = (String[]) elements.keySet().toArray(availableKeys);
+    return availableKeys;
   }
+
   /**
    * @return All keys that values exist for.
    */
@@ -162,19 +166,25 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements
       String[] value = (String[]) entry.getValue();
       String key = (String) entry.getKey();
       // remove namespace prefix
-      if (key.indexOf(":")>-1){
-        key = key.substring(key.indexOf(":")+1,key.length());
+      if (key.indexOf(":") > -1) {
+        key = key.substring(key.indexOf(":") + 1, key.length());
       }
       if (value.length > 0) {
         String nodeValue = "";
         for (int i = 0; i < value.length; i++) {
           nodeValue = nodeValue + value[i];
         }
-        /**FIXME: if we do not want empty elements then uncomment and delete this note*/  
-        //if (!"".equals(nodeValue)){
+        /**
+         * FIXME: if we do not want empty elements then uncomment and delete
+         * this note
+         */
+        // if (!"".equals(nodeValue)){
         key2value.put(key, nodeValue);
-        /**FIXME: if we do not want empty elements then uncomment and delete this note*/  
-        //}
+        /**
+         * FIXME: if we do not want empty elements then uncomment and delete
+         * this note
+         */
+        // }
       }
     }
     return key2value;
