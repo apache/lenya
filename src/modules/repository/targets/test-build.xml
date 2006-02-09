@@ -28,7 +28,7 @@
       <formatter type="plain"/>
       <sysproperty key="test.repo.webappDirectory" value="${build.webapp}"/>
       <sysproperty key="test.repo.repositoryFactory" value="${repository.factory}"/>
-      <test name="org.apache.lenya.cms.jcr.JCRRepositoryTest"/>
+      <test name="org.apache.lenya.cms.repo.JCRRepositoryTest"/>
     </junit>
   </target>
   

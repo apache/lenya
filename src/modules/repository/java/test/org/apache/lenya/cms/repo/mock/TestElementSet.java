@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.jcr.mock;
+package org.apache.lenya.cms.repo.mock;
 
 import org.apache.lenya.cms.repo.metadata.Element;
 import org.apache.lenya.cms.repo.metadata.impl.ElementImpl;

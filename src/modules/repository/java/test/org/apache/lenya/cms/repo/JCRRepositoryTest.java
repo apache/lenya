@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.jcr;
+package org.apache.lenya.cms.repo;
 
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -27,8 +27,8 @@ import junit.framework.TestCase;
 
 import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.cocoon.components.validation.Validator;
-import org.apache.lenya.cms.jcr.mock.AssetTypeResolverImpl;
-import org.apache.lenya.cms.jcr.mock.TestElementSet;
+import org.apache.lenya.cms.repo.mock.AssetTypeResolverImpl;
+import org.apache.lenya.cms.repo.mock.TestElementSet;
 import org.apache.lenya.cms.repo.Area;
 import org.apache.lenya.cms.repo.Asset;
 import org.apache.lenya.cms.repo.AssetType;

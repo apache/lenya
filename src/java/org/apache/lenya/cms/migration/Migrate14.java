@@ -31,7 +31,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
-import org.apache.lenya.cms.jcr.mock.AssetTypeResolverImpl;
+import org.apache.lenya.cms.repo.mock.AssetTypeResolverImpl;
 import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.repo.Area;
 import org.apache.lenya.cms.repo.Asset;
