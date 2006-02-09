@@ -322,6 +322,11 @@
   <!-- Info asset  --> 
   <message key="New Asset">New Asset</message>
   
+  <!-- Info meta -->
+  <message key="Custom metadata">Custom metadata</message>
+  <message key="Show custom metadata">Show custom metadata</message>
+  <message key="Hide custom metadata">Hide custom metadata</message>
+  
   <!-- Info RC  --> 
   <message key="Current Version">Current Version</message>
   <message key="Rollback to this revision">Rollback to this revision</message>

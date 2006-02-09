@@ -38,6 +38,14 @@ public class Metadata extends SiteUsecase {
     super();
   }
 
+  public static final String DC_PREFIX = "meta.dc.";
+
+  public static final String CUSTOM_PREFIX = "meta.custom.";
+
+  public static final String SHOW_CUSTOM_PARAMETER = "showCustom";
+
+  private boolean showCustom;
+
   /**
    * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
    */
@@ -51,7 +59,10 @@ public class Metadata extends SiteUsecase {
    */
   protected void initParameters() {
     super.initParameters();
+    showCustom = getParameterAsBoolean(SHOW_CUSTOM_PARAMETER, false);
+    setParameter(SHOW_CUSTOM_PARAMETER, String.valueOf(showCustom));
 
+    // dc metadata
     try {
       MetaData meta = getSourceDocument().getMetaDataManager()
           .getDublinCoreMetaData();
@@ -60,7 +71,7 @@ public class Metadata extends SiteUsecase {
       for (int i = 0; i < keys.length; i++) {
         String value = meta.getFirstValue(keys[i]);
         if (value != null) {
-          setParameter("meta.dc." + keys[i], value);
+          setParameter(DC_PREFIX + keys[i], value);
         }
       }
 
@@ -68,6 +79,27 @@ public class Metadata extends SiteUsecase {
       getLogger().error("Unable to load Dublin Core metadata.", e);
       addErrorMessage("Unable to load Dublin Core metadata.");
     }
+
+    // custom metadata
+    try {
+      MetaData customMeta = getSourceDocument().getMetaDataManager()
+          .getCustomMetaData();
+
+      HashMap customMetaHash = customMeta.getAvailableKey2Value();
+      Iterator customKeys = customMetaHash.keySet().iterator();
+      while (customKeys.hasNext()) {
+        String key = (String) customKeys.next();
+        String value = (String) customMetaHash.get(key);
+        if (value != null) {
+          setParameter(CUSTOM_PREFIX + key, value);
+        }
+      }
+
+    } catch (Exception e) {
+      getLogger().error("Unable to load custom metadata.", e);
+      addErrorMessage("Unable to load custom metadata.");
+    }
+
   }
 
   /**
@@ -93,19 +125,45 @@ public class Metadata extends SiteUsecase {
   protected void doExecute() throws Exception {
     super.doExecute();
 
+    // dc metadata
     MetaData meta = getSourceDocument().getMetaDataManager()
         .getDublinCoreMetaData();
 
     String[] keys = meta.getPossibleKeys();
     for (int i = 0; i < keys.length; i++) {
-      String value = getParameterAsString("meta.dc." + keys[i]);
+      String value = getParameterAsString(DC_PREFIX + keys[i]);
       if (value != null) {
         meta.setValue(keys[i], value);
       }
     }
     meta.save();
 
+    // custom metadata
+    MetaData customMeta = getSourceDocument().getMetaDataManager()
+        .getCustomMetaData();
+    String[] parameterNames = getParameterNames();
+    for (int i = 0; i < parameterNames.length; i++) {
+      String id = parameterNames[i];
+      if (id.startsWith(CUSTOM_PREFIX)) {
+        String key = id.substring(CUSTOM_PREFIX.length());
+        String value = getParameterAsString(CUSTOM_PREFIX + key);
+        if (value != null) {
+          customMeta.setValue(key, value);
+        }
+      }
+    }
+    customMeta.save();
+
     // TODO set workflow situation to edit here.
   }
 
+  public String getTargetURL(boolean success) {
+    showCustom = getParameterAsBoolean(SHOW_CUSTOM_PARAMETER, false);
+    if (showCustom) {
+      String transfer = getSourceDocument().getCanonicalWebappURL()
+          + "?lenya.usecase=tab.meta&showCustom=true";
+      return transfer;
+    } else
+      return super.getTargetURL(success);
+  }
 }

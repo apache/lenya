@@ -291,8 +291,16 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements
         } else {
           Iterator elementNames = maps[type].keySet().iterator();
           while (elementNames.hasNext()) {
-            writeElementValues(helper, metaElement, maps[type],
-                (String) elementNames.next());
+            /*
+             * removing prefixed elements to prevent that lenya:custom/* is
+             * inserted twice. Further prefixed metadata is causing an exception
+             * since writeElementValues(...) is prefixing all elements by
+             * default.
+             */
+            String elementName = (String) elementNames.next();
+            if (!(elementName.indexOf(":") > -1)) {
+              writeElementValues(helper, metaElement, maps[type], elementName);
+            }
           }
         }
       }

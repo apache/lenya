@@ -25,6 +25,11 @@ td.lenya-entry-caption {
 	background-color: transparent;
 }
 
+td.lenya-entry-caption h2{
+	text-align: center;
+    font-size: medium;
+}
+
 .lenya-form-element {
     width: 300px;
     font-family: Verdana, sans-serif;
