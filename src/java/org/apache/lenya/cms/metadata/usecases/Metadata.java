@@ -38,9 +38,9 @@ public class Metadata extends SiteUsecase {
     super();
   }
 
-  public static final String DC_PREFIX = "meta.dc.";
+  public static final String DC_FORM_PREFIX = "meta.dc.";
 
-  public static final String CUSTOM_PREFIX = "meta.custom.";
+  public static final String CUSTOM_FORM_PREFIX = "meta.custom.";
 
   public static final String SHOW_CUSTOM_PARAMETER = "showCustom";
 
@@ -71,7 +71,7 @@ public class Metadata extends SiteUsecase {
       for (int i = 0; i < keys.length; i++) {
         String value = meta.getFirstValue(keys[i]);
         if (value != null) {
-          setParameter(DC_PREFIX + keys[i], value);
+          setParameter(DC_FORM_PREFIX + keys[i], value);
         }
       }
 
@@ -91,7 +91,7 @@ public class Metadata extends SiteUsecase {
         String key = (String) customKeys.next();
         String value = (String) customMetaHash.get(key);
         if (value != null) {
-          setParameter(CUSTOM_PREFIX + key, value);
+          setParameter(CUSTOM_FORM_PREFIX + key, value);
         }
       }
 
@@ -125,34 +125,40 @@ public class Metadata extends SiteUsecase {
   protected void doExecute() throws Exception {
     super.doExecute();
 
+    boolean modified = false;
     // dc metadata
     MetaData meta = getSourceDocument().getMetaDataManager()
         .getDublinCoreMetaData();
 
     String[] keys = meta.getPossibleKeys();
     for (int i = 0; i < keys.length; i++) {
-      String value = getParameterAsString(DC_PREFIX + keys[i]);
+      String value = getParameterAsString(DC_FORM_PREFIX + keys[i]);
       if (value != null) {
         meta.setValue(keys[i], value);
+        modified = true;
       }
     }
-    meta.save();
+    if (modified)
+      meta.save();
 
     // custom metadata
+    modified = false;
     MetaData customMeta = getSourceDocument().getMetaDataManager()
         .getCustomMetaData();
     String[] parameterNames = getParameterNames();
     for (int i = 0; i < parameterNames.length; i++) {
       String id = parameterNames[i];
-      if (id.startsWith(CUSTOM_PREFIX)) {
-        String key = id.substring(CUSTOM_PREFIX.length());
-        String value = getParameterAsString(CUSTOM_PREFIX + key);
+      if (id.startsWith(CUSTOM_FORM_PREFIX)) {
+        String key = id.substring(CUSTOM_FORM_PREFIX.length());
+        String value = getParameterAsString(id);
         if (value != null) {
           customMeta.setValue(key, value);
+          modified = true;
         }
       }
     }
-    customMeta.save();
+    if (modified)
+      customMeta.save();
 
     // TODO set workflow situation to edit here.
   }
