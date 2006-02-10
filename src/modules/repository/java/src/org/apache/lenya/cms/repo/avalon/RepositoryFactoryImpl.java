@@ -24,18 +24,23 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.lenya.cms.repo.AssetTypeResolver;
 import org.apache.lenya.cms.repo.Repository;
 import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.cms.repo.RepositoryManager;
+import org.apache.lenya.cms.repo.adapter.ResourceTypeWrapperResolver;
 
 /**
  * Repository factory implementation.
  */
 public class RepositoryFactoryImpl implements RepositoryFactory, Contextualizable, Configurable,
-        ThreadSafe {
+        ThreadSafe, Serviceable {
 
     public void contextualize(Context context) throws ContextException {
         this.context = context;
@@ -54,8 +59,16 @@ public class RepositoryFactoryImpl implements RepositoryFactory, Contextualizabl
             Map objectModel = ContextHelper.getObjectModel(this.context);
             String webappPath = ObjectModelHelper.getContext(objectModel).getRealPath("/");
             this.repository = RepositoryManager.getRepository(webappPath, this.factoryClassName);
+            AssetTypeResolver resolver = new ResourceTypeWrapperResolver(manager);
+            this.repository.setAssetTypeResolver(resolver);
         }
         return this.repository;
+    }
+    
+    private ServiceManager manager;
+
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
     }
 
 }

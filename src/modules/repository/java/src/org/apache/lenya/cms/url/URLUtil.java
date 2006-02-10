@@ -22,11 +22,10 @@ import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repo.Area;
 import org.apache.lenya.cms.repo.Publication;
-import org.apache.lenya.cms.repo.Repository;
 import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.cms.repo.Session;
 import org.apache.lenya.cms.repo.Translation;
-import org.apache.lenya.cms.repo.avalon.RepositoryFactory;
+import org.apache.lenya.cms.repo.cocoon.SessionUtil;
 import org.apache.lenya.cms.repo.metadata.MetaData;
 import org.apache.lenya.cms.repo.metadata.MetaDataRegistry;
 import org.apache.lenya.cms.url.impl.LanguageSuffixMapper;
@@ -39,34 +38,6 @@ public class URLUtil {
 
     /**
      * @param manager The service manager.
-     * @param request The request object.
-     * @param logger The logger to use.
-     * @return A session.
-     */
-    public static Session getSession(ServiceManager manager, Request request, Logger logger) {
-        Session session = (Session) request.getAttribute(Session.class.getName());
-        if (session == null) {
-
-            RepositoryFactory factory = null;
-            try {
-                factory = (RepositoryFactory) manager.lookup(RepositoryFactory.ROLE);
-                Repository repository = factory.getRepository();
-                session = repository.createSession();
-                request.setAttribute(Session.class.getName(), session);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            } finally {
-                if (factory != null) {
-                    manager.release(factory);
-                }
-            }
-
-        }
-        return session;
-    }
-
-    /**
-     * @param manager The service manager.
      * @param request The request.
      * @param logger The logger.
      * @return A publication.
@@ -74,7 +45,7 @@ public class URLUtil {
      */
     public static Publication getPublication(ServiceManager manager, Request request, Logger logger)
             throws RepositoryException {
-        Session session = getSession(manager, request, logger);
+        Session session = SessionUtil.getSession(manager);
         String url = ServletHelper.getWebappURI(request);
         String pubId = new URLInformation(url).getPublicationId();
         return session.getPublication(pubId);

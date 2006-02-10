@@ -108,7 +108,7 @@ public class RepositoryTest extends TestCase {
         System.out.println("Starting test");
 
         this.repo = RepositoryManager.getRepository(getWebappDirectory(), getRepositoryFactory());
-        Session session = repo.createSession();
+        Session session = repo.login("john");
 
         URL schemaUrl = getClass().getResource("schema.xml");
         Schema schema = new Schema(Validator.GRAMMAR_RELAX_NG, schemaUrl.toString());

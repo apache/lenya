@@ -28,12 +28,13 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceFactory;
 import org.apache.lenya.cms.repo.Area;
 import org.apache.lenya.cms.repo.Asset;
-import org.apache.lenya.cms.repo.Translation;
 import org.apache.lenya.cms.repo.Publication;
 import org.apache.lenya.cms.repo.Repository;
 import org.apache.lenya.cms.repo.Session;
 import org.apache.lenya.cms.repo.SiteNode;
+import org.apache.lenya.cms.repo.Translation;
 import org.apache.lenya.cms.repo.avalon.RepositoryFactory;
+import org.apache.lenya.cms.repo.cocoon.SessionUtil;
 
 /**
  * Repository source factory.
@@ -54,7 +55,7 @@ public class ContentSourceFactory extends AbstractLogEnabled implements SourceFa
                 this.repository = factory.getRepository();
             }
 
-            Session session = this.repository.createSession();
+            Session session = SessionUtil.getSession(this.manager);
 
             String[] parts = location.split(":");
 
@@ -87,6 +88,8 @@ public class ContentSourceFactory extends AbstractLogEnabled implements SourceFa
             } else {
                 throw new MalformedURLException("The locator must start with either one or two slashes.");
             }
+
+            session.logout();
 
         } catch (MalformedURLException e) {
             throw e;

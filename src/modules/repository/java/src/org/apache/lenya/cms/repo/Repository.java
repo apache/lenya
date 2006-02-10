@@ -24,10 +24,11 @@ import org.apache.lenya.cms.repo.metadata.MetaDataRegistry;
 public interface Repository {
 
     /**
+     * @param userId The user ID.
      * @return A session.
      * @throws RepositoryException if an error occurs.
      */
-    Session createSession() throws RepositoryException;
+    Session login(String userId) throws RepositoryException;
 
     /**
      * @return The meta data registry.

@@ -31,9 +31,9 @@ public class JackrabbitRepository extends JCRRepository {
         ((RepositoryImpl) getRepository()).shutdown();
     }
 
-    protected Session getSession(String workspaceName) throws RepositoryException {
+    protected Session getSession(String workspaceName, String userId) throws RepositoryException {
         try {
-            Session defaultWorkspaceSession = getRepository().login(new SimpleCredentials("john",
+            Session defaultWorkspaceSession = getRepository().login(new SimpleCredentials(userId,
                     "".toCharArray()));
             WorkspaceImpl defaultWorkspace = (WorkspaceImpl) defaultWorkspaceSession.getWorkspace();
             String[] workspaces = defaultWorkspace.getAccessibleWorkspaceNames();
@@ -42,7 +42,7 @@ public class JackrabbitRepository extends JCRRepository {
                 // create = true;
             }
 
-            return getRepository().login(new SimpleCredentials("john", "".toCharArray()),
+            return getRepository().login(new SimpleCredentials(userId, "".toCharArray()),
                     workspaceName);
         } catch (javax.jcr.RepositoryException e) {
             throw new RepositoryException(e);

@@ -39,13 +39,27 @@ import org.apache.lenya.cms.repo.RepositoryException;
  * Repository session.
  */
 public class JCRSession implements org.apache.lenya.cms.repo.Session {
+    
+    private String userId;
 
     /**
      * Ctor.
      * @param repository The repository facade.
+     * @param userId The user to log in.
      */
-    public JCRSession(JCRRepository repository) {
+    public JCRSession(JCRRepository repository, String userId) {
+        if (repository == null) {
+            throw new IllegalArgumentException("The repository must not be null!");
+        }
         this.repository = repository;
+        if (userId == null) {
+            throw new IllegalArgumentException("The user ID must not be null!");
+        }
+        this.userId = userId;
+    }
+    
+    protected String getUserId() {
+        return this.userId;
     }
 
     private JCRRepository repository;
@@ -67,7 +81,7 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
             try {
                 // boolean create = false;
 
-                Session session = getJcrRepository().getSession(area);
+                Session session = getJcrRepository().getSession(area, getUserId());
                 facade = new RepositoryFacade(this,
                         session,
                         getRepository().getAssetTypeResolver(),

@@ -24,14 +24,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.stream.StreamResult;
-import javax.xml.transform.stream.StreamSource;
-
-import org.apache.lenya.cms.repo.mock.AssetTypeResolverImpl;
 import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.repo.Area;
 import org.apache.lenya.cms.repo.Asset;
@@ -44,6 +36,7 @@ import org.apache.lenya.cms.repo.Session;
 import org.apache.lenya.cms.repo.SiteNode;
 import org.apache.lenya.cms.repo.Translation;
 import org.apache.lenya.cms.repo.impl.AssetTypeImpl;
+import org.apache.lenya.cms.repo.mock.AssetTypeResolverImpl;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.tools.ant.BuildException;
@@ -129,7 +122,7 @@ public class Migrate14 {
                     getRepositoryFactory());
             repo.setAssetTypeResolver(new AssetTypeResolverImpl());
 
-            this.session = this.repo.createSession();
+            this.session = this.repo.login("john");
 
             File publicationsDirectory = new File(webappDirectory, PUBLICATION_PREFIX);
             File[] pubDirs = publicationsDirectory.listFiles(new FileFilter() {
@@ -181,8 +174,10 @@ public class Migrate14 {
 
         File contentDir = new File(pubDir, "content");
         File[] areaDirs = contentDir.listFiles(directoryFilter);
-        for (int i = 0; i < areaDirs.length; i++) {
-            importContent(areaDirs[i], pub);
+        if (areaDirs != null) {
+            for (int i = 0; i < areaDirs.length; i++) {
+                importContent(areaDirs[i], pub);
+            }
         }
     }
 
@@ -294,24 +289,6 @@ public class Migrate14 {
             throw new RepositoryException(e);
         }
         copy(in, out);
-        /*
-        try {
-            Transformer transformer = TransformerFactory.newInstance().newTransformer();
-            Source source = new StreamSource(file);
-            Result result = new StreamResult(out);
-            transformer.transform(source, result);
-        } catch (Exception e) {
-            throw new RepositoryException(e);
-        } finally {
-            if (out != null) {
-                try {
-                    out.close();
-                } catch (IOException e) {
-                    throw new RepositoryException(e);
-                }
-            }
-        }
-        */
     }
 
     static void copy(InputStream fis, OutputStream fos) {

@@ -16,20 +16,17 @@
  */
 package org.apache.lenya.cms.repo.adapter;
 
-import org.apache.avalon.framework.activity.Initializable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.lenya.cms.repo.Area;
 import org.apache.lenya.cms.repo.Asset;
-import org.apache.lenya.cms.repo.AssetTypeResolver;
 import org.apache.lenya.cms.repo.Publication;
-import org.apache.lenya.cms.repo.Repository;
 import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.cms.repo.SiteNode;
 import org.apache.lenya.cms.repo.Translation;
-import org.apache.lenya.cms.repo.avalon.RepositoryFactory;
+import org.apache.lenya.cms.repo.cocoon.SessionUtil;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.Session;
@@ -40,8 +37,7 @@ import org.apache.lenya.transaction.IdentityMap;
 /**
  * Repository node factory.
  */
-public class RepoNodeFactory extends AbstractLogEnabled implements NodeFactory, Serviceable,
-        Initializable {
+public class RepoNodeFactory extends AbstractLogEnabled implements NodeFactory, Serviceable {
 
     private Session oldSession;
 
@@ -68,11 +64,13 @@ public class RepoNodeFactory extends AbstractLogEnabled implements NodeFactory, 
         } else {
 
             try {
-                String language = docPath.substring(underscoreIndex + 1, underscoreIndex + 3);
 
+                org.apache.lenya.cms.repo.Session session = SessionUtil.getSession(this.manager);
+                
+                String language = docPath.substring(underscoreIndex + 1, underscoreIndex + 3);
                 docPath = docPath.substring(0, docPath.length() - "/index_de.xml".length());
 
-                Publication pub = this.session.getPublication(pubId);
+                Publication pub = session.getPublication(pubId);
                 Area area = pub.getArea(areaId);
 
                 Translation trans = null;
@@ -97,27 +95,9 @@ public class RepoNodeFactory extends AbstractLogEnabled implements NodeFactory, 
     }
 
     private ServiceManager manager;
-    private org.apache.lenya.cms.repo.Session session;
 
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
-    }
-
-    public void initialize() throws Exception {
-        RepositoryFactory factory = null;
-        try {
-            factory = (RepositoryFactory) manager.lookup(RepositoryFactory.ROLE);
-            Repository repository = factory.getRepository();
-            AssetTypeResolver resolver = new ResourceTypeWrapperResolver(this.manager);
-            repository.setAssetTypeResolver(resolver);
-            this.session = repository.createSession();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (factory != null) {
-                manager.release(factory);
-            }
-        }
     }
 
 }

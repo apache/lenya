@@ -48,11 +48,8 @@ public abstract class JCRRepository implements org.apache.lenya.cms.repo.Reposit
         return this.repository;
     }
 
-    /**
-     * @return The repository session.
-     */
-    public org.apache.lenya.cms.repo.Session createSession() {
-        return new JCRSession(this);
+    public org.apache.lenya.cms.repo.Session login(String userId) {
+        return new JCRSession(this, userId);
     }
 
     private AssetTypeResolver typeResolver;
@@ -68,6 +65,7 @@ public abstract class JCRRepository implements org.apache.lenya.cms.repo.Reposit
 
     private MetaDataRegistry metaDataRegistry;
     protected Session internalSession;
+    protected static final String INTERNAL_USER = "admin";
 
     public MetaDataRegistry getMetaDataRegistry() throws RepositoryException {
         if (this.metaDataRegistry == null) {
@@ -76,11 +74,12 @@ public abstract class JCRRepository implements org.apache.lenya.cms.repo.Reposit
         return this.metaDataRegistry;
     }
 
-    protected abstract Session getSession(String workspaceName) throws RepositoryException;
+    protected abstract Session getSession(String workspaceName, String userId)
+            throws RepositoryException;
 
     protected Session getInternalSession() throws RepositoryException {
         if (this.internalSession == null) {
-            this.internalSession = getSession(INTERNAL_WORKSPACE);
+            this.internalSession = getSession(INTERNAL_WORKSPACE, INTERNAL_USER);
         }
         return this.internalSession;
     }
