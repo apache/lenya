@@ -27,15 +27,14 @@
       <p>In 1.4.x meta data is kept apart from the xml document but in the same 
         directory (index_{lang}.xml.meta). There are differnt types of meta 
         data. </p>
-        <ol>
-          <li>The default is based on the <a 
-            href="http://dublincore.org">Dublin Core</a> standard (like in 
-            1.2.x).</li>
-          <li>Besides we introduced internal (used by lenya internally and not 
-            exposed to the user)</li>
-          <li>and custom metadata (added from the developer to enable user to 
-            maintain their extra informations about the document)</li>
-        </ol>
+      <ol>
+        <li>The default is based on the <a href="http://dublincore.org">Dublin 
+          Core</a> standard (like in 1.2.x).</li>
+        <li>Besides we introduced internal (used by lenya internally and not 
+          exposed to the user)</li>
+        <li>and custom metadata (added from the developer to enable user to 
+          maintain their extra informations about the document)</li>
+      </ol>
       <p>There are basically two use cases as example:</p>
       <ol>
         <li>Create meta data</li>
@@ -73,30 +72,43 @@
       <dc:rights>All rights reserved</dc:rights>
     </lenya:dc>
   </lenya:meta>
-</lenya:document>]]>
-      </source>
+</lenya:document>]]> </source>
     </section>
     <section>
       <title>Implementation</title>
       <p>Like nearly all new modules/functionality the meta data usecases are 
-        following the new fallback concept. Meaning you are using the core 
-        contracts as long you are *not* overriding them with your own 
-        implementation.</p>
+        following the new <strong>fallback</strong> concept. Meaning you are 
+        using the core contracts as long you are *not* overriding them with 
+        your own implementation. To override a core implementation you just 
+        need to place your custom implementation to the right path in you pub 
+        and lenya will try to pick it up from there.</p>
       <section>
         <title>Create meta data</title>
-        <p>Upon creation of a document a sample is copied from the sample 
-          doctype directory. This sample already contains some sample meta 
-          data. This values are partially filled in by the user (subject, 
-          desciption, etc.) and partly by the system (creator, creation data). 
-          This is done in the <code>site.create</code> usecase 
-          (lenya.usecase=site.create).</p>
-        <fixme author="thorsten">Add more information about extending the 
-          create.jx file with custom meta data</fixme>
+        <p>Upon creation of a document a set of sample meta data is presented 
+          in the creation form. This values are partially filled in by the user 
+          (subject, desciption, etc.) and partly by the system (creator, 
+          creation data). This is done with the <code>site.create</code> 
+          usecase (lenya.usecase=site.create).</p>
+        <p> We activated that all custom meta data will be picked up from the 
+          form and saved to the meta data doc. To tell lenya that you want as 
+          well create a set of custom meta data, you need to modify your 
+          implementation of the create.jx. form.</p>
+        <note label="Custom implementation of create.jx"> An 
+          <strong>example</strong> of an implementation can be found in 
+          <code>{$default-pub}/lenya/usecases/site/create.jx</code>. Just 
+          change it and see what comes out. BTW if you need it in your custom 
+          pub just mind the path. ;-)</note>
       </section>
       <section>
         <title>Display/modify meta data</title>
         <p>The display of meta data is handled by the usecase 
-          <code>tab.meta</code>. We activated that all custom meta data </p>
+          <code>tab.meta</code>. We activated that all custom meta data are 
+          passed to the form. However you will need to add the fields you want 
+          to edit in your own implementation of the meta.jx.</p>
+        <note label="Custom implementation of meta.jx"> An <strong>example</strong> of an 
+          implementation can be found in 
+          <code>{$default-pub}/lenya/usecases/tab/meta.jx</code>. If you need 
+          it in your custom pub just mind the path. </note>
       </section>
     </section>
   </body>
