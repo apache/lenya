@@ -7,30 +7,18 @@
   xmlns:dc="http://purl.org/dc/elements/1.1/"
 >
 
-<xsl:param name="index"/>
 <xsl:param name="uri"/>
-<xsl:param name="id"/>
-<xsl:param name="action"/>
 
 <xsl:variable name="boost" select="number(/descendant-or-self::dc:rights)"/>  
 
-<xsl:template match="/">  
-  <xsl:choose>
-    <xsl:when test="$action = 'delete'">
-       <lucene:delete indexid="{$index}">
-        <lucene:document uid="{$id}"/>
-      </lucene:delete>     
-    </xsl:when>
-    <xsl:when test="$action = 'index'">        
-      <lucene:index clear="false" indexid="{$index}" merge-factor="100">
-        <lucene:document uid="{$id}">
-          <lucene:field name="url" boost="{$boost}"><xsl:value-of select="$uri"/></lucene:field>
-          <xsl:apply-templates/>
-        </lucene:document>
-      </lucene:index>  
-    </xsl:when>
-  </xsl:choose>
-
+<xsl:template match="/">
+  <!-- attributes of the index and document element will be added by the lucene module -->
+  <lucene:index>
+    <lucene:document>
+      <lucene:field name="url" boost="{$boost}"><xsl:value-of select="$uri"/></lucene:field>
+      <xsl:apply-templates/>
+    </lucene:document>
+  </lucene:index>  
 </xsl:template>
 
 <xsl:template match="dc:rights" priority="1">
@@ -55,6 +43,5 @@
 <xsl:template match="@*|node()" priority="-1">
     <xsl:apply-templates/>
 </xsl:template>
-
 
 </xsl:stylesheet>

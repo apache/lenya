@@ -16,6 +16,8 @@
  */
 package org.apache.lenya.cms.lucene;
 
+import java.util.Arrays;
+
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.repository.Node;
@@ -50,6 +52,13 @@ public class IndexDocument extends DocumentUsecase {
         String area = super.getParameterAsString(INDEX_AREA);
 
         try {
+            String[] formats = getSourceDocument().getResourceType().getFormats();
+            if (!Arrays.asList(formats).contains("luceneIndex")) {
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("Document ["+getSourceDocument()+"] does not support indexing.");
+                }
+                return;
+            }
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             if (action.equals(INDEX)) {
                 // index

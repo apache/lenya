@@ -115,36 +115,19 @@
       </map:match>
 
       <map:match pattern="index-*.xml">
-        <map:aggregate element="cmsbody">
-          <!-- TODO Use the standard pipeline for retieving the document -->
-          <!-- <map:part src="cocoon:/modules/{page-envelope:document-type}/view.xml"/> -->
-          <map:part src="fallback://content/{page-envelope:area}/{page-envelope:document-id}/index_{page-envelope:document-language}.xml.meta"/>
-          <map:part src="fallback://content/{page-envelope:area}/{page-envelope:document-id}/index_{page-envelope:document-language}.xml"/>
-        </map:aggregate>
-
-        <map:transform src="fallback://lenya/modules/{page-envelope:document-type}/xslt/{page-envelope:document-type}2index.xsl">
+        <map:generate src="{resource-type:format-luceneIndex}"/>
+        <map:transform src="fallback://lenya/modules/lucene/xslt/index.xsl">
           <map:parameter name="index" value="{page-envelope:publication-id}-{1}"/>
-          <map:parameter name="action" value="index"/>
-          <map:parameter name="url" value="{request:requestURI}"/>
           <map:parameter name="id" value="{page-envelope:document-url}"/>
         </map:transform>
-
         <map:transform type="index2"/>
         <map:serialize type="xml"/>
       </map:match>
 
       <map:match pattern="delete-*.xml">
-        <map:aggregate element="cmsbody">
-          <!-- TODO Use the standard pipeline for retieving the document -->
-          <!-- <map:part src="cocoon:/modules/{page-envelope:document-type}/view.xml"/> -->
-          <map:part src="fallback://content/{page-envelope:area}/{page-envelope:document-id}/index_{page-envelope:document-language}.xml.meta"/>
-          <map:part src="fallback://content/{page-envelope:area}/{page-envelope:document-id}/index_{page-envelope:document-language}.xml"/>
-        </map:aggregate>
-
-        <map:transform src="fallback://lenya/modules/{page-envelope:document-type}/xslt/{page-envelope:document-type}2index.xsl">
+        <map:generate src="context://lenya/content/util/empty.xml"/>
+        <map:transform src="fallback://lenya/modules/lucene/xslt/delete.xsl">
           <map:parameter name="index" value="{page-envelope:publication-id}-{1}"/>
-          <map:parameter name="action" value="delete"/>
-          <map:parameter name="url" value="{request:requestURI}"/>
           <map:parameter name="id" value="{page-envelope:document-url}"/>
         </map:transform>
 
