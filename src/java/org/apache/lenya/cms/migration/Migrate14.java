@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import org.apache.lenya.cms.metadata.LenyaMetaData;
+import org.apache.lenya.cms.metadata.dublincore.DublinCoreImpl;
 import org.apache.lenya.cms.repo.Area;
 import org.apache.lenya.cms.repo.Asset;
 import org.apache.lenya.cms.repo.AssetType;
@@ -35,7 +36,11 @@ import org.apache.lenya.cms.repo.RepositoryManager;
 import org.apache.lenya.cms.repo.Session;
 import org.apache.lenya.cms.repo.SiteNode;
 import org.apache.lenya.cms.repo.Translation;
+import org.apache.lenya.cms.repo.adapter.DublinCoreElements;
+import org.apache.lenya.cms.repo.adapter.LenyaElements;
 import org.apache.lenya.cms.repo.impl.AssetTypeImpl;
+import org.apache.lenya.cms.repo.metadata.MetaData;
+import org.apache.lenya.cms.repo.metadata.MetaDataRegistry;
 import org.apache.lenya.cms.repo.mock.AssetTypeResolverImpl;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
@@ -279,9 +284,9 @@ public class Migrate14 {
         String language = suffix.substring(0, suffix.length() - ".xml".length());
         System.out.println(" language [" + language + "]");
 
-        Translation document = contentNode.addTranslation(language, "Label", "application/xml");
+        Translation trans = contentNode.addTranslation(language, "Label", "application/xml");
 
-        OutputStream out = document.getOutputStream();
+        OutputStream out = trans.getOutputStream();
         FileInputStream in;
         try {
             in = new FileInputStream(file);
@@ -289,9 +294,65 @@ public class Migrate14 {
             throw new RepositoryException(e);
         }
         copy(in, out);
+
+        File metaFile = new File(file.getAbsolutePath() + ".meta");
+        try {
+            org.w3c.dom.Document xmlDoc = DocumentHelper.readDocument(metaFile);
+            importMetaData(trans,
+                    xmlDoc,
+                    LenyaMetaData.NAMESPACE,
+                    "internal",
+                    LenyaElements.ELEMENT_SET,
+                    LenyaElements.ELEMENTS);
+            importMetaData(trans,
+                    xmlDoc,
+                    DublinCoreImpl.DC_NAMESPACE,
+                    "dc",
+                    DublinCoreElements.ELEMENT_SET,
+                    DublinCoreElements.getElements());
+            importMetaData(trans,
+                    xmlDoc,
+                    DublinCoreImpl.DCTERMS_NAMESPACE,
+                    "dc",
+                    DublinCoreElements.ELEMENT_SET,
+                    DublinCoreElements.getElements());
+        } catch (Exception e) {
+            throw new RepositoryException(e);
+        }
     }
 
-    static void copy(InputStream fis, OutputStream fos) {
+    protected void importMetaData(Translation trans, org.w3c.dom.Document xmlDoc,
+            String namespaceUri, String parentElement, String elementSetName,
+            org.apache.lenya.cms.repo.metadata.Element[] elements) throws RepositoryException {
+
+        NamespaceHelper lenyaHelper = new NamespaceHelper(LenyaMetaData.NAMESPACE, "", xmlDoc);
+        Element metaElement = lenyaHelper.getFirstChild(xmlDoc.getDocumentElement(), "meta");
+        Element parent = lenyaHelper.getFirstChild(metaElement, parentElement);
+
+        NamespaceHelper helper = new NamespaceHelper(namespaceUri, "", xmlDoc);
+        Element[] children = helper.getChildren(parent);
+        for (int i = 0; i < children.length; i++) {
+            String key = children[i].getLocalName();
+            String value = DocumentHelper.getSimpleElementText(children[i]);
+            System.out.println("  Setting meta data: [" + key + "] = [" + value + "]");
+
+            MetaDataRegistry registry = this.repo.getMetaDataRegistry();
+            if (!registry.isRegistered(elementSetName)) {
+                registry.register(elementSetName, elements);
+            }
+            
+            MetaData meta = trans.getMetaData(elementSetName);
+            if (meta.getElementSet().getElement(key).isMultiple()) {
+                meta.addValue(key, value);
+            }
+            else {
+                meta.setValue(key, value);
+            }
+        }
+
+    }
+
+    protected static void copy(InputStream fis, OutputStream fos) {
         try {
             byte buffer[] = new byte[0xffff];
             int nbytes;
