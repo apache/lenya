@@ -78,10 +78,38 @@
               <jx:out value="${usecase.getParameter('meta.dc.creator')}"/>
             </td>
           </tr>
+          <jx:if test="${usecase.getParameter('showCustom').equals('true')}">
+            <tr>
+              <td colspan="2" class="lenya-entry-caption">
+                <h2><i18n:text>Custom metadata</i18n:text></h2>
+              </td>
+            </tr>
+            <tr>
+              <td class="lenya-entry-caption"><label for="myMeta"><i18n:text>My
+                custom metadata</i18n:text>:</label></td>
+              <td>
+                <input type="text" id="myMeta" name="meta.custom.myMeta"
+                  class="lenya-form-element"
+                  value="${usecase.getParameter('meta.custom.myMeta')}"/>
+              </td>
+            </tr>
+          </jx:if>
           <tr>
             <td/>
             <td>
               <br/>
+              <jx:if
+                test="${usecase.getParameter('showCustom').equals('false')}">
+                <input i18n:attr="value" name="submit" type="submit"
+                  value="Show custom metadata"
+                  onClick="this.form.showCustom.value='true';"/>
+              </jx:if>
+              <jx:if
+                test="${usecase.getParameter('showCustom').equals('true')}">
+                <input i18n:attr="value" name="submit" type="submit"
+                  value="Hide custom metadata"
+                  onClick="this.form.showCustom.value='false';"/>
+              </jx:if>
               <jx:choose>
                 <jx:when
                   test="${usecase.getParameter('document').getArea().equals('authoring') &amp;&amp; ! usecase.hasErrors()}">
@@ -97,6 +125,7 @@
           </tr>
         </table>
         <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
+        <input type="hidden" id="showCustom" name="showCustom" value="${usecase.getParameter('showCustom')}"/>
         <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
       </form>
     </div>
