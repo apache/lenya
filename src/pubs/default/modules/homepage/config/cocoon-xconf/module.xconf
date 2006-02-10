@@ -28,6 +28,7 @@
     </creator>
     <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@href"/>
     <format name="xhtml" uri="cocoon://modules/homepage/xhtml.xml"/>
+    <format name="luceneIndex" uri="cocoon://modules/xhtml/lucene-index.xml"/>
   </component-instance>
 
 </xconf>

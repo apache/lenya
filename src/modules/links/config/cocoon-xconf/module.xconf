@@ -28,6 +28,7 @@
       <sample-name>fallback://lenya/modules/links/samples/links.xml</sample-name>
     </creator>
     <format name="xhtml" uri="cocoon://modules/links/xhtml.xml"/>
+    <format name="luceneIndex" uri="cocoon://modules/xhtml/lucene-index.xml"/>
   </component-instance>
 
 </xconf>
