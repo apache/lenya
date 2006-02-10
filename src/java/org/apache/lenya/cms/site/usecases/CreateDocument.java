@@ -19,8 +19,11 @@ package org.apache.lenya.cms.site.usecases;
 import java.util.Arrays;
 
 import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.lenya.cms.metadata.MetaData;
+import org.apache.lenya.cms.metadata.usecases.Metadata;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.Publication;
 
 /**
@@ -169,5 +172,26 @@ public class CreateDocument extends Create {
      */
     protected String getDocumentTypeName() {
         return getParameterAsString(DOCUMENT_TYPE);
+    }
+    
+    /**
+     * @see org.apache.lenya.cms.site.usecases.Create#setMetaData(org.apache.lenya.cms.publication.Document)
+     */
+    protected void setMetaData(Document document) throws DocumentException {
+        super.setMetaData(document);
+
+        boolean modified = false;
+        MetaData customMeta = document.getMetaDataManager().getCustomMetaData();
+        String[] paramNames = getParameterNames();
+        for (int i=0; i<paramNames.length; i++) {
+            if (paramNames[i].startsWith(Metadata.CUSTOM_FORM_PREFIX)) {
+                String key = paramNames[i].substring(Metadata.CUSTOM_FORM_PREFIX.length());
+                String value = getParameterAsString(paramNames[i]);
+                customMeta.addValue(key, value);
+                modified = true;
+            }
+        }
+        if (modified)
+            customMeta.save();
     }
 }

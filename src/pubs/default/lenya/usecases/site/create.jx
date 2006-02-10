@@ -167,6 +167,15 @@
                 <input class="lenya-form-element" type="text" name="rights" value="${usecase.getParameter('rights')}"/>
               </td>
             </tr>
+            <tr>
+              <td class="lenya-entry-caption"><label for="myMeta"><i18n:text>My
+                custom metadata</i18n:text>:</label></td>
+              <td>
+                <input type="text" id="myMeta" name="meta.custom.myMeta"
+                  class="lenya-form-element"
+                  value="${usecase.getParameter('meta.custom.myMeta')}"/>
+              </td>
+            </tr>
             <jx:set var="resourceTypes" value="${usecase.getParameter('resourceTypes')}"/>
             <jx:if test="${resourceTypes.size()  &gt; 0}">
               <tr>
