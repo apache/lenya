@@ -35,9 +35,7 @@
       <link rel="stylesheet" type="text/css" href="{$contextprefix}/lenya/css/default.css" title="default css"/>
       <!-- the following line is a fix for an Internet Explorer incompatibility -->
       <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
-<xsl:if test="count(xhtml:script) &gt; 0">
- <script><xsl:copy-of select="xhtml:script/@*|xhtml:script/node()" /> </script>
-</xsl:if>
+      <xsl:apply-templates select="xhtml:script"/>
     </head>
     <body>
     
