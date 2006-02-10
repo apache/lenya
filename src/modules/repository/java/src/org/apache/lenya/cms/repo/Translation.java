@@ -86,5 +86,46 @@ public interface Translation extends MetaDataOwner {
      * @throws RepositoryException if an error occurs.
      */
     Asset getAsset() throws RepositoryException;
-
+    
+    /**
+     * Checks the translation in.
+     * @throws RepositoryException if an error occurs.
+     */
+    void checkin() throws RepositoryException;
+        
+    /**
+     * Checks the translation out.
+     * @throws RepositoryException if an error occurs.
+     */
+    void checkout() throws RepositoryException;
+    
+    /**
+     * @return if the translation is checked out.
+     * @throws RepositoryException if an error occurs.
+     */
+    boolean isCheckedOut() throws RepositoryException;
+    
+    /**
+     * Locks the translation.
+     * @throws RepositoryException if an error occurs.
+     */
+    void lock() throws RepositoryException;
+    
+    /**
+     * Unlocks the translation.
+     * @throws RepositoryException if an error occurs.
+     */
+    void unlock() throws RepositoryException;
+    
+    /**
+     * @return if the translation is locked.
+     * @throws RepositoryException if an error occurs.
+     */
+    boolean isLocked() throws RepositoryException;
+    
+    /**
+     * Removes this translation.
+     * @throws RepositoryException if an error occurs.
+     */
+    void remove() throws RepositoryException;
 }

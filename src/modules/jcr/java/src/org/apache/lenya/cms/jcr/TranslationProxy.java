@@ -24,8 +24,8 @@ import org.apache.lenya.cms.jcr.mapping.Path;
 import org.apache.lenya.cms.jcr.mapping.PathElement;
 import org.apache.lenya.cms.jcr.metadata.MetaDataProxy;
 import org.apache.lenya.cms.repo.Asset;
-import org.apache.lenya.cms.repo.Translation;
 import org.apache.lenya.cms.repo.RepositoryException;
+import org.apache.lenya.cms.repo.Translation;
 import org.apache.lenya.cms.repo.metadata.MetaData;
 
 /**
@@ -108,6 +108,55 @@ public class TranslationProxy extends AbstractNodeProxy implements Translation {
 
     public String getMimeType() throws RepositoryException {
         return getResourceProxy().getMimeType();
+    }
+
+    public void checkin() throws RepositoryException {
+        try {
+            getNode().checkin();
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
+    }
+
+    public void checkout() throws RepositoryException {
+        try {
+            getNode().checkout();
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
+    }
+
+    public boolean isCheckedOut() throws RepositoryException {
+        try {
+            return getNode().isCheckedOut();
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
+    }
+
+    public void lock() throws RepositoryException {
+        try {
+            // deep, sessionScoped
+            getNode().lock(true, true);
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
+    }
+
+    public void unlock() throws RepositoryException {
+        try {
+            getNode().unlock();
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
+    }
+
+    public boolean isLocked() throws RepositoryException {
+        try {
+            return getNode().isLocked();
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
     }
 
 }

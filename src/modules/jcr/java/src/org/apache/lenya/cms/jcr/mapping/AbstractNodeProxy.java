@@ -208,6 +208,14 @@ public abstract class AbstractNodeProxy implements NodeProxy {
         } catch (javax.jcr.RepositoryException e) {
             throw new RepositoryException(e);
         }
-
+        save();
+    }
+    
+    protected void save() throws RepositoryException {
+        try {
+            getRepository().getSession().save();
+        } catch (javax.jcr.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
     }
 }

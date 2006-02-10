@@ -57,4 +57,10 @@ public interface Publication extends MetaDataOwner {
      */
     Session getSession() throws RepositoryException;
     
+    /**
+     * Removes this publication.
+     * @throws RepositoryException if an error occurs.
+     */
+    void remove() throws RepositoryException;
+    
 }

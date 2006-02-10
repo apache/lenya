@@ -76,4 +76,8 @@ public class JCRPublication implements Publication {
         return internalArea.getMetaData(elementSet);
     }
 
+    public void remove() throws RepositoryException {
+        getJcrSession().removePublication(getPublicationId());
+    }
+
 }

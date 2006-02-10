@@ -108,19 +108,35 @@ public class RepoNode extends AbstractLogEnabled implements Node, Identifiable {
     }
 
     public void lock() throws RepositoryException {
-        throw new RuntimeException("not implemented");
+        try {
+            getTranslation().lock();
+        } catch (org.apache.lenya.cms.repo.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
     }
 
     public void unlock() throws RepositoryException {
-        throw new RuntimeException("not implemented");
+        try {
+            getTranslation().unlock();
+        } catch (org.apache.lenya.cms.repo.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
     }
 
     public void checkout() throws RepositoryException {
-        throw new RuntimeException("not implemented");
+        try {
+            getTranslation().checkout();
+        } catch (org.apache.lenya.cms.repo.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
     }
 
     public void checkin() throws RepositoryException {
-        throw new RuntimeException("not implemented");
+        try {
+            getTranslation().checkin();
+        } catch (org.apache.lenya.cms.repo.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
     }
 
     public void registerDirty() throws RepositoryException {
@@ -128,15 +144,23 @@ public class RepoNode extends AbstractLogEnabled implements Node, Identifiable {
     }
 
     public boolean isCheckedOut() throws RepositoryException {
-        throw new RuntimeException("not implemented");
+        try {
+            return getTranslation().isCheckedOut();
+        } catch (org.apache.lenya.cms.repo.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
     }
 
     public boolean isCheckedOutByUser() throws RepositoryException {
-        throw new RuntimeException("not implemented");
+        return isCheckedOut();
     }
 
     public boolean isLocked() throws RepositoryException {
-        throw new RuntimeException("not implemented");
+        try {
+            return getTranslation().isLocked();
+        } catch (org.apache.lenya.cms.repo.RepositoryException e) {
+            throw new RepositoryException(e);
+        }
     }
 
     public void registerRemoved() throws RepositoryException {

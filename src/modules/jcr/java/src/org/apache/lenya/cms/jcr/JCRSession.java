@@ -178,6 +178,14 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
             return pub;
         }
     }
+    
+    protected void removePublication(String id) throws RepositoryException {
+        AreaProxy[] areas = getAreas(getPublication(id));
+        for (int i = 0; i < areas.length; i++) {
+            areas[i].remove();
+        }
+        this.publications.remove(id);
+    }
 
     protected AreaProxy addArea(JCRPublication publication, String area)
             throws org.apache.lenya.cms.repo.RepositoryException {

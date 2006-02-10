@@ -40,12 +40,6 @@ public interface Asset extends MetaDataOwner {
     Translation addTranslation(String language, String label, String mimeType) throws RepositoryException;
 
     /**
-     * @param document The document.
-     * @throws RepositoryException
-     */
-    void removeTranslation(Translation document) throws RepositoryException;
-
-    /**
      * Returns a document of a specific language.
      * @param language The document's language.
      * @return A document.

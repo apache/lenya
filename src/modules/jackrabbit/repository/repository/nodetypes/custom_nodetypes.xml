@@ -135,7 +135,7 @@
     <propertyDefinition name="lenya:label" requiredType="String" autoCreate="false" mandatory="true"
       onParentVersion="COPY" protected="false" multiple="false"/>
     <childNodeDefinition name="lenya:resource" defaultPrimaryType="lnt:resource" autoCreate="true" mandatory="true"
-      onParentVersion="ABORT">
+      onParentVersion="COPY">
       <requiredPrimaryTypes>
         <requiredPrimaryType>lnt:resource</requiredPrimaryType>
       </requiredPrimaryTypes>
@@ -164,9 +164,9 @@
       <supertype>lnt:mappable</supertype>
     </supertypes>
     <propertyDefinition name="lenya:elementSet" requiredType="String" autoCreate="false" mandatory="true"
-      onParentVersion="ABORT" multiple="false" protected="false"/>
+      onParentVersion="COPY" multiple="false" protected="false"/>
     <propertyDefinition name="*" requiredType="String" autoCreate="false" mandatory="false"
-      onParentVersion="ABORT" multiple="true" protected="false"/>
+      onParentVersion="COPY" multiple="true" protected="false"/>
   </nodeType>
   
   <!--
