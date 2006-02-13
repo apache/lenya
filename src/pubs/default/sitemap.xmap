@@ -93,11 +93,11 @@
     the navigational elements (breadcrumb, tabs, menu) with the actual
     content of the document. -->
     <map:pipeline>
-      <!-- pattern="meta?docid={docid}" -->
+      <!-- pattern="meta?docid={docid}&lang={lang}" -->
       <map:match pattern="**meta">
         <map:generate type="lenyaMetaData">
           <map:parameter name="docid" value="{request-param:docid}"/>
-          <map:parameter name="lang" value="en"/>
+          <map:parameter name="lang" value="{request-param:lang}"/>
         </map:generate>
         <map:serialize type="xml"/>
       </map:match>
