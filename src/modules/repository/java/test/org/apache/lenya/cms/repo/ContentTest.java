@@ -39,6 +39,14 @@ public class ContentTest extends RepositoryTest {
         Publication pub = session.addPublication(PUBLICATION_ID);
         assertSame(pub, session.getPublication(PUBLICATION_ID));
 
+        Exception ex = null;
+        try {
+            pub = session.addPublication(PUBLICATION_ID);
+        } catch (Exception e) {
+            ex = e;
+        }
+        assertNotNull(ex);
+
         doTestMetaData(pub);
 
         assertFalse(pub.existsArea(AREA_ID));

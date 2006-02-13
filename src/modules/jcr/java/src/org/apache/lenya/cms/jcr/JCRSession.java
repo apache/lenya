@@ -169,7 +169,7 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
     public Publication addPublication(String id)
             throws org.apache.lenya.cms.repo.RepositoryException {
         initPublications();
-        if (this.publications.keySet().contains("id")) {
+        if (this.publications.keySet().contains(id)) {
             throw new org.apache.lenya.cms.repo.RepositoryException("The publication [" + id
                     + "]Êalready exists.");
         } else {
