@@ -20,7 +20,7 @@
 <project name="module-jcr-test">
   
   <target name="test">
-    <junit printsummary="yes" showoutput="true">
+    <junit printsummary="yes" showoutput="true" haltonerror="on" haltonfailure="on">
       <classpath>
         <fileset dir="${build.webapp}/WEB-INF/lib" includes="*.jar"/>
         <path location="${build.webapp}/WEB-INF/classes"/>
