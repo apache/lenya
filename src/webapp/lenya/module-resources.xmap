@@ -60,6 +60,7 @@
           <map:generate src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}"/>
           <map:transform src="fallback://lenya/xslt/resources/external-relax.xsl">
             <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
+            <map:parameter name="contextprefix" value="{request:contextPath}"/>
           </map:transform>
           <map:serialize type="xml"/>
         </map:match>
