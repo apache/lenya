@@ -110,7 +110,7 @@ Override this template to add scripts etc.
   <div class="lenya-box">
     <div class="lenya-box-title"><i18n:text>Asset Library</i18n:text></div>
     <div class="lenya-box-body">
-      <form name="assetlibrary" action="" name="assetlibrary-form">
+      <form name="assetlibrary" action="">
         <table class="lenya-table-noborder">
           <xsl:if test="not(lenya-info:asset)">
             <tr><td colspan="5" class="lenya-form-caption"><i18n:text>No assets available</i18n:text></td></tr>
