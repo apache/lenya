@@ -36,7 +36,7 @@
   </nodeType>
   
   <nodeType name="lnt:mappable" isMixin="true">
-    <propertyDefinition name="lnt:className" autoCreate="false" mandatory="true" onParentVersion="ABORT" protected="false"
+    <propertyDefinition name="lnt:className" autoCreate="false" mandatory="true" onParentVersion="COPY" protected="false"
       multiple="false" requiredType="String"/>
   </nodeType>
 
