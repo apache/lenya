@@ -20,8 +20,28 @@ public class VersioningTest extends RepositoryTest {
 
     public void testVersioning() throws RepositoryException {
         Session session = getSession();
+
+        Publication pub = session.addPublication(PUBLICATION_ID);
+        Area area = pub.addArea("authoring");
+
+        AssetType type = session.getRepository().getAssetTypeResolver().resolve(ASSET_TYPYE);
+
+        Asset asset = area.getContent().addAsset(type);
+        Translation trans = asset.addTranslation(LANGUAGE_DE, "hello", "application/xml");
+
+        trans.setLabel("foo");
+        trans.checkin();
         
-        
+        Exception ex = null;
+        try {
+            trans.setLabel("bar");
+        } catch (Exception e) {
+            ex = e;
+        }
+        assertTrue(ex != null && ex instanceof RepositoryException);
+
+        session.logout();
+        session.getRepository().shutdown();
     }
-    
+
 }

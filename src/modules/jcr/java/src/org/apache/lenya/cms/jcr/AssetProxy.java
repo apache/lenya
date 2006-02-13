@@ -60,7 +60,7 @@ public class AssetProxy extends AbstractNodeProxy implements Asset {
                 TranslationProxy.NODE_NAME,
                 TranslationProxy.LANGUAGE_PROPERTY,
                 language);
-        proxy.setLabel(label);
+        proxy.setLabelInternal(label);
 
         ResourceProxy resourceProxy = (ResourceProxy) getRepository().addByName(proxy.getAbsolutePath(),
                 ResourceProxy.NODE_TYPE,

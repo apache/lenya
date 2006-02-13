@@ -37,9 +37,14 @@ public class TranslationProxy extends AbstractNodeProxy implements Translation {
     protected static final String NODE_TYPE = "lnt:translation";
     protected static final String LANGUAGE_PROPERTY = "xml:lang";
     protected static final String LABEL_PROPERTY = "lenya:label";
+    
+    protected void setLabelInternal(String label) throws RepositoryException {
+        setProperty(LABEL_PROPERTY, label);
+    }
 
     public void setLabel(String label) throws RepositoryException {
-        setProperty(LABEL_PROPERTY, label);
+        setLabelInternal(label);
+        save();
     }
 
     public String getLanguage() throws RepositoryException {
@@ -112,6 +117,7 @@ public class TranslationProxy extends AbstractNodeProxy implements Translation {
 
     public void checkin() throws RepositoryException {
         try {
+            save();
             getNode().checkin();
         } catch (javax.jcr.RepositoryException e) {
             throw new RepositoryException(e);

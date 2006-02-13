@@ -51,6 +51,8 @@ public class SiteTest extends RepositoryTest {
         doTestSite(site, asset1);
         doTestUrlMapping(child);
         
+        session.logout();
+        session.getRepository().shutdown();
     }
 
     protected void doTestSite(Site site, Asset asset) throws RepositoryException {
