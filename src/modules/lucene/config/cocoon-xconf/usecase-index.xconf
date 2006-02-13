@@ -15,13 +15,11 @@
   limitations under the License.
 -->
 
-<!-- $Id: doctypes.xconf 164635 2005-04-25 20:01:43Z tschlabach $ -->
-
 <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'lucene.index']">
 
-    <component-instance name="lucene.index" logger="lenya.lucene" class="org.apache.lenya.cms.usecase.DummyUsecase">
-      <view template="modules/lucene/usecases/lucene/index.jx"/>
-      <exit usecase="lucene.index"/>
-    </component-instance>
+  <component-instance name="lucene.index"
+                      logger="lenya.usecases.lucene"
+                      class="org.apache.lenya.cms.lucene.IndexDocument">
+  </component-instance>
 
 </xconf>
