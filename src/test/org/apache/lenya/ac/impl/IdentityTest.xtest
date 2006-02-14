@@ -19,13 +19,13 @@
   <annotation>
     Test Cases: Identity 
   </annotation>
-  <!--
   <context>
     <entry name="environment-context" value="/c:/src/lenya-trunk/build/lenya/webapp/"/>
+  <!--
     <entry name="container.rootDir" value="/c:/src/lenya-trunk/build/lenya/webapp/"/>
     <entry name="context-root" value="/c:/src/lenya-trunk/build/lenya/webapp/"/>
-  </context>
   -->
+  </context>
 
    <roles>
   

@@ -68,32 +68,31 @@ public class AccessControlTest extends PublicationTestCase {
 
         super.setUp();
 
-        this.accessControllerResolverSelector = (ServiceSelector) getManager()
-                .lookup(AccessControllerResolver.ROLE + "Selector");
+        this.accessControllerResolverSelector = (ServiceSelector) getManager().lookup(AccessControllerResolver.ROLE
+                + "Selector");
         assertNotNull(this.accessControllerResolverSelector);
 
-        this.accessControllerResolver = (AccessControllerResolver) this.accessControllerResolverSelector
-                .select(AccessControllerResolver.DEFAULT_RESOLVER);
+        this.accessControllerResolver = (AccessControllerResolver) this.accessControllerResolverSelector.select(AccessControllerResolver.DEFAULT_RESOLVER);
 
         assertNotNull(this.accessControllerResolver);
-        getLogger().info(
-                "Using access controller resolver: [" + this.accessControllerResolver.getClass() + "]");
-
-        this.accessController = (DefaultAccessController) ((PublicationAccessControllerResolver) this.accessControllerResolver)
-                .resolveAccessController(URL);
+        getLogger().info("Using access controller resolver: ["
+                + this.accessControllerResolver.getClass() + "]");
+        
+        Publication pub = PublicationUtil.getPublication(getManager(), "test");
+        getLogger().info("Resolve access controller");
+        getLogger().info("Publication directory: [" + pub.getDirectory().getAbsolutePath() + "]");
+        
+        this.accessController = (DefaultAccessController) ((PublicationAccessControllerResolver) this.accessControllerResolver).resolveAccessController(URL);
 
         assertNotNull(this.accessController);
         getLogger().info("Resolved access controller: [" + this.accessController.getClass() + "]");
 
-        Publication pub = PublicationUtil.getPublication(getManager(), "test");
         File servletContext = pub.getServletContext();
-        ((FilePolicyManager) this.accessController.getPolicyManager())
-                .setPoliciesDirectory(servletContext);
+        ((FilePolicyManager) this.accessController.getPolicyManager()).setPoliciesDirectory(servletContext);
 
-        this.accreditablesDirectory = new File(pub.getDirectory(),
-                "config/ac/passwd".replace('/', File.separatorChar));
-        ((FileAccreditableManager) this.accessController.getAccreditableManager())
-                .setConfigurationDirectory(this.accreditablesDirectory);
+        this.accreditablesDirectory = new File(pub.getDirectory(), "config/ac/passwd".replace('/',
+                File.separatorChar));
+        ((FileAccreditableManager) this.accessController.getAccreditableManager()).setConfigurationDirectory(this.accreditablesDirectory);
 
     }
 

@@ -116,11 +116,11 @@
      </categories>
   </logkit>
   
-<!--  <context>
+  <context>
     <entry name="container.rootDir" value="file:///c:/src/lenya-trunk/build/lenya/webapp/"/>
     <entry name="context-root" value="file:///c:/src/lenya-trunk/build/lenya/webapp/"/>
   </context>
--->
+
   <roles>
   
     <role name="org.apache.excalibur.source.SourceFactorySelector"
