@@ -63,7 +63,7 @@
 </target>
 
 <!-- e.g. tidying legacy "HTML" stylesheets -->
-<target name="u2l" description="Transforms upper to lower case"> 
+<target name="u2l" description="Transforms upper to lower case."> 
     <echo>INFO: Upper 2 lower case</echo>
     <xslt
         basedir="/home/username/upper_case"
@@ -74,5 +74,14 @@
         />
 </target>
 
+
+<target name="xslt" description="Transforms an XML into another by using an XSLT. Usage: -Din=in.xml -Dxslt=in2out.xsl -Dout=out.xml"> 
+    <echo>INFO: Transform ${in}</echo>
+    <xslt
+        in="${in}"
+        out="${out}"
+        style="${xslt}"
+        />
+</target>
 
 </project>
