@@ -120,6 +120,7 @@
           overwrite="yes">
       <filterset>
         <filter token="COCOON_PROJECT" value="${projectDescription.name}"/>
+        <filter token="VERSION" value="${version}"/>
       </filterset>
     </copy>
   </target>
