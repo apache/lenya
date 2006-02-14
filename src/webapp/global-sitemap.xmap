@@ -263,12 +263,12 @@
         <map:select type="resource-exists">
           <!-- resource exists - serve statically -->
           <map:when test="lenya/modules/{1}/resources/{2}">
-            <map:mount uri-prefix="modules/" src="lenya/module-resources.xmap" check-reload="true" reload-method="synchron" pass-through="true"/>
+            <map:mount uri-prefix="modules/" src="fallback://lenya/module-resources.xmap" check-reload="true" reload-method="synchron" pass-through="true"/>
           </map:when>
         </map:select>
         
         <!-- resource doesn't exist or not handled by lenya/module-resources.xmap - delegate to module -->
-        <map:mount uri-prefix="modules/{1}/" src="lenya/modules/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+        <map:mount uri-prefix="modules/{1}/" src="fallback://lenya/modules/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
         
       </map:match>
       
