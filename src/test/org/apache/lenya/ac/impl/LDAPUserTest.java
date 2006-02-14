@@ -28,10 +28,9 @@ import org.apache.lenya.ac.file.FileGroup;
 import org.apache.lenya.ac.file.FileRole;
 import org.apache.lenya.ac.file.FileUserManager;
 import org.apache.lenya.ac.ldap.LDAPUser;
-import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationFactory;
+import org.apache.lenya.cms.publication.PublicationUtil;
 
 /**
  * LDAP user test.
@@ -52,7 +51,6 @@ public class LDAPUserTest extends AccessControlTest {
      * @param args an array of <code>String</code>
      */
     public static void main(String[] args) {
-        PublicationHelper.extractPublicationArguments(args);
         junit.textui.TestRunner.run(LDAPUserTest.class);
     }
 
@@ -79,10 +77,7 @@ public class LDAPUserTest extends AccessControlTest {
      */
     final public Publication getPublication() throws PublicationException {
         String publicationId = "default";
-        String servletContextPath = "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya/";
-
-        PublicationFactory factory = PublicationFactory.getInstance(getLogger());
-        return factory.getPublication(publicationId, servletContextPath);
+        return PublicationUtil.getPublication(getManager(), publicationId);
     }
 
     /**

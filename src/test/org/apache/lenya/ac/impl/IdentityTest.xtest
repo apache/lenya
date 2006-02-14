@@ -19,11 +19,13 @@
   <annotation>
     Test Cases: Identity 
   </annotation>
+  <!--
   <context>
     <entry name="environment-context" value="/c:/src/lenya-trunk/build/lenya/webapp/"/>
     <entry name="container.rootDir" value="/c:/src/lenya-trunk/build/lenya/webapp/"/>
     <entry name="context-root" value="/c:/src/lenya-trunk/build/lenya/webapp/"/>
   </context>
+  -->
 
    <roles>
   
@@ -72,13 +74,20 @@
           shorthand="sourcecache"
           default-class="org.apache.lenya.ac.cache.PolicyCacheImpl"/>
   -->
-  </roles>
+     <role name="org.apache.lenya.cms.publication.PublicationManager"
+       shorthand="publication-manager"
+       default-class="org.apache.lenya.cms.publication.PublicationManagerImpl"/>
+     
+   </roles>
 
   <components>
   
   <source-factories>
     <component-instance class="org.apache.excalibur.source.impl.ResourceSourceFactory" name="resource"/>
+    <!--
     <component-instance class="org.apache.cocoon.components.source.impl.ContextSourceFactory" name="context"/>
+    -->
+    <component-instance class="org.apache.lenya.cms.cocoon.source.ContextSourceFactory" name="context"/>
     <component-instance class="org.apache.excalibur.source.impl.URLSourceFactory" name="*"/>
   </source-factories>
 
@@ -93,7 +102,6 @@
     
   <authorizers>
     <component-instance class="org.apache.lenya.ac.impl.PolicyAuthorizer" logger="lenya.ac.authorizer" name="policy"/>
-    <component-instance class="org.apache.lenya.cms.ac.workflow.WorkflowAuthorizer" logger="lenya.ac.authorizer" name="workflow"/>
   </authorizers>
   
   <policy-managers>

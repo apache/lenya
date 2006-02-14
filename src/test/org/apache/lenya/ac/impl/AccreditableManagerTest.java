@@ -21,7 +21,6 @@ import org.apache.avalon.framework.component.ComponentSelector;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.cms.ExcaliburTest;
-import org.apache.lenya.cms.PublicationHelper;
 
 /**
  * Test class for the Accreditable Manager
@@ -42,7 +41,6 @@ public class AccreditableManagerTest extends ExcaliburTest {
      * @param args The command line arguments.
      */
     public static void main(String[] args) {
-        args = PublicationHelper.extractPublicationArguments(args);
         TestRunner.run(AccreditableManagerTest.class);
     }
     

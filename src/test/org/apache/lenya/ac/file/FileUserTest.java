@@ -29,7 +29,6 @@ import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.UserType;
 import org.apache.lenya.ac.impl.AccessControlTest;
-import org.apache.lenya.cms.PublicationHelper;
 
 /**
  * File user test.
@@ -53,7 +52,6 @@ public class FileUserTest extends AccessControlTest {
      * @param args command line args
      */
     public static void main(String[] args) {
-        PublicationHelper.extractPublicationArguments(args);
         junit.textui.TestRunner.run(FileUserTest.class);
     }
 

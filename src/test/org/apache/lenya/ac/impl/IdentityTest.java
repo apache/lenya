@@ -20,7 +20,6 @@ import junit.textui.TestRunner;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
-import org.apache.lenya.cms.PublicationHelper;
 
 /**
  * Tests the identity
@@ -45,7 +44,6 @@ public class IdentityTest extends AccessControlTest {
      * @param args The command-line arguments.
      */
     public static void main(String[] args) {
-        PublicationHelper.extractPublicationArguments(args);
         TestRunner.run(IdentityTest.class);
     }
     

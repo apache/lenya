@@ -29,7 +29,6 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Groupable;
 import org.apache.lenya.ac.impl.AccessControlTest;
-import org.apache.lenya.cms.PublicationHelper;
 import org.xml.sax.SAXException;
 
 /**
@@ -56,7 +55,6 @@ public class FileGroupTest extends AccessControlTest {
      * @param args The command line args
      */
     public static void main(String[] args) {
-        PublicationHelper.extractPublicationArguments(args);
         junit.textui.TestRunner.run(FileGroupTest.class);
     }
 

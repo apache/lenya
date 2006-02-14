@@ -19,7 +19,6 @@ import java.io.File;
 
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.impl.AccessControlTest;
-import org.apache.lenya.cms.PublicationHelper;
 
 /**
  * File role test.
@@ -41,7 +40,6 @@ public class FileRoleTest extends AccessControlTest {
      * @param args DOCUMENT ME!
      */
     public static void main(String[] args) {
-        PublicationHelper.extractPublicationArguments(args);
         junit.textui.TestRunner.run(FileRoleTest.class);
     }
 

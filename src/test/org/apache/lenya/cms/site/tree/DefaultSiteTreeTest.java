@@ -21,6 +21,10 @@ package org.apache.lenya.cms.site.tree;
 
 import junit.framework.TestCase;
 
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationTestCase;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.tree.DefaultSiteTree;
@@ -29,7 +33,7 @@ import org.apache.lenya.cms.site.tree.SiteTreeNode;
 /**
  * Test class for the default site tree
  */
-public class DefaultSiteTreeTest extends TestCase {
+public class DefaultSiteTreeTest extends PublicationTestCase {
 	
 	private DefaultSiteTree siteTree = null;
 
@@ -38,7 +42,7 @@ public class DefaultSiteTreeTest extends TestCase {
 	 * @param test The test.
 	 */
 	public DefaultSiteTreeTest(String test) {
-        super(test);
+        super();
     }
 
 	/**
@@ -54,22 +58,23 @@ public class DefaultSiteTreeTest extends TestCase {
     /**
      * @see TestCase#setUp()
      */
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
-		this.siteTree = new DefaultSiteTree("testTree.xml");
+        Publication pub = PublicationUtil.getPublication(getManager(), "test");
+		this.siteTree = new DefaultSiteTree(pub, "test", getManager());
 		Label label = new Label("Foo", "en");
 		Label[] fooLabels = { label };
-		this.siteTree.addNode("/foo", fooLabels, null, null, false);
+		this.siteTree.addNode("/foo", fooLabels, true, null, null, false);
 		label = new Label("Home", "en");
 		Label[] homeLabels = { label };
-		this.siteTree.addNode("/index", homeLabels, null, null, false);
+		this.siteTree.addNode("/index", homeLabels, true, null, null, false);
 		label = new Label("Bar", "en");
 		Label label_de = new Label("Stab", "de");
 		Label[] barLabels = { label, label_de };
-		this.siteTree.addNode("/foo/bar", barLabels, "http://exact.biz", "suffix", true);
+		this.siteTree.addNode("/foo/bar", barLabels, true, "http://exact.biz", "suffix", true);
 		label = new Label("Lala", "en");
 		Label[] lalaLabels = { label };
-		this.siteTree.addNode("/foo/lala", lalaLabels, null, null, false);
+		this.siteTree.addNode("/foo/lala", lalaLabels, true, null, null, false);
 	}
 
     /**
@@ -102,7 +107,7 @@ public class DefaultSiteTreeTest extends TestCase {
 		Label label = new Label("Tutorial", null);
 		Label[] labels = { label };
 
-		this.siteTree.addNode("/foo", "tutorial", labels);
+		this.siteTree.addNode("/foo", "tutorial", labels, true);
 		SiteTreeNode node =  this.siteTree.getNode("/foo/tutorial");
 		assertNotNull(node);
 		assertEquals(node.getId(), "tutorial");
@@ -125,7 +130,7 @@ public class DefaultSiteTreeTest extends TestCase {
 		Label label2 = new Label("Ding", "en");
 		Label[] labels = { label1, label2};
 
-		this.siteTree.addNode("/foo/ding", labels, null, null, false);
+		this.siteTree.addNode("/foo/ding", labels, true, null, null, false);
 		
 		assertNotNull(this.siteTree.getNode("/foo/ding"));
 		assertEquals(this.siteTree.getNode("/foo/ding").getId(), "ding");
@@ -140,7 +145,7 @@ public class DefaultSiteTreeTest extends TestCase {
 		Label label2 = new Label("Ding", "en");
 		Label[] labels = { label1, label2};
 
-		this.siteTree.addNode("/foo", "baz", labels, null, null, false);
+		this.siteTree.addNode("/foo", "baz", labels, true, null, null, false);
 		
 		assertNotNull(this.siteTree.getNode("/foo/baz"));
 		assertEquals(this.siteTree.getNode("/foo/baz").getId(), "baz");		
@@ -187,11 +192,11 @@ public class DefaultSiteTreeTest extends TestCase {
     	Label label2 = new Label("Ho", "en");
     	Label[] labels1 = { label1, label2};
     	
-    	this.siteTree.addNode("/hi", labels1, null, null, false);
+    	this.siteTree.addNode("/hi", labels1, true, null, null, false);
 
 		Label[] labels2 = { label1, label2};
 
-		this.siteTree.addNode("/hi/ho", labels2, null, null, false);
+		this.siteTree.addNode("/hi/ho", labels2, true, null, null, false);
 		
 		assertNotNull(this.siteTree.getNode("/hi/ho"));
 		
@@ -241,22 +246,23 @@ public class DefaultSiteTreeTest extends TestCase {
     
     /**
      * Test the import of a subtree
-     * @throws SiteException if an error occurs.
+     * @throws PublicationException 
      */
-	final public void testImportSubtree() throws SiteException {
-		DefaultSiteTree newSiteTree = new DefaultSiteTree("importedTree.xml");
+	final public void testImportSubtree() throws PublicationException {
+        Publication pub = PublicationUtil.getPublication(getManager(), "test");
+		DefaultSiteTree newSiteTree = new DefaultSiteTree(pub, "test1", getManager());
 		Label label = new Label("root", "en");
 		Label[] rootLabels = { label };
-		newSiteTree.addNode("/root", rootLabels, null, null, false);
+		newSiteTree.addNode("/root", rootLabels, true, null, null, false);
 		label = new Label("foo", "en");
 		Label[] fooLabels = { label };
-		newSiteTree.addNode("/root/foo", fooLabels, null, null, false);
+		newSiteTree.addNode("/root/foo", fooLabels, true, null, null, false);
 		label = new Label("subtree", "en");
 		Label[] subtreeLabels = { label };
-		newSiteTree.addNode("/root/subtree", subtreeLabels, "http://exact.biz", "suffix", true);
+		newSiteTree.addNode("/root/subtree", subtreeLabels, true, "http://exact.biz", "suffix", true);
 		label = new Label("child", "en");
 		Label[] childLabels = { label };
-		newSiteTree.addNode("/root/subtree/child", childLabels, null, null, false);
+		newSiteTree.addNode("/root/subtree/child", childLabels, true, null, null, false);
 		SiteTreeNode node=newSiteTree.getNode("/root/subtree");
 		assertNotNull(node);
 		SiteTreeNode parentNode=this.siteTree.getNode("/foo/lala");

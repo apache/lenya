@@ -78,7 +78,7 @@ public class RevisionControllerTest extends TestCase {
         }
 
         try {
-            rc.reservedCheckIn(destination, identityD, true);
+            rc.reservedCheckIn(destination, identityD, true, true);
         } catch (FileReservedCheckInException e) {
             System.out.println(e.toString());
         } catch (Exception e) {

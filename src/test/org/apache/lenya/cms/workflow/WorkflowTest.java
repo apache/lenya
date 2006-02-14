@@ -30,12 +30,13 @@ import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.impl.AccessControlTest;
-import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.workflow.Situation;
-import org.apache.lenya.workflow.WorkflowInstance;
+import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.workflow.WorkflowManager;
+import org.apache.lenya.workflow.Workflowable;
 
 /**
  * To change the template for this generated type comment go to Window>Preferences>Java>Code
@@ -56,7 +57,6 @@ public class WorkflowTest extends AccessControlTest {
      * @param args The command line arguments
      */
     public static void main(String[] args) {
-        args = PublicationHelper.extractPublicationArguments(args);
         TestRunner.run(getSuite());
     }
 
@@ -76,36 +76,37 @@ public class WorkflowTest extends AccessControlTest {
      * @throws Exception when something went wrong.
      */
     public void testWorkflow() throws Exception {
-        Publication publication = PublicationHelper.getPublication();
+        Publication publication = PublicationUtil.getPublication(getManager(), "test");
         String url = "/" + publication.getId() + URL;
-        DocumentIdentityMap map = new DocumentIdentityMap(publication);
-        Document document = map.getFactory().getFromURL(url);
+        DocumentIdentityMap map = getIdentityMap();
+        Document document = map.getFromURL(url);
+        Session session = new Session(map.getIdentityMap(), getIdentity(), getLogger());
 
         File configDir = new File(publication.getDirectory(), "config" + File.separator + "ac"
                 + File.separator + "passwd");
         assertTrue(configDir.exists());
 
         Policy policy = getPolicyManager().getPolicy(getAccreditableManager(), url);
-        
-        WorkflowResolver resolver = null;
-        try {
-            resolver = (WorkflowResolver) getManager().lookup(WorkflowResolver.ROLE);
 
+        WorkflowManager resolver = null;
+        try {
+            resolver = (WorkflowManager) getManager().lookup(WorkflowManager.ROLE);
 
             String[] emptyRoles = {};
-            Situation situation = new CMSSituation(emptyRoles, "test", "127.0.0.1");
 
-            WorkflowInstance instance = resolver.getWorkflowInstance(document);
-            instance.getHistory().initialize(situation);
+            Workflowable instance = new DocumentWorkflowable(getManager(),
+                    session,
+                    document,
+                    getLogger());
 
             for (int situationIndex = 0; situationIndex < situations.length; situationIndex++) {
                 assertNotNull(instance);
 
-                System.out.println("Current state: " + instance.getCurrentState());
+                System.out.println("Current state: " + instance.getLatestVersion().getState());
 
                 Identity identity = new Identity();
-                User user = getAccreditableManager().getUserManager().getUser(
-                        situations[situationIndex].getUser());
+                User user = getAccreditableManager().getUserManager()
+                        .getUser(situations[situationIndex].getUser());
                 identity.addIdentifiable(user);
 
                 Role[] roles = policy.getRoles(identity);
@@ -116,44 +117,22 @@ public class WorkflowTest extends AccessControlTest {
                 }
 
                 System.out.println();
-                
+
                 String[] roleIds = new String[roles.length];
                 for (int i = 0; i < roles.length; i++) {
                     roleIds[i] = roles[i].getId();
                 }
 
-                situation = new CMSSituation(roleIds, identity.getUser().getId(), "");
 
-                String[] events = instance.getExecutableEvents(situation);
-
-                String event = null;
-                System.out.print("Events:");
-
-                for (int eventIndex = 0; eventIndex < events.length; eventIndex++) {
-                    System.out.print(" " + events[eventIndex]);
-
-                    if (events[eventIndex].equals(situations[situationIndex].getEvent())) {
-                        event = events[eventIndex];
-                    }
-                }
-
-                assertNotNull(event);
-                System.out.println();
-
-                System.out.println("Executing event: " + event);
-                instance.invoke(situation, event);
-
-                assertTrue(instance.getValue(variableName) == situations[situationIndex].getValue());
+                assertTrue(instance.getLatestVersion().getValue(variableName) == situations[situationIndex].getValue());
 
                 System.out.println("Variable: " + variableName + " = "
-                        + instance.getValue(variableName));
+                        + instance.getLatestVersion().getValue(variableName));
                 System.out.println("------------------------------------------------------");
             }
+        } finally {
+            // this.manager.release(resolver);
         }
-        finally {
-//            this.manager.release(resolver);
-        }
-
 
         System.out.println("Test completed.");
     }

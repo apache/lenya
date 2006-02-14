@@ -19,6 +19,9 @@
 
 package org.apache.lenya.cms.site.tree;
 
+import org.apache.cocoon.SitemapComponentTestCase;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.tree.DefaultSiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
@@ -28,7 +31,7 @@ import junit.framework.TestCase;
 /**
  * Tests the site tree
  */
-public class SiteTreeNodeImplTest extends TestCase {
+public class SiteTreeNodeImplTest extends SitemapComponentTestCase {
 
     private SiteTreeNode node = null;
 
@@ -37,13 +40,12 @@ public class SiteTreeNodeImplTest extends TestCase {
      * @param test The test.
      */
     public SiteTreeNodeImplTest(String test) {
-        super(test);
+        super();
     }
 
     /**
-     * The main program.
-     * The parameters are set from the command line arguments.
-     *
+     * The main program. The parameters are set from the command line arguments.
+     * 
      * @param args The command line arguments.
      */
     public static void main(String[] args) {
@@ -53,21 +55,17 @@ public class SiteTreeNodeImplTest extends TestCase {
     /**
      * @see TestCase#setUp()
      */
-    protected void setUp() throws Exception {
+    public void setUp() throws Exception {
         super.setUp();
-        DefaultSiteTree siteTree = new DefaultSiteTree("testTree");
+        Publication pub = PublicationUtil.getPublication(getManager(), "test");
+        DefaultSiteTree siteTree = new DefaultSiteTree(pub, "testArea", getManager());
         Label label = new Label("Foo", "en");
         Label[] fooLabels = { label };
-        siteTree.addNode("/foo", fooLabels, null, null, false);
+        siteTree.addNode("/foo", fooLabels, true, null, null, false);
         label = new Label("Bar", "en");
         Label label_de = new Label("Stab", "de");
         Label[] barLabels = { label, label_de };
-        siteTree.addNode(
-            "/foo/bar",
-            barLabels,
-            "http://exact.biz",
-            "suffix",
-            true);
+        siteTree.addNode("/foo/bar", barLabels, true, "http://exact.biz", "suffix", true);
 
         this.node = siteTree.getNode("/foo/bar");
     }
@@ -89,7 +87,7 @@ public class SiteTreeNodeImplTest extends TestCase {
 
     /**
      * Test getId
-     *
+     * 
      */
     final public void testGetId() {
         assertEquals(this.node.getId(), "bar");
@@ -97,7 +95,7 @@ public class SiteTreeNodeImplTest extends TestCase {
 
     /**
      * Test getLabels
-     *
+     * 
      */
     final public void testGetLabels() {
         assertEquals(this.node.getLabels().length, 2);
@@ -111,7 +109,7 @@ public class SiteTreeNodeImplTest extends TestCase {
 
     /**
      * Test getLabel
-     *
+     * 
      */
     final public void testGetLabel() {
         Label label = this.node.getLabel("en");
@@ -120,8 +118,8 @@ public class SiteTreeNodeImplTest extends TestCase {
     }
 
     /**
-     * Test addLabel 
-     *
+     * Test addLabel
+     * 
      */
     final public void testAddLabel() {
         Label label = new Label("Barolo", "it");
@@ -135,7 +133,7 @@ public class SiteTreeNodeImplTest extends TestCase {
 
     /**
      * Test removeLabel
-     *
+     * 
      */
     final public void testRemoveLabel() {
         Label label = new Label("Bar", "en");
@@ -146,7 +144,7 @@ public class SiteTreeNodeImplTest extends TestCase {
 
     /**
      * Test getHref
-     *
+     * 
      */
     final public void testGetHref() {
         assertEquals(this.node.getHref(), "http://exact.biz");
@@ -155,7 +153,7 @@ public class SiteTreeNodeImplTest extends TestCase {
     /**
      * Test getSuffix
      * 
-     *
+     * 
      */
     final public void testGetSuffix() {
         assertEquals(this.node.getSuffix(), "suffix");
@@ -163,7 +161,7 @@ public class SiteTreeNodeImplTest extends TestCase {
 
     /**
      * Test hasLink
-     *
+     * 
      */
     final public void testHasLink() {
         assertTrue(this.node.hasLink());

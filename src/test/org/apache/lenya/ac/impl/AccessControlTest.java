@@ -22,6 +22,7 @@ package org.apache.lenya.ac.impl;
 import java.io.File;
 
 import org.apache.avalon.framework.component.ComponentSelector;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.AccreditableManager;
@@ -29,17 +30,18 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.file.FileAccreditableManager;
 import org.apache.lenya.ac.file.FilePolicyManager;
-import org.apache.cocoon.SitemapComponentTestCase;
-import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.ac.PublicationAccessControllerResolver;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationTestCase;
+import org.apache.lenya.cms.publication.PublicationUtil;
 
 /**
  * To change the template for this generated type comment go to Window>Preferences>Java>Code
  * Generation>Code and Comments
  */
-public class AccessControlTest extends SitemapComponentTestCase {
+public class AccessControlTest extends PublicationTestCase {
 
-    private ComponentSelector accessControllerResolverSelector;
+    private ServiceSelector accessControllerResolverSelector;
     private AccessControllerResolver accessControllerResolver;
     private DefaultAccessController accessController;
 
@@ -64,14 +66,9 @@ public class AccessControlTest extends SitemapComponentTestCase {
     /** @see junit.framework.TestCase#setUp() */
     public void setUp() throws Exception {
 
-        if (PublicationHelper.getPublication() == null) {
-            String[] args = { "D:\\Development\\build\\tomcat-4.1.24\\webapps\\lenya", "test" };
-            PublicationHelper.extractPublicationArguments(args);
-        }
-
         super.setUp();
 
-        this.accessControllerResolverSelector = (ComponentSelector) getManager()
+        this.accessControllerResolverSelector = (ServiceSelector) getManager()
                 .lookup(AccessControllerResolver.ROLE + "Selector");
         assertNotNull(this.accessControllerResolverSelector);
 
@@ -88,11 +85,12 @@ public class AccessControlTest extends SitemapComponentTestCase {
         assertNotNull(this.accessController);
         getLogger().info("Resolved access controller: [" + this.accessController.getClass() + "]");
 
-        File servletContext = PublicationHelper.getPublication().getServletContext();
+        Publication pub = PublicationUtil.getPublication(getManager(), "test");
+        File servletContext = pub.getServletContext();
         ((FilePolicyManager) this.accessController.getPolicyManager())
                 .setPoliciesDirectory(servletContext);
 
-        this.accreditablesDirectory = new File(PublicationHelper.getPublication().getDirectory(),
+        this.accreditablesDirectory = new File(pub.getDirectory(),
                 "config/ac/passwd".replace('/', File.separatorChar));
         ((FileAccreditableManager) this.accessController.getAccreditableManager())
                 .setConfigurationDirectory(this.accreditablesDirectory);

@@ -21,7 +21,6 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.file.FileRole;
 import org.apache.lenya.ac.file.FileRoleManager;
-import org.apache.lenya.cms.PublicationHelper;
 
 /**
  * Role manager test.
@@ -42,7 +41,6 @@ public class RoleManagerTest extends AccessControlTest {
      * @param args Command line args
      */
     public static void main(String[] args) {
-        PublicationHelper.extractPublicationArguments(args);
         junit.textui.TestRunner.run(RoleManagerTest.class);
     }
 

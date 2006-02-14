@@ -24,7 +24,6 @@ import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
-import org.apache.lenya.cms.PublicationHelper;
 import org.apache.lenya.cms.publication.file.FilePublicationTest;
 
 /**
@@ -45,7 +44,6 @@ public class PublicationTest extends TestCase {
      * @param args The command-line arguments.
      */
     public static void main(String[] args) {
-        PublicationHelper.extractPublicationArguments(args);
         TestRunner.run(getSuite());
     }
 
@@ -64,14 +62,6 @@ public class PublicationTest extends TestCase {
         }
 
         return suite;
-    }
-
-    /** @see junit.framework.TestCase#setUp() */
-    protected void setUp() throws Exception {
-        if (PublicationHelper.getPublication() == null) {
-            String[] args = { "D:\\Development\\build\\tomcat-4.1.24\\webapps\\lenya", "test" };
-            PublicationHelper.extractPublicationArguments(args);
-        }
     }
 
 }

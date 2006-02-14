@@ -24,7 +24,6 @@ import junit.textui.TestRunner;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
-import org.apache.lenya.cms.PublicationHelper;
 
 /**
  * Test for the Policy Manager
@@ -44,7 +43,6 @@ public class PolicyManagerTest extends AccessControlTest {
      * @param args The command-line arguments.
      */
     public static void main(String[] args) {
-        PublicationHelper.extractPublicationArguments(args);
         TestRunner.run(AccessControllerTest.class);
     }
 

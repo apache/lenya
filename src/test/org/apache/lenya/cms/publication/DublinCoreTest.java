@@ -17,19 +17,20 @@
 
 package org.apache.lenya.cms.publication;
 
-import junit.framework.TestCase;
 import junit.textui.TestRunner;
 
-import org.apache.lenya.cms.PublicationHelper;
+import org.apache.cocoon.SitemapComponentTestCase;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
+import org.apache.lenya.transaction.IdentityMap;
+import org.apache.lenya.transaction.IdentityMapImpl;
 
 /**
  * Dublin Core test.
  * 
  * @version $Id$
  */
-public class DublinCoreTest extends TestCase {
+public class DublinCoreTest extends SitemapComponentTestCase {
 
     private static final String AREA = "authoring";
     private static final String DOCUMENT_ID = "/tutorial";
@@ -41,7 +42,7 @@ public class DublinCoreTest extends TestCase {
      * @param arg0 a test
      */
     public DublinCoreTest(String arg0) {
-        super(arg0);
+        super();
     }
 
     /**
@@ -50,19 +51,18 @@ public class DublinCoreTest extends TestCase {
      * @param args The command line arguments.
      */
     public static void main(String[] args) {
-        args = PublicationHelper.extractPublicationArguments(args);
         TestRunner.run(DublinCoreTest.class);
     }
 
     /**
      * Test the fetching, modification and refetching of a dc core object.
-     * 
-     * @throws DocumentBuildException if an error occurs
-     * @throws DocumentException if an error occurs
+     * @throws PublicationException 
      */
-    final public void testModifySaveAndReload() throws DocumentBuildException, DocumentException {
-        Publication publication = PublicationHelper.getPublication();
-        DocumentIdentityMap map = new DocumentIdentityMap();
+    final public void testModifySaveAndReload() throws PublicationException {
+        Publication publication = PublicationUtil.getPublication(getManager(), "test");
+        
+        IdentityMap idMap = new IdentityMapImpl(getLogger());
+        DocumentIdentityMap map = new DocumentIdentityMap(idMap, getManager(), getLogger());
         Document doc = map.get(publication, AREA, DOCUMENT_ID, LANGUAGE);
         MetaData dcCore = doc.getMetaDataManager().getDublinCoreMetaData();
         String title = dcCore.getFirstValue(DublinCore.ELEMENT_TITLE);
@@ -83,12 +83,4 @@ public class DublinCoreTest extends TestCase {
         assertEquals(CREATOR, dcCore2.getFirstValue(DublinCore.ELEMENT_CREATOR));
     }
 
-    /** @see junit.framework.TestCase#setUp() */
-    protected void setUp() throws Exception {
-        if (PublicationHelper.getPublication() == null) {
-            String[] args = { "/home/egli/build/jakarta-tomcat-4.1.21-LE-jdk14/webapps/lenya",
-                    "test" };
-            PublicationHelper.extractPublicationArguments(args);
-        }
-    }
 }

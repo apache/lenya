@@ -28,7 +28,9 @@ import junit.textui.TestRunner;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
-import org.apache.lenya.cms.PublicationHelper;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationUtil;
 
 /**
  * Policy Test
@@ -48,7 +50,6 @@ public class PolicyTest extends AccessControlTest {
      * @param args The command-line arguments.
      */
     public static void main(String[] args) {
-        PublicationHelper.extractPublicationArguments(args);
         TestRunner.run(PolicyTest.class);
     }
 
@@ -58,9 +59,11 @@ public class PolicyTest extends AccessControlTest {
     /**
      * A test.
      * @throws AccessControlException when something went wrong.
+     * @throws PublicationException 
      */
-    public void testLoadPolicy() throws AccessControlException {
-        String url = "/" + PublicationHelper.getPublication().getId() + URL;
+    public void testLoadPolicy() throws AccessControlException, PublicationException {
+        Publication pub = PublicationUtil.getPublication(getManager(), "test");
+        String url = "/" + pub.getId() + URL;
         Policy policy = getPolicy(url);
         Role[] roles = policy.getRoles(getIdentity());
         System.out.print("Roles: ");

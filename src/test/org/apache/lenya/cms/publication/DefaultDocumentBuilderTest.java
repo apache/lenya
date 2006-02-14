@@ -23,8 +23,6 @@ import junit.framework.Test;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
-import org.apache.lenya.cms.PublicationHelper;
-
 /**
  * 
  * To change the template for this generated type comment go to Window>Preferences>Java>Code
@@ -46,7 +44,6 @@ public class DefaultDocumentBuilderTest extends DefaultDocumentTest {
      * @param args The command line arguments.
      */
     public static void main(String[] args) {
-        PublicationHelper.extractPublicationArguments(args);
         TestRunner.run(getSuite());
     }
 
@@ -60,12 +57,11 @@ public class DefaultDocumentBuilderTest extends DefaultDocumentTest {
     }
 
     /**
+     * @throws PublicationException 
      * @see org.apache.lenya.cms.publication.DefaultDocumentTest#getDocument(DocumentTestSet)
      */
-    protected Document getDocument(DocumentTestSet set) throws DocumentBuildException {
-        Publication pub = PublicationHelper.getPublication();
-
-        return getIdentityMap().getFactory().getFromURL(pub,
-                pub.getId() + "/" + set.getArea() + set.getUrl());
+    protected Document getDocument(DocumentTestSet set) throws PublicationException {
+        Publication pub = PublicationUtil.getPublication(getManager(), "test");
+        return getIdentityMap().getFromURL("/" + pub.getId() + "/" + set.getArea() + set.getUrl());
     }
 }

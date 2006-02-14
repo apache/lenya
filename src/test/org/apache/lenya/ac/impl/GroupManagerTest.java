@@ -21,7 +21,6 @@ import java.io.File;
 
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.file.FileGroupManager;
-import org.apache.lenya.cms.PublicationHelper;
 
 /**
  * Group manager test.
@@ -44,7 +43,6 @@ public class GroupManagerTest extends AccessControlTest {
      * @param args command line args
      */
     public static void main(String[] args) {
-        PublicationHelper.extractPublicationArguments(args);
         junit.textui.TestRunner.run(GroupManagerTest.class);
     }
 

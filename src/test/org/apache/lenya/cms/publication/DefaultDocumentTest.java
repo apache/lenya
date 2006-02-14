@@ -20,24 +20,25 @@
 package org.apache.lenya.cms.publication;
 
 import junit.framework.Test;
-import junit.framework.TestCase;
 import junit.framework.TestSuite;
 import junit.textui.TestRunner;
 
-import org.apache.lenya.cms.PublicationHelper;
+import org.apache.cocoon.SitemapComponentTestCase;
+import org.apache.lenya.transaction.IdentityMap;
+import org.apache.lenya.transaction.IdentityMapImpl;
 
 /**
  * 
  * To change the template for this generated type comment go to Window>Preferences>Java>Code
  * Generation>Code and Comments
  */
-public class DefaultDocumentTest extends TestCase {
+public class DefaultDocumentTest extends SitemapComponentTestCase {
     /**
      * Constructor.
      * @param test The test.
      */
     public DefaultDocumentTest(String test) {
-        super(test);
+        super();
     }
 
     /**
@@ -45,7 +46,6 @@ public class DefaultDocumentTest extends TestCase {
      * @param args The command line arguments.
      */
     public static void main(String[] args) {
-        PublicationHelper.extractPublicationArguments(args);
         TestRunner.run(getSuite());
     }
 
@@ -60,15 +60,18 @@ public class DefaultDocumentTest extends TestCase {
     protected static final DocumentTestSet[] testSets = {
             new DocumentTestSet("/index.html", "/index", Publication.AUTHORING_AREA, "en", "html"),
             new DocumentTestSet("/index_en.htm", "/index", Publication.AUTHORING_AREA, "en", "htm"),
-            new DocumentTestSet("/index_de.html", "/index", Publication.AUTHORING_AREA, "de",
+            new DocumentTestSet("/index_de.html",
+                    "/index",
+                    Publication.AUTHORING_AREA,
+                    "de",
                     "html") };
 
     /**
      * Tests a document test set.
      * @param testSet The test set.
-     * @throws DocumentBuildException if an error occurs
+     * @throws PublicationException
      */
-    protected void doDocumentTest(DocumentTestSet testSet) throws DocumentBuildException {
+    protected void doDocumentTest(DocumentTestSet testSet) throws PublicationException {
         Document document = getDocument(testSet);
         System.out.println("ID:           " + document.getId());
         System.out.println("Area:         " + document.getArea());
@@ -77,7 +80,7 @@ public class DefaultDocumentTest extends TestCase {
         System.out.println("Complete URL: " + document.getCanonicalWebappURL());
         System.out.println("Extension:    " + document.getExtension());
 
-        Publication publication = PublicationHelper.getPublication();
+        Publication publication = PublicationUtil.getPublication(getManager(), "test");
         assertEquals(document.getPublication(), publication);
         assertEquals(document.getId(), testSet.getId());
         assertEquals(document.getArea(), testSet.getArea());
@@ -92,9 +95,9 @@ public class DefaultDocumentTest extends TestCase {
 
     /**
      * Tests the default document.
-     * @throws DocumentBuildException if an error occurs
+     * @throws PublicationException
      */
-    public void testDefaultDocument() throws DocumentBuildException {
+    public void testDefaultDocument() throws PublicationException {
         for (int i = 0; i < testSets.length; i++) {
             doDocumentTest(testSets[i]);
         }
@@ -104,7 +107,8 @@ public class DefaultDocumentTest extends TestCase {
 
     protected DocumentIdentityMap getIdentityMap() {
         if (this.identityMap == null) {
-            this.identityMap = new DocumentIdentityMap();
+            IdentityMap map = new IdentityMapImpl(getLogger());
+            this.identityMap = new DocumentIdentityMap(map, getManager(), getLogger());
         }
         return this.identityMap;
     }
@@ -113,15 +117,17 @@ public class DefaultDocumentTest extends TestCase {
      * Returns the test document for a given test set.
      * @param testSet A document test set.
      * @return A document.
-     * @throws DocumentBuildException if an error occurs
+     * @throws PublicationException 
      */
-    protected Document getDocument(DocumentTestSet testSet) throws DocumentBuildException {
+    protected Document getDocument(DocumentTestSet testSet) throws PublicationException {
 
-        Publication pub = PublicationHelper.getPublication();
-        DefaultDocument document = new DefaultDocument(getIdentityMap(), pub, testSet.getId(),
-                testSet.getArea());
+        Publication pub = PublicationUtil.getPublication(getManager(), "test");
+        DocumentIdentifier id = new DocumentIdentifier(pub,
+                testSet.getArea(),
+                testSet.getId(),
+                testSet.getLanguage());
+        DefaultDocument document = new DefaultDocument(getManager(), getIdentityMap(), id, getLogger());
         document.setDocumentURL(testSet.getUrl());
-        document.setLanguage(testSet.getLanguage());
         document.setExtension(testSet.getExtension());
 
         return document;
@@ -190,13 +196,4 @@ public class DefaultDocumentTest extends TestCase {
         }
     }
 
-    /**
-     * @see junit.framework.TestCase#setUp()
-     */
-    protected void setUp() throws Exception {
-        if (PublicationHelper.getPublication() == null) {
-            String[] args = { "D:\\Development\\build\\tomcat-4.1.24\\webapps\\lenya", "test" };
-            PublicationHelper.extractPublicationArguments(args);
-        }
-    }
 }

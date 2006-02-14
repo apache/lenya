@@ -21,8 +21,6 @@ package org.apache.lenya.ac.impl;
 
 import junit.textui.TestRunner;
 
-import org.apache.lenya.cms.PublicationHelper;
-
 /**
  * Access controller test
  */
@@ -40,7 +38,6 @@ public class AccessControllerTest extends AccessControlTest {
      * @param args The command-line arguments.
      */
     public static void main(String[] args) {
-        PublicationHelper.extractPublicationArguments(args);
         TestRunner.run(AccessControllerTest.class);
     }
 

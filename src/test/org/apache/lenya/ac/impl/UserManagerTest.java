@@ -29,7 +29,6 @@ import org.apache.lenya.ac.file.FileGroupManager;
 import org.apache.lenya.ac.file.FileRole;
 import org.apache.lenya.ac.file.FileUser;
 import org.apache.lenya.ac.file.FileUserManager;
-import org.apache.lenya.cms.PublicationHelper;
 
 /**
  * User manager test.
@@ -51,7 +50,6 @@ public class UserManagerTest extends AccessControlTest {
      * @param args Command line args
      */
     public static void main(String[] args) {
-        PublicationHelper.extractPublicationArguments(args);
         junit.textui.TestRunner.run(UserManagerTest.class);
     }
 
