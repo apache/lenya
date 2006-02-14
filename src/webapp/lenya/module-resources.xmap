@@ -58,7 +58,7 @@
         </map:match>        
         <map:match type="regexp" pattern="(.*\.)(rng)$">
           <map:generate src="fallback://lenya/modules/{../1}/resources/{../2}.{../3}"/>
-          <map:transform src="fallback://lenya/xslt/resources/external-relax.xsl">
+          <map:transform src="fallback://lenya/xslt/resources/translate-rng-includes.xsl">
             <map:parameter name="publicationid" value="{page-envelope:publication-id}"/>
             <map:parameter name="contextprefix" value="{request:contextPath}"/>
           </map:transform>

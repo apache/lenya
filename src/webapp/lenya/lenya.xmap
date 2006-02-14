@@ -63,7 +63,7 @@
       
       <map:match pattern="**.rng">
         <map:generate src="resources/{1}.rng"/>
-        <map:transform src="xslt/resources/external-relax.xsl"/>
+        <map:transform src="xslt/resources/translate-rng-includes.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
 
