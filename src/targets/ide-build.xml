@@ -33,9 +33,11 @@
       <pathelement path="${src.test.dir}"/>
       <dirset dir="src/pubs">
         <include name="*/java/src"/>
+        <include name="*/java/test"/>
       </dirset>
       <dirset dir="src/modules">
         <include name="*/java/src"/>
+        <include name="*/java/test"/>
       </dirset>
     </path>
 
