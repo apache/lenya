@@ -107,10 +107,20 @@
        <param name="exportlib" expression="${ide.eclipse.export.libs}"/>
     </xslt>
 
+    <xmlproperty file="${cocoon.src.dir}/.project"/>
+    
+    <fail unless="projectDescription.name">
+      Please call "./build.sh eclipse-project" in the Cocoon source directory first.
+    </fail>
+
     <!-- copy the project file (expand version) -->
     <copy file="${src.resource.dir}/dev/eclipse/project"
           tofile="${basedir}/.project"
+          filtering="yes"
           overwrite="yes">
+      <filterset>
+        <filter token="COCOON_PROJECT" value="${projectDescription.name}"/>
+      </filterset>
     </copy>
   </target>
 
