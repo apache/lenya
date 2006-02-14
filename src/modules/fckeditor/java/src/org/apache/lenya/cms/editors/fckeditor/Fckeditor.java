@@ -99,7 +99,8 @@ public class Fckeditor extends DocumentUsecase {
         String encoding = request.getCharacterEncoding();
         String content = "<?xml version=\"1.0\" encoding=\"" + encoding + "\"?>\n"
                 + addNamespaces(namespaces, getParameterAsString("content"));
-
+        // ToDo: set replacements in an properties file
+        content = content.replaceAll("&nbsp;","&#160;");
         saveDocument(encoding, content);
     }
 
