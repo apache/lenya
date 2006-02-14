@@ -1,3 +1,20 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 1999-2005 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
 <page:page
   xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
@@ -7,30 +24,18 @@
   >
   
   <script type="text/javascript" src="/modules/fckeditor/FCKeditor/fckeditor.js">&#160;</script>
+  <script type="text/javascript" src="/modules/fckeditor/javascript/fckloader.js">&#160;</script>
   <script type="text/javascript">
-
     window.onload = function()
     {
-    	var oFCKeditor = new FCKeditor( 'content' ) ;
-    	oFCKeditor.BasePath	= '/modules/fckeditor/FCKeditor/' ;
-    	oFCKeditor.Width="800";
-    	oFCKeditor.Height="700";
-    	oFCKeditor.Config[ "FullPage" ] = true ;
-    	oFCKeditor.Config[ "EditorAreaCSS" ] = '/default/authoring/css/page.css' ;
-    	oFCKeditor.ReplaceTextarea() ;
-
+      fckloader('<jx:out value="${usecase.getParameter('host')}"/>', '<jx:out value="${usecase.getParameter('requesturi')}"/>');
     }
-
   </script>
   
 	<page:title>FCKeditor - Sample</page:title>
 
 	<page:body>
 		<jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
-
-
-            <jx:choose>
-              <jx:when test="${! usecase.hasErrors()}">
           
                 <div class="lenya-box">
                   <div class="lenya-box-title">Information</div>
@@ -56,10 +61,10 @@
                   </div>
                 </div>
           
-              <form method="post" >
+              <form method="post" name="fckeditor" id="fckeditor">
             <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
             <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>		
-            <input name="namespaces" type="hidden" value=" xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot; xmlns=&quot;http://www.w3.org/1999/xhtml&quot;" />
+            <input name="namespaces" type="hidden" value=" xmlns=&quot;http://www.w3.org/1999/xhtml&quot;" />
 			    <div>
 				    <textarea id="content" name="content" style="WIDTH: 100%; HEIGHT: 200px">
                       <cinclude:includexml>
@@ -69,13 +74,8 @@
 			    </div>
 			    <br />
 			    <input name="submit" type="submit" value="Save" />
+          <input type="submit" name="cancel" value="Cancel"/>
 		      </form>
-                
-              </jx:when>
-              <jx:otherwise>
-                <input type="submit" name="cancel" value="Cancel"/>
-              </jx:otherwise>
-            </jx:choose>
             			
 	</page:body>
 </page:page>
