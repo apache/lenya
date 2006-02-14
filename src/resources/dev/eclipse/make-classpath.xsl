@@ -25,6 +25,7 @@
 
   <xsl:output indent="yes" method="xml"/>
   <xsl:param name="exportlib"/>
+  <xsl:param name="cocoonProjectName"/>
   
   <xsl:strip-space elements="*"/>
 
@@ -61,7 +62,7 @@
       <classpathentry kind="output" path="{output}"/>
 
       <!-- 5. Dependance on Cocoon. There needs to be a cocoon-2.1 eclipse project -->
-	  <classpathentry kind="src" path="/cocoon-2.1"/>
+	  <classpathentry kind="src" path="/{$cocoonProjectName}"/>
 
     </classpath>
   </xsl:template>

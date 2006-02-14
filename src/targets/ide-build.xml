@@ -25,6 +25,12 @@
 
     <echo message="Building Eclipse Project Files"/>
 
+    <xmlproperty file="${cocoon.src.dir}/.project"/>
+    
+    <fail unless="projectDescription.name">
+      Please call "./build.sh eclipse-project" in the Cocoon source directory first.
+    </fail>
+    
     <!-- prepare the various paths that will form the project -->
     <path id="srcs">
       <!-- main source dir -->
@@ -105,13 +111,8 @@
           processor="trax"
           style="${src.resource.dir}/dev/eclipse/make-classpath.xsl">
        <param name="exportlib" expression="${ide.eclipse.export.libs}"/>
+       <param name="cocoonProjectName" expression="${projectDescription.name}"/>
     </xslt>
-
-    <xmlproperty file="${cocoon.src.dir}/.project"/>
-    
-    <fail unless="projectDescription.name">
-      Please call "./build.sh eclipse-project" in the Cocoon source directory first.
-    </fail>
 
     <!-- copy the project file (expand version) -->
     <copy file="${src.resource.dir}/dev/eclipse/project"
