@@ -139,7 +139,7 @@ This sitemap creates default navigation components.
           <map:parameter name="Cache-Control" value="pre-check=0" />
           <map:parameter name="Expires" value="-1" />
         </map:act>
-        <map:transform src="xslt/navigation/sitetree2nav.xsl" label="navtree">
+        <map:transform src="fallback://lenya/modules/sitetree/xslt/navigation/sitetree2nav.xsl" label="navtree">
           <map:parameter name="chosenlanguage" value="{request-param:language}"/>
           <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
         </map:transform>
