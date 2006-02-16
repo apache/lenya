@@ -50,7 +50,7 @@
   <!-- Runs all tests -->
   <target name="test"
       description="Runs all tests"
-      depends="tests.junit"/>
+      depends="tests.junit, modules.test"/>
   <!--
   depends="tests.junit, tests.anteater, tests.webtest"/>
   -->
