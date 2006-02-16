@@ -21,10 +21,6 @@ package org.apache.lenya.cms.workflow;
 
 import java.io.File;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
-
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
@@ -43,14 +39,6 @@ import org.apache.lenya.workflow.Workflowable;
  * Generation>Code and Comments
  */
 public class WorkflowTest extends AccessControlTest {
-
-    /**
-     * Returns the test suite.
-     * @return A test suite.
-     */
-    public static Test getSuite() {
-        return new TestSuite(WorkflowTest.class);
-    }
 
     private static final String variableName = "is-live";
     protected static final String URL = "/authoring/index.html";
