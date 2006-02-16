@@ -24,6 +24,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.User;
@@ -37,23 +38,6 @@ import org.apache.lenya.ac.impl.AccessControlTest;
  */
 public class FileUserTest extends AccessControlTest {
     private HashMap groups = new HashMap();
-
-    /**
-     * Constructor for FileUserTest.
-     * @param arg0 command line args
-     */
-    public FileUserTest(String arg0) {
-        super(arg0);
-    }
-
-    /**
-     * The main method
-     * 
-     * @param args command line args
-     */
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(FileUserTest.class);
-    }
 
     /**
      * (non-Javadoc)
@@ -92,11 +76,14 @@ public class FileUserTest extends AccessControlTest {
         String adminGroupName = "adminGroup";
 
         FileGroup editorGroup = new FileGroup(configDir, editorGroupName);
+        ContainerUtil.enableLogging(editorGroup, getLogger());
         FileGroup adminGroup = new FileGroup(configDir, adminGroupName);
+        ContainerUtil.enableLogging(adminGroup, getLogger());
         this.groups.put(editorGroupName, editorGroup);
         this.groups.put(adminGroupName, adminGroup);
 
         FileUser user = new FileUser(configDir, userName, fullName, email, password);
+        ContainerUtil.enableLogging(user, getLogger());
 
         editorGroup.add(user);
         adminGroup.add(user);

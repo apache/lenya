@@ -26,23 +26,7 @@ import org.apache.lenya.ac.impl.AccessControlTest;
  * @version $Id$
  */
 public class FileRoleTest extends AccessControlTest {
-    /**
-     * Constructor for FileRoleTest.
-     * @param arg0 The test to execute.
-     */
-    public FileRoleTest(String arg0) {
-        super(arg0);
-    }
-
-    /**
-     * DOCUMENT ME!
-     * 
-     * @param args DOCUMENT ME!
-     */
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(FileRoleTest.class);
-    }
-
+    
     /**
      * DOCUMENT ME!
      * 

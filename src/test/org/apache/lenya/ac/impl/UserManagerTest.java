@@ -38,22 +38,6 @@ import org.apache.lenya.ac.file.FileUserManager;
 public class UserManagerTest extends AccessControlTest {
 
     /**
-     * Constructor for UserManagerTest.
-     * @param arg0 command line args
-     */
-    public UserManagerTest(String arg0) {
-        super(arg0);
-    }
-
-    /**
-     * Command line interface
-     * @param args Command line args
-     */
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(UserManagerTest.class);
-    }
-
-    /**
      * @see junit.framework.TestCase#setUp()
      */
     public void setUp() throws Exception {

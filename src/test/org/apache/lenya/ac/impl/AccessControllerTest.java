@@ -19,27 +19,10 @@
 
 package org.apache.lenya.ac.impl;
 
-import junit.textui.TestRunner;
-
 /**
  * Access controller test
  */
 public class AccessControllerTest extends AccessControlTest {
-
-    /**
-     * @param test A test.
-     */
-    public AccessControllerTest(String test) {
-        super(test);
-    }
-
-    /**
-     * The main method.
-     * @param args The command-line arguments.
-     */
-    public static void main(String[] args) {
-        TestRunner.run(AccessControllerTest.class);
-    }
 
     /**
      * The test.

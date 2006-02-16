@@ -15,8 +15,6 @@
 */
 package org.apache.lenya.ac.impl;
 
-import junit.textui.TestRunner;
-
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identity;
@@ -33,14 +31,6 @@ public class IdentityTest extends AccessControlTest {
     public static final String USER_ID = "lenya";
 
     /**
-     * Ctor.
-     * @param test The test.
-     */
-    public IdentityTest() {
-        super();
-    }
-
-    /**
      * Tests the identity.
      * 
      * @throws AccessControlException if an error occurs
@@ -49,7 +39,7 @@ public class IdentityTest extends AccessControlTest {
         Identity identity = new Identity();
         ContainerUtil.enableLogging(identity, getLogger());
         User user = getAccessController().getAccreditableManager().getUserManager().getUser(USER_ID);
-        System.out.println("Adding user to identity: [" + user + "]");
+        getLogger().info("Adding user to identity: [" + user + "]");
         identity.addIdentifiable(user);
         
         assertSame(user, identity.getUser());

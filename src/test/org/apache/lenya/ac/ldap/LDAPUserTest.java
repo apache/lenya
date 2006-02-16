@@ -15,7 +15,7 @@
  *
  */
 
-package org.apache.lenya.ac.impl;
+package org.apache.lenya.ac.ldap;
 
 import java.io.File;
 
@@ -27,6 +27,7 @@ import org.apache.lenya.ac.file.FileAccreditableManager;
 import org.apache.lenya.ac.file.FileGroup;
 import org.apache.lenya.ac.file.FileRole;
 import org.apache.lenya.ac.file.FileUserManager;
+import org.apache.lenya.ac.impl.AccessControlTest;
 import org.apache.lenya.ac.ldap.LDAPUser;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -38,35 +39,6 @@ import org.apache.lenya.cms.publication.PublicationUtil;
  * @version $Id$
  */
 public class LDAPUserTest extends AccessControlTest {
-    /**
-     * Constructor for LDAPUserTest.
-     * @param arg0 a <code>String</code>
-     */
-    public LDAPUserTest(String arg0) {
-        super(arg0);
-    }
-
-    /**
-     * 
-     * @param args an array of <code>String</code>
-     */
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(LDAPUserTest.class);
-    }
-
-    /**
-     * @see junit.framework.TestCase#setUp()
-     */
-    public void setUp() throws Exception {
-        super.setUp();
-    }
-
-    /**
-     * @see junit.framework.TestCase#tearDown()
-     */
-    public void tearDown() throws Exception {
-        super.tearDown();
-    }
 
     /**
      * get a publication
@@ -76,7 +48,7 @@ public class LDAPUserTest extends AccessControlTest {
      * @throws PublicationException if an error occurs
      */
     final public Publication getPublication() throws PublicationException {
-        String publicationId = "default";
+        String publicationId = "test";
         return PublicationUtil.getPublication(getManager(), publicationId);
     }
 

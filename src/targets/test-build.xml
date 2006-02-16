@@ -28,7 +28,7 @@
   <property name="debug" value="true"/>
   <property name="test.pub.id" value="test"/>
   <property name="test.pub.source.id" value="default"/>
-  <property name="junit.test.loglevel" value="1"/>
+  <property name="junit.test.loglevel" value="2"/>
   
   <!--
   DEBUG 0
@@ -50,7 +50,10 @@
   <!-- Runs all tests -->
   <target name="test"
       description="Runs all tests"
-      depends="tests.junit, tests.anteater, tests.webtest"/>
+      depends="tests.junit"/>
+  <!--
+  depends="tests.junit, tests.anteater, tests.webtest"/>
+  -->
   
   <!-- Prepares the test publication -->
   <target name="test.pub.prepare">
@@ -94,10 +97,9 @@
 
   <!-- Runs JUnit tests -->
   <target name="tests.junit"	depends="init, tests.prepare,
-        test.identity" />
+        test.accesscontrol" />
   
   <!--
-  			test.identity,
   			test.workflow,
   			test.anttask,
   			test.publisher,
@@ -107,8 +109,8 @@
   -->
 
   
-  <!-- Identity Test -->
-  <target name="test.identity" depends="test.pub.prepare">
+  <!-- Access Control Tests -->
+  <target name="test.accesscontrol" depends="test.pub.prepare">
     <junit printsummary="yes" showoutput="true" haltonerror="on" haltonfailure="on">
       <sysproperty key="junit.test.loglevel" value="${junit.test.loglevel}"/>
       <sysproperty key="contextRoot" value="${basedir}/build/lenya/webapp"/>
@@ -124,6 +126,19 @@
         <pathelement path="${src.test.dir}"/>
       </classpath>
       <test name="org.apache.lenya.ac.impl.IdentityTest"/>
+      <test name="org.apache.lenya.ac.impl.AccessControllerTest"/>
+      <test name="org.apache.lenya.ac.impl.AccreditableManagerTest"/>
+      <test name="org.apache.lenya.ac.impl.UserManagerTest"/>
+      <test name="org.apache.lenya.ac.impl.GroupManagerTest"/>
+      <test name="org.apache.lenya.ac.impl.RoleManagerTest"/>
+      <test name="org.apache.lenya.ac.impl.PolicyManagerTest"/>
+      <test name="org.apache.lenya.ac.impl.PolicyTest"/>
+      <!--
+      <test name="org.apache.lenya.ac.ldap.LDAPUserTest"/>
+      -->
+      <test name="org.apache.lenya.ac.file.FileUserTest"/>
+      <test name="org.apache.lenya.ac.file.FileGroupTest"/>
+      <test name="org.apache.lenya.ac.file.FileRoleTest"/>
     </junit>
   </target>
   
@@ -156,16 +171,6 @@
   <!-- Publisher Test -->
   <target name="test.publisher" depends="test.pub.prepare">
     <java fork="yes" classname="org.apache.lenya.cms.task.PublisherTest">
-      <jvmarg value="-enableassertions"/>
-      <arg value="${build.webapp}"/>
-      <arg value="${test.pub.id}"/>
-      <classpath refid="classpath.default"/>
-    </java>
-  </target>  
-
-  <!-- Access Control Test -->
-  <target name="test.accesscontrol" depends="test.pub.prepare">
-    <java fork="yes" classname="org.apache.lenya.ac.impl.AccessControllerTest">
       <jvmarg value="-enableassertions"/>
       <arg value="${build.webapp}"/>
       <arg value="${test.pub.id}"/>

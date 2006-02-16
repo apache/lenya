@@ -43,22 +43,6 @@ import org.apache.lenya.workflow.Workflowable;
  * Generation>Code and Comments
  */
 public class WorkflowTest extends AccessControlTest {
-    /**
-     * Constructor.
-     * @param test The test to execute.
-     */
-    public WorkflowTest(String test) {
-        super(test);
-    }
-
-    /**
-     * The main program for the WorkflowTest class
-     * 
-     * @param args The command line arguments
-     */
-    public static void main(String[] args) {
-        TestRunner.run(getSuite());
-    }
 
     /**
      * Returns the test suite.

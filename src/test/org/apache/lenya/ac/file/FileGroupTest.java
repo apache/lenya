@@ -42,23 +42,6 @@ public class FileGroupTest extends AccessControlTest {
     public static final String GROUP_ID = "testGroup";
 
     /**
-     * Constructor for FileGroupTest.
-     * @param arg0 command line args
-     */
-    public FileGroupTest(String arg0) {
-        super(arg0);
-    }
-
-    /**
-     * The command line interface
-     *
-     * @param args The command line args
-     */
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(FileGroupTest.class);
-    }
-
-    /**
      * Runs the test
      *
      * @throws AccessControlException if an AC error occurs

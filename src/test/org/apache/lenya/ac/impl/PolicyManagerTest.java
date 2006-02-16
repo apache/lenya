@@ -30,22 +30,6 @@ import org.apache.lenya.ac.PolicyManager;
  */
 public class PolicyManagerTest extends AccessControlTest {
 
-    /**
-     * Create an instance of PolicyManagerTest
-     * @param test a test
-     */
-    public PolicyManagerTest(String test) {
-        super(test);
-    }
-
-    /**
-     * The main method.
-     * @param args The command-line arguments.
-     */
-    public static void main(String[] args) {
-        TestRunner.run(AccessControllerTest.class);
-    }
-
     private static String[] URLS = { "/test/authoring/index.html" };
 
     /**

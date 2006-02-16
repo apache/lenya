@@ -28,21 +28,6 @@ import org.apache.lenya.ac.file.FileRoleManager;
  * @version $Id$
  */
 public class RoleManagerTest extends AccessControlTest {
-    /**
-     * Constructor for RoleManagerTest.
-     * @param arg0 command line args
-     */
-    public RoleManagerTest(String arg0) {
-        super(arg0);
-    }
-
-    /**
-     * Command line interface
-     * @param args Command line args
-     */
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(RoleManagerTest.class);
-    }
 
     /**
      * Run the test

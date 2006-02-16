@@ -30,23 +30,6 @@ import org.apache.lenya.ac.file.FileGroupManager;
 public class GroupManagerTest extends AccessControlTest {
 
     /**
-     * Constructor for GroupManagerTest.
-     * @param arg0 command line args
-     */
-    public GroupManagerTest(String arg0) {
-        super(arg0);
-    }
-
-    /**
-     * Command line interface
-     *
-     * @param args command line args
-     */
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(GroupManagerTest.class);
-    }
-
-    /**
      * The test
      * @throws AccessControlException if an error occurs
      */

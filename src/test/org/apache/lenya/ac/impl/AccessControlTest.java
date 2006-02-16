@@ -21,37 +21,32 @@ package org.apache.lenya.ac.impl;
 
 import java.io.File;
 
-import org.apache.avalon.framework.component.ComponentSelector;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.file.FileAccreditableManager;
 import org.apache.lenya.ac.file.FilePolicyManager;
+import org.apache.lenya.cms.LenyaTestCase;
 import org.apache.lenya.cms.ac.DocumentPolicyManagerWrapper;
 import org.apache.lenya.cms.ac.PublicationAccessControllerResolver;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
-import org.apache.lenya.cms.repository.RepositoryTestCase;
 
 /**
  * To change the template for this generated type comment go to Window>Preferences>Java>Code
  * Generation>Code and Comments
  */
-public class AccessControlTest extends RepositoryTestCase {
+public class AccessControlTest extends LenyaTestCase {
 
     private ServiceSelector accessControllerResolverSelector;
     private AccessControllerResolver accessControllerResolver;
     private DefaultAccessController accessController;
 
     private File accreditablesDirectory;
-
-    /**
-     */
-    public AccessControlTest() {
-    }
 
     /**
      * Returns the access controller.
@@ -63,7 +58,6 @@ public class AccessControlTest extends RepositoryTestCase {
 
     protected static final String URL = "/test/authoring/index.html";
 
-    /** @see junit.framework.TestCase#setUp() */
     public void setUp() throws Exception {
 
         super.setUp();
@@ -139,8 +133,8 @@ public class AccessControlTest extends RepositoryTestCase {
      * Returns the policy manager.
      * @return A policy manager.
      */
-    protected FilePolicyManager getPolicyManager() {
-        return (FilePolicyManager) getAccessController().getPolicyManager();
+    protected PolicyManager getPolicyManager() {
+        return getAccessController().getPolicyManager();
     }
 
     /**

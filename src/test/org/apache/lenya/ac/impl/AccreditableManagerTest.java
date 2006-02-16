@@ -15,37 +15,15 @@
 */
 package org.apache.lenya.ac.impl;
 
-import junit.textui.TestRunner;
-
-import org.apache.avalon.framework.component.ComponentSelector;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
-import org.apache.lenya.cms.ExcaliburTest;
 
 /**
  * Test class for the Accreditable Manager
  */
-public class AccreditableManagerTest extends ExcaliburTest {
+public class AccreditableManagerTest extends AccessControllerTest {
 
-    /**
-     * @param test The test to execute.
-     */
-    public AccreditableManagerTest(String test) {
-        super(test);
-    }
-
-    /**
-     * The main program.
-     * The parameters are set from the command line arguments.
-     *
-     * @param args The command line arguments.
-     */
-    public static void main(String[] args) {
-        TestRunner.run(AccreditableManagerTest.class);
-    }
-    
     private AccreditableManager accreditableManager;
-    private ComponentSelector selector;
     
     protected static final String HINT = "file";
 
@@ -58,10 +36,8 @@ public class AccreditableManagerTest extends ExcaliburTest {
     public void setUp() throws Exception {
         super.setUp();
 
-        String role = AccreditableManager.ROLE + "Selector";
-        this.selector = (ComponentSelector) this.manager.lookup(role);
+        this.accreditableManager = getAccessController().getAccreditableManager();
         
-        this.accreditableManager = (AccreditableManager) this.selector.select(HINT);
         assertNotNull("AccreditableManager is null", this.accreditableManager);
     }
 

@@ -23,8 +23,6 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import junit.textui.TestRunner;
-
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
@@ -34,32 +32,16 @@ import org.apache.lenya.cms.publication.PublicationUtil;
 
 /**
  * Policy Test
- *  
- * */
+ * 
+ */
 public class PolicyTest extends AccessControlTest {
-    /**
-     * Executes this test.
-     * @param test The test.
-     */
-    public PolicyTest(String test) {
-        super(test);
-    }
-
-    /**
-     * The main method.
-     * @param args The command-line arguments.
-     */
-    public static void main(String[] args) {
-        TestRunner.run(PolicyTest.class);
-    }
-
     protected static final String URL = "/test/authoring/index.html";
     protected static final String SAVE_URL = "/test/authoring/tutorial.html";
 
     /**
      * A test.
      * @throws AccessControlException when something went wrong.
-     * @throws PublicationException 
+     * @throws PublicationException
      */
     public void testLoadPolicy() throws AccessControlException, PublicationException {
         Publication pub = PublicationUtil.getPublication(getManager(), "test");
@@ -82,8 +64,8 @@ public class PolicyTest extends AccessControlTest {
      * @throws AccessControlException when something went wrong.
      */
     protected Policy getPolicy(String url) throws AccessControlException {
-        Policy policy =
-            getPolicyManager().getPolicy(getAccessController().getAccreditableManager(), url);
+        Policy policy = getPolicyManager().getPolicy(getAccessController().getAccreditableManager(),
+                url);
 
         return policy;
     }
@@ -93,8 +75,9 @@ public class PolicyTest extends AccessControlTest {
      * @throws AccessControlException when something went wrong.
      */
     public void testSavePolicy() throws AccessControlException {
-        DefaultPolicy urlPolicy =
-            getPolicyManager().buildURLPolicy(getAccessController().getAccreditableManager(), URL);
+        InheritingPolicyManager policyManager = (InheritingPolicyManager) getPolicyManager();
+        DefaultPolicy urlPolicy = policyManager.buildURLPolicy(getAccessController().getAccreditableManager(),
+                URL);
         DefaultPolicy newPolicy = new DefaultPolicy();
 
         Credential[] credentials = urlPolicy.getCredentials();
@@ -112,11 +95,9 @@ public class PolicyTest extends AccessControlTest {
 
         assertEquals(urlPolicy.getCredentials().length, newPolicy.getCredentials().length);
 
-        getPolicyManager().saveURLPolicy(SAVE_URL, newPolicy);
+        policyManager.saveURLPolicy(SAVE_URL, newPolicy);
 
-        newPolicy =
-            getPolicyManager().buildURLPolicy(
-                getAccessController().getAccreditableManager(),
+        newPolicy = policyManager.buildURLPolicy(getAccessController().getAccreditableManager(),
                 SAVE_URL);
         assertEquals(urlPolicy.getCredentials().length, newPolicy.getCredentials().length);
 
@@ -141,11 +122,9 @@ public class PolicyTest extends AccessControlTest {
             assertEquals(oldRoles, newRoles);
 
             /*
-            for (int j = 0; j < roles.length; j++) {
-                assertEquals(roles[j], newRoles[j]);
-                System.out.println("  Role: [" + roles[j] + "]");
-            }
-            */
+             * for (int j = 0; j < roles.length; j++) { assertEquals(roles[j], newRoles[j]);
+             * System.out.println(" Role: [" + roles[j] + "]"); }
+             */
         }
     }
 }
