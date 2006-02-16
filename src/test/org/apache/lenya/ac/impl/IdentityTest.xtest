@@ -20,11 +20,10 @@
     Test Cases: Identity 
   </annotation>
   <context>
+    <!--
     <entry name="environment-context" value="/c:/src/lenya-trunk/build/lenya/webapp/"/>
-  <!--
     <entry name="container.rootDir" value="/c:/src/lenya-trunk/build/lenya/webapp/"/>
-    <entry name="context-root" value="/c:/src/lenya-trunk/build/lenya/webapp/"/>
-  -->
+    -->
   </context>
 
    <roles>
@@ -69,11 +68,10 @@
           shorthand="authenticator"
           default-class="org.apache.lenya.ac.impl.UserAuthenticator"/>
   
-  <!--
-    <role name="org.apache.lenya.ac.cache.PolicyCache"
-          shorthand="sourcecache"
-          default-class="org.apache.lenya.ac.cache.PolicyCacheImpl"/>
-  -->
+     <role name="org.apache.lenya.ac.cache.SourceCache"
+       shorthand="sourcecache"
+       default-class="org.apache.lenya.ac.cache.SourceCacheImpl"/>
+     
      <role name="org.apache.lenya.cms.publication.PublicationManager"
        shorthand="publication-manager"
        default-class="org.apache.lenya.cms.publication.PublicationManagerImpl"/>
@@ -84,10 +82,10 @@
   
   <source-factories>
     <component-instance class="org.apache.excalibur.source.impl.ResourceSourceFactory" name="resource"/>
-    <!--
     <component-instance class="org.apache.cocoon.components.source.impl.ContextSourceFactory" name="context"/>
-    -->
+    <!--
     <component-instance class="org.apache.lenya.cms.cocoon.source.ContextSourceFactory" name="context"/>
+    -->
     <component-instance class="org.apache.excalibur.source.impl.URLSourceFactory" name="*"/>
   </source-factories>
 
@@ -102,6 +100,7 @@
     
   <authorizers>
     <component-instance class="org.apache.lenya.ac.impl.PolicyAuthorizer" logger="lenya.ac.authorizer" name="policy"/>
+    <component-instance class="org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer" logger="lenya.ac.authorizer" name="usecase"/>
   </authorizers>
   
   <policy-managers>

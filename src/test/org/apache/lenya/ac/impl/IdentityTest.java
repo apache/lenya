@@ -17,6 +17,7 @@ package org.apache.lenya.ac.impl;
 
 import junit.textui.TestRunner;
 
+import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
@@ -35,18 +36,10 @@ public class IdentityTest extends AccessControlTest {
      * Ctor.
      * @param test The test.
      */
-    public IdentityTest(String test) {
-        super(test);
+    public IdentityTest() {
+        super();
     }
 
-    /**
-     * The main method.
-     * @param args The command-line arguments.
-     */
-    public static void main(String[] args) {
-        TestRunner.run(IdentityTest.class);
-    }
-    
     /**
      * Tests the identity.
      * 
@@ -54,6 +47,7 @@ public class IdentityTest extends AccessControlTest {
      */
     public void testIdentity() throws AccessControlException {
         Identity identity = new Identity();
+        ContainerUtil.enableLogging(identity, getLogger());
         User user = getAccessController().getAccreditableManager().getUserManager().getUser(USER_ID);
         System.out.println("Adding user to identity: [" + user + "]");
         identity.addIdentifiable(user);

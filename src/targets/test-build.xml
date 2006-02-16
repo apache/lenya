@@ -28,6 +28,15 @@
   <property name="debug" value="true"/>
   <property name="test.pub.id" value="test"/>
   <property name="test.pub.source.id" value="default"/>
+  <property name="junit.test.loglevel" value="1"/>
+  
+  <!--
+  DEBUG 0
+  INFO  1
+  WARN  2
+  ERROR 3
+  FATAL 4
+  -->
 
   <path id="classpath.default">
     <path refid="classpath"/>
@@ -45,18 +54,13 @@
   
   <!-- Prepares the test publication -->
   <target name="test.pub.prepare">
-  <!--
-    
     <property name="test.pub.dir" value="${build.webapp}/lenya/pubs/${test.pub.id}"/>
-    
+    <echo>Creating test publication at ${test.pub.dir}</echo>
     <delete dir="${test.pub.dir}"/>
     <mkdir dir="${test.pub.dir}"/>
-    
     <copy todir="${test.pub.dir}">
       <fileset dir="${build.webapp}/lenya/pubs/${test.pub.source.id}"/>
     </copy>
-    
-  -->
   </target>
   
   <!-- prepares the tests. -->
@@ -104,10 +108,11 @@
 
   
   <!-- Identity Test -->
-  <target name="test.identity">
-    <java fork="no" classname="org.apache.lenya.ac.impl.IdentityTest">
-      <arg value="${build.webapp}"/>
-      <arg value="default"/>
+  <target name="test.identity" depends="test.pub.prepare">
+    <junit printsummary="yes" showoutput="true" haltonerror="on" haltonfailure="on">
+      <sysproperty key="junit.test.loglevel" value="${junit.test.loglevel}"/>
+      <sysproperty key="contextRoot" value="${basedir}/build/lenya/webapp"/>
+      <formatter type="plain"/>
       <classpath refid="classpath"/>
       <classpath>
         <pathelement location="${build.test}" />
@@ -115,7 +120,8 @@
         <pathelement path="${build.webapp}/WEB-INF/lib" />
         <pathelement path="${src.test.dir}"/>
       </classpath>
-    </java>
+      <test name="org.apache.lenya.ac.impl.IdentityTest"/>
+    </junit>
   </target>
   
     

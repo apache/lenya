@@ -16,7 +16,14 @@
  */
 package org.apache.lenya.cms.publication;
 
+import java.io.File;
+
+import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.context.DefaultContext;
 import org.apache.cocoon.core.container.ContainerTestCase;
+import org.apache.cocoon.environment.Context;
+import org.apache.cocoon.environment.commandline.CommandLineContext;
+import org.apache.cocoon.environment.mock.MockContext;
 import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.IdentityMapImpl;
 
@@ -30,6 +37,17 @@ public class PublicationTestCase extends ContainerTestCase {
             this.identityMap = new DocumentIdentityMap(map, getManager(), getLogger());
         }
         return this.identityMap;
+    }
+
+    protected void addContext(DefaultContext context) {
+        super.addContext(context);
+        String contextRoot = System.getProperty("contextRoot");
+        getLogger().info("Adding context root entry [" + contextRoot + "]");
+        context.put("context-root", new File(contextRoot));
+        
+        Context envContext = new CommandLineContext(contextRoot);
+        ContainerUtil.enableLogging(envContext, getLogger());
+        context.put("environment-context", envContext);
     }
     
 }

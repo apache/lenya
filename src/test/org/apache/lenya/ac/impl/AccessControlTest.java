@@ -30,6 +30,7 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.file.FileAccreditableManager;
 import org.apache.lenya.ac.file.FilePolicyManager;
+import org.apache.lenya.cms.ac.DocumentPolicyManagerWrapper;
 import org.apache.lenya.cms.ac.PublicationAccessControllerResolver;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationTestCase;
@@ -48,9 +49,8 @@ public class AccessControlTest extends PublicationTestCase {
     private File accreditablesDirectory;
 
     /**
-     * @param test The test.
      */
-    public AccessControlTest(String test) {
+    public AccessControlTest() {
     }
 
     /**
@@ -88,7 +88,9 @@ public class AccessControlTest extends PublicationTestCase {
         getLogger().info("Resolved access controller: [" + this.accessController.getClass() + "]");
 
         File servletContext = pub.getServletContext();
-        ((FilePolicyManager) this.accessController.getPolicyManager()).setPoliciesDirectory(servletContext);
+        DocumentPolicyManagerWrapper wrapper = (DocumentPolicyManagerWrapper) this.accessController.getPolicyManager();
+        FilePolicyManager policyManager = (FilePolicyManager) wrapper.getPolicyManager();
+        policyManager.setPoliciesDirectory(servletContext);
 
         this.accreditablesDirectory = new File(pub.getDirectory(), "config/ac/passwd".replace('/',
                 File.separatorChar));
@@ -101,7 +103,6 @@ public class AccessControlTest extends PublicationTestCase {
      * @exception Exception if an error occurs
      */
     public void tearDown() throws Exception {
-        super.tearDown();
 
         if (this.accessControllerResolverSelector != null) {
             if (this.accessControllerResolver != null) {
@@ -112,6 +113,7 @@ public class AccessControlTest extends PublicationTestCase {
             }
             getManager().release(this.accessControllerResolver);
         }
+        super.tearDown();
     }
 
     protected static final String USERNAME = "lenya";
