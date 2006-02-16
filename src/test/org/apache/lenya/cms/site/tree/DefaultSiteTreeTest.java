@@ -23,8 +23,8 @@ import junit.framework.TestCase;
 
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationTestCase;
 import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.repository.RepositoryTestCase;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.tree.DefaultSiteTree;
@@ -33,7 +33,7 @@ import org.apache.lenya.cms.site.tree.SiteTreeNode;
 /**
  * Test class for the default site tree
  */
-public class DefaultSiteTreeTest extends PublicationTestCase {
+public class DefaultSiteTreeTest extends RepositoryTestCase {
 	
 	private DefaultSiteTree siteTree = null;
 

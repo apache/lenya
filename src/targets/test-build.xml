@@ -117,7 +117,10 @@
       <classpath>
         <pathelement location="${build.test}" />
         <pathelement path="${build.webapp}/WEB-INF/classes" />
-        <pathelement path="${build.webapp}/WEB-INF/lib" />
+        <fileset dir="${build.webapp}/WEB-INF/lib">
+          <include name="*.jar"/>
+          <include name="endorsed/*.jar"/>
+        </fileset>
         <pathelement path="${src.test.dir}"/>
       </classpath>
       <test name="org.apache.lenya.ac.impl.IdentityTest"/>

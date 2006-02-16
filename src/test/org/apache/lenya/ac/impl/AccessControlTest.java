@@ -33,14 +33,14 @@ import org.apache.lenya.ac.file.FilePolicyManager;
 import org.apache.lenya.cms.ac.DocumentPolicyManagerWrapper;
 import org.apache.lenya.cms.ac.PublicationAccessControllerResolver;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationTestCase;
 import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.repository.RepositoryTestCase;
 
 /**
  * To change the template for this generated type comment go to Window>Preferences>Java>Code
  * Generation>Code and Comments
  */
-public class AccessControlTest extends PublicationTestCase {
+public class AccessControlTest extends RepositoryTestCase {
 
     private ServiceSelector accessControllerResolverSelector;
     private AccessControllerResolver accessControllerResolver;

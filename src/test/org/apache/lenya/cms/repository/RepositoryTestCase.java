@@ -14,20 +14,17 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.publication;
+package org.apache.lenya.cms.repository;
 
-import java.io.File;
-
-import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.context.DefaultContext;
-import org.apache.cocoon.core.container.ContainerTestCase;
-import org.apache.cocoon.environment.Context;
-import org.apache.cocoon.environment.commandline.CommandLineContext;
-import org.apache.cocoon.environment.mock.MockContext;
+import org.apache.lenya.cms.LenyaTestCase;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.IdentityMapImpl;
 
-public class PublicationTestCase extends ContainerTestCase {
+/**
+ * Base class for tests which operate on the Lenya repository.
+ */
+public class RepositoryTestCase extends LenyaTestCase {
 
     private DocumentIdentityMap identityMap;
     
@@ -39,15 +36,5 @@ public class PublicationTestCase extends ContainerTestCase {
         return this.identityMap;
     }
 
-    protected void addContext(DefaultContext context) {
-        super.addContext(context);
-        String contextRoot = System.getProperty("contextRoot");
-        getLogger().info("Adding context root entry [" + contextRoot + "]");
-        context.put("context-root", new File(contextRoot));
-        
-        Context envContext = new CommandLineContext(contextRoot);
-        ContainerUtil.enableLogging(envContext, getLogger());
-        context.put("environment-context", envContext);
-    }
     
 }
