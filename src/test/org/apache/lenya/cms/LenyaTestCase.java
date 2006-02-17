@@ -38,7 +38,7 @@ import org.apache.excalibur.source.SourceResolver;
  */
 public class LenyaTestCase extends ContainerTestCase {
 
-    private DefaultContext context;
+    protected DefaultContext context;
 
     protected void addContext(DefaultContext context) {
         super.addContext(context);
@@ -89,10 +89,14 @@ public class LenyaTestCase extends ContainerTestCase {
         MockEnvironment env = new MockEnvironment(resolver);
 
         String contextRoot = System.getProperty("contextRoot");
-        String pathInfo = "";
+        String pathInfo = getWebappUrl();
 
-        Request request = new CommandLineRequest(env, "", contextRoot, pathInfo);
+        Request request = new CommandLineRequest(env, contextRoot, "", pathInfo);
         context.put("object-model.request", request);
+    }
+    
+    protected String getWebappUrl() {
+        return "";
     }
 
     /**

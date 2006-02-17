@@ -21,6 +21,12 @@ package org.apache.lenya.cms.workflow;
 
 import java.io.File;
 
+import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.context.DefaultContext;
+import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.environment.commandline.CommandLineRequest;
+import org.apache.cocoon.environment.mock.MockEnvironment;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
@@ -43,6 +49,10 @@ public class WorkflowTest extends AccessControlTest {
     private static final String variableName = "is-live";
     protected static final String URL = "/authoring/index.html";
 
+    protected String getWebappUrl() {
+        return "/test" + URL;
+    }
+
     /**
      * Tests the workflow.
      * @throws Exception when something went wrong.
@@ -52,7 +62,6 @@ public class WorkflowTest extends AccessControlTest {
         String url = "/" + publication.getId() + URL;
         DocumentIdentityMap map = getIdentityMap();
         Document document = map.getFromURL(url);
-        Session session = new Session(map.getIdentityMap(), getIdentity(), getLogger());
 
         File configDir = new File(publication.getDirectory(), "config" + File.separator + "ac"
                 + File.separator + "passwd");
@@ -66,47 +75,54 @@ public class WorkflowTest extends AccessControlTest {
 
             String[] emptyRoles = {};
 
-            Workflowable instance = new DocumentWorkflowable(getManager(),
-                    session,
-                    document,
-                    getLogger());
-
             for (int situationIndex = 0; situationIndex < situations.length; situationIndex++) {
-                assertNotNull(instance);
-
-                System.out.println("Current state: " + instance.getLatestVersion().getState());
 
                 Identity identity = new Identity();
+                ContainerUtil.enableLogging(identity, getLogger());
                 User user = getAccreditableManager().getUserManager()
                         .getUser(situations[situationIndex].getUser());
+                ContainerUtil.enableLogging(user, getLogger());
                 identity.addIdentifiable(user);
 
                 Role[] roles = policy.getRoles(identity);
-                System.out.print("Roles:");
+                getLogger().info("Roles:");
 
                 for (int roleIndex = 0; roleIndex < roles.length; roleIndex++) {
-                    System.out.print(" " + roles[roleIndex]);
+                    getLogger().info(" " + roles[roleIndex]);
                 }
-
-                System.out.println();
 
                 String[] roleIds = new String[roles.length];
                 for (int i = 0; i < roles.length; i++) {
                     roleIds[i] = roles[i].getId();
                 }
+                Session session = new Session(map.getIdentityMap(), identity, getLogger());
+                Workflowable instance = new DocumentWorkflowable(getManager(),
+                        session,
+                        document,
+                        getLogger());
+                assertNotNull(instance);
+                
+                if (situationIndex > 0) {
+                    getLogger().info("Current state: " + instance.getLatestVersion().getState());
+                }
 
+                WorkflowUtil.invoke(getManager(),
+                        session,
+                        getLogger(),
+                        document,
+                        situations[situationIndex].getEvent());
 
                 assertTrue(instance.getLatestVersion().getValue(variableName) == situations[situationIndex].getValue());
 
-                System.out.println("Variable: " + variableName + " = "
+                getLogger().info("Variable: " + variableName + " = "
                         + instance.getLatestVersion().getValue(variableName));
-                System.out.println("------------------------------------------------------");
+                getLogger().info("------------------------------------------------------");
             }
         } finally {
             // this.manager.release(resolver);
         }
 
-        System.out.println("Test completed.");
+        getLogger().info("Test completed.");
     }
 
     private static final TestSituation[] situations = {
