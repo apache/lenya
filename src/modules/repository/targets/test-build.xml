@@ -25,13 +25,14 @@
         <fileset dir="${build.webapp}/WEB-INF/lib" includes="*.jar"/>
         <path location="${build.webapp}/WEB-INF/classes"/>
       </classpath>
-      <formatter type="plain"/>
+      <formatter type="plain" usefile="false" />
+      <formatter type="xml" />
       <sysproperty key="junit.test.loglevel" value="${junit.test.loglevel}"/>
       <sysproperty key="test.repo.webappDirectory" value="${build.webapp}"/>
       <sysproperty key="test.repo.repositoryFactory" value="${repository.factory}"/>
-      <test name="org.apache.lenya.cms.repo.ContentTest"/>
-      <test name="org.apache.lenya.cms.repo.SiteTest"/>
-      <test name="org.apache.lenya.cms.repo.VersioningTest"/>
+      <test name="org.apache.lenya.cms.repo.ContentTest" todir="${junit.dir}"/>
+      <test name="org.apache.lenya.cms.repo.SiteTest" todir="${junit.dir}"/>
+      <test name="org.apache.lenya.cms.repo.VersioningTest" todir="${junit.dir}"/>
     </junit>
   </target>
   
