@@ -51,13 +51,7 @@ public class RCMLTest extends TestCase {
         super(test);
     }
 
-    /**
-     * The main method.
-     * @param args The command-line arguments.
-     */
-    public void main(String[] args) {
-//        TestRunner.run(getSuite());
-
+    public void testRCML(String[] args) {
 
 		if (args.length != 1) {
 			System.out.println("Usage: java RCML rcmlDirectory datafilename rootDirectory");

@@ -57,7 +57,7 @@
       <!-- sources -->
       <sourcepath>
          <pathelement path="${src.java.dir}"/>
-         <pathelement path="${build.src}"/>
+         <pathelement path="${build.java.src}"/>
       </sourcepath>
 
       <!-- pass ant in the classpath to avoid class not found errors -->

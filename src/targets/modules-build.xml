@@ -27,9 +27,24 @@
   <property name="build.modules" value="${build.webapp}/lenya/modules"/>
   
   <target name="copy-modules">
+    <!--
     <copyPubs todir="${build.webapp}/lenya/modules"
               pubsrootdirs="${modules.root.dirs}"
               excludes="CVS,.svn,cocoon-xconf,lenya-roles"/>
+              -->
+    <bulkCopy 
+      sourcedirs="${modules.root.dirs}" 
+      todir="${build.webapp}/lenya/modules"
+      flatten="false">
+      <fileset>
+        <exclude name="java/**"/>
+        <exclude name="*/java/**"/>
+        <exclude name="config/cocoon-xconf/**"/>
+        <exclude name="*/config/cocoon-xconf/**"/>
+        <exclude name="config/lenya-roles/**"/>
+        <exclude name="*/config/lenya-roles/**"/>
+      </fileset>
+    </bulkCopy>
     <bulkCopy 
       sourcedirs="${modules.root.dirs}" 
       todir="${build.patch}/cocoon-xconf/modules"
@@ -54,10 +69,11 @@
   <!-- Module tests -->
   <!-- ================================================ -->
   
-  <target name="modules.test" depends="deploy-modules">
+  <target name="modules.test" depends="tests.prepare, deploy-modules">
+    <property name="module" value="*"/>
     <subant target="test" inheritall="true">
       <property name="build.webapp" value="${build.webapp}"/>
-      <fileset dir="${build.webapp}/lenya/modules" includes="*/targets/test-build.xml"/>
+      <fileset dir="${build.webapp}/lenya/modules" includes="${module}/targets/test-build.xml"/>
     </subant>
   </target>
   

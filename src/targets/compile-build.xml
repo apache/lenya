@@ -43,7 +43,7 @@
            nowarn="${nowarn}"
            source="1.4">
       <src path="${java.dir}"/>
-      <src path="${build.src}"/>
+      <src path="${build.java.src}"/>
       <classpath refid="classpath"/>
     </javac>
   </target>

@@ -17,7 +17,7 @@
 
 <!-- $Id: test-build.xml 209293 2005-07-05 16:19:18Z andreas $ -->
 
-<project name="module-jcr-test">
+<project name="module-sitetree-test">
   
   <target name="test">
     <junit printsummary="yes" showoutput="true" haltonerror="on" haltonfailure="on">
@@ -29,11 +29,10 @@
       <formatter type="plain" usefile="false" />
       <formatter type="xml" />
       <sysproperty key="junit.test.loglevel" value="${junit.test.loglevel}"/>
-      <sysproperty key="test.repo.webappDirectory" value="${build.webapp}"/>
-      <sysproperty key="test.repo.repositoryFactory" value="${repository.factory}"/>
-      <test name="org.apache.lenya.cms.repo.ContentTest" todir="${junit.dir}"/>
-      <test name="org.apache.lenya.cms.repo.SiteTest" todir="${junit.dir}"/>
-      <test name="org.apache.lenya.cms.repo.VersioningTest" todir="${junit.dir}"/>
+      <sysproperty key="contextRoot" value="${basedir}/build/lenya/webapp"/>
+      <sysproperty key="tempDir" value="${basedir}/build/lenya/temp"/>
+      <test name="org.apache.lenya.cms.site.tree.SiteTreeNodeImplTest" todir="${junit.dir}"/>
+      <test name="org.apache.lenya.cms.site.tree.DefaultSiteTreeTest" todir="${junit.dir}"/>
     </junit>
   </target>
   

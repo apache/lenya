@@ -67,7 +67,7 @@
     
     <!--  copy properties, xml configuration files and roles -->
     <copy todir="${build.webapp}/WEB-INF/classes">
-      <fileset dir="${build.src}">
+      <fileset dir="${build.java.src}">
         <include name="**/*.properties"/>
         <include name="**/*.roles"/>
         <include name="**/*.xml"/>

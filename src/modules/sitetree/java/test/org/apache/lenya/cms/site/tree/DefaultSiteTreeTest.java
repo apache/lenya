@@ -21,9 +21,11 @@ package org.apache.lenya.cms.site.tree;
 
 import junit.framework.TestCase;
 
+import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryTestCase;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
@@ -37,24 +39,6 @@ public class DefaultSiteTreeTest extends RepositoryTestCase {
 	
 	private DefaultSiteTree siteTree = null;
 
-	/**
-	 * Constructor.
-	 * @param test The test.
-	 */
-	public DefaultSiteTreeTest(String test) {
-        super();
-    }
-
-	/**
-	 * The main program.
-	 * The parameters are set from the command line arguments.
-	 *
-	 * @param args The command line arguments.
-	 */
-	public static void main(String[] args) {
-        junit.textui.TestRunner.run(DefaultSiteTreeTest.class);
-    }
-
     /**
      * @see TestCase#setUp()
      */
@@ -62,6 +46,10 @@ public class DefaultSiteTreeTest extends RepositoryTestCase {
         super.setUp();
         Publication pub = PublicationUtil.getPublication(getManager(), "test");
 		this.siteTree = new DefaultSiteTree(pub, "test", getManager());
+        ContainerUtil.enableLogging(this.siteTree, getLogger());
+        
+        this.siteTree.getRepositoryNode().lock();
+        
 		Label label = new Label("Foo", "en");
 		Label[] fooLabels = { label };
 		this.siteTree.addNode("/foo", fooLabels, true, null, null, false);
@@ -82,6 +70,7 @@ public class DefaultSiteTreeTest extends RepositoryTestCase {
      */
     protected void tearDown() throws Exception {
         super.tearDown();
+        this.siteTree.getRepositoryNode().unlock();
     }
 
     /**
@@ -247,10 +236,15 @@ public class DefaultSiteTreeTest extends RepositoryTestCase {
     /**
      * Test the import of a subtree
      * @throws PublicationException 
+     * @throws RepositoryException 
      */
-	final public void testImportSubtree() throws PublicationException {
+	final public void testImportSubtree() throws PublicationException, RepositoryException {
         Publication pub = PublicationUtil.getPublication(getManager(), "test");
 		DefaultSiteTree newSiteTree = new DefaultSiteTree(pub, "test1", getManager());
+        ContainerUtil.enableLogging(newSiteTree, getLogger());
+        
+        newSiteTree.getRepositoryNode().lock();
+        
 		Label label = new Label("root", "en");
 		Label[] rootLabels = { label };
 		newSiteTree.addNode("/root", rootLabels, true, null, null, false);
@@ -271,5 +265,7 @@ public class DefaultSiteTreeTest extends RepositoryTestCase {
 		this.siteTree.save();
 		assertNotNull(this.siteTree.getNode("/foo/lala/subtree"));
 		assertNotNull(this.siteTree.getNode("/foo/lala/subtree/child"));
+        
+		newSiteTree.getRepositoryNode().unlock();
 	}
 }

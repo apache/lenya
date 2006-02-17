@@ -67,7 +67,9 @@
   <!-- Destination for the compliation of our own classes in the "compile" target -->
   <property name="build.dir" value="${build.root}/${ant.project.name}"/>
   <!-- Destination for the filtered source files  -->
-  <property name="build.src" value="${build.dir}/src"/>
+  <property name="build.java.src" value="${build.dir}/java/src"/>
+  <property name="build.java.test" value="${build.dir}/java/test"/>
+  
   <!-- Destination for temporary files during the build  -->
   <property name="build.temp" value="${build.dir}/temp"/>
   <property name="build.patch" value="${build.temp}/patch"/>

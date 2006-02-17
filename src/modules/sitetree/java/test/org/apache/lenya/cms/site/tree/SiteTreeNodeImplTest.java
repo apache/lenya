@@ -19,7 +19,9 @@
 
 package org.apache.lenya.cms.site.tree;
 
+import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.cocoon.SitemapComponentTestCase;
+import org.apache.lenya.cms.LenyaTestCase;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.site.Label;
@@ -31,26 +33,10 @@ import junit.framework.TestCase;
 /**
  * Tests the site tree
  */
-public class SiteTreeNodeImplTest extends SitemapComponentTestCase {
+public class SiteTreeNodeImplTest extends LenyaTestCase {
 
     private SiteTreeNode node = null;
-
-    /**
-     * Constructor.
-     * @param test The test.
-     */
-    public SiteTreeNodeImplTest(String test) {
-        super();
-    }
-
-    /**
-     * The main program. The parameters are set from the command line arguments.
-     * 
-     * @param args The command line arguments.
-     */
-    public static void main(String[] args) {
-        junit.textui.TestRunner.run(SiteTreeNodeImplTest.class);
-    }
+    private DefaultSiteTree siteTree = null;
 
     /**
      * @see TestCase#setUp()
@@ -58,7 +44,11 @@ public class SiteTreeNodeImplTest extends SitemapComponentTestCase {
     public void setUp() throws Exception {
         super.setUp();
         Publication pub = PublicationUtil.getPublication(getManager(), "test");
-        DefaultSiteTree siteTree = new DefaultSiteTree(pub, "testArea", getManager());
+        this.siteTree = new DefaultSiteTree(pub, "testArea", getManager());
+        ContainerUtil.enableLogging(siteTree, getLogger());
+        
+        siteTree.getRepositoryNode().lock();
+        
         Label label = new Label("Foo", "en");
         Label[] fooLabels = { label };
         siteTree.addNode("/foo", fooLabels, true, null, null, false);
@@ -75,6 +65,7 @@ public class SiteTreeNodeImplTest extends SitemapComponentTestCase {
      */
     protected void tearDown() throws Exception {
         super.tearDown();
+        this.siteTree.getRepositoryNode().unlock();
     }
 
     /**

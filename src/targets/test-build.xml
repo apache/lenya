@@ -69,18 +69,19 @@
   </target>
   
   <!-- prepares the tests. -->
-  <target name="tests.prepare">
+  <target name="tests.prepare" depends="init">
     <mkdir dir="${build.test}"/>
 
     <!-- Copy test files to build test dir -->
-    <copy todir="${build.test}" filtering="on">
-      <fileset dir="${src.test.dir}" excludes="**/*.java"/>
+    <copy todir="${build.java.test}" filtering="on">
+      <fileset dir="${src.test.dir}"/>
     </copy>
 
-    <copyJavaSources pubsrootdirs="${pubs.root.dirs}" javadir="java/test" builddir="${src.test.dir}" />
-
+    <copyJavaSources pubsrootdirs="${pubs.root.dirs}" javadir="java/test" builddir="${build.java.test}" />
+    <copyJavaSources pubsrootdirs="${modules.root.dirs}" javadir="java/test" builddir="${build.java.test}" />
+    
     <!-- Compile tests -->
-    <javac srcdir="${src.test.dir}"
+    <javac srcdir="${build.java.test}"
            destdir="${build.test}"
            debug="true"
            debuglevel="lines,vars,source"
@@ -94,6 +95,11 @@
         <pathelement path="${build.webapp}/WEB-INF/classes" />
       </classpath>
     </javac>
+    
+    <!-- Copy test resources -->
+    <copy todir="${build.test}" filtering="on">
+      <fileset dir="${build.java.test}" excludes="**.java"/>
+    </copy>
     
     <!-- Generate the xtest file -->
     <!--
@@ -137,7 +143,7 @@
 
 
   <!-- Runs JUnit tests -->
-  <target name="tests.junit" depends="init, tests.prepare, test.pub.prepare">
+  <target name="tests.junit" depends="tests.prepare, test.pub.prepare">
     <junit printsummary="yes" showoutput="true" haltonerror="on" haltonfailure="on">
       <sysproperty key="junit.test.loglevel" value="${junit.test.loglevel}"/>
       <sysproperty key="contextRoot" value="${basedir}/build/lenya/webapp"/>
@@ -172,6 +178,12 @@
       <test name="org.apache.lenya.cms.publication.DefaultDocumentTest" todir="${junit.dir}"/>
       <test name="org.apache.lenya.cms.publication.DefaultDocumentBuilderTest" todir="${junit.dir}"/>
       <test name="org.apache.lenya.cms.publication.DublinCoreTest" todir="${junit.dir}"/>
+      <test name="org.apache.lenya.cms.publication.file.FilePublicationTest" todir="${junit.dir}"/>
+      <!--
+      <test name="org.apache.lenya.cms.rc.RCMLTest" todir="${junit.dir}"/>
+      <test name="org.apache.lenya.cms.rc.RevisionControllerTest" todir="${junit.dir}"/>
+      -->
+      
     </junit>
   </target>
   

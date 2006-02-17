@@ -19,12 +19,6 @@
 
 package org.apache.lenya.cms.publication.file;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
-
-import org.apache.cocoon.SitemapComponentTestCase;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
@@ -32,42 +26,13 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryTestCase;
-import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.tree.SiteTree;
-import org.apache.lenya.cms.site.tree.SiteTreeNode;
-import org.apache.lenya.cms.site.tree.TreeSiteManager;
 
 /**
  * To change the template for this generated type comment go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
 public class FilePublicationTest extends RepositoryTestCase {
-
-    /**
-     * Constructor.
-     * @param test The test.
-     */
-    public FilePublicationTest(String test) {
-        super();
-    }
-
-    /**
-     * The main program. The parameters are set from the command line arguments.
-     * 
-     * @param args The command line arguments.
-     */
-    public static void main(String[] args) {
-        TestRunner.run(getSuite());
-    }
-
-    /**
-     * Returns the test suite.
-     * @return A test suite.
-     */
-    public static Test getSuite() {
-        return new TestSuite(FilePublicationTest.class);
-    }
 
     /**
      * <code>sourceDocumentId</code> The source document id
@@ -124,13 +89,13 @@ public class FilePublicationTest extends RepositoryTestCase {
             String _destinationLanguage) throws PublicationException, DocumentException,
             SiteException {
 
-        System.out.println("Copy document");
-        System.out.println("    Source area:             [" + sourceArea + "]");
-        System.out.println("    Source document ID:      [" + _sourceDocumentId + "]");
-        System.out.println("    Source language:         [" + _sourceLanguage + "]");
-        System.out.println("    Destination area:        [" + destinationArea + "]");
-        System.out.println("    Destination document ID: [" + _destinationDocumentId + "]");
-        System.out.println("    Destination language:    [" + _destinationLanguage + "]");
+        getLogger().info("Copy document");
+        getLogger().info("    Source area:             [" + sourceArea + "]");
+        getLogger().info("    Source document ID:      [" + _sourceDocumentId + "]");
+        getLogger().info("    Source language:         [" + _sourceLanguage + "]");
+        getLogger().info("    Destination area:        [" + destinationArea + "]");
+        getLogger().info("    Destination document ID: [" + _destinationDocumentId + "]");
+        getLogger().info("    Destination language:    [" + _destinationLanguage + "]");
 
         Publication publication = PublicationUtil.getPublication(getManager(), "test");
         DocumentIdentityMap map = getIdentityMap();
