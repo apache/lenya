@@ -83,6 +83,15 @@
     <role name="org.apache.lenya.cms.site.SiteManagerSelector"
       shorthand="site-managers"
       default-class="org.apache.cocoon.components.ExtendedComponentSelector"/>
+      
+    <role name="org.apache.lenya.cms.repository.NodeFactory"
+      shorthand="node-factory"
+      default-class="org.apache.lenya.cms.repository.SourceNodeFactory"/>
+    <!--
+      default-class="org.apache.lenya.cms.repo.adapter.RepoNodeFactory"/>
+      default-class="org.apache.lenya.cms.jcr.JCRNodeFactory"/>
+    -->
+    
     
   </roles>
   
@@ -91,10 +100,8 @@
     <source-factories>
       <component-instance class="org.apache.excalibur.source.impl.ResourceSourceFactory" name="resource"/>
       <component-instance class="org.apache.cocoon.components.source.impl.ContextSourceFactory" name="context"/>
-      <!--
-        <component-instance class="org.apache.lenya.cms.cocoon.source.ContextSourceFactory" name="context"/>
-      -->
       <component-instance class="org.apache.excalibur.source.impl.URLSourceFactory" name="*"/>
+      <component-instance class="org.apache.lenya.cms.cocoon.source.LenyaSourceFactory" name="lenya" scheme="context:"/>
     </source-factories>
     
     <source-resolver class="org.apache.excalibur.source.impl.SourceResolverImpl"/>

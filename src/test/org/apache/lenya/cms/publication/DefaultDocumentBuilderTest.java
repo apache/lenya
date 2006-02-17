@@ -19,42 +19,12 @@
 
 package org.apache.lenya.cms.publication;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
-
 /**
  * 
  * To change the template for this generated type comment go to Window>Preferences>Java>Code
  * Generation>Code and Comments
  */
 public class DefaultDocumentBuilderTest extends DefaultDocumentTest {
-    /**
-     * Constructor.
-     * 
-     * @param test The test.
-     */
-    public DefaultDocumentBuilderTest(String test) {
-        super(test);
-    }
-
-    /**
-     * The main program. The parameters are set from the command line arguments.
-     * 
-     * @param args The command line arguments.
-     */
-    public static void main(String[] args) {
-        TestRunner.run(getSuite());
-    }
-
-    /**
-     * Returns the test suite.
-     * 
-     * @return A test suite.
-     */
-    public static Test getSuite() {
-        return new TestSuite(DefaultDocumentBuilderTest.class);
-    }
 
     /**
      * @throws PublicationException 

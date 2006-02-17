@@ -17,20 +17,17 @@
 
 package org.apache.lenya.cms.publication;
 
-import junit.textui.TestRunner;
-
-import org.apache.cocoon.SitemapComponentTestCase;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
-import org.apache.lenya.transaction.IdentityMap;
-import org.apache.lenya.transaction.IdentityMapImpl;
+import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryTestCase;
 
 /**
  * Dublin Core test.
  * 
  * @version $Id$
  */
-public class DublinCoreTest extends SitemapComponentTestCase {
+public class DublinCoreTest extends RepositoryTestCase {
 
     private static final String AREA = "authoring";
     private static final String DOCUMENT_ID = "/tutorial";
@@ -38,32 +35,18 @@ public class DublinCoreTest extends SitemapComponentTestCase {
     private static final String CREATOR = "test";
 
     /**
-     * Constructor for DublinCoreTest.
-     * @param arg0 a test
-     */
-    public DublinCoreTest(String arg0) {
-        super();
-    }
-
-    /**
-     * The main program. The parameters are set from the command line arguments.
-     * 
-     * @param args The command line arguments.
-     */
-    public static void main(String[] args) {
-        TestRunner.run(DublinCoreTest.class);
-    }
-
-    /**
      * Test the fetching, modification and refetching of a dc core object.
      * @throws PublicationException 
+     * @throws RepositoryException 
      */
-    final public void testModifySaveAndReload() throws PublicationException {
+    final public void testModifySaveAndReload() throws PublicationException, RepositoryException {
         Publication publication = PublicationUtil.getPublication(getManager(), "test");
         
-        IdentityMap idMap = new IdentityMapImpl(getLogger());
-        DocumentIdentityMap map = new DocumentIdentityMap(idMap, getManager(), getLogger());
+        DocumentIdentityMap map = getIdentityMap();
         Document doc = map.get(publication, AREA, DOCUMENT_ID, LANGUAGE);
+        
+        doc.getRepositoryNode().lock();
+        
         MetaData dcCore = doc.getMetaDataManager().getDublinCoreMetaData();
         String title = dcCore.getFirstValue(DublinCore.ELEMENT_TITLE);
         String subject = dcCore.getFirstValue(DublinCore.ELEMENT_SUBJECT);
@@ -81,6 +64,8 @@ public class DublinCoreTest extends SitemapComponentTestCase {
         assertEquals(dateIssued, dcCore2.getFirstValue(DublinCore.TERM_ISSUED));
         assertFalse(creator.equals(dcCore2.getFirstValue(DublinCore.ELEMENT_CREATOR)));
         assertEquals(CREATOR, dcCore2.getFirstValue(DublinCore.ELEMENT_CREATOR));
+        
+        doc.getRepositoryNode().unlock();
     }
 
 }

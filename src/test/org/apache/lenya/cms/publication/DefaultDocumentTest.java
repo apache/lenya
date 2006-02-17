@@ -19,11 +19,7 @@
 
 package org.apache.lenya.cms.publication;
 
-import junit.framework.Test;
-import junit.framework.TestSuite;
-import junit.textui.TestRunner;
-
-import org.apache.cocoon.SitemapComponentTestCase;
+import org.apache.lenya.cms.LenyaTestCase;
 import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.IdentityMapImpl;
 
@@ -32,34 +28,10 @@ import org.apache.lenya.transaction.IdentityMapImpl;
  * To change the template for this generated type comment go to Window>Preferences>Java>Code
  * Generation>Code and Comments
  */
-public class DefaultDocumentTest extends SitemapComponentTestCase {
-    /**
-     * Constructor.
-     * @param test The test.
-     */
-    public DefaultDocumentTest(String test) {
-        super();
-    }
-
-    /**
-     * The main program. The parameters are set from the command line arguments.
-     * @param args The command line arguments.
-     */
-    public static void main(String[] args) {
-        TestRunner.run(getSuite());
-    }
-
-    /**
-     * Returns the test suite.
-     * @return A test suite.
-     */
-    public static Test getSuite() {
-        return new TestSuite(DefaultDocumentTest.class);
-    }
-
+public class DefaultDocumentTest extends LenyaTestCase {
+    
     protected static final DocumentTestSet[] testSets = {
             new DocumentTestSet("/index.html", "/index", Publication.AUTHORING_AREA, "en", "html"),
-            new DocumentTestSet("/index_en.htm", "/index", Publication.AUTHORING_AREA, "en", "htm"),
             new DocumentTestSet("/index_de.html",
                     "/index",
                     Publication.AUTHORING_AREA,
@@ -73,12 +45,12 @@ public class DefaultDocumentTest extends SitemapComponentTestCase {
      */
     protected void doDocumentTest(DocumentTestSet testSet) throws PublicationException {
         Document document = getDocument(testSet);
-        System.out.println("ID:           " + document.getId());
-        System.out.println("Area:         " + document.getArea());
-        System.out.println("Language:     " + document.getLanguage());
-        System.out.println("Document URL: " + document.getCanonicalDocumentURL());
-        System.out.println("Complete URL: " + document.getCanonicalWebappURL());
-        System.out.println("Extension:    " + document.getExtension());
+        getLogger().info("ID:           " + document.getId());
+        getLogger().info("Area:         " + document.getArea());
+        getLogger().info("Language:     " + document.getLanguage());
+        getLogger().info("Document URL: " + document.getCanonicalDocumentURL());
+        getLogger().info("Complete URL: " + document.getCanonicalWebappURL());
+        getLogger().info("Extension:    " + document.getExtension());
 
         Publication publication = PublicationUtil.getPublication(getManager(), "test");
         assertEquals(document.getPublication(), publication);
@@ -90,7 +62,7 @@ public class DefaultDocumentTest extends SitemapComponentTestCase {
                 + document.getArea() + testSet.getUrl());
         assertEquals(document.getExtension(), testSet.getExtension());
 
-        System.out.println("-----------------------------------------------");
+        getLogger().info("-----------------------------------------------");
     }
 
     /**

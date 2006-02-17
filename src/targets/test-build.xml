@@ -92,28 +92,54 @@
         <pathelement path="${build.webapp}/WEB-INF/classes" />
       </classpath>
     </javac>
+    
+    <!-- Generate the xtest file -->
+    <!--
+    This is template code to generate the xtest file automatically.
+    It doesn't work yet due to some exceptions during component initialization.
+    -->
+    <!--
+    <xslt in="${cocoon.src.dir}/build/cocoon-2.1.9-dev/classes/org/apache/cocoon/cocoon.roles"
+      out="${build.temp}/test/cocoon-roles.xsl"
+      style="${src.resource.dir}/test/meta.xsl"
+      force="true">
+      <param name="element" expression="roles"/>
+    </xslt>
+    
+    <xslt in="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles"
+          out="${build.temp}/test/roles.xsl"
+          style="${src.resource.dir}/test/meta.xsl">
+      <param name="element" expression="roles"/>
+    </xslt>
+    
+    <xslt in="${build.webapp}/WEB-INF/cocoon.xconf"
+      out="${build.temp}/test/components.xsl"
+      style="${src.resource.dir}/test/meta.xsl">
+      <param name="element" expression="components"/>
+    </xslt>
+    
+    <xslt in="${src.resource.dir}/test/template.xtest"
+      out="${build.temp}/test/cocoon-roles.xtest"
+      style="${build.temp}/test/cocoon-roles.xsl"/>
+    
+    <xslt in="${build.temp}/test/cocoon-roles.xtest"
+      out="${build.temp}/test/roles.xtest"
+      style="${build.temp}/test/roles.xsl"/>
+    
+    <xslt in="${build.temp}/test/roles.xtest"
+      out="${build.test}/org/apache/lenya/cms/LenyaTestCase.xtest"
+      style="${build.temp}/test/components.xsl"/>
+    -->
+    
   </target>
 
 
   <!-- Runs JUnit tests -->
-  <target name="tests.junit"	depends="init, tests.prepare,
-        test.accesscontrol" />
-  
-  <!--
-  			test.workflow,
-  			test.anttask,
-  			test.publisher,
-  			test.accesscontrol,
-        test.deactivate,
-        test.publications" />
-  -->
-
-  
-  <!-- Access Control Tests -->
-  <target name="test.accesscontrol" depends="test.pub.prepare">
+  <target name="tests.junit" depends="init, tests.prepare, test.pub.prepare">
     <junit printsummary="yes" showoutput="true" haltonerror="on" haltonfailure="on">
       <sysproperty key="junit.test.loglevel" value="${junit.test.loglevel}"/>
       <sysproperty key="contextRoot" value="${basedir}/build/lenya/webapp"/>
+      <sysproperty key="tempDir" value="${basedir}/build/lenya/temp"/>
       <formatter type="plain"/>
       <classpath refid="classpath"/>
       <classpath>
@@ -139,65 +165,14 @@
       <test name="org.apache.lenya.ac.file.FileUserTest"/>
       <test name="org.apache.lenya.ac.file.FileGroupTest"/>
       <test name="org.apache.lenya.ac.file.FileRoleTest"/>
+      
+      <test name="org.apache.lenya.cms.publication.DefaultDocumentTest"/>
+      <test name="org.apache.lenya.cms.publication.DefaultDocumentBuilderTest"/>
+      <test name="org.apache.lenya.cms.publication.DublinCoreTest"/>
     </junit>
   </target>
   
     
-  <!-- AntTask Test -->
-  <target name="test.anttask" depends="test.pub.prepare">
-    <java
-    	fork="yes"
-    	classname="org.apache.lenya.cms.task.AntTaskTest"
-    	>
-      <jvmarg value="-enableassertions"/>
-      <arg value="${build.webapp}"/>
-      <arg value="${test.pub.id}"/>
-      <classpath refid="classpath.default"/>
-    </java>
-  </target>
-  
-
-  <!-- Workflow Test -->
-  <target name="test.workflow" depends="test.pub.prepare">
-    <java fork="yes" classname="org.apache.lenya.cms.workflow.WorkflowTest">
-      <jvmarg value="-enableassertions"/>
-      <arg value="${build.webapp}"/>
-      <arg value="${test.pub.id}"/>
-      <arg value="xhtml"/> <!-- document type -->
-      <classpath refid="classpath.default"/>
-    </java>
-  </target>  
-  
-  <!-- Publisher Test -->
-  <target name="test.publisher" depends="test.pub.prepare">
-    <java fork="yes" classname="org.apache.lenya.cms.task.PublisherTest">
-      <jvmarg value="-enableassertions"/>
-      <arg value="${build.webapp}"/>
-      <arg value="${test.pub.id}"/>
-      <classpath refid="classpath.default"/>
-    </java>
-  </target>  
-
-  <!-- Publication Test -->
-  <target name="test.publication" depends="test.pub.prepare">
-    <java fork="yes" classname="org.apache.lenya.cms.publication.PublicationTest">
-      <jvmarg value="-enableassertions"/>
-      <arg value="${build.webapp}"/>
-      <arg value="${test.pub.id}"/>
-      <classpath refid="classpath.default"/>
-    </java>
-  </target>  
-
-  <!-- Deactivate Document Test -->
-  <target name="test.deactivate" depends="test.pub.prepare">
-    <java fork="yes" classname="org.apache.lenya.cms.task.DocumentDeactivateTaskTest">
-      <jvmarg value="-enableassertions"/>
-      <arg value="C:\digitas\src\lenya-trunk\build\lenya\webapp"/>
-      <arg value="${test.pub.id}"/>
-      <classpath refid="classpath.default"/>
-    </java>
-  </target>
-
   <!-- ================================================ -->
   <!-- Anteater tests -->
   <!-- ================================================ -->
