@@ -79,4 +79,8 @@ public class DocumentIdentifier {
     protected String getKey() {
         return this.publication.getId() + ":" + this.area + ":" + this.id + ":" + this.language;
     }
+    
+    public String toString() {
+        return getKey();
+    }
 }
