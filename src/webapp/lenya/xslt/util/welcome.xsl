@@ -29,6 +29,10 @@
   <page:page>
     
   <page:title>Apache Lenya - Content Management System</page:title>
+  <page:head>
+    <xhtml:meta http-equiv="cache-control" content="no-cache"/>
+    <xhtml:meta http-equiv="pragma" content="no-cache"/>
+  </page:head>  
   <page:body>
     <xsl:apply-templates select="xhtml:div[@class = 'lenya-frontpage']"/>
     <xsl:apply-templates select="lenya:publications"/>
