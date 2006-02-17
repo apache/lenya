@@ -108,6 +108,10 @@ public class WorkflowManagerImpl extends AbstractLogEnabled implements WorkflowM
                 workflow = (WorkflowImpl) this.uri2workflow.get(uri);
                 if (workflow == null) {
                     Document document = SourceUtil.readDOM(uri, this.manager);
+                    if (document == null) {
+                        throw new WorkflowException("Could not read workflow schema from URI ["
+                                + uri + "]!");
+                    }
                     WorkflowBuilder builder = new WorkflowBuilder(getLogger());
                     workflow = builder.buildWorkflow(uri, document);
                     this.uri2workflow.put(uri, workflow);
