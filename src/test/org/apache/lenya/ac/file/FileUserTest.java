@@ -130,7 +130,7 @@ public class FileUserTest extends AccessControlTest {
      * @throws AccessControlException if an error occurs
      */
     final public void testSave() throws AccessControlException {
-        String userName = "alice";
+        String userName = "aliceTest";
         createAndSaveUser(userName, "Alice Wonderland", "alice@wonderland.org", "secret");
 
         File configDir = getAccreditablesDirectory();
@@ -144,7 +144,7 @@ public class FileUserTest extends AccessControlTest {
      * @throws AccessControlException if an error occurs
      */
     final public void testGetEmail() throws AccessControlException {
-        String userID = "alice";
+        String userID = "aliceTest";
         String email = "alice@wonderland.org";
         User user = createAndSaveUser(userID, "Alice Wonderland", email, "secret");
         assertTrue(user.getEmail().equals(email));
@@ -158,7 +158,7 @@ public class FileUserTest extends AccessControlTest {
      * @throws AccessControlException if an error occurs
      */
     final public void testGetName() throws AccessControlException {
-        String userID = "alice";
+        String userID = "aliceTest";
         String userName = "Alice Wonderland";
         FileUser user = createAndSaveUser(userID, userName, "alice@wonderland.org", "secret");
         assertTrue(user.getName().equals(userName));
@@ -187,7 +187,7 @@ public class FileUserTest extends AccessControlTest {
      * @throws AccessControlException if an error occurs
      */
     final public void testGetId() throws AccessControlException {
-        String id = "alice";
+        String id = "aliceTest";
         FileUser user = createAndSaveUser(id, "Alice Wonderland", "alice@wonderland.org", "secret");
         assertTrue(user.getId().equals(id));
     }

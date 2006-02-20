@@ -25,6 +25,7 @@ import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.environment.Session;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessControllerResolver;
+import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.PolicyManager;
@@ -70,6 +71,11 @@ public class AccessControlTest extends RepositoryTestCase {
         }
         
         getAccessController().authorize(getRequest());
+        
+        Accreditable[] accrs = identity.getAccreditables();
+        for (int i = 0; i < accrs.length; i++) {
+            getLogger().info("Accreditable: " + accrs[i]);
+        }
 
     }
 
