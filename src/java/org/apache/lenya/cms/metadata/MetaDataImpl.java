@@ -136,9 +136,7 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
         return true;
     }
 
-    /*
-     * (non-Javadoc)
-     * 
+    /**
      * @see org.apache.lenya.cms.metadata.MetaData#getAvailableKeys()
      */
     public String[] getAvailableKeys() {
@@ -471,6 +469,7 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
             }
         } else
             this.elements.put(key, newValues);
+        save();
     }
 
     /**
@@ -550,6 +549,7 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
         } else {
             this.elements.put(key, newValues);
         }
+        save();
     }
 
     /**
@@ -566,7 +566,6 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
     /**
      * @param key The key.
      * @throws DocumentException if an error occurs.
-     * @see org.apache.lenya.cms.metadata.MetaData#removeAllValues(java.lang.String)
      */
     private void removeAllValues(String key) throws DocumentException {
         if (useFixedElements()) {
