@@ -54,7 +54,6 @@ public class DublinCoreTest extends RepositoryTestCase {
         String dateIssued = dcCore.getFirstValue(DublinCore.TERM_ISSUED);
 
         dcCore.setValue(DublinCore.ELEMENT_CREATOR, CREATOR);
-        dcCore.save();
 
         Document doc2 = map.get(publication, AREA, DOCUMENT_ID, LANGUAGE);
 

@@ -125,7 +125,6 @@ public class Metadata extends SiteUsecase {
   protected void doExecute() throws Exception {
     super.doExecute();
 
-    boolean modified = false;
     // dc metadata
     MetaData meta = getSourceDocument().getMetaDataManager()
         .getDublinCoreMetaData();
@@ -135,14 +134,10 @@ public class Metadata extends SiteUsecase {
       String value = getParameterAsString(DC_FORM_PREFIX + keys[i]);
       if (value != null) {
         meta.setValue(keys[i], value);
-        modified = true;
       }
     }
-    if (modified)
-      meta.save();
 
     // custom metadata
-    modified = false;
     MetaData customMeta = getSourceDocument().getMetaDataManager()
         .getCustomMetaData();
     String[] parameterNames = getParameterNames();
@@ -153,12 +148,9 @@ public class Metadata extends SiteUsecase {
         String value = getParameterAsString(id);
         if (value != null) {
           customMeta.setValue(key, value);
-          modified = true;
         }
       }
     }
-    if (modified)
-      customMeta.save();
 
     // TODO set workflow situation to edit here.
   }

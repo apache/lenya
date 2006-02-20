@@ -28,13 +28,6 @@ import org.apache.lenya.cms.publication.DocumentException;
 public interface MetaData {
     
     /**
-     * Save the meta data.
-     * 
-     * @throws DocumentException if the meta data could not be made persistent.
-     */
-    void save() throws DocumentException;
-
-    /**
      * Returns the values for a certain key.
      * @param key The key.
      * @return An array of strings.
@@ -86,7 +79,6 @@ public interface MetaData {
     
     /**
      * @return All keys and values that exist in the metadata doc.
-     * @throws DocumentException
      */
     HashMap getAvailableKey2Value();
 
@@ -100,6 +92,7 @@ public interface MetaData {
     /**
      * Get last modification date.
      * @return last modification date
+     * @throws DocumentException if an error occurs.
      */
      long getLastModified() throws DocumentException;
 }
