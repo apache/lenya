@@ -111,7 +111,6 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
     public Version[] getVersions() {
         try {
             MetaData meta = this.document.getMetaDataManager().getLenyaMetaData();
-System.out.println("last modified: " + meta.getLastModified());
             if (this.versions == null || meta.getLastModified() > this.lastModified) {
                 String[] versionStrings = meta.getValues(LenyaMetaData.ELEMENT_WORKFLOW_VERSION);
                 this.versions = new Version[versionStrings.length];
