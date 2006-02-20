@@ -116,6 +116,13 @@
         <map:read src="resource://org/apache/cocoon/ajax/resources/{1}"/>
       </map:match>
     </map:pipeline>   
+    
+    <!-- dojo -->
+    <map:pipeline>
+      <map:match pattern="cforms/dojo/**">
+        <map:read src="resource://org/apache/cocoon/dojo/resources/{1}"/>
+      </map:match>
+    </map:pipeline> 
 
     <!-- cforms -->
     <map:pipeline>
