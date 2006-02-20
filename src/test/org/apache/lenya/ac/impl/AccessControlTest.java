@@ -127,7 +127,7 @@ public class AccessControlTest extends RepositoryTestCase {
                 }
                 this.accessControllerResolverSelector.release(this.accessControllerResolver);
             }
-            getManager().release(this.accessControllerResolver);
+            getManager().release(this.accessControllerResolverSelector);
         }
         super.tearDown();
     }

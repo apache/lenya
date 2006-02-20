@@ -19,12 +19,16 @@ package org.apache.lenya.cms;
 import java.io.File;
 import java.net.URL;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.context.DefaultContext;
 import org.apache.cocoon.Constants;
+import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.core.container.ContainerTestCase;
 import org.apache.cocoon.environment.Context;
+import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.commandline.CommandLineContext;
 import org.apache.cocoon.environment.commandline.CommandLineRequest;
@@ -39,7 +43,7 @@ import org.apache.excalibur.source.SourceResolver;
 public class LenyaTestCase extends ContainerTestCase {
 
     protected DefaultContext context;
-    
+
     protected void addContext(DefaultContext context) {
         super.addContext(context);
 
@@ -72,9 +76,9 @@ public class LenyaTestCase extends ContainerTestCase {
         // context.put(Constants.CONTEXT_CONFIG_URL, conf.toURL());
         context.put(Constants.CONTEXT_DEFAULT_ENCODING, "ISO-8859-1");
     }
-    
+
     private Request request = null;
-    
+
     protected Request getRequest() {
         return this.request;
     }
@@ -95,12 +99,28 @@ public class LenyaTestCase extends ContainerTestCase {
 
         String pathInfo = getWebappUrl();
 
-        this.request = new CommandLineRequest(env, "", "", pathInfo);
+        this.request = new CommandLineRequest(env,
+                "",
+                "",
+                pathInfo,
+                new HashMap(),
+                getRequestParameters());
         context.put("object-model.request", this.request);
+
+        Map objectModel = new HashMap();
+        objectModel.put(ObjectModelHelper.REQUEST_OBJECT, request);
+        Context envContext = (Context) context.get(Constants.CONTEXT_ENVIRONMENT_CONTEXT);
+        objectModel.put(ObjectModelHelper.CONTEXT_OBJECT, envContext);
+        context.put(ContextHelper.CONTEXT_OBJECT_MODEL, objectModel);
+        
     }
-    
+
     protected String getWebappUrl() {
-        return "";
+        return "/test/authoring/index.html";
+    }
+
+    protected Map getRequestParameters() {
+        return new HashMap();
     }
 
     /**
@@ -141,4 +161,5 @@ public class LenyaTestCase extends ContainerTestCase {
         getLogger().info("Context classpath: " + buildClassPath);
         return buildClassPath.toString();
     }
+    
 }

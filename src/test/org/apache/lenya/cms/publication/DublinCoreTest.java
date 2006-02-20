@@ -17,6 +17,8 @@
 
 package org.apache.lenya.cms.publication;
 
+import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.impl.AccessControlTest;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.repository.RepositoryException;
@@ -27,7 +29,7 @@ import org.apache.lenya.cms.repository.RepositoryTestCase;
  * 
  * @version $Id$
  */
-public class DublinCoreTest extends RepositoryTestCase {
+public class DublinCoreTest extends AccessControlTest {
 
     private static final String AREA = "authoring";
     private static final String DOCUMENT_ID = "/tutorial";
@@ -38,8 +40,13 @@ public class DublinCoreTest extends RepositoryTestCase {
      * Test the fetching, modification and refetching of a dc core object.
      * @throws PublicationException 
      * @throws RepositoryException 
+     * @throws AccessControlException 
      */
-    final public void testModifySaveAndReload() throws PublicationException, RepositoryException {
+    final public void testModifySaveAndReload() throws PublicationException, RepositoryException,
+            AccessControlException {
+        
+        login("lenya");
+        
         Publication publication = PublicationUtil.getPublication(getManager(), "test");
         
         DocumentIdentityMap map = getIdentityMap();

@@ -104,6 +104,18 @@
       shorthand="publication-template-manager"
       default-class="org.apache.lenya.cms.publication.templating.PublicationTemplateManagerImpl"/>
     
+    <role name="org.apache.lenya.cms.usecase.UsecaseInvoker"
+      shorthand="usecase-invoker"
+      default-class="org.apache.lenya.cms.usecase.UsecaseInvokerImpl"/>
+      
+    <role name="org.apache.lenya.cms.usecase.UsecaseResolver"
+      shorthand="usecase-resolver"
+      default-class="org.apache.lenya.cms.usecase.UsecaseResolverImpl"/>
+    
+    <role name="org.apache.lenya.cms.usecase.UsecaseSelector"
+      shorthand="usecases"
+      default-class="org.apache.cocoon.components.ExtendedComponentSelector"/>
+    
   </roles>
   
   <components>

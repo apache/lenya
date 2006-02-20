@@ -22,7 +22,8 @@
   <xconf xpath="/cocoon"
     remove="/cocoon/component[@role = 'org.apache.cocoon.components.cron.JobScheduler']"
     insert-after="/cocoon/hsqldb-server"
-    unless="/cocoon/component[@role = 'org.apache.cocoon.components.cron.JobScheduler'][store/datasource = 'LenyaScheduler']">
+    unless="/cocoon/component[@role = 'org.apache.cocoon.components.cron.JobScheduler'][store/datasource = 'LenyaScheduler']"
+    if-prop="patch.webapp">
     
     <component class="org.apache.cocoon.components.cron.CocoonQuartzJobScheduler" logger="cron" role="org.apache.cocoon.components.cron.JobScheduler">
       <!--+

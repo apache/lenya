@@ -48,13 +48,11 @@ public class PolicyTest extends AccessControlTest {
         String url = "/" + pub.getId() + URL;
         Policy policy = getPolicy(url);
         Role[] roles = policy.getRoles(getIdentity());
-        System.out.print("Roles: ");
+        getLogger().info("Roles: ");
 
         for (int i = 0; i < roles.length; i++) {
-            System.out.print(roles[i]);
+            getLogger().info(" " + roles[i]);
         }
-
-        System.out.println();
     }
 
     /**
@@ -114,7 +112,7 @@ public class PolicyTest extends AccessControlTest {
                 }
             }
 
-            System.out.println("Accreditable: [" + credential.getAccreditable() + "]");
+            getLogger().info("Accreditable: [" + credential.getAccreditable() + "]");
             assertNotNull(newCredential);
 
             Set oldRoles = new HashSet(Arrays.asList(credential.getRoles()));
@@ -123,7 +121,7 @@ public class PolicyTest extends AccessControlTest {
 
             /*
              * for (int j = 0; j < roles.length; j++) { assertEquals(roles[j], newRoles[j]);
-             * System.out.println(" Role: [" + roles[j] + "]"); }
+             * getLogger().info(" Role: [" + roles[j] + "]"); }
              */
         }
     }

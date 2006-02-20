@@ -81,7 +81,7 @@ public class FileGroupTest extends AccessControlTest {
      */
     protected FileGroup getGroup() throws AccessControlException {
         File configurationDirectory = getAccreditablesDirectory();
-        System.out.println("Configuration directory: " + configurationDirectory);
+        getLogger().info("Configuration directory: " + configurationDirectory);
         FileGroup group = new FileGroup(configurationDirectory, GROUP_ID);
         return group;
     }

@@ -19,7 +19,8 @@
   
   <xconf xpath="/cocoon"
     remove="/cocoon/component[@role = 'javax.jcr.Repository']"
-    unless="/cocoon/component[@role = 'javax.jcr.Repository'][@class = 'org.apache.lenya.cms.jcr.LenyaRepository']">
+    unless="/cocoon/component[@role = 'javax.jcr.Repository'][@class = 'org.apache.lenya.cms.jcr.LenyaRepository']"
+    if-prop="patch.webapp">
     
     <component class="org.apache.lenya.cms.jcr.LenyaRepository" logger="jcr" role="javax.jcr.Repository">
       <credentials login="anonymous" password=""/>

@@ -32,6 +32,8 @@ import org.apache.lenya.cms.usecase.UsecaseException;
  */
 public class Login extends AccessControlUsecase {
 
+    protected static final String PASSWORD = "password";
+    protected static final String USERNAME = "username";
     protected static final String REFERRER_QUERY_STRING = "referrerQueryString";
     protected static final String PUBLICATION_ID = "publicationId";
 
@@ -66,8 +68,8 @@ public class Login extends AccessControlUsecase {
      */
     void validate() throws UsecaseException {
 
-        String userId = getParameterAsString("username");
-        String password = getParameterAsString("password");
+        String userId = getParameterAsString(USERNAME);
+        String password = getParameterAsString(PASSWORD);
 
         if (userId.length() == 0) {
             addErrorMessage("Please enter a user name.");

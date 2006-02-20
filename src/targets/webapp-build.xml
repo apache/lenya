@@ -142,6 +142,7 @@
     <antcall target="deploy-modules"/>
 
     <!-- Patch cocoon.xconf -->
+    <property name="patch.webapp" value="true"/>
     <xpatch file="${build.webapp}/WEB-INF/cocoon.xconf"
       srcdir="${build.patch}/cocoon-xconf" 
       includes="prepare/*.xconf"

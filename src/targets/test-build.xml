@@ -102,17 +102,17 @@
     </copy>
     
     <!-- Generate the xtest file -->
-    <!--
-    This is template code to generate the xtest file automatically.
-    It doesn't work yet due to some exceptions during component initialization.
-    -->
-    <!--
-    <xslt in="${cocoon.src.dir}/build/cocoon-2.1.9-dev/classes/org/apache/cocoon/cocoon.roles"
-      out="${build.temp}/test/cocoon-roles.xsl"
-      style="${src.resource.dir}/test/meta.xsl"
-      force="true">
-      <param name="element" expression="roles"/>
-    </xslt>
+
+    <copy todir="${build.temp}/test" filtering="on" overwrite="true">
+      <fileset dir="${src.resource.dir}/test">
+        <include name="*-template.xml"/>
+      </fileset>
+    </copy>
+    
+    <xpatch file="${build.temp}/test/roles-template.xml"
+      srcdir="${build.patch}/lenya-roles" 
+      includes="**/*.xroles"
+      addComments="true"/>
     
     <xslt in="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles"
           out="${build.temp}/test/roles.xsl"
@@ -120,13 +120,23 @@
       <param name="element" expression="roles"/>
     </xslt>
     
-    <xslt in="${build.webapp}/WEB-INF/cocoon.xconf"
+    <xpatch file="${build.temp}/test/xconf-template.xml"
+      srcdir="${build.patch}/cocoon-xconf" 
+      includes="prepare/*.xconf"
+      addComments="true"/>
+    <xpatch file="${build.temp}/test/xconf-template.xml"
+      srcdir="${build.patch}/cocoon-xconf" 
+      includes="**/*.xconf"
+      excludes="prepare/*.xconf"
+      addComments="true"/>
+    
+    <xslt in="${build.temp}/test/xconf-template.xml"
       out="${build.temp}/test/components.xsl"
       style="${src.resource.dir}/test/meta.xsl">
       <param name="element" expression="components"/>
     </xslt>
     
-    <xslt in="${src.resource.dir}/test/template.xtest"
+    <xslt in="${src.resource.dir}/test/template-xtest.xml"
       out="${build.temp}/test/cocoon-roles.xtest"
       style="${build.temp}/test/cocoon-roles.xsl"/>
     
@@ -137,7 +147,8 @@
     <xslt in="${build.temp}/test/roles.xtest"
       out="${build.test}/org/apache/lenya/cms/LenyaTestCase.xtest"
       style="${build.temp}/test/components.xsl"/>
-    -->
+      
+    <!-- -->
     
   </target>
 
@@ -160,7 +171,7 @@
         </fileset>
         <pathelement path="${src.test.dir}"/>
       </classpath>
-
+      
       <test name="org.apache.lenya.ac.impl.IdentityTest" todir="${junit.dir}"/>
       <test name="org.apache.lenya.ac.impl.AccessControllerTest" todir="${junit.dir}"/>
       <test name="org.apache.lenya.ac.impl.AccreditableManagerTest" todir="${junit.dir}"/>
@@ -174,15 +185,17 @@
       <test name="org.apache.lenya.ac.file.FileGroupTest" todir="${junit.dir}"/>
       <test name="org.apache.lenya.ac.file.FileRoleTest" todir="${junit.dir}"/>
       
+      <test name="org.apache.lenya.cms.ac.usecases.LoginTest" todir="${junit.dir}"/>
+      
       <test name="org.apache.lenya.cms.publication.DefaultDocumentTest" todir="${junit.dir}"/>
       <test name="org.apache.lenya.cms.publication.DefaultDocumentBuilderTest" todir="${junit.dir}"/>
       <test name="org.apache.lenya.cms.publication.DublinCoreTest" todir="${junit.dir}"/>
       <test name="org.apache.lenya.cms.publication.file.FilePublicationTest" todir="${junit.dir}"/>
 
       <!--
-      <test name="org.apache.lenya.ac.ldap.LDAPUserTest" todir="${junit.dir}"/>
-      <test name="org.apache.lenya.cms.rc.RCMLTest" todir="${junit.dir}"/>
-      <test name="org.apache.lenya.cms.rc.RevisionControllerTest" todir="${junit.dir}"/>
+        <test name="org.apache.lenya.ac.ldap.LDAPUserTest" todir="${junit.dir}"/>
+        <test name="org.apache.lenya.cms.rc.RCMLTest" todir="${junit.dir}"/>
+        <test name="org.apache.lenya.cms.rc.RevisionControllerTest" todir="${junit.dir}"/>
       -->
       <test name="org.apache.lenya.cms.workflow.WorkflowTest" todir="${junit.dir}"/>
     </junit>

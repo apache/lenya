@@ -20,7 +20,8 @@
   <xconf xpath="/cocoon"
     unless="/cocoon/datasources/jdbc[@name = 'LenyaScheduler']"
     remove="/cocoon/datasources"
-    insert-before="/cocoon/hsqldb-server">
+    insert-before="/cocoon/hsqldb-server"
+    if-prop="patch.webapp">
     
     <datasources>
       <jdbc logger="core.datasources.lenya.scheduler" name="LenyaScheduler">
