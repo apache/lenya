@@ -40,9 +40,9 @@ public class DefaultPolicy implements Policy {
     private Map accreditableToCredential = new HashMap();
 
     /**
-	 * Adds a credential to this policy.
-	 * @param credential A credential.
-	 */
+     * Adds a credential to this policy.
+     * @param credential A credential.
+     */
     public void addCredential(Credential credential) {
         assert credential != null;
         assert !this.accreditableToCredential.containsKey(credential.getAccreditable());
@@ -50,12 +50,12 @@ public class DefaultPolicy implements Policy {
     }
 
     /**
-	 * Adds a role to this policy for a certain accreditable and a certain role. If a credenital
-	 * exists for the accreditable, the role is added to this credential. Otherwise, a new
-	 * credential is created.
-	 * @param accreditable An accreditable.
-	 * @param role A role.
-	 */
+     * Adds a role to this policy for a certain accreditable and a certain role. If a credenital
+     * exists for the accreditable, the role is added to this credential. Otherwise, a new
+     * credential is created.
+     * @param accreditable An accreditable.
+     * @param role A role.
+     */
     public void addRole(Accreditable accreditable, Role role) {
         assert accreditable != null;
         assert role != null;
@@ -71,30 +71,22 @@ public class DefaultPolicy implements Policy {
     }
 
     /**
-	 * Removes a role from this policy for a certain accreditable and a certain role.
-	 * @param accreditable An accreditable.
-	 * @param role A role.
-	 * @throws AccessControlException if the accreditable-role pair is not contained.
-	 */
+     * Removes a role from this policy for a certain accreditable and a certain role.
+     * @param accreditable An accreditable.
+     * @param role A role.
+     * @throws AccessControlException if the accreditable-role pair is not contained.
+     */
     public void removeRole(Accreditable accreditable, Role role) throws AccessControlException {
         assert accreditable != null;
         assert role != null;
         Credential credential = getCredential(accreditable);
         if (credential == null) {
-            throw new AccessControlException(
-                "No credential for accreditable ["
-                    + accreditable
-                    + "] ["
-                    + this.accreditableToCredential.keySet().size()
-                    + "]");
+            throw new AccessControlException("No credential for accreditable [" + accreditable
+                    + "] [" + this.accreditableToCredential.keySet().size() + "]");
         }
         if (!credential.contains(role)) {
-            throw new AccessControlException(
-                "Credential for accreditable ["
-                    + accreditable
-                    + "] does not contain role ["
-                    + role
-                    + "]");
+            throw new AccessControlException("Credential for accreditable [" + accreditable
+                    + "] does not contain role [" + role + "]");
         }
         credential.removeRole(role);
 
@@ -104,17 +96,17 @@ public class DefaultPolicy implements Policy {
     }
 
     /**
-	 * Returns the credentials of this policy.
-	 * @return An array of credentials.
-	 */
+     * Returns the credentials of this policy.
+     * @return An array of credentials.
+     */
     public Credential[] getCredentials() {
         Collection values = this.accreditableToCredential.values();
         return (Credential[]) values.toArray(new Credential[values.size()]);
     }
 
     /**
-	 * @see org.apache.lenya.ac.Policy#getRoles(org.apache.lenya.ac.Identity)
-	 */
+     * @see org.apache.lenya.ac.Policy#getRoles(org.apache.lenya.ac.Identity)
+     */
     public Role[] getRoles(Identity identity) {
         Accreditable[] accreditables = identity.getAccreditables();
         Credential[] credentials = getCredentials();
@@ -123,6 +115,7 @@ public class DefaultPolicy implements Policy {
 
         for (int credIndex = 0; credIndex < credentials.length; credIndex++) {
             for (int accrIndex = 0; accrIndex < accreditables.length; accrIndex++) {
+
                 Credential credential = credentials[credIndex];
                 Accreditable accreditable = accreditables[accrIndex];
 
@@ -136,11 +129,11 @@ public class DefaultPolicy implements Policy {
     }
 
     /**
-	 * Returns the credential for a certain accreditable.
-	 * 
-	 * @param accreditable An accreditable.
-	 * @return A credential.
-	 */
+     * Returns the credential for a certain accreditable.
+     * 
+     * @param accreditable An accreditable.
+     * @return A credential.
+     */
     public Credential getCredential(Accreditable accreditable) {
         return (Credential) this.accreditableToCredential.get(accreditable);
     }
@@ -148,32 +141,32 @@ public class DefaultPolicy implements Policy {
     private boolean isSSL;
 
     /**
-	 * @see org.apache.lenya.ac.Policy#isSSLProtected()
-	 */
+     * @see org.apache.lenya.ac.Policy#isSSLProtected()
+     */
     public boolean isSSLProtected() throws AccessControlException {
         return this.isSSL;
     }
 
     /**
-	 * Sets if this policy requires SSL protection.
-	 * @param ssl A boolean value.
-	 */
+     * Sets if this policy requires SSL protection.
+     * @param ssl A boolean value.
+     */
     public void setSSL(boolean ssl) {
         this.isSSL = ssl;
     }
 
     /**
-	 * @see org.apache.lenya.ac.Policy#isEmpty()
-	 */
+     * @see org.apache.lenya.ac.Policy#isEmpty()
+     */
     public boolean isEmpty() throws AccessControlException {
         return getCredentials().length == 0;
     }
 
     /**
-	 * Removes a credential.
-	 * @param credential The credential to remove.
-	 * @throws AccessControlException If the credential does not exist.
-	 */
+     * Removes a credential.
+     * @param credential The credential to remove.
+     * @throws AccessControlException If the credential does not exist.
+     */
     protected void removeCredential(Credential credential) throws AccessControlException {
         if (!this.accreditableToCredential.containsValue(credential)) {
             throw new AccessControlException("Credential [" + credential + "] does not exist!");
@@ -182,10 +175,10 @@ public class DefaultPolicy implements Policy {
     }
 
     /**
-	 * Removes all roles for a certain accreditable.
-	 * @param accreditable The accreditable to remove all roles for.
-	 * @throws AccessControlException If no credential exists for this accreditable.
-	 */
+     * Removes all roles for a certain accreditable.
+     * @param accreditable The accreditable to remove all roles for.
+     * @throws AccessControlException If no credential exists for this accreditable.
+     */
     public void removeRoles(Accreditable accreditable) throws AccessControlException {
         if (this.accreditableToCredential.containsKey(accreditable)) {
             Credential credential = getCredential(accreditable);
