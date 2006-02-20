@@ -17,7 +17,6 @@
 
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
-import java.io.File;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
@@ -49,13 +48,8 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
      * <code>VARIABLE_PREFIX</code> The variable prefix
      */
     public static final String VARIABLE_PREFIX = "variable.";
-    /**
-     * <code>HISTORY_PATH</code> The history path
-     * @deprecated Exposes implementation details.
-     */
-    public static final String HISTORY_PATH = "history-path";
 
-    static final String[] PARAMETER_NAMES = { STATE, HISTORY_PATH };
+    static final String[] PARAMETER_NAMES = { STATE };
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
@@ -100,15 +94,6 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
                                 value = Boolean.valueOf(latestVersion.getValue(variableName));
                             }
                         }
-                    } else if (name.equals(HISTORY_PATH)) {
-                        final String path = document.getPublication()
-                                .getPathMapper()
-                                .getPath(document.getId(), document.getLanguage());
-                        final String uri = "content/workflow/history/" + path;
-                        final File pubDir = document.getPublication().getDirectory();
-                        final File workflowFile = new File(pubDir, uri.replace('/',
-                                File.separatorChar));
-                        value = workflowFile.getAbsolutePath();
                     } else {
                         throw new ConfigurationException("The attribute [" + name
                                 + "] is not supported!");
