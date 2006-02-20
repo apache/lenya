@@ -172,7 +172,7 @@ public class FileUserTest extends AccessControlTest {
      * @throws AccessControlException if an error occurs
      */
     final public void testGetGroups() throws AccessControlException {
-        FileUser user = createAndSaveUser("alice", "Alice Wonderland", "alice@wonderland.org",
+        FileUser user = createAndSaveUser("aliceTest", "Alice Wonderland", "alice@wonderland.org",
                 "secret");
 
         for (Iterator i = getGroups().values().iterator(); i.hasNext();) {

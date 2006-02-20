@@ -62,7 +62,7 @@ public class UserManagerTest extends AccessControlTest {
         FileAccreditableManager accreditableManager = (FileAccreditableManager) getAccreditableManager();
         File configDir = accreditableManager.getConfigurationDirectory();
 
-        String userName = "alice";
+        String userName = "aliceTest";
         String editorGroupId = "editorGroup";
         String adminGroupId = "adminGroup";
         String editorRoleId = "editorRole";
