@@ -133,7 +133,6 @@ public class MetaDataManager extends AbstractLogEnabled {
             Map.Entry entry = (Map.Entry) iter.next();
             _metaData.setValue((String) entry.getKey(), (String) entry.getValue());
         }
-        _metaData.save();
     }
 
     /**
