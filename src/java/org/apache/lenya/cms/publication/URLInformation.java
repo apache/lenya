@@ -66,7 +66,10 @@ public class URLInformation {
      * @param webappUrl A webapp URL (without context prefix).
      */
     public URLInformation(String webappUrl) {
-        assert webappUrl.startsWith("/");
+        
+        if (!webappUrl.startsWith("/")) {
+            throw new RuntimeException("The URL [" + webappUrl + "] doesn't start with a slash!");
+        }
 
         String url = webappUrl.substring(1);
 
