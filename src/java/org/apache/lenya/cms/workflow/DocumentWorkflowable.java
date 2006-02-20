@@ -161,7 +161,6 @@ System.out.println("last modified: " + meta.getLastModified());
         try {
             MetaData meta = this.document.getMetaDataManager().getLenyaMetaData();
             meta.addValue(LenyaMetaData.ELEMENT_WORKFLOW_VERSION, string);
-            meta.save();
         } catch (DocumentException e) {
             throw new RuntimeException(e);
         }
