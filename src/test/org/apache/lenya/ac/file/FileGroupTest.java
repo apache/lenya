@@ -77,8 +77,9 @@ public class FileGroupTest extends AccessControlTest {
      * Test getGroup
      * 
      * @return a <code>FileGroup</code>
+     * @throws AccessControlException 
      */
-    protected FileGroup getGroup() {
+    protected FileGroup getGroup() throws AccessControlException {
         File configurationDirectory = getAccreditablesDirectory();
         System.out.println("Configuration directory: " + configurationDirectory);
         FileGroup group = new FileGroup(configurationDirectory, GROUP_ID);
@@ -87,8 +88,9 @@ public class FileGroupTest extends AccessControlTest {
 
     /**
      * Tests the removeAllMembers() method.
+     * @throws AccessControlException 
      */
-    public void testRemoveAllMembers() {
+    public void testRemoveAllMembers() throws AccessControlException {
         Group group = getGroup();
         Groupable members[] = group.getMembers();
         group.removeAllMembers();

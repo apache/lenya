@@ -22,6 +22,7 @@ package org.apache.lenya.ac.impl;
 import java.io.File;
 
 import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.cocoon.environment.Session;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.AccreditableManager;
@@ -29,8 +30,6 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.file.FileAccreditableManager;
-import org.apache.lenya.ac.file.FilePolicyManager;
-import org.apache.lenya.cms.ac.DocumentPolicyManagerWrapper;
 import org.apache.lenya.cms.ac.PublicationAccessControllerResolver;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
@@ -45,8 +44,34 @@ public class AccessControlTest extends RepositoryTestCase {
     private ServiceSelector accessControllerResolverSelector;
     private AccessControllerResolver accessControllerResolver;
     private DefaultAccessController accessController;
+    
+    protected void login(String userId) throws AccessControlException {
+        
+        User user = getAccreditableManager().getUserManager().getUser(userId);
+        
+        if (user == null) {
+            throw new AccessControlException("The user [" + userId + "] does not exist!");
+        }
+        
+        getAccessController().setupIdentity(getRequest());
+        
+        Session session = getRequest().getSession();
+        Identity identity = (Identity) session.getAttribute(Identity.class.getName());
+        
+        if (!identity.contains(user)) {
+            User oldUser = identity.getUser();
+            if (oldUser != null) {
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("Removing user [" + oldUser + "] from identity.");
+                }
+                identity.removeIdentifiable(oldUser);
+            }
+            identity.addIdentifiable(user);
+        }
+        
+        getAccessController().authorize(getRequest());
 
-    private File accreditablesDirectory;
+    }
 
     /**
      * Returns the access controller.
@@ -80,15 +105,6 @@ public class AccessControlTest extends RepositoryTestCase {
 
         assertNotNull(this.accessController);
         getLogger().info("Resolved access controller: [" + this.accessController.getClass() + "]");
-
-        File servletContext = pub.getServletContext();
-        DocumentPolicyManagerWrapper wrapper = (DocumentPolicyManagerWrapper) this.accessController.getPolicyManager();
-        FilePolicyManager policyManager = (FilePolicyManager) wrapper.getPolicyManager();
-        policyManager.setPoliciesDirectory(servletContext);
-
-        this.accreditablesDirectory = new File(pub.getDirectory(), "config/ac/passwd".replace('/',
-                File.separatorChar));
-        ((FileAccreditableManager) this.accessController.getAccreditableManager()).setConfigurationDirectory(this.accreditablesDirectory);
 
     }
 
@@ -144,13 +160,11 @@ public class AccessControlTest extends RepositoryTestCase {
     protected AccreditableManager getAccreditableManager() {
         return getAccessController().getAccreditableManager();
     }
-
-    /**
-     * Returns the directories where accreditables are stored.
-     * @return A file.
-     */
-    protected File getAccreditablesDirectory() {
-        return this.accreditablesDirectory;
+    
+    protected File getAccreditablesDirectory() throws AccessControlException {
+        FileAccreditableManager accrMgr = (FileAccreditableManager) getAccreditableManager();
+        return accrMgr.getConfigurationDirectory();
     }
+
 
 }

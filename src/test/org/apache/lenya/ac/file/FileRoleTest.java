@@ -69,8 +69,9 @@ public class FileRoleTest extends AccessControlTest {
 
     /**
      * DOCUMENT ME!
+     * @throws AccessControlException 
      */
-    final public void testGetId() {
+    final public void testGetId() throws AccessControlException {
         String id = "test";
         File configDir = getAccreditablesDirectory();
         FileRole role = new FileRole(configDir, id);
@@ -79,8 +80,9 @@ public class FileRoleTest extends AccessControlTest {
 
     /**
      * Test for boolean equals(Object)
+     * @throws AccessControlException 
      */
-    final public void testEqualsObject() {
+    final public void testEqualsObject() throws AccessControlException {
         String name = "test";
         File configDir = getAccreditablesDirectory();
         FileRole role1 = new FileRole(configDir, name);

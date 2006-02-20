@@ -39,7 +39,7 @@ import org.apache.excalibur.source.SourceResolver;
 public class LenyaTestCase extends ContainerTestCase {
 
     protected DefaultContext context;
-
+    
     protected void addContext(DefaultContext context) {
         super.addContext(context);
 
@@ -71,7 +71,12 @@ public class LenyaTestCase extends ContainerTestCase {
         context.put(Constants.CONTEXT_CLASSPATH, getClassPath(contextRoot));
         // context.put(Constants.CONTEXT_CONFIG_URL, conf.toURL());
         context.put(Constants.CONTEXT_DEFAULT_ENCODING, "ISO-8859-1");
-
+    }
+    
+    private Request request = null;
+    
+    protected Request getRequest() {
+        return this.request;
     }
 
     protected void prepare() throws Exception {
@@ -88,11 +93,10 @@ public class LenyaTestCase extends ContainerTestCase {
         SourceResolver resolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
         MockEnvironment env = new MockEnvironment(resolver);
 
-        String contextRoot = System.getProperty("contextRoot");
         String pathInfo = getWebappUrl();
 
-        Request request = new CommandLineRequest(env, contextRoot, "", pathInfo);
-        context.put("object-model.request", request);
+        this.request = new CommandLineRequest(env, "", "", pathInfo);
+        context.put("object-model.request", this.request);
     }
     
     protected String getWebappUrl() {

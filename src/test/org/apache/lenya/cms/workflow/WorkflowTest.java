@@ -19,17 +19,7 @@
 
 package org.apache.lenya.cms.workflow;
 
-import java.io.File;
-
-import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.context.DefaultContext;
-import org.apache.cocoon.environment.Request;
-import org.apache.cocoon.environment.commandline.CommandLineRequest;
-import org.apache.cocoon.environment.mock.MockEnvironment;
-import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.ac.Policy;
-import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.impl.AccessControlTest;
 import org.apache.lenya.cms.publication.Document;
@@ -37,7 +27,6 @@ import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.workflow.WorkflowManager;
 import org.apache.lenya.workflow.Workflowable;
 
 /**
@@ -46,7 +35,7 @@ import org.apache.lenya.workflow.Workflowable;
  */
 public class WorkflowTest extends AccessControlTest {
 
-    private static final String variableName = "is-live";
+    private static final String variableName = "is_live";
     protected static final String URL = "/authoring/index.html";
 
     protected String getWebappUrl() {
@@ -63,74 +52,54 @@ public class WorkflowTest extends AccessControlTest {
         DocumentIdentityMap map = getIdentityMap();
         Document document = map.getFromURL(url);
 
-        File configDir = new File(publication.getDirectory(), "config" + File.separator + "ac"
-                + File.separator + "passwd");
-        assertTrue(configDir.exists());
+        document.getRepositoryNode().lock();
 
-        Policy policy = getPolicyManager().getPolicy(getAccreditableManager(), url);
+        for (int situationIndex = 0; situationIndex < situations.length; situationIndex++) {
 
-        WorkflowManager resolver = null;
-        try {
-            resolver = (WorkflowManager) getManager().lookup(WorkflowManager.ROLE);
+            login(situations[situationIndex].getUser());
 
-            String[] emptyRoles = {};
+            Identity identity = (Identity) getRequest().getSession()
+                    .getAttribute(Identity.class.getName());
+            User user = identity.getUser();
+            getLogger().info("User: [" + user + "]");
 
-            for (int situationIndex = 0; situationIndex < situations.length; situationIndex++) {
+            Session session = new Session(map.getIdentityMap(), identity, getLogger());
+            Workflowable instance = new DocumentWorkflowable(getManager(),
+                    session,
+                    document,
+                    getLogger());
+            assertNotNull(instance);
 
-                Identity identity = new Identity();
-                ContainerUtil.enableLogging(identity, getLogger());
-                User user = getAccreditableManager().getUserManager()
-                        .getUser(situations[situationIndex].getUser());
-                ContainerUtil.enableLogging(user, getLogger());
-                identity.addIdentifiable(user);
-
-                Role[] roles = policy.getRoles(identity);
-                getLogger().info("Roles:");
-
-                for (int roleIndex = 0; roleIndex < roles.length; roleIndex++) {
-                    getLogger().info(" " + roles[roleIndex]);
-                }
-
-                String[] roleIds = new String[roles.length];
-                for (int i = 0; i < roles.length; i++) {
-                    roleIds[i] = roles[i].getId();
-                }
-                Session session = new Session(map.getIdentityMap(), identity, getLogger());
-                Workflowable instance = new DocumentWorkflowable(getManager(),
-                        session,
-                        document,
-                        getLogger());
-                assertNotNull(instance);
-                
-                if (situationIndex > 0) {
-                    getLogger().info("Current state: " + instance.getLatestVersion().getState());
-                }
-
-                WorkflowUtil.invoke(getManager(),
-                        session,
-                        getLogger(),
-                        document,
-                        situations[situationIndex].getEvent());
-
-                assertTrue(instance.getLatestVersion().getValue(variableName) == situations[situationIndex].getValue());
-
-                getLogger().info("Variable: " + variableName + " = "
-                        + instance.getLatestVersion().getValue(variableName));
-                getLogger().info("------------------------------------------------------");
+            if (situationIndex > 0) {
+                getLogger().info("Current state: " + instance.getLatestVersion().getState());
             }
-        } finally {
-            // this.manager.release(resolver);
+
+            String event = situations[situationIndex].getEvent();
+
+            getLogger().info("Event: " + event);
+
+            WorkflowUtil.invoke(getManager(), session, getLogger(), document, event);
+
+            boolean value = instance.getLatestVersion().getValue(variableName);
+
+            getLogger().info("Variable: " + variableName + " = " + value);
+            getLogger().info("------------------------------------------------------");
+
+            assertEquals(value, situations[situationIndex].getValue());
+
         }
+
+        document.getRepositoryNode().unlock();
 
         getLogger().info("Test completed.");
     }
 
     private static final TestSituation[] situations = {
             new TestSituation("lenya", "submit", false),
-            new TestSituation("roger", "reject", false),
+            new TestSituation("alice", "reject", false),
             new TestSituation("lenya", "submit", false),
-            new TestSituation("roger", "publish", true),
-            new TestSituation("roger", "deactivate", false) };
+            new TestSituation("alice", "publish", true),
+            new TestSituation("alice", "deactivate", false) };
 
     /**
      * A test situation.

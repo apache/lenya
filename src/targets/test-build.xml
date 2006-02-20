@@ -183,8 +183,8 @@
       <test name="org.apache.lenya.ac.ldap.LDAPUserTest" todir="${junit.dir}"/>
       <test name="org.apache.lenya.cms.rc.RCMLTest" todir="${junit.dir}"/>
       <test name="org.apache.lenya.cms.rc.RevisionControllerTest" todir="${junit.dir}"/>
-      <test name="org.apache.lenya.cms.workflow.WorkflowTest" todir="${junit.dir}"/>
       -->
+      <test name="org.apache.lenya.cms.workflow.WorkflowTest" todir="${junit.dir}"/>
     </junit>
   </target>
   

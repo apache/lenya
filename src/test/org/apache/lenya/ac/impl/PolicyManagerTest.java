@@ -19,8 +19,6 @@
 
 package org.apache.lenya.ac.impl;
 
-import junit.textui.TestRunner;
-
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;

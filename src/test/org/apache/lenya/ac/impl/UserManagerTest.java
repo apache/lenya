@@ -22,6 +22,7 @@ import java.io.File;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserManager;
 import org.apache.lenya.ac.UserType;
 import org.apache.lenya.ac.file.FileAccreditableManager;
 import org.apache.lenya.ac.file.FileGroup;
@@ -49,10 +50,7 @@ public class UserManagerTest extends AccessControlTest {
      * @throws AccessControlException if an error occurs
      */
     final public void testInstance() throws AccessControlException {
-        File configDir = getAccreditablesDirectory();
-        UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
-        FileUserManager _manager = FileUserManager.instance(configDir, userTypes,
-                getLogger());
+        UserManager _manager = getAccreditableManager().getUserManager();
         assertNotNull(_manager);
     }
 
@@ -61,7 +59,8 @@ public class UserManagerTest extends AccessControlTest {
      * @throws AccessControlException if an error occurs
      */
     final public void testLoadConfig() throws AccessControlException {
-        File configDir = getAccreditablesDirectory();
+        FileAccreditableManager accreditableManager = (FileAccreditableManager) getAccreditableManager();
+        File configDir = accreditableManager.getConfigurationDirectory();
 
         String userName = "alice";
         String editorGroupId = "editorGroup";
@@ -93,9 +92,7 @@ public class UserManagerTest extends AccessControlTest {
         user.save();
 
         FileGroupManager groupManager = null;
-        UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
-        FileUserManager userManager = FileUserManager.instance(configDir, userTypes,
-                getLogger());
+        UserManager userManager = getAccreditableManager().getUserManager();
         assertNotNull(userManager);
 
         groupManager = FileGroupManager.instance(configDir, getLogger());
@@ -113,7 +110,8 @@ public class UserManagerTest extends AccessControlTest {
      * @throws AccessControlException if an error occurs
      */
     final public void testGetUser() throws AccessControlException {
-        File configDir = getAccreditablesDirectory();
+        FileAccreditableManager accrMgr = (FileAccreditableManager) getAccreditableManager();
+        File configDir = accrMgr.getConfigurationDirectory();
         String userName = "testuser";
         FileUser user = new FileUser(configDir, userName, "Alice in Wonderland",
                 "alice@wonderland.com", "secret");
