@@ -20,7 +20,16 @@
     Test Cases
   </annotation>
   
-  <roles/>
+  <roles>
+    
+    <role name="org.apache.excalibur.source.SourceFactorySelector"
+      shorthand="source-factories"
+      default-class="org.apache.avalon.excalibur.component.ExcaliburComponentSelector"/>
+    <role name="org.apache.excalibur.source.SourceResolver"
+      shorthand="source-resolver"
+      default-class="org.apache.excalibur.source.impl.SourceResolverImpl"/>
+      
+  </roles>
   
   <components/>
   

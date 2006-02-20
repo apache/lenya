@@ -109,12 +109,15 @@
       </fileset>
     </copy>
     
-    <xpatch file="${build.temp}/test/roles-template.xml"
+    <copy todir="${build.temp}/test" filtering="on" overwrite="true"
+      file="${src.java.dir}/org/apache/lenya/lenya.roles"/>
+    
+    <xpatch file="${build.temp}/test/lenya.roles"
       srcdir="${build.patch}/lenya-roles" 
       includes="**/*.xroles"
       addComments="true"/>
     
-    <xslt in="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles"
+    <xslt in="${build.temp}/test/lenya.roles"
           out="${build.temp}/test/roles.xsl"
           style="${src.resource.dir}/test/meta.xsl">
       <param name="element" expression="roles"/>
@@ -137,10 +140,6 @@
     </xslt>
     
     <xslt in="${src.resource.dir}/test/template-xtest.xml"
-      out="${build.temp}/test/cocoon-roles.xtest"
-      style="${build.temp}/test/cocoon-roles.xsl"/>
-    
-    <xslt in="${build.temp}/test/cocoon-roles.xtest"
       out="${build.temp}/test/roles.xtest"
       style="${build.temp}/test/roles.xsl"/>
     
