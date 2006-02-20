@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collection;
+import java.util.Date;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
@@ -255,7 +256,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                     out.write(buf, 0, read);
                     read = in.read(buf);
                 }
-
+                
             } catch (Exception e) {
                 throw new RepositoryException(e);
             } finally {
@@ -492,6 +493,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
          */
         public synchronized void close() throws IOException {
             SourceNode.this.data = super.toByteArray();
+            SourceNode.this.lastModified = new Date().getTime();
             super.close();
         }
     }
@@ -522,6 +524,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             }
         }
     }
+    
+    private long lastModified = -1;
 
     /**
      * @see org.apache.lenya.cms.repository.Node#getLastModified()
@@ -532,12 +536,22 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             source = resolver.resolveURI(getRealSourceURI());
+            
+            long sourceLastModified;
+            
             if (source.exists()) {
-                return source.getLastModified();
-            } else {
+                sourceLastModified = source.getLastModified();
+                if (sourceLastModified > this.lastModified) {
+                    this.lastModified = sourceLastModified;
+                }
+            }
+            else if (this.lastModified == -1) {
                 throw new RepositoryException("The source [" + getRealSourceURI()
                         + "] does not exist!");
             }
+            
+            return this.lastModified;
+            
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
