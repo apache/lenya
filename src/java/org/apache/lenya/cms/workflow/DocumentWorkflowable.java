@@ -103,14 +103,16 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
 
     private Version[] versions = null;
 
+    private long lastModified = 0;
+
     /**
      * @see org.apache.lenya.workflow.Workflowable#getVersions()
      */
     public Version[] getVersions() {
-        if (this.versions == null) {
-            try {
-                MetaData meta = this.document.getMetaDataManager().getLenyaMetaData();
-
+        try {
+            MetaData meta = this.document.getMetaDataManager().getLenyaMetaData();
+System.out.println("last modified: " + meta.getLastModified());
+            if (this.versions == null || meta.getLastModified() > this.lastModified) {
                 String[] versionStrings = meta.getValues(LenyaMetaData.ELEMENT_WORKFLOW_VERSION);
                 this.versions = new Version[versionStrings.length];
                 for (int i = 0; i < versionStrings.length; i++) {
@@ -122,10 +124,10 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
                     Version version = decodeVersion(versionString);
                     this.versions[number] = version;
                 }
-
-            } catch (DocumentException e) {
-                throw new RuntimeException();
+                this.lastModified = meta.getLastModified();
             }
+        } catch (DocumentException e) {
+            throw new RuntimeException();
         }
         return this.versions;
     }
