@@ -41,6 +41,7 @@ import org.apache.log4j.Category;
 import org.apache.log4j.Logger;
 
 import com.sun.jndi.ldap.LdapCtxFactory;
+import com.sun.jndi.ldap.LdapURL;
 
 /**
  * LDAP user.
@@ -68,6 +69,7 @@ public class LDAPUser extends FileUser {
     private static String USR_AUTH_TYPE_DEFAULT = "simple";
     private static String BASE_DN_PROP = "base-dn";
     private static String DOMAIN_NAME_PROP = "domain-name";
+    private static String HANDLE_REFERRALS_PROP = "handle-referrals";
 
     private String ldapId;
     private String ldapName;
@@ -369,6 +371,8 @@ public class LDAPUser extends FileUser {
 	if (authMethod != null && ! authMethod.equals("none")) {
 	    env.put(Context.SECURITY_PRINCIPAL, principal);
 	    env.put(Context.SECURITY_CREDENTIALS, credentials);
+        String referrals = defaultProperties.getProperty(HANDLE_REFERRALS_PROP);
+        if (referrals != null) env.put(Context.REFERRAL, referrals);
 	}
 
         DirContext ctx = new InitialLdapContext(env, null);
@@ -540,9 +544,13 @@ public class LDAPUser extends FileUser {
 		principal = entry.getName();
 		if (entry.isRelative()) {
 		    if (principal.length()>0){
-			principal = principal +","+ defaultProperties.getProperty(BASE_DN_PROP);
-		    }
-		}
+                principal = principal +","+ defaultProperties.getProperty(BASE_DN_PROP);
+                }
+            } else {
+                //if the item is found followin a referral an URL string is returned which can not be used as principal
+                LdapURL ldapurl = new LdapURL(principal);
+                principal = ldapurl.getDN();
+            }
 	    }
 	    else {
 		// 3. Principal is constructed from properties
