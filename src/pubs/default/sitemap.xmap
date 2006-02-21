@@ -62,6 +62,7 @@
     </map:component-configurations>
 
     <map:pipeline>
+    
       <map:match pattern="**">
         <map:match pattern="webdav**">
           <map:mount uri-prefix="" src="{fallback:lenya/modules/webdav/sitemap.xmap}" check-reload="true" reload-method="synchron"/>    
@@ -215,6 +216,12 @@
                         </map:transform>
                         <map:transform src="fallback://lenya/xslt/authoring/edit/removeSourceTags.xsl"/>
                       </map:when>
+                      <!-- Turn off caching in authoring area -->
+                      <map:otherwise>
+                        <map:act type="set-header">
+                          <map:parameter name="Cache-Control" value="no-cache" />
+                        </map:act>
+                      </map:otherwise> 
                     </map:select>
                     <map:serialize type="xhtml"/>
                   </map:otherwise>
