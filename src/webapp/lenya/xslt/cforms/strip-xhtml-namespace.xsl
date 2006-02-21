@@ -17,17 +17,13 @@
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <xsl:template match="xhtml:head">
-    <head>
-      <xsl:apply-templates select="@*|node()"/>
-    </head>
+  <xsl:template match="xhtml:*">
+    <xsl:element name="{local-name()}">
+      <xsl:apply-templates select="@*|node()|text()"/>
+    </xsl:element>
   </xsl:template>
 
-  <xsl:template match="xhtml:body">
-    <body>
-      <xsl:apply-templates select="@*|node()"/>
-    </body>
-  </xsl:template>
+
 
   <xsl:template match="@*|node()">
     <xsl:copy>

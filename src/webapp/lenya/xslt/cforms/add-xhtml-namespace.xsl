@@ -15,18 +15,28 @@
   limitations under the License.
 -->
 <xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns="http://www.w3.org/1999/xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <xsl:template match="head">
-    <head>
-      <xsl:apply-templates select="@*|node()"/>
-    </head>
+  <xsl:template match="*[namespace-uri()='']">
+    <xsl:element name="{local-name()}" namespace="http://www.w3.org/1999/xhtml">
+      <xsl:apply-templates select="@*|node()|text()"/>
+    </xsl:element>
   </xsl:template>
-
-  <xsl:template match="body">
-    <body>
-      <xsl:apply-templates select="@*|node()"/>
-    </body>
+  
+    <!--
+    Workaround to prevent the serializer from collapsing these
+    elements, since browsers currently can not handle things like
+      <textarea/>
+    The XHTML serializer currently used by Lenya can not be
+    configured to avoid this collapsing; as long as that is the case
+    this workaround is needed.
+    -->  
+  <xsl:template match="node()[local-name() = 'textarea' or local-name() = 'script' or local-name() = 'style']">
+   <xsl:element name="{local-name()}" namespace="http://www.w3.org/1999/xhtml">
+      <xsl:copy-of select="@*"/>
+      <xsl:apply-templates/>
+	  <xsl:if test="string-length(.) = 0"><xsl:text> </xsl:text></xsl:if>
+    </xsl:element>
   </xsl:template>
 
   <xsl:template match="@*|node()">
