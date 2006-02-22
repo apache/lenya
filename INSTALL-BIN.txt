@@ -25,7 +25,13 @@ Tomcat
 
 1) Copy lenya.war into .../TOMCAT_PREFIX/webapps directory
 
-2) Copy endorsed libraries into .../TOMCAT_PREFIX/common/endorsed directory
+2) Copy endorsed libraries into .../TOMCAT_PREFIX/common/endorsed directory.
+
+   (Unpack the lenya.war file by typing jar -xf lenya.war and you will find the
+   endorsed libraries within WEB-INF/lib/endorsed)
+
+   Also please make sure to delete any "duplicated" older libraries from the
+   endorsed directory.
 
 3) Startup Tomcat
 
