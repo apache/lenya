@@ -25,7 +25,11 @@
 </xsl:template>
 
 <xsl:template match="xhtml:body" priority="1">
-  <lucene:field name="body" boost="{$boost}"><xsl:value-of select="descendant-or-self::*"/></lucene:field>
+  <lucene:field name="body" boost="{$boost}">
+    <xsl:for-each select=".//text()">
+      <xsl:value-of select="concat(normalize-space(.),' ')"/>
+    </xsl:for-each>
+  </lucene:field>
 </xsl:template>
 
 <xsl:template match="dc:title" priority="1">
