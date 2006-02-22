@@ -27,6 +27,7 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.commons.lang.StringUtils;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
@@ -61,16 +62,17 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
             Publication pub = null;
             String attribute;
 
+            DocumentIdentityMap docFactory = new DocumentIdentityMap(session,
+                    this.manager,
+                    getLogger());
+            String webappUrl = ServletHelper.getWebappURI(request);
+            Document document = docFactory.getFromURL(webappUrl);
+            pub = document.getPublication();
+            
             String[] steps = name.split(":");
             if (steps.length == 1) {
                 attribute = name;
-                DocumentIdentityMap docFactory = new DocumentIdentityMap(session,
-                        this.manager,
-                        getLogger());
-                String webappUrl = ServletHelper.getWebappURI(request);
-                Document document = docFactory.getFromURL(webappUrl);
                 resourceType = document.getResourceType();
-                pub = document.getPublication();
             } else {
                 attribute = steps[1];
                 String resourceTypeName = steps[0];
@@ -92,8 +94,8 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
                 value = resourceType.getSchema().getURI();
             } else if (attribute.equals(HTTP_SCHEMA_URI)) {
                 String uri = resourceType.getSchema().getURI();
-                String path = uri.substring(uri.indexOf("/schemas"));
-                value = request.getContextPath() + "/" + pub.getId() + "/modules/" + resourceType.getName() + path;
+                String prefix = request.getContextPath();
+                value = transformFallbackUriToHttp(pub.getId(), prefix, uri);
             } else {
                 throw new ConfigurationException("Attribute [" + name + "] not supported!");
             }
@@ -103,6 +105,33 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
         }
 
         return value;
+    }
+
+    /**
+     * Transforms a fallback URI for resources into a HTTP URL.
+     *
+     * Currently only supports module urls: 
+     * 
+     * fallback://lenya/modules/foo/resources/schemas/bar.rng
+     * -> prefix/pubid/modules/foo/schemas/bar.rng
+     * 
+     * FIXME: allow other kind of fallback URIs
+     * 
+     * @param pubid publication id of the current document
+     * @param prefix prefix which will be prepended to the resulting URL
+     * @param uri fallback uri, must start with fallback://
+     * @return
+     * @throws ConfigurationException
+     */
+    protected String transformFallbackUriToHttp(String pubid, String prefix, String uri) throws ConfigurationException {
+        if (uri.startsWith("fallback://lenya/modules/")) {
+            String path = StringUtils.substringAfter(uri, "fallback://lenya/modules/");
+            String module = StringUtils.substringBefore(path, "/");
+            path = StringUtils.substringAfter(path, module + "/resources");
+            return prefix + "/" + pubid + "/modules/" + module + path;
+        } else {
+            throw new ConfigurationException("Don't know how to create HTTP URL from : "+uri);
+        }
     }
 
     protected ServiceManager manager;
