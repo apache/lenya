@@ -74,7 +74,7 @@ public class NewBlogEntryCreator extends DefaultBranchCreator {
         element = (Element) XPathAPI.selectSingleNode(parent,
                 "/*[local-name() = 'entry']/*[local-name() = 'link']");
         element.setAttribute("rel", "alternate");
-        element.setAttribute("href", "http://bob.blog");
+        element.setAttribute("href", "");
         element.setAttribute("type", "text/xml");
 
         // Replace Summary
