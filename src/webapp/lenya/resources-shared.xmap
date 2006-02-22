@@ -29,7 +29,7 @@
       <map:match pattern="*/*/css/*.inherited.css">
         <map:act type="resource-exists" src="template-fallback://resources/shared/css/{3}.xml">
           <map:generate src="template-fallback://resources/shared/css/{../3}.xml"/>
-          <map:transform src="template-fallback://resources/css/css.xsl">
+          <map:transform src="template-fallback://lenya/resources/css/css.xsl">
             <map:parameter name="contextprefix" value="{request:contextPath}"/>
           </map:transform>
           <map:serialize type="text" mime-type="text/css"/>
@@ -42,7 +42,7 @@
         <!-- Only called if a {3}.css exists because of resource-exists-enhanced before -->
         <map:act type="resource-exists" src="fallback://resources/shared/css/{3}.xml">
           <map:generate src="fallback://resources/shared/css/{../3}.xml"/>
-          <map:transform src="fallback://resources/css/css.xsl">
+          <map:transform src="fallback://lenya/resources/css/css.xsl">
             <map:parameter name="contextprefix" value="{request:contextPath}"/>
           </map:transform>
           <map:serialize type="text" mime-type="text/css"/>
