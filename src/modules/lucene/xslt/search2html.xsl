@@ -27,6 +27,7 @@
 <xsl:param name="area"/>
 <xsl:param name="pub"/>
 <xsl:param name="root"/>
+<xsl:param name="lenya.usecase"/>
 
   <xsl:template match="search:results">  
     <cmsbody>
@@ -42,8 +43,9 @@
 
   <xsl:template match="search:hits">
     <h1>
-        <xsl:value-of select="@total-count"/> hit(s)
-        <xsl:value-of select="@count-of-pages"/> page(s) on query
+        <xsl:value-of select="@total-count"/> hit<xsl:if test="@total-count &gt; 1">s</xsl:if>
+        <xsl:text>, </xsl:text>
+        <xsl:value-of select="@count-of-pages"/> result page<xsl:if test="@count-of-pages &gt; 1">s</xsl:if> on query
         <em><xsl:value-of select="/search:results/@query-string"/></em>
     </h1>
     
@@ -52,16 +54,18 @@
     </ul>
     
     <p>
-      <xsl:for-each select="/search:results/search:navigation/search:navigation-page">
-        <xsl:call-template name="navigation-link"> 
-          <xsl:with-param name="query-string" select="/search:results/@query-string"/>
-          <xsl:with-param name="page-length" select="/search:results/@page-length"/>
-          <xsl:with-param name="start-index" select="@start-index"/>
-          <xsl:with-param name="link-text" select="position()"/>
-        </xsl:call-template>
-      </xsl:for-each>
 
-    
+      <xsl:if test="count(/search:results/search:navigation/search:navigation-page) &gt; 1">
+        <xsl:for-each select="/search:results/search:navigation/search:navigation-page">
+          <xsl:call-template name="navigation-link"> 
+            <xsl:with-param name="query-string" select="/search:results/@query-string"/>
+            <xsl:with-param name="page-length" select="/search:results/@page-length"/>
+            <xsl:with-param name="start-index" select="@start-index"/>
+            <xsl:with-param name="link-text" select="position()"/>
+          </xsl:call-template>
+        </xsl:for-each>
+      </xsl:if>  
+      
       <xsl:call-template name="navigation-paging-link">
         <xsl:with-param name="query-string" select="/search:results/@query-string"/>
         <xsl:with-param name="page-length" select="/search:results/@page-length"/>
@@ -108,7 +112,7 @@
 
     <xsl:if test="$has-previous = 'true'">
       <form action="" id="form-previous">
-        <input type="hidden" name="lenya.usecase" value="search"/>
+        <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
         <input type="hidden" name="startIndex" value="{$previous-index}"/>
         <input type="hidden" name="queryString" value="{$query-string}"/>
         <input type="hidden" name="pageLength" value="{$page-length}"/>
@@ -118,7 +122,7 @@
     
     <xsl:if test="$has-next = 'true'">
       <form action="" id="form-next">
-        <input type="hidden" name="lenya.usecase" value="search"/>
+        <input type="hidden" name="lenya.usecase" value="{$lenya.usecase}"/>
         <input type="hidden" name="startIndex" value="{$next-index}"/>
         <input type="hidden" name="queryString" value="{$query-string}"/>
         <input type="hidden" name="pageLength" value="{$page-length}"/>
@@ -147,7 +151,7 @@
     </xsl:if>
     &#160;
     <xsl:if test="$has-next = 'true'">
-      <a href="index.html?lenya.usecase=search&amp;startIndex={$next-index}&amp;queryString={$query-string}&amp;pageLength={$page-length}">
+      <a href="index.html?lenya.usecase={$lenya.usecase}&amp;startIndex={$next-index}&amp;queryString={$query-string}&amp;pageLength={$page-length}">
         Next Page Of Hits
       </a>
     </xsl:if>
@@ -159,7 +163,7 @@
     <xsl:param name="start-index"/>
     <xsl:param name="link-text"/>
 
-    <a href="index.html?lenya.usecase=search&amp;startIndex={$start-index}&amp;queryString={$query-string}&amp;pageLength={$page-length}">
+    <a href="index.html?lenya.usecase={$lenya.usecase}&amp;startIndex={$start-index}&amp;queryString={$query-string}&amp;pageLength={$page-length}">
       <xsl:value-of select="$link-text"/>
     </a>
     &#160;

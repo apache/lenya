@@ -97,6 +97,7 @@
           <map:parameter name="area" value="{page-envelope:area}"/>
           <map:parameter name="pub" value="{page-envelope:publication-id}"/>
           <map:parameter name="root" value="{base-url:{page-envelope:publication-id}:{page-envelope:area}}"/>
+          <map:parameter name="use-request-parameters" value="true"/>
         </map:transform>
 
         <map:transform type="cinclude"/>
