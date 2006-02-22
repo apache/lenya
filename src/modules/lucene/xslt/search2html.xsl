@@ -49,7 +49,7 @@
         <em><xsl:value-of select="/search:results/@query-string"/></em>
     </h1>
     
-    <ul>
+    <ul class="search-results">
       <xsl:apply-templates/>
     </ul>
     
@@ -96,9 +96,11 @@
   </xsl:template>
   
   <xsl:template match="search:hit">
-    <li>
-        <h2>Score: <xsl:value-of select="format-number( @score, '### %' )"/> Rank: <xsl:value-of select="@rank"/></h2>
-        <p><a href="{$root}{search:field[attribute::name='uid']}"><xsl:value-of select="search:field[attribute::name='title']"/></a></p>
+    <li class="search-result">
+        <div class="search-result-score">Score: <xsl:value-of select="format-number( @score, '### %' )"/></div> 
+        <div class="search-result-rank">Rank: <xsl:value-of select="@rank"/></div>
+        <div class="search-result-title"><a href="{$root}{search:field[attribute::name='uid']}"><xsl:value-of select="search:field[attribute::name='title']"/></a></div>
+        <div class="search-result-description"><xsl:value-of select="search:field[attribute::name='description']"/></div>
     </li>
   </xsl:template>
 

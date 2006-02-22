@@ -339,3 +339,30 @@ a.brokenlink {
     border: 1px dashed #000000;
     text-decoration: none;
 }
+
+/* Search Results */
+
+.search-results {} 
+
+.search-result {
+    padding: 0.50em;
+}
+
+.search-result-score {
+    font-size: 90%; 
+    float: right;
+}
+
+.search-result-rank {
+    font-size: 90%; 
+    float: right; 
+    margin-right: 20px;
+}
+
+.search-result-title {
+    font-size: 105%;
+}
+
+.search-result-description {
+    font-size: 90%;
+}
