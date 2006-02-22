@@ -74,13 +74,23 @@
         />
 </target>
 
-
-<target name="xslt" description="Transforms an XML into another by using an XSLT. Usage: -Din=in.xml -Dxslt=in2out.xsl -Dout=out.xml"> 
+<target name="xslt" description="Transforms an XML file into another one by using an XSLT. Usage: -Din=fileIn.xml -Dxslt=in2out.xsl -Dout=fileOut.xml"> 
     <echo>INFO: Transform ${in}</echo>
     <xslt
         in="${in}"
         out="${out}"
         style="${xslt}"
+        />
+</target>
+
+<target name="xslt-dir" description="Transforms all XML files within a specified directory into new files one by using an XSLT. Usage: -Din=dirIn -Dxslt=in2out.xsl -Dout=dirOut"> 
+    <echo>INFO: Transform ${in}</echo>
+    <xslt
+        basedir="${in}"
+        destdir="${out}"
+        style="${xslt}"
+        includes="**/*.xhtml"
+        extension=".html"
         />
 </target>
 
