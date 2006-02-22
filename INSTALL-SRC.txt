@@ -18,7 +18,7 @@ Please note that you can use other servlet containers as well, but Jetty and Tom
     *
 
       Apache Cocoon
-      version: 2.1.5.1
+      version: BRANCH_2_1_X (https://svn.apache.org/repos/asf/cocoon/branches/BRANCH_2_1_X)
       source: http://cocoon.apache.org/mirror.cgi
 
       Note that Cocoon is needed when building the source version of Lenya, but the 
