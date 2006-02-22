@@ -35,7 +35,8 @@
     <echo message="*      Windows:      lenya"/>
     <echo message="*"/>
     <echo message="* and browse to "/>
-    <echo message="*      http://127.0.0.1:8888"/>
+    <echo message="*      http://127.0.0.1:${web.app.server.jetty.port}"/>
+    <echo message="*      (Jetty Admin Port: ${web.app.server.jetty.admin.port})"/>
     <echo message="*"/>
     <echo message="* Thanks for using ${Name}"/>
     <echo message="*"/>
