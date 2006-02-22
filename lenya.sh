@@ -89,6 +89,9 @@ fi
 
 if [ "$LENYA_HOME" = "" ] ; then
   LENYA_HOME='.'
+  # TODO: Make it startable from any directory
+  #LENYA_HOME=`dirname $0`
+  #echo "LENYA_HOME: $LENYA_HOME"
 fi
 
 if [ "$LENYA_WEBAPP_HOME" = "" ] ; then
@@ -107,13 +110,24 @@ if [ "$LENYA_LIB" = "" ] ; then
   LENYA_LIB="$LENYA_WEBAPP_HOME/WEB-INF/lib"
 fi
 
-if [ "$JETTY_PORT" = "" ] ; then
-  JETTY_PORT='8888'
-fi
 
-if [ "$JETTY_ADMIN_PORT" = "" ] ; then
-  JETTY_ADMIN_PORT='8889'
+# Set Jetty Port
+if [ -f local.build.properties ] ; then
+  JETTY_PORT=`grep web.app.server.jetty.port $LENYA_HOME/local.build.properties | grep -v "#" | sed -e 's/web\.app\.server\.jetty\.port=//'`
 fi
+if [ "$JETTY_PORT" = "" ] ; then
+  JETTY_PORT=`grep web.app.server.jetty.port $LENYA_HOME/build.properties | grep -v "#" | sed -e 's/web\.app\.server\.jetty\.port=//'`
+fi
+echo "INFO: Jetty Port is $JETTY_PORT"
+
+# Set Jetty Admin Port
+if [ -f local.build.properties ] ; then
+  JETTY_ADMIN_PORT=`grep web.app.server.jetty.admin.port $LENYA_HOME/local.build.properties | grep -v "#" | sed -e 's/web\.app\.server\.jetty\.admin\.port=//'`
+fi
+if [ "$JETTY_ADMIN_PORT" = "" ] ; then
+  JETTY_ADMIN_PORT=`grep web.app.server.jetty.admin.port $LENYA_HOME/build.properties | grep -v "#" | sed -e 's/web\.app\.server\.jetty\.admin\.port=//'`
+fi
+echo "INFO: Jetty Admin Port is $JETTY_ADMIN_PORT"
 
 if [ "$JAVA_DEBUG_ARGS" = "" ] ; then
   JAVA_DEBUG_ARGS='-Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n'
