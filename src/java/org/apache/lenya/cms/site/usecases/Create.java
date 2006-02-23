@@ -36,10 +36,10 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
-import org.apache.lenya.cms.publication.PublicationUtil;
-import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteException;
@@ -298,6 +298,39 @@ public abstract class Create extends AbstractUsecase {
         return document;
     }
 
+    /**
+     * @return The new document.
+     */
+    protected Document getNewDocument() {
+        Document document = null;
+        //get new document
+        DocumentManager documentManager = null;
+        ServiceSelector selector = null;
+        ResourceType resourceType = null;
+        try {
+            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
+
+            DocumentIdentityMap map = getDocumentIdentityMap();
+            document = map.get(getPublication(),
+                    getArea(),
+                    getNewDocumentId(),
+                    getParameterAsString(LANGUAGE));
+
+        } catch (Exception e) {
+          throw new RuntimeException(e);
+        } finally {
+            if (documentManager != null) {
+                this.manager.release(documentManager);
+            }
+            if (selector != null) {
+                if (resourceType != null) {
+                    selector.release(resourceType);
+                }
+                this.manager.release(selector);
+            }
+        }
+        return document;
+    }
     /**
      * @return The area without the "info-" prefix.
      */
