@@ -22,10 +22,13 @@
 <lenya:lenya-version>@lenya.version@</lenya:lenya-version>
 <lenya:cocoon-version>2.1.8 or 2.1.9-dev</lenya:cocoon-version>
 <lenya:name>Lenya's Weblog</lenya:name>
+
 <lenya:description>
 This publication is an initiative to implement the <a href="http://www.intertwingly.net/wiki/pie/FrontPage">"Echo/Atom"</a> specification for syndicating, archiving and
 editing episodic web sites (e.g. weblogs).
+</lenya:description>
 
+<lenya:readme>
 <h3>Customizing the layout</h3>
 The fonts and colors can be customized by editing the file <code>resources/css/styles.css</code>.
 The positioning can be customized by editing the file <code>xslt/global.xsl</code>. The following CSS resources
@@ -69,6 +72,6 @@ might be helpful
 <a href="http://www.feedvalidator.org">http://www.feedvalidator.org</a>
 <br />
 <a href="http://feedvalidator.org/download/rssvalidator-latest.zip">Download Feed Validator</a>
+</lenya:readme>
 
-</lenya:description>
 </lenya:publication>
