@@ -25,6 +25,7 @@
       +-->
   <xsl:include href="resource://org/apache/cocoon/forms/resources/forms-page-styling.xsl"/>
   <xsl:include href="resource://org/apache/cocoon/forms/resources/forms-advanced-field-styling.xsl"/>
+  <xsl:include href="fallback://lenya/xslt/cforms/forms-dojoarea-styling.xsl"/>
 
   <!-- Location of the resources directory, where JS libs and icons are stored -->
   <xsl:param name="resources-uri"/>
@@ -34,6 +35,7 @@
       <xsl:apply-templates/>
       <xsl:apply-templates select="." mode="forms-page"/>
       <xsl:apply-templates select="." mode="forms-field"/>
+      <xsl:apply-templates select="." mode="forms-dojoarea"/>
     </head>
   </xsl:template>
 
