@@ -179,7 +179,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
                 Document existingSourceDoc = DocumentHelper.getExistingLanguageVersion(sourceDoc,
                         doc.getLanguage());
                 Document targetDoc = map.getAreaVersion(existingSourceDoc, getTargetArea());
-                documentManager.copy(existingSourceDoc, targetDoc);
+                documentManager.copyDocument(existingSourceDoc, targetDoc);
                 if (!targetDoc.getArea().equals(Publication.AUTHORING_AREA)) {
                     MetaData meta = targetDoc.getMetaDataManager().getLenyaMetaData();
                     meta.setValue(LenyaMetaData.ELEMENT_PLACEHOLDER, "true");

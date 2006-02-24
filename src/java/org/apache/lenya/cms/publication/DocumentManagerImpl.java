@@ -192,6 +192,36 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             }
         }
     }
+    
+    /**
+     * Method to copy a document without it's resources. Override {@link #copyDocumentSource(Document, Document)}
+     * to implement access to a custom repository.
+     * @see org.apache.lenya.cms.publication.DocumentManager#copy(org.apache.lenya.cms.publication.Document,
+     *      org.apache.lenya.cms.publication.Document)
+     */
+    public void copyDocument(Document sourceDocument, Document destinationDocument)
+            throws PublicationException {
+
+        Publication publication = sourceDocument.getPublication();
+        copyDocumentSource(sourceDocument, destinationDocument);
+
+        SiteManager siteManager = null;
+        ServiceSelector selector = null;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
+            siteManager.copy(sourceDocument, destinationDocument);
+        } catch (Exception e) {
+            throw new PublicationException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
+        }
+    }
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#delete(org.apache.lenya.cms.publication.Document)

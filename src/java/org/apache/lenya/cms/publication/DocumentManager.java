@@ -41,6 +41,16 @@ public interface DocumentManager {
     void copy(Document sourceDocument, Document destinationDocument) throws PublicationException;
 
     /**
+     * Copies a document from one location to another location.
+     * Does not copy the documents resources
+     * @param sourceDocument The document to copy.
+     * @param destinationDocument The destination document.
+     * @throws PublicationException if a document which destinationDocument depends on does not
+     *             exist.
+     */
+    void copyDocument(Document sourceDocument, Document destinationDocument) throws PublicationException;
+    
+    /**
      * Copies a document to another area.
      * @param sourceDocument The document to copy.
      * @param destinationArea The destination area.
