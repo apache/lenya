@@ -42,6 +42,7 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.LenyaMetaData;
+import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.repository.Node;
 
 /**
@@ -109,6 +110,13 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
      *      org.apache.cocoon.servlet.multipart.Part, java.util.Map)
      */
     public void addResource(Document document, Part part, Map metadata) throws Exception {
+      addResource(document,part,metadata,null);
+    }
+    /**
+     * @see org.apache.lenya.cms.publication.ResourcesManager#addResource(org.apache.lenya.cms.publication.Document,
+     *      org.apache.cocoon.servlet.multipart.Part, java.util.Map)
+     */
+    public void addResource(Document document, Part part, Map metadata, MetaData customMeta) throws Exception {
 
         if (getLogger().isDebugEnabled())
             getLogger().debug("DefaultResourcesManager::addResource() called");
@@ -122,7 +130,6 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
             }
             // convert spaces in the file name to underscores
             fileName = fileName.replace(' ', '_');
-
             Resource resource = new Resource(document, fileName, this.manager, getLogger());
             Node[] nodes = resource.getRepositoryNodes();
             for (int i = 0; i < nodes.length; i++) {
@@ -136,6 +143,11 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
              */
             metadata.put("format", mimeType);
             metadata.put("extent", Integer.toString(fileSize));
+            if(customMeta!=null){
+              customMeta.addValue("media-filename", fileName);
+              customMeta.addValue("media-format", mimeType);
+              customMeta.addValue("media-extent", Integer.toString(fileSize));
+            }
             Map lenyaMetaData = new HashMap(1);
             lenyaMetaData.put(LenyaMetaData.ELEMENT_CONTENT_TYPE, "asset");
 
@@ -145,6 +157,10 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
                 String height = Integer.toString(input.getHeight());
                 lenyaMetaData.put(LenyaMetaData.ELEMENT_WIDTH, width);
                 lenyaMetaData.put(LenyaMetaData.ELEMENTE_HEIGHT, height);
+                if(customMeta!=null){
+                  customMeta.addValue("media-"+LenyaMetaData.ELEMENTE_HEIGHT, height);
+                  customMeta.addValue("media-"+LenyaMetaData.ELEMENT_WIDTH, width);
+                }
             }    
 
             resource.getMetaDataManager().setMetaData(metadata, lenyaMetaData, null);

@@ -20,6 +20,7 @@ package org.apache.lenya.cms.publication;
 import java.util.Map;
 
 import org.apache.cocoon.servlet.multipart.Part;
+import org.apache.lenya.cms.metadata.MetaData;
 
 /**
  * Manager for resources of a CMS document.
@@ -136,5 +137,15 @@ public interface ResourcesManager {
      * @return the resource, or null if no such resource exists.
      */
     Resource getResource(Document document, String resourceName);
+    /**
+     * Add a resource to the document and add meta data to a custom MetaData.
+     * @param document The document.
+     * @param part the part that contains the uploaded file
+     * @param metadata the metadata for the resource
+     * @param customMeta the metadata where we will add as well the properties
+     * @throws Exception 
+     * @throws Exception if an error occurs
+     */
+    void addResource(Document document, Part file, Map metadata, MetaData customMeta) throws Exception;
 
 }
