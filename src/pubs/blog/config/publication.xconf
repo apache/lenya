@@ -31,4 +31,14 @@
   <resource-type name="sidebar" workflow="workflow.xml"/>
   <module name="entry"/>
   <module name="sidebar"/>
+
+  <!-- NOTE: The configuration of content directories has NOT been fully tested yet and might lead to unexpected results. Use at own risk ;-) -->
+  <!--
+  <content-dir area="authoring">lenya/pubs/blog/content/authoring</content-dir>
+  <content-dir      area="live">lenya/pubs/blog/content/live</content-dir>
+  -->
+  <!--
+  <content-dir area="authoring">/home/USERNAME/data/blog/authoring</content-dir>
+  <content-dir area="live">D:\tmp\blog\live</content-dir>
+  -->
 </publication>

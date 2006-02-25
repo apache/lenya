@@ -41,6 +41,16 @@
   <module name="homepage"/>
   <module name="search"/>
   <module name="blog"/>
+
+  <!-- NOTE: The configuration of content directories has NOT been fully tested yet and might lead to unexpected results. Use at own risk ;-) -->
+  <!--
+  <content-dir area="authoring">lenya/pubs/default/content/authoring</content-dir>
+  <content-dir      area="live">lenya/pubs/default/content/live</content-dir>
+  -->
+  <!--
+  <content-dir area="authoring">/home/USERNAME/data/default/authoring</content-dir>
+  <content-dir area="live">D:\tmp\default\live</content-dir>
+  -->
   
   <!--
        For information about these settings, read 

@@ -88,7 +88,24 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
      * @return A string.
      */
     protected String getRealSourceURI() {
-        return "context://" + this.sourceURI.substring(Node.LENYA_PROTOCOL.length());
+/*
+        if (getLogger().isDebugEnabled()) {
+            getLogger().error("test ...");
+        }
+*/
+        //String realSourceURI = "file://home/michi/" + this.sourceURI.substring(Node.LENYA_PROTOCOL.length());
+        String realSourceURI = "context://" + this.sourceURI.substring(Node.LENYA_PROTOCOL.length());
+/*
+        try {
+            SourceResolver resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            getLogger().error("Real Source URI: " + realSourceURI);
+            Source source = (Source) resolver.resolveURI(realSourceURI);
+            getLogger().error("Source: " + source);
+        } catch (Exception e) {
+            getLogger().error(e.getMessage());
+        }
+*/
+        return realSourceURI;
     }
 
     /**
