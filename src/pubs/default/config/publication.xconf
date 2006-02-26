@@ -31,25 +31,28 @@
   <resource-type name="xhtml" workflow="fallback://config/workflow/workflow.xml"/>
   <resource-type name="homepage" workflow="fallback://config/workflow/workflow.xml"/>
   <resource-type name="links" workflow="fallback://config/workflow/workflow.xml"/>
+  <resource-type name="aurl" workflow="fallback://config/workflow/workflow.xml"/>
   <resource-type name="search" workflow="fallback://config/workflow/workflow.xml"/>
   <resource-type name="cforms" workflow="fallback://config/workflow/workflow.xml"/>
   
   <module name="xhtml"/>
   <module name="links"/>
+  <module name="aurl"/>
   <module name="opendocument"/>
   <module name="cforms"/>
   <module name="homepage"/>
   <module name="search"/>
   <module name="blog"/>
 
-  <!-- NOTE: The configuration of content directories has NOT been fully tested yet and might lead to unexpected results. Use at own risk ;-) -->
+  <!-- NOTE: The configuration of the content directory has NOT been fully tested yet and might lead to unexpected results. Use at own risk ;-) -->
+  <!-- Relative to webapp context: -->
   <!--
-  <content-dir area="authoring">lenya/pubs/default/content/authoring</content-dir>
-  <content-dir      area="live">lenya/pubs/default/content/live</content-dir>
+  <content-dir src="lenya/pubs/default/content"/>
   -->
+  <!-- Absolute: -->
   <!--
-  <content-dir area="authoring">/home/USERNAME/data/default/authoring</content-dir>
-  <content-dir area="live">D:\tmp\default\live</content-dir>
+  <content-dir src="/home/USERNAME/data/default"/>
+  <content-dir src="D:\tmp\default"/>
   -->
   
   <!--
