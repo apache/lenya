@@ -32,13 +32,14 @@
   <module name="entry"/>
   <module name="sidebar"/>
 
-  <!-- NOTE: The configuration of content directories has NOT been fully tested yet and might lead to unexpected results. Use at own risk ;-) -->
+  <!-- NOTE: The configuration of the content directory has NOT been fully tested yet and might lead to unexpected results. Use at own risk ;-) -->
+  <!-- Relative to webapp context: -->
   <!--
-  <content-dir area="authoring">lenya/pubs/blog/content/authoring</content-dir>
-  <content-dir      area="live">lenya/pubs/blog/content/live</content-dir>
+  <content-dir src="lenya/pubs/blog/content"/>
   -->
+  <!-- Absolute: -->
   <!--
-  <content-dir area="authoring">/home/USERNAME/data/blog/authoring</content-dir>
-  <content-dir area="live">D:\tmp\blog\live</content-dir>
+  <content-dir src="/home/USERNAME/data/blog"/>
+  <content-dir src="D:\tmp\blog"/>
   -->
 </publication>
