@@ -171,6 +171,13 @@ public interface Publication {
     String getInstantiatorHint();
 
     /**
+     * Returns the content dir.
+     * If the publication does not specify a content dir, then <code>null</code> is returned.
+     * @return A base directory where all the content is located.
+     */
+    String getContentDir();
+
+    /**
      * Returns the proxy which is used for a particular document.
      * @param document The document.
      * @param isSslProtected A boolean value.

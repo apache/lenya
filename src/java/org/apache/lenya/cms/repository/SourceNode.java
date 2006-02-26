@@ -88,23 +88,38 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
      * @return A string.
      */
     protected String getRealSourceURI() {
-/*
-        if (getLogger().isDebugEnabled()) {
-            getLogger().error("test ...");
-        }
-*/
-        //String realSourceURI = "file://home/michi/" + this.sourceURI.substring(Node.LENYA_PROTOCOL.length());
-        String realSourceURI = "context://" + this.sourceURI.substring(Node.LENYA_PROTOCOL.length());
-/*
+        String contentDir = null;
+        String publicationId = null;
         try {
-            SourceResolver resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            getLogger().error("Real Source URI: " + realSourceURI);
-            Source source = (Source) resolver.resolveURI(realSourceURI);
-            getLogger().error("Source: " + source);
+            String pubBase = Node.LENYA_PROTOCOL + Publication.PUBLICATION_PREFIX_URI + "/";
+            String publicationsPath = this.sourceURI.substring(pubBase.length());
+            publicationId = publicationsPath.split("/")[0];
+            Publication pub = PublicationUtil.getPublication(this.manager, publicationId);
+            contentDir = pub.getContentDir();
         } catch (Exception e) {
             getLogger().error(e.getMessage());
         }
-*/
+	
+
+        String realSourceURI = null;
+        if (contentDir == null) {
+            // Default
+            realSourceURI = "context://" + this.sourceURI.substring(Node.LENYA_PROTOCOL.length());
+        } else {
+            if (new File(contentDir).isAbsolute()) {
+                // Absolute
+                // Substitute "lenya://lenya/pubs/PUB_ID/content" by "contentDir"
+                realSourceURI = "file:/" + contentDir + this.sourceURI.substring(Node.LENYA_PROTOCOL.length() + new String("lenya/pubs/" + publicationId + "/content").length());
+            } else {
+                // Relative
+                // Substitute "lenya://lenya/pubs/PUB_ID/content" by "contentDir"
+                realSourceURI = "context://" + contentDir + this.sourceURI.substring(Node.LENYA_PROTOCOL.length() + new String("lenya/pubs/" + publicationId + "/content").length());
+            }
+        }
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Real Source URI: " + realSourceURI);
+        }
+
         return realSourceURI;
     }
 

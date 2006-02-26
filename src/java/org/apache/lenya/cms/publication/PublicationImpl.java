@@ -45,6 +45,7 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     private String defaultLanguage = null;
     private String breadcrumbprefix = null;
     private String instantiatorHint = null;
+    private String contentDir = null;
 
     private static final String ELEMENT_PROXY = "proxy";
     private static final String ATTRIBUTE_AREA = "area";
@@ -67,6 +68,7 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     private static final String ELEMENT_SITE_MANAGER = "site-manager";
     private static final String ATTRIBUTE_NAME = "name";
     private static final String ELEMENT_TEMPLATE_INSTANTIATOR = "template-instantiator";
+    private static final String ELEMENT_CONTENT_DIR = "content-dir";
     private static final String LANGUAGES = "languages";
     private static final String DEFAULT_LANGUAGE_ATTR = "default";
     private static final String BREADCRUMB_PREFIX = "breadcrumb-prefix";
@@ -178,6 +180,14 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
                     false);
             if (templateInstantiatorConfig != null) {
                 this.instantiatorHint = templateInstantiatorConfig.getAttribute(PublicationImpl.ATTRIBUTE_NAME);
+            }
+
+            Configuration contentDirConfig = config.getChild(ELEMENT_CONTENT_DIR, false);
+            if (contentDirConfig != null) {
+                this.contentDir = contentDirConfig.getAttribute("src");
+                getLogger().info("Content directory loaded from pub configuration: " + this.contentDir);
+            } else {
+                getLogger().info("No content directory specified within pub configuration!");
             }
 
             Configuration[] resourceTypeConfigs = config.getChildren(ELEMENT_RESOURCE_TYPE);
@@ -413,6 +423,14 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     public String getInstantiatorHint() {
         loadConfiguration();
         return this.instantiatorHint;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Publication#getContentDir()
+     */
+    public String getContentDir() {
+        loadConfiguration();
+        return this.contentDir;
     }
 
     /**
