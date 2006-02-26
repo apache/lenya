@@ -40,6 +40,6 @@
   <!-- Absolute: -->
   <!--
   <content-dir src="/home/USERNAME/data/blog"/>
-  <content-dir src="D:\tmp\blog"/>
+  <content-dir src="D:/tmp/blog"/>
   -->
 </publication>

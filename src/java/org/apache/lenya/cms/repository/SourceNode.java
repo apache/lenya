@@ -109,7 +109,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             if (new File(contentDir).isAbsolute()) {
                 // Absolute
                 // Substitute "lenya://lenya/pubs/PUB_ID/content" by "contentDir"
-                realSourceURI = "file:/" + contentDir + this.sourceURI.substring(Node.LENYA_PROTOCOL.length() + new String("lenya/pubs/" + publicationId + "/content").length());
+                realSourceURI = "file:/" + new File(contentDir + this.sourceURI.substring(Node.LENYA_PROTOCOL.length() + new String("lenya/pubs/" + publicationId + "/content").length())).getAbsolutePath();
             } else {
                 // Relative
                 // Substitute "lenya://lenya/pubs/PUB_ID/content" by "contentDir"
