@@ -13,7 +13,7 @@ Please note that you can use other servlet containers as well, but Jetty and Tom
     *
 
       Java 2 Platform, Standard Edition
-      version: 1.4.2 or newer, 1.5.x not tested.
+      version: 1.4.2 or newer (1.5.x NOT properly tested).
       source: http://java.sun.com/j2se/1.4.2/download.html
     *
 
@@ -70,25 +70,31 @@ Standalone Installation (using the built-in Jetty)
       will work (MS Windows: Don't use backslashes "\" for directory separation.)
           * cocoon.src.dir=$COCOON_HOME
           * tomcat.home.dir=$TOMCAT_HOME
-   6.
 
-      Build Lenya
+
+   6.  Build Lenya
+   ---------------
+
+      Make sure that you have the environment variable JAVA_HOME defined to point 
+      to the location of the Java SDK you installed (see Prerequisites).
+
+      MS Windows: http://support.microsoft.com/default.aspx?scid=kb;en-us;310519&sd=tech
+      Linux/Unix: export JAVA_HOME=/usr/local/jdk-1.4.2
 
       Execute build.bat or build.sh in your Lenya source directory, depending on your platform.
 
       MS Windows
 
             $LENYA_HOME > build.bat
-          
 
       Unix
 
             $LENYA_HOME > ./build.sh
           
 
-   7.
 
-      Start Lenya
+   7.  Start Lenya
+   ---------------
 
       Execute lenya.bat or lenya.sh servlet in your Lenya source directory, depending on your 
       platform. Make sure that you have the environment variable JAVA_HOME defined to point 
