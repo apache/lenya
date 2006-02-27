@@ -17,7 +17,6 @@
 
 package org.apache.lenya.cms.publication.util;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +24,9 @@ import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.DefaultDocument;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
@@ -230,15 +231,15 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      * @throws ParserConfigurationException when something went wrong.
      * @throws SAXException when something went wrong.
      * @throws IOException when something went wrong.
+     * @throws ServiceException 
      */
     protected NamespaceHelper getNamespaceHelper() throws DocumentException,
-            ParserConfigurationException, SAXException, IOException {
+            ParserConfigurationException, SAXException, IOException, ServiceException {
 
         NamespaceHelper helper;
 
         if (exists()) {
-            File file = getFile();
-            org.w3c.dom.Document document = DocumentHelper.readDocument(file);
+            org.w3c.dom.Document document = SourceUtil.readDOM(getSourceURI(), this.manager);
             helper = new NamespaceHelper(Collection.NAMESPACE, Collection.DEFAULT_PREFIX, document);
         } else {
             helper = new NamespaceHelper(Collection.NAMESPACE,

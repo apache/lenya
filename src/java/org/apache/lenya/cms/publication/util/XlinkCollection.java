@@ -22,6 +22,7 @@ import java.io.IOException;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -84,10 +85,11 @@ public class XlinkCollection extends CollectionImpl {
 
     /**
      * Adds the XLink namespace declaration to the document element.
+     * @throws ServiceException 
      * @see org.apache.lenya.cms.publication.util.CollectionImpl#getNamespaceHelper()
      */
     protected NamespaceHelper getNamespaceHelper() throws DocumentException,
-            ParserConfigurationException, SAXException, IOException {
+            ParserConfigurationException, SAXException, IOException, ServiceException {
         NamespaceHelper helper = super.getNamespaceHelper();
         if (!exists()) {
             Element collectionElement = helper.getDocument().getDocumentElement();
