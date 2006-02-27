@@ -125,6 +125,7 @@ public interface Document extends MetaDataOwner, Identifiable {
     /**
      * Returns the file for this document.
      * @return A file object.
+     * @deprecated This implies the usage of a filesystem based storage. Use {@link #getSourceURI()} instead.
      */
     File getFile();
 

@@ -111,10 +111,6 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         return new Date(getFile().lastModified());
     }
 
-    /**
-     * Returns the file for this document.
-     * @return A file object.
-     */
     public File getFile() {
         return getPublication().getPathMapper().getFile(getPublication(),
                 getArea(),
