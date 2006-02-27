@@ -89,6 +89,7 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
     /**
      * @see org.apache.lenya.cms.site.SiteStructure#getRepositoryNode()
      */
+    /*
     public Node getRepositoryNode() {
         SourceResolver resolver = null;
         RepositorySource documentSource = null;
@@ -109,6 +110,7 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
         }
         return node;
     }
+    */
 
     /**
      * @see org.apache.lenya.cms.publication.Document#exists()
