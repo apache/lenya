@@ -30,6 +30,7 @@
   <property name="test.pub.source.id" value="default"/>
   <property name="junit.test.loglevel" value="2"/>
   <property name="junit.dir" value="${build.root}/test/output" />
+  <property name="patch.webapp" value="false"/>
   
   <!--
   DEBUG 0
@@ -170,6 +171,8 @@
         </fileset>
         <pathelement path="${src.test.dir}"/>
       </classpath>
+
+      <test name="org.apache.lenya.cms.publication.util.XLinkCollectionTest" todir="${junit.dir}"/>
       
       <test name="org.apache.lenya.ac.impl.IdentityTest" todir="${junit.dir}"/>
       <test name="org.apache.lenya.ac.impl.AccessControllerTest" todir="${junit.dir}"/>
