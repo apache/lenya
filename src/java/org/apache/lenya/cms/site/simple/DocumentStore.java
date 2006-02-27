@@ -18,8 +18,6 @@ package org.apache.lenya.cms.site.simple;
 
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
@@ -28,7 +26,6 @@ import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.CollectionImpl;
-import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Element;
@@ -85,32 +82,6 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
         Document document = getIdentityMap().get(getPublication(), getArea(), documentId, language);
         return document;
     }
-
-    /**
-     * @see org.apache.lenya.cms.site.SiteStructure#getRepositoryNode()
-     */
-    /*
-    public Node getRepositoryNode() {
-        SourceResolver resolver = null;
-        RepositorySource documentSource = null;
-        Node node = null;
-        try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            documentSource = (RepositorySource) resolver.resolveURI(getSourceURI());
-            node = documentSource.getNode();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (resolver != null) {
-                if (documentSource != null) {
-                    resolver.release(documentSource);
-                }
-                this.manager.release(resolver);
-            }
-        }
-        return node;
-    }
-    */
 
     /**
      * @see org.apache.lenya.cms.publication.Document#exists()
