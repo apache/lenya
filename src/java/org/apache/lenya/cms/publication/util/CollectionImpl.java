@@ -199,7 +199,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
                 Element documentElement = createDocumentElement(documents[i], helper);
                 collectionElement.appendChild(documentElement);
             }
-            DocumentHelper.writeDocument(helper.getDocument(), getFile());
+            SourceUtil.writeDOM(helper.getDocument(), getSourceURI(), this.manager);
 
         } catch (Exception e) {
             throw new TransactionException(e);

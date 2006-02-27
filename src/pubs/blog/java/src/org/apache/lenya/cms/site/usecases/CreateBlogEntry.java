@@ -40,6 +40,8 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -54,6 +56,21 @@ public class CreateBlogEntry extends DocumentUsecase {
     protected static final String PARENT_ID = "parentId";
     protected static final String DOCUMENT_TYPE = "doctype";
     protected static final String DOCUMENT_ID = "documentId";
+
+    /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
+     */
+    protected Node[] getNodesToLock() throws UsecaseException {
+        try {
+            SiteStructure structure = SiteUtil.getSiteStructure(this.manager,
+            getSourceDocument());
+            Node[] nodes = { structure.getRepositoryNode() };
+            return nodes;
+        } catch (SiteException e) {
+            throw new UsecaseException(e);
+        }
+    }
+    
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
