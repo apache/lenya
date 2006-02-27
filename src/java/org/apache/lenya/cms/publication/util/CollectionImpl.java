@@ -62,7 +62,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
         super(manager, map, identifier, _logger);
     }
 
-    private List documentsList = new ArrayList();
+    private List documentsList;
 
     /**
      * Returns the list that holds the documents. Use this method to invoke lazy loading.
@@ -131,6 +131,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
     protected void load() throws DocumentException {
         if (!this.isLoaded) {
             getLogger().debug("Loading: ");
+            this.documentsList = new ArrayList();
             NamespaceHelper helper;
             try {
                 helper = getNamespaceHelper();
@@ -238,7 +239,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
 
         NamespaceHelper helper;
 
-        if (exists()) {
+        if (SourceUtil.exists(getSourceURI(), this.manager)) {
             org.w3c.dom.Document document = SourceUtil.readDOM(getSourceURI(), this.manager);
             helper = new NamespaceHelper(Collection.NAMESPACE, Collection.DEFAULT_PREFIX, document);
         } else {
