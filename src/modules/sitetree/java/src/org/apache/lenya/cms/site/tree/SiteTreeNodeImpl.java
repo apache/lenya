@@ -189,7 +189,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
 
             labelElem.setAttribute(SiteTreeNodeImpl.LANGUAGE_ATTRIBUTE_NAME, label.getLanguage());
 
-            this.node.appendChild(labelElem);
+            node.insertBefore(labelElem, node.getFirstChild());
         }
     }
 
