@@ -288,7 +288,7 @@
       <map:match pattern="*/feeds/*/lenya-page-body.xml">
         <map:aggregate element="cmsbody">
           <map:part src="cocoon:/{1}/feeds/{2}/index.xml"/>
-          <map:part src="content/{1}/sidebar.xml"/>
+          <map:part src="lenya://lenya/pubs/blog/content/{1}/sidebar.xml"/>
           <map:part src="cocoon:/{1}/overview?struct=23"/>
         </map:aggregate>
         <map:transform src="xslt/links.xsl">
