@@ -74,14 +74,7 @@ public class XlinkCollection extends CollectionImpl {
      * @throws DocumentException when something went wrong.
      */
     protected String getXlinkHref(Document document) throws DocumentException {
-        String path = null;
-        try {
-            path = document.getFile().getCanonicalPath();
-        } catch (IOException e) {
-            throw new DocumentException("Couldn't found the file path for the document ["
-                    + document + "]", e);
-        }
-        return path;
+        return document.getSourceURI();
     }
 
     /**
