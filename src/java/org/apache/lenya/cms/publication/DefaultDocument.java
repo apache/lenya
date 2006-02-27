@@ -260,20 +260,20 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         }
         return exists;
     }
+    
+    protected DocumentIdentifier getIdentifier() {
+        return this.identifier;
+    }
 
     /**
      * @see java.lang.Object#equals(java.lang.Object)
      */
     public boolean equals(Object object) {
-        boolean equals = false;
         if (getClass().isInstance(object)) {
-            Document document = (Document) object;
-            equals = getPublication().equals(document.getPublication())
-                    && getId().equals(document.getId()) && getArea().equals(document.getArea())
-                    && getLanguage().equals(document.getLanguage());
+            DefaultDocument document = (DefaultDocument) object;
+            return document.getIdentifier().equals(getIdentifier());
         }
-        return equals;
-
+        return false;
     }
 
     /**
