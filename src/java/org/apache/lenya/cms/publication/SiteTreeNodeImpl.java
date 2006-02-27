@@ -211,7 +211,7 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
 
             labelElem.setAttribute(SiteTreeNodeImpl.LANGUAGE_ATTRIBUTE_NAME, label.getLanguage());
             synchronized (sitetree) {
-                node.appendChild(labelElem);
+                node.insertBefore(labelElem, node.getFirstChild());
             }
         }
     }
