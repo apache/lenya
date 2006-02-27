@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!--
   Copyright 1999-2004 The Apache Software Foundation
-
+  
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,8 +18,8 @@
 <!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
-
-	
+  
+  
   <map:components>
     <map:generators default="file">
       <map:generator logger="sitemap.generator.traversable" name="traversable" src="org.apache.cocoon.generation.TraversableGenerator"/>
@@ -41,30 +41,30 @@
       <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
       <map:serialize/>
     </map:resource>
- </map:resources>
-
+  </map:resources>
+  
   <map:pipelines>
-
+    
     <map:component-configurations>
       <global-variables>
         <blog-url>http://192.168.1.77:8888/blog</blog-url>
       </global-variables>
     </map:component-configurations>
-	 
+    
     <!-- WebDAV -->
     <map:pipeline>
       <map:match pattern="webdav/**">
         <map:mount src="webdav.xmap" uri-prefix="webdav" check-reload="yes"/>
       </map:match>
     </map:pipeline>
-
+    
     <!-- AtomAPI -->
     <map:pipeline>
       <map:match pattern="atomapi/**">
         <map:mount src="atomapi.xmap" uri-prefix="atomapi" check-reload="yes"/>
       </map:match>
     </map:pipeline>
-  
+    
     <!-- Redirects -->
     <map:pipeline>
       <map:match pattern="*/">
@@ -77,19 +77,19 @@
         <map:redirect-to uri="feeds/all/index.html"/>
       </map:match>
     </map:pipeline>
-
+    
     <!-- Entries -->
     <map:pipeline>
       <map:match pattern="*/entries/*/*/*/*/introspection.xml">
         <map:generate src="content/introspection.xml"/>
         <map:transform src="xslt/entry/introspection.xsl">
-  	  <map:parameter name="editURL" value="{global:blog-url}/authoring/entries/{2}/{3}/{4}/{5}/index.html"/>
+          <map:parameter name="editURL" value="{global:blog-url}/authoring/entries/{2}/{3}/{4}/{5}/index.html"/>
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
     <map:pipeline> 
-	 
+      
       <map:match pattern="*/entries/*/*/*/*/index.xml">
         <map:select type="request-parameter">
           <map:parameter name="parameter-name" value="lenya.step"/>  
@@ -103,7 +103,7 @@
         </map:select>
         <map:serialize type="xml"/>
       </map:match>
-
+      
       <map:match pattern="*/entries/*/*/*/*/index.rss">
         <map:select type="request-parameter">
           <map:parameter name="parameter-name" value="lenya.step"/>  
@@ -112,23 +112,23 @@
             <map:transform src="fallback://lenya/xslt/rc/toDoc.xsl"/>
           </map:when>
           <map:otherwise>
-	    <map:generate src="content/{1}/entries/{2}/{3}/{4}/{5}/index.xml"/>
-	    <map:transform src="xslt/feed/atom2other.xsl">
-   	      <map:parameter name="type" value="rss"/>
-	      <map:parameter name="url" value="{global:blog-url}"/>
-	      <map:parameter name="area" value="{1}"/>
-	    </map:transform>	    
+            <map:generate src="content/{1}/entries/{2}/{3}/{4}/{5}/index.xml"/>
+            <map:transform src="xslt/feed/atom2other.xsl">
+              <map:parameter name="type" value="rss"/>
+              <map:parameter name="url" value="{global:blog-url}"/>
+              <map:parameter name="area" value="{1}"/>
+            </map:transform>	    
           </map:otherwise>
         </map:select>
         <map:serialize type="xml"/>
       </map:match>
-
+      
       <map:match pattern="*/entries/*/*/*/*/lenya-body.xml">
         <map:aggregate element="feed">
           <map:part src="lenya://lenya/pubs/blog/content/{1}/feeds/all/index.xml"/>
           <map:part src="cocoon:/{1}/entries/{2}/{3}/{4}/{5}/index.xml"/>
-	  <map:part src="lenya://lenya/pubs/blog/content/{1}/sidebar.xml"/>
-	  <map:part src="cocoon:/{1}/overview?struct=23"/>
+          <map:part src="lenya://lenya/pubs/blog/content/{1}/sidebar.xml"/>
+          <map:part src="cocoon:/{1}/overview?struct=23"/>
         </map:aggregate>
         <map:transform src="xslt/entry/aggregate.xsl"/>
         <map:serialize type="xml"/>
@@ -136,12 +136,12 @@
       <map:match pattern="*/entries/*/*/*/*/lenya-page-body.xml">
         <map:aggregate element="cmsbody">
           <map:part src="cocoon:/{1}/entries/{2}/{3}/{4}/{5}/lenya-body.xml"/>
-	  <map:part src="content/{1}/sidebar.xml"/>
+          <map:part src="content/{1}/sidebar.xml"/>
         </map:aggregate>
-	<map:transform src="xslt/links.xsl">
-     	<map:parameter name="relpath" value="../../../../../feeds/all"/>
-	  <map:parameter name="area" value="{1}"/>
-	</map:transform>
+        <map:transform src="xslt/links.xsl">
+          <map:parameter name="relpath" value="../../../../../feeds/all"/>
+          <map:parameter name="area" value="{1}"/>
+        </map:transform>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="*/entries/*/*/*/*/index.html">
@@ -163,7 +163,7 @@
         </map:select>
       </map:match>
     </map:pipeline>
-
+    
     <!-- BX Editor: Entries -->
     
     <map:pipeline>
@@ -206,40 +206,40 @@
         <map:read src="resources/misc/bxe/entry.css" mime-type="text/css"/>
       </map:match>
       <map:match pattern="*/entries/*/*/*/*/entry-relaxng-bxe.xml">
-	      <map:generate src="lenya/resources/schemas/entry.rng"/>
+        <map:generate src="lenya/resources/schemas/entry.rng"/>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
     <!-- /BX Editor: Entries -->
-
+    
     <!-- Entry Overwiev -->
     <map:pipeline>
       <map:match pattern="*/overview">
         <map:generate type="blogoverview">
           <map:parameter name="area" value="{1}"/>		      
         </map:generate>		     
-	<map:serialize type="xml"/>
+        <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="*/overview/lenya-page-body.xml">
         <map:aggregate element="cmsbody">
-  	  <map:part src="content/{1}/feeds/all/index.xml"/>
+          <map:part src="content/{1}/feeds/all/index.xml"/>
           <map:part src="content/{1}/sidebar.xml"/>
-	  <map:part src="cocoon:/{1}/overview"/>
-	  <map:part src="cocoon:/{1}/overview?struct=23"/>
+          <map:part src="cocoon:/{1}/overview"/>
+          <map:part src="cocoon:/{1}/overview?struct=23"/>
         </map:aggregate>
         <map:transform src="xslt/links.xsl">
-	  <map:parameter name="area" value="{1}"/>
-	  <map:parameter name="relpath" value="."/>  	
+          <map:parameter name="area" value="{1}"/>
+          <map:parameter name="relpath" value="."/>  	
         </map:transform>
-	<map:serialize type="xml"/>
+        <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="*/overview.html">
         <map:generate src="cocoon:/{1}/overview/lenya-page-body.xml"/>
-	<map:transform type="xalan" src="xslt/overview/main.xsl">
-	  <map:parameter name="relative2root" value="."/>
+        <map:transform type="xalan" src="xslt/overview/main.xsl">
+          <map:parameter name="relative2root" value="."/>
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
         </map:transform>
-	<map:serialize type="xhtml"/>
+        <map:serialize type="xhtml"/>
       </map:match>
     </map:pipeline>
     
@@ -255,51 +255,51 @@
     <map:pipeline>
       <!-- RSS Feed -->
       <map:match pattern="*/feeds/*/index.rss">
-	<map:generate type="blog">
+        <map:generate type="blog">
           <map:parameter name="area" value="{1}"/>
-	</map:generate>
-          <map:transform src="xslt/feed/xinclude.xsl">
-            <map:parameter name="feedid" value="{2}"/>
-            <map:parameter name="area" value="{1}"/>
-          </map:transform>
-	  <map:transform type="xinclude"/>
-	  <map:transform src="xslt/feed/atom2other.xsl">
-	    <map:parameter name="type" value="rss"/>
-	    <map:parameter name="url" value="{global:blog-url}"/>
-	    <map:parameter name="area" value="{1}"/>	    
-          </map:transform>
-	  <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
-	 <map:serialize type="xml"/>
+        </map:generate>
+        <map:transform src="xslt/feed/xinclude.xsl">
+          <map:parameter name="feedid" value="{2}"/>
+          <map:parameter name="area" value="{1}"/>
+        </map:transform>
+        <map:transform type="xinclude"/>
+        <map:transform src="xslt/feed/atom2other.xsl">
+          <map:parameter name="type" value="rss"/>
+          <map:parameter name="url" value="{global:blog-url}"/>
+          <map:parameter name="area" value="{1}"/>	    
+        </map:transform>
+        <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
+        <map:serialize type="xml"/>
       </map:match>
       
       <!-- Atom Feed -->
       <map:match pattern="*/feeds/*/index.xml">
-	<map:generate type="blog">
+        <map:generate type="blog">
           <map:parameter name="area" value="{1}"/>
-	</map:generate>
-          <map:transform src="xslt/feed/xinclude.xsl">
-            <map:parameter name="feedid" value="{2}"/>
-            <map:parameter name="area" value="{1}"/>
-          </map:transform>
-	  <map:transform type="xinclude"/>
-	 <map:serialize type="xml"/>
+        </map:generate>
+        <map:transform src="xslt/feed/xinclude.xsl">
+          <map:parameter name="feedid" value="{2}"/>
+          <map:parameter name="area" value="{1}"/>
+        </map:transform>
+        <map:transform type="xinclude"/>
+        <map:serialize type="xml"/>
       </map:match>
-
+      
       <map:match pattern="*/feeds/*/lenya-page-body.xml">
         <map:aggregate element="cmsbody">
           <map:part src="cocoon:/{1}/feeds/{2}/index.xml"/>
-	  <map:part src="content/{1}/sidebar.xml"/>
-	  <map:part src="cocoon:/{1}/overview?struct=23"/>
+          <map:part src="content/{1}/sidebar.xml"/>
+          <map:part src="cocoon:/{1}/overview?struct=23"/>
         </map:aggregate>
         <map:transform src="xslt/links.xsl">
-	  <map:parameter name="area" value="{1}"/>
-	  <map:parameter name="relpath" value="."/>  	
+          <map:parameter name="area" value="{1}"/>
+          <map:parameter name="relpath" value="."/>  	
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="*/feeds/*/index.html">
         <map:generate src="cocoon:/{1}/feeds/{2}/lenya-page-body.xml"/>
-	<map:transform type="xalan" src="xslt/feed/main-{1}.xsl">
+        <map:transform type="xalan" src="xslt/feed/main-{1}.xsl">
           <map:parameter name="relative2root" value="../.."/>
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
         </map:transform>
@@ -310,7 +310,7 @@
           </map:when>
           <map:otherwise>
             <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/feed.xml"/>
-	    <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
+            <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
             <map:serialize type="xhtml"/>
           </map:otherwise>
         </map:select>
