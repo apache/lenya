@@ -52,11 +52,16 @@ public class CopyTask extends Task {
         while (st.hasMoreTokens()) {
             String pubsRootDir = st.nextToken();
 
+            // In the case the pubsRootDir is publication dir
             if (new File(pubsRootDir, "publication.xml").isFile()) {
                 CopyJavaSourcesTask.copyDir(new File(pubsRootDir), new File(this.toDir.toString()),
                     twoTuple, filter, this);
+            // In the case the pubsRootDir is module dir
+	    } else if (new File(pubsRootDir, "module.xml").isFile()) {
+                CopyJavaSourcesTask.copyDir(new File(pubsRootDir), new File(this.toDir.toString()),
+                    twoTuple, filter, this);
             } else {
-                // FIXME: Look for publications defined by the file "publication.xml"
+                // FIXME: Look for publications defined by the file "publication.xml" or modules defined by the file "module.xml"
                 CopyJavaSourcesTask.copyContentOfDir(new File(pubsRootDir),
                     new File(this.toDir.toString()), twoTuple, filter, this);
             }

@@ -70,11 +70,16 @@ public class CopyJavaSourcesTask extends Task {
             File path = new File(pubsRootDir);
 
             if (path.isDirectory()) {
+                // In the case of a publication 
                 if (new File(path, "publication.xml").isFile()) {
                     copyContentOfDir(new File(path, this.javaDir), absoluteBuildDir, twoTuple,
                             new JavaFilenameFilter(), this);
+                // In the case of a module
+		} else if (new File(path, "module.xml").isFile()) {
+                    copyContentOfDir(new File(path, this.javaDir), absoluteBuildDir, twoTuple,
+                            new JavaFilenameFilter(), this);
                 } else {
-                    // FIXME: Look for publications defined by the file "publication.xml"
+                    // FIXME: Look for publications defined by the file "publication.xml" or modules defined by the file "module.xml"
                     String[] pubs = path.list();
 
                     for (int i = 0; i < pubs.length; i++) {
