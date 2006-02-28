@@ -138,6 +138,22 @@
     <taskdef name="bulkCopy"        classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.BulkCopyTask"/>
     <taskdef name="copyPubs"        classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.CopyTask"/>
     <taskdef name="xpatch"          classpath="${cocoon.src.dir}/tools/anttasks" classname="XConfToolTask" />
-  </target>  
+  </target>
+
+  <!-- Compile tasks -->
+  <target name="compile-tasks">
+
+    <javac srcdir="tools/anttasks"
+           destdir="tools/anttasks"
+           debug="${debug}"
+           optimize="{optimize}"
+           deprecation="${deprecation}"
+           target="${target.vm}"
+           nowarn="${nowarn}"
+           source="${target.vm}"/>
+	   <!--
+           classpathref="classpath"
+	   -->
+  </target>
 
 </project>
