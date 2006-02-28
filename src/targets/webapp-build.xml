@@ -78,10 +78,13 @@
       </fileset>
     </copy>
     
-    <!-- copy patch files for cocoon.xconf -->
-    <copy todir="${build.patch}/cocoon-xconf" flatten="false">
-      <fileset dir="${src.webapp.dir}/lenya/config/cocoon-xconf">
-        <include name="**/*.xconf"/>
+    <!-- copy patch files -->
+    <copy todir="${build.patch}" flatten="false">
+      <fileset dir="${src.webapp.dir}/lenya/config">
+        <include name="cocoon-xconf/**/*.xconf"/>
+        <include name="cocoon-xconf/*.xconf"/>
+        <include name="sitemap/**/*.xmap"/>
+        <include name="sitemap/*.xmap"/>
       </fileset>
     </copy>
     
@@ -140,7 +143,13 @@
     </delete>
 
     <antcall target="deploy-modules"/>
-
+    
+    <!-- Patch sitemap.xmap -->
+    <xpatch file="${build.webapp}/sitemap.xmap"
+      srcdir="${build.patch}/sitemap" 
+      includes="**/*.xmap"
+      addComments="false"/>
+    
     <!-- Patch cocoon.xconf -->
     <property name="patch.webapp" value="true"/>
     <xpatch file="${build.webapp}/WEB-INF/cocoon.xconf"
@@ -151,13 +160,13 @@
       srcdir="${build.patch}/cocoon-xconf" 
       includes="**/*.xconf"
       excludes="prepare/*.xconf"
-      addComments="true"/>
+      addComments="false"/>
     
     <!-- Patch lenya.roles -->
     <xpatch file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles"
       srcdir="${build.patch}/lenya-roles"
       includes="**/*.xroles"
-      addComments="true"/>
+      addComments="false"/>
     
     <!-- Copy database files to ${build.webapp}/WEB-INF/db -->
     <copy todir="${build.webapp}/WEB-INF/db">

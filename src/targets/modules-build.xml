@@ -43,7 +43,16 @@
         <exclude name="*/config/cocoon-xconf/**"/>
         <exclude name="config/lenya-roles/**"/>
         <exclude name="*/config/lenya-roles/**"/>
+        <exclude name="config/sitemap/**"/>
+        <exclude name="*/config/sitemap/**"/>
       </fileset>
+    </bulkCopy>
+    <bulkCopy 
+      sourcedirs="${modules.root.dirs}" 
+      todir="${build.patch}/sitemap/modules"
+      flatten="false">
+      <fileset includes="config/sitemap/**.xmap"/>
+      <fileset includes="*/config/sitemap/**.xmap"/>
     </bulkCopy>
     <bulkCopy 
       sourcedirs="${modules.root.dirs}" 
