@@ -26,6 +26,7 @@
     <download-page rdf:resource="http://lenya.apache.org/1_2_x/installation/index.html" />
     <programming-language>Java</programming-language>
     <category rdf:resource="http://projects.apache.org/category/web-framework" />
+    <category rdf:resource="http://projects.apache.org/category/xml"/>
     <release>
       <Version>
         <name>Latest release</name>
