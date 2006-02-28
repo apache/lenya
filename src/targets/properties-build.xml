@@ -141,7 +141,7 @@
   </target>
 
   <!-- Compile tasks -->
-  <target name="compile-tasks">
+  <target name="compile-build-tasks" description="Target to compile tasks needed during build">
 
     <javac srcdir="tools/anttasks"
            destdir="tools/anttasks"
