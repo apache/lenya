@@ -15,9 +15,9 @@
  *
  */
 
-/* $Id: CreatorException.java 176415 2005-05-23 00:55:20Z gregor $  */
-
 package org.apache.lenya.config;
+
+import java.util.Vector;
 
 /**
  * A command line tool to configure Lenya build
@@ -28,12 +28,33 @@ public class ConfigureCommandLine {
      * @param args Command line args
      */
     public static void main(String[] args) {
-        System.out.println("Hello Command Line");
+        System.out.println("Welcome to the command line interface to configure Apache Lenya for building");
 
-        // Loop over config files
-        //   - Read default values from config file
-	//   - Ask for new values
-	//   - Ask if existing config file should be overwritten
+        if (args.length != 1) {
+            System.err.println("No root dir specified (e.g. /home/USERNAME/src/lenya/trunk)!");
+            return;
+        }
+        String rootDir = args[0];
+
+        // Define all configuration files
+        FileConfiguration buildProperties = new PropertiesConfiguration();
+        buildProperties.setFilenameDefault(rootDir + "/build.properties");
+        buildProperties.setFilenameLocal(rootDir + "/local.build.properties");
+
+	Vector configs = new Vector();
+        configs.addElement(buildProperties);
+
+	for (int i = 0; i < configs.size(); i++) {
+            Configuration config = (Configuration) configs.elementAt(i);
+            config.read();
+            Parameter[] params = config.getParameters();
+	    for (int k = 0; k < params.length; k++) {
+                System.out.println(params[k]);
+	    //   - Ask for new values
+            }
+	    //   - Ask if existing local config should be overwritten
+            config.write();
+        }
 	// Suggest to build now ./build.sh (depending on OS)
     }
 }
