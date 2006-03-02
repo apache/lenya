@@ -29,5 +29,11 @@ public class ConfigureCommandLine {
      */
     public static void main(String[] args) {
         System.out.println("Hello Command Line");
+
+        // Loop over config files
+        //   - Read default values from config file
+	//   - Ask for new values
+	//   - Ask if existing config file should be overwritten
+	// Suggest to build now ./build.sh (depending on OS)
     }
 }
