@@ -38,10 +38,11 @@ fi
 
 echo "WARNING: This shell script has not been finished yet! Use at own risk ;-)"
 
+PWD=`pwd`
 if [ "$UI_TYPE" = "cmd" ];then
-  java org.apache.lenya.config.ConfigureCommandLine
+  java org.apache.lenya.config.ConfigureCommandLine $PWD
 elif [ "$UI_TYPE" = "gui" ]; then
-  java org.apache.lenya.config.ConfigureGUI
+  java org.apache.lenya.config.ConfigureGUI $PWD
 else
   echo "No such User Interface: $UI_TYPE"
   exit 1
