@@ -82,7 +82,7 @@
 
     <!-- patch sitemap.xmap -->
     <xpatch file="${build.webapp}/sitemap.xmap" 
-            includes="src/confpatch/*.xmap"/> 
+            includes="src/webapp/lenya/config/sitemap/*.xmap"/> 
 
     <!-- patch logkit.xconf -->
     <xpatch file="${build.webapp}/WEB-INF/logkit.xconf"
