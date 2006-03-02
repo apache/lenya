@@ -54,4 +54,15 @@ abstract public class FileConfiguration extends Configuration {
     public void setFilenameLocal(String filename) {
         this.filenameLocal = new File(filename);
     }
+
+    /**
+     *
+     */
+    public boolean localConfigExists() {
+        if (getFilenameLocal().exists()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

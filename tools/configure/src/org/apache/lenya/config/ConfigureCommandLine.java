@@ -55,7 +55,7 @@ public class ConfigureCommandLine {
                 System.out.println("\nParameter " + params[k].getName() + ":");
                 System.out.println("  Default Value        : " + params[k].getDefaultValue());
                 System.out.println("  Local Value          : " + params[k].getLocalValue());
-                System.out.print  ("  New Local Value (D/L): ");
+                System.out.print  ("  New Local Value (d/L): ");
                 try {
                     String newValue = br.readLine();
                     if (newValue.equals("D")) {
@@ -76,9 +76,23 @@ public class ConfigureCommandLine {
                 }
                 config.setParameter(params[k]);
             }
-	    // TODO: Ask if existing local config should be overwritten
-            config.writeLocal();
+            if (config.localConfigExists()) {
+                System.out.println("\nWARNING: Local configuration already exists!");
+                System.out.print("Do you want to overwrite (y/N)? ");
+                try {
+                    String value = br.readLine();
+                    if (value.equals("y")) {
+                        config.writeLocal();
+                    } else {
+                        System.out.println("Local configuration has NOT been overwritten.");
+                    }
+                } catch (Exception e) {
+                    System.err.println(e.getMessage());
+                }
+            } else {
+                config.writeLocal();
+            }
         }
-	// Suggest to build now ./build.sh (depending on OS)
+	// TODO: Suggest to build now ./build.sh (depending on OS)
     }
 }

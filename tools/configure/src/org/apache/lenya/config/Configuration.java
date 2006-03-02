@@ -69,4 +69,9 @@ abstract public class Configuration {
      *
      */
     abstract public void writeLocal();
+
+    /**
+     *
+     */
+    abstract public boolean localConfigExists();
 }

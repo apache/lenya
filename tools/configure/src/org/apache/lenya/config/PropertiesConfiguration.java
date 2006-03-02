@@ -64,7 +64,7 @@ abstract public class PropertiesConfiguration extends FileConfiguration {
             newLocalProperties.setProperty(params[i].getName(), params[i].getLocalValue());
         }
         try {
-            newLocalProperties.store(new FileOutputStream(getFilenameLocal()), "blabla");
+            newLocalProperties.store(new FileOutputStream(getFilenameLocal()), "Created by org.apache.lenya.config.PropertiesConfiguration");
         } catch(Exception e) {
             System.err.println(e.getMessage());
         }
