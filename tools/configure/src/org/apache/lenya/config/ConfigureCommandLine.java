@@ -30,7 +30,7 @@ public class ConfigureCommandLine {
      * @param args Command line args
      */
     public static void main(String[] args) {
-        System.out.println("Welcome to the command line interface to configure Apache Lenya for building");
+        System.out.println("\nWelcome to the command line interface to configure the building process of Apache Lenya");
 
         if (args.length != 1) {
             System.err.println("No root dir specified (e.g. /home/USERNAME/src/lenya/trunk)!");
@@ -58,7 +58,7 @@ public class ConfigureCommandLine {
                 System.out.print  ("  New Local Value (d/L): ");
                 try {
                     String newValue = br.readLine();
-                    if (newValue.equals("D")) {
+                    if (newValue.equals("d")) {
                         params[k].setLocalValue(params[k].getDefaultValue());
                     } else if (newValue.equals("L") || newValue.equals("")) {
                         params[k].setLocalValue(params[k].getLocalValue());
