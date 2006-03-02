@@ -36,6 +36,13 @@ public class Parameter {
     /**
      *
      */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     *
+     */
     public void setDefaultValue(String value) { 
         this.defaultValue = value;
     }
@@ -43,8 +50,30 @@ public class Parameter {
     /**
      *
      */
+    public String getDefaultValue() { 
+        return defaultValue;
+    }
+
+    /**
+     *
+     */
     public void setLocalValue(String value) { 
         this.localValue = value;
+    }
+
+    /**
+     *
+     */
+    public String getLocalValue() { 
+        return localValue;
+    }
+
+    /**
+     *
+     */
+    public boolean test(String value) {
+        // No tests are being executed!
+        return true;
     }
 
     /**

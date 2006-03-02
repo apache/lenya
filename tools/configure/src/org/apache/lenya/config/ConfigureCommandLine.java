@@ -17,6 +17,8 @@
 
 package org.apache.lenya.config;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.Vector;
 
 /**
@@ -44,14 +46,35 @@ public class ConfigureCommandLine {
 	Vector configs = new Vector();
         configs.addElement(buildProperties);
 
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	for (int i = 0; i < configs.size(); i++) {
             Configuration config = (Configuration) configs.elementAt(i);
             config.readDefault();
             config.readLocal();
             Parameter[] params = config.getParameters();
 	    for (int k = 0; k < params.length; k++) {
-                System.out.println(params[k]);
-	    //   - Ask for new values
+                System.out.println("\nParameter " + params[k].getName() + ":");
+                System.out.println("  Default Value        : " + params[k].getDefaultValue());
+                System.out.println("  Local Value          : " + params[k].getLocalValue());
+                System.out.print  ("  New Local Value (D/L): ");
+                try {
+                    String newValue = br.readLine();
+                    if (newValue.equals("D")) {
+                        params[k].setLocalValue(params[k].getDefaultValue());
+                    } else if (newValue.equals("L") || newValue.equals("")) {
+                        params[k].setLocalValue(params[k].getLocalValue());
+                    } else {
+                        if (params[k].test(newValue)) {
+                            params[k].setLocalValue(newValue);
+                        } else {
+                            // TODO: Implement this
+                            System.err.println("Test failed! Re-enter value ...");
+                        }
+                    }
+                System.out.println("  Value entered        : " + params[k].getLocalValue());
+                } catch (Exception e) {
+                    System.err.println(e.getMessage());
+                }
             }
 	    //   - Ask if existing local config should be overwritten
             config.writeLocal();
