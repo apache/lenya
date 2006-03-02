@@ -17,40 +17,27 @@
 
 package org.apache.lenya.config;
 
+import java.io.FileInputStream;
+import java.util.Enumeration;
+import java.util.Properties;
+import java.util.Vector;
+
 /**
- * Parameter
+ * Build Properties Configuration
  */
-public class Parameter {
-
-    private String name;
-    private String defaultValue;
-    private String localValue;
+public class BuildPropertiesConfiguration extends PropertiesConfiguration {
 
     /**
      *
      */
-    public void setName(String name) { 
-        this.name = name;
+    public String getVersionDefault() {
+        return null;
     }
 
     /**
      *
      */
-    public void setDefaultValue(String value) { 
-        this.defaultValue = value;
-    }
-
-    /**
-     *
-     */
-    public void setLocalValue(String value) { 
-        this.localValue = value;
-    }
-
-    /**
-     *
-     */
-    public String toString() { 
-        return name + ":::" + defaultValue + ":::" + localValue;
+    public String getVersionLocal() {
+        return null;
     }
 }

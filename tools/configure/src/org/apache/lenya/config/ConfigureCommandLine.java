@@ -37,7 +37,7 @@ public class ConfigureCommandLine {
         String rootDir = args[0];
 
         // Define all configuration files
-        FileConfiguration buildProperties = new PropertiesConfiguration();
+        FileConfiguration buildProperties = new BuildPropertiesConfiguration();
         buildProperties.setFilenameDefault(rootDir + "/build.properties");
         buildProperties.setFilenameLocal(rootDir + "/local.build.properties");
 
@@ -46,14 +46,15 @@ public class ConfigureCommandLine {
 
 	for (int i = 0; i < configs.size(); i++) {
             Configuration config = (Configuration) configs.elementAt(i);
-            config.read();
+            config.readDefault();
+            config.readLocal();
             Parameter[] params = config.getParameters();
 	    for (int k = 0; k < params.length; k++) {
                 System.out.println(params[k]);
 	    //   - Ask for new values
             }
 	    //   - Ask if existing local config should be overwritten
-            config.write();
+            config.writeLocal();
         }
 	// Suggest to build now ./build.sh (depending on OS)
     }

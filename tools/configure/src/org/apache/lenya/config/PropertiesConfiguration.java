@@ -25,14 +25,15 @@ import java.util.Vector;
 /**
  * Properties Configuration
  */
-public class PropertiesConfiguration extends FileConfiguration {
+abstract public class PropertiesConfiguration extends FileConfiguration {
 
     private Properties defaultProps;
+    private Properties localProps;
 
     /**
      *
      */
-    public void read() {
+    public void readDefault() {
         try {
         defaultProps = new Properties();
         defaultProps.load(new FileInputStream(getFilenameDefault()));
@@ -44,7 +45,19 @@ public class PropertiesConfiguration extends FileConfiguration {
     /**
      *
      */
-    public void write() {
+    public void readLocal() {
+        try {
+        localProps = new Properties();
+        localProps.load(new FileInputStream(getFilenameLocal()));
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
+    /**
+     *
+     */
+    public void writeLocal() {
         System.out.println(getFilenameLocal());
     }
 
@@ -59,6 +72,10 @@ public class PropertiesConfiguration extends FileConfiguration {
             Parameter param = new Parameter();
             param.setName(name);
             param.setDefaultValue(defaultProps.getProperty(name));
+            String localValue = localProps.getProperty(name);
+            if (localValue != null) {
+                param.setLocalValue(localProps.getProperty(name));
+            }
             params.addElement(param);
         }
         Parameter[] p = new Parameter[params.size()];

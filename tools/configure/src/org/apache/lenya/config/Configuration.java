@@ -30,10 +30,25 @@ public interface Configuration {
     /**
      *
      */
-    public void read();
+    public void readDefault();
 
     /**
      *
      */
-    public void write();
+    public void readLocal();
+
+    /**
+     *
+     */
+    public String getVersionDefault();
+
+    /**
+     *
+     */
+    public String getVersionLocal();
+
+    /**
+     *
+     */
+    public void writeLocal();
 }
