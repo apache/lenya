@@ -156,4 +156,20 @@
 	   -->
   </target>
 
+  <!-- Compile Configure Command Line Tool -->
+  <target name="compile-configure" description="Compile configure command line tool">
+
+    <javac srcdir="tools/configure/src"
+           destdir="tools/configure/build"
+           debug="${debug}"
+           optimize="{optimize}"
+           deprecation="${deprecation}"
+           target="${target.vm}"
+           nowarn="${nowarn}"
+           source="${target.vm}"/>
+	   <!--
+           classpathref="classpath"
+	   -->
+  </target>
+
 </project>
