@@ -18,6 +18,7 @@
 package org.apache.lenya.config;
 
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.Vector;
@@ -58,14 +59,25 @@ abstract public class PropertiesConfiguration extends FileConfiguration {
      *
      */
     public void writeLocal() {
-        System.out.println(getFilenameLocal());
+        Properties newLocalProperties = new Properties();
+        for (int i = 0; i < params.length; i++) {
+            newLocalProperties.setProperty(params[i].getName(), params[i].getLocalValue());
+        }
+        try {
+            newLocalProperties.store(new FileOutputStream(getFilenameLocal()), "blabla");
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+        }
     }
 
     /**
      *
      */
-    public Parameter[] getParameters() {
-        Vector params = new Vector();
+    public void read() {
+        readDefault();
+        readLocal();
+
+        Vector p = new Vector();
         Enumeration names = defaultProps.propertyNames();
         while (names.hasMoreElements()) {
             String name = (String) names.nextElement();
@@ -75,13 +87,21 @@ abstract public class PropertiesConfiguration extends FileConfiguration {
             String localValue = localProps.getProperty(name);
             if (localValue != null) {
                 param.setLocalValue(localProps.getProperty(name));
+            } else {
+                param.setLocalValue(defaultProps.getProperty(name));
             }
-            params.addElement(param);
+            p.addElement(param);
         }
-        Parameter[] p = new Parameter[params.size()];
-        for (int i = 0; i < p.length; i++) {
-            p[i] = (Parameter) params.elementAt(i);
+        params = new Parameter[p.size()];
+        for (int i = 0; i < params.length; i++) {
+            params[i] = (Parameter) p.elementAt(i);
         }
-        return p;
+    }
+
+    /**
+     *
+     */
+    public Parameter[] getParameters() {
+        return params;
     }
 }

@@ -20,35 +20,53 @@ package org.apache.lenya.config;
 /**
  * Configuration
  */
-public interface Configuration {
+abstract public class Configuration {
+
+    protected Parameter[] params;
 
     /**
      *
      */
-    public Parameter[] getParameters();
+    abstract public Parameter[] getParameters();
 
     /**
      *
      */
-    public void readDefault();
+    public void setParameter(Parameter param) {
+        for (int i = 0; i < params.length; i++) {
+            if(param.getName().equals(params[i].getName())) {
+                params[i] = param;
+            }
+        }
+    }
 
     /**
      *
      */
-    public void readLocal();
+    abstract public void readDefault();
 
     /**
      *
      */
-    public String getVersionDefault();
+    abstract public void readLocal();
+
+    /**
+     * Read default and local and combine the two of them
+     */
+    abstract public void read();
 
     /**
      *
      */
-    public String getVersionLocal();
+    abstract public String getVersionDefault();
 
     /**
      *
      */
-    public void writeLocal();
+    abstract public String getVersionLocal();
+
+    /**
+     *
+     */
+    abstract public void writeLocal();
 }

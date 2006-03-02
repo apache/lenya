@@ -22,7 +22,7 @@ import java.io.File;
 /**
  * File Configuration
  */
-abstract public class FileConfiguration implements Configuration {
+abstract public class FileConfiguration extends Configuration {
 
     private File filenameDefault;
     private File filenameLocal;

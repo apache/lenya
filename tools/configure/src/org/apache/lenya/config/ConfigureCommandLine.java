@@ -49,8 +49,7 @@ public class ConfigureCommandLine {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	for (int i = 0; i < configs.size(); i++) {
             Configuration config = (Configuration) configs.elementAt(i);
-            config.readDefault();
-            config.readLocal();
+            config.read();
             Parameter[] params = config.getParameters();
 	    for (int k = 0; k < params.length; k++) {
                 System.out.println("\nParameter " + params[k].getName() + ":");
@@ -75,8 +74,9 @@ public class ConfigureCommandLine {
                 } catch (Exception e) {
                     System.err.println(e.getMessage());
                 }
+                config.setParameter(params[k]);
             }
-	    //   - Ask if existing local config should be overwritten
+	    // TODO: Ask if existing local config should be overwritten
             config.writeLocal();
         }
 	// Suggest to build now ./build.sh (depending on OS)
