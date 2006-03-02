@@ -15,8 +15,6 @@
  *
  */
 
-/* $Id: CreatorException.java 176415 2005-05-23 00:55:20Z gregor $  */
-
 package org.apache.lenya.config;
 
 /**
