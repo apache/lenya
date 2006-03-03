@@ -48,6 +48,13 @@ public class ServerParameter extends Parameter {
             p[0] = config.getParameter("web.app.server.jetty.port");
             p[1] = config.getParameter("web.app.server.jetty.admin.port");
             return p;
+        } else if (value.equals("Tomcat")) {
+            Parameter[] p = new Parameter[4];
+            p[0] = config.getParameter("tomcat.home.dir");
+            p[1] = config.getParameter("tomcat.webapps.dir");
+            p[2] = config.getParameter("tomcat.cache.dir");
+            p[3] = config.getParameter("tomcat.endorsed.dir");
+            return p;
         }
         return null;
     }
