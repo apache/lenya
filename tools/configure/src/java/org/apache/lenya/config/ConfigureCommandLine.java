@@ -58,7 +58,35 @@ public class ConfigureCommandLine {
 	for (int i = 0; i < configs.size(); i++) {
             Configuration config = (Configuration) configs.elementAt(i);
             config.read();
+
             Parameter[] params = config.getConfigurableParameters();
+            readParameters(params, config);
+
+            if (config.localConfigExists()) {
+                System.out.println("\nWARNING: Local configuration already exists!");
+                System.out.print("Do you want to overwrite (y/N)? ");
+                try {
+                    String value = br.readLine();
+                    if (value.equals("y")) {
+                        config.writeLocal();
+                    } else {
+                        System.out.println("Local configuration has NOT been overwritten.");
+                    }
+                } catch (Exception e) {
+                    System.err.println(e.getMessage());
+                }
+            } else {
+                config.writeLocal();
+            }
+        }
+	// TODO: Suggest to build now ./build.sh (depending on OS)
+    }
+
+    /**
+     *
+     */
+    static public void readParameters(Parameter[] params, Configuration config) {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	    for (int k = 0; k < params.length; k++) {
                 try {
                     boolean notOK = true;
@@ -90,30 +118,18 @@ public class ConfigureCommandLine {
                     System.out.println("  Value entered        : " + params[k].getLocalValue());
                     Parameter[] subParams = params[k].getSubsequentParameters(params[k].getLocalValue(), config);
                     if (subParams != null) {
-                        System.out.println("  Subsequent Params    : " + subParams.length);
+                        String sp = "";
+	                for (int j = 0; j < subParams.length; j++) {
+                            sp = sp + subParams[j].getName();
+                            if (j != subParams.length -1) sp = sp + ", ";
+                        }
+                        System.out.println("  " + subParams.length + " Subsequent Params  : " + sp);
+                        readParameters(subParams, config);
                     }
                 } catch (Exception e) {
                     System.err.println(e.getMessage());
                 }
                 config.setParameter(params[k]);
             }
-            if (config.localConfigExists()) {
-                System.out.println("\nWARNING: Local configuration already exists!");
-                System.out.print("Do you want to overwrite (y/N)? ");
-                try {
-                    String value = br.readLine();
-                    if (value.equals("y")) {
-                        config.writeLocal();
-                    } else {
-                        System.out.println("Local configuration has NOT been overwritten.");
-                    }
-                } catch (Exception e) {
-                    System.err.println(e.getMessage());
-                }
-            } else {
-                config.writeLocal();
-            }
-        }
-	// TODO: Suggest to build now ./build.sh (depending on OS)
     }
 }
