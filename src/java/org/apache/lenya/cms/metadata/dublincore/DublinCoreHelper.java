@@ -72,7 +72,7 @@ public final class DublinCoreHelper {
                 while (identifier == null && i < languages.length) {
                     Document document = map.get(publication, area, documentId, languages[i]);
                     if (getLogger().isDebugEnabled())
-                        getLogger().debug("document file : " + document.getFile().getAbsolutePath());
+                        getLogger().debug("document file : " + document.getSourceURI());
                     MetaData dublincore = document.getMetaDataManager().getDublinCoreMetaData();
                     if (getLogger().isDebugEnabled())
                         getLogger().debug("dublincore title : "
