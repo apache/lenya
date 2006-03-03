@@ -43,8 +43,16 @@ public class ConfigureCommandLine {
         buildProperties.setFilenameDefault(rootDir + "/build.properties");
         buildProperties.setFilenameLocal(rootDir + "/local.build.properties");
 
+        /*
+        FileConfiguration defaultPub = new PublicationConfiguration();
+        defaultPub.setFilenameDefault(rootDir + "src/pubs/default/config/publication.xconf");
+        defaultPub.setFilenameLocal(rootDir + "src/pubs/default/config/local.publication.xconf");
+        */
+
 	Vector configs = new Vector();
         configs.addElement(buildProperties);
+        //configs.addElement(defaultPub);
+
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	for (int i = 0; i < configs.size(); i++) {
