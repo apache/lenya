@@ -25,7 +25,7 @@ fi
 # ----- Ignore system CLASSPATH variable
 OLD_CLASSPATH="$CLASSPATH"
 unset CLASSPATH
-CLASSPATH="`echo tools/configure/build | tr ' ' $S`"
+CLASSPATH="`echo tools/configure/build/classes | tr ' ' $S`"
 export CLASSPATH
 #echo "$CLASSPATH"
 
