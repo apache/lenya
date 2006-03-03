@@ -49,7 +49,7 @@
 
   <property name="debug"          value="on"/>
   <property name="optimize"       value="on"/>
-  <property name="deprecation"    value="on"/>
+  <property name="deprecation"    value="off"/>
   <property name="nowarn"         value="off"/>
   <property name="target.vm"      value="1.4"/>
 
@@ -159,8 +159,8 @@
   <!-- Compile Configure Command Line Tool -->
   <target name="compile-configure" description="Compile configure command line tool">
 
-    <javac srcdir="tools/configure/src"
-           destdir="tools/configure/build"
+    <javac srcdir="tools/configure/src/java"
+           destdir="tools/configure/build/classes"
            debug="${debug}"
            optimize="{optimize}"
            deprecation="${deprecation}"
