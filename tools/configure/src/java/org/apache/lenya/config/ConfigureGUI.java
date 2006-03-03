@@ -17,6 +17,7 @@
 
 package org.apache.lenya.config;
 
+import java.util.Vector;
 import javax.swing.*;
 
 /**
@@ -45,11 +46,28 @@ public class ConfigureGUI {
     public ConfigureGUI(String rootDir) {
         System.out.println("Starting GUI ...");
 
+        // Define all configuration files
+        FileConfiguration buildProperties = new BuildPropertiesConfiguration();
+        buildProperties.setFilenameDefault(rootDir + "/build.properties");
+        buildProperties.setFilenameLocal(rootDir + "/local.build.properties");
+
+	Vector configs = new Vector();
+        configs.addElement(buildProperties);
+
         JFrame.setDefaultLookAndFeelDecorated(true);
         JFrame frame = new JFrame("Apache Lenya Configuration");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         JLabel label = new JLabel("Hello Apache Lenya: " + rootDir);
         frame.getContentPane().add(label);
+	for (int i = 0; i < configs.size(); i++) {
+            Configuration config = (Configuration) configs.elementAt(i);
+            config.read();
+            Parameter[] params = config.getParameters();
+	    for (int k = 0; k < params.length; k++) {
+                JLabel pLabel = new JLabel("Parameter: " + params[k].getName());
+                frame.getContentPane().add(pLabel);
+            }
+        }
         frame.pack();
         frame.setVisible(true);
     }
