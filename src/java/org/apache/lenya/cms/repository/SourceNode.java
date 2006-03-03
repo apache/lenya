@@ -110,7 +110,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             // Default
             realSourceURI = CONTEXT_PREFIX + urlID;
         } else {
-            // Substitute "lenya://lenya/pubs/PUB_ID/content" by "contentDir"
+            // Substitute e.g. "lenya://lenya/pubs/PUB_ID/content" by "contentDir/content"
             String filePrefix = urlID.substring(0,urlID.indexOf(publicationId))+publicationId;
             String tempString = urlID.substring(filePrefix.length()+1);
             String fileMiddle= tempString.substring(0,tempString.indexOf("/"));
