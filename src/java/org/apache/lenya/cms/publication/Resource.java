@@ -16,6 +16,8 @@
  */
 package org.apache.lenya.cms.publication;
 
+import java.io.File;
+
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
@@ -27,6 +29,7 @@ import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.metadata.MetaDataOwner;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.repository.SourceNode;
 
 /**
  * A resource (asset).
@@ -39,6 +42,7 @@ public class Resource extends AbstractLogEnabled implements MetaDataOwner {
     private String name;
     private ServiceManager manager;
     private MetaDataManager metaDataManager;
+    private String contentDir = null;
 
     /**
      * Ctor.
@@ -105,8 +109,35 @@ public class Resource extends AbstractLogEnabled implements MetaDataOwner {
      * @return The directory URI where the resources are located.
      */
     public String getBaseURI() {
-        String resourcesUri = getResourcesURI().substring(Node.LENYA_PROTOCOL.length());
-        return "context://" + resourcesUri;
+        String publicationId = null;
+        try {
+            String pubBase = Node.LENYA_PROTOCOL + Publication.PUBLICATION_PREFIX_URI + "/";
+            String publicationsPath = document.getPublication().getSourceURI().substring(pubBase.length());
+            publicationId = publicationsPath.split("/")[0];
+            Publication pub = PublicationUtil.getPublication(this.manager, publicationId);
+            contentDir = pub.getContentDir();
+        } catch (Exception e) {
+            getLogger().error(e.getMessage());
+        }
+        String realSourceURI = null;
+        String urlID = ResourcesManager.RESOURCES_PREFIX + "/" + document.getArea() + document.getId();
+        
+        if (contentDir == null) {
+            // Default
+            realSourceURI =  SourceNode.CONTEXT_PREFIX + Publication.PUBLICATION_PREFIX_URI + "/" +publicationId+ "/" +urlID;
+        } else {
+            if (new File(contentDir).isAbsolute()) {
+                // Absolute
+                realSourceURI = SourceNode.FILE_PREFIX + contentDir + File.separator+urlID;
+            } else {
+                // Relative
+                realSourceURI = SourceNode.CONTEXT_PREFIX + contentDir + File.separator+urlID;
+            }
+        }
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Real Source URI: " + realSourceURI);
+        }
+        return realSourceURI;
     }
 
     protected String getResourcesURI() {
