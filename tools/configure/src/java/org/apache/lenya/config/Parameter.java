@@ -58,7 +58,7 @@ public class Parameter {
      *
      */
     public void setLocalValue(String value) { 
-        this.localValue = value;
+        this.localValue = value.trim();
     }
 
     /**
