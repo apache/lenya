@@ -33,7 +33,9 @@
   <resource-type name="links" workflow="fallback://config/workflow/workflow.xml"/>
   <resource-type name="search" workflow="fallback://config/workflow/workflow.xml"/>
   <resource-type name="cforms" workflow="fallback://config/workflow/workflow.xml"/>
+  <resource-type name="mediaType" workflow="fallback://config/workflow/workflow.xml"/>
   
+  <module name="mediaType"/>
   <module name="xhtml"/>
   <module name="links"/>
   <module name="opendocument"/>
@@ -45,7 +47,7 @@
   <!-- NOTE: The configuration of the content directory has NOT been fully tested yet and might lead to unexpected results. Use at own risk ;-) -->
   <!-- Relative to webapp context: -->
   <!--
-  <content-dir src="lenya/pubs/default/content"/>
+  <content-dir src="lenya/pubs/default"/>
   -->
   <!-- Absolute: -->
   <!--

@@ -56,6 +56,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     private String sourceURI;
     protected ServiceManager manager;
+    public static final String FILE_PREFIX = "file:/";
+    public static final String CONTEXT_PREFIX = "context://";
 
     /**
      * Ctor.
@@ -102,18 +104,23 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 	
 
         String realSourceURI = null;
+        String urlID = this.sourceURI.substring(Node.LENYA_PROTOCOL.length());
+        
         if (contentDir == null) {
             // Default
-            realSourceURI = "context://" + this.sourceURI.substring(Node.LENYA_PROTOCOL.length());
+            realSourceURI = CONTEXT_PREFIX + urlID;
         } else {
+            // Substitute "lenya://lenya/pubs/PUB_ID/content" by "contentDir"
+            String filePrefix = urlID.substring(0,urlID.indexOf(publicationId))+publicationId;
+            String tempString = urlID.substring(filePrefix.length()+1);
+            String fileMiddle= tempString.substring(0,tempString.indexOf("/"));
+            String fileSuffix = tempString.substring(fileMiddle.length()+1,tempString.length());
             if (new File(contentDir).isAbsolute()) {
                 // Absolute
-                // Substitute "lenya://lenya/pubs/PUB_ID/content" by "contentDir"
-                realSourceURI = "file:/" + new File(contentDir + this.sourceURI.substring(Node.LENYA_PROTOCOL.length() + new String("lenya/pubs/" + publicationId + "/content").length())).getAbsolutePath();
+                realSourceURI = FILE_PREFIX + contentDir + File.separator+fileMiddle+ File.separator+fileSuffix;
             } else {
                 // Relative
-                // Substitute "lenya://lenya/pubs/PUB_ID/content" by "contentDir"
-                realSourceURI = "context://" + contentDir + this.sourceURI.substring(Node.LENYA_PROTOCOL.length() + new String("lenya/pubs/" + publicationId + "/content").length());
+                realSourceURI = CONTEXT_PREFIX + contentDir +"/"+ fileMiddle + "/"+fileSuffix;
             }
         }
         if (getLogger().isDebugEnabled()) {

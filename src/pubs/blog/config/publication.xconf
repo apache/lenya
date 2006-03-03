@@ -35,7 +35,7 @@
   <!-- NOTE: The configuration of the content directory has NOT been fully tested yet and might lead to unexpected results. Use at own risk ;-) -->
   <!-- Relative to webapp context: -->
   <!--
-  <content-dir src="lenya/pubs/blog/content"/>
+  <content-dir src="lenya/pubs/blog"/>
   -->
   <!-- Absolute: -->
   <!--
