@@ -50,27 +50,36 @@ public class ConfigureCommandLine {
 	for (int i = 0; i < configs.size(); i++) {
             Configuration config = (Configuration) configs.elementAt(i);
             config.read();
-            Parameter[] params = config.getParameters();
+            Parameter[] params = config.getConfigurableParameters();
 	    for (int k = 0; k < params.length; k++) {
-                System.out.println("\nParameter " + params[k].getName() + ":");
-                System.out.println("  Default Value        : " + params[k].getDefaultValue());
-                System.out.println("  Local Value          : " + params[k].getLocalValue());
-                System.out.print  ("  New Local Value (d/L): ");
                 try {
-                    String newValue = br.readLine();
-                    if (newValue.equals("d")) {
-                        params[k].setLocalValue(params[k].getDefaultValue());
-                    } else if (newValue.equals("L") || newValue.equals("")) {
-                        params[k].setLocalValue(params[k].getLocalValue());
-                    } else {
+                    boolean notOK = true;
+                    while (notOK) {
+                        System.out.println("\nParameter " + params[k].getName() + ":");
+                        System.out.println("  Default Value        : " + params[k].getDefaultValue());
+                        System.out.println("  Local Value          : " + params[k].getLocalValue());
+                        System.out.print  ("  New Local Value (d/L): ");
+
+                        // Read new value
+                        String newValue = br.readLine();
+                        if (newValue.equals("d")) {
+                            newValue = params[k].getDefaultValue();
+                        } else if (newValue.equals("L") || newValue.equals("")) {
+                            newValue = params[k].getLocalValue();
+                        }
+
+                        // Test entered value
                         if (params[k].test(newValue)) {
                             params[k].setLocalValue(newValue);
+                            notOK = false;
                         } else {
-                            // TODO: Implement this
-                            System.err.println("Test failed! Re-enter value ...");
+                            System.err.println("  WARNING: No such value available!");
+                            System.err.println("           Available values: " + params[k].getAvailableValues());
+                            System.err.println("           Re-enter value ...");
                         }
                     }
-                System.out.println("  Value entered        : " + params[k].getLocalValue());
+
+                    System.out.println("  Value entered        : " + params[k].getLocalValue());
                 } catch (Exception e) {
                     System.err.println(e.getMessage());
                 }

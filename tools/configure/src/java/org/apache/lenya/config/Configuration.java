@@ -32,12 +32,29 @@ abstract public class Configuration {
     /**
      *
      */
+    abstract public Parameter[] getConfigurableParameters();
+
+    /**
+     *
+     */
     public void setParameter(Parameter param) {
         for (int i = 0; i < params.length; i++) {
             if(param.getName().equals(params[i].getName())) {
                 params[i] = param;
             }
         }
+    }
+
+    /**
+     *
+     */
+    public Parameter getParameter(String name) {
+        for (int i = 0; i < params.length; i++) {
+            if(name.equals(params[i].getName())) {
+                return params[i];
+            }
+        }
+        return null;
     }
 
     /**

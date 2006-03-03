@@ -31,13 +31,29 @@ public class BuildPropertiesConfiguration extends PropertiesConfiguration {
      *
      */
     public String getVersionDefault() {
-        return null;
+        return getParameter("build.properties.version").getDefaultValue();
     }
 
     /**
      *
      */
     public String getVersionLocal() {
-        return null;
+        return getParameter("build.properties.version").getLocalValue();
+    }
+
+    /**
+     *
+     */
+    public Parameter[] getConfigurableParameters() {
+        Parameter[] p = new Parameter[5];
+        p[0] = getParameter("cocoon.src.dir");
+        p[1] = getParameter("pubs.root.dirs");
+        p[2] = getParameter("modules.root.dirs");
+        p[3] = new ServerParameter();
+	p[3].setName(getParameter("web.app.server").getName());
+	p[3].setDefaultValue(getParameter("web.app.server").getDefaultValue());
+	p[3].setLocalValue(getParameter("web.app.server").getLocalValue());
+        p[4] = getParameter("enable.uploads");
+        return p;
     }
 }

@@ -79,6 +79,13 @@ public class Parameter {
     /**
      *
      */
+    public String getAvailableValues() {
+        return null;
+    }
+
+    /**
+     *
+     */
     public String toString() { 
         return name + ":::" + defaultValue + ":::" + localValue;
     }
