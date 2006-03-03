@@ -86,6 +86,13 @@ public class Parameter {
     /**
      *
      */
+    public Parameter[] getSubsequentParameters(String value, Configuration config) {
+        return null;
+    }
+
+    /**
+     *
+     */
     public String toString() { 
         return name + ":::" + defaultValue + ":::" + localValue;
     }

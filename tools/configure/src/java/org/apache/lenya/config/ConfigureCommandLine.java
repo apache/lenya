@@ -80,6 +80,10 @@ public class ConfigureCommandLine {
                     }
 
                     System.out.println("  Value entered        : " + params[k].getLocalValue());
+                    Parameter[] subParams = params[k].getSubsequentParameters(params[k].getLocalValue(), config);
+                    if (subParams != null) {
+                        System.out.println("  Subsequent Params    : " + subParams.length);
+                    }
                 } catch (Exception e) {
                     System.err.println(e.getMessage());
                 }

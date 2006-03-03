@@ -38,4 +38,17 @@ public class ServerParameter extends Parameter {
     public String getAvailableValues() {
         return "Jetty, Tomcat, WLS";
     }
+
+    /**
+     *
+     */
+    public Parameter[] getSubsequentParameters(String value, Configuration config) {
+        if (value.equals("Jetty")) {
+            Parameter[] p = new Parameter[2];
+            p[0] = config.getParameter("web.app.server.jetty.port");
+            p[1] = config.getParameter("web.app.server.jetty.admin.port");
+            return p;
+        }
+        return null;
+    }
 }
