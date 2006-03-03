@@ -17,6 +17,8 @@
 
 package org.apache.lenya.config;
 
+import javax.swing.*;
+
 /**
  * A GUI to configure Lenya build
  */
@@ -26,6 +28,29 @@ public class ConfigureGUI {
      * @param args Command line args
      */
     public static void main(String[] args) {
-        System.out.println("Hello GUI");
+        System.out.println("\nWelcome to the GUI to configure the building process of Apache Lenya");
+
+        if (args.length != 1) {
+            System.err.println("No root dir specified (e.g. /home/USERNAME/src/lenya/trunk)!");
+            return;
+        }
+        String rootDir = args[0];
+
+        new ConfigureGUI(rootDir);
+    }
+
+    /**
+     *
+     */
+    public ConfigureGUI(String rootDir) {
+        System.out.println("Starting GUI ...");
+
+        JFrame.setDefaultLookAndFeelDecorated(true);
+        JFrame frame = new JFrame("Apache Lenya Configuration");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JLabel label = new JLabel("Hello Apache Lenya: " + rootDir);
+        frame.getContentPane().add(label);
+        frame.pack();
+        frame.setVisible(true);
     }
 }
