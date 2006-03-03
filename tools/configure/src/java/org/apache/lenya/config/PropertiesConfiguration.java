@@ -19,6 +19,7 @@ package org.apache.lenya.config;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.PrintWriter;
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.Vector;
@@ -59,15 +60,31 @@ abstract public class PropertiesConfiguration extends FileConfiguration {
      *
      */
     public void writeLocal() {
+        String header = "Created by org.apache.lenya.config.PropertiesConfiguration";
+
+        try {
+        PrintWriter out = new PrintWriter(new FileOutputStream(getFilenameLocal()));
+        out.println("#" + header);
+        for (int i = 0; i < params.length; i++) {
+            out.println(params[i].getName() + "=" + params[i].getLocalValue());
+        }
+        out.close();
+        } catch(Exception e) {
+            System.err.println(e.getMessage());
+        }
+
+/*
         Properties newLocalProperties = new Properties();
         for (int i = 0; i < params.length; i++) {
             newLocalProperties.setProperty(params[i].getName(), params[i].getLocalValue());
         }
+
         try {
-            newLocalProperties.store(new FileOutputStream(getFilenameLocal()), "Created by org.apache.lenya.config.PropertiesConfiguration");
+            newLocalProperties.store(new FileOutputStream(getFilenameLocal()), header);
         } catch(Exception e) {
             System.err.println(e.getMessage());
         }
+*/
     }
 
     /**
