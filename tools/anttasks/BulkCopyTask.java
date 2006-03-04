@@ -64,7 +64,7 @@ public class BulkCopyTask extends Copy {
     }
 
     /**
-     * @param _sourceDirs Colon seperated list of source directories
+     * @param _sourceDirs Colon separated list of source directories
      */
     public void setSourceDirs(Path _sourceDirs) {
         this.sourceDirs = _sourceDirs;
