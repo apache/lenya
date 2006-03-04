@@ -66,6 +66,7 @@ abstract public class PropertiesConfiguration extends FileConfiguration {
         PrintWriter out = new PrintWriter(new FileOutputStream(getFilenameLocal()));
         out.println("#" + header);
         for (int i = 0; i < params.length; i++) {
+            out.println("\n#");
             out.println(params[i].getName() + "=" + params[i].getLocalValue());
         }
         out.close();
