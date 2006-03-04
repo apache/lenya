@@ -35,6 +35,7 @@
   
   <menu>
 
+<!-- TODO: New and edit implementation needs to be finished" -->
 <!--
     <menus>
       <menu i18n:attr="name" name="File">
