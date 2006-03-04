@@ -33,14 +33,14 @@
   <resource-type name="links" workflow="fallback://config/workflow/workflow.xml"/>
   <resource-type name="search" workflow="fallback://config/workflow/workflow.xml"/>
   <resource-type name="cforms" workflow="fallback://config/workflow/workflow.xml"/>
-  <resource-type name="mediaType" workflow="fallback://config/workflow/workflow.xml"/>
   
-  <module name="mediaType"/>
   <module name="xhtml"/>
   <module name="links"/>
   <module name="opendocument"/>
   <module name="cforms"/>
   <module name="homepage"/>
+
+  <!-- TODO: Where do these two modules come from? -->
   <module name="search"/>
   <module name="blog"/>
 
