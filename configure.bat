@@ -29,8 +29,8 @@ goto end
 
 :: Execute the Configuration if JAVA_HOME is set.
 :gotJavaHome
-::java -classpath %CP% org.apache.lenya.config.ConfigureCommandLine %LENYA_HOME%
-java -classpath %CP% org.apache.lenya.config.ConfigureGUI %LENYA_HOME%
+java -classpath %CP% org.apache.lenya.config.ConfigureCommandLine %LENYA_HOME%
+::java -classpath %CP% org.apache.lenya.config.ConfigureGUI %LENYA_HOME%
 
 
 :: Terminate program
