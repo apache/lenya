@@ -119,6 +119,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
             contentDir = publications[i].getContentDir();
             if (contentDir != null){
                 uris.add(contentDir);
+                contentDir = null;
             }
         }
 
