@@ -111,10 +111,15 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
     protected String[] getBaseURIs(Publication publication) {
 
         List uris = new ArrayList();
+        String contentDir = null;
 
         Publication[] publications = getPublications(publication);
         for (int i = 0; i < publications.length; i++) {
             uris.add(getBaseURI(publications[i]));
+            contentDir = publications[i].getContentDir();
+            if (contentDir != null){
+                uris.add(contentDir);
+            }
         }
 
         String coreBaseURI = "context://";
