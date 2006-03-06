@@ -17,6 +17,7 @@
 
 package org.apache.lenya.config;
 
+import java.awt.FlowLayout;
 import java.util.Vector;
 import javax.swing.*;
 
@@ -26,13 +27,16 @@ import javax.swing.*;
 public class ConfigureGUI {
 
     /**
-     * @param args Command line args
+     * @param args
+     *            Command line args
      */
     public static void main(String[] args) {
-        System.out.println("\nWelcome to the GUI to configure the building process of Apache Lenya");
+        System.out
+                .println("\nWelcome to the GUI to configure the building process of Apache Lenya");
 
         if (args.length != 1) {
-            System.err.println("No root dir specified (e.g. /home/USERNAME/src/lenya/trunk)!");
+            System.err
+                    .println("No root dir specified (e.g. /home/USERNAME/src/lenya/trunk)!");
             return;
         }
         String rootDir = args[0];
@@ -41,7 +45,7 @@ public class ConfigureGUI {
     }
 
     /**
-     *
+     * 
      */
     public ConfigureGUI(String rootDir) {
         System.out.println("Starting GUI ...");
@@ -51,22 +55,27 @@ public class ConfigureGUI {
         buildProperties.setFilenameDefault(rootDir + "/build.properties");
         buildProperties.setFilenameLocal(rootDir + "/local.build.properties");
 
-	Vector configs = new Vector();
+        Vector configs = new Vector();
         configs.addElement(buildProperties);
 
         JFrame.setDefaultLookAndFeelDecorated(true);
         JFrame frame = new JFrame("Apache Lenya Configuration");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        JLabel label = new JLabel("Hello Apache Lenya: " + rootDir);
-        frame.getContentPane().add(label);
-	for (int i = 0; i < configs.size(); i++) {
+        JTextArea text = new JTextArea("Hello Apache Lenya: " + rootDir + "\n");
+        frame.setLayout(new FlowLayout(FlowLayout.LEFT));
+        frame.getContentPane().add(text);
+
+        for (int i = 0; i < configs.size(); i++) {
             Configuration config = (Configuration) configs.elementAt(i);
             config.read();
-            Parameter[] params = config.getParameters();
-	    for (int k = 0; k < params.length; k++) {
-                JLabel pLabel = new JLabel("Parameter: " + params[k].getName());
-                frame.getContentPane().add(pLabel);
+            Parameter[] params = config.getConfigurableParameters();
+
+            JTextArea pText = new JTextArea();
+            for (int k = 0; k < params.length; k++) {
+                pText.append("Parameter: " + params[k].getName() + "\n");
+                frame.getContentPane().add(pText);
             }
+
         }
         frame.pack();
         frame.setVisible(true);
