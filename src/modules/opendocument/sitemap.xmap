@@ -62,6 +62,9 @@
         <map:transform src="fallback://lenya/modules/opendocument/xslt/opendocument2xhtml.xsl"/>
         <map:serialize type="xml"/>
       </map:match>
+      <map:match pattern="**.odt">
+        <map:read src="context://lenya/pubs/{page-envelope:publication-id}/content/{page-envelope:area}{page-envelope:document-id}/index_{page-envelope:document-language}.odt"/>
+      </map:match>
 
     </map:pipeline>
     
