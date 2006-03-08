@@ -21,22 +21,31 @@ if [ "$TERM" = "cygwin" ] ; then
 else
   S=':'
 fi
+
+# ----- Check JAVA_HOME
+JAVA_HOME="$JAVA_HOME"
+if [ "$JAVA_HOME" = "" ];then
+  echo "ERROR: No JAVA_HOME set yet!"
+  echo "       Have you installed JDK 1.4.2 or higher?"
+  echo ""
+  echo "NOTE:  Apache Lenya does not work properly with JDK 1.5!"
+  exit 1
+fi
                                                                                                                                                              
 # ----- Ignore system CLASSPATH variable
 OLD_CLASSPATH="$CLASSPATH"
 unset CLASSPATH
 CLASSPATH="`echo tools/configure/build/classes | tr ' ' $S`"
 export CLASSPATH
-#echo "$CLASSPATH"
+#echo "DEBUG: $CLASSPATH"
 
 DEFAULT_UI_TYPE=cmd
 UI_TYPE=$1
 if [ "$UI_TYPE" = "" ];then
   UI_TYPE=$DEFAULT_UI_TYPE
 fi
-#echo $UI_TYPE
+#echo "DEBUG: $UI_TYPE"
 
-echo "WARNING: This shell script has not been finished yet! Use at own risk ;-)"
 
 PWD=`pwd`
 if [ "$UI_TYPE" = "cmd" ];then
@@ -44,10 +53,16 @@ if [ "$UI_TYPE" = "cmd" ];then
 elif [ "$UI_TYPE" = "gui" ]; then
   java org.apache.lenya.config.ConfigureGUI $PWD
 else
-  echo "No such User Interface: $UI_TYPE"
+  echo "ERROR: No such User Interface: $UI_TYPE"
   exit 1
 fi
 ERR=$?
+
+echo ""
+echo "NOTE (for the advanced user): You might want to edit the local.* files manually, because there are often more parameters, than the ones which were presented!"
+
+echo ""
+echo "NOTE: Build Lenya now by running ./build.sh!"
 
 # ----- Restore CLASSPATH
 CLASSPATH="$OLD_CLASSPATH"
