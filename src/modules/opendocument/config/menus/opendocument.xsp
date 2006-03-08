@@ -43,19 +43,19 @@
           <item uc:usecase="module.odt.create" href="?doctype=opendocument"><i18n:text>New ODT</i18n:text></item>
         </block>
       </menu>
-      <!--<menu i18n:attr="name" name="Edit">
+      <menu i18n:attr="name" name="Edit">
           <xsp:logic>
             String doctype = <input:get-attribute module="page-envelope" as="string" name="document-type"/>;
             if ("opendocument".equals(doctype)) {
-                <block info="false">
+                <!--<block info="false">
                   <item wf:event="edit" uc:usecase="module.odt.download" href="?"><i18n:text>Download ODT</i18n:text></item>
-                </block>
+                </block>-->
                 <block info="false">
                   <item wf:event="edit" uc:usecase="module.odt.upload" href="?"><i18n:text>Upload ODT</i18n:text></item>
                 </block>
             }
           </xsp:logic>
-      </menu>-->
+      </menu>
     </menus>
 
     
