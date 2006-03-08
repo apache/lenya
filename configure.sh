@@ -59,7 +59,7 @@ fi
 ERR=$?
 
 echo ""
-echo "NOTE (for the advanced user): You might want to edit the local.* files manually, because there are often more parameters, than the ones which were presented!"
+echo "NOTE (for the advanced user): You might want to edit the local.* files manually, because there are often even more parameters which can be configured than the ones which were presented during this configuration setup!"
 
 echo ""
 echo "NOTE: Build Lenya now by running ./build.sh!"
