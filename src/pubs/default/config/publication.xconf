@@ -28,21 +28,18 @@
   <breadcrumb-prefix/>
   <site-manager name="tree"/>
   
+  <!-- NOTE: Resource types need to be listed because of the workflow -->
   <resource-type name="xhtml" workflow="fallback://config/workflow/workflow.xml"/>
   <resource-type name="homepage" workflow="fallback://config/workflow/workflow.xml"/>
   <resource-type name="links" workflow="fallback://config/workflow/workflow.xml"/>
-  <resource-type name="search" workflow="fallback://config/workflow/workflow.xml"/>
   <resource-type name="cforms" workflow="fallback://config/workflow/workflow.xml"/>
   
+  <!-- NOTE: Modules need to be listed because of the menu -->
   <module name="xhtml"/>
   <module name="links"/>
   <module name="opendocument"/>
   <module name="cforms"/>
   <module name="homepage"/>
-
-  <!-- TODO: Where do these two modules come from? -->
-  <module name="search"/>
-
   <!-- TODO: The goal is to have a blog module ;-) -->
   <!--
   <module name="blog"/>
