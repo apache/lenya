@@ -42,7 +42,11 @@
 
   <!-- TODO: Where do these two modules come from? -->
   <module name="search"/>
+
+  <!-- TODO: The goal is to have a blog module ;-) -->
+  <!--
   <module name="blog"/>
+  -->
 
   <!-- NOTE: The configuration of the content directory has NOT been fully tested yet and might lead to unexpected results. Use at own risk ;-) -->
   <!-- Relative to webapp context: -->
