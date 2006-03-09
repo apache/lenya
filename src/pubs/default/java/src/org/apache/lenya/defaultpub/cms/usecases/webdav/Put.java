@@ -86,7 +86,7 @@ public class Put extends DocumentUsecase {
                             doc.getLanguage());
 
                     resourceType = (ResourceType) selector.select("xhtml");
-                    documentManager.add(document, resourceType, doc.getName(), true, null);
+                    documentManager.add(document, resourceType, "xml", doc.getName(), true, null);
 
                     setMetaData(document);
                     doc = document;
@@ -104,7 +104,7 @@ public class Put extends DocumentUsecase {
             }
 
             DocumentIdToPathMapper mapper = doc.getPublication().getPathMapper();
-            String path = mapper.getPath(doc.getId(), getSourceDocument().getLanguage());
+            String path = mapper.getPath(doc.getId(), getSourceDocument().getLanguage(), doc.getSourceExtension());
             String sourceUri = doc.getSourceURI();
             String pubId = doc.getPublication().getId();
             String uploadSourceUri = "cocoon:/request/PUT";

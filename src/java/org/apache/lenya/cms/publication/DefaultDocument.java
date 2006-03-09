@@ -115,7 +115,8 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         return getPublication().getPathMapper().getFile(getPublication(),
                 getArea(),
                 getId(),
-                getLanguage());
+                getLanguage(),
+                getSourceExtension());
     }
 
     /**
@@ -190,6 +191,20 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         return this.extension;
     }
 
+    public String getSourceExtension() {
+        String extension;
+        try {
+            extension = getMetaDataManager().getLenyaMetaData()
+                    .getFirstValue(LenyaMetaData.ELEMENT_EXTENSION);
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
+        }
+        if (extension == null) {
+            extension = "xml";
+        }
+        return extension;
+    }
+
     /**
      * Sets the extension of the file in the URL.
      * @param _extension A string.
@@ -260,7 +275,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         }
         return exists;
     }
-    
+
     protected DocumentIdentifier getIdentifier() {
         return this.identifier;
     }
@@ -331,7 +346,9 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
             RepositorySource source = null;
             try {
                 resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-                source = (RepositorySource) resolver.resolveURI(getSourceURI());
+                String sourceUri = getPublication().getSourceURI() + "/content/" + getArea()
+                        + getId() + "/index_" + getLanguage() + ".xml";
+                source = (RepositorySource) resolver.resolveURI(sourceUri);
                 this.metaDataManager = source.getNode().getMetaDataManager();
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -373,7 +390,9 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @return A URI.
      */
     private String getDefaultSourceURI() {
-        String path = getPublication().getPathMapper().getPath(getId(), getLanguage());
+        String path = getPublication().getPathMapper().getPath(getId(),
+                getLanguage(),
+                getSourceExtension());
         return getPublication().getSourceURI() + "/content/" + getArea() + "/" + path;
 
     }

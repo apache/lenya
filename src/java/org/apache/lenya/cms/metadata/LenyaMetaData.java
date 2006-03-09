@@ -47,6 +47,11 @@ public class LenyaMetaData extends MetaDataImpl {
      * be used e.g. to provide an appropriate management interface.
      */
     public static final String ELEMENT_CONTENT_TYPE = "contentType";
+    
+    /**
+     * The extension to use for the document source.
+     */
+    public static final String ELEMENT_EXTENSION = "extension";
 
     /**
      * A workflow version.
@@ -69,7 +74,8 @@ public class LenyaMetaData extends MetaDataImpl {
        ELEMENT_WORKFLOW_VERSION,
        ELEMENT_PLACEHOLDER,
        ELEMENTE_HEIGHT,
-       ELEMENT_WIDTH
+       ELEMENT_WIDTH,
+       ELEMENT_EXTENSION
     };
 
     /**

@@ -113,25 +113,22 @@ public class CreateOpenDocument extends Create {
         ServiceSelector selector = null;
         DocumentBuilder builder = null;
         try {
-            selector = (ServiceSelector) this.manager
-                            .lookup(DocumentBuilder.ROLE + "Selector");
-            String hint = getSourceDocument().getPublication()
-                            .getDocumentBuilderHint();
+            selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
+            String hint = getSourceDocument().getPublication().getDocumentBuilderHint();
             builder = (DocumentBuilder) selector.select(hint);
 
-            boolean provided = getParameterAsBoolean(DOCUMENT_ID_PROVIDED,
-                            false);
+            boolean provided = getParameterAsBoolean(DOCUMENT_ID_PROVIDED, false);
             if (!provided && !builder.isValidDocumentName(documentName)) {
                 addErrorMessage("The document ID may not contain any special characters.");
             } else {
                 Publication publication = getSourceDocument().getPublication();
                 String newDocumentId = getNewDocumentId();
-                Document document = getSourceDocument().getIdentityMap().get(
-                                publication, getSourceDocument().getArea(),
-                                newDocumentId, language);
+                Document document = getSourceDocument().getIdentityMap().get(publication,
+                        getSourceDocument().getArea(),
+                        newDocumentId,
+                        language);
                 if (document.exists()) {
-                    addErrorMessage("The document with ID " + newDocumentId
-                                    + " already exists.");
+                    addErrorMessage("The document with ID " + newDocumentId + " already exists.");
                 }
             }
         } finally {
@@ -155,18 +152,16 @@ public class CreateOpenDocument extends Create {
         ResourceType resourceType = null;
         try {
 
-            documentManager = (DocumentManager) this.manager
-                            .lookup(DocumentManager.ROLE);
+            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
             DocumentIdentityMap map = getDocumentIdentityMap();
-            Document document = map.get(getPublication(), getArea(),
-                            getNewDocumentId(), getParameterAsString(LANGUAGE));
-            selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE
-                            + "Selector");
-            resourceType = (ResourceType) selector
-                            .select(getDocumentTypeName());
-            if (getParameterAsString(SAMPLE) != null
-                            && getParameterAsString(SAMPLE).length() > 0)
+            Document document = map.get(getPublication(),
+                    getArea(),
+                    getNewDocumentId(),
+                    getParameterAsString(LANGUAGE));
+            selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
+            resourceType = (ResourceType) selector.select(getDocumentTypeName());
+            if (getParameterAsString(SAMPLE) != null && getParameterAsString(SAMPLE).length() > 0)
                 resourceType.setSampleURI(getParameterAsString(SAMPLE));
             // now that the source is determined, lock involved nodes
             Node node = document.getRepositoryNode();
@@ -196,8 +191,7 @@ public class CreateOpenDocument extends Create {
 
     }
 
-    protected void addODT(Document document, ResourceType resourceType)
-                    throws Exception {
+    protected void addODT(Document document, ResourceType resourceType) throws Exception {
         SourceResolver resolver = null;
         String publicationId = null;
         String contentDir = null;
@@ -207,46 +201,44 @@ public class CreateOpenDocument extends Create {
         ServiceSelector selector = null;
         try {
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            resolver = (SourceResolver) this.manager
-                            .lookup(SourceResolver.ROLE);
-            String pubBase = Node.LENYA_PROTOCOL
-                            + Publication.PUBLICATION_PREFIX_URI + "/";
-            String publicationsPath = document.getPublication().getSourceURI()
-                            .substring(pubBase.length());
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            String pubBase = Node.LENYA_PROTOCOL + Publication.PUBLICATION_PREFIX_URI + "/";
+            String publicationsPath = document.getPublication()
+                    .getSourceURI()
+                    .substring(pubBase.length());
             publicationId = publicationsPath.split("/")[0];
-            Publication pub = PublicationUtil.getPublication(this.manager,
-                            publicationId);
+            Publication pub = PublicationUtil.getPublication(this.manager, publicationId);
             contentDir = pub.getContentDir();
-            String urlID = "content/" + document.getArea() + document.getId()
-                            + "/" + DEFAULT_INDEX + "_"
-                            + document.getLanguage() + ODT_EXTENSION;
+            String urlID = "content/" + document.getArea() + document.getId() + "/" + DEFAULT_INDEX
+                    + "_" + document.getLanguage() + ODT_EXTENSION;
             if (contentDir == null) {
-                destination = SourceNode.CONTEXT_PREFIX
-                                + Publication.PUBLICATION_PREFIX_URI + "/"
-                                + publicationId + "/" + urlID;
+                destination = SourceNode.CONTEXT_PREFIX + Publication.PUBLICATION_PREFIX_URI + "/"
+                        + publicationId + "/" + urlID;
             } else {
                 if (new File(contentDir).isAbsolute()) {
                     // Absolute
-                    destination = SourceNode.FILE_PREFIX + contentDir
-                                    + File.separator + urlID;
+                    destination = SourceNode.FILE_PREFIX + contentDir + File.separator + urlID;
                 } else {
                     // Relative
-                    destination = SourceNode.CONTEXT_PREFIX + contentDir
-                                    + File.separator + urlID;
+                    destination = SourceNode.CONTEXT_PREFIX + contentDir + File.separator + urlID;
                 }
             }
             SourceUtil.copy(resolver, sourceUri, destination);
-            siteManager = (SiteManager) selector.select(document
-                            .getPublication().getSiteManagerHint());
+            siteManager = (SiteManager) selector.select(document.getPublication()
+                    .getSiteManagerHint());
             if (siteManager.contains(document)) {
                 throw new PublicationException("The document [" + document
-                                + "] is already contained in this publication!");
+                        + "] is already contained in this publication!");
             }
 
             siteManager.add(document);
-            siteManager.setLabel(document,
-                            getParameterAsString(DublinCore.ELEMENT_TITLE));
+            siteManager.setLabel(document, getParameterAsString(DublinCore.ELEMENT_TITLE));
             siteManager.setVisibleInNav(document, getVisibleInNav());
+
+            String extension = ODT_EXTENSION.substring(1);
+            document.getMetaDataManager()
+                    .getLenyaMetaData()
+                    .setValue(LenyaMetaData.ELEMENT_EXTENSION, extension);
         } catch (Exception e) {
             throw new Exception(e);
         } finally {
@@ -268,8 +260,7 @@ public class CreateOpenDocument extends Create {
         final String documentId = getParameterAsString(DOCUMENT_ID);
         String documentName;
         if (getParameterAsBoolean(DOCUMENT_ID_PROVIDED, false)) {
-            documentName = documentId
-                            .substring(documentId.lastIndexOf("/") + 1);
+            documentName = documentId.substring(documentId.lastIndexOf("/") + 1);
         } else {
             documentName = documentId;
         }
@@ -277,8 +268,7 @@ public class CreateOpenDocument extends Create {
     }
 
     /**
-     * @return The relation between the source document and the created
-     *         document.
+     * @return The relation between the source document and the created document.
      */
     protected String getRelation() {
         return getParameterAsString(RELATION);
@@ -296,17 +286,13 @@ public class CreateOpenDocument extends Create {
             if (relation.equals(RELATION_CHILD)) {
                 return sourceDoc.getId() + "/" + getNewDocumentName();
             } else if (relation.equals(RELATION_BEFORE)) {
-                return sourceDoc.getId().substring(
-                                0,
-                                sourceDoc.getId().lastIndexOf(
-                                                sourceDoc.getName()))
-                                + getNewDocumentName();
+                return sourceDoc.getId().substring(0,
+                        sourceDoc.getId().lastIndexOf(sourceDoc.getName()))
+                        + getNewDocumentName();
             } else if (relation.equals(RELATION_AFTER)) {
-                return sourceDoc.getId().substring(
-                                0,
-                                sourceDoc.getId().lastIndexOf(
-                                                sourceDoc.getName()))
-                                + getNewDocumentName();
+                return sourceDoc.getId().substring(0,
+                        sourceDoc.getId().lastIndexOf(sourceDoc.getName()))
+                        + getNewDocumentName();
             } else {
                 return getSourceDocument().getId() + "/" + getNewDocumentName();
             }
@@ -330,8 +316,7 @@ public class CreateOpenDocument extends Create {
         String[] paramNames = getParameterNames();
         for (int i = 0; i < paramNames.length; i++) {
             if (paramNames[i].startsWith(Metadata.CUSTOM_FORM_PREFIX)) {
-                String key = paramNames[i]
-                                .substring(Metadata.CUSTOM_FORM_PREFIX.length());
+                String key = paramNames[i].substring(Metadata.CUSTOM_FORM_PREFIX.length());
                 String value = getParameterAsString(paramNames[i]);
                 customMeta.addValue(key, value);
             }

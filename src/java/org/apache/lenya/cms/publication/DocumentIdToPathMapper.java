@@ -25,43 +25,43 @@ import java.io.File;
  * Document Id to Path mapper interface
  */
 public interface DocumentIdToPathMapper {
-    
+
     /**
-     * Compute the document-path for a given publication, area
-     * and document-id. The file separator is the slash (/).
-     *
+     * Compute the document-path for a given publication, area and document-id. The file separator
+     * is the slash (/).
+     * 
      * @param documentId the document-id of the document
      * @param language the language of the document
+     * @param extension The source extension.
      * 
      * @return the path to the document, without publication ID and area
      */
-    String getPath(String documentId, String language);
+    String getPath(String documentId, String language, String extension);
 
     /**
-     * Compute the document-path for a given publication, area, 
-     * document-id and language
-     *
+     * Compute the document-path for a given publication, area, document-id and language
+     * 
      * @param publication the publication of the document
      * @param area the area of the document
      * @param documentId the document-id of the document
      * @param language the language of the document
+     * @param extension The source extension.
      * 
      * @return the path to the document
      */
-    File getFile(Publication publication, String area, String documentId,
-        String language);
+    File getFile(Publication publication, String area, String documentId, String language,
+            String extension);
 
     /**
-     * Compute the document-path for a given publication, area and 
-     * document-id. As there are possibly multiple files for the same 
-     * document-id (for different languages) the return value is a directory.
-     *  
+     * Compute the document-path for a given publication, area and document-id. As there are
+     * possibly multiple files for the same document-id (for different languages) the return value
+     * is a directory.
+     * 
      * @param publication The publication.
      * @param area The area.
      * @param documentId The document id.
      * 
-     * @return The directory where all the files with the same 
-     * document-id are located
+     * @return The directory where all the files with the same document-id are located
      */
     File getDirectory(Publication publication, String area, String documentId);
 }

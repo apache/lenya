@@ -201,22 +201,13 @@ public class PageEnvelope {
      */
     public Publication getPublication() {
         /*
-        if (this.publication == null) {
-            try {
-                Publication pub = PublicationManagerImpl.getInstance(new ConsoleLogger())
-                        .getPublication(this.webappUrl, this.servletContext);
-                if (pub.exists()) {
-                    this.publication = pub;
-                    if (getIdentityMap().isDocument(this.webappUrl)) {
-                        Document _document = getIdentityMap().getFromURL(this.webappUrl);
-                        setDocument(_document);
-                    }
-                }
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-        */
+         * if (this.publication == null) { try { Publication pub =
+         * PublicationManagerImpl.getInstance(new ConsoleLogger()) .getPublication(this.webappUrl,
+         * this.servletContext); if (pub.exists()) { this.publication = pub; if
+         * (getIdentityMap().isDocument(this.webappUrl)) { Document _document =
+         * getIdentityMap().getFromURL(this.webappUrl); setDocument(_document); } } } catch
+         * (Exception e) { throw new RuntimeException(e); } }
+         */
         return this.publication;
     }
 
@@ -254,8 +245,9 @@ public class PageEnvelope {
      * @return a <code>File<code> value
      */
     public String getDocumentPath() {
-        return getPublication().getPathMapper().getPath(getDocument().getId(),
-                getDocument().getLanguage());
+            return getPublication().getPathMapper().getPath(getDocument().getId(),
+                    getDocument().getLanguage(),
+                    getDocument().getSourceExtension());
     }
 
     /**

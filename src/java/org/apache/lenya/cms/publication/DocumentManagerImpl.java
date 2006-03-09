@@ -51,28 +51,34 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * implementation to be used is specified in doctypes.xconf (and thus depends on the publication
      * and the resource type to be used)
      * 
-     * @see DocumentManager#add(Document, ResourceType, String, boolean, Map)
+     * @see DocumentManager#add(Document, ResourceType, String, String, boolean, Map)
      * @see org.apache.lenya.cms.authoring.NodeCreatorInterface
      * @see org.apache.lenya.cms.publication.DocumentBuilder
      */
-    public void add(Document document, ResourceType documentType, String navigationTitle,
-            boolean visibleInNav, 
-            Map parameters) throws DocumentBuildException, PublicationException {
+    public void add(Document document, ResourceType documentType, String extension,
+            String navigationTitle, boolean visibleInNav, Map parameters)
+            throws DocumentBuildException, PublicationException {
 
         String contentsURI = documentType.getSampleURI();
-        add(document, documentType, navigationTitle, visibleInNav, parameters, contentsURI);
+        add(document, documentType, extension, navigationTitle, visibleInNav, parameters, contentsURI);
     }
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#add(org.apache.lenya.cms.publication.Document,
-     *      org.apache.lenya.cms.publication.Document, java.lang.String, boolean, 
+     *      org.apache.lenya.cms.publication.Document, String, java.lang.String, boolean,
      *      java.util.Map)
      */
-    public void add(Document document, Document sourceDocument, String navigationTitle,
-            boolean visibleInNav,
-            Map parameters) throws DocumentBuildException, PublicationException {
+    public void add(Document document, Document sourceDocument, String extension,
+            String navigationTitle, boolean visibleInNav, Map parameters)
+            throws DocumentBuildException, PublicationException {
         String contentsURI = sourceDocument.getSourceURI();
-        add(document, sourceDocument.getResourceType(), navigationTitle, visibleInNav, parameters, contentsURI);
+        add(document,
+                sourceDocument.getResourceType(),
+                extension,
+                navigationTitle,
+                visibleInNav,
+                parameters,
+                contentsURI);
         MetaDataManager mgr = document.getMetaDataManager();
         MetaDataManager srcMgr = sourceDocument.getMetaDataManager();
         mgr.getLenyaMetaData().replaceBy(srcMgr.getLenyaMetaData());
@@ -84,6 +90,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * Adds a document.
      * @param document The document.
      * @param documentType The document type.
+     * @param extension The extension for the document source.
      * @param navigationTitle The navigation title.
      * @param visibleInNav determines the visibility of a node in the navigation
      * @param parameters The parameters for the creator.
@@ -93,9 +100,9 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * @throws PublicationException if an error occurs.
      */
 
-    protected void add(Document document, ResourceType documentType, String navigationTitle,
-            boolean visibleInNav, Map parameters, String initialContentsURI) throws DocumentBuildException,
-            DocumentException, PublicationException {
+    protected void add(Document document, ResourceType documentType, String extension, String navigationTitle,
+            boolean visibleInNav, Map parameters, String initialContentsURI)
+            throws DocumentBuildException, DocumentException, PublicationException {
 
         try {
 
@@ -123,6 +130,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         Map lenyaMetaData = new HashMap(2);
         lenyaMetaData.put(LenyaMetaData.ELEMENT_RESOURCE_TYPE, documentType.getName());
         lenyaMetaData.put(LenyaMetaData.ELEMENT_CONTENT_TYPE, "xml");
+        lenyaMetaData.put(LenyaMetaData.ELEMENT_EXTENSION, extension);
         document.getMetaDataManager().setLenyaMetaData(lenyaMetaData);
 
         // Notify site manager about new document
@@ -192,10 +200,10 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             }
         }
     }
-    
+
     /**
-     * Method to copy a document without it's resources. Override {@link #copyDocumentSource(Document, Document)}
-     * to implement access to a custom repository.
+     * Method to copy a document without it's resources. Override
+     * {@link #copyDocumentSource(Document, Document)} to implement access to a custom repository.
      * @see org.apache.lenya.cms.publication.DocumentManager#copy(org.apache.lenya.cms.publication.Document,
      *      org.apache.lenya.cms.publication.Document)
      */
@@ -397,7 +405,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         RepositoryManager repoManager = null;
         try {
             repoManager = (RepositoryManager) this.manager.lookup(RepositoryManager.ROLE);
-            repoManager.copy(sourceDocument.getRepositoryNode(), destinationDocument.getRepositoryNode());
+            repoManager.copy(sourceDocument.getRepositoryNode(),
+                    destinationDocument.getRepositoryNode());
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {

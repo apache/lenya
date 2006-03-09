@@ -74,6 +74,7 @@ public interface DocumentManager {
      * 
      * @param document The document to add.
      * @param resourceType the document type (aka resource type) of the new document
+     * @param extension The extension to use for the document source.
      * @param navigationTitle navigation title
      * @param visibleInNav determines the visibility of a node in the navigation
      * @param parameters any parameters the caller needs to pass to the creator
@@ -83,6 +84,7 @@ public interface DocumentManager {
      */
     void add(Document document,
             ResourceType resourceType,
+            String extension,
             String navigationTitle,
             boolean visibleInNav,
             Map parameters) throws DocumentBuildException, PublicationException;
@@ -93,6 +95,7 @@ public interface DocumentManager {
      * 
      * @param document The document to add.
      * @param sourceDocument The document to initialize the contents and meta data from.
+     * @param extension The extension to use for the document source.
      * @param navigationTitle navigation title
      * @param visibleInNav determines the visibility of a node in the navigation
      * @param parameters any parameters the caller needs to pass to the creator
@@ -102,6 +105,7 @@ public interface DocumentManager {
      */
     void add(Document document,
             Document sourceDocument,
+            String extension,
             String navigationTitle,
             boolean visibleInNav,
             Map parameters) throws DocumentBuildException, PublicationException;

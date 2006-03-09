@@ -18,27 +18,21 @@ package org.apache.lenya.cms.site.usecases;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 import java.util.HashMap;
+import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
-
 import org.apache.lenya.ac.Identity;
-
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourceType;
-import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteStructure;
@@ -62,15 +56,13 @@ public class CreateBlogEntry extends DocumentUsecase {
      */
     protected Node[] getNodesToLock() throws UsecaseException {
         try {
-            SiteStructure structure = SiteUtil.getSiteStructure(this.manager,
-            getSourceDocument());
+            SiteStructure structure = SiteUtil.getSiteStructure(this.manager, getSourceDocument());
             Node[] nodes = { structure.getRepositoryNode() };
             return nodes;
         } catch (SiteException e) {
             throw new UsecaseException(e);
         }
     }
-    
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
@@ -82,7 +74,6 @@ public class CreateBlogEntry extends DocumentUsecase {
         setParameter(PARENT_ID, parent.getId());
     }
 
-        
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
      */
@@ -133,11 +124,14 @@ public class CreateBlogEntry extends DocumentUsecase {
             DocumentIdentityMap map = getDocumentIdentityMap();
 
             String documentId = getDocumentID();
-            Document document = map.get(getSourceDocument().getPublication(), getSourceDocument()
-                    .getArea(), documentId, language);
+            Document document = map.get(getSourceDocument().getPublication(),
+                    getSourceDocument().getArea(),
+                    documentId,
+                    language);
 
             documentManager.add(document,
                     resourceType,
+                    "xml",
                     getParameterAsString(DublinCore.ELEMENT_TITLE),
                     true,
                     allParameters);

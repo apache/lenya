@@ -197,4 +197,9 @@ public interface Document extends MetaDataOwner, Identifiable {
      * @throws DocumentException if an error occurs.
      */
     ResourceType getResourceType() throws DocumentException;
+    
+    /**
+     * @return The source extension used by this document.
+     */
+    String getSourceExtension();
 }
