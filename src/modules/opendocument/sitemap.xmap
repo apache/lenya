@@ -63,7 +63,7 @@
         <map:serialize type="xml"/>
       </map:match>
       <map:match pattern="**.odt">
-        <map:read src="context://lenya/pubs/{page-envelope:publication-id}/content/{page-envelope:area}{page-envelope:document-id}/index_{page-envelope:document-language}.odt"/>
+        <map:read src="context://lenya/pubs/{page-envelope:publication-id}/content/{page-envelope:area}{page-envelope:document-id}/index_{page-envelope:document-language}.odt" mime-type="application/vnd.oasis.opendocument.text"/>
       </map:match>
 
     </map:pipeline>
