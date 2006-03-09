@@ -21,7 +21,7 @@
     >
 
   <xsl:import href="fallback://lenya/resources/kupu/apache-lenya/lenya/kupusave.xsl"/>
-  <xsl:import href="fallback://lenya/xslt/bxe/change-object-path-back.xsl"/>
+  <xsl:import href="fallback://lenya/modules/bxe/xslt/change-object-path-back.xsl"/>
 
   <xsl:template match="@*|node()">
     <xsl:copy>
