@@ -24,6 +24,7 @@ import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -64,8 +65,7 @@ public abstract class DefaultCreator extends AbstractLogEnabled implements NodeC
      * @see NodeCreatorInterface#create(String, org.apache.lenya.cms.publication.Document, Map)
      */
     public void create(String initialContentsURI,
-            org.apache.lenya.cms.publication.Document document,
-            Map parameters) throws Exception {
+            org.apache.lenya.cms.publication.Document document, Map parameters) throws Exception {
 
         if (getLogger().isDebugEnabled())
             getLogger().debug("DefaultCreator::create() called with\n" + "\t initialContentsURI ["
@@ -77,26 +77,38 @@ public abstract class DefaultCreator extends AbstractLogEnabled implements NodeC
             getLogger().debug("DefaultCreator::create(), ready to read initial contents from URI ["
                     + initialContentsURI + "]");
 
-        Document xmlDoc = null;
-        try {
-            xmlDoc = SourceUtil.readDOM(initialContentsURI, manager);
-        } catch (Exception e) {
-            throw new DocumentException("could not read document at location [ "
-                    + initialContentsURI + "]", e);
-        }
+        if (initialContentsURI.endsWith(".xml")) {
+            Document xmlDoc = null;
+            try {
+                xmlDoc = SourceUtil.readDOM(initialContentsURI, manager);
+            } catch (Exception e) {
+                throw new DocumentException("could not read document at location [ "
+                        + initialContentsURI + "]", e);
+            }
 
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("transform sample file: ");
+            if (getLogger().isDebugEnabled())
+                getLogger().debug("transform sample file: ");
 
-        // transform the xml if needed
-        transformXML(xmlDoc, document, parameters);
+            // transform the xml if needed
+            transformXML(xmlDoc, document, parameters);
 
-        // write the document
-        try {
-            SourceUtil.writeDOM(xmlDoc, document.getSourceURI(), manager);
-        } catch (Exception e) {
-            throw new DocumentBuildException("could not write document [" + document
-                    + "], exception " + e.toString(), e);
+            // write the document
+            try {
+                SourceUtil.writeDOM(xmlDoc, document.getSourceURI(), manager);
+            } catch (Exception e) {
+                throw new DocumentBuildException("could not write document [" + document
+                        + "], exception " + e.toString(), e);
+            }
+        } else {
+            SourceResolver resolver = null;
+            try {
+                resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+                SourceUtil.copy(resolver, initialContentsURI, document.getSourceURI());
+            } finally {
+                if (resolver != null) {
+                    this.manager.release(resolver);
+                }
+            }
         }
     }
 
@@ -116,8 +128,7 @@ public abstract class DefaultCreator extends AbstractLogEnabled implements NodeC
      * @param parameters additional parameters that can be used in the transformation
      * @throws Exception if the transformation fails
      */
-    protected void transformXML(Document doc,
-            org.apache.lenya.cms.publication.Document document,
+    protected void transformXML(Document doc, org.apache.lenya.cms.publication.Document document,
             Map parameters) throws Exception {
     }
 
