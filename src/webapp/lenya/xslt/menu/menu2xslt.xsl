@@ -82,8 +82,7 @@
       </xso:template>
       
       <xso:template match="xhtml:*">
-        <xso:element>
-          <xsl:attribute name="name">{local-name()}</xsl:attribute>
+        <xso:element name="{string('{local-name()}')}">
           <xso:apply-templates select="@*|node()"/>
         </xso:element>
       </xso:template>
