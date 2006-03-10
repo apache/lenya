@@ -27,6 +27,7 @@
     <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.DocumentException</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.util.DocumentLanguagesHelper</xsp:include>
+    <xsp:include>org.apache.avalon.framework.service.WrapperServiceManager</xsp:include>
   </xsp:structure>
   
   <missing-language>    
@@ -35,7 +36,7 @@
     <available-languages>
       <xsp:logic>
 	Document doc = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
-	DocumentLanguagesHelper helper = new DocumentLanguagesHelper(doc.getIdentityMap(), objectModel);
+	DocumentLanguagesHelper helper = new DocumentLanguagesHelper(doc.getIdentityMap(), objectModel, new WrapperServiceManager(this.manager));
 	try {
 	  String[] availableLanguages = doc.getLanguages();
 	  String language = null;
