@@ -46,6 +46,7 @@ import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.transaction.Transactionable;
+import org.apache.log4j.Category;
 
 /**
  * A repository node.
@@ -54,10 +55,14 @@ import org.apache.lenya.transaction.Transactionable;
  */
 public class SourceNode extends AbstractLogEnabled implements Node, Transactionable {
 
+    private Category log = Category.getInstance(SourceNode.class);
+
     private String sourceURI;
     protected ServiceManager manager;
     public static final String FILE_PREFIX = "file:/";
     public static final String CONTEXT_PREFIX = "context://";
+    public static final String LENYA_META_SUFFIX = "meta";
+    //public static final String LENYA_META_SUFFIX = "lenyameta";
 
     /**
      * Ctor.
@@ -346,7 +351,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         }
         this.lock = new Lock(currentVersion);
 
-        if (!getSourceURI().endsWith(".meta")) {
+        if (!getSourceURI().endsWith("." + LENYA_META_SUFFIX)) {
             lockMetaData();
         }
     }
@@ -638,7 +643,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     protected String getMetaSourceURI() {
-        return getSourceURI() + ".meta";
+        log.debug("Meta source URI: " + getSourceURI() + "." + LENYA_META_SUFFIX);
+        return getSourceURI() + "." + LENYA_META_SUFFIX;
     }
 
     private MetaDataManager metaDataManager;
