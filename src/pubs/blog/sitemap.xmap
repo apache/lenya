@@ -321,5 +321,27 @@
         </map:select>
       </map:match>
     </map:pipeline>
+
+
+
+    <!-- Pipeline to debug Lenya menu (XSLT) -->
+    <map:pipeline>
+      <map:match pattern="*/feeds/*/index.html.lenyamenu">
+        <map:select type="browser">
+          <map:when test="mozilla5DISABLED">
+            <!-- XUL menus -->
+            <map:generate src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/feed.xml?uiml=xul"/>
+          </map:when>
+          <map:otherwise>
+            <!-- XHTML menus -->
+            <map:generate src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/feed.xml"/>
+          </map:otherwise>
+        </map:select>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+
+
+
   </map:pipelines>
 </map:sitemap>
