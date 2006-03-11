@@ -68,6 +68,7 @@
         <item href="index.xml"><i18n:text>Echo/Atom Feed</i18n:text></item>
         <item href="index.rss"><i18n:text>RSS Feed</i18n:text></item>
         <item href="lenya-page-body.xml"><i18n:text>Body</i18n:text></item>
+        <item href="index.html.lenyamenu"><i18n:text>Lenya Menu XSLT</i18n:text></item>
       </block>
       <block>
         <item href="/lenya/blog/atomapi/">introspection</item>
