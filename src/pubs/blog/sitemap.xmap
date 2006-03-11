@@ -297,18 +297,23 @@
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
+
+      <!-- Entry point for feed/category requests ({area}/feeds/{feed-id}/index.html, e.g. authoring/feeds/all/index.html) -->
       <map:match pattern="*/feeds/*/index.html">
         <map:generate src="cocoon:/{1}/feeds/{2}/lenya-page-body.xml"/>
         <map:transform type="xalan" src="xslt/feed/main-{1}.xsl">
           <map:parameter name="relative2root" value="../.."/>
           <map:parameter name="contextprefix" value="{request:contextPath}"/>
         </map:transform>
+        <!-- Apply Lenya menus -->
         <map:select type="browser">
           <map:when test="mozilla5DISABLED">
+            <!-- XUL menus -->
             <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/feed.xml?uiml=xul"/>
             <map:serialize type="xml" mime-type="application/vnd.mozilla.xul+xml"/>
           </map:when>
           <map:otherwise>
+            <!-- XHTML menus -->
             <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/feed.xml"/>
             <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
             <map:serialize type="xhtml"/>
