@@ -29,16 +29,16 @@ import org.apache.tools.ant.types.Path;
 
 
 /**
- * Task to copy files
+ * Task to copy files of publications and modules
  */
-public class CopyTask extends Task {
+public class CopyPublicationsTask extends Task {
     private Path pubsRootDirs;
     private Path toDir;
     private String excludes;
 
-	/** (non-Javadoc)
-	 * @see org.apache.tools.ant.Task#execute()
-	 */
+    /** (non-Javadoc)
+     * @see org.apache.tools.ant.Task#execute()
+     */
     public void execute() throws BuildException {
         int numberOfDirectoriesCreated = 0;
         int numberOfFilesCopied = 0;
@@ -52,25 +52,41 @@ public class CopyTask extends Task {
         while (st.hasMoreTokens()) {
             String pubsRootDir = st.nextToken();
 
-            // In the case the pubsRootDir is publication dir
-            if (new File(pubsRootDir, "publication.xml").isFile()) {
-                CopyJavaSourcesTask.copyDir(new File(pubsRootDir), new File(this.toDir.toString()),
-                    twoTuple, filter, this);
-            // In the case the pubsRootDir is module dir
-	    } else if (new File(pubsRootDir, "module.xml").isFile()) {
-                CopyJavaSourcesTask.copyDir(new File(pubsRootDir), new File(this.toDir.toString()),
-                    twoTuple, filter, this);
-            } else {
-                // FIXME: Look for publications defined by the file "publication.xml" or modules defined by the file "module.xml"
-                CopyJavaSourcesTask.copyContentOfDir(new File(pubsRootDir),
-                    new File(this.toDir.toString()), twoTuple, filter, this);
-            }
+            copy(pubsRootDir, filter, twoTuple);
         }
 
         numberOfDirectoriesCreated = twoTuple.x;
         numberOfFilesCopied = twoTuple.y;
         log("Copying " + numberOfDirectoriesCreated + " directories to " + this.toDir);
         log("Copying " + numberOfFilesCopied + " files to " + this.toDir);
+    }
+
+    /**
+     *
+     */
+    public void copy(String pubsRootDir, FilenameFilter filter, TwoTuple twoTuple) {
+            // In the case the pubsRootDir is publication dir
+            if (new File(pubsRootDir, "publication.xml").isFile()) {
+                File pubDir = new File(pubsRootDir);
+                log("Copy publication: " + pubDir);
+                CopyJavaSourcesTask.copyDir(pubDir, new File(this.toDir.toString()), twoTuple, filter, this);
+                File localPublicationXConf = new File(pubDir, "/config/local.publication.xconf");
+                if (localPublicationXConf.isFile()) {
+                    File publicationXConf = new File(this.toDir.toString() + "/" + pubDir.getName() + "/config/publication.xconf");
+                    log("Patch config file with local version: " + localPublicationXConf + " " + publicationXConf);
+                    CopyJavaSourcesTask.copyFile(localPublicationXConf, publicationXConf, twoTuple, this, true);
+                }
+            // In the case the pubsRootDir is module dir
+	    } else if (new File(pubsRootDir, "module.xml").isFile()) {
+                log("Copy module: " + pubsRootDir);
+                CopyJavaSourcesTask.copyDir(new File(pubsRootDir), new File(this.toDir.toString()), twoTuple, filter, this);
+            } else {
+                File[] files = new File(pubsRootDir).listFiles(filter);
+                for (int i = 0; i < files.length; i++) {
+                    copy(files[i].getAbsolutePath(), filter, twoTuple);
+                }
+                if (files.length < 1) log("ERROR: No children: " + pubsRootDir);
+            }
     }
 
     /**

@@ -139,7 +139,7 @@ public class CopyJavaSourcesTask extends Task {
                 File file = new File(source, files[i]);
 
                 if (file.isFile()) {
-                    copyFile(file, new File(destination, files[i]), twoTuple, client);
+                    copyFile(file, new File(destination, files[i]), twoTuple, client, false);
                 } else if (file.isDirectory()) {
                     copyContentOfDir(file, new File(destination, files[i]), twoTuple,
                             filenameFilter, client);
@@ -159,7 +159,7 @@ public class CopyJavaSourcesTask extends Task {
      * @param twoTuple The twoTuple to use
      * @param client The client task
      */
-    public static void copyFile(File source, File destination, TwoTuple twoTuple, Task client) {
+    public static void copyFile(File source, File destination, TwoTuple twoTuple, Task client, boolean force) {
         if (source.isFile()) {
             File parentDest = new File(destination.getParent());
 
@@ -172,7 +172,7 @@ public class CopyJavaSourcesTask extends Task {
             }
 
             if (destination.isFile()) {
-                if (destination.lastModified() > source.lastModified()) {
+                if (destination.lastModified() > source.lastModified() && !force) {
                     return;
                 }
             }
