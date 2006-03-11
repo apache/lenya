@@ -35,6 +35,7 @@ import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
+import org.apache.log4j.Category;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -48,6 +49,8 @@ import org.w3c.dom.NodeList;
  * @version $Id: DefaultSiteTree.java 208764 2005-07-01 15:57:21Z andreas $
  */
 public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
+
+    private Category log = Category.getInstance(DefaultSiteTree.class);
 
     /**
      * The sitetree namespace.
@@ -82,6 +85,8 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         try {
             this.document = SourceUtil.readDOM(this.sourceUri, this.manager);
             if (this.document == null) {
+                log.warn("No such file or directory: " + this.sourceUri);
+                log.warn("Empty sitetree will be created/initialized!");
                 this.document = createDocument();
             }
         } catch (Exception e) {
@@ -134,17 +139,18 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * @return the node that matches the path given in the list of ids
      */
     protected synchronized Node findNode(Node node, List ids) {
-
         if (ids.size() < 1) {
             return node;
         }
         NodeList nodes = node.getChildNodes();
+
 
         for (int i = 0; i < nodes.getLength(); i++) {
             NamedNodeMap attributes = nodes.item(i).getAttributes();
 
             if (attributes != null) {
                 Node idAttribute = attributes.getNamedItem("id");
+
 
                 if (idAttribute != null && !"".equals(idAttribute.getNodeValue())
                         && idAttribute.getNodeValue().equals(ids.get(0))) {
@@ -406,11 +412,14 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         try {
             node = getNodeInternal(documentId);
         } catch (SiteException e) {
+            log.error(e.getMessage());
             throw new RuntimeException(e);
         }
         if (node != null) {
             treeNode = new SiteTreeNodeImpl(node);
             ContainerUtil.enableLogging(treeNode, getLogger());
+        } else {
+            log.warn("No such node: " + documentId);
         }
 
         return treeNode;
