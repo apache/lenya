@@ -50,6 +50,9 @@
     <echo message="*"/>
     <echo message="*      Cocoon (${cocoon.src.dir})"/>
     <echo message="*"/>
+    <echo message="* IMPORTANT: Make sure that the endorsed libraries are set correctly"/>
+    <echo message="*            ${tomcat.endorsed.dir}"/>
+    <echo message="*"/>
     <echo message="* Start using ${Name} with Tomcat by typing"/>
     <echo message="*      Linux/UNIX: ${tomcat.home.dir}/bin/startup.sh"/>
     <echo message="*      Windows:    ${tomcat.home.dir}/bin/startup.bat"/>
