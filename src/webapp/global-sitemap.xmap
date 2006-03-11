@@ -137,17 +137,20 @@
         <map:mount uri-prefix="lenya" src="lenya/lenya.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
             
-      <!-- Lenya page transformation -->
+
+      <!-- Lenya page transformation for adding a Lenya menu -->
       <!-- lenya-page/{publication-id}/{complete-area}/... -->
       <map:match pattern="lenya-page/*/*/**">
         <map:aggregate element="menu" ns="http://apache.org/cocoon/lenya/menubar/1.0">
           <map:part src="cocoon:/menu-xml/{1}/{2}/{3}" strip-root="true"/>
           <map:part src="cocoon:/menu-xml/modules/{1}/{2}.xml" strip-root="true"/>
         </map:aggregate>
+
         <map:transform src="lenya/xslt/menu/merge-menus.xsl"/>
         
         <map:call resource="i18n"/>
         
+        <!-- Disable menu items according to usecase policies -->
         <map:act type="resource-exists" src="lenya/pubs/{1}/config/ac/usecase-policies.xml">
           <map:transform type="usecasemenu"/>
         </map:act>
@@ -221,6 +224,8 @@
         <map:transform type="xinclude"/>
         <map:serialize type="xml"/>
       </map:match>
+
+
       <!-- menu-xml/module/{module-id}/{area}.xml -->
       <map:match pattern="menu-xml/module/*/*.xml">
         <map:select type="resource-exists">
