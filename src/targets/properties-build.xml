@@ -136,7 +136,7 @@
   <target name="init-tasks" depends="cocoon-init-tasks">
     <taskdef name="copyJavaSources" classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.CopyJavaSourcesTask"/>
     <taskdef name="bulkCopy"        classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.BulkCopyTask"/>
-    <taskdef name="copyPubs"        classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.CopyTask"/>
+    <taskdef name="copyPubs"        classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.CopyPublicationsTask"/>
     <taskdef name="xpatch"          classpath="${cocoon.src.dir}/tools/anttasks" classname="XConfToolTask" />
   </target>
 
