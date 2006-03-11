@@ -49,6 +49,12 @@ public class ConfigureCommandLine {
         defaultPub.setFilenameLocal(rootDir + "src/pubs/default/config/local.publication.xconf");
         */
 
+        /*
+        FileConfiguration log4j = new Log4jConfiguration();
+        log4j.setFilenameDefault(rootDir + "src/webapp/WEB-INF/log4j.xconf");
+        log4j.setFilenameLocal(rootDir + "src/webapp/WEB-INF/local.log4j.xconf");
+        */
+
 	Vector configs = new Vector();
         configs.addElement(buildProperties);
         //configs.addElement(defaultPub);
