@@ -51,6 +51,7 @@ public class ConfigureCommandLine {
 
         /*
         FileConfiguration log4j = new Log4jConfiguration();
+        // src/confpatch/log4j-*
         log4j.setFilenameDefault(rootDir + "src/webapp/WEB-INF/log4j.xconf");
         log4j.setFilenameLocal(rootDir + "src/webapp/WEB-INF/local.log4j.xconf");
         */
