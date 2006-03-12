@@ -17,23 +17,32 @@
 
 :: define variables for paths
 set LENYA_HOME=%CD%
-echo LENYA_HOME = %LENYA_HOME%
 set CP=%LENYA_HOME%\tools\configure\build\classes
-echo CLASSPATH = %CP%
 
 :: check if JAVA_HOME is set or goto end
-echo JAVA_HOME = %JAVA_HOME%
 if not "%JAVA_HOME%" == "" goto gotJavaHome
 echo You must set JAVA_HOME to point at your Java Development Kit installation
 goto end
 
-:: Execute the Configuration if JAVA_HOME is set.
 :gotJavaHome
+:: If commandline argument cmd is given goto javaCmd. Default without any argument
+:: it will start the GUI.
+if "%1" == "gui" goto javaGui
+goto javaCmd
+
+:javaGui
+java -classpath %CP% org.apache.lenya.config.ConfigureGUI %LENYA_HOME%
+goto end
+
+:javaCmd
 java -classpath %CP% org.apache.lenya.config.ConfigureCommandLine %LENYA_HOME%
-::java -classpath %CP% org.apache.lenya.config.ConfigureGUI %LENYA_HOME%
+goto end
+
+:help
+echo Usage: %0 gui or cmd
+goto end
 
 
-:: Terminate program
 :end
 :: unset used variables
 set LENYA_HOME=
