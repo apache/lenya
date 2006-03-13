@@ -86,13 +86,13 @@
               `-- src/
                    |-- lenya-1.4.x/            $LENYA_HOME
                      `-- externals/
-                       `-- cocoon-2.1.x/       $COCOON_HOME
+                       `-- cocoon_2_1_x/       $COCOON_HOME
                          `-- build/
                            `-- webapp/         $COCOON_WEBAPP
      		</source>
      		
      		<p>
-     		The directories inside cocoon-2.1.x/ will be created when you build Cocoon, cocoon will be built when you build lenya. 
+     		The directories inside cocoon_2_1_x/ will be created when you build Cocoon, cocoon will be built when you build lenya. 
      		The variables will later be used in the local.build.properties file that configures the Lenya build process.
       		</p>
       		
@@ -129,13 +129,11 @@
             local.build.properties. To do this execute configure.sh 
             or configure.bat.
           </p>
-          <p> 
-            <note>Cocoon 2.1.x is now placed in Lenya as a svn:external
+          <note>Cocoon 2.1.x is now placed in Lenya as a svn:external
             you'll find coocoon in $LENYA_HOME/externals/cocoon_2_1_x.
             If you want to use cocoon from another location you can change
             the $COCOON_HOME point to your cocoon src directory.
             </note>
-          </p>
           <p>
               Copy $LENYA_HOME/src/cocoon/local.blocks.properties and 
               local.build.properties to $COCOON_HOME.
@@ -151,8 +149,8 @@
             Execute <code>build.bat</code> or <code>build.sh</code> in
             your Lenya source directory, depending on your platform.
           </p>
-          <p><note>Cocoon will be built when you build lenya. You can manually build or clean
-          cocoon in $COCOON_HOME with ./build.sh or ./build.sh clean</note></p>
+          <note>Cocoon will be built when you build lenya. You can manually build or clean
+          cocoon in $COCOON_HOME with ./build.sh or ./build.sh clean</note>
 
           <p>
             <strong>MS Windows</strong>
@@ -270,8 +268,8 @@ Lenya is developed and tested with Tomcat 5.0.28; it is assumed in the following
             properties. To do this, copy
             <code>$LENYA_HOME/build.properties</code> to
             <code>$LENYA_HOME/local.build.properties</code>.
-            <note>You can use the configure.sh or configure.bat to configure your local.build.properties.</note>
           </p>
+          <note>You can use the configure.sh or configure.bat to configure your local.build.properties.</note>
 
           <p>
             Edit <code>local.build.properties</code>. For the described
@@ -281,7 +279,7 @@ Lenya is developed and tested with Tomcat 5.0.28; it is assumed in the following
             <code>tomcat.home.dir</code> is an absolute path. Replace
             <code>$TOMCAT_HOME</code> by your Tomcat installation
             directory.  If your Cocoon source directory is not at
-            <code>../cocoon-2.1.x</code> relative to Lenya, then change
+            <code>../cocoon_2_1_x</code> relative to Lenya, then change
             the <code>cocoon.webapp.dir</code>, <code>web.app.server</code> and
             <code>cocoon.src.dir</code> properties.
           </p>
