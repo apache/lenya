@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <D:multistatus xmlns:D="DAV:" xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
-  xmlns:collection="http://apache.org/cocoon/collection/1.0"> --&gt;
+  xmlns:collection="http://apache.org/cocoon/collection/1.0">
   <jx:set var="sourceURL" value="${usecase.getParameter('sourceURL')}"/>
   <jx:set var="dateFormat" value="${usecase.getParameter('dateFormat')}"/>
   <jx:set var="checkedOut" value="${usecase.getParameter('rc')}"/>
