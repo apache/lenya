@@ -88,7 +88,8 @@
   <modules href="modules/" label="Modules" tab="modules">
     <index href="index.html" label="Index"/>
     <webdav href="webdav/" label="WebDAV">
-      <index href="index.html" label="Index"/>
+      <index href="index.html" label="Getting started"/>
+      <monitoring href="monitoring.html" label="Monitoring"/>
       <server href="webdav.html" label="WebDAV Servers"/>
     </webdav>
   </modules>
