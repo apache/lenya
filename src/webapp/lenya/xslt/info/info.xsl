@@ -21,6 +21,7 @@
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0"
+    xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
     xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
     xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0"
     xmlns:dc="http://purl.org/dc/elements/1.1/"
@@ -196,6 +197,7 @@
         <th><i18n:text>Preview</i18n:text></th>
         <th><i18n:text>Title</i18n:text></th>
         <th><i18n:text>File Size</i18n:text></th>
+        <th><i18n:text>Dimension w x h</i18n:text></th>
         <th><i18n:text>Creation Date</i18n:text></th>
         <th></th>
       </tr>
@@ -210,6 +212,11 @@
            </td>
           <td><xsl:value-of select="dc:title"/></td>
           <td align="right"><xsl:value-of select="dc:extent"/> kB</td>
+          <td align="right">
+            <xsl:if test="lenya:imagewidth != ''">
+              <xsl:value-of select="lenya:imagewidth"/> x <xsl:value-of select="lenya:imageheight"/> 
+	        </xsl:if>
+          </td>
           <td align="right"><xsl:value-of select="dc:date"/></td>
           <td>
             <form name="asset-form">
