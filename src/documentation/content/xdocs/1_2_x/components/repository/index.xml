@@ -17,12 +17,12 @@
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 <document> 
   <header> 
-    <title>Samples</title> 
+    <title>Docu moved</title> 
   </header> 
   <body> 
     <section>
-      <title>If something goes wrong..</title>
-      <p>Patches are welcome: <a href="http://forrest.apache.org/faq.html">Forrest FAQ</a></p>
+      <title>Docu moved</title>
+      <p>Redirect: <a href="site:modules/webdav/server">click here</a></p>
     </section>
   </body>
 </document>

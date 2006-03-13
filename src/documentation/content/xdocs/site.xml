@@ -85,7 +85,12 @@
     <javadoc1.4 href="../../../../apidocs/1.4/index.html" label="1.4 API (Javadoc)"/>
     
   </docu1.4>
-  
+  <modules href="modules/" label="Modules" tab="modules">
+    <index href="index.html" label="Index"/>
+    <webdav href="webdav/" label="WebDAV">
+        <server href="webdav.html" label="WebDAV Servers"/>
+      </webdav>
+  </modules>
   <!--+
     | Version 1.2 tab
     +-->
@@ -180,7 +185,7 @@
         <namespaces href="rollback.html" label="Rollback"/>
       </revisioncontrol>
       <repository href="repository/" label="Repository">
-        <namespaces href="webdav.html" label="WebDAV Servers"/>
+        <namespaces href="index.html" label="WebDAV Servers"/>
       </repository>
       <search href="search/" label="Search">
         <namespaces href="lucene.html" label="Searching with Lucene"/>
