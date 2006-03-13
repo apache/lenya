@@ -21,6 +21,7 @@
   language="java" 
   xmlns:xsp="http://apache.org/xsp"
   xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0"
+  xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
   xmlns:li="http://apache.org/cocoon/lenya/info/1.0"
   xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
   xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0"
@@ -35,6 +36,7 @@
     <xsp:include>java.util.Date</xsp:include>
     <xsp:include>java.text.SimpleDateFormat</xsp:include>
     <xsp:include>org.apache.lenya.xml.DocumentHelper</xsp:include>
+    <xsp:include>org.w3c.dom.NodeList</xsp:include>
   </xsp:structure>
   
   <lenya-info:info>
@@ -68,11 +70,24 @@
       File metaFile;
       String title = "";
       String format = "";
+      String height = null;
+      String width = null;
+      
       org.w3c.dom.Document metaDoc;
       try {
         metaDoc = DocumentHelper.readDocument(resourceMgr.getMetaFile(resources[i]));
-				title = metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "title").item(0).getChildNodes().item(0).getNodeValue();
-				format = metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "format").item(0).getChildNodes().item(0).getNodeValue();
+          title = metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "title").item(0).getChildNodes().item(0).getNodeValue();
+          format = metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "format").item(0).getChildNodes().item(0).getNodeValue();
+
+          NodeList nodes =  metaDoc.getElementsByTagNameNS("http://apache.org/cocoon/lenya/page-envelope/1.0","height");
+          if (nodes.item(0) != null) {
+            height = nodes.item(0).getChildNodes().item(0).getNodeValue();;
+          }
+          nodes =  metaDoc.getElementsByTagNameNS("http://apache.org/cocoon/lenya/page-envelope/1.0","width");
+          if (nodes.item(0) != null) {
+            width = nodes.item(0).getChildNodes().item(0).getNodeValue();;
+          }
+
       } catch(Exception e) { continue; } 
 
 	  <xsp:content>
@@ -82,6 +97,12 @@
 	      <dc:date><xsp:expr>SimpleDateFormat.getDateInstance().format(new Date(resources[i].lastModified()))</xsp:expr></dc:date>
         <dc:format><xsp:expr>format</xsp:expr></dc:format>
 	      <dc:extent><xsp:expr>resources[i].length()/1024</xsp:expr></dc:extent>
+	      <xsp:logic>
+            if ((width != null) &amp;&amp; (height != null)) { 
+              <lenya:imagewidth><xsp:expr>width</xsp:expr></lenya:imagewidth>
+              <lenya:imageheight><xsp:expr>height</xsp:expr></lenya:imageheight>
+            }
+          </xsp:logic>	      
 	    </lenya-info:asset>
 	  </xsp:content>
 	  } 
