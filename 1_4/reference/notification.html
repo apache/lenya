@@ -67,6 +67,9 @@
 <a class="base-selected" href="../../1_4/index.html">Version 1.4</a>
 </li>
 <li>
+<a class="base-not-selected" href="../../modules/index.html">Modules</a>
+</li>
+<li>
 <a class="base-not-selected" href="../../1_2_x/index.html">Version 1.2</a>
 </li>
 <li>
@@ -163,8 +166,11 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../1_4/reference/modules/index.html">Modules</a>
 </div>
-<div onclick="SwitchMenu('menu_1.1.5.6', '../../skin/')" id="menu_1.1.5.6Title" class="menutitle">Protocols</div>
-<div id="menu_1.1.5.6" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_4/reference/metadata.html">Meta data</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.7', '../../skin/')" id="menu_1.1.5.7Title" class="menutitle">Protocols</div>
+<div id="menu_1.1.5.7" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../1_4/reference/protocols/index.html">Overview</a>
 </div>
@@ -175,8 +181,19 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../1_4/reference/protocols/lenyadoc.html">lenyadoc:</a>
 </div>
 </div>
+<div class="menuitem">
+<a href="../../1_4/reference/link-management.html">Link Management</a>
+</div>
 <div class="menupage">
 <div class="menupagetitle">Notification</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a href="#Setup">Setup</a>
+</div>
+<div class="menupageitem">
+<a title="How to Send Notification Messages" href="#How+to+Send+Notification+Messages">How to Send Notific...</a>
+</div>
+</div>
 </div>
 <div class="menuitem">
 <a href="../../1_4/reference/repository/index.html">Repository</a>
@@ -207,8 +224,27 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <h1>Notification</h1>
 	  
+	
+<a name="N1000D"></a><a name="Setup"></a>
+<h2 class="h3">Setup</h2>
+<div class="section">
+<p>
+	    To enable notification by e-mail, you have to download the JavaMail and JavaBeans Activation
+	    Framework libraries from the <a href="http://java.sun.com/products/javamail/">JavaMail website</a>
+	    and place them in the <span class="codefrag">&lt;lenya-webapp&gt;/WEB-INF/lib</span> directory.
+	  </p>
+<div class="note">
+<div class="label">Note</div>
+<div class="content">
+	    Currently, you have to remove <span class="codefrag">geronimo-spec-*.jar</span> from
+	    <span class="codefrag">&lt;lenya-webapp&gt;/WEB-INF/lib</span> to enable e-mail notification
+	    (see <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=38587">bug 38587</a>).
+	  </div>
+</div>
+</div>
+	  
 
-<a name="N1000D"></a><a name="How+to+Send+Notification+Messages"></a>
+<a name="N1002B"></a><a name="How+to+Send+Notification+Messages"></a>
 <h2 class="h3">How to Send Notification Messages</h2>
 <div class="section">
 <p>To send notification messages, use the <span class="codefrag">Notifier</span> component which is provided by the

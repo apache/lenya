@@ -67,6 +67,9 @@
 <a class="base-selected" href="../../1_4/index.html">Version 1.4</a>
 </li>
 <li>
+<a class="base-not-selected" href="../../modules/index.html">Modules</a>
+</li>
+<li>
 <a class="base-not-selected" href="../../1_2_x/index.html">Version 1.2</a>
 </li>
 <li>
@@ -164,18 +167,21 @@ document.write("Last Published: " + document.lastModified);
 <a href="#Introduction">Introduction</a>
 </div>
 <div class="menupageitem">
-<a title="Configuring Resource Types" href="#Configuring+Resource+Types">Configuring Resourc...</a>
+<a title="Choose a Unique Resource Type Name" href="#Choose+a+Unique+Resource+Type+Name">Choose a Unique Res...</a>
 </div>
 <div class="menupageitem">
-<a title="Adding Resource Types to a Publication" href="#Adding+Resource+Types+to+a+Publication">Adding Resource Typ...</a>
+<a title="Adding the Resource Type to a Publication" href="#Adding+the+Resource+Type+to+a+Publication">Adding the Resource...</a>
 </div>
 </div>
 </div>
 <div class="menuitem">
 <a href="../../1_4/reference/modules/index.html">Modules</a>
 </div>
-<div onclick="SwitchMenu('menu_1.1.5.6', '../../skin/')" id="menu_1.1.5.6Title" class="menutitle">Protocols</div>
-<div id="menu_1.1.5.6" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_4/reference/metadata.html">Meta data</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.7', '../../skin/')" id="menu_1.1.5.7Title" class="menutitle">Protocols</div>
+<div id="menu_1.1.5.7" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../1_4/reference/protocols/index.html">Overview</a>
 </div>
@@ -185,6 +191,9 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../1_4/reference/protocols/lenyadoc.html">lenyadoc:</a>
 </div>
+</div>
+<div class="menuitem">
+<a href="../../1_4/reference/link-management.html">Link Management</a>
 </div>
 <div class="menuitem">
 <a href="../../1_4/reference/notification.html">Notification</a>
@@ -251,33 +260,23 @@ document.write("Last Published: " + document.lastModified);
 </div>
 
 
-<a name="N10039"></a><a name="Configuring+Resource+Types"></a>
-<h2 class="h3">Configuring Resource Types</h2>
+<a name="N10039"></a><a name="Choose+a+Unique+Resource+Type+Name"></a>
+<h2 class="h3">Choose a Unique Resource Type Name</h2>
 <div class="section">
 <p>
-    Resource types are configured in <span class="codefrag">cocoon.xconf</span>.
-    Typically the configuration is added using an XPatch file:
+    You should choose a reasonable name for your resource type.
   </p>
-<pre class="code">&lt;xconf xpath="/cocoon/resource-types"
-       unless="/cocoon/resource-types/component-instance[@name = 'xhtml']"&gt;
-
-  &lt;component-instance name="xhtml"
-                      logger="lenya.resourcetypes.xhtml"
-                      class="org.apache.lenya.cms.publication.ResourceTypeImpl"&gt;
-    &lt;schema src="fallback://lenya/resources/schemas/xhtml.rng"/&gt;
-    &lt;creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator"&gt;
-      &lt;sample-name&gt;fallback://lenya/publets/xhtml/samples/xhtml.xml&lt;/sample-name&gt;
-    &lt;/creator&gt;
-    &lt;link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@href"/&gt;
-    &lt;format name="xhtml" uri="cocoon://modules/xhtml/xhtml.xml"/&gt;
-  &lt;/component-instance&gt;
-
-&lt;/xconf&gt;</pre>
+<div class="note">
+<div class="label">Note</div>
+<div class="content">
+    In the examples, we use the name <em>profile</em> (page with information about a person).
+  </div>
 </div>
+</div>
+	  
 
-
-<a name="N1004A"></a><a name="Adding+Resource+Types+to+a+Publication"></a>
-<h2 class="h3">Adding Resource Types to a Publication</h2>
+<a name="N10048"></a><a name="Adding+the+Resource+Type+to+a+Publication"></a>
+<h2 class="h3">Adding the Resource Type to a Publication</h2>
 <div class="section">
 <p>
     The resource types used by a publication are declared in <span class="codefrag">publication.xconf</span>,
@@ -288,16 +287,18 @@ document.write("Last Published: " + document.lastModified);
   &lt;resource-type name="xhtml" workflow="workflow.xml"/&gt;
   &lt;resource-type name="homepage" workflow="workflow.xml"/&gt;
   &lt;resource-type name="links" workflow="workflow.xml"/&gt;
+  &lt;resource-type name="profile" workflow="workflow.xml"/&gt;
   ...
 &lt;/publication&gt;
 </pre>
 <p>
-    You can add references to any resource types configured in <span class="codefrag">cocoon.xconf</span>,
+    You can add references to any resource types configured in
+    <span class="codefrag">&lt;lenya-webapp&gt;/WEB-INF/cocoon.xconf</span> (see below),
     containing
   </p>
 <ul>
     
-<li>resource types provided by publets,</li>
+<li>resource types provided by modules,</li>
     
 <li>resource types of template publications, and</li>
     
@@ -307,13 +308,7 @@ document.write("Last Published: " + document.lastModified);
 <p>
     Adding a custom resource type to your publication includes the following steps:
   </p>
-<a name="N1006F"></a><a name="Choose+a+Unique+Resource+Type+Name"></a>
-<h3 class="h4">Choose a Unique Resource Type Name</h3>
-<p>
-    You should choose a reasonable name for your resource type.
-    In the examples, we use <em>profile</em> (page with information about a person).
-  </p>
-<a name="N1007B"></a><a name="Providing+a+Sample+XML+Document"></a>
+<a name="N1006D"></a><a name="Providing+a+Sample+XML+Document"></a>
 <h3 class="h4">Providing a Sample XML Document</h3>
 <p>
       If you want to enable users to create new resources belonging to
@@ -324,11 +319,11 @@ document.write("Last Published: " + document.lastModified);
     </p>
 <p>
       The sample document is typically placed in
-      <span class="codefrag">{publication}/lenya/resources/samples/</span>.
+      <span class="codefrag">&lt;publication&gt;/lenya/resources/samples/</span>.
       You can choose an arbitrary filename, but it is recommended to
       use the resource type name (e.g., <span class="codefrag">profile.xml</span>).
     </p>
-<a name="N10090"></a><a name="Providing+an+XML+Structure+Definition"></a>
+<a name="N10082"></a><a name="Providing+an+XML+Structure+Definition"></a>
 <h3 class="h4">Providing an XML Structure Definition</h3>
 <p>
       This step is only needed if you want to edit resources with Lenya
@@ -341,11 +336,11 @@ document.write("Last Published: " + document.lastModified);
       editor requires a Relax NG document.
     </p>
 <p>The structure definition document is typically placed in the directory
-      <span class="codefrag">{publication}/lenya/resources/schemas/</span>. The name
+      <span class="codefrag">&lt;publication&gt;/lenya/resources/schemas/</span>. The name
       of the file is arbitrary, but it is recommended to use the
       resource type name (e.g., <span class="codefrag">profile.rng</span>).
     </p>
-<a name="N100AE"></a><a name="Creating+a+Workflow+Schema"></a>
+<a name="N100A0"></a><a name="Creating+a+Workflow+Schema"></a>
 <h3 class="h4">Creating a Workflow Schema</h3>
 <p>
       If your resources should have a workflow, you have to add a workflow
@@ -355,11 +350,12 @@ document.write("Last Published: " + document.lastModified);
       The workflow schema is assigned to a resource type in <span class="codefrag">publication.xconf</span>
       (see section <em>Adding Resource Types to a Publication</em>).
     </p>
-<a name="N100C1"></a><a name="The+Resource+Type+Definition"></a>
+<a name="N100B3"></a><a name="The+Resource+Type+Definition"></a>
 <h3 class="h4">The Resource Type Definition</h3>
 <p>
     To declare a custom resource type and assign the creator, schema etc. to it,
-	  add the component instance to an XPatch file (e.g., <span class="codefrag">{publication}/config/resourcetypes.xconf</span>):
+	  add the component instance to an XPatch file (e.g.,
+	  <span class="codefrag">&lt;publication&gt;/config/cocoon-xconf/resourcetype-profile.xconf</span>):
     </p>
 <pre class="code">&lt;xconf xpath="/cocoon/resource-types"
        unless="/cocoon/resource-types/component-instance[@name = 'profile']"&gt;
@@ -367,7 +363,8 @@ document.write("Last Published: " + document.lastModified);
   &lt;component-instance name="profile"
                       logger="lenya.resourcetypes.profile"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl"&gt;
-    &lt;schema src="fallback://lenya/resources/schemas/profile.rng"/&gt;
+    &lt;schema src="fallback://lenya/resources/schemas/profile.rng"
+            language="http://relaxng.org/ns/structure/0.9"/&gt;
     &lt;creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator"&gt;
       &lt;sample-name&gt;fallback://lenya/resources/samples/profile.xml&lt;/sample-name&gt;
     &lt;/creator&gt;
@@ -376,7 +373,12 @@ document.write("Last Published: " + document.lastModified);
   &lt;/component-instance&gt;
 
 &lt;/xconf&gt;</pre>
-<a name="N100D1"></a><a name="Define+a+Custom+Menubar"></a>
+<p>
+      This XPatch file will be used when the publication is deployed (e.g., when you issue
+      a <span class="codefrag">./build</span> command). Its contents will be patched into
+      <span class="codefrag">&lt;lenya-webapp&gt;/WEB-INF/cocoon.xconf</span>.
+    </p>
+<a name="N100CC"></a><a name="Define+a+Custom+Menubar"></a>
 <h3 class="h4">Define a Custom Menubar</h3>
 <p>
       If you want to use a custom menubar for your resource type,
@@ -392,7 +394,7 @@ document.write("Last Published: " + document.lastModified);
 <pre class="code">
   &lt;item uc:usecase="site.create" href="?doctype=profile"&gt;&lt;i18n:text&gt;New Profile Document&lt;/i18n:text&gt;&lt;/item&gt;
 </pre>
-<a name="N100E8"></a><a name="Formats"></a>
+<a name="N100E3"></a><a name="Formats"></a>
 <h3 class="h4">Formats</h3>
 <p>
       A resource type provides a set of <em>formats</em> to provide different ways of presenting content documents.
@@ -410,7 +412,8 @@ document.write("Last Published: " + document.lastModified);
 <pre class="code">
   &lt;!-- apply a format --&gt;
   &lt;map:match pattern="*.xml"&gt;
-    &lt;map:generate src="lenya://lenya/pubs/{pe:publication-id}/content/{pe:area}/{pe:document-path}"/&gt;
+    &lt;map:generate src="lenya://lenya/pubs/{page-envelope:publication-id}/ \
+      content/{page-envelope:area}/{page-envelope:document-path}"/&gt;
     &lt;map:transform src="fallback://lenya/modules/profile/xslt/profile2xhtml.xsl"&gt;
       &lt;map:parameter name="rendertype" value="{request-param:rendertype}"/&gt;
       &lt;map:parameter name="nodeid" value="{page-envelope:document-name}"/&gt;
@@ -434,7 +437,7 @@ document.write("Last Published: " + document.lastModified);
   &lt;/map:aggregate&gt;
 
 </pre>
-<a name="N10116"></a><a name="Presentation"></a>
+<a name="N10111"></a><a name="Presentation"></a>
 <h3 class="h4">Presentation</h3>
 <p>
       To make your resources available as HTTP pages, you have to add the
@@ -444,8 +447,8 @@ document.write("Last Published: " + document.lastModified);
 <p>
       If you derive your publication from the default publication,
       the pipelines have to be placed in
-      <span class="codefrag">{publication}/doctypes.xmap</span>. The stylesheets are located in
-      <span class="codefrag">{publication}/xslt/</span> and are named <span class="codefrag">{resource-type}2xhtml.xsl</span>
+      <span class="codefrag">&lt;publication&gt;/doctypes.xmap</span>. The stylesheets are located in
+      <span class="codefrag">&lt;publication&gt;/xslt/</span> and are named <span class="codefrag">&lt;resource-type&gt;2xhtml.xsl</span>
       (e.g., <span class="codefrag">profile2xhtml.xsl</span>). The stylesheet is supposed to generate
       a valid XHTML fragment (in the XHTML namespace) with <span class="codefrag">&lt;div id="body"&gt;</span>
       as the document element.

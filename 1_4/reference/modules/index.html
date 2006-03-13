@@ -67,6 +67,9 @@
 <a class="base-selected" href="../../../1_4/index.html">Version 1.4</a>
 </li>
 <li>
+<a class="base-not-selected" href="../../../modules/index.html">Modules</a>
+</li>
+<li>
 <a class="base-not-selected" href="../../../1_2_x/index.html">Version 1.2</a>
 </li>
 <li>
@@ -174,8 +177,11 @@ document.write("Last Published: " + document.lastModified);
 </div>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.5.6', '../../../skin/')" id="menu_1.1.5.6Title" class="menutitle">Protocols</div>
-<div id="menu_1.1.5.6" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../1_4/reference/metadata.html">Meta data</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.7', '../../../skin/')" id="menu_1.1.5.7Title" class="menutitle">Protocols</div>
+<div id="menu_1.1.5.7" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../1_4/reference/protocols/index.html">Overview</a>
 </div>
@@ -185,6 +191,9 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../../1_4/reference/protocols/lenyadoc.html">lenyadoc:</a>
 </div>
+</div>
+<div class="menuitem">
+<a href="../../../1_4/reference/link-management.html">Link Management</a>
 </div>
 <div class="menuitem">
 <a href="../../../1_4/reference/notification.html">Notification</a>
@@ -244,7 +253,7 @@ document.write("Last Published: " + document.lastModified);
 <ul>
         
 <li>
-<strong>search</strong> - search functionality</li>
+<strong>lucene</strong> - search functionality</li>
         
 <li>
 <strong>sitetree</strong> - manage documents in a tree-like structure</li>
@@ -275,15 +284,16 @@ document.write("Last Published: " + document.lastModified);
       </p>
 <pre class="code">
 mymodule/
-    config/                  configuration files
-        components.xconf     patch for cocoon.xconf
-    usecases/
-        mymodule.jx          usecase view
-    java/
-        src/                 Java source files
-        lib/                 Java libraries
-    xslt/                    XSLT stylesheets
-    sitemap.xmap             main module sitemap
+  config/                    configuration files
+    cocoon-xconf/            patches for cocoon.xconf
+      components.xconf     
+  usecases/
+    mymodule.jx              usecase view
+  java/
+    src/                     Java source files
+    lib/                     Java libraries
+  xslt/                      XSLT stylesheets
+  sitemap.xmap               main module sitemap
 </pre>
 <p>To add a module to your Lenya installation, declare it in <span class="codefrag">local.build.properties</span>:</p>
 <pre class="code">
@@ -309,38 +319,36 @@ modules.root.dirs=src/modules:src/webapp/lenya/pubs/default/modules:/home/john/m
 <a name="N1007C"></a><a name="Implementing+Usecases+in+Modules"></a>
 <h2 class="h3">Implementing Usecases in Modules</h2>
 <div class="section">
+<a name="N10082"></a><a name="Declaring+the+Usecase"></a>
+<h3 class="h4">Declaring the Usecase</h3>
 <p>
-        To declare usecases, add a patch file for <span class="codefrag">cocoon.xconf</span>, for instance <span class="codefrag">module/config/usecases.xconf</span>:
+        For example, imagine you implement a <span class="codefrag">newsletter</span> module, containing a <span class="codefrag">send</span> usecase.
+        To declare usecases, add a patch file for <span class="codefrag">cocoon.xconf</span>, for instance <span class="codefrag">newsletter/config/cocoon-xconf/usecases.xconf</span>:
       </p>
 <pre class="code">&lt;xconf xpath="/cocoon/usecases"
-       unless="/cocoon/usecases/component-instance[@name = 'mymodule.edit']"&gt;
-  &lt;component-instance name="mymodule.edit"
-                      logger="lenya.usecases.edit
-                      class="org.myproject.lenya.mymodule.usecases.Edit"&gt;
-    &lt;view template="modules/mymodule/usecases/edit.jx" menu="false"/&gt;
+       unless="/cocoon/usecases/component-instance[@name = 'newsletter.send']"&gt;
+  &lt;component-instance name="newsletter.send"
+                      logger="lenya.usecases.newsletter.send"
+                      class="org.myproject.lenya.newsletter.usecases.Send"&gt;
+    &lt;view template="modules/newsletter/usecases/send.jx" menu="false"/&gt;
   &lt;/component-instance&gt;
 &lt;/xconf&gt;</pre>
 <p>
-        As you can see in the view declaration, the JX templates are typically stored in the <span class="codefrag">mymodule/usecases</span>
-        directory. The Java source files go into the <span class="codefrag">mymodule/java/src</span> directory, they are compiled
+        As you can see in the view declaration, the JX templates are typically stored in the <span class="codefrag">&lt;module&gt;/usecases</span>
+        directory. The Java source files go into the <span class="codefrag">&lt;module&gt;/java/src</span> directory, they are compiled
         automatically by the Lenya build process.
       </p>
-<a name="N10098"></a><a name="Sitemaps+for+Module+Usecases"></a>
-<h3 class="h4">Sitemaps for Module Usecases</h3>
+<a name="N100A5"></a><a name="Calling+the+Module+Sitemap"></a>
+<h3 class="h4">Calling the Module Sitemap</h3>
 <p>
-        Module-specific usecase sitemaps must be located at
+        The following URL syntax is used to make a call to a module sitemap:
       </p>
-<pre class="code">&lt;module&gt;/usecases/&lt;usecase-name&gt;/usecase.xmap</pre>
+<pre class="code">cocoon://modules/&lt;module&gt;/**</pre>
 <p>
-        To make a call into a usecase sitemap, use a request of the following form:
-      </p>
-<pre class="code">cocoon://core/modules/&lt;module&gt;/usecases/&lt;usecase-name&gt;/&lt;request&gt;</pre>
-<p>
-        For example, imagine you implement a <span class="codefrag">newsletter</span> module, containing a <span class="codefrag">send</span> usecase.
-        The usecase sitemap is located at <span class="codefrag">mymodules/newsletter/usecases/send/usecase.xmap</span>. To request
+        The module sitemap is located at <span class="codefrag">newsletter/sitemap.xmap</span>. To request
         the latest newsletter and display it on the confirmation screen using the CInclude approach
         (for more information, see documentation about the usecase framework), you could for instance use
-        the URI <span class="codefrag">cocoon://core/modules/newsletter/usecases/send/latestNewsletter.xml</span>:
+        the URI <span class="codefrag">cocoon://modules/newsletter/latestNewsletter.xml</span>:
       </p>
 <pre class="code">&lt;page:page
   xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
@@ -357,13 +365,65 @@ modules.root.dirs=src/modules:src/webapp/lenya/pubs/default/modules:/home/john/m
       &lt;jx:import uri="templates/messages.jx"/&gt;
       
       &lt;cinclude:includexml&gt;
-        &lt;cinclude:src&gt;cocoon://core/modules/newsletter/usecases/send/latestNewsletter.xml&lt;/cinclude:src&gt;
+        &lt;cinclude:src&gt;cocoon://modules/newsletter/latestNewsletter.xml&lt;/cinclude:src&gt;
       &lt;/cinclude:includexml&gt;
       
       &lt;input name="submit" type="submit" value="Send Newsletter"/&gt;
     &lt;/form&gt;
   &lt;/page:body&gt;
 &lt;/page:page&gt;</pre>
+<p>
+        Another useful option is to use a module URL as the usecase view, e.g. to export some XML.
+        Note that the attribute <span class="codefrag">uri</span> is used instead of <span class="codefrag">template</span>.
+        The usecase class <span class="codefrag">DummyUsecase</span> can be used because no Java code shall be
+        executed.
+        </p>
+<pre class="code">&lt;xconf xpath="/cocoon/usecases"
+       unless="/cocoon/usecases/component-instance[@name = 'newsletter.download']"&gt;
+  &lt;component-instance name="newsletter.send"
+                      logger="lenya.usecases.newsletter.send"
+                      class="org.apache.lenya.cms.usecase.DummyUsecase"&gt;
+    &lt;view uri="cocoon://modules/newsletter/downloadNewsletter.xml"/&gt;
+  &lt;/component-instance&gt;
+&lt;/xconf&gt;</pre>
+<a name="N100D0"></a><a name="Adding+Menu+Items"></a>
+<h3 class="h4">Adding Menu Items</h3>
+<p>
+      A module can provide menu items which are added to the publication menu.
+      To insert the menu items of a module, you have to add the module declaration to <span class="codefrag">publication.xconf</span>:
+      </p>
+<pre class="code">&lt;publication&gt;
+  ...
+  &lt;module name="newsletter"/&gt;
+  ...
+&lt;/publication&gt;</pre>
+<p>
+        If there is a <span class="codefrag">menus.xmap</span> sitemap in the module's root directory, a
+        request of the form <span class="codefrag">&lt;area&gt;.xml</span> is sent into this sitemap.
+        The matching pipeline could look like this:
+      </p>
+<pre class="code">&lt;map:match pattern="**"&gt;
+  &lt;map:generate type="serverpages" src="config/menu.xsp"/&gt;
+  &lt;map:serialize type="xml"/&gt;
+&lt;/map:match&gt;
+</pre>
+<p>
+        The server page <span class="codefrag">&lt;module&gt;/config/menu.xsp</span> delivers a menu XML
+        which includes the items to be inserted:
+      </p>
+<pre class="code">&lt;xsp:page ...&gt;
+  &lt;menu&gt;
+    &lt;menus&gt;
+      &lt;menu i18n:attr="name" name="File"&gt;
+        &lt;block admin="false"&gt;
+          &lt;item uc:usecase="newsletter.send" href="?"&gt;
+            &lt;i18n:text&gt;Send Newsletter&lt;/i18n:text&gt;
+          &lt;/item&gt;
+        &lt;/block&gt;
+      &lt;/menu&gt;
+    &lt;/menus&gt;
+  &lt;/menu&gt;
+&lt;/xsp:page&gt;</pre>
 </div>
     
   

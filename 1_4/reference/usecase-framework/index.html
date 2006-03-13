@@ -67,6 +67,9 @@
 <a class="base-selected" href="../../../1_4/index.html">Version 1.4</a>
 </li>
 <li>
+<a class="base-not-selected" href="../../../modules/index.html">Modules</a>
+</li>
+<li>
 <a class="base-not-selected" href="../../../1_2_x/index.html">Version 1.2</a>
 </li>
 <li>
@@ -183,8 +186,11 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../../1_4/reference/modules/index.html">Modules</a>
 </div>
-<div onclick="SwitchMenu('menu_1.1.5.6', '../../../skin/')" id="menu_1.1.5.6Title" class="menutitle">Protocols</div>
-<div id="menu_1.1.5.6" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../1_4/reference/metadata.html">Meta data</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.7', '../../../skin/')" id="menu_1.1.5.7Title" class="menutitle">Protocols</div>
+<div id="menu_1.1.5.7" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../../1_4/reference/protocols/index.html">Overview</a>
 </div>
@@ -194,6 +200,9 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../../1_4/reference/protocols/lenyadoc.html">lenyadoc:</a>
 </div>
+</div>
+<div class="menuitem">
+<a href="../../../1_4/reference/link-management.html">Link Management</a>
 </div>
 <div class="menuitem">
 <a href="../../../1_4/reference/notification.html">Notification</a>
@@ -553,7 +562,8 @@ $PUB_HOME
           </li>
           
 <li>
-            Add the usecase handler class declaration to an XPatch file, e.g. <span class="codefrag">$PUB_HOME/config/usecases.xconf</span>:
+            Add the usecase handler class declaration to an XPatch file, e.g.
+            <span class="codefrag">$PUB_HOME/config/cocoon-xconf/usecases.xconf</span>:
 <pre class="code">&lt;xconf xpath="/cocoon/usecases"
        unless="/cocoon/usecases/component-instance[@name = 'article.editHeadline']"&gt;
   &lt;component-instance name="article.editHeadline"
@@ -588,10 +598,10 @@ $PUB_HOME
           <span class="codefrag">${usecase.getView().getParameter('...')}</span>.
         </p>
 <p>
-          The view for a usecase is implemented using a JX template. The location of the
+          One option is to implement view for a usecase as a JX template. The location of the
           JX template is defined using the <span class="codefrag">&lt;view&gt;</span> element's <span class="codefrag">template</span>
           attribute (relatively to the <span class="codefrag">context://lenya</span> directory).
-          The output of the view has to be a Lenya page:
+          The output of the template has to be a Lenya page:
         </p>
 <pre class="code">&lt;page:page
   xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
@@ -618,8 +628,16 @@ $PUB_HOME
 <p>
           Take care of adding the hidden <span class="codefrag">lenya.usecase</span> and <span class="codefrag">lenya.continuation</span> fields as shown above.
           </p>
-<a name="N101F9"></a><a name="Displaying+Usecases+in+Tabs"></a>
-<h4>Displaying Usecases in Tabs</h4>
+<p>
+          If you don't want to display a form, but output arbitrary XML, text, an SVG-generated image
+          or something like that, you can use a <span class="codefrag">uri</span> attribute instead of the <span class="codefrag">template</span>
+          attribute. In this case, the <span class="codefrag">menu</span> attribute can be omitted.
+        </p>
+<pre class="code">  &lt;component-instance ...&gt;
+    &lt;view uri="cocoon://modules/reports/generateReport.pdf" /&gt;
+  &lt;/component-instance&gt;</pre>
+<a name="N1020A"></a><a name="Displaying+Usecases+in+Tabs"></a>
+<h3 class="h4">Displaying Usecases in Tabs</h3>
 <p>
               It is possible to use a tab-based layout to assemble a set of usecases.
               The admin and site areas are displayed using this style.
@@ -650,13 +668,45 @@ $PUB_HOME
 </li>
             
 </ol>
+<a name="N10225"></a><a name="dyn_exit"></a>
+<h3 class="h4">Dynamically Setting the Exit URL</h3>
+<p> Like you see above you can specify the "exit" URL of the 
+                usecase via the component configuration, however this is 
+                sometimes not enough because you may need to set the exit URL 
+                of a usecase dynamically.</p>
+<p>Consider the use case is that you have a form and you need two 
+                possibilities to exit the usecase. </p>
+<ol>
+                
+<li>Pressing on "submit" will save and exit to the same page in 
+                  the authoring area. </li>
+                
+<li>The other exit point could be a dynamic link based on a <span class="codefrag">&lt;a href=""/&gt;</span>
+                   where the user get redirected after submitting the form (e.g. to edit the linked document
+                    with the <a href="../../../1_2_x/components/editors/bxe.html">BXE</a> editor).</li>
+              
+</ol>
+<p>First you need to add another request parameter (e.g., 
+                <span class="codefrag">TRANSFER_FIELD</span>) denoting that the user clicked the link. This 
+                could be e.g. a hidden field which contains the URL to transfer 
+                the request. Further you need to override 
+                <span class="codefrag">Usecase.getTargetURL()</span> to return the BXE usecase URL if the 
+                <span class="codefrag">TRANSFER_FIELD</span> parameter is set, and <span class="codefrag">super.getTargetURL()</span> 
+                otherwise.</p>
+<pre class="code">public String getTargetURL(boolean success) {
+    String tmpTransfer = getParameterAsString("TRANSFER_FIELD", null);
+    if (!tmpTransfer.equals("") &amp; tmpTransfer != null)
+        return tmpTransfer;
+    else
+        return super.getTargetURL(success);
+}</pre>
 </div>
     
     
-<a name="N10216"></a><a name="Overriding+Core+Usecases+in+Publications"></a>
+<a name="N10256"></a><a name="Overriding+Core+Usecases+in+Publications"></a>
 <h2 class="h3">Overriding Core Usecases in Publications</h2>
 <div class="section">
-<a name="N1021C"></a><a name="Overriding+Usecase+Handler+Classes"></a>
+<a name="N1025C"></a><a name="Overriding+Usecase+Handler+Classes"></a>
 <h3 class="h4">Overriding Usecase Handler Classes</h3>
 <p>
           The usecase resolver, which is responsible for obtaining the handler class for a usecase,
@@ -671,7 +721,8 @@ $PUB_HOME
           In most cases, you will extend the core usecase handler class to inherit the basic functionality.</li>
           
 <li>
-            Declare it in an <em>xpatch</em> file, for instance <span class="codefrag">$PUB_HOME/config/usecases.xconf</span>:
+            Declare it in an <em>xpatch</em> file, for instance
+            <span class="codefrag">$PUB_HOME/config/cocoon-xconf/usecases.xconf</span>:
 <pre class="code">&lt;xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'mypub/admin.addUser']"&gt;
   &lt;component-instance name="mypub/admin.addUser"
                       logger="lenya.usecases.editHeadline"
@@ -685,7 +736,7 @@ $PUB_HOME
           Now, when the usecase is invoked from inside the publication mypub, the custom
           handler class will be used.
         </p>
-<a name="N10245"></a><a name="Overriding+JX+Templates"></a>
+<a name="N10285"></a><a name="Overriding+JX+Templates"></a>
 <h3 class="h4">Overriding JX Templates</h3>
 <p>
           Overriding the JX template of a usecase follows the

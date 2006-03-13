@@ -67,6 +67,9 @@
 <a class="base-selected" href="../../1_4/index.html">Version 1.4</a>
 </li>
 <li>
+<a class="base-not-selected" href="../../modules/index.html">Modules</a>
+</li>
+<li>
 <a class="base-not-selected" href="../../1_2_x/index.html">Version 1.2</a>
 </li>
 <li>
@@ -177,8 +180,11 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../1_4/reference/modules/index.html">Modules</a>
 </div>
-<div onclick="SwitchMenu('menu_1.1.5.6', '../../skin/')" id="menu_1.1.5.6Title" class="menutitle">Protocols</div>
-<div id="menu_1.1.5.6" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_4/reference/metadata.html">Meta data</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.7', '../../skin/')" id="menu_1.1.5.7Title" class="menutitle">Protocols</div>
+<div id="menu_1.1.5.7" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../1_4/reference/protocols/index.html">Overview</a>
 </div>
@@ -188,6 +194,9 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../1_4/reference/protocols/lenyadoc.html">lenyadoc:</a>
 </div>
+</div>
+<div class="menuitem">
+<a href="../../1_4/reference/link-management.html">Link Management</a>
 </div>
 <div class="menuitem">
 <a href="../../1_4/reference/notification.html">Notification</a>
@@ -296,14 +305,15 @@ document.write("Last Published: " + document.lastModified);
             your_home/ (or c:\ on Windows, NOT My Documents)
               `-- src/
                    |-- lenya-1.4.x/            $LENYA_HOME
-                   `-- cocoon-2.1.x/           $COCOON_HOME
-                        `-- build/
-                             `-- webapp/       $COCOON_WEBAPP
+                     `-- externals/
+                       `-- cocoon_2_1_x/       $COCOON_HOME
+                         `-- build/
+                           `-- webapp/         $COCOON_WEBAPP
      		</pre>
      		
      		
 <p>
-     		The directories inside cocoon-2.1.7/ will be created when you build Cocoon. 
+     		The directories inside cocoon_2_1_x/ will be created when you build Cocoon, cocoon will be built when you build lenya. 
      		The variables will later be used in the local.build.properties file that configures the Lenya build process.
       		</p>
       		
@@ -325,44 +335,13 @@ document.write("Last Published: " + document.lastModified);
           </p>
         
 </li>
-
-        
-<li>
-          
-<p>
-            
-<strong>Get Apache Cocoon</strong>
-            
-<br>
-            version: 2.1.x (BRANCH)
-            <br>
-            Get it from <a href="http://cocoon.apache.org/mirror.cgi">http://svn.apache.org/repos/asf/cocoon/branches/</a>
-<br>
-            Unpack Coccon in <span class="codefrag">src/</span>.
-          </p>
-
-			
-<br>
-			
-          
-<p>
-            Note that Cocoon is needed to build the source
-            version of Lenya, but the resulting Lenya webapp is
-            completely self contained and therefore  does not need
-            the Cocoon webapp to be installed. See the <a href="http://wiki.apache.org/lenya/FAQ">FAQ</a>
-            for details of configuration changes required when running
-            multiple Cocoon based applications. In 1.4, the Lenya build process takes
-            care of building Cocoon as well.
-          </p>
-        
-</li>
       
 </ul>
 </div>
 
 
     
-<a name="N1009D"></a><a name="1%3A+Standalone+Installation+%28using+the+built-in+Jetty%29"></a>
+<a name="N1007F"></a><a name="1%3A+Standalone+Installation+%28using+the+built-in+Jetty%29"></a>
 <h2 class="h3">1: Standalone Installation (using the built-in Jetty)</h2>
 <div class="section">
 <ol>
@@ -372,45 +351,31 @@ document.write("Last Published: " + document.lastModified);
           
 <p>
             
-<strong>Configure Lenya to point to Coccon</strong>
+<strong>Configure Lenya</strong>
           
 </p>
 
           
 <p>
-            You need to edit your build properties. To do this, copy
-            <span class="codefrag">$LENYA_HOME/build.properties</span> to
-            <span class="codefrag">$LENYA_HOME/local.build.properties</span>.
+            You need to edit your build properties and write
+            local.build.properties. To do this execute configure.sh 
+            or configure.bat.
           </p>
-
           
-<p>
-            Edit <span class="codefrag">local.build.properties</span>. For the described
-            configuration the following settings will work (<strong>MS
-            Windows:</strong> Don't use backslashes "<span class="codefrag">\</span>" for
-            directory separation.)
-          </p>
-
-          
-<ul>
-            
-<li>
-<span class="codefrag">cocoon.src.dir=$COCOON_HOME</span>
-</li>
-          
-</ul>
-            
+<div class="note">
+<div class="label">Note</div>
+<div class="content">Cocoon 2.1.x is now placed in Lenya as a svn:external
+            you'll find coocoon in $LENYA_HOME/externals/cocoon_2_1_x.
+            If you want to use cocoon from another location you can change
+            the $COCOON_HOME point to your cocoon src directory.
+            </div>
+</div>
           
 <p>
               Copy $LENYA_HOME/src/cocoon/local.blocks.properties and 
               local.build.properties to $COCOON_HOME.
           </p>
-           
-          
-<p>
-              Build Cocoon.
-          </p>  
-        
+       
 </li>
 
         
@@ -427,6 +392,12 @@ document.write("Last Published: " + document.lastModified);
             Execute <span class="codefrag">build.bat</span> or <span class="codefrag">build.sh</span> in
             your Lenya source directory, depending on your platform.
           </p>
+          
+<div class="note">
+<div class="label">Note</div>
+<div class="content">Cocoon will be built when you build lenya. You can manually build or clean
+          cocoon in $COCOON_HOME with ./build.sh or ./build.sh clean</div>
+</div>
 
           
 <p>
@@ -531,7 +502,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 
     
-<a name="N1013B"></a><a name="2%3A+Installation+with+Apache+Tomcat"></a>
+<a name="N10107"></a><a name="2%3A+Installation+with+Apache+Tomcat"></a>
 <h2 class="h3">2: Installation with Apache Tomcat</h2>
 <div class="section">
 <ol>
@@ -600,6 +571,11 @@ Lenya is developed and tested with Tomcat 5.0.28; it is assumed in the following
             <span class="codefrag">$LENYA_HOME/build.properties</span> to
             <span class="codefrag">$LENYA_HOME/local.build.properties</span>.
           </p>
+          
+<div class="note">
+<div class="label">Note</div>
+<div class="content">You can use the configure.sh or configure.bat to configure your local.build.properties.</div>
+</div>
 
           
 <p>
@@ -610,7 +586,7 @@ Lenya is developed and tested with Tomcat 5.0.28; it is assumed in the following
             <span class="codefrag">tomcat.home.dir</span> is an absolute path. Replace
             <span class="codefrag">$TOMCAT_HOME</span> by your Tomcat installation
             directory.  If your Cocoon source directory is not at
-            <span class="codefrag">../cocoon-2.1.7</span> relative to Lenya, then change
+            <span class="codefrag">../cocoon_2_1_x</span> relative to Lenya, then change
             the <span class="codefrag">cocoon.webapp.dir</span>, <span class="codefrag">web.app.server</span> and
             <span class="codefrag">cocoon.src.dir</span> properties.
           </p>

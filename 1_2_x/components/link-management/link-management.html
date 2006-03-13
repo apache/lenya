@@ -66,6 +66,9 @@
 <li>
 <a class="base-not-selected" href="../../../1_4/index.html">Version 1.4</a>
 </li>
+<li>
+<a class="base-not-selected" href="../../../modules/index.html">Modules</a>
+</li>
 <li class="current">
 <a class="base-selected" href="../../../1_2_x/index.html">Version 1.2</a>
 </li>
@@ -307,7 +310,7 @@ document.write("Last Published: " + document.lastModified);
 <div onclick="SwitchMenu('menu_1.1.5.9', '../../../skin/')" id="menu_1.1.5.9Title" class="menutitle">Repository</div>
 <div id="menu_1.1.5.9" class="menuitemgroup">
 <div class="menuitem">
-<a href="../../../1_2_x/components/repository/webdav.html">WebDAV Servers</a>
+<a href="../../../1_2_x/components/repository/index.html">WebDAV Servers</a>
 </div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5.10', '../../../skin/')" id="menu_1.1.5.10Title" class="menutitle">Search</div>
@@ -551,7 +554,16 @@ document.write("Last Published: " + document.lastModified);
       document to other documents. A transformer
       (SimpleLinkRewritingTransformer) is used to rewrite the internal
       links in the live area.</p>
-<a name="N10069"></a><a name="A+document+is+not+yet+live-N10069"></a>
+<div class="note">
+<div class="label">Note</div>
+<div class="content">
+        The <span class="codefrag">DocumentReferencesHelper</span> mimics the behaviour of
+        the <span class="codefrag">DefaultDocumentBuilder</span>, therefore the reference check
+        doesn't work with arbitrary <span class="codefrag">DocumentBuilder</span> implementations
+        (see <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=37718">bug 37718</a>)
+      </div>
+</div>
+<a name="N10079"></a><a name="A+document+is+not+yet+live-N10079"></a>
 <h3 class="h4">A document is not yet live</h3>
 <p>This is implemented as an extension to the publish xsp. It
 	  queries the <span class="codefrag">DocumentReferencesHelper</span> (using the
@@ -562,7 +574,7 @@ document.write("Last Published: " + document.lastModified);
 	  <span class="codefrag">Grep#findPattern</span> method to search the current
 	  document for patterns of a reference. The pattern is defined
 	  in <span class="codefrag">DocumentReferencesHelper#getInternalLinkPattern</span>.</p>
-<a name="N10082"></a><a name="A+document+is+withdrawn+from+live-N10082"></a>
+<a name="N10092"></a><a name="A+document+is+withdrawn+from+live-N10092"></a>
 <h3 class="h4">A document is withdrawn from live</h3>
 <p>This is implemented as an extension to the deactivate
 	  xsp. It queries the <span class="codefrag">DocumentReferencesHelper</span>
@@ -573,7 +585,7 @@ document.write("Last Published: " + document.lastModified);
 	  documents which contain a patterns of a reference. The
 	  pattern is defined in
 	  <span class="codefrag">DocumentReferencesHelper#getReferencesSearchString()</span>.</p>
-<a name="N1009B"></a><a name="A+document-id+changes-N1009B"></a>
+<a name="N100AB"></a><a name="A+document-id+changes-N100AB"></a>
 <h3 class="h4">A document-id changes</h3>
 <p>This is implemented with an ant task
 	  (<span class="codefrag">org.apache.lenya.cms.ant.LinkRewriteTask</span>)
@@ -583,7 +595,7 @@ document.write("Last Published: " + document.lastModified);
 	  modify all references to the document that changed its
 	  document-id.
 	</p>
-<a name="N100AB"></a><a name="Rewrite+internal+links+in+live-N100AB"></a>
+<a name="N100BB"></a><a name="Rewrite+internal+links+in+live-N100BB"></a>
 <h3 class="h4">Rewrite internal links in live</h3>
 <p>The
 	  <span class="codefrag">org.apache.lenya.cms.cocoon.transformation.SimpleLinkRewritingTransformer</span>
@@ -593,7 +605,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 
     
-<a name="N100B9"></a><a name="Involved+classes%2C+XSPs+and+XSLTs"></a>
+<a name="N100C9"></a><a name="Involved+classes%2C+XSPs+and+XSLTs"></a>
 <h2 class="h3">Involved classes, XSPs and XSLTs</h2>
 <div class="section">
 <p>The following classes, XSPs and XSLTs are involved in link
