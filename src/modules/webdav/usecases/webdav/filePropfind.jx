@@ -1,41 +1,46 @@
 <?xml version="1.0"?>
-<D:multistatus xmlns:D="DAV:"
-               xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
-               xmlns:collection="http://apache.org/cocoon/collection/1.0"> --&gt;
-      <jx:set var="sourceURL" value="${usecase.getParameter('sourceURL')}" />
-      <jx:set var="dateFormat" value="${usecase.getParameter('dateFormat')}"/>  
-      <jx:set var="checkedOut" value="${usecase.getParameter('rc')}" />   
-      <jx:forEach var="doc" items="${usecase.getParameter('documents')}" varStatus="status">
-       <jx:if test="${doc.getId()}">
-          <D:response>
-              <D:href>/${doc.getPublication().getId()}/${doc.getArea()}${doc.getId()}_${doc.getLanguage()}.html</D:href>
-              <D:propstat>
-                <D:prop>
-                  <D:displayname>${doc.getName()}_${doc.getLanguage()}.html</D:displayname>
-                  <D:getlastmodified>${dateFormat.format(doc.getLastModified())}</D:getlastmodified>
-                  <D:creationdate />
-                  <D:getcontenttype>text/html</D:getcontenttype>
-                  <D:getcontentlength>${doc.getFile().length()}</D:getcontentlength>
-                  <D:resourcetype />
-                  <D:lockdiscovery>
-                    <jx:if test="${checkedOut[status.index] != null}">
-                         <D:activelock>
-                              <D:locktype><D:write/></D:locktype>
-                              <D:lockscope><D:exclusive/></D:lockscope>
-                              <D:depth>0</D:depth>
-                              <D:owner><D:href>${checkedOut[status.index].getIdentity()}</D:href></D:owner>
-                              <D:timeout>Infinite</D:timeout>
-                              <D:locktoken>
-                                <D:href>${usecase.getParameter('sourceURL')}</D:href>
-                              </D:locktoken>
-                         </D:activelock>
-                    </jx:if>
-                  </D:lockdiscovery>
-                </D:prop>
-                <D:status>HTTP/1.1 200 OK</D:status>
-              </D:propstat>
-          </D:response>
-       </jx:if>
-      </jx:forEach>
-      
+<D:multistatus xmlns:D="DAV:" xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:collection="http://apache.org/cocoon/collection/1.0"> --&gt;
+  <jx:set var="sourceURL" value="${usecase.getParameter('sourceURL')}"/>
+  <jx:set var="dateFormat" value="${usecase.getParameter('dateFormat')}"/>
+  <jx:set var="checkedOut" value="${usecase.getParameter('rc')}"/>
+  <jx:forEach var="doc" items="${usecase.getParameter('documents')}"
+    varStatus="status">
+    <jx:if test="${doc.getId()}">
+      <D:response>
+        <D:href>
+          /${doc.getPublication().getId()}/${doc.getArea()}${doc.getId()}_${doc.getLanguage()}.html</D:href>
+        <D:propstat>
+          <D:prop>
+            <D:displayname>
+              ${doc.getName()}_${doc.getLanguage()}.html</D:displayname>
+            <D:getlastmodified>
+              ${dateFormat.format(doc.getLastModified())}</D:getlastmodified>
+            <D:creationdate/>
+            <D:getcontenttype>text/html</D:getcontenttype>
+            <D:getcontentlength>${doc.getFile().length()}</D:getcontentlength>
+            <D:resourcetype/>
+            <D:lockdiscovery>
+              <jx:if test="${checkedOut[status.index] != null}">
+                <D:activelock>
+                  <D:locktype><D:write/></D:locktype>
+                  <D:lockscope><D:exclusive/></D:lockscope>
+                  <D:depth>0</D:depth>
+                  <D:owner>
+                    <D:href>${checkedOut[status.index].getIdentity()}</D:href>
+                    </D:owner>
+                  <D:timeout>Infinite</D:timeout>
+                  <D:locktoken>
+                    <D:href>${usecase.getParameter('sourceURL')}</D:href>
+                  </D:locktoken>
+                </D:activelock>
+              </jx:if>
+            </D:lockdiscovery>
+          </D:prop>
+          <D:status>HTTP/1.1 200 OK</D:status>
+        </D:propstat>
+      </D:response>
+    </jx:if>
+  </jx:forEach>
+  
 </D:multistatus>
