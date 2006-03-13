@@ -28,6 +28,8 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerConfigurationException;
@@ -70,6 +72,7 @@ public class UploadAction extends AbstractConfigurableAction {
     public static final String CONTENT_PREFIX = "content";
 
     public static final String FILE_NAME_REGEXP = "[-a-zA-Z0-9_.]+";
+    
 
     // optional parameters for meta data according to dublin core
     public static final String[] DUBLIN_CORE_PARAMETERS = { "title", "creator", "subject",
@@ -98,7 +101,9 @@ public class UploadAction extends AbstractConfigurableAction {
         Request request = ObjectModelHelper.getRequest(objectModel);
         pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(objectModel);
         document = pageEnvelope.getDocument();
-
+        
+        int width = 0;
+        int height = 0;
         File assetFile;
 
         logRequestParameters(request);
@@ -112,6 +117,7 @@ public class UploadAction extends AbstractConfigurableAction {
         }
 
         Map dublinCoreParams = getDublinCoreParameters(request);
+        Map lenyaMetaParams = new HashMap();
 
         // upload the file to the uploadDir
         Part part = (Part) request.get(UPLOADASSET_PARAM_NAME);
@@ -130,33 +136,50 @@ public class UploadAction extends AbstractConfigurableAction {
 
         results.put(UPLOADASSET_RETURN_MIMETYPE, mimeType);
         results.put(UPLOADASSET_RETURN_FILESIZE, new Integer(fileSize));
-
-        dublinCoreParams.put("format", mimeType);
-        dublinCoreParams.put("extent", Integer.toString(fileSize));
-
-        if (uploadType.equals("asset")) {
-            ResourcesManager resourcesMgr = new ResourcesManager(document);
+        
+        ResourcesManager resourcesMgr = new ResourcesManager(document);
+        if (uploadType.equals("asset")) {   
             assetFile = new File(resourcesMgr.getPath(), fileName);
 
             if (!resourcesMgr.getPath().exists()) {
                 resourcesMgr.getPath().mkdirs();
             }
-
-            // create an extra file containing the meta description for
-            // the asset.
-            File metaDataFile = new File(resourcesMgr.getPath(), fileName + ".meta");
-            createMetaData(metaDataFile, dublinCoreParams);
-
         }
         // must be a content upload then
         else {
             assetFile = new File(document.getFile().getParent(), fileName);
-            getLogger().debug("assetFile: " + assetFile);
+            getLogger().debug("assetFile: " + assetFile);    
         }
 
         saveAsset(assetFile, part);
 
+        if (uploadType.equals("asset")) {
+
+            
+            if (canReadMimeType(mimeType)) {
+                BufferedImage input = ImageIO.read(assetFile);
+                width = input.getWidth();
+                height = input.getHeight();
+            }
+            dublinCoreParams.put("format", mimeType);
+            dublinCoreParams.put("extent", Integer.toString(fileSize));
+            lenyaMetaParams.put("width", Integer.toString(width));
+            lenyaMetaParams.put("height", Integer.toString(height));
+            // create an extra file containing the meta description for
+            // the asset.
+            File metaDataFile = new File(resourcesMgr.getPath(), fileName + ".meta");
+            createMetaData(metaDataFile, dublinCoreParams, lenyaMetaParams);
+        }
+
         return Collections.unmodifiableMap(results);
+    }
+    
+    /**
+    * Returns true if the specified mime type can be read
+    */
+    public static boolean canReadMimeType(String mimeType) {
+        Iterator iter = ImageIO.getImageReadersByMIMEType(mimeType);
+        return iter.hasNext();
     }
 
     /**
@@ -172,7 +195,7 @@ public class UploadAction extends AbstractConfigurableAction {
             if (!created) {
                 throw new RuntimeException("The file [" + assetFile + "] could not be created.");
             }
-	}
+        }  
 
         byte[] buf = new byte[4096];
         FileOutputStream out = new FileOutputStream(assetFile);
@@ -235,12 +258,13 @@ public class UploadAction extends AbstractConfigurableAction {
      * 
      * @param metaDataFile the file where the meta data file is to be created
      * @param dublinCoreParams a <code>Map</code> containing the dublin core values
+     * @prame lenyaMetaParams a <code>Map</code> containing lenya specific values
      * @throws TransformerConfigurationException if an error occurs.
      * @throws TransformerException if an error occurs.
      * @throws IOException if an error occurs
      * @throws ParserConfigurationException if an error occurs.
      */
-    protected void createMetaData(File metaDataFile, Map dublinCoreParams)
+    protected void createMetaData(File metaDataFile, Map dublinCoreParams, Map lenyaMetaParams)
             throws TransformerConfigurationException, TransformerException, IOException,
             ParserConfigurationException {
 
@@ -258,7 +282,25 @@ public class UploadAction extends AbstractConfigurableAction {
             String tagValue = (String) dublinCoreParams.get(tagName);
             root.appendChild(helper.createElement(tagName, tagValue));
         }
+        
+        String mimeType = dublinCoreParams.get("format").toString();
+        if (canReadMimeType(mimeType)) {
+            Iterator iterlenya = lenyaMetaParams.keySet().iterator();
+        
+            NamespaceHelper lenyaHelper = new NamespaceHelper("http://apache.org/cocoon/lenya/page-envelope/1.0", "lenya", helper.getDocument());
+            Element metaElement = lenyaHelper.createElement("meta");
+        
+            while (iterlenya.hasNext()) {
+                String tagName = (String) iterlenya.next();
+                String tagValue = (String) lenyaMetaParams.get(tagName);
+                metaElement.appendChild(lenyaHelper.createElement(tagName, tagValue));
+            }
+            root.appendChild(metaElement);
+        }
 
         DocumentHelper.writeDocument(helper.getDocument(), metaDataFile);
+        
     }
+    
+    
 }
