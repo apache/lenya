@@ -122,26 +122,6 @@ public class Propfind extends SiteUsecase {
                         checkedOut.add(entry);
                     else
                         checkedOut.add(null);
-                    // get additional language documents
-                    String[] langs = documents[i].getLanguages();
-                    for (int j = 0; j < langs.length; j++) {
-                        if (!(langs[j].equals(documents[i].getLanguage()))) {
-                            String url = documents[i].getCanonicalWebappURL()
-                                    .replaceFirst(".html$", "_" + langs[j] + ".html");
-                            DocumentIdentifier identifier = docBuilder.getIdentitfier(url);
-                            Document langDoc = docBuilder.buildDocument(documents[i].getIdentityMap(),
-                                    identifier);
-                            docs.add(langDoc);
-
-                            filename = langDoc.getFile().getCanonicalPath();
-                            filename = filename.substring(publicationPath.length());
-                            entry = rc.getRCML(filename).getLatestEntry();
-                            if ((entry != null) && (entry.getType() == RCML.co))
-                                checkedOut.add(entry);
-                            else
-                                checkedOut.add(null);
-                        }
-                    }
                 }
             }
 
