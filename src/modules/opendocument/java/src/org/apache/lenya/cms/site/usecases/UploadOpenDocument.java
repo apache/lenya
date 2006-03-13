@@ -36,13 +36,9 @@ import org.apache.lenya.cms.usecase.DocumentUsecase;
  */
 public class UploadOpenDocument extends DocumentUsecase {
 
-    protected static final String PARENT_ID = "parentId";
-
     protected static final String ODT_EXTENSION = ".odt";
 
-    protected static final String DEFAULT_INDEX = "index";
-    
-    protected static final String ODT_MIME = "application/vnd.oasis.opendocument.text";
+    protected static final String ODT_MIME_TYPE = "application/vnd.oasis.opendocument.text";
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
@@ -57,11 +53,11 @@ public class UploadOpenDocument extends DocumentUsecase {
     protected void doExecute() throws Exception {
         if (getLogger().isDebugEnabled())
             getLogger().debug("ODT::uploadODT() called");
-        Document parent = getSourceDocument();
-        String sourceURI = parent.getSourceURI();
-        String destination = sourceURI.substring(0, sourceURI
-                        .lastIndexOf(".xml"))
-                        + ODT_EXTENSION;
+        Document source = getSourceDocument();
+        String destination = source.getSourceURI();
+        if (source.getSourceExtension().equals("xml")) {
+            destination = destination.substring(0, destination.lastIndexOf(".xml")) + ODT_EXTENSION;
+        }
 
         Part file = getPart("file");
         String mimeType = file.getMimeType();
@@ -69,10 +65,10 @@ public class UploadOpenDocument extends DocumentUsecase {
         if (file.isRejected()) {
             String[] params = { Integer.toString(file.getSize()) };
             addErrorMessage("upload-size-exceeded", params);
-        } else if (ODT_MIME.equals(mimeType)){
+        } else if (ODT_MIME_TYPE.equals(mimeType)){
             saveResource(destination, file);
         } else {
-            addErrorMessage("The mime type of the document you want to upload does not match the mime type: \""+ODT_MIME+"\"");
+            addErrorMessage("The mime type of the document you want to upload does not match the mime type: \""+ODT_MIME_TYPE+"\"");
         }
 
     }

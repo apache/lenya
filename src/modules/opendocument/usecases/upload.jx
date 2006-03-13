@@ -38,7 +38,7 @@ limitations under the License.
           </tr>
           <tr>
             <td colspan="2">
-              <strong><i18n:text>HEADSUP:</i18n:text> <i18n:text>The existing document will be deleted!</i18n:text></strong>
+              <strong><i18n:text>HEADSUP:</i18n:text> <i18n:text>The existing document will be overwritten!</i18n:text></strong>
             </td>
           </tr>
           <tr>
@@ -55,7 +55,7 @@ limitations under the License.
             <td/>
             <td>
               <input i18n:attr="value" name="submit" type="submit"
-                value="New Asset"/>
+                value="Upload ODT"/>
             </td>
           </tr>
         </table>
