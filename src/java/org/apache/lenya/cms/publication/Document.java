@@ -149,8 +149,7 @@ public interface Document extends MetaDataOwner, Identifiable {
      * Check if a document exists with the given document-id and the given area
      * independently of the given language.
      * 
-     * @return true if a document with the given document-id and area exists,
-     * null otherwise
+     * @return true if a document with the given document-id and area exists, false otherwise
      * 
      * @throws DocumentException if an error occurs
      */
