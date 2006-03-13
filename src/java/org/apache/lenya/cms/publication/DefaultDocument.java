@@ -59,9 +59,10 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
             DocumentIdentifier identifier, Logger _logger) {
 
         ContainerUtil.enableLogging(this, _logger);
-        if (getLogger().isDebugEnabled())
+        if (getLogger().isDebugEnabled()) {
             getLogger().debug("DefaultDocument() creating new instance with id ["
                     + identifier.getId() + "], language [" + identifier.getLanguage() + "]");
+        }
 
         this.manager = manager;
         this.identifier = identifier;
@@ -74,10 +75,10 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
 
         this.identityMap = map;
 
-        if (getLogger().isDebugEnabled())
+        if (getLogger().isDebugEnabled()) {
             getLogger().debug("DefaultDocument() done building instance with _id ["
                     + identifier.getId() + "], _language [" + identifier.getLanguage() + "]");
-
+        }
     }
 
     /**
@@ -134,7 +135,9 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         List documentLanguages = new ArrayList();
         String[] allLanguages = getPublication().getLanguages();
 
-        getLogger().debug("Number of languages of this publication: " + allLanguages.length);
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Number of languages of this publication: " + allLanguages.length);
+        }
 
         for (int i = 0; i < allLanguages.length; i++) {
             Document version;
@@ -208,7 +211,8 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
             throw new RuntimeException(e);
         }
         if (extension == null) {
-            getLogger().warn("No source extension. The extension \"xml\" will be used as default!");
+            getLogger().warn("No source extension for document [" + this
+                    + "]. The extension \"xml\" will be used as default!");
             extension = "xml";
         }
         return extension;
@@ -362,7 +366,8 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      */
     public MetaDataManager getMetaDataManager() {
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Publication source URI: " + getPublication().getSourceURI());
+            getLogger().debug("Publication source URI for document [" + this + "]: "
+                    + getPublication().getSourceURI());
         }
         if (this.metaDataManager == null) {
             SourceResolver resolver = null;
