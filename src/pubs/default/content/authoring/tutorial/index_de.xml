@@ -26,11 +26,11 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
   <body>
     <h1>Tutorial</h1>
 
-    <p>This tutorial gives you a short introduction into the Apache
-    Lenya content management system. We'll look at a typical use case
-    where we create a new document, edit and publish it.</p>
+    <p>Das folgende Tutorial gibt eine kurze Einfuehrung in das Content Management
+    System Apache Lenya. Wir betrachten typische Anwendungsfaelle,
+    wie zum Beispiel ein neues Dokument kreieren, bearbeiten und publizieren</p>
 
-    <h2>Creating a new document</h2>
+    <h2>Ein neues Dokument kreieren</h2>
 
     <p>To create a new document goto the <code>File->New
     Document</code> menu entry. You'll get a new screen that asks you
@@ -47,7 +47,7 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
     as a sub-document of the document you're currently looking at. You
     also notice how the navigation is built automatically.</p>
 
-    <h2>Editing a document</h2>
+    <h2>Ein Dokument bearbeiten</h2>
 
     <p>To look at the newly created document click on the "Foo" entry
     in the navigation. You'll notice that the "Foo" document already
@@ -73,7 +73,7 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
     <code>Save&amp;Exit</code> to get back. You'll see your changes in
     the document.</p>
 
-    <h2>Publishing a document</h2>
+    <h2>Ein Dokument bearbeiten</h2>
 
     <p>Once you are satisfied with the content of the document you
     want to publish it to make it visible in the live area.</p> 
