@@ -88,8 +88,9 @@
   <modules href="modules/" label="Modules" tab="modules">
     <index href="index.html" label="Index"/>
     <webdav href="webdav/" label="WebDAV">
-        <server href="webdav.html" label="WebDAV Servers"/>
-      </webdav>
+      <index href="index.html" label="Index"/>
+      <server href="webdav.html" label="WebDAV Servers"/>
+    </webdav>
   </modules>
   <!--+
     | Version 1.2 tab
@@ -324,11 +325,15 @@
     <wiki href="http://wiki.apache.org/">
       <lenya href="lenya/">
         <FAQ href="FAQ"/>
+        <webdav href="HowToEditWithWebDAV"/>
       </lenya>
       <cocoon href="cocoon/">
         <websiteUpdate href="../cocoon/CocoonWebsiteUpdate"/>
       </cocoon>
     </wiki>
+    <webdav href="http://www.webdav.org/">
+      <cadaver href="cadaver/"/>
+    </webdav>
     <oscom href="http://oscom.org"/>
     <wyona href="http://wyona.com" />
     <java href="http://java.sun.com/j2se/1.4.2/download.html"/>
