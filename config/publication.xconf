@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<publication>
+  <languages>
+    <language default="true">en</language>
+    <language>de</language>
+  </languages>
+  <template-instantiator name="default"/>
+  <path-mapper>
+    org.apache.lenya.cms.publication.DefaultDocumentIdToPathMapper</path-mapper>
+  <document-builder name="default"/>
+  <breadcrumb-prefix/>
+  <site-manager name="tree"/>
+  <resource-type workflow="fallback://config/workflow/workflow.xml" 
+    name="xhtml"/>
+  <resource-type workflow="fallback://config/workflow/workflow.xml" 
+    name="homepage"/>
+  <resource-type workflow="fallback://config/workflow/workflow.xml" 
+    name="links"/>
+  <resource-type workflow="fallback://config/workflow/workflow.xml" 
+    name="cforms"/>
+  <module name="xhtml"/>
+  <module name="links"/>
+  <module name="opendocument"/>
+  <module name="cforms"/>
+  <module name="homepage"/>
+  <link-attribute 
+    xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@href"/>
+  <templates>
+    <template id="default"/>
+  </templates>
+  <content-dir src="/home/thorsten/src/apache/forrest-trunk/whiteboard/doco"/>
+</publication>

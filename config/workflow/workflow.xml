@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: workflow.xml 153818 2005-02-14 18:07:10Z gregor $ -->
+
+<workflow xmlns="http://apache.org/cocoon/lenya/workflow/1.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://apache.org/cocoon/lenya/workflow/1.0 ../../../../resources/entities/workflow.xsd">
+
+  <state id="authoring" initial="true"/>
+  <state id="review"/>
+  <state id="live"/>
+  <state id="trash"/>
+  <state id="archive"/>
+  
+  <variable name="is_live" value="false"/>
+  
+  <transition source="authoring" destination="review">
+    <event id="submit"/>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">edit</condition>
+  </transition>
+        
+  <transition source="review" destination="live">
+    <event id="publish"/>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">review</condition>
+    <assign variable="is_live" value="true"/>
+  </transition>
+        
+  <transition source="review" destination="authoring">
+    <event id="reject"/>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">review</condition>
+  </transition>
+        
+  <transition source="live" destination="authoring">
+    <event id="edit"/>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">edit</condition>
+  </transition>
+        
+  <transition source="authoring" destination="authoring">
+    <event id="edit"/>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">edit</condition>
+  </transition>
+        
+  <transition source="live" destination="authoring">
+    <event id="deactivate"/>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">review</condition>
+    <assign variable="is_live" value="false"/>
+  </transition>
+
+  <transition source="authoring" destination="trash">
+    <event id="delete"/>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">edit</condition>
+    <assign variable="is_live" value="false"/>
+  </transition>
+
+  <transition source="authoring" destination="archive">
+    <event id="archive"/>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">edit</condition>
+    <assign variable="is_live" value="false"/>
+  </transition>
+  
+  <transition source="archive" destination="authoring">
+    <event id="restore"/>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">edit</condition>
+  </transition>
+  
+  <transition source="trash" destination="authoring">
+    <event id="restore"/>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">edit</condition>
+  </transition>  
+</workflow>
