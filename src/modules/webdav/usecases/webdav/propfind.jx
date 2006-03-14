@@ -6,6 +6,7 @@
   <jx:set var="moddate" value="${usecase.getParameter('rootModDate')}"/>
   <jx:set var="defaultLang" value="${usecase.getParameter('defaultLang')}"/>
   <jx:set var="depth" value="${usecase.getParameter('header-Depth')}"/>
+  /* returns root webdav directory */
   <D:response>
     <D:href>${sourceURL.replaceFirst("authoring","webdav")}</D:href>
     <D:propstat>
@@ -27,6 +28,9 @@
     <jx:forEach var="doc" items="${usecase.getParameter('documents')}">
       <jx:if test="${doc.getId()}">
         <jx:if test="${doc.getLanguage().equals(defaultLang)}">
+          /* create a directory for each document;
+          the language check is to prevent multiple folders appearing with the same name
+          since concepts_en and concepts_de would both produce a folder called concepts */
           <D:response>
             <D:href>/${doc.getPublication().getId()}/webdav${doc.getId()}</D:href>
             <D:propstat>
@@ -51,6 +55,8 @@
     <jx:forEach var="doc" items="${usecase.getParameter('documents')}"
       varStatus="status">
       <jx:if test="${doc.getId()}">
+        /* create a file for each document, the href is the path to the file and the 
+        display name is what will appear in the webdav folder */
         <D:response>
           <D:href>/${doc.getPublication().getId()}/webdav${doc.getId()}_${doc.getLanguage()}.${doc.getExtension()}</D:href>
           <D:propstat>
@@ -82,6 +88,7 @@
       </jx:if>
     </jx:forEach>
     <jx:forEach var="asset" items="${usecase.getParameter('assets')}">
+      /* similar to documents, a file is created for each asset with an href and display name */
       <D:response>
         <D:href>/${sourceURL.replaceFirst("authoring","webdav")}${asset.getName()}</D:href>
         <D:propstat>
