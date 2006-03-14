@@ -252,13 +252,14 @@
   <target name="compile-xsp" depends="tests.prepare"
           description="Compile the XSP sources">
     <mkdir dir="${build.dir}/work"/>
-    <java classname="org.apache.cocoon.bean.XSPPrecompileWrapper">
+    <property name="compile-xsp.failonerror" value="false"/> <!-- may be overridden with -D -->
+    <java classname="org.apache.cocoon.bean.XSPPrecompileWrapper" failonerror="${compile-xsp.failonerror}">
       <arg value="-c${build.webapp}"/>
       <arg value="-w${build.dir}/work"/>
       <classpath>
          <pathelement path="${build.webapp}/WEB-INF/classes"/>
          <fileset dir="${build.webapp}/WEB-INF/lib">
-            <include name="*.jar"/>
+            <include name="**/*.jar"/>
          </fileset>
          <fileset dir="tools/jetty/lib">
           <include name="servlet-*.jar"/>
