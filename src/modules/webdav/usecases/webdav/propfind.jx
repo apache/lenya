@@ -58,7 +58,7 @@
        <!-- create a file for each document, the href is the path to the file and the 
         display name is what will appear in the webdav folder -->
         <D:response>
-          <D:href>/${doc.getPublication().getId()}/webdav${doc.getId()}_${doc.getLanguage()}.${doc.getExtension()}</D:href>
+          <D:href>/${doc.getPublication().getId()}/webdav${doc.getId()}_${doc.getLanguage()}.${doc.getSourceExtension()}</D:href>
           <D:propstat>
             <D:prop>
               <D:displayname>${doc.getName()}_${doc.getLanguage()}.${doc.getExtension()}</D:displayname>
