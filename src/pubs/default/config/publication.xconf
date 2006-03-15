@@ -18,6 +18,8 @@
 <!-- $Id$ -->
 
 <publication>
+
+  <!-- NOTE: The various languages need to be listed for verification and widget building -->
   <languages>
     <language default="true">en</language>
     <language>de</language>
