@@ -24,7 +24,7 @@
   </description>
 
 <!-- Export the webapp -->
-<target name="export" depends="webapp" description="Exports a publication to static HTML. As a paramter one should specify a publication, e.g. -Dpublication=default">
+<target name="export" depends="webapp" description="Exports a publication to static HTML. As a parameter one should specify a publication, e.g. -Dpublication=default">
   <property name="publication" value=""/>
   <property name="publication.dir" value="${build.webapp}/lenya/pubs/${publication}"/>
   <property name="build.export" value="${build.dir}/export"/>
