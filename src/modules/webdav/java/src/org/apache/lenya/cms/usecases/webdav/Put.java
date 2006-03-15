@@ -1,5 +1,5 @@
-/*
- * Copyright  1999-2004 The Apache Software Foundation
+/* 
+ * Copyright  1999-2006 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -69,6 +69,7 @@ public class Put extends DocumentUsecase {
             if (doc == null)
                 throw new IllegalArgumentException("illegal usage, source document may not be null");
 
+            // create new doc from PUT input
             if (!doc.exists()) {
                 DocumentManager documentManager = null;
                 ServiceSelector selector = null;
@@ -84,6 +85,7 @@ public class Put extends DocumentUsecase {
                             doc.getId(),
                             doc.getLanguage());
 
+                    // TODO allow to create other docs than xhtml
                     resourceType = (ResourceType) selector.select("xhtml");
                     documentManager.add(document, resourceType, "xml", doc.getName(), true, null);
 
@@ -102,47 +104,22 @@ public class Put extends DocumentUsecase {
                 }
             }
 
-            DocumentIdToPathMapper mapper = doc.getPublication().getPathMapper();
-            String path = mapper.getPath(doc.getId(),
-                    getSourceDocument().getLanguage(),
-                    doc.getSourceExtension());
             String sourceUri = doc.getSourceURI();
-            String pubId = doc.getPublication().getId();
-            String uploadSourceUri = "cocoon:/request/PUT";
-
-            // lets copy the source to temp work area
-            String tempSourceUri = "context://lenya/pubs/" + pubId + "/work/webdav/content/"
-                    + doc.getArea() + "/" + path + ".tmp";
-            tempSourceUri = tempSourceUri.substring("lenya://".length());
-            tempSourceUri = "context://" + tempSourceUri;
-
-            try {
-                SourceUtil.copy(resolver, uploadSourceUri, tempSourceUri, true);
-            } catch (Exception e) {
-                addErrorMessage("invalid source xml");
+            String sourceExtension = doc.getSourceExtension();
+            String uploadSourceUri = "cocoon:/request/PUT/" + sourceExtension;
+            
+            // validate if a schema is provided
+            if (doc.getResourceType().getSchema() != null){
+              validateDoc(resolver, uploadSourceUri, doc);
             }
 
             if (!hasErrors()) {
-
-                Source tempSource = resolver.resolveURI(tempSourceUri);
-                if (!tempSource.exists()) {
-                    throw new IllegalArgumentException("The temp file [" + tempSource.getURI()
-                            + "] does not exist.");
-                }
-
-                // validity check
-                ResourceType resourceType = doc.getResourceType();
-                Schema schema = resourceType.getSchema();
-
-                org.w3c.dom.Document xmlDoc = DocumentHelper.readDocument(tempSource.getInputStream());
-                ValidationUtil.validate(this.manager, xmlDoc, schema, new UsecaseErrorHandler(this));
-
-                if (SourceUtil.exists(tempSourceUri, this.manager)) {
-                    SourceUtil.copy(resolver, tempSourceUri, sourceUri, true);
-                    SourceUtil.delete(tempSourceUri, this.manager);
-                }
-
-            }
+              try {
+                SourceUtil.copy(resolver, uploadSourceUri, sourceUri, true);
+              } catch (Exception e) {
+                addErrorMessage("invalid source xml");
+              }
+           }
 
         } finally {
             if (resolver != null) {
@@ -152,6 +129,22 @@ public class Put extends DocumentUsecase {
                 this.manager.release(wfManager);
             }
         }
+    }    
+
+    private void validateDoc(SourceResolver resolver, String uploadSourceUri, Document doc) throws Exception {
+
+          Source uploadSource = resolver.resolveURI(uploadSourceUri);
+          if (!uploadSource.exists()) {
+              throw new IllegalArgumentException("The upload file [" + uploadSource.getURI()
+                      + "] does not exist.");
+          }
+
+          ResourceType resourceType = doc.getResourceType();
+          Schema schema = resourceType.getSchema();
+
+          // FIXME not working yet, dunno why
+          //org.w3c.dom.Document xmlDoc = DocumentHelper.readDocument(uploadSource.getInputStream());
+          //ValidationUtil.validate(this.manager, xmlDoc, schema, new UsecaseErrorHandler(this));
     }
 
     /**
@@ -176,7 +169,7 @@ public class Put extends DocumentUsecase {
         } catch (Exception e) {
             throw new UsecaseException(e);
         }
-    }
+    }    
 
     /**
      * Sets the meta data of the created document.

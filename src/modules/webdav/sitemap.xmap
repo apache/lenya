@@ -24,6 +24,10 @@
         <header-name>Destination</header-name>
       </map:matcher>
     </map:matchers>
+
+    <map:readers default="resource">
+       <map:reader logger="sitemap.reader.requestreader" name="request" pool-max="16" src="org.apache.cocoon.reading.RequestReader"/>
+    </map:readers>
   
     <map:serializers default="xhtml"> 
       <map:serializer name="xml-get" src="org.apache.cocoon.serialization.XMLSerializer" mime-type="text/xml">
@@ -86,13 +90,6 @@
 
     <map:pipeline type="noncaching" internal-only="true">
       
-      <!-- Read the request for binaries PUT -->
-      <!--
-      <map:match pattern="request/read">
-        <map:read type="request" />
-      </map:match>
-      -->
-      
       <map:match pattern="request/generate">
         <map:generate type="stream" />
         <map:serialize type="xml" />
@@ -103,7 +100,7 @@
           | you can do that here. This is the pipeline that will
           | generate the input for the PUT method.
           + -->
-      <map:match pattern="request/PUT">
+      <map:match pattern="request/PUT/xml">
         <map:generate type="stream">
           <map:parameter name="defaultContentType" value="text/xml" />
         </map:generate>
@@ -112,6 +109,11 @@
         </map:act>
         <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
         <map:serialize type="xml" />
+      </map:match>
+
+      <!-- Read the request for binaries PUT -->
+      <map:match pattern="request/PUT/odt">
+        <map:read type="request"/>
       </map:match>
       
     </map:pipeline>
