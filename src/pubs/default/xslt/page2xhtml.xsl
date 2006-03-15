@@ -39,7 +39,6 @@
 <!-- The request url i.e. /lenya/doctypes/xhtml-document_en.html -->
 <xsl:param name="url"/>
 <xsl:param name="language"/>
-<xsl:param name="document-type"/>
 <xsl:param name="title"/>
 
 <xsl:template match="cmsbody">
