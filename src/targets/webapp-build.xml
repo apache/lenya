@@ -88,15 +88,6 @@
       </fileset>
     </copy>
     
-    
-    <!-- Patch web.xml -->
-    <!--
-    <xpatch file="${build.webapp}/WEB-INF/web.xml"
-            srcdir="${build.webapp}/lenya/pubs" 
-            includes="*/config/web.xml"
-            addComments="false"/>
-    -->
-            
     <!-- Patch publication tests -->
     <copy file="./src/targets/publication-test-build-template.xml"
           tofile="./src/targets/publication-test-build.xml"
