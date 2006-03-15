@@ -121,20 +121,27 @@
           <map:when test="xslt/page2xhtml-{4}.xsl">
             <map:transform src="fallback://xslt/page2xhtml-{4}.xsl">
               <map:parameter name="root" value="{base-url:{2}:{3}}"/>
+              <map:parameter name="publication-id" value="{2}"/>
+              <map:parameter name="area" value="{3}"/>
               <map:parameter name="url" value="{5}"/>
               <map:parameter name="document-id" value="{page-envelope:document-id}"/>
               <map:parameter name="document-type" value="{page-envelope:document-type}"/>
               <map:parameter name="language" value="{page-envelope:document-language}"/>
+              <map:parameter name="contextprefix" value="{request:contextPath}"/>
               <map:parameter name="title" value="{dublincore:title}"/>
             </map:transform>
           </map:when>
           <map:otherwise>
             <map:transform src="fallback://xslt/page2xhtml-xhtml.xsl">
               <map:parameter name="root" value="{base-url:{2}:{3}}"/>
+              <map:parameter name="publication-id" value="{2}"/>
+              <map:parameter name="area" value="{3}"/>
               <map:parameter name="url" value="{5}"/>
               <map:parameter name="document-id" value="{page-envelope:document-id}"/>
               <map:parameter name="document-type" value="{page-envelope:document-type}"/>
               <map:parameter name="language" value="{page-envelope:document-language}"/>
+              <map:parameter name="contextprefix" value="{request:contextPath}"/>
+              <map:parameter name="title" value="{dublincore:title}"/>
             </map:transform>
           </map:otherwise>
         </map:select>
