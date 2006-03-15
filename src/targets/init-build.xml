@@ -42,7 +42,8 @@
   <!-- Prepare the build webapp directory -->
   <target name="check-cocoon" depends="init" unless="gump.skipcocoonbuild">
     <available file="${cocoon.src.dir}/build/webapp" type="dir" property="cocoon.build.webapp.dir.exists"/>
-    <antcall target="check-blocks"/>
+    <antcall target="check-blocks-properties"/>
+    <antcall target="check-build-properties"/>
     <antcall target="build-cocoon"/>
   </target>
 
@@ -56,12 +57,21 @@
   </target>
 
   <!-- Check local.blocks.properties  -->
-  <target name="check-blocks" if="cocoon.build.webapp.dir.exists">
+  <target name="check-blocks-properties" if="cocoon.build.webapp.dir.exists">
     <property file="${cocoon.src.dir}/local.blocks.properties"/>
     <condition property="local.blocks.properties.in.sync">
       <equals arg1="${lenya.blocks.properties.version}" arg2="374661"/>
     </condition>
     <fail unless="local.blocks.properties.in.sync" message="It seems that your ${cocoon.src.dir}/local.blocks.properties is NOT in sync with ${src.cocoon.properties.dir}/local.blocks.properties! The file ${src.cocoon.properties.dir}/local.blocks.properties has probably been modified by some Apache Lenya developer. Issue a build clean in your Cocoon directory and rebuild Lenya."/>
+  </target>
+
+  <!-- Check local.build.properties  -->
+  <target name="check-build-properties" if="cocoon.build.webapp.dir.exists">
+    <property file="${cocoon.src.dir}/local.build.properties"/>
+    <condition property="local.build.properties.in.sync">
+      <equals arg1="${lenya.build.properties.version}" arg2="386155"/>
+    </condition>
+    <fail unless="local.build.properties.in.sync" message="It seems that your ${cocoon.src.dir}/local.build.properties is NOT in sync with ${src.cocoon.properties.dir}/local.build.properties! The file ${src.cocoon.properties.dir}/local.build.properties has probably been modified by some Apache Lenya developer. Issue a 'build clean' and remove 'local.build.properties' in your Cocoon directory (${cocoon.src.dir}) and rebuild Lenya."/>
   </target>
 
   <!-- Copy the bulk of the cocoon webapp to our destination -->
@@ -93,6 +103,7 @@
         includes="src/confpatch/log4j-*.xconf"/> 
     
     <!-- patch web.xml -->
+    <echo>PATCH web.xml</echo>
     <xpatch file="${build.webapp}/WEB-INF/web.xml" 
             includes="src/confpatch/*.xweb"/> 
 
