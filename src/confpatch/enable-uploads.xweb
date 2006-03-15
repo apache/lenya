@@ -14,7 +14,10 @@
   See the License for the specific language governing permissions and
   limitations under the License.
 -->
+
+<!-- http://wiki.apache.org/cocoon/XPatchTaskUsage -->
+
 <xweb xpath="/web-app/servlet/init-param[param-name='enable-uploads']/param-value"
-	if-prop="enable-uploads"
-	remove="/web-app/servlet/init-param[param-name='enable-uploads']/param-value/text()"
+      if-prop="enable.uploads"
+      remove="/web-app/servlet/init-param[param-name='enable-uploads']/param-value/text()"
 >true</xweb>
