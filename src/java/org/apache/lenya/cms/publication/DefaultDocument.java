@@ -326,8 +326,9 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
             }
             String[] allLanguages = getPublication().getLanguages();
             if (languages.length == allLanguages.length)
+                // TODO: This is not entirely true, because the publication could assume the languages EN and DE, but the document could exist for the languages DE and FR!
                 if (getLogger().isDebugEnabled()) {
-                    getLogger().warn("Document (" + this
+                    getLogger().debug("Document (" + this
                             + ") exists even in all languages of this publication");
                 }
             return true;
