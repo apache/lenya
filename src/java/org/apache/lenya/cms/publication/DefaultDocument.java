@@ -190,32 +190,72 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         return this.identifier.getArea();
     }
 
-    private String extension = "html";
+    private String extension = null;
+    private String defaultExtension = "html";
 
     /**
      * @see org.apache.lenya.cms.publication.Document#getExtension()
      */
     public String getExtension() {
+        if (extension == null) {
+            getLogger().warn("Default extension will be used: " + defaultExtension);
+            return defaultExtension;
+        }
         return this.extension;
     }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getUUID()
+     */
+    public String getUUID() throws DocumentException {
+        String uuid = null;
+        String hint = getPublication().getSiteManagerHint();
+        if (hint == null) {
+            getLogger().error("SiteManagerHint is null!");
+        } else {
+            SiteManager siteManager = null;
+            ServiceSelector selector = null;
+            try {
+                selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+                siteManager = (SiteManager) selector.select(hint);
+                uuid = siteManager.getUUID(this);
+                if (uuid == null) {
+                    uuid = getCanonicalDocumentURL();
+                    getLogger().warn("No UUID found for document [" + this + "]. Use canonical document URL: " + uuid);
+                }
+                return uuid;
+            } catch (Exception e) {
+                throw new DocumentException(e);
+            } finally {
+                if (selector != null) {
+                    if (siteManager != null) {
+                        selector.release(siteManager);
+                    }
+                    this.manager.release(selector);
+                }
+            }
+        }
+        return uuid;
+    }
+
+    private String defaultSourceExtension = "xml";
 
     /**
      * @see org.apache.lenya.cms.publication.Document#getSourceExtension()
      */
     public String getSourceExtension() {
-        String extension;
+        String sourceExtension;
         try {
-            extension = getMetaDataManager().getLenyaMetaData()
+            sourceExtension = getMetaDataManager().getLenyaMetaData()
                     .getFirstValue(LenyaMetaData.ELEMENT_EXTENSION);
         } catch (DocumentException e) {
             throw new RuntimeException(e);
         }
-        if (extension == null) {
-            getLogger().warn("No source extension for document [" + this
-                    + "]. The extension \"xml\" will be used as default!");
-            extension = "xml";
+        if (sourceExtension == null) {
+            getLogger().warn("No source extension for document [" + this + "]. The extension \"" + defaultSourceExtension + "\" will be used as default!");
+            sourceExtension = defaultSourceExtension;
         }
-        return extension;
+        return sourceExtension;
     }
 
     /**

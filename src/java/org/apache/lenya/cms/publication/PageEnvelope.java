@@ -38,6 +38,7 @@ public class PageEnvelope {
             PageEnvelope.DOCUMENT_ID, PageEnvelope.DOCUMENT_NAME, PageEnvelope.DOCUMENT_LABEL,
             PageEnvelope.DOCUMENT_URL, PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE,
             PageEnvelope.DOCUMENT_PATH, PageEnvelope.DOCUMENT_EXTENSION,
+            PageEnvelope.DOCUMENT_SOURCE_EXTENSION, PageEnvelope.DOCUMENT_UUID,
             PageEnvelope.DOCUMENT_TYPE, PageEnvelope.DEFAULT_LANGUAGE,
             PageEnvelope.DOCUMENT_LANGUAGE, PageEnvelope.DOCUMENT_LANGUAGES,
             PageEnvelope.DOCUMENT_LANGUAGES_CSV, PageEnvelope.DOCUMENT_LASTMODIFIED,
@@ -108,6 +109,14 @@ public class PageEnvelope {
      * <code>DOCUMENT_EXTENSION</code> The extension of the current document
      */
     public static final String DOCUMENT_EXTENSION = "document-extension";
+    /**
+     * <code>DOCUMENT_SOURCE_EXTENSION</code> The source extension of the current document
+     */
+    public static final String DOCUMENT_SOURCE_EXTENSION = "document-source-extension";
+    /**
+     * <code>DOCUMENT_UUID</code> The uuid of the current document
+     */
+    public static final String DOCUMENT_UUID = "document-uuid";
     /**
      * <code>DOCUMENT_LANGUAGE</code> The language of the current document
      */

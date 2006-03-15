@@ -98,6 +98,15 @@ public interface SiteManager {
     boolean contains(Document resource) throws SiteException;
 
     /**
+     * Return the UUID of a certain resource in a certain area.
+     * 
+     * @param resource The resource.
+     * @return A string.
+     * @throws SiteException if an error occurs.
+     */
+    String getUUID(Document resource) throws SiteException;
+
+    /**
      * Checks if the site structure contains any language version of a certain resource in a certain
      * area.
      * 

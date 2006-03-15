@@ -75,6 +75,14 @@ public class TopicMapSiteManager extends AbstractSiteManager {
     }
 
     /**
+     * @see org.apache.lenya.cms.site.SiteManager#getUUID(org.apache.lenya.cms.publication.Document)
+     */
+    public String getUUID(Document resource) throws SiteException {
+        // TODO: Implement this method ...
+        return null;
+    }
+
+    /**
      * @see org.apache.lenya.cms.site.SiteManager#containsInAnyLanguage(org.apache.lenya.cms.publication.Document)
      */
     public boolean containsInAnyLanguage(Document resource) throws SiteException {

@@ -121,6 +121,14 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
     }
 
     /**
+     * @see org.apache.lenya.cms.site.SiteManager#getUUID(org.apache.lenya.cms.publication.Document)
+     */
+    public String getUUID(Document resource) throws SiteException {
+        getLogger().warn("NOT implemented yet!");
+        return null;
+    }
+
+    /**
      * @see org.apache.lenya.cms.site.SiteManager#contains(org.apache.lenya.cms.publication.Document)
      */
     public boolean contains(Document resource) throws SiteException {

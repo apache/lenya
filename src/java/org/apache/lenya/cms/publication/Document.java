@@ -134,6 +134,12 @@ public interface Document extends MetaDataOwner, Identifiable {
      * @return A string.
      */
     String getExtension();
+
+    /**
+     * Returns the UUID.
+     * @return A string.
+     */
+    String getUUID() throws DocumentException;
     
     /**
      * Check if a document with the given document-id, language and in the given
