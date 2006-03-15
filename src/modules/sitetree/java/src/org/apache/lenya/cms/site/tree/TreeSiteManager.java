@@ -169,6 +169,20 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
     }
 
     /**
+     * @see org.apache.lenya.cms.site.SiteManager#getUUID(org.apache.lenya.cms.publication.Document)
+     */
+    public String getUUID(Document resource) throws SiteException {
+        String uuid = null;
+        SiteTree tree = getTree(resource);
+        SiteTreeNode node = tree.getNode(resource.getId());
+        if (node != null) {
+            uuid = node.getUUID();
+        }
+        if (uuid == null) log.warn("No UUID: " + resource);
+        return uuid;
+    }
+
+    /**
      * @see org.apache.lenya.cms.site.SiteManager#containsInAnyLanguage(org.apache.lenya.cms.publication.Document)
      */
     public boolean containsInAnyLanguage(Document resource) throws SiteException {

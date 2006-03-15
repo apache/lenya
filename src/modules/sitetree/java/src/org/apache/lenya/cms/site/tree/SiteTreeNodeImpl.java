@@ -44,6 +44,10 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
      */
     public static final String ID_ATTRIBUTE_NAME = "id";
     /**
+     * <code>UUID_ATTRIBUTE_NAME</code> The uuid attribute
+     */
+    public static final String UUID_ATTRIBUTE_NAME = "uuid";
+    /**
      * <code>ISIBLEINNAV_ATTRIBUTE_NAME</code>The visibleinnav attribute
      */
     public static final String VISIBLEINNAV_ATTRIBUTE_NAME="visibleinnav";
@@ -91,6 +95,17 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
             return "";
         }
         return this.node.getAttributes().getNamedItem(ID_ATTRIBUTE_NAME).getNodeValue();
+    }
+
+    /**
+     * @see org.apache.lenya.cms.site.tree.SiteTreeNode#getUUID()
+     */
+    public String getUUID() {
+        if (this.node == this.node.getOwnerDocument().getDocumentElement()) {
+            getLogger().warn("Node equals OwnerDocument: " + this);
+            return "";
+        }
+        return this.node.getAttributes().getNamedItem(UUID_ATTRIBUTE_NAME).getNodeValue();
     }
 
     /**

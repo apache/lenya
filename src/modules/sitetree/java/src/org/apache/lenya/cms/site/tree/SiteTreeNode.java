@@ -59,6 +59,13 @@ public interface SiteTreeNode {
     String getId();
 
     /**
+     * Get the uuid of this node.
+     * 
+     * @return the uuid.
+     */
+    String getUUID();
+
+    /**
      * Get all labels for this node (independent of their language attribute).
      * 
      * @return an <code>Array</code> of labels.
