@@ -70,7 +70,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
         // do nothing
     }
 
-    private String SOURCE_URL = "private.sourceUrl";
+    protected String SOURCE_URL = "private.sourceUrl";
 
     /**
      * @see org.apache.lenya.cms.usecase.Usecase#getSourceURL()
