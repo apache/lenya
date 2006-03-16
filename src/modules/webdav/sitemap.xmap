@@ -100,7 +100,7 @@
           | you can do that here. This is the pipeline that will
           | generate the input for the PUT method.
           + -->
-      <map:match pattern="request/PUT/xml">
+<!--      <map:match pattern="request/PUT/xml">
         <map:generate type="stream">
           <map:parameter name="defaultContentType" value="text/xml" />
         </map:generate>
@@ -109,10 +109,10 @@
         </map:act>
         <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
         <map:serialize type="xml" />
-      </map:match>
+      </map:match>-->
 
       <!-- Read the request for binaries PUT -->
-      <map:match pattern="request/PUT/odt">
+      <map:match pattern="request/PUT/*">
         <map:read type="request"/>
       </map:match>
       

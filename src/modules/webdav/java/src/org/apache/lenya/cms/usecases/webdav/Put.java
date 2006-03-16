@@ -124,8 +124,7 @@ public class Put extends DocumentUsecase {
 
             if (!hasErrors()) {
               try {
-                SourceUtil.copy(resolver, sourceUri, doc.getSourceURI());
-                //SourceUtil.copy(resolver, sourceUri, destinationUri, true);
+                SourceUtil.copy(resolver, sourceUri, doc.getSourceURI(), true);
               } catch (Exception e) {
                 addErrorMessage("invalid source xml. Full exception: "+ e);
               }
