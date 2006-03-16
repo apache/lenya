@@ -28,7 +28,6 @@ import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
@@ -41,11 +40,8 @@ import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.cms.usecase.xml.UsecaseErrorHandler;
 import org.apache.lenya.workflow.WorkflowManager;
-import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.Schema;
-import org.apache.lenya.xml.ValidationUtil;
 
 /**
  * Supports WebDAV PUT.
@@ -65,6 +61,8 @@ public class Put extends DocumentUsecase {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
 
             Document doc = getSourceDocument();
+            String destinationUri = getParameterAsString(SOURCE_URL);
+            String extension = destinationUri.substring(destinationUri.lastIndexOf(".")+1,destinationUri.length());
             // sanity check
             if (doc == null)
                 throw new IllegalArgumentException("illegal usage, source document may not be null");
@@ -84,10 +82,23 @@ public class Put extends DocumentUsecase {
                             doc.getArea(),
                             doc.getId(),
                             doc.getLanguage());
-
-                    // TODO allow to create other docs than xhtml
-                    resourceType = (ResourceType) selector.select("xhtml");
-                    documentManager.add(document, resourceType, "xml", doc.getName(), true, null);
+                    
+                    if("xml".equals(extension)){
+                        // FIXME allow to create other docs than xhtml - but how?
+                        resourceType = (ResourceType) selector.select("xhtml");
+                    }else{
+                        // FIXME the following works only if the resource typ is called like the extension but normally 
+                        // that is not the case maybe there is a way to store which extension a resource type is 
+                        // treating and lookup a hashMap to get the real name via the extension
+                        if (selector.isSelectable(extension)){
+                            resourceType = (ResourceType) selector.select(extension);
+                        }else{
+                            //using a fallback resource type
+                            // FIXME this resource tye should be a more generic one like "media-assets" or "bin"
+                            resourceType = (ResourceType) selector.select("xhtml");
+                        }
+                      }
+                    documentManager.add(document, resourceType, extension, doc.getName(), true, null);
 
                     setMetaData(document);
                     doc = document;
@@ -104,20 +115,19 @@ public class Put extends DocumentUsecase {
                 }
             }
 
-            String sourceUri = doc.getSourceURI();
-            String sourceExtension = doc.getSourceExtension();
-            String uploadSourceUri = "cocoon:/request/PUT/" + sourceExtension;
+            String sourceUri = "cocoon:/request/PUT/" + extension;
             
             // validate if a schema is provided
             if (doc.getResourceType().getSchema() != null){
-              validateDoc(resolver, uploadSourceUri, doc);
+              validateDoc(resolver, sourceUri, doc);
             }
 
             if (!hasErrors()) {
               try {
-                SourceUtil.copy(resolver, uploadSourceUri, sourceUri, true);
+                SourceUtil.copy(resolver, sourceUri, doc.getSourceURI());
+                //SourceUtil.copy(resolver, sourceUri, destinationUri, true);
               } catch (Exception e) {
-                addErrorMessage("invalid source xml");
+                addErrorMessage("invalid source xml. Full exception: "+ e);
               }
            }
 
@@ -152,8 +162,8 @@ public class Put extends DocumentUsecase {
      */
     protected Node[] getNodesToLock() throws UsecaseException {
         try {
-            List nodes = new ArrayList();
             Document doc = getSourceDocument();
+            List nodes = new ArrayList();
 
             DocumentSet set = SiteUtil.getSubSite(this.manager, doc);
             Document[] documents = set.getDocuments();
@@ -163,14 +173,12 @@ public class Put extends DocumentUsecase {
 
             SiteStructure structure = SiteUtil.getSiteStructure(this.manager, getSourceDocument());
             nodes.add(structure.getRepositoryNode());
-
             return (Node[]) nodes.toArray(new Node[nodes.size()]);
 
         } catch (Exception e) {
             throw new UsecaseException(e);
         }
     }    
-
     /**
      * Sets the meta data of the created document.
      * 
