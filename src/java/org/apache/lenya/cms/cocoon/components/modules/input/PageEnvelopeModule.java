@@ -99,7 +99,6 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
                     value = document.getExtension();
                 } else if (name.equals(PageEnvelope.DOCUMENT_SOURCE_EXTENSION)) {
                     value = document.getSourceExtension();
-                    getLogger().error("HUGO: Source Extension: " + value);
                 } else if (name.equals(PageEnvelope.DOCUMENT_UUID)) {
                     value = document.getUUID();
                 } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGE)) {
