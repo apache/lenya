@@ -10,7 +10,7 @@
   <lenya:internal>
     <lenya:resourceType>opendocument</lenya:resourceType>
     <lenya:contentType>odt</lenya:contentType>
-     <!--<lenya:extension>odt</lenya:extension>-->
+     <lenya:extension>odt</lenya:extension>
   </lenya:internal>
 </lenya:meta>
 </lenya:document>
