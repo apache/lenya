@@ -21,6 +21,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
@@ -48,6 +51,33 @@ import org.apache.lenya.xml.Schema;
  * 
  */
 public class Put extends DocumentUsecase {
+    // registeredExtensions contain all known extension matching to a certain resource-type.
+    private HashMap registeredExtensions = new HashMap();
+//  default is xhtml and xml but you can override it with the config
+    protected String TYPE = "xhtml";
+    protected String EXTENSION = "*";
+    protected static final String ATTRIBUTE_TYPE = "resource-type";
+    protected static final String ELEMENT_ROOT = "extensions";
+    protected static final String ELEMENT_EXTENSION = "extension";
+    
+    private boolean fallback = false;
+    
+    public void configure(Configuration config) throws ConfigurationException {
+        super.configure(config);
+        Configuration extensionsConfig = config.getChild(ELEMENT_ROOT, false);
+        if (extensionsConfig != null) {
+            Configuration [] extensions=extensionsConfig.getChildren(ELEMENT_EXTENSION);
+            for (int i = 0; i < extensions.length; i++) {
+                Configuration extension = extensions[i];
+//              add extension to register (key: extension,value: resource-type)
+                if (extension != null)
+                  registeredExtensions.put(extension.getValue(),extension.getAttribute(ATTRIBUTE_TYPE));
+            }
+        }else{
+            registeredExtensions.put(this.EXTENSION,this.TYPE);
+        }
+      }
+    
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
@@ -82,24 +112,9 @@ public class Put extends DocumentUsecase {
                             doc.getArea(),
                             doc.getId(),
                             doc.getLanguage());
-                    
-                    if("xml".equals(extension)){
-                        // FIXME allow to create other docs than xhtml - but how?
-                        resourceType = (ResourceType) selector.select("xhtml");
-                    }else{
-                        // FIXME the following works only if the resource typ is called like the extension but normally 
-                        // that is not the case maybe there is a way to store which extension a resource type is 
-                        // treating and lookup a hashMap to get the real name via the extension
-                        if (selector.isSelectable(extension)){
-                            resourceType = (ResourceType) selector.select(extension);
-                        }else{
-                            //using a fallback resource type
-                            // FIXME this resource tye should be a more generic one like "media-assets" or "bin"
-                            resourceType = (ResourceType) selector.select("xhtml");
-                        }
-                      }
+                    //lookupResourceType(extension)
+                    resourceType = lookUpExtension(extension, selector);
                     documentManager.add(document, resourceType, extension, doc.getName(), true, null);
-
                     setMetaData(document);
                     doc = document;
                 } finally {
@@ -117,8 +132,8 @@ public class Put extends DocumentUsecase {
 
             String sourceUri = "cocoon:/request/PUT/" + extension;
             
-            // validate if a schema is provided
-            if (doc.getResourceType().getSchema() != null){
+            // validate if a schema is provided and we are not using any fallback
+            if (doc.getResourceType().getSchema() != null & fallback==false){
               validateDoc(resolver, sourceUri, doc);
             }
 
@@ -138,10 +153,28 @@ public class Put extends DocumentUsecase {
                 this.manager.release(wfManager);
             }
         }
+    }
+
+
+    private ResourceType lookUpExtension(String extension, ServiceSelector selector) throws ServiceException {
+        ResourceType resourceType;
+        String resourceTypeName=(String) registeredExtensions.get(extension);
+        if (resourceTypeName==null||resourceTypeName.equals("")){
+            resourceTypeName=(String) registeredExtensions.get(this.EXTENSION);
+            this.fallback=true;
+        }
+        if (selector.isSelectable(resourceTypeName)){
+            resourceType = (ResourceType) selector.select(resourceTypeName);
+        }else{
+            //using a fallback resource type
+            // FIXME this resource tye should be a more generic one like "media-assets" or "bin"
+            resourceType = (ResourceType) selector.select(this.TYPE);
+            this.fallback=true;
+        }
+        return resourceType;
     }    
 
     private void validateDoc(SourceResolver resolver, String uploadSourceUri, Document doc) throws Exception {
-
           Source uploadSource = resolver.resolveURI(uploadSourceUri);
           if (!uploadSource.exists()) {
               throw new IllegalArgumentException("The upload file [" + uploadSource.getURI()

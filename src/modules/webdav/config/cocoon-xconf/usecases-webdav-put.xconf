@@ -18,5 +18,16 @@
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'webdav.put']">
     <component-instance name="webdav.put" logger="lenya.publication"
       class="org.apache.lenya.cms.usecases.webdav.Put">
+      <!-- You can configure which resource type and extension are connected.
+        The idea is similar to the file system browser dialog that an operation system
+        offers (open with) where you can register applications to open certain file extensions-->
+      <extensions>
+        <extension resource-type="xhtml">xml</extension>
+        <extension resource-type="opendocument">odt</extension>
+        <extension resource-type="xhtml">html</extension>
+        <extension resource-type="xhtml">xhtml</extension>
+        <!--Next extension is a wildcard (all others)-->
+        <extension resource-type="xhtml">*</extension>
+      </extensions>
     </component-instance>
   </xconf>
