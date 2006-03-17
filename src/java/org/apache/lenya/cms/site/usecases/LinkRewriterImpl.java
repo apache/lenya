@@ -41,6 +41,7 @@ import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXParseException;
 
 /**
  * Rewrite the links in a publication. This is used after renaming / moving a document.
@@ -104,9 +105,7 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
                     String[] xPaths = doctype.getLinkAttributeXPaths();
 
                     try {
-
-                        org.w3c.dom.Document xmlDocument = SourceUtil.readDOM(examinedDocument.getSourceURI(),
-                                this.manager);
+                        org.w3c.dom.Document xmlDocument = SourceUtil.readDOM(examinedDocument.getSourceURI(), this.manager);
 
                         for (int xPathIndex = 0; xPathIndex < xPaths.length; xPathIndex++) {
                             NodeList nodes = XPathAPI.selectNodeList(xmlDocument,
@@ -144,10 +143,14 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
                                     examinedDocument.getSourceURI(),
                                     this.manager);
                         }
-
+		    } catch (SAXParseException e) {
+                        getLogger().warn("Document [" + examinedDocument + "] is not XML and will be ignored!");
+		    } catch (Exception e) {
+                        getLogger().error(e.getMessage(), e);
                     } finally {
                     }
-
+                } else {
+                    getLogger().warn("HUGO: No such document: " + examinedDocument.getSourceURI());
                 }
             }
         } catch (final Exception e) {
