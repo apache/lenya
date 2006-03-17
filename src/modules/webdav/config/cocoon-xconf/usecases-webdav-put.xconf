@@ -16,10 +16,7 @@
 -->
 
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'webdav.put']">
-
-    <component-instance name="webdav.put"
-                        logger="lenya.publication"
-                        class="org.apache.lenya.cms.usecases.webdav.Put">
+    <component-instance name="webdav.put" logger="lenya.publication"
+      class="org.apache.lenya.cms.usecases.webdav.Put">
     </component-instance>
-    
   </xconf>
