@@ -19,6 +19,8 @@ package org.apache.lenya.cms.usecases.webdav;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
@@ -36,7 +38,21 @@ import org.apache.lenya.workflow.WorkflowManager;
  * 
  */
 public class Mkcol extends Create {
-
+    // default is xhtml and xml but you can override it with the config
+    protected String TYPE = "xhtml";
+    protected String EXTENSION = "xml";
+    protected static final String ATTRIBUTE_TYPE = "resource-type";
+    protected static final String ELEMENT_EXTENSION = "extension";
+    
+    public void configure(Configuration config) throws ConfigurationException {
+        super.configure(config);
+        Configuration typeConfig = config.getChild(ELEMENT_EXTENSION, false);
+        if (typeConfig != null) {
+          this.EXTENSION = typeConfig.getValue();
+          this.TYPE = typeConfig.getAttribute(ATTRIBUTE_TYPE);
+        }
+      }
+    
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
@@ -68,8 +84,8 @@ public class Mkcol extends Create {
                             doc.getId(),
                             doc.getLanguage());
 
-                    resourceType = (ResourceType) selector.select("xhtml");
-                    documentManager.add(document, resourceType, "xml", doc.getName(), true, null);
+                    resourceType = (ResourceType) selector.select(TYPE);
+                    documentManager.add(document, resourceType, EXTENSION, doc.getName(), true, null);
 
                     setMetaData(document);
                     doc = document;

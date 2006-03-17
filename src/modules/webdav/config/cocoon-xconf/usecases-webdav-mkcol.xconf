@@ -19,6 +19,9 @@
     unless="/cocoon/usecases/component-instance[@name = 'webdav.mkcol']">
     <component-instance name="webdav.mkcol" logger="lenya.publication"
       class="org.apache.lenya.cms.usecases.webdav.Mkcol">
+      <!-- You can configure which resource type and extension the 
+        creation of a webdav collection will trigger in lenya. -->
+      <extension resource-type="xhtml">xml</extension>
     </component-instance>
     
   </xconf>
