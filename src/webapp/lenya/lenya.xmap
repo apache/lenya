@@ -41,26 +41,6 @@
         </map:select>
       </map:match>
 
-      <!-- matches lenya/**.jpg -->
-      <map:match pattern="**.jpg">
-        <map:read src="resources/{1}.jpg" mime-type="image/jpeg" />
-      </map:match>
-
-      <!-- matches lenya/**.gif -->
-      <map:match pattern="**.gif">
-        <map:read src="resources/{1}.gif" mime-type="image/gif" />
-      </map:match>
-
-      <!-- matches lenya/**.png -->
-      <map:match pattern="**.png">
-        <map:read src="resources/{1}.png" mime-type="image/png" />
-      </map:match>
-
-      <!-- matches lenya/**.ext -->
-      <map:match pattern="images/**.*">
-        <map:read src="resources/images/{1}.{2}" mime-type="image/{4}" />
-      </map:match>
-      
       <map:match pattern="**.rng">
         <map:generate src="resources/{1}.rng"/>
         <map:transform src="xslt/resources/translate-rng-includes.xsl"/>
@@ -82,5 +62,31 @@
         </map:select>
       </map:match>
     </map:pipeline>
+
+    <map:pipeline>
+      <!-- enable client side caching of resources -->
+      <map:parameter name="expires" value="access plus 2 hours"/>
+      
+      <!-- matches lenya/**.jpg -->
+      <map:match pattern="**.jpg">
+        <map:read src="resources/{1}.jpg" mime-type="image/jpeg" />
+      </map:match>
+
+      <!-- matches lenya/**.gif -->
+      <map:match pattern="**.gif">
+        <map:read src="resources/{1}.gif" mime-type="image/gif" />
+      </map:match>
+
+      <!-- matches lenya/**.png -->
+      <map:match pattern="**.png">
+        <map:read src="resources/{1}.png" mime-type="image/png" />
+      </map:match>
+
+      <!-- matches lenya/**.ext -->
+      <map:match pattern="images/**.*">
+        <map:read src="resources/images/{1}.{2}" mime-type="image/{4}" />
+      </map:match>
+    </map:pipeline>
+
   </map:pipelines>
 </map:sitemap>
