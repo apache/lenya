@@ -46,6 +46,9 @@
               <p>
                 <a href="?lenya.usecase=site.create&amp;documentId={$documentid}"><i18n:text>create-document</i18n:text></a>
               </p>
+<p>
+<b>NOTE:</b> Please make sure that your content repository is configured correctly within (local.)publication.xconf
+</p>
             </xsl:if>
           </div>
         </div>
