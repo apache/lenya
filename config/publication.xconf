@@ -22,6 +22,7 @@
   <module name="links"/>
   <module name="opendocument"/>
   <module name="cforms"/>
+  <module name="xdocs"/>
   <module name="homepage"/>
   <link-attribute 
     xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@href"/>
