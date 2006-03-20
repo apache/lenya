@@ -235,7 +235,19 @@
       </map:match>
             
       <map:match pattern="DELETE/**">
-        <map:call function="remove" />
+        <map:match pattern="DELETE/**_*.html">
+          <map:act type="resource-exists" src="context://lenya/pubs/{page-envelope:publication-id}/content/authoring/{1}/index_{page-envelope:document-language}.xml">
+            <map:call function="remove" />
+          </map:act>
+        </map:match>
+        <map:match pattern="DELETE/**">
+          <map:act type="resource-exists" src="context://lenya/pubs/{page-envelope:publication-id}/content/authoring/{1}">
+            <map:call function="remove" />
+          </map:act>
+        </map:match>
+        <!-- does not exist -->
+        <map:generate src="context://lenya/content/util/empty.xml"/>
+        <map:serialize status-code="200"/>
       </map:match> 
                         
       <map:match pattern="LOCK/**">
