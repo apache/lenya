@@ -7,17 +7,18 @@
   <jx:forEach var="doc" items="${usecase.getParameter('documents')}"
     varStatus="status">
     <jx:if test="${doc.getId()}">
+    <jx:set var="fileExtension" value="${doc.getSourceExtension()}"/>
+    <jx:if test="${doc.getSourceExtension().equals('xml')}">
+        <jx:set var="fileExtension" value="html"/>
+    </jx:if>
       <D:response>
-        <D:href>
-          /${doc.getPublication().getId()}/${doc.getArea()}${doc.getId()}_${doc.getLanguage()}.html</D:href>
+        <D:href>/${doc.getPublication().getId()}/webdav${doc.getId()}_${doc.getLanguage()}.${fileExtension}</D:href>
         <D:propstat>
           <D:prop>
-            <D:displayname>
-              ${doc.getName()}_${doc.getLanguage()}.html</D:displayname>
-            <D:getlastmodified>
-              ${dateFormat.format(doc.getLastModified())}</D:getlastmodified>
+            <D:displayname>${doc.getName()}_${doc.getLanguage()}.${fileExtension}</D:displayname>
+            <D:getlastmodified>${dateFormat.format(doc.getLastModified())}</D:getlastmodified>
             <D:creationdate/>
-            <D:getcontenttype>text/html</D:getcontenttype>
+            <D:getcontenttype>application/xml</D:getcontenttype>
             <D:getcontentlength>${doc.getFile().length()}</D:getcontentlength>
             <D:resourcetype/>
             <D:lockdiscovery>
@@ -26,9 +27,7 @@
                   <D:locktype><D:write/></D:locktype>
                   <D:lockscope><D:exclusive/></D:lockscope>
                   <D:depth>0</D:depth>
-                  <D:owner>
-                    <D:href>${checkedOut[status.index].getIdentity()}</D:href>
-                    </D:owner>
+                  <D:owner><D:href>${checkedOut[status.index].getIdentity()}</D:href></D:owner>
                   <D:timeout>Infinite</D:timeout>
                   <D:locktoken>
                     <D:href>${usecase.getParameter('sourceURL')}</D:href>
@@ -42,5 +41,4 @@
       </D:response>
     </jx:if>
   </jx:forEach>
-  
 </D:multistatus>
