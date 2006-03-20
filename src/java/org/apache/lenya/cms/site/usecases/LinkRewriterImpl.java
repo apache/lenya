@@ -105,7 +105,8 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
                     String[] xPaths = doctype.getLinkAttributeXPaths();
 
                     try {
-                        org.w3c.dom.Document xmlDocument = SourceUtil.readDOM(examinedDocument.getSourceURI(), this.manager);
+                        org.w3c.dom.Document xmlDocument = SourceUtil.readDOM(examinedDocument.getSourceURI(),
+                                this.manager);
 
                         for (int xPathIndex = 0; xPathIndex < xPaths.length; xPathIndex++) {
                             NodeList nodes = XPathAPI.selectNodeList(xmlDocument,
@@ -143,9 +144,10 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
                                     examinedDocument.getSourceURI(),
                                     this.manager);
                         }
-		    } catch (SAXParseException e) {
-                        getLogger().warn("Document [" + examinedDocument + "] is not XML and will be ignored!");
-		    } catch (Exception e) {
+                    } catch (SAXParseException e) {
+                        getLogger().warn("Document [" + examinedDocument
+                                + "] is not XML and will be ignored!");
+                    } catch (Exception e) {
                         getLogger().error(e.getMessage(), e);
                     } finally {
                     }
