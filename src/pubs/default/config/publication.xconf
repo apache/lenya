@@ -30,7 +30,7 @@
   <breadcrumb-prefix/>
   <site-manager name="tree"/>
   
-  <!-- NOTE: Resource types need to be listed because of the workflow -->
+  <!-- NOTE: Resource types need to be listed because of the workflow resp. because the workflow depends on the publication and not on the resource type -->
   <resource-type name="xhtml" workflow="fallback://config/workflow/workflow.xml"/>
   <resource-type name="homepage" workflow="fallback://config/workflow/workflow.xml"/>
   <resource-type name="links" workflow="fallback://config/workflow/workflow.xml"/>
