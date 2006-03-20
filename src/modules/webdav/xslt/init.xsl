@@ -22,7 +22,7 @@
 
                     <D:getcontenttype>httpd/unix-directory</D:getcontenttype>
 
-                    <D:contentlength>0</D:contentlength>
+                    <D:getcontentlength>0</D:getcontentlength>
                  </D:prop>
 
                  <D:status>HTTP/1.1 200 OK</D:status>
@@ -46,7 +46,7 @@
 
                     <D:getcontenttype>httpd/unix-directory</D:getcontenttype>
 
-                    <D:contentlength>0</D:contentlength>
+                    <D:getcontentlength>0</D:getcontentlength>
                  </D:prop>
 
                  <D:status>HTTP/1.1 200 OK</D:status>

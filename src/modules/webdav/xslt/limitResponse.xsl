@@ -57,8 +57,8 @@
     <xsl:if test="//D:prop/D:getcontenttype"><xso:copy-of select="."/></xsl:if>
   </xso:template>
   
-  <xso:template match="D:contentlength">
-    <xsl:if test="//D:prop/D:contentlength"><xso:copy-of select="."/></xsl:if>
+  <xso:template match="D:getcontentlength">
+    <xsl:if test="//D:prop/D:getcontentlength"><xso:copy-of select="."/></xsl:if>
   </xso:template>
   
   <xso:template match="D:lockdiscovery">

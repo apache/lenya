@@ -15,7 +15,7 @@
                     <D:timeout>Second-604800</D:timeout>
                     <D:locktoken>
                          <D:href>
-                           <xsl:value-of select="docid"/>
+                           <xsl:value-of select="$docid"/>
                          </D:href>
                     </D:locktoken>
                </D:activelock>
