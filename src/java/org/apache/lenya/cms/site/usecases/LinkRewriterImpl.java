@@ -34,14 +34,13 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXParseException;
 
 /**
  * Rewrite the links in a publication. This is used after renaming / moving a document.
