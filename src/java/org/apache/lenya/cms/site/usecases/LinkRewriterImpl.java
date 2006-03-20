@@ -104,55 +104,56 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
                     ResourceType doctype = examinedDocument.getResourceType();
                     String[] xPaths = doctype.getLinkAttributeXPaths();
 
-                    try {
-                        org.w3c.dom.Document xmlDocument = SourceUtil.readDOM(examinedDocument.getSourceURI(),
-                                this.manager);
+                    if (xPaths.length > 0) {
+                        try {
+                            org.w3c.dom.Document xmlDocument = SourceUtil.readDOM(examinedDocument.getSourceURI(),
+                                    this.manager);
 
-                        for (int xPathIndex = 0; xPathIndex < xPaths.length; xPathIndex++) {
-                            NodeList nodes = XPathAPI.selectNodeList(xmlDocument,
-                                    xPaths[xPathIndex]);
-                            for (int nodeIndex = 0; nodeIndex < nodes.getLength(); nodeIndex++) {
-                                Node node = nodes.item(nodeIndex);
-                                if (node.getNodeType() != Node.ATTRIBUTE_NODE) {
-                                    throw new RuntimeException("The XPath [" + xPaths[xPathIndex]
-                                            + "] may only match attribute nodes!");
-                                }
-                                Attr attribute = (Attr) node;
-                                final String url = attribute.getValue();
+                            for (int xPathIndex = 0; xPathIndex < xPaths.length; xPathIndex++) {
+                                NodeList nodes = XPathAPI.selectNodeList(xmlDocument,
+                                        xPaths[xPathIndex]);
+                                for (int nodeIndex = 0; nodeIndex < nodes.getLength(); nodeIndex++) {
+                                    Node node = nodes.item(nodeIndex);
+                                    if (node.getNodeType() != Node.ATTRIBUTE_NODE) {
+                                        throw new RuntimeException("The XPath ["
+                                                + xPaths[xPathIndex]
+                                                + "] may only match attribute nodes!");
+                                    }
+                                    Attr attribute = (Attr) node;
+                                    final String url = attribute.getValue();
 
-                                if (url.startsWith(contextPath + "/" + publication.getId())) {
-                                    final String webappUrl = url.substring(contextPath.length());
+                                    if (url.startsWith(contextPath + "/" + publication.getId())) {
+                                        final String webappUrl = url.substring(contextPath.length());
 
-                                    if (identityMap.isDocument(webappUrl)) {
-                                        Document targetDocument = identityMap.getFromURL(webappUrl);
+                                        if (identityMap.isDocument(webappUrl)) {
+                                            Document targetDocument = identityMap.getFromURL(webappUrl);
 
-                                        if (matches(targetDocument, originalTargetDocument)) {
-                                            String newTargetUrl = getNewTargetURL(targetDocument,
-                                                    originalTargetDocument,
-                                                    newTargetDocument);
-                                            attribute.setValue(contextPath + newTargetUrl);
-                                            linksRewritten = true;
+                                            if (matches(targetDocument, originalTargetDocument)) {
+                                                String newTargetUrl = getNewTargetURL(targetDocument,
+                                                        originalTargetDocument,
+                                                        newTargetDocument);
+                                                attribute.setValue(contextPath + newTargetUrl);
+                                                linksRewritten = true;
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
 
-                        if (linksRewritten) {
-                            examinedDocument.getRepositoryNode().lock();
-                            SourceUtil.writeDOM(xmlDocument,
-                                    examinedDocument.getSourceURI(),
-                                    this.manager);
+                            if (linksRewritten) {
+                                examinedDocument.getRepositoryNode().lock();
+                                SourceUtil.writeDOM(xmlDocument,
+                                        examinedDocument.getSourceURI(),
+                                        this.manager);
+                            }
+                        } catch (Exception e) {
+                            throw new RuntimeException(e);
                         }
-                    } catch (SAXParseException e) {
-                        getLogger().warn("Document [" + examinedDocument
-                                + "] is not XML and will be ignored!");
-                    } catch (Exception e) {
-                        getLogger().error(e.getMessage(), e);
-                    } finally {
                     }
+
                 } else {
-                    getLogger().warn("No such document: " + examinedDocument.getSourceURI());
+                    throw new RuntimeException("No such document: [" + examinedDocument
+                            + "] - source URI: [" + examinedDocument.getSourceURI() + "]");
                 }
             }
         } catch (final Exception e) {
