@@ -84,7 +84,7 @@
 
       <!-- matches lenya/**.ext -->
       <map:match pattern="images/**.*">
-        <map:read src="resources/images/{1}.{2}" mime-type="image/{4}" />
+        <map:read src="resources/images/{1}.{2}" mime-type="image/{2}" />
       </map:match>
     </map:pipeline>
 
