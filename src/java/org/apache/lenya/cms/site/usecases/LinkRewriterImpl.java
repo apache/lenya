@@ -150,7 +150,7 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
                     } finally {
                     }
                 } else {
-                    getLogger().warn("HUGO: No such document: " + examinedDocument.getSourceURI());
+                    getLogger().warn("No such document: " + examinedDocument.getSourceURI());
                 }
             }
         } catch (final Exception e) {
