@@ -204,9 +204,8 @@
     <jar jarfile="${dist.bin.warfile}" basedir="${build.webapp}" excludes="META-INF/MANIFEST.MF"/>
   </target>
 
-  <!-- Clean targets -->
-  <target name="reset" depends="clean" description="Resets the deployment by also cleaning the servlet engine context">
-    <!-- Empty server cache - this directory is set in the "local.build.properties" file -->
+  <!-- Clean Tomcat directories -->
+  <target name="clean-tomcat" depends="clean" description="Clean the deployment by also cleaning the servlet engine context of Tomcat">
     <delete dir="${tomcat.cache.dir}"/>
     <mkdir dir="${tomcat.webapps.dir}" />
     <delete includeEmptyDirs="true">
