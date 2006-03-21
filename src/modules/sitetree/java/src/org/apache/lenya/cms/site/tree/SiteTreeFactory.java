@@ -55,8 +55,7 @@ public class SiteTreeFactory extends AbstractLogEnabled implements IdentifiableF
         String area = snippets[1];
 
         Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
-        DefaultSiteTree tree = new DefaultSiteTree(publication, area, this.manager);
-        ContainerUtil.enableLogging(tree, getLogger());
+        DefaultSiteTree tree = new DefaultSiteTree(publication, area, this.manager, getLogger());
         return tree;
     }
 

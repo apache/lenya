@@ -26,6 +26,7 @@ import javax.xml.transform.TransformerException;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.RepositorySource;
@@ -71,10 +72,14 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * @param publication The publication.
      * @param _area The area.
      * @param manager The service manager.
+     * @param logger The logger.
      * @throws SiteException if an error occurs.
      */
-    protected DefaultSiteTree(Publication publication, String _area, ServiceManager manager)
+    protected DefaultSiteTree(Publication publication, String _area, ServiceManager manager, Logger logger)
             throws SiteException {
+        
+        ContainerUtil.enableLogging(this, logger);
+        
         this.sourceUri = publication.getSourceURI() + "/content/" + _area + "/"
                 + SITE_TREE_FILENAME;
         this.area = _area;
