@@ -222,7 +222,7 @@
     <delete dir="${dist.root}"/>
   </target>
 
-  <!-- Install the webapp -->
+  <!-- Install the webapp into Tomcat -->
   <target name="install-tomcat" description="Install the webapp into Tomcat servlet engine context" if="servlet.engine.tomcat">
     <!-- Copy From build.webapp=${build.webapp} To tomcat.webapps.dir=${tomcat.webapps.dir} -->
     <copy todir="${tomcat.webapps.dir}" filtering="off">
@@ -235,7 +235,15 @@
         <include name="*.jar"/>
       </fileset>
     </copy>
+
+    <!-- Customize tomcatctrl -->
+<!--
+    <echo>TODO: Customize tomcatctrl: src/webapp/lenya/bin/tomcatctrl</echo>
+-->
   </target>
+
+
+
 
   <!-- Install publication -->
   <target name="install-pub" depends="webapp" description="Install a publication into servlet engine context. Usage: -Dpub.prefix=blog">
