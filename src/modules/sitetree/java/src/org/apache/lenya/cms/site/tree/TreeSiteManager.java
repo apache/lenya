@@ -35,7 +35,6 @@ import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.transaction.IdentifiableFactory;
-import org.apache.log4j.Category;
 
 /**
  * A tree-based site manager.
@@ -43,8 +42,6 @@ import org.apache.log4j.Category;
  * @version $Id: TreeSiteManager.java 208766 2005-07-01 16:05:00Z andreas $
  */
 public class TreeSiteManager extends AbstractSiteManager implements Serviceable {
-
-    private Category log = Category.getInstance(TreeSiteManager.class);
 
     /**
      * Ctor.
@@ -164,7 +161,6 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         SiteTree tree = getTree(resource);
         SiteTreeNode node = tree.getNode(resource.getId());
         boolean exists = node != null && node.getLabel(resource.getLanguage()) != null;
-        if (!exists) log.warn("No such resource: " + resource);
         return exists;
     }
 
@@ -178,7 +174,9 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         if (node != null) {
             uuid = node.getUUID();
         }
-        if (uuid == null) log.warn("No UUID: " + resource);
+        if (uuid == null) {
+            getLogger().warn("No UUID: " + resource);
+        }
         return uuid;
     }
 
@@ -293,8 +291,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
 
         if (node.getLabels().length == 0) {
             tree.removeNode(document.getId());
-        }
-        else {
+        } else {
             tree.save();
         }
     }
