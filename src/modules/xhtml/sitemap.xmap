@@ -25,8 +25,9 @@
   
     <map:serializers default="xhtml"> 
       <map:serializer name="xml-get" src="org.apache.cocoon.serialization.XMLSerializer" mime-type="text/xml">
-        <encoding>utf-8</encoding>
-        <omit-xml-declaration>yes</omit-xml-declaration>
+        <doctype-public>-//W3C//DTD XHTML 1.0 Strict//EN</doctype-public>
+        <doctype-system>http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd</doctype-system>
+        <encoding>UTF-8</encoding>
       </map:serializer>
     </map:serializers>
  
