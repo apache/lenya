@@ -78,13 +78,23 @@ public class DocumentReferencesHelper {
      * @return the search string
      */
     protected String getReferencesSearchString() {
+        Publication publication = pageEnvelope.getPublication();
+        Document document = pageEnvelope.getDocument();
+        String langSuffix;
+        if (document.getLanguage().equals(publication.getDefaultLanguage())) {
+            langSuffix = "(_"+document.getLanguage()+")?";
+        } else {
+            langSuffix = "_"+document.getLanguage();
+        }
+        
         return "href\\s*=\\s*\""
             + pageEnvelope.getContext()
             + "/"
             + pageEnvelope.getPublication().getId()
             + "/"
             + pageEnvelope.getDocument().getArea()
-            + pageEnvelope.getDocument().getId();
+            + pageEnvelope.getDocument().getId()
+            + langSuffix + ".html";
     }
 
     /**
@@ -148,66 +158,16 @@ public class DocumentReferencesHelper {
                         publication.getContentDirectory(area),
                         getReferencesSearchString());
                 for (int i = 0; i < inconsistentFiles.length; i++) {
-                    // for performance reasons the getReferencesSearchString() is 
-                    // constructed in a way such that it will catch all files which 
-                    // have a link to any language version of the current document.
-                    // That's why we need to do some additional tests for each hit. 
-                    String languageOfCurrentDocument =
-                        pageEnvelope.getDocument().getLanguage();
-                    String defaultLanguage =
-                        pageEnvelope.getPublication().getDefaultLanguage();
-                    Pattern referencesSearchStringWithLanguage =
-                        Pattern.compile(
-                            getReferencesSearchString()
-                                + "_"
-                                + languageOfCurrentDocument);
-                    Pattern referencesSearchStringWithOutLanguage =
-                        Pattern.compile(
-                            getReferencesSearchString() + "\\.html");
-                    log.debug(
-                        "languageOfCurrentDocument: "
-                            + languageOfCurrentDocument);
-                    log.debug("defaultLanguage: " + defaultLanguage);
-                    log.debug(
-                        "referencesSearchStringWithOutLanguage: "
-                            + referencesSearchStringWithOutLanguage.pattern());
-                    log.debug(
-                        "referencesSearchStringWithLanguage: "
-                            + referencesSearchStringWithLanguage.pattern());
-                    // a link is indeed to the current document if the following conditions
-                    // are met:
-                    // 1. the link is to foo_xx and the language of the current 
-                    //    document is xx.
-                    // 2. or the link is to foo.html and the language of the current 
-                    //    document is the default language.
-                    // Now negate the expression because we continue if above (1) and (2) are
-                    // false, and you'll get the following if statement
-                    if (!Grep
-                        .containsPattern(
-                            inconsistentFiles[i],
-                            referencesSearchStringWithLanguage)
-                        && !(Grep
-                            .containsPattern(
-                                inconsistentFiles[i],
-                                referencesSearchStringWithOutLanguage)
-                            && languageOfCurrentDocument.equals(
-                                defaultLanguage))) {
-                        // the reference foo_xx is neither to the language of the current 
-                        // document.
-                        // nor is the reference foo.html and the current document is in the 
-                        // default language.
-                        // So the reference is of no importance to us, skip 
-                        continue;
-                    }
-
                     documentId =
                         fileMapper.getDocumentId(
                             publication,
                             area,
                             inconsistentFiles[i]);
-                    log.debug("documentId: " + documentId);
                     language = fileMapper.getLanguage(inconsistentFiles[i]);
-                    log.debug("language: " + language);
+                    if (log.isDebugEnabled()) {
+                        log.debug("documentId: " + documentId);
+                        log.debug("language: " + language);
+                    }
 
                     String url = null;
                     if (language != null) {
@@ -217,13 +177,14 @@ public class DocumentReferencesHelper {
                                 area,
                                 documentId,
                                 language);
-                        log.debug("url: " + url);
                     } else {
                         url =
                             builder.buildCanonicalUrl(
                                 publication,
                                 area,
                                 documentId);
+                    }
+                    if (log.isDebugEnabled()) {
                         log.debug("url: " + url);
                     }
                     documents.add(builder.buildDocument(publication, url));
