@@ -88,6 +88,12 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
         Request request = ObjectModelHelper.getRequest(this.objectModel);
         String contextPath = request.getContextPath();
 
+        if (getLogger().isDebugEnabled()) {
+            getLogger().debug("Rewriting source: [" + originalTargetDocument + "]");
+            getLogger().debug("Rewriting target: [" + newTargetDocument + "]");
+            getLogger().debug("Rewriting context path: [" + contextPath + "]");
+        }
+
         try {
             for (int documentIndex = 0; documentIndex < documents.length; documentIndex++) {
 
@@ -103,12 +109,21 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
                     ResourceType doctype = examinedDocument.getResourceType();
                     String[] xPaths = doctype.getLinkAttributeXPaths();
 
-                    if (xPaths.length > 0) {
+                    if (xPaths.length == 0) {
+                        if (getLogger().isDebugEnabled()) {
+                            getLogger().debug("Rewriting: No XPaths for resource type ["
+                                    + doctype.getName() + "]");
+                        }
+                    } else {
                         try {
                             org.w3c.dom.Document xmlDocument = SourceUtil.readDOM(examinedDocument.getSourceURI(),
                                     this.manager);
 
                             for (int xPathIndex = 0; xPathIndex < xPaths.length; xPathIndex++) {
+                                if (getLogger().isDebugEnabled()) {
+                                    getLogger().debug("Rewriting: Check XPath ["
+                                            + xPaths[xPathIndex] + "]");
+                                }
                                 NodeList nodes = XPathAPI.selectNodeList(xmlDocument,
                                         xPaths[xPathIndex]);
                                 for (int nodeIndex = 0; nodeIndex < nodes.getLength(); nodeIndex++) {
@@ -120,17 +135,27 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
                                     }
                                     Attr attribute = (Attr) node;
                                     final String url = attribute.getValue();
+                                    if (getLogger().isDebugEnabled()) {
+                                        getLogger().debug("Rewriting: Check URL [" + url + "]");
+                                    }
 
                                     if (url.startsWith(contextPath + "/" + publication.getId())) {
                                         final String webappUrl = url.substring(contextPath.length());
-
                                         if (identityMap.isDocument(webappUrl)) {
                                             Document targetDocument = identityMap.getFromURL(webappUrl);
+                                            if (getLogger().isDebugEnabled()) {
+                                                getLogger().debug("Rewriting: Check webapp URL ["
+                                                        + webappUrl + "]");
+                                            }
 
                                             if (matches(targetDocument, originalTargetDocument)) {
                                                 String newTargetUrl = getNewTargetURL(targetDocument,
                                                         originalTargetDocument,
                                                         newTargetDocument);
+                                                if (getLogger().isDebugEnabled()) {
+                                                    getLogger().debug("Rewrite URL [" + webappUrl
+                                                            + "] to [" + newTargetUrl + "]");
+                                                }
                                                 attribute.setValue(contextPath + newTargetUrl);
                                                 linksRewritten = true;
                                             }
