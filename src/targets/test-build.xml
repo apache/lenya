@@ -155,7 +155,9 @@
 
   <!-- Runs JUnit tests -->
   <target name="tests.junit" depends="tests.prepare, test.pub.prepare">
-    <junit printsummary="yes" showoutput="true" haltonerror="on" haltonfailure="on">
+    <junit printsummary="yes" showoutput="true" haltonerror="on" haltonfailure="on" fork="true">
+      <jvmarg value="-Djava.endorsed.dirs=${build.webapp}/WEB-INF/lib/endorsed"/>
+      <jvmarg value="-Dorg.xml.sax.parser=org.apache.xerces.parsers.SAXParser"/>
       <sysproperty key="junit.test.loglevel" value="${junit.test.loglevel}"/>
       <sysproperty key="contextRoot" value="${basedir}/build/lenya/webapp"/>
       <sysproperty key="tempDir" value="${basedir}/build/lenya/temp"/>
@@ -171,7 +173,7 @@
         </fileset>
         <pathelement path="${src.test.dir}"/>
       </classpath>
-
+      
       <test name="org.apache.lenya.ac.impl.IdentityTest" todir="${junit.dir}"/>
       <test name="org.apache.lenya.ac.impl.AccessControllerTest" todir="${junit.dir}"/>
       <test name="org.apache.lenya.ac.impl.AccreditableManagerTest" todir="${junit.dir}"/>
@@ -198,7 +200,10 @@
         <test name="org.apache.lenya.cms.rc.RCMLTest" todir="${junit.dir}"/>
         <test name="org.apache.lenya.cms.rc.RevisionControllerTest" todir="${junit.dir}"/>
       -->
+      
       <test name="org.apache.lenya.cms.workflow.WorkflowTest" todir="${junit.dir}"/>
+      <test name="org.apache.lenya.cms.site.usecases.LinkRewriterTest" todir="${junit.dir}"/>
+      
     </junit>
   </target>
   
