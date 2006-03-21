@@ -20,7 +20,6 @@
 package org.apache.lenya.cms.site.tree;
 
 import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.cocoon.SitemapComponentTestCase;
 import org.apache.lenya.cms.LenyaTestCase;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
@@ -44,7 +43,7 @@ public class SiteTreeNodeImplTest extends LenyaTestCase {
     public void setUp() throws Exception {
         super.setUp();
         Publication pub = PublicationUtil.getPublication(getManager(), "test");
-        this.siteTree = new DefaultSiteTree(pub, "testArea", getManager());
+        this.siteTree = new DefaultSiteTree(pub, "testArea", getManager(), getLogger());
         ContainerUtil.enableLogging(siteTree, getLogger());
         
         siteTree.getRepositoryNode().lock();
