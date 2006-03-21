@@ -22,6 +22,16 @@
   <lenya:pub-version>@lenya.version@</lenya:pub-version>
   <lenya:lenya-version>@lenya.version@</lenya:lenya-version>
   <lenya:cocoon-version>2.1.8 or 2.1.9-dev</lenya:cocoon-version>
+  <lenya:modules>
+    <lenya:module>lucene</lenya:module>
+    <lenya:module>homepage</lenya:module>
+    <lenya:module>xhtml</lenya:module>
+    <lenya:module>links</lenya:module>
+    <lenya:module href="https://svn.apache.org/repos/asf/lenya/trunk/src/modules/opendocument">opendocumenrt</lenya:module>
+    <lenya:module>cforms</lenya:module>
+    <lenya:module>sitetree</lenya:module>
+    <lenya:module>...</lenya:module>
+  </lenya:modules>
   <lenya:description>This publication is a best practice, getting started publication.</lenya:description>
   <lenya:credits>Special thanks to </lenya:credits>
   <lenya:help></lenya:help>
