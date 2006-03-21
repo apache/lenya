@@ -53,13 +53,13 @@ To render your lenya site with forrest first you will need to deploy
 locally some plugins (first time and after ./build.sh clean) and then start forrest.
 1) deploy locally
 cd {forrest-trunk}/whiteboard/plugins/org.apache.forrest.themes.core
-ant local-deploy
+$FORREST_HOME/tools/ant/bin/ant local-deploy
 cd ../org.apache.forrest.plugin.internal.dispatcher
-ant local-deploy
+$FORREST_HOME/tools/ant/bin/ant local-deploy
 cd ../org.apache.forrest.plugin.input.Lenya
-ant local-deploy
+$FORREST_HOME/tools/ant/bin/ant local-deploy
 2) Run forrest, run ;)
-cd {doco}
+cd $FORREST_HOME/whiteboard/doco
 forrest run
 http://localhost:8888/index.html
 
