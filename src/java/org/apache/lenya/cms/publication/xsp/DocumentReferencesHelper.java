@@ -125,11 +125,11 @@ public class DocumentReferencesHelper {
         return Pattern.compile(
             "href\\s*=\\s*\""
                 + pageEnvelope.getContext()
-                + "/"
+                + "(/"
                 + pageEnvelope.getPublication().getId()
                 + "/"
                 + pageEnvelope.getDocument().getArea()
-                + "(/[-a-zA-Z0-9_/]+?)(_[a-z][a-z])?\\.html");
+                + "(/[-a-zA-Z0-9_/]+?)(_[a-z][a-z])?\\.html)");
     }
 
     /**
@@ -222,59 +222,28 @@ public class DocumentReferencesHelper {
                     pageEnvelope.getDocument().getFile(),
                     internalLinkPattern,
                     1);
-            String[] internalLinksLanguages =
-                Grep.findPattern(
-                    pageEnvelope.getDocument().getFile(),
-                    internalLinkPattern,
-                    2);
 
             for (int i = 0; i < internalLinks.length; i++) {
-                String docId = internalLinks[i];
-                String language = null;
+                Document document = builder.buildDocument(publication, internalLinks[i]);
+                
+                String docId = document.getId();
+                String language = document.getLanguage();
 
-                log.debug("docId: " + docId);
-                if (internalLinksLanguages[i] != null) {
-                    // trim the leading '_'
-                    language = internalLinksLanguages[i].substring(1);
+                if (log.isDebugEnabled()) {
+                    log.debug("docId: " + docId);
+                    log.debug("language: " + language);
                 }
 
-                log.debug("language: " + language);
                 SiteTreeNode documentNode = sitetree.getNode(docId);
 
-                if (language == null) {
-                    String url =
-                        "/"
-                            + publication.getId()
-                            + "/"
-                            + pageEnvelope.getDocument().getArea()
-                            + docId
-                            + ".html";
-                    language =
-                        builder.buildDocument(publication, url).getLanguage();
-                }
-                log.debug("language: " + language);
                 if (documentNode == null
                     || documentNode.getLabel(language) == null) {
                     // the docId has not been published for the given language
-                    String url = null;
-                    if (language != null) {
-                        url =
-                            builder.buildCanonicalUrl(
-                                publication,
-                                Publication.AUTHORING_AREA,
-                                docId,
-                                language);
-                        log.debug("url: " + url);
-                    } else {
-                        url =
-                            builder.buildCanonicalUrl(
-                                publication,
-                                Publication.AUTHORING_AREA,
-                                docId);
-                        log.debug("url: " + url);
+                    if (log.isDebugEnabled()) {
+                        log.debug("url: " + internalLinks[i]);
                     }
                     unpublishedReferences.add(
-                        builder.buildDocument(publication, url));
+                        builder.buildDocument(publication, internalLinks[i]));
                 }
             }
         } catch (SiteTreeException e) {
