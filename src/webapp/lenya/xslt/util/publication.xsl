@@ -54,6 +54,7 @@
 <p>
 <xsl:apply-templates select="lenya:lenya-version"/>
 <xsl:apply-templates select="lenya:cocoon-version"/>
+<xsl:apply-templates select="lenya:modules"/>
 </p>
 
 <xsl:apply-templates select="lenya:readme"/>
@@ -77,11 +78,20 @@
 </xsl:template>
 
 <xsl:template match="lenya:version|lenya:lenya-version">
-Lenya <strong><xsl:value-of select="."/></strong><br/>
+Lenya: <strong><xsl:value-of select="."/></strong><br/>
 </xsl:template>
 
 <xsl:template match="lenya:cocoon-version">
-Cocoon <strong><xsl:value-of select="."/></strong><br/>
+Cocoon: <strong><xsl:value-of select="."/></strong><br/>
+</xsl:template>
+
+<xsl:template match="lenya:modules">
+Modules:
+<ul>
+<xsl:for-each select="lenya:module">
+  <li><xsl:value-of select="."/></li>
+</xsl:for-each>
+</ul>
 </xsl:template>
 
 <xsl:template match="lenya:pub-version">
