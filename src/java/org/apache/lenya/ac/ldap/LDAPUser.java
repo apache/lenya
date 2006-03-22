@@ -48,7 +48,7 @@ import com.sun.jndi.ldap.LdapURL;
  * @version $Id$
  */
 public class LDAPUser extends FileUser {
-    private static Properties defaultProperties = null;
+    private Properties defaultProperties = null;
     private static Category log =  Logger.getLogger(LDAPUser.class);
 
     public static final String LDAP_ID = "ldapid";
