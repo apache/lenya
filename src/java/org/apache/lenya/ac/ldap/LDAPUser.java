@@ -54,7 +54,7 @@ public class LDAPUser extends FileUser {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private static Properties defaultProperties = null;
+	private Properties defaultProperties = null;
 
     /**
      * <code>LDAP_ID</code> The LDAP id
