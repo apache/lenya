@@ -86,12 +86,10 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
         }
 
         Request request = ObjectModelHelper.getRequest(this.objectModel);
-        String contextPath = request.getContextPath();
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Rewriting source: [" + originalTargetDocument + "]");
             getLogger().debug("Rewriting target: [" + newTargetDocument + "]");
-            getLogger().debug("Rewriting context path: [" + contextPath + "]");
         }
 
         try {
@@ -139,8 +137,8 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
                                         getLogger().debug("Rewriting: Check URL [" + url + "]");
                                     }
 
-                                    if (url.startsWith(contextPath + "/" + publication.getId())) {
-                                        final String webappUrl = url.substring(contextPath.length());
+                                    if (url.startsWith("/" + publication.getId())) {
+                                        final String webappUrl = url;
                                         if (identityMap.isDocument(webappUrl)) {
                                             Document targetDocument = identityMap.getFromURL(webappUrl);
                                             if (getLogger().isDebugEnabled()) {
@@ -156,7 +154,7 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
                                                     getLogger().debug("Rewrite URL [" + webappUrl
                                                             + "] to [" + newTargetUrl + "]");
                                                 }
-                                                attribute.setValue(contextPath + newTargetUrl);
+                                                attribute.setValue(newTargetUrl);
                                                 linksRewritten = true;
                                             }
                                         }
