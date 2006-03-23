@@ -285,19 +285,25 @@ public abstract class MoveSubsite extends DocumentUsecase {
                 Node node = requiredSourceNodes[i];
                 boolean delete = true;
 
+                Document requiredDoc = map.get(node.getPublication(), node.getArea(), node.getDocumentId());
+                String[] languages = requiredDoc.getLanguages();
+                for (int l = 0; l < languages.length; l++) {
+                    Document langVersion = map.getLanguageVersion(requiredDoc, languages[l]);
+                    if (!sources.contains(langVersion) && !isPlaceholder(langVersion)) {
+                        delete = false;
+                    }
+                }
+                
                 Node[] requiringNodes = siteManager.getRequiringResources(map, node);
+                
                 for (int j = 0; j < requiringNodes.length; j++) {
                     Node n = requiringNodes[j];
                     Document reqDoc = map.get(n.getPublication(), n.getArea(), n.getDocumentId());
-                    String[] languages = reqDoc.getLanguages();
+                    languages = reqDoc.getLanguages();
                     for (int l = 0; l < languages.length; l++) {
                         Document langVersion = map.getLanguageVersion(reqDoc, languages[l]);
-                        if (!sources.contains(langVersion)) {
-                            MetaData meta = langVersion.getMetaDataManager().getLenyaMetaData();
-                            String placeholder = meta.getFirstValue(LenyaMetaData.ELEMENT_PLACEHOLDER);
-                            if (placeholder == null || !placeholder.equals("true")) {
-                                delete = false;
-                            }
+                        if (!sources.contains(langVersion) && !isPlaceholder(langVersion)) {
+                            delete = false;
                         }
                     }
                 }
@@ -325,5 +331,20 @@ public abstract class MoveSubsite extends DocumentUsecase {
             }
         }
         return docsToDelete;
+    }
+    
+    /**
+     * Checks if a document is a placeholder.
+     * @param document
+     * @return
+     * @throws DocumentException
+     */
+    protected boolean isPlaceholder(Document document) throws DocumentException {
+        MetaData meta = document.getMetaDataManager().getLenyaMetaData();
+        String placeholder = meta.getFirstValue(LenyaMetaData.ELEMENT_PLACEHOLDER);
+        if (placeholder == null || !placeholder.equals("true")) {
+            return false;
+        }
+        return true;
     }
 }
