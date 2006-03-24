@@ -42,10 +42,11 @@
 
   <!-- Project version and name -->
   <property name="version" value="1.4-dev"/>
+  <property name="lenya.revision" value="xxxxxx"/>
   <property name="fullname" value="${ant.project.name}-${version}"/>
   <property name="distname" value="apache-${ant.project.name}-${version}"/>
   <property name="Name"     value="Apache Lenya"/>
-  <property name="year"     value="1999-2005"/>
+  <property name="year"     value="1999-2006"/>
 
   <property name="debug"          value="on"/>
   <property name="optimize"       value="on"/>
