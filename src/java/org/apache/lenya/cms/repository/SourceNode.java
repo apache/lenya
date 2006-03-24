@@ -639,8 +639,19 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         return sourceURI;
     }
 
+    /**
+     * @return The source URI of the meta data node.
+     * TODO: This is a hack and can be removed when UUIDs are used.
+     */
     protected String getMetaSourceURI() {
-        return getSourceURI() + "." + LENYA_META_SUFFIX;
+        String sourceUri = getSourceURI();
+        if (!sourceUri.endsWith(".xml")) {
+            int lastDotIndex = sourceUri.lastIndexOf(".");
+            if (lastDotIndex > -1) {
+                sourceUri = sourceUri.substring(0, lastDotIndex) + ".xml";
+            }
+        }
+        return sourceUri + "." + LENYA_META_SUFFIX;
     }
 
     private MetaDataManager metaDataManager;

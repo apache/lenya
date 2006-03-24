@@ -106,6 +106,19 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
         try {
 
+            // This locks the meta data node, using the default source URI with the extension ".xml".
+            // Note that the actual source URI with the correct extension is not yet determined,
+            // that's why the node has to be locked again later on.
+            Node node = document.getRepositoryNode();
+            node.lock();
+
+            // Write Lenya-internal meta-data
+            Map lenyaMetaData = new HashMap();
+            lenyaMetaData.put(LenyaMetaData.ELEMENT_RESOURCE_TYPE, documentType.getName());
+            lenyaMetaData.put(LenyaMetaData.ELEMENT_CONTENT_TYPE, "xml");
+            lenyaMetaData.put(LenyaMetaData.ELEMENT_EXTENSION, extension);
+            document.getMetaDataManager().setLenyaMetaData(lenyaMetaData);
+
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Create");
                 getLogger().debug("    document:     [" + document + "]");
@@ -113,25 +126,15 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 getLogger().debug("    contents URI: [" + initialContentsURI + "]");
             }
 
+            // Now that the correcet source is determined, lock the document node again.
+            document.getRepositoryNode().lock();
+
             // look up creator for documents of this type
             NodeCreatorInterface creator = documentType.getCreator();
-
-            // now that the source is determined, lock involved nodes
-            Node node = document.getRepositoryNode();
-            node.lock();
-
-            //
             creator.create(initialContentsURI, document, parameters);
         } catch (Exception e) {
             throw new DocumentBuildException("call to creator for new document failed", e);
         }
-
-        // Write Lenya-internal meta-data
-        Map lenyaMetaData = new HashMap(2);
-        lenyaMetaData.put(LenyaMetaData.ELEMENT_RESOURCE_TYPE, documentType.getName());
-        lenyaMetaData.put(LenyaMetaData.ELEMENT_CONTENT_TYPE, "xml");
-        lenyaMetaData.put(LenyaMetaData.ELEMENT_EXTENSION, extension);
-        document.getMetaDataManager().setLenyaMetaData(lenyaMetaData);
 
         // Notify site manager about new document
         addToSiteManager(document, navigationTitle, visibleInNav);

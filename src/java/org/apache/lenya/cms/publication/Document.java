@@ -174,12 +174,6 @@ public interface Document extends MetaDataOwner, Identifiable {
     String getSourceURI();
     
     /**
-     * Setter for the URI to resolve the document's source.
-     * @param uri URI
-     */
-    void setSourceURI(String uri);
-    
-    /**
      * Accepts a document visitor.
      * @param visitor The visitor.
      * @throws PublicationException if an error occurs.

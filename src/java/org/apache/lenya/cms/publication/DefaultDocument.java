@@ -43,7 +43,6 @@ import org.apache.lenya.cms.site.SiteManager;
 public class DefaultDocument extends AbstractLogEnabled implements Document {
 
     private DocumentIdentifier identifier;
-    private String sourceURI;
     private DocumentIdentityMap identityMap;
     protected ServiceManager manager;
     private MetaDataManager metaDataManager;
@@ -221,7 +220,8 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
                 uuid = siteManager.getUUID(this);
                 if (uuid == null) {
                     uuid = getCanonicalDocumentURL();
-                    getLogger().warn("No UUID found for document [" + this + "]. Use canonical document URL: " + uuid);
+                    getLogger().warn("No UUID found for document [" + this
+                            + "]. Use canonical document URL: " + uuid);
                 }
                 return uuid;
             } catch (Exception e) {
@@ -252,7 +252,8 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
             throw new RuntimeException(e);
         }
         if (sourceExtension == null) {
-            getLogger().warn("No source extension for document [" + this + "]. The extension \"" + defaultSourceExtension + "\" will be used as default!");
+            getLogger().warn("No source extension for document [" + this + "]. The extension \""
+                    + defaultSourceExtension + "\" will be used as default!");
             sourceExtension = defaultSourceExtension;
         }
         return sourceExtension;
@@ -315,8 +316,6 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.cms.publication.Document#existsInAnyLanguage()
      */
     public boolean existsInAnyLanguage() throws DocumentException {
-        boolean exists = false;
-
         String[] languages = getLanguages();
 
         if (languages.length > 0) {
@@ -326,7 +325,8 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
             }
             String[] allLanguages = getPublication().getLanguages();
             if (languages.length == allLanguages.length)
-                // TODO: This is not entirely true, because the publication could assume the languages EN and DE, but the document could exist for the languages DE and FR!
+                // TODO: This is not entirely true, because the publication could assume the
+                // languages EN and DE, but the document could exist for the languages DE and FR!
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("Document (" + this
                             + ") exists even in all languages of this publication");
@@ -457,32 +457,13 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
     }
 
     /**
-     * When source URI has not been set by whoever created the document, provides a default
-     * mechanism for constructing the document's URI.
-     * @return A URI.
+     * @see org.apache.lenya.cms.publication.Document#getSourceURI()
      */
-    private String getDefaultSourceURI() {
+    public String getSourceURI() {
         String path = getPublication().getPathMapper().getPath(getId(),
                 getLanguage(),
                 getSourceExtension());
         return getPublication().getSourceURI() + "/content/" + getArea() + "/" + path;
-
-    }
-
-    /**
-     * @see org.apache.lenya.cms.publication.Document#getSourceURI()
-     */
-    public String getSourceURI() {
-        if (sourceURI == null)
-            sourceURI = getDefaultSourceURI();
-        return sourceURI;
-    }
-
-    /**
-     * @see org.apache.lenya.cms.publication.Document#setSourceURI(String)
-     */
-    public void setSourceURI(String _uri) {
-        sourceURI = _uri;
     }
 
     /**
