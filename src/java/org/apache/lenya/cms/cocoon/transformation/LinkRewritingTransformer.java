@@ -68,9 +68,9 @@ import org.xml.sax.helpers.AttributesImpl;
  * <ul>
  * <li>The area is replaced by the current area (obtained from the page envelope).</li>
  * <li>A URL prefix is added depending on the proxy configuration of the publication.</li>
- * <li>If the target document does not exist and is in the authoring area, the href attribute is 
+ * <li>If the target document does not exist and is in the authoring area, the href attribute is
  * removed and a class="brokenlink" attribute is added to the <code>&lt;a/&gt;</code> element</li>
- * <li>If the target document does not exist and is in the live area, the <code>&lt;a/&gt;</code> 
+ * <li>If the target document does not exist and is in the live area, the <code>&lt;a/&gt;</code>
  * element is removed to disable the link.</li>
  * </ul>
  * 
@@ -80,7 +80,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
 
     protected static final String BROKEN_ATTRIB = "class";
     protected static final String BROKEN_VALUE = "brokenlink";
-    
+
     private boolean ignoreAElement = false;
     private ServiceSelector serviceSelector;
     private PolicyManager policyManager;
@@ -100,7 +100,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
         super.setup(_resolver, _objectModel, _source, _parameters);
 
         Request _request = ObjectModelHelper.getRequest(_objectModel);
-        
+
         try {
             Session session = RepositoryUtil.getSession(_request, getLogger());
             this.identityMap = new DocumentIdentityMap(session, this.manager, getLogger());
@@ -120,10 +120,9 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
         this.policyManager = null;
 
         try {
-            this.serviceSelector = (ServiceSelector) this.manager
-                    .lookup(AccessControllerResolver.ROLE + "Selector");
-            this.acResolver = (AccessControllerResolver) this.serviceSelector
-                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
+            this.serviceSelector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
+                    + "Selector");
+            this.acResolver = (AccessControllerResolver) this.serviceSelector.select(AccessControllerResolver.DEFAULT_RESOLVER);
 
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("    Resolved AC resolver [" + this.acResolver + "]");
@@ -200,26 +199,25 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
 
                         final String webappUrlWithQueryString = href;
                         String webappUrlWithAnchor;
-                        
+
                         String queryString = null;
                         int queryStringIndex = webappUrlWithQueryString.indexOf("?");
                         if (queryStringIndex > -1) {
-                            webappUrlWithAnchor = webappUrlWithQueryString.substring(0, queryStringIndex);
+                            webappUrlWithAnchor = webappUrlWithQueryString.substring(0,
+                                    queryStringIndex);
                             queryString = webappUrlWithQueryString.substring(queryStringIndex + 1);
-                        }
-                        else {
+                        } else {
                             webappUrlWithAnchor = webappUrlWithQueryString;
                         }
-                        
+
                         String anchor = null;
                         String webappUrl = null;
-                        
+
                         int anchorIndex = webappUrlWithAnchor.indexOf("#");
                         if (anchorIndex > -1) {
                             webappUrl = webappUrlWithAnchor.substring(0, anchorIndex);
                             anchor = webappUrlWithAnchor.substring(anchorIndex + 1);
-                        }
-                        else {
+                        } else {
                             webappUrl = webappUrlWithAnchor;
                         }
 
@@ -236,13 +234,24 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                                         + targetDocument + "]");
                             }
 
-                            targetDocument = this.identityMap.get(publication, getCurrentDocument()
-                                    .getArea(), targetDocument.getId(), targetDocument
-                                    .getLanguage());
+                            targetDocument = this.identityMap.get(publication,
+                                    getCurrentDocument().getArea(),
+                                    targetDocument.getId(),
+                                    targetDocument.getLanguage());
 
                             if (targetDocument.exists()) {
-                                rewriteLink(newAttrs, targetDocument, anchor, queryString);
-                            } else if (getCurrentDocument().getArea().equals(Publication.AUTHORING_AREA)) {
+                                String extension = "";
+                                int lastDotIndex = webappUrl.lastIndexOf(".");
+                                if (lastDotIndex > -1) {
+                                    extension = webappUrl.substring(lastDotIndex);
+                                }
+                                rewriteLink(newAttrs,
+                                        targetDocument,
+                                        anchor,
+                                        queryString,
+                                        extension);
+                            } else if (getCurrentDocument().getArea()
+                                    .equals(Publication.AUTHORING_AREA)) {
                                 markBrokenLink(newAttrs, href);
                             } else {
                                 this.ignoreAElement = true;
@@ -277,7 +286,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
             }
         }
     }
-    
+
     /**
      * Marks a <code>&lt;a/&gt;</code> element as broken and removes href attribute.
      * 
@@ -286,15 +295,15 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
      */
     protected void markBrokenLink(AttributesImpl newAttrs, String brokenHref)
             throws AccessControlException {
-        if(newAttrs.getIndex(BROKEN_ATTRIB) > -1)
+        if (newAttrs.getIndex(BROKEN_ATTRIB) > -1)
             newAttrs.removeAttribute(newAttrs.getIndex(BROKEN_ATTRIB));
-        if(newAttrs.getIndex("title") > -1)
+        if (newAttrs.getIndex("title") > -1)
             newAttrs.removeAttribute(newAttrs.getIndex("title"));
-        if(newAttrs.getIndex("href") > -1)
-            newAttrs.setAttribute(newAttrs.getIndex("href"),"","href","href","CDATA","");
+        if (newAttrs.getIndex("href") > -1)
+            newAttrs.setAttribute(newAttrs.getIndex("href"), "", "href", "href", "CDATA", "");
         String warning = "Broken Link: " + brokenHref;
-        newAttrs.addAttribute("","title","title","CDATA",warning);
-        newAttrs.addAttribute("",BROKEN_ATTRIB,BROKEN_ATTRIB,"CDATA",BROKEN_VALUE);
+        newAttrs.addAttribute("", "title", "title", "CDATA", warning);
+        newAttrs.addAttribute("", BROKEN_ATTRIB, BROKEN_ATTRIB, "CDATA", BROKEN_VALUE);
     }
 
     /**
@@ -304,10 +313,11 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
      * @param targetDocument The target document.
      * @param anchor The anchor (the string after the # character in the URL).
      * @param queryString The query string without question mark.
+     * @param extension The extension to use.
      * @throws AccessControlException when something went wrong.
      */
-    protected void rewriteLink(AttributesImpl newAttrs, Document targetDocument, String anchor, String queryString)
-            throws AccessControlException {
+    protected void rewriteLink(AttributesImpl newAttrs, Document targetDocument, String anchor,
+            String queryString, String extension) throws AccessControlException {
 
         String webappUrl = targetDocument.getCanonicalWebappURL();
         Policy policy = this.policyManager.getPolicy(this.accreditableManager, webappUrl);
@@ -320,6 +330,11 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
             rewrittenURL = this.request.getContextPath() + webappUrl;
         } else {
             rewrittenURL = proxy.getURL(targetDocument);
+        }
+        
+        int lastDotIndex = rewrittenURL.lastIndexOf(".");
+        if (lastDotIndex > -1) {
+            rewrittenURL = rewrittenURL.substring(0, lastDotIndex) + extension;
         }
 
         if (anchor != null) {
