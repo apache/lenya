@@ -190,4 +190,9 @@ public class CreateDocument extends Create {
             }
         }
     }
+
+    protected String getSourceExtension() {
+        return "xml";
+    }
+
 }

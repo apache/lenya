@@ -322,4 +322,8 @@ public class CreateOpenDocument extends Create {
             }
         }
     }
+
+    protected String getSourceExtension() {
+        return ODT_EXTENSION;
+    }
 }

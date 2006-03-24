@@ -166,4 +166,8 @@ public class CreateLanguage extends Create {
         }
     }
 
+    protected String getSourceExtension() {
+        return getSourceDocument().getSourceExtension();
+    }
+
 }

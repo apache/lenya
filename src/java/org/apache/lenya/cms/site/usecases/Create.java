@@ -152,7 +152,7 @@ public abstract class Create extends AbstractUsecase {
                     resourceType.setSampleURI(getParameterAsString(SAMPLE));
                 documentManager.add(document,
                         resourceType,
-                        "xml",
+                        getSourceExtension(),
                         getParameterAsString(DublinCore.ELEMENT_TITLE),
                         getVisibleInNav(),
                         null);
@@ -160,7 +160,7 @@ public abstract class Create extends AbstractUsecase {
             } else {
                 documentManager.add(document,
                         initialDocument,
-                        "xml",
+                        getSourceExtension(),
                         getParameterAsString(DublinCore.ELEMENT_TITLE),
                         getVisibleInNav(),
                         null);
@@ -184,6 +184,11 @@ public abstract class Create extends AbstractUsecase {
         }
 
     }
+    
+    /**
+     * @return the extension to use for the document source.
+     */
+    protected abstract String getSourceExtension();
 
     /**
      * @return the name of the document being created in the usecase
