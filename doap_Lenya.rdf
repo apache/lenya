@@ -16,7 +16,7 @@
   <Project rdf:about="http://Lenya.rdf.apache.org/">
     <created>2006-02-28</created>
     <license rdf:resource="http://usefulinc.com/doap/licenses/asl20" />
-    <name>http://Lenya</name>
+    <name>Apache Lenya</name>
     <homepage rdf:resource="http://lenya.apache.org" />
     <asfext:pmc rdf:resource="http://lenya.apache.org" />
     <shortdesc>Content Management Framework</shortdesc>
