@@ -250,6 +250,7 @@
     <map:pipeline>
       <map:match pattern="*/**.*">
         <map:act type="language-exists">
+          <!-- TODO: Call resource type specific sitemap -->
           <map:read src="resources/shared/images/project-logo.png"/>
         </map:act>
 
