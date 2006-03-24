@@ -28,7 +28,7 @@
 <!--
   <lenya:resourceType>image</lenya:resourceType>
 -->
-  <lenya:extension>png</lenya:extension>
+  <lenya:extension>xhtml</lenya:extension>
   <lenya:contentType>binary</lenya:contentType>
 </lenya:internal>
 
