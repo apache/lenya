@@ -71,7 +71,8 @@ public class Instantiator extends AbstractLogEnabled implements
 
     protected static final String[] sourcesToCopy = { "publication.xml",
             "config/publication.xconf", "config/ac/passwd/", "config/ac/ac.xconf",
-            "config/ac/policies/", "config/ac/usecase-policies.xml", "config/workflow/workflow.xml" };
+            "config/ac/policies/", "config/ac/usecase-policies.xml", "config/workflow/workflow.xml",
+            "config/lucene_index.xconf"};
 
     /*
      * "config/cocoon-xconf/index_manager_index.xconf", "config/cocoon-xconf/index_manager.xconf",
@@ -105,7 +106,7 @@ public class Instantiator extends AbstractLogEnabled implements
 
             updateMetaData(resolver, newPublicationId, name, publicationsUri);
 
-            // configureSearchIndex(resolver, template, newPublicationId, publicationsUri);
+            configureSearchIndex(resolver, template, newPublicationId, publicationsUri);
 
             updateConfiguration(resolver, template, newPublicationId, publicationsUri);
 
@@ -196,32 +197,18 @@ public class Instantiator extends AbstractLogEnabled implements
             TransformerConfigurationException, TransformerException, ServiceException,
             ConfigurationException {
         ModifiableSource indexSource = null;
-        ModifiableSource indexerSource = null;
+        IndexManager indexManager = null;
         try {
 
             // RGE: Soc addition
             // First, patch the xconf patchfile with the new publication name
 
-            String indexDir = publicationsUri + newPublicationId + "/work/lucene/index";
-            indexDir = indexDir.substring(5);
+            String indexDir = "lenya/pubs/" + newPublicationId + "/work/lucene/index";
 
             indexSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
-                    + newPublicationId + "/config/cocoon-xconf/index_manager_index.xconf");
+                    + newPublicationId + "/config/lucene_index.xconf");
             Document indexDoc = DocumentHelper.readDocument(indexSource.getInputStream());
             NamespaceHelper indexHelper = new NamespaceHelper(null, "xconf", indexDoc);
-
-            indexerSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
-                    + newPublicationId + "/config/cocoon-xconf/index_manager.xconf");
-            Document indexerDoc = DocumentHelper.readDocument(indexerSource.getInputStream());
-            NamespaceHelper indexerHelper = new NamespaceHelper(null, "xconf", indexerDoc);
-
-            Element indexManagerElement = indexerHelper.getFirstChild(indexerDoc.getDocumentElement(),
-                    "index_manager");
-            Element indexerElement = indexerHelper.getFirstChild(indexManagerElement, "indexer");
-
-            Element xconfIndexElement = indexDoc.getDocumentElement();
-            xconfIndexElement.setAttribute("unless", "/cocoon/index_manager/indexes/index[@id = '"
-                    + newPublicationId + "-live' or @id = '" + newPublicationId + "-authoring']");
 
             Element[] indexElement = indexHelper.getChildren(indexDoc.getDocumentElement(), "index");
 
@@ -234,75 +221,22 @@ public class Instantiator extends AbstractLogEnabled implements
 
             // Second, configure the index and add it to the IndexManager
 
-            IndexManager indexM = (IndexManager) manager.lookup(IndexManager.ROLE);
+            indexManager = (IndexManager) manager.lookup(IndexManager.ROLE);
 
-            Element structure = indexHelper.getFirstChild(indexElement[0], "structure");
-            Element[] fields = indexHelper.getChildren(structure, "field");
-
-            IndexStructure docdecl = new IndexStructure();
-
-            for (int j = 0; j < fields.length; j++) {
-
-                FieldDefinition fielddecl = null;
-
-                // field id attribute
-                String id_field = fields[j].getAttribute("id");
-
-                // field type attribute
-                String typeS = fields[j].getAttribute("type");
-                int type = FieldDefinition.stringTotype(typeS);
-                try {
-                    fielddecl = FieldDefinition.create(id_field, type);
-                } catch (IllegalArgumentException e) {
-                    throw new ConfigurationException("field " + id_field + " type " + typeS, e);
-                }
-
-                // field store attribute
-                boolean store;
-                Boolean BoolStore = new Boolean(fields[j].getAttribute("storetext"));
-                store = BoolStore.booleanValue();
-
-                fielddecl.setStore(store);
-
-                // field dateformat attribute
-                if (fielddecl.getType() == FieldDefinition.DATE) {
-                    String dateformat_field = fields[j].getAttribute("dateformat");
-                    ((DateFieldDefinition) fielddecl).setDateFormat(new SimpleDateFormat(dateformat_field));
-                }
-
-                docdecl.addFieldDef(fielddecl);
-            }
-
-            Index indexLive = new Index();
-            Index indexAuthoring = new Index();
-            indexLive.setID(newPublicationId + "-live");
-            indexAuthoring.setID(newPublicationId + "-authoring");
-            indexLive.setIndexer(indexerElement.getAttribute("role"));
-            indexAuthoring.setIndexer(indexerElement.getAttribute("role"));
-            indexLive.setDirectory(indexDir + "/live/index");
-            indexAuthoring.setDirectory(indexDir + "/authoring/index");
-            indexLive.setDefaultAnalyzerID(indexElement[0].getAttribute("analyzer"));
-            indexAuthoring.setDefaultAnalyzerID(indexElement[1].getAttribute("analyzer"));
-            indexLive.setManager(manager);
-            indexAuthoring.setManager(manager);
-            indexLive.setStructure(docdecl);
-            indexAuthoring.setStructure(docdecl);
-
-            indexM.addIndex(indexLive);
-            indexM.addIndex(indexAuthoring);
-            manager.release(indexM);
+            indexManager.addIndexes(indexSource);
+            
             // TODO: release all objects!
 
             // RGE: End Soc addition
 
         } finally {
+            if (indexManager != null) {
+                this.manager.release(indexManager);
+            }
             if (resolver != null) {
                 this.manager.release(resolver);
                 if (indexSource != null) {
                     resolver.release(indexSource);
-                }
-                if (indexerSource != null) {
-                    resolver.release(indexerSource);
                 }
             }
         }
