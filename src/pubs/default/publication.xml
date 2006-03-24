@@ -21,6 +21,7 @@
   <lenya:name>Default Publication</lenya:name>
   <lenya:pub-version>@lenya.version@</lenya:pub-version>
   <lenya:lenya-version>@lenya.version@</lenya:lenya-version>
+  <lenya:lenya-revision>@lenya.revision@</lenya:lenya-revision>
   <lenya:cocoon-version>2.1.8 or 2.1.9-dev</lenya:cocoon-version>
   <lenya:modules>
     <lenya:module>lucene</lenya:module>
