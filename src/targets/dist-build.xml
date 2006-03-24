@@ -116,10 +116,11 @@
   	
   	<!-- Replace version placeholder with build version -->
   	<replace dir="${dist.src.dir}">
-	  <include name="**/publication.xml"/>
   	  <include name="**/introduction.xml"/>
   	  <include name="**/about.xml"/>
+	  <include name="**/publication.xml"/>
   	  <replacefilter token="@lenya.version@" value="${version}"/>
+  	  <replacefilter token="@lenya.revision@" value="${lenya.revision}"/>
   	</replace>
 
     <!-- Make shell scripts executable -->
