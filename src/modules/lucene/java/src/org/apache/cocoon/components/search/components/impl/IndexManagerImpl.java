@@ -24,7 +24,6 @@ import java.util.Map;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
@@ -44,9 +43,6 @@ import org.apache.excalibur.source.SourceUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationManager;
-import org.xml.sax.SAXException;
-
-//import org.apache.excalibur.source.SourceResolver;
 
 /**
  * Index Manager Component. Configure and Manage the differents indexes.

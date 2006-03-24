@@ -15,8 +15,6 @@
  */
 package org.apache.cocoon.components.search.components;
 
-import java.io.File;
-
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.components.search.Index;
 import org.apache.cocoon.components.search.IndexException;
