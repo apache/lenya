@@ -240,6 +240,9 @@ public class IndexManagerImpl extends AbstractLogEnabled implements
                 this.manager.release(pubManager);
             }
             if (resolver != null) {
+                if (confSource != null) {
+                    resolver.release(confSource);
+                }
                 this.manager.release(resolver);
             }
         }
@@ -269,75 +272,72 @@ public class IndexManagerImpl extends AbstractLogEnabled implements
      */
     private void addIndexes(Configuration configuration)
             throws ConfigurationException {
-        AnalyzerManager analyzerM = null;
+        AnalyzerManager analyzerManager = null;
         Configuration[] confs = configuration.getChildren(INDEX_ELEMENT);
 
         if (confs.length == 0) {
             throw new ConfigurationException("no index is defined !");
         }
         try {
-            analyzerM = (AnalyzerManager) this.manager
+            analyzerManager = (AnalyzerManager) this.manager
                     .lookup(AnalyzerManager.ROLE);
-        } catch (ServiceException ex1) {
-            throw new ConfigurationException("AnalyzerManager lookup error",ex1);
-        }
 
-        // configure each index
-        for (int i = 0; i < confs.length; i++) {
-            String id = confs[i].getAttribute(ID_ATTRIBUTE);
-            String analyzerid = confs[i]
-                    .getAttribute(INDEX_DEFAULTANALZER_ATTRIBUTE);
-            String directory = confs[i].getAttribute(INDEX_DIRECTORY_ATTRIBUTE);
-            if (!analyzerM.exist(analyzerid)) {
-                throw new ConfigurationException("Analyzer " + analyzerid
-                        + " no found");
-            }
-
-            Configuration[] fields = confs[i].getChild(STRUCTURE_ELEMENT)
-                    .getChildren(FIELD_ELEMENT);
-
-            IndexStructure docdecl = new IndexStructure();
-            for (int j = 0; j < fields.length; j++) {
-
-                FieldDefinition fielddecl;
-
-                // field id attribute
-                String id_field = fields[j].getAttribute(ID_ATTRIBUTE);
-
-                // field type attribute
-                String typeS = fields[j].getAttribute(TYPE_ATTRIBUTE, "");
-                int type = FieldDefinition.stringTotype(typeS);
-                try {
-                    fielddecl = FieldDefinition.create(id_field, type);
-                } catch (IllegalArgumentException e) {
-                    throw new ConfigurationException("field " + id_field
-                            + " type " + typeS, e);
+            // configure each index
+            for (int i = 0; i < confs.length; i++) {
+                String id = confs[i].getAttribute(ID_ATTRIBUTE);
+                String analyzerid = confs[i]
+                        .getAttribute(INDEX_DEFAULTANALZER_ATTRIBUTE);
+                String directory = confs[i].getAttribute(INDEX_DIRECTORY_ATTRIBUTE);
+                if (!analyzerManager.exist(analyzerid)) {
+                    throw new ConfigurationException("Analyzer " + analyzerid
+                            + " no found");
                 }
-
-                // field store attribute
-                boolean store;
-                if (fielddecl.getType() == FieldDefinition.TEXT) {
-                    store = fields[j].getAttributeAsBoolean(STORE_ATTRIBUTE,
-                            false);
-                } else {
-                    store = fields[j].getAttributeAsBoolean(STORE_ATTRIBUTE,
-                            true);
+    
+                Configuration[] fields = confs[i].getChild(STRUCTURE_ELEMENT)
+                        .getChildren(FIELD_ELEMENT);
+    
+                IndexStructure docdecl = new IndexStructure();
+                for (int j = 0; j < fields.length; j++) {
+    
+                    FieldDefinition fielddecl;
+    
+                    // field id attribute
+                    String id_field = fields[j].getAttribute(ID_ATTRIBUTE);
+    
+                    // field type attribute
+                    String typeS = fields[j].getAttribute(TYPE_ATTRIBUTE, "");
+                    int type = FieldDefinition.stringTotype(typeS);
+                    try {
+                        fielddecl = FieldDefinition.create(id_field, type);
+                    } catch (IllegalArgumentException e) {
+                        throw new ConfigurationException("field " + id_field
+                                + " type " + typeS, e);
+                    }
+    
+                    // field store attribute
+                    boolean store;
+                    if (fielddecl.getType() == FieldDefinition.TEXT) {
+                        store = fields[j].getAttributeAsBoolean(STORE_ATTRIBUTE,
+                                false);
+                    } else {
+                        store = fields[j].getAttributeAsBoolean(STORE_ATTRIBUTE,
+                                true);
+                    }
+                    fielddecl.setStore(store);
+    
+                    // field dateformat attribute
+                    if (fielddecl.getType() == FieldDefinition.DATE) {
+                        String dateformat_field = fields[j]
+                                .getAttribute(DATEFORMAT_ATTRIBUTE);
+                        ((DateFieldDefinition) fielddecl)
+                                .setDateFormat(new SimpleDateFormat(
+                                        dateformat_field));
+                    }
+    
+                    this.getLogger().debug("field added: " + fielddecl);
+                    docdecl.addFieldDef(fielddecl);
                 }
-                fielddecl.setStore(store);
-
-                // field dateformat attribute
-                if (fielddecl.getType() == FieldDefinition.DATE) {
-                    String dateformat_field = fields[j]
-                            .getAttribute(DATEFORMAT_ATTRIBUTE);
-                    ((DateFieldDefinition) fielddecl)
-                            .setDateFormat(new SimpleDateFormat(
-                                    dateformat_field));
-                }
-
-                this.getLogger().debug("field added: " + fielddecl);
-                docdecl.addFieldDef(fielddecl);
-            }
-            try {
+            
                 Index index = new Index();
                 index.setID(id);
                 index.setIndexer(indexerRole);
@@ -357,10 +357,15 @@ public class IndexManagerImpl extends AbstractLogEnabled implements
 
                 this.addIndex(index);
                 this.getLogger().info("add index  " + index.getID() + " for directory " + directory);
-            } catch (Exception ex) {
-                throw new ConfigurationException(ex.getMessage(), ex);
             }
-            this.manager.release(analyzerM);
+        } catch (ServiceException e) {
+            throw new ConfigurationException("AnalyzerManager lookup error", e);
+        } catch (Exception e) {
+            throw new ConfigurationException(e.getMessage(), e);
+        } finally {
+            if (analyzerManager != null) {
+                this.manager.release(analyzerManager);
+            }
         }
     }
 
