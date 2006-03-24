@@ -250,7 +250,7 @@
     <map:pipeline>
       <map:match pattern="*/**.*">
         <map:act type="language-exists">
-          <map:read src="sitemap.xmap"/>
+          <map:read src="resources/shared/images/project-logo.png"/>
         </map:act>
 
         <map:generate type="serverpages" src="fallback://lenya/content/exception/missing-language.xsp"/>

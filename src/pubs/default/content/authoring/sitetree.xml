@@ -11,6 +11,11 @@
   <node id="index">
     <label xml:lang="en">Home</label>
     <label xml:lang="de">Home</label>
+
+    <node id="logo" href="index/logo.png">
+      <label xml:lang="en">Apache Lenya Logo</label>
+      <label xml:lang="de">Apache Lenya Logo</label>
+    </node>
   </node>
   
   <node id="tutorial">
