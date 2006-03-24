@@ -168,10 +168,11 @@
   	
   	<!-- Replace version placeholder with build version -->
   	<replace dir="${build.webapp}">
+  	  <include name="lenya/content/introduction.xml"/>
+  	  <include name="lenya/content/about.xml"/>
 	  <include name="**/publication.xml"/>
-  	  <include name="**/introduction.xml"/>
-  	  <include name="**/about.xml"/>
   	  <replacefilter token="@lenya.version@" value="${version}"/>
+  	  <replacefilter token="@lenya.revision@" value="${lenya.revision}"/>
   	</replace>
 
   	<condition property="servlet.engine.tomcat">
