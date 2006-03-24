@@ -43,10 +43,6 @@ public interface Publication {
      */
     String LIVE_AREA = "live";
     /**
-     * <code>ADMIN_AREA</code> The admin area
-     */
-    String ADMIN_AREA = "admin";
-    /**
      * <code>ARCHIVE_AREA</code> The archive area
      */
     String ARCHIVE_AREA = "archive";

@@ -35,7 +35,7 @@ import org.apache.lenya.cms.repository.Node;
  */
 public class PublicationImpl extends AbstractLogEnabled implements Publication {
 
-    private static final String[] areas = { AUTHORING_AREA, DAV_AREA, STAGING_AREA, LIVE_AREA, ADMIN_AREA,
+    private static final String[] areas = { AUTHORING_AREA, DAV_AREA, STAGING_AREA, LIVE_AREA,
             ARCHIVE_AREA, TRASH_AREA };
 
     private String id;
@@ -185,7 +185,8 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
             Configuration contentDirConfig = config.getChild(ELEMENT_CONTENT_DIR, false);
             if (contentDirConfig != null) {
                 this.contentDir = contentDirConfig.getAttribute("src");
-                getLogger().info("Content directory loaded from pub configuration: " + this.contentDir);
+                getLogger().info("Content directory loaded from pub configuration: "
+                        + this.contentDir);
             } else {
                 getLogger().info("No content directory specified within pub configuration!");
             }
