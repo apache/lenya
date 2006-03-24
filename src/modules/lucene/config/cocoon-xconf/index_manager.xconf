@@ -24,9 +24,6 @@
 		
 		<indexer role="org.apache.cocoon.components.search.components.Indexer/default" />
 		
-		<indexes>
-		<!-- publication-specific index_manager_index.xpatch will place their indexes here -->		
-		</indexes>
 	</index_manager>
 
 </xconf>

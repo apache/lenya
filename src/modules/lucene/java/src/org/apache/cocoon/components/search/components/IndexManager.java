@@ -15,8 +15,12 @@
  */
 package org.apache.cocoon.components.search.components;
 
+import java.io.File;
+
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.components.search.Index;
 import org.apache.cocoon.components.search.IndexException;
+import org.apache.excalibur.source.Source;
 
 /**
  * Index Manager Class allow to register and access to a specific index
@@ -66,4 +70,11 @@ public interface IndexManager {
      * @return true if the index exist
      */
     public boolean contains(String id);
+    
+    /**
+     * Adds indexes from the given configuration file to the index manager.
+     * @param confSource
+     * @throws ConfigurationException
+     */
+    public void addIndexes(Source confSource) throws ConfigurationException;
 }

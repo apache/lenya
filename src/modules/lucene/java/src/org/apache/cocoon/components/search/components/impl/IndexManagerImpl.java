@@ -24,6 +24,7 @@ import java.util.Map;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
@@ -40,6 +41,10 @@ import org.apache.cocoon.components.search.utils.SourceHelper;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationManager;
+import org.xml.sax.SAXException;
 
 //import org.apache.excalibur.source.SourceResolver;
 
@@ -115,6 +120,8 @@ public class IndexManagerImpl extends AbstractLogEnabled implements
      * The date Format when the field type is a date
      */
     public static final String DATEFORMAT_ATTRIBUTE = "dateformat";
+    
+    public static final String INDEX_CONF_FILE = "lucene_index.xconf";
 
     /**
      * check the config file each time the getIndex is called to update if
@@ -141,6 +148,8 @@ public class IndexManagerImpl extends AbstractLogEnabled implements
     private ServiceManager manager;
 
     private Map indexes;
+    
+    private String indexerRole = null;
 
     public IndexManagerImpl() {
         indexes = new HashMap();
@@ -168,21 +177,6 @@ public class IndexManagerImpl extends AbstractLogEnabled implements
         if (id == null || id.equals("")) {
             throw new IndexException(" index with no name was called");
         }
-
-        // if (check) {
-        // // if the configuration file has changed , reload it
-        // if (!SourceHelper.checkSourceValidity(configfile)) {
-        // try {
-        // configureIndexManager(configfile);
-        // } catch (ConfigurationException e) {
-        // throw new IndexException(
-        // "Configuration Exception (index called: " + id, e);
-        // }
-        // this.getLogger().info(
-        // "Index Configuration file has changed. Index Configuration is
-        // reloading...");
-        // }
-        // }
 
         Index index = (Index) this.indexes.get(id);
         if (index == null) {
@@ -218,40 +212,69 @@ public class IndexManagerImpl extends AbstractLogEnabled implements
     public void configure(Configuration configuration)
             throws ConfigurationException {
 
-        // // update the index if the config file changes 
-        // check = configuration.getAttributeAsBoolean(CHECK_ATTRIBUTE, false);
-        //
-        // // index config file  
-        // String sourceURI = configuration.getAttribute(CONFIG_ATTRIBUTE);
-        //
-        // try {
-        // SourceResolver resolver = (SourceResolver) manager
-        // .lookup(SourceResolver.ROLE);
-        // configfile = resolver.resolveURI(sourceURI);
-        // if (check) {
-        // SourceHelper.registerSource(configfile);
-        // }
-        // manager.release(resolver);
-        // } catch (Exception ex1) {
-        // throw new ConfigurationException("get source " + sourceURI
-        // + " error", ex1);
-        // }
-        // configureIndexManager(configfile);
-        ConfigureIndexManager(configuration);
+        // configure the index manager:
+        this.indexerRole = configuration.getChild(INDEXER_ELEMENT).getAttribute(INDEXER_ROLE_ATTRIBUTE);
+        
+        // now check all publications and add their indexes:
+        PublicationManager pubManager = null;
+        SourceResolver resolver = null;
+        Source confSource = null;
+        try {
+            pubManager = (PublicationManager) this.manager
+                    .lookup(PublicationManager.ROLE);
+            Publication[] publications = pubManager.getPublications();
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            
+            for (int i=0; i<publications.length; i++) {
+                String uri = "context://" + Publication.PUBLICATION_PREFIX_URI+"/"+publications[i].getId()+
+                    "/"+Publication.CONFIGURATION_PATH + "/" + INDEX_CONF_FILE;
+                confSource = resolver.resolveURI(uri);
+                if (confSource.exists()) {
+                    addIndexes(confSource);
+                }
+            }
+        } catch (IOException e) {
+            throw new ConfigurationException("Config file error", e);
+        } catch (ServiceException e) {
+            throw new ConfigurationException("PublicationManager lookup error", e);
+        } catch (PublicationException e) {
+            throw new ConfigurationException("Publication error", e);
+        } finally {
+            if (pubManager != null) {
+                this.manager.release(pubManager);
+            }
+            if (resolver != null) {
+                this.manager.release(resolver);
+            }
+        }
+        
         getLogger().info("Search Engine - Index Manager configured.");
     }
 
-    private void configureIndexManager(Source source)
-            throws ConfigurationException {
-        Configuration configuration = SourceHelper.build(source);
-        ConfigureIndexManager(configuration);
-    }
 
-    private void ConfigureIndexManager(Configuration configuration)
+    /**
+     * Adds indexes from the given configuration file to the index manager.
+     * @param confSource
+     * @throws ConfigurationException
+     */
+    public void addIndexes(Source confSource) throws ConfigurationException {
+        try {
+            Configuration indexConfiguration = SourceHelper.build(confSource);
+            addIndexes(indexConfiguration);
+        } catch (ConfigurationException e) {
+            throw new ConfigurationException("Error with configuration file "+confSource.getURI(), e);
+        }
+    }
+    
+    /**
+     * Adds indexes from the given configuration object to the index manager.
+     * @param configuration
+     * @throws ConfigurationException
+     */
+    private void addIndexes(Configuration configuration)
             throws ConfigurationException {
         AnalyzerManager analyzerM = null;
-        String indexerRole = configuration.getChild(INDEXER_ELEMENT).getAttribute(INDEXER_ROLE_ATTRIBUTE);
-        Configuration[] confs = configuration.getChild(INDEXES_ELEMENT).getChildren(INDEX_ELEMENT);
+        Configuration[] confs = configuration.getChildren(INDEX_ELEMENT);
 
         if (confs.length == 0) {
             throw new ConfigurationException("no index is defined !");
