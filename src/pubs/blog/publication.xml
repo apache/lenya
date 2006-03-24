@@ -20,6 +20,7 @@
 <lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0">
 <lenya:pub-version>@lenya.version@</lenya:pub-version>
 <lenya:lenya-version>@lenya.version@</lenya:lenya-version>
+<lenya:lenya-revision>@lenya.revision@</lenya:lenya-revision>
 <lenya:cocoon-version>2.1.8 or 2.1.9-dev</lenya:cocoon-version>
 <lenya:name>Lenya's Weblog</lenya:name>
 
