@@ -160,4 +160,8 @@ public class Mkcol extends Create {
         return null;
     }
 
+    protected String getSourceExtension() {
+        return EXTENSION;
+    }
+
 }
