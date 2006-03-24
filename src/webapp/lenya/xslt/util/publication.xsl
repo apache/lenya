@@ -78,7 +78,11 @@
 </xsl:template>
 
 <xsl:template match="lenya:version|lenya:lenya-version">
-Lenya: <strong><xsl:value-of select="."/></strong><br/>
+Lenya: <strong><xsl:value-of select="."/></strong> <xsl:apply-templates select="../lenya:lenya-revision"/><br/>
+</xsl:template>
+
+<xsl:template match="lenya:lenya-revision">
+(Revision: <xsl:value-of select="."/>)
 </xsl:template>
 
 <xsl:template match="lenya:cocoon-version">

@@ -20,7 +20,7 @@
 <page:page  
    xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0">
 
-<page:title>Apache Lenya @lenya.version@</page:title>
+<page:title>Apache Lenya @lenya.version@ (Revision: @lenya.revision@)</page:title>
 <page:body>
 <div class="lenya-box">
 <p>
@@ -29,9 +29,9 @@ on behalf of the <br /><a href="http://www.apache.org/">Apache Software Foundati
 and was originally created by <a href="mailto:michi@apache.org">Michael Wechner</a>.
 <br /><br />
 Apache Lenya includes software developed by the <a href="http://www.apache.org/">Apache Software Foundation</a>, 
-<a href="http://w3c.org">W3C</a>, <br /> and <a href="http://sf.net/projects/websphinx">WebSHPINX</a>.
+<a href="http://w3c.org">W3C</a>, <br /> and <a href="http://sf.net/projects/websphinx">WebSPHINX</a>.
 <br /><br /> 
-Copyright (C) 1999-2004 The Apache Software Foundation. All rights reserved.
+Copyright (C) 2006 The Apache Software Foundation. All rights reserved.
 </p>
 <form id="form-about-back">
 <input type="button" value="Back" onClick="history.go(-1)" name="input-back"/>
