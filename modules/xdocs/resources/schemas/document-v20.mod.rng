@@ -254,7 +254,7 @@
       <ref name="text"/>
       <ref name="markup"/>
       <ref name="special-inline"/>
-      <ref name="local.inline"/>
+      <!--<ref name="local.inline"/>-->
     </choice>
   </define>
   <define name="content.mix">
@@ -462,7 +462,7 @@
       <ref name="tables"/>
       <ref name="lists"/>
       <ref name="special-blocks"/>
-      <ref name="local.blocks"/>
+      <!--<ref name="local.blocks"/>-->
     </choice>
   </define>
   <!-- Flow mixes block and inline -->
@@ -947,7 +947,7 @@
   <define name="sections">
     <choice>
       <ref name="section"/>
-      <ref name="local.sections"/>
+      <!--<ref name="local.sections"/>-->
     </choice>
   </define>
   <define name="body">
@@ -990,7 +990,7 @@
       <ref name="footer.attlist"/>
       <choice>
         <ref name="legal"/>
-        <ref name="local.footers"/>
+        <!--<ref name="local.footers"/>-->
       </choice>
     </element>
   </define>

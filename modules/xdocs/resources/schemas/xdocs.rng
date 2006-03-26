@@ -96,12 +96,10 @@
 <!-- Document -->
 <!-- =============================================================== -->
 <grammar xmlns="http://relaxng.org/ns/structure/1.0">
-  <include href="fallback://lenya/modules/xdocs/resources/schemas/document-v20.mod.rng"/>
   <start>
-    <choice>
-      <ref name="document"/>
-    </choice>
+    <ref name="document"/>
   </start>
+  <include href="fallback://lenya/modules/xdocs/resources/schemas/document-v20.mod.rng"/>
 </grammar>
 <!-- =============================================================== -->
 <!-- End of DTD -->

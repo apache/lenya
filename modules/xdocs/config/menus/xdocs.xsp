@@ -47,6 +47,7 @@
             if ("xdocs".equals(doctype)) {
                 <block info="false">
                   <item wf:event="edit" uc:usecase="edit.bxe" href="?"><i18n:text>With BXE</i18n:text></item>
+                  <item wf:event="edit" uc:usecase="edit.oneform" href="?"><i18n:text>With one Form</i18n:text></item>
                 </block>
             }
           </xsp:logic>
