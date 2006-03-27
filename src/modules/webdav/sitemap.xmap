@@ -154,7 +154,7 @@
         </map:call>
       </map:match>
 
-      <map:match pattern="PROPFIND/**.html">
+      <map:match pattern="PROPFIND/**.*">
         <map:match pattern="PROPFIND/**_*.html">
           <map:act type="resource-exists" src="context://lenya/pubs/{page-envelope:publication-id}/content/authoring/{1}/index_{page-envelope:document-language}.xml">
             <map:call function="filePropfind" >
@@ -162,8 +162,8 @@
             </map:call>
           </map:act>
         </map:match>
-        <map:match pattern="PROPFIND/**.html">
-          <map:act type="resource-exists" src="context://lenya/pubs/{page-envelope:publication-id}/content/authoring/{1}/index_{page-envelope:document-language}.xml">
+        <map:match pattern="PROPFIND/**_*.*">
+          <map:act type="resource-exists" src="context://lenya/pubs/{page-envelope:publication-id}/content/authoring/{1}/index_{page-envelope:document-language}.{3}">
             <map:call function="filePropfind" >
               <map:parameter name="last-modified" value="{page-envelope:document-lastmodified}"/>
             </map:call>
@@ -184,7 +184,7 @@
         </map:call>
       </map:match>
 
-      <map:match pattern="HEAD/**.html">
+      <map:match pattern="HEAD/**.*">
         <map:match pattern="HEAD/**_*.html">
           <map:act type="resource-exists" src="context://lenya/pubs/{page-envelope:publication-id}/content/authoring/{1}/index_{page-envelope:document-language}.xml">
             <map:act type="set-header">
@@ -194,8 +194,8 @@
             </map:act>
           </map:act>
         </map:match>      
-        <map:match pattern="HEAD/**.html">
-          <map:act type="resource-exists" src="context://lenya/pubs/{page-envelope:publication-id}/content/authoring/{1}/index_{page-envelope:document-language}.xml">
+        <map:match pattern="HEAD/**_*.*">
+          <map:act type="resource-exists" src="context://lenya/pubs/{page-envelope:publication-id}/content/authoring/{1}/index_{page-envelope:document-language}.{3}">
             <map:act type="set-header">
               <map:parameter name="Last-Modified" value="{page-envelope:document-lastmodified}" />
               <map:generate src="context://lenya/content/util/empty.xml"/>
@@ -237,6 +237,11 @@
       <map:match pattern="DELETE/**">
         <map:match pattern="DELETE/**_*.html">
           <map:act type="resource-exists" src="context://lenya/pubs/{page-envelope:publication-id}/content/authoring/{1}/index_{page-envelope:document-language}.xml">
+            <map:call function="remove" />
+          </map:act>
+        </map:match>
+        <map:match pattern="DELETE/**_*.*">
+          <map:act type="resource-exists" src="context://lenya/pubs/{page-envelope:publication-id}/content/authoring/{1}/index_{page-envelope:document-language}.{3}">
             <map:call function="remove" />
           </map:act>
         </map:match>
