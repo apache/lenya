@@ -11,7 +11,9 @@
                     <D:locktype><D:write/></D:locktype>
                     <D:lockscope><D:exclusive/></D:lockscope>
                     <D:depth>Infinity</D:depth>
-                    <D:owner><D:href><xsl:value-of select="$userid"/></D:href></D:owner>
+                    <xsl:if test="//*[local-name()='owner']">
+                        <D:owner><xsl:value-of select="//*[local-name()='owner']"/></D:owner>
+                    </xsl:if>
                     <D:timeout>Second-604800</D:timeout>
                     <D:locktoken>
                          <D:href>

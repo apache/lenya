@@ -263,7 +263,7 @@
               <map:generate src="context://lenya/content/util/empty.xml"/>
               <map:serialize type="xml"  status-code="423"/>
             </map:act>
-            <map:generate src="context://lenya/content/util/empty.xml"/>
+            <map:generate type="file" src="cocoon:/request/generate"/>
             <map:transform type="xslt" src="fallback://lenya/modules/webdav/xslt/lock.xsl">
               <map:parameter name="userid" value="{access-control:user-id}"/>
               <map:parameter name="docid" value="{page-envelope:document-id}"/>
