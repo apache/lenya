@@ -169,7 +169,8 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
                                         this.manager);
                             }
                         } catch (Exception e) {
-                            throw new RuntimeException(e);
+                            throw new RuntimeException("Error rewriting document: [" + examinedDocument
+                                    + "] - source URI: [" + examinedDocument.getSourceURI() + "]", e);
                         }
                     }
 
