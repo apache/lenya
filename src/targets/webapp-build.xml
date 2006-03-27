@@ -207,14 +207,13 @@
 
   <!-- Clean Tomcat directories -->
   <target name="clean-tomcat" depends="clean" description="Clean the deployment by also cleaning the servlet engine context of Tomcat">
-    <delete dir="${tomcat.cache.dir}"/>
-    <mkdir dir="${tomcat.webapps.dir}" />
-    <delete includeEmptyDirs="true">
+    <delete dir="${tomcat.cache.dir}" quiet="true"/>
+    <delete includeEmptyDirs="true" quiet="true">
       <fileset dir="${tomcat.webapps.dir}" excludes="${target.reset.excludes}" />
     </delete>
   </target>
 
-  <!-- Cleans the build directory, with the exception of target.reset.excludes -->
+  <!-- Cleans the Lenya build directory, with the exception of target.reset.excludes -->
   <target name="clean" depends="init" description="Cleans the build directories">
     <mkdir dir="${build.root}"/> <!-- Create dir such that build process does not fail if build dir does not exist -->
     <delete includeEmptyDirs="true">
@@ -222,6 +221,18 @@
     </delete>
     <delete dir="${dist.root}"/>
   </target>
+
+  <!-- Cleans the Cocoon build directory and the local.p* files -->
+  <target name="clean-cocoon" depends="init" description="Cleans Cocoon">
+    <delete includeEmptyDirs="true" quiet="true">
+      <fileset dir="${cocoon.src.dir}/build"/>
+    </delete>
+    <delete file="${cocoon.src.dir}/local.build.properties" quiet="true"/>
+    <delete file="${cocoon.src.dir}/local.blocks.properties" quiet="true"/>
+  </target>
+
+  <!-- Cleans the build files of Lenya, Cocoon and Tomcat -->
+  <target name="clean-all" depends="init, clean, clean-cocoon, clean-tomcat " description="Cleans Lenya, Cocoon and Tomcat"/>
 
   <!-- Install the webapp into Tomcat -->
   <target name="install-tomcat" description="Install the webapp into Tomcat servlet engine context" if="servlet.engine.tomcat">
