@@ -41,16 +41,16 @@ import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
-import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.cms.site.usecases.CreateDocument;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.workflow.WorkflowManager;
 import org.apache.lenya.xml.Schema;
 
 /**
  * Supports WebDAV PUT.
- * 
+ * @version $Id: $
  */
-public class Put extends DocumentUsecase {
+public class Put extends CreateDocument {
     // registeredExtensions contain all known extension matching to a certain resource-type.
     private HashMap registeredExtensions = new HashMap();
 //  default is xhtml and xml but you can override it with the config
@@ -78,12 +78,10 @@ public class Put extends DocumentUsecase {
         }
       }
     
-
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
-        super.doExecute();
         SourceResolver resolver = null;
         WorkflowManager wfManager = null;
 
@@ -91,8 +89,7 @@ public class Put extends DocumentUsecase {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
 
             Document doc = getSourceDocument();
-            String destinationUri = getParameterAsString(SOURCE_URL);
-            String extension = destinationUri.substring(destinationUri.lastIndexOf(".")+1,destinationUri.length());
+            String extension= getSourceExtension();
             // sanity check
             if (doc == null)
                 throw new IllegalArgumentException("illegal usage, source document may not be null");
@@ -253,6 +250,47 @@ public class Put extends DocumentUsecase {
             }
         }
         return this.publication;
+    }
+
+
+    protected String getSourceExtension() {
+        String destinationUri = getParameterAsString(SOURCE_URL);
+        String extension = destinationUri.substring(destinationUri.lastIndexOf(".")+1,destinationUri.length());
+        return extension;
+    }
+
+
+    protected String getNewDocumentName() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+
+    protected String getNewDocumentId() {
+        Document doc = getSourceDocument();
+        return doc.getId();
+    }
+
+    protected boolean getVisibleInNav(){
+        return true;
+    }
+
+    protected String getDocumentTypeName() {
+        ResourceType resourceType = null;
+        ServiceSelector selector = null;
+        String docType="";
+        try {
+            selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
+            resourceType = lookUpExtension(getSourceExtension(), selector);
+            docType=resourceType.getName();
+        } catch (ServiceException e) {
+            throw new RuntimeException(e);
+        }finally {
+            if (selector != null) {
+                this.manager.release(selector);
+            }
+        }
+        return docType;
     }
 
 }
