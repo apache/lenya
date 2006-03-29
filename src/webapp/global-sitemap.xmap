@@ -297,6 +297,7 @@
               <map:parameter name="servertime" value="{date-i18n:currentDate}"/>
               <map:parameter name="workflowstate" value="{workflow:state}"/>
               <map:parameter name="islive" value="{workflow:variable.is_live}"/>
+              <map:parameter name="proxy-url-live" value="{proxy-url:live:{page-envelope:document-id}:{page-envelope:document-language}}"/>
             </map:transform>
           </map:otherwise>
         </map:select>

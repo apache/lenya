@@ -35,6 +35,7 @@
 <xsl:param name="servertime"/>
 <xsl:param name="workflowstate"/>
 <xsl:param name="islive"/>
+<xsl:param name="proxy-url-live"/>
 
 <xsl:variable name="image-prefix"><xsl:value-of select="$contextprefix"/>/lenya/menu/images</xsl:variable>
  
@@ -143,6 +144,9 @@
     </xsl:variable>
     
     <xsl:choose>
+      <xsl:when test="$tab-area='live'">
+        <li id="area-{$tab-area}"><a href="{$proxy-url-live}" target="_blank"> <span><i18n:text><xsl:value-of select="$tab-name"/></i18n:text></span></a></li>
+      </xsl:when>
       <xsl:when test="starts-with($completearea, $tab-area-prefix)">
         <li id="area-{$tab-area}-active"><a href="{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}"> <span><i18n:text><xsl:value-of select="$tab-name"/></i18n:text></span></a></li>
       </xsl:when>
