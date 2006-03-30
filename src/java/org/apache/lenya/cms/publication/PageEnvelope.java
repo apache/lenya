@@ -35,7 +35,7 @@ public class PageEnvelope {
     public static final String[] PARAMETER_NAMES = { PageEnvelope.AREA, PageEnvelope.CONTEXT,
             PageEnvelope.PUBLICATION_ID, PageEnvelope.PUBLICATION,
             PageEnvelope.PUBLICATION_LANGUAGES_CSV, PageEnvelope.DOCUMENT,
-            PageEnvelope.DOCUMENT_ID, PageEnvelope.DOCUMENT_NAME, PageEnvelope.DOCUMENT_LABEL,
+            PageEnvelope.DOCUMENT_ID, PageEnvelope.DOCUMENT_PARENT, PageEnvelope.DOCUMENT_NAME, PageEnvelope.DOCUMENT_LABEL,
             PageEnvelope.DOCUMENT_URL, PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE,
             PageEnvelope.DOCUMENT_PATH, PageEnvelope.DOCUMENT_EXTENSION,
             PageEnvelope.DOCUMENT_SOURCE_EXTENSION, PageEnvelope.DOCUMENT_UUID,
@@ -76,6 +76,10 @@ public class PageEnvelope {
      * <code>DOCUMENT_ID</code> The document id of the current document
      */
     public static final String DOCUMENT_ID = "document-id";
+    /**
+     * <code>DOCUMENT_PARENT</code> The document id of the parent document
+     */
+    public static final String DOCUMENT_PARENT = "document-parent";
     /**
      * <code>DOCUMENT_NAME</code> The name of the current document
      */
