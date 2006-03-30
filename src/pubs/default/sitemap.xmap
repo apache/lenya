@@ -61,6 +61,15 @@
       </global-variables>
     </map:component-configurations>
 
+    <!-- Blog module mounted -->
+<!--
+    <map:pipeline>
+      <map:match pattern="*/news/**">
+        <map:mount src="../../modules/blog/sitemap.xmap" uri-prefix="news" check-reload="yes"/>
+      </map:match>
+    </map:pipeline>
+-->
+
     <map:pipeline>
     
       <map:match pattern="**">
