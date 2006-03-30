@@ -35,6 +35,7 @@
   <resource-type name="homepage" workflow="fallback://config/workflow/workflow.xml"/>
   <resource-type name="links" workflow="fallback://config/workflow/workflow.xml"/>
   <resource-type name="cforms" workflow="fallback://config/workflow/workflow.xml"/>
+  <resource-type name="opendocument" workflow="fallback://config/workflow/workflow.xml"/>
   
   <!-- NOTE: Modules need to be listed because of the menu -->
   <module name="xhtml"/>
