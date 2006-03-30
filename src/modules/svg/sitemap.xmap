@@ -101,7 +101,10 @@
             <map:parameter name="url" value="fallback://resources/shared/{../3}.{../4}"/>
             <map:parameter name="type" value="file"/>
             <map:read src="fallback://resources/shared/{../../3}.{../../4}" mime-type="image/gif" />
-          </map:act>        
+          </map:act>
+          <map:act type="language-exists">
+            <map:read src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-id}" mime-type="image/gif"/>
+          </map:act>  
         </map:match>
       </map:match>
 
