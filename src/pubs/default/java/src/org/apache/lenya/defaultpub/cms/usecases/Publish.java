@@ -56,6 +56,7 @@ import org.apache.lenya.workflow.WorkflowException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.Source;
 import org.xml.sax.InputSource;
+
 /**
  * Publish usecase handler.
  * 
@@ -245,8 +246,6 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
     protected void publish(Document authoringDocument) {
 
         DocumentManager documentManager = null;
-        SourceResolver resolver = null;	
-	Source source = null;
 
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
@@ -266,12 +265,6 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
-	    if (resolver != null) {
-		    if (source != null) {
-			    resolver.release(source);
-		    }
-		    this.manager.release(resolver);
-	    }
             if (documentManager != null) {
                 this.manager.release(documentManager);
             }
