@@ -55,7 +55,6 @@ import org.apache.lenya.workflow.WorkflowException;
 
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.Source;
-import org.xml.sax.InputSource;
 
 /**
  * Publish usecase handler.
