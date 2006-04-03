@@ -53,9 +53,6 @@ import org.apache.lenya.notification.NotificationException;
 import org.apache.lenya.notification.NotificationUtil;
 import org.apache.lenya.workflow.WorkflowException;
 
-import org.apache.excalibur.source.SourceResolver;
-import org.apache.excalibur.source.Source;
-
 /**
  * Publish usecase handler.
  * 
