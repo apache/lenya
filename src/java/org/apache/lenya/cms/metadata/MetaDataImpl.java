@@ -493,12 +493,13 @@ public abstract class MetaDataImpl extends AbstractLogEnabled implements MetaDat
             }
         } else {
             // elements not fixed: clear old elements and write all from other
-            elementList = new ArrayList();
-            termList = new ArrayList();
-            String[] newKeys = other.getPossibleKeys();
-            for (int i = 0; i < newKeys.length; i++) {
-                String key = newKeys[i];
-                addValues(key, other.getValues(key));
+            HashMap elementMap = other.getAvailableKey2Value();
+            Iterator iteratorMap = elementMap.entrySet().iterator();
+            while (iteratorMap.hasNext()) {
+                Map.Entry entry = (Map.Entry) iteratorMap.next();
+                String key =(String) entry.getKey();
+                String[] valueNode = {(String) entry.getValue()};
+                addValues(key, valueNode);
             }
         }
         save();
