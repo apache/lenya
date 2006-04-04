@@ -240,7 +240,12 @@ public class CrawlerConfiguration {
     public String getRobotsFileResolved() {
         log.debug(robots_file);
 
-        return resolvePath(robots_file);
+        if (robots_file != null) {
+            return resolvePath(robots_file);
+        } else {
+            log.warn("No local robots file specified!");
+            return null;
+        }
     }
 
     /**
