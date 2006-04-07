@@ -19,7 +19,7 @@ package org.apache.lenya.ac;
 
 /**
  * A user type to be supported by the UserManager
- * Note: the types are configured through access control (ac.xconf)
+ * Note: the types are configured through the access control configuration
  * 
  * @version $Id$
  */
