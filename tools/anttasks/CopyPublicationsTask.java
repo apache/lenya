@@ -76,6 +76,14 @@ public class CopyPublicationsTask extends Task {
                     log("Patch config file with local version: " + localPublicationXConf + " " + publicationXConf);
                     CopyJavaSourcesTask.copyFile(localPublicationXConf, publicationXConf, twoTuple, this, true);
                 }
+
+                File localAccessControlXConf = new File(pubDir, "/config/ac/local.ac.xconf");
+                if (localAccessControlXConf.isFile()) {
+                    File accessControlXConf = new File(this.toDir.toString() + "/" + pubDir.getName() + "/config/ac/ac.xconf");
+                    log("Patch access control config file with local version: " + localAccessControlXConf + " " + accessControlXConf);
+                    CopyJavaSourcesTask.copyFile(localAccessControlXConf, accessControlXConf, twoTuple, this, true);
+                }
+
             // In the case the pubsRootDir is module dir
 	    } else if (new File(pubsRootDir, "module.xml").isFile()) {
                 log("Copy module: " + pubsRootDir);
