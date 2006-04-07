@@ -21,6 +21,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.apache.avalon.framework.activity.Disposable;
+import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameterizable;
@@ -63,13 +64,27 @@ public class UsecaseAuthorizer extends AbstractLogEnabled implements Authorizer,
 
     /**
      * Returns the source URI of the usecase role configuration file for a certain publication.
+     * TODO: This method seems to be called many times. Wouldn't it make sense to cache it somehow ...?
      * 
      * @param publication The publication.
      * @return A string representing a URI.
      */
-    protected String getConfigurationURI(Publication publication) {
-        return "context:///" + Publication.PUBLICATION_PREFIX_URI + "/" + publication.getId()
-                + CONFIGURATION_FILE;
+    protected String getConfigurationURI(Publication publication, String requestURI) {
+        String configURI = null;
+        try {
+            //org.apache.lenya.ac.AccessController ac = new org.apache.lenya.cms.ac.PublicationAccessControllerResolver().resolveAccessController(publication, requestURI);
+            Configuration config = new org.apache.lenya.cms.ac.PublicationAccessControllerResolver().getConfiguration(publication);
+            Configuration[] authorizerConfigs = config.getChildren("authorizer");
+            for (int i = 0; i < authorizerConfigs.length; i++) {
+               if (authorizerConfigs[i].getAttribute("type").equals("usecase")) {
+                   Configuration paraConfig = authorizerConfigs[i].getChild("parameter");
+                   configURI = paraConfig.getAttribute("value");
+               }
+            }
+        } catch (Exception e) {
+            getLogger().error(e.getMessage(), e);
+        }
+        return configURI;
     }
 
     /**
@@ -91,11 +106,11 @@ public class UsecaseAuthorizer extends AbstractLogEnabled implements Authorizer,
                     _configurationUri = getConfigurationURI();
                 } else {
                     Publication publication = PublicationUtil.getPublication(this.manager, request);
-                    _configurationUri = getConfigurationURI(publication);
+                    _configurationUri = getConfigurationURI(publication, request.getRequestURI());
                 }
 
                 Role[] roles = PolicyAuthorizer.getRoles(request);
-                authorized = authorizeUsecase(usecase, roles, _configurationUri);
+                authorized = authorizeUsecase(usecase, roles, _configurationUri, request.getRequestURI());
             } else {
                 getLogger().debug("No usecase to authorize. Granting access.");
             }
@@ -123,7 +138,7 @@ public class UsecaseAuthorizer extends AbstractLogEnabled implements Authorizer,
      * @return A boolean value.
      * @throws AccessControlException when something went wrong.
      */
-    public boolean authorizeUsecase(String usecase, Role[] roles, String _configurationUri)
+    public boolean authorizeUsecase(String usecase, Role[] roles, String _configurationUri, String requestURI)
             throws AccessControlException {
         getLogger().debug("Authorizing usecase [" + usecase + "]");
         boolean authorized = true;
@@ -210,9 +225,9 @@ public class UsecaseAuthorizer extends AbstractLogEnabled implements Authorizer,
      * @return A boolean value.
      * @throws AccessControlException when something went wrong.
      */
-    public boolean authorizeUsecase(String usecase, Role[] roles, Publication publication)
+    public boolean authorizeUsecase(String usecase, Role[] roles, Publication publication, String requestURI)
             throws AccessControlException {
-        return authorizeUsecase(usecase, roles, getConfigurationURI(publication));
+        return authorizeUsecase(usecase, roles, getConfigurationURI(publication, requestURI), requestURI);
     }
 
     protected boolean authorize(Request request, String webappUrl) throws AccessControlException {
