@@ -103,7 +103,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
                     if (getLogger().isDebugEnabled()) {
                         getLogger().debug("Found usecase [" + usecaseName + "]");
                     }
-                    if (!this.authorizer.authorizeUsecase(usecaseName, this.roles, this.publication)) {
+                    if (!this.authorizer.authorizeUsecase(usecaseName, this.roles, this.publication, this.request.getRequestURI())) {
                         if (getLogger().isDebugEnabled()) {
                             getLogger().debug("Usecase not authorized");
                         }

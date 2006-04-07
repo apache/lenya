@@ -164,7 +164,7 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Co
                     getLogger().debug("Found usecase [" + tab.getUsecase() + "]");
                 }
                 Publication pub = PublicationUtil.getPublicationFromUrl(this.manager, this.webappUrl);
-                if (!authorizer.authorizeUsecase(tab.getUsecase(), this.roles, pub)) {
+                if (!authorizer.authorizeUsecase(tab.getUsecase(), this.roles, pub, this.requestURI)) {
                     if (getLogger().isDebugEnabled()) {
                         getLogger().debug("Usecase not authorized");
                     }
@@ -234,6 +234,7 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Co
     }
 
     private String webappUrl;
+    private String requestURI;
     private Role[] roles;
 
     /**
@@ -247,6 +248,7 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Co
             throw new ContextException("Obtaining roles failed: ", e);
         }
         this.webappUrl = ServletHelper.getWebappURI(request);
+        this.requestURI = request.getRequestURI();
     }
 
 }
