@@ -156,13 +156,6 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
      *      added to read new user-manager block within accreditable-manager
      */
     public void configure(Configuration configuration) throws ConfigurationException {
-        // note:
-        // we need to distinguish the case where configure is called from
-        // somewhere else (i.e. not due to the reading of ac.xconf),
-        // from the case where the child user-manager does not exist,
-        // for instance when reading an old ac.xconf which does not yet
-        // have this configuration. So for backward compatibility, we need
-        // to distinguish the 2 cases
         if (A_M_TAG.equals(configuration.getName())) {
             this.userTypes = new HashSet();
             Configuration umConf = configuration.getChild(U_M_CHILD_TAG, false);
@@ -180,8 +173,11 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
                 // a default for backward compatibility
                 this.userTypes.add(getDefaultUserType());
             }
-            // maybe todo (or is it overkill?) : validate the parametrized user
+            // maybe TODO (or is it overkill?) : validate the parametrized user
             // types, for example, check if the classes are in the classpath ?
+        } else {
+            // TODO: In most cases it doesn't seem to find this element ...
+            //throw new ConfigurationException("No such element: " + A_M_TAG);
         }
     }
 
