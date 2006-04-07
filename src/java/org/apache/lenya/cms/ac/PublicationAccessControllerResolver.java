@@ -41,8 +41,7 @@ import org.apache.lenya.cms.publication.URLInformation;
 public class PublicationAccessControllerResolver extends AbstractAccessControllerResolver implements
         Initializable {
 
-    protected static final String CONFIGURATION_FILE = "config/ac/ac.xconf".replace('/',
-            File.separatorChar);
+    protected static final String AC_CONFIGURATION_FILE = "config/ac/ac.xconf".replace('/', File.separatorChar);
     protected static final String TYPE_ATTRIBUTE = "type";
 
     /**
@@ -124,6 +123,27 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
         return this.context;
     }
 
+    /**
+     * Retrieves access control configuration of a specific publication.
+     * @param publication The publication.
+     * @return Configuration
+     * @throws AccessControlException when something went wrong.
+     */
+    public Configuration getConfiguration(Publication publication) throws AccessControlException {
+        File configurationFile = new File(publication.getDirectory(), AC_CONFIGURATION_FILE);
+
+        if (configurationFile.isFile()) {
+            try {
+                Configuration configuration = new DefaultConfigurationBuilder().buildFromFile(configurationFile);
+                return configuration;
+            } catch (Exception e) {
+                throw new AccessControlException(e);
+            }
+        } else {
+            throw new AccessControlException("No such file or directory: " + configurationFile);
+        }
+    }
+
     private File context;
 
     /**
@@ -139,11 +159,9 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
         assert publication != null;
 
         AccessController accessController = null;
-        File configurationFile = new File(publication.getDirectory(), CONFIGURATION_FILE);
 
-        if (configurationFile.isFile()) {
             try {
-                Configuration configuration = new DefaultConfigurationBuilder().buildFromFile(configurationFile);
+                Configuration configuration = getConfiguration(publication);
                 String type = configuration.getAttribute(TYPE_ATTRIBUTE);
 
                 accessController = (AccessController) getManager().lookup(AccessController.ROLE
@@ -156,7 +174,6 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
             } catch (Exception e) {
                 throw new AccessControlException(e);
             }
-        }
 
         return accessController;
     }
