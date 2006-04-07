@@ -47,7 +47,7 @@
     <!-- Copy publications -->
     <copyPubs todir="${build.webapp}/lenya/pubs"
       pubsrootdirs="${pubs.root.dirs}"
-      excludes="CVS,.svn,cocoon-xconf,lenya-roles,local.publication.xconf,.project"/>
+      excludes="CVS,.svn,cocoon-xconf,lenya-roles,local.publication.xconf,local.ac.xconf,.project"/>
     
     <bulkCopy 
       sourcedirs="${pubs.root.dirs}" 
