@@ -46,9 +46,6 @@ import org.apache.lenya.ac.impl.ItemConfiguration;
  */
 public abstract class FileItemManager extends AbstractLogEnabled {
 
-    protected static final String PATH = "config" + File.separator + "ac" + File.separator
-            + "passwd";
-
     private Map items = new HashMap();
     private File configurationDirectory;
     private DirectoryChangeNotifier notifier;
