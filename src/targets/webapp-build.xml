@@ -166,16 +166,16 @@
       </fileset>
     </copy>
   	
-  	<!-- Replace version placeholder with build version -->
-  	<replace dir="${build.webapp}">
-  	  <include name="lenya/content/introduction.xml"/>
-  	  <include name="lenya/content/about.xml"/>
-	  <include name="**/publication.xml"/>
-  	  <replacefilter token="@lenya.version@" value="${version}"/>
-  	  <replacefilter token="@lenya.revision@" value="${lenya.revision}"/>
-  	</replace>
+    <!-- Replace version placeholder with build version -->
+    <replace dir="${build.webapp}">
+      <include name="lenya/content/introduction.xml"/>
+      <include name="lenya/content/about.xml"/>
+      <include name="**/publication.xml"/>
+      <replacefilter token="@lenya.version@" value="${version}"/>
+      <replacefilter token="@lenya.revision@" value="${lenya.revision}"/>
+    </replace>
 
-  	<condition property="servlet.engine.tomcat">
+    <condition property="servlet.engine.tomcat">
       <equals arg1="${web.app.server}" arg2="Tomcat"/>
     </condition>
     <antcall target="install-tomcat"/>
@@ -206,7 +206,8 @@
   </target>
 
   <!-- Clean Tomcat directories -->
-  <target name="clean-tomcat" depends="clean" description="Clean the deployment by also cleaning the servlet engine context of Tomcat">
+  <target name="clean-tomcat" description="Clean also the servlet engine context of Tomcat">
+    <echo>INFO: Clean Tomcat context and cache: ${tomcat.webapps.dir}, ${tomcat.cache.dir}</echo>
     <delete dir="${tomcat.cache.dir}" quiet="true"/>
     <delete includeEmptyDirs="true" quiet="true">
       <fileset dir="${tomcat.webapps.dir}" excludes="${target.reset.excludes}" />
@@ -220,10 +221,16 @@
       <fileset dir="${build.root}" excludes="${target.reset.excludes}" />
     </delete>
     <delete dir="${dist.root}"/>
+
+    <condition property="servlet.engine.tomcat">
+      <equals arg1="${web.app.server}" arg2="Tomcat"/>
+    </condition>
+    <antcall target="clean-tomcat"/>
   </target>
 
   <!-- Cleans the Cocoon build directory and the local.p* files -->
   <target name="clean-cocoon" depends="init" description="Cleans Cocoon">
+    <echo>INFO: Clean Cocoon: ${cocoon.src.dir}/build</echo>
     <delete includeEmptyDirs="true" quiet="true">
       <fileset dir="${cocoon.src.dir}/build"/>
     </delete>
@@ -232,7 +239,7 @@
   </target>
 
   <!-- Cleans the build files of Lenya, Cocoon and Tomcat -->
-  <target name="clean-all" depends="init, clean, clean-cocoon, clean-tomcat " description="Cleans Lenya, Cocoon and Tomcat"/>
+  <target name="clean-all" depends="clean, clean-cocoon" description="Cleans Lenya and Cocoon"/>
 
   <!-- Install the webapp into Tomcat -->
   <target name="install-tomcat" description="Install the webapp into Tomcat servlet engine context" if="servlet.engine.tomcat">
