@@ -17,7 +17,7 @@
 
 <!-- $Id$ -->
 
-<lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0">
+<lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0" lenya:show="true">
   <lenya:name>Default Publication</lenya:name>
   <lenya:pub-version>@lenya.version@</lenya:pub-version>
   <lenya:lenya-version>@lenya.version@</lenya:lenya-version>
