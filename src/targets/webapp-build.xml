@@ -206,7 +206,7 @@
   </target>
 
   <!-- Clean Tomcat directories -->
-  <target name="clean-tomcat" description="Clean also the servlet engine context of Tomcat">
+  <target name="clean-tomcat" description="Clean also the servlet engine context of Tomcat" if="servlet.engine.tomcat">
     <echo>INFO: Clean Tomcat context and cache: ${tomcat.webapps.dir}, ${tomcat.cache.dir}</echo>
     <delete dir="${tomcat.cache.dir}" quiet="true"/>
     <delete includeEmptyDirs="true" quiet="true">
