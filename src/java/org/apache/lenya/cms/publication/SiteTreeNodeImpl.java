@@ -167,7 +167,15 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
                         labelLanguage = languageAttribute.getNodeValue();
                     }
     
-                    labels.add(new Label(labelName, labelLanguage));
+                    Label label = new Label(labelName, labelLanguage);
+                    
+                    Node hrefAttribute =
+                        child.getAttributes().getNamedItem(HREF_ATTRIBUTE_NAME);
+    
+                    if (hrefAttribute != null) {
+                        label.setHref(hrefAttribute.getNodeValue());
+                    }
+                    labels.add(label);
                 }
             }
         }
@@ -210,6 +218,9 @@ public class SiteTreeNodeImpl implements SiteTreeNode {
             Element labelElem = helper.createElement(SiteTreeNodeImpl.LABEL_NAME, label.getLabel());
 
             labelElem.setAttribute(SiteTreeNodeImpl.LANGUAGE_ATTRIBUTE_NAME, label.getLanguage());
+            if (label.getHref() != null) {
+                labelElem.setAttribute(SiteTreeNodeImpl.HREF_ATTRIBUTE_NAME, label.getHref());
+            }
             synchronized (sitetree) {
                 node.insertBefore(labelElem, node.getFirstChild());
             }

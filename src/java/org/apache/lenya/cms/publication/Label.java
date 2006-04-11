@@ -25,6 +25,7 @@ package org.apache.lenya.cms.publication;
 public class Label {
     private String label = null;
     private String language = null;
+    private String href = null;
 
     /**
      * Creates a new Label object without language.
@@ -72,6 +73,22 @@ public class Label {
 
     public String getLanguage() {
         return language;
+    }
+    
+    /**
+     * Get the href of this label.
+     * 
+     * @return the href.
+     */
+    public String getHref() {
+        return this.href;
+    }
+    
+    /**
+     * Set the href of this label.
+     */
+    public void setHref(String href) {
+       this.href = href; 
     }
     
     /** (non-Javadoc)

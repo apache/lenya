@@ -64,6 +64,9 @@
 <xsl:template name="label">
    <xsl:choose>
     <xsl:when test="@current='true'"><xsl:apply-templates select="nav:label"/></xsl:when>
+    <xsl:when test="nav:label/@href">
+      <a href="{nav:label/@href}"><xsl:apply-templates select="nav:label"/></a>
+    </xsl:when>
     <xsl:otherwise><a href="{@href}"><xsl:apply-templates select="nav:label"/></a></xsl:otherwise>
   </xsl:choose>	  
 </xsl:template>

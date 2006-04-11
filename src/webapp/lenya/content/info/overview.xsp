@@ -48,10 +48,13 @@
       String identifier = null; 
       final Document doc = (Document)<input:get-attribute module="page-envelope" as="object" name="document"/>;
       String visibility = "visible";
+      String href = "";
       
       try {
           SiteTreeNode node = doc.getPublication().getTree(doc.getArea()).getNode(doc.getId());
           if (!node.visibleInNav()) visibility = "hidden";
+          href = node.getLabel(doc.getLanguage()).getHref();
+          if (href == null) href = "";
       } catch(SiteTreeException e) {
           throw new ProcessingException(e);
       }
@@ -111,6 +114,7 @@
 						<lenya-info:workflow-state><input:get-attribute module="workflow" as="string" name="state"/></lenya-info:workflow-state>
 						<lenya-info:is-live><input:get-attribute module="workflow" as="string" name="variable.is_live"/></lenya-info:is-live>
             <lenya-info:visibleinnav><xsp:expr>visibility</xsp:expr></lenya-info:visibleinnav>
+            <lenya-info:href><xsp:expr>href</xsp:expr></lenya-info:href>
             <lenya-info:identifier><xsp:expr>identifier</xsp:expr></lenya-info:identifier>
       }
       

@@ -174,6 +174,9 @@ public class SiteTreeGenerator extends ServiceableGenerator implements Parameter
         atts.clear();
         atts.addAttribute(NamespaceSupport.XMLNS, LANG_ATTRIBUTE, Q_LANG_ATTRIBUTE, CDATA, label
                 .getLanguage());
+        if (label.getHref() != null) {
+            atts.addAttribute("", HREF_ATTRIBUTE, HREF_ATTRIBUTE, CDATA, label.getHref());
+        }
 
         this.contentHandler
                 .startElement(SiteTree.NAMESPACE_URI, LABEL_ELEMENT, LABEL_ELEMENT, atts);

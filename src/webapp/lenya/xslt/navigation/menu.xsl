@@ -65,7 +65,14 @@
 
 <xsl:template name="item-default">
   <div class="menuitem-{count(ancestor-or-self::nav:node)}">
-    <a href="{@href}"><xsl:apply-templates select="nav:label"/></a>
+    <xsl:choose>
+      <xsl:when test="nav:label/@href">
+        <a href="{nav:label/@href}"><xsl:apply-templates select="nav:label"/></a>
+      </xsl:when>
+      <xsl:otherwise>
+        <a href="{@href}"><xsl:apply-templates select="nav:label"/></a>
+      </xsl:otherwise>
+    </xsl:choose>
   </div>
 </xsl:template>
     

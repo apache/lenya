@@ -113,6 +113,7 @@ public interface SiteTreeNode {
      * Get the href of this node.
      * 
      * @return the href.
+     * @deprecated use the href attribute of the label instead
      */
     String getHref();
 

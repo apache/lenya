@@ -343,18 +343,6 @@ public class DefaultSiteTree implements SiteTree, LastModified {
             child.setAttribute(SiteTreeNodeImpl.LINK_ATTRIBUTE_NAME, "true");
         }
 
-        for (int i = 0; i < labels.length; i++) {
-            String labelName = labels[i].getLabel();
-            Element label = helper.createElement(SiteTreeNodeImpl.LABEL_NAME, labelName);
-            String labelLanguage = labels[i].getLanguage();
-
-            if ((labelLanguage != null) && (labelLanguage.length() > 0)) {
-                label.setAttribute(SiteTreeNodeImpl.LANGUAGE_ATTRIBUTE_NAME, labelLanguage);
-            }
-
-            child.appendChild(label);
-        }
-
         // Add Node 
         if (refDocumentId != null && !refDocumentId.equals("")) {
             Node nextSibling = getNodeInternal(refDocumentId);
@@ -366,6 +354,13 @@ public class DefaultSiteTree implements SiteTree, LastModified {
         } else {
             parentNode.appendChild(child);
         }
+
+        // Add labels to the node
+        SiteTreeNode siteTreeNode = new SiteTreeNodeImpl(child, this);
+        for (int i = 0; i < labels.length; i++) {
+            siteTreeNode.addLabel(labels[i]);
+        }
+        
         log.debug("Tree has been modified: " + document.getDocumentElement());
     }
     /**
