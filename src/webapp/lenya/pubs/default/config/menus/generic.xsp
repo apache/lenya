@@ -193,6 +193,12 @@
             <item>Edit Navigation Title</item>
           }
           if (isDocument) {
+            <item wf:event="edit" uc:usecase="change-href" uc:step="showscreen" href="?"><i18n:text>Edit Navigation Link</i18n:text></item>
+          }
+          else {
+            <item>Edit Navigation Link</item>
+          }
+          if (isDocument) {
             <item wf:event="edit" uc:usecase="change-visibility" uc:step="showscreen" href="?"><i18n:text>Change node visibility</i18n:text></item>
           }
           else {

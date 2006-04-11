@@ -820,6 +820,31 @@
           
         </map:match>
 
+        <!-- Change the href attribute -->
+        <map:match pattern="change-href" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/util/empty.xml"/>
+            <map:transform src="xslt/info/change-href.xsl">
+              <map:parameter name="use-request-parameters" value="true"/>
+              <map:parameter name="requesturi" value="{request:requestURI}"/>
+              <map:parameter name="area" value="{page-envelope:area}"/>
+              <map:parameter name="language" value="{page-envelope:document-language}"/>
+              <map:parameter name="href" value="{sitetree:label-href}"/>
+              <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+              <map:parameter name="taskid" value="change-href"/>
+            </map:transform>
+            <map:call resource="style-cms-page"/>
+          </map:match>
+          
+          <map:match pattern="change-href" type="step">
+            <map:act type="task">
+              <map:redirect-to session="true" uri="{request:requestURI}"/>
+            </map:act>
+          </map:match>
+          
+        </map:match>
+
         <!-- Change visibility of a node in navigation -->
          <map:match pattern="change-visibility" type="usecase">
           

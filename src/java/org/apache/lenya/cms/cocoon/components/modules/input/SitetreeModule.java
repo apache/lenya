@@ -26,6 +26,7 @@ import java.util.Map;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
+import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
@@ -39,8 +40,9 @@ public class SitetreeModule extends AbstractInputModule {
     public static final String TRASH_NODE = "trash-node";
     public static final String ARCHIVE_NODE = "archive-node";
     public static final String FIRST_CHILD_ID = "first-child-id";
+    public static final String LABEL_HREF = "label-href";
 
-    protected static final String[] PARAMETER_NAMES = { AUTHORING_NODE, LIVE_NODE, TRASH_NODE, ARCHIVE_NODE, FIRST_CHILD_ID };
+    protected static final String[] PARAMETER_NAMES = { AUTHORING_NODE, LIVE_NODE, TRASH_NODE, ARCHIVE_NODE, FIRST_CHILD_ID, LABEL_HREF };
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
@@ -83,6 +85,13 @@ public class SitetreeModule extends AbstractInputModule {
                 } else {
                     value = null;   
                 }
+            }
+            
+            if (name.equals(LABEL_HREF)) {
+                Document document = envelope.getDocument();
+                SiteTree siteTree = publication.getTree(document.getArea());
+                value = siteTree.getNode(document.getId()).getLabel(document.getLanguage()).getHref();
+                if (value == null) value = "";
             }
 
         } catch (Exception e) {

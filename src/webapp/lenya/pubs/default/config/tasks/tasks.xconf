@@ -74,6 +74,11 @@
     <parameter name="target" value="rename-label"/>
   </task>
 
+  <task id="change-href" class="org.apache.lenya.cms.task.AntTask">
+    <label>Change Navigation Link</label>
+    <parameter name="target" value="change-href"/>
+  </task>
+
   <task id="change-visibility" class="org.apache.lenya.cms.task.AntTask">
     <label>Change Node Visibility</label>
     <parameter name="target" value="change-visibility"/>

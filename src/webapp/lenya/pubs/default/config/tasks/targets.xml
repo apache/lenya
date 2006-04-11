@@ -643,6 +643,23 @@
       />
   </target>
 
+  <taskdef name="changeHref" classname="org.apache.lenya.cms.ant.ChangeHrefTask"/>
+  
+  <target name = "change-href">
+    <property name="change.href.document-id" value=""/>
+    <property name="change.href.language" value=""/>
+    <property name="change.href.area" value=""/>
+    <property name="change.href.href" value=""/>
+    
+    <echo>Change Href</echo>
+    <changeHref
+      documentid="${change.href.document-id}"
+      language="${change.href.language}"
+      area="${change.href.area}"
+      href="${change.href.href}"
+      />
+  </target>
+
   <taskdef name="changeVisibility" classname="org.apache.lenya.cms.ant.ChangeVisibilityTask"/>
   
   <target name = "change-visibility">
