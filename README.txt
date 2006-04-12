@@ -72,7 +72,7 @@ the live are. This will change.
 
 TODO
 * lenya 
-- due to the exit usecases set in some of the usecases it throws an error 
- -> remove all exit usecases in default conf or override it.
-* forrest
-- we need a xhtml to xdocs plugin
+- create forrest enabler usecase in lenya/doco. We need a basic usecase that adds forrest 
+specific files to a lenya pub.
+- create a forrest export usecase in lenya/doco. We need a basic usecase that 
+communicate via ant with forrest and invoke e.g. forrestbot, forrest site, ...
