@@ -58,6 +58,7 @@ public class SMTP {
     String subject = null;
     String data = null;
     String charset ="ISO-8859-1";
+    BCodec encoder = null;
     
     /**
      *
@@ -103,6 +104,7 @@ public class SMTP {
             socket = new Socket(host, port);
             out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), charset)), true);
             in = new DataInputStream(socket.getInputStream());
+            encoder = new BCodec(charset);
             
             errlog = errlog + getResponse(220);
 
@@ -134,12 +136,15 @@ public class SMTP {
             out.println("DATA");
             errlog = errlog + getResponse(354);
 
-            errlog = errlog + "From: " + from + "\n";
-            out.println("From: " + from);
+            String base64reply_to = encoder.encode(reply_to);
+            errlog = errlog + "From: " + base64reply_to + "\n";
+            out.println("From: " + base64reply_to);
+            
             errlog = errlog + "To: " + to + "\n";
             out.println("To: " + to);
-            errlog = errlog + "Reply-To: " + reply_to + "\n";
-            out.println("Reply-To: " + reply_to);
+
+            errlog = errlog + "Reply-To: " + base64reply_to + "\n";
+            out.println("Reply-To: " + base64reply_to);
 
             if (cc != null) {
                 errlog = errlog + "Cc: " + cc + "\n";
@@ -151,7 +156,6 @@ public class SMTP {
                 out.println("Bcc: " + bcc);
             }
  
-            BCodec encoder = new BCodec(charset);
             String base64Subject = encoder.encode(subject);
             errlog = errlog +"Subject: " + base64Subject + "\n";
             out.println("Subject: " + base64Subject);
@@ -228,7 +232,16 @@ public class SMTP {
      */
     public void From(String from) {
         this.from = from;
+        
+        if (from == null) {
+        	return;
+        }
+        if (from.indexOf("<") > 0) {
+        	this.from = from.substring(from.indexOf("<")+1, from.length()-1);
+        }
+
     }
+
 
     /**
      * DOCUMENT ME!
