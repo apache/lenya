@@ -34,6 +34,7 @@
     <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.DefaultDocumentBuilder</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.Label</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.DocumentException</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.SiteTreeException</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.xsp.DocumentLanguagesHelper</xsp:include>
@@ -48,12 +49,13 @@
       String identifier = null; 
       final Document doc = (Document)<input:get-attribute module="page-envelope" as="object" name="document"/>;
       String visibility = "visible";
-      String href = "";
+      String href = null;
       
       try {
           SiteTreeNode node = doc.getPublication().getTree(doc.getArea()).getNode(doc.getId());
           if (!node.visibleInNav()) visibility = "hidden";
-          href = node.getLabel(doc.getLanguage()).getHref();
+          Label label = node.getLabel(doc.getLanguage());
+          if (label != null) href = label.getHref();
           if (href == null) href = "";
       } catch(SiteTreeException e) {
           throw new ProcessingException(e);
