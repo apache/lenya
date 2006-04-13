@@ -30,13 +30,29 @@
     </tstamp>
     
     <echo message="------------------- ${Name} ${version} [${year}] ----------------"/>
-    <echo>Building with ${ant.version}</echo>
+    <echo>Building with ${ant.version} and Java version ${ant.java.version}</echo>
     <echo>Using build file ${ant.file}</echo>
+
+    <condition property="java.version.equal.target.vm">
+      <equals arg1="${target.vm}" arg2="${ant.java.version}"/>
+    </condition>
+    <antcall target="warning-re-java-version"/>
 
     <property name="snapshot.bin.name" value="${fullname}-${SNAPSHOT_STAMP}-bin"/>
     <property name="snapshot.src.name" value="${fullname}-${SNAPSHOT_STAMP}-src"/>
     <property name="snapshot.bin.dir" value="${dist.root}/${snapshot.bin.name}"/>
     <property name="snapshot.src.dir" value="${dist.root}/${snapshot.src.name}"/>
+  </target>
+
+  <target name="warning-re-java-version" unless="java.version.equal.target.vm">
+    <echo message="*****************************************************************"/>
+    <echo message="*"/>
+    <echo message="* WARNING: Apache Lenya ${version} is targeted for Java version ${target.vm}. Please refer to the public mailing list for other Java version."/>
+    <echo message="*"/>
+    <echo message="*****************************************************************"/>
+<!--
+    <fail message="Build process will be aborted!"/>
+-->
   </target>
 
   <!-- Prepare the build webapp directory -->
