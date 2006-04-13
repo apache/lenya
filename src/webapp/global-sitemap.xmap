@@ -151,6 +151,7 @@
         <map:call resource="i18n"/>
         
         <!-- Disable menu items according to usecase policies -->
+        <!-- TODO: Use the configuration of config/ac/ac.xconf resp. org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer -->
         <map:act type="resource-exists" src="lenya/pubs/{1}/config/ac/usecase-policies.xml">
           <map:transform type="usecasemenu"/>
         </map:act>
