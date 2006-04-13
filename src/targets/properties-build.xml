@@ -54,6 +54,11 @@
   <property name="nowarn"         value="off"/>
   <property name="target.vm"      value="1.4"/>
 
+<!-- http://article.gmane.org/gmane.comp.cms.lenya.user/9712 -->
+<!--
+  <property name="target.vm"      value="1.5"/>
+-->
+
   <property name="packages"      value="*.*"/>
 
   <!-- cocoon endorsed libraries directory -->
