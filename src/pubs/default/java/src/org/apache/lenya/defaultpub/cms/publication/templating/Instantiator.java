@@ -72,7 +72,7 @@ public class Instantiator extends AbstractLogEnabled implements
     protected static final String[] sourcesToCopy = { "publication.xml",
             "config/publication.xconf", "config/ac/passwd/", "config/ac/ac.xconf",
             "config/ac/policies/", "config/ac/usecase-policies.xml", "config/workflow/workflow.xml",
-            "config/lucene_index.xconf"};
+            "config/" + org.apache.cocoon.components.search.components.impl.IndexManagerImpl.INDEX_CONF_FILE};
 
     /*
      * "config/cocoon-xconf/index_manager_index.xconf", "config/cocoon-xconf/index_manager.xconf",
