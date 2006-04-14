@@ -62,7 +62,11 @@
         </map:transform>
 -->
 
-        <map:transform src="fallback://lenya/modules/opendocument/xslt/opendocument2xhtml.xsl"/>
+        <map:transform src="fallback://lenya/modules/opendocument/xslt/opendocument2xhtml.xsl">
+          <map:parameter name="rendertype" value="{1}"/>
+          <map:parameter name="nodeid" value="{page-envelope:document-name}"/>
+          <map:parameter name="language" value="{page-envelope:document-language}"/>
+        </map:transform>
         <map:serialize type="xml"/>
       </map:match>
 
