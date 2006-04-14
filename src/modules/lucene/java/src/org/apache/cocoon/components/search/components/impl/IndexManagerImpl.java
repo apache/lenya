@@ -176,7 +176,7 @@ public class IndexManagerImpl extends AbstractLogEnabled implements
 
         Index index = (Index) this.indexes.get(id);
         if (index == null) {
-            throw new IndexException("index " + id + " doesn't exist");
+            throw new IndexException("Index " + id + " doesn't exist. Check if configuration " + INDEX_CONF_FILE + " exists for this publication!");
         }
 
         return index;
@@ -221,7 +221,7 @@ public class IndexManagerImpl extends AbstractLogEnabled implements
             Publication[] publications = pubManager.getPublications();
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             
-            for (int i=0; i<publications.length; i++) {
+            for (int i = 0; i < publications.length; i++) {
                 String uri = "context://" + Publication.PUBLICATION_PREFIX_URI+"/"+publications[i].getId()+
                     "/"+Publication.CONFIGURATION_PATH + "/" + INDEX_CONF_FILE;
                 confSource = resolver.resolveURI(uri);
