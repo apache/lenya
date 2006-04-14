@@ -7,12 +7,11 @@
   xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
   xmlns:xlink="http://www.w3.org/1999/xlink"
 >
-
+<xsl:import href="fallback://lenya/modules/opendocument/xslt/odt_to_xhtml.xsl"/>
 <!-- default parameter value -->
 <xsl:param name="rendertype" select="''"/>
 
-<!-- TODO: The language does seem to be passed to this XSLT -->
-<xsl:param name="language" select="'HUGO'"/>
+<xsl:param name="language" select="'none'"/>
 
 <xsl:template match="office:document-content">
   <div id="body">
@@ -24,26 +23,5 @@ Language: <xsl:value-of select="$language"/>
   </div>
 </xsl:template>
 
-<xsl:template match="text:p">
-<p>
-  <xsl:apply-templates/>
-</p>
-</xsl:template>
-
-<xsl:template match="text:list">
-<ul>
-  <xsl:apply-templates/>
-</ul>
-</xsl:template>
-
-<xsl:template match="text:list-item">
-<li>
-  <xsl:apply-templates/>
-</li>
-</xsl:template>
-
-<xsl:template match="text:a">
-  <a href="{@xlink:href}"><xsl:apply-templates/></a>
-</xsl:template>
 
 </xsl:stylesheet>
