@@ -19,3 +19,13 @@
 
   The usecase lucene.index is called by other usecases, e.g.
   src/webapp/lenya/config/cocoon-xconf/usecases/edit/usecase-edit-oneform.xconf
+
+  In order to make a resource type indexable one needs to add the format luceneIndex to the
+  resource type configuration (e.g. src/modules/xhtml/config/cocoon-xconf/resource-type-xhtml.xconf)
+  One needs to create or reuse a pipeline for this format within the specified sitemap.
+
+
+  Searching
+  ---------
+
+  TBD
