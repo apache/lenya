@@ -7,7 +7,7 @@
   xmlns:text="urn:oasis:names:tc:opendocument:xmlns:text:1.0"
   xmlns:xlink="http://www.w3.org/1999/xlink"
 >
-<xsl:import href="fallback://lenya/modules/opendocument/xslt/odt_to_xhtml.xsl"/>
+<xsl:import href="fallback://lenya/modules/opendocument/xslt/common/odt_to_xhtml.xsl"/>
 <!-- default parameter value -->
 <xsl:param name="rendertype" select="''"/>
 
