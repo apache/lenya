@@ -28,7 +28,7 @@
     <lenya:module>homepage</lenya:module>
     <lenya:module>xhtml</lenya:module>
     <lenya:module>links</lenya:module>
-    <lenya:module href="https://svn.apache.org/repos/asf/lenya/trunk/src/modules/opendocument">opendocumenrt</lenya:module>
+    <lenya:module href="https://svn.apache.org/repos/asf/lenya/trunk/src/modules/opendocument">opendocument</lenya:module>
     <lenya:module>cforms</lenya:module>
     <lenya:module>sitetree</lenya:module>
     <lenya:module>...</lenya:module>
