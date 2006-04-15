@@ -54,9 +54,7 @@ public class IndexDocument extends DocumentUsecase {
         try {
             String[] formats = getSourceDocument().getResourceType().getFormats();
             if (!Arrays.asList(formats).contains("luceneIndex")) {
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("Document ["+getSourceDocument()+"] does not support indexing.");
-                }
+                getLogger().warn("Document ["+getSourceDocument()+"] does not support indexing.");
                 return;
             }
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
