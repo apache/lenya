@@ -18,7 +18,7 @@
 <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'lucene.index']">
 
   <component-instance name="lucene.index"
-                      logger="lenya.usecases.lucene"
+                      logger="lenya.usecases.lucene-org.apache.lenya.cms.lucene.IndexDocument"
                       class="org.apache.lenya.cms.lucene.IndexDocument">
   </component-instance>
 
