@@ -29,5 +29,9 @@
   <templates>
     <template id="default"/>
   </templates>
+
+<!-- NOTE: Copy publication.xconf to local.publication.xconf and uncomment and modify the line below accordingly -->
+<!--
   <content-dir src="/home/thorsten/src/apache/forrest-trunk/whiteboard/doco"/>
+-->
 </publication>
