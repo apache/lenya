@@ -49,6 +49,8 @@
 		dr3d chart form script style number anim dc xlink math xforms fo
 		svg smil ooo ooow oooc int #default"
 >
+<!-- FIXME Grab file name (to be used in case there's no ODT //dc:title/ or //h1[1]) -->
+<xsl:variable name="filename">Client Name</xsl:variable>
 
 <xsl:output
 	method="xml"
@@ -63,15 +65,33 @@
 
 <xsl:key name="listTypes" match="text:list-style" use="@style:name"/>
 
-<xsl:template match="/office:document-content">
+<xsl:template match="/">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>Converted by odt_to_xhtml.xsl</title>
+<title>
+  <xsl:choose>
+    <!-- if no title element or h1 elements, display $filename -->
+    <xsl:when test="(/office:document-meta/office:meta/dc:title = '' or
+        not(office:document-meta/office:meta/dc:title)) and
+        office:document-content/office:body/office:text/text:h[1] = ''">
+      <xsl:value-of select="$filename"/>
+    </xsl:when>
+    <!-- if no title element, display 1st h1 -->
+    <xsl:when test="not(/office:document-meta/office:meta/dc:title) and
+        office:document-content/office:body/office:text/text:h[1] != ''">
+      <xsl:value-of select="office:document-content/office:body/office:text/text:h[1]"/>
+    </xsl:when>
+    <!-- display title element from ODT File:Properties -->
+    <xsl:otherwise>
+      <xsl:value-of select="/office:document-meta/office:meta/dc:title"/>
+    </xsl:otherwise>
+  </xsl:choose>
+</title>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
-<xsl:apply-templates select="office:automatic-styles"/>
+<xsl:apply-templates select="office:document-content/office:automatic-styles"/>
 </head>
 <body>
-<xsl:apply-templates select="office:body/office:text"/>
+<xsl:apply-templates select="office:document-content/office:body/office:text"/>
 </body>
 </html>
 </xsl:template>
@@ -81,9 +101,9 @@
 	This section of the transformation handles styles in the
 	content.xml file
 -->
-<xsl:template match="office:automatic-styles">
+<xsl:template match="office:document-content/office:automatic-styles">
 	<style type="text/css">
-	<xsl:apply-templates/>
+		<xsl:apply-templates/>
 	</style>
 </xsl:template>
 
