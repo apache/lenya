@@ -8,17 +8,18 @@
   xmlns:xlink="http://www.w3.org/1999/xlink"
 >
 <xsl:import href="fallback://lenya/modules/opendocument/xslt/common/odt_to_xhtml.xsl"/>
-<!-- default parameter value -->
-<xsl:param name="rendertype" select="''"/>
 
+<!-- default parameter value -->
+<xsl:param name="rendertype" select="'null'"/>
 <xsl:param name="language" select="'none'"/>
+<xsl:param name="nodeid" select="'null'"/>
 
 <xsl:template match="office:document-content">
   <div id="body">
 <!--
 Language: <xsl:value-of select="$language"/>
 -->
-    <h1>OpenDocument Content (content.xml)</h1>
+    <h1>OpenDocument Content (<a href="{$nodeid}.odt">ODT</a>)</h1>
     <xsl:apply-templates select="office:body/office:text"/>
   </div>
 </xsl:template>
