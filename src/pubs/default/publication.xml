@@ -44,6 +44,12 @@
       <li><a href="authoring/index.html">Editor`s View</a> (Authoring)</li>
     </ol>
 
+    <h4>Use WebDAV</h4>
+    <ul>
+      <li>Cadaver: cadaver http://127.0.0.1:8888/default/webdav</li>
+      <li>More Info: <a href="http://wiki.apache.org/lenya/HowToEditWithWebDAV">http://wiki.apache.org/lenya/HowToEditWithWebDAV</a></li>
+    </ul>
+
     <h4>Enable JCR</h4>
     <ul>
       <li>Build Lenya and start it</li>
