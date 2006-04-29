@@ -18,13 +18,9 @@ package org.apache.lenya.cms.publication.util;
 
 import java.io.File;
 import java.io.FileFilter;
-import java.io.FilenameFilter;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.lenya.cms.publication.Document;
@@ -35,7 +31,6 @@ import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 /**
  * Rewrite the links in a publication. This is used after renaming / moving a
