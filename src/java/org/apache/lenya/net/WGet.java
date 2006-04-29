@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: WGet.java,v 1.32 2004/03/01 16:18:25 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.net;
 
@@ -31,14 +31,13 @@ import java.net.URL;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.log4j.Category;
-
+import org.apache.log4j.Logger;
 
 /**
  * Similar to the UNIX wget
  */
 public class WGet {
-    static Category log = Category.getInstance(WGet.class);
+    static Logger log = Logger.getLogger(WGet.class);
     String directory_prefix = null;
 
     /**

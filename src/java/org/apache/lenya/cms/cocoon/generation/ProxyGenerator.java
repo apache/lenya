@@ -40,14 +40,14 @@ import org.apache.commons.httpclient.HttpState;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.excalibur.xml.sax.SAXParser;
 import org.apache.lenya.cms.cocoon.generation.Configuration;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
 public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerator implements
         Parameterizable {
-    private static Category log = Category.getInstance(ProxyGenerator.class);
+    private static Logger log = Logger.getLogger(ProxyGenerator.class);
     
     private static String trustStore = null;
     private static String trustStorePassword = null;    

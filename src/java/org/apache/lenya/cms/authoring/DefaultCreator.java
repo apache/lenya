@@ -26,11 +26,11 @@ import java.util.Map;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.xml.DocumentHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 
 public abstract class DefaultCreator implements ParentChildCreatorInterface {
-    private static Category log = Category.getInstance(DefaultCreator.class);
+    private static Logger log = Logger.getLogger(DefaultCreator.class);
     public static final String RESOURCE_NAME = "resource-name";
     public static final String RESOURCE_META_NAME = "resource-meta-name";
     public static final String SAMPLE_NAME = "sample-name";

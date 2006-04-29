@@ -29,13 +29,13 @@ import java.util.Map;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * A publication.
  */
 public abstract class AbstractPublication implements Publication {
-    private static Category log = Category.getInstance(AbstractPublication.class);
+    private static Logger log = Logger.getLogger(AbstractPublication.class);
 
     private static final String[] areas = { AUTHORING_AREA, STAGING_AREA, LIVE_AREA, ADMIN_AREA,
             ARCHIVE_AREA, TRASH_AREA, INFO_AREA_PREFIX + AUTHORING_AREA,

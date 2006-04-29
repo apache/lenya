@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DOMParserFactory.java,v 1.19 2004/03/01 16:18:23 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.xml;
 
@@ -26,7 +26,7 @@ import java.io.Reader;
 import java.util.Properties;
 
 import org.apache.lenya.xml.parser.Parser;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.w3c.dom.CDATASection;
 import org.w3c.dom.Comment;
 import org.w3c.dom.Document;
@@ -37,13 +37,12 @@ import org.w3c.dom.NodeList;
 import org.w3c.dom.Text;
 import org.xml.sax.SAXException;
 
-
 /**
  * Utility class for creating DOM documents
  * @deprecated replaced by DocumentHelper
  */
 public class DOMParserFactory {
-    static Category log = Category.getInstance(DOMParserFactory.class);
+    static Logger log = Logger.getLogger(DOMParserFactory.class);
     public Parser parser = null;
 
     /**

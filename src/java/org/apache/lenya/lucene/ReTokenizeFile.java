@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ReTokenizeFile.java,v 1.22 2004/07/12 10:21:37 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.lucene;
 
@@ -30,7 +30,7 @@ import java.nio.charset.IllegalCharsetNameException;
 import java.util.StringTokenizer;
 
 import org.apache.lenya.lucene.html.HTMLParser;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -40,7 +40,7 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
  * DOCUMENT ME!
  */
 public class ReTokenizeFile {
-    private static final Category log = Category.getInstance(ReTokenizeFile.class);
+    private static final Logger log = Logger.getLogger(ReTokenizeFile.class);
 
     private int offset = 100;
     

@@ -26,8 +26,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.apache.log4j.Category;
-
+import org.apache.log4j.Logger;
 
 /**
  * SSI - Server Side Include, which can be used within a ResourceReader supporting SSI
@@ -35,7 +34,7 @@ import org.apache.log4j.Category;
  * @deprecated
  */
 public class SSI {
-    static Category log = Category.getInstance(SSI.class);
+    static Logger log = Logger.getLogger(SSI.class);
 
     static String fileinc = "<!--#include file=\"";
     static String virtinc = "<!--#include virtual=\"";

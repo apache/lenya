@@ -15,26 +15,25 @@
  *
  */
 
-/* $Id: XalanXPointer.java,v 1.18 2004/03/01 16:18:26 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.xml.xpointer;
 
 import java.util.Vector;
 
 import org.apache.lenya.xml.DOMParserFactory;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-
 /**
  * XPointer implementation
  */
 public class XalanXPointer implements XPointer {
-    private static Category log = Category.getInstance(XalanXPointer.class);
+    private static Logger log = Logger.getLogger(XalanXPointer.class);
 
     /**
      * DOCUMENT ME!

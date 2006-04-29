@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ConfigurableDocumentCreator.java,v 1.11 2004/05/16 23:23:13 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.lucene.index;
 
@@ -42,7 +42,7 @@ import org.apache.lenya.lucene.parser.HTMLParserFactory;
 import org.apache.lenya.lucene.parser.StringCleaner;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.w3c.dom.Element;
@@ -54,7 +54,7 @@ import org.xml.sax.InputSource;
  * Uses XSLT to transform a XML into a Lucene document
  */
 public class ConfigurableDocumentCreator extends AbstractDocumentCreator {
-    Category log = Category.getInstance(ConfigurableDocumentCreator.class);
+    Logger log = Logger.getLogger(ConfigurableDocumentCreator.class);
   
     public static final String LUCENE_NAMESPACE = "http://apache.org/cocoon/lenya/lucene/1.0";
     public static final String XHTML_NAMESPACE = "http://www.w3.org/1999/xhtml";

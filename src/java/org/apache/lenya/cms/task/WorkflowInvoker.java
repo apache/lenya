@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: WorkflowInvoker.java,v 1.10 2004/03/01 16:18:20 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.task;
 
@@ -33,11 +33,11 @@ import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 public class WorkflowInvoker extends ParameterWrapper {
 
-	private static Category log = Category.getInstance(WorkflowInvoker.class);
+	private static Logger log = Logger.getLogger(WorkflowInvoker.class);
 
 	public static final String ROLES = "roles";
 	public static final String USER_ID = "user-id";

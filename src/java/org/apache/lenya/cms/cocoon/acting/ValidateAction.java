@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ValidateAction.java,v 1.10 2004/03/18 14:51:58 egli Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -39,7 +39,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.RelaxNG;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
@@ -47,7 +47,7 @@ import org.xml.sax.SAXException;
  * Action to validate an xml document with relax ng schema.
  */
 public class ValidateAction extends AbstractConfigurableAction {
-    Category log = Category.getInstance(ValidateAction.class);
+    Logger log = Logger.getLogger(ValidateAction.class);
 
     /** (non-Javadoc)
      * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector, org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)

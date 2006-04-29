@@ -28,14 +28,13 @@ import java.util.StringTokenizer;
 
 import websphinx.RobotExclusion;
 
-import org.apache.log4j.Category;
-
+import org.apache.log4j.Logger;
 
 /**
  * Crawl iteratively
  */
 public class IterativeHTMLCrawler {
-    static Category log = Category.getInstance(IterativeHTMLCrawler.class);
+    static Logger log = Logger.getLogger(IterativeHTMLCrawler.class);
 
     java.util.Vector urlsToCrawl;
     java.util.TreeSet urlsToCrawlLowerCase;

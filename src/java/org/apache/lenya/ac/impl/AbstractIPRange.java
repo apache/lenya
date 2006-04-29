@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractIPRange.java,v 1.7 2004/08/16 16:34:06 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac.impl;
 
@@ -28,7 +28,7 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.IPRange;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.net.InetAddressUtil;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * <p>
@@ -69,7 +69,7 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
      * FIXME II (from the previous version): why are we in the business of implementing IP ranges??
      */
 
-    private static final Category log = Category.getInstance(AbstractIPRange.class);
+    private static final Logger log = Logger.getLogger(AbstractIPRange.class);
 
     /**
      * Initializes the the IP range with the local host (127.0.0.1/24 for IPv4, ::1/128 for IPv6).

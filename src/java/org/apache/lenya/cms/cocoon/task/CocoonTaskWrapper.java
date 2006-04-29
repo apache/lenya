@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: CocoonTaskWrapper.java,v 1.10 2004/06/28 08:29:46 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.task;
 
@@ -41,14 +41,14 @@ import org.apache.lenya.cms.task.TaskWrapperParameters;
 import org.apache.lenya.cms.task.WorkflowInvoker;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.util.ServletHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * Task wrapper to be used from Cocoon components.
  */
 public class CocoonTaskWrapper extends DefaultTaskWrapper {
 
-	private static Category log = Category.getInstance(CocoonTaskWrapper.class);
+	private static Logger log = Logger.getLogger(CocoonTaskWrapper.class);
 
 	/**
 	 * Ctor to be called from a Cocoon component.

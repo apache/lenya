@@ -15,21 +15,20 @@
  *
  */
 
-/* $Id: ResourcePublishingEnvironment.java,v 1.8 2004/03/01 16:18:18 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publishing;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.log4j.Category;
-
+import org.apache.log4j.Logger;
 
 /**
  * DOCUMENT ME!
  *
  */
 public class ResourcePublishingEnvironment extends PublishingEnvironment {
-    private static Category log = Category.getInstance(ResourcePublishingEnvironment.class);
+    private static Logger log = Logger.getLogger(ResourcePublishingEnvironment.class);
     public static final String PARAMETER_RESOURCE_AUTHORING_PATH = "resources-authoring-path";
     public static final String PARAMETER_RESOURCE_LIVE_PATH = "resources-live-path";
     private String resourceAuthoringPath;

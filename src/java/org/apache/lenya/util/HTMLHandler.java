@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: HTMLHandler.java,v 1.11 2004/03/01 16:18:14 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.util;
 
@@ -26,14 +26,13 @@ import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTML.Tag;
 import javax.swing.text.html.HTMLEditorKit.ParserCallback;
 
-import org.apache.log4j.Category;
-
+import org.apache.log4j.Logger;
 
 /**
  * DOCUMENT ME!
  */
 public class HTMLHandler extends ParserCallback {
-    Category log = Category.getInstance(HTMLHandler.class);
+    Logger log = Logger.getLogger(HTMLHandler.class);
     private ArrayList img_src;
     private ArrayList img_src_all;
     private ArrayList a_href;

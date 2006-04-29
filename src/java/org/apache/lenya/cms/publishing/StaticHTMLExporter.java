@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: StaticHTMLExporter.java,v 1.20 2004/03/01 16:18:18 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publishing;
 
@@ -25,8 +25,7 @@ import java.util.StringTokenizer;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.lenya.cms.task.ExecutionException;
-import org.apache.log4j.Category;
-
+import org.apache.log4j.Logger;
 
 /**
  * This Exporter uses WGet to download HTML files from URIs and saves them. The Task parameters
@@ -40,7 +39,7 @@ import org.apache.log4j.Category;
  * the path<br/>
  */
 public class StaticHTMLExporter extends AbstractExporter {
-    private static Category log = Category.getInstance(StaticHTMLExporter.class);
+    private static Logger log = Logger.getLogger(StaticHTMLExporter.class);
     public static final String PARAMETER_URIS = "uris";
 
     /**

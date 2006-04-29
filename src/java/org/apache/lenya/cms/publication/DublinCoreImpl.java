@@ -33,7 +33,7 @@ import javax.xml.transform.TransformerException;
 
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -44,7 +44,7 @@ import org.xml.sax.SAXException;
  * This class uses the dublin core specification from 2003-03-04.
  */
 public class DublinCoreImpl {
-    private static final Category log = Category.getInstance(DublinCoreImpl.class);
+    private static final Logger log = Logger.getLogger(DublinCoreImpl.class);
     private Document cmsdocument;
     private File infofile;
 

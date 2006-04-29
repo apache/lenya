@@ -33,7 +33,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.apache.lucene.document.DateField;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
@@ -41,7 +41,7 @@ import org.apache.lucene.index.TermEnum;
 
 public class IndexIterator {
     
-    private static Category log = Category.getInstance(IndexIterator.class);
+    private static Logger log = Logger.getLogger(IndexIterator.class);
     
     /**
      * Creates a new instance of IndexItertor

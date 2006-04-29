@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: PublicationFactory.java,v 1.27 2004/06/28 08:32:13 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -32,14 +32,14 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
 import org.apache.lenya.cms.publication.file.FilePublication;
 import org.apache.lenya.util.ServletHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * Factory for creating publication objects.
  */
 public final class PublicationFactory {
 
-    private static Category log = Category.getInstance(PublicationFactory.class);
+    private static Logger log = Logger.getLogger(PublicationFactory.class);
 
     /**
      * Create a new <code>PublicationFactory</code>.

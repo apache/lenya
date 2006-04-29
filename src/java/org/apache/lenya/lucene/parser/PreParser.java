@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: PreParser.java,v 1.7 2004/03/01 16:18:26 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.lucene.parser;
 
@@ -23,7 +23,7 @@ import java.io.IOException;
 import java.io.Reader;
 import java.io.StringReader;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * The Java HTML parser cannot handle self-closing text.
@@ -31,7 +31,7 @@ import org.apache.log4j.Category;
  */
 public class PreParser {
     
-    private static Category log = Category.getInstance(PreParser.class);
+    private static Logger log = Logger.getLogger(PreParser.class);
     
     /** Creates a new instance of PreParser */
     public PreParser() {

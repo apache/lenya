@@ -43,14 +43,14 @@ import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
 import org.apache.lenya.workflow.WorkflowException;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * Abstract super class for publication-based tasks.
  */
 public abstract class PublicationTask extends AbstractTask {
 
-    private static final Category log = Category.getInstance(PublicationTask.class);
+    private static final Logger log = Logger.getLogger(PublicationTask.class);
 
     private Publication publication;
 

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ProxyManager.java,v 1.17 2004/03/01 16:18:25 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.net;
 
@@ -25,17 +25,16 @@ import java.util.Vector;
 
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.XPointerFactory;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
 
 /**
  * The <code>ProxyManager</code> Class is used to set or unset the java systems proxy settings
  * based on the hostname of the host that want to be reached.
  */
 public class ProxyManager {
-    static Category log = Category.getInstance(ProxyManager.class);
+    static Logger log = Logger.getLogger(ProxyManager.class);
     Vector proxies = null;
 
     /**

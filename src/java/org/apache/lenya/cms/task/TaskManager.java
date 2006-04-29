@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: TaskManager.java,v 1.22 2004/03/01 16:18:19 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.task;
 
@@ -28,11 +28,11 @@ import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 
 public class TaskManager implements Configurable {
-    private static Category log = Category.getInstance(TaskManager.class);
+    private static Logger log = Logger.getLogger(TaskManager.class);
     public static final String TASK_ELEMENT = "task";
     public static final String TASK_ID_ATTRIBUTE = "id";
     public static final String CONFIGURATION_FILE =

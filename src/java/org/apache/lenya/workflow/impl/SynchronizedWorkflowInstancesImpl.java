@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SynchronizedWorkflowInstancesImpl.java,v 1.5 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.workflow.impl;
 
@@ -29,7 +29,7 @@ import org.apache.lenya.workflow.State;
 import org.apache.lenya.workflow.SynchronizedWorkflowInstances;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * An object of this class encapsulates a set of synchronized
@@ -37,7 +37,7 @@ import org.apache.log4j.Category;
  */
 public class SynchronizedWorkflowInstancesImpl implements SynchronizedWorkflowInstances {
 
-    private static final Category log = Category.getInstance(SynchronizedWorkflowInstancesImpl.class);
+    private static final Logger log = Logger.getLogger(SynchronizedWorkflowInstancesImpl.class);
 
     /**
      * Ctor.

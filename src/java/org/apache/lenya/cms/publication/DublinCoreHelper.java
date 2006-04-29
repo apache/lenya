@@ -19,7 +19,7 @@
 
 package org.apache.lenya.cms.publication;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * Facade to get the DublinCore through the cms Document
@@ -32,7 +32,7 @@ public final class DublinCoreHelper {
 	private DublinCoreHelper() {
 	}
 
-	private static Category log = Category.getInstance(DublinCoreHelper.class);
+	private static Logger log = Logger.getLogger(DublinCoreHelper.class);
 
 	/**
 	 * Get the value of the DCIdentifier corresponding to a document id.

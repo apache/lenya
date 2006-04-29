@@ -15,21 +15,20 @@
  *
  */
 
-/* $Id: Configuration.java,v 1.17 2004/03/01 16:18:25 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.net;
 
 import java.net.URL;
 import java.util.Properties;
 
-import org.apache.log4j.Category;
-
+import org.apache.log4j.Logger;
 
 /**
  * Read configuration
  */
 public class Configuration {
-    static Category log = Category.getInstance(Configuration.class);
+    static Logger log = Logger.getLogger(Configuration.class);
     public static final String DEFAULT_CONFIGURATION_FILE = "org/apache/lenya/net/conf.properties";
     public static final String DEFAULT_CONFIGURATION_KEY = "lenya.configuration";
     public static final String OVERRIDE_DEFAULT_CONFIGURATION_KEY = "override.lenya.configuration";

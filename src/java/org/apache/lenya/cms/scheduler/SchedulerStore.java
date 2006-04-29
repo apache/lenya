@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SchedulerStore.java,v 1.4 2004/03/01 16:18:26 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.scheduler;
 
@@ -31,7 +31,7 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.scheduler.xml.TriggerHelper;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.quartz.JobDetail;
 import org.quartz.SchedulerException;
 import org.quartz.Trigger;
@@ -47,7 +47,7 @@ public class SchedulerStore {
     public static final String ELEMENT_JOB = "job";
     public static final String TITLE_ELEMENT = "title";
 
-    private static final Category log = Category.getInstance(SchedulerStore.class);
+    private static final Logger log = Logger.getLogger(SchedulerStore.class);
 
     public static final String SNAPSHOT_FILE =
         "config/scheduler/jobs.xml".replace('/', File.separatorChar);

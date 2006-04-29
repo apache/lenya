@@ -13,7 +13,7 @@ package org.apache.lenya.cms.authoring;
 
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.servlet.multipart.Part;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -29,7 +29,7 @@ import java.io.OutputStream;
  */
 public class UploadHelper {
 
-    private static final Category log = Category.getInstance(UploadHelper.class);
+    private static final Logger log = Logger.getLogger(UploadHelper.class);
 
     private File directory;
 

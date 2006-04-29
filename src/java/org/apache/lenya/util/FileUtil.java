@@ -26,13 +26,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.StringTokenizer;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * @version $Id$
  */
 public final class FileUtil {
-    private static Category log = Category.getInstance(FileUtil.class);
+    private static Logger log = Logger.getLogger(FileUtil.class);
 
     /**
      * DOCUMENT ME!

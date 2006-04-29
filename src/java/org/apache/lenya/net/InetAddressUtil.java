@@ -15,21 +15,21 @@
  *
  */
 
-/* $Id: InetAddressUtil.java,v 1.14 2004/06/28 08:52:33 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.net;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * A utility class for InetAddress. Also see http://jodies.de/ipcalc
  */
 public class InetAddressUtil {
 
-    private static final Category log = Category.getInstance(InetAddressUtil.class);
+    private static final Logger log = Logger.getLogger(InetAddressUtil.class);
 
     /**
      * Ctor.

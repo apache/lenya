@@ -20,21 +20,19 @@
 package org.apache.lenya.search.crawler;
 
 import java.io.File;
-import java.io.IOException;
 
 import org.apache.lenya.xml.DOMUtil;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.XPath;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-
 
 /**
  * Web-Crawler (it might make sense to replace this by Nutch)
  */
 public class CrawlerConfiguration {
-    static Category log = Category.getInstance(CrawlerConfiguration.class);
+    static Logger log = Logger.getLogger(CrawlerConfiguration.class);
     private String configurationFilePath;
     private String base_url;
     private String user_agent;

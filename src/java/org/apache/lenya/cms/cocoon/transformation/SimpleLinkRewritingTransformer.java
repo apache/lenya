@@ -55,8 +55,7 @@ import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
-import org.apache.log4j.Category;
-
+import org.apache.log4j.Logger;
 
 /**
  * This is a simple transformer which rewrites &lt;a
@@ -77,7 +76,7 @@ import org.apache.log4j.Category;
 public class SimpleLinkRewritingTransformer extends AbstractSAXTransformer
 implements Disposable {
 
-    Category log = Category.getInstance(SimpleLinkRewritingTransformer.class);
+    Logger log = Logger.getLogger(SimpleLinkRewritingTransformer.class);
 
     private String baseURI;
     private PageEnvelope envelope = null;

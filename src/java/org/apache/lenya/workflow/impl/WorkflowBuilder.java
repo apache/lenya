@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: WorkflowBuilder.java,v 1.15 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.workflow.impl;
 
@@ -32,7 +32,7 @@ import org.apache.lenya.workflow.Event;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.xml.DocumentHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -43,7 +43,7 @@ import org.xml.sax.SAXException;
  */
 public class WorkflowBuilder {
 
-    private static final Category log = Category.getInstance(WorkflowBuilder.class);
+    private static final Logger log = Logger.getLogger(WorkflowBuilder.class);
 
     /**
      * Ctor.

@@ -30,13 +30,13 @@ import org.apache.lenya.cms.publication.DocumentTypeBuilder;
 import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.Publication;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  *
  */
 public class DocumentCreator {
-    private static Category log = Category.getInstance(DocumentCreator.class);
+    private static Logger log = Logger.getLogger(DocumentCreator.class);
 
     /**
      * DOCUMENT ME!

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ParameterWrapper.java,v 1.2 2004/03/01 16:18:20 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.task;
 
@@ -25,11 +25,11 @@ import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.lenya.util.NamespaceMap;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 public abstract class ParameterWrapper {
     
-    private static Category log = Category.getInstance(ParameterWrapper.class);
+    private static Logger log = Logger.getLogger(ParameterWrapper.class);
     private NamespaceMap parameters;
     
     /**

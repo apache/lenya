@@ -15,21 +15,21 @@
  *
  */
 
-/* $Id: BooleanVariableCondition.java,v 1.6 2004/04/13 22:04:35 joerg Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.workflow.impl;
 
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * Implementation of a boolean variable condition.
  */
 public class BooleanVariableCondition extends AbstractCondition {
     
-    private static final Category log = Category.getInstance(BooleanVariableCondition.class);
+    private static final Logger log = Logger.getLogger(BooleanVariableCondition.class);
 
     private String variableName;
     private boolean value;
@@ -81,5 +81,4 @@ public class BooleanVariableCondition extends AbstractCondition {
         }
         return instance.getValue(getVariableName()) == getValue();
     }
-
 }

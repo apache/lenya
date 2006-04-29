@@ -22,7 +22,6 @@ import java.util.Properties;
 
 import org.apache.lenya.ac.file.FileUser;
 
-import org.apache.log4j.Category;
 import org.apache.log4j.Logger;
 
 import org.apache.avalon.framework.configuration.Configuration;
@@ -43,7 +42,7 @@ import java.net.UnknownHostException;
 public class CIFSUser extends FileUser {
 
     private static Properties defaultProperties = null;
-    private static Category log =  Logger.getLogger(CIFSUser.class);
+    private static Logger log =  Logger.getLogger(CIFSUser.class);
 
     // The name for the cifs.properties domain controller lookup
     private static final String DOMAIN_CONTROLLER = "domain-controller";

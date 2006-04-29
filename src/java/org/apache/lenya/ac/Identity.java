@@ -24,7 +24,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.cocoon.environment.Session;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * Identity object. Used to store the authenticated accreditables in the session.
@@ -32,7 +32,7 @@ import org.apache.log4j.Category;
 public class Identity implements Identifiable, java.io.Serializable {
     private Set identifiables = new HashSet();
     
-    private static final Category log = Category.getInstance(Identity.class);
+    private static final Logger log = Logger.getLogger(Identity.class);
     
     /**
      * Ctor.

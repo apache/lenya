@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: XPointerFactory.java,v 1.17 2004/03/01 16:18:23 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.xml;
 
@@ -25,14 +25,14 @@ import java.util.Properties;
 import java.util.Vector;
 
 import org.apache.lenya.xml.xpointer.XPointer;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class XPointerFactory {
-    static Category log = Category.getInstance(XPointerFactory.class);
+    static Logger log = Logger.getLogger(XPointerFactory.class);
     XPointer xpointer = null;
 
     /**

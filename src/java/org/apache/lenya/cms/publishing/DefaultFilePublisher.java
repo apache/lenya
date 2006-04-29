@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DefaultFilePublisher.java,v 1.23 2004/03/01 16:18:18 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publishing;
 
@@ -26,8 +26,7 @@ import java.util.StringTokenizer;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.lenya.cms.task.ExecutionException;
-import org.apache.log4j.Category;
-
+import org.apache.log4j.Logger;
 
 /**
  * The <code>DefaultFilePublisher</code> is a task that copies XML
@@ -47,7 +46,7 @@ import org.apache.log4j.Category;
  *  * @deprecated use the publish ant task instead.
  */
 public class DefaultFilePublisher extends AbstractFilePublisher {
-    private static Category log = Category.getInstance(DefaultFilePublisher.class);
+    private static Logger log = Logger.getLogger(DefaultFilePublisher.class);
     public static final String PARAMETER_SOURCES = "sources";
 
     /**

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractIndexer.java,v 1.22 2004/08/02 06:28:44 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.lucene.index;
 
@@ -24,7 +24,7 @@ import java.io.FileFilter;
 import java.io.IOException;
 import java.util.Arrays;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.apache.lenya.lucene.IndexConfiguration;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
@@ -40,7 +40,7 @@ import org.w3c.dom.Element;
  * DocumentCreator from the command-line arguments.
  */
 public abstract class AbstractIndexer implements Indexer {
-    private static Category log = Category.getInstance(AbstractIndexer.class); 
+    private static Logger log = Logger.getLogger(AbstractIndexer.class); 
     
     private DocumentCreator documentCreator;
     private Element indexer;

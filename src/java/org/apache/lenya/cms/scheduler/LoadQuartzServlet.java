@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: LoadQuartzServlet.java,v 1.38 2004/03/01 16:18:26 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.scheduler;
 
@@ -47,7 +47,7 @@ import org.apache.lenya.cms.publishing.PublishingEnvironment;
 import org.apache.lenya.cms.scheduler.xml.TriggerHelper;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.xml.DocumentHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.quartz.SchedulerException;
 import org.w3c.dom.Document;
 
@@ -55,7 +55,7 @@ import org.w3c.dom.Document;
  * A simple servlet that starts an instance of a Quartz scheduler.
  */
 public class LoadQuartzServlet extends HttpServlet {
-    private static Category log = Category.getInstance(LoadQuartzServlet.class);
+    private static Logger log = Logger.getLogger(LoadQuartzServlet.class);
     private static SchedulerWrapper scheduler = null;
     private ServletContext servletContext;
     private String schedulerConfigurations;

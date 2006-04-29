@@ -19,7 +19,6 @@
 
 package org.apache.lenya.cms.mail;
 
-
 import java.io.File;
 import java.net.URL;
 import java.util.Arrays;
@@ -29,12 +28,11 @@ import org.apache.lenya.cms.task.AbstractTask;
 import org.apache.lenya.net.SMTP;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.Text;
-
 
 /**
  * A task that sends an e-mail. Each parameter can either be provided as a task parameter or
@@ -64,7 +62,7 @@ import org.w3c.dom.Text;
  * > &lt;/mail:mail&gt;<br/></code>
  */
 public class MailTask extends AbstractTask {
-    private static Category log = Category.getInstance(MailTask.class);
+    private static Logger log = Logger.getLogger(MailTask.class);
     
     public static final String ELEMENT_TO = "to";
     public static final String ELEMENT_CC = "cc";

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: CollectionImpl.java,v 1.13 2004/07/10 22:59:55 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -28,7 +28,7 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -40,7 +40,7 @@ import org.xml.sax.SAXException;
  */
 public class CollectionImpl extends DefaultDocument implements Collection {
     
-    private static final Category log = Category.getInstance(CollectionImpl.class);
+    private static final Logger log = Logger.getLogger(CollectionImpl.class);
 
     /**
      * Ctor.

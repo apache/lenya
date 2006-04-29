@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: XPSSourceInformation.java,v 1.18 2004/03/01 16:18:23 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.xml;
 
@@ -25,10 +25,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Vector;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 public class XPSSourceInformation {
-    static Category log = Category.getInstance(XPSSourceInformation.class);
+    static Logger log = Logger.getLogger(XPSSourceInformation.class);
     public int lineNumber = -1;
     public URL url = null;
     public XPSSourceInformation parentInfo = null;

@@ -46,7 +46,7 @@ import org.apache.lenya.cms.workflow.WorkflowDocument;
 import org.apache.lenya.cms.workflow.WorkflowFactory;
 import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.WorkflowException;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * Flowscript utility class.
@@ -56,7 +56,7 @@ import org.apache.log4j.Category;
  */
 public class FlowHelper {
 
-    private static final Category log = Category.getInstance(FlowHelper.class);
+    private static final Logger log = Logger.getLogger(FlowHelper.class);
 
     /**
      * Ctor.

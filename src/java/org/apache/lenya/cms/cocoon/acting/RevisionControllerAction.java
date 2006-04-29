@@ -38,10 +38,10 @@ import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RevisionController;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 public class RevisionControllerAction extends AbstractAction {
-    Category log = Category.getInstance(RevisionControllerAction.class);
+    Logger log = Logger.getLogger(RevisionControllerAction.class);
 
     private String rcmlDirectory = null;
     private String backupDirectory = null;

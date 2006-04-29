@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FileItemManager.java,v 1.8 2004/08/16 15:59:51 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac.file;
 
@@ -39,16 +39,16 @@ import org.apache.lenya.ac.Groupable;
 import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.ItemManagerListener;
 import org.apache.lenya.ac.impl.ItemConfiguration;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * Abstract superclass for classes that manage items loaded from configuration files.
  */
 public abstract class FileItemManager {
-    private static final Category log = Category.getInstance(FileItemManager.class);
+    private static final Logger log = Logger.getLogger(FileItemManager.class);
 
     public static final String PATH = "config" + File.separator + "ac" + File.separator + "passwd";
-    
+
     private Map items = new HashMap();
     private File configurationDirectory;
     private DirectoryChangeNotifier notifier;
@@ -400,7 +400,7 @@ public abstract class FileItemManager {
         private File directory;
         private FileFilter filter;
         private Map canonicalPath2LastModified = new HashMap();
-        private static final Category log = Category.getInstance(DirectoryChangeNotifier.class);
+        private static final Logger log = Logger.getLogger(DirectoryChangeNotifier.class);
 
         private Set addedFiles = new HashSet();
         private Set removedFiles = new HashSet();

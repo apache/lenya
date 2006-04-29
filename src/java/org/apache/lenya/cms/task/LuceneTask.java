@@ -1,8 +1,8 @@
-/* $Id: LuceneTask.java,v 1.2 2004/08/02 00:19:42 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.task;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 import java.io.File;
 
@@ -10,7 +10,7 @@ import org.apache.lenya.lucene.index.Index;
 import org.apache.lenya.lucene.index.Indexer;
 
 public class LuceneTask extends AbstractTask {
-    Category log = Category.getInstance(LuceneTask.class);
+    Logger log = Logger.getLogger(LuceneTask.class);
 
     /**
      * @see org.apache.lenya.cms.task.Task#execute(java.lang.String)

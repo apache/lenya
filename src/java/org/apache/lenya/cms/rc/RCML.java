@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: RCML.java,v 1.27 2004/08/15 04:23:03 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.rc;
 
@@ -31,7 +31,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.lenya.xml.XPointerFactory;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
@@ -41,7 +41,7 @@ import org.w3c.dom.NodeList;
  * Handle with the RCML file
  */
 public class RCML {
-    private static Category log = Category.getInstance(RCML.class);
+    private static Logger log = Logger.getLogger(RCML.class);
 
     public static final short co = 0;
     public static final short ci = 1;

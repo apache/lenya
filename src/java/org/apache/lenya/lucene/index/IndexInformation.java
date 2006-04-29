@@ -27,7 +27,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
 
@@ -36,7 +36,7 @@ import org.apache.lucene.index.Term;
  */
 public class IndexInformation {
     
-    private static Category log = Category.getInstance(IndexInformation.class);
+    private static Logger log = Logger.getLogger(IndexInformation.class);
     
     /**
      * Creates a new IndexInformation object.

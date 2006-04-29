@@ -34,14 +34,14 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.apache.cocoon.util.NetUtils;
 import org.apache.lenya.xml.DocumentHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 public class ConfigurableIndexer extends AbstractIndexer {
-    Category log = Category.getInstance(ConfigurableIndexer.class);
+    Logger log = Logger.getLogger(ConfigurableIndexer.class);
 
     /**
      * Instantiate a Document Creator for creating Lucene Documents

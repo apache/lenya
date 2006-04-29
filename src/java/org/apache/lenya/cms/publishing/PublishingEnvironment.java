@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: PublishingEnvironment.java,v 1.26 2004/03/01 16:18:18 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publishing;
 
@@ -24,11 +24,10 @@ import java.io.File;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-import org.apache.log4j.Category;
-
+import org.apache.log4j.Logger;
 
 public class PublishingEnvironment implements Configurable {
-    private static Category log = Category.getInstance(PublishingEnvironment.class);
+    private static Logger log = Logger.getLogger(PublishingEnvironment.class);
     public static final String CONFIGURATION_FILE = "config" + File.separator + "publishing" +
         File.separator + "publisher.xconf";
     public static final String PUBLICATION_PREFIX = "lenya" + File.separator + "pubs" +

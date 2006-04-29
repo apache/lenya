@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ReservedCheckoutAction.java,v 1.18 2004/05/22 19:43:41 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -26,13 +26,13 @@ import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.rc.FileReservedCheckOutException;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * Action doing reserved checkout
  */
 public class ReservedCheckoutAction extends RevisionControllerAction {
-    Category log = Category.getInstance(ReservedCheckoutAction.class);
+    Logger log = Logger.getLogger(ReservedCheckoutAction.class);
 
     /**
      * DOCUMENT ME!

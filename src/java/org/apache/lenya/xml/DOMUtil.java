@@ -22,7 +22,7 @@ package org.apache.lenya.xml;
 import java.io.StringReader;
 import java.util.Vector;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -34,7 +34,7 @@ import org.w3c.dom.NodeList;
  * org.apache.cocoon.xml.dom.DOMUtil FIXME: Merge classes or extend functionality
  */
 public class DOMUtil {
-    static Category log = Category.getInstance(DOMUtil.class);
+    static Logger log = Logger.getLogger(DOMUtil.class);
 
     DOMParserFactory dpf = null;
 

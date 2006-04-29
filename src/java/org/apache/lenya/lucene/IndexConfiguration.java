@@ -24,13 +24,12 @@ import java.io.File;
 import org.apache.lenya.xml.DOMUtil;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.XPath;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-
 public class IndexConfiguration {
-    static Category log = Category.getInstance(IndexConfiguration.class);
+    static Logger log = Logger.getLogger(IndexConfiguration.class);
     private String configurationFilePath;
     private String update_index_type;
     private String index_dir;

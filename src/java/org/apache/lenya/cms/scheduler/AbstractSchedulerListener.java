@@ -15,18 +15,18 @@
  *
  */
 
-/* $Id: AbstractSchedulerListener.java,v 1.2 2004/03/01 16:18:26 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.scheduler;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerListener;
 import org.quartz.Trigger;
 
 public class AbstractSchedulerListener implements SchedulerListener {
 
-	private static final Category log = Category.getInstance(AbstractSchedulerListener.class);
+	private static final Logger log = Logger.getLogger(AbstractSchedulerListener.class);
 
 	/**
 	 * @see org.quartz.SchedulerListener#jobScheduled(org.quartz.Trigger)

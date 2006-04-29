@@ -15,18 +15,18 @@
  *
  */
 
-/* $Id: Log4Echo.java,v 1.1 2004/03/16 22:56:15 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.util;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 
 /**
  * Can be used within shell scripts resp. batch files
  */
 public class Log4Echo {
-    private static Category log = Category.getInstance(Log4Echo.class);
+    private static Logger log = Logger.getLogger(Log4Echo.class);
     
     /**
      * main

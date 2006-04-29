@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: WorkflowInstanceImpl.java,v 1.15 2004/04/13 22:04:35 joerg Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.workflow.impl;
 
@@ -39,15 +39,14 @@ import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
 import org.apache.lenya.workflow.WorkflowListener;
-import org.apache.log4j.Category;
-
+import org.apache.log4j.Logger;
 
 /**
  * Implementation of a workflow instance.
  */
 public abstract class WorkflowInstanceImpl implements WorkflowInstance {
     
-    private static final Category log = Category.getInstance(WorkflowInstanceImpl.class);
+    private static final Logger log = Logger.getLogger(WorkflowInstanceImpl.class);
     
     /**
      * Creates a new instance of WorkflowInstanceImpl.

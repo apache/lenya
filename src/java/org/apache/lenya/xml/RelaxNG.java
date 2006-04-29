@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: RelaxNG.java,v 1.6 2004/03/01 16:18:23 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.xml;
 
@@ -33,13 +33,13 @@ import com.thaiopensource.validate.ValidationDriver;
 import com.thaiopensource.validate.auto.AutoSchemaReader;
 import com.thaiopensource.xml.sax.ErrorHandlerImpl;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * Validate XML Document with RELAX NG Schema
  */
 public class RelaxNG {
-    static Category log = Category.getInstance(RelaxNG.class);
+    static Logger log = Logger.getLogger(RelaxNG.class);
 
     /**
      *

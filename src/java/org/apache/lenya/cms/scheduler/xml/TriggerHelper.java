@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: TriggerHelper.java,v 1.19 2004/03/01 16:18:26 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.scheduler.xml;
 
@@ -28,12 +28,11 @@ import java.util.GregorianCalendar;
 import org.apache.lenya.cms.scheduler.SchedulerStore;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.quartz.CronTrigger;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
 import org.w3c.dom.Element;
-
 
 /**
  * Utility class to work with trigger XML.
@@ -46,7 +45,7 @@ public final class TriggerHelper {
     private TriggerHelper() {
     }
 
-    private static Category log = Category.getInstance(TriggerHelper.class);
+    private static Logger log = Logger.getLogger(TriggerHelper.class);
     public static final String YEAR = "year";
     public static final String MONTH = "month";
     public static final String DAY = "day";

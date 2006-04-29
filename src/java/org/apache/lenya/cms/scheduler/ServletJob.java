@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ServletJob.java,v 1.18 2004/03/01 16:18:26 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.scheduler;
 
@@ -23,7 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
@@ -35,7 +35,7 @@ import org.w3c.dom.Element;
  */
 public abstract class ServletJob implements Job {
 
-    private static Category log = Category.getInstance(ServletJob.class);
+    private static Logger log = Logger.getLogger(ServletJob.class);
     
     /**
      * Creates the job data from an HTTP request.

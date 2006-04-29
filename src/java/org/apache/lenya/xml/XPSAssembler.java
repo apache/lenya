@@ -15,10 +15,9 @@
  *
  */
 
-/* $Id: XPSAssembler.java,v 1.23 2004/04/20 13:37:02 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.xml;
-
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -31,18 +30,17 @@ import java.util.StringTokenizer;
 import java.util.Vector;
 
 import org.apache.lenya.net.ProxyManager;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-
 /**
  * XLink/XInclude Processor (Nesting, Caching, Java, Exceptions)
  */
 public class XPSAssembler implements XPSInclude {
-    static Category log = Category.getInstance(XPSAssembler.class);
+    static Logger log = Logger.getLogger(XPSAssembler.class);
     DOMParserFactory dpf = null;
     XPointerFactory xpf = null;
     Configuration conf = null;

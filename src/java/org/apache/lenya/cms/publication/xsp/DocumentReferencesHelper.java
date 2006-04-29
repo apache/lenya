@@ -43,15 +43,14 @@ import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.SAXException;
-import org.apache.log4j.Category;
-
+import org.apache.log4j.Logger;
 
 /**
  * Helper class for finding references to the current document.
  */
 public class DocumentReferencesHelper {
 
-    private static final Category log = Category.getInstance(DocumentReferencesHelper.class);
+    private static final Logger log = Logger.getLogger(DocumentReferencesHelper.class);
 
     private PageEnvelope pageEnvelope = null;
     private Publication publication = null;

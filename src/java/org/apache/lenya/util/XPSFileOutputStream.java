@@ -25,14 +25,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Category;
-
+import org.apache.log4j.Logger;
 
 /**
  * DOCUMENT ME!
  */
 public class XPSFileOutputStream extends FileOutputStream {
-    static Category log = Category.getInstance(XPSFileOutputStream.class);
+    static Logger log = Logger.getLogger(XPSFileOutputStream.class);
     private static final String suffixBase = ".xpstemp";
     protected String realFilename = null;
     protected String suffix = null;

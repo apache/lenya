@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ServletHelper.java,v 1.5 2004/03/01 16:18:14 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.util;
 
@@ -24,14 +24,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.cocoon.environment.Request;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * Servlet utility class.
  */
 public final class ServletHelper {
 	
-	private static Category log = Category.getInstance(ServletHelper.class);
+	private static Logger log = Logger.getLogger(ServletHelper.class);
 
     /**
      * Ctor.

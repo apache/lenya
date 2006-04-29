@@ -27,16 +27,14 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Date;
 
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.util.XPSFileOutputStream;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * Controller for the reserved check-in, check-out, the backup versions and the rollback 
  */
 public class RevisionController {
-    private static Category log = Category.getInstance(RevisionController.class);
+    private static Logger log = Logger.getLogger(RevisionController.class);
 
     // System username. This is used for 
     // - creating dummy checkin events in a new RCML file

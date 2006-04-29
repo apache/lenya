@@ -31,16 +31,14 @@ import java.net.Socket;
 import java.util.StringTokenizer;
 
 import org.apache.commons.codec.net.BCodec;
-import org.apache.log4j.Category;
-
-
+import org.apache.log4j.Logger;
 
 /**
  * DOCUMENT ME!
  * @deprecated use cocoon mail block
  */
 public class SMTP {
-    private static Category log = Category.getInstance(SMTP.class);
+    private static Logger log = Logger.getLogger(SMTP.class);
     String host = null;
     int port;
     String domain = null;

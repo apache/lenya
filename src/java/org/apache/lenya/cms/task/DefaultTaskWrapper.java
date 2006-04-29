@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: DefaultTaskWrapper.java,v 1.11 2004/03/01 16:18:20 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.task;
 
@@ -35,12 +35,12 @@ import org.apache.lenya.ac.Role;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Element;
 
 public class DefaultTaskWrapper implements TaskWrapper {
 
-    private static Category log = Category.getInstance(DefaultTaskWrapper.class);
+    private static Logger log = Logger.getLogger(DefaultTaskWrapper.class);
 
     private Map parameters = new HashMap();
     private TaskWrapperParameters wrapperParameters =

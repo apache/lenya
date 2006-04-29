@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: TaskJob.java,v 1.39 2004/03/01 16:18:26 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.scheduler;
 
@@ -31,7 +31,7 @@ import org.apache.lenya.cms.task.TaskParameters;
 import org.apache.lenya.cms.task.TaskWrapper;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
@@ -44,7 +44,7 @@ import org.w3c.dom.Element;
  * request parameter.
  */
 public class TaskJob extends ServletJob {
-    private static Category log = Category.getInstance(TaskJob.class);
+    private static Logger log = Logger.getLogger(TaskJob.class);
 
     /**
      * Un-prefix the parameters.

@@ -42,19 +42,17 @@ import org.apache.lenya.cms.publication.SiteTree;
 import org.apache.lenya.cms.publication.Label;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
-import org.apache.log4j.Category;
-
+import org.apache.log4j.Logger;
 
 import org.dom4j.Attribute;
 import org.dom4j.Document;
 import org.dom4j.io.SAXReader;
 
-
 /**
  * DOCUMENT ME!
  */
 public class DefaultCreatorAction extends AbstractComplementaryConfigurableAction implements Configurable {
-    Category log = Category.getInstance(DefaultCreatorAction.class);
+    Logger log = Logger.getLogger(DefaultCreatorAction.class);
 
     private String docsPath = null;
     private String doctypesPath = null;

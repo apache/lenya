@@ -15,21 +15,20 @@
  *
  */
 
-/* $Id: TaskSequence.java,v 1.15 2004/03/01 16:18:20 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.task;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.log4j.Category;
-
+import org.apache.log4j.Logger;
 
 /**
  * A TaskSequence contains of multiple tasks that are executed successively.
  */
 public class TaskSequence extends AbstractTask {
-    private static Category log = Category.getInstance(TaskSequence.class);
+    private static Logger log = Logger.getLogger(TaskSequence.class);
 
     // keeps the task order
     private Task[] tasks;

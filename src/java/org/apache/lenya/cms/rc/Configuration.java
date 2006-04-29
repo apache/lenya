@@ -15,20 +15,19 @@
  *
  */
 
-/* $Id: Configuration.java,v 1.16 2004/03/01 16:18:22 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.rc;
 
 import java.util.Properties;
 
-import org.apache.log4j.Category;
-
+import org.apache.log4j.Logger;
 
 /**
  * Reads conf.properties
  */
 public class Configuration {
-    private static Category log = Category.getInstance(Configuration.class);
+    private static Logger log = Logger.getLogger(Configuration.class);
     
     private String rcmlDirectory = null;
     private String backupDirectory = null;

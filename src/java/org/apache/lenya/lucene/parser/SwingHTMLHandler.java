@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SwingHTMLHandler.java,v 1.11 2004/03/01 16:18:26 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.lucene.parser;
 
@@ -30,10 +30,10 @@ import javax.swing.text.html.HTML;
 import javax.swing.text.html.HTML.Tag;
 import javax.swing.text.html.HTMLEditorKit.ParserCallback;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 public class SwingHTMLHandler extends ParserCallback {
-    Category log = Category.getInstance(SwingHTMLHandler.class);
+    Logger log = Logger.getLogger(SwingHTMLHandler.class);
 
     /** 
      * Creates a new instance of SwingHTMLHandler

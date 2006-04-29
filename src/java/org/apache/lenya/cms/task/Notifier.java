@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Notifier.java,v 1.8 2004/07/10 23:15:54 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.task;
 
@@ -25,11 +25,11 @@ import java.util.Map;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.lenya.util.NamespaceMap;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 public class Notifier extends ParameterWrapper {
 
-    private static Category log = Category.getInstance(Notifier.class);
+    private static Logger log = Logger.getLogger(Notifier.class);
 
     public static final String PREFIX = "notification";
     public static final String TARGET = "notification";

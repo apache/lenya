@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SchedulerWrapper.java,v 1.29 2004/03/01 16:18:26 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.scheduler;
 
@@ -36,7 +36,7 @@ import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationFactory;
 import org.apache.lenya.cms.scheduler.xml.TriggerHelper;
 import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -49,7 +49,7 @@ import org.w3c.dom.Element;
 
 public class SchedulerWrapper {
 
-    private static Category log = Category.getInstance(SchedulerWrapper.class);
+    private static Logger log = Logger.getLogger(SchedulerWrapper.class);
     public static final String JOB_PREFIX = "job";
     public static final String JOB_ID = "id";
     private static int jobId = 0;

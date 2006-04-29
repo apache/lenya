@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SED.java,v 1.3 2004/03/01 16:18:14 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.util;
 
@@ -32,13 +32,13 @@ import java.nio.charset.CharsetDecoder;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * Similar to the UNIX sed
  */
 public class SED {
-    static Category log = Category.getInstance(SED.class);
+    static Logger log = Logger.getLogger(SED.class);
 
     /**
      * Command Line Interface

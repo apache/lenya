@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AbstractDocumentCreator.java,v 1.11 2004/08/02 00:19:42 michi Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.lucene.index;
 
@@ -25,10 +25,10 @@ import org.apache.lucene.document.DateField;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 public class AbstractDocumentCreator implements DocumentCreator {
-    Category log = Category.getInstance(AbstractDocumentCreator.class);
+    Logger log = Logger.getLogger(AbstractDocumentCreator.class);
 
     /** Creates a new instance of AbstractDocumentCreator */
     public AbstractDocumentCreator() {

@@ -15,20 +15,20 @@
  *
  */
 
-/* $Id: Password.java,v 1.4 2004/08/16 16:21:22 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac;
 
 import java.security.MessageDigest;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * Encrypt plain text password
  * Example: "message digest" becomes "f96b697d7cb7938d525a2f31aaf161d0" (hexadecimal notation (32 characters))
  */
 public class Password {
-    private static Category log = Category.getInstance(Password.class);
+    private static Logger log = Logger.getLogger(Password.class);
 
     /**
      * CLI

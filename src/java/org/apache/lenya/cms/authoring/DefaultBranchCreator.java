@@ -19,14 +19,14 @@
 
 package org.apache.lenya.cms.authoring;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 import org.apache.lenya.cms.publication.Publication;
 
 import java.io.File;
 
 public class DefaultBranchCreator extends DefaultCreator {
-    private Category log = Category.getInstance(DefaultBranchCreator.class);
+    private Logger log = Logger.getLogger(DefaultBranchCreator.class);
 
     /**
      * Return the child type.

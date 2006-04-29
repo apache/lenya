@@ -36,7 +36,7 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.environment.http.HttpRequest;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.RelaxNG;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.xml.sax.SAXException;
 
 /**
@@ -45,7 +45,7 @@ import org.xml.sax.SAXException;
 public class OneFormEditorSaveAction
     extends AbstractConfigurableAction
     implements ThreadSafe {
-    Category log = Category.getInstance(OneFormEditorSaveAction.class);
+    Logger log = Logger.getLogger(OneFormEditorSaveAction.class);
 
     /**
      * Save data to temporary file

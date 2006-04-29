@@ -15,20 +15,20 @@
  *
  */
 
-/* $Id: HTMLParserFactory.java,v 1.10 2004/03/01 16:18:26 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.lucene.parser;
 
 import java.io.File;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * Factory to create HTML parsers that are used for indexing HTML.
  */
 public class HTMLParserFactory {
     
-    public static Category log = Category.getInstance(HTMLParserFactory.class);
+    public static Logger log = Logger.getLogger(HTMLParserFactory.class);
     
     /**
      * Returns an HTMLParser.

@@ -15,22 +15,21 @@
  *
  */
 
-/* $Id: Configuration.java,v 1.18 2004/03/01 16:18:23 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.xml;
 
 import java.net.URL;
 import java.util.Properties;
 
-import org.apache.log4j.Category;
-
+import org.apache.log4j.Logger;
 
 /**
  * Reads xpsconf.properties
  * @deprecated replaced by config/ directory
  */
 public class Configuration {
-    static Category log = Category.getInstance(Configuration.class);
+    static Logger log = Logger.getLogger(Configuration.class);
     public static final String DEFAULT_CONFIGURATION_FILE = "org/apache/lenya/xml/xpsconf.properties";
     public static final String DEFAULT_CONFIGURATION_KEY = "xps.configuration";
     public static final String OVERRIDE_DEFAULT_CONFIGURATION_KEY = "override.xps.configuration";

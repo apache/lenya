@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: RCEnvironment.java,v 1.7 2004/03/01 16:18:22 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.rc;
 
@@ -26,10 +26,10 @@ import java.util.Map;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 public class RCEnvironment implements Configurable {
-    private static Category log = Category.getInstance(RCEnvironment.class);
+    private static Logger log = Logger.getLogger(RCEnvironment.class);
     public static final String CONFIGURATION_FILE = "lenya" + File.separator + "config" +
         File.separator + "rc" + File.separator + "revision-controller.xconf";
     public static final String RCML_DIRECTORY = "rcml-directory";

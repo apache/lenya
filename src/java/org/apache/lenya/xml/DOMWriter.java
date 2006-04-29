@@ -26,20 +26,19 @@ import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.Vector;
 
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-
 /**
  * DOCUMENT ME!
  * @deprecated replaced by DocumentHelper
  */
 public class DOMWriter {
-    static Category log = Category.getInstance(DOMWriter.class);
+    static Logger log = Logger.getLogger(DOMWriter.class);
     PrintWriter out = null;
     String encoding = null;
 

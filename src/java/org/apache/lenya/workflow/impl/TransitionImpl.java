@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: TransitionImpl.java,v 1.11 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.workflow.impl;
 
@@ -26,18 +26,17 @@ import org.apache.lenya.workflow.Situation;
 import org.apache.lenya.workflow.Transition;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.WorkflowInstance;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 /**
  * Implementation of a transition.
  */
 public class TransitionImpl implements Transition {
     
-    private static final Category log = Category.getInstance(TransitionImpl.class);
+    private static final Logger log = Logger.getLogger(TransitionImpl.class);
     
     /**
      * Ctor.
