@@ -41,8 +41,7 @@ public final class FileUtil {
      */
     public static void main(String[] args) {
         if (args.length == 0) {
-            System.err.println("Usage: java " + new FileUtil().getClass().getName());
-
+            System.err.println("Usage: java " + FileUtil.class.getName());
             return;
         }
 

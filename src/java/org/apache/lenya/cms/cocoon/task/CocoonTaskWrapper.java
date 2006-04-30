@@ -134,19 +134,23 @@ public class CocoonTaskWrapper extends DefaultTaskWrapper {
 
 		Map requestParameters = ServletHelper.getParameterMap(request);
 
-		log.debug("    Request parameters:");
-		for (Iterator i = requestParameters.keySet().iterator(); i.hasNext();) {
-			Object key = i.next();
-			log.debug("        [" + key + "] = [" + requestParameters.get(key) + "]");
-		}
+        if (log.isDebugEnabled()) {
+            log.debug("    Request parameters:");
+            for (Iterator iter = requestParameters.entrySet().iterator(); iter.hasNext();) {
+                Map.Entry entry = (Map.Entry) iter.next();
+                log.debug("\t[" + entry.getKey() + "] = [" + entry.getValue() + "]");
+            }
+        }
 
 		NamespaceMap notificationMap = new NamespaceMap(requestParameters, Notifier.PREFIX);
 
-		log.debug("    Notification parameters:");
-		for (Iterator i = notificationMap.getMap().keySet().iterator(); i.hasNext();) {
-			Object key = i.next();
-			log.debug("        [" + key + "] = [" + notificationMap.getMap().get(key) + "]");
-		}
+        if (log.isDebugEnabled()) {
+            log.debug("    Notification parameters:");
+            for (Iterator iter = notificationMap.getMap().entrySet().iterator(); iter.hasNext();) {
+                Map.Entry entry = (Map.Entry) iter.next();
+                log.debug("\t[" + entry.getKey() + "] = [" + entry.getValue() + "]");
+            }
+        }
 
 		if (notificationMap.getMap().isEmpty()) {
 			log.debug("    No notification parameters found.");

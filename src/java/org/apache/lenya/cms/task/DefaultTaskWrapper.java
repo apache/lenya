@@ -30,6 +30,7 @@ import java.util.Properties;
 
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.cocoon.environment.Request;
+import org.apache.commons.collections.IteratorUtils;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.cms.publication.Publication;
@@ -61,12 +62,7 @@ public class DefaultTaskWrapper implements TaskWrapper {
     public DefaultTaskWrapper(Map parameters) {
         log.debug("Creating");
 
-        List keys = new ArrayList();
-        for (Iterator i = parameters.keySet().iterator(); i.hasNext();) {
-            String key = (String) i.next();
-            keys.add(key);
-        }
-
+        List keys = IteratorUtils.toList(parameters.keySet().iterator(), parameters.size()); 
         Collections.sort(keys);
 
         for (Iterator i = keys.iterator(); i.hasNext();) {
@@ -79,7 +75,7 @@ public class DefaultTaskWrapper implements TaskWrapper {
                 String[] values = (String[]) valueObject;
                 value = "";
                 for (int j = 0; j < values.length; j++) {
-                    if (j > 0 && !"".equals(value)) {
+                    if (j > 0 && value.length() > 0) {
                         value += ",";
                     }
                     value += values[j].trim();

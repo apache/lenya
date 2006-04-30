@@ -33,7 +33,7 @@ public class Identity implements Identifiable, java.io.Serializable {
     private Set identifiables = new HashSet();
     
     private static final Logger log = Logger.getLogger(Identity.class);
-    
+
     /**
      * Ctor.
      */
@@ -107,16 +107,13 @@ public class Identity implements Identifiable, java.io.Serializable {
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        String accrString = "";
         Accreditable[] accreditables = getAccreditables();
-
+        StringBuffer buf = new StringBuffer("[identity:");
         for (int i = 0; i < accreditables.length; i++) {
-            accrString += (" " + accreditables[i]);
+            buf.append(" ").append(accreditables[i]);
         }
-
-        String string = "[identity:" + accrString + "]";
-
-        return string;
+        buf.append("]");
+        return buf.toString();
     }
     
     /**

@@ -27,9 +27,9 @@ import org.apache.log4j.Logger;
  * Factory to create HTML parsers that are used for indexing HTML.
  */
 public class HTMLParserFactory {
-    
-    public static Logger log = Logger.getLogger(HTMLParserFactory.class);
-    
+
+    public static final Logger log = Logger.getLogger(HTMLParserFactory.class);
+
     /**
      * Returns an HTMLParser.
      */

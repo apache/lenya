@@ -22,7 +22,7 @@ package org.apache.lenya.cms.publication;
 /**
  * class to compute an unique document id for a document, if there is
  * already a node in the sitetree for a document with this id. It will
- * documentid_"number of version"
+ * documentid_"number of version".
  */
 public class UniqueDocumentId {
 
@@ -60,11 +60,9 @@ public class UniqueDocumentId {
                 } else {
                     idwithoutsuffix = substring + lastToken;
                 }
-                
 
                 while (node != null) {
-                    version = version + 1;
-                    suffix = (new Integer(version)).toString();
+                    suffix = Integer.toString(++version);
                     documentid = idwithoutsuffix + "-" + suffix;
                     node = tree.getNode(documentid);                           
                 }

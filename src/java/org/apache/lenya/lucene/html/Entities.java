@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: Entities.java,v 1.11 2004/03/01 16:18:15 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.lucene.html;
 
@@ -334,12 +334,11 @@ public class Entities {
                 buffer.append(';');
             }
         }
-
         return buffer.toString();
     }
 
     static final void add(String entity, int value) {
-        decoder.put(entity, (new Character((char) value)).toString());
+        decoder.put(entity, Character.toString((char) value));
 
         if (value < 0x100) {
             encoder[value] = entity;

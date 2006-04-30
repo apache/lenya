@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: NamespaceMap.java,v 1.9 2004/03/01 16:18:14 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.util;
 
@@ -78,20 +78,17 @@ public class NamespaceMap {
     public Map getMap() {
         Map resultMap = new HashMap();
 
-        Set keys = getMapObject().keySet();
-
-        for (Iterator i = keys.iterator(); i.hasNext();) {
-            Object key = i.next();
-
+        for (Iterator iter = getMapObject().entrySet().iterator(); iter.hasNext(); ) {
+            Map.Entry entry = (Map.Entry)iter.next();
+            Object key = entry.getKey();
             if (key instanceof String) {
                 String keyString = (String) key;
 
                 if (keyString.startsWith(getPrefix() + SEPARATOR)) {
-                    resultMap.put(getShortName(getPrefix(), keyString), getMapObject().get(key));
+                    resultMap.put(getShortName(getPrefix(), keyString), entry.getValue());
                 }
             }
         }
-
         return resultMap;
     }
 

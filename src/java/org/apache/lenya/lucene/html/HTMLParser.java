@@ -32,7 +32,7 @@ import java.io.Reader;
  * HTML Parser
  */
 public class HTMLParser implements HTMLParserConstants {
-    public static int SUMMARY_LENGTH = 200;
+    public static final int SUMMARY_LENGTH = 200;
     StringBuffer title = new StringBuffer(SUMMARY_LENGTH);
     StringBuffer summary = new StringBuffer(SUMMARY_LENGTH * 2);
     int length = 0;
@@ -273,7 +273,7 @@ public class HTMLParser implements HTMLParserConstants {
         } else {
             addToSummary(text);
 
-            if (!titleComplete && !title.equals("")) { // finished title
+            if (!titleComplete && title.length() > 0) { // finished title
 
                 synchronized (this) {
                     titleComplete = true; // tell waiting threads

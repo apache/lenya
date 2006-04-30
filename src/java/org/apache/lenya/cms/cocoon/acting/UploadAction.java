@@ -240,16 +240,16 @@ public class UploadAction extends AbstractConfigurableAction {
             if (paramValue == null) {
                 paramValue = "";
             }
-
             dublinCoreParams.put(paramName, paramValue);
         }
-        
-        Iterator iter = dublinCoreParams.keySet().iterator();
-        while (iter.hasNext()) {
-            String paramName = (String) iter.next();
-            getLogger().debug(paramName + ": " + dublinCoreParams.get(paramName));
+
+        if (getLogger().isDebugEnabled()) {
+            Iterator iter = dublinCoreParams.entrySet().iterator();
+            while (iter.hasNext()) {
+                Map.Entry entry = (Map.Entry) iter.next();
+                getLogger().debug(entry.getKey() + ": " + entry.getValue());
+            }
         }
-        
         return dublinCoreParams;
     }
 
@@ -275,32 +275,24 @@ public class UploadAction extends AbstractConfigurableAction {
 
         Element root = helper.getDocument().getDocumentElement();
 
-        Iterator iter = dublinCoreParams.keySet().iterator();
-
+        Iterator iter = dublinCoreParams.entrySet().iterator();
         while (iter.hasNext()) {
-            String tagName = (String) iter.next();
-            String tagValue = (String) dublinCoreParams.get(tagName);
-            root.appendChild(helper.createElement(tagName, tagValue));
+            Map.Entry entry = (Map.Entry)iter.next();
+            root.appendChild(helper.createElement((String)entry.getKey(), (String)entry.getValue()));
         }
-        
+
         String mimeType = dublinCoreParams.get("format").toString();
         if (canReadMimeType(mimeType)) {
-            Iterator iterlenya = lenyaMetaParams.keySet().iterator();
-        
             NamespaceHelper lenyaHelper = new NamespaceHelper("http://apache.org/cocoon/lenya/page-envelope/1.0", "lenya", helper.getDocument());
             Element metaElement = lenyaHelper.createElement("meta");
-        
+
+            Iterator iterlenya = lenyaMetaParams.entrySet().iterator();
             while (iterlenya.hasNext()) {
-                String tagName = (String) iterlenya.next();
-                String tagValue = (String) lenyaMetaParams.get(tagName);
-                metaElement.appendChild(lenyaHelper.createElement(tagName, tagValue));
+                Map.Entry entry = (Map.Entry)iterlenya.next();
+                metaElement.appendChild(lenyaHelper.createElement((String)entry.getKey(), (String)entry.getValue()));
             }
             root.appendChild(metaElement);
         }
-
         DocumentHelper.writeDocument(helper.getDocument(), metaDataFile);
-        
     }
-    
-    
 }

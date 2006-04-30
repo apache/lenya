@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: TidyCommandLine.java,v 1.11 2004/03/01 16:18:14 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.util;
 
@@ -40,7 +40,7 @@ public class TidyCommandLine {
      */
     public static void main(String[] args) {
         if (args.length != 3) {
-            System.err.println("Usage: java " + new TidyCommandLine().getClass().getName() +
+            System.err.println("Usage: java " + TidyCommandLine.class.getName() +
                 " http://www.lenya.org index.xhtml error.log");
 
             return;

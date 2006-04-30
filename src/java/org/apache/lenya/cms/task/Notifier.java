@@ -86,10 +86,10 @@ public class Notifier extends ParameterWrapper {
             NamespaceMap propertiesMap = new NamespaceMap(AntTask.PROPERTIES_PREFIX);
             propertiesMap.putAll(mailMap.getPrefixedMap());
 
-            Map prefixMap = propertiesMap.getPrefixedMap();
-            for (Iterator i = prefixMap.keySet().iterator(); i.hasNext();) {
-                String key = (String) i.next();
-                String value = (String) prefixMap.get(key);
+            for (Iterator iter = propertiesMap.getPrefixedMap().entrySet().iterator(); iter.hasNext();) {
+                Map.Entry entry = (Map.Entry)iter.next();
+                String key = (String)entry.getKey();
+                String value = (String)entry.getValue();
                 String trimmedValue = value.replace((char) 160, ' ');
                 trimmedValue = trimmedValue.trim();
                 if (log.isDebugEnabled()) {

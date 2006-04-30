@@ -35,7 +35,7 @@ public class Log4Echo {
      */
     public static void main(String[] args) {
         if (args.length != 2) {
-            System.err.println("Usage: java " + new Log4Echo().getClass().getName() + "log-level log-message");
+            System.err.println("Usage: java " + Log4Echo.class.getName() + "log-level log-message");
             return;
         }
 

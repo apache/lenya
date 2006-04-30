@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: HTMLHandler.java,v 1.11 2004/03/01 16:18:19 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.search.crawler;
 
@@ -181,17 +181,12 @@ public final class HTMLHandler extends ParserCallback implements ContentHandler 
      * @param attribs DOCUMENT ME!
      */
     public void handleAnchor(MutableAttributeSet attribs) {
-        String href = new String();
+        String href = (String) attribs.getAttribute(HTML.Attribute.HREF);
 
-        href = (String) attribs.getAttribute(HTML.Attribute.HREF);
-
-        if (href == null) {
-            return;
+        if (href != null) {
+            links.add(href);
+            state = HREF;
         }
-
-        links.add(href);
-
-        state = HREF;
     }
 
     /**
@@ -232,13 +227,8 @@ public final class HTMLHandler extends ParserCallback implements ContentHandler 
      * @param attribs DOCUMENT ME!
      */
     public void handleMeta(MutableAttributeSet attribs) {
-        String name = new String();
-
-        String content = new String();
-
-        name = (String) attribs.getAttribute(HTML.Attribute.NAME);
-
-        content = (String) attribs.getAttribute(HTML.Attribute.CONTENT);
+        String name = (String) attribs.getAttribute(HTML.Attribute.NAME);
+        String content = (String) attribs.getAttribute(HTML.Attribute.CONTENT);
 
         if ((name == null) || (content == null)) {
             return;

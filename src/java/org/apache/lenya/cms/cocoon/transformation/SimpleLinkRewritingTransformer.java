@@ -333,7 +333,7 @@ implements Disposable {
 
         // trim the '_'
         String language =
-            (languageExtension == "") ? null : languageExtension.substring(1);
+            (languageExtension.length() == 0) ? null : languageExtension.substring(1);
         String url =
             (language == null)
                 ? builder.buildCanonicalUrl(

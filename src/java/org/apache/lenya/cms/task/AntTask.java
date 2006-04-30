@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AntTask.java,v 1.19 2004/03/01 16:18:20 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.task;
 
@@ -112,11 +112,9 @@ public class AntTask extends AbstractTask {
             project.setUserProperty(SERVLET_CONTEXT_PATH, servletContextPath);
 			project.setUserProperty(CONTEXT_PREFIX, contextPrefix);
 
-            for (Iterator keys = properties.keySet().iterator();
-                keys.hasNext();
-                ) {
-                String key = (String)keys.next();
-                project.setUserProperty(key, (String)properties.get(key));
+            for (Iterator iter = properties.entrySet().iterator(); iter.hasNext(); ) {
+                Map.Entry entry = (Map.Entry)iter.next();
+                project.setUserProperty((String)entry.getKey(), (String)entry.getValue());
             }
 
             if (target == null) {

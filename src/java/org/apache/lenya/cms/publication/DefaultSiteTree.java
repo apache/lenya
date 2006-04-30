@@ -469,7 +469,7 @@ public class DefaultSiteTree implements SiteTree, LastModified {
 
         NamespaceHelper helper = new NamespaceHelper(NAMESPACE_URI, "", document);
  
-        Element[] elements = helper.getChildren((Element) document.getDocumentElement(), SiteTreeNodeImpl.NODE_NAME);
+        Element[] elements = helper.getChildren(document.getDocumentElement(), SiteTreeNodeImpl.NODE_NAME);
 
         for (int i = 0; i < elements.length; i++) {
             SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i], this);
