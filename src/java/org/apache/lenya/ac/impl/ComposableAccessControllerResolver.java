@@ -34,7 +34,7 @@ import org.apache.lenya.ac.AccessControllerResolver;
  * Access controller resolver composed of other access controller resolvers.
  * The member resolvers are called one after the other to resolve the access controllers.
  * 
- * @version $Id: ComposableAccessControllerResolver.java,v 1.4 2004/08/16 16:34:06 andreas Exp $
+ * @version $Id$
  */
 public class ComposableAccessControllerResolver
     extends AbstractAccessControllerResolver
@@ -141,5 +141,4 @@ public class ComposableAccessControllerResolver
             getManager().release(selector);
         }
     }
-
 }

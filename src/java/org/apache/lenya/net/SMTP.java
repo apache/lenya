@@ -237,9 +237,7 @@ public class SMTP {
         if (from.indexOf("<") > 0) {
         	this.from = from.substring(from.indexOf("<")+1, from.length()-1);
         }
-
     }
-
 
     /**
      * DOCUMENT ME!

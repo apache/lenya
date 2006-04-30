@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SwingHTMLParser.java,v 1.9 2004/03/01 16:18:26 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.lucene.parser;
 
@@ -73,8 +73,6 @@ public class SwingHTMLParser extends AbstractHTMLParser {
     public String getKeywords() {
         return getHandler().getKeywords();
     }
-
-    private Reader reader;
 
     /**
      * DOCUMENT ME!
