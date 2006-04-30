@@ -101,7 +101,7 @@ public class Publish extends PublicationTask {
         String userId = getParameters().getParameter(PARAMETER_USER_ID);
         String userName = getParameters().getParameter(PARAMETER_USER_NAME);
         String userEmail = getParameters().getParameter(PARAMETER_USER_EMAIL);
-        String publisher = document.getDublinCore().getFirstValue(DublinCore.ELEMENT_PUBLISHER);
+        //String publisher = document.getDublinCore().getFirstValue(DublinCore.ELEMENT_PUBLISHER);
         document.getDublinCore().setValue(DublinCore.ELEMENT_PUBLISHER, userId + "|" + userName + "|" + userEmail);
     }
 
@@ -111,7 +111,7 @@ public class Publish extends PublicationTask {
      * @throws PublicationException When something went wrong
      */
     public void setModificationDate(Document document,String date) throws PublicationException {
-        String lastModDate = document.getDublinCore().getFirstValue(DublinCore.TERM_MODIFIED);
+        //String lastModDate = document.getDublinCore().getFirstValue(DublinCore.TERM_MODIFIED);
         document.getDublinCore().setValue(DublinCore.TERM_MODIFIED, date);
     }
     
