@@ -21,9 +21,12 @@ package org.apache.lenya.search.crawler;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.UnknownHostException;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import websphinx.RobotExclusion;
@@ -233,19 +236,19 @@ public class IterativeHTMLCrawler {
      *
      * @return ok, 404
      */
-    public java.util.List parsePage(String urlString) {
-        String status = "ok";
+    public List parsePage(String urlString) {
+        //String status = "ok";
 
         try {
             URL currentURL = new java.net.URL(urlString);
-            String currentURLPath = urlString.substring(0, urlString.lastIndexOf("/"));
+            //String currentURLPath = urlString.substring(0, urlString.lastIndexOf("/"));
             HttpURLConnection httpCon = (HttpURLConnection) currentURL.openConnection();
 
             httpCon.setRequestProperty("User-Agent", "Lenya Lucene Crawler");
 
             httpCon.connect();
 
-            long lastModified = httpCon.getLastModified();
+            //long lastModified = httpCon.getLastModified();
 
             if (httpCon.getResponseCode() == HttpURLConnection.HTTP_OK) {
                 String contentType = httpCon.getContentType();
@@ -255,24 +258,22 @@ public class IterativeHTMLCrawler {
                 } else if (contentType.indexOf("application/pdf") != -1) {
                     handlePDF(httpCon);
                 } else {
-                    status = "Not an excepted content type : " + contentType;
+                    //status = "Not an excepted content type : " + contentType;
                 }
             } else {
-                status = "bad";
+                //status = "bad";
             }
 
             httpCon.disconnect();
-        } catch (java.net.MalformedURLException mue) {
-            status = mue.toString();
-        } catch (java.net.UnknownHostException uh) {
-            status = uh.toString(); // Mark as a bad URL
-        } catch (java.io.IOException ioe) {
-            status = ioe.toString(); // Mark as a bad URL
+        } catch (MalformedURLException mue) {
+            log.debug("status=" + mue);
+        } catch (UnknownHostException uh) {
+            log.debug("status=" + uh); // Mark as a bad URL
+        } catch (IOException ioe) {
+            log.debug("status=" + ioe); // Mark as a bad URL
         } catch (Exception e) {
-            status = e.toString(); // Mark as a bad URL
+            log.debug("status=" + e); // Mark as a bad URL
         }
-
-        //return status;
         return null;
     }
 
@@ -556,7 +557,6 @@ public class IterativeHTMLCrawler {
         while (st.hasMoreElements()) {
             extension = st.nextToken();
         }
-
         return extension;
     }
 }

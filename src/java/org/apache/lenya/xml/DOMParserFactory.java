@@ -82,25 +82,20 @@ public class DOMParserFactory {
 
         if (args.length != 1) {
             System.out.println("Usage: java " + dpf.getClass().getName() + " example.xml");
-
             return;
         }
 
         Document doc = null;
-
         try {
             doc = dpf.getDocument(args[0]);
         } catch (FileNotFoundException e) {
             System.err.println("No such file or directory: " + e.getMessage());
-
             return;
         } catch (SAXException e) {
             System.err.println(e);
-
             return;
         } catch (Exception e) {
             System.err.println(e.getMessage());
-
             return;
         }
     }

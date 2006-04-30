@@ -315,82 +315,62 @@ public class HTMLParser implements HTMLParserConstants {
      */
     final public void HTMLDocument() throws ParseException, IOException {
         Token t;
-label_1: 
         while (true) {
             switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
-            case TagName:
-            case DeclName:
-            case Comment1:
-            case Comment2:
-            case Word:
-            case Entity:
-            case Space:
-            case Punct:
-
-                break;
-
-            default:
-                jj_la1[0] = jj_gen;
-
-                break label_1;
+                case TagName:
+                case DeclName:
+                case Comment1:
+                case Comment2:
+                case Word:
+                case Entity:
+                case Space:
+                case Punct:
+                    break;
+                default:
+                    jj_la1[0] = jj_gen;
+                    jj_consume_token(0);
+                    return;
             }
-
             switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
-            case TagName:
-                Tag();
-                afterTag = true;
-
-                break;
-
-            case DeclName:
-                t = Decl();
-                afterTag = true;
-
-                break;
-
-            case Comment1:
-            case Comment2:
-                CommentTag();
-                afterTag = true;
-
-                break;
-
-            case Word:
-                t = jj_consume_token(Word);
-                addText(t.image);
-                afterTag = false;
-
-                break;
-
-            case Entity:
-                t = jj_consume_token(Entity);
-                addText(Entities.decode(t.image));
-                afterTag = false;
-
-                break;
-
-            case Punct:
-                t = jj_consume_token(Punct);
-                addText(t.image);
-                afterTag = false;
-
-                break;
-
-            case Space:
-                jj_consume_token(Space);
-                addSpace();
-                afterTag = false;
-
-                break;
-
-            default:
-                jj_la1[1] = jj_gen;
-                jj_consume_token(-1);
-                throw new ParseException();
+                case TagName:
+                    Tag();
+                    afterTag = true;
+                    break;
+                case DeclName:
+                    t = Decl();
+                    afterTag = true;
+                    break;
+                case Comment1:
+                case Comment2:
+                    CommentTag();
+                    afterTag = true;
+                    break;
+                case Word:
+                    t = jj_consume_token(Word);
+                    addText(t.image);
+                    afterTag = false;
+                    break;
+                case Entity:
+                    t = jj_consume_token(Entity);
+                    addText(Entities.decode(t.image));
+                    afterTag = false;
+                    break;
+                case Punct:
+                    t = jj_consume_token(Punct);
+                    addText(t.image);
+                    afterTag = false;
+                    break;
+                case Space:
+                    jj_consume_token(Space);
+                    addSpace();
+                    afterTag = false;
+                    break;
+                default:
+                    jj_la1[1] = jj_gen;
+                    jj_consume_token(-1);
+                    throw new ParseException();
             }
         }
-
-        jj_consume_token(0);
     }
 
     /**
@@ -413,49 +393,36 @@ label_1:
             inScript = t1.image.equalsIgnoreCase("<script");
         }
 
-label_2: 
         while (true) {
             switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
-            case ArgName:
-
-                break;
-
-            default:
-                jj_la1[2] = jj_gen;
-
-                break label_2;
-            }
-
-            t1 = jj_consume_token(ArgName);
-
-            switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
-            case ArgEquals:
-                jj_consume_token(ArgEquals);
-
-                switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
-                case ArgValue:
-                case ArgQuote1:
-                case ArgQuote2:
-                    t2 = ArgValue();
-
-                    if (inImg && t1.image.equalsIgnoreCase("alt") && (t2 != null)) {
-                        addText("[" + t2.image + "]");
-                    }
-
+                case ArgName:
                     break;
-
                 default:
-                    jj_la1[3] = jj_gen;
-                }
-
-                break;
-
-            default:
-                jj_la1[4] = jj_gen;
+                    jj_la1[2] = jj_gen;
+                    jj_consume_token(TagEnd);
+                    return;
+            }
+            t1 = jj_consume_token(ArgName);
+            switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
+                case ArgEquals:
+                    jj_consume_token(ArgEquals);
+                    switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
+                        case ArgValue:
+                        case ArgQuote1:
+                        case ArgQuote2:
+                            t2 = ArgValue();
+                            if (inImg && t1.image.equalsIgnoreCase("alt") && (t2 != null)) {
+                                addText("[" + t2.image + "]");
+                            }
+                            break;
+                        default:
+                            jj_la1[3] = jj_gen;
+                    }
+                    break;
+                default:
+                    jj_la1[4] = jj_gen;
             }
         }
-
-        jj_consume_token(TagEnd);
     }
 
     /**
@@ -552,7 +519,6 @@ label_2:
     final public Token Decl() throws ParseException {
         Token t;
         t = jj_consume_token(DeclName);
-label_3: 
         while (true) {
             switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
             case ArgName:
@@ -560,47 +526,33 @@ label_3:
             case ArgValue:
             case ArgQuote1:
             case ArgQuote2:
-
                 break;
-
             default:
                 jj_la1[8] = jj_gen;
-
-                break label_3;
+                jj_consume_token(TagEnd);
+                if (true) {
+                    return t;
+                }
+                throw new Error("Missing return statement in function");
             }
-
             switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
             case ArgName:
                 jj_consume_token(ArgName);
-
                 break;
-
             case ArgValue:
             case ArgQuote1:
             case ArgQuote2:
                 ArgValue();
-
                 break;
-
             case ArgEquals:
                 jj_consume_token(ArgEquals);
-
                 break;
-
             default:
                 jj_la1[9] = jj_gen;
                 jj_consume_token(-1);
                 throw new ParseException();
             }
         }
-
-        jj_consume_token(TagEnd);
-
-        if (true) {
-            return t;
-        }
-
-        throw new Error("Missing return statement in function");
     }
 
     /**
@@ -610,54 +562,40 @@ label_3:
      */
     final public void CommentTag() throws ParseException {
         switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
-        case Comment1:
-            jj_consume_token(Comment1);
-label_4: 
-            while (true) {
-                switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
-                case CommentText1:
-
-                    break;
-
-                default:
-                    jj_la1[10] = jj_gen;
-
-                    break label_4;
+            case Comment1:
+                jj_consume_token(Comment1);
+    label_4:
+                while (true) {
+                    switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
+                    case CommentText1:
+                        break;
+                    default:
+                        jj_la1[10] = jj_gen;
+                        break label_4;
+                    }
+                    jj_consume_token(CommentText1);
                 }
-
-                jj_consume_token(CommentText1);
-            }
-
-            jj_consume_token(CommentEnd1);
-
-            break;
-
-        case Comment2:
-            jj_consume_token(Comment2);
-label_5: 
-            while (true) {
-                switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
-                case CommentText2:
-
-                    break;
-
-                default:
-                    jj_la1[11] = jj_gen;
-
-                    break label_5;
+                jj_consume_token(CommentEnd1);
+                break;
+            case Comment2:
+                jj_consume_token(Comment2);
+    label_5:
+                while (true) {
+                    switch ((jj_ntk == -1) ? jj_ntk() : jj_ntk) {
+                    case CommentText2:
+                        break;
+                    default:
+                        jj_la1[11] = jj_gen;
+                        break label_5;
+                    }
+                    jj_consume_token(CommentText2);
                 }
-
-                jj_consume_token(CommentText2);
-            }
-
-            jj_consume_token(CommentEnd2);
-
-            break;
-
-        default:
-            jj_la1[12] = jj_gen;
-            jj_consume_token(-1);
-            throw new ParseException();
+                jj_consume_token(CommentEnd2);
+                break;
+            default:
+                jj_la1[12] = jj_gen;
+                jj_consume_token(-1);
+                throw new ParseException();
         }
     }
 

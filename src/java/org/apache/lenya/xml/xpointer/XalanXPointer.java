@@ -94,13 +94,13 @@ public class XalanXPointer implements XPointer {
      * @exception Exception ...
      */
     public Vector select(Node node, String xpath, Vector namespaces) throws Exception {
-        NodeList children = node.getChildNodes();
+        //NodeList children = node.getChildNodes();
 
         log.debug("Select " + xpath + " from node " + node.getNodeName());
 
         NodeList nl = null;
         if (namespaces.size() > 0) {
-            org.w3c.dom.Document doc = org.apache.lenya.xml.DocumentHelper.createDocument("", "foo", null);
+            Document doc = org.apache.lenya.xml.DocumentHelper.createDocument("", "foo", null);
             for (int i = 0; i < namespaces.size(); i++) {
                 String namespace = (String)namespaces.elementAt(i);
                 String prefix = namespace.substring(0, namespace.indexOf("="));
@@ -114,8 +114,7 @@ public class XalanXPointer implements XPointer {
             nl = XPathAPI.selectNodeList(node, xpath);
         }
 
-
-	if (nl != null && nl.getLength() == 0) {
+        if (nl != null && nl.getLength() == 0) {
             log.info("No such nodes: " + xpath);
             return new Vector();
         }
@@ -125,7 +124,6 @@ public class XalanXPointer implements XPointer {
         for (int i = 0; i < nl.getLength(); i++) {
             nodes.addElement(nl.item(i));
         }
-
         return nodes;
     }
 }

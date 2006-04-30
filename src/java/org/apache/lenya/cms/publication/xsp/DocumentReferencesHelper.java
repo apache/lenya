@@ -103,7 +103,6 @@ public class DocumentReferencesHelper {
                 final String url = attribute.getValue();
 
                 if (url.startsWith(pageEnvelope.getContext() + "/" + publication.getId())) {
-                    final String webappUrl = url.substring(pageEnvelope.getContext().length());
                     links.add(url);
                 }
             }

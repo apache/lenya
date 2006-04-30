@@ -67,8 +67,7 @@ public class WGet {
                     wget.setDirectoryPrefix(args[i].substring(2)); // -P/home/lenya/download, 2: remove "-P"
                 }
             }
-
-            byte[] response = wget.download(new URL(args[0]), "s/\\/lenya\\/oscom//g", "");
+            wget.download(new URL(args[0]), "s/\\/lenya\\/oscom//g", "");
         } catch (MalformedURLException e) {
             System.err.println(e);
         } catch (Exception e) {

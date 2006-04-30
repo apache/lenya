@@ -322,7 +322,7 @@ public class XPSAssembler implements XPSInclude {
             traverse(newRoot, nl.item(i), sourceInfo, currentInfo);
         }
 
-        boolean writtenToCache = tryWritingToCache(currentInfo, newDocument);
+        tryWritingToCache(currentInfo, newDocument);
 
         if (currentInfo.url.getRef() == null) {
             log.debug("No XPointer. Return the root node in order to add the whole document.");

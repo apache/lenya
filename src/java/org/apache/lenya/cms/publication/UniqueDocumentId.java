@@ -47,9 +47,8 @@ public class UniqueDocumentId {
             if (node != null) {
                 int n = documentid.lastIndexOf("/");               
                 String lastToken = "";
-                String substring = documentid;
                 lastToken = documentid.substring(n);
-                substring = documentid.substring(0, n);
+                String substring = documentid.substring(0, n);
 
                 int l = lastToken.length();
                 int index = lastToken.lastIndexOf("-");

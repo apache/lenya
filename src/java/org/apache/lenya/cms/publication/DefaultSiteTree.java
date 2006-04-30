@@ -406,7 +406,7 @@ public class DefaultSiteTree implements SiteTree, LastModified {
     public void deleteNode(String documentId) throws SiteTreeException {
         Node node = this.getNodeInternal(documentId);
         Node parentNode = node.getParentNode();
-        Node newNode = parentNode.removeChild(node);
+        parentNode.removeChild(node);
     }
 
 

@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: PageEnvelopeFactory.java,v 1.10 2004/03/01 16:18:17 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -54,15 +54,10 @@ public class PageEnvelopeFactory {
      * @return A page envelope.
      * @throws PageEnvelopeException if something went wrong.
      */
-    public PageEnvelope getPageEnvelope(Map objectModel)
-        throws PageEnvelopeException {
+    public PageEnvelope getPageEnvelope(Map objectModel) throws PageEnvelopeException {
         Request request = ObjectModelHelper.getRequest(objectModel);
-        PageEnvelope envelope = (PageEnvelope) request.getAttribute(PageEnvelope.class.getName());
-
-        envelope = new PageEnvelope(objectModel, true);
+        PageEnvelope envelope = new PageEnvelope(objectModel, true);
         request.setAttribute(PageEnvelope.class.getName(), envelope);
-
         return envelope;
     }
-    
 }

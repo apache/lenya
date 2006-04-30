@@ -318,14 +318,13 @@ public class SMTP {
      * @return DOCUMENT ME!
      */
     public int numberOfLines(String filename) {
-        String string = "";
         int nlines = 0;
 
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
 
             while (in.available() != 0) {
-                string = reader.readLine();
+                reader.readLine();
                 nlines++;
             }
 

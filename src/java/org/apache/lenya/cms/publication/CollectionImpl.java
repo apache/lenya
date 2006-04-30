@@ -184,7 +184,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
             NodeList emptyTextNodes = XPathAPI.selectNodeList(collectionElement, "text()");
             for (int i = 0; i < emptyTextNodes.getLength(); i++) {
                 Node node = emptyTextNodes.item(i);
-                node = collectionElement.removeChild(node);
+                collectionElement.removeChild(node);
             }
 
             Document[] documents = getDocuments();

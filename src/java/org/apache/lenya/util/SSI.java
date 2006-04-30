@@ -50,8 +50,7 @@ public class SSI {
         }
 
         try {
-            OutputStream out = System.out;
-            out = new FileOutputStream("ssi-out.html");
+            OutputStream out = new FileOutputStream("ssi-out.html");
             new SSI().includeFile(args[0], false, out);
             out.close();
         } catch (Exception e) {

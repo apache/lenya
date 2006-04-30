@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: SearchFiles.java,v 1.13 2004/03/01 16:18:25 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.lucene;
 
@@ -53,14 +53,12 @@ class SearchFiles {
         if (!index_directory.exists()) {
             System.err.println("Exception: No such directory: " +
                 index_directory.getAbsolutePath());
-
             return;
         }
 
-
         try {
             if (args.length > 1) {
-                Hits hits = new SearchFiles().search(args[1], index_directory);
+                search(args[1], index_directory);
                 return;
             }
 
@@ -68,16 +66,15 @@ class SearchFiles {
 
             while (true) {
                 System.out.print("Search: ");
-
                 String line = in.readLine();
 
                 if (line.length() == -1) {
                     break;
                 }
 
-		Hits hits = new SearchFiles().search(line, index_directory);
+                search(line, index_directory);
 
-                    System.out.print("\nAnother Search (y/n) ? ");
+                System.out.print("\nAnother Search (y/n) ? ");
                     line = in.readLine();
 
                     if ((line.length() == 0) || (line.charAt(0) == 'n')) {
@@ -93,7 +90,7 @@ class SearchFiles {
     /**
      *
      */
-    public Hits search(String line, File index_directory) throws Exception {
+    public static Hits search(String line, File index_directory) throws Exception {
         Searcher searcher = new IndexSearcher(index_directory.getAbsolutePath());
         Analyzer analyzer = new StandardAnalyzer();
 

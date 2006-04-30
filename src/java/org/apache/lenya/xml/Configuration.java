@@ -85,8 +85,6 @@ public class Configuration {
             log.debug(OVERRIDE_DEFAULT_CONFIGURATION_KEY + "=" + resourcePathRelativeToClasspath);
         }
 
-        ClassLoader cl = ClassLoader.getSystemClassLoader();
-
         // FIXME:
         URL url = org.apache.log4j.helpers.Loader.getResource("hallo");
 
