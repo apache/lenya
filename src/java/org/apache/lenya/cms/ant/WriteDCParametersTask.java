@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: WriteDCParametersTask.java,v 1.6 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
@@ -34,7 +34,7 @@ public class WriteDCParametersTask extends PublicationTask {
     private String area = null;
     private String creator = null;
     private String title = null;
-    private String description = null;
+    private String dcDescription = null;
     private String subject = null;
     private String language = null;
     private String publisher = null;
@@ -62,7 +62,7 @@ public class WriteDCParametersTask extends PublicationTask {
      * @return the description
      */
     public String getDescription() {
-        return description;
+        return dcDescription;
     }
 
     /**
@@ -116,7 +116,7 @@ public class WriteDCParametersTask extends PublicationTask {
      * @param string the description
      */
     public void setDescription(String string) {
-        description = string;
+        dcDescription = string;
     }
 
     /**
@@ -271,5 +271,4 @@ public class WriteDCParametersTask extends PublicationTask {
             throw new BuildException(e);
         }
     }
-
 }
