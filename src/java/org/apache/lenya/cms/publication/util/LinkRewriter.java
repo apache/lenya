@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Publication;
@@ -40,20 +40,7 @@ import org.w3c.dom.NodeList;
  */
 public class LinkRewriter {
 
-    private FileFilter directoryFilter = new FileFilter() {
-
-        public boolean accept(File file) {
-            return file.isDirectory();
-        }
-    };
-
-    private FileFilter xmlFileFilter = new FileFilter() {
-
-        public boolean accept(File file) {
-            return file.isFile() && FilenameUtils.getExtension(file.getName()).equals("xml");
-        }
-    };
-
+    private FileFilter xmlFileFilter = FileFilterUtils.suffixFileFilter(".xml");
     /**
      * Ctor.
      */
@@ -177,7 +164,7 @@ public class LinkRewriter {
 
         List list = new ArrayList();
 
-        File[] directories = directory.listFiles(directoryFilter);
+        File[] directories = directory.listFiles((FileFilter)FileFilterUtils.directoryFileFilter());
         for (int i = 0; i < directories.length; i++) {
             list.addAll(getDocumentFiles(directories[i]));
         }
@@ -185,5 +172,4 @@ public class LinkRewriter {
         list.addAll(Arrays.asList(xmlFiles));
         return list;
     }
-
 }

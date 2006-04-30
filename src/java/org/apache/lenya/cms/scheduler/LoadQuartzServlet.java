@@ -39,6 +39,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -349,11 +350,7 @@ public class LoadQuartzServlet extends HttpServlet {
         File publicationsDirectory =
             new File(getServletContextDirectory(), PublishingEnvironment.PUBLICATION_PREFIX);
 
-        File[] publicationDirectories = publicationsDirectory.listFiles(new FileFilter() {
-            public boolean accept(File file) {
-                return file.isDirectory();
-            }
-        });
+        File[] publicationDirectories = publicationsDirectory.listFiles((FileFilter)FileFilterUtils.directoryFileFilter());
 
         log.debug("=========================================");
         log.debug("  Restoring jobs.");
@@ -408,7 +405,6 @@ public class LoadQuartzServlet extends HttpServlet {
             String value = (String) map.get(keys[i]);
             requestUri += keys[i] + "=" + value;
         }
-
         return requestUri;
     }
 }

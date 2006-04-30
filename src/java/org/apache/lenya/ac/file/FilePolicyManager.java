@@ -36,6 +36,7 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.util.NetUtils;
+import org.apache.commons.io.filefilter.FileFilterUtils;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
@@ -81,6 +82,9 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
     protected static final String URL_FILENAME = "url-policy.acml";
     protected static final String SUBTREE_FILENAME = "subtree-policy.acml";
     protected static final String USER_ADMIN_URL = "/admin/users/";
+
+    private static final FileFilter POLICY_ACML_FILEFILTER = 
+        FileFilterUtils.orFileFilter(FileFilterUtils.nameFileFilter(SUBTREE_FILENAME), FileFilterUtils.nameFileFilter(URL_FILENAME));
 
     /**
      * Builds the URL policy for a URL from a file. When the file is not present, an empty policy is
@@ -394,12 +398,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
     protected void removeAccreditable(AccreditableManager manager, Accreditable accreditable,
             File policyDirectory) throws AccessControlException {
 
-        File[] policyFiles = policyDirectory.listFiles(new FileFilter() {
-            public boolean accept(File file) {
-                return file.getName().equals(SUBTREE_FILENAME)
-                        || file.getName().equals(URL_FILENAME);
-            }
-        });
+        File[] policyFiles = policyDirectory.listFiles(POLICY_ACML_FILEFILTER);
 
         try {
             RemovedAccreditablePolicyBuilder builder = new RemovedAccreditablePolicyBuilder(manager);
@@ -422,16 +421,11 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
             throw new AccessControlException(e);
         }
 
-        File[] directories = policyDirectory.listFiles(new FileFilter() {
-            public boolean accept(File file) {
-                return file.isDirectory();
-            }
-        });
+        File[] directories = policyDirectory.listFiles((FileFilter)FileFilterUtils.directoryFileFilter());
 
         for (int i = 0; i < directories.length; i++) {
             removeAccreditable(manager, accreditable, directories[i]);
         }
-
     }
 
     /**
@@ -488,5 +482,4 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
             }
         }
     }
-
 }

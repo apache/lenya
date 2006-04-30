@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ResourcesManager.java,v 1.13 2004/08/26 22:18:52 roku Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.publication;
 
@@ -123,7 +123,6 @@ public class ResourcesManager {
         if (getPath().isDirectory()) {
             files = getPath().listFiles(filter);
         }
-
         return files;
     }
 
@@ -159,7 +158,7 @@ public class ResourcesManager {
                     file.getName().equals(resource.getName().concat(RESOURCES_META_SUFFIX));
             }
         };
-        
+
         final File[] metaFiles = getFiles(filter);
         assert(metaFiles.length == 0);
         return metaFiles[0];

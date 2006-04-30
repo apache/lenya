@@ -62,18 +62,13 @@ public class DeletePoliciesTask extends TwoDocumentsOperationTask {
 	 * @param directory The directory
 	 * @return List of files
 	 */
-	public File[] getFiles(File directory) {
-		FileFilter filter = new FileFilter() {
-
-			public boolean accept(File file) {
-				return file.isFile();
-			}
-		};
-		if (directory.exists() && directory.isDirectory()) {
-			return directory.listFiles(filter);
-		}
-		return null;
-	}
+    public File[] getFiles(File directory) {
+        if (directory.exists() && directory.isDirectory()) {
+            return FileUtils.convertFileCollectionToFileArray(
+                    FileUtils.listFiles(directory, null, false));
+        }
+        return null;
+    }
 
 	/**
 	 * Delte the policies file 
@@ -90,16 +85,15 @@ public class DeletePoliciesTask extends TwoDocumentsOperationTask {
             FileUtils.forceDelete(authoringPolicies[i]);
             } catch (IOException e) {
                 //FIXME: catch Exception because of window's delete problem 
-                log("exception " +e);
+                log("exception " + e);
             }
-
 		}
         if (srcDir.exists() && srcDir.isDirectory() && srcDir.listFiles().length == 0) {  
             try {
           FileUtils.forceDelete(srcDir);
             } catch (IOException e) {
 				//FIXME: catch Exception because of window's delete problem 
-                log("exception " +e);
+                log("exception " + e);
             }
         }
 	}

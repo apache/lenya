@@ -20,7 +20,6 @@
 package org.apache.lenya.cms.ant;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
@@ -60,18 +59,13 @@ public class CopyPoliciesTask extends TwoDocumentsOperationTask {
 	 * @param directory The directory
 	 * @return List of files
 	 */
-	public File[] getFiles(File directory) {
-		FileFilter filter = new FileFilter() {
-
-			public boolean accept(File file) {
-				return file.isFile();
-			}
-		};
-		if (directory.exists() && directory.isDirectory()) {
-			return directory.listFiles(filter);
-		}
-		return null;
-	}
+    public File[] getFiles(File directory) {
+        if (directory.exists() && directory.isDirectory()) {
+            return FileUtils.convertFileCollectionToFileArray(
+                    FileUtils.listFiles(directory, null, false));
+        }
+        return null;
+    }
 
 	/**
 	 * Copies the policies file 
@@ -133,7 +127,6 @@ public class CopyPoliciesTask extends TwoDocumentsOperationTask {
 							+ destDocumentid);
 
 				copyPolicies(srcLiveDir, destLiveDir);
-
 			} else if (
 				destArea.equals(Publication.ARCHIVE_AREA)
 					| destArea.equals(Publication.TRASH_AREA)) {
@@ -165,7 +158,6 @@ public class CopyPoliciesTask extends TwoDocumentsOperationTask {
 							+ destDocumentid);
 
 				copyPolicies(srcLiveDir, destLiveDir);
-
 			}
 		} else if (
 			srcArea.equals(Publication.ARCHIVE_AREA)
@@ -201,7 +193,6 @@ public class CopyPoliciesTask extends TwoDocumentsOperationTask {
 							+ destDocumentid);
 
 				copyPolicies(srcLiveDir, destLiveDir);
-
 			}
 		}
 	}
