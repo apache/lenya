@@ -28,10 +28,11 @@ import org.apache.lenya.ac.RoleManager;
 
 /**
  * File-based role manager implementation.
- * @version $Id: FileRoleManager.java,v 1.4 2004/08/16 15:59:51 andreas Exp $
+ * @version $Id$
  */
 public final class FileRoleManager extends FileItemManager implements RoleManager {
-    protected static final String SUFFIX = ".rml";
+    static final String SUFFIX = ".rml";
+
     private static Map instances = new HashMap();
 
     /**
