@@ -72,7 +72,7 @@ import org.xmldb.xupdate.lexus.XUpdateQueryImpl;
  */
 public class HTMLFormSaveAction extends AbstractConfigurableAction implements ThreadSafe {
 
-    class XUpdateAttributes {
+    static class XUpdateAttributes {
         public String xupdateAttrExpr = "";
         public String tagID = "";
 

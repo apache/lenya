@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: URIParameterizerImpl.java,v 1.4 2004/03/01 16:18:19 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.uriparameterizer;
 
@@ -45,7 +45,7 @@ public class URIParameterizerImpl
     /**
      * Consumer to handle URIParameterizer events.
      */
-    public class URIParametrizerConsumer extends AbstractXMLConsumer {
+    public static class URIParametrizerConsumer extends AbstractXMLConsumer {
         private boolean inParamElement = false;
         private String parameterValue = null;
 

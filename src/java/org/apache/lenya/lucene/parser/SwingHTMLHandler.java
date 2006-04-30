@@ -388,7 +388,7 @@ public class SwingHTMLHandler extends ParserCallback {
     /**
      * DOCUMENT ME!
      */
-    public class TagStack {
+    public static class TagStack {
         private List tags = new ArrayList();
 
         /**
@@ -458,7 +458,7 @@ public class SwingHTMLHandler extends ParserCallback {
         /**
          * DOCUMENT ME!
          */
-        public class UnderflowException extends Exception {
+        public static class UnderflowException extends Exception {
             /**
              * Creates a new UnderflowException object.
              */

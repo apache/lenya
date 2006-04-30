@@ -216,7 +216,7 @@ public abstract class AbstractIndexer implements Indexer {
     /**
      * FileFilter used to obtain the files to index.
      */
-    public class DefaultIndexFilter implements FileFilter {
+    public static class DefaultIndexFilter implements FileFilter {
         protected String[] indexableExtensions;
 
         /**
@@ -264,7 +264,7 @@ public abstract class AbstractIndexer implements Indexer {
      *   <li>representing the same file but are older than the current file</li>
      * </ul>
      */
-    public class DeleteHandler extends AbstractIndexIteratorHandler {
+    public static class DeleteHandler extends AbstractIndexIteratorHandler {
         /** Handles a stale document.
          *
          */
