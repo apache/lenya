@@ -22,8 +22,6 @@ package org.apache.lenya.util;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
-
 
 /**
  * An object of this class provides an easy way to access
@@ -129,18 +127,18 @@ public class NamespaceMap {
     public static String getShortName(String prefix, String key) {
         return key.substring(prefix.length() + SEPARATOR.length());
     }
-    
+
     /**
      * Puts all prefixed key-value-pairs of map into this map.
      * @param map A map.
      */
     public void putAll(Map map) {
-        for (Iterator i = map.keySet().iterator(); i.hasNext(); ) {
-            String key = (String) i.next();
-            put(key, map.get(key));
+        for (Iterator iter = map.entrySet().iterator(); iter.hasNext(); ) {
+            Map.Entry entry = (Map.Entry)iter.next();
+            put((String)entry.getKey(), (String)entry.getValue());
         }
     }
-    
+
     /**
      * Returns a map with prefixed keys.
      * @return A map.
@@ -148,5 +146,4 @@ public class NamespaceMap {
     public Map getPrefixedMap() {
         return new HashMap(getMapObject());
     }
-    
 }
