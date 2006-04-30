@@ -70,9 +70,7 @@ public class AnonymousAuthenticator extends AbstractLogEnabled implements Authen
             authenticated = true;
         } else {
             if (getLogger().isDebugEnabled()) {
-                if (user == null) {
-                    getLogger().debug("No such user: [" + username + "]");
-                }
+                getLogger().debug("No such user: [" + username + "]");
                 getLogger().debug("User [" + username + "] not authenticated.");
             }
         }

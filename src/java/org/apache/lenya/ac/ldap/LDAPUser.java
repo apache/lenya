@@ -165,7 +165,6 @@ public class LDAPUser extends FileUser {
      * throw an exception.
      */
     protected void initialize() {
-        DirContext context = null;
         try {
 	    if (log.isDebugEnabled())
 		log.debug("initialize() getting entry ...");
@@ -201,14 +200,6 @@ public class LDAPUser extends FileUser {
         } catch (NamingException e) {
 	    log.warn("LDAPUser.initialize() can not read the user name for the id [" + ldapId + "], this is probably a setup error of your user entry.", e);
 	    ldapName = "";
-        } finally {
-            try {
-                if (context != null) {
-                    close(context);
-                }
-            } catch (NamingException e) {
-		log.warn("LDAPUser.initialize() could not close the connection to the directory server, this should not happen", e);
-            }
         }
     }
 

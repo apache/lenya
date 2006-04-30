@@ -63,7 +63,7 @@ public class SSI {
      * Read the specified file and parse server side include instructions
      *
      * @param fileName The file path to read in
-     * @param virtual Whether the fileName parameter is absolut or relativ to the document root of the web server
+     * @param virtual Whether the fileName parameter is absolute or relative to the document root of the web server
      * @param out The OutputStream where to write output to
      */
     public void includeFile(String fileName, boolean virtual, OutputStream out)
@@ -71,9 +71,9 @@ public class SSI {
         if (virtual) {
             String documentRoot = ""; //(String) r_request.get("Request.DOCUMENT_ROOT");
 
-            if (documentRoot != null) {
+            //if (documentRoot != null) {
                 fileName = documentRoot + fileName;
-            }
+            //}
         }
 
         log.info("Including file: " + fileName);

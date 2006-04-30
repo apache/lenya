@@ -32,6 +32,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.apache.commons.io.IOUtils;
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 import org.xml.sax.SAXException;
@@ -109,12 +110,12 @@ public class DownloadFeeds extends Task {
                     log(e.toString());
                 }
 
-                try {    
+                try {
                     URLConnection connection = source.openConnection();
-                    
+
                     connection.connect();
-                    HttpURLConnection httpConnection = (HttpURLConnection) connection;
-                    
+                    //HttpURLConnection httpConnection = (HttpURLConnection) connection;
+
                     InputStream is = null;
                     for (int i = 0; i < 3; i++) {
                         try {
@@ -155,10 +156,8 @@ public class DownloadFeeds extends Task {
                         }
                         finished = true;
                     } finally {
-                        if (fos != null) {
-                            fos.close();
-                        }
-                        is.close();
+                        IOUtils.closeQuietly(fos);
+                        IOUtils.closeQuietly(is);
                         // we have started to (over)write dest, but failed.
                         // Try to delete the garbage we'd otherwise leave
                         // behind.
@@ -170,7 +169,7 @@ public class DownloadFeeds extends Task {
                     log("IOException: " + e.toString());
                     throw new BuildException(e, getLocation());
                 }
-                
+
                 SAXParserFactory factory = SAXParserFactory.newInstance();
                 try {
                     SAXParser saxParser = factory.newSAXParser();
