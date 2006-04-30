@@ -20,7 +20,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.service.ServiceException;
@@ -33,9 +32,9 @@ import org.apache.excalibur.source.SourceResolver;
 
 /**
  * Checks if a certain resource exists and returns either the string "true" or "false".
- * @version $Id: ResourceExistsModule.java,v 1.3 2004/04/15 14:11:02 andreas Exp $
+ * @version $Id$
  */
-public class ResourceExistsModule extends AbstractInputModule implements Serviceable, Disposable {
+public class ResourceExistsModule extends AbstractInputModule implements Serviceable {
 
     /* (non-Javadoc)
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)

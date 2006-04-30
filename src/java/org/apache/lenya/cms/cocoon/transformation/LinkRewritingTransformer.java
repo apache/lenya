@@ -19,7 +19,6 @@ package org.apache.lenya.cms.cocoon.transformation;
 import java.io.IOException;
 import java.util.Map;
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -70,7 +69,7 @@ import org.xml.sax.helpers.AttributesImpl;
  * 
  * $Id: LinkRewritingTransformer.java,v 1.7 2004/03/16 11:12:16 gregor
  */
-public class LinkRewritingTransformer extends AbstractSAXTransformer implements Disposable {
+public class LinkRewritingTransformer extends AbstractSAXTransformer {
 
     private boolean ignoreAElement = false;
     private ServiceSelector serviceSelector;

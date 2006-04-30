@@ -26,7 +26,6 @@ import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Group;
-import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.impl.AbstractUser;
 import org.apache.lenya.ac.impl.ItemConfiguration;
 import org.apache.log4j.Logger;
@@ -35,7 +34,7 @@ import org.apache.log4j.Logger;
  * File-based user implementation.
  * @version $Id$
  */
-public class FileUser extends AbstractUser implements Item, Serializable {
+public class FileUser extends AbstractUser implements Serializable {
 	private static final Logger log = Logger.getLogger(FileUser.class);
 
     public static final String ID = "identity";

@@ -28,7 +28,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
@@ -73,8 +72,7 @@ import org.apache.log4j.Logger;
  * 
  * @deprecated Use the {@link org.apache.lenya.cms.cocoon.transformation.LinkRewritingTransformer} instead.
  */
-public class SimpleLinkRewritingTransformer extends AbstractSAXTransformer
-implements Disposable {
+public class SimpleLinkRewritingTransformer extends AbstractSAXTransformer {
 
     Logger log = Logger.getLogger(SimpleLinkRewritingTransformer.class);
 

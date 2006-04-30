@@ -22,7 +22,6 @@ package org.apache.lenya.cms.cocoon.transformation;
 import java.io.IOException;
 import java.util.Map;
 
-import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
@@ -54,9 +53,7 @@ import org.xml.sax.helpers.AttributesImpl;
  * current identity is not allowed to access 
  * with a <code>protected="true"</code> attribute.
  */
-public class AccessControlSitetreeTransformer
-    extends AbstractSAXTransformer
-    implements Disposable {
+public class AccessControlSitetreeTransformer extends AbstractSAXTransformer {
 
     public static final String ATTRIBUTE_PROTECTED = "protected";
     public static final String PARAMETER_PUBLICATION_ID = "publication-id";

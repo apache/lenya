@@ -24,15 +24,14 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
 import org.apache.lenya.ac.AccessControlException;
-import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.impl.AbstractRole;
 import org.apache.lenya.ac.impl.ItemConfiguration;
 
 /**
  * File-based role implementation.
- * @version $Id: FileRole.java,v 1.4 2004/08/16 15:59:51 andreas Exp $
+ * @version $Id$
  */
-public class FileRole extends AbstractRole implements Item {
+public class FileRole extends AbstractRole {
     
     /**
     * Creates a new file role.

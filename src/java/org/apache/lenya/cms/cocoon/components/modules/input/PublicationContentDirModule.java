@@ -20,7 +20,6 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.Map;
 
-import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.service.ServiceException;
@@ -36,7 +35,7 @@ import org.apache.lenya.cms.publication.PublicationFactory;
 /**
  * Gets the content directory of a specific publication and specific area
  */
-public class PublicationContentDirModule extends AbstractInputModule implements Serviceable, Disposable {
+public class PublicationContentDirModule extends AbstractInputModule implements Serviceable {
 
     /* (non-Javadoc)
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)

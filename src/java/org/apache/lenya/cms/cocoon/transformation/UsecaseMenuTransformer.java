@@ -22,7 +22,6 @@ package org.apache.lenya.cms.cocoon.transformation;
 import java.io.IOException;
 import java.util.Map;
 
-import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.parameters.Parameters;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
@@ -49,7 +48,7 @@ import org.xml.sax.helpers.AttributesImpl;
  * This transformer disables menu items (by removing the href attribute)
  * which are not allowed with respect to the usecase policies.
  */
-public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Disposable {
+public class UsecaseMenuTransformer extends AbstractSAXTransformer {
 
     public static final String MENU_ELEMENT = "menu";
     public static final String ITEM_ELEMENT = "item";
@@ -85,9 +84,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
                 }
             }
         }
-
         super.startElement(uri, localName, raw, attributes);
-
     }
 
     private UsecaseAuthorizer authorizer;

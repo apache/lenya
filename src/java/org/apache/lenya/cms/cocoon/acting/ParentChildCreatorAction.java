@@ -19,7 +19,6 @@
 
 package org.apache.lenya.cms.cocoon.acting;
 
-import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
@@ -56,8 +55,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringTokenizer;
 
-public class ParentChildCreatorAction extends AbstractComplementaryConfigurableAction
-    implements Configurable {
+public class ParentChildCreatorAction extends AbstractComplementaryConfigurableAction {
     private String treeAuthoringPath = null;
     private String docsPath = null;
     private String doctypesPath = null;

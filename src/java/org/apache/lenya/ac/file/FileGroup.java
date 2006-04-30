@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: FileGroup.java,v 1.4 2004/08/16 15:59:51 andreas Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.ac.file;
 
@@ -26,14 +26,13 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
 import org.apache.lenya.ac.AccessControlException;
-import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.impl.AbstractGroup;
 import org.apache.lenya.ac.impl.ItemConfiguration;
 
 /**
  * File-based group implementation.
  */
-public class FileGroup extends AbstractGroup implements Item {
+public class FileGroup extends AbstractGroup {
     
     /**
      * @see org.apache.lenya.ac.Group#delete()

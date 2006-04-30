@@ -16,7 +16,6 @@
 
 /* $Id$  */
 
-
 package org.apache.lenya.cms.cocoon.acting;
 
 import java.io.File;
@@ -24,7 +23,6 @@ import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
@@ -51,7 +49,7 @@ import org.dom4j.io.SAXReader;
 /**
  * DOCUMENT ME!
  */
-public class DefaultCreatorAction extends AbstractComplementaryConfigurableAction implements Configurable {
+public class DefaultCreatorAction extends AbstractComplementaryConfigurableAction {
     Logger log = Logger.getLogger(DefaultCreatorAction.class);
 
     private String docsPath = null;
@@ -286,7 +284,7 @@ public class DefaultCreatorAction extends AbstractComplementaryConfigurableActio
         getLogger().debug(".validate(): parentid=" + parentid + " ; childid=" + childid +
             " ; childname=" + childname + " ; childtype=" + childtype + " ; doctype=" + doctype);
 
-        if ((childid.indexOf(" ") >= 0) || (childid.length() == 0)) {
+        if (childid.length() == 0 || childid.indexOf(" ") >= 0) {
             return false;
         }
 

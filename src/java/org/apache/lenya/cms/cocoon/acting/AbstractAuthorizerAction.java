@@ -15,14 +15,13 @@
  *
  */
 
-/* $Id: AbstractAuthorizerAction.java,v 1.17 2004/03/03 12:56:32 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.parameters.Parameters;
@@ -39,8 +38,7 @@ import org.apache.regexp.RECompiler;
 import org.apache.regexp.REProgram;
 import org.apache.regexp.RESyntaxException;
 
-public abstract class AbstractAuthorizerAction extends AbstractComplementaryConfigurableAction
-    implements Configurable {
+public abstract class AbstractAuthorizerAction extends AbstractComplementaryConfigurableAction {
     REProgram[] public_matchers;
     boolean logRequests = false;
     String authenticator_type = null;
