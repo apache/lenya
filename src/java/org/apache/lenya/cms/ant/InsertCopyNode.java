@@ -40,32 +40,30 @@ public class InsertCopyNode extends TwoNodesTask {
     /**
      * copies a node corresponding to a document with id firstdocumentid and area firstarea and
      * inserts it like a node corresponding to a document with id secdocumentid and area secarea.
-     * @param firstdocumentid The document-id of the document corresponding to the source node.
-     * @param secdocumentid The document-id of the document corresponding to the destination node.
-     * @param firstarea The area of the document corresponding to the source node.
-     * @param secarea The area of the document corresponding to the destination node.
+     * @param firstDocumentId The document-id of the document corresponding to the source node.
+     * @param secDocumentId The document-id of the document corresponding to the destination node.
+     * @param firstArea The area of the document corresponding to the source node.
+     * @param secArea The area of the document corresponding to the destination node.
      * @throws SiteTreeException if there are problems with creating or saving the site tree.
      */
-    public void manipulateTree(String firstdocumentid, String secdocumentid, String firstarea,
-            String secarea) throws SiteTreeException {
+    public void manipulateTree(String firstDocumentId, String secDocumentId, String firstArea,
+            String secArea) throws SiteTreeException {
 
         Publication publication = getPublication();
-        SiteTree firsttree = publication.getTree(firstarea);
-        SiteTree sectree = publication.getTree(secarea);
-
-        String parentid = "";
-        StringTokenizer st = new StringTokenizer(secdocumentid, "/");
-        int length = st.countTokens();
-
-        for (int i = 0; i < (length - 1); i++) {
-            parentid = parentid + "/" + st.nextToken();
+        SiteTree firsttree = publication.getTree(firstArea);
+        SiteTree sectree = publication.getTree(secArea);
+        
+        StringTokenizer st = new StringTokenizer(secDocumentId, "/");
+        int length = st.countTokens() - 1;
+        StringBuffer parentId = new StringBuffer(secDocumentId.length());
+        for (int i = 0; i < length; i++) {
+            parentId.append("/").append(st.nextToken());
         }
         String newid = st.nextToken();
-
-        SiteTreeNode node = firsttree.getNode(firstdocumentid);
+        SiteTreeNode node = firsttree.getNode(firstDocumentId);
 
         if (node != null) {
-            SiteTreeNode parentNode = sectree.getNode(parentid);
+            SiteTreeNode parentNode = sectree.getNode(parentId.toString());
             if (parentNode != null) {
                 sectree.copy(node, parentNode, newid, null);
             } else {
@@ -75,7 +73,7 @@ public class InsertCopyNode extends TwoNodesTask {
         } else {
             throw new SiteTreeException("Node " + node + " couldn't be found");
         }
-        if (firstarea.equals(secarea)) {
+        if (firstArea.equals(secArea)) {
             firsttree.save();
         } else {
             firsttree.save();

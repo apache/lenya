@@ -103,15 +103,14 @@ public class WorkflowInvoker extends ParameterWrapper {
 	 *            A role array.
 	 */
 	public static void setRoles(NamespaceMap parameters, Role[] roles) {
-
-		String roleString = "";
+		StringBuffer roleString = new StringBuffer();
 		for (int i = 0; i < roles.length; i++) {
 			if (i > 0) {
-				roleString += ",";
+				roleString.append(",");
 			}
-			roleString += roles[i].getId();
+			roleString.append(roles[i].getId());
 		}
-		parameters.put(ROLES, roleString);
+		parameters.put(ROLES, roleString.toString());
 	}
 
 	/**

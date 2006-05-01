@@ -163,9 +163,9 @@ public class SitetreeFragmentGenerator extends AbstractGenerator {
             this.getLogger().debug("Parameter documentid: " + this.documentid);
             this.getLogger()
                     .debug("Parameter initialTree: " + this.initialTree);
-            String areasStr = "";
+            StringBuffer areasStr = new StringBuffer();
             for (int i = 0; i < this.areas.length; i++)
-                areasStr += this.areas[i] + " ";
+                areasStr.append(this.areas[i]).append(" ");
             this.getLogger().debug("Parameter areas: " + areasStr);
         }
 

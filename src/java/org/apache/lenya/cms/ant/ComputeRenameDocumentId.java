@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: ComputeRenameDocumentId.java,v 1.4 2004/03/03 12:56:30 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.ant;
 
@@ -28,7 +28,6 @@ import java.util.StringTokenizer;
  * Used by Rename
  */
 public class ComputeRenameDocumentId extends ComputeNewDocumentId {
-
 	/**
 	 * Creates a new instance of ComputeRenameDocumentId
 	 */
@@ -45,14 +44,13 @@ public class ComputeRenameDocumentId extends ComputeNewDocumentId {
 	 * @return String The document id of the destination.
 	 */
 	protected String compute(String firstdocumentid, String secdocumentid) {
-		String documentid= "";
 		StringTokenizer st = new StringTokenizer(firstdocumentid, "/");
 		int l = st.countTokens();
-		for (int i = 0; i < l-1; i++) {
-			documentid = documentid + "/" + st.nextToken();
+        StringBuffer documentId = new StringBuffer(firstdocumentid.length());
+		for (int i = 0; i < l - 1; i++) {
+			documentId.append("/").append(st.nextToken());
 		}
-		secdocumentid = documentid + "/" + secdocumentid;
-		return secdocumentid;
+		documentId.append("/").append(secdocumentid);
+		return documentId.toString();
 	}
-
 }

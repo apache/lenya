@@ -205,8 +205,7 @@ public class ReTokenizeFile {
      * @return DOCUMENT ME!
      */
     public String emphasizeAsXML(String string, String[] words) {
-        String emphasizedString = "... Hello <word>World</word>! ...";
-
+        //String emphasizedString = "... Hello <word>World</word>! ...";
         String lowerCaseString = string.toLowerCase();
 
         for (int i = 0; i < words.length; i++) {
@@ -219,7 +218,7 @@ public class ReTokenizeFile {
         lowerCaseString = lowerCaseString.toLowerCase();
 
         //if (true) return "<excerpt>" + lowerCaseString + "</excerpt>";
-        String result = "";
+        StringBuffer result = new StringBuffer("<excerpt>");
 
         int sourceIndex = 0;
         int index = 0;
@@ -229,15 +228,14 @@ public class ReTokenizeFile {
             for (int tag = 0; tag < 2; tag++) {
                 int subStringLength = lowerCaseString.indexOf(tags[tag], index) - index;
                 String subString = string.substring(sourceIndex, sourceIndex + subStringLength);
-                result += (includeInCDATA(subString) + tags[tag]);
+                result.append(includeInCDATA(subString)).append(tags[tag]);
                 sourceIndex += subStringLength;
                 index += (subStringLength + tags[tag].length());
             }
         }
-
-        result += includeInCDATA(string.substring(sourceIndex));
-
-        return "<excerpt>" + result + "</excerpt>";
+        result.append(includeInCDATA(string.substring(sourceIndex)));
+        result.append("</excerpt>");
+        return result.toString();
     }
 
     /**

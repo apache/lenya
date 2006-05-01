@@ -73,13 +73,14 @@ public class DefaultTaskWrapper implements TaskWrapper {
                 value = ((String) valueObject).trim();
             } else if (valueObject instanceof String[]) {
                 String[] values = (String[]) valueObject;
-                value = "";
+                StringBuffer buf = new StringBuffer();
                 for (int j = 0; j < values.length; j++) {
-                    if (j > 0 && value.length() > 0) {
-                        value += ",";
+                    if (j > 0 && buf.length() > 0) {
+                        buf.append(",");
                     }
-                    value += values[j].trim();
+                    buf.append(values[j].trim());
                 }
+                value = buf.toString();
             } else {
                 log.debug("Not a string value: [" + key + "] = [" + valueObject + "]");
             }
@@ -89,7 +90,6 @@ public class DefaultTaskWrapper implements TaskWrapper {
                 this.parameters.put(key, value);
             }
         }
-
     }
 
     /**
@@ -198,12 +198,12 @@ public class DefaultTaskWrapper implements TaskWrapper {
         if (!wrapperParameters.isComplete()) {
 
             String[] missingKeys = getWrapperParameters().getMissingKeys();
-            String keyString = "";
+            StringBuffer keyString = new StringBuffer();
             for (int i = 0; i < missingKeys.length; i++) {
                 if (i > 0) {
-                    keyString += ", ";
+                    keyString.append(", ");
                 }
-                keyString += missingKeys[i];
+                keyString.append(missingKeys[i]);
             }
             throw new ExecutionException("Parameters missing: [" + keyString + "]");
         }

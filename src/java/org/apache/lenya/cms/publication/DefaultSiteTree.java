@@ -240,7 +240,7 @@ public class DefaultSiteTree implements SiteTree, LastModified {
      * @see org.apache.lenya.cms.publication.SiteTree#addNode(java.lang.String, org.apache.lenya.cms.publication.Label[], java.lang.String, java.lang.String, boolean, java.lang.String)
      */
     public synchronized void addNode(
-        String documentid,
+        String documentId,
         Label[] labels,
         boolean visibleInNav,
         String href,
@@ -248,16 +248,14 @@ public class DefaultSiteTree implements SiteTree, LastModified {
         boolean link,
         String refDocumentId)
         throws SiteTreeException {
-        String parentid = "";
-        StringTokenizer st = new StringTokenizer(documentid, "/");
-        int length = st.countTokens();
-
-        for (int i = 0; i < (length - 1); i++) {
-            parentid = parentid + "/" + st.nextToken();
+        StringTokenizer st = new StringTokenizer(documentId, "/");
+        int length = st.countTokens() - 1;
+        StringBuffer parentId = new StringBuffer(documentId.length());
+        for (int i = 0; i < length; i++) {
+            parentId.append("/").append(st.nextToken());
         }
-
         String id = st.nextToken();
-        this.addNode(parentid, id, labels, visibleInNav, href, suffix, link, refDocumentId);
+        this.addNode(parentId.toString(), id, labels, visibleInNav, href, suffix, link, refDocumentId);
     }
 
     /** (non-Javadoc)

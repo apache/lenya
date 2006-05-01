@@ -46,7 +46,9 @@ import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.RelaxNG;
 import org.apache.lenya.xml.XPath;
 
+import org.w3c.dom.Attr;
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
@@ -332,13 +334,12 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
      * @param node Original node
      */
     private XUpdateAttributes getAttributes(Node node) {
-
-        String xupdateString = "";
+        StringBuffer xUpdate = new StringBuffer();
         String tagID = "";
-        org.w3c.dom.NamedNodeMap attributes = node.getAttributes();
+        NamedNodeMap attributes = node.getAttributes();
         if (attributes != null) {
             for (int i = 0; i < attributes.getLength(); i++) {
-                org.w3c.dom.Attr attribute = (org.w3c.dom.Attr) attributes.item(i);
+                Attr attribute = (Attr) attributes.item(i);
                 getLogger().debug(".getAttributes(): " + attribute.getName() + " "
                         + attribute.getValue());
                 if (!attribute.getName().equals("tagID")) {
@@ -348,21 +349,17 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                     if (namespace != null) {
                         namespaceAttribute = " namespace=\"" + namespace + "\"";
                     }
-                    xupdateString = xupdateString + "<xupdate:attribute name=\""
-                            + attribute.getName() + "\"" + namespaceAttribute + ">"
-                            + attribute.getValue() + "</xupdate:attribute>";
+                    xUpdate.append("<xupdate:attribute name=\"")
+                            .append(attribute.getName()).append("\"").append(namespaceAttribute).append(">")
+                            .append(attribute.getValue()).append("</xupdate:attribute>");
                 } else {
-                    xupdateString = xupdateString
-                            + "<xupdate:attribute name=\"tagID\">temp</xupdate:attribute>";
+                    xUpdate.append("<xupdate:attribute name=\"tagID\">temp</xupdate:attribute>");
                     tagID = attribute.getValue();
                 }
             }
-        } else {
-            xupdateString = "";
         }
-        getLogger().debug("Attributes: " + xupdateString);
-
-        return new XUpdateAttributes(xupdateString, tagID);
+        getLogger().debug("Attributes: " + xUpdate);
+        return new XUpdateAttributes(xUpdate.toString(), tagID);
     }
 
     /**
@@ -373,7 +370,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
     private XUpdateAttributes getAttributes(String update, String tagID) {
         getLogger().debug(update);
 
-        String xupdateString = "<xupdate:attribute name=\"tagID\">temp</xupdate:attribute>";
+        StringBuffer xUpdate = new StringBuffer("<xupdate:attribute name=\"tagID\">temp</xupdate:attribute>");
 
         String[] attributes = update.substring(0, update.indexOf(">")).split(" ");
         for (int i = 1; i < attributes.length; i++) {
@@ -383,15 +380,13 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                 String name = attributes[i].substring(0, index);
                 String value = attributes[i].substring(index + 2, attributes[i].length() - 1);
                 if (name.indexOf("xmlns") < 0) {
-                    xupdateString = xupdateString + "<xupdate:attribute name=\"" + name + "\">"
-                            + value + "</xupdate:attribute>";
+                    xUpdate.append("<xupdate:attribute name=\"").append(name).append("\">")
+                            .append(value).append("</xupdate:attribute>");
                 }
             }
         }
-
-        getLogger().debug("Attributes: " + xupdateString);
-
-        return new XUpdateAttributes(xupdateString, tagID);
+        getLogger().debug("Attributes: " + xUpdate);
+        return new XUpdateAttributes(xUpdate.toString(), tagID);
     }
 
     /**

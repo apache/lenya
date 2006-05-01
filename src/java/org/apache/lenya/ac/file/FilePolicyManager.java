@@ -362,14 +362,13 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
         policies.add(policy);
 
         String[] directories = url.split("/");
-        url = "";
+        StringBuffer buf = new StringBuffer();
 
         for (int i = 0; i < directories.length; i++) {
-            url += directories[i] + "/";
-            policy = buildSubtreePolicy(controller, url);
+            buf.append(directories[i]).append("/");
+            policy = buildSubtreePolicy(controller, buf.toString());
             policies.add(policy);
         }
-
         return (DefaultPolicy[]) policies.toArray(new DefaultPolicy[policies.size()]);
     }
 
@@ -377,7 +376,6 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
      * @see org.apache.avalon.framework.activity.Disposable#dispose()
      */
     public void dispose() {
-
         if (getCache() != null) {
             getServiceManager().release(getCache());
         }

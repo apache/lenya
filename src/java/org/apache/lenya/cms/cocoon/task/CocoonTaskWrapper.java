@@ -164,22 +164,22 @@ public class CocoonTaskWrapper extends DefaultTaskWrapper {
             log.debug("    Setting from address [" + Notifier.PARAMETER_FROM + "] = [" + eMail + "]");
 
 			String toKey = NamespaceMap.getFullName(Notifier.PREFIX, Notifier.PARAMETER_TO);
-			String toString = "";
 			String[] toValues = request.getParameterValues(toKey);
 
 			if (toValues == null) {
 				throw new IllegalStateException("You must specify at least one [notification.tolist] request parameter!");
 			}
-
+            StringBuffer buf = new StringBuffer();
 			for (int i = 0; i < toValues.length; i++) {
-				if (i > 0 && !"".equals(toString)) {
-					toString += ",";
+				if (i > 0 && buf.length() > 0) {
+					buf.append(",");
 				}
-				log.debug("    Adding notification address [" + toValues[i].trim() + "]");
-				toString += toValues[i].trim();
+                if (log.isDebugEnabled()) {
+                    log.debug("    Adding notification address [" + toValues[i].trim() + "]");
+                }
+				buf.append(toValues[i].trim());
 			}
-
-			notificationMap.put(Notifier.PARAMETER_TO, toString);
+			notificationMap.put(Notifier.PARAMETER_TO, buf.toString());
 			setNotifying(notificationMap);
 		}
 	}

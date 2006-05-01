@@ -310,26 +310,27 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
     /**
      *
      */
-    private boolean updateTree(String childtype, short childType, String childid, String childname, String parentid, String doctype, ParentChildCreatorInterface creator, String treefilename) throws Exception {
-        Document doc = new SAXReader().read("file:" + treefilename);
+    private boolean updateTree(String childTypeStr, short childType, String childId, String childName,
+            String parentId, String docType, ParentChildCreatorInterface creator, String treeFilename)
+    throws Exception {
+        Document doc = new SAXReader().read("file:" + treeFilename);
 
         // Get parent element
-        StringTokenizer st = new StringTokenizer(parentid, "/");
-        String xpath_string = "/tree/branch"; // Trunk of tree
+        StringTokenizer st = new StringTokenizer(parentId, "/");
+        StringBuffer xPath = new StringBuffer("/tree/branch"); // Trunk of tree
 
         while (st.hasMoreTokens()) {
-            xpath_string = xpath_string + "/branch[@relURI='" + st.nextToken() + "']";
+            xPath.append("/branch[@relURI='").append(st.nextToken()).append("']");
         }
 
-        getLogger().debug("XPATH: " + xpath_string);
+        getLogger().debug("XPATH: " + xPath);
 
-        XPath xpathSelector = DocumentHelper.createXPath(xpath_string);
+        XPath xpathSelector = DocumentHelper.createXPath(xPath.toString());
         List nodes = xpathSelector.selectNodes(doc);
 
         if (nodes.isEmpty()) {
-            getLogger().error(".act(): No nodes: " + xpath_string);
+            getLogger().error(".act(): No nodes: " + xPath);
             getLogger().error(".act(): No child added!");
-
             return false;
         }
 
@@ -340,36 +341,35 @@ public class ParentChildCreatorAction extends AbstractComplementaryConfigurableA
         childType = creator.getChildType(childType);
 
         if (childType == ParentChildCreatorInterface.BRANCH_NODE) {
-            childtype = "branch";
+            childTypeStr = "branch";
         } else {
-            childtype = "leaf";
+            childTypeStr = "leaf";
         }
 
         // Check if child already exists
-        String newChildXPath = xpath_string + "/" + childtype;
+        String newChildXPath = xPath + "/" + childTypeStr;
         getLogger().debug("CHECK: " + newChildXPath);
 
         if (doc.selectSingleNode(newChildXPath + "[@relURI='" +
-                    creator.generateTreeId(childid, childType) + "']") != null) {
+                    creator.generateTreeId(childId, childType) + "']") != null) {
             getLogger().error("Exception: XPath exists: " + newChildXPath + "[@relURI='" +
-                creator.generateTreeId(childid, childType) + "']");
+                creator.generateTreeId(childId, childType) + "']");
             getLogger().error("No child added");
 
             return false;
         }
 
         // Add node: branch or leaf
-        parent_element.addElement(childtype)
-                      .addAttribute("relURI", creator.generateTreeId(childid, childType))
-                      .addAttribute("doctype", doctype).addAttribute("menuName",
-            creator.getChildName(childname));
+        parent_element.addElement(childTypeStr)
+                      .addAttribute("relURI", creator.generateTreeId(childId, childType))
+                      .addAttribute("doctype", docType).addAttribute("menuName",
+            creator.getChildName(childName));
         getLogger().debug("Tree has been modified: " + doc.asXML());
 
         // Write new tree
-        java.io.FileWriter fileWriter = new java.io.FileWriter(treefilename);
+        java.io.FileWriter fileWriter = new java.io.FileWriter(treeFilename);
         doc.write(fileWriter);
         fileWriter.close();
-
         return true;
     }
 }

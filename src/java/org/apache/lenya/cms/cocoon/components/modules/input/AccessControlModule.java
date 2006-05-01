@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: AccessControlModule.java,v 1.12 2004/03/01 16:18:24 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
@@ -117,18 +117,17 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
                 } else if (name.equals(ROLE_IDS)) {
                     try {
                         Role[] roles = PolicyAuthorizer.getRoles(request);
-                        String roleIds = "";
+                        StringBuffer roleIds = new StringBuffer();
                         for (int i = 0; i < roles.length; i++) {
                             if (i > 0) {
-                                roleIds += ",";
+                                roleIds.append(",");
                             }
-                            roleIds += roles[i].getId();
+                            roleIds.append(roles[i].getId());
                         }
                         value = roleIds;
                     } catch (AccessControlException e) {
                         throw new ConfigurationException(
-                            "Obtaining value for attribute [" + name + "] failed: ",
-                            e);
+                            "Obtaining value for attribute [" + name + "] failed: ", e);
                     }
                 }
             }
@@ -140,7 +139,6 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
             || name.equals(IP_RANGE_MANAGER)) {
             value = getItemManager(request, name);
         }
-
         return value;
     }
 

@@ -232,7 +232,6 @@ public class DOMUtil {
      */
     public Element getElement(Element element, XPath xpath) throws Exception {
         log.debug(xpath);
-
         if (xpath.parts.length > 0) {
             NodeList nl = element.getElementsByTagName(xpath.parts[0]);
 
@@ -241,24 +240,21 @@ public class DOMUtil {
             } else if (nl.getLength() == 1) {
                 log.debug("There is one element with Name \"" + xpath.parts[0] + "\" ("
                         + xpath.parts.length + ").");
-
                 if (xpath.parts.length == 1) {
                     return (Element) nl.item(0);
                 } else {
-                    String newXPathString = xpath.parts[1];
+                    StringBuffer newXPathString = new StringBuffer(xpath.parts[1]);
 
                     for (int i = 2; i < xpath.parts.length; i++) {
-                        newXPathString = newXPathString + "/" + xpath.parts[i];
+                        newXPathString.append("/").append(xpath.parts[i]);
                     }
-
-                    return getElement((Element) nl.item(0), new XPath(newXPathString));
+                    return getElement((Element) nl.item(0), new XPath(newXPathString.toString()));
                 }
             } else {
                 throw new Exception("There are more elements than one with Name \""
                         + xpath.parts[0] + "\".");
             }
         }
-
         return null;
     }
 

@@ -34,7 +34,7 @@ import org.apache.lenya.ac.Role;
 
 /**
  * Policy-based authorizer.
- * @version $Id: PolicyAuthorizer.java,v 1.4 2004/08/16 16:34:06 andreas Exp $
+ * @version $Id$
  */
 public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
 
@@ -147,14 +147,16 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
      * @param roles The roles.
      */
     protected void saveRoles(Request request, Role[] roles) {
-        String rolesString = "";
-        for (int i = 0; i < roles.length; i++) {
-            rolesString += " " + roles[i];
+        if (getLogger().isDebugEnabled()) {
+            StringBuffer rolesStrBuffer = new StringBuffer();
+            for (int i = 0; i < roles.length; i++) {
+                rolesStrBuffer.append(" ").append(roles[i]);
+            }
+            getLogger().debug("Adding roles [" + rolesStrBuffer.toString() + " ] to request [" + request + "]");
         }
-        getLogger().debug("Adding roles [" + rolesString + " ] to request [" + request + "]");
         request.setAttribute(AbstractRole.class.getName(), Arrays.asList(roles));
     }
-    
+
     /**
      * Fetches the stored roles from the request.
      * @param request The request.
@@ -165,17 +167,15 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
         List roleList = (List) request.getAttribute(AbstractRole.class.getName());
 
         if (roleList == null) {
-            String message = "    URI: [" + request.getRequestURI() + "]\n";
+            StringBuffer message = new StringBuffer("    URI: [").append(request.getRequestURI()).append("]\n");
             for (Enumeration e = request.getParameterNames(); e.hasMoreElements(); ) {
                 String key = (String) e.nextElement();
-                message += "    Parameter: [" + key + "] = [" + request.getParameter(key) + "]\n";
+                message.append("    Parameter: [").append(key).append("] = [").append(request.getParameter(key)).append("]\n");
             }
-            
-            throw new AccessControlException("Request [" + request + "] does not contain roles: \n" + message);
+            throw new AccessControlException("Request [" + request + "] does not contain roles: \n" + message.toString());
         }
         
         Role[] roles = (Role[]) roleList.toArray(new Role[roleList.size()]);
         return roles;
     }
-
 }

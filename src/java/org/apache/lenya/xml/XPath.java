@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: XPath.java,v 1.8 2004/03/01 16:18:23 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.xml;
 
@@ -46,13 +46,12 @@ public class XPath {
      *
      */
     public XPath getParent() {
-        String parentXPath = "";
+        StringBuffer parentXPath = new StringBuffer();
 
         for (int i = 0; i < (parts.length - 1); i++) {
-            parentXPath = parentXPath + "/" + parts[i];
+            parentXPath.append("/").append(parts[i]);
         }
-
-        return new XPath(parentXPath);
+        return new XPath(parentXPath.toString());
     }
 
     /**

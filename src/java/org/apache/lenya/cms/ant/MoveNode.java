@@ -41,35 +41,34 @@ public class MoveNode extends TwoNodesTask {
 	/**
 	 * Move a node.
 	 * 
-	 * @param firstdocumentid The document-id of the document corresponding to the source node.
-	 * @param secdocumentid  The document-id of the document corresponding to the destination node.
-	 * @param firstarea The area of the document corresponding to the source node.
-	 * @param secarea The area of the document corresponding to the destination node.
+	 * @param firstDocumentId The document-id of the document corresponding to the source node.
+	 * @param secDocumentId  The document-id of the document corresponding to the destination node.
+	 * @param firstArea The area of the document corresponding to the source node.
+	 * @param secArea The area of the document corresponding to the destination node.
 	 * @throws SiteTreeException if there are problems with creating or saving the site tree.  
 	 */
 	public void manipulateTree(
-		String firstdocumentid,
-		String secdocumentid,
-		String firstarea,
-		String secarea)
+		String firstDocumentId,
+		String secDocumentId,
+		String firstArea,
+		String secArea)
 		throws SiteTreeException {
 
 		Publication publication = getPublication();
-		SiteTree firsttree = publication.getTree(firstarea);
-		SiteTree sectree = publication.getTree(secarea);
+		SiteTree firsttree = publication.getTree(firstArea);
+		SiteTree sectree = publication.getTree(secArea);
 
-		String parentid = "";
-		StringTokenizer st = new StringTokenizer(secdocumentid, "/");
-		int length = st.countTokens();
-
-		for (int i = 0; i < (length - 1); i++) {
-			parentid = parentid + "/" + st.nextToken();
+		StringTokenizer st = new StringTokenizer(secDocumentId, "/");
+		int length = st.countTokens() - 1;
+        StringBuffer parentId = new StringBuffer(secDocumentId.length());
+		for (int i = 0; i < length; i++) {
+			parentId.append("/").append(st.nextToken());
 		}
 		String newid = st.nextToken();
 
-		SiteTreeNode node = firsttree.getNode(firstdocumentid);
+		SiteTreeNode node = firsttree.getNode(firstDocumentId);
 		if (node != null) {
-		    SiteTreeNode parentNode = sectree.getNode(parentid);
+		    SiteTreeNode parentNode = sectree.getNode(parentId.toString());
 			if (parentNode != null) {
                 sectree.move(node, parentNode, newid, this.getRefdocumentid());
 			} else {
@@ -83,7 +82,7 @@ public class MoveNode extends TwoNodesTask {
 				"Node " + node + " couldn't be removed");
 		}
 
-		if (firstarea.equals(secarea)) {
+		if (firstArea.equals(secArea)) {
 			firsttree.save();
 		} else {
 			firsttree.save();

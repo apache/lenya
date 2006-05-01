@@ -394,17 +394,17 @@ public class LoadQuartzServlet extends HttpServlet {
         requestParameters.put(PARAMETER_PUBLICATION_ID, document.getPublication().getId());
         requestParameters.put(PARAMETER_DOCUMENT_URL, document.getCompleteURL());
 
-        String requestUri = "http://127.0.0.1:" + port + servletContextPath + "?";
+        StringBuffer requestUri = new StringBuffer("http://127.0.0.1:" + port + servletContextPath + "?");
         Map map = requestParameters.getMap();
 
         String[] keys = (String[]) map.keySet().toArray(new String[map.keySet().size()]);
         for (int i = 0; i < keys.length; i++) {
             if (i > 0) {
-                requestUri += "&";
+                requestUri.append("&");
             }
             String value = (String) map.get(keys[i]);
-            requestUri += keys[i] + "=" + value;
+            requestUri.append(keys[i]).append("=").append(value);
         }
-        return requestUri;
+        return requestUri.toString();
     }
 }

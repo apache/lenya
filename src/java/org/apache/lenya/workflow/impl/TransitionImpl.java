@@ -150,34 +150,31 @@ public class TransitionImpl implements Transition {
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        String string = getEvent().getName() + " [";
+        StringBuffer buffer = new StringBuffer(getEvent().getName()).append(" [");
         Condition[] conditions = getConditions();
 
         for (int i = 0; i < conditions.length; i++) {
             if (i > 0) {
-                string += ", ";
+                buffer.append(", ");
             }
 
-            string += conditions[i].toString();
+            buffer.append(conditions[i].toString());
         }
-
-        string += "]";
+        buffer.append("]");
 
         Action[] actions = getActions();
 
         if (actions.length > 0) {
-            string += " / ";
+            buffer.append(" / ");
 
             for (int i = 0; i < actions.length; i++) {
                 if (i > 0) {
-                    string += ", ";
+                    buffer.append(", ");
                 }
-
-                string += actions[i].toString();
+                buffer.append(actions[i].toString());
             }
         }
-
-        return string;
+        return buffer.toString();
     }
 
     /**
