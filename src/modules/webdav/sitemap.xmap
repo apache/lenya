@@ -134,6 +134,13 @@
           <map:parameter name="requestURI" value="{request:requestURI}" />
         </map:call>
       </map:match>
+      <map:match pattern="authoring/**">
+        <map:call function="selectMethod">
+          <map:parameter name="page" value="{1}"/>
+          <map:parameter name="requestURI" value="{request:requestURI}" />
+        </map:call>
+      </map:match>
+
 
       <map:match pattern="{page-envelope:publication-id}">
         <map:call function="selectMethod">
