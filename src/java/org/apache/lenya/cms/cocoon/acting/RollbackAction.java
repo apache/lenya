@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id: RollbackAction.java,v 1.18 2004/03/01 16:18:21 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.cocoon.acting;
 
@@ -66,7 +66,7 @@ public class RollbackAction extends RevisionControllerAction {
         long newtime = 0;
 
         try {
-            newtime = getRc().rollback(getFilename(), getUsername(), true, new Long(rollbackTime).longValue());
+            newtime = getRc().rollback(getFilename(), getUsername(), true, Long.parseLong(rollbackTime));
         } catch (FileNotFoundException e) {
             getLogger().error("Unable to roll back!" + e);
 

@@ -685,7 +685,7 @@ public class RevisionController {
             RCML rcml = this.getRCML(doc);
             String[] times = rcml.getBackupsTime();
             for (int i=0; i < times.length; i++) {
-                long time = new Long(times[i]).longValue();
+                long time = Long.parseLong(times[i]);
                 File backup = this.getBackupFile(time, doc);
                 File parentDirectory = null; 
                 parentDirectory = backup.getParentFile(); 
@@ -717,7 +717,7 @@ public class RevisionController {
 			RCML rcml = this.getRCML(filename);
             String[] times = rcml.getBackupsTime();
             for (int i=0; i < times.length; i++) {
-                long time = new Long(times[i]).longValue();
+                long time = Long.parseLong(times[i]);
                 File backup = this.getBackupFile(time, filename);
                 File parentDirectory = null; 
                 parentDirectory = backup.getParentFile(); 
