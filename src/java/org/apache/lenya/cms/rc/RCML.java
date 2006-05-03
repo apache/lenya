@@ -226,7 +226,7 @@ public class RCML {
         }
 
         String[] fcoValues = xpf.getNodeValues(firstCheckOut);
-        long fcoTime = new Long(fcoValues[1]).longValue();
+        long fcoTime = Long.parseLong(fcoValues[1]);
 
         return new CheckOutEntry(fcoValues[0], fcoTime);
     }
@@ -253,7 +253,7 @@ public class RCML {
         }
 
         String[] fciValues = xpf.getNodeValues(firstCheckIn);
-        long fciTime = new Long(fciValues[1]).longValue();
+        long fciTime = Long.parseLong(fciValues[1]);
 
         return new CheckInEntry(fciValues[0], fciTime);
     }
@@ -269,7 +269,7 @@ public class RCML {
         CheckInEntry cie = getLatestCheckInEntry();
         CheckOutEntry coe = getLatestCheckOutEntry();
 
-        if ((cie != null) && (coe != null)) {
+        if (cie != null && coe != null) {
             if (cie.getTime() > coe.getTime()) {
                 return cie;
             } else {
@@ -307,9 +307,9 @@ public class RCML {
                 elem.getElementsByTagName("Identity").item(0).getFirstChild().getNodeValue();
 
             if (elem.getTagName().equals("CheckOut")) {
-                RCMLEntries.add(new CheckOutEntry(identity, new Long(time).longValue()));
+                RCMLEntries.add(new CheckOutEntry(identity, Long.parseLong(time)));
             } else {
-                RCMLEntries.add(new CheckInEntry(identity, new Long(time).longValue()));
+                RCMLEntries.add(new CheckInEntry(identity, Long.parseLong(time)));
             }
         }
 
