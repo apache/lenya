@@ -162,11 +162,11 @@
         String userId = <input:get-attribute module="access-control" name="user-id" as="string"/>;
   
         RCEnvironment rcEnvironment = RCEnvironment.getInstance(publication.getServletContext().getAbsolutePath());
-        String rootDir=publication.getEnvironment().getPublicationPath();
+        String rootDir = publication.getEnvironment().getPublicationPath();
         String rcmlDirectory = rcEnvironment.getRCMLDirectory();
-        rcmlDirectory=rootDir+rcmlDirectory;
+        rcmlDirectory = rootDir + rcmlDirectory;
         String backupDirectory = rcEnvironment.getBackupDirectory();
-        backupDirectory=rootDir+backupDirectory;
+        backupDirectory = rootDir + backupDirectory;
         RevisionController rc = new RevisionController(rcmlDirectory, backupDirectory, rootDir);
 
         Document document = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;

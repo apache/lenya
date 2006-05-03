@@ -26,7 +26,7 @@
   xmlns:sch="http://apache.org/cocoon/lenya/scheduler/1.0"
   xmlns="http://www.w3.org/1999/xhtml"
   >
-  
+
   <xsl:import href="../util/page-util.xsl"/>
   <xsl:import href="../util/waitScreen.xsl"/>
 
@@ -45,7 +45,6 @@
   <xsl:variable name="task-id"><xsl:value-of select="/usecase:publish/usecase:task-id"/></xsl:variable>
   <xsl:variable name="referer"><xsl:value-of select="/usecase:publish/usecase:referer"/></xsl:variable>
   <xsl:variable name="contextprefix"><xsl:value-of select="/usecase:publish/usecase:context-prefix"/></xsl:variable>
-
 
   <xsl:template match="/usecase:publish[usecase:message]">
     <page:page>
@@ -88,7 +87,6 @@
                   </td>
                 </tr>
               </table>
-              
             </div>
           </div>
       </page:body>
@@ -169,7 +167,6 @@
                   </td>
                 </tr>
               </table>
-              
             </div>
           </div>
 
@@ -179,9 +176,8 @@
             </not:preset>
             <not:textarea/>
           </not:notification>
-          
-        </form>
 
+        </form>
 
         <!--
         <sch:scheduler-form>
@@ -194,14 +190,14 @@
             <input type="hidden" name="workflow.event" value="publish"/>
             <input type="hidden" name="wrapper.task-id" value="publish"/>
           </sch:job>
-          
+
           <sch:job tasklabel="Deactivate">
             <input type="hidden" name="properties.node.firstdocumentid" value="{$document-id}"/>
             <input type="hidden" name="properties.node.language" value="{$document-language}"/>
             <input type="hidden" name="workflow.event" value="deactivate"/>
             <input type="hidden" name="wrapper.task-id" value="deactivateDocument"/>
           </sch:job>
-          
+
         </sch:scheduler-form>
         -->                
         <xsl:call-template name="wait_screen"/>   
@@ -219,6 +215,5 @@
       </xsl:for-each>
     </td>
   </xsl:template>
-  
 
 </xsl:stylesheet>  

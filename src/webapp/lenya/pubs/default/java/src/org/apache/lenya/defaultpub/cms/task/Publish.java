@@ -36,14 +36,14 @@ import org.apache.lenya.cms.publication.SiteTreeNode;
 import org.apache.lenya.cms.publication.task.PublicationTask;
 import org.apache.lenya.cms.task.ExecutionException;
 import org.apache.lenya.workflow.WorkflowException;
-import org.apache.log4j.Category;
+import org.apache.log4j.Logger;
 
 /**
  * Publish a document.
  */
 public class Publish extends PublicationTask {
 
-    private static final Category log = Category.getInstance(Publish.class);
+    private static final Logger log = Logger.getLogger(Publish.class);
 
     public static final String PARAMETER_DOCUMENT_ID = "document-id";
     public static final String PARAMETER_DOCUMENT_LANGUAGE = "document-language";
@@ -122,7 +122,7 @@ public class Publish extends PublicationTask {
      */
     public void setPublicationDate(Document document,String date) throws PublicationException {
         String publicationDate = document.getDublinCore().getFirstValue(DublinCore.TERM_ISSUED);
-        if (publicationDate != null && !publicationDate.equals("")){
+        if (publicationDate != null && publicationDate.length() > 0){
             return;
         }
         document.getDublinCore().setValue(DublinCore.TERM_ISSUED, date);
