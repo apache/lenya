@@ -269,16 +269,16 @@ public class RCML {
         CheckInEntry cie = getLatestCheckInEntry();
         CheckOutEntry coe = getLatestCheckOutEntry();
 
-        if (cie != null && coe != null) {
-            if (cie.getTime() > coe.getTime()) {
-                return cie;
-            } else {
-                return coe;
-            }
-        }
-
         if (cie != null) {
-            return cie;
+            if (coe != null) {
+                if (cie.getTime() > coe.getTime()) {
+                    return cie;
+                } else {
+                    return coe;
+                }
+            } else {
+                return cie;
+            }
         } else {
             return coe;
         }
@@ -422,7 +422,6 @@ public class RCML {
             }
         }
         return (String[]) times.toArray(new String[times.size()]);
-
     }
 
     /**
