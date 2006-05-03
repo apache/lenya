@@ -148,7 +148,6 @@ public class XPointerFactory {
         parse(reference, xpaths, namespaces);
 
         Vector nodes = new Vector();
-
         for (int i = 0; i < xpaths.size(); i++) {
             Vector n = xpointer.select(node, (String) xpaths.elementAt(i), namespaces);
 
@@ -156,7 +155,6 @@ public class XPointerFactory {
                 nodes.addElement(n.elementAt(j));
             }
         }
-
         return nodes;
     }
 

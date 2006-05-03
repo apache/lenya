@@ -36,7 +36,9 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.http.HttpRequest;
 import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpMethod;
 import org.apache.commons.httpclient.HttpState;
+import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.excalibur.xml.sax.SAXParser;
 import org.apache.lenya.cms.cocoon.generation.Configuration;
@@ -89,14 +91,14 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
             if (submitMethod.equals("POST")) {
                 // FIXME: Andreas
                 if (request instanceof HttpRequest) {
-                    java.io.InputStream is = intercept(((HttpRequest) request).getInputStream());
+                    InputStream is = intercept(((HttpRequest) request).getInputStream());
                 }
             }
 
             URL url = createURL(request);
 
             // Forward "InputStream", Parameters, QueryString to Servlet
-            org.apache.commons.httpclient.HttpMethod httpMethod = null;
+            HttpMethod httpMethod = null;
 
             if (submitMethod.equals("POST")) {
                 httpMethod = new PostMethod();
@@ -112,7 +114,7 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
                     }
                 }
             } else if (submitMethod.equals("GET")) {
-                httpMethod = new org.apache.commons.httpclient.methods.GetMethod();
+                httpMethod = new GetMethod();
                 httpMethod.setQueryString(request.getQueryString());
             }
 

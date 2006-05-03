@@ -31,7 +31,7 @@ import org.apache.lenya.util.XPSFileOutputStream;
 import org.apache.log4j.Logger;
 
 /**
- * Controller for the reserved check-in, check-out, the backup versions and the rollback 
+ * Controller for the reserved check-in, check-out, the backup versions and the rollback.
  */
 public class RevisionController {
     private static Logger log = Logger.getLogger(RevisionController.class);
@@ -253,7 +253,7 @@ public class RevisionController {
         // The same user is allowed to check out repeatedly without
         // having to check back in first.
         //
-        if (entry != null) {
+        if (log.isDebugEnabled() && entry != null) {
             log.debug("entry: " + entry);
             log.debug("entry.type:" + entry.getType());
             log.debug("entry.identity" + entry.getIdentity());

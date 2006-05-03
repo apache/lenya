@@ -15,12 +15,12 @@
  *
  */
 
-/* $Id: RCMLEntry.java,v 1.9 2004/03/01 16:18:22 gregor Exp $  */
+/* $Id$  */
 
 package org.apache.lenya.cms.rc;
 
 public class RCMLEntry {
-	
+
     private String identity = null;
     private long time = 0;
     private short type = 0;
@@ -35,7 +35,7 @@ public class RCMLEntry {
         this.identity = identity;
         this.time = time;
     }
-    
+
     /**
      * Get the identity.
      *  
@@ -71,5 +71,4 @@ public class RCMLEntry {
     protected void setType(short s) {
         type = s;
     }
-
 }

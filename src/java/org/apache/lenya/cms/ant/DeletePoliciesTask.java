@@ -20,7 +20,6 @@
 package org.apache.lenya.cms.ant;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 
 import org.apache.commons.io.FileUtils;
