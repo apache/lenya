@@ -1,3 +1,4 @@
+org.apache.cocoon.components.modules.input
 org.apache.cocoon.components.search
 org.apache.cocoon.components.search.analyzer
 org.apache.cocoon.components.search.components
@@ -5,6 +6,7 @@ org.apache.cocoon.components.search.components.impl
 org.apache.cocoon.components.search.fieldmodel
 org.apache.cocoon.components.search.utils
 org.apache.cocoon.generation
+org.apache.cocoon.reading
 org.apache.cocoon.transformation
 org.apache.lenya.ac
 org.apache.lenya.ac.cache
@@ -32,14 +34,13 @@ org.apache.lenya.cms.cocoon.task
 org.apache.lenya.cms.cocoon.transformation
 org.apache.lenya.cms.editors
 org.apache.lenya.cms.editors.bxe
+org.apache.lenya.cms.editors.fckeditor
 org.apache.lenya.cms.editors.forms
 org.apache.lenya.cms.editors.kupu
 org.apache.lenya.cms.jcr
 org.apache.lenya.cms.jcr.jackrabbit
 org.apache.lenya.cms.jcr.mapping
 org.apache.lenya.cms.jcr.metadata
-org.apache.lenya.cms.jcr.mock
-org.apache.lenya.cms.jcr.usecases
 org.apache.lenya.cms.jcr.util
 org.apache.lenya.cms.lucene
 org.apache.lenya.cms.metadata
@@ -53,10 +54,13 @@ org.apache.lenya.cms.publication.util
 org.apache.lenya.cms.publishing
 org.apache.lenya.cms.rc
 org.apache.lenya.cms.repo
+org.apache.lenya.cms.repo.adapter
 org.apache.lenya.cms.repo.avalon
+org.apache.lenya.cms.repo.cocoon
 org.apache.lenya.cms.repo.impl
 org.apache.lenya.cms.repo.metadata
 org.apache.lenya.cms.repo.metadata.impl
+org.apache.lenya.cms.repo.mock
 org.apache.lenya.cms.repository
 org.apache.lenya.cms.scheduler
 org.apache.lenya.cms.scheduler.xml
@@ -66,6 +70,8 @@ org.apache.lenya.cms.site.topicmap
 org.apache.lenya.cms.site.tree
 org.apache.lenya.cms.site.usecases
 org.apache.lenya.cms.task
+org.apache.lenya.cms.url
+org.apache.lenya.cms.url.impl
 org.apache.lenya.cms.usecase
 org.apache.lenya.cms.usecase.gui
 org.apache.lenya.cms.usecase.scheduling
@@ -75,15 +81,9 @@ org.apache.lenya.cms.workflow
 org.apache.lenya.cms.workflow.usecases
 org.apache.lenya.defaultpub.cms.publication.templating
 org.apache.lenya.defaultpub.cms.usecases
-org.apache.lenya.defaultpub.cms.usecases.webdav
-org.apache.lenya.lucene
-org.apache.lenya.lucene.html
-org.apache.lenya.lucene.index
-org.apache.lenya.lucene.parser
 org.apache.lenya.net
 org.apache.lenya.notification
 org.apache.lenya.search
-org.apache.lenya.search.crawler
 org.apache.lenya.transaction
 org.apache.lenya.util
 org.apache.lenya.workflow

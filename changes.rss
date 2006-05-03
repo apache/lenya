@@ -1,5 +1,979 @@
 <?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN" "http://my.netscape.com/publish/formats/rss-0.91.dtd">
-<rss version="0.91"><channel><title> (2006-03) Changes</title><link>changes.html</link><description> (2006-03) Changes</description><language>en-us</language><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+<rss version="0.91"><channel><title> (2006-05) Changes</title><link>changes.html</link><description> (2006-05) Changes</description><language>en-us</language><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Don't check 2 time expression 'cie != null'. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Don't create unnecesary Long Objects. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Formatting. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Code formatting. Remove unused imports and Use imports. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Don't create unnecesary Long Objects. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            allow client editors to save (should allow kupu to save) Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Use StringBuffer inside cycles. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Ant Task has a variable called description. Rename 'description' to 'dcDescription'. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Remove dead store variable. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Clean code and dead store variables. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Cleanup. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Class is already final. Protected variable does make sense. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Remove redundant checks. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Use commons-io instead of creating nested annonymous classes. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Set static inner class. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Remove interface already implemented by superclass. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Use Map.Entry. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Some code improvements.Use Map.Entry instead of looking up the value. Add if (log.isDebugEnable()) {} clausule to cycles generating log.debug() info. Use StringBuffer() instead of String() in cycles. Don't use new String() instead use an empty string. Add final keyword to some static variables. And other small improvements. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Remove unused imports. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Use o.a.log4j.Logger instead of deprecated o.a.log4j.Category. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Sync with cocoon 2.1.9. This works with older cocoon versions too. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            link to ODT added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            note about WebDAV added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        cdupoirieux
+        :
+        [1.4] 
+            FOR-872 - RollBack of the patch in order to take into account Thorsten remarks.
+Waiting for a new patch Clay... Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        cdupoirieux
+        :
+        [1.4] 
+            FOR-872 - Patch odt_plugin.diff, Thanks to Clay Leeds. Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
+        by
+        michi
+        :
+        [Sandbox] 
+            content dir commented Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
+        by
+        michi
+        :
+        [Sandbox] 
+            ignore local publication config Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            TODO added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            message improved Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            log a warning if a resource type is not indexable because generally a resource type should be indexable Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            how to make a resource type indexable added Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            README on this module started Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            usecase config renamed according to usecase name Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            logger name changed such that one actually knows where to look for Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            description added Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        michi
+        :
+        [1.4] 
+            obsolete Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            typo fixed Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        thorsten
+        :
+        [1.4] 
+            moving the common files (the ones coming from David Eisenberg) into a directory on it one to easier reuse it in forrest via svn:ext. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            lucene config filename from IndexManager Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            error message improved Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Bugfix Bug 39134
+  Apache License added to ODT-&gt;XHTML .xsl file Last modified: 2006-04-05 10:36
+Reporter:    J David Eisenberg
+Using now the stylesheet from http://books.evc-cit.info/odf_utils/odt_to_xhtml.html for odt.
+Thanks David for your most valuable contribution. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            adding parameter to the opendocument transformer Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            warning re Java version implemented Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            note about target.vm 1.5 added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            TODO added re usecase policies config Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
+        by
+        thorsten
+        :
+        [Sandbox] 
+            Updating todo list for doco Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        josias
+        :
+        [1.2] 
+            don't throw an NPE on the authoring, trash, or archive nodes, which don't have any labels Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        edith
+        :
+        [1.2] 
+            It is now possible to set the name of the user in 'from' and 'Reply-to'. The name is taken from the parameters 'from', which should be in the form 'Name &lt;name@foo.org&gt;'  Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
+        by
+        thorsten
+        :
+        [Sandbox] 
+            ignoring .settings Diff </description></item><item><title>Sandbox remove</title><link>changes.html</link><description>Sandbox remove
+        by
+        thorsten
+        :
+        [Sandbox] 
+            Fixing lucene indexing bug Diff </description></item><item><title>1.2 add</title><link>changes.html</link><description>1.2 add
+        by
+        josias
+        :
+        [1.2] 
+            allow to edit the href attribute of a sitetree label in the GUI (Site area, Edit Navigation Link). fixes bug #39237 Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        josias
+        :
+        [1.2] 
+            allow a href attribute in the sitetree for each language version of a document. the attribute is used to create the link in the menu and the tabs. its value is displayed in the overview tab of the site area. fixes bug #39165 Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            show as true added Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        michi
+        :
+        [1.2] 
+            show true added Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        michi
+        :
+        [1.2] 
+            show true added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            if statement added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            clean made dependable on properties Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            usecase-policies read from config Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            requestURI introduced Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            getConfiguration separated Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            note seems to be obsolete, but another TODO added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            Fixme replaced by TODO Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            PATH is obsolete Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            note clarified re ac config Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            do not copy local.ac.xconf Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            allow patching of ac.xconf with local version Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        michi
+        :
+        [1.2] 
+            return null if local robots has not been specified within crawler config Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Fixing bug related to custom meta data which have not been copied when publishing a document Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            removing obsolete imports Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            removing obsolete import Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            RepositoryManagerImpl: copy meta data before copying document source so that the destination document uses the same source extension. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed unused variable Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        chestnut
+        :
+        [1.4] 
+            webDAV usecases have been moved into the webDAV module Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Adding workflow to the odt doc Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Removing obsolete code in comments for odt xsl Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Adding parent id to the pageEnvelope input module. This parameter enables to request the id of the parent node like {page-envelope:document-parent} in your sitemap. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Adding another fallback for the gif pix since they can be a document for themself. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Splitting the object template to a helper class to better reuse this code Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            mount for blog module started Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Adding eclipse specific files to exclude expression Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        jann
+        :
+        [1.2] 
+            Use the url defined in publication.xconf for the live area. It it is not set the respective input module construct the url from request parameters. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Refactored PUT usecase to store the files with the right extension. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            use fallback for menu.xsp request so that ancestor template pubs menu can be used Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            lenya.revision added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            [minor change] code formatting Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        michi
+        :
+        [1.4] 
+            logo removed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            logo removed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            ASF Bugzilla Bug 39100
+  create ant target to clean Cocoon, and clean-all (Lenya+Cocoon+Tomcat)
+   Reporter/Patch provider: renaud richardet
+ Thanks Renaud Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            ASF Bugzilla Bug 39019
+  [WebDAV] Files open as read-only in Word 2003
+  Reporter/Patch provider: Jonathan Addison
+Thanks Jonathan. :) Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            ASF Bugzilla Bug 39087
+  [WebDAV] Cannot open .odt files with OpenOffice
+  Reporter/Patch provider: Jonathan Addison
+Thanks Jonathan. :) Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            improved exception handling: inform about the document where link rewriting failed. Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
+        by
+        thorsten
+        :
+        [Sandbox] 
+            setting ignore properties for eclipse file Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
+        by
+        thorsten
+        :
+        [Sandbox] 
+            Adding one-form editor to xdocs. Fixing rng to make it compatible with BXE. This makes it possible to edit xdocs with BXE. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Use actual source for non-html documents Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            LinkRewritingTransformer keeps URL extensions Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Allow different extensions for actual source and meta data source Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            improved releasing of sources and components Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed log4j logging Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Implemented Create.getSourceExtension() in Mkcol class Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            [minor] removed unused imports Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            re-enabled search index configuration upon publication instantiation. now a new index is created at runtime and search should be working directly after instantiation. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            modified lucene index configuration: now the indexes are configured in the file pubid/config/lucene_index.xconf. this is not an xpatch file, i.e. the configuration will not go to cocoon.xconf. this allows to create new indexes at runtime. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Added template method getSourceExtension() to Create usecase to allow custom source extensions Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Removed obsolete admin area declaration Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            note added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            cleaned Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            descriptor for asset added Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            arbitrary resource types added to site Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            arbitrary resource types added to site Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            handle resources as 'documents' Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            lenya revision number added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            lenya revision number added Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            upload max size patcher added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            lenya revision added and typos fixed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            lenya revision added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            lenya revision number added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            lenya revision number added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            lenya revision number added Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+        by
+        gregor
+        :
+        [Site] 
+            'fix Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            removed context path, because internal links don't contain the context path anymore. this makes link-rewriting work with deployment outside of the root context. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            if a document is deleted, don't delete it's parent. fixes bug #38820 Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        josias
+        :
+        [1.2] 
+            reworked the DocumentReferencesHelper: now uses the link attributes defined in publication.xconf and does not duplicate knowledge about URLs, so it should work with custom document builders Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        jann
+        :
+        [1.4] 
+            make default properties non-static allowing ddifferent ldap properties for different publications Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        jann
+        :
+        [1.2] 
+            make default properties non-static allowing ddifferent ldap properties for different publications Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            modules added to dependencies Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            modules added to dependencies Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Fixing typo in src location of the opendocument module Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            note improved and TODO added for customizing tomcatctrl Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Using fallback:// to determine the menu location Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Bug 39042
+  [WebDAV] Identify WebDAV html documents as xhtml
+  Patch submitted by Jonathan Addison
+Thanks Jonathan :) Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        josias
+        :
+        [1.2] 
+            more code simplification Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        josias
+        :
+        [1.2] 
+            code simplification Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        edith
+        :
+        [1.4] 
+            Move the sitreefragment generator's declaration, to the lenya sitemap Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Added LinkRewriterTest Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] Added some debug statements. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Passing logger to DefaultSiteTree in constructor. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Passing logger to DefaultSiteTree in constructor. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            reset renamed to clean-tomcat in order to clarify Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
+        by
+        crossley
+        :
+        [Sandbox] 
+            Do 'forrest run' in $FORREST_HOME/whiteboard/doco
+Use Forrest's Ant.
+ Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed log4j references, removed invalid warning logs Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed log4j references, removed invalid warning logs Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Bug 39018
+  [WebDAV] All files use the source file extension
+Patch submitted by Jonathan Addison
+Thanks Jonathan Addison. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Bug 39017
+  [WebDAV] Empty property values in propfind response
+ Patch submitted by Jonathan Addison
+Thanks Jonathan Addison. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Bug 39016
+  [WebDAV] 500 Internal Server Error when checking in files with Dreamweaver
+  Patch submitted by Jonathan Addison
+Thanks Jonathan Addison. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed unused import Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Don't rewrite links if resource type doesn't provide any link rewriting XPaths. Don't swallow exceptions. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] code formatting Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        antonio
+        :
+        [1.4] 
+            Fix typo. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            clarified Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            HUGO removed Diff </description></item><item><title>Sandbox add</title><link>changes.html</link><description>Sandbox add
+        by
+        thorsten
+        :
+        [Sandbox] 
+            Adding xdocs module. The bxe editing is not working, need to fix this. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            note about content repo configuration added Diff </description></item><item><title>Sandbox add</title><link>changes.html</link><description>Sandbox add
+        by
+        thorsten
+        :
+        [Sandbox] 
+            Adding default transformation stylesheet Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            You can now configure which resource type and extension are connected with each other via the usecase config file. That makes the PUT usecase more generic and flexible. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        josias
+        :
+        [1.2] 
+            enable browser-caching for static lenya images. this increases the performance e.g. of the sitetree widget and also reduces 'flickering' of the menu tabs which occurred in IE. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            enable browser-caching for static lenya images. this increases the performance e.g. of the sitetree widget and also reduces 'flickering' of the menu tabs which occurred in IE. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            ignore non-XML files Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            white noise - formating changes Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Making the mkcol usecase more abstract, allowing to define a default extension and resource type via the usecase config file. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Adding the extension again to the odt meta data like requested by michi. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            treating xml and binaries the same Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Changing access to SOURCE_URL to protected Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Extending the put.java of the webdav usecase. You can now add any file via PUT. Still there is a problem how lenya stores the final file. It uses the xml extension for all files. I tried with PUT a png and in will be saved like {name}/index_{lang}.xml. I can open it with Gimp but Lenya will fail to open the document complaining about 'Invalid byte 1 of 1-byte UTF-8 sequence.' Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            obsolete debug statement removed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            check also Cocoon build properties re version Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            note added about the BUG within Cocoon Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            property fixed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            warning replaced by debug and note added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            UUID implementation started Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            UUID implementation started Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Commenting extension since it causes the LinkRewriterImpl.java to fail. You cannot create a DOM from a binary file. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            note about languages added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            unused patching removed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            missing parameters added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        antonio
+        :
+        [1.4] 
+            Fix typo. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            ASF Bugzilla Bug 38969
+  [WebDAV] cannot PUT a binary document, like .odt or .jpg
+Patch (id=17897) provided by Renaud
+- Registers the RequestReader in the sitemap
+- adds a matcher for /PUT/odt
+- started refactoring Put.java, validation not working ATM Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        thorsten
+        :
+        [1.4] 
+            ASF Bugzilla Bug 38969
+  [WebDAV] cannot PUT a binary document, like .odt or .jpg
+Patch (id=17896) provided by Renaud - RequestReader.java
+Thx Renaud. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            duplicated line removed Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        thorsten
+        :
+        [1.4] 
+            Implementing the first version of mkcol usecase for webdav. It is quite rudimental and is assuming a xhtml to be created but you can now create new folders in e.g. cadaver with 'mkcol test2'. Have not tested with any other client yet. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            fixed classpath for the compile-xsp target (now includes endorsed libs) and added an option to fail on error, so this target could be used by a continous integration tool. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            ASF Bugzilla Bug 38926
+  [WebDAV] in the file listing, all files have the .html file extension
+Patch submitted by renaud richardet.
+Applied, thx Renaud. :) Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Switching java comments to xml comments Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Adding comments to webDAV code. Submitted by Jonathan Addison. Thx Jonathan. :) Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
+        by
+        thorsten
+        :
+        [Sandbox] 
+            Added local deploy of involved forrest plugins Diff </description></item><item><title>Sandbox update</title><link>changes.html</link><description>Sandbox update
+        by
+        thorsten
+        :
+        [Sandbox] 
+            fix line endings Diff </description></item><item><title>Sandbox add</title><link>changes.html</link><description>Sandbox add
+        by
+        thorsten
+        :
+        [Sandbox] 
+            Initial version of doco as lenya pub and forrest docu Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+        by
+        thorsten
+        :
+        [Site] 
+            Automatic publish from forrestbot Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         andreas
         :
@@ -52137,634 +53111,39 @@ These actions are used in the html-form-editor.xmap sitemap
         
         :
         [0.8] 
-            New repository initialized by cvs2svn. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+            New repository initialized by cvs2svn. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
-        andreas
-        :
-        [1.4] 
-            [minor change] improved logging Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            [minor change] fixed some logging issues, removed dead code Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        thorsten
-        :
-        [1.4] 
-            Formating changes thx to Jonathan Addison who pointed out that line breaks will cause different clients to fail. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        thorsten
-        :
-        [1.4] 
-            removing old comment closing brakets Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        thorsten
-        :
-        [1.4] 
-            white noise - formating changes Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        thorsten
-        :
-        [1.4] 
-            Bug 38913
-  WebDav module displays empty directories (collections)
-  Reporter:    renaud richardet
-  Patch:  Jonathan Addison
-Patch applied, thx Jonathan. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            existsInAnyLanguage simplified because it is duplicating code Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            java doc fixed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            opendocument links fixed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            german translation started Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            reference to xpatch file added Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            Updated the monitoring section to reflect current development. Diff </description></item><item><title>Docs add</title><link>changes.html</link><description>Docs add
-        by
-        thorsten
-        :
-        [Docs] 
-            Splitting monitoring from server webdav file to a file on its own. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            white noise - Formating changes Diff </description></item><item><title>Docs add</title><link>changes.html</link><description>Docs add
-        by
-        thorsten
-        :
-        [Docs] 
-            Added quickstart document taken from the wiki, further linked to the current webdav wiki page. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            white noise - Formating changes Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            Removing note for alpha since it is way too much outdated. Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
-        by
-        thorsten
-        :
-        [1.4] 
-            removing empty file Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        thorsten
-        :
-        [1.4] 
-            Bug 38925
-  WebDAV module: index_en.xml and links_en.xml cannot be opened
-Reporter:    Jonathan Addison
-Thx Jonathan.
-Patch applied.
-however with cadaver you cannot upload the edit files. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            Fixing xdoc grammar. Note tags are NOT allowed in P tags. Further fixed the cocoon location. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
-        by
-        thorsten
-        :
-        [Docs] 
-            Bug 38949
-  Update the 1.4 source version documentation.
-  Reporter:    Oliver Schalch
-Patch applied, thx Oli. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-        by
-        jann
+        antonio
         :
         [1.2] 
-            Adding Image dimensions to the asset tab Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+            Don't check 2 time expression 'cie != null'. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
-        jann
+        antonio
         :
         [1.2] 
-            Reading image height and width from the metadata in order to show them in the asset tab of the site area Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+            Don't create unnecesary Long Objects. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
-        jann
+        antonio
         :
         [1.2] 
-            Add image height and width to the metadata of the respecitve asset Diff </description></item><item><title>Docs add</title><link>changes.html</link><description>Docs add
+            Formatting. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
-        thorsten
+        antonio
         :
-        [Docs] 
-            Started the module documentation section. Added first description about webdav from the old 1.2 docu. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        [1.2] 
+            Code formatting. Remove unused imports and Use imports. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
-        michi
+        antonio
         :
-        [1.4] 
-            cmd as default and gui as parameter Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            confpatch path added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            warning implemented for the case that a node or the sitetree itself does not exists Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            warning implemented for the case that a resource/document does not exists Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            link to debug Lenya menu added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            notes added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            LENYA_META_SUFFIX introduced to make sure that the suffix is defined only once Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
-        by
-        michi
-        :
-        [1.4] 
-            obsolete Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        michi
-        :
-        [1.4] 
-            meta fixed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            log4j added as TODO Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            pipeline added to debug lenya menu Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            comments added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            parameter for usage added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            note added resource type input module added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            note about endorsed libs added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            copy task class renamed Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
-        by
-        michi
-        :
-        [1.4] 
-            patching of publication.xconf added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        josias
-        :
-        [1.4] 
-            fixed missing language screen Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            Allow to create non-XML documents with the DefaultCreator. It checks for the extension .xml at the moment, this could be improved. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            Update BXE class to new DocIdToPathMapper signature Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            Add extension attribute to LenyaMetaData. This way, the extension can be accessed by the DocumentIdToPathMapper - this allows custom source extensions (like .odt, ...) and is a first step towards handling assets and documents in the same way. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            Replaced &lt;xsl:attribute&gt; with string function in menu2xslt.xsl. This solves a Xalan problem. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            [minor change] formatting Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            Reverting check-in (will check-in the whitespace changes in a separate commit) Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        thorsten
-        :
-        [1.4] 
-            Finishing up the odt module download feature. Now we "just" have to make the whole module more generic Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        thorsten
-        :
-        [1.4] 
-            adding mime-type definition to for the odt module Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            Replaced &lt;xsl:attribute&gt; with string function in menu2xslt.xsl. This solves a Xalan problem. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        thorsten
-        :
-        [1.4] 
-            Applying first part of the patch provided by renaud richardet attached to Bug 38900. Thanks renaud. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            search module removed and notes added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            blog module commented Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            note clarified Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            Note added about not modifying this file directly Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        thorsten
-        :
-        [1.4] 
-            Added new usecase for the opendocument module.
-You can now upload opendocuments to already existing odt docs in lenya. 
-This will replace the existing document. 
- Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            check on JAVA_HOME and some notes added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        thorsten
-        :
-        [1.4] 
-            Enabling to download the opendocument for local editing. Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        thorsten
-        :
-        [1.4] 
-            Added new create usecase for openDocument. This usecase is bypassing the 'normal' routine and creating a new document on basis of the odt sample. Activated the usecase in the menu. Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
-        by
-        thorsten
-        :
-        [1.4] 
-            Renaming template dir to samples since all other modules name it like this and we have to handle this consistent\! Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            command line as default Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            thanks to Oliver one step further re GUI class Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            thanks to Oli one step further Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        michi
-        :
-        [1.4] 
-            Thanks to Ilhan and Oliver we now have a configure.bat for Windows Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        thorsten
-        :
-        [1.4] 
-            Cleaning the variable after using in the loop otherwise this can cause a bug by more then one pub. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        thorsten
-        :
-        [1.4] 
-            Adding the content dir to the fallback URIs like described in http://marc.theaimsgroup.com/?l=lenya-dev&amp;m=114142602919893&amp;w=2. This fixes the second part of the 'external' resources/asset preview. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            typo fixed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            note about NodeFactory and XUL added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            TODO note added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            private modules removed Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        michi
-        :
-        [1.4] 
-            menu started by not ready yet Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        michi
-        :
-        [1.4] 
-            module descriptor added Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        michi
-        :
-        [1.4] 
-            samples renamed to templates Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            zip protocol fixed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            some more space for better readability added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            externals as default added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            cocoon as external added Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        michi
-        :
-        [1.4] 
-            externals added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        thorsten
-        :
-        [1.4] 
-            Part one to fix the bug related to asset management and outsourced content. Still missing to rewrite either the fallback source or the sitemap to force lenya to look in the  outsourced content dir for display. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            backslash bug fixed re properties writing Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            trim values Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            pointer to antinstaller added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            Tomcat as subsequent implemented Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            subsequent parameters implemented Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            another config added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            subsequent parameters started Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            path fixed Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        michi
-        :
-        [1.4] 
-            testing introduced Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            testing introduced Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        thorsten
-        :
-        [1.4] 
-            Updated comment to refer to the top level instead of topLevel/content Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        thorsten
-        :
-        [1.4] 
-            Fixing Bug related to the contentDir. Further refactored code to be better understandable. Updated publications to refer to the top level instead of topLevel/content Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        jann
-        :
-        [1.4] 
-            dos2unix Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        jann
-        :
-        [1.4] 
-            fixing typo. The session tab will again be available in the admin area Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        thorsten
-        :
-        [1.4] 
-            Using getSourceURI() instead of getFile().getAbsolutePath() for DublinCoreHelper.java Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            gui enhanced Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            path fixed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            moved Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        michi
-        :
-        [1.4] 
-            classes added Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
-        by
-        michi
-        :
-        [1.4] 
-            moved Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        michi
-        :
-        [1.4] 
-            java added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            swing based GUI started Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            bug fixed re selecting default values Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            more fool proveness added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            writing fixed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            read values from command line Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            differentiate between local and default Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            root dir passed Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        michi
-        :
-        [1.4] 
-            classes updated Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            cleaned Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            build.properties config added Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        michi
-        :
-        [1.4] 
-            utility classes added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        andreas
-        :
-        [1.4] 
-            Fixed location of sitemap.xmap patch files Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            instructions added Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        michi
-        :
-        [1.4] 
-            README added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            compile target for building configure added Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
-        by
-        michi
-        :
-        [1.4] 
-            configure started cmd and gui Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            ignore local.publication.xconf Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            ignore local.publication.xconf Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
-        by
-        michi
-        :
-        [1.4] 
-            ignore local.publication.xconf files during copying Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        [1.2] 
+            Don't create unnecesary Long Objects. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
-        michi
+        chestnut
         :
         [1.4] 
-            note about max upload size added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+            allow client editors to save (should allow kupu to save) Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
-        michi
+        antonio
         :
-        [1.4] 
-            outdated history deleted because it is covered by SVN anyway Diff </description></item></channel></rss>
+        [1.2] 
+            Use StringBuffer inside cycles. Diff </description></item></channel></rss>

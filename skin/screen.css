@@ -102,7 +102,7 @@ html>body #top .searchbox {
     color: white;
     background-color: #000000;
     z-index:0;
-    background-image: url(images/rc-t-l-5-1header-2searchbox-3searchbox.png); ;
+    background-image: url(images/rc-t-l-5-1header-2searchbox-3searchbox.png);
     background-repeat: no-repeat;
     background-position: top left;
     bottom: -1px; /* compensate for IE rendering issue */
@@ -129,7 +129,7 @@ html>body #top .searchbox {
 /*    background: #CFDCED url("images/tab-right.gif") no-repeat right top;*/
 #tabs li {
     float: left;
-    background-image: url(images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png); ;
+    background-image: url(images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png);
     background-repeat: no-repeat;
     background-position: top right;
     background-color: #000000;
@@ -145,7 +145,7 @@ html>body #top .searchbox {
     text-decoration: none;
     color: black;
     white-space: nowrap;
-    background-image: url(images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png); ;
+    background-image: url(images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png);
     background-repeat: no-repeat;
     background-position: top left;
     padding: 5px 15px 4px;
@@ -160,7 +160,7 @@ html>body #top .searchbox {
 
 #top .header .current {
     background-color: #4C6C8F;
-    background-image: url(images/rc-t-r-5-1header-2tab-selected-3tab-selected.png); ;
+    background-image: url(images/rc-t-r-5-1header-2tab-selected-3tab-selected.png);
     background-repeat: no-repeat;
     background-position: top right;
 }
@@ -168,7 +168,7 @@ html>body #top .searchbox {
     font-weight: bold;
     padding-bottom: 5px;
     color: white;
-    background-image: url(images/rc-t-l-5-1header-2tab-selected-3tab-selected.png); ;
+    background-image: url(images/rc-t-l-5-1header-2tab-selected-3tab-selected.png);
     background-repeat: no-repeat;
     background-position: top left;
 }
@@ -213,13 +213,13 @@ position:relative;
 * Round corner
 */
 #roundtop {
-    background-image: url(images/rc-t-r-15-1body-2menu-3menu.png); ;
+    background-image: url(images/rc-t-r-15-1body-2menu-3menu.png);
     background-repeat: no-repeat;
     background-position: top right;
 }
 
 #roundbottom {
-    background-image: url(images/rc-b-r-15-1body-2menu-3menu.png); ;
+    background-image: url(images/rc-b-r-15-1body-2menu-3menu.png);
     background-repeat: no-repeat;
     background-position: top right;
 }
@@ -232,13 +232,13 @@ img.corner {
 }
 
 .roundtopsmall {
-    background-image: url(images/rc-t-r-5-1header-2searchbox-3searchbox.png); ;
+    background-image: url(images/rc-t-r-5-1header-2searchbox-3searchbox.png);
     background-repeat: no-repeat;
     background-position: top right;
 }
 
 #roundbottomsmall {
-    background-image: url(images/rc-b-r-5-1header-2tab-selected-3tab-selected.png); ;
+    background-image: url(images/rc-b-r-5-1header-2tab-selected-3tab-selected.png);
     background-repeat: no-repeat;
     background-position: top right;
 }
@@ -274,7 +274,7 @@ img.cornersmall {
         cursor:pointer;
         padding: 3px 12px;
         margin-left: 10px;
-        background-image: url('images/chapter.gif'); ;
+        background-image: url('images/chapter.gif');
         background-repeat: no-repeat;
         background-position: center left;
         font-weight : bold;
@@ -292,7 +292,7 @@ img.cornersmall {
 
 #menu .menuitem {
         padding: 0px 0px 2px 12px;
-        background-image: url('images/page.gif'); ;
+        background-image: url('images/page.gif');
         background-repeat: no-repeat;
         background-position: center left;
         font-weight : normal;
@@ -302,7 +302,7 @@ img.cornersmall {
 #menu .menupage {
         margin: 5px 0px 5px 10px;
         padding: 0px 3px 0px 12px;
-        background-image: url('images/current.gif'); ;
+        background-image: url('images/current.gif');
         background-repeat: no-repeat;
         background-position: top left;
         font-style : normal;
@@ -443,7 +443,7 @@ acronym { cursor: help; }
     padding-top: 5px;
 }
 .minitoc {
-    list-style-image: url('images/current.gif'); ;
+    list-style-image: url('images/current.gif');
     font-weight: normal;
 }
 
@@ -544,7 +544,7 @@ li p {
 
 p.instruction {
   display: list-item;
-  list-style-image: url('../images/instruction_arrow.png'); ;
+  list-style-image: url('../images/instruction_arrow.png');
   list-style-position: outside;
   margin-left: 2em;
 } 

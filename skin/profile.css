@@ -71,7 +71,8 @@ color: #000000;
 background: #E5E4D9; 
 }
 
-#menu .menupagetitle  { background-color: #CFDCED}
+#menu .menupagetitle  { background-color: #CFDCED;
+  color: #000000;}
 
 #menu           { border-color: #999999;}
 #menu .menupagetitle  { border-color: #999999;}
@@ -85,7 +86,6 @@ background: #E5E4D9;
 background-color: #E5E4D9;
 color: #000000;} 
  
-#menu .menupagetitle  { color: #000000;}    
 #menu .menupageitemgroup     { 
 background-color: #CFDCED;
 }
