@@ -54,7 +54,7 @@ import org.xml.sax.helpers.AttributesImpl;
 public class SitetreeFragmentGenerator extends ServiceableGenerator {
 
     protected Publication publication;
-    private DocumentIdentityMap identityMap;
+    protected DocumentIdentityMap identityMap;
 
     /** Parameter which denotes the documentid of the clicked node */
     protected String documentid;
@@ -233,11 +233,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
 
             SiteTreeNode[] children = node.getChildren();
 
-            for (int i = 0; i < children.length; i++) {
-                startNode(NODE_NODE, children[i]);
-                addLabels(children[i]);
-                endNode(NODE_NODE);
-            }
+            addNodes(children);
         } catch (ServiceException e) {
             throw new ProcessingException(e);
         } finally {
@@ -247,6 +243,19 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
                 }
                 this.manager.release(selector);
             }
+        }
+    }
+    
+    /**
+     * Adds the given nodes (not recursive).
+     * @param nodes
+     * @throws SAXException
+     */
+    protected void addNodes(SiteTreeNode[] nodes) throws SAXException {
+        for (int i = 0; i < nodes.length; i++) {
+            startNode(NODE_NODE, nodes[i]);
+            addLabels(nodes[i]);
+            endNode(NODE_NODE);
         }
     }
 
@@ -340,13 +349,25 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
         }
 
         for (int i = 0; i < nodes.length; i++) {
-            startNode(NODE_NODE, nodes[i]);
-            addLabels(nodes[i]);
-            if (nodes[i].getId().equals(nodeid)) {
-                generateFragmentRecursive(nodes[i].getChildren(), childid);
-            }
-            endNode(NODE_NODE);
+            addNodeRecursive(nodes[i], nodeid, childid);
         }
+    }
+    
+    /**
+     * Adds the given node, and if the node's id matched the given nodeid, it continues recursively.
+     * @param node
+     * @param nodeid
+     * @param childid
+     * @throws SAXException
+     * @throws SiteException
+     */
+    protected void addNodeRecursive(SiteTreeNode node, String nodeid, String childid) throws SAXException, SiteException {
+        startNode(NODE_NODE, node);
+        addLabels(node);
+        if (node.getId().equals(nodeid)) {
+            generateFragmentRecursive(node.getChildren(), childid);
+        }
+        endNode(NODE_NODE);
     }
 
     /**
@@ -383,7 +404,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
         String hasLink = Boolean.toString(node.hasLink());
         String href = node.getHref();
         String suffix = node.getSuffix();
-        String isFolder = isFolder(node);
+        String isFolder = Boolean.toString(isFolder(node));
 
         if (this.getLogger().isDebugEnabled()) {
             this.getLogger().debug("adding attribute id: " + id);
@@ -412,12 +433,12 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      * incremental sitetree loading, we sometimes load nodes which are folders, but we don't load
      * their children. But we still have to know if it's a folder or not, i.e. if it can be opened.
      * @param node
-     * @return "true" or "false"
+     * @return 
      */
-    protected String isFolder(SiteTreeNode node) {
+    protected boolean isFolder(SiteTreeNode node) {
         if (node.getChildren().length > 0)
-            return "true";
-        return "false";
+            return true;
+        return false;
     }
 
     /**
