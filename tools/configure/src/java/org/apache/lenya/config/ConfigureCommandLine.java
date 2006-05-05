@@ -21,6 +21,11 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.Vector;
 
+import org.apache.lenya.config.core.Configuration;
+import org.apache.lenya.config.core.FileConfiguration;
+import org.apache.lenya.config.core.Parameter;
+import org.apache.lenya.config.impl.BuildPropertiesConfiguration;
+
 /**
  * A command line tool to configure Lenya build
  */
@@ -38,28 +43,14 @@ public class ConfigureCommandLine {
         }
         String rootDir = args[0];
 
-        // Define all configuration files
-        FileConfiguration buildProperties = new BuildPropertiesConfiguration();
-        buildProperties.setFilenameDefault(rootDir + "/build.properties");
-        buildProperties.setFilenameLocal(rootDir + "/local.build.properties");
+	Vector configs = setConfigurations(rootDir);
+        changeConfigurations(configs);
+    }
 
-        /*
-        FileConfiguration defaultPub = new PublicationConfiguration();
-        defaultPub.setFilenameDefault(rootDir + "src/pubs/default/config/publication.xconf");
-        defaultPub.setFilenameLocal(rootDir + "src/pubs/default/config/local.publication.xconf");
-        */
-
-        /*
-        FileConfiguration log4j = new Log4jConfiguration();
-        // src/confpatch/log4j-*
-        log4j.setFilenameDefault(rootDir + "src/webapp/WEB-INF/log4j.xconf");
-        log4j.setFilenameLocal(rootDir + "src/webapp/WEB-INF/local.log4j.xconf");
-        */
-
-	Vector configs = new Vector();
-        configs.addElement(buildProperties);
-        //configs.addElement(defaultPub);
-
+    /**
+     *
+     */
+    static public void changeConfigurations(Vector configs) {
 
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
 	for (int i = 0; i < configs.size(); i++) {
@@ -86,7 +77,35 @@ public class ConfigureCommandLine {
                 config.writeLocal();
             }
         }
-	// TODO: Suggest to build now ./build.sh (depending on OS)
+    }
+
+    /**
+     *
+     */
+    static public Vector setConfigurations(String rootDir) {
+        // Define all configuration files
+        FileConfiguration buildProperties = new BuildPropertiesConfiguration();
+        buildProperties.setFilenameDefault(rootDir + "/build.properties");
+        buildProperties.setFilenameLocal(rootDir + "/local.build.properties");
+
+        /*
+        FileConfiguration defaultPub = new PublicationConfiguration();
+        defaultPub.setFilenameDefault(rootDir + "src/pubs/default/config/publication.xconf");
+        defaultPub.setFilenameLocal(rootDir + "src/pubs/default/config/local.publication.xconf");
+        */
+
+        /*
+        FileConfiguration log4j = new Log4jConfiguration();
+        // src/confpatch/log4j-*
+        log4j.setFilenameDefault(rootDir + "src/webapp/WEB-INF/log4j.xconf");
+        log4j.setFilenameLocal(rootDir + "src/webapp/WEB-INF/local.log4j.xconf");
+        */
+
+	Vector configs = new Vector();
+        configs.addElement(buildProperties);
+        //configs.addElement(defaultPub);
+
+        return configs;
     }
 
     /**

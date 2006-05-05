@@ -15,12 +15,16 @@
  *
  */
 
-package org.apache.lenya.config;
+package org.apache.lenya.config.impl;
 
 import java.io.FileInputStream;
 import java.util.Enumeration;
 import java.util.Properties;
 import java.util.Vector;
+
+import org.apache.lenya.config.core.Configuration;
+import org.apache.lenya.config.core.Parameter;
+import org.apache.lenya.config.core.PropertiesConfiguration;
 
 /**
  * Build Properties Configuration

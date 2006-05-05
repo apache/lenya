@@ -15,7 +15,10 @@
  *
  */
 
-package org.apache.lenya.config;
+package org.apache.lenya.config.impl;
+
+import org.apache.lenya.config.core.Configuration;
+import org.apache.lenya.config.core.Parameter;
 
 /**
  * Server Parameter web.app.server

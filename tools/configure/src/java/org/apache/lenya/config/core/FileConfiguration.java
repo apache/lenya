@@ -15,7 +15,7 @@
  *
  */
 
-package org.apache.lenya.config;
+package org.apache.lenya.config.core;
 
 import java.io.File;
 
