@@ -49,9 +49,9 @@ fi
 
 PWD=`pwd`
 if [ "$UI_TYPE" = "cmd" ];then
-  java org.apache.lenya.config.ConfigureCommandLine $PWD
+  java org.apache.lenya.config.impl.ConfigureCommandLine $PWD
 elif [ "$UI_TYPE" = "gui" ]; then
-  java org.apache.lenya.config.ConfigureGUI $PWD
+  java org.apache.lenya.config.impl.ConfigureGUI $PWD
 else
   echo "ERROR: No such User Interface: $UI_TYPE"
   exit 1
