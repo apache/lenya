@@ -14,6 +14,14 @@
   limitations under the License.
 -->
 
+<!--
+http://www.opendocumentfoundation.org/repos/svn/libopendocument/trunk/
+
+resp.
+
+http://books.evc-cit.info/odf_utils/odt_to_xhtml.html
+-->
+
 <xsl:stylesheet version="1.0"
 	xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
     xmlns:office="urn:oasis:names:tc:opendocument:xmlns:office:1.0"
