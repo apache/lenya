@@ -31,9 +31,26 @@ import org.apache.lenya.config.core.Parameter;
 public class ConfigureCommandLine extends org.apache.lenya.config.ConfigureCommandLine {
 
     /**
+     * @param args Command line args
+     */
+    public static void main(String[] args) {
+        System.out.println("\nWelcome to the command line interface to configure the building process of Apache Lenya 1.4-dev");
+
+        if (args.length != 1) {
+            System.err.println("No root dir specified (e.g. /home/USERNAME/src/lenya/trunk)!");
+            return;
+        }
+        String rootDir = args[0];
+
+        ConfigureCommandLine ccl = new ConfigureCommandLine();
+        Vector configs = ccl.setConfigurations(rootDir);
+        ccl.changeConfigurations(configs);
+    }
+
+    /**
      *
      */
-    static public Vector setConfigurations(String rootDir) {
+    public Vector setConfigurations(String rootDir) {
         // Define all configuration files
         FileConfiguration buildProperties = new BuildPropertiesConfiguration();
         buildProperties.setFilenameDefault(rootDir + "/build.properties");

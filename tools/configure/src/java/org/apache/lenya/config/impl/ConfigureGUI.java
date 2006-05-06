@@ -15,7 +15,7 @@
  *
  */
 
-package org.apache.lenya.config;
+package org.apache.lenya.config.impl;
 
 import java.awt.Component;
 import java.awt.FlowLayout;

@@ -29,23 +29,7 @@ import org.apache.lenya.config.impl.BuildPropertiesConfiguration;
 /**
  * A command line tool to configure Lenya build
  */
-public class ConfigureCommandLine {
-
-    /**
-     * @param args Command line args
-     */
-    public static void main(String[] args) {
-        System.out.println("\nWelcome to the command line interface to configure the building process of Apache Lenya");
-
-        if (args.length != 1) {
-            System.err.println("No root dir specified (e.g. /home/USERNAME/src/lenya/trunk)!");
-            return;
-        }
-        String rootDir = args[0];
-
-	Vector configs = setConfigurations(rootDir);
-        changeConfigurations(configs);
-    }
+abstract public class ConfigureCommandLine {
 
     /**
      *
@@ -82,31 +66,7 @@ public class ConfigureCommandLine {
     /**
      *
      */
-    static public Vector setConfigurations(String rootDir) {
-        // Define all configuration files
-        FileConfiguration buildProperties = new BuildPropertiesConfiguration();
-        buildProperties.setFilenameDefault(rootDir + "/build.properties");
-        buildProperties.setFilenameLocal(rootDir + "/local.build.properties");
-
-        /*
-        FileConfiguration defaultPub = new PublicationConfiguration();
-        defaultPub.setFilenameDefault(rootDir + "src/pubs/default/config/publication.xconf");
-        defaultPub.setFilenameLocal(rootDir + "src/pubs/default/config/local.publication.xconf");
-        */
-
-        /*
-        FileConfiguration log4j = new Log4jConfiguration();
-        // src/confpatch/log4j-*
-        log4j.setFilenameDefault(rootDir + "src/webapp/WEB-INF/log4j.xconf");
-        log4j.setFilenameLocal(rootDir + "src/webapp/WEB-INF/local.log4j.xconf");
-        */
-
-	Vector configs = new Vector();
-        configs.addElement(buildProperties);
-        //configs.addElement(defaultPub);
-
-        return configs;
-    }
+    abstract public Vector setConfigurations(String rootDir);
 
     /**
      *
