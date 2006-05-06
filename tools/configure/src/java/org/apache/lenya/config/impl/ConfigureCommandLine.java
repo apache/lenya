@@ -28,7 +28,7 @@ import org.apache.lenya.config.core.Parameter;
 /**
  * A command line tool to configure Lenya 1.4 build
  */
-public class ConfigureCommandLine extends org.apache.lenya.config.ConfigureCommandLine {
+public class ConfigureCommandLine extends org.apache.lenya.config.core.ConfigureCommandLine {
 
     /**
      * @param args Command line args
