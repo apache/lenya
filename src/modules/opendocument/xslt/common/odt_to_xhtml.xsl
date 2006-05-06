@@ -15,6 +15,10 @@
 -->
 
 <!--
+http://www.opendocumentfoundation.org/repos/svn/libopendocument/trunk/xsl/default/document2xhtml.xsl
+
+resp.
+
 http://www.opendocumentfoundation.org/repos/svn/libopendocument/trunk/
 
 resp.
