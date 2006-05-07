@@ -52,12 +52,17 @@
   <property name="optimize"       value="on"/>
   <property name="deprecation"    value="off"/>
   <property name="nowarn"         value="off"/>
-  <property name="target.vm"      value="1.4"/>
-
-<!-- http://article.gmane.org/gmane.comp.cms.lenya.user/9712 -->
-<!--
-  <property name="target.vm"      value="1.5"/>
--->
+  <!-- Detecting the current jvm -->
+  <condition property="target.vm" value="${ant.java.version}">
+    <not>
+      <or>
+        <equals arg1="1.1" arg2="${ant.java.version}"/>
+        <equals arg1="1.2" arg2="${ant.java.version}"/>
+        <equals arg1="1.3" arg2="${ant.java.version}"/>
+      </or>
+    </not>
+  </condition>
+  <fail unless="target.vm">Please use a JVM 1.4 or superior to compile lenya ${version}</fail>
 
   <property name="packages"      value="*.*"/>
 

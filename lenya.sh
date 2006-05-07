@@ -148,7 +148,7 @@ esac
 # ----- Set Local Variables ( used to minimize cut/paste) ---------------------
 
 JAVA="$JAVA_HOME/bin/java"
-ENDORSED_LIBS="$LENYA_LIB/endorsed"
+ENDORSED_LIBS="${LENYA_HOME}/externals/cocoon_2_1_x/lib/endorsed"
 ENDORSED="-Djava.endorsed.dirs=$ENDORSED_LIBS"
 PARSER=-Dorg.xml.sax.parser=org.apache.xerces.parsers.SAXParser
 LOADER=Loader

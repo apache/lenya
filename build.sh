@@ -29,6 +29,8 @@ fi
 OLD_CLASSPATH="$CLASSPATH"
 unset CLASSPATH
 CLASSPATH="`echo lib/*.jar | tr ' ' $S`"
+# Add cocoon endorsed libs
+CLASSPATH="$CLASSPATH `echo externals/cocoon_2_1_x/lib/endorsed/*.jar | tr ' ' $S`"
 export CLASSPATH
 
 # ----- Use Ant shipped with Lenya. Ignore installed in the system Ant
