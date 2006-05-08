@@ -118,9 +118,6 @@
 
     <!-- Copy libraries from ${endorsed.lib.dir} and ${cocoon.endorsed.lib.dir} to ${build.webapp}/WEB-INF/lib/endorsed -->
     <copy todir="${build.webapp}/WEB-INF/lib/endorsed">
-      <fileset dir="${endorsed.lib.dir}">
-        <include name="**/*"/>
-      </fileset>
       <fileset dir="${cocoon.endorsed.lib.dir}">
         <include name="**/*"/>
       </fileset>
