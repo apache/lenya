@@ -171,7 +171,7 @@ public class JCRSession implements org.apache.lenya.cms.repo.Session {
         initPublications();
         if (this.publications.keySet().contains(id)) {
             throw new org.apache.lenya.cms.repo.RepositoryException("The publication [" + id
-                    + "]Êalready exists.");
+                    + "] already exists.");
         } else {
             Publication pub = new JCRPublication(this, id);
             this.publications.put(id, pub);

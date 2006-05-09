@@ -84,7 +84,7 @@ public class JCRMetaDataRegistry implements MetaDataRegistry {
             Node elementSetNode = getElementSetNode(name);
             if (elementSetNode != null) {
                 throw new RepositoryException("The element set [" + name
-                        + "]Êis already registered!");
+                        + "] is already registered!");
             }
             Node registryNode = getRegistryNode();
             Node setNode = registryNode.addNode(SET_NODE_NAME, SET_NODE_TYPE);
