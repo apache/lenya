@@ -207,7 +207,7 @@ public class ConfigureGUI {
         Container contentPane = frame.getContentPane();
         contentPane.setLayout(new FlowLayout(FlowLayout.LEFT));
 
-                //TODO: Somehow this doesn't work
+        //TODO: Somehow this doesn't work
         //contentPane.setPreferredSize(new java.awt.Dimension(380, 182));
 
         contentPanel.setLayout(new GridBagLayout());
