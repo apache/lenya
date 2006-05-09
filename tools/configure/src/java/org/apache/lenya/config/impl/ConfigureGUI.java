@@ -119,6 +119,7 @@ public class ConfigureGUI {
     public final static boolean RIGHT_TO_LEFT = false;
 
     private FileConfiguration buildProperties;
+    private FileConfiguration tmpBuildProperties;
 
     public static void main(String[] args) {
 
@@ -145,29 +146,24 @@ public class ConfigureGUI {
         buildProperties.setFilenameDefault(rootDir + "/build.properties");
         buildProperties.setFilenameLocal(rootDir + "/local.build.properties");
 
-        Vector configs = new Vector();
-        configs.addElement(buildProperties);
+        buildProperties.read();
+        params = buildProperties.getConfigurableParameters();
+
+        tmpBuildProperties = new BuildPropertiesConfiguration();
+        tmpBuildProperties.setFilenameDefault(rootDir + "/build.properties");
+        tmpBuildProperties.setFilenameLocal(rootDir + "/local.build.properties");
+        tmpBuildProperties.read();
+        tmpParams = tmpBuildProperties.getConfigurableParameters();
+        // Empty temporary local fields of temporary parameters
+        for (int k = 0; k < tmpParams.length; k ++) {
+            tmpParams[k].setLocalValue("");
+        }
+        
 
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame = new JFrame("Apache Lenya Configuration");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(new FlowLayout(FlowLayout.LEFT));
-
-        for (int i = 0; i < configs.size(); i++) {
-            Configuration config = (Configuration) configs.elementAt(i);
-            config.read();
-            params = config.getConfigurableParameters();
-
-            tmpParams = config.getConfigurableParameters();
-            // Empty temporary local fields of temporary parameters
-            for (int k = 0; k < tmpParams.length; k ++) {
-                tmpParams[k].setLocalValue("");
-            }
-        }
-
-        final Configuration config = (Configuration) configs.elementAt(0);
-        config.read();
-        params = config.getConfigurableParameters();
 
         contentPanel = new JPanel();
         checkBoxPanel = new JPanel();
@@ -421,6 +417,8 @@ public class ConfigureGUI {
         checkLast();
 
         newLocalValueTextField.setText(tmpParams[getStep()].getLocalValue());
+
+	setRadioButton();
     }
 
     public void moveNext() {
@@ -435,6 +433,21 @@ public class ConfigureGUI {
         checkLast();
 
         newLocalValueTextField.setText(tmpParams[getStep()].getLocalValue());
+
+	setRadioButton();
+    }
+
+    /**
+     * Set radio button
+     */
+    public void setRadioButton() {
+        if (tmpParams[getStep()].getLocalValue() != "") {
+            radioButton3.setSelected(true);
+        } else if (params[getStep()].getLocalValue() != "") {
+            radioButton2.setSelected(true);
+        } else {
+            radioButton1.setSelected(true);
+        }
     }
 
     /**
@@ -581,7 +594,9 @@ public class ConfigureGUI {
     }
 
     private void showYesScreen() {
-        buildProperties.writeLocal();
+        tmpBuildProperties.writeLocal();
+
+
         saveMessage.setText("Successful saved to: " + rootDir + "/local.build.properties");
         contentPanel.add(saveMessage, new GridBagConstraints(2, 3, 1, 1, 0.0,
                 0.0, GridBagConstraints.SOUTH, GridBagConstraints.PAGE_END,
