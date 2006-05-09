@@ -27,6 +27,7 @@
     <index_pm href="index.html" label="About"/>
     <changes href="changes.html" label="Changes"/>
     <charter href="charter.html" label="Charter"/>
+    <guidelines href="guidelines.html" label="Project guidelines"/>
     <history href="history.html" label="History"/>
     <screenshots href="screenshots.html" label="Screenshots"/>
     <node-d href="roadmap.html" label="Roadmap"/>
@@ -260,7 +261,7 @@
     <index_com href="index.html" label="Contributing"/>
     <wiki href="ext:wiki/lenya" label="Lenya Wiki" />
     <translating href="translations.html" label="Translations" />
-    <node-h href="acknowledgements.html" label="Credits"/>
+    <credits href="acknowledgements.html" label="Credits"/>
     <node-f href="http://svn.apache.org/viewcvs.cgi/lenya/#dirlist" label="SVN Web"/>
     <node-g
       href="http://issues.apache.org/bugzilla/buglist.cgi?bug_status=NEW&amp;bug_status=ASSIGNED&amp;bug_status=REOPENED&amp;email1=&amp;emailtype1=substring&amp;emailassigned_to1=1&amp;email2=&amp;emailtype2=substring&amp;emailreporter2=1&amp;bugidtype=include&amp;bug_id=&amp;changedin=&amp;votes=&amp;chfieldfrom=&amp;chfieldto=Now&amp;chfieldvalue=&amp;product=Lenya&amp;short_desc=&amp;short_desc_type=allwordssubstr&amp;long_desc=&amp;long_desc_type=allwordssubstr&amp;bug_file_loc=&amp;bug_file_loc_type=allwordssubstr&amp;keywords=&amp;keywords_type=anywords&amp;field0-0-0=noop&amp;type0-0-0=noop&amp;value0-0-0=&amp;cmdtype=doit&amp;order=Importance"
@@ -282,7 +283,11 @@
   </images>
   
   <external-refs>
-    <asf href="http://www.apache.org/"/>
+    <asf href="http://www.apache.org/">
+      <asl href="licenses/"/>
+      <how-it-works href="foundation/how-it-works.html"/>
+      <voting href="foundation/voting.html"/>
+    </asf>
     <apachecon href="http://apachecon.com/"/>
     <cocoon href="http://cocoon.apache.org/">
       <cocoon.2.1 href="2.1/">
@@ -307,6 +312,7 @@
       <forrest.build href="build.html"/>
       <forrest.install href="docs/your-project.html#installing"/>
       <forrest.contrib href="contrib.html"/>
+      <forrest.committed href="committed.html"/>
     </forrest.apache.org>
     <issues href="http://issues.apache.org/bugzilla/">
       <issue.add href="enter_bug.cgi?reporter=&amp;product=Lenya&amp;version=Current+CVS&amp;component=core&amp;rep_platform=Other&amp;op_sys=other&amp;priority=Other&amp;bug_severity=Enhancement&amp;bug_status=NEW&amp;assigned_to=&amp;cc=&amp;bug_file_loc=&amp;short_desc=%5BPatch%5D&amp;comment=&amp;maketemplate=Remember+values+as+bookmarkable+template&amp;form_name=enter_bug"/>
