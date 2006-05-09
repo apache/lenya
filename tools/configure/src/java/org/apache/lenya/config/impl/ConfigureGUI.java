@@ -657,14 +657,19 @@ public class ConfigureGUI {
     public void comboBox() {
         /* Hardcoded, we cant know where the dropdown could be... */
 
-        if (steps == 3) {
+        String[] availableValues = params[getStep()].getAvailableValues();
+
+        if (availableValues != null && availableValues.length > 0) {
             warning1.setVisible(false);
             warning2.setVisible(false);
             defaultValueTextField.setVisible(false);
             localValueTextField.setVisible(false);
             newLocalValueTextField.setVisible(true);
 
-            String labels[] = { "Jetty", "Tomcat", "Wls" };
+            String[] labels = new String[availableValues.length];
+            for (int i = 0; i < availableValues.length; i ++) {
+                labels[i] = availableValues[i];
+            }
             DefaultValueComboBox = new JComboBox(labels);
             DefaultValueComboBox.setMaximumRowCount(3);
             contentPanel.add(DefaultValueComboBox, new GridBagConstraints(2, 1,
