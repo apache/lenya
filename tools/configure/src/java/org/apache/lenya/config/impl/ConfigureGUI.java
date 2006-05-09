@@ -102,6 +102,7 @@ public class ConfigureGUI {
     private JButton exitButton;
 
     private Parameter[] params;
+    private Parameter[] tmpParams;
 
     private JFrame frame;
 
@@ -156,6 +157,12 @@ public class ConfigureGUI {
             Configuration config = (Configuration) configs.elementAt(i);
             config.read();
             params = config.getConfigurableParameters();
+
+            tmpParams = config.getConfigurableParameters();
+            // Empty temporary local fields of temporary parameters
+            for (int k = 0; k < tmpParams.length; k ++) {
+                tmpParams[k].setLocalValue("");
+            }
         }
 
         final Configuration config = (Configuration) configs.elementAt(0);
@@ -302,7 +309,7 @@ public class ConfigureGUI {
         g.add(radioButton2);
         radioButton2.setSelected(true);
 
-        newLocalValueLabel.setText("new Local Value:");
+        newLocalValueLabel.setText("New Local Value:");
         contentPanel.add(newLocalValueLabel, new GridBagConstraints(1, 3, 1, 1,
                 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 0, 0), 0, 0));
@@ -412,7 +419,8 @@ public class ConfigureGUI {
         showNormalOptions();
         comboBox();
         checkLast();
-        newLocalValueTextField.setText(params[getStep()].getLocalValue());
+
+        newLocalValueTextField.setText(tmpParams[getStep()].getLocalValue());
     }
 
     public void moveNext() {
@@ -426,29 +434,27 @@ public class ConfigureGUI {
         comboBox();
         checkLast();
 
-        newLocalValueTextField.setText("");
+        newLocalValueTextField.setText(tmpParams[getStep()].getLocalValue());
     }
 
     /**
      * Set local value depending on chosen value
      */
     public void setLocalValue() {
-        String tmpLocalValue = "TBD";
         if (radioButton1.isSelected()) {
-            tmpLocalValue = defaultValueTextField.getText();
-            System.out.println("Default Value: " + tmpLocalValue);
+            tmpParams[steps].setLocalValue(defaultValueTextField.getText());
+            System.out.print("Default Value: ");
         } else if (radioButton2.isSelected()) {
-            tmpLocalValue = localValueTextField.getText();
-            System.out.println("Local Value: " + tmpLocalValue);
+            tmpParams[steps].setLocalValue(localValueTextField.getText());
+            System.out.print("Local Value: ");
         } else if (radioButton3.isSelected()) {
-            tmpLocalValue = newLocalValueTextField.getText();
-            System.out.println("New Local Value: " + tmpLocalValue);
+            tmpParams[steps].setLocalValue(newLocalValueTextField.getText());
+            System.out.print("New Local Value: ");
         } else {
             System.err.println("Fatal Error 0123456789!");
         }
 
-        params[steps].setLocalValue(tmpLocalValue);
-        System.out.println("Temporary Local Value: " + params[steps].getLocalValue());
+        System.out.println(tmpParams[steps].getLocalValue());
     }
 
     public void currentStep(String direction) {
