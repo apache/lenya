@@ -96,7 +96,12 @@ abstract public class ConfigureCommandLine {
                             notOK = false;
                         } else {
                             System.err.println("  WARNING: No such value available!");
-                            System.err.println("           Available values: " + params[k].getAvailableValues());
+                            String[] aValues = params[k].getAvailableValues();
+                            System.err.print("           Available values: ");
+                            for (int j = 0; j < aValues.length; j++) {
+                                System.err.print(aValues[j] + " ");
+                            }
+                            System.err.println("");
                             System.err.println("           Re-enter value ...");
                         }
                     }

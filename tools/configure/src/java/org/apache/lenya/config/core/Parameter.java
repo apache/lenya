@@ -79,7 +79,7 @@ public class Parameter {
     /**
      *
      */
-    public String getAvailableValues() {
+    public String[] getAvailableValues() {
         return null;
     }
 

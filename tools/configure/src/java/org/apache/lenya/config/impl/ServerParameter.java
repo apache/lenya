@@ -38,8 +38,12 @@ public class ServerParameter extends Parameter {
     /**
      *
      */
-    public String getAvailableValues() {
-        return "Jetty, Tomcat, WLS";
+    public String[] getAvailableValues() {
+        String[] aValues = new String[3];
+        aValues[0] = "Jetty";
+        aValues[1] = "Tomcat";
+        aValues[2] = "WLS";
+        return aValues;
     }
 
     /**
