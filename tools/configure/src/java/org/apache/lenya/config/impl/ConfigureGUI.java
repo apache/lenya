@@ -83,9 +83,9 @@ public class ConfigureGUI {
 
     private JTextField newLocalValueTextField;
 
-    private JComboBox DefaultValueComboBox;
-
-    private JComboBox LocalValueComboBox;
+    private JComboBox defaultValueComboBox;
+    private JComboBox localValueComboBox;
+    private JComboBox newLocalValueComboBox;
 
     private JButton cancelButton;
 
@@ -102,6 +102,7 @@ public class ConfigureGUI {
     private JButton exitButton;
 
     private Parameter[] params;
+    
     private Parameter[] tmpParams;
 
     private JFrame frame;
@@ -177,8 +178,12 @@ public class ConfigureGUI {
         localValueTextField = new JTextField(20);
         newLocalValueTextField = new JTextField(20);
 
-        DefaultValueComboBox = new JComboBox();
-        LocalValueComboBox = new JComboBox();
+        defaultValueComboBox = new JComboBox();
+        // TODO: Add Listener (to change radio, tmpParams)
+        localValueComboBox = new JComboBox();
+        // TODO: Add Listener (to change radio, tmpParams)
+        newLocalValueComboBox = new JComboBox();
+        // TODO: Add Listener (to change radio, tmpParams)
 
         radioButton1 = new JRadioButton();
         radioButton2 = new JRadioButton();
@@ -598,7 +603,7 @@ public class ConfigureGUI {
 
 
         saveMessage.setText("Successful saved to: " + rootDir + "/local.build.properties");
-        contentPanel.add(saveMessage, new GridBagConstraints(2, 3, 1, 1, 0.0,
+        contentPanel.add(saveMessage, new GridBagConstraints(2, 2, 1, 1, 0.0,
                 0.0, GridBagConstraints.SOUTH, GridBagConstraints.PAGE_END,
                 new Insets(0, 0, 0, 0), 0, 0));
         saveMessage.setVisible(true);
@@ -609,7 +614,7 @@ public class ConfigureGUI {
         warning2.setVisible(false);
         exitButton.setPreferredSize(new java.awt.Dimension(74, 22));
         exitButton.setText("Exit");
-        contentPanel.add(exitButton, new GridBagConstraints(2, 3 + 1, 1, 1, 0.0,
+        contentPanel.add(exitButton, new GridBagConstraints(2, 3 , 1, 1, 0.0,
                 0.0, GridBagConstraints.SOUTH, GridBagConstraints.PAGE_END,
                 new Insets(0, 0, 0, 0), 0, 0));
         exitButton.addActionListener(new ActionListener() {
@@ -655,40 +660,54 @@ public class ConfigureGUI {
 
 
     public void comboBox() {
-        /* Hardcoded, we cant know where the dropdown could be... */
-
         String[] availableValues = params[getStep()].getAvailableValues();
 
         if (availableValues != null && availableValues.length > 0) {
             warning1.setVisible(false);
             warning2.setVisible(false);
+
             defaultValueTextField.setVisible(false);
             localValueTextField.setVisible(false);
-            newLocalValueTextField.setVisible(true);
+            newLocalValueTextField.setVisible(false);
 
             String[] labels = new String[availableValues.length];
             for (int i = 0; i < availableValues.length; i ++) {
                 labels[i] = availableValues[i];
             }
-            DefaultValueComboBox = new JComboBox(labels);
-            DefaultValueComboBox.setMaximumRowCount(3);
-            contentPanel.add(DefaultValueComboBox, new GridBagConstraints(2, 1,
+
+            defaultValueComboBox = new JComboBox(labels);
+            // TODO: Show lable according to params.getDefaultValue
+            defaultValueComboBox.setMaximumRowCount(availableValues.length);
+            contentPanel.add(defaultValueComboBox, new GridBagConstraints(2, 1,
                     1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
                     GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-            LocalValueComboBox = new JComboBox(labels);
-            LocalValueComboBox.setMaximumRowCount(3);
-            contentPanel.add(LocalValueComboBox, new GridBagConstraints(2, 2,
+
+            localValueComboBox = new JComboBox(labels);
+            // TODO: Show lable according to params.getLocalValue, params.getDefaultValue
+            localValueComboBox.setMaximumRowCount(availableValues.length);
+            contentPanel.add(localValueComboBox, new GridBagConstraints(2, 2,
                     1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
                     GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+
+            newLocalValueComboBox = new JComboBox(labels);
+            // TODO: Show lable according to tmpParams.getLocalValue, params.getLocalValue, params.getDefaultValue
+            newLocalValueComboBox.setMaximumRowCount(availableValues.length);
+            contentPanel.add(newLocalValueComboBox, new GridBagConstraints(2, 3,
+                    1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
+                    GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+
             contentPanel.revalidate();
         } else {
-            DefaultValueComboBox.setVisible(false);
-            LocalValueComboBox.setVisible(false);
+            defaultValueComboBox.setVisible(false);
+            localValueComboBox.setVisible(false);
+            newLocalValueComboBox.setVisible(false);
+
             defaultValueTextField.setVisible(true);
             localValueTextField.setVisible(true);
+            newLocalValueTextField.setVisible(true);
+
             warning1.setVisible(false);
             warning2.setVisible(false);
-
         }
     }
 
