@@ -184,6 +184,7 @@ public class ConfigureGUI {
         // TODO: Add Listener (to change radio, tmpParams)
         newLocalValueComboBox = new JComboBox();
         // TODO: Add Listener (to change radio, tmpParams)
+        // tmpParams[getStep()].setLocalValue(newLocalValueComboBox ...);
 
         radioButton1 = new JRadioButton();
         radioButton2 = new JRadioButton();
@@ -459,20 +460,26 @@ public class ConfigureGUI {
      * Set local value depending on chosen value
      */
     public void setLocalValue() {
-        if (radioButton1.isSelected()) {
-            tmpParams[steps].setLocalValue(defaultValueTextField.getText());
-            System.out.print("Default Value: ");
-        } else if (radioButton2.isSelected()) {
-            tmpParams[steps].setLocalValue(localValueTextField.getText());
-            System.out.print("Local Value: ");
-        } else if (radioButton3.isSelected()) {
-            tmpParams[steps].setLocalValue(newLocalValueTextField.getText());
-            System.out.print("New Local Value: ");
-        } else {
-            System.err.println("Fatal Error 0123456789!");
-        }
+        String[] av = params[getStep()].getAvailableValues();
 
-        System.out.println(tmpParams[steps].getLocalValue());
+        if (av == null) {
+            if (radioButton1.isSelected()) {
+                tmpParams[steps].setLocalValue(defaultValueTextField.getText());
+                System.out.print("Default Value: ");
+            } else if (radioButton2.isSelected()) {
+                tmpParams[steps].setLocalValue(localValueTextField.getText());
+                System.out.print("Local Value: ");
+            } else if (radioButton3.isSelected()) {
+                tmpParams[steps].setLocalValue(newLocalValueTextField.getText());
+                System.out.print("New Local Value: ");
+            } else {
+                System.err.println("Fatal Error 0123456789!");
+            }
+
+            System.out.println(tmpParams[getStep()].getLocalValue());
+        } else {
+            System.out.println("Combo Box: " + tmpParams[getStep()].getLocalValue());
+        }
     }
 
     public void currentStep(String direction) {
