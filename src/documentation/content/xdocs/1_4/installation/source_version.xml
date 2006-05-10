@@ -130,7 +130,7 @@
             or configure.bat.
           </p>
           <note>Cocoon 2.1.x is now placed in Lenya as a svn:external
-            you'll find coocoon in $LENYA_HOME/externals/cocoon_2_1_x.
+            you'll find cocoon in $LENYA_HOME/externals/cocoon_2_1_x.
             If you want to use cocoon from another location you can change
             the $COCOON_HOME point to your cocoon src directory.
             </note>

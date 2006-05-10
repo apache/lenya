@@ -113,7 +113,7 @@
             version: 2.1.7
             <br/>
             Get it from <a href="site:cocoon/mirror">http://cocoon.apache.org/mirror.cgi</a><br/>
-            Unpack Coccon in <code>src/</code>.
+            Unpack Cocoon in <code>src/</code>.
           </p>
 
 			<br/>
@@ -185,7 +185,7 @@
 
         <li>
           <p>
-            <strong>Configure Lenya to point to Coccon</strong>
+            <strong>Configure Lenya to point to Cocoon</strong>
           </p>
 
           <p>
