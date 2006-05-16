@@ -37,8 +37,10 @@ Standalone Installation (using the built-in Jetty)
 
    1.
 
-      Get the Java SDK (see Prerequisites)
-   2.
+      Get the Java SDK (see Prerequisites): e.g. J2SDK_1.4.2_10
+      and set JAVA_HOME
+      (Windows: start -> Control Panel -> System -> Advanced -> Environment Variables -> User variables ...
+   2. 
 
       Get Apache Cocoon (see Prerequisites)
    3.
@@ -70,6 +72,11 @@ Standalone Installation (using the built-in Jetty)
       will work (MS Windows: Don't use backslashes "\" for directory separation.)
           * cocoon.src.dir=$COCOON_HOME
           * tomcat.home.dir=$TOMCAT_HOME
+
+      or use
+
+          * Linux: configure.sh
+          * Windows: configure.bat
 
 
    6.  Build Lenya
