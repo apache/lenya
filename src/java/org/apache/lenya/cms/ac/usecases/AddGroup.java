@@ -16,12 +16,8 @@
  */
 package org.apache.lenya.cms.ac.usecases;
 
-import java.io.File;
-
 import org.apache.lenya.ac.Group;
-import org.apache.lenya.ac.file.FileGroup;
-import org.apache.lenya.ac.file.FileGroupManager;
-import org.apache.lenya.ac.impl.AbstractItem;
+import org.apache.lenya.ac.ItemUtil;
 import org.apache.lenya.cms.usecase.UsecaseException;
 
 /**
@@ -52,7 +48,7 @@ public class AddGroup extends AccessControlUsecase {
             addErrorMessage("This group already exists.");
         }
 
-        if (!AbstractItem.isValidId(groupId)) {
+        if (!ItemUtil.isValidId(groupId)) {
             addErrorMessage("This is not a valid group ID.");
         }
 
@@ -68,13 +64,11 @@ public class AddGroup extends AccessControlUsecase {
         String name = getParameterAsString(GroupProfile.NAME);
         String description = getParameterAsString(GroupProfile.DESCRIPTION);
 
-        File configDir = ((FileGroupManager) getGroupManager()).getConfigurationDirectory();
-        Group group = new FileGroup(configDir, id);
+        Group group = getGroupManager().add(id);
         group.setName(name);
         group.setDescription(description);
         
         group.save();
-        getGroupManager().add(group);
         
         setExitParameter(GroupProfile.ID, id);
     }

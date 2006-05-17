@@ -34,10 +34,11 @@ public interface IPRangeManager extends ItemManager {
     /**
      * Add the given IP range
      *
-     * @param range IP range that is to be added
+     * @param id IP range that is to be added
+     * @return An IP range.
      * @throws AccessControlException when the IP range is already contained.
      */
-    void add(IPRange range) throws AccessControlException;
+    IPRange add(String id) throws AccessControlException;
     
     /**
      * Remove the given IP range

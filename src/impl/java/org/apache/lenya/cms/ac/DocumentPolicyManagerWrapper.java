@@ -32,11 +32,10 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.AccreditableManager;
+import org.apache.lenya.ac.InheritingPolicyManager;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.impl.DefaultAccessController;
-import org.apache.lenya.ac.impl.DefaultPolicy;
-import org.apache.lenya.ac.impl.InheritingPolicyManager;
 import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
@@ -73,13 +72,12 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Resolving policy for webapp URL [" + webappUrl + "]");
         }
-        
-        
+
         Publication publication = getPublication(webappUrl);
         String url = null;
         ContextUtility contextUtility = null;
         try {
-            contextUtility = (ContextUtility)serviceManager.lookup(ContextUtility.ROLE);
+            contextUtility = (ContextUtility) serviceManager.lookup(ContextUtility.ROLE);
             Session session = RepositoryUtil.getSession(contextUtility.getRequest(), getLogger());
             DocumentIdentityMap map = new DocumentIdentityMap(session,
                     getServiceManager(),
@@ -164,47 +162,27 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         this.policyManager = _policyManager;
     }
 
-    /**
-     * @see org.apache.lenya.ac.impl.InheritingPolicyManager#buildURLPolicy(org.apache.lenya.ac.AccreditableManager,
-     *      java.lang.String)
-     */
-    public DefaultPolicy buildURLPolicy(AccreditableManager controller, String url)
+    public Policy buildURLPolicy(AccreditableManager controller, String url)
             throws AccessControlException {
         return getPolicyManager().buildURLPolicy(controller, getPolicyURL(url));
     }
 
-    /**
-     * @see org.apache.lenya.ac.impl.InheritingPolicyManager#buildSubtreePolicy(org.apache.lenya.ac.AccreditableManager,
-     *      java.lang.String)
-     */
-    public DefaultPolicy buildSubtreePolicy(AccreditableManager controller, String url)
+    public Policy buildSubtreePolicy(AccreditableManager controller, String url)
             throws AccessControlException {
         return getPolicyManager().buildSubtreePolicy(controller, getPolicyURL(url));
     }
 
-    /**
-     * @see org.apache.lenya.ac.impl.InheritingPolicyManager#getPolicies(org.apache.lenya.ac.AccreditableManager,
-     *      java.lang.String)
-     */
-    public DefaultPolicy[] getPolicies(AccreditableManager controller, String url)
+    public Policy[] getPolicies(AccreditableManager controller, String url)
             throws AccessControlException {
         return getPolicyManager().getPolicies(controller, getPolicyURL(url));
     }
 
-    /**
-     * @see org.apache.lenya.ac.impl.InheritingPolicyManager#saveURLPolicy(java.lang.String,
-     *      org.apache.lenya.ac.impl.DefaultPolicy)
-     */
-    public void saveURLPolicy(String url, DefaultPolicy policy) throws AccessControlException {
+    public void saveURLPolicy(String url, Policy policy) throws AccessControlException {
         getPolicyManager().saveURLPolicy(getPolicyURL(url), policy);
 
     }
 
-    /**
-     * @see org.apache.lenya.ac.impl.InheritingPolicyManager#saveSubtreePolicy(java.lang.String,
-     *      org.apache.lenya.ac.impl.DefaultPolicy)
-     */
-    public void saveSubtreePolicy(String url, DefaultPolicy policy) throws AccessControlException {
+    public void saveSubtreePolicy(String url, Policy policy) throws AccessControlException {
         getPolicyManager().saveSubtreePolicy(getPolicyURL(url), policy);
     }
 

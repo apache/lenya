@@ -81,13 +81,12 @@ public final class FileGroupManager extends FileItemManager implements GroupMana
     }
 
     /**
-     * Add a group to this manager
-     *
-     * @param group the group to be added
-     * @throws AccessControlException when the notification failed.
+     * @see org.apache.lenya.ac.GroupManager#add(java.lang.String)
      */
-    public void add(Group group) throws AccessControlException {
+    public Group add(String id) throws AccessControlException {
+        Group group = new FileGroup(getConfigurationDirectory(), id);
         super.add(group);
+        return group;
     }
 
     /**

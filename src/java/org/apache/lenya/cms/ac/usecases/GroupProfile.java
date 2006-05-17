@@ -21,7 +21,7 @@ import org.apache.lenya.ac.Group;
 /**
  * Usecase to change the profile of a group.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class GroupProfile extends AccessControlUsecase {
 

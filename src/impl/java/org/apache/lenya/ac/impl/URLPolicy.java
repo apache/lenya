@@ -26,12 +26,13 @@ import java.util.Set;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.InheritingPolicyManager;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
 
 /**
- * A policy at a certain URL. The final policy is computed by merging the subtree
- * policies of all ancestor-or-self directories with the URL policy of the actual URL.  
+ * A policy at a certain URL. The final policy is computed by merging the subtree policies of all
+ * ancestor-or-self directories with the URL policy of the actual URL.
  */
 public class URLPolicy implements Policy {
 
@@ -58,8 +59,8 @@ public class URLPolicy implements Policy {
     private Policy[] policies = null;
 
     /**
-     * Obtains the policies from the policy manager.
-     * This method is expensive and therefore only called when needed.
+     * Obtains the policies from the policy manager. This method is expensive and therefore only
+     * called when needed.
      * @throws AccessControlException when something went wrong.
      */
     protected void obtainPolicies() throws AccessControlException {
@@ -116,7 +117,8 @@ public class URLPolicy implements Policy {
      * @return A role.
      * @throws AccessControlException when something went wrong.
      */
-    public static Role getAdministratorRole(AccreditableManager manager) throws AccessControlException {
+    public static Role getAdministratorRole(AccreditableManager manager)
+            throws AccessControlException {
         Role administratorRole = null;
         for (int i = 0; i < ADMINISTRATOR_ROLES.length; i++) {
             Role role = manager.getRoleManager().getRole(ADMINISTRATOR_ROLES[i]);
@@ -152,7 +154,7 @@ public class URLPolicy implements Policy {
      * @throws AccessControlException when something went wrong.
      */
     protected void addRoles(Policy policy, Identity identity, Set roles)
-        throws AccessControlException {
+            throws AccessControlException {
         roles.addAll(Arrays.asList(policy.getRoles(identity)));
     }
 
@@ -181,8 +183,7 @@ public class URLPolicy implements Policy {
     }
 
     /**
-     * The URL policy requires SSL protection if one of its
-     * member policies requires SSL protection.
+     * The URL policy requires SSL protection if one of its member policies requires SSL protection.
      * @see org.apache.lenya.ac.Policy#isSSLProtected()
      */
     public boolean isSSLProtected() throws AccessControlException {

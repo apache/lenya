@@ -31,10 +31,11 @@ public interface GroupManager extends ItemManager {
     
     /**
      * Add a group to this manager.
-     * @param group the group to be added.
+     * @param id the ID of the group to be added.
+     * @return A group.
      * @throws AccessControlException when the group is already contained.
      */
-    void add(Group group) throws AccessControlException;
+    Group add(String id) throws AccessControlException;
     
     /**
      * Remove a group from this manager.

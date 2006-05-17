@@ -25,6 +25,9 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.AccreditableManager;
+import org.apache.lenya.ac.Credential;
+import org.apache.lenya.ac.ModifiablePolicy;
+import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.World;
@@ -75,7 +78,7 @@ public class PolicyBuilder implements InputStreamBuilder {
      * @return A policy.
      * @throws AccessControlException when something went wrong.
      */
-    public DefaultPolicy buildPolicy(InputStream stream)
+    public ModifiablePolicy buildPolicy(InputStream stream)
         throws AccessControlException {
 
         Document document;
@@ -95,7 +98,7 @@ public class PolicyBuilder implements InputStreamBuilder {
      * @return A policy.
      * @throws AccessControlException when something went wrong.
      */
-    public DefaultPolicy buildPolicy(Document document)
+    public ModifiablePolicy buildPolicy(Document document)
         throws AccessControlException {
 
         DefaultPolicy policy = new DefaultPolicy();
@@ -116,7 +119,7 @@ public class PolicyBuilder implements InputStreamBuilder {
             String id = credentialElements[i].getAttribute(ID_ATTRIBUTE);
             accreditable = getAccreditable(credentialElements[i].getLocalName(), id);
 
-            Credential credential = new Credential(accreditable);
+            CredentialImpl credential = new CredentialImpl(accreditable);
 
             Element[] roleElements = helper.getChildren(credentialElements[i], ROLE_ELEMENT);
 
@@ -176,7 +179,7 @@ public class PolicyBuilder implements InputStreamBuilder {
      * @return A DOM document.
      * @throws AccessControlException when something went wrong.
      */
-    public static Document savePolicy(DefaultPolicy policy) throws AccessControlException {
+    public static Document savePolicy(Policy policy) throws AccessControlException {
         NamespaceHelper helper;
 
         try {
@@ -189,7 +192,7 @@ public class PolicyBuilder implements InputStreamBuilder {
             throw new AccessControlException(e);
         }
 
-        Credential[] credentials = policy.getCredentials();
+        Credential[] credentials = ((DefaultPolicy) policy).getCredentials();
         Element policyElement = helper.getDocument().getDocumentElement();
 
         for (int i = 0; i < credentials.length; i++) {

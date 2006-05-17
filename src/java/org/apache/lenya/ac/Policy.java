@@ -46,4 +46,5 @@ public interface Policy {
      * @throws AccessControlException when something went wrong.
      */
     boolean isEmpty() throws AccessControlException;
+    
 }

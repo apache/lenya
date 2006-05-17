@@ -19,16 +19,13 @@
 
 package org.apache.lenya.cms.ac.usecases;
 
-import java.io.File;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.lenya.ac.IPRange;
-import org.apache.lenya.ac.file.FileIPRange;
-import org.apache.lenya.ac.file.FileIPRangeManager;
-import org.apache.lenya.ac.impl.AbstractItem;
+import org.apache.lenya.ac.ItemUtil;
 import org.apache.lenya.cms.ac.usecases.IPRangeProfile.Part;
 
 /**
@@ -48,7 +45,7 @@ public class AddIPRange extends AccessControlUsecase {
             addErrorMessage("This IP range already exists.");
         }
 
-        if (!AbstractItem.isValidId(id)) {
+        if (!ItemUtil.isValidId(id)) {
             addErrorMessage("This is not a valid IP range ID.");
         }
 
@@ -59,13 +56,12 @@ public class AddIPRange extends AccessControlUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
-        File configDir = ((FileIPRangeManager) getIpRangeManager()).getConfigurationDirectory();
 
         String id = getParameterAsString(IPRangeProfile.ID);
         String name = getParameterAsString(IPRangeProfile.NAME);
         String description = getParameterAsString(IPRangeProfile.DESCRIPTION);
 
-        IPRange ipRange = new FileIPRange(configDir, id);
+        IPRange ipRange = getIpRangeManager().add(id);
         ContainerUtil.enableLogging(ipRange, getLogger());
 
         ipRange.setName(name);
@@ -92,7 +88,6 @@ public class AddIPRange extends AccessControlUsecase {
         ipRange.setSubnetMask(subnetMask.getAddress());
 
         ipRange.save();
-        getIpRangeManager().add(ipRange);
         
         setExitParameter(IPRangeProfile.ID, id);
     }

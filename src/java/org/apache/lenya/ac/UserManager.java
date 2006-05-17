@@ -40,7 +40,7 @@ public interface UserManager extends ItemManager {
     /**
      * Add the given user
      *
-     * @param user User that is to be added
+     * @param user A user.
      * @throws AccessControlException when the user is already contained.
      */
     void add(User user) throws AccessControlException;

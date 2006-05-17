@@ -24,7 +24,6 @@ import org.apache.lenya.ac.GroupManager;
 import org.apache.lenya.ac.IPRangeManager;
 import org.apache.lenya.ac.RoleManager;
 import org.apache.lenya.ac.UserManager;
-import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
 
 /**
@@ -40,7 +39,7 @@ public class AccessControlUsecase extends AbstractUsecase {
     public AccessControlUsecase() {
         super();
     }
-    
+
     private UserManager userManager;
     private GroupManager groupManager;
     private IPRangeManager ipRangeManager;
@@ -48,29 +47,27 @@ public class AccessControlUsecase extends AbstractUsecase {
     private AccessController accessController;
 
     /**
-     * Initializes the accreditable managers.
-     * FIXME: This method resolves the AccessController, it has to be released after it is used!
+     * Initializes the accreditable managers. FIXME: This method resolves the AccessController, it
+     * has to be released after it is used!
      */
     protected void initializeAccessController() {
         super.doInitialize();
-        
+
         if (getLogger().isDebugEnabled())
             getLogger().debug("initializeAccessController() called");
 
         this.accessController = null;
         ServiceSelector selector = null;
         AccessControllerResolver resolver = null;
-        
+
         try {
-            selector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE + "Selector");
-            resolver =
-                (AccessControllerResolver) selector.select(
-                    AccessControllerResolver.DEFAULT_RESOLVER);
+            selector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
+                    + "Selector");
+            resolver = (AccessControllerResolver) selector.select(AccessControllerResolver.DEFAULT_RESOLVER);
 
             this.accessController = resolver.resolveAccessController(getSourceURL());
 
-            AccreditableManager accreditableManager =
-                ((DefaultAccessController) this.accessController).getAccreditableManager();
+            AccreditableManager accreditableManager = this.accessController.getAccreditableManager();
 
             this.userManager = accreditableManager.getUserManager();
             this.groupManager = accreditableManager.getGroupManager();
@@ -89,8 +86,7 @@ public class AccessControlUsecase extends AbstractUsecase {
         }
 
     }
-    
-    
+
     /**
      * @return Returns the groupManager.
      */
@@ -100,7 +96,7 @@ public class AccessControlUsecase extends AbstractUsecase {
         }
         return this.groupManager;
     }
-    
+
     /**
      * @return Returns the ipRangeManager.
      */
@@ -110,7 +106,7 @@ public class AccessControlUsecase extends AbstractUsecase {
         }
         return this.ipRangeManager;
     }
-    
+
     /**
      * @return Returns the roleManager.
      */
@@ -120,19 +116,19 @@ public class AccessControlUsecase extends AbstractUsecase {
         }
         return this.roleManager;
     }
-    
+
     /**
      * @return Returns the userManager.
      */
     protected UserManager getUserManager() {
         if (this.userManager == null) {
             if (getLogger().isDebugEnabled())
-               getLogger().debug("getUserManager() accessed, is null, so calling initializeAccessController");
+                getLogger().debug("getUserManager() accessed, is null, so calling initializeAccessController");
             initializeAccessController();
         }
         return this.userManager;
     }
-    
+
     /**
      * @return Returns the accessController.
      */

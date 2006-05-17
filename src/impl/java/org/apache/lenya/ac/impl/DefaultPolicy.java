@@ -28,14 +28,15 @@ import java.util.Set;
 
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
+import org.apache.lenya.ac.Credential;
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.ac.Policy;
+import org.apache.lenya.ac.ModifiablePolicy;
 import org.apache.lenya.ac.Role;
 
 /**
  * A DefaultPolicy is the own policy of a certain URL (not merged).
  */
-public class DefaultPolicy implements Policy {
+public class DefaultPolicy implements ModifiablePolicy {
 
     private Map accreditableToCredential = new HashMap();
 
@@ -60,9 +61,9 @@ public class DefaultPolicy implements Policy {
         assert accreditable != null;
         assert role != null;
 
-        Credential credential = getCredential(accreditable);
+        CredentialImpl credential = (CredentialImpl) getCredential(accreditable);
         if (credential == null) {
-            credential = new Credential(accreditable);
+            credential = new CredentialImpl(accreditable);
             addCredential(credential);
         }
         if (!credential.contains(role)) {
@@ -79,7 +80,7 @@ public class DefaultPolicy implements Policy {
     public void removeRole(Accreditable accreditable, Role role) throws AccessControlException {
         assert accreditable != null;
         assert role != null;
-        Credential credential = getCredential(accreditable);
+        CredentialImpl credential = (CredentialImpl) getCredential(accreditable);
         if (credential == null) {
             throw new AccessControlException("No credential for accreditable [" + accreditable
                     + "] [" + this.accreditableToCredential.keySet().size() + "]");

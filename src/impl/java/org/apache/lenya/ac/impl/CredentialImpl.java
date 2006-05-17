@@ -19,18 +19,17 @@
 
 package org.apache.lenya.ac.impl;
 
-
 import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.lenya.ac.Accreditable;
+import org.apache.lenya.ac.Credential;
 import org.apache.lenya.ac.Role;
 
-
 /**
- * A credential assigns a set of {@link Role}s to an {@link Accreditable}.
+ * Credential implementation.
  */
-public class Credential {
+public class CredentialImpl implements Credential {
     private Accreditable accreditable;
     private Set roles = new HashSet();
 
@@ -38,7 +37,7 @@ public class Credential {
      * Creates a new credential object.
      * @param _accreditable The accreditable.
      */
-    public Credential(Accreditable _accreditable) {
+    public CredentialImpl(Accreditable _accreditable) {
         setAccreditable(_accreditable);
     }
 
@@ -93,7 +92,7 @@ public class Credential {
     public String toString() {
         return "[credential of: " + getAccreditable() + "]";
     }
-    
+
     /**
      * Returns if a role is contained.
      * @param role A role.
@@ -102,12 +101,12 @@ public class Credential {
     public boolean contains(Role role) {
         return this.roles.contains(role);
     }
-    
+
     /**
      * Returns if the credential is empty (contains no roles).
      * @return A boolean value.
      */
     public boolean isEmpty() {
-    	return this.roles.isEmpty();
+        return this.roles.isEmpty();
     }
 }

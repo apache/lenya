@@ -32,7 +32,6 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
-import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.cache.CachingException;
 import org.apache.lenya.ac.cache.SourceCache;
@@ -68,6 +67,7 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
      * ...?
      * 
      * @param publication The publication.
+     * @param requestURI The request URI.
      * @return A string representing a URI.
      */
     protected String getConfigurationURI(Publication publication, String requestURI) {

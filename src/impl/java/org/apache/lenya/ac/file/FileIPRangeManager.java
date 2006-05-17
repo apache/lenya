@@ -91,13 +91,10 @@ public class FileIPRangeManager extends FileItemManager implements IPRangeManage
         return ranges;
     }
 
-    /**
-     * Add the given IP range
-     * @param range IP range that is to be added
-     * @throws AccessControlException when the notification failed.
-     */
-    public void add(IPRange range) throws AccessControlException {
+    public IPRange add(String id) throws AccessControlException {
+        IPRange range = new FileIPRange(getConfigurationDirectory(), id);
         super.add(range);
+        return range;
     }
 
     /**

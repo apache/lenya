@@ -14,21 +14,28 @@
  *  limitations under the License.
  *
  */
-
-/* $Id$  */
-
 package org.apache.lenya.ac;
 
-
 /**
- * An Accreditable can be accredited with roles on a certain URI
- * using a {@link org.apache.lenya.ac.Credential}.
+ * A credential assigns a set of {@link Role}s to an {@link Accreditable}.
  */
-public interface Accreditable {
+public interface Credential {
+
     /**
-     * Returns the set of accreditables of this accreditable.
-     * The set contains the accreditable itself and all collections it belongs to.
-     * @return An array of accreditables.
+     * @return The accreditable this credential applies to.
      */
-    Accreditable[] getAccreditables();
+    Accreditable getAccreditable();
+
+    /**
+     * @return The roles of this credential.
+     */
+    Role[] getRoles();
+
+    /**
+     * Returns if the credential contains a certain role.
+     * @param role A role.
+     * @return A boolean value.
+     */
+    boolean contains(Role role);
+
 }

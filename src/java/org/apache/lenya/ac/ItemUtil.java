@@ -14,21 +14,20 @@
  *  limitations under the License.
  *
  */
-
-/* $Id$  */
-
 package org.apache.lenya.ac;
 
-
 /**
- * An Accreditable can be accredited with roles on a certain URI
- * using a {@link org.apache.lenya.ac.Credential}.
+ * Utility class for access control items.
  */
-public interface Accreditable {
+public class ItemUtil {
+
     /**
-     * Returns the set of accreditables of this accreditable.
-     * The set contains the accreditable itself and all collections it belongs to.
-     * @return An array of accreditables.
+     * Checks if a string is a valid ID.
+     * @param id The string to test.
+     * @return A boolean value.
      */
-    Accreditable[] getAccreditables();
+    public static boolean isValidId(String id) {
+        return id != null && id.matches("\\w+");
+    }
+
 }

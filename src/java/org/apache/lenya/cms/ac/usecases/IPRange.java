@@ -19,7 +19,7 @@ package org.apache.lenya.cms.ac.usecases;
 /**
  * Show information about an IP range.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class IPRange extends AccessControlUsecase {
 

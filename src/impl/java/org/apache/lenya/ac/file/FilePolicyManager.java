@@ -42,14 +42,15 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.AccreditableManager;
+import org.apache.lenya.ac.ModifiablePolicy;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.cache.CachingException;
 import org.apache.lenya.ac.cache.SourceCache;
-import org.apache.lenya.ac.impl.Credential;
+import org.apache.lenya.ac.Credential;
 import org.apache.lenya.ac.impl.DefaultPolicy;
-import org.apache.lenya.ac.impl.InheritingPolicyManager;
+import org.apache.lenya.ac.InheritingPolicyManager;
 import org.apache.lenya.ac.impl.PolicyBuilder;
 import org.apache.lenya.ac.impl.RemovedAccreditablePolicyBuilder;
 import org.apache.lenya.ac.impl.URLPolicy;
@@ -76,8 +77,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
          * @see java.io.FileFilter#accept(java.io.File)
          */
         public boolean accept(File file) {
-            return file.getName().equals(this.subtree)
-                    || file.getName().equals(this.url);
+            return file.getName().equals(this.subtree) || file.getName().equals(this.url);
         }
     }
 
@@ -94,7 +94,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
      * Creates a new FilePolicyManager.
      */
     public FilePolicyManager() {
-	    // do nothing
+        // do nothing
     }
 
     /**
@@ -119,7 +119,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
      * @return A policy.
      * @throws AccessControlException when something went wrong.
      */
-    public DefaultPolicy buildURLPolicy(AccreditableManager controller, String url)
+    public Policy buildURLPolicy(AccreditableManager controller, String url)
             throws AccessControlException {
         return buildPolicy(controller, url, URL_FILENAME);
     }
@@ -132,7 +132,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
      * @return A policy.
      * @throws AccessControlException when something went wrong.
      */
-    public DefaultPolicy buildSubtreePolicy(AccreditableManager controller, String url)
+    public Policy buildSubtreePolicy(AccreditableManager controller, String url)
             throws AccessControlException {
         return buildPolicy(controller, url, SUBTREE_FILENAME);
     }
@@ -221,7 +221,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
      * @param policy The policy to save.
      * @throws AccessControlException when something went wrong.
      */
-    public void saveURLPolicy(String url, DefaultPolicy policy) throws AccessControlException {
+    public void saveURLPolicy(String url, Policy policy) throws AccessControlException {
         getLogger().debug("Saving URL policy for URL [" + url + "]");
         savePolicy(url, policy, URL_FILENAME);
     }
@@ -232,7 +232,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
      * @param policy The policy to save.
      * @throws AccessControlException when something went wrong.
      */
-    public void saveSubtreePolicy(String url, DefaultPolicy policy) throws AccessControlException {
+    public void saveSubtreePolicy(String url, Policy policy) throws AccessControlException {
         getLogger().debug("Saving subtree policy for URL [" + url + "]");
         savePolicy(url, policy, SUBTREE_FILENAME);
     }
@@ -244,7 +244,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
      * @param filename The file.
      * @throws AccessControlException if something goes wrong.
      */
-    protected void savePolicy(String url, DefaultPolicy policy, String filename)
+    protected void savePolicy(String url, Policy policy, String filename)
             throws AccessControlException {
 
         File file = getPolicyFile(url, filename);
@@ -257,7 +257,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
      * @param file The file.
      * @throws AccessControlException when an error occurs.
      */
-    protected void savePolicy(DefaultPolicy policy, File file) throws AccessControlException {
+    protected void savePolicy(Policy policy, File file) throws AccessControlException {
         Document document = PolicyBuilder.savePolicy(policy);
 
         try {
@@ -330,8 +330,8 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
                 }
             }
 
-            getLogger().debug(
-                    "Policies directory resolved to [" + directory.getAbsolutePath() + "]");
+            getLogger().debug("Policies directory resolved to [" + directory.getAbsolutePath()
+                    + "]");
             setPoliciesDirectory(directory);
         }
 
@@ -361,10 +361,10 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
     }
 
     /**
-     * @see org.apache.lenya.ac.impl.InheritingPolicyManager#getPolicies(org.apache.lenya.ac.AccreditableManager,
+     * @see org.apache.lenya.ac.InheritingPolicyManager#getPolicies(org.apache.lenya.ac.AccreditableManager,
      *      java.lang.String)
      */
-    public DefaultPolicy[] getPolicies(AccreditableManager controller, String url)
+    public Policy[] getPolicies(AccreditableManager controller, String url)
             throws AccessControlException {
 
         List policies = new ArrayList();
@@ -372,18 +372,18 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
         Policy policy = buildURLPolicy(controller, url);
         policies.add(policy);
 
-        //The live area should be restrictive and will use the policy belonging to self-or-ancestor
+        // The live area should be restrictive and will use the policy belonging to self-or-ancestor
         if (url.startsWith("/live")) {
             while (url.indexOf("/") >= 0) {
-                policy = buildSubtreePolicy(controller, url+"/");
+                policy = buildSubtreePolicy(controller, url + "/");
                 policies.add(policy);
-                if(!policy.isEmpty()) {
-                    url="";
+                if (!policy.isEmpty()) {
+                    url = "";
                 } else {
-                    url=url.replaceFirst("/[\\w\\-\\.\\_\\~]*$","");
+                    url = url.replaceFirst("/[\\w\\-\\.\\_\\~]*$", "");
                 }
             }
-        } else { 
+        } else {
             String[] directories = url.split("/");
             url = "";
 
@@ -420,7 +420,8 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
     protected void removeAccreditable(AccreditableManager manager, Accreditable accreditable,
             File policyDirectory) throws AccessControlException {
 
-        File[] policyFiles = policyDirectory.listFiles(new SubtreeFileFilter(URL_FILENAME, SUBTREE_FILENAME));
+        File[] policyFiles = policyDirectory.listFiles(new SubtreeFileFilter(URL_FILENAME,
+                SUBTREE_FILENAME));
 
         try {
             RemovedAccreditablePolicyBuilder builder = new RemovedAccreditablePolicyBuilder(manager);
@@ -430,12 +431,12 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("Removing roles");
                     getLogger().debug("    Accreditable: [" + accreditable + "]");
-                    getLogger().debug(
-                            "    File:         [" + policyFiles[i].getAbsolutePath() + "]");
+                    getLogger().debug("    File:         [" + policyFiles[i].getAbsolutePath()
+                            + "]");
                 }
 
                 InputStream stream = new FileInputStream(policyFiles[i]);
-                DefaultPolicy policy = builder.buildPolicy(stream);
+                ModifiablePolicy policy = builder.buildPolicy(stream);
                 policy.removeRoles(accreditable);
                 savePolicy(policy, policyFiles[i]);
             }
@@ -470,7 +471,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
             Role role = URLPolicy.getAuthorRole(manager);
             if (role != null) {
                 String url = USER_ADMIN_URL + ((User) accreditable).getId() + ".html";
-                DefaultPolicy policy = buildSubtreePolicy(manager, url);
+                DefaultPolicy policy = (DefaultPolicy) buildSubtreePolicy(manager, url);
                 Credential credential = policy.getCredential(accreditable);
                 if (credential != null && credential.contains(role)) {
                     policy.removeRole(accreditable, role);
@@ -500,7 +501,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
             Role role = URLPolicy.getAuthorRole(manager);
             if (role != null) {
                 String url = USER_ADMIN_URL + ((User) accreditable).getId() + ".html";
-                DefaultPolicy policy = buildSubtreePolicy(manager, url);
+                ModifiablePolicy policy = (ModifiablePolicy) buildSubtreePolicy(manager, url);
                 policy.addRole(accreditable, role);
                 saveSubtreePolicy(url, policy);
             }

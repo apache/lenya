@@ -19,6 +19,7 @@ package org.apache.lenya.ac.impl;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.ac.Item;
+import org.apache.lenya.ac.ItemUtil;
 
 /**
  * Abstract superclass for all access control objects that can be managed by an
@@ -43,7 +44,7 @@ public abstract class AbstractItem extends AbstractLogEnabled implements Item, C
      * @param string The ID.
      */
     protected void setId(String string) {
-        assert isValidId(string);
+        assert ItemUtil.isValidId(string);
         this.id = string;
     }
 
@@ -95,15 +96,6 @@ public abstract class AbstractItem extends AbstractLogEnabled implements Item, C
     public void setName(String _name) {
         assert _name != null;
         this.name = _name;
-    }
-
-    /**
-     * Checks if a string is a valid ID.
-     * @param id The string to test.
-     * @return A boolean value.
-     */
-    public static boolean isValidId(String id) {
-        return id != null && id.matches("\\w+");
     }
 
     /**

@@ -24,6 +24,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.Credential;
+import org.apache.lenya.ac.InheritingPolicyManager;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.cms.publication.Publication;
@@ -74,14 +76,14 @@ public class PolicyTest extends AccessControlTest {
      */
     public void testSavePolicy() throws AccessControlException {
         InheritingPolicyManager policyManager = (InheritingPolicyManager) getPolicyManager();
-        DefaultPolicy urlPolicy = policyManager.buildURLPolicy(getAccessController().getAccreditableManager(),
+        DefaultPolicy urlPolicy = (DefaultPolicy) policyManager.buildURLPolicy(getAccessController().getAccreditableManager(),
                 URL);
         DefaultPolicy newPolicy = new DefaultPolicy();
 
         Credential[] credentials = urlPolicy.getCredentials();
 
         for (int i = 0; i < credentials.length; i++) {
-            Credential credential = new Credential(credentials[i].getAccreditable());
+            CredentialImpl credential = new CredentialImpl(credentials[i].getAccreditable());
             Role[] roles = credentials[i].getRoles();
 
             for (int j = 0; j < roles.length; j++) {
@@ -95,14 +97,14 @@ public class PolicyTest extends AccessControlTest {
 
         policyManager.saveURLPolicy(SAVE_URL, newPolicy);
 
-        newPolicy = policyManager.buildURLPolicy(getAccessController().getAccreditableManager(),
+        newPolicy = (DefaultPolicy) policyManager.buildURLPolicy(getAccessController().getAccreditableManager(),
                 SAVE_URL);
         assertEquals(urlPolicy.getCredentials().length, newPolicy.getCredentials().length);
 
         Credential[] newCredentials = newPolicy.getCredentials();
 
         for (int i = 0; i < credentials.length; i++) {
-            Credential credential = new Credential(credentials[i].getAccreditable());
+            Credential credential = new CredentialImpl(credentials[i].getAccreditable());
 
             Credential newCredential = null;
 

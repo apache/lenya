@@ -19,7 +19,7 @@ package org.apache.lenya.cms.ac.usecases;
 /**
  * Display user information.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class User extends AccessControlUsecase {
 

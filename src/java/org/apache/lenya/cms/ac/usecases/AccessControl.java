@@ -37,10 +37,9 @@ import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
-import org.apache.lenya.ac.impl.Credential;
-import org.apache.lenya.ac.impl.DefaultAccessController;
-import org.apache.lenya.ac.impl.DefaultPolicy;
-import org.apache.lenya.ac.impl.InheritingPolicyManager;
+import org.apache.lenya.ac.Credential;
+import org.apache.lenya.ac.ModifiablePolicy;
+import org.apache.lenya.ac.InheritingPolicyManager;
 
 /**
  * Usecase to display the AccessControl tab in the site area for a document. This is a mix-in class
@@ -288,7 +287,7 @@ public class AccessControl extends AccessControlUsecase {
      */
     protected void setSSLProtected(boolean ssl) throws ProcessingException {
         try {
-            DefaultPolicy policy = getPolicyManager().buildSubtreePolicy(getAccreditableManager(),
+            ModifiablePolicy policy = (ModifiablePolicy) getPolicyManager().buildSubtreePolicy(getAccreditableManager(),
                     getPolicyURL());
             policy.setSSL(ssl);
             getPolicyManager().saveSubtreePolicy(getPolicyURL(), policy);
@@ -298,12 +297,11 @@ public class AccessControl extends AccessControlUsecase {
     }
 
     protected InheritingPolicyManager getPolicyManager() {
-        return (InheritingPolicyManager) ((DefaultAccessController) getAccessController())
-                .getPolicyManager();
+        return (InheritingPolicyManager) getAccessController().getPolicyManager();
     }
 
     protected AccreditableManager getAccreditableManager() {
-        return ((DefaultAccessController) getAccessController()).getAccreditableManager();
+        return getAccessController().getAccreditableManager();
     }
 
     /**
@@ -317,7 +315,7 @@ public class AccessControl extends AccessControlUsecase {
             throws ProcessingException {
 
         try {
-            DefaultPolicy policy = getPolicyManager().buildSubtreePolicy(getAccreditableManager(),
+            ModifiablePolicy policy = (ModifiablePolicy) getPolicyManager().buildSubtreePolicy(getAccreditableManager(),
                     getPolicyURL());
             Accreditable accreditable = (Accreditable) item;
 
@@ -364,7 +362,7 @@ public class AccessControl extends AccessControlUsecase {
 
         List credentials = new ArrayList();
 
-        DefaultPolicy policies[] = getPolicies(urlOnly);
+        ModifiablePolicy policies[] = getPolicies(urlOnly);
         List policyCredentials = new ArrayList();
         for (int i = 0; i < policies.length; i++) {
             Credential[] creds = policies[i].getCredentials();
@@ -390,15 +388,16 @@ public class AccessControl extends AccessControlUsecase {
      * @return An array of DefaultPolicy objects.
      * @throws ProcessingException when something went wrong.
      */
-    protected DefaultPolicy[] getPolicies(boolean onlyUrl) throws ProcessingException {
+    protected ModifiablePolicy[] getPolicies(boolean onlyUrl) throws ProcessingException {
 
-        DefaultPolicy[] policies;
+        ModifiablePolicy[] policies;
 
         try {
             if (onlyUrl) {
-                policies = new DefaultPolicy[1];
+                policies = new ModifiablePolicy[1];
                 AccreditableManager policyManager = getAccreditableManager();
-                policies[0] = getPolicyManager().buildSubtreePolicy(policyManager, getPolicyURL());
+                policies[0] = (ModifiablePolicy) getPolicyManager().buildSubtreePolicy(policyManager,
+                        getPolicyURL());
             } else {
                 String ancestorUrl = "";
 
@@ -411,7 +410,12 @@ public class AccessControl extends AccessControlUsecase {
                 if (lastSlashIndex != -1) {
                     ancestorUrl = currentUrl.substring(0, lastSlashIndex);
                 }
-                policies = getPolicyManager().getPolicies(getAccreditableManager(), ancestorUrl);
+                Policy[] pArray = getPolicyManager().getPolicies(getAccreditableManager(),
+                        ancestorUrl);
+                policies = new ModifiablePolicy[pArray.length];
+                for (int i = 0; i < pArray.length; i++) {
+                    policies[i] = (ModifiablePolicy) pArray[i];
+                }
             }
         } catch (AccessControlException e) {
             throw new ProcessingException(e);
