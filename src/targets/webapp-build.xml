@@ -121,7 +121,7 @@
     <antcall target="compile-src">
       <param name="compile.src.dir" value="${src.java.api.dir}"/>
       <param name="compile.dest.dir" value="${build.dir}/api"/>
-      <param name="compile.classpath" refid="classpath"/>
+      <param name="compile.classpath" value="classpath"/>
       <param name="jar.name" value="api"/>
     </antcall>
     
