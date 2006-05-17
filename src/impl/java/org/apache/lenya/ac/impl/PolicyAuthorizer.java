@@ -18,8 +18,6 @@
 package org.apache.lenya.ac.impl;
 
 import java.util.Arrays;
-import java.util.Enumeration;
-import java.util.List;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.cocoon.environment.Request;
@@ -125,33 +123,9 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
             rolesString += " " + roles[i];
         }
         getLogger().debug("Adding roles [" + rolesString + " ] to request [" + request + "]");
-        request.setAttribute(AbstractRole.class.getName(), Arrays.asList(roles));
+        request.setAttribute(Role.class.getName(), Arrays.asList(roles));
     }
     
-    /**
-     * Fetches the stored roles from the request.
-     * @param request The request.
-     * @return A role array.
-     * @throws AccessControlException If the request does not contain the roles list.
-     */
-    public static Role[] getRoles(Request request) throws AccessControlException {
-        List roleList = (List) request.getAttribute(AbstractRole.class.getName());
-
-        if (roleList == null) {
-            StringBuffer buf = new StringBuffer();
-            buf.append("    URI: [" + request.getRequestURI() + "]\n");
-            for (Enumeration e = request.getParameterNames(); e.hasMoreElements(); ) {
-                String key = (String) e.nextElement();
-                buf.append("    Parameter: [" + key + "] = [" + request.getParameter(key) + "]\n");
-            }
-            
-            throw new AccessControlException("Request [" + request + "] does not contain roles: \n" + buf.toString());
-        }
-        
-        Role[] roles = (Role[]) roleList.toArray(new Role[roleList.size()]);
-        return roles;
-    }
-
     protected boolean authorize(Request request, String webappUrl) throws AccessControlException {
         Session session = request.getSession(true);
         Identity identity = (Identity) session.getAttribute(Identity.class.getName());

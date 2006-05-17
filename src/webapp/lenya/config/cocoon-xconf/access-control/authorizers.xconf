@@ -26,7 +26,7 @@
         class="org.apache.lenya.ac.impl.PolicyAuthorizer"
         logger="lenya.ac.authorizer.policy"/>
       <component-instance name="usecase"
-        class="org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer"
+        class="org.apache.lenya.cms.ac.usecase.UsecaseAuthorizerImpl"
         logger="lenya.ac.authorizer.usecase"/>
     </authorizers>
   </xconf>

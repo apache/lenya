@@ -22,39 +22,53 @@
   <description>
     Compilation Targets
   </description>
+  
+  <target name="compile-src">
+    
+    <property name="compile.src.dir" value=""/>
+    <property name="compile.dest.dir" value=""/>
 
-  <!-- The main compilation target -->
-  <!-- Compile the core Lenya classes plus the assembled publication classes -->
-  <target name="compile" depends="prepare-src"
-          description="Compile the sources">
+    <!-- DEBUG classpath -->
+    <!--
+      <property name="classpath.compile" refid="classpath"/>
+      <echo>CLASSPATH : ${classpath.compile}</echo>
+    -->
 
-<!-- DEBUG classpath -->
-<!--
-    <property name="classpath.compile" refid="classpath"/>
-    <echo>CLASSPATH : ${classpath.compile}</echo>
--->
-
-    <mkdir dir="${build.webapp}/WEB-INF/classes"/>
-    <javac destdir="${build.webapp}/WEB-INF/classes"
-           debug="${debug}"
-           optimize="${optimize}"
-           deprecation="${deprecation}"
-           target="${target.vm}"
-           nowarn="${nowarn}"
-           source="1.4">
-      <src path="${java.dir}"/>
-      <src path="${build.java.src}"/>
+    <mkdir dir="${compile.dest.dir}"/>
+    
+    <!--  copy properties, xml configuration files and roles -->
+    <copy todir="${compile.dest.dir}">
+      <fileset dir="${compile.src.dir}">
+        <include name="**/*.properties"/>
+        <include name="**/*.roles"/>
+        <include name="**/*.xml"/>
+        <include name="**/*.rng"/>
+      </fileset>
+    </copy>
+    
+    <javac destdir="${compile.dest.dir}"
+      debug="${debug}"
+      optimize="${optimize}"
+      deprecation="${deprecation}"
+      target="${target.vm}"
+      nowarn="${nowarn}"
+      source="1.4">
+      <src path="${compile.src.dir}"/>
       <classpath refid="classpath"/>
     </javac>
   </target>
 
-	<!-- package lenya -->
-	  <target name="package" depends="compile">
-	    <jar jarfile="${build.dir}/${fullname}.jar" index="true">
-	      <fileset dir="${build.webapp}/WEB-INF/classes">
-	         <exclude name="**/Manifest.mf"/>
-	      </fileset>
-	    </jar>
-	  </target>
 
+  <!-- Generate and deploy JAR file -->
+  <target name="package">
+    <property name="compile.dest.dir" value=""/>
+    <property name="jar.name" value=""/>
+    <jar jarfile="${build.webapp}/WEB-INF/lib/${fullname}-${jar.name}.jar" index="true">
+      <fileset dir="${compile.dest.dir}">
+        <exclude name="**/Manifest.mf"/>
+      </fileset>
+    </jar>
+  </target>
+  
+  
 </project>

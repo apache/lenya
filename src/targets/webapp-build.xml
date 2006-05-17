@@ -32,7 +32,7 @@
   in the server.xml configuration is set to true so changes in the classes
   are reflected immediately.
   -->
-  <target name="webapp" depends="compile" 
+  <target name="webapp" depends="prepare-src"
       description="Builds the webapp directory ready to be linked into a servlet engines context directory">  
     <!--
     Copy CMS files and overwrite some parts of the previously copied cocoon webapp package with our customized files
@@ -64,19 +64,6 @@
       <fileset includes="config/lenya-roles/**.xroles"/>
       <fileset includes="*/config/lenya-roles/**.xroles"/>
     </bulkCopy>
-    
-    <!--  copy properties, xml configuration files and roles -->
-    <copy todir="${build.webapp}/WEB-INF/classes">
-      <fileset dir="${build.java.src}">
-        <include name="**/*.properties"/>
-        <include name="**/*.roles"/>
-        <include name="**/*.xml"/>
-        <include name="**/*.rng"/>
-      </fileset>
-      <fileset dir="${java.dir}">
-        <include name="**/*.roles"/>
-      </fileset>
-    </copy>
     
     <!-- copy patch files -->
     <copy todir="${build.patch}" flatten="false">
@@ -130,8 +117,19 @@
       </fileset>
     </delete>
 
-    <antcall target="deploy-modules"/>
+    <!-- compile and deploy API -->    
+    <antcall target="compile-src">
+      <param name="compile.name" value="api"/>
+      <param name="compile.src.dir" value="${src.java.api.dir}"/>
+      <param name="compile.dest.dir" value="${build.dir}/api"/>
+    </antcall>
+    <antcall target="package">
+      <param name="compile.dest.dir" value="${build.dir}/api"/>
+      <param name="jar.name" value="api"/>
+    </antcall>
     
+    <antcall target="deploy-modules"/>
+
     <!-- Patch sitemap.xmap -->
     <xpatch file="${build.webapp}/sitemap.xmap"
       srcdir="${build.patch}/sitemap" 
@@ -149,12 +147,46 @@
       includes="**/*.xconf"
       excludes="prepare/*.xconf"
       addComments="false"/>
+
+    <!-- compile and package modules -->
+    <antcall target="compile-src">
+      <param name="compile.src.dir" value="${build.dir}/java/modules"/>
+      <param name="compile.dest.dir" value="${build.dir}/modules"/>
+    </antcall>
+    <antcall target="package">
+      <param name="compile.dest.dir" value="${build.dir}/modules"/>
+      <param name="jar.name" value="modules"/>
+    </antcall>
+
+    <!-- compile and package publications -->
+    <antcall target="compile-src">
+      <param name="compile.src.dir" value="${build.dir}/java/pubs"/>
+      <param name="compile.dest.dir" value="${build.dir}/pubs"/>
+    </antcall>
+    <antcall target="package">
+      <param name="compile.dest.dir" value="${build.dir}/pubs"/>
+      <param name="jar.name" value="pubs"/>
+    </antcall>
+    
+    <!-- compile core implementation -->
+    <antcall target="compile-src">
+      <param name="compile.src.dir" value="${src.java.impl.dir}"/>
+      <param name="compile.dest.dir" value="${build.dir}/impl"/>
+    </antcall>
     
     <!-- Patch lenya.roles -->
-    <xpatch file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles"
+    <xpatch file="${build.dir}/impl/org/apache/lenya/lenya.roles"
       srcdir="${build.patch}/lenya-roles"
       includes="**/*.xroles"
       addComments="false"/>
+    <copy todir="${build.webapp}/WEB-INF/classes/org/apache/lenya"
+      file="${build.dir}/impl/org/apache/lenya/lenya.roles"/>
+      
+    <!-- deploy implementation -->
+    <antcall target="package">
+      <param name="compile.dest.dir" value="${build.dir}/impl"/>
+      <param name="jar.name" value="impl"/>
+    </antcall>
     
     <!-- Copy database files to ${build.webapp}/WEB-INF/db -->
     <copy todir="${build.webapp}/WEB-INF/db">
@@ -185,13 +217,6 @@
 
   </target>
 
-  <!-- Copy lenya.roles -->
-  <target name="copy-lenya.roles" if="lenya.roles.copy">
-    <copy
-      file="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles.ant_patch"
-      toFile="${build.webapp}/WEB-INF/classes/org/apache/lenya/lenya.roles"
-      overwrite="true"/>
-  </target>
   
   <!--
   The war target just packs up what was created in the webapp target

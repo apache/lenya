@@ -32,11 +32,8 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.AccreditableManager;
-import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
-import org.apache.lenya.ac.impl.DefaultAccessController;
-import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -129,17 +126,8 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
             }
             String webappUrl = ServletHelper.getWebappURI(_request);
             AccessController accessController = this.acResolver.resolveAccessController(webappUrl);
-            if (accessController instanceof DefaultAccessController) {
-                DefaultAccessController defaultAccessController = (DefaultAccessController) accessController;
-                this.accreditableManager = defaultAccessController.getAccreditableManager();
-                Authorizer[] authorizers = defaultAccessController.getAuthorizers();
-                for (int i = 0; i < authorizers.length; i++) {
-                    if (authorizers[i] instanceof PolicyAuthorizer) {
-                        PolicyAuthorizer policyAuthorizer = (PolicyAuthorizer) authorizers[i];
-                        this.policyManager = policyAuthorizer.getPolicyManager();
-                    }
-                }
-            }
+            this.accreditableManager = accessController.getAccreditableManager();
+            this.policyManager = accessController.getPolicyManager();
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("    Using policy manager [" + this.policyManager + "]");
             }
@@ -331,7 +319,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
         } else {
             rewrittenURL = proxy.getURL(targetDocument);
         }
-        
+
         int lastDotIndex = rewrittenURL.lastIndexOf(".");
         if (lastDotIndex > -1) {
             rewrittenURL = rewrittenURL.substring(0, lastDotIndex) + extension;

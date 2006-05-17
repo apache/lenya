@@ -36,13 +36,10 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.AccreditableManager;
-import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.Role;
-import org.apache.lenya.ac.impl.DefaultAccessController;
-import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.site.tree.DefaultSiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNodeImpl;
 import org.apache.lenya.util.ServletHelper;
@@ -51,14 +48,10 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
 /**
- * This transformer is applied to the sitetree.
- * It marks the site element and all node elements the
- * current identity is not allowed to access 
- * with a <code>protected="true"</code> attribute.
+ * This transformer is applied to the sitetree. It marks the site element and all node elements the
+ * current identity is not allowed to access with a <code>protected="true"</code> attribute.
  */
-public class AccessControlSitetreeTransformer
-    extends AbstractSAXTransformer
-    implements Disposable {
+public class AccessControlSitetreeTransformer extends AbstractSAXTransformer implements Disposable {
 
     /**
      * <code>ATTRIBUTE_PROTECTED</code> The attribute for protected
@@ -82,10 +75,11 @@ public class AccessControlSitetreeTransformer
     private String urlPrefix;
 
     /**
-     * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
+     * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
+     *      java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
     public void setup(SourceResolver _resolver, Map _objectModel, String src, Parameters par)
-        throws ProcessingException, SAXException, IOException {
+            throws ProcessingException, SAXException, IOException {
         super.setup(_resolver, _objectModel, src, par);
 
         this.serviceSelector = null;
@@ -109,12 +103,10 @@ public class AccessControlSitetreeTransformer
 
             Request _request = ObjectModelHelper.getRequest(_objectModel);
 
-            this.serviceSelector =
-                (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE + "Selector");
+            this.serviceSelector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
+                    + "Selector");
 
-            this.acResolver =
-                (AccessControllerResolver) this.serviceSelector.select(
-                    AccessControllerResolver.DEFAULT_RESOLVER);
+            this.acResolver = (AccessControllerResolver) this.serviceSelector.select(AccessControllerResolver.DEFAULT_RESOLVER);
 
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("    Resolved AC resolver [" + this.acResolver + "]");
@@ -122,21 +114,8 @@ public class AccessControlSitetreeTransformer
 
             String webappUrl = ServletHelper.getWebappURI(_request);
             AccessController accessController = this.acResolver.resolveAccessController(webappUrl);
-
-            if (accessController instanceof DefaultAccessController) {
-                DefaultAccessController defaultAccessController =
-                    (DefaultAccessController) accessController;
-
-                this.accreditableManager = defaultAccessController.getAccreditableManager();
-
-                Authorizer[] authorizers = defaultAccessController.getAuthorizers();
-                for (int i = 0; i < authorizers.length; i++) {
-                    if (authorizers[i] instanceof PolicyAuthorizer) {
-                        PolicyAuthorizer policyAuthorizer = (PolicyAuthorizer) authorizers[i];
-                        this.policyManager = policyAuthorizer.getPolicyManager();
-                    }
-                }
-            }
+            this.accreditableManager = accessController.getAccreditableManager();
+            this.policyManager = accessController.getPolicyManager();
 
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("    Using policy manager [" + this.policyManager + "]");
@@ -174,19 +153,21 @@ public class AccessControlSitetreeTransformer
         this.documentId = "";
     }
 
-    /** (non-Javadoc)
-     * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String, java.lang.String, org.xml.sax.Attributes)
+    /**
+     * (non-Javadoc)
+     * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String,
+     *      java.lang.String, org.xml.sax.Attributes)
      */
     public void startElement(String uri, String localName, String raw, Attributes attr)
-        throws SAXException {
+            throws SAXException {
 
         Attributes attributes = attr;
 
         if (isFragmentNode(uri, localName)) {
             String area = attr.getValue("area"); // FIXME: don't hardcode
             String base = attr.getValue("base");
-            if (area!=null && base!=null) {
-                this.documentId = "/"+area+base;
+            if (area != null && base != null) {
+                this.documentId = "/" + area + base;
             }
         }
         if (isNode(uri, localName)) {
@@ -212,12 +193,11 @@ public class AccessControlSitetreeTransformer
                     getLogger().debug("    Adding attribute [protected='true']");
 
                     AttributesImpl attributesImpl = new AttributesImpl(attributes);
-                    attributesImpl.addAttribute(
-                        "",
-                        ATTRIBUTE_PROTECTED,
-                        ATTRIBUTE_PROTECTED,
-                        "",
-                        Boolean.toString(true));
+                    attributesImpl.addAttribute("",
+                            ATTRIBUTE_PROTECTED,
+                            ATTRIBUTE_PROTECTED,
+                            "",
+                            Boolean.toString(true));
                     attributes = attributesImpl;
                 }
             } catch (AccessControlException e) {
@@ -229,7 +209,8 @@ public class AccessControlSitetreeTransformer
     }
 
     /**
-     * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String, java.lang.String)
+     * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String,
+     *      java.lang.String)
      */
     public void endElement(String uri, String localName, String raw) throws SAXException {
         super.endElement(uri, localName, raw);
@@ -246,18 +227,17 @@ public class AccessControlSitetreeTransformer
      */
     protected boolean isNode(String uri, String localName) {
         return uri.equals(DefaultSiteTree.NAMESPACE_URI)
-            && (localName.equals(SiteTreeNodeImpl.NODE_NAME) || localName.equals("site"));
+                && (localName.equals(SiteTreeNodeImpl.NODE_NAME) || localName.equals("site"));
     }
 
-   /**
+    /**
      * Returns if an element represents a fragment node.
      * @param uri The namespace URI.
      * @param localName The local name.
      * @return A boolean value.
      */
     protected boolean isFragmentNode(String uri, String localName) {
-        return uri.equals(DefaultSiteTree.NAMESPACE_URI)
-            && (localName.equals("fragment"));
+        return uri.equals(DefaultSiteTree.NAMESPACE_URI) && (localName.equals("fragment"));
     }
 
 }

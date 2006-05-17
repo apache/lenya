@@ -64,4 +64,21 @@ public interface AccessController extends Component {
      */
     void setupIdentity(Request request) throws AccessControlException;
 
+    /**
+     * Returns the accreditable manager.
+     * @return An accreditable manager.
+     */
+    AccreditableManager getAccreditableManager();
+
+    /**
+     * Returns the policy manager.
+     * @return A policy manager.
+     */
+    PolicyManager getPolicyManager();
+    
+    /**
+     * @return The authorizers.
+     */
+    Authorizer[] getAuthorizers();
+    
 }

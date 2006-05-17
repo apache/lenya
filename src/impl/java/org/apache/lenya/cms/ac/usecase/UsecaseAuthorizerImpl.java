@@ -36,17 +36,17 @@ import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.cache.CachingException;
 import org.apache.lenya.ac.cache.SourceCache;
-import org.apache.lenya.ac.impl.PolicyAuthorizer;
+import org.apache.lenya.cms.ac.PolicyUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
 
 /**
  * Authorizer for usecases.
- * @version $Id$
+ * @version $Id: UsecaseAuthorizer.java 392449 2006-04-07 23:20:38Z michi $
  */
-public class UsecaseAuthorizer extends AbstractLogEnabled implements Authorizer, Serviceable,
-        Disposable, Parameterizable {
+public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements UsecaseAuthorizer,
+        Serviceable, Disposable, Parameterizable {
 
     protected static final String TYPE = "usecase";
     protected static final String USECASE_PARAMETER = "lenya.usecase";
@@ -64,7 +64,8 @@ public class UsecaseAuthorizer extends AbstractLogEnabled implements Authorizer,
 
     /**
      * Returns the source URI of the usecase role configuration file for a certain publication.
-     * TODO: This method seems to be called many times. Wouldn't it make sense to cache it somehow ...?
+     * TODO: This method seems to be called many times. Wouldn't it make sense to cache it somehow
+     * ...?
      * 
      * @param publication The publication.
      * @return A string representing a URI.
@@ -72,14 +73,16 @@ public class UsecaseAuthorizer extends AbstractLogEnabled implements Authorizer,
     protected String getConfigurationURI(Publication publication, String requestURI) {
         String configURI = null;
         try {
-            //org.apache.lenya.ac.AccessController ac = new org.apache.lenya.cms.ac.PublicationAccessControllerResolver().resolveAccessController(publication, requestURI);
+            // org.apache.lenya.ac.AccessController ac = new
+            // org.apache.lenya.cms.ac.PublicationAccessControllerResolver().resolveAccessController(publication,
+            // requestURI);
             Configuration config = new org.apache.lenya.cms.ac.PublicationAccessControllerResolver().getConfiguration(publication);
             Configuration[] authorizerConfigs = config.getChildren("authorizer");
             for (int i = 0; i < authorizerConfigs.length; i++) {
-               if (authorizerConfigs[i].getAttribute("type").equals("usecase")) {
-                   Configuration paraConfig = authorizerConfigs[i].getChild("parameter");
-                   configURI = paraConfig.getAttribute("value");
-               }
+                if (authorizerConfigs[i].getAttribute("type").equals("usecase")) {
+                    Configuration paraConfig = authorizerConfigs[i].getChild("parameter");
+                    configURI = paraConfig.getAttribute("value");
+                }
             }
         } catch (Exception e) {
             getLogger().error(e.getMessage(), e);
@@ -109,8 +112,11 @@ public class UsecaseAuthorizer extends AbstractLogEnabled implements Authorizer,
                     _configurationUri = getConfigurationURI(publication, request.getRequestURI());
                 }
 
-                Role[] roles = PolicyAuthorizer.getRoles(request);
-                authorized = authorizeUsecase(usecase, roles, _configurationUri, request.getRequestURI());
+                Role[] roles = PolicyUtil.getRoles(request);
+                authorized = authorizeUsecase(usecase,
+                        roles,
+                        _configurationUri,
+                        request.getRequestURI());
             } else {
                 getLogger().debug("No usecase to authorize. Granting access.");
             }
@@ -135,11 +141,12 @@ public class UsecaseAuthorizer extends AbstractLogEnabled implements Authorizer,
      * @param usecase The usecase ID.
      * @param roles The roles of the current identity.
      * @param _configurationUri The URI to retrieve the policy configuration from.
+     * @param requestURI The request URI.
      * @return A boolean value.
      * @throws AccessControlException when something went wrong.
      */
-    public boolean authorizeUsecase(String usecase, Role[] roles, String _configurationUri, String requestURI)
-            throws AccessControlException {
+    public boolean authorizeUsecase(String usecase, Role[] roles, String _configurationUri,
+            String requestURI) throws AccessControlException {
         getLogger().debug("Authorizing usecase [" + usecase + "]");
         boolean authorized = true;
 
@@ -225,9 +232,12 @@ public class UsecaseAuthorizer extends AbstractLogEnabled implements Authorizer,
      * @return A boolean value.
      * @throws AccessControlException when something went wrong.
      */
-    public boolean authorizeUsecase(String usecase, Role[] roles, Publication publication, String requestURI)
-            throws AccessControlException {
-        return authorizeUsecase(usecase, roles, getConfigurationURI(publication, requestURI), requestURI);
+    public boolean authorizeUsecase(String usecase, Role[] roles, Publication publication,
+            String requestURI) throws AccessControlException {
+        return authorizeUsecase(usecase,
+                roles,
+                getConfigurationURI(publication, requestURI),
+                requestURI);
     }
 
     protected boolean authorize(Request request, String webappUrl) throws AccessControlException {

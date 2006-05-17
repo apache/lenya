@@ -35,8 +35,7 @@ import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.ac.Role;
-import org.apache.lenya.ac.impl.DefaultAccessController;
-import org.apache.lenya.ac.impl.PolicyAuthorizer;
+import org.apache.lenya.cms.ac.PolicyUtil;
 import org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
@@ -103,7 +102,10 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
                     if (getLogger().isDebugEnabled()) {
                         getLogger().debug("Found usecase [" + usecaseName + "]");
                     }
-                    if (!this.authorizer.authorizeUsecase(usecaseName, this.roles, this.publication, this.request.getRequestURI())) {
+                    if (!this.authorizer.authorizeUsecase(usecaseName,
+                            this.roles,
+                            this.publication,
+                            this.request.getRequestURI())) {
                         if (getLogger().isDebugEnabled()) {
                             getLogger().debug("Usecase not authorized");
                         }
@@ -240,7 +242,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
         this.sourceUrl = ServletHelper.getWebappURI(this.request);
 
         try {
-            this.roles = PolicyAuthorizer.getRoles(this.request);
+            this.roles = PolicyUtil.getRoles(this.request);
             this.publication = PublicationUtil.getPublication(this.manager, _objectModel);
 
             this.serviceSelector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
@@ -251,13 +253,10 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
             String webappUrl = ServletHelper.getWebappURI(this.request);
             AccessController accessController = this.acResolver.resolveAccessController(webappUrl);
 
-            if (accessController instanceof DefaultAccessController) {
-                DefaultAccessController defaultAccessController = (DefaultAccessController) accessController;
-                Authorizer[] authorizers = defaultAccessController.getAuthorizers();
-                for (int i = 0; i < authorizers.length; i++) {
-                    if (authorizers[i] instanceof UsecaseAuthorizer) {
-                        this.authorizer = (UsecaseAuthorizer) authorizers[i];
-                    }
+            Authorizer[] authorizers = accessController.getAuthorizers();
+            for (int i = 0; i < authorizers.length; i++) {
+                if (authorizers[i] instanceof UsecaseAuthorizer) {
+                    this.authorizer = (UsecaseAuthorizer) authorizers[i];
                 }
             }
 

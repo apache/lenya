@@ -42,8 +42,7 @@ import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
-import org.apache.lenya.ac.impl.DefaultAccessController;
-import org.apache.lenya.ac.impl.PolicyAuthorizer;
+import org.apache.lenya.cms.ac.PolicyUtil;
 
 /**
  * Input module for access control attributes.
@@ -88,26 +87,18 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
     public static final String IP_RANGE_MANAGER = "iprange-manager";
 
     /**
-      * The names of the AccessControlModule parameters.
-      */
-    static final String[] PARAMETER_NAMES =
-        {
-            IP_ADDRESS,
-            USER_ID,
-            USER_NAME,
-            USER_EMAIL,
-            ROLE_IDS,
-            USER_MANAGER,
-            GROUP_MANAGER,
-            ROLE_MANAGER,
-            IP_RANGE_MANAGER };
+     * The names of the AccessControlModule parameters.
+     */
+    static final String[] PARAMETER_NAMES = { IP_ADDRESS, USER_ID, USER_NAME, USER_EMAIL, ROLE_IDS,
+            USER_MANAGER, GROUP_MANAGER, ROLE_MANAGER, IP_RANGE_MANAGER };
 
     /**
-     *
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     * 
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
+     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
+            throws ConfigurationException {
 
         Request request = ObjectModelHelper.getRequest(objectModel);
         Session session = request.getSession();
@@ -142,7 +133,7 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
                     }
                 } else if (name.equals(ROLE_IDS)) {
                     try {
-                        Role[] roles = PolicyAuthorizer.getRoles(request);
+                        Role[] roles = PolicyUtil.getRoles(request);
                         StringBuffer buf = new StringBuffer();
                         for (int i = 0; i < roles.length; i++) {
                             if (i > 0) {
@@ -152,18 +143,15 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
                         }
                         value = buf.toString();
                     } catch (AccessControlException e) {
-                        throw new ConfigurationException(
-                            "Obtaining value for attribute [" + name + "] failed: ",
-                            e);
+                        throw new ConfigurationException("Obtaining value for attribute [" + name
+                                + "] failed: ", e);
                     }
                 }
             }
         }
 
-        if (name.equals(USER_MANAGER)
-            || name.equals(GROUP_MANAGER)
-            || name.equals(ROLE_MANAGER)
-            || name.equals(IP_RANGE_MANAGER)) {
+        if (name.equals(USER_MANAGER) || name.equals(GROUP_MANAGER) || name.equals(ROLE_MANAGER)
+                || name.equals(IP_RANGE_MANAGER)) {
             value = getItemManager(request, name);
         }
 
@@ -171,19 +159,21 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
     }
 
     /**
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeNames(org.apache.avalon.framework.configuration.Configuration,
+     *      java.util.Map)
      */
     public Iterator getAttributeNames(Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
+            throws ConfigurationException {
         return Arrays.asList(PARAMETER_NAMES).iterator();
     }
 
     /**
-     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String, org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String,
+     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
-        throws ConfigurationException {
-        Object[] objects = { getAttribute(name, modeConf, objectModel)};
+            throws ConfigurationException {
+        Object[] objects = { getAttribute(name, modeConf, objectModel) };
 
         return objects;
     }
@@ -191,23 +181,22 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
     /**
      * Returns the item manager for a certain name.
      * @param request The request.
-     * @param name The name of the manager ({@link #USER_MANAGER},
-     * {@link #ROLE_MANAGER}, {@link #GROUP_MANAGER}, or {@link #IP_RANGE_MANAGER}
+     * @param name The name of the manager ({@link #USER_MANAGER}, {@link #ROLE_MANAGER},
+     *            {@link #GROUP_MANAGER}, or {@link #IP_RANGE_MANAGER}
      * @return An item manager.
      * @throws ConfigurationException when something went wrong.
      */
     protected ItemManager getItemManager(Request request, String name)
-        throws ConfigurationException {
+            throws ConfigurationException {
         AccessController accessController = null;
         ServiceSelector selector = null;
         AccessControllerResolver resolver = null;
         ItemManager itemManager = null;
 
         try {
-            selector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE + "Selector");
-            resolver =
-                (AccessControllerResolver) selector.select(
-                    AccessControllerResolver.DEFAULT_RESOLVER);
+            selector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
+                    + "Selector");
+            resolver = (AccessControllerResolver) selector.select(AccessControllerResolver.DEFAULT_RESOLVER);
 
             String requestURI = request.getRequestURI();
             String context = request.getContextPath();
@@ -217,8 +206,7 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
             String url = requestURI.substring(context.length());
             accessController = resolver.resolveAccessController(url);
 
-            AccreditableManager accreditableManager =
-                ((DefaultAccessController) accessController).getAccreditableManager();
+            AccreditableManager accreditableManager = accessController.getAccreditableManager();
 
             if (name.equals(USER_MANAGER)) {
                 itemManager = accreditableManager.getUserManager();

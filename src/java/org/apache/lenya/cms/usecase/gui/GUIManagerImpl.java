@@ -39,8 +39,7 @@ import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.ac.Role;
-import org.apache.lenya.ac.impl.DefaultAccessController;
-import org.apache.lenya.ac.impl.PolicyAuthorizer;
+import org.apache.lenya.cms.ac.PolicyUtil;
 import org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
@@ -142,17 +141,13 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Co
 
             selector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
                     + "Selector");
-            acResolver = (AccessControllerResolver) selector
-                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
+            acResolver = (AccessControllerResolver) selector.select(AccessControllerResolver.DEFAULT_RESOLVER);
             accessController = acResolver.resolveAccessController(this.webappUrl);
 
-            if (accessController instanceof DefaultAccessController) {
-                DefaultAccessController defaultAccessController = (DefaultAccessController) accessController;
-                Authorizer[] authorizers = defaultAccessController.getAuthorizers();
-                for (int i = 0; i < authorizers.length; i++) {
-                    if (authorizers[i] instanceof UsecaseAuthorizer) {
-                        authorizer = (UsecaseAuthorizer) authorizers[i];
-                    }
+            Authorizer[] authorizers = accessController.getAuthorizers();
+            for (int i = 0; i < authorizers.length; i++) {
+                if (authorizers[i] instanceof UsecaseAuthorizer) {
+                    authorizer = (UsecaseAuthorizer) authorizers[i];
                 }
             }
 
@@ -163,7 +158,8 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Co
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("Found usecase [" + tab.getUsecase() + "]");
                 }
-                Publication pub = PublicationUtil.getPublicationFromUrl(this.manager, this.webappUrl);
+                Publication pub = PublicationUtil.getPublicationFromUrl(this.manager,
+                        this.webappUrl);
                 if (!authorizer.authorizeUsecase(tab.getUsecase(), this.roles, pub, this.requestURI)) {
                     if (getLogger().isDebugEnabled()) {
                         getLogger().debug("Usecase not authorized");
@@ -201,8 +197,8 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Co
                 }
             } else {
                 messages = new UsecaseMessage[1];
-                messages[0] = new UsecaseMessage(
-                        "Usecase [" + tab.getUsecase() + "] is not registered!", null);
+                messages[0] = new UsecaseMessage("Usecase [" + tab.getUsecase()
+                        + "] is not registered!", null);
             }
         } catch (final Exception e) {
             throw new RuntimeException(e);
@@ -243,7 +239,7 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Co
     public void contextualize(Context context) throws ContextException {
         Request request = ContextHelper.getRequest(context);
         try {
-            this.roles = PolicyAuthorizer.getRoles(request);
+            this.roles = PolicyUtil.getRoles(request);
         } catch (AccessControlException e) {
             throw new ContextException("Obtaining roles failed: ", e);
         }

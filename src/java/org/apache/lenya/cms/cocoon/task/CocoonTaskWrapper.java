@@ -31,7 +31,7 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
-import org.apache.lenya.ac.impl.PolicyAuthorizer;
+import org.apache.lenya.cms.ac.PolicyUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.task.DefaultTaskWrapper;
@@ -120,7 +120,7 @@ public class CocoonTaskWrapper extends DefaultTaskWrapper {
                     log.debug("Identity found - enabling workflow handling.");
                     Role[] roles;
                     try {
-                        roles = PolicyAuthorizer.getRoles(request);
+                        roles = PolicyUtil.getRoles(request);
                     } catch (AccessControlException e) {
                         throw new ExecutionException(e);
                     }

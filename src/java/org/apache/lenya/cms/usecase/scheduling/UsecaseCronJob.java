@@ -44,14 +44,13 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.UserManager;
-import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseInvoker;
 
 /**
  * Job to schedule usecase execution.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCronJob,
         Contextualizable {
@@ -134,8 +133,11 @@ public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCr
         }
 
         Map objectModel = ContextHelper.getObjectModel(this.context);
-        objectModel.put(ObjectModelHelper.REQUEST_OBJECT, new CommandLineRequest(env, request
-                .getContextPath(), request.getServletPath(), getSourceURL(), attributes,
+        objectModel.put(ObjectModelHelper.REQUEST_OBJECT, new CommandLineRequest(env,
+                request.getContextPath(),
+                request.getServletPath(),
+                getSourceURL(),
+                attributes,
                 requestParameters));
     }
 
@@ -152,8 +154,7 @@ public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCr
         try {
             selector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
                     + "Selector");
-            acResolver = (AccessControllerResolver) selector
-                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
+            acResolver = (AccessControllerResolver) selector.select(AccessControllerResolver.DEFAULT_RESOLVER);
             controller = acResolver.resolveAccessController(getSourceURL());
 
             getLogger().debug("Add identity to session");
@@ -161,7 +162,7 @@ public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCr
             getLogger().debug("Machine: [" + this.machineIp + "]");
 
             Request request = ContextHelper.getRequest(this.context);
-            ((DefaultAccessController) controller).setupIdentity(request);
+            controller.setupIdentity(request);
             Session session = request.getSession(false);
             Identity identity = (Identity) session.getAttribute(Identity.class.getName());
             Identifiable[] identifiables = identity.getIdentifiables();
@@ -169,8 +170,7 @@ public class UsecaseCronJob extends ServiceableCronJob implements ConfigurableCr
                 identity.removeIdentifiable(identifiables[i]);
             }
 
-            UserManager userManager = ((DefaultAccessController) controller)
-                    .getAccreditableManager().getUserManager();
+            UserManager userManager = controller.getAccreditableManager().getUserManager();
             if (this.userId != null) {
                 User user = userManager.getUser(this.userId);
 

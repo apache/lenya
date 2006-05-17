@@ -29,7 +29,6 @@ import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.Role;
-import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.Workflowable;
@@ -76,11 +75,8 @@ public class RoleCondition extends AbstractCondition {
             acResolver = (AccessControllerResolver) selector.select(AccessControllerResolver.DEFAULT_RESOLVER);
             accessController = acResolver.resolveAccessController(url);
 
-            DefaultAccessController defaultAccessController = (DefaultAccessController) accessController;
-            PolicyManager policyManager = defaultAccessController.getPolicyManager();
-
-            Policy policy = policyManager.getPolicy(defaultAccessController.getAccreditableManager(),
-                    url);
+            PolicyManager policyManager = accessController.getPolicyManager();
+            Policy policy = policyManager.getPolicy(accessController.getAccreditableManager(), url);
 
             Role[] roles = policy.getRoles(workflowable.getSession().getUnitOfWork().getIdentity());
             boolean complied = false;

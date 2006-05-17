@@ -23,20 +23,17 @@ import java.util.Map;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.AccreditableManager;
-import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
-import org.apache.lenya.ac.impl.DefaultAccessController;
-import org.apache.lenya.ac.impl.PolicyAuthorizer;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Proxy;
@@ -99,22 +96,12 @@ public class ProxyUrlModule extends AbstractInputModule implements Serviceable {
             // Get proxy for document
             serviceSelector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
                     + "Selector");
-            acResolver = (AccessControllerResolver) serviceSelector
-                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
+            acResolver = (AccessControllerResolver) serviceSelector.select(AccessControllerResolver.DEFAULT_RESOLVER);
 
             String url = doc.getCanonicalWebappURL();
             AccessController accessController = acResolver.resolveAccessController(url);
-            if (accessController instanceof DefaultAccessController) {
-                DefaultAccessController defaultAccessController = (DefaultAccessController) accessController;
-                accreditableManager = defaultAccessController.getAccreditableManager();
-                Authorizer[] authorizers = defaultAccessController.getAuthorizers();
-                for (int i = 0; i < authorizers.length; i++) {
-                    if (authorizers[i] instanceof PolicyAuthorizer) {
-                        PolicyAuthorizer policyAuthorizer = (PolicyAuthorizer) authorizers[i];
-                        policyManager = policyAuthorizer.getPolicyManager();
-                    }
-                }
-            }
+            accreditableManager = accessController.getAccreditableManager();
+            policyManager = accessController.getPolicyManager();
 
             Policy policy = policyManager.getPolicy(accreditableManager, url);
 
