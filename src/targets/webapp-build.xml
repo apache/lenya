@@ -119,13 +119,23 @@
 
     <!-- compile and deploy API -->    
     <antcall target="compile-src">
-      <param name="compile.name" value="api"/>
       <param name="compile.src.dir" value="${src.java.api.dir}"/>
       <param name="compile.dest.dir" value="${build.dir}/api"/>
-    </antcall>
-    <antcall target="package">
-      <param name="compile.dest.dir" value="${build.dir}/api"/>
+      <param name="compile.classpath" refid="classpath"/>
       <param name="jar.name" value="api"/>
+    </antcall>
+    
+    <path id="classpath.impl">
+      <path refid="classpath"/>
+      <fileset dir="${build.webapp}/WEB-INF/lib" includes="lenya-*-api.jar"/>
+    </path>
+    
+    <!-- compile core implementation -->
+    <antcall target="compile-src">
+      <param name="compile.src.dir" value="${src.java.impl.dir}"/>
+      <param name="compile.dest.dir" value="${build.dir}/impl"/>
+      <param name="compile.classpath" value="classpath.impl"/>
+      <param name="jar.name" value="impl"/>
     </antcall>
     
     <antcall target="deploy-modules"/>
@@ -147,31 +157,32 @@
       includes="**/*.xconf"
       excludes="prepare/*.xconf"
       addComments="false"/>
+      
+    <path id="classpath.modules">
+      <path refid="classpath"/>
+      <fileset dir="${build.webapp}/WEB-INF/lib" includes="lenya-*-api.jar"/>
+    </path>
 
     <!-- compile and package modules -->
     <antcall target="compile-src">
       <param name="compile.src.dir" value="${build.dir}/java/modules"/>
       <param name="compile.dest.dir" value="${build.dir}/modules"/>
-    </antcall>
-    <antcall target="package">
-      <param name="compile.dest.dir" value="${build.dir}/modules"/>
+      <param name="compile.classpath" value="classpath.modules"/>
       <param name="jar.name" value="modules"/>
     </antcall>
 
+    <path id="classpath.pubs">
+      <path refid="classpath"/>
+      <fileset dir="${build.webapp}/WEB-INF/lib" includes="lenya-*-api.jar"/>
+      <fileset dir="${build.webapp}/WEB-INF/lib" includes="lenya-*-modules.jar"/>
+    </path>
+    
     <!-- compile and package publications -->
     <antcall target="compile-src">
       <param name="compile.src.dir" value="${build.dir}/java/pubs"/>
       <param name="compile.dest.dir" value="${build.dir}/pubs"/>
-    </antcall>
-    <antcall target="package">
-      <param name="compile.dest.dir" value="${build.dir}/pubs"/>
+      <param name="compile.classpath" value="classpath.pubs"/>
       <param name="jar.name" value="pubs"/>
-    </antcall>
-    
-    <!-- compile core implementation -->
-    <antcall target="compile-src">
-      <param name="compile.src.dir" value="${src.java.impl.dir}"/>
-      <param name="compile.dest.dir" value="${build.dir}/impl"/>
     </antcall>
     
     <!-- Patch lenya.roles -->
@@ -182,12 +193,6 @@
     <copy todir="${build.webapp}/WEB-INF/classes/org/apache/lenya"
       file="${build.dir}/impl/org/apache/lenya/lenya.roles"/>
       
-    <!-- deploy implementation -->
-    <antcall target="package">
-      <param name="compile.dest.dir" value="${build.dir}/impl"/>
-      <param name="jar.name" value="impl"/>
-    </antcall>
-    
     <!-- Copy database files to ${build.webapp}/WEB-INF/db -->
     <copy todir="${build.webapp}/WEB-INF/db">
       <fileset dir="${src.database.dir}">

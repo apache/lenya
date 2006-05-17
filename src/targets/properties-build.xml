@@ -133,7 +133,12 @@
     <fileset dir="${lib.dir}">
       <include name="*.jar"/>
     </fileset>
+    <!--
     <fileset dir="${build.webapp}/WEB-INF/lib">
+      <include name="*.jar"/>
+    </fileset>
+    -->
+    <fileset dir="${cocoon.webapp.dir}/WEB-INF/lib">
       <include name="*.jar"/>
     </fileset>
     <fileset dir="tools/jetty/lib">

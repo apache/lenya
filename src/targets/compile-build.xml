@@ -23,11 +23,14 @@
     Compilation Targets
   </description>
   
+  <!-- compile and package a specific source directory -->
   <target name="compile-src">
     
     <property name="compile.src.dir" value=""/>
     <property name="compile.dest.dir" value=""/>
-
+    <property name="compile.classpath" value=""/>
+    <property name="jar.name" value=""/>
+    
     <!-- DEBUG classpath -->
     <!--
       <property name="classpath.compile" refid="classpath"/>
@@ -54,15 +57,9 @@
       nowarn="${nowarn}"
       source="1.4">
       <src path="${compile.src.dir}"/>
-      <classpath refid="classpath"/>
+      <classpath refid="${compile.classpath}"/>
     </javac>
-  </target>
 
-
-  <!-- Generate and deploy JAR file -->
-  <target name="package">
-    <property name="compile.dest.dir" value=""/>
-    <property name="jar.name" value=""/>
     <jar jarfile="${build.webapp}/WEB-INF/lib/${fullname}-${jar.name}.jar" index="true">
       <fileset dir="${compile.dest.dir}">
         <exclude name="**/Manifest.mf"/>
