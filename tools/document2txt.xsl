@@ -42,8 +42,8 @@ Section handling
 <xsl:param name="notoc"/>
 <xsl:param name="path"/>
 
-<xsl:include href="../skins/common/xslt/html/dotdots.xsl"/>
-<xsl:include href="../skins/common/xslt/html/pathutils.xsl"/>
+<xsl:include href="dotdots.xsl"/>
+<xsl:include href="pathutils.xsl"/>
 
 
 <xsl:template name="underline">
