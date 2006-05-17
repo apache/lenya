@@ -115,7 +115,7 @@
   
   <!-- This is where the source of the tests are located -->
   <property name="src.test.api.dir" value="src/test"/>
-  <property name="src.test.impl.dir" value="src/test"/>
+  <property name="src.test.impl.dir" value="src/impl/test"/>
   
   <!-- Publication-specific entities are here -->
   <property name="src.entities.dir" value="resources/entities"/>
