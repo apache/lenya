@@ -108,12 +108,14 @@
   directory and packed up as tar.gz file, along with the sources etc.
   -->
   <property name="src.dist-src.dir" value="./src/dist-src"/>
+  
   <!-- Our own source code tree is here -->
   <property name="src.java.api.dir" value="./src/java"/>
   <property name="src.java.impl.dir" value="./src/impl/java"/>
   
   <!-- This is where the source of the tests are located -->
-  <property name="src.test.dir" value="src/test"/>
+  <property name="src.test.api.dir" value="src/test"/>
+  <property name="src.test.impl.dir" value="src/test"/>
   
   <!-- Publication-specific entities are here -->
   <property name="src.entities.dir" value="resources/entities"/>

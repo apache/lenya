@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: config.xml,v 1.2 2004/03/13 12:44:37 gregor Exp $ -->
+<!-- $Id$ -->
 
 <config
         host="localhost"

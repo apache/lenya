@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <!--
   Copyright 1999-2004 The Apache Software Foundation
 
@@ -15,25 +15,23 @@
   limitations under the License.
 -->
 
-<!-- $Id: tests.xml,v 1.4 2004/03/13 12:44:37 gregor Exp $ -->
+<!-- $Id$ -->
 
 <!DOCTYPE project [
-  <!ENTITY default SYSTEM "../../webapp/lenya/pubs/default/test/anteater/tests.xml"> 
+  <!ENTITY default SYSTEM "../../webapp/lenya/pubs/default/test/webtest/tests.xml">
+  <!ENTITY config SYSTEM "config.xml"> 
 ]>
 
-<project name="Lenya Anteater Tests" default="tests">
+<project name="Lenya webtest tests" default="tests">
 
-  <taskdef resource="META-INF/Anteater.tasks"/>
-  <typedef resource="META-INF/Anteater.types"/>
+  <taskdef file="${webtest.home}/webtestTaskdefs.properties">
+    <classpath>
+      <fileset dir="${webtest.home}" includes="**/lib/*.jar"/>
+    </classpath>
+  </taskdef>
+
+  <target name="tests" depends="pubs.default"/>
   
-  <property name="default.port" value="8888"/>
-  <property name="default.haltonerror" value="true"/>
-
-  <target name="tests"
-    depends="
-        pubs.default
-    "/>
-
   &default;
-
+  
 </project>

@@ -75,11 +75,16 @@
 
     <!-- Copy test files to build test dir -->
     <copy todir="${build.java.test}" filtering="on">
-      <fileset dir="${src.test.dir}"/>
+      <fileset dir="${src.test.impl.dir}"/>
     </copy>
 
     <copyJavaSources pubsrootdirs="${pubs.root.dirs}" javadir="java/test" builddir="${build.java.test}" />
     <copyJavaSources pubsrootdirs="${modules.root.dirs}" javadir="java/test" builddir="${build.java.test}" />
+    
+    <path id="classpath.test">
+      <path refid="classpath"/>
+      <fileset dir="${build.webapp}/WEB-INF/lib" includes="lenya-*.jar"/>
+    </path>
     
     <!-- Compile tests -->
     <javac srcdir="${build.java.test}"
@@ -91,10 +96,7 @@
            target="${target.vm}"
            fork="true"
            source="1.4">
-      <classpath refid="classpath"/>
-      <classpath>
-        <pathelement path="${build.webapp}/WEB-INF/classes" />
-      </classpath>
+      <classpath refid="classpath.test"/>
     </javac>
     
     <!-- Copy test resources -->
@@ -171,7 +173,7 @@
           <include name="*.jar"/>
           <include name="endorsed/*.jar"/>
         </fileset>
-        <pathelement path="${src.test.dir}"/>
+        <pathelement path="${src.test.impl.dir}"/>
       </classpath>
       
       <test name="org.apache.lenya.ac.impl.IdentityTest" todir="${junit.dir}"/>

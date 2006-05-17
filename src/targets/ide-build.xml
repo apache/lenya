@@ -33,10 +33,14 @@
     
     <!-- prepare the various paths that will form the project -->
     <path id="srcs">
-      <!-- main source dir -->
-      <pathelement path="${src.java.dir}"/>
-      <!-- test source dir -->
-      <pathelement path="${src.test.dir}"/>
+      <!-- API source dirs -->
+      <pathelement path="${src.java.api.dir}"/>
+      <pathelement path="${src.test.api.dir}"/>
+      
+      <!-- implementation source dirs -->
+      <pathelement path="${src.java.impl.dir}"/>
+      <pathelement path="${src.test.impl.dir}"/>
+      
       <dirset dir="src/pubs">
         <include name="*/java/src"/>
         <include name="*/java/test"/>
