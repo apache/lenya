@@ -150,8 +150,22 @@
       <fileset includes="java/lib/*"/>   <!-- if only a specific publication is being specified, e.g. pubs/blog -->
     </bulkCopy>
     <bulkCopy 
+      sourcedirs="${pubs.root.dirs}" 
+      todir="${build.dir}/lib" 
+      flatten="true">
+      <fileset includes="*/java/lib/*"/> <!-- if a directory with more than one publication is being specified, e.g. pubs -->
+      <fileset includes="java/lib/*"/>   <!-- if only a specific publication is being specified, e.g. pubs/blog -->
+    </bulkCopy>
+    <bulkCopy 
       sourcedirs="${modules.root.dirs}" 
       todir="${build.webapp}/WEB-INF/lib" 
+      flatten="true">
+      <fileset includes="*/java/lib/*"/> <!-- if a directory with more than one publication is being specified, e.g. pubs -->
+      <fileset includes="java/lib/*"/>   <!-- if only a specific publication is being specified, e.g. pubs/blog -->
+    </bulkCopy>
+    <bulkCopy 
+      sourcedirs="${modules.root.dirs}" 
+      todir="${build.dir}/lib" 
       flatten="true">
       <fileset includes="*/java/lib/*"/> <!-- if a directory with more than one publication is being specified, e.g. pubs -->
       <fileset includes="java/lib/*"/>   <!-- if only a specific publication is being specified, e.g. pubs/blog -->
