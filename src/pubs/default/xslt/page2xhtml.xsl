@@ -44,6 +44,7 @@
 <xsl:template match="cmsbody">
   <html>
     <head>
+      <link rel="cms.client" type="application/x.osr+xml" href="{$root}{$document-id}/introspection.xml" title="OSR-101"/>
       <link rel="stylesheet" href="{$root}/css/page.css" type="text/css"/>
       <!-- Load doctype-specific CSS -->
       <xsl:choose>
