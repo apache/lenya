@@ -70,6 +70,15 @@
     </map:pipeline>
 -->
 
+    <!-- Introspection -->
+    <map:pipeline>
+      <map:match pattern="**/introspection.xml">
+        <map:generate src="context:/lenya/content/util/empty.xml"/>
+        <map:transform src="context:/lenya/xslt/util/introspection.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+
     <map:pipeline>
     
       <map:match pattern="**">
