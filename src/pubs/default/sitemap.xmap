@@ -72,9 +72,14 @@
 
     <!-- Introspection -->
     <map:pipeline>
-      <map:match pattern="**/introspection.xml">
+      <map:match pattern="*/**/introspection.xml">
         <map:generate src="context:/lenya/content/util/empty.xml"/>
-        <map:transform src="context:/lenya/xslt/util/introspection.xsl"/>
+        <map:transform src="context:/lenya/xslt/util/introspection.xsl">
+          <map:parameter name="context" value="{page-envelope:context-prefix}"/>
+          <map:parameter name="publication" value="{page-envelope:publication-id}"/>
+          <map:parameter name="area" value="{1}"/>
+          <map:parameter name="page-id" value="{2}"/>
+        </map:transform>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
