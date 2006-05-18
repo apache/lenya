@@ -42,7 +42,7 @@ import org.apache.lenya.cms.usecase.Usecase;
 /**
  * Usecase scheduler implementation.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class UsecaseSchedulerImpl extends AbstractLogEnabled implements UsecaseScheduler,
         Serviceable, Contextualizable {
