@@ -24,9 +24,12 @@
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
   <map:components>
-    <map:transformers default="xslt">
+    <map:transformers default="xslt">    
       <map:transformer name="browser-update" src="org.apache.cocoon.ajax.BrowserUpdateTransformer"/>
     </map:transformers>
+    <map:selectors>
+      <map:selector name="ajax-request" src="org.apache.cocoon.ajax.AjaxRequestSelector"/>
+    </map:selectors>
   </map:components>
   
   <!-- =========================== FlowScript =============================== -->
@@ -70,8 +73,7 @@
         <map:match pattern="view/menu/**">
           <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{page-envelope:area}/default.xml"/>
         </map:match>
-        <map:select type="request-parameter">
-          <map:parameter name="parameter-name" value="cocoon-ajax"/>
+        <map:select type="ajax-request">
           <map:when test="true">
             <map:serialize type="xml"/>
           </map:when>
