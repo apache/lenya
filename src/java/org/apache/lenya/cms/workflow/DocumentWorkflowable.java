@@ -213,6 +213,9 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
                 variables.put(nameValue[0], nameValue[1]);
             }
         }
+        
+        
+        
         Version version = new LenyaVersion(event, state);
         for (Iterator i = variables.keySet().iterator(); i.hasNext();) {
             String name = (String) i.next();

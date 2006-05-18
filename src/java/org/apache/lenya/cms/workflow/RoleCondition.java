@@ -29,15 +29,15 @@ import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.Role;
+import org.apache.lenya.workflow.Condition;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.Workflowable;
-import org.apache.lenya.workflow.impl.AbstractCondition;
 
 /**
  * Role condition
  */
-public class RoleCondition extends AbstractCondition {
+public class RoleCondition implements Condition {
 
     private Set roleIds = new HashSet();
 
@@ -47,7 +47,7 @@ public class RoleCondition extends AbstractCondition {
      * @see org.apache.lenya.workflow.Condition#setExpression(java.lang.String)
      */
     public void setExpression(String expression) throws WorkflowException {
-        super.setExpression(expression);
+        this.expression = expression;
 
         String[] roles = expression.split(SEPARATOR);
         for (int i = 0; i < roles.length; i++) {
@@ -103,6 +103,23 @@ public class RoleCondition extends AbstractCondition {
             }
         }
 
+    }
+
+    private String expression;
+
+    /**
+     * Returns the expression of this condition.
+     * @return A string.
+     */
+    public String getExpression() {
+        return this.expression;
+    }
+
+    /**
+     * @see java.lang.Object#toString()
+     */
+    public String toString() {
+        return getExpression();
     }
 
 }
