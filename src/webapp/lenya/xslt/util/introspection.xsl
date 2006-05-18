@@ -22,6 +22,7 @@
     xmlns="http://www.wyona.org/osr-101/1.0"
 >
 
+<xsl:param name="context" select="'context-null'"/>
 <xsl:param name="publication" select="'publication-null'"/>
 <xsl:param name="area" select="'area-null'"/>
 <xsl:param name="page-id" select="'page-id-null'"/>
@@ -29,7 +30,7 @@
 
 <xsl:template match="/">
   <introspection>
-    <edit href="{$publication}/authoring{$page-id}" mime-type="application/xml" version="xxx">
+    <edit href="{$context}/{$publication}/authoring/{$page-id}.xml" mime-type="application/xml" version="xxx">
     <schemas>
       <schema href="http://foo.bar.com/lenya/modules/docbook/schemas/simple.rng" type="RelaxNG"/>
       <schema href="http://foo.bar.com/lenya/modules/docbook/schemas/default.rng" type="RelaxNG"/>
