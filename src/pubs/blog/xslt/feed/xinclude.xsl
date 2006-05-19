@@ -22,11 +22,11 @@
   </xsl:template>
   <xsl:template match="blog:blog">
     <echo:feed xmlns:echo="http://purl.org/atom/ns#" xmlns="http://www.w3.org/1999/xhtml" version="0.3" xml:lang="en">
-      <xi:include href="lenya://lenya/pubs/blog/content/{$area}/feeds/{$feedid}/index.xml#xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:title)"/>
-      <xi:include href="lenya://lenya/pubs/blog/content/{$area}/feeds/{$feedid}/index.xml#xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:link)"/>
-      <xi:include href="lenya://lenya/pubs/blog/content/{$area}/feeds/{$feedid}/index.xml#xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:modified)"/>
+      <xi:include href="lenyadoc:/en//feeds/{$feedid}/index#xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:title)"/>
+      <xi:include href="lenyadoc:/en//feeds/{$feedid}/index#xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:link)"/>
+      <xi:include href="lenyadoc:/en//feeds/{$feedid}/index#xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:modified)"/>
       <xsl:for-each select="blog:entry">
-        <xi:include href="lenya://lenya/pubs/blog/content/{$area}{@docid}.xml"/>
+        <xi:include href="lenyadoc:/en/{@docid}"/>
       </xsl:for-each>
     </echo:feed>
   </xsl:template>

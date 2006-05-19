@@ -19,7 +19,7 @@ xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0">
   limitations under the License.
 -->
 
-<!-- $Id$ -->
+<!-- $Id: index_en.xml 169299 2005-05-09 12:00:43Z jwkaltz $ -->
   <head>
     <title>Lenya Tutorial - How to create a new doctype</title>
   </head>

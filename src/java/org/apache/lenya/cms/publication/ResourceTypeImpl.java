@@ -32,7 +32,7 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.lenya.cms.authoring.DefaultBranchCreator;
-import org.apache.lenya.cms.authoring.NodeCreatorInterface;
+import org.apache.lenya.cms.authoring.DocumentCreator;
 import org.apache.lenya.xml.Schema;
 
 /**
@@ -60,7 +60,7 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     private String defaultSampleUri = null;
     private Map sampleUris = new HashMap();
     private String[] linkAttributeXPaths;
-    private NodeCreatorInterface creator;
+    private DocumentCreator creator;
 
     /**
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
@@ -82,7 +82,7 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
             if (creatorConf != null) {
                 String creatorClassName = creatorConf.getAttribute(SRC_ATTRIBUTE);
                 Class creatorClass = Class.forName(creatorClassName);
-                this.creator = (NodeCreatorInterface) creatorClass.newInstance();
+                this.creator = (DocumentCreator) creatorClass.newInstance();
                 this.creator.init(creatorConf, manager, getLogger());
             } else {
                 creator = new DefaultBranchCreator();
@@ -161,7 +161,7 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
         return this.sampleUri;
     }
 
-    public NodeCreatorInterface getCreator() {
+    public DocumentCreator getCreator() {
         return this.creator;
     }
 

@@ -27,7 +27,7 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
-import org.apache.lenya.cms.authoring.NodeCreatorInterface;
+import org.apache.lenya.cms.authoring.DocumentCreator;
 import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.publication.util.DocumentSet;
@@ -52,7 +52,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * and the resource type to be used)
      * 
      * @see DocumentManager#add(Document, ResourceType, String, String, boolean, Map)
-     * @see org.apache.lenya.cms.authoring.NodeCreatorInterface
+     * @see org.apache.lenya.cms.authoring.DocumentCreator
      * @see org.apache.lenya.cms.publication.DocumentBuilder
      */
     public void add(Document document, ResourceType documentType, String extension,
@@ -106,9 +106,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
         try {
 
-            // This locks the meta data node, using the default source URI with the extension ".xml".
-            // Note that the actual source URI with the correct extension is not yet determined,
-            // that's why the node has to be locked again later on.
             Node node = document.getRepositoryNode();
             node.lock();
 
@@ -126,11 +123,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 getLogger().debug("    contents URI: [" + initialContentsURI + "]");
             }
 
-            // Now that the correcet source is determined, lock the document node again.
-            document.getRepositoryNode().lock();
-
             // look up creator for documents of this type
-            NodeCreatorInterface creator = documentType.getCreator();
+            DocumentCreator creator = documentType.getCreator();
             creator.create(initialContentsURI, document, parameters);
         } catch (Exception e) {
             throw new DocumentBuildException("call to creator for new document failed", e);

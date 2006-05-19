@@ -35,11 +35,11 @@ public class PageEnvelope {
     public static final String[] PARAMETER_NAMES = { PageEnvelope.AREA, PageEnvelope.CONTEXT,
             PageEnvelope.PUBLICATION_ID, PageEnvelope.PUBLICATION,
             PageEnvelope.PUBLICATION_LANGUAGES_CSV, PageEnvelope.DOCUMENT,
-            PageEnvelope.DOCUMENT_ID, PageEnvelope.DOCUMENT_PARENT, PageEnvelope.DOCUMENT_NAME, PageEnvelope.DOCUMENT_LABEL,
-            PageEnvelope.DOCUMENT_URL, PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE,
-            PageEnvelope.DOCUMENT_PATH, PageEnvelope.DOCUMENT_EXTENSION,
-            PageEnvelope.DOCUMENT_SOURCE_EXTENSION, PageEnvelope.DOCUMENT_UUID,
-            PageEnvelope.DOCUMENT_TYPE, PageEnvelope.DEFAULT_LANGUAGE,
+            PageEnvelope.DOCUMENT_ID, PageEnvelope.DOCUMENT_PARENT, PageEnvelope.DOCUMENT_NAME,
+            PageEnvelope.DOCUMENT_LABEL, PageEnvelope.DOCUMENT_URL,
+            PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE, PageEnvelope.DOCUMENT_PATH,
+            PageEnvelope.DOCUMENT_EXTENSION, PageEnvelope.DOCUMENT_SOURCE_EXTENSION,
+            PageEnvelope.DOCUMENT_UUID, PageEnvelope.DOCUMENT_TYPE, PageEnvelope.DEFAULT_LANGUAGE,
             PageEnvelope.DOCUMENT_LANGUAGE, PageEnvelope.DOCUMENT_LANGUAGES,
             PageEnvelope.DOCUMENT_LANGUAGES_CSV, PageEnvelope.DOCUMENT_LASTMODIFIED,
             PageEnvelope.BREADCRUMB_PREFIX, PageEnvelope.SSL_PREFIX };
@@ -258,9 +258,8 @@ public class PageEnvelope {
      * @return a <code>File<code> value
      */
     public String getDocumentPath() {
-            return getPublication().getPathMapper().getPath(getDocument().getId(),
-                    getDocument().getLanguage(),
-                    getDocument().getSourceExtension());
+        return getPublication().getPathMapper().getPath(getDocument().getId(),
+                getDocument().getLanguage());
     }
 
     /**

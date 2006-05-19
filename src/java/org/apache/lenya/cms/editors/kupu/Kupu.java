@@ -46,9 +46,7 @@ public class Kupu extends DocumentUsecase {
 
             Document doc = getSourceDocument();
             DocumentIdToPathMapper mapper = doc.getPublication().getPathMapper();
-            String path = mapper.getPath(doc.getId(),
-                    getSourceDocument().getLanguage(),
-                    getSourceDocument().getSourceExtension());
+            String path = mapper.getPath(doc.getId(), getSourceDocument().getLanguage());
             String sourceUri = doc.getSourceURI();
             String pubId = doc.getPublication().getId();
             String tempSourceUri = "context://lenya/pubs/" + pubId + "/work/bxe/content/"

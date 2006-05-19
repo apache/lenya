@@ -39,10 +39,9 @@
     <map:pipeline>
       <map:match pattern="lucene-index.xml">
         <map:aggregate element="cmsbody">
-          <!-- TODO Use the standard pipeline for retrieving the document -->
+          <!-- TODO aggregate meta file -->
           <!-- <map:part src="cocoon:/modules/{page-envelope:document-type}/view.xml"/> -->
-          <map:part src="fallback://content/{page-envelope:area}/{page-envelope:document-id}/index_{page-envelope:document-language}.xml.meta"/>
-          <map:part src="fallback://content/{page-envelope:area}/{page-envelope:document-id}/index_{page-envelope:document-language}.xml"/>
+          <map:part src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-id}"/>
         </map:aggregate>
   
         <map:transform src="fallback://lenya/modules/xhtml/xslt/xhtml2index.xsl">

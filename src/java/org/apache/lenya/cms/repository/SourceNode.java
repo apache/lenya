@@ -59,7 +59,6 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     public static final String FILE_PREFIX = "file:/";
     public static final String CONTEXT_PREFIX = "context://";
     public static final String LENYA_META_SUFFIX = "meta";
-    //public static final String LENYA_META_SUFFIX = "lenyameta";
 
     /**
      * Ctor.
@@ -645,12 +644,6 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
      */
     protected String getMetaSourceURI() {
         String sourceUri = getSourceURI();
-        if (!sourceUri.endsWith(".xml")) {
-            int lastDotIndex = sourceUri.lastIndexOf(".");
-            if (lastDotIndex > -1) {
-                sourceUri = sourceUri.substring(0, lastDotIndex) + ".xml";
-            }
-        }
         return sourceUri + "." + LENYA_META_SUFFIX;
     }
 

@@ -34,12 +34,10 @@ public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper,
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getFile(org.apache.lenya.cms.publication.Publication,
-     *      java.lang.String, java.lang.String, java.lang.String, String)
+     *      java.lang.String, java.lang.String, java.lang.String)
      */
-    public File getFile(Publication publication, String area, String documentId, String language,
-            String extension) {
-        File file = new File(getDirectory(publication, area, documentId), getFilename(language,
-                extension));
+    public File getFile(Publication publication, String area, String documentId, String language) {
+        File file = new File(getDirectory(publication, area, documentId), getFilename(language));
         return file;
     }
 
@@ -63,28 +61,27 @@ public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper,
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getPath(java.lang.String,
-     *      java.lang.String, String)
+     *      java.lang.String)
      */
-    public String getPath(String documentId, String language, String extension) {
+    public String getPath(String documentId, String language) {
         assert documentId.startsWith("/");
         // remove leading slash
         documentId = documentId.substring(1);
-        return documentId + "/" + getFilename(language, extension);
+        return documentId + "/" + getFilename(language);
     }
 
     /**
      * Constructs the filename for a given language.
      * 
      * @param language The language.
-     * @param extension The extension.
      * @return A string value.
      */
-    protected String getFilename(String language, String extension) {
+    protected String getFilename(String language) {
         String languageSuffix = "";
         if (language != null && !"".equals(language)) {
             languageSuffix = "_" + language;
         }
-        return BASE_FILENAME_PREFIX + languageSuffix + "." + extension;
+        return BASE_FILENAME_PREFIX + languageSuffix;
     }
 
     /**

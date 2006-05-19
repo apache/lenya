@@ -46,7 +46,7 @@ public class BXE extends DocumentUsecase {
 
             Document doc = getSourceDocument();
             DocumentIdToPathMapper mapper = doc.getPublication().getPathMapper();
-            String path = mapper.getPath(doc.getId(), doc.getLanguage(), doc.getSourceExtension());
+            String path = mapper.getPath(doc.getId(), doc.getLanguage());
             String sourceUri = doc.getSourceURI();
             String pubId = doc.getPublication().getId();
             String tempSourceUri = "context://lenya/pubs/" + pubId + "/work/bxe/content/"

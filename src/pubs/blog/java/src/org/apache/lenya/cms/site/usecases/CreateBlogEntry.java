@@ -28,6 +28,7 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.lenya.ac.Identity;
+import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
@@ -39,6 +40,9 @@ import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.xpath.XPathAPI;
+import org.w3c.dom.Element;
 
 /**
  * Usecase to create a Blog entry.
@@ -101,12 +105,6 @@ public class CreateBlogEntry extends DocumentUsecase {
         // prepare values necessary for blog entry creation
         Document parent = getSourceDocument();
         String language = parent.getPublication().getDefaultLanguage();
-        Map objectModel = ContextHelper.getObjectModel(getContext());
-        Request request = ObjectModelHelper.getRequest(objectModel);
-        Session session = request.getSession(false);
-        HashMap allParameters = new HashMap();
-        allParameters.put(Identity.class.getName(), session.getAttribute(Identity.class.getName()));
-        allParameters.put("title", getParameterAsString(DublinCore.ELEMENT_TITLE));
 
         // create new document
         // implementation note: since blog does not have a hierarchy,
@@ -115,6 +113,7 @@ public class CreateBlogEntry extends DocumentUsecase {
         DocumentManager documentManager = null;
         ServiceSelector selector = null;
         ResourceType resourceType = null;
+
         try {
             selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
             resourceType = (ResourceType) selector.select(getDocumentTypeName());
@@ -134,7 +133,9 @@ public class CreateBlogEntry extends DocumentUsecase {
                     "xml",
                     getParameterAsString(DublinCore.ELEMENT_TITLE),
                     true,
-                    allParameters);
+                    new HashMap());
+
+            transformXML(document);
         } finally {
             if (documentManager != null) {
                 this.manager.release(documentManager);
@@ -202,5 +203,80 @@ public class CreateBlogEntry extends DocumentUsecase {
      */
     protected String getDocumentTypeName() {
         return getParameterAsString(DOCUMENT_TYPE);
+    }
+
+    protected void transformXML(Document document) throws Exception {
+
+        Map objectModel = ContextHelper.getObjectModel(getContext());
+        Request request = ObjectModelHelper.getRequest(objectModel);
+        Session session = request.getSession(false);
+        Identity identity = (Identity) session.getAttribute(Identity.class.getName());
+        String title = getParameterAsString(DublinCore.ELEMENT_TITLE);
+
+        org.w3c.dom.Document xmlDoc = SourceUtil.readDOM(document.getSourceURI(), this.manager);
+
+        Element parent = xmlDoc.getDocumentElement();
+
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("NewBlogEntryCreator.transformXML(): " + document);
+
+        String[] steps = document.getId().split("/");
+        String nodeId = steps[5];
+
+        // Replace id
+        Element element = (Element) XPathAPI.selectSingleNode(parent,
+                "/*[local-name() = 'entry']/*[local-name() = 'id']");
+
+        String year = steps[2];
+        String month = steps[3];
+        String day = steps[4];
+
+        DocumentHelper.setSimpleElementText(element, year + "/" + month + "/" + day + "/" + nodeId);
+
+        // Replace title
+        element = (Element) XPathAPI.selectSingleNode(parent,
+                "/*[local-name() = 'entry']/*[local-name() = 'title']");
+        DocumentHelper.setSimpleElementText(element, title);
+
+        element = (Element) XPathAPI.selectSingleNode(parent,
+                "/*[local-name() = 'entry']/*[local-name() = 'link']");
+        element.setAttribute("rel", "alternate");
+        element.setAttribute("href", "");
+        element.setAttribute("type", "text/xml");
+
+        // Replace Summary
+        element = (Element) XPathAPI.selectSingleNode(parent,
+                "/*[local-name() = 'entry']/*[local-name() = 'summary']");
+        DocumentHelper.setSimpleElementText(element, "Summary");
+
+        element = (Element) XPathAPI.selectSingleNode(parent,
+                "/*[local-name() = 'entry']/*[local-name() = 'author']/*[local-name() = 'name']");
+
+        if (element == null) {
+            throw new RuntimeException("Element entry/author/name not found.");
+        }
+
+        DocumentHelper.setSimpleElementText(element, identity.getUser().getId());
+
+        // Replace date created, issued and modified
+        DateFormat datefmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+        DateFormat ofsfmt = new SimpleDateFormat("Z");
+        Date date = new Date();
+
+        String dateofs = ofsfmt.format(date);
+        String datestr = datefmt.format(date) + dateofs.substring(0, 3) + ":"
+                + dateofs.substring(3, 5);
+
+        element = (Element) XPathAPI.selectSingleNode(parent,
+                "/*[local-name() = 'entry']/*[local-name() = 'created']");
+        DocumentHelper.setSimpleElementText(element, datestr);
+        element = (Element) XPathAPI.selectSingleNode(parent,
+                "/*[local-name() = 'entry']/*[local-name() = 'issued']");
+        DocumentHelper.setSimpleElementText(element, datestr);
+        element = (Element) XPathAPI.selectSingleNode(parent,
+                "/*[local-name() = 'entry']/*[local-name() = 'modified']");
+        DocumentHelper.setSimpleElementText(element, datestr);
+
+        SourceUtil.writeDOM(xmlDoc, document.getSourceURI(), this.manager);
     }
 }

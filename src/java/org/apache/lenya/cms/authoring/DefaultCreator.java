@@ -34,12 +34,12 @@ import org.w3c.dom.Document;
  * Base creator for creating documents
  * @version $Id$
  */
-public abstract class DefaultCreator extends AbstractLogEnabled implements NodeCreatorInterface {
+public abstract class DefaultCreator extends AbstractLogEnabled implements DocumentCreator {
 
     private ServiceManager manager;
 
     /**
-     * @see org.apache.lenya.cms.authoring.NodeCreatorInterface#init(Configuration, ServiceManager,
+     * @see org.apache.lenya.cms.authoring.DocumentCreator#init(Configuration, ServiceManager,
      *      Logger)
      */
     public void init(Configuration conf, ServiceManager _manager, Logger _logger) {
@@ -62,7 +62,7 @@ public abstract class DefaultCreator extends AbstractLogEnabled implements NodeC
     }
 
     /**
-     * @see NodeCreatorInterface#create(String, org.apache.lenya.cms.publication.Document, Map)
+     * @see DocumentCreator#create(String, org.apache.lenya.cms.publication.Document, Map)
      */
     public void create(String initialContentsURI,
             org.apache.lenya.cms.publication.Document document, Map parameters) throws Exception {

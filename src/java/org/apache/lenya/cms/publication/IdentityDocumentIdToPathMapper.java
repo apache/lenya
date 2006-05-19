@@ -28,13 +28,12 @@ public class IdentityDocumentIdToPathMapper implements DocumentIdToPathMapper {
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getFile(org.apache.lenya.cms.publication.Publication,
-     *      java.lang.String, java.lang.String, java.lang.String, String)
+     *      java.lang.String, java.lang.String, java.lang.String)
      */
-    public File getFile(Publication publication, String area, String documentId, String language,
-            String extension) {
+    public File getFile(Publication publication, String area, String documentId, String language) {
         File areaDirectory = new File(publication.getDirectory(), Publication.CONTENT_PATH
                 + File.separator + area);
-        File file = new File(areaDirectory, getPath(documentId, language, extension));
+        File file = new File(areaDirectory, getPath(documentId, language));
         return file;
     }
 
@@ -43,32 +42,31 @@ public class IdentityDocumentIdToPathMapper implements DocumentIdToPathMapper {
      *      java.lang.String, java.lang.String)
      */
     public File getDirectory(Publication publication, String area, String documentId) {
-        return getFile(publication, area, documentId, null, null).getParentFile();
+        return getFile(publication, area, documentId, null).getParentFile();
     }
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getPath(java.lang.String,
-     *      java.lang.String, String)
+     *      java.lang.String)
      */
-    public String getPath(String documentId, String language, String extension) {
+    public String getPath(String documentId, String language) {
         assert documentId.startsWith("/");
         // remove leading slash
         documentId = documentId.substring(1);
-        return documentId + getSuffix(language, extension);
+        return documentId + getSuffix(language);
     }
 
     /**
      * Constructs the filename for a given language.
      * @param language The language.
-     * @param extension The extension.
      * @return A string value.
      */
-    protected String getSuffix(String language, String extension) {
+    protected String getSuffix(String language) {
         String languageSuffix = "";
         if (language != null && !"".equals(language)) {
             languageSuffix = "_" + language;
         }
-        return languageSuffix + "." + extension;
+        return languageSuffix;
     }
 
 }

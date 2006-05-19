@@ -28,7 +28,7 @@ import org.apache.avalon.framework.service.ServiceManager;
  * @version $Id$
  * @deprecated This interface and it's implementations will be removed during the 1.4 development cycle
  */
-public interface NodeCreatorInterface {
+public interface DocumentCreator {
 
     /**
      * Configures the Creator, based on a configuration file.

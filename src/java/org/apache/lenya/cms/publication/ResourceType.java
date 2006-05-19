@@ -32,7 +32,7 @@
  */
 package org.apache.lenya.cms.publication;
 
-import org.apache.lenya.cms.authoring.NodeCreatorInterface;
+import org.apache.lenya.cms.authoring.DocumentCreator;
 import org.apache.lenya.xml.Schema;
 
 /**
@@ -83,7 +83,7 @@ public interface ResourceType {
     /**
      * @return The creator.
      */
-    NodeCreatorInterface getCreator();
+    DocumentCreator getCreator();
 
     /**
      * @param name The name of the resource type.

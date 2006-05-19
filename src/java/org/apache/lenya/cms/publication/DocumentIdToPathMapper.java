@@ -32,11 +32,10 @@ public interface DocumentIdToPathMapper {
      * 
      * @param documentId the document-id of the document
      * @param language the language of the document
-     * @param extension The source extension.
      * 
      * @return the path to the document, without publication ID and area
      */
-    String getPath(String documentId, String language, String extension);
+    String getPath(String documentId, String language);
 
     /**
      * Compute the document-path for a given publication, area, document-id and language
@@ -45,12 +44,10 @@ public interface DocumentIdToPathMapper {
      * @param area the area of the document
      * @param documentId the document-id of the document
      * @param language the language of the document
-     * @param extension The source extension.
      * 
      * @return the path to the document
      */
-    File getFile(Publication publication, String area, String documentId, String language,
-            String extension);
+    File getFile(Publication publication, String area, String documentId, String language);
 
     /**
      * Compute the document-path for a given publication, area and document-id. As there are

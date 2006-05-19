@@ -115,8 +115,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
         return getPublication().getPathMapper().getFile(getPublication(),
                 getArea(),
                 getId(),
-                getLanguage(),
-                getSourceExtension());
+                getLanguage());
     }
 
     /**
@@ -415,12 +414,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
             RepositorySource source = null;
             try {
                 resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-
-                // TODO: This needs to be improved ...
-                String sourceUri = getPublication().getSourceURI() + "/content/" + getArea()
-                        + getId() + "/index_" + getLanguage() + ".xml";
-
-                source = (RepositorySource) resolver.resolveURI(sourceUri);
+                source = (RepositorySource) resolver.resolveURI(getSourceURI());
                 this.metaDataManager = source.getNode().getMetaDataManager();
             } catch (Exception e) {
                 throw new RuntimeException(e);
@@ -460,9 +454,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.cms.publication.Document#getSourceURI()
      */
     public String getSourceURI() {
-        String path = getPublication().getPathMapper().getPath(getId(),
-                getLanguage(),
-                getSourceExtension());
+        String path = getPublication().getPathMapper().getPath(getId(), getLanguage());
         return getPublication().getSourceURI() + "/content/" + getArea() + "/" + path;
     }
 

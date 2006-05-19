@@ -98,7 +98,7 @@
             <map:transform src="fallback://lenya/xslt/rc/toDoc.xsl"/>
           </map:when>
           <map:otherwise>
-            <map:generate src="lenya://lenya/pubs/blog/content/{1}/entries/{2}/{3}/{4}/{5}/index.xml"/>
+            <map:generate src="lenyadoc:/en//entries/{2}/{3}/{4}/{5}/index"/>
           </map:otherwise>
         </map:select>
         <map:serialize type="xml"/>
@@ -112,7 +112,7 @@
             <map:transform src="fallback://lenya/xslt/rc/toDoc.xsl"/>
           </map:when>
           <map:otherwise>
-            <map:generate src="content/{1}/entries/{2}/{3}/{4}/{5}/index.xml"/>
+            <map:generate src="lenyadoc:/en//entries/{2}/{3}/{4}/{5}/index"/>
             <map:transform src="xslt/feed/atom2other.xsl">
               <map:parameter name="type" value="rss"/>
               <map:parameter name="url" value="{global:blog-url}"/>
@@ -125,7 +125,7 @@
       
       <map:match pattern="*/entries/*/*/*/*/lenya-body.xml">
         <map:aggregate element="feed">
-          <map:part src="lenya://lenya/pubs/blog/content/{1}/feeds/all/index.xml"/>
+          <map:part src="lenyadoc:/en//feeds/all/index"/>
           <map:part src="cocoon:/{1}/entries/{2}/{3}/{4}/{5}/index.xml"/>
           <map:part src="lenya://lenya/pubs/blog/content/{1}/sidebar.xml"/>
           <map:part src="cocoon:/{1}/overview?struct=23"/>
@@ -222,7 +222,7 @@
       </map:match>
       <map:match pattern="*/overview/lenya-page-body.xml">
         <map:aggregate element="cmsbody">
-          <map:part src="content/{1}/feeds/all/index.xml"/>
+          <map:part src="lenyadoc:/en//feeds/all"/>
           <map:part src="content/{1}/sidebar.xml"/>
           <map:part src="cocoon:/{1}/overview"/>
           <map:part src="cocoon:/{1}/overview?struct=23"/>

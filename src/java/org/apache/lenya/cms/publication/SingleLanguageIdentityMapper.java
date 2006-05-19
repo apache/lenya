@@ -33,7 +33,7 @@ public class SingleLanguageIdentityMapper extends IdentityDocumentIdToPathMapper
      * @see org.apache.lenya.cms.publication.IdentityDocumentIdToPathMapper#getSuffix(java.lang.String)
      */
     protected String getSuffix(String language) {
-        return ".xml";
+        return "";
     }
 
 }

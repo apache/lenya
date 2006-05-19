@@ -22,6 +22,21 @@
   <description>
     Migration targets
   </description>
+  
+  <target name="migrate-extensions">
+    <property name="publication" value=""/>
+    <move todir="${build.webapp}/lenya/pubs">
+      <fileset dir="${build.webapp}/lenya/pubs/${publication}">
+        <include name="content/**"/>
+        <exclude name="content/*/site.xml"/>
+        <exclude name="content/*/sitetree.xml"/>
+      </fileset>
+      <compositemapper>
+        <mapper type="glob" from="*.xml" to="*"/>
+        <mapper type="glob" from="*.xml.meta" to="*.meta"/>
+      </compositemapper>
+    </move>
+  </target>
 
   <target name="migrate-14">
     <path id="migration.classpath">
