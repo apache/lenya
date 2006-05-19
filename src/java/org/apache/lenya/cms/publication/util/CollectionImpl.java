@@ -34,7 +34,6 @@ import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.transaction.TransactionException;
-import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.DOMException;
