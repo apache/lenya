@@ -25,6 +25,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Enumeration;
+import java.util.zip.GZIPInputStream;
 
 import org.apache.avalon.framework.component.Component;
 import org.apache.avalon.framework.parameters.ParameterException;
@@ -34,6 +35,8 @@ import org.apache.cocoon.environment.Cookie;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.http.HttpRequest;
+import org.apache.cocoon.generation.ServletGenerator;
+import org.apache.commons.httpclient.Header;
 import org.apache.commons.httpclient.HostConfiguration;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpMethod;
@@ -45,22 +48,20 @@ import org.apache.lenya.cms.cocoon.generation.Configuration;
 import org.apache.log4j.Logger;
 import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
-import org.xml.sax.helpers.AttributesImpl;
 
-public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerator implements
-        Parameterizable {
+public class ProxyGenerator extends ServletGenerator implements Parameterizable {
     private static Logger log = Logger.getLogger(ProxyGenerator.class);
-    
+
     private static String trustStore = null;
     private static String trustStorePassword = null;    
-    
+
     public ProxyGenerator() {
         Configuration conf = new Configuration();
         trustStore = conf.trustStore;
         trustStorePassword = conf.trustStorePassword;
         log.debug("loaded ProxyGenerator Config: " + "trustStore="+trustStore + " trustStorePassword=" + trustStorePassword);
     }
-    
+
     // The URI of the namespace of this generator
     private String URI = "http://apache.org/cocoon/lenya/proxygenerator/1.0";
 
@@ -76,7 +77,7 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
      */
     public void generate() throws SAXException {
         Request request = (Request) objectModel.get(ObjectModelHelper.REQUEST_OBJECT);
-        
+
         log.debug("\n----------------------------------------------------------------"
                 + "\n- Request: (" + request.getClass().getName() + ") at port "
                 + request.getServerPort()
@@ -152,8 +153,9 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
             for (Enumeration e = request.getHeaderNames(); e.hasMoreElements();) {
                 String name = (String) e.nextElement();
                 httpMethod.addRequestHeader(name, request.getHeader(name));
+                log.debug("Header Name=" + name + "value=" + request.getHeader(name));
             }
-                        
+
             HostConfiguration hostConfiguration = new HostConfiguration();
             hostConfiguration.setHost(url.getHost(), url.getPort(), url.getProtocol());
 
@@ -161,28 +163,35 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
                     + "\n- Starting session at URI: " + url + "\n- Host:                    "
                     + url.getHost() + "\n- Port:                    " + url.getPort()
                     + "\n----------------------------------------------------------------");
-            
+
             if (trustStore != null) {
             	System.setProperty("javax.net.ssl.trustStore", trustStore);
             }            
             if (trustStorePassword != null) {
             	System.setProperty("javax.net.ssl.trustStorePassword", trustStorePassword);     
             }
-            
+
             int result = httpClient.executeMethod(hostConfiguration, httpMethod);
 
             log.debug("\n----------------------------------------------------------------"
                     + "\n- Result:                    " + result
                     + "\n----------------------------------------------------------------");
 
-            byte[] sresponse = httpMethod.getResponseBody();
-
-            httpMethod.releaseConnection();
+            // Handle GZIP Content-Encoding
+            InputStream is = null;
+            Header contentEncodingHeader = httpMethod.getResponseHeader("Content-Encoding");
+            if (contentEncodingHeader != null && contentEncodingHeader.getValue().equalsIgnoreCase("gzip")) {
+               is = new GZIPInputStream(httpMethod.getResponseBodyAsStream());
+               log.debug("The content type is gzip.");
+            } else {
+                is = httpMethod.getResponseBodyAsStream();
+            }
 
             // Return XML
-            InputSource input = new InputSource(new ByteArrayInputStream(sresponse));
+            InputSource input = new InputSource(is);
             parser = (SAXParser) this.manager.lookup(SAXParser.ROLE);
             parser.parse(input, this.xmlConsumer);
+            httpMethod.releaseConnection();
         } catch (SAXException e) {
             throw e;
         } catch (Exception e) {
@@ -224,10 +233,9 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
             url = new URL(request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + this.source);
             log.debug(".createURL(): Add localhost and port: " + url);
         }
-
         return url;
     }
-
+/*
     private void attribute(AttributesImpl attr, String name, String value) {
         attr.addAttribute("", name, name, "CDATA", value);
     }
@@ -243,5 +251,5 @@ public class ProxyGenerator extends org.apache.cocoon.generation.ServletGenerato
 
     private void data(String data) throws SAXException {
         super.contentHandler.characters(data.toCharArray(), 0, data.length());
-    }
+    }*/
 }
