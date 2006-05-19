@@ -26,15 +26,15 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.commons.collections.map.LRUMap;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceValidity;
-import org.apache.lenya.util.CacheMap;
 
 /**
  * Basic implementation of a source cache.
- * @version $Id: SourceCacheImpl.java,v 1.5 2004/08/16 16:06:14 andreas Exp $
+ * @version $Id$
  */
 public class SourceCacheImpl
     extends AbstractLogEnabled
@@ -60,17 +60,17 @@ public class SourceCacheImpl
      * Ctor.
      */
     public SourceCacheImpl() {
-        cache = new CacheMap(CAPACITY);
+        cache = new LRUMap(CAPACITY);
     }
 
     public static final int CAPACITY = 1000;
-    private CacheMap cache;
+    private LRUMap cache;
 
     /**
      * Returns the cache.
      * @return A cache object.
      */
-    protected CacheMap getCache() {
+    protected LRUMap getCache() {
         return cache;
     }
 
