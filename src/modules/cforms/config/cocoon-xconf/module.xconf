@@ -23,9 +23,7 @@
                       logger="lenya.resourcetypes.cforms"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
     <schema src="fallback://lenya/modules/cforms/schemas/cforms.rng" language="http://relaxng.org/ns/structure/0.9"/>
-    <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
-      <sample-name>fallback://lenya/modules/cforms/samples/cforms.xml</sample-name>
-    </creator>
+    <sample-name>fallback://lenya/modules/cforms/samples/cforms.xml</sample-name>
     <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@href"/>
     <format name="xhtml" uri="cocoon://modules/cforms/xhtml.xml"/>
   </component-instance>

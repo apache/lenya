@@ -85,7 +85,7 @@ public class Mkcol extends Create {
                             doc.getLanguage());
 
                     resourceType = (ResourceType) selector.select(TYPE);
-                    documentManager.add(document, resourceType, EXTENSION, doc.getName(), true, null);
+                    documentManager.add(document, resourceType, EXTENSION, doc.getName(), true);
 
                     setMetaData(document);
                     doc = document;

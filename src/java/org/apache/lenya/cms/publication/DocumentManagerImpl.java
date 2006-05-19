@@ -27,7 +27,8 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
-import org.apache.lenya.cms.authoring.DocumentCreator;
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.publication.util.DocumentSet;
@@ -51,33 +52,31 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * implementation to be used is specified in doctypes.xconf (and thus depends on the publication
      * and the resource type to be used)
      * 
-     * @see DocumentManager#add(Document, ResourceType, String, String, boolean, Map)
+     * @see DocumentManager#add(Document, ResourceType, String, String, boolean)
      * @see org.apache.lenya.cms.authoring.DocumentCreator
      * @see org.apache.lenya.cms.publication.DocumentBuilder
      */
     public void add(Document document, ResourceType documentType, String extension,
-            String navigationTitle, boolean visibleInNav, Map parameters)
-            throws DocumentBuildException, PublicationException {
+            String navigationTitle, boolean visibleInNav) throws DocumentBuildException,
+            PublicationException {
 
         String contentsURI = documentType.getSampleURI();
-        add(document, documentType, extension, navigationTitle, visibleInNav, parameters, contentsURI);
+        add(document, documentType, extension, navigationTitle, visibleInNav, contentsURI);
     }
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#add(org.apache.lenya.cms.publication.Document,
-     *      org.apache.lenya.cms.publication.Document, String, java.lang.String, boolean,
-     *      java.util.Map)
+     *      org.apache.lenya.cms.publication.Document, String, java.lang.String, boolean)
      */
     public void add(Document document, Document sourceDocument, String extension,
-            String navigationTitle, boolean visibleInNav, Map parameters)
-            throws DocumentBuildException, PublicationException {
+            String navigationTitle, boolean visibleInNav) throws DocumentBuildException,
+            PublicationException {
         String contentsURI = sourceDocument.getSourceURI();
         add(document,
                 sourceDocument.getResourceType(),
                 extension,
                 navigationTitle,
                 visibleInNav,
-                parameters,
                 contentsURI);
         MetaDataManager mgr = document.getMetaDataManager();
         MetaDataManager srcMgr = sourceDocument.getMetaDataManager();
@@ -93,15 +92,14 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * @param extension The extension for the document source.
      * @param navigationTitle The navigation title.
      * @param visibleInNav determines the visibility of a node in the navigation
-     * @param parameters The parameters for the creator.
      * @param initialContentsURI A URI to read the contents from.
      * @throws DocumentBuildException if an error occurs.
      * @throws DocumentException if an error occurs.
      * @throws PublicationException if an error occurs.
      */
 
-    protected void add(Document document, ResourceType documentType, String extension, String navigationTitle,
-            boolean visibleInNav, Map parameters, String initialContentsURI)
+    protected void add(Document document, ResourceType documentType, String extension,
+            String navigationTitle, boolean visibleInNav, String initialContentsURI)
             throws DocumentBuildException, DocumentException, PublicationException {
 
         try {
@@ -123,15 +121,31 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 getLogger().debug("    contents URI: [" + initialContentsURI + "]");
             }
 
-            // look up creator for documents of this type
-            DocumentCreator creator = documentType.getCreator();
-            creator.create(initialContentsURI, document, parameters);
+            create(initialContentsURI, document);
         } catch (Exception e) {
             throw new DocumentBuildException("call to creator for new document failed", e);
         }
 
         // Notify site manager about new document
         addToSiteManager(document, navigationTitle, visibleInNav);
+    }
+
+    protected void create(String initialContentsURI, Document document) throws Exception {
+
+        // Read initial contents as DOM
+        if (getLogger().isDebugEnabled())
+            getLogger().debug("DefaultCreator::create(), ready to read initial contents from URI ["
+                    + initialContentsURI + "]");
+
+        SourceResolver resolver = null;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            SourceUtil.copy(resolver, initialContentsURI, document.getSourceURI());
+        } finally {
+            if (resolver != null) {
+                this.manager.release(resolver);
+            }
+        }
     }
 
     private void addToSiteManager(Document document, String navigationTitle, boolean visibleInNav)

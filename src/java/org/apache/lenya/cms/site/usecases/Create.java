@@ -154,16 +154,14 @@ public abstract class Create extends AbstractUsecase {
                         resourceType,
                         getSourceExtension(),
                         getParameterAsString(DublinCore.ELEMENT_TITLE),
-                        getVisibleInNav(),
-                        null);
+                        getVisibleInNav());
                 resourceType.setSampleURI(""); // reset to default sample
             } else {
                 documentManager.add(document,
                         initialDocument,
                         getSourceExtension(),
                         getParameterAsString(DublinCore.ELEMENT_TITLE),
-                        getVisibleInNav(),
-                        null);
+                        getVisibleInNav());
             }
 
             setMetaData(document);
@@ -184,7 +182,7 @@ public abstract class Create extends AbstractUsecase {
         }
 
     }
-    
+
     /**
      * @return the extension to use for the document source.
      */

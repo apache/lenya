@@ -22,9 +22,7 @@
   <component-instance name="opendocument"
                       logger="lenya.resourcetypes.opendocument"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
-    <creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator">
-      <sample-name>fallback://lenya/modules/opendocument/samples/helloworld.odt</sample-name>
-    </creator>
+    <sample-name>fallback://lenya/modules/opendocument/samples/helloworld.odt</sample-name>
     <!-- NOTE: Will be matched within sitemap of this module (modules/opendocument/sitemap.xmap) -->
     <format name="xhtml" uri="cocoon://modules/opendocument/xhtml.xml"/>
     <format name="webdavGET" uri="cocoon://modules/opendocument/davget.xml"/>

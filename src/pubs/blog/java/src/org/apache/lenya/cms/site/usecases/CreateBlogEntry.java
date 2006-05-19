@@ -19,7 +19,6 @@ package org.apache.lenya.cms.site.usecases;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceSelector;
@@ -132,8 +131,7 @@ public class CreateBlogEntry extends DocumentUsecase {
                     resourceType,
                     "xml",
                     getParameterAsString(DublinCore.ELEMENT_TITLE),
-                    true,
-                    new HashMap());
+                    true);
 
             transformXML(document);
         } finally {

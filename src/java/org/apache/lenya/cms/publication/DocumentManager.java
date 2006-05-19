@@ -16,7 +16,6 @@
  */
 package org.apache.lenya.cms.publication;
 
-import java.util.Map;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 
 /**
@@ -41,15 +40,16 @@ public interface DocumentManager {
     void copy(Document sourceDocument, Document destinationDocument) throws PublicationException;
 
     /**
-     * Copies a document from one location to another location.
-     * Does not copy the documents resources
+     * Copies a document from one location to another location. Does not copy the documents
+     * resources
      * @param sourceDocument The document to copy.
      * @param destinationDocument The destination document.
      * @throws PublicationException if a document which destinationDocument depends on does not
      *             exist.
      */
-    void copyDocument(Document sourceDocument, Document destinationDocument) throws PublicationException;
-    
+    void copyDocument(Document sourceDocument, Document destinationDocument)
+            throws PublicationException;
+
     /**
      * Copies a document to another area.
      * @param sourceDocument The document to copy.
@@ -77,17 +77,13 @@ public interface DocumentManager {
      * @param extension The extension to use for the document source.
      * @param navigationTitle navigation title
      * @param visibleInNav determines the visibility of a node in the navigation
-     * @param parameters any parameters the caller needs to pass to the creator
      * 
      * @throws DocumentBuildException if the document can not be created
      * @throws PublicationException if the document is already contained.
      */
-    void add(Document document,
-            ResourceType resourceType,
-            String extension,
-            String navigationTitle,
-            boolean visibleInNav,
-            Map parameters) throws DocumentBuildException, PublicationException;
+    void add(Document document, ResourceType resourceType, String extension,
+            String navigationTitle, boolean visibleInNav) throws DocumentBuildException,
+            PublicationException;
 
     /**
      * Creates a new document in the same publication the <code>parentDocument</code> belongs to
@@ -98,17 +94,12 @@ public interface DocumentManager {
      * @param extension The extension to use for the document source.
      * @param navigationTitle navigation title
      * @param visibleInNav determines the visibility of a node in the navigation
-     * @param parameters any parameters the caller needs to pass to the creator
      * 
      * @throws DocumentBuildException if the document can not be created
      * @throws PublicationException if the document is already contained.
      */
-    void add(Document document,
-            Document sourceDocument,
-            String extension,
-            String navigationTitle,
-            boolean visibleInNav,
-            Map parameters) throws DocumentBuildException, PublicationException;
+    void add(Document document, Document sourceDocument, String extension, String navigationTitle,
+            boolean visibleInNav) throws DocumentBuildException, PublicationException;
 
     /**
      * Deletes a document.
@@ -145,7 +136,7 @@ public interface DocumentManager {
      *             exist.
      */
     void copy(DocumentSet sources, DocumentSet destinations) throws PublicationException;
-    
+
     /**
      * Moves a document to another location, incl. all requiring documents. If a sitetree is used,
      * this means that the whole subtree is moved.

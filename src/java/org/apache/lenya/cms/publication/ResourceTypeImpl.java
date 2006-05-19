@@ -18,21 +18,16 @@ package org.apache.lenya.cms.publication;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.Iterator;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.lenya.cms.authoring.DefaultBranchCreator;
-import org.apache.lenya.cms.authoring.DocumentCreator;
 import org.apache.lenya.xml.Schema;
 
 /**
@@ -40,11 +35,10 @@ import org.apache.lenya.xml.Schema;
  * 
  * @version $Id:$
  */
-public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable, Serviceable,
-        ThreadSafe, ResourceType {
+public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable, ThreadSafe,
+        ResourceType {
 
     protected static final String SCHEMA_ELEMENT = "schema";
-    protected static final String CREATOR_ELEMENT = "creator";
     protected static final String SRC_ATTRIBUTE = "src";
     protected static final String ELEMENT_REWRITE_ATTRIBUTE = "link-attribute";
     protected static final String ATTRIBUTE_XPATH = "xpath";
@@ -60,7 +54,6 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     private String defaultSampleUri = null;
     private Map sampleUris = new HashMap();
     private String[] linkAttributeXPaths;
-    private DocumentCreator creator;
 
     /**
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
@@ -77,28 +70,15 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
                 this.schema = new Schema(language, uri);
             }
 
-            Configuration creatorConf = config.getChild(CREATOR_ELEMENT, false);
-
-            if (creatorConf != null) {
-                String creatorClassName = creatorConf.getAttribute(SRC_ATTRIBUTE);
-                Class creatorClass = Class.forName(creatorClassName);
-                this.creator = (DocumentCreator) creatorClass.newInstance();
-                this.creator.init(creatorConf, manager, getLogger());
-            } else {
-                creator = new DefaultBranchCreator();
-            }
-
             // determine the sample content locations.
-            if (creatorConf != null) {
-                Configuration[] samplesConf = creatorConf.getChildren(SAMPLE_NAME);
-                for (int i = 0; i < samplesConf.length; i++) {
-                    if (samplesConf[i].getAttributeNames().length > 0)
-                        this.sampleUris.put(samplesConf[i].getAttribute(SAMPLE_NAME_ATTRIBUTE),
-                                samplesConf[i].getValue());
-                    else { // default sample doesn't have name attribute
-                        this.sampleUri = samplesConf[i].getValue();
-                        this.defaultSampleUri = samplesConf[i].getValue();
-                    }
+            Configuration[] samplesConf = config.getChildren(SAMPLE_NAME);
+            for (int i = 0; i < samplesConf.length; i++) {
+                if (samplesConf[i].getAttributeNames().length > 0)
+                    this.sampleUris.put(samplesConf[i].getAttribute(SAMPLE_NAME_ATTRIBUTE),
+                            samplesConf[i].getValue());
+                else { // default sample doesn't have name attribute
+                    this.sampleUri = samplesConf[i].getValue();
+                    this.defaultSampleUri = samplesConf[i].getValue();
                 }
             }
 
@@ -121,15 +101,6 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
             throw new ConfigurationException("Configuring resource type failed: ", e);
         }
 
-    }
-
-    private ServiceManager manager;
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
     }
 
     public Schema getSchema() {
@@ -159,10 +130,6 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
 
     public String getSampleURI() {
         return this.sampleUri;
-    }
-
-    public DocumentCreator getCreator() {
-        return this.creator;
     }
 
     public void setName(String name) {

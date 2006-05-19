@@ -111,7 +111,7 @@ public class Put extends CreateDocument {
                             doc.getLanguage());
                     //lookupResourceType(extension)
                     resourceType = lookUpExtension(extension, selector);
-                    documentManager.add(document, resourceType, extension, doc.getName(), true, null);
+                    documentManager.add(document, resourceType, extension, doc.getName(), true);
                     setMetaData(document);
                     doc = document;
                 } finally {
