@@ -46,13 +46,8 @@
       <!-- parametrized doctype matcher -->
       <!-- pattern="{rendertype}" -->
 
-<!-- TODO: The path of the odt file should be get with the input module, like for the xml file.
- Write a special DocumentIdToPathMapper, permit a Resource to have its own Mapper-->
       <map:match pattern="*.xml">
-        <map:generate src="zip:lenya://lenya/pubs/{page-envelope:publication-id}/content/{page-envelope:area}{page-envelope:document-id}/index_{page-envelope:document-language}.odt!/content.xml"/>
-<!--
-        <map:generate src="zip:lenyadoc://{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-language}/{page-envelope:document-id}!/content.xml"/>
--->
+        <map:generate src="zip:lenyadoc:/{page-envelope:document-language}/{page-envelope:document-id}!/content.xml"/>
 
 <!--
         <map:transform src="fallback://lenya/modules/opendocument/xslt/main_html.xsl">
