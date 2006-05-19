@@ -33,6 +33,7 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentDoesNotExistException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentIdentityMapImpl;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
@@ -67,8 +68,8 @@ public class LanguageExistsAction extends ServiceableAction {
             Parameters parameters) throws Exception {
 
         Request request = ObjectModelHelper.getRequest(objectModel);
-        Session session = RepositoryUtil.getSession(request, getLogger());
-        DocumentIdentityMap map = new DocumentIdentityMap(session, this.manager, getLogger());
+        Session session = RepositoryUtil.getSession(this.manager, request);
+        DocumentIdentityMap map = new DocumentIdentityMapImpl(session, this.manager, getLogger());
 
         String url = ServletHelper.getWebappURI(request);
         Document doc = map.getFromURL(url);

@@ -35,6 +35,7 @@ import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryManager;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteUtil;
 
@@ -53,7 +54,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * and the resource type to be used)
      * 
      * @see DocumentManager#add(Document, ResourceType, String, String, boolean)
-     * @see org.apache.lenya.cms.authoring.DocumentCreator
      * @see org.apache.lenya.cms.publication.DocumentBuilder
      */
     public void add(Document document, ResourceType documentType, String extension,
@@ -664,4 +664,9 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             copy(sortedSourceDocs[i], (Document) source2target.get(sortedSourceDocs[i]));
         }
     }
+
+    public DocumentIdentityMap createDocumentIdentityMap(Session session) {
+        return new DocumentIdentityMapImpl(session, this.manager, getLogger());
+    }
+
 }

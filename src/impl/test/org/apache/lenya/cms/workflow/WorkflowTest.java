@@ -26,6 +26,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.workflow.Workflowable;
 
@@ -63,7 +64,7 @@ public class WorkflowTest extends AccessControlTest {
             User user = identity.getUser();
             getLogger().info("User: [" + user + "]");
 
-            Session session = new Session(map.getIdentityMap(), identity, getLogger());
+            Session session = RepositoryUtil.createSession(getManager(), identity);
             Workflowable instance = new DocumentWorkflowable(getManager(),
                     session,
                     document,

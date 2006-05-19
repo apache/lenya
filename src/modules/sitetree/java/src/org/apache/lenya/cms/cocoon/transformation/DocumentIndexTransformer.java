@@ -37,6 +37,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
@@ -112,8 +113,8 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
             PageEnvelope envelope = null;
             this.publication = PublicationUtil.getPublication(this.manager, _objectModel);
             Request request = ObjectModelHelper.getRequest(_objectModel);
-            Session session = RepositoryUtil.getSession(request, getLogger());
-            this.identityMap = new DocumentIdentityMap(session, this.manager, getLogger());
+            Session session = RepositoryUtil.getSession(this.manager, request);
+            this.identityMap = DocumentUtil.createDocumentIdentityMap(this.manager, session);
             
             String url = ServletHelper.getWebappURI(request);
             setDocument(this.identityMap.getFromURL(url));

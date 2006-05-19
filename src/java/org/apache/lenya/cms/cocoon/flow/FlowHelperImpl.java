@@ -35,11 +35,11 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
 import org.apache.lenya.cms.rc.FileReservedCheckInException;
@@ -68,16 +68,15 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Se
      */
     public PageEnvelope getPageEnvelope(FOM_Cocoon cocoon) throws PageEnvelopeException {
         Request request = getRequest(cocoon);
-        Session session = RepositoryUtil.getSession(request, getLogger());
-        DocumentIdentityMap map = new DocumentIdentityMap(session, this.manager, getLogger());
-        PageEnvelopeFactory factory = PageEnvelopeFactory.getInstance();
-        Publication publication;
         try {
-            publication = PublicationUtil.getPublication(this.manager, request);
-        } catch (PublicationException e) {
+            Session session = RepositoryUtil.getSession(this.manager, request);
+            DocumentIdentityMap map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+            PageEnvelopeFactory factory = PageEnvelopeFactory.getInstance();
+            Publication publication = PublicationUtil.getPublication(this.manager, request);
+            return factory.getPageEnvelope(map, cocoon.getObjectModel(), publication);
+        } catch (Exception e) {
             throw new PageEnvelopeException(e);
         }
-        return factory.getPageEnvelope(map, cocoon.getObjectModel(), publication);
     }
 
     /**
@@ -148,8 +147,13 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Se
             PageEnvelopeException, AccessControlException {
         Document document = getPageEnvelope(cocoon).getDocument();
         Request request = getRequest(cocoon);
-        Session session = RepositoryUtil.getSession(request, getLogger());
-        WorkflowUtil.invoke(this.manager, session, getLogger(), document, event);
+        try {
+            Session session = RepositoryUtil.getSession(this.manager, request);
+            WorkflowUtil.invoke(this.manager, session, getLogger(), document, event);
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
     }
 
     /**

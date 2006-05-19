@@ -21,8 +21,11 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.repository.SessionImpl;
 import org.apache.lenya.transaction.Identifiable;
 import org.apache.lenya.transaction.IdentifiableFactory;
 import org.apache.lenya.transaction.IdentityMap;
@@ -57,7 +60,8 @@ public class DocumentStoreFactory extends AbstractLogEnabled implements Identifi
 
         Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
 
-        DocumentIdentityMap docMap = new DocumentIdentityMap(map, this.manager, getLogger());
+        Session session = new SessionImpl(map, null, getLogger());
+        DocumentIdentityMap docMap = DocumentUtil.createDocumentIdentityMap(this.manager, session);
         DocumentStore store = new DocumentStore(this.manager,
                 docMap,
                 publication,

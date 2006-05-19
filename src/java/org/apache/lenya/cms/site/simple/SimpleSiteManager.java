@@ -22,6 +22,7 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentIdentityMapImpl;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.Node;
@@ -106,7 +107,7 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
         String key = getKey(publication, area);
         DocumentStore store;
         IdentifiableFactory factory = new DocumentStoreFactory(this.manager, getLogger());
-        store = (DocumentStore) map.getIdentityMap().get(factory, key);
+        store = (DocumentStore) ((DocumentIdentityMapImpl) map).getIdentityMap().get(factory, key);
 
         return store;
     }

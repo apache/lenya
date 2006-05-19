@@ -16,12 +16,12 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import org.apache.lenya.ac.impl.AccessControlTest;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
-import org.apache.lenya.cms.repository.RepositoryTestCase;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.xpath.XPathAPI;
@@ -31,7 +31,7 @@ import org.w3c.dom.NodeList;
 /**
  * Link rewriter test.
  */
-public class LinkRewriterTest extends RepositoryTestCase {
+public class LinkRewriterTest extends AccessControlTest {
 
     protected static final String DOCUMENT_ID = "/index";
     protected static final String SOURCE_DOCUMENT_ID = "/concepts";

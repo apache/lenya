@@ -19,16 +19,16 @@
 
 package org.apache.lenya.cms.publication;
 
-import org.apache.lenya.cms.LenyaTestCase;
-import org.apache.lenya.transaction.IdentityMap;
-import org.apache.lenya.transaction.IdentityMapImpl;
+import org.apache.lenya.ac.impl.AccessControlTest;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 
 /**
  * 
  * To change the template for this generated type comment go to Window>Preferences>Java>Code
  * Generation>Code and Comments
  */
-public class DefaultDocumentTest extends LenyaTestCase {
+public class DefaultDocumentTest extends AccessControlTest {
     
     protected static final DocumentTestSet[] testSets = {
             new DocumentTestSet("/index.html", "/index", Publication.AUTHORING_AREA, "en", "html"),
@@ -79,8 +79,14 @@ public class DefaultDocumentTest extends LenyaTestCase {
 
     protected DocumentIdentityMap getIdentityMap() {
         if (this.identityMap == null) {
-            IdentityMap map = new IdentityMapImpl(getLogger());
-            this.identityMap = new DocumentIdentityMap(map, getManager(), getLogger());
+            
+            Session session;
+            try {
+                session = RepositoryUtil.createSession(getManager(), getIdentity());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            this.identityMap = DocumentUtil.createDocumentIdentityMap(getManager(), session);
         }
         return this.identityMap;
     }

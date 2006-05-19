@@ -22,7 +22,6 @@ import org.apache.lenya.ac.impl.AccessControlTest;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.RepositoryTestCase;
 
 /**
  * Dublin Core test.

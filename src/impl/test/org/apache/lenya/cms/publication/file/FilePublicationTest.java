@@ -19,20 +19,20 @@
 
 package org.apache.lenya.cms.publication.file;
 
+import org.apache.lenya.ac.impl.AccessControlTest;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
-import org.apache.lenya.cms.repository.RepositoryTestCase;
 import org.apache.lenya.cms.site.SiteException;
 
 /**
  * To change the template for this generated type comment go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-public class FilePublicationTest extends RepositoryTestCase {
+public class FilePublicationTest extends AccessControlTest {
 
     /**
      * <code>sourceDocumentId</code> The source document id

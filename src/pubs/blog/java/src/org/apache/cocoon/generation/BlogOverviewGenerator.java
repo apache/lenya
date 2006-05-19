@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
@@ -31,6 +30,7 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryUtil;
@@ -176,10 +176,8 @@ public class BlogOverviewGenerator extends ServiceableGenerator {
         ServiceSelector selector = null;
         SiteManager siteManager = null;
         try {            
-            Session session = RepositoryUtil.getSession(request, this
-                    .getLogger());
-            DocumentIdentityMap map = new DocumentIdentityMap(session,
-                    this.manager, this.getLogger());
+            Session session = RepositoryUtil.getSession(this.manager, request);
+            DocumentIdentityMap map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
             Publication publication = PublicationUtil.getPublication(
                     this.manager, request);
             

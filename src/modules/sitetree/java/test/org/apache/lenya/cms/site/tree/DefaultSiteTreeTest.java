@@ -22,11 +22,11 @@ package org.apache.lenya.cms.site.tree;
 import junit.framework.TestCase;
 
 import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.lenya.ac.impl.AccessControlTest;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.RepositoryTestCase;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.tree.DefaultSiteTree;
@@ -35,7 +35,7 @@ import org.apache.lenya.cms.site.tree.SiteTreeNode;
 /**
  * Test class for the default site tree
  */
-public class DefaultSiteTreeTest extends RepositoryTestCase {
+public class DefaultSiteTreeTest extends AccessControlTest {
 
     private DefaultSiteTree siteTree = null;
 
@@ -68,7 +68,7 @@ public class DefaultSiteTreeTest extends RepositoryTestCase {
     /**
      * @see TestCase#tearDown()
      */
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
         super.tearDown();
         this.siteTree.getRepositoryNode().unlock();
     }

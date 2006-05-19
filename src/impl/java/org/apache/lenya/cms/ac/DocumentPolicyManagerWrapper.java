@@ -39,6 +39,7 @@ import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryUtil;
@@ -78,10 +79,8 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         ContextUtility contextUtility = null;
         try {
             contextUtility = (ContextUtility) serviceManager.lookup(ContextUtility.ROLE);
-            Session session = RepositoryUtil.getSession(contextUtility.getRequest(), getLogger());
-            DocumentIdentityMap map = new DocumentIdentityMap(session,
-                    getServiceManager(),
-                    getLogger());
+            Session session = RepositoryUtil.getSession(this.serviceManager, contextUtility.getRequest());
+            DocumentIdentityMap map = DocumentUtil.createDocumentIdentityMap(this.serviceManager, session);
             if (map.isDocument(webappUrl)) {
                 Document document = map.getFromURL(webappUrl);
                 if (document.existsInAnyLanguage()) {

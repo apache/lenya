@@ -39,8 +39,8 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.RepositoryUtil;
@@ -156,11 +156,12 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
             ProcessingException {
 
         Request request = ObjectModelHelper.getRequest(objectModel);
-        Session session = RepositoryUtil.getSession(request, getLogger());
         Publication pub;
+        Session session;
         try {
+            session = RepositoryUtil.getSession(this.manager, request);
             pub = PublicationUtil.getPublication(this.manager, objectModel);
-        } catch (PublicationException e) {
+        } catch (Exception e) {
             throw new ProcessingException("Error geting publication id / area from page envelope",
                     e);
         }
@@ -173,7 +174,7 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
             }
         }
 
-        DocumentIdentityMap map = new DocumentIdentityMap(session, this.manager, getLogger());
+        DocumentIdentityMap map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
         this.document = map.get(pub, area, docId, language);
     }
 

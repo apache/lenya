@@ -29,6 +29,8 @@ import org.apache.cocoon.Constants;
 import org.apache.commons.lang.StringUtils;
 import org.apache.excalibur.source.Source;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.regexp.RE;
@@ -315,8 +317,13 @@ public class LinkStatusGenerator extends ServiceableGenerator
     throws ProcessingException, SAXException, IOException {
         
         Request request = ObjectModelHelper.getRequest(objectModel);
-        Session session = RepositoryUtil.getSession(request, getLogger());
-        this.identityMap = new DocumentIdentityMap(session, this.manager, getLogger());
+        Session session;
+        try {
+            session = RepositoryUtil.getSession(this.manager, request);
+        } catch (RepositoryException e) {
+            throw new ProcessingException(e);
+        }
+        this.identityMap = DocumentUtil.createDocumentIdentityMap(this.manager, session);
 
         super.setup(resolver, objectModel, src, par);
         this.src = src;

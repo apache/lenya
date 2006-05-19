@@ -16,63 +16,28 @@
  */
 package org.apache.lenya.cms.repository;
 
-import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.transaction.IdentityMap;
-import org.apache.lenya.transaction.TransactionException;
-import org.apache.lenya.transaction.UnitOfWork;
-import org.apache.lenya.transaction.UnitOfWorkImpl;
 
 /**
  * Repository session.
  */
-public class Session extends AbstractLogEnabled {
-    
-    /**
-     * Ctor.
-     * @param map The identity map.
-     * @param identity The identity.
-     * @param logger The logger.
-     */
-    public Session(IdentityMap map, Identity identity, Logger logger) {
-        this.unitOfWork = new UnitOfWorkImpl(map, logger);
-        this.unitOfWork.setIdentity(identity);
-        ContainerUtil.enableLogging(this, logger);
-    }
-    
-    private UnitOfWork unitOfWork;
-    
-    /**
-     * @return The unit of work.
-     */
-    public UnitOfWork getUnitOfWork() {
-        return this.unitOfWork;
-    }
+public interface Session {
 
+    /**
+     * @return the identity this session belongs to.
+     */
+    Identity getIdentity();
+    
     /**
      * Commits the transaction.
      * @throws RepositoryException if an error occurs.
      */
-    public void commit() throws RepositoryException {
-        try {
-            getUnitOfWork().commit();
-        } catch (TransactionException e) {
-            throw new RepositoryException(e);
-        }
-    }
+    void commit() throws RepositoryException;
     
     /**
      * Rolls the transaction back.
      * @throws RepositoryException if an error occurs.
      */
-    public void rollback() throws RepositoryException {
-        try {
-            getUnitOfWork().rollback();
-        } catch (TransactionException e) {
-            throw new RepositoryException(e);
-        }
-    }
+    void rollback() throws RepositoryException;
     
 }

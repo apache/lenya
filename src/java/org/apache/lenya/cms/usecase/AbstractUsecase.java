@@ -39,11 +39,11 @@ import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.LockException;
 
 /**
@@ -482,8 +482,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
 
     protected DocumentIdentityMap getDocumentIdentityMap() {
         if (this.documentFactory == null) {
-            IdentityMap map = getSession().getUnitOfWork().getIdentityMap();
-            this.documentFactory = new DocumentIdentityMap(map, this.manager, getLogger());
+            this.documentFactory = DocumentUtil.createDocumentIdentityMap(this.manager, session);
         }
         return this.documentFactory;
     }
@@ -493,7 +492,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      */
     public final void initialize() throws Exception {
         Request request = ContextHelper.getRequest(this.context);
-        Session session = RepositoryUtil.getSession(request, getLogger());
+        Session session = RepositoryUtil.getSession(this.manager, request);
         setSession(session);
     }
 

@@ -26,12 +26,12 @@ import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
-import org.apache.lenya.transaction.IdentityMapImpl;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.log4j.Logger;
 
@@ -196,11 +196,10 @@ public class WorkflowInvoker extends ParameterWrapper {
             log.debug("Workflow event: [" + eventName + "]");
             // check for workflow instance first (task can initialize the workflow history)
             try {
-                org.apache.avalon.framework.logger.Logger logger = new ConsoleLogger();
-                Session session = new Session(new IdentityMapImpl(logger), null, logger);
-                DocumentIdentityMap map = new DocumentIdentityMap(session, this.manager, logger);
+                Session session = RepositoryUtil.createSession(this.manager, null);
+                DocumentIdentityMap map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
                 this.document = map.getFromURL(webappUrl);
-            } catch (DocumentBuildException e) {
+            } catch (Exception e) {
                 throw new ExecutionException(e);
             }
         }
@@ -213,8 +212,7 @@ public class WorkflowInvoker extends ParameterWrapper {
     public void invokeTransition() throws ExecutionException {
 
         try {
-            org.apache.avalon.framework.logger.Logger logger = new ConsoleLogger();
-            Session session = new Session(new IdentityMapImpl(logger), null, logger);
+            Session session = RepositoryUtil.createSession(this.manager, null);
             WorkflowUtil.invoke(this.manager,
                     session,
                     new ConsoleLogger(),

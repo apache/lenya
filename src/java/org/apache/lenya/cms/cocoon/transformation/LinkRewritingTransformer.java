@@ -38,6 +38,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.RepositoryUtil;
@@ -99,8 +100,8 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
         Request _request = ObjectModelHelper.getRequest(_objectModel);
 
         try {
-            Session session = RepositoryUtil.getSession(_request, getLogger());
-            this.identityMap = new DocumentIdentityMap(session, this.manager, getLogger());
+            Session session = RepositoryUtil.getSession(this.manager, _request);
+            this.identityMap = DocumentUtil.createDocumentIdentityMap(this.manager, session);
             String url = ServletHelper.getWebappURI(_request);
             this.currentDocument = this.identityMap.getFromURL(url);
         } catch (final Exception e1) {

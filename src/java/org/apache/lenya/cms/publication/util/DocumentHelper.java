@@ -32,10 +32,12 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
@@ -62,8 +64,13 @@ public class DocumentHelper {
             throw new RuntimeException(e);
         }
         Request request = ObjectModelHelper.getRequest(_objectModel);
-        Session session = RepositoryUtil.getSession(request, new ConsoleLogger());
-        this.identityMap = new DocumentIdentityMap(session, manager, new ConsoleLogger());
+        Session session;
+        try {
+            session = RepositoryUtil.getSession(manager, request);
+        } catch (RepositoryException e) {
+            throw new RuntimeException(e);
+        }
+        this.identityMap = DocumentUtil.createDocumentIdentityMap(manager, session);
     }
 
     /**

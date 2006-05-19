@@ -35,6 +35,7 @@ import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryUtil;
@@ -89,10 +90,10 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
         Document document = null;
 
         Request request = ObjectModelHelper.getRequest(objectModel);
-        Session session = RepositoryUtil.getSession(request, getLogger());
-        DocumentIdentityMap docFactory = new DocumentIdentityMap(session, this.manager, getLogger());
 
         try {
+            Session session = RepositoryUtil.getSession(this.manager, request);
+            DocumentIdentityMap docFactory = DocumentUtil.createDocumentIdentityMap(this.manager, session);
             Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
             document = docFactory.get(publication, area, docId, docLang);
         } catch (Exception e) {

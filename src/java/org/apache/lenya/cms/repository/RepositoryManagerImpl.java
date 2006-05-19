@@ -21,7 +21,9 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.transaction.IdentityMapImpl;
 
 /**
  * Repository manager implementation.
@@ -64,6 +66,10 @@ public class RepositoryManagerImpl extends AbstractLogEnabled implements Reposit
         } else {
             node.registerRemoved();
         }
+    }
+
+    public Session createSession(Identity identity) throws RepositoryException {
+        return new SessionImpl(new IdentityMapImpl(getLogger()), identity, getLogger());
     }
 
 }

@@ -31,8 +31,8 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.generation.ServiceableGenerator;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
@@ -146,11 +146,11 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
             this.getLogger().debug("Parameter areas: " + areasStr);
         }
 
-        Session session = RepositoryUtil.getSession(request, getLogger());
-        this.identityMap = new DocumentIdentityMap(session, this.manager, getLogger());
         try {
+            Session session = RepositoryUtil.getSession(this.manager, request);
+            this.identityMap = DocumentUtil.createDocumentIdentityMap(this.manager, session);
             this.publication = PublicationUtil.getPublication(this.manager, _objectModel);
-        } catch (PublicationException e) {
+        } catch (Exception e) {
             throw new ProcessingException("Could not create publication: ", e);
         }
         this.attributes = new AttributesImpl();

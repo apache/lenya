@@ -78,7 +78,7 @@ public class RoleCondition implements Condition {
             PolicyManager policyManager = accessController.getPolicyManager();
             Policy policy = policyManager.getPolicy(accessController.getAccreditableManager(), url);
 
-            Role[] roles = policy.getRoles(workflowable.getSession().getUnitOfWork().getIdentity());
+            Role[] roles = policy.getRoles(workflowable.getSession().getIdentity());
             boolean complied = false;
 
             for (int i = 0; i < roles.length; i++) {

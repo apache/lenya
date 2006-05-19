@@ -26,6 +26,7 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentIdentityMapImpl;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.Label;
@@ -66,7 +67,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         String key = getKey(publication, area);
         DefaultSiteTree sitetree;
         IdentifiableFactory factory = new SiteTreeFactory(this.manager, getLogger());
-        sitetree = (DefaultSiteTree) map.getIdentityMap().get(factory, key);
+        sitetree = (DefaultSiteTree) ((DocumentIdentityMapImpl) map).getIdentityMap().get(factory, key);
 
         return sitetree;
     }

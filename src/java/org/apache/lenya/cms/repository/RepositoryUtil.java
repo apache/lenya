@@ -16,20 +16,52 @@
  */
 package org.apache.lenya.cms.repository;
 
-import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.transaction.IdentityMapImpl;
 
+/**
+ * Repository utility class.
+ */
 public class RepositoryUtil {
 
-    public static Session getSession(Request request, Logger logger) {
+    /**
+     * Returns the session attached to the request or creates a session.
+     * @param manager The service manager.
+     * @param request The request.
+     * @return A session.
+     * @throws RepositoryException if an error occurs.
+     */
+    public static Session getSession(ServiceManager manager, Request request)
+            throws RepositoryException {
         Session session = (Session) request.getAttribute(Session.class.getName());
         if (session == null) {
             org.apache.cocoon.environment.Session cocoonSession = request.getSession();
             Identity identity = (Identity) cocoonSession.getAttribute(Identity.class.getName());
-            session = new Session(new IdentityMapImpl(logger), identity, logger);
+            session = createSession(manager, identity);
             request.setAttribute(Session.class.getName(), session);
+        }
+        return session;
+    }
+
+    /**
+     * Creates a session.
+     * @param manager The service manager.
+     * @param identity The identity.
+     * @return a session.
+     * @throws RepositoryException if an error occurs.
+     */
+    public static Session createSession(ServiceManager manager, Identity identity)
+            throws RepositoryException {
+        RepositoryManager repoMgr = null;
+        Session session;
+        try {
+            repoMgr = (RepositoryManager) manager.lookup(RepositoryManager.ROLE);
+            session = repoMgr.createSession(identity);
+        } catch (Exception e) {
+            throw new RepositoryException(e);
+        } finally {
+            manager.release(repoMgr);
         }
         return session;
     }

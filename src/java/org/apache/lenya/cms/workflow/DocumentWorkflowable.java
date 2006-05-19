@@ -170,7 +170,7 @@ public class DocumentWorkflowable extends AbstractLogEnabled implements Workflow
         String string = "event:" + version.getEvent();
         string += " state:" + version.getState();
 
-        Identity identity = getSession().getUnitOfWork().getIdentity();
+        Identity identity = getSession().getIdentity();
         string += " user:" + identity.getUser().getId();
         string += " machine:" + identity.getMachine().getIp();
 

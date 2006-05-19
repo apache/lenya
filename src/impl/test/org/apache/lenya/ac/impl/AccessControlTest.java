@@ -31,34 +31,37 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.file.FileAccreditableManager;
+import org.apache.lenya.cms.LenyaTestCase;
 import org.apache.lenya.cms.ac.PublicationAccessControllerResolver;
+import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
-import org.apache.lenya.cms.repository.RepositoryTestCase;
+import org.apache.lenya.cms.repository.RepositoryUtil;
 
 /**
  * To change the template for this generated type comment go to Window>Preferences>Java>Code
  * Generation>Code and Comments
  */
-public class AccessControlTest extends RepositoryTestCase {
+public class AccessControlTest extends LenyaTestCase {
 
     private ServiceSelector accessControllerResolverSelector;
     private AccessControllerResolver accessControllerResolver;
     private DefaultAccessController accessController;
-    
+
     protected void login(String userId) throws AccessControlException {
-        
+
         User user = getAccreditableManager().getUserManager().getUser(userId);
-        
+
         if (user == null) {
             throw new AccessControlException("The user [" + userId + "] does not exist!");
         }
-        
+
         getAccessController().setupIdentity(getRequest());
-        
+
         Session session = getRequest().getSession();
         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
-        
+
         if (!identity.contains(user)) {
             User oldUser = identity.getUser();
             if (oldUser != null) {
@@ -69,9 +72,9 @@ public class AccessControlTest extends RepositoryTestCase {
             }
             identity.addIdentifiable(user);
         }
-        
+
         getAccessController().authorize(getRequest());
-        
+
         Accreditable[] accrs = identity.getAccreditables();
         for (int i = 0; i < accrs.length; i++) {
             getLogger().info("Accreditable: " + accrs[i]);
@@ -102,11 +105,11 @@ public class AccessControlTest extends RepositoryTestCase {
         assertNotNull(this.accessControllerResolver);
         getLogger().info("Using access controller resolver: ["
                 + this.accessControllerResolver.getClass() + "]");
-        
+
         Publication pub = PublicationUtil.getPublication(getManager(), "test");
         getLogger().info("Resolve access controller");
         getLogger().info("Publication directory: [" + pub.getDirectory().getAbsolutePath() + "]");
-        
+
         this.accessController = (DefaultAccessController) ((PublicationAccessControllerResolver) this.accessControllerResolver).resolveAccessController(URL);
 
         assertNotNull(this.accessController);
@@ -166,11 +169,24 @@ public class AccessControlTest extends RepositoryTestCase {
     protected AccreditableManager getAccreditableManager() {
         return getAccessController().getAccreditableManager();
     }
-    
+
     protected File getAccreditablesDirectory() throws AccessControlException {
         FileAccreditableManager accrMgr = (FileAccreditableManager) getAccreditableManager();
         return accrMgr.getConfigurationDirectory();
     }
 
+    private DocumentIdentityMap identityMap;
 
+    protected DocumentIdentityMap getIdentityMap() {
+        if (this.identityMap == null) {
+            org.apache.lenya.cms.repository.Session session;
+            try {
+                session = RepositoryUtil.createSession(getManager(), getIdentity());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            this.identityMap = DocumentUtil.createDocumentIdentityMap(getManager(), session);
+        }
+        return this.identityMap;
+    }
 }

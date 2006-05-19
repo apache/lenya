@@ -43,6 +43,7 @@ import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.repository.SessionImpl;
 
 /**
  * Repository source.
@@ -101,7 +102,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
         try {
             factory = (NodeFactory) this.manager.lookup(NodeFactory.ROLE);
             factory.setSession(session);
-            this.node = (Node) session.getUnitOfWork().getIdentityMap().get(factory, uri);
+            this.node = (Node) ((SessionImpl) session).getUnitOfWork().getIdentityMap().get(factory, uri);
         } catch (ServiceException e) {
             throw new SourceException("Creating repository node failed: ", e);
         } finally {

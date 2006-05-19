@@ -21,7 +21,8 @@ package org.apache.lenya.cms.publication;
 
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.lenya.transaction.IdentityMapImpl;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 
 /**
  * To change the template for this generated type comment go to Window>Preferences>Java>Code
@@ -39,10 +40,10 @@ public class TestPageEnvelope extends PageEnvelope {
         setContext("");
 
         try {
-            IdentityMapImpl idMap = new IdentityMapImpl(logger);
-            DocumentIdentityMap map = new DocumentIdentityMap(idMap, manager, logger);
+            Session session = RepositoryUtil.createSession(manager, null);
+            DocumentIdentityMap map = DocumentUtil.createDocumentIdentityMap(manager, session);
             setDocument(map.getFromURL(url));
-        } catch (DocumentBuildException e) {
+        } catch (Exception e) {
             throw new PageEnvelopeException(e);
         }
     }

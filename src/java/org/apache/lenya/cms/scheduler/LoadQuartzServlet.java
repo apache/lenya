@@ -44,6 +44,7 @@ import javax.xml.transform.TransformerException;
 import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationManagerImpl;
@@ -275,7 +276,7 @@ public class LoadQuartzServlet extends HttpServlet {
                 getScheduler().deleteJob(jobId, publicationId);
             } else if (action.equals(DOCUMENT_DELETED)) {
                 String documentUrl = (String) schedulerParameters.get(PARAMETER_DOCUMENT_URL);
-                DocumentIdentityMap map = new DocumentIdentityMap((Session) null, null, null);
+                DocumentIdentityMap map = DocumentUtil.createDocumentIdentityMap(null, null);
                 org.apache.lenya.cms.publication.Document document = map.getFromURL(documentUrl);
                 deleteDocumentJobs(document);
             }

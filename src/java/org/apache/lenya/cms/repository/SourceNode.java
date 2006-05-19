@@ -73,10 +73,14 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         enableLogging(logger);
         this.session = session;
     }
+    
+    protected SessionImpl getSessionImpl() {
+        return (SessionImpl) getSession();
+    }
 
     protected String getUserId() {
         String userId = null;
-        Identity identity = getSession().getUnitOfWork().getIdentity();
+        Identity identity = getSessionImpl().getUnitOfWork().getIdentity();
         if (identity != null) {
             User user = identity.getUser();
             if (user != null) {
@@ -142,7 +146,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
         try {
             String userName = getUserId();
-            boolean newVersion = getSession().getUnitOfWork().isDirty(this);
+            boolean newVersion = getSessionImpl().getUnitOfWork().isDirty(this);
             getRevisionController().reservedCheckIn(getRCPath(), userName, true, newVersion);
         } catch (Exception e) {
             throw new RepositoryException(e);
@@ -514,7 +518,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                 throw new RuntimeException("Cannot write to source [" + getSourceURI()
                         + "]: not locked!");
             }
-            if (getSession().getUnitOfWork() == null) {
+            if (getSessionImpl().getUnitOfWork() == null) {
                 throw new RuntimeException("Cannot write to source outside of a transaction (UnitOfWork is null)!");
             }
             registerDirty();
@@ -672,7 +676,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     public void registerDirty() throws RepositoryException {
         try {
-            getSession().getUnitOfWork().registerDirty(this);
+            getSessionImpl().getUnitOfWork().registerDirty(this);
         } catch (TransactionException e) {
             throw new RepositoryException(e);
         }
@@ -680,7 +684,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     public void registerRemoved() throws RepositoryException {
         try {
-            getSession().getUnitOfWork().registerRemoved(this);
+            getSessionImpl().getUnitOfWork().registerRemoved(this);
             SourceUtil.delete(getMetaSourceURI(), this.manager);
         } catch (Exception e) {
             throw new RepositoryException(e);

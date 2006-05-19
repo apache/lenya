@@ -28,6 +28,7 @@ import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.commons.lang.StringUtils;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
@@ -56,15 +57,13 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
 
         try {
             Request request = ObjectModelHelper.getRequest(objectModel);
-            Session session = RepositoryUtil.getSession(request, getLogger());
+            Session session = RepositoryUtil.getSession(this.manager, request);
 
             ResourceType resourceType;
             Publication pub = null;
             String attribute;
 
-            DocumentIdentityMap docFactory = new DocumentIdentityMap(session,
-                    this.manager,
-                    getLogger());
+            DocumentIdentityMap docFactory = DocumentUtil.createDocumentIdentityMap(this.manager, session);
             String webappUrl = ServletHelper.getWebappURI(request);
             Document document = docFactory.getFromURL(webappUrl);
             pub = document.getPublication();

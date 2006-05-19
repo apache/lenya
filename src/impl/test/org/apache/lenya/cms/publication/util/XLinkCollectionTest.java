@@ -23,9 +23,11 @@ import org.apache.lenya.ac.impl.AccessControlTest;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteUtil;
@@ -39,8 +41,8 @@ public class XLinkCollectionTest extends AccessControlTest {
     public void testXLinkCollection() throws PublicationException, AccessControlException,
             TransactionException, ServiceException {
         
-        DocumentIdentityMap map = getIdentityMap();
-        Session session = new Session(map.getIdentityMap(), getIdentity(), getLogger());
+        Session session = RepositoryUtil.createSession(getManager(), getIdentity());
+        DocumentIdentityMap map = DocumentUtil.createDocumentIdentityMap(getManager(), session);
         
         Publication pub = PublicationUtil.getPublication(getManager(), "test");
         DocumentIdentifier identifier = new DocumentIdentifier(pub, Publication.AUTHORING_AREA, "/collection", "en");

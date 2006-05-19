@@ -16,6 +16,8 @@
  */
 package org.apache.lenya.cms.repository;
 
+import org.apache.lenya.ac.Identity;
+
 /**
  * Repository manager.
  * @version $Id:$
@@ -41,5 +43,12 @@ public interface RepositoryManager {
      * @throws RepositoryException if an error occurs.
      */
     void delete(Node node) throws RepositoryException;
+    
+    /**
+     * @param identity The identity the session belongs to.
+     * @return A session.
+     * @throws RepositoryException if an error occurs.
+     */
+    Session createSession(Identity identity) throws RepositoryException;
     
 }

@@ -26,6 +26,7 @@ import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.lenya.cms.cocoon.task.CocoonTaskWrapper;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.scheduler.LoadQuartzServlet;
@@ -73,7 +74,7 @@ public class SchedulerHelper {
 
             NamespaceMap schedulerParameters = new NamespaceMap(LoadQuartzServlet.PREFIX);
 
-            DocumentIdentityMap identityMap = new DocumentIdentityMap((Session) null, null, null);
+            DocumentIdentityMap identityMap = DocumentUtil.createDocumentIdentityMap(null, null);
             String url = ServletHelper.getWebappURI(ObjectModelHelper.getRequest(this.objectModel));
             Publication pub = null;
 

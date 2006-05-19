@@ -16,24 +16,17 @@
  */
 package org.apache.lenya.cms.workflow.usecases;
 
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-
-import org.apache.lenya.cms.publication.DefaultDocument;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
-import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteUtil;
@@ -42,12 +35,10 @@ import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.DocumentWorkflowable;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.workflow.Version;
-import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.Workflowable;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
 
 /**
  * Publish usecase handler.
@@ -146,8 +137,7 @@ public class Publish extends DocumentUsecase {
     }
 
     protected void updateFeed() throws Exception {
-        DocumentIdentityMap map = new DocumentIdentityMap(this.getSession(),
-                this.manager, this.getLogger());
+        DocumentIdentityMap map = DocumentUtil.createDocumentIdentityMap(this.manager, getSession());
         
         Document[] docs = new Document[2];
         org.w3c.dom.Document[] doms = new org.w3c.dom.Document[2];

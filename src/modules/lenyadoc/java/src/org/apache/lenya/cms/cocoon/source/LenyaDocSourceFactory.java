@@ -40,10 +40,12 @@ import org.apache.excalibur.source.SourceFactory;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.URLInformation;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
@@ -176,12 +178,17 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
         docId = location.substring(start);
 
         Request request = ContextHelper.getRequest(this.context);
-        Session session = RepositoryUtil.getSession(request, getLogger());
+        Session session;
+        try {
+            session = RepositoryUtil.getSession(this.manager, request);
+        } catch (RepositoryException e1) {
+            throw new RuntimeException(e1);
+        }
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Creating repository source for URI [" + location + "]");
         }
-        DocumentIdentityMap map = new DocumentIdentityMap(session, this.manager, getLogger());
+        DocumentIdentityMap map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
         Document document;
         try {
             document = map.get(pub, area, docId, language);

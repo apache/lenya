@@ -32,6 +32,7 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
@@ -77,14 +78,27 @@ public class RevisionControllerAction extends ServiceableAction {
         } catch (Exception e) {
             throw new AccessControlException(e);
         }
-        org.apache.lenya.cms.repository.Session repoSession = RepositoryUtil.getSession(request,
-                getLogger());
-        DocumentIdentityMap map = new DocumentIdentityMap(repoSession, this.manager, getLogger());
+        org.apache.lenya.cms.repository.Session repoSession = RepositoryUtil.getSession(this.manager,
+                request);
+
+        DocumentIdentityMap map;
+        DocumentManager docManager = null;
+        try {
+            docManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
+            map = docManager.createDocumentIdentityMap(repoSession);
+        } finally {
+            if (docManager != null) {
+                this.manager.release(docManager);
+            }
+        }
+
         Document document = null;
 
         try {
             publication = PublicationUtil.getPublication(this.manager, objectModel);
-            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel, publication);
+            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map,
+                    objectModel,
+                    publication);
             document = envelope.getDocument();
         } catch (Exception e) {
             getLogger().error("Resolving page envelope failed: ", e);
