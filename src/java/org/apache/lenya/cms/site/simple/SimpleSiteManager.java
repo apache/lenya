@@ -22,7 +22,6 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.cms.publication.DocumentIdentityMapImpl;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.Node;
@@ -89,8 +88,9 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
     /**
      * @param document The document.
      * @return The store of the document.
+     * @throws SiteException if an error occurs.
      */
-    private DocumentStore getStore(Document document) {
+    private DocumentStore getStore(Document document) throws SiteException {
         Publication publication = document.getPublication();
         String area = document.getArea();
         DocumentIdentityMap map = document.getIdentityMap();
@@ -102,12 +102,17 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
      * @param publication The publication.
      * @param area The area.
      * @return A document store.
+     * @throws SiteException if an error occurs.
      */
-    protected DocumentStore getStore(DocumentIdentityMap map, Publication publication, String area) {
+    protected DocumentStore getStore(DocumentIdentityMap map, Publication publication, String area) throws SiteException {
         String key = getKey(publication, area);
         DocumentStore store;
         IdentifiableFactory factory = new DocumentStoreFactory(this.manager, getLogger());
-        store = (DocumentStore) ((DocumentIdentityMapImpl) map).getIdentityMap().get(factory, key);
+        try {
+            store = (DocumentStore) map.buildObject(factory, key);
+        } catch (Exception e) {
+            throw new SiteException(e);
+        }
 
         return store;
     }

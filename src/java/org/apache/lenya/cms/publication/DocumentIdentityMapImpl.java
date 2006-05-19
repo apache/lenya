@@ -25,6 +25,7 @@ import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.repository.SessionImpl;
 import org.apache.lenya.transaction.Identifiable;
+import org.apache.lenya.transaction.IdentifiableFactory;
 import org.apache.lenya.transaction.IdentityMap;
 
 /**
@@ -321,6 +322,10 @@ public class DocumentIdentityMapImpl extends AbstractLogEnabled implements Docum
      */
     public String getType() {
         return Document.TRANSACTIONABLE_TYPE;
+    }
+
+    public Object buildObject(Object factory, String key) throws Exception {
+        return getIdentityMap().get((IdentifiableFactory) factory, key);
     }
 
 }

@@ -105,22 +105,15 @@ public interface DocumentIdentityMap extends IdentifiableFactory {
      * @throws DocumentBuildException if an error occurs.
      */
     boolean isDocument(String webappUrl) throws DocumentBuildException;
-
+    
     /**
-     * Builds a document key.
-     * @param publication The publication.
-     * @param area The area.
-     * @param documentId The document ID.
-     * @param language The language.
-     * @return A key.
+     * Generic method to build objects using the identity map.
+     * @TODO We have to find a better solution for this.
+     * @param factory The factory.
+     * @param key The key.
+     * @return An object.
+     * @throws Exception if an error occurs.
      */
-    String getKey(Publication publication, String area, String documentId, String language);
-
-    /**
-     * Builds a document key.
-     * @param webappUrl The web application URL.
-     * @return A key.
-     */
-    String getKey(String webappUrl);
+    Object buildObject(Object factory, String key) throws Exception;
 
 }
