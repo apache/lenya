@@ -30,9 +30,9 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.source.SourceUtil;
 import org.apache.cocoon.xml.AbstractXMLConsumer;
+import org.apache.commons.collections.map.LRUMap;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.util.CacheMap;
 import org.xml.sax.Attributes;
 
 /**
@@ -177,7 +177,7 @@ public class URIParameterizerImpl
 
     protected static final int CACHE_CAPACITY = 1000;
 
-    private static Map cache = new CacheMap(CACHE_CAPACITY);
+    private static Map cache = new LRUMap(CACHE_CAPACITY);
 
     private ServiceManager manager;
 
@@ -187,5 +187,4 @@ public class URIParameterizerImpl
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
     }
-
 }
