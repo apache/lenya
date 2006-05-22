@@ -30,7 +30,6 @@ import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.templating.ExistingUsecaseResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
-import org.apache.lenya.cms.publication.templating.PublicationTemplateManagerImpl;
 
 /**
  * Input module to resolve fallback usecases
@@ -45,6 +44,17 @@ public class UsecaseFallbackModule extends AbstractPageEnvelopeModule implements
     }
 
     protected static final String USECASE_SITEMAP = "usecase.xmap";
+
+    /**
+     * Returns the base URI for a certain publication.
+     * @param publication The publication.
+     * @return A string.
+     */
+    protected static String getBaseURI(Publication publication) {
+        String publicationUri = "context://" + Publication.PUBLICATION_PREFIX_URI + "/"
+                + publication.getId();
+        return publicationUri;
+    }
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
@@ -65,7 +75,7 @@ public class UsecaseFallbackModule extends AbstractPageEnvelopeModule implements
 
             Publication publication = resolver.getPublication();
             if (publication != null) {
-                resolvedSitemapUri = PublicationTemplateManagerImpl.getBaseURI(publication) + "/"
+                resolvedSitemapUri = UsecaseFallbackModule.getBaseURI(publication) + "/"
                         + USECASE_SITEMAP;
             } else {
                 resolvedSitemapUri = "context://lenya/" + USECASE_SITEMAP;
