@@ -30,6 +30,7 @@ import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.transaction.TransactionException;
 
@@ -40,48 +41,54 @@ public class XLinkCollectionTest extends AccessControlTest {
 
     public void testXLinkCollection() throws PublicationException, AccessControlException,
             TransactionException, ServiceException {
-        
+
         Session session = RepositoryUtil.createSession(getManager(), getIdentity());
         DocumentIdentityMap map = DocumentUtil.createDocumentIdentityMap(getManager(), session);
-        
+
         Publication pub = PublicationUtil.getPublication(getManager(), "test");
-        DocumentIdentifier identifier = new DocumentIdentifier(pub, Publication.AUTHORING_AREA, "/collection", "en");
+        DocumentIdentifier identifier = new DocumentIdentifier(pub,
+                Publication.AUTHORING_AREA,
+                "/collection",
+                "en");
         XlinkCollection collection = new XlinkCollection(getManager(), map, identifier, getLogger());
-        
-        SiteUtil.getSiteStructure(getManager(), collection).getRepositoryNode().lock();
-        
+
+        SiteStructure structure = SiteUtil.getSiteStructure(getManager(),
+                map,
+                pub,
+                identifier.getArea());
+        structure.getRepositoryNode().lock();
+
         SiteManager siteManager = null;
         ServiceSelector selector = null;
         try {
             selector = (ServiceSelector) getManager().lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(pub.getSiteManagerHint());
-            
-            siteManager.add(collection);
-        }
-        finally {
+
+            siteManager.add(collection.getDelegate());
+        } finally {
             selector.release(siteManager);
             getManager().release(selector);
         }
 
         Document doc = map.get(pub, Publication.AUTHORING_AREA, "/index", "en");
-        
-        collection.getRepositoryNode().lock();
+
+        collection.getDelegate().getRepositoryNode().lock();
         collection.add(doc);
-        
+
         collection.save();
-        
-        collection.getRepositoryNode().unlock();
-        SiteUtil.getSiteStructure(getManager(), collection).getRepositoryNode().unlock();
-        
-        
+
+        collection.getDelegate().getRepositoryNode().unlock();
+        structure.getRepositoryNode().unlock();
+
         Collection coll2 = new XlinkCollection(getManager(), map, identifier, getLogger());
-        
-        assertSame(collection.getRepositoryNode(), coll2.getRepositoryNode());
-        
-        assertEquals(collection.getSourceURI(), coll2.getSourceURI());
+
+        assertSame(collection.getDelegate().getRepositoryNode(), coll2.getDelegate()
+                .getRepositoryNode());
+
+        assertEquals(collection.getDelegate().getSourceURI(), coll2.getDelegate().getSourceURI());
         assertEquals(coll2.size(), 1);
         assertTrue(coll2.contains(doc));
-        
+
     }
-    
+
 }

@@ -26,6 +26,7 @@ import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.CollectionImpl;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Element;
@@ -79,18 +80,26 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
     protected Document loadDocument(Element documentElement) throws DocumentBuildException {
         String documentId = documentElement.getAttribute(ATTRIBUTE_ID);
         String language = documentElement.getAttribute(ATTRIBUTE_LANGUAGE);
-        Document document = getIdentityMap().get(getPublication(), getArea(), documentId, language);
+        Document document = getDelegate().getIdentityMap().get(getDelegate().getPublication(),
+                getDelegate().getArea(),
+                documentId,
+                language);
         return document;
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Document#exists()
+     * @return if the document exists.
+     * @throws DocumentException if an error occurs.
      */
     public boolean exists() throws DocumentException {
         try {
-            return SourceUtil.exists(getSourceURI(), this.manager);
+            return SourceUtil.exists(getDelegate().getSourceURI(), this.manager);
         } catch (Exception e) {
             throw new DocumentException(e);
         }
+    }
+
+    public Node getRepositoryNode() {
+        return getDelegate().getRepositoryNode();
     }
 }

@@ -103,7 +103,7 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
 
         URLInformation info = new URLInformation(url);
         String area = info.getArea();
-        if (area != null && PublicationImpl.isValidArea(area)) {
+        if (area != null && PublicationUtil.isValidArea(area)) {
             String documentUrl = info.getDocumentUrl();
             if (documentUrl != null && documentUrl.startsWith("/") && documentUrl.length() > 1) {
                 isDocument = true;

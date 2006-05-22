@@ -85,7 +85,7 @@ public class XlinkCollection extends CollectionImpl {
     protected NamespaceHelper getNamespaceHelper() throws DocumentException,
             ParserConfigurationException, SAXException, IOException, ServiceException {
         NamespaceHelper helper = super.getNamespaceHelper();
-        if (!SourceUtil.exists(getSourceURI(), this.manager)) {
+        if (!SourceUtil.exists(getDelegate().getSourceURI(), this.manager)) {
             Element collectionElement = helper.getDocument().getDocumentElement();
             String namespaceDeclaration = collectionElement.getAttributeNS("http://www.w3.org/2000/xmlns/",
                     "xlink");

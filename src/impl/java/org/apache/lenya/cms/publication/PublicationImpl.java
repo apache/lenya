@@ -35,9 +35,6 @@ import org.apache.lenya.cms.repository.Node;
  */
 public class PublicationImpl extends AbstractLogEnabled implements Publication {
 
-    private static final String[] areas = { AUTHORING_AREA, DAV_AREA, STAGING_AREA, LIVE_AREA,
-            ARCHIVE_AREA, TRASH_AREA };
-
     private String id;
     private File servletContext;
     private DocumentIdToPathMapper mapper = null;
@@ -270,15 +267,6 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
             loadConfiguration();
         }
         return this.mapper;
-    }
-
-    /**
-     * Returns if a given string is a valid area name.
-     * @param area The area string to test.
-     * @return A boolean value.
-     */
-    public static boolean isValidArea(String area) {
-        return area != null && Arrays.asList(areas).contains(area);
     }
 
     /**

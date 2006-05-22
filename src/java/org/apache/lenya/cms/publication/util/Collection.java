@@ -26,7 +26,7 @@ import org.apache.lenya.cms.publication.DocumentException;
  * A document representing a collection of documents.
  * This class is in prototyping stage.
  */
-public interface Collection extends Document {
+public interface Collection {
 
     /** collection namespace */
     String NAMESPACE = "http://apache.org/cocoon/lenya/collection/1.0";
@@ -102,5 +102,10 @@ public interface Collection extends Document {
      * @throws DocumentException when something went wrong.
      */
     int size() throws DocumentException;
+    
+    /**
+     * @return The document which the collection is stored in.
+     */
+    Document getDelegate();
     
 }

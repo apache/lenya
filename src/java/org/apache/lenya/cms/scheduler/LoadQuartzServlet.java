@@ -41,15 +41,11 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 
-import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
 import org.apache.lenya.cms.publication.DocumentUtil;
-import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationManagerImpl;
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.scheduler.xml.TriggerHelper;
 import org.apache.lenya.util.NamespaceMap;
 import org.apache.lenya.xml.DocumentHelper;

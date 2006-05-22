@@ -31,10 +31,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
-import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationManagerImpl;
 import org.apache.lenya.cms.scheduler.xml.TriggerHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.log4j.Logger;

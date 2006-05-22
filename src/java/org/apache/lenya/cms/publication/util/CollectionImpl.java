@@ -23,16 +23,17 @@ import java.util.List;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.cms.publication.DefaultDocument;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.transaction.Identifiable;
 import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.xpath.XPathAPI;
@@ -46,7 +47,10 @@ import org.xml.sax.SAXException;
  * Implementation of a Collection.
  * @version $Id$
  */
-public class CollectionImpl extends DefaultDocument implements Collection {
+public class CollectionImpl extends AbstractLogEnabled implements Collection, Identifiable {
+
+    private Document delegate;
+    protected ServiceManager manager;
 
     /**
      * Ctor.
@@ -58,7 +62,17 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      */
     public CollectionImpl(ServiceManager manager, DocumentIdentityMap map,
             DocumentIdentifier identifier, Logger _logger) throws DocumentException {
-        super(manager, map, identifier, _logger);
+        enableLogging(_logger);
+        this.manager = manager;
+        try {
+            this.delegate = map.get(identifier);
+        } catch (DocumentBuildException e) {
+            throw new DocumentException(e);
+        }
+    }
+
+    public Document getDelegate() {
+        return this.delegate;
     }
 
     private List documentsList;
@@ -160,10 +174,10 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      */
     protected Document loadDocument(Element documentElement) throws DocumentBuildException {
         String documentId = documentElement.getAttribute(ATTRIBUTE_ID);
-        Document document = getIdentityMap().get(getPublication(),
-                getArea(),
+        Document document = getDelegate().getIdentityMap().get(getDelegate().getPublication(),
+                getDelegate().getArea(),
                 documentId,
-                getLanguage());
+                getDelegate().getLanguage());
         return document;
     }
 
@@ -178,7 +192,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
             Element collectionElement = helper.getDocument().getDocumentElement();
             if (collectionElement.getAttributeNS(null, ATTRIBUTE_ID) == null
                     | collectionElement.getAttribute(ATTRIBUTE_ID).equals("")) {
-                collectionElement.setAttributeNS(null, ATTRIBUTE_ID, this.getId());
+                collectionElement.setAttributeNS(null, ATTRIBUTE_ID, getDelegate().getId());
             }
             Element[] existingDocumentElements = helper.getChildren(collectionElement,
                     ELEMENT_DOCUMENT);
@@ -199,7 +213,7 @@ public class CollectionImpl extends DefaultDocument implements Collection {
                 Element documentElement = createDocumentElement(documents[i], helper);
                 collectionElement.appendChild(documentElement);
             }
-            SourceUtil.writeDOM(helper.getDocument(), getSourceURI(), this.manager);
+            SourceUtil.writeDOM(helper.getDocument(), getDelegate().getSourceURI(), this.manager);
 
         } catch (Exception e) {
             throw new TransactionException(e);
@@ -231,15 +245,16 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      * @throws ParserConfigurationException when something went wrong.
      * @throws SAXException when something went wrong.
      * @throws IOException when something went wrong.
-     * @throws ServiceException 
+     * @throws ServiceException
      */
     protected NamespaceHelper getNamespaceHelper() throws DocumentException,
             ParserConfigurationException, SAXException, IOException, ServiceException {
 
         NamespaceHelper helper;
 
-        if (SourceUtil.exists(getSourceURI(), this.manager)) {
-            org.w3c.dom.Document document = SourceUtil.readDOM(getSourceURI(), this.manager);
+        if (SourceUtil.exists(getDelegate().getSourceURI(), this.manager)) {
+            org.w3c.dom.Document document = SourceUtil.readDOM(getDelegate().getSourceURI(),
+                    this.manager);
             helper = new NamespaceHelper(Collection.NAMESPACE, Collection.DEFAULT_PREFIX, document);
         } else {
             helper = new NamespaceHelper(Collection.NAMESPACE,
@@ -280,6 +295,10 @@ public class CollectionImpl extends DefaultDocument implements Collection {
      */
     public int size() throws DocumentException {
         return documents().size();
+    }
+
+    public String getIdentifiableType() {
+        return CollectionImpl.class.getName();
     }
 
 }
