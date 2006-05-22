@@ -25,6 +25,7 @@ import java.util.Map;
 
 import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
@@ -40,14 +41,13 @@ import org.apache.lenya.cms.publication.PublicationManager;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.templating.ExistingSourceResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
-import org.apache.lenya.transaction.AbstractOperation;
 
 /**
  * Source factory following the fallback principle.
  * 
  * @version $Id$
  */
-public class FallbackSourceFactory extends AbstractOperation implements SourceFactory, Serviceable,
+public class FallbackSourceFactory extends AbstractLogEnabled implements SourceFactory, Serviceable,
         Contextualizable, URIAbsolutizer {
 
     /**
@@ -155,7 +155,6 @@ public class FallbackSourceFactory extends AbstractOperation implements SourceFa
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
     public void service(ServiceManager _manager) throws ServiceException {
-        super.service(_manager);
         this.manager = _manager;
     }
 
