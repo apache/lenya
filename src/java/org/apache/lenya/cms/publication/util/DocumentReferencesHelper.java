@@ -32,7 +32,7 @@ import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentDoesNotExistException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdToPathMapper;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.PathToDocumentIdMapper;
@@ -49,7 +49,7 @@ public class DocumentReferencesHelper {
     private static final Logger log = Logger.getLogger(DocumentReferencesHelper.class);
 
     private PageEnvelope pageEnvelope = null;
-    private DocumentIdentityMap identityMap;
+    private DocumentFactory identityMap;
 
     /**
      * Create a new DocumentReferencesHelper
@@ -59,7 +59,7 @@ public class DocumentReferencesHelper {
      * 
      * @throws ProcessingException if the page envelope could not be created.
      */
-    public DocumentReferencesHelper(DocumentIdentityMap map, Map objectModel, ServiceManager manager)
+    public DocumentReferencesHelper(DocumentFactory map, Map objectModel, ServiceManager manager)
             throws ProcessingException {
         this.identityMap = map;
         try {

@@ -26,7 +26,7 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.Request;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryUtil;
@@ -47,11 +47,11 @@ public class OperationModule extends AbstractInputModule implements Serviceable,
         super();
     }
 
-    private DocumentIdentityMap documentIdentityMap;
+    private DocumentFactory documentIdentityMap;
 
     private Request request;
 
-    protected DocumentIdentityMap getDocumentIdentityMap() {
+    protected DocumentFactory getDocumentIdentityMap() {
         if (this.documentIdentityMap == null) {
             try {
                 Session session = RepositoryUtil.getSession(this.manager, this.request);

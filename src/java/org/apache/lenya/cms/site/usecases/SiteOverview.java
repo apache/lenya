@@ -33,7 +33,7 @@ import java.util.TreeSet;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
@@ -200,7 +200,7 @@ public class SiteOverview extends AbstractUsecase {
      */
     protected Document[] getDocuments() throws PublicationException, SiteException {
         Publication publication = getPublication();
-        DocumentIdentityMap identityMap = getDocumentIdentityMap();
+        DocumentFactory identityMap = getDocumentIdentityMap();
         Document[] documents;
 
         ServiceSelector selector = null;

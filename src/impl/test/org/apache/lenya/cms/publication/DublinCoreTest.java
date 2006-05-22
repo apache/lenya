@@ -48,7 +48,7 @@ public class DublinCoreTest extends AccessControlTest {
         
         Publication publication = PublicationUtil.getPublication(getManager(), "test");
         
-        DocumentIdentityMap map = getIdentityMap();
+        DocumentFactory map = getIdentityMap();
         Document doc = map.get(publication, AREA, DOCUMENT_ID, LANGUAGE);
         
         doc.getRepositoryNode().lock();

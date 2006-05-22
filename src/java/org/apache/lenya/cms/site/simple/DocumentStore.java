@@ -23,7 +23,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentifier;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.CollectionImpl;
 import org.apache.lenya.cms.repository.Node;
@@ -53,7 +53,7 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
      * @param _logger The logger.
      * @throws DocumentException if an error occurs.
      */
-    public DocumentStore(ServiceManager manager, DocumentIdentityMap map, Publication publication,
+    public DocumentStore(ServiceManager manager, DocumentFactory map, Publication publication,
             String area, Logger _logger) throws DocumentException {
         super(manager, map, new DocumentIdentifier(publication,
                 area,

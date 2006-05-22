@@ -18,7 +18,7 @@
 package org.apache.lenya.cms.site;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 
@@ -57,7 +57,7 @@ public interface SiteManager {
      * @return A boolean value.
      * @throws SiteException if an error occurs.
      */
-    boolean requires(DocumentIdentityMap map, Node dependingResource, Node requiredResource)
+    boolean requires(DocumentFactory map, Node dependingResource, Node requiredResource)
             throws SiteException;
 
     /**
@@ -68,7 +68,7 @@ public interface SiteManager {
      * @return An array of resources.
      * @throws SiteException if an error occurs.
      */
-    Node[] getRequiredResources(DocumentIdentityMap map, Node resource) throws SiteException;
+    Node[] getRequiredResources(DocumentFactory map, Node resource) throws SiteException;
 
     /**
      * Returns the resources which require a certain resource.
@@ -78,7 +78,7 @@ public interface SiteManager {
      * @return An array of resources.
      * @throws SiteException if an error occurs.
      */
-    Node[] getRequiringResources(DocumentIdentityMap map, Node resource) throws SiteException;
+    Node[] getRequiringResources(DocumentFactory map, Node resource) throws SiteException;
 
     /**
      * Adds a document to the site structure.
@@ -179,7 +179,7 @@ public interface SiteManager {
      * @return An array of documents.
      * @throws SiteException if an error occurs.
      */
-    Document[] getDocuments(DocumentIdentityMap identityMap, Publication publication, String area)
+    Document[] getDocuments(DocumentFactory identityMap, Publication publication, String area)
             throws SiteException;
 
     /**
@@ -197,7 +197,7 @@ public interface SiteManager {
      * @return The object that holds the site structure information.
      * @throws SiteException if an error occurs.
      */
-    SiteStructure getSiteStructure(DocumentIdentityMap map, Publication publication, String area)
+    SiteStructure getSiteStructure(DocumentFactory map, Publication publication, String area)
             throws SiteException;
 
     /**

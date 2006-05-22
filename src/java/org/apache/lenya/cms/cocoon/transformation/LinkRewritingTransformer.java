@@ -37,7 +37,7 @@ import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
@@ -87,7 +87,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
 
     private Document currentDocument;
 
-    private DocumentIdentityMap identityMap;
+    private DocumentFactory identityMap;
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,

@@ -22,7 +22,7 @@ import java.util.Comparator;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 
 /**
@@ -44,7 +44,7 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
     public void sortAscending(DocumentSet set) throws SiteException {
         if (!set.isEmpty()) {
 
-            DocumentIdentityMap map = set.getDocuments()[0].getIdentityMap();
+            DocumentFactory map = set.getDocuments()[0].getIdentityMap();
             if (!check(map, new NodeSet(set))) {
                 throw new SiteException("The dependence relation is not a strict partial order!");
             }
@@ -66,7 +66,7 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
      * @return A boolean value.
      * @throws SiteException when something went wrong.
      */
-    protected boolean check(DocumentIdentityMap map, NodeSet set) throws SiteException {
+    protected boolean check(DocumentFactory map, NodeSet set) throws SiteException {
         boolean isStrictPartialOrder = isIrreflexive(map, set) && isAntisymmetric(map, set)
                 && isTransitive(map, set);
         return isStrictPartialOrder;
@@ -80,7 +80,7 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
      * @return A boolean value.
      * @throws SiteException when something went wrong.
      */
-    protected boolean isAntisymmetric(DocumentIdentityMap map, NodeSet set) throws SiteException {
+    protected boolean isAntisymmetric(DocumentFactory map, NodeSet set) throws SiteException {
         Node[] resources = set.getNodes();
         boolean isAntisymmetric = true;
         for (int i = 0; i < resources.length; i++) {
@@ -103,7 +103,7 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
      * @return A boolean value.
      * @throws SiteException when something went wrong.
      */
-    protected boolean isTransitive(DocumentIdentityMap map, NodeSet set) throws SiteException {
+    protected boolean isTransitive(DocumentFactory map, NodeSet set) throws SiteException {
         Node[] resources = set.getNodes();
         boolean isTransitive = true;
         for (int i = 0; i < resources.length; i++) {
@@ -128,7 +128,7 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
      * @return A boolean value
      * @throws SiteException
      */
-    protected boolean isIrreflexive(DocumentIdentityMap map, NodeSet set) throws SiteException {
+    protected boolean isIrreflexive(DocumentFactory map, NodeSet set) throws SiteException {
         Node[] resources = set.getNodes();
         boolean isIrreflexive = true;
         for (int i = 0; i < resources.length; i++) {
@@ -149,11 +149,11 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
          * 
          * @param map The identity map to operate on.
          */
-        public NodeComparator(DocumentIdentityMap map) {
+        public NodeComparator(DocumentFactory map) {
             this.map = map;
         }
 
-        private DocumentIdentityMap map;
+        private DocumentFactory map;
 
         /**
          * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
@@ -189,11 +189,11 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
          * 
          * @param map The identity map to operate on.
          */
-        public DocumentComparator(DocumentIdentityMap map) {
+        public DocumentComparator(DocumentFactory map) {
             this.map = map;
         }
 
-        private DocumentIdentityMap map;
+        private DocumentFactory map;
 
         /**
          * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)

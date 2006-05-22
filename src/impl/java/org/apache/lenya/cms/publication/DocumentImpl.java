@@ -43,7 +43,7 @@ import org.apache.lenya.cms.site.SiteManager;
 public class DocumentImpl extends AbstractLogEnabled implements Document {
 
     private DocumentIdentifier identifier;
-    private DocumentIdentityMap identityMap;
+    private DocumentFactory identityMap;
     protected ServiceManager manager;
     private MetaDataManager metaDataManager;
 
@@ -54,7 +54,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      * @param identifier The identifier.
      * @param _logger a logger
      */
-    protected DocumentImpl(ServiceManager manager, DocumentIdentityMap map,
+    protected DocumentImpl(ServiceManager manager, DocumentFactory map,
             DocumentIdentifier identifier, Logger _logger) {
 
         ContainerUtil.enableLogging(this, _logger);
@@ -376,7 +376,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     /**
      * @see org.apache.lenya.cms.publication.Document#getIdentityMap()
      */
-    public DocumentIdentityMap getIdentityMap() {
+    public DocumentFactory getIdentityMap() {
         return this.identityMap;
     }
 
@@ -442,13 +442,6 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     protected static final String IDENTIFIABLE_TYPE = "document";
-
-    /**
-     * @see org.apache.lenya.transaction.Identifiable#getIdentifiableType()
-     */
-    public String getIdentifiableType() {
-        return IDENTIFIABLE_TYPE;
-    }
 
     /**
      * @see org.apache.lenya.cms.publication.Document#getSourceURI()

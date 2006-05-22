@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2005 The Apache Software Foundation
+ * Copyright  1999-2004 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -14,18 +14,24 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.transaction;
+package org.apache.lenya.cms.repository;
 
 /**
- * An identifiable object.
- *
- * @version $Id:$
+ * Interface for repository item factories.
  */
-public interface Identifiable {
+public interface RepositoryItemFactory {
+    
+    /**
+     * @return The item type.
+     */
+    String getItemType();
 
     /**
-     * @return The type of the identifiable.
+     * @param session The current session.
+     * @param key The key.
+     * @return A repository item.
+     * @throws RepositoryException if an error occurs.
      */
-    String getIdentifiableType();
+    RepositoryItem buildItem(Session session, String key) throws RepositoryException;
     
 }

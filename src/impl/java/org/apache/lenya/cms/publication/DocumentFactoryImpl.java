@@ -22,27 +22,25 @@ import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.cms.repository.SessionImpl;
-import org.apache.lenya.transaction.Identifiable;
-import org.apache.lenya.transaction.IdentifiableFactory;
-import org.apache.lenya.transaction.IdentityMap;
 
 /**
  * A DocumentIdentityMap avoids the multiple instanciation of a document object.
  * 
  * @version $Id: DocumentIdentityMap.java 264153 2005-08-29 15:11:14Z andreas $
  */
-public class DocumentIdentityMapImpl extends AbstractLogEnabled implements DocumentIdentityMap {
+public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentFactory {
 
-    private IdentityMap map;
+    private Session session;
     protected ServiceManager manager;
 
     /**
-     * @return The identity map.
+     * @return The session.
      */
-    public IdentityMap getIdentityMap() {
-        return this.map;
+    public Session getSession() {
+        return this.session;
     }
 
     /**
@@ -51,8 +49,8 @@ public class DocumentIdentityMapImpl extends AbstractLogEnabled implements Docum
      * @param manager The service manager.
      * @param logger The logger to use.
      */
-    public DocumentIdentityMapImpl(Session session, ServiceManager manager, Logger logger) {
-        this.map = ((SessionImpl) session).getUnitOfWork().getIdentityMap();
+    public DocumentFactoryImpl(Session session, ServiceManager manager, Logger logger) {
+        this.session = session;
         this.manager = manager;
         ContainerUtil.enableLogging(this, logger);
     }
@@ -80,7 +78,11 @@ public class DocumentIdentityMapImpl extends AbstractLogEnabled implements Docum
             getLogger().debug("DocumentIdentityMap::get() got key [" + key
                     + "] from DocumentFactory");
 
-        return (Document) getIdentityMap().get(this, key);
+        try {
+            return (Document) getSession().getRepositoryItem(this, key);
+        } catch (RepositoryException e) {
+            throw new DocumentBuildException(e);
+        }
     }
 
     /**
@@ -91,7 +93,11 @@ public class DocumentIdentityMapImpl extends AbstractLogEnabled implements Docum
      */
     public Document getFromURL(String webappUrl) throws DocumentBuildException {
         String key = getKey(webappUrl);
-        return (Document) getIdentityMap().get(this, key);
+        try {
+            return (Document) getSession().getRepositoryItem(this, key);
+        } catch (RepositoryException e) {
+            throw new DocumentBuildException(e);
+        }
     }
 
     /**
@@ -277,8 +283,7 @@ public class DocumentIdentityMapImpl extends AbstractLogEnabled implements Docum
      * @see org.apache.lenya.transaction.IdentifiableFactory#build(org.apache.lenya.transaction.IdentityMap,
      *      java.lang.String)
      */
-    public Identifiable build(IdentityMap map, String key) throws Exception {
-
+    public RepositoryItem buildItem(Session session, String key) throws RepositoryException {
         if (getLogger().isDebugEnabled())
             getLogger().debug("DocumentFactory::build() called with key [" + key + "]");
 
@@ -302,6 +307,8 @@ public class DocumentIdentityMapImpl extends AbstractLogEnabled implements Docum
                     documentId,
                     language);
             document = buildDocument(this, identifier, builder);
+        } catch (Exception e) {
+            throw new RepositoryException(e);
         } finally {
             if (selector != null) {
                 if (builder != null) {
@@ -316,19 +323,7 @@ public class DocumentIdentityMapImpl extends AbstractLogEnabled implements Docum
         return document;
     }
 
-    /**
-     * *
-     * @see org.apache.lenya.transaction.IdentifiableFactory#getType()
-     */
-    public String getType() {
-        return Document.TRANSACTIONABLE_TYPE;
-    }
-
-    public Object buildObject(Object factory, String key) throws Exception {
-        return getIdentityMap().get((IdentifiableFactory) factory, key);
-    }
-
-    protected Document buildDocument(DocumentIdentityMap map, DocumentIdentifier identifier,
+    protected Document buildDocument(DocumentFactory map, DocumentIdentifier identifier,
             DocumentBuilder builder) throws DocumentBuildException {
 
         DocumentImpl document = createDocument(map, identifier, builder);
@@ -345,8 +340,8 @@ public class DocumentIdentityMapImpl extends AbstractLogEnabled implements Docum
      * @return A document.
      * @throws DocumentBuildException when something went wrong.
      */
-    protected DocumentImpl createDocument(DocumentIdentityMap map,
-            DocumentIdentifier identifier, DocumentBuilder builder) throws DocumentBuildException {
+    protected DocumentImpl createDocument(DocumentFactory map, DocumentIdentifier identifier,
+            DocumentBuilder builder) throws DocumentBuildException {
         DocumentImpl document = new DocumentImpl(this.manager, map, identifier, getLogger());
         final String canonicalUrl = builder.buildCanonicalUrl(identifier);
         final String prefix = "/" + identifier.getPublication().getId() + "/"
@@ -363,4 +358,7 @@ public class DocumentIdentityMapImpl extends AbstractLogEnabled implements Docum
                 identifier.getLanguage());
     }
 
+    public String getItemType() {
+        return Document.TRANSACTIONABLE_TYPE;
+    }
 }

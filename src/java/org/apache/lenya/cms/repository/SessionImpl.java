@@ -29,7 +29,7 @@ import org.apache.lenya.transaction.UnitOfWorkImpl;
  * Repository session.
  */
 public class SessionImpl extends AbstractLogEnabled implements Session {
-    
+
     /**
      * Ctor.
      * @param map The identity map.
@@ -41,13 +41,13 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
         this.unitOfWork.setIdentity(identity);
         ContainerUtil.enableLogging(this, logger);
     }
-   
+
     public Identity getIdentity() {
         return getUnitOfWork().getIdentity();
     }
- 
+
     private UnitOfWork unitOfWork;
-    
+
     /**
      * @return The unit of work.
      */
@@ -66,7 +66,7 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
             throw new RepositoryException(e);
         }
     }
-    
+
     /**
      * Rolls the transaction back.
      * @throws RepositoryException if an error occurs.
@@ -78,5 +78,15 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
             throw new RepositoryException(e);
         }
     }
-    
+
+    /**
+     * @see org.apache.lenya.cms.repository.Session#getRepositoryItem(org.apache.lenya.cms.repository.RepositoryItemFactory,
+     *      java.lang.String)
+     */
+    public RepositoryItem getRepositoryItem(RepositoryItemFactory factory, String key)
+            throws RepositoryException {
+        RepositoryItemFactoryWrapper wrapper = new RepositoryItemFactoryWrapper(factory, this);
+        return (RepositoryItem) getUnitOfWork().getIdentityMap().get(wrapper, key);
+    }
+
 }

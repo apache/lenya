@@ -24,7 +24,7 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.log4j.Logger;
 
@@ -55,7 +55,7 @@ public final class DublinCoreHelper {
      * @return a String. The value of the DCIdentifier.
      * @throws DocumentException when something with the document went wrong.
      */
-    public static String getDCIdentifier(ServiceManager manager, DocumentIdentityMap map,
+    public static String getDCIdentifier(ServiceManager manager, DocumentFactory map,
             Publication publication, String area, String documentId) throws DocumentException {
 
         String identifier = null;

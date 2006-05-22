@@ -23,7 +23,7 @@ import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.site.SiteManager;
@@ -69,7 +69,7 @@ public class CreateLanguage extends Create {
         Document source = getSourceDocument();
         List nonExistingLanguages = new ArrayList();
         String[] languages = source.getPublication().getLanguages();
-        DocumentIdentityMap map = source.getIdentityMap();
+        DocumentFactory map = source.getIdentityMap();
         for (int i = 0; i < languages.length; i++) {
             Document version = map.get(source.getPublication(),
                     source.getArea(),

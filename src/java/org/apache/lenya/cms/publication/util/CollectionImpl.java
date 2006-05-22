@@ -32,8 +32,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentifier;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
-import org.apache.lenya.transaction.Identifiable;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.xpath.XPathAPI;
@@ -47,7 +46,7 @@ import org.xml.sax.SAXException;
  * Implementation of a Collection.
  * @version $Id$
  */
-public class CollectionImpl extends AbstractLogEnabled implements Collection, Identifiable {
+public class CollectionImpl extends AbstractLogEnabled implements Collection {
 
     private Document delegate;
     protected ServiceManager manager;
@@ -60,7 +59,7 @@ public class CollectionImpl extends AbstractLogEnabled implements Collection, Id
      * @param _logger a logger
      * @throws DocumentException when something went wrong.
      */
-    public CollectionImpl(ServiceManager manager, DocumentIdentityMap map,
+    public CollectionImpl(ServiceManager manager, DocumentFactory map,
             DocumentIdentifier identifier, Logger _logger) throws DocumentException {
         enableLogging(_logger);
         this.manager = manager;
@@ -295,10 +294,6 @@ public class CollectionImpl extends AbstractLogEnabled implements Collection, Id
      */
     public int size() throws DocumentException {
         return documents().size();
-    }
-
-    public String getIdentifiableType() {
-        return CollectionImpl.class.getName();
     }
 
 }

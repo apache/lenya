@@ -29,9 +29,11 @@ import org.apache.lenya.cms.repo.Translation;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.transaction.Identifiable;
 
-public class RepoNode extends AbstractLogEnabled implements Node, Identifiable {
+/**
+ * Repository node.
+ */
+public class RepoNode extends AbstractLogEnabled implements Node {
 
     private Translation translation;
 

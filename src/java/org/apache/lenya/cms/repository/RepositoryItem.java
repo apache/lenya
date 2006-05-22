@@ -16,20 +16,6 @@
  */
 package org.apache.lenya.cms.repository;
 
-/**
- * Factory to produce repository nodes.
- * @version $Id:$
- */
-public interface NodeFactory extends RepositoryItemFactory {
-
-    /**
-     * The role of the service.
-     */
-    String ROLE = NodeFactory.class.getName();
-    
-    /**
-     * @param session The session.
-     */
-    void setSession(Session session);
+public interface RepositoryItem {
 
 }

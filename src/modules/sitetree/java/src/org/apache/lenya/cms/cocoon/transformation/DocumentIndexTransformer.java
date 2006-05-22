@@ -36,7 +36,7 @@ import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.Publication;
@@ -94,7 +94,7 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
     private Publication publication;
     private String area;
     private SiteTree siteTree;
-    private DocumentIdentityMap identityMap;
+    private DocumentFactory identityMap;
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,

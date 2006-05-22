@@ -41,7 +41,7 @@ public class TestPageEnvelope extends PageEnvelope {
 
         try {
             Session session = RepositoryUtil.createSession(manager, null);
-            DocumentIdentityMap map = DocumentUtil.createDocumentIdentityMap(manager, session);
+            DocumentFactory map = DocumentUtil.createDocumentIdentityMap(manager, session);
             setDocument(map.getFromURL(url));
         } catch (Exception e) {
             throw new PageEnvelopeException(e);

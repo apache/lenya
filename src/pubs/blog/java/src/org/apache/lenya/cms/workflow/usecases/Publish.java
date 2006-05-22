@@ -23,7 +23,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
@@ -137,7 +137,7 @@ public class Publish extends DocumentUsecase {
     }
 
     protected void updateFeed() throws Exception {
-        DocumentIdentityMap map = DocumentUtil.createDocumentIdentityMap(this.manager, getSession());
+        DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, getSession());
         
         Document[] docs = new Document[2];
         org.w3c.dom.Document[] doms = new org.w3c.dom.Document[2];

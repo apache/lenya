@@ -23,7 +23,7 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.impl.AccessControlTest;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryUtil;
@@ -50,7 +50,7 @@ public class WorkflowTest extends AccessControlTest {
     public void testWorkflow() throws Exception {
         Publication publication = PublicationUtil.getPublication(getManager(), "test");
         String url = "/" + publication.getId() + URL;
-        DocumentIdentityMap map = getIdentityMap();
+        DocumentFactory map = getIdentityMap();
         Document document = map.getFromURL(url);
 
         document.getRepositoryNode().lock();

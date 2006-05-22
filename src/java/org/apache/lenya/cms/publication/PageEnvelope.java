@@ -176,7 +176,7 @@ public class PageEnvelope {
      * @param publication The publication.
      * @throws PageEnvelopeException when something went wrong.
      */
-    public PageEnvelope(DocumentIdentityMap map, String contextPath, String webappUrl,
+    public PageEnvelope(DocumentFactory map, String contextPath, String webappUrl,
             File servletContext, Publication publication) throws PageEnvelopeException {
         this.identityMap = map;
         this.context = contextPath;
@@ -186,13 +186,13 @@ public class PageEnvelope {
 
     private String webappUrl;
 
-    private DocumentIdentityMap identityMap;
+    private DocumentFactory identityMap;
 
     /**
      * Returns the identity map.
      * @return An identity map.
      */
-    public DocumentIdentityMap getIdentityMap() {
+    public DocumentFactory getIdentityMap() {
         return this.identityMap;
     }
 

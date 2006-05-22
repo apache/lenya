@@ -22,16 +22,17 @@ import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
-import org.apache.lenya.transaction.Identifiable;
-import org.apache.lenya.transaction.IdentifiableFactory;
-import org.apache.lenya.transaction.IdentityMap;
+import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryItem;
+import org.apache.lenya.cms.repository.RepositoryItemFactory;
+import org.apache.lenya.cms.repository.Session;
 
 /**
  * Factory for sitetree objects.
  * 
  * @version $Id: SiteTreeFactory.java 179568 2005-06-02 09:27:26Z jwkaltz $
  */
-public class SiteTreeFactory extends AbstractLogEnabled implements IdentifiableFactory {
+public class SiteTreeFactory extends AbstractLogEnabled implements RepositoryItemFactory {
 
     protected ServiceManager manager;
 
@@ -45,24 +46,21 @@ public class SiteTreeFactory extends AbstractLogEnabled implements IdentifiableF
         ContainerUtil.enableLogging(this, logger);
     }
 
-    /**
-     * @see org.apache.lenya.transaction.IdentifiableFactory#build(org.apache.lenya.transaction.IdentityMap,
-     *      java.lang.String)
-     */
-    public Identifiable build(IdentityMap map, String key) throws Exception {
+    public RepositoryItem buildItem(Session session, String key) throws RepositoryException {
         String[] snippets = key.split(":");
         String publicationId = snippets[0];
         String area = snippets[1];
-
-        Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
-        DefaultSiteTree tree = new DefaultSiteTree(publication, area, this.manager, getLogger());
+        DefaultSiteTree tree;
+        try {
+            Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
+            tree = new DefaultSiteTree(publication, area, this.manager, getLogger());
+        } catch (Exception e) {
+            throw new RepositoryException(e);
+        }
         return tree;
     }
 
-    /**
-     * @see org.apache.lenya.transaction.IdentifiableFactory#getType()
-     */
-    public String getType() {
+    public String getItemType() {
         return SiteTree.IDENTIFIABLE_TYPE;
     }
 

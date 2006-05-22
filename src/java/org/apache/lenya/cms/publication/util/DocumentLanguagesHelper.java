@@ -25,7 +25,7 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
@@ -37,7 +37,7 @@ import org.apache.lenya.cms.publication.PublicationUtil;
 public class DocumentLanguagesHelper {
 
     private PageEnvelope pageEnvelope = null;
-    private DocumentIdentityMap identityMap;
+    private DocumentFactory identityMap;
 
     /**
      * Create a new DocumentlanguageHelper.
@@ -46,7 +46,7 @@ public class DocumentLanguagesHelper {
      * @param manager The service manager.
      * @throws ProcessingException if the page envelope could not be created.
      */
-    public DocumentLanguagesHelper(DocumentIdentityMap map, Map objectModel, ServiceManager manager)
+    public DocumentLanguagesHelper(DocumentFactory map, Map objectModel, ServiceManager manager)
             throws ProcessingException {
         this.identityMap = map;
         try {

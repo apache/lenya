@@ -27,7 +27,7 @@ import org.apache.lenya.cms.metadata.MetaDataOwner;
  * 
  * @version $Id$
  */
-public interface Node extends MetaDataOwner {
+public interface Node extends MetaDataOwner, RepositoryItem {
     
     /**
      * @return The session this node belongs to.

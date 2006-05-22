@@ -17,14 +17,14 @@
 package org.apache.lenya.cms.site;
 
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.transaction.Identifiable;
+import org.apache.lenya.cms.repository.RepositoryItem;
 
 /**
  * Object to hold a site structure information.
  *
  * @version $Id$
  */
-public interface SiteStructure extends Identifiable {
+public interface SiteStructure extends RepositoryItem {
     
     /**
      * @return The repository node the site structure is stored in.

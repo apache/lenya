@@ -24,7 +24,7 @@ import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 
@@ -48,7 +48,7 @@ public class SiteUtil {
      * @return A site structure.
      * @throws SiteException if an error occurs.
      */
-    public static SiteStructure getSiteStructure(ServiceManager manager, DocumentIdentityMap map,
+    public static SiteStructure getSiteStructure(ServiceManager manager, DocumentFactory map,
             Publication publication, String area) throws SiteException {
 
         SiteStructure structure = null;
@@ -106,7 +106,7 @@ public class SiteUtil {
             siteManager = (SiteManager) selector.select(document.getPublication()
                     .getSiteManagerHint());
 
-            DocumentIdentityMap map = document.getIdentityMap();
+            DocumentFactory map = document.getIdentityMap();
             Node node = NodeFactory.getNode(document);
             set = getExistingDocuments(map, node);
 
@@ -135,7 +135,7 @@ public class SiteUtil {
      * @throws DocumentBuildException if an error occurs.
      * @throws DocumentException if an error occurs.
      */
-    public static DocumentSet getExistingDocuments(DocumentIdentityMap map, Node node)
+    public static DocumentSet getExistingDocuments(DocumentFactory map, Node node)
             throws DocumentBuildException, DocumentException {
         DocumentSet set = new DocumentSet();
         Document document = map.get(node.getPublication(), node.getArea(), node.getDocumentId());

@@ -28,7 +28,7 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.Constants;
 import org.apache.commons.lang.StringUtils;
 import org.apache.excalibur.source.Source;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryUtil;
@@ -195,7 +195,7 @@ public class LinkStatusGenerator extends ServiceableGenerator
     
     protected Source inputSource;
     String src;
-    private DocumentIdentityMap identityMap;
+    private DocumentFactory identityMap;
 
     /**
      * Stores links to process and the referrer links

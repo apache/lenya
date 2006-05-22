@@ -31,7 +31,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.transformation.AbstractSAXTransformer;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.repository.RepositoryUtil;
@@ -125,7 +125,7 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
         try {
             Request request = ObjectModelHelper.getRequest(_objectModel);
             Session session = RepositoryUtil.getSession(this.manager, request);
-            DocumentIdentityMap map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+            DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
 
             String webappUrl = ServletHelper.getWebappURI(request);
             Document document = null;

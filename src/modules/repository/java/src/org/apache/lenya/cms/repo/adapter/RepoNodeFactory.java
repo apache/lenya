@@ -29,10 +29,9 @@ import org.apache.lenya.cms.repo.Translation;
 import org.apache.lenya.cms.repo.cocoon.SessionUtil;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
+import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.repository.SourceNode;
-import org.apache.lenya.transaction.Identifiable;
-import org.apache.lenya.transaction.IdentityMap;
 
 /**
  * Repository node factory.
@@ -45,7 +44,8 @@ public class RepoNodeFactory extends AbstractLogEnabled implements NodeFactory, 
         this.oldSession = session;
     }
 
-    public Identifiable build(IdentityMap map, String key) throws Exception {
+    public RepositoryItem buildItem(Session session, String key)
+            throws org.apache.lenya.cms.repository.RepositoryException {
 
         String url = key;
         String path = url.substring("lenya://lenya/pubs/".length());
@@ -65,12 +65,12 @@ public class RepoNodeFactory extends AbstractLogEnabled implements NodeFactory, 
 
             try {
 
-                org.apache.lenya.cms.repo.Session session = SessionUtil.getSession(this.manager);
-                
+                org.apache.lenya.cms.repo.Session repoSession = SessionUtil.getSession(this.manager);
+
                 String language = docPath.substring(underscoreIndex + 1, underscoreIndex + 3);
                 docPath = docPath.substring(0, docPath.length() - "/index_de.xml".length());
 
-                Publication pub = session.getPublication(pubId);
+                Publication pub = repoSession.getPublication(pubId);
                 Area area = pub.getArea(areaId);
 
                 Translation trans = null;
@@ -84,13 +84,14 @@ public class RepoNodeFactory extends AbstractLogEnabled implements NodeFactory, 
                 }
                 return new RepoNode(trans, getLogger());
             } catch (RepositoryException e) {
-                throw new RepositoryException("Error resolving translation for URL [" + key + "]: "
-                        + e.getMessage(), e);
+                throw new org.apache.lenya.cms.repository.RepositoryException("Error resolving translation for URL ["
+                        + key + "]: " + e.getMessage(),
+                        e);
             }
         }
     }
 
-    public String getType() {
+    public String getItemType() {
         return Node.IDENTIFIABLE_TYPE;
     }
 

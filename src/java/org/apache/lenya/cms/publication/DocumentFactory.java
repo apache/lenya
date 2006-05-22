@@ -16,14 +16,15 @@
  */
 package org.apache.lenya.cms.publication;
 
-import org.apache.lenya.transaction.IdentifiableFactory;
+import org.apache.lenya.cms.repository.RepositoryItemFactory;
+import org.apache.lenya.cms.repository.Session;
 
 /**
  * A DocumentIdentityMap avoids the multiple instanciation of a document object.
  * 
  * @version $Id$
  */
-public interface DocumentIdentityMap extends IdentifiableFactory {
+public interface DocumentFactory extends RepositoryItemFactory {
 
     /**
      * Returns a document.
@@ -115,13 +116,8 @@ public interface DocumentIdentityMap extends IdentifiableFactory {
     boolean isDocument(String webappUrl) throws DocumentBuildException;
     
     /**
-     * Generic method to build objects using the identity map.
-     * @TODO We have to find a better solution for this.
-     * @param factory The factory.
-     * @param key The key.
-     * @return An object.
-     * @throws Exception if an error occurs.
+     * @return The session.
      */
-    Object buildObject(Object factory, String key) throws Exception;
-
+    Session getSession();
+    
 }

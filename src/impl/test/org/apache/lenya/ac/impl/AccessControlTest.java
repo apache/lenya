@@ -33,7 +33,7 @@ import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.file.FileAccreditableManager;
 import org.apache.lenya.cms.LenyaTestCase;
 import org.apache.lenya.cms.ac.PublicationAccessControllerResolver;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
@@ -175,9 +175,9 @@ public class AccessControlTest extends LenyaTestCase {
         return accrMgr.getConfigurationDirectory();
     }
 
-    private DocumentIdentityMap identityMap;
+    private DocumentFactory identityMap;
 
-    protected DocumentIdentityMap getIdentityMap() {
+    protected DocumentFactory getIdentityMap() {
         if (this.identityMap == null) {
             org.apache.lenya.cms.repository.Session session;
             try {

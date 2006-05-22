@@ -32,7 +32,7 @@ import org.apache.lenya.ac.Identifiable;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
@@ -148,7 +148,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
             }
 
             Publication publication = document.getPublication();
-            DocumentIdentityMap map = document.getIdentityMap();
+            DocumentFactory map = document.getIdentityMap();
 
             Document liveDocument = map.getAreaVersion(document, Publication.LIVE_AREA);
 

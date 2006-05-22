@@ -38,7 +38,7 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.servlet.multipart.Part;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryException;
@@ -478,9 +478,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
         return (Part) getParameter(name);
     }
 
-    private DocumentIdentityMap documentFactory;
+    private DocumentFactory documentFactory;
 
-    protected DocumentIdentityMap getDocumentIdentityMap() {
+    protected DocumentFactory getDocumentIdentityMap() {
         if (this.documentFactory == null) {
             this.documentFactory = DocumentUtil.createDocumentIdentityMap(this.manager, session);
         }

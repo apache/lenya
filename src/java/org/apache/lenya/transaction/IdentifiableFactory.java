@@ -27,10 +27,10 @@ public interface IdentifiableFactory {
      * Builds an identifiable.
      * @param map The identity map.
      * @param key The key.
-     * @return An identifiable.
+     * @return An identifiable object.
      * @throws Exception if an error occurs.
      */
-    Identifiable build(IdentityMap map, String key) throws Exception;
+    Object build(IdentityMap map, String key) throws Exception;
     
     /**
      * @return The type of the identifables to produce.

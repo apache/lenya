@@ -30,7 +30,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -47,7 +47,7 @@ import org.apache.lenya.util.ServletHelper;
 public class DocumentHelper {
 
     private Map objectModel;
-    private DocumentIdentityMap identityMap;
+    private DocumentFactory identityMap;
     private Publication publication;
 
     /**

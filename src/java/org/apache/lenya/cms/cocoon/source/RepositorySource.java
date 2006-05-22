@@ -31,7 +31,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
 import org.apache.avalon.framework.logger.Logger;
-import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.excalibur.source.ModifiableTraversableSource;
 import org.apache.excalibur.source.Source;
@@ -43,7 +42,6 @@ import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.cms.repository.SessionImpl;
 
 /**
  * Repository source.
@@ -102,8 +100,8 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
         try {
             factory = (NodeFactory) this.manager.lookup(NodeFactory.ROLE);
             factory.setSession(session);
-            this.node = (Node) ((SessionImpl) session).getUnitOfWork().getIdentityMap().get(factory, uri);
-        } catch (ServiceException e) {
+            this.node = (Node) session.getRepositoryItem(factory, uri);
+        } catch (Exception e) {
             throw new SourceException("Creating repository node failed: ", e);
         } finally {
             if (factory != null) {

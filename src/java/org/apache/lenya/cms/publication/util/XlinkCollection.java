@@ -28,7 +28,7 @@ import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentIdentifier;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.lenya.xml.XLink;
 import org.w3c.dom.Element;
@@ -48,7 +48,7 @@ public class XlinkCollection extends CollectionImpl {
      * @param _logger a logger
      * @throws DocumentException when something went wrong.
      */
-    public XlinkCollection(ServiceManager manager, DocumentIdentityMap map,
+    public XlinkCollection(ServiceManager manager, DocumentFactory map,
             DocumentIdentifier identifier, Logger _logger) throws DocumentException {
         super(manager, map, identifier, _logger);
     }

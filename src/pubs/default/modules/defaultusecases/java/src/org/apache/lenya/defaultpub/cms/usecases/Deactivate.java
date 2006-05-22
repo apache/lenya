@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -37,7 +37,7 @@ import org.apache.lenya.workflow.WorkflowException;
 
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.Source;
-import org.xml.sax.InputSource;
+
 /**
  * Deactivate usecase handler.
  * 
@@ -73,7 +73,7 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
                 addInfoMessage("The single document cannot be deactivated because the workflow event cannot be invoked.");
             }
 
-            DocumentIdentityMap map = getSourceDocument().getIdentityMap();
+            DocumentFactory map = getSourceDocument().getIdentityMap();
             Document liveDoc = map.getAreaVersion(getSourceDocument(), Publication.LIVE_AREA);
             DocumentSet subSite = SiteUtil.getSubSite(this.manager, liveDoc);
             Node node = NodeFactory.getNode(liveDoc);

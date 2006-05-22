@@ -21,7 +21,7 @@ package org.apache.lenya.transaction;
  *
  * @version $Id$
  */
-public interface Transactionable extends Identifiable, Versionable {
+public interface Transactionable extends Versionable {
 
     /**
      * Saves the object.

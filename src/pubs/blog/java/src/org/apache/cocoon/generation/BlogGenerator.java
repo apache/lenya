@@ -27,7 +27,7 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
@@ -123,7 +123,7 @@ public class BlogGenerator extends ServiceableGenerator {
         try {
             Request request = ObjectModelHelper.getRequest(this.objectModel);
             Session session = RepositoryUtil.getSession(this.manager, request);
-            DocumentIdentityMap map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+            DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
             Publication publication = PublicationUtil.getPublication(
                     this.manager, request);
                        

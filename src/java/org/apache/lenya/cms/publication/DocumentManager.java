@@ -199,6 +199,6 @@ public interface DocumentManager {
      * @param session The session.
      * @return A document identity map.
      */
-    DocumentIdentityMap createDocumentIdentityMap(Session session);
+    DocumentFactory createDocumentIdentityMap(Session session);
 
 }

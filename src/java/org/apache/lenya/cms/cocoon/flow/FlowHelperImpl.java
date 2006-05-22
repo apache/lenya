@@ -34,7 +34,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeException;
@@ -70,7 +70,7 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Se
         Request request = getRequest(cocoon);
         try {
             Session session = RepositoryUtil.getSession(this.manager, request);
-            DocumentIdentityMap map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+            DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
             PageEnvelopeFactory factory = PageEnvelopeFactory.getInstance();
             Publication publication = PublicationUtil.getPublication(this.manager, request);
             return factory.getPageEnvelope(map, cocoon.getObjectModel(), publication);

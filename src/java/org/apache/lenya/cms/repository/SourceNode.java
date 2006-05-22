@@ -382,13 +382,6 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     /**
-     * @see org.apache.lenya.transaction.Identifiable#getIdentifiableType()
-     */
-    public String getIdentifiableType() {
-        return Node.IDENTIFIABLE_TYPE;
-    }
-
-    /**
      * @see org.apache.lenya.cms.repository.Node#exists()
      */
     public boolean exists() throws RepositoryException {

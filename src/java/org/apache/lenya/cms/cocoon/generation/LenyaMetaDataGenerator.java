@@ -38,7 +38,7 @@ import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
@@ -174,7 +174,7 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
             }
         }
 
-        DocumentIdentityMap map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+        DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
         this.document = map.get(pub, area, docId, language);
     }
 

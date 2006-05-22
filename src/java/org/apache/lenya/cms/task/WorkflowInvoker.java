@@ -26,7 +26,7 @@ import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.RepositoryUtil;
@@ -197,7 +197,7 @@ public class WorkflowInvoker extends ParameterWrapper {
             // check for workflow instance first (task can initialize the workflow history)
             try {
                 Session session = RepositoryUtil.createSession(this.manager, null);
-                DocumentIdentityMap map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+                DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
                 this.document = map.getFromURL(webappUrl);
             } catch (Exception e) {
                 throw new ExecutionException(e);

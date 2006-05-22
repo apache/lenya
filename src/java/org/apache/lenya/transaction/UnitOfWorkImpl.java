@@ -150,7 +150,7 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
         }
 
         if (getIdentityMap() != null) {
-            Identifiable[] objects = getIdentityMap().getObjects();
+            Object[] objects = getIdentityMap().getObjects();
             for (int i = 0; i < objects.length; i++) {
                 if (objects[i] instanceof Transactionable) {
                     Transactionable t = (Transactionable) objects[i];
@@ -196,7 +196,7 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
             getLogger().debug("UnitOfWorkImpl::rollback() called");
         }
         if (getIdentityMap() != null) {
-            Identifiable[] objects = getIdentityMap().getObjects();
+            Object[] objects = getIdentityMap().getObjects();
             for (int i = 0; i < objects.length; i++) {
                 if (objects[i] instanceof Transactionable) {
                     Transactionable t = (Transactionable) objects[i];

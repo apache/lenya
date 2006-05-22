@@ -22,7 +22,7 @@ import java.util.List;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentSet;
@@ -88,7 +88,7 @@ public class Paste extends DocumentUsecase {
             nodes.add(siteNode);
 
             Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
-            DocumentIdentityMap map = getDocumentIdentityMap();
+            DocumentFactory map = getDocumentIdentityMap();
             Publication pub = getSourceDocument().getPublication();
             String area = getSourceDocument().getArea();
             Document clippedDocument = clipboard.getDocument(map, pub);
@@ -125,7 +125,7 @@ public class Paste extends DocumentUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
 
-        DocumentIdentityMap identityMap = getDocumentIdentityMap();
+        DocumentFactory identityMap = getDocumentIdentityMap();
         Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
         Publication pub = getSourceDocument().getPublication();
         Document clippedDocument = clipboard.getDocument(identityMap, pub);
@@ -151,7 +151,7 @@ public class Paste extends DocumentUsecase {
 
     protected Document getTargetDocument() throws SiteException, DocumentBuildException,
             ServiceException {
-        DocumentIdentityMap identityMap = getDocumentIdentityMap();
+        DocumentFactory identityMap = getDocumentIdentityMap();
         Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
         Publication pub = getSourceDocument().getPublication();
         Document clippedDocument = clipboard.getDocument(identityMap, pub);

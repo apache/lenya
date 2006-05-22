@@ -31,7 +31,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
@@ -63,7 +63,7 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
             Publication pub = null;
             String attribute;
 
-            DocumentIdentityMap docFactory = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+            DocumentFactory docFactory = DocumentUtil.createDocumentIdentityMap(this.manager, session);
             String webappUrl = ServletHelper.getWebappURI(request);
             Document document = docFactory.getFromURL(webappUrl);
             pub = document.getPublication();

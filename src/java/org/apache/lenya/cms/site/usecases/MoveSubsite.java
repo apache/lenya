@@ -28,7 +28,7 @@ import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
@@ -75,7 +75,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
         } else {
 
             Document document = getSourceDocument();
-            DocumentIdentityMap identityMap = getDocumentIdentityMap();
+            DocumentFactory identityMap = getDocumentIdentityMap();
 
             DocumentSet set = SiteUtil.getSubSite(this.manager, document);
             Document[] documents = set.getDocuments();
@@ -156,7 +156,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
 
         Document doc = getSourceDocument();
         DocumentSet sources = SiteUtil.getSubSite(this.manager, doc);
-        DocumentIdentityMap map = getDocumentIdentityMap();
+        DocumentFactory map = getDocumentIdentityMap();
 
         Document target = doc.getIdentityMap().getAreaVersion(doc, getTargetArea());
         target = SiteUtil.getAvailableDocument(this.manager, target);
@@ -228,7 +228,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
     protected DocumentSet getTargetDocsToCopy() throws ServiceException, SiteException,
             DocumentBuildException {
         Document doc = getSourceDocument();
-        DocumentIdentityMap map = getDocumentIdentityMap();
+        DocumentFactory map = getDocumentIdentityMap();
         DocumentSet docsToCopy = new DocumentSet();
         ServiceSelector selector = null;
         SiteManager siteManager = null;
@@ -270,7 +270,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
             SiteException, DocumentBuildException, DocumentException {
         DocumentSet docsToDelete = new DocumentSet();
         Document doc = getSourceDocument();
-        DocumentIdentityMap map = getDocumentIdentityMap();
+        DocumentFactory map = getDocumentIdentityMap();
         ServiceSelector selector = null;
         SiteManager siteManager = null;
         try {

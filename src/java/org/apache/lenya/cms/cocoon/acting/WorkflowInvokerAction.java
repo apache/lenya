@@ -30,7 +30,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
@@ -96,7 +96,7 @@ public class WorkflowInvokerAction extends ServiceableAction {
             throw new AccessControlException(e);
         }
         Session session = RepositoryUtil.getSession(this.manager, request);
-        DocumentIdentityMap map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+        DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
         Document document = map.get(pub, area, documentId, language);
 
         if (getLogger().isDebugEnabled()) {

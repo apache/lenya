@@ -39,7 +39,7 @@ import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceFactory;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -188,7 +188,7 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Creating repository source for URI [" + location + "]");
         }
-        DocumentIdentityMap map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+        DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
         Document document;
         try {
             document = map.get(pub, area, docId, language);

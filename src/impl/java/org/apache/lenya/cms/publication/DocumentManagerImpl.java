@@ -391,7 +391,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      */
     public void copyAllLanguageVersions(Document source, Document target)
             throws PublicationException {
-        DocumentIdentityMap identityMap = source.getIdentityMap();
+        DocumentFactory identityMap = source.getIdentityMap();
         String[] languages = source.getLanguages();
         for (int i = 0; i < languages.length; i++) {
 
@@ -542,7 +542,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * @see org.apache.lenya.cms.publication.DocumentManager#deleteAllLanguageVersions(org.apache.lenya.cms.publication.Document)
      */
     public void deleteAllLanguageVersions(Document document) throws PublicationException {
-        DocumentIdentityMap identityMap = document.getIdentityMap();
+        DocumentFactory identityMap = document.getIdentityMap();
         String[] languages = document.getLanguages();
         for (int i = 0; i < languages.length; i++) {
             Document version = identityMap.getLanguageVersion(document, languages[i]);
@@ -665,8 +665,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         }
     }
 
-    public DocumentIdentityMap createDocumentIdentityMap(Session session) {
-        return new DocumentIdentityMapImpl(session, this.manager, getLogger());
+    public DocumentFactory createDocumentIdentityMap(Session session) {
+        return new DocumentFactoryImpl(session, this.manager, getLogger());
     }
 
 }

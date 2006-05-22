@@ -31,7 +31,7 @@ import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -104,7 +104,7 @@ public class Put extends CreateDocument {
 
                     documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
-                    DocumentIdentityMap map = getDocumentIdentityMap();
+                    DocumentFactory map = getDocumentIdentityMap();
                     Document document = map.get(getPublication(),
                             doc.getArea(),
                             doc.getId(),

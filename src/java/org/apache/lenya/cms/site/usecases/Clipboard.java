@@ -18,7 +18,7 @@ package org.apache.lenya.cms.site.usecases;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 
 /**
@@ -58,7 +58,7 @@ public class Clipboard {
      * @return A document.
      * @throws DocumentBuildException if the document could not be built.
      */
-    public Document getDocument(DocumentIdentityMap identityMap, Publication publication) throws DocumentBuildException {
+    public Document getDocument(DocumentFactory identityMap, Publication publication) throws DocumentBuildException {
         Document document = identityMap.get(publication, this.area, this.documentId, this.language);
         return document;
     }

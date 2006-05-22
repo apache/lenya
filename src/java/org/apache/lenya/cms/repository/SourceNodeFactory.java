@@ -21,8 +21,6 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.lenya.transaction.Identifiable;
-import org.apache.lenya.transaction.IdentityMap;
 
 /**
  * Factory to create source nodes.
@@ -40,7 +38,7 @@ public class SourceNodeFactory extends AbstractLogEnabled implements NodeFactory
      */
     public SourceNodeFactory() {
     }
-    
+
     /**
      * @param session The session.
      */
@@ -48,21 +46,14 @@ public class SourceNodeFactory extends AbstractLogEnabled implements NodeFactory
         this.session = session;
     }
 
-    /**
-     * @see org.apache.lenya.transaction.IdentifiableFactory#build(org.apache.lenya.transaction.IdentityMap,
-     *      java.lang.String)
-     */
-    public Identifiable build(IdentityMap map, String key) throws Exception {
+    public RepositoryItem buildItem(Session session, String key) throws RepositoryException {
         if (this.session == null) {
             throw new RepositoryException("The session has not been set!");
         }
         return new SourceNode(this.session, key, this.manager, getLogger());
     }
 
-    /**
-     * @see org.apache.lenya.transaction.IdentifiableFactory#getType()
-     */
-    public String getType() {
+    public String getItemType() {
         return Node.IDENTIFIABLE_TYPE;
     }
 

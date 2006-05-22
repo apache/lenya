@@ -20,22 +20,21 @@ import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryItem;
+import org.apache.lenya.cms.repository.RepositoryItemFactory;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.cms.repository.SessionImpl;
-import org.apache.lenya.transaction.Identifiable;
-import org.apache.lenya.transaction.IdentifiableFactory;
-import org.apache.lenya.transaction.IdentityMap;
 
 /**
  * Factory for sitetree objects.
  * 
  * @version $Id$
  */
-public class DocumentStoreFactory extends AbstractLogEnabled implements IdentifiableFactory {
+public class DocumentStoreFactory extends AbstractLogEnabled implements RepositoryItemFactory {
 
     protected ServiceManager manager;
 
@@ -50,32 +49,30 @@ public class DocumentStoreFactory extends AbstractLogEnabled implements Identifi
     }
 
     /**
-     * @see org.apache.lenya.transaction.IdentifiableFactory#build(org.apache.lenya.transaction.IdentityMap,
-     *      java.lang.String)
+     * @see org.apache.lenya.cms.repository.RepositoryItemFactory#getItemType()
      */
-    public Identifiable build(IdentityMap map, String key) throws Exception {
-        String[] snippets = key.split(":");
-        String publicationId = snippets[0];
-        String area = snippets[1];
-
-        Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
-
-        Session session = new SessionImpl(map, null, getLogger());
-        DocumentIdentityMap docMap = DocumentUtil.createDocumentIdentityMap(this.manager, session);
-        DocumentStore store = new DocumentStore(this.manager,
-                docMap,
-                publication,
-                area,
-                getLogger());
-
-        return store;
+    public String getItemType() {
+        return DocumentStore.IDENTIFIABLE_TYPE;
     }
 
     /**
-     * @see org.apache.lenya.transaction.IdentifiableFactory#getType()
+     * @see org.apache.lenya.cms.repository.RepositoryItemFactory#buildItem(org.apache.lenya.cms.repository.Session,
+     *      java.lang.String)
      */
-    public String getType() {
-        return DocumentStore.IDENTIFIABLE_TYPE;
+    public RepositoryItem buildItem(Session session, String key) throws RepositoryException {
+        String[] snippets = key.split(":");
+        String publicationId = snippets[0];
+        String area = snippets[1];
+        DocumentStore store;
+        try {
+            Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
+
+            DocumentFactory docMap = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+            store = new DocumentStore(this.manager, docMap, publication, area, getLogger());
+        } catch (Exception e) {
+            throw new RepositoryException(e);
+        }
+        return store;
     }
 
 }

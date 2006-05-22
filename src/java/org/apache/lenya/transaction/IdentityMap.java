@@ -30,7 +30,7 @@ public interface IdentityMap {
      * @param key The key for the identifiable.
      * @return An identifiable.
      */
-    Identifiable get(IdentifiableFactory factory, String key);
+    Object get(IdentifiableFactory factory, String key);
 
     /**
      * Returns the unit of work. This maybe <code>null</code> if the identity map is not involved
@@ -47,6 +47,6 @@ public interface IdentityMap {
     /**
      * @return All objects in this map.
      */
-    Identifiable[] getObjects();
+    Object[] getObjects();
 
 }

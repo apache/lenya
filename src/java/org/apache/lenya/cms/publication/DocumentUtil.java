@@ -31,8 +31,8 @@ public class DocumentUtil {
      * @param session The session.
      * @return if an error occurs.
      */
-    public static DocumentIdentityMap createDocumentIdentityMap(ServiceManager manager, Session session) {
-        DocumentIdentityMap map;
+    public static DocumentFactory createDocumentIdentityMap(ServiceManager manager, Session session) {
+        DocumentFactory map;
         DocumentManager docManager = null;
         try {
             docManager = (DocumentManager) manager.lookup(DocumentManager.ROLE);

@@ -23,7 +23,7 @@ import java.util.List;
 
 import org.apache.cocoon.ProcessingException;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -89,7 +89,7 @@ public class AccessControl extends AccessControlUsecase {
             URLInformation info = new URLInformation(getSourceURL());
             setParameter(COMPLETE_AREA, info.getCompleteArea());
 
-            DocumentIdentityMap map = getDocumentIdentityMap();
+            DocumentFactory map = getDocumentIdentityMap();
             Document sourceDocument = map.getFromURL(getSourceURL());
             setParameter(DOCUMENT, sourceDocument);
 

@@ -27,17 +27,26 @@ public interface Session {
      * @return the identity this session belongs to.
      */
     Identity getIdentity();
-    
+
     /**
      * Commits the transaction.
      * @throws RepositoryException if an error occurs.
      */
     void commit() throws RepositoryException;
-    
+
     /**
      * Rolls the transaction back.
      * @throws RepositoryException if an error occurs.
      */
     void rollback() throws RepositoryException;
-    
+
+    /**
+     * @param factory The factory.
+     * @param key The key.
+     * @return The item for the specific key.
+     * @throws RepositoryException if an error occurs.
+     */
+    RepositoryItem getRepositoryItem(RepositoryItemFactory factory, String key)
+            throws RepositoryException;
+
 }

@@ -22,7 +22,7 @@ package org.apache.lenya.cms.publication.file;
 import org.apache.lenya.ac.impl.AccessControlTest;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
@@ -98,7 +98,7 @@ public class FilePublicationTest extends AccessControlTest {
         getLogger().info("    Destination language:    [" + _destinationLanguage + "]");
 
         Publication publication = PublicationUtil.getPublication(getManager(), "test");
-        DocumentIdentityMap map = getIdentityMap();
+        DocumentFactory map = getIdentityMap();
 
         Document sourceDocument = map.get(publication,
                 sourceArea,

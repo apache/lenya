@@ -30,7 +30,7 @@ import org.apache.lenya.cms.metadata.usecases.Metadata;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -154,7 +154,7 @@ public class CreateOpenDocument extends Create {
 
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
-            DocumentIdentityMap map = getDocumentIdentityMap();
+            DocumentFactory map = getDocumentIdentityMap();
             Document document = map.get(getPublication(),
                     getArea(),
                     getNewDocumentId(),

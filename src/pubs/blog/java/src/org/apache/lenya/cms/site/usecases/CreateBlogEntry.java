@@ -30,7 +30,7 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.repository.Node;
@@ -119,7 +119,7 @@ public class CreateBlogEntry extends DocumentUsecase {
 
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
-            DocumentIdentityMap map = getDocumentIdentityMap();
+            DocumentFactory map = getDocumentIdentityMap();
 
             String documentId = getDocumentID();
             Document document = map.get(getSourceDocument().getPublication(),

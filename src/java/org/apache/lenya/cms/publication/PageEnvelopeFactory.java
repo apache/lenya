@@ -59,7 +59,7 @@ public class PageEnvelopeFactory {
      * @return A page envelope.
      * @throws PageEnvelopeException if something went wrong.
      */
-    public PageEnvelope getPageEnvelope(DocumentIdentityMap map, Map objectModel, Publication pub)
+    public PageEnvelope getPageEnvelope(DocumentFactory map, Map objectModel, Publication pub)
             throws PageEnvelopeException {
         Request request = ObjectModelHelper.getRequest(objectModel);
         String contextPath = request.getContextPath();
@@ -79,7 +79,7 @@ public class PageEnvelopeFactory {
      * @return A page envelope.
      * @throws PageEnvelopeException if something went wrong.
      */
-    public PageEnvelope getPageEnvelope(DocumentIdentityMap map, String contextPath,
+    public PageEnvelope getPageEnvelope(DocumentFactory map, String contextPath,
             String webappUrl, File servletContext, Publication pub) throws PageEnvelopeException {
         PageEnvelope envelope = new PageEnvelope(map, contextPath, webappUrl, servletContext, pub);
         return envelope;

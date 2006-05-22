@@ -34,7 +34,7 @@ import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -137,7 +137,7 @@ public abstract class Create extends AbstractUsecase {
 
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
-            DocumentIdentityMap map = getDocumentIdentityMap();
+            DocumentFactory map = getDocumentIdentityMap();
             Document document = map.get(getPublication(),
                     getArea(),
                     getNewDocumentId(),
@@ -315,7 +315,7 @@ public abstract class Create extends AbstractUsecase {
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
-            DocumentIdentityMap map = getDocumentIdentityMap();
+            DocumentFactory map = getDocumentIdentityMap();
             document = map.get(getPublication(),
                     getArea(),
                     getNewDocumentId(),

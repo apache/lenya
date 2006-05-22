@@ -23,7 +23,7 @@ import java.util.List;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -74,7 +74,7 @@ public class EmptyTrash extends AbstractUsecase {
  
         try {
             Publication publication = PublicationUtil.getPublicationFromUrl(this.manager, getSourceURL());
-            DocumentIdentityMap identityMap = getDocumentIdentityMap();
+            DocumentFactory identityMap = getDocumentIdentityMap();
             Document[] docs = getTrashDocuments();
             for (int i = 0; i < docs.length; i++) {
                 nodes.add(docs[i].getRepositoryNode());
@@ -127,7 +127,7 @@ public class EmptyTrash extends AbstractUsecase {
      */
     protected Document[] getTrashDocuments() throws PublicationException, SiteException {
         Publication publication = PublicationUtil.getPublicationFromUrl(this.manager, getSourceURL());
-        DocumentIdentityMap identityMap = getDocumentIdentityMap();
+        DocumentFactory identityMap = getDocumentIdentityMap();
         Document[] documents;
         
         ServiceSelector selector = null;

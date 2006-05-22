@@ -23,13 +23,13 @@ import java.util.Date;
 import org.apache.lenya.cms.metadata.MetaDataOwner;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.transaction.Identifiable;
+import org.apache.lenya.cms.repository.RepositoryItem;
 
 /**
  * A CMS document.
  * @version $Id$
  */
-public interface Document extends MetaDataOwner, Identifiable {
+public interface Document extends MetaDataOwner, RepositoryItem {
     
     /**
      * The document namespace URI.
@@ -138,6 +138,7 @@ public interface Document extends MetaDataOwner, Identifiable {
     /**
      * Returns the UUID.
      * @return A string.
+     * @throws DocumentException if an error occurs.
      */
     String getUUID() throws DocumentException;
     
@@ -165,7 +166,7 @@ public interface Document extends MetaDataOwner, Identifiable {
      * Returns the identity map this document belongs to.
      * @return A document identity map.
      */
-    DocumentIdentityMap getIdentityMap();
+    DocumentFactory getIdentityMap();
     
     /**
      * Returns the URI to resolve the document's source.

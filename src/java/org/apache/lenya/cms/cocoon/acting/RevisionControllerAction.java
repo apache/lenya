@@ -31,7 +31,7 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
@@ -81,7 +81,7 @@ public class RevisionControllerAction extends ServiceableAction {
         org.apache.lenya.cms.repository.Session repoSession = RepositoryUtil.getSession(this.manager,
                 request);
 
-        DocumentIdentityMap map;
+        DocumentFactory map;
         DocumentManager docManager = null;
         try {
             docManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);

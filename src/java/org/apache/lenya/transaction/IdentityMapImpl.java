@@ -43,14 +43,14 @@ public final class IdentityMapImpl extends AbstractLogEnabled implements Identit
         ContainerUtil.enableLogging(this, logger);
     }
 
-    public Identifiable get(IdentifiableFactory factory, String key) {
+    public Object get(IdentifiableFactory factory, String key) {
         String type = factory.getType();
         Map map = (Map) this.maps.get(type);
         if (map == null) {
             map = new HashMap();
             this.maps.put(type, map);
         }
-        Identifiable object = (Identifiable) map.get(key);
+        Object object = map.get(key);
 
         if (getLogger().isDebugEnabled())
             getLogger().debug("IdentityMapImpl::get() looked up type [" + type + "], key [" + key
@@ -86,7 +86,7 @@ public final class IdentityMapImpl extends AbstractLogEnabled implements Identit
     /**
      * @see org.apache.lenya.transaction.IdentityMap#getObjects()
      */
-    public Identifiable[] getObjects() {
+    public Object[] getObjects() {
         Set objects = new HashSet();
         for (Iterator i = this.maps.values().iterator(); i.hasNext();) {
             Map map = (Map) i.next();
@@ -94,7 +94,7 @@ public final class IdentityMapImpl extends AbstractLogEnabled implements Identit
                 objects.add(j.next());
             }
         }
-        return (Identifiable[]) objects.toArray(new Identifiable[objects.size()]);
+        return (Object[]) objects.toArray(new Object[objects.size()]);
     }
 
 }

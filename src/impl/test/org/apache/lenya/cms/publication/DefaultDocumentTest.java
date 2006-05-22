@@ -75,9 +75,9 @@ public class DefaultDocumentTest extends AccessControlTest {
         }
     }
 
-    private DocumentIdentityMap identityMap;
+    private DocumentFactory identityMap;
 
-    protected DocumentIdentityMap getIdentityMap() {
+    protected DocumentFactory getIdentityMap() {
         if (this.identityMap == null) {
             
             Session session;

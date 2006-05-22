@@ -26,7 +26,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentSet;
@@ -148,7 +148,7 @@ public class ChangeNodeID extends DocumentUsecase {
     }
 
     protected Document getTargetDocument() throws DocumentBuildException {
-        DocumentIdentityMap identityMap = getDocumentIdentityMap();
+        DocumentFactory identityMap = getDocumentIdentityMap();
         String nodeId = getParameterAsString(NODE_ID);
         Document parent = identityMap.getParent(getSourceDocument());
         String parentId = "";

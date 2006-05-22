@@ -30,7 +30,7 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.generation.ServiceableGenerator;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
@@ -54,7 +54,7 @@ import org.xml.sax.helpers.AttributesImpl;
 public class SitetreeFragmentGenerator extends ServiceableGenerator {
 
     protected Publication publication;
-    protected DocumentIdentityMap identityMap;
+    protected DocumentFactory identityMap;
 
     /** Parameter which denotes the documentid of the clicked node */
     protected String documentid;
