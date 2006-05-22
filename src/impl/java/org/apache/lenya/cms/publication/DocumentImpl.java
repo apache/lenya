@@ -40,7 +40,7 @@ import org.apache.lenya.cms.site.SiteManager;
  * A typical CMS document.
  * @version $Id$
  */
-public class DefaultDocument extends AbstractLogEnabled implements Document {
+public class DocumentImpl extends AbstractLogEnabled implements Document {
 
     private DocumentIdentifier identifier;
     private DocumentIdentityMap identityMap;
@@ -54,7 +54,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      * @param identifier The identifier.
      * @param _logger a logger
      */
-    protected DefaultDocument(ServiceManager manager, DocumentIdentityMap map,
+    protected DocumentImpl(ServiceManager manager, DocumentIdentityMap map,
             DocumentIdentifier identifier, Logger _logger) {
 
         ContainerUtil.enableLogging(this, _logger);
@@ -349,7 +349,7 @@ public class DefaultDocument extends AbstractLogEnabled implements Document {
      */
     public boolean equals(Object object) {
         if (getClass().isInstance(object)) {
-            DefaultDocument document = (DefaultDocument) object;
+            DocumentImpl document = (DocumentImpl) object;
             return document.getIdentifier().equals(getIdentifier());
         }
         return false;

@@ -104,7 +104,7 @@ public class DefaultDocumentTest extends AccessControlTest {
                 testSet.getArea(),
                 testSet.getId(),
                 testSet.getLanguage());
-        DefaultDocument document = new DefaultDocument(getManager(), getIdentityMap(), id, getLogger());
+        DocumentImpl document = new DocumentImpl(getManager(), getIdentityMap(), id, getLogger());
         document.setDocumentURL(testSet.getUrl());
         document.setExtension(testSet.getExtension());
 

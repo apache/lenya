@@ -331,7 +331,7 @@ public class DocumentIdentityMapImpl extends AbstractLogEnabled implements Docum
     protected Document buildDocument(DocumentIdentityMap map, DocumentIdentifier identifier,
             DocumentBuilder builder) throws DocumentBuildException {
 
-        DefaultDocument document = createDocument(map, identifier, builder);
+        DocumentImpl document = createDocument(map, identifier, builder);
         ContainerUtil.enableLogging(document, getLogger());
         return document;
     }
@@ -345,9 +345,9 @@ public class DocumentIdentityMapImpl extends AbstractLogEnabled implements Docum
      * @return A document.
      * @throws DocumentBuildException when something went wrong.
      */
-    protected DefaultDocument createDocument(DocumentIdentityMap map,
+    protected DocumentImpl createDocument(DocumentIdentityMap map,
             DocumentIdentifier identifier, DocumentBuilder builder) throws DocumentBuildException {
-        DefaultDocument document = new DefaultDocument(this.manager, map, identifier, getLogger());
+        DocumentImpl document = new DocumentImpl(this.manager, map, identifier, getLogger());
         final String canonicalUrl = builder.buildCanonicalUrl(identifier);
         final String prefix = "/" + identifier.getPublication().getId() + "/"
                 + identifier.getArea();
