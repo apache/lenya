@@ -301,7 +301,7 @@ public class DocumentIdentityMapImpl extends AbstractLogEnabled implements Docum
                     area,
                     documentId,
                     language);
-            document = builder.buildDocument(this, identifier);
+            document = buildDocument(this, identifier, builder);
         } finally {
             if (selector != null) {
                 if (builder != null) {
@@ -326,6 +326,41 @@ public class DocumentIdentityMapImpl extends AbstractLogEnabled implements Docum
 
     public Object buildObject(Object factory, String key) throws Exception {
         return getIdentityMap().get((IdentifiableFactory) factory, key);
+    }
+
+    protected Document buildDocument(DocumentIdentityMap map, DocumentIdentifier identifier,
+            DocumentBuilder builder) throws DocumentBuildException {
+
+        DefaultDocument document = createDocument(map, identifier, builder);
+        ContainerUtil.enableLogging(document, getLogger());
+        return document;
+    }
+
+    /**
+     * Creates a new document object. Override this method to create specific document objects,
+     * e.g., for different document IDs.
+     * @param map The identity map.
+     * @param identifier The identifier.
+     * @param builder The document builder.
+     * @return A document.
+     * @throws DocumentBuildException when something went wrong.
+     */
+    protected DefaultDocument createDocument(DocumentIdentityMap map,
+            DocumentIdentifier identifier, DocumentBuilder builder) throws DocumentBuildException {
+        DefaultDocument document = new DefaultDocument(this.manager, map, identifier, getLogger());
+        final String canonicalUrl = builder.buildCanonicalUrl(identifier);
+        final String prefix = "/" + identifier.getPublication().getId() + "/"
+                + identifier.getArea();
+        final String canonicalDocumentUrl = canonicalUrl.substring(prefix.length());
+        document.setDocumentURL(canonicalDocumentUrl);
+        return document;
+    }
+
+    public Document get(DocumentIdentifier identifier) throws DocumentBuildException {
+        return get(identifier.getPublication(),
+                identifier.getArea(),
+                identifier.getId(),
+                identifier.getLanguage());
     }
 
 }

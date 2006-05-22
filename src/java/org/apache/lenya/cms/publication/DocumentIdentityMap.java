@@ -27,6 +27,14 @@ public interface DocumentIdentityMap extends IdentifiableFactory {
 
     /**
      * Returns a document.
+     * @param identifier The identifier of the document.
+     * @return A document.
+     * @throws DocumentBuildException if an error occurs.
+     */
+    Document get(DocumentIdentifier identifier) throws DocumentBuildException;
+    
+    /**
+     * Returns a document.
      * @param publication The publication.
      * @param area The area.
      * @param documentId The document ID.

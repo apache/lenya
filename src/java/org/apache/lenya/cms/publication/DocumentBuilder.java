@@ -38,16 +38,6 @@ public interface DocumentBuilder {
     DocumentIdentifier getIdentitfier(String webappUrl) throws DocumentBuildException;
 
     /**
-     * Builds a document.
-     * @param map The identity map the document belongs to.
-     * @param identifier The document identifier.
-     * @return A document.
-     * @throws DocumentBuildException when something went wrong.
-     */
-    Document buildDocument(DocumentIdentityMap map, DocumentIdentifier identifier)
-            throws DocumentBuildException;
-
-    /**
      * Checks if an URL corresponds to a CMS document.
      * @param url The URL of the form /{publication-id}/...
      * @return A boolean value.

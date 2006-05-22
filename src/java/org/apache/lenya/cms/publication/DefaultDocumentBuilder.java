@@ -17,7 +17,6 @@
 
 package org.apache.lenya.cms.publication;
 
-import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
@@ -45,36 +44,6 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
     }
 
     protected ServiceManager manager;
-
-    /**
-     * @see org.apache.lenya.cms.publication.DocumentBuilder#buildDocument(org.apache.lenya.cms.publication.DocumentIdentityMap,
-     *      org.apache.lenya.cms.publication.DocumentIdentifier)
-     */
-    public Document buildDocument(DocumentIdentityMap map, DocumentIdentifier identifier)
-            throws DocumentBuildException {
-
-        DefaultDocument document = createDocument(map, identifier);
-        ContainerUtil.enableLogging(document, getLogger());
-        /*
-         * document.setExtension(extension); document.setDocumentURL(originalURL);
-         */
-        return document;
-    }
-
-    /**
-     * Creates a new document object. Override this method to create specific document objects,
-     * e.g., for different document IDs.
-     * @param map The identity map.
-     * @param identifier The identifier.
-     * @return A document.
-     * @throws DocumentBuildException when something went wrong.
-     */
-    protected DefaultDocument createDocument(DocumentIdentityMap map, DocumentIdentifier identifier)
-            throws DocumentBuildException {
-        DefaultDocument document = new DefaultDocument(this.manager, map, identifier, getLogger());
-        document.setDocumentURL(buildCanonicalDocumentUrl(identifier));
-        return document;
-    }
 
     /**
      * Removes all "."-separated extensions from a URL (e.g., <code>/foo.print.html</code> is

@@ -17,27 +17,26 @@
 package org.apache.lenya.cms.usecases.webdav;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.Vector;
-import java.text.SimpleDateFormat;
 
 import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.lenya.cms.rc.RCEnvironment;
-import org.apache.lenya.cms.rc.RCML;
-import org.apache.lenya.cms.rc.RCMLEntry;
-import org.apache.lenya.cms.rc.RevisionController;
-import org.apache.lenya.cms.site.SiteManager;
-import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.Resource;
 import org.apache.lenya.cms.publication.ResourcesManager;
-import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.publication.DocumentBuilder;
+import org.apache.lenya.cms.rc.RCEnvironment;
+import org.apache.lenya.cms.rc.RCML;
+import org.apache.lenya.cms.rc.RCMLEntry;
+import org.apache.lenya.cms.rc.RevisionController;
+import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.usecases.SiteUsecase;
 
 /**
  * Usecase to provide WebDAV propfind support for a document.
@@ -129,7 +128,7 @@ public class Propfind extends SiteUsecase {
             if (!request.equals("/" + _publication.getId() + "/authoring/")) {
                 String url = request.substring(0, request.length() - 1) + ".html";
                 DocumentIdentifier identifier = docBuilder.getIdentitfier(url);
-                Document currentDoc = docBuilder.buildDocument(getDocumentIdentityMap(), identifier);
+                Document currentDoc = getDocumentIdentityMap().get(identifier);
                 if (currentDoc.exists()) {
                     resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
                     Resource[] resources = resourcesManager.getResources(currentDoc);
