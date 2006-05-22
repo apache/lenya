@@ -269,7 +269,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
 
     protected void sendNotification(Document authoringDocument) throws DocumentBuildException,
             NotificationException {
-        User sender = getSession().getUnitOfWork().getIdentity().getUser();
+        User sender = getSession().getIdentity().getUser();
         Identifiable[] recipients = { sender };
         Document liveVersion = getDocumentIdentityMap().getAreaVersion(authoringDocument,
                 Publication.LIVE_AREA);
