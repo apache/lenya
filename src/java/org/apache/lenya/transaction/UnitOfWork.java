@@ -33,12 +33,6 @@ import org.apache.lenya.ac.Identity;
 public interface UnitOfWork {
 
     /**
-     * Returns the identity map.
-     * @return An identity map.
-     */
-    IdentityMap getIdentityMap();
-    
-    /**
      * Registers an object as new.
      * @param object The object.
      * @throws TransactionException if an error occurs.

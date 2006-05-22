@@ -17,11 +17,12 @@
 package org.apache.lenya.cms.repository;
 
 import org.apache.lenya.ac.Identity;
+import org.apache.lenya.transaction.UnitOfWork;
 
 /**
  * Repository session.
  */
-public interface Session {
+public interface Session extends UnitOfWork {
 
     /**
      * @return the identity this session belongs to.

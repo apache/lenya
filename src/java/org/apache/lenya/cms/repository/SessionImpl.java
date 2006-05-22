@@ -22,6 +22,7 @@ import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.TransactionException;
+import org.apache.lenya.transaction.Transactionable;
 import org.apache.lenya.transaction.UnitOfWork;
 import org.apache.lenya.transaction.UnitOfWorkImpl;
 
@@ -86,7 +87,28 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
     public RepositoryItem getRepositoryItem(RepositoryItemFactory factory, String key)
             throws RepositoryException {
         RepositoryItemFactoryWrapper wrapper = new RepositoryItemFactoryWrapper(factory, this);
-        return (RepositoryItem) getUnitOfWork().getIdentityMap().get(wrapper, key);
+        return (RepositoryItem) ((UnitOfWorkImpl) getUnitOfWork()).getIdentityMap().get(wrapper,
+                key);
+    }
+
+    public void registerNew(Transactionable object) throws TransactionException {
+        getUnitOfWork().registerNew(object);
+    }
+
+    public void registerDirty(Transactionable object) throws TransactionException {
+        getUnitOfWork().registerDirty(object);
+    }
+
+    public void registerRemoved(Transactionable object) throws TransactionException {
+        getUnitOfWork().registerRemoved(object);
+    }
+
+    public void setIdentity(Identity identity) {
+        getUnitOfWork().setIdentity(identity);
+    }
+
+    public boolean isDirty(Transactionable transactionable) {
+        return getUnitOfWork().isDirty(transactionable);
     }
 
 }
