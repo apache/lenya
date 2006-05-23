@@ -50,11 +50,8 @@
         <map:generate src="zip:lenyadoc:/{page-envelope:document-language}/{page-envelope:document-id}!/content.xml"/>
 
 <!--
-        <map:transform src="fallback://lenya/modules/opendocument/xslt/main_html.xsl">
-            <map:parameter name="document_name" value="{1}"/>
-            <map:parameter name="metaFileURL" value="zip://meta.xml@context://lenya/pubs/{page-envelope:publication-id}/content/{page-envelope:area}{page-envelope:document-id}/index_{page-envelope:document-language}.odt"/>
-            <map:parameter name="stylesFileURL" value="zip://styles.xml@context://lenya/pubs/{page-envelope:publication-id}/content/{page-envelope:area}{page-envelope:document-id}/index_{page-envelope:document-language}.odt"/>
-        </map:transform>
+        <map:parameter name="metaFileURL" value="{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-id}/{page-envelope:document-language}/meta.xml"/>
+        <map:parameter name="stylesFileURL" value="{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-id}/{page-envelope:document-language}/styles.xml"/>
 -->
 
         <map:transform src="fallback://lenya/modules/opendocument/xslt/opendocument2xhtml.xsl">
