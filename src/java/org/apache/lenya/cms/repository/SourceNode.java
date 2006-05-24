@@ -73,7 +73,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         enableLogging(logger);
         this.session = session;
     }
-    
+
     protected String getUserId() {
         String userId = null;
         Identity identity = getSession().getIdentity();
@@ -102,26 +102,26 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         } catch (Exception e) {
             getLogger().error(e.getMessage());
         }
-	
 
         String realSourceURI = null;
         String urlID = this.sourceURI.substring(Node.LENYA_PROTOCOL.length());
-        
+
         if (contentDir == null) {
             // Default
             realSourceURI = CONTEXT_PREFIX + urlID;
         } else {
             // Substitute e.g. "lenya://lenya/pubs/PUB_ID/content" by "contentDir/content"
-            String filePrefix = urlID.substring(0,urlID.indexOf(publicationId))+publicationId;
-            String tempString = urlID.substring(filePrefix.length()+1);
-            String fileMiddle= tempString.substring(0,tempString.indexOf("/"));
-            String fileSuffix = tempString.substring(fileMiddle.length()+1,tempString.length());
+            String filePrefix = urlID.substring(0, urlID.indexOf(publicationId)) + publicationId;
+            String tempString = urlID.substring(filePrefix.length() + 1);
+            String fileMiddle = tempString.substring(0, tempString.indexOf("/"));
+            String fileSuffix = tempString.substring(fileMiddle.length() + 1, tempString.length());
             if (new File(contentDir).isAbsolute()) {
                 // Absolute
-                realSourceURI = FILE_PREFIX + contentDir + File.separator+fileMiddle+ File.separator+fileSuffix;
+                realSourceURI = FILE_PREFIX + contentDir + File.separator + fileMiddle
+                        + File.separator + fileSuffix;
             } else {
                 // Relative
-                realSourceURI = CONTEXT_PREFIX + contentDir +"/"+ fileMiddle + "/"+fileSuffix;
+                realSourceURI = CONTEXT_PREFIX + contentDir + "/" + fileMiddle + "/" + fileSuffix;
             }
         }
         if (getLogger().isDebugEnabled()) {
@@ -296,7 +296,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                     out.write(buf, 0, read);
                     read = in.read(buf);
                 }
-                
+
             } catch (Exception e) {
                 throw new RepositoryException(e);
             } finally {
@@ -554,7 +554,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             }
         }
     }
-    
+
     private long lastModified = -1;
 
     /**
@@ -566,22 +566,21 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             source = resolver.resolveURI(getRealSourceURI());
-            
+
             long sourceLastModified;
-            
+
             if (source.exists()) {
                 sourceLastModified = source.getLastModified();
                 if (sourceLastModified > this.lastModified) {
                     this.lastModified = sourceLastModified;
                 }
-            }
-            else if (this.lastModified == -1) {
+            } else if (this.lastModified == -1) {
                 throw new RepositoryException("The source [" + getRealSourceURI()
                         + "] does not exist!");
             }
-            
+
             return this.lastModified;
-            
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -629,8 +628,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     /**
-     * @return The source URI of the meta data node.
-     * TODO: This is a hack and can be removed when UUIDs are used.
+     * @return The source URI of the meta data node. TODO: This is a hack and can be removed when
+     *         UUIDs are used.
      */
     protected String getMetaSourceURI() {
         String sourceUri = getSourceURI();
