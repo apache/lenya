@@ -5,10 +5,9 @@
   <jx:set var="dateFormat" value="${usecase.getParameter('dateFormat')}"/>
   <jx:set var="moddate" value="${usecase.getParameter('rootModDate')}"/>
   <jx:set var="defaultLang" value="${usecase.getParameter('defaultLang')}"/>
-  <jx:set var="depth" value="${usecase.getParameter('header-Depth')}"/>
  <!-- returns root webdav directory -->
   <D:response>
-    <D:href>${sourceURL.replaceFirst("authoring","webdav")}</D:href>
+    <D:href>${request.getContextPath()}${sourceURL.replaceFirst("authoring","webdav")}</D:href>
     <D:propstat>
       <D:prop>
         <D:displayname>webdav</D:displayname>
@@ -24,7 +23,7 @@
       <D:status>HTTP/1.1 200 OK</D:status>
     </D:propstat>
   </D:response>
-  <jx:if test="${depth > 0}">
+  <jx:if test="${request.getHeader('depth') &gt; 0}">
     <jx:forEach var="doc" items="${usecase.getParameter('documents')}">
       <jx:if test="${doc.getId()}">
         <jx:if test="${doc.getLanguage().equals(defaultLang)}">
@@ -32,7 +31,7 @@
           the language check is to prevent multiple folders appearing with the same name
           since concepts_en and concepts_de would both produce a folder called concepts -->
           <D:response>
-            <D:href>/${doc.getPublication().getId()}/webdav${doc.getId()}</D:href>
+            <D:href>${request.getContextPath()}/${doc.getPublication().getId()}/webdav${doc.getId()}</D:href>
             <D:propstat>
               <D:prop>
                 <D:displayname>${doc.getName()}</D:displayname>
@@ -62,7 +61,7 @@
        <!-- create a file for each document, the href is the path to the file and the 
         display name is what will appear in the webdav folder -->
         <D:response>
-          <D:href>/${doc.getPublication().getId()}/webdav${doc.getId()}_${doc.getLanguage()}.${fileExtension}</D:href>
+          <D:href>${request.getContextPath()}/${doc.getPublication().getId()}/webdav${doc.getId()}_${doc.getLanguage()}.${fileExtension}</D:href>
           <D:propstat>
             <D:prop>
               <D:displayname>${doc.getName()}_${doc.getLanguage()}.${fileExtension}</D:displayname>
@@ -94,7 +93,7 @@
     <jx:forEach var="asset" items="${usecase.getParameter('assets')}">
      <!-- similar to documents, a file is created for each asset with an href and display name -->
       <D:response>
-        <D:href>/${sourceURL.replaceFirst("authoring","webdav")}${asset.getName()}</D:href>
+        <D:href>${request.getContextPath()}/${sourceURL.replaceFirst("authoring","webdav")}${asset.getName()}</D:href>
         <D:propstat>
           <D:prop>
             <D:displayname>${asset.getName()}</D:displayname>
