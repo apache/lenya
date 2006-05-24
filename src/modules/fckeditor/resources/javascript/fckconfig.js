@@ -38,4 +38,4 @@ FCKConfig.ToolbarSets["Lenya"] = [
  /*
  * plugin for save in lenya
  */  
-FCKConfig.Plugins.Add( 'lenyaSave', 'de,en', '/modules/fckeditor/plugins/' ) ;
+FCKConfig.Plugins.Add( 'lenyaSave', 'de,en', '../../plugins/' ) ;

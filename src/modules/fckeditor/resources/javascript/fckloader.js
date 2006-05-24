@@ -14,19 +14,19 @@
 * limitations under the License.
 */
 
-function fckloader(host, requesturi)
+function fckloader(host, requesturi, contextPath)
 {
   var oFCKeditor = new FCKeditor( 'content' ) ;
-  oFCKeditor.BasePath	= '/modules/fckeditor/FCKeditor/' ;
+  oFCKeditor.BasePath	= contextPath + '/modules/fckeditor/FCKeditor/' ;
   oFCKeditor.Width="800";
   oFCKeditor.Height="700";
   oFCKeditor.Config[ "FullPage" ] = true ;
   oFCKeditor.Config[ "ProcessHTMLEntities" ] = true ;
   oFCKeditor.Config[ "BaseHref" ] = host + requesturi ;
-  oFCKeditor.Config["CustomConfigurationsPath"] = "/modules/fckeditor/javascript/fckconfig.js"  ;
+  oFCKeditor.Config["CustomConfigurationsPath"] = contextPath + "/modules/fckeditor/javascript/fckconfig.js"  ;
   oFCKeditor.ToolbarSet = 'Lenya' ;
   oFCKeditor.Config[ "ImageBrowserURL" ] = host + requesturi +'?lenya.usecase=insertImage.fckeditor' ;
   oFCKeditor.Config[ "LinkBrowserURL" ] = host + requesturi +'?lenya.module=fckeditor&lenya.step=link-show&language=en' ;
-  oFCKeditor.Config[ "EditorAreaCSS" ] = '/default/authoring/css/page.css' ;
+  oFCKeditor.Config[ "EditorAreaCSS" ] = contextPath + '/default/authoring/css/page.css' ;
   oFCKeditor.ReplaceTextarea() ;
 }

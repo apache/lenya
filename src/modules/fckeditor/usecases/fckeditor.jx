@@ -28,7 +28,7 @@
   <script type="text/javascript">
     window.onload = function()
     {
-      fckloader('<jx:out value="${usecase.getParameter('host')}"/>', '<jx:out value="${usecase.getParameter('requesturi')}"/>');
+      fckloader('${usecase.getParameter('host')}', '${usecase.getParameter('requesturi')}', '${request.getContextPath()}');
     }
   </script>
   
