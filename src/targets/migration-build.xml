@@ -24,6 +24,12 @@
   </description>
   
   <target name="migrate-extensions">
+    
+    <echo>
+    CAUTION: This target does not work out of the box if you use an external content directory
+    in publication.xconf. Please change the parameters of the target accordingly.
+    </echo>
+    
     <property name="publication" value=""/>
     <move todir="${build.webapp}/lenya/pubs">
       <fileset dir="${build.webapp}/lenya/pubs/${publication}">
