@@ -232,7 +232,7 @@
         <map:serialize type="xml" status-code="201" />
       </map:match>
 
-      <map:match pattern="PUT/**.*">
+      <map:match pattern="PUT/**">
         <map:call function="put" />  
       </map:match> 
       

@@ -255,7 +255,12 @@ public class Put extends CreateDocument {
 
     protected String getSourceExtension() {
         String destinationUri = getParameterAsString(SOURCE_URL);
-        String extension = destinationUri.substring(destinationUri.lastIndexOf(".")+1,destinationUri.length());
+        String extension = null;
+        if (destinationUri.indexOf(".") > 0) {
+            extension = destinationUri.substring(destinationUri.lastIndexOf(".")+1,destinationUri.length());
+        } else {
+            extension = EXTENSION;
+        }
         return extension;
     }
 
