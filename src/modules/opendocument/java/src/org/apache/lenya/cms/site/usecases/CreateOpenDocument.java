@@ -64,7 +64,7 @@ public class CreateOpenDocument extends Create {
 
     protected static final String DOCUMENT_ID_PROVIDED = "documentIdProvided";
 
-    protected static final String ODT_EXTENSION = ".odt";
+    protected static final String ODT_EXTENSION = "odt";
 
     protected static final String DEFAULT_INDEX = "index";
 
@@ -210,7 +210,7 @@ public class CreateOpenDocument extends Create {
             Publication pub = PublicationUtil.getPublication(this.manager, publicationId);
             contentDir = pub.getContentDir();
             String urlID = "content/" + document.getArea() + document.getId() + "/" + DEFAULT_INDEX
-                    + "_" + document.getLanguage() + ODT_EXTENSION;
+                    + "_" + document.getLanguage();
             if (contentDir == null) {
                 destination = SourceNode.CONTEXT_PREFIX + Publication.PUBLICATION_PREFIX_URI + "/"
                         + publicationId + "/" + urlID;
@@ -235,10 +235,9 @@ public class CreateOpenDocument extends Create {
             siteManager.setLabel(document, getParameterAsString(DublinCore.ELEMENT_TITLE));
             siteManager.setVisibleInNav(document, getVisibleInNav());
 
-            String extension = ODT_EXTENSION.substring(1);
             document.getMetaDataManager()
                     .getLenyaMetaData()
-                    .setValue(LenyaMetaData.ELEMENT_EXTENSION, extension);
+                    .setValue(LenyaMetaData.ELEMENT_EXTENSION, ODT_EXTENSION);
         } catch (Exception e) {
             throw new Exception(e);
         } finally {
