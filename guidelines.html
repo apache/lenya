@@ -1,0 +1,1045 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.8-dev">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Apache Lenya project guidelines</title>
+<link type="text/css" href="skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="skin/print.css" rel="stylesheet">
+<link type="text/css" href="skin/profile.css" rel="stylesheet">
+<script src="skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="favicon.ico">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+<a href="http://www.apache.org/">apache</a> &gt; <a href="http://lenya.apache.org/">lenya</a><script src="skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>
+</div>
+<!--+
+    |header
+    +-->
+<div class="header">
+<!--+
+    |start group logo
+    +-->
+<div class="grouplogo">
+<a href=""><img class="logoImage" alt="Lenya" src="images/apache-lenya-light.png" title=""></a>
+</div>
+<!--+
+    |end group logo
+    +-->
+<!--+
+    |start Project Logo
+    +-->
+<div class="projectlogo">
+<a href=""></a>
+</div>
+<!--+
+    |end Project Logo
+    +-->
+<!--+
+    |start Search
+    +-->
+<div class="searchbox">
+<form action="http://www.google.com/search" method="get" class="roundtopsmall">
+<input value="lenya.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with ');" size="25" name="q" id="query" type="text" value="Search the site with ">&nbsp; 
+                    <input name="Search" value="Search" type="submit">
+</form>
+</div>
+<!--+
+    |end search
+    +-->
+<!--+
+    |start Tabs
+    +-->
+<ul id="tabs">
+<li class="current">
+<a class="base-selected" href="index.html">Project</a>
+</li>
+<li>
+<a class="base-not-selected" href="1_4/index.html">Version 1.4</a>
+</li>
+<li>
+<a class="base-not-selected" href="modules/index.html">Modules</a>
+</li>
+<li>
+<a class="base-not-selected" href="1_2_x/index.html">Version 1.2</a>
+</li>
+<li>
+<a class="base-not-selected" href="community/index.html">Community</a>
+</li>
+</ul>
+<!--+
+    |end Tabs
+    +-->
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<!--+
+    |start Subtabs
+    +-->
+<div id="level2tabs"></div>
+<!--+
+    |end Endtabs
+    +-->
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<!--+
+    |start Menu, mainarea
+    +-->
+<!--+
+    |start Menu
+    +-->
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', 'skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('skin/images/chapter_open.gif');">Project</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="index.html">About</a>
+</div>
+<div class="menuitem">
+<a href="changes.html">Changes</a>
+</div>
+<div class="menuitem">
+<a href="charter.html">Charter</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Project guidelines</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a title="The mission of Apache Lenya" href="#mission">The mission of Apac...</a>
+</div>
+<div class="menupageitem">
+<a title="Open development" href="#way">Open development...</a>
+</div>
+<div class="menupageitem">
+<a title="Roles and responsibilities" href="#roles">Roles and responsib...</a>
+</div>
+<div class="menupageitem">
+<a title="Project Management Committee (PMC)" href="#pmc">Project Management ...</a>
+</div>
+<div class="menupageitem">
+<a href="#decision">Decision making</a>
+</div>
+<div class="menupageitem">
+<a title="Communication channels" href="#communication">Communication chann...</a>
+</div>
+<div class="menupageitem">
+<a href="#code">Code management</a>
+</div>
+<div class="menupageitem">
+<a title="Contribution and acknowledgement" href="#contribution">Contribution and ac...</a>
+</div>
+<div class="menupageitem">
+<a title="Development procedure" href="#develop">Development procedu...</a>
+</div>
+</div>
+</div>
+<div class="menuitem">
+<a href="history.html">History</a>
+</div>
+<div class="menuitem">
+<a href="screenshots.html">Screenshots</a>
+</div>
+<div class="menuitem">
+<a href="roadmap.html">Roadmap</a>
+</div>
+<div class="menuitem">
+<a href="license.html">License</a>
+</div>
+<div class="menuitem">
+<a href="resolution.html">Resolution</a>
+</div>
+<div class="menuitem">
+<a href="related-projects.html">Related Projects</a>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<!--+
+  |alternative credits
+  +-->
+<div id="credit2">
+<a href="http://apachecon.com/"><img border="0" title="ApacheCon EU 2006" alt="ApacheCon EU 2006 - logo" src="http://www.eu.apachecon.com/konferenzen/apachecon06/images/header-left.gif" style="width: 150px;height: 50px;"></a>
+</div>
+</div>
+<!--+
+    |end Menu
+    +-->
+<!--+
+    |start content
+    +-->
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="guidelines.pdf"><img alt="PDF -icon" src="skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Apache Lenya project guidelines</h1> 
+  
+<div class="warning">
+<div class="label">Proposal draft document</div>
+<div class="content">This document is a proposal and 
+    currently under discussions on the dev list.</div>
+</div>
+  
+<p>
+   This document provides the guidelines under which the Apache Lenya
+   project operates. It defines the roles and responsibilities, who may vote,
+   how voting works, how conflicts are resolved, etc.
+   Apache Lenya is a project of The Apache Software Foundation
+   (<a href="http://www.apache.org/foundation/">ASF</a>) which is a
+   non-profit corporation. As with all such organisations there are some
+   procedures to be followed.
+   The ASF website explains the
+   operation and background of the ASF. These project guidelines supplement that
+   ASF documentation. Normally these guidelines are not needed - the project
+   just gets on with its day-to-day operation - but they enable
+   all people to understand how the project operates.
+  </p>
+
+  
+<a name="N10018"></a><a name="mission"></a>
+<h2 class="h3">The mission of Apache Lenya</h2>
+<div class="section">
+<p>
+      The generation of open source content management solutions,
+      maintaining a separation of content and presentation.
+    </p>
+</div>
+
+  
+<a name="N10022"></a><a name="way"></a>
+<h2 class="h3">Open development</h2>
+<div class="section">
+<p>
+      Lenya is typical of Apache projects, in that it operates under a set of
+      principles that encourage open development. There is no clear definition 
+      (perhaps that is part of it) and it is ever-evolving. Each ASF project is different
+      in its own way - there is healthy diversity rather than uniformity across all projects.
+      The main principles are to facilitate open collaborative development, with respect for
+      others; to ensure that there is a healthy community (even to give community issues
+      higher priority than code issues); to use a consensus-based approach;
+      to ensure that each
+      <a href="#contribution">contributor</a> is recognised and
+      feels a productive part of the community; to encourage diversity; to make the project a nice place to be.
+    </p>
+<p>
+      Each project, as part of the
+      <a href="http://www.apache.org/foundation/records/minutes/2004/board_minutes_2004_05_26.txt">resolution</a>
+      that formed its Project Management Committee (<a href="#pmc">PMC</a>),
+      creates its set of project guidelines intended to encourage open development and
+      increased participation. These facilitate the project to conduct its main charge,
+      which is the creation and maintenance of open-source software for distribution at no
+      charge to the public with the purpose of its
+      <a href="#mission">mission</a>.
+    </p>
+<p>
+      For more information about the way that Apache projects operate, please refer to
+      the
+      <a href="http://www.apache.org/foundation/">ASF foundation</a>
+      and
+      <a href="http://www.apache.org/dev/">ASF developer</a> sections
+      of the ASF website, including the
+      <a href="http://www.apache.org/foundation/bylaws.html">ASF ByLaws</a>
+      and the
+      <a href="http://www.apache.org/foundation/how-it-works.html">How it works</a> document,
+      the 
+      <a href="http://www.apache.org/foundation/faq.html">FAQs</a>
+      about the Foundation, and the
+      <a href="http://incubator.apache.org/">Incubator project</a>.
+    </p>
+</div>
+
+  
+<a name="N1005A"></a><a name="roles"></a>
+<h2 class="h3">Roles and responsibilities</h2>
+<div class="section">
+<p>The meritocracy enables various roles as defined in the
+      <a href="http://www.apache.org/foundation/how-it-works.html">How it works</a> document.
+    </p>
+<p>
+    
+<a href="http://www.apache.org/foundation/how-it-works.html#users">user</a> |
+    <a href="http://www.apache.org/foundation/how-it-works.html#developers">developer</a> |
+    <a href="http://www.apache.org/foundation/how-it-works.html#committers">committer</a> |
+    <a href="http://www.apache.org/foundation/how-it-works.html#pmc-members">PMC member</a> |
+    <a href="http://www.apache.org/foundation/how-it-works.html#asf-members">ASF member</a>
+    
+</p>
+<p>The current Apache Lenya committers and PMC members are
+      <a href="community/acknowledgements.html">listed</a>.
+    </p>
+</div>
+
+  
+<a name="N10086"></a><a name="pmc"></a>
+<h2 class="h3">Project Management Committee (PMC)</h2>
+<div class="section">
+<p>The Apache Lenya project was established in spring 2003 and became a
+      top-level project in September 2004.
+      The Project Management Committee (PMC) was created by a
+      <a href="http://www.apache.org/foundation/records/minutes/2004/board_minutes_2004_09_22.txt">resolution</a>
+      of the board of the Apache Software Foundation.
+      See explanation of the role of the PMC in that resolution and also the
+      <a href="http://www.apache.org/foundation/bylaws.html">ASF Bylaws</a>
+      and 
+    <a href="http://www.apache.org/foundation/how-it-works.html#pmc">How-it-works</a>.
+    </p>
+<p>The responsibilities of the PMC include:</p>
+<ul>
+      
+<li>Be familiar with these project guidelines, and the
+      ASF Bylaws, and with the ASF documentation and procedures
+      in general.</li>
+      
+<li>Keep oversight of the commit log messages and ensure that
+       the codebase does not have copyright and license issues.</li>
+      
+<li>Resolve license disputes regarding products of the project,
+        including other supporting software that is re-distributed.</li>
+      
+<li>Decide what is distributed as products of the project.
+        In particular all releases must be approved by the PMC.</li>
+      
+<li>Guide the direction of the project.</li>
+      
+<li>Strive for and help to facilitate a harmonious productive community.</li>
+      
+<li>Nominate new PMC members and committers.</li>
+      
+<li>Maintain the project's shared resources, including the
+        codebase repository, mailing lists, websites.</li>
+      
+<li>Speak on behalf of the project.</li>
+      
+<li>Maintain these and other guidelines of the project.</li>
+    
+</ul>
+<p>
+      The PMC does have a private mailing list on which it can discuss
+      certain issues. However this list is rarely used and every effort
+      is made to conduct all discussion on the public mailing lists.
+    </p>
+<p>
+      Membership of the PMC is by invitation only and must receive
+      consensus approval of the active PMC members.
+    </p>
+<p>
+      A PMC member is considered
+      "emeritus" by their own declaration or by not contributing in
+      any form to the project for over six months. An emeritus member may
+      request reinstatement to the PMC. Such reinstatement is subject to
+      consensus approval of the active PMC members. Membership of the PMC can be
+      revoked by unanimous consensus of all active PMC members (other than
+      the member in question).
+    </p>
+<p>
+      The chair of the PMC is appointed by the Board and is an officer of
+      the ASF (Vice President). The chair has primary responsibility to the
+      Board, and has the power to establish rules and procedures for the
+      day-to-day management of the communities for which the PMC is
+      responsible, including the composition of the PMC itself.
+      The chair reports to the board every three months about the status of the
+      project. The PMC may consider the position of PMC chair annually and 
+      may recommend a new chair to the board.
+      Ultimately, however, it is the board's responsibility who it chooses
+      to appoint as the PMC chair.
+      See further explanation of the role of the chair in the
+      <a href="http://www.apache.org/foundation/bylaws.html">ASF Bylaws</a>
+      and the
+      <a href="http://www.apache.org/dev/pmc.html#chair">PMC FAQ</a>
+    
+</p>
+<a name="N100D3"></a><a name="report"></a>
+<h3 class="h4">Quarterly reports to ASF Board</h3>
+<p>
+        Every three months, it is the responsibility of our PMC chair to
+        send a report to the ASF Board. This is mainly concerned with the
+        status of our community, but can also include the technical progress.
+        Further details are in the "committers" SVN in the /board/ directory.
+      </p>
+<p>
+        The minutes are available for each
+        <a href="http://www.apache.org/foundation/board/calendar.html">
+        board meeting</a>. Our reporting schedule is: Feb, May, Aug, Nov.
+      </p>
+<a name="N100E4"></a><a name="elect"></a>
+<h3 class="h4">Electing new committers and PMC members</h3>
+<p>
+        We conduct the vote on the private PMC mailing list to enable a frank
+        discussion.
+        In most cases we will be inviting people to go straight from developer
+        to PMC member, i.e. they simultaneously become committer and PMC
+        member. However, there may be extraordinary cases where we want
+        limited work-related commit access (not also a PMC member).
+        This will be resolved during the discussion and vote.
+        Notes about this process are in the "committers" svn in the
+        pmc/lenya/ directory.
+      </p>
+</div>
+
+  
+<a name="N100EF"></a><a name="decision"></a>
+<h2 class="h3">Decision making</h2>
+<div class="section">
+<p>
+      Different types of decisions require different
+      forms of approval. For example, the previous section describes
+      several decisions which require "consensus approval". This
+      section defines how voting is performed, the types of approval, and which
+      types of decision require which type of approval.
+    </p>
+<p>
+      Most day-to-day operations do not require explicit voting - just get on
+      and do the work. See the "Lazy approval" type described below.
+    </p>
+<a name="N100FB"></a><a name="voting"></a>
+<h3 class="h4">Voting</h3>
+<p>
+        Certain actions and decisions regarding the project are made by votes
+        on the project development mailing list. Where necessary,
+        PMC voting may take place on the private PMC mailing list.
+      </p>
+<p>
+        Votes are clearly indicated by subject line starting with [VOTE].
+        Discussion and proposal should have happened prior to the vote.
+        Voting is carried out by replying to the vote mail. 
+        See <a href="#procedure">voting procedure</a> below.
+        Votes are expressed using one of the following symbols:
+      </p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+        
+<tr>
+          
+<td colspan="1" rowspan="1"><strong>+1</strong></td>
+          <td colspan="1" rowspan="1">
+            "Yes," "Agree," or "the action should be
+            performed." In general, this vote also indicates a willingness
+            on the behalf of the voter to assist with "making it happen".
+          </td>
+        
+</tr>
+
+        
+<tr>
+          
+<td colspan="1" rowspan="1"><strong>+0</strong></td>
+          <td colspan="1" rowspan="1">
+            This vote indicates a willingness for the action under
+            consideration to go ahead. The voter, however will not be able
+            to help.
+          </td>
+        
+</tr>
+
+        
+<tr>
+          
+<td colspan="1" rowspan="1"><strong>-0</strong></td>
+          <td colspan="1" rowspan="1">
+            This vote indicates that the voter does not, in general, agree with
+            the proposed action but is not concerned enough to prevent the
+            action going ahead.
+          </td>
+        
+</tr>
+
+        
+<tr>
+          
+<td colspan="1" rowspan="1"><strong>-1</strong></td>
+          <td colspan="1" rowspan="1">
+            This is a negative vote. On issues where consensus is required,
+            this vote counts as a <a href="#veto">veto</a>.
+            All vetoes must
+            contain an explanation of why the veto is appropriate. Vetoes with
+            no explanation are void. It may also be appropriate for a -1 vote
+            to include an alternative course of action.
+          </td>
+        
+</tr>
+
+        
+<tr>
+          
+<td colspan="1" rowspan="1"><strong>abstain</strong></td>
+          <td colspan="1" rowspan="1">People can abstain from voting. They can either remain
+          silent or express their reason.
+          </td>
+        
+</tr>
+      
+</table>
+<p>
+        All participants in the project are encouraged to show their
+        preference for a particular action by voting. When the votes are
+        tallied, only the votes of PMC members are binding. Non-binding
+        votes are still useful to enable everyone to understand the
+        perception of an action by the wider community.
+      </p>
+<p>
+        Voting can also be applied to changes made to the project codebase. These
+        typically take the form of a veto (-1) in reply to the commit message
+        sent when the commit is made.
+      </p>
+<a name="N1015F"></a><a name="approvals"></a>
+<h3 class="h4">Types of approval</h3>
+<p>
+        Different actions require different types of approval:
+      </p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+        
+<tr>
+          
+<td colspan="1" rowspan="1"><strong>Consensus approval</strong></td>
+          <td colspan="1" rowspan="1">
+            Consensus approval requires 3 binding +1 votes and no binding vetoes.
+          </td>
+        
+</tr>
+
+        
+<tr>
+          
+<td colspan="1" rowspan="1"><strong>Lazy majority</strong></td>
+          <td colspan="1" rowspan="1">
+            A lazy majority vote requires 3 binding +1 votes and more binding +1
+            votes than -1 votes.
+          </td>
+        
+</tr>
+
+        
+<tr>
+          
+<td colspan="1" rowspan="1"><strong>Lazy approval</strong></td>
+          <td colspan="1" rowspan="1">
+            An action with lazy approval is implicitly allowed unless a -1 vote
+            is received, at which time, depending on the type of action, either
+            lazy majority or consensus approval must be obtained.
+          </td>
+        
+</tr>
+
+        
+<tr>
+          
+<td colspan="1" rowspan="1"><strong>2/3 majority</strong></td>
+          <td colspan="1" rowspan="1">
+            Some actions require a 2/3 majority of active PMC members.
+            Such actions typically affect the foundation
+            of the project (e.g. adopting a new codebase to replace an existing
+            product). The higher threshold is designed to ensure such changes
+            are strongly supported. To pass this vote requires at least 2/3 of
+            binding vote holders to vote +1
+          </td>
+        
+</tr>
+
+        
+<tr>
+          
+<td colspan="1" rowspan="1"><strong>Unanimous consensus</strong></td>
+          <td colspan="1" rowspan="1">
+            All voters with binding votes must vote and there
+            can be no binding vetoes (-1).
+          </td>
+        
+</tr>
+      
+</table>
+<a name="N101B2"></a><a name="veto"></a>
+<h3 class="h4">Vetoes</h3>
+<p>
+        A valid veto cannot be over-ruled, it can only be withdrawn by its issuer.
+        Any veto must be accompanied by reasoning and be prepared to defend it.
+      </p>
+<p>
+        The validity of a veto, if challenged, can be confirmed by anyone who
+        has a binding vote. This does not necessarily signify agreement with the
+        veto - merely that the veto is valid. In case of disputes about whether
+        a veto is valid, then opinion of the PMC chair is final.
+      </p>
+<p>
+        If you disagree with a valid veto, then you must engage the person
+        casting the veto to further discuss the issues. The vetoer is obliged
+        to vote early and to then work with the community to resolve
+        the matter.
+      </p>
+<p>
+        If a veto is not withdrawn, the action that has been vetoed must
+        be reversed in a timely manner.
+      </p>
+<a name="N101C5"></a><a name="actions"></a>
+<h3 class="h4">Actions</h3>
+<p>
+        This section describes the various actions which are undertaken within
+        the project, the corresponding approval required for that action, and
+        those who have binding votes over the action.
+      </p>
+<table class="ForrestTable" cellspacing="1" cellpadding="4">
+        
+<tr>
+          
+<th colspan="1" rowspan="1">Action</th>
+          <th colspan="1" rowspan="1">Description</th>
+          <th colspan="1" rowspan="1">Approval</th>
+          <th colspan="1" rowspan="1">Binding Votes</th>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1"><strong>Code change</strong></td>
+          <td colspan="1" rowspan="1">
+            A change made to a codebase of the project by a committer.
+            This includes source code, documentation, website content, etc.
+          </td>
+          <td colspan="1" rowspan="1">
+            Lazy approval
+          </td>
+          <td colspan="1" rowspan="1">
+            Active PMC members
+          </td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1"><strong>Release plan</strong></td>
+          <td colspan="1" rowspan="1">
+            Defines the timetable and actions for a release.
+          </td>
+          <td colspan="1" rowspan="1">
+            Lazy majority
+          </td>
+          <td colspan="1" rowspan="1">
+            Active PMC members
+          </td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1"><strong>Product release</strong></td>
+          <td colspan="1" rowspan="1">
+            When a release of one of the project's products is ready, a vote is
+            required to accept the release as an official release of the
+            project.
+          </td>
+          <td colspan="1" rowspan="1">
+            Lazy majority
+          </td>
+          <td colspan="1" rowspan="1">
+            Active PMC members
+          </td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1"><strong>Adoption of new codebase</strong></td>
+          <td colspan="1" rowspan="1">
+            When the codebase for an existing, released product is to be
+            replaced with an alternative codebase. If such a vote fails to
+            gain approval, the existing code base will continue.
+            This also covers the creation of new sub-projects
+            within the project.
+          </td>
+          <td colspan="1" rowspan="1">
+            2/3 majority
+          </td>
+          <td colspan="1" rowspan="1">
+            Active PMC members
+          </td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1"><strong>New committer</strong></td>
+          <td colspan="1" rowspan="1">
+            When a new committer is proposed for the project.
+          </td>
+          <td colspan="1" rowspan="1">
+            Consensus approval
+          </td>
+          <td colspan="1" rowspan="1">
+            Active PMC members
+          </td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1"><strong>New PMC member</strong></td>
+          <td colspan="1" rowspan="1">
+            When a new member is proposed for the PMC.
+          </td>
+          <td colspan="1" rowspan="1">
+            Consensus approval
+          </td>
+          <td colspan="1" rowspan="1">
+            Active PMC members
+          </td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1"><strong>Reinstate emeritus member</strong></td>
+          <td colspan="1" rowspan="1">
+            An emeritus PMC member can be reinstated.
+          </td>
+          <td colspan="1" rowspan="1">
+            Consensus approval
+          </td>
+          <td colspan="1" rowspan="1">
+            Active PMC members (excluding the member in question)
+          </td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1"><strong>Committer removal</strong></td>
+          <td colspan="1" rowspan="1">
+            When removal of commit privileges is sought.
+          </td>
+          <td colspan="1" rowspan="1">
+            Unanimous consensus
+          </td>
+          <td colspan="1" rowspan="1">
+            Active PMC members (excluding the committer in question if a
+            member of the PMC)
+          </td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1"><strong>PMC member removal</strong></td>
+          <td colspan="1" rowspan="1">
+            When removal of a PMC member is sought.
+            See also section 6.5 of the ASF Bylaws whereby the ASF Board may
+            remove a PMC member.
+          </td>
+          <td colspan="1" rowspan="1">
+            Unanimous consensus
+          </td>
+          <td colspan="1" rowspan="1">
+            Active PMC members (excluding the member in question)
+          </td>
+        
+</tr>
+      
+</table>
+<a name="N102C1"></a><a name="timeframe"></a>
+<h3 class="h4">Voting timeframes</h3>
+<p>
+        Votes are normally open for a period of one week to allow all active voters
+        time to consider the vote. If the vote has not achieved a quorum,
+        then it can be extended for another week. If still no quorum, then
+        the vote fails, and would need to be raised again later.
+        Votes relating to code changes are not subject to a strict timetable,
+        but should be made as timely as possible.
+      </p>
+<a name="N102CB"></a><a name="procedure"></a>
+<h3 class="h4">Voting procedure</h3>
+<p>
+        Discussion about the topic would have already happened in a [Proposal]
+        email thread to express the issues and opinions. The [Vote] thread is
+        to ratify the proposal.
+      </p>
+<p>
+        The instigator sends the Vote email to the dev mailing list.
+        Describe the issue with no ambiguity and in a positive sense.
+        Define the date and time for the end of the vote period.
+      </p>
+<p>
+        Votes are expressed by replying email using the
+        <a href="#voting">voting symbols</a> defined above.
+        Voters can change their vote during the timeframe.
+        At the end of the vote period, the instigator tallies the number of
+        final votes and reports the results.
+      </p>
+<a name="N102DF"></a><a name="ultimatum"></a>
+<h3 class="h4">Ultimatum and breakdown</h3>
+<p>
+        For breakdown situations and those requiring unanimous consensus,
+        if this consensus cannot be reached within the extended timeframe,
+        then the Board expects the chair to act as the officer of the
+        Foundation and make the ultimate decision.
+      </p>
+</div>
+
+  
+<a name="N102EA"></a><a name="communication"></a>
+<h2 class="h3">Communication channels</h2>
+<div class="section">
+<p>
+      The primary mechanism for communication is the mailing lists.
+      Anyone can participate, no matter what their time zone.
+      A reliable searchable archive of past discussion is built.
+      Oversight is enabled. Many eyes ensures that the project evolves
+      in a consistent direction.
+    </p>
+<p>
+      All decisions are made on the "dev" mailing list.
+    </p>
+<p>
+      The main channel for user support is the "user" mailing list.
+      As is usual with mailing lists, be prepared to wait for an answer.
+    </p>
+<p>
+      Occasionally we will use other communication channels such as IRC.
+      These are used only for a specific purpose and are not permanently
+      available. This policy ensures that solutions are available in the
+      mailing list archives and enables people to respond at whatever time
+      that they choose. Permanent IRC channels are poor from a community-building
+      point-of-view, as they tend to create time-zone based cliques.
+      So we don't.
+    </p>
+<p>
+      Similarly, private discussions are discouraged. The rest of the community
+      would not benefit from the understanding that is developed.
+      Off-list discussions put too much load on overworked volunteers.
+    </p>
+</div>
+
+  
+<a name="N10300"></a><a name="code"></a>
+<h2 class="h3">Code management</h2>
+<div class="section">
+<p>
+      The term "patch" has two meanings: Developers provide a set of changes
+      via our <a href="community/index.html">issue tracker</a> marked for inclusion,
+      which will be applied by a committer. Committers apply their own work
+      directly, but it is still essentially a patch.
+    </p>
+<p>
+      We use the
+      <a href="http://www.apache.org/foundation/glossary.html#CommitThenReview">Commit-then-review</a>
+      method for decision-making about code changes. Please refer to that
+      glossary definition. Note that it does not preclude the committer
+      from making changes to patches prior to their commit, nor mean that the
+      committer can be careless. Rather it is a policy for decision-making.
+    </p>
+<p>
+      There is an important issue where both developers and committers need
+      to pay special attention: "licenses". We must not introduce licensing
+      conditions that go beyond the terms of the <a href="http://www.apache.org/licenses/">Apache License</a>.
+      If such issues do creep in to our repository, then we must work as
+      quickly as possible to address it and definitely before the next release.
+    </p>
+<p>
+      There are some other problem areas:
+      What should a committer do if the patch is sloppy, containing inconsistent
+      whitespace and other code formatting, which mean that actual changes are not
+      easily visible in the svn diff messages. What if there is poorly constructed
+      (yet working) xml or java code? What if the new functionality is beyond the
+      scope of the project? What if there is a better way to do the task? What if
+      the patch will break the build, thereby preventing other developers from
+      working and causing an unstable trunk?
+    </p>
+<p>
+      The committer has various options: ask the developer to resubmit the patch;
+      change the patch to fix the problems prior to committing; discuss the
+      issues on the dev list; commit it and then draw attention to the
+      issues so that the rest of the community can review and fix it.
+      A combination of these options would appear to be the best approach.
+      Please aim to not break the build, or introduce license problems, or make
+      noisy changes that obscure the real differences.
+    </p>
+<p>
+      Committers should not be afraid to add changes that still need attention.
+      This enables prompt patch application and eases the load on the individual
+      committer. An interesting side-effect is that it encourages community growth.
+    </p>
+</div>
+
+  
+<a name="N10325"></a><a name="contribution"></a>
+<h2 class="h3">Contribution and acknowledgement</h2>
+<div class="section">
+<p>
+      Some <a href="#way">principles</a> of open development at ASF are to ensure that each
+      contributor is recognised and feels a productive part of the community, and to
+      encourage diversity, respect, and equality.
+      Key to this is the recognition of contributions from individuals
+      in a manner that also recognises the community effort that made it all
+      possible. It is important to remember that there is no concept of
+      individual leadership. See the discussion of
+      <a href="http://www.apache.org/foundation/how-it-works.html#meritocracy">meritocracy</a>
+      and other sections of the
+      <a href="http://www.apache.org/foundation/how-it-works.html">How the ASF works</a> document.
+    </p>
+<p>
+       In an Open Source Project, or more importantly, a project developed
+       using an open process, such as Apache Lenya, most contributions of actual
+       code are supported by, or at least *should* be supported by, design
+       discussion, oversight, testing, documentation, bug fixes and much more.
+       No code contribution is an independent unit of work (or should not be).
+       It is therefore impossible to credit individual contributors, it is
+       simply unmanageable, even if it is possible to identify each part of a
+       contribution.
+    </p>
+<p>
+      At Apache Lenya we use the following method to provide recognition:
+    </p>
+<ul>
+      
+<li>
+        All developers encourage other developers to participate on the
+        mailing lists, treat each other with respect, and openly collaborate.
+        This enables the contributors to feel a part of the project and shows
+        that their discussion and ideas are valuable. These replies enhance
+        the presence of their name in the email archives and search engines.
+      </li>
+      
+<li>
+        Encourage contributors to add patches via the
+        <a href="community/index.html">issue tracker</a>. This also enables clear
+        tracking of the issue and by default specifically shows who was the
+        contributor.
+      </li>
+      
+<li>
+        When committers apply the patch, they refer to the issue number
+        and the contributor's name. This enables linkage between the issue
+        tracker and the Subversion history. It adds the contributor's name
+        to the mail archives.
+      </li>
+      
+<li>
+        Committers apply patches as soon as possible. This keeps the contributor
+        enthused and shows them that their work is valuable.
+      </li>
+      
+<li>
+        Committers add an entry for each significant contribution to the
+        top-level <a href="changes.html">changes</a> document (site-author/status.xml)
+        and detailed entries to the relevant plugin's changes document. This enables linkage
+        to the relevant issue and shows the contributor's name. It also shows
+        the initials of the committer who did the work to add the patch.
+      </li>
+      
+<li>
+        When committers are adding their own work, they similarly add entries
+        to the "changes" documents. Their initials are added to the entry.
+      </li>
+      
+<li>
+        The existing PMC will notice new contributors who are committed. It eventually
+        <a href="#elect">invites</a> them to become new committers/PMC members. See the 
+        <a href="http://forrest.apache.org/committed.html">forrest notes</a> about this topic.
+      </li>
+      
+<li>
+        Committers/PMC members are
+        <a href="community/acknowledgements.html">listed</a>.
+      </li>
+    
+</ul>
+<p>
+      As discussed above, there is no specific documentation which lists each
+      contributor and their work. For those who are interested there are various
+      mechanisms: Use general internet search services; use search services provided
+      by various third-party mail archives; search the "svn" mailing list using
+      committer IDs and using contributor names; browse the
+      <a href="changes.html">changes</a> page; use 'svn log' and 'svn blame'.
+    </p>
+</div>
+
+  
+<a name="N10377"></a><a name="develop"></a>
+<h2 class="h3">Development procedure</h2>
+<div class="section">
+<div class="note">
+<div class="label">Note</div>
+<div class="content">
+  This section is still under development. The issues have been discussed
+  on the mailing list. Decisions need to be put into words, so that we do
+  not need to revisit the topic.
+</div>
+</div>
+<div class="fixme">
+<div class="label">Fixme (open)</div>
+<div class="content">
+The following issues still need to be added above.
+There are also some relevant email threads, from which we need to extract info.
+</div>
+</div>
+<pre class="code">
+* Define our policy for adding changes to release branch.
+* Define the purpose of the "sandbox".
+* Declare that we only really maintain the current release branch
+  (although contributed patches will be applied).
+* When to create a temporary branch for development and when/how to merge.
+
+    </pre>
+</div>
+
+<!-- FIXME:
+
+The default is lazy consensus. So just get on with the job
+unless someone asks to stop, review, perhaps revert.
+
+==================
+> We should make mention somewhere of our relationship to other projects
+> Cocoon committers are Lenya committers; something with xml-commons
+
+==================
+Mention the "Contributer License Agreement".
+Who needs to send it? ... is it committers plus major contributers?
+
+==================
+
+-->
+
+</div>
+<!--+
+    |end content
+    +-->
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<!--+
+    |start bottomstrip
+    +-->
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2002-2005 <a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software Foundation.</a>
+</div>
+<div id="feedback">
+    Send feedback about the website to:
+  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A0guidelines.html">dev@lenya.apache.org</a>
+</div>
+<!--+
+    |end bottomstrip
+    +-->
+</div>
+</body>
+</html>
