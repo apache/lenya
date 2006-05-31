@@ -23,7 +23,7 @@
 
 -->
 
-<catalogue xml:lang="es">
+<catalogue xml:lang="es" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
   <!-- common used words -->
   <message key="Save">Guardar</message>
@@ -69,6 +69,7 @@
   <message key="Back">Atrás</message>
   <message key="Add">Añadir</message>
   <message key="Create">Crear</message>
+   <message key="create-document">Crear este documento</message>
   <message key="The Archive">El&#160;Archivo</message>
   <message key="Trash">Papelera</message>
   <message key="Publisher">Editor</message>
@@ -89,6 +90,9 @@
   <message key="Image">Imagen</message>
   <message key="Link">Enlace</message>
   <message key="Caption">Subtítulo</message>
+  <message key="Dimension (w x h)">Dimensiones (ancho&#160;x&#160;alto)</message>
+  <message key="Height">Altura</message>
+  <message key="Width">Anchura</message>
   <message key="All rights reserved">Todos los derechos reservados.</message>
   <message key="show">Ver</message>
   <message key="hide">Ocultar</message>
@@ -116,10 +120,13 @@
 
   <!-- reject screen -->
   <message key="Reject">Rechazar</message>
+  <message key="reject-doc">Rechazar documento {0}</message>
   <message key="reject-doc?">¿Desea rechazar&#160;el&#160;documento&#160;{0}?</message>
 
   <!-- cms menu -->
   <message key="New Document">Nuevo&#160;documento</message>
+  <message key="New XHTML Document">Nuevo&#160;documento XHTML</message>
+  <message key="New ODT">Nuevo&#160; documento Openoffice</message> 
   <message key="New Language Version">Nueva&#160;versión&#160;de&#160;idioma</message>
   <message key="Remove Language Version">Eliminar&#160;versión&#160;de&#160;idioma</message>
   <message key="File">Archivo</message>
@@ -144,13 +151,21 @@
   <message key="User Documentation">Documentación&#160;de&#160;usuario</message>
   <message key="About Apache Lenya">Acerca&#160;de&#160;Apache&#160;Lenya</message>
   <message key="Apache Lenya Homepage">Página&#160;principal&#160;de&#160;Apache&#160;Lenya</message>
-  <message key="Edit with Kupu">Editar con Kupu</message>
-  <message key="Edit with BXE">Editar&#160;con&#160;BXE</message>
+ <message key="Edit with Kupu">
+    <xhtml:abbr title="What&#160;You&#160;See&#160;Is&#160;What&#160;You&#160;Get">WYSIWYG</xhtml:abbr>&#160;Editor&#160;(Kupu)
+  </message>
+  <message key="Edit with BXE">
+    <xhtml:abbr title="What&#160;You&#160;See&#160;Is&#160;What&#160;You&#160;Get">WYSIWYG</xhtml:abbr>&#160;Editor&#160;(BXE)
+  </message>
   <message key="Edit with one Form">Editar&#160;con&#160;formulario&#160;Único</message>
   <message key="Edit with Forms">Editar&#160;con&#160;formularios</message>
   <message key="Edit Metadata">Editar&#160;Metadatos</message>
   <message key="Edit Navigation Title">Editar&#160;título&#160;de&#160;navegación</message>
+  <message key="Visible in Navigation">Visible en la Navegacion</message>
   <message key="Rename URL">Renombrar&#160;URL</message>
+  <message key="Download ODT">Descargar&#160; Documento OpenOffice</message>
+  <message key="Upload ODT">Enviar&#160;Documento OpenOffice</message>
+  
 
   <!-- cms tabs -->
   <message key="Server Time">Hora&#160;del&#160;servidor</message>
@@ -176,6 +191,7 @@
   <message key="Group Administration">Administración de grupos</message>
   <message key="Add Group">Añadir&#160;Grupo</message>
   <message key="Group Data">Datos&#160;del&#160;Grupo</message>
+  <message key="group_no_such_entry">El grupo {0} no existe.</message>
 
     <!-- User Administration -->
   <message key="User Data">Datos&#160;del&#160;Usuario</message>
@@ -191,6 +207,8 @@
   <message key="Group Affiliation">Afiliación a un Grupo</message>
   <message key="Change Password">Cambiar Contraseña</message>
   <message key="Edit Group Affiliation">Editar Grupo de Afiliación</message>
+ <message key="user_no_such_user">El usuario {0} no existe.</message>
+  <message key="ldap_no_such_user">El usuario {0} no existe en el directorio LDAP.</message>
 
     <!-- User Types -->
   <message key="LDAP User">Usuario LDAP</message>
@@ -208,6 +226,21 @@
   <message key="Add IP Range">Añadir&#160;rango&#160;de IP</message>
   <message key="IP Range Profile">Perfil&#160;del&#160;rango&#160;de IP</message>
 
+  <!-- Site Overview -->
+  <message key="filterResourceType">Tipo de Recurso</message>
+  <message key="filterWorkflowState">Estado de flujo de trabajo</message>
+  <message key="filterLanguage">Idioma</message>
+  <message key="filterLastModified">Ultima modificación</message>
+  <message key="filterDocumentId">Identificativo de documento</message>
+  <message key="keyResourceType">Tipo de Recurso</message>
+  <message key="keyWorkflowState">Estado de flujo de trabajo</message>
+  <message key="Live">En producción</message>
+  <message key="keyLanguage">Idioma</message>
+  <message key="keyLastModified">Ultima modificación</message>
+  <message key="keyDocumentId">Identificativo de documento</message>
+  <message key="keyCheckedOut">Revisado por</message>
+  <message key="Update">Actualiza</message>
+
   <!-- Site tab (info screens) -->
   <message key="Available Languages">Idiomas Disponibles</message>
   <message key="This document is not available in this language.">Este documento no se encuentra disponible en este idioma.</message>
@@ -221,7 +254,7 @@
   <message key="AC Live">Producción&#160;AC</message>
   <message key="Scheduler">Planificador</message>
 
-    <!-- Info screen actions-->
+<!-- Info screen actions-->
   <message key="New Navigation Title">Nuevo título de navegación</message>
   <message key="Rename Document">Renombrar un Documento</message>
   <message key="New Document ID">Nuevo ID de Documento</message>
@@ -261,12 +294,13 @@
   <message key="Paste Document">Pegar Documento</message>
   <message key="paste-doc">Pegar documento {0}</message>
   <message key="paste-doc-from-clip?">¿Seguro que desea pegar el documento {0} desde el portapapeles?</message>
+
       <!-- Cut document -->
   <message key="Cut Document">Cortar Documento</message>
   <message key="cut-doc">Cortar documento {0}</message>
   <message key="cut-doc-to-clip?">¿Seguro que desea cortar el documento {0} y moverlo al portapapeles? Más tarde puede pegar el documento en el lugar que elija.</message>
 
-  <!-- Nudge document -->
+      <!-- Nudge document -->
   <message key="nudge-error-direction-unknown">La dirección {0} no está soportada!</message>
   <message key="nudge-error-direction">No puedo mover el nodo en esta dirección.</message>
   <message key="nudge-error-area">Esta operación solo puede ser llamada en los árboles del sitio.</message>
@@ -278,7 +312,7 @@
   <message key="Insert a new Image">Insertar nueva imagen</message>
   <message key="Upload an Asset">Cargar un activo</message>
 
-  <!-- Info workflow  -->
+  <!-- Workflow  -->
   <message key="Value">Valor</message>
   <message key="Event">Evento</message>
   <message key="Variables">Variables</message>
@@ -289,10 +323,21 @@
   <message key="submit">enviar</message>
   <message key="reject">rechazar</message>
   <message key="publish">publicar</message>
-  <message key="error-workflow-document">El evento  {0} no es ejecutable en el documento {1}</message>
+  <message key="error-workflow-document">El evento  {0} no es ejecutable en
+  el documento {1}</message>
+
+  <!-- Notification -->
+  <message key="notification-message">Lenya Notification</message>
+  <message key="notify-submitter">notify the submitter</message>
+  <message key="document-published">A document you submitted was published: {0}</message>
 
   <!-- Info asset  -->
   <message key="New Asset">Nuevo activo</message>
+
+  <!-- Info meta -->
+  <message key="Custom metadata">Metadatos personalizados</message>
+  <message key="Show custom metadata">Muestra metadatos personalizados</message>
+  <message key="Hide custom metadata">Oculta metadatos personalizados</message>
 
   <!-- Info RC  -->
   <message key="Current Version">Versión Actual</message>
@@ -348,5 +393,11 @@
   <message key="error-missing-language">El documento solicitado no está disponible para el idioma: {0}</message>
   <message key="error-document-existance">El documento solicitado {0} con documento-id {1} no existe.</message>
   <message key="error-generic">Ocurrió un error.</message>
-
+  <message key="error-404">404: Pagína no encontrada</message>
+  <!--.odt.upload -->
+  <message key="Upload odt">Enviar Documento OpenOffice</message>
+  <message key="HEADSUP:">Atención:</message>
+  <message key="The existing document will be overwritten!">El documento existente sera sobre escrito</message>
+  
 </catalogue>
+
