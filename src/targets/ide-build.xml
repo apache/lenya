@@ -35,7 +35,6 @@
     <path id="srcs">
       <!-- API source dirs -->
       <pathelement path="${src.java.api.dir}"/>
-      <pathelement path="${src.test.api.dir}"/>
       
       <!-- implementation source dirs -->
       <pathelement path="${src.java.impl.dir}"/>
@@ -46,6 +45,10 @@
         <include name="*/java/test"/>
       </dirset>
       <dirset dir="src/modules">
+        <include name="*/java/src"/>
+        <include name="*/java/test"/>
+      </dirset>
+      <dirset dir="src/modules-optional">
         <include name="*/java/src"/>
         <include name="*/java/test"/>
       </dirset>
