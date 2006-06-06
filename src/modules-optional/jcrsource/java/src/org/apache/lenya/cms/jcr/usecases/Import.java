@@ -29,7 +29,7 @@ import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.jcr.metadata.JCRMetaDataManager;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentityMap;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
@@ -59,7 +59,7 @@ public class Import extends AbstractUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
         String pubId = getParameterAsString(PUBLICATION);
-        DocumentIdentityMap map = getDocumentIdentityMap();
+        DocumentFactory map = getDocumentIdentityMap();
         ServiceSelector selector = null;
         SiteManager siteManager = null;
         SourceResolver resolver = null;
