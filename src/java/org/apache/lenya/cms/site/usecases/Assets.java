@@ -18,17 +18,14 @@ package org.apache.lenya.cms.site.usecases;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
-import org.apache.cocoon.servlet.multipart.Part;
-import org.apache.cocoon.servlet.multipart.RejectedPart;
 
+import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.lenya.cms.publication.Resource;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 
 /**
