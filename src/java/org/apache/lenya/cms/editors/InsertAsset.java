@@ -79,7 +79,7 @@ public class InsertAsset extends DocumentUsecase {
      */
     public void advance() throws UsecaseException {
         super.advance();
-        if (getParameter("file") != null) {
+        if (getParameterAsBoolean("upload", false)) {
             UsecaseInvoker invoker = null;
             try {
                 invoker = (UsecaseInvoker) this.manager.lookup(UsecaseInvoker.ROLE);

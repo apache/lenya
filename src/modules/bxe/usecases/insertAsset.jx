@@ -98,6 +98,7 @@
       <form method="POST" enctype="multipart/form-data" id="form-new_asset">
         <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
         <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+        <input type="hidden" name="upload" value="true"/>
         <table class="lenya-table-noborder">
           <tr>
             <td colspan="2">

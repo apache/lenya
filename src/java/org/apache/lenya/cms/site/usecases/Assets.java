@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.cocoon.servlet.multipart.Part;
+import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Resource;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.repository.Node;
@@ -40,11 +41,22 @@ public class Assets extends SiteUsecase {
      * @throws UsecaseException if an error occurs.
      */
     void validate() throws UsecaseException {
-        String title = getParameterAsString("title");
 
-        if (title.length() == 0) {
+        if (getParameterAsString("title").length() == 0) {
             addErrorMessage("Please enter a title.");
         }
+        if (getParameterAsString("creator").length() == 0) {
+            addErrorMessage("Please enter a creator.");
+        }
+        if (getParameterAsString("rights").length() == 0) {
+            addErrorMessage("Please enter the rights.");
+        }
+
+        Part file = getPart("file");
+        if (file == null) {
+            addErrorMessage("Please choose a file to upload.");
+        }
+
     }
 
     /**
@@ -68,6 +80,19 @@ public class Assets extends SiteUsecase {
             resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
             Resource[] resources = resourcesManager.getResources(getSourceDocument());
             setParameter("assets", Arrays.asList(resources));
+
+            User user = getSession().getIdentity().getUser();
+            if (user != null) {
+                String creator;
+                String name = user.getName();
+                if (name != null && !name.trim().equals("")) {
+                    creator = name;
+                } else {
+                    creator = user.getId();
+                }
+                setParameter("creator", creator);
+            }
+
         } catch (final Exception e) {
             throw new RuntimeException(e);
         } finally {
