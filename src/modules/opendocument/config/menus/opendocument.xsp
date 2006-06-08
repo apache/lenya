@@ -43,20 +43,28 @@
       </menu>
       <menu i18n:attr="name" name="Edit">
           <xsp:logic>
-            String doctype = <input:get-attribute module="page-envelope" as="string" name="document-type"/>;
-            String requestURI = <input:get-attribute module="request" as="string" name="requestURI"/>;
-            String moduleURI = requestURI.substring(0,requestURI.lastIndexOf(".html")).concat(".odt?lenya.module=opendocument");
-            if ("opendocument".equals(doctype)) {
-                <block info="false">
-                  <item>
-                    <xsp:attribute name="href">
-                      <xsp:expr>moduleURI</xsp:expr>
-                    </xsp:attribute>
-                    <i18n:text>Download ODT</i18n:text></item>
-                </block>
-                <block info="false">
-                  <item uc:usecase="module.odt.upload" href="?"><i18n:text>Upload ODT</i18n:text></item>
-                </block>
+            try {
+                Document doc = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
+                if (doc != null &amp;&amp; doc.exists()) {
+                    String doctype = <input:get-attribute module="page-envelope" as="string" name="document-type"/>;
+                    String requestURI = <input:get-attribute module="request" as="string" name="requestURI"/>;
+                    String moduleURI = requestURI.substring(0,requestURI.lastIndexOf(".html")).concat(".odt?lenya.module=opendocument");
+                    if ("opendocument".equals(doctype)) {
+                        <block info="false">
+                          <item>
+                            <xsp:attribute name="href">
+                              <xsp:expr>moduleURI</xsp:expr>
+                            </xsp:attribute>
+                            <i18n:text>Download ODT</i18n:text></item>
+                        </block>
+                        <block info="false">
+                          <item uc:usecase="module.odt.upload" href="?"><i18n:text>Upload ODT</i18n:text></item>
+                        </block>
+                    }
+                }
+            }
+            catch (Exception e) {
+                throw new ProcessingException("Error during menu generation: ", e);
             }
           </xsp:logic>
       </menu>

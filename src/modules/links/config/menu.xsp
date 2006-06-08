@@ -44,11 +44,19 @@
       
       <menu i18n:attr="name" name="Edit">
           <xsp:logic>
-            String doctype = <input:get-attribute module="page-envelope" as="string" name="document-type"/>;
-            if ("links".equals(doctype)) {
-                <block info="false">
-                  <item wf:event="edit" uc:usecase="edit.oneform" href="?"><i18n:text>With one Form</i18n:text></item>
-                </block>
+            try {
+                Document doc = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
+                if (doc != null &amp;&amp; doc.exists()) {
+                    String doctype = <input:get-attribute module="page-envelope" as="string" name="document-type"/>;
+                    if ("links".equals(doctype)) {
+                        <block info="false">
+                          <item wf:event="edit" uc:usecase="edit.oneform" href="?"><i18n:text>With one Form</i18n:text></item>
+                        </block>
+                    }
+                }
+            }
+            catch (Exception e) {
+                throw new ProcessingException("Error during menu generation: ", e);
             }
           </xsp:logic>
       </menu>
