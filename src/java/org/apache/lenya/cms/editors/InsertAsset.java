@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Resource;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
@@ -40,6 +41,22 @@ public class InsertAsset extends DocumentUsecase {
     protected void initParameters() {
         super.initParameters();
         loadResources();
+        
+        try {
+            User user = getSession().getIdentity().getUser();
+            if (user != null) {
+                String creator;
+                String name = user.getName();
+                if (name != null && !name.trim().equals("")) {
+                    creator = name;
+                } else {
+                    creator = user.getId();
+                }
+                setParameter("creator", creator);
+            }
+        } catch (final Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     protected void loadResources() {
@@ -90,6 +107,9 @@ public class InsertAsset extends DocumentUsecase {
                 invoker.invoke(getSourceURL(), usecaseName, getParameters());
                 if (invoker.getResult() == UsecaseInvoker.SUCCESS) {
                     loadResources();
+                    deleteParameter("title");
+                    deleteParameter("creator");
+                    deleteParameter("rights");
                 }
                 else {
                     List messages = invoker.getErrorMessages();
@@ -98,6 +118,11 @@ public class InsertAsset extends DocumentUsecase {
                         addErrorMessage(message.getMessage());
                     }
                 }
+                /*
+                 * The <input type="file"/> value cannot be passed to the next screen because
+                 * the browser doesn't allow this for security reasons.
+                 */
+                deleteParameter("file");
             }
             catch (Exception e) {
                 throw new UsecaseException(e);
