@@ -23,7 +23,8 @@
   </node>
 
   <node id="concepts">
-    <label xml:lang="en">Concepts (english only)</label>
+    <label xml:lang="en">Concepts</label>
+    <label xml:lang="de">Konzepte</label>
   </node>
 
   <node id="links">
