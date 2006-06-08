@@ -52,11 +52,20 @@ public class Assets extends SiteUsecase {
             addErrorMessage("Please enter the rights.");
         }
 
+        /*
+         * The <input type="file"/> value cannot be passed to the next screen because
+         * the browser doesn't allow this for security reasons.
+         */
+        
+        if (hasErrors()) {
+            deleteParameter("file");
+        }
+
         Part file = getPart("file");
         if (file == null) {
             addErrorMessage("Please choose a file to upload.");
         }
-
+        
     }
 
     /**
