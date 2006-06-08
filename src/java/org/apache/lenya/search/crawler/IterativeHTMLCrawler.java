@@ -394,6 +394,9 @@ public class IterativeHTMLCrawler {
 
             // handle mailto:...
             url = null;
+        } else if (urlLowCase.equals("")) {
+            // handle empty href's
+            url = null;
         } else {
             url = currentURLPath + "/" + url;
         }
