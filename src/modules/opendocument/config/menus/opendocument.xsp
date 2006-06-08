@@ -44,8 +44,8 @@
       <menu i18n:attr="name" name="Edit">
           <xsp:logic>
             try {
-                Document doc = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
-                if (doc != null &amp;&amp; doc.exists()) {
+                Object doc = <input:get-attribute module="page-envelope" as="object" name="document"/>;
+                if (doc instanceof Document &amp;&amp; ((Document) doc).exists()) {
                     String doctype = <input:get-attribute module="page-envelope" as="string" name="document-type"/>;
                     String requestURI = <input:get-attribute module="request" as="string" name="requestURI"/>;
                     String moduleURI = requestURI.substring(0,requestURI.lastIndexOf(".html")).concat(".odt?lenya.module=opendocument");
