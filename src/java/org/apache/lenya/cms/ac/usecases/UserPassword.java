@@ -23,18 +23,8 @@ import org.apache.lenya.ac.User;
  */
 public class UserPassword extends AccessControlUsecase {
 
-    protected static final String OLD_PASSWORD = "oldPassword";
     protected static final String NEW_PASSWORD = "password";
     protected static final String CONFIRM_PASSWORD = "confirmPassword";
-    
-    protected static final String CHECK_PASSWORD = "checkPassword";
-
-    /**
-     * Ctor.
-     */
-    public UserPassword() {
-        super();
-    }
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
@@ -42,15 +32,11 @@ public class UserPassword extends AccessControlUsecase {
     protected void doCheckExecutionConditions() throws Exception {
         super.doCheckExecutionConditions();
         
-        String checkOldPassword = getParameterAsString(CHECK_PASSWORD);
-        if (checkOldPassword != null && checkOldPassword.equals(Boolean.toString(true))) {
-            String oldPassword = getParameterAsString(OLD_PASSWORD);
-            boolean authenticated = this.user.authenticate(oldPassword);
-            if (!authenticated) {
-                addErrorMessage("The old password is not correct.");
-            }
+        if (this.user == null) {
+            addErrorMessage("The user ID has to be provided when executing this usecase.");
+            return;
         }
-        
+
         checkNewPassword(this);
     }
 
@@ -63,11 +49,16 @@ public class UserPassword extends AccessControlUsecase {
     }
 
     private User user;
+    
+    protected User getUser() {
+        return this.user;
+    }
 
     /**
      * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.Object)
      */
     public void setParameter(String name, Object value) {
+
         super.setParameter(name, value);
 
         if (name.equals(UserProfile.USER_ID)) {
@@ -76,7 +67,6 @@ public class UserPassword extends AccessControlUsecase {
             if (this.user == null) {
                 throw new RuntimeException("User [" + userId + "] not found.");
             }
-
         }
     }
 
@@ -100,6 +90,5 @@ public class UserPassword extends AccessControlUsecase {
             usecase.addErrorMessage("The password must contain at least one number.");
         }
     }
-
 
 }
