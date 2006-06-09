@@ -97,7 +97,9 @@
         <map:call continuation="{1}"/>
       </map:match>
       <map:match type="usecase" pattern="*">
-        <map:call function="executeUsecase"/>
+        <map:call function="executeUsecase">
+          <map:parameter name="usecaseName" value="{request-param:lenya.usecase}"/>
+        </map:call>
       </map:match>
     </map:pipeline>
     

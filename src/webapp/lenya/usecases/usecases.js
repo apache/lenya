@@ -54,7 +54,9 @@ function passRequestParameters(flowHelper, usecase) {
  * 
  */
 function executeUsecase() {
-    var usecaseName = cocoon.request.getParameter("lenya.usecase");
+
+    var usecaseName = cocoon.parameters["usecaseName"];
+
     var view;
     var proxy;
     var menu = "nomenu";
