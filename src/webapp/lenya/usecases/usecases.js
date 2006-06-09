@@ -183,7 +183,6 @@ function executeUsecase() {
                         cocoon.sendPageAndWait(viewUri, {
                             "usecase" : proxy
                         });
-Packages.java.lang.System.out.println("Here again");
                     }
                 }
                 else {
@@ -300,7 +299,6 @@ Packages.java.lang.System.out.println("Here again");
 
     if (cocoon.log.isDebugEnabled())
        cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", completed, redirecting to url = [" + url + "]");
-Packages.java.lang.System.out.println("redirect: " + url);
     cocoon.redirectTo(url, true);
     
 }
