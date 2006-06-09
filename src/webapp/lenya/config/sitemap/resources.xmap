@@ -15,7 +15,11 @@
   limitations under the License.
 -->
 
-<xmap remove="/sitemap/resources" xpath="/sitemap" insert-after="/sitemap/views">
+<xmap unless="/sitemap/resources/resource[@name = 'style-cms-page']"
+  remove="/sitemap/resources"
+  xpath="/sitemap"
+  insert-after="/sitemap/views">
+  
 <!-- =========================== Resources ================================= -->
 
   <map:resources>

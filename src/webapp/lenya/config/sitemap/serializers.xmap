@@ -15,8 +15,15 @@
   limitations under the License.
 -->
 
-<xmap remove="/sitemap/components/serializers" xpath="/sitemap/components" insert-after="/sitemap/components/transformers">
+<xmap remove="/sitemap/components/serializers"
+  unless="/sitemap/components/serializers/serializer[@name = 'patch-test']"
+  xpath="/sitemap/components"
+  insert-after="/sitemap/components/transformers">
+  
   <map:serializers default="xhtml">
+
+    <!-- this declaration is just to test if the patch has already been applied -->
+    <map:serializer name="patch-test"  src="org.apache.cocoon.components.serializers.HTMLSerializer"/>
 
     <map:serializer name="html" logger="sitemap.serializer.html" mime-type="text/html; charset=utf-8" pool-grow="4" pool-max="32" 
     pool-min="4" src="org.apache.cocoon.components.serializers.HTMLSerializer">

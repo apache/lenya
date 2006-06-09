@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<xmap xpath="/sitemap/components/selectors">
+<xmap xpath="/sitemap/components/selectors" unless="/sitemap/components/selectors/selector[@name = 'client']">
     <map:selector logger="sitemap.selector.browser" name="client" src="org.apache.cocoon.selection.BrowserSelector">
       <browser name="explorer" useragent="MSIE"/>
       <browser name="mozilla5" useragent="Mozilla/5"/>

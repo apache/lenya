@@ -15,7 +15,10 @@
   limitations under the License.
 -->
 
-<xmap remove="/sitemap/pipelines" xpath="/sitemap" insert-after="/sitemap/resources">
+<xmap remove="/sitemap/pipelines"
+      unless="/sitemap/pipelines/pipeline/match[@pattern = 'lenya-screen.xsl']"
+      xpath="/sitemap"
+      insert-after="/sitemap/resources">
 
 <!-- =========================== Pipelines ================================= -->
 

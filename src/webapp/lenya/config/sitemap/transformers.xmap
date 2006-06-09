@@ -18,6 +18,7 @@
 <xmap xpath="/sitemap/components/transformers" 
   unless="/sitemap/components/transformers/transformer[@name = 'link-rewrite']"
   xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  
     <map:transformer name="link-rewrite" logger="lenya.sitemap.transformer.link-rewrite" src="org.apache.lenya.cms.cocoon.transformation.LinkRewritingTransformer"/>
     <map:transformer name="usecasemenu" logger="lenya.sitemap.transformer.usecasemenu" src="org.apache.lenya.cms.cocoon.transformation.UsecaseMenuTransformer"/>
     <map:transformer name="workflowmenu" logger="lenya.sitemap.transformer.workflowmenu" src="org.apache.lenya.cms.cocoon.transformation.WorkflowMenuTransformer"/>
