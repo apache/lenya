@@ -1,0 +1,321 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:components/>
+
+  <map:resources>
+          <map:resource name="style-cms-page">
+      <map:transform type="i18n">      
+        <map:parameter name="locale" value="{request:locale}"/>
+      </map:transform>    
+      <map:transform src="{fallback://xslt/util/page2xhtml.xsl}">
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:transform src="{fallback://xslt/util/strip_namespaces.xsl}"/>
+      <map:serialize/>
+    </map:resource>
+ </map:resources>
+
+  <map:pipelines>
+    <!-- WebDAV -->
+    <map:pipeline>
+      <map:match pattern="webdav/**">
+        <map:mount src="webdav.xmap" uri-prefix="webdav" check-reload="yes"/>
+      </map:match>
+    </map:pipeline>
+
+    <!-- AtomAPI -->
+    <map:pipeline>
+      <map:match pattern="atomapi/**">
+        <map:mount src="atomapi.xmap" uri-prefix="atomapi" check-reload="yes"/>
+      </map:match>
+    </map:pipeline>
+  
+    <!-- Redirects -->
+    <map:pipeline>
+      <map:match pattern="*/">
+        <map:redirect-to uri="feeds/all/index.html"/>
+      </map:match>
+      <map:match pattern="*/index.html">
+        <map:redirect-to uri="feeds/all/index.html"/>
+      </map:match>
+      <!-- The HTML Form Editor does send a redirect -->
+      <map:match pattern="*/sidebar.html">
+        <map:redirect-to uri="feeds/all/index.html"/>
+      </map:match>
+    </map:pipeline>
+
+    <!-- Entries -->
+    <map:pipeline>
+      <map:match pattern="*/entries/*/*/*/*/introspection.xml">
+        <map:generate src="content/introspection.xml"/>
+        <map:transform src="xslt/entry/introspection.xsl">
+          <map:parameter name="editURL" value="http://127.0.0.1:8080/lenya/blog/authoring/entries/{2}/{3}/{4}/{5}/index.html"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+    <map:pipeline>
+      <map:match pattern="*/entries/*/*/*/*/index.xml">
+        <map:select type="request-parameter">
+          <map:parameter name="parameter-name" value="lenya.step"/>  
+          <map:when test="view-revision"> <!-- view of an older version -->
+            <map:generate type="serverpages" src="../../content/rc/view.xsp"/>
+            <map:transform src="../../xslt/rc/toDoc.xsl"/>
+          </map:when>
+          <map:otherwise>
+            <map:generate src="content/{1}/entries/{2}/{3}/{4}/{5}/index.xml"/>
+          </map:otherwise>
+        </map:select>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="*/entries/*/*/*/*/lenya-body.xml">
+        <map:aggregate element="feed">
+          <map:part src="content/{1}/feeds/all/index.xml"/>
+          <map:part src="cocoon:/{1}/entries/{2}/{3}/{4}/{5}/index.xml"/>
+          <map:part src="content/{1}/sidebar.xml"/>
+        </map:aggregate>
+        <map:transform src="xslt/entry/aggregate.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="*/entries/*/*/*/*/lenya-page-body.xml">
+        <map:aggregate element="cmsbody">
+          <map:part src="cocoon:/{1}/entries/{2}/{3}/{4}/{5}/lenya-body.xml"/>
+          <map:part src="content/{1}/sidebar.xml"/>
+        </map:aggregate>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <map:match pattern="*/entries/*/*/*/*/index.html">
+        <map:generate src="cocoon:/{1}/entries/{2}/{3}/{4}/{5}/lenya-page-body.xml"/>
+        <map:transform src="xslt/entry/main-{1}.xsl">
+          <map:parameter name="contextprefix" value="{request:contextPath}"/>
+          <map:parameter name="relative2root" value="../../../../.."/>
+        </map:transform>
+        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/entry.xml"/>
+        <map:transform src="{fallback://xslt/util/strip_namespaces.xsl}"/>
+        <map:serialize type="xhtml"/>
+      </map:match>
+      <map:handle-errors>
+        <map:select type="exception">
+           <map:when test="resourcenotfound">
+             <map:generate src="../../content/util/empty.xml" />
+            <map:transform src="../../xslt/exception/document-does-not-exist.xsl"/>
+            <map:call resource="style-cms-page">
+              <map:parameter name="statusCode" value="404"/>
+            </map:call>
+          </map:when>
+        <map:otherwise>
+        <map:generate type="notifying"/>
+        <map:transform src="../../../stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+         </map:otherwise>
+        </map:select>
+        <map:serialize type="xhtml"/>
+      </map:handle-errors>
+    </map:pipeline>
+
+    <!-- BX Editor: Entries -->
+    <map:pipeline>
+      <map:match pattern="*/entries/*/*/*/*/index-bxeng.html">
+        <!-- Check for BXE -->
+        <map:act type="resource-exists" src="../../resources/bxeng/bxeLoader.js">
+          <map:aggregate element="bxeng">
+            <map:part src="../../resources/misc/bxeng/index.xhtml"/>
+            <map:part src="resources/misc/bxeng/entry-namespaces.xml"/>
+          </map:aggregate>
+          <map:transform src="../../xslt/bxeng/aggregate.xsl"/>
+          <map:transform src="../../xslt/bxeng/index-xhtml.xsl">
+            <map:parameter name="configfile" value="./config-bxeng.xml"/>
+            <map:parameter name="context" value="{request:contextPath}"/>
+          </map:transform>
+          <map:serialize type="xhtml"/>
+        </map:act>
+        <map:generate src="../../resources/misc/bxeng/download.xhtml"/>
+        <map:serialize type="xhtml"/>
+      </map:match>
+    </map:pipeline>
+    <map:pipeline>
+      <map:match pattern="*/entries/*/*/*/*/config-bxeng.xml">
+        <map:generate src="../../resources/misc/bxeng/inc/config.xml"/>
+        <map:transform src="../../xslt/bxeng/config-xml.xsl">
+          <map:parameter name="BX_xmlfile" value="../../../../../../webdav/entries/{2}/{3}/{4}/{5}/index.xml"/>
+          <map:parameter name="BX_xslfile" value="entry-bxeng.xsl"/>
+          <map:parameter name="css" value="entry-bxeng.css"/>
+          <map:parameter name="BX_exitdestination" value="index.html"/>
+          <map:parameter name="BX_validationfile" value="entry-relaxng-bxeng.xml"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+    <map:pipeline>
+      <map:match pattern="*/entries/*/*/*/*/entry-bxeng.xsl">
+        <map:generate src="xslt/entry/bxeng.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="*/entries/*/*/*/*/entry-bxeng.css">
+        <map:read src="resources/misc/bxeng/entry.css" mime-type="text/css"/>
+      </map:match>
+      <map:match pattern="*/entries/*/*/*/*/entry-relaxng-bxeng.xml">
+        <map:generate src="config/doctypes/schemas/entry.rng"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:handle-errors>
+        <map:select type="exception">
+           <map:when test="resourcenotfound">
+             <map:generate src="../../content/util/empty.xml" />
+            <map:transform src="../../xslt/exception/document-does-not-exist.xsl"/>
+            <map:call resource="style-cms-page">
+              <map:parameter name="statusCode" value="404"/>
+            </map:call>
+          </map:when>
+        <map:otherwise>
+        <map:generate type="notifying"/>
+        <map:transform src="../../../stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+         </map:otherwise>
+        </map:select>
+        <map:serialize type="xhtml"/>
+      </map:handle-errors>
+    </map:pipeline>
+    <!-- /BX Editor: Entries -->
+
+    <!-- Feeds -->
+    <map:pipeline>
+      <map:match pattern="*/feeds/*/introspection.xml">
+        <map:generate src="content/introspection.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+    <map:pipeline>
+      <map:match pattern="*/feeds/*/index.xml">
+        <map:act type="resource-exists">
+          <map:parameter name="url" value="content/{1}/entries"/>
+	
+          <map:generate type="directory" src="content/{../1}/entries">
+            <map:parameter name="depth" value="4"/>
+            <map:parameter name="reverse" value="true"/>
+          </map:generate>
+          <map:transform src="xslt/feed/xinclude.xsl">
+            <map:parameter name="feedid" value="{../2}"/>
+          </map:transform>
+          <map:transform type="xlink">
+            <map:parameter name="href" value="content/{../1}/dummy.xml"/>
+          </map:transform>
+          <map:serialize type="xml"/>
+        </map:act>
+
+        <map:generate src="content/{1}/feeds/all/index.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="*/feeds/*/lenya-page-body.xml">
+        <map:aggregate element="cmsbody">
+          <map:part src="cocoon:/{1}/feeds/{2}/index.xml"/>
+          <map:part src="content/{1}/sidebar.xml"/>
+        </map:aggregate>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="*/feeds/*/index.html">
+        <map:generate src="cocoon:/{1}/feeds/{2}/lenya-page-body.xml"/>
+        <map:transform type="xalan" src="xslt/feed/main-{1}.xsl">
+          <map:parameter name="relative2root" value="../.."/>
+          <map:parameter name="contextprefix" value="{request:contextPath}"/>
+        </map:transform>
+        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/feed.xml"/>
+        <map:transform src="{fallback://xslt/util/strip_namespaces.xsl}"/>
+        <map:serialize type="xhtml"/>
+      </map:match>
+      <map:handle-errors>
+        <map:select type="exception">
+           <map:when test="resourcenotfound">
+             <map:generate src="../../content/util/empty.xml" />
+            <map:transform src="../../xslt/exception/document-does-not-exist.xsl"/>
+            <map:call resource="style-cms-page">
+              <map:parameter name="statusCode" value="404"/>
+            </map:call>
+          </map:when>
+        <map:otherwise>
+        <map:generate type="notifying"/>
+        <map:transform src="../../../stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+         </map:otherwise>
+        </map:select>
+        <map:serialize type="xhtml"/>
+      </map:handle-errors>
+    </map:pipeline>
+
+    <!-- Archives -->
+    <map:pipeline>
+      <map:match pattern="*/*/*/index.xml">
+        <map:generate type="directory" src="content/{1}/entries/{2}/{3}/">
+          <map:parameter name="depth" value="2"/>
+          <map:parameter name="reverse" value="true"/>
+        </map:generate>
+        <map:transform src="xslt/archive/xinclude.xsl">
+          <map:parameter name="year" value="{2}"/>
+        </map:transform>
+        <map:transform type="xlink">
+          <map:parameter name="href" value="content/{1}/dummy.xml"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="*/*/*/lenya-page-body.xml">
+        <map:aggregate element="cmsbody">
+          <map:part src="cocoon:/{1}/{2}/{3}/index.xml"/>
+          <map:part src="content/{1}/sidebar.xml"/>
+        </map:aggregate>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="*/*/*/">
+        <map:generate src="cocoon:/{1}/{2}/{3}/lenya-page-body.xml"/>
+        <map:transform type="xalan" src="xslt/feed/main-{1}.xsl">
+          <map:parameter name="relative2root" value="../.."/>
+          <map:parameter name="contextprefix" value="{request:contextPath}"/>
+        </map:transform>
+        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{1}/archive.xml"/>
+        <map:transform src="{fallback://xslt/util/strip_namespaces.xsl}"/>
+        <map:serialize type="xhtml"/>
+      </map:match>
+      <map:handle-errors>
+        <map:select type="exception">
+           <map:when test="resourcenotfound">
+             <map:generate src="../../content/util/empty.xml" />
+            <map:transform src="../../xslt/exception/document-does-not-exist.xsl"/>
+            <map:call resource="style-cms-page">
+              <map:parameter name="statusCode" value="404"/>
+            </map:call>
+          </map:when>
+        <map:otherwise>
+        <map:generate type="notifying"/>
+        <map:transform src="../../../stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+         </map:otherwise>
+        </map:select>
+        <map:serialize type="xhtml"/>
+      </map:handle-errors>
+    </map:pipeline>
+
+  </map:pipelines>
+</map:sitemap>

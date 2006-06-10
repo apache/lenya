@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<xsp:page 
+  language="java" 
+  xmlns:xsp="http://apache.org/xsp"
+  xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0"
+  xmlns:li="http://apache.org/cocoon/lenya/info/1.0"
+  xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
+  xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+  xmlns:request="http://apache.org/xsp/request/2.0"
+>
+
+  <xsp:structure>
+    <xsp:include>org.apache.lenya.cms.rc.RevisionController</xsp:include>
+    <xsp:include>java.io.IOException</xsp:include>
+    <xsp:include>org.apache.cocoon.environment.Session</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
+    <xsp:include>org.apache.lenya.cms.rc.RCEnvironment</xsp:include>
+    <xsp:include>org.apache.lenya.xml.DocumentHelper</xsp:include>
+  </xsp:structure>
+    
+<lenya-info:info>
+  <rc:revisions>
+   <xsp:logic>
+    String docId = (String)<input:get-attribute module="page-envelope" as="object" name="document-id"/>;
+    Publication publication = (Publication)<input:get-attribute module="page-envelope" as="object" name="publication"/>;
+
+      String rootDir=publication.getEnvironment().getPublicationPath();
+
+      String servletContextPath = publication.getServletContext().getCanonicalPath();
+      
+      RCEnvironment rcEnvironment = new RCEnvironment(servletContextPath);
+      String rcmlDirectory = rcEnvironment.getRCMLDirectory();
+      rcmlDirectory=rootDir+rcmlDirectory;
+      String backupDirectory = rcEnvironment.getBackupDirectory();
+      backupDirectory=rootDir+backupDirectory;
+
+      RevisionController rc = new RevisionController(rcmlDirectory, backupDirectory, rootDir);
+
+      String filename= "content/authoring" +docId + "/index_" + (String)<input:get-attribute module="page-envelope" as="object" name="document-language"/> + ".xml";
+
+
+      org.w3c.dom.Document rcmlDoc=null;
+      try {
+        rcmlDoc=rc.getRCML(filename).getDOMDocumentClone();
+      } catch (Exception e) {
+        <rc:exception>rollback: Unable to get DOM doc for rcml file, caught exception: <xsp:expr>e.toString()</xsp:expr></rc:exception>
+      }                                                                                                                                    
+
+      org.w3c.dom.Element rootE= (org.w3c.dom.Element)rcmlDoc.getDocumentElement();
+      org.w3c.dom.NodeList timeElements = rootE.getElementsByTagName("Time");
+
+      for (int i = 0; i &lt; timeElements.getLength(); i++) {
+        org.w3c.dom.Element time = (org.w3c.dom.Element) timeElements.item(i);
+        time.setAttribute("humanreadable", new Date(new Long(time.getFirstChild().getNodeValue()).longValue()).toString());
+      }
+            
+    </xsp:logic>
+      <lenya-info:documentid><xsp:expr>docId</xsp:expr></lenya-info:documentid>
+    	<xsp:expr>rootE</xsp:expr>
+   </rc:revisions>
+</lenya-info:info>
+
+</xsp:page>

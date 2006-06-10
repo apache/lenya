@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+
+<project name="clone" default="clone">
+
+  <target name="init">
+    <property file="local.build.properties"/>
+    <property file="build.properties"/>
+
+    <dirname property="clone.dir" file="${ant.file}"/>
+    <dirname property="tools.dir" file="${clone.dir}"/>
+    <dirname property="default.source.dir" file="${tools.dir}"/>
+    <dirname property="pubs.source.dir" file="${default.source.dir}"/>
+    <dirname property="lenya.source.dir" file="${pubs.source.dir}"/>
+    <dirname property="webapp.source.dir" file="${lenya.source.dir}"/>
+    <dirname property="source.dir" file="${webapp.source.dir}"/>
+    <dirname property="dist.dir" file="${source.dir}"/>
+
+    <property name="build.dir" value="${dist.dir}/build"/>
+    <property name="default.build.dir" value="${build.dir}/lenya/webapp/lenya/pubs/default"/>
+    <property name="clone.build.dir" value="${build.dir}/lenya/webapp/lenya/pubs/${clone.publication.prefix}"/>
+  </target>
+
+  <target name="clone" depends="init" description="Clone default publication">
+    <echo>Clone default publication</echo>
+
+    <echo>Check if build directory exists: ${build.dir}</echo>
+    <condition property="build.dir.exists">
+      <available file="${build.dir}" type="dir"/>
+    </condition>
+    <fail unless="build.dir.exists" message="INFO: Apache Lenya needs first to be built by executing build.sh resp. build.bat"/>
+
+    <echo>Copy files from ${default.build.dir} to ${clone.build.dir}</echo>
+    <copy todir="${clone.build.dir}" overwrite="true">
+      <fileset dir="${default.build.dir}"/>
+    </copy>
+
+    <echo>Replace default specifics ...</echo>
+    <xslt
+      in="${default.build.dir}/config/ac/ac.xconf"
+      out="${clone.build.dir}/config/ac/ac.xconf"
+      style="ac-xconf.xsl"
+      force="true"
+      >
+        <param name="publicationName" expression="${clone.publication.prefix}"/>
+        <param name="templatePublication" expression="default"/>
+    </xslt>
+    <xslt
+      in="${default.build.dir}/config/publication.xconf"
+      out="${clone.build.dir}/config/publication.xconf"
+      style="publication-xconf.xsl"
+      force="true"
+      >
+      <param name="publicationName" expression="${clone.publication.prefix}"/>
+      <param name="templatePublication" expression="default"/>
+    </xslt>
+    <xslt
+      in="${default.build.dir}/publication.xml"
+      out="${clone.build.dir}/publication.xml"
+      style="publication-xml.xsl"
+      force="true"
+      >
+      <param name="publicationName" expression="${clone.publication.name}"/>
+    </xslt>
+
+    <echo>Touch source of clone publication ${clone.publication.source.dir}</echo>
+    <touch>
+      <fileset dir="${clone.publication.source.dir}">
+        <patternset>
+          <include name="**"/>
+        </patternset>
+      </fileset>
+    </touch>
+  </target>
+
+</project>

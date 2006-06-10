@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- Download Verify XML -->
+<project name="dvx" basedir="." default="download">
+
+  <target name="init" description="Initialize parameters">
+    <dirname property="bin.dir" file="${ant.file}"/>
+    <dirname property="lenya.dir" file="${bin.dir}"/>
+    <dirname property="webapp.dir" file="${lenya.dir}"/>
+    <dirname property="src.dir" file="${webapp.dir}"/>
+    <dirname property="root.dir" file="${src.dir}"/>
+    <property name="classes.dir" value="${root.dir}/build/lenya/tools/anttasks"/>
+
+    <property name="pubs.dir" value="${lenya.dir}/pubs"/>
+    <echo>Pubs Directory ${pubs.dir}</echo>
+
+    <property file="local.feeds.properties"/>
+    <property file="feeds.properties"/>
+    <!-- [URL],[PATH],... -->
+    <!-- NOTE: No whitespace after and before colons -->
+    <property name="feeds" value="http://www.oscom.org/planet-oscom/rss.xml,oscom.xml,http://www.cmswatch.com/RSS/cmswatch.xml,${pubs.dir}/cmswatch.xml"/>
+  </target>
+
+<!--
+  <target name="clean" description="Delete all generated files">
+    <delete dir="classes"/>
+    <delete file="dvx.jar"/>
+  </target>
+-->
+
+  <target name="compile" description="Compile the Task" depends="init">
+    <mkdir dir="${classes.dir}"/>
+    <javac srcdir="${src.dir}/java" includes="org/apache/lenya/cms/ant/DownloadFeeds.java" destdir="${classes.dir}"/>
+  </target>
+
+<!--
+  <target name="jar" description="Generate JAR" depends="compile">
+    <jar destfile="Dvx.jar" basedir="classes"/>
+  </target>
+-->
+
+  <target name="download" description="Download and verify the feeds" depends="compile,init">
+    <taskdef name="dvx" classname="org.apache.lenya.cms.ant.DownloadFeeds" classpath="${classes.dir}"/>
+    <echo>Download Feeds</echo>
+    <dvx rootdir="${pubs.dir}" feeds="${feeds}"/>
+  </target>
+
+</project>

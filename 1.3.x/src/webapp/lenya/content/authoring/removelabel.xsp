@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<xsp:page
+       language="java"
+       xmlns:xsp="http://apache.org/xsp"
+       xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+       xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
+       >
+
+  <xsp:structure>
+    <xsp:include>org.apache.lenya.cms.publication.Publication</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.SiteTreeException</xsp:include>
+  </xsp:structure>
+  
+  <usecase:removelabel>
+    
+    <xsp:logic>
+      String documentId = <input:get-attribute module="page-envelope" name="document-id" as="string"/>;
+      String language = <input:get-attribute module="page-envelope" name="document-language" as="string"/>;
+      Publication pub = (Publication) <input:get-attribute module="page-envelope" as="object" name="publication"/>;
+      String label = "";
+      try {
+        label = pub.getTree(Publication.AUTHORING_AREA).getNode(documentId).getLabel(language).getLabel();
+      } catch (SiteTreeException e) {}
+    </xsp:logic>
+  
+    <usecase:document-id><xsp:expr>documentId</xsp:expr></usecase:document-id>
+    <usecase:language><xsp:expr>language</xsp:expr></usecase:language>
+    <usecase:label><xsp:expr>label</xsp:expr></usecase:label>
+    <usecase:referer><input:get-attribute module="request" name="requestURI" as="string"/></usecase:referer>
+    
+    <!-- FIXME: this should be defined in the workflow schema -->
+    <usecase:task-id>remove-language</usecase:task-id>
+    
+  </usecase:removelabel>
+  
+</xsp:page>

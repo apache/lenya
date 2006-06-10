@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+    
+<html xmlns="http://www.w3.org/1999/xhtml"  >
+<head>
+
+<!-- Namespaces are doctype specific and will be added during aggregation -->
+
+<link rel="stylesheet" href="@EDITOR_CSS@" type="text/css" />
+<!-- href="/bxeng/css/editor.css" -->
+
+<script src="@BXELOADER_JS@" type="text/javascript"></script>
+<!-- src="/bxeng/bxeLoader.js" -->
+
+
+<title>Bitflux Editor</title>
+
+</head>
+
+<body onload="bxe_start('CONFIG_FILE')">
+<!-- everything in the following div element will be replaced -->
+<div id="bxe_area">
+<noscript>
+<span style='font-family: Arial; padding: 5px; background-color: #ffffff'>
+You need JavaScript enabled. Otherwise nothing at all works here
+:)</span></noscript>
+</div>
+
+<!-- another way to do it without having to use xslt
+  <div id="foobar" bxe_xpath="/xhtml:body"></div>
+-->
+</body>
+</html>

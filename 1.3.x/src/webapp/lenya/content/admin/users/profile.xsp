@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<xsp:page
+  language="java"
+  xmlns:xsp="http://apache.org/xsp"  
+  xmlns:jpath="http://apache.org/xsp/jpath/1.0"
+  >
+  
+  <page>
+    <title><jpath:value-of select="page-title"/></title>
+    <continuation><jpath:continuation/></continuation>
+    <user>
+      <xsp:attribute name="new"><jpath:value-of select="new-user"/></xsp:attribute>
+      <xsp:attribute name="ldap"><jpath:value-of select="ldap"/></xsp:attribute>
+      
+      <messages>
+        <xsp:logic>
+          java.util.List messages = (java.util.List) <jpath:value-of select="messages"/>;
+          if (messages != null) {
+              for (java.util.Iterator i = messages.iterator(); i.hasNext(); ) {
+                <message type="error"><xsp:expr>i.next()</xsp:expr></message>
+              }
+          }
+        </xsp:logic>	  
+      </messages>
+      	
+      <id><jpath:value-of select="user-id"/></id>
+      
+      <xsp:logic>
+      	String ldapId = (String) <jpath:value-of select="ldap-id"/>;
+      	if (ldapId != null) {
+          <ldapid><xsp:expr>ldapId</xsp:expr></ldapid>
+      	}
+      </xsp:logic>
+      
+      <fullname><jpath:value-of select="fullname"/></fullname>
+      <email><jpath:value-of select="email"/></email>
+      <password><jpath:value-of select="password"/></password>
+      <confirm-password><jpath:value-of select="confirm-password"/></confirm-password>
+      <description><jpath:value-of select="description"/></description>
+    </user>
+  </page>
+  
+</xsp:page>

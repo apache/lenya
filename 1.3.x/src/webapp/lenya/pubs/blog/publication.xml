@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<lenya:publication xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0">
+<lenya:pub-version>@lenya.version@</lenya:pub-version>
+<lenya:lenya-version>@lenya.version@</lenya:lenya-version>
+<lenya:cocoon-version>2.1.7, 2.1.8, 2.1.9</lenya:cocoon-version>
+<lenya:name>Lenya's Weblog</lenya:name>
+<lenya:description>
+This publication is an initiative to implement the <a href="http://www.intertwingly.net/wiki/pie/FrontPage">"Echo/Atom"</a> specification for syndicating, archiving and
+editing episodic web sites (e.g. weblogs).
+
+<h3>Customizing the layout</h3>
+The fonts and colors can be customized by editing the file <code>resources/css/styles.css</code>.
+The positioning can be customized by editing the file <code>xslt/global.xsl</code>. The following CSS resources
+might be helpful
+<br /><a href="http://www.w3schools.com/css/css_reference.asp">CSS2 Reference</a>
+<br /><a href="http://www.csszengarden.com">The Beauty of CSS Design</a>
+<br /><a href="http://www.lightsphere.com/colors/">216 Color Square</a>
+
+<h3>Weblog Resources</h3>
+<a href="http://www.intertwingly.net/wiki/pie/Syntax">Doctypes</a> (entry, feed, etc.)
+<br />
+<a href="http://www.imc.org/atom-syntax/mail-archive/maillist.html">Mailing List</a>
+<br />
+<a href="http://intertwingly.net/stories/2003/07/01/example.necho">XML proposal of doctype entry</a>
+<br />
+<a href="http://www.dynamicobjects.com/d2r/archives/001921.html">A Review of Blogging APIs</a>
+<br />
+<a href="http://btrott.typepad.com/typepad/atom.xml">Sample Feed by TypePad</a>
+
+<h3>Other Atom API Implementations</h3>
+<a href="http://bitworking.org/rfc/">Specification</a>
+<br />
+<a href="http://diveintomark.org/archives/2003/08/18/atom_api_implementation">Overview</a>
+<br />
+<a href="http://bitworking.org/rfc/implementation/wxAtomClient_25Aug2003.zip">Python Client</a>
+<br />
+<code>export HTTP_PROXY=http://127.0.0.1:4444</code>
+<br />
+<code>python wxAtomClientApp.py</code>
+<br />
+<a href="http://www.diveintomark.org/atom/">Testing the client</a>
+<br />
+<code>java -classpath lib/axis.jar org.apache.axis.utils.tcpmon</code>
+(Listen Port # 4444, Act as a ... Proxy, Options: HTTP Proxy Support)
+<br />
+<a href="http://diveintomark.org/public/2003/08/atom-api-20030825.py">Python Server</a>
+<br />
+<a href="http://www.intertwingly.net/code/mombo/">Python Server</a>
+
+<h3>Atom Misc</h3>
+<a href="http://www.feedvalidator.org">http://www.feedvalidator.org</a>
+<br />
+<a href="http://feedvalidator.org/download/rssvalidator-latest.zip">Download Feed Validator</a>
+
+</lenya:description>
+</lenya:publication>

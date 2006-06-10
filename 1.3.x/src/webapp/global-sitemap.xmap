@@ -1,0 +1,465 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+    
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:components/>
+
+<!-- =========================== Views =================================== -->
+
+  <!--+
+      | Views provide diffent, well, views to resources. Views are
+      | orthogonal to pipelines. Please refer to the docs.
+      +-->
+  <map:views>
+
+    <map:view name="first" from-position="first">
+      <map:serialize type="xml"/>
+    </map:view>
+
+    <map:view name="last" from-position="last">
+      <map:serialize type="xml"/>
+    </map:view>
+
+    <map:view from-label="content" name="content">
+      <map:serialize type="xml"/>
+    </map:view>
+
+    <map:view from-label="data" name="pretty-content">
+      <map:transform src="stylesheets/simple-xml2html.xsl"/>
+      <map:serialize type="html"/>
+    </map:view>
+
+    <map:view from-position="last" name="links">
+      <map:serialize type="links"/>
+    </map:view>
+
+    <map:view from-label="aggregate" name="aggregate">
+      <map:serialize type="xml"/>
+    </map:view>
+  </map:views>
+
+<!-- =========================== Resources ================================= -->
+
+  <!--+
+      | Resources are pipeline fragments that may be used from different
+      | pipeline fragments. For our needs, they behave exactly like
+      | pipelines, only that they are not accessible from outside.
+      | Hence I will explain what's inside below for pipelines.
+      +-->
+  <map:resources>
+
+
+    <!-- TODO: Is this resource being actually used somewhere? -->
+    <!-- TODO: This sitemap does not call this resource anywhere! -->
+    <!--
+    <map:resource name="navigation">
+      <map:generate src="lenya/pubs/{pub_id}/content/live/sitetree.xml" />
+      <map:transform src="lenya/xslt/util/sitetree2navigation.xsl">
+        <map:parameter name="nav_id" value="{nav_id}"/>
+      </map:transform>
+    </map:resource>
+    -->
+   
+    <map:resource name="style-cms-page">
+    <!-- FIXME: due to resolver issues, i18n can currently not be used outside
+        of a publication IF you do not make a hit into a publication context first.     
+         <map:transform type="i18n">      
+        <map:parameter name="locale" value="{request:locale}"/>
+      </map:transform>    
+-->      <map:transform src="lenya/xslt/util/page2xhtml.xsl">
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:transform src="lenya/xslt/util/strip_namespaces.xsl"/>
+      <map:serialize/>
+    </map:resource>
+   
+    <map:resource name="i18n">
+      <map:transform type="i18n">
+        <map:parameter name="locale" value="{request:locale}"/>
+      </map:transform>
+    </map:resource>
+ </map:resources>
+
+<!-- ========================== Action sets ================================ -->
+
+ <!--+
+     | Action sets group actions together. If some actions are often used
+     | together in pipeline fragments, it's easier to group them and refer
+     | to the group. For more info, please see the docs.
+     +-->
+  <map:action-sets>
+  </map:action-sets>
+
+<!-- =========================== Pipelines ================================= -->
+
+ <!--+
+     | Pipelines. The beef. Pipelines specify how the processing of your
+     | content is done. Usually, a pipeline consists of several fragments
+     | that specify the generation, transformation, and serialization of
+     | SAX events.
+     |
+     | Processing is done in two steps:
+     |
+     | 1) The top level elements are executed in order of appearance until
+     |    one signals success. These top level elements are usually
+     |    matchers.
+     |
+     |    Other components are called depth-first to determine what
+     |    fragments make up the processing pipeline. When a component
+     |    fails, no nested components are called but the next component on
+     |    the same level.
+     |
+     | 2) Once it is determined which generator, which transformers and
+     |    wich serializer is used, these components are executed. During
+     |    this, the pipeline may not be changed.
+     |
+     | You may have as many pipelines in your sitemap as you like.
+     +-->
+ <map:pipelines>
+
+  <map:component-configurations>
+    <global-variables>
+       <!--+
+           | Define global parameters here:
+           |   <skin>my_skin</skin>
+           |   ...
+           | You can access them by {global:*name*}, e.g. {global:skin}.
+           | These values are inherited into sub-sitemaps and can
+           | be extended there.
+           +-->
+    </global-variables>
+  </map:component-configurations>
+
+
+
+<!-- =========================== Lenya CMS ================================= -->
+
+<!-- =========================== Pipelines ================================= -->
+
+    <map:pipeline>
+      <map:match pattern="publications.xml">
+        <map:generate type="directory" src="lenya/pubs"/>
+        <map:transform src="lenya/xslt/util/xinclude.xsl"/>
+        <map:transform type="xlink">
+          <map:parameter name="href" value="lenya/pubs/dummy.xml"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+
+    <map:pipeline>
+      <map:match pattern="">
+        <map:redirect-to uri="index.html"/>
+      </map:match>
+      <map:match pattern="index.html">
+        <map:aggregate element="lenya" ns="http://apache.org/cocoon/lenya/publication/1.0" prefix="lenya" label="aggregate">
+          <map:part src="cocoon:/publications.xml"/>
+          <map:part src="lenya/content/introduction.xml"/>
+        </map:aggregate>
+        <map:transform src="lenya/xslt/util/welcome.xsl"/>
+        <map:call resource="style-cms-page"/>
+      </map:match>
+      <map:match pattern="about.html">
+        <map:generate src="lenya/content/about.xml"/>
+        <map:call resource="style-cms-page"/>
+      </map:match>
+      
+      <map:handle-errors>
+        <map:select type="exception">
+           <map:when test="resourcenotfound">
+             <map:generate src="lenya/content/util/empty.xml" />
+            <map:transform src="lenya/xslt/exception/document-does-not-exist.xsl"/>
+            <map:call resource="style-cms-page">
+              <map:parameter name="statusCode" value="404"/>
+            </map:call>
+          </map:when>
+      <map:otherwise>
+        <map:generate type="notifying"/>
+        <map:transform src="stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+      </map:otherwise>
+        </map:select>
+        <map:serialize type="html"/>
+      </map:handle-errors>    
+      </map:pipeline>
+
+    <!-- Search with Lucene -->
+    <map:pipeline>
+      <map:match pattern="*/search-*/lucene*">
+        <map:mount uri-prefix="" src="{fallback:lucene.xmap}" check-reload="true" reload-method="synchron"/>
+      </map:match>
+      <map:handle-errors>
+        <map:select type="exception">
+           <map:when test="resourcenotfound">
+             <map:generate src="lenya/content/util/empty.xml" />
+            <map:transform src="lenya/xslt/exception/document-does-not-exist.xsl"/>
+            <map:call resource="style-cms-page">
+              <map:parameter name="statusCode" value="404"/>
+            </map:call>
+          </map:when>
+      <map:otherwise>
+        <map:generate type="notifying"/>
+        <map:transform src="stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+      </map:otherwise>
+        </map:select>
+        <map:serialize type="html"/>
+      </map:handle-errors>    
+    </map:pipeline>
+    <!-- /Search with Lucene -->
+
+    <!-- Editor Xopus -->
+    <map:pipeline>
+      <map:match pattern="xopus/**">
+        <map:mount uri-prefix="xopus" src="lenya/xopus.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+    </map:pipeline>
+
+    <!-- Editor BXE -->
+    <map:pipeline>
+      <map:match pattern="bxeng/**">
+        <map:read src="lenya/resources/bxeng/{1}"/>
+      </map:match>
+    </map:pipeline>
+
+    <!-- Editor Epoz -->
+    <map:pipeline>
+      <map:match pattern="kupu/**">
+        <map:read src="lenya/resources/kupu/{1}"/>
+      </map:match>
+    </map:pipeline>
+
+    <map:pipeline>
+      <!-- Lenya GUI -->
+      <map:match pattern="lenya/**">
+        <map:mount uri-prefix="lenya" src="lenya/lenya.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+            
+      <!-- Lenya page transformation -->
+      <!-- lenya-page/{publication-id}/{complete-area}/... -->
+      <map:match pattern="lenya-page/*/*/**">
+      	<map:generate src="cocoon:/menu-xml/{1}/{2}/{3}"/>
+        
+        <map:call resource="i18n"/>
+        
+      	<map:act type="resource-exists" src="lenya/pubs/{1}/config/workflow/">
+          <map:transform type="workflowmenu"/>
+        </map:act>
+        
+      	<map:act type="resource-exists" src="lenya/pubs/{1}/config/ac/usecase-policies.xml">
+          <map:transform type="usecasemenu"/>
+        </map:act>
+        
+        <map:select type="request-parameter">
+          <map:parameter name="parameter-name" value="uiml"/>
+          <map:when test="xul">
+            <map:transform src="{fallback:xslt/menu/menu2xul.xsl}">
+              <map:parameter name="contextprefix" value="{request:contextPath}"/>
+              <map:parameter name="publicationid" value="{1}"/>
+              <map:parameter name="completearea" value="{2}"/>
+              <map:parameter name="documentarea" value="{page-envelope:area}"/>
+              <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
+              <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+              <map:parameter name="userid" value="{access-control:user-id}"/>
+              <map:parameter name="servertime" value="{date-i18n:currentDate}"/>
+              <map:parameter name="workflowstate" value="{workflow:state}"/>
+              <map:parameter name="islive" value="{workflow:variable.is_live}"/>
+            </map:transform>
+          </map:when>
+          <map:otherwise>
+            <map:transform src="{fallback:xslt/menu/menu2xhtml.xsl}">
+              <map:parameter name="contextprefix" value="{request:contextPath}"/>
+              <map:parameter name="publicationid" value="{1}"/>
+              <map:parameter name="completearea" value="{2}"/>
+              <map:parameter name="documentarea" value="{page-envelope:area}"/>
+              <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
+              <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+              <map:parameter name="userid" value="{access-control:user-id}"/>
+              <map:parameter name="servertime" value="{date-i18n:currentDate}"/>
+              <map:parameter name="workflowstate" value="{workflow:state}"/>
+              <map:parameter name="islive" value="{workflow:variable.is_live}"/>
+            </map:transform>
+          </map:otherwise>
+        </map:select>
+        
+        <map:call resource="i18n"/>
+        
+        <map:select type="request-parameter">
+          <map:parameter name="parameter-name" value="uiml"/>
+          <map:when test="xul">
+            <map:transform src="{fallback:xslt/menu/menu2xsltwithxul.xsl}">
+              <map:parameter name="contextprefix" value="{request:contextPath}"/>
+              <map:parameter name="publicationid" value="{1}"/>
+              <map:parameter name="area" value="{2}"/>
+              <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
+            </map:transform>
+          </map:when>
+          <map:otherwise>
+            <map:transform src="{fallback:xslt/menu/menu2xslt.xsl}">
+              <map:parameter name="contextprefix" value="{request:contextPath}"/>
+              <map:parameter name="publicationid" value="{1}"/>
+              <map:parameter name="area" value="{2}"/>
+              <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
+            </map:transform>
+          </map:otherwise>
+        </map:select>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+      <!-- menus -->
+      
+      <!-- menu-xml/{publication-id}/admin/... -->
+      <map:match pattern="menu-xml/*/admin/**" internal-only="true">
+        <map:generate type="serverpages" src="lenya/content/menus/admin.xsp"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+      <!-- menu-xml/{publication-id}/... -->
+      <map:match pattern="menu-xml/*/**" internal-only="true">
+        <map:mount uri-prefix="menu-xml/{1}/" src="lenya/pubs/{1}/menus.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+      
+      <!-- navigation -->
+      <map:match pattern="navigation/**">
+        <map:mount uri-prefix="navigation" src="lenya/navigation.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+
+      <!-- uri-parameter/{publication-id}/{parameter}/{area}/{uri} -->
+      <map:match pattern="uri-parameter/*/*/*/**">
+        <map:mount uri-prefix="uri-parameter/{1}/{2}/" src="lenya/pubs/{1}/parameter-{2}.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+
+      <!-- Access Control Policies -->
+      <map:match pattern="*/policies/**">
+        <map:mount uri-prefix="{1}/policies" src="lenya/pubs/{1}/policies-sitemap.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+      
+      <!-- Admin Area -->
+      <map:match pattern="*/admin/**">
+        <map:mount uri-prefix="{1}/admin" src="lenya/admin.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+      
+      <!-- Scheduler -->
+    	<map:match pattern="scheduler/**">
+        <map:mount uri-prefix="scheduler/" src="lenya/scheduler.xmap" check-reload="true" reload-method="synchron"/>
+     	</map:match>
+
+      <!-- Info usecases -->
+      <map:match type="usecase" pattern="info-*">
+        <map:mount uri-prefix="" src="lenya/info.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+    </map:pipeline>
+
+      <!-- Internal usecases -->
+      <map:pipeline internal-only="true">
+        <map:match type="usecase" pattern="*">
+          <map:match pattern="*/**">
+            <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+          </map:match>
+        </map:match>
+      </map:pipeline>
+
+    <map:pipeline>
+      <!-- Usecases -->
+        <map:match type="usecase" pattern="*">
+          <map:mount uri-prefix="" src="lenya/usecase.xmap" check-reload="true" reload-method="synchron"/>
+        </map:match>
+
+      <!-- Info area -->
+      	<map:match pattern="*/*/info-sitetree/**">
+          <map:mount uri-prefix="" src="lenya/info.xmap" check-reload="true" reload-method="synchron"/>
+      	</map:match>
+        <map:match pattern="*/info-*/**">
+          <map:mount uri-prefix="" src="lenya/info.xmap" check-reload="true" reload-method="synchron"/>
+        </map:match>
+
+      <!-- Publications -->
+      <map:match pattern="*/">
+        <map:redirect-to uri="introduction.html"/>
+      </map:match>
+      <map:match pattern="*/index.html">
+        <map:redirect-to uri="introduction.html"/>
+      </map:match>
+
+      <!-- About Publication -->
+      <map:match pattern="*/introduction.html">
+        <map:generate src="lenya/pubs/{1}/publication.xml" />
+        <map:transform src="lenya/xslt/util/publication.xsl"/>
+        <map:call resource="style-cms-page"/>
+      </map:match>
+      <!-- Publication Tests-->
+      <map:match pattern="*/tests.html">
+        <map:generate src="lenya/pubs/{1}/publication-tests.xml" />
+        <map:transform src="lenya/xslt/util/publication.xsl"/>
+        <map:call resource="style-cms-page"/>
+      </map:match>
+      
+      <!-- Enter the actual publication (url = "") -->
+      <map:match pattern="*/">
+        <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+      
+      <!-- Resources -->
+      
+      <!-- {publication-id}/{area}/{file} -->
+      <map:match pattern="*/*/**">
+        <map:act type="resource-exists-enhanced">
+          <map:parameter name="url" value="lenya/pubs/{1}/resources/{2}/{3}"/>
+          <map:parameter name="type" value="file"/>
+          <map:mount uri-prefix="" src="lenya/resources.xmap" check-reload="true" reload-method="synchron"/>
+        </map:act>
+        <map:act type="resource-exists-enhanced">
+          <map:parameter name="url" value="lenya/pubs/{1}/resources/shared/{3}"/>
+          <map:parameter name="type" value="file"/>
+          <map:mount uri-prefix="" src="lenya/resources-shared.xmap" check-reload="true" reload-method="synchron"/>
+        </map:act>
+      </map:match>
+      
+      <!-- Enter the actual publication -->
+      <map:match pattern="*/**">
+        <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+
+      <map:handle-errors>
+       <map:select type="exception">
+           <map:when test="resourcenotfound">
+             <map:generate src="lenya/content/util/empty.xml" />
+            <map:transform src="lenya/xslt/exception/document-does-not-exist.xsl"/>
+            <map:call resource="style-cms-page">
+              <map:parameter name="statusCode" value="404"/>
+            </map:call>
+          </map:when>
+      <map:otherwise>
+        <map:generate type="notifying"/>
+        <map:transform src="stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+      </map:otherwise>
+        </map:select>
+        <map:serialize type="html"/>
+      </map:handle-errors>    
+
+    </map:pipeline>
+
+ </map:pipelines>
+
+</map:sitemap>

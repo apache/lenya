@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<xsp:page 
+  language="java" 
+  xmlns:xsp="http://apache.org/xsp"
+>
+
+<menu>
+
+  <!-- Import Lenya Page Envelope -->
+  <url-info>
+    <context-prefix></context-prefix>
+    <publication-id></publication-id>
+    <area></area>
+    <document-id></document-id>
+    <servlet-context-path></servlet-context-path>
+    <publication></publication>
+  </url-info>  
+
+</menu>
+
+</xsp:page>

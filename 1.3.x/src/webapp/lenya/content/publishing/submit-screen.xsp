@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<xsp:page
+       language="java"
+       xmlns:xsp="http://apache.org/xsp"
+       xmlns:usecase="http://apache.org/cocoon/lenya/usecase/1.0"
+       xmlns:xsp-session="http://apache.org/xsp/session/2.0"
+       xmlns:not="http://apache.org/cocoon/lenya/notification/1.0"
+       xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+       >
+
+<xsp:structure>
+	<xsp:include>org.apache.lenya.ac.User</xsp:include>
+  <xsp:include>org.apache.lenya.cms.ac.cocoon.PolicyHelper</xsp:include>
+</xsp:structure>
+
+<usecase:submit>
+  <usecase:referer><input:get-attribute module="request" name="requestURI" as="string"/></usecase:referer>
+  <publication-id><xsp-session:get-attribute name="org.apache.lenya.cms.cocoon.acting.Authenticator.id"/></publication-id>
+  <document-id><input:get-attribute module="page-envelope" as="string" name="document-id"/></document-id>
+  <usecase:context-prefix><input:get-attribute module="page-envelope" name="context-prefix" as="string"/></usecase:context-prefix>
+  
+	<not:users>
+	<xsp:logic>
+			PolicyHelper helper = new PolicyHelper();
+			helper.setup(objectModel, this.manager, "authoring");
+			
+			User[] managers = helper.getUsersWithRole("review");
+			for (int i = 0; i &lt; managers.length; i++) {
+					<not:user>
+						<xsp:attribute name="id"><xsp:expr>managers[i].getId()</xsp:expr></xsp:attribute>
+						<xsp:attribute name="name"><xsp:expr>managers[i].getName()</xsp:expr></xsp:attribute>
+						<xsp:attribute name="email"><xsp:expr>managers[i].getEmail()</xsp:expr></xsp:attribute>
+					</not:user>
+			}
+		
+		  helper.tearDown();
+	</xsp:logic>
+	</not:users>
+	
+</usecase:submit>
+  
+</xsp:page>

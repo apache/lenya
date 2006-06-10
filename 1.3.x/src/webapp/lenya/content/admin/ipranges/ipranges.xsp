@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<xsp:page
+  language="java"
+  xmlns:xsp="http://apache.org/xsp"  
+  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+  xmlns:jpath="http://apache.org/xsp/jpath/1.0"
+  >
+
+  <xsp:structure>
+    <xsp:include>org.apache.lenya.ac.IPRangeManager</xsp:include>
+    <xsp:include>org.apache.lenya.ac.IPRange</xsp:include>
+    <xsp:include>org.apache.lenya.ac.Group</xsp:include>
+  </xsp:structure>
+
+  <page>
+    <ipranges>
+      <xsp:logic>
+        IPRangeManager manager = (IPRangeManager)
+            <input:get-attribute module="access-control" name="iprange-manager" as="object"/>;
+        IPRange[] ranges = manager.getIPRanges();
+        for (int rangeIndex = 0; rangeIndex &lt; ranges.length; rangeIndex++) {
+            IPRange range = ranges[rangeIndex];
+      </xsp:logic>
+        
+      <iprange>
+        <id><xsp:expr>range.getId()</xsp:expr></id>
+        <name><xsp:expr>range.getName()</xsp:expr></name>
+        <groups>
+          <xsp:logic>
+            Group groups[] = range.getGroups();
+            for (int i = 0; i &lt; groups.length; i++) {
+                <xsp:content>
+                  <group><xsp:attribute name="id"><xsp:expr>groups[i].getId()</xsp:expr></xsp:attribute></group>
+                </xsp:content>
+            }
+          </xsp:logic>
+        </groups>
+      </iprange>
+      <xsp:logic>
+        }
+      </xsp:logic>
+    </ipranges>
+  </page>
+  
+</xsp:page>

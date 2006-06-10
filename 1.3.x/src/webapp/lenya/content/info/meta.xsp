@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<xsp:page 
+  language="java" 
+  xmlns:xsp="http://apache.org/xsp"
+  xmlns:lenya-info="http://apache.org/cocoon/lenya/info/1.0"
+  xmlns:li="http://apache.org/cocoon/lenya/info/1.0"
+  xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"
+  xmlns:rc="http://apache.org/cocoon/lenya/rc/1.0"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:input="http://apache.org/cocoon/xsp/input/1.0"
+  xmlns:request="http://apache.org/xsp/request/2.0"
+  >
+
+  <xsp:structure>
+    <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
+    <xsp:include>org.apache.lenya.cms.publication.DocumentException</xsp:include>
+  </xsp:structure>
+
+  <lenya-info:info>
+    <xsp:logic>
+      Document doc = (Document)<input:get-attribute module="page-envelope" as="object" name="document"/>;
+      boolean docExists = false;
+      try {
+          docExists = doc.exists();
+      } catch (DocumentException e) {
+          throw new ProcessingException(e);
+      }
+      
+      if (docExists) {
+      	<lenya-info:meta>
+	  <xsp:logic>
+	    if (parameters.getParameter("user", null) != null) {
+	      <lenya-info:exception-user><xsp:expr>parameters.getParameter("user", "")</xsp:expr></lenya-info:exception-user>
+	      <lenya-info:exception-date><xsp:expr>parameters.getParameter("date", "")</xsp:expr></lenya-info:exception-date>
+	    }
+	  </xsp:logic>
+      	  <lenya-info:documentid><input:get-attribute module="page-envelope" name="document-id"/></lenya-info:documentid>
+      	  <lenya-info:area><input:get-attribute module="page-envelope" name="area"/></lenya-info:area>
+      	  <dc:language><input:get-attribute module="page-envelope" name="document-language"/></dc:language>
+      	  <dc:title><input:get-attribute module="dublincore" name="title"/></dc:title>
+      	  <dc:creator><input:get-attribute module="dublincore" name="creator"/></dc:creator>
+      	  <dc:subject><input:get-attribute module="dublincore" name="subject"/></dc:subject>
+      	  <dc:description><input:get-attribute module="dublincore" name="description"/></dc:description>
+      	  <dc:date><input:get-attribute module="dublincore" name="created"/></dc:date>
+      	  <dc:publisher><input:get-attribute module="dublincore" name="publisher"/></dc:publisher>
+      	  <dc:rights><input:get-attribute module="dublincore" name="rights"/></dc:rights>
+      	</lenya-info:meta>
+      }
+    </xsp:logic>
+  </lenya-info:info>
+  
+</xsp:page>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<!-- Bi-directional Module -->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+
+<define name="bdo">
+  <element name="bdo">
+    <ref name="bdo.attlist"/>
+    <ref name="Inline.model"/>
+  </element>
+</define>
+
+<define name="bdo.attlist">
+  <ref name="Core.attrib"/>
+  <ref name="lang.attrib"/>
+  <ref name="dir.attrib"/>
+</define>
+
+<define name="dir.attrib">
+  <attribute name="dir">
+    <choice>
+      <value>ltr</value>
+      <value>rtl</value>
+    </choice>
+  </attribute>
+</define>
+
+<define name="I18n.attrib" combine="interleave">
+  <optional>
+    <ref name="dir.attrib"/>
+  </optional>
+</define>
+
+<define name="Inline.class" combine="choice">
+  <ref name="bdo"/>
+</define>
+
+</grammar>

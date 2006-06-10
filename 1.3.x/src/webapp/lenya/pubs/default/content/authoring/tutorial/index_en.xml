@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+xmlns:xhtml="http://www.w3.org/1999/xhtml" 
+xmlns:dc="http://purl.org/dc/elements/1.1/" 
+xmlns:dcterms="http://purl.org/dc/terms/"
+xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" 
+xhtml:dummy="FIXME:keepNamespace" dc:dummy="FIXME:keepNamespace" 
+lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace">
+
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+    <lenya:meta>
+        <dc:title>A Short Lenya Tutorial</dc:title>
+        <dc:creator>Lenya Development Team</dc:creator>
+        <dc:subject>Lenya Tutorial</dc:subject>
+        <dc:description>A short tutorial on Lenya usage</dc:description>
+        <dc:publisher>Apache Software Foundation</dc:publisher>
+        <dc:contributor/>
+        <dc:date>2005-01-31</dc:date>
+        <dc:type/>
+        <dc:format/>
+        <dc:identifier/>
+        <dc:source/>
+        <dc:language>en</dc:language>
+        <dc:relation/>
+        <dc:coverage/>
+        <dc:rights>All rights reserved</dc:rights>
+    </lenya:meta>
+  <head>
+    <title>Lenya Tutorial</title>
+  </head>
+  <body>
+    <h1>Tutorial</h1>
+
+    <p>This tutorial gives you a short introduction into the Apache
+    Lenya content management system. We'll look at a typical use case
+    where we create a new document, edit and publish it.</p>
+
+    <h2>Creating a new document</h2>
+
+    <p>To create a new document goto the <code>File->New
+    Document</code> menu entry. You'll get a new screen that asks you
+    for an id and a name for this new document. The id will be used
+    internally as an identifier for the document and the name will be
+    used in the navigation. Let's use "foo" as id and "Foo" as the
+    name of the new document. Now press <code>Create</code>. You will
+    be redirected back to the page where you originally invoked the
+    creation and you'll notice that the new document "Foo" now shows
+    up as a sub-document of the Tutorial document in the
+    navigation.</p>
+
+    <p>This illustrates the fact that a new document is always created
+    as a sub-document of the document you're currently looking at. You
+    also notice how the navigation is built automatically.</p>
+
+    <h2>Editing a document</h2>
+
+    <p>To look at the newly created document click on the "Foo" entry
+    in the navigation. You'll notice that the "Foo" document already
+    contains some content. It was created from a sample XML
+    document. To change this sample content you will have to edit the
+    document. You can pick on of the following web-based WYSIWYG
+    editors:</p>
+
+    <ul>
+      <li>HTML Forms: This is a good choice for users of Mosaic ;-)</li>
+      <li>Bitflux: This is a good choice for users of Mozilla.</li>
+      <li>One Form: For the power user who needs all the control</li>
+    </ul>
+
+    <p>Pick your choice of editor (based on your platform) and start
+    editing the newly created document by selecting the
+    <code>Edit->Edit with BXE</code> menu button. The Lenya menu will
+    disappear and the Bitflux toolbar will appear instead. You can use
+    the left mouse button to get a context sensitive menu from where
+    you can copy, cut and paste. You're also able to insert new
+    elements into the document from the context sensitive menu. Once
+    you're done with all your changes, press
+    <code>Save&amp;Exit</code> to get back. You'll see your changes in
+    the document.</p>
+
+    <h2>Publishing a document</h2>
+
+    <p>Once you are satisfied with the content of the document you
+    want to publish it to make it visible in the live area.</p> 
+
+    <h3>Workflow</h3>
+
+    <p>The default publication has a simple workflow configured which
+    involves an author and a reviewer. The author creates and edits a
+    new document and submits it for approval. The reviewer (obviously
+    :-)) reviews the document and publishes it so that it will appear
+    on the live site.
+
+    The user lenya (which you are probably currently logged in as) has
+    the role edit, i.e. he can create new documents and submit them
+    for approval (with <code>Workflow->Submit for review</code>). The
+    user alice has the role review which allows her to approve,
+    i.e. publish documents.</p>
+
+    <p>In order to publish your newly created document simply press
+    <code>Workflow->Sumbit</code> (as user lenya) to submit the
+    current document for approval. Now log out
+    (<code>File->Logout</code>), log back in as alice (use the same
+    password as for user lenya) and publish the current document by
+    selecting <code>Workflow->Publish</code>. You will get a
+    confirmation screen where you confirm your intention to publish
+    the document "Foo" by pressing <code>Publish Now</code>. You might
+    have to publish the parent document ("Tutorial") first, as the
+    "Foo" document will not be published if the parent document is not
+    in the live area yet.</p> <p>To check how the "Foo" document looks
+    like in the live site click on the <code>live</code> tab in the
+    Lenya menu. This will open a new browser window showing you the
+    live site.</p>
+    
+    <h2>Scheduling</h2>
+    
+    <p>Apache Lenya allows you to publish a document at a specific
+    date. To do this select the <code>Workflow->Publish</code> menu
+    entry. Now instead of pressing <code>Publish</code>, specify the
+    date and the time at which you wish to publish the document and
+    press <code>Schedule</code>. Your document will be published at
+    the specified date. Use the <code>Scheduler</code> tab in the site
+    area to see the pending tasks and their status.</p>
+
+    <h2>Revision Control</h2>
+
+    <p>Every time you edit a document and exit the editor a new
+    revision of the document is stored. Old versions of the document
+    are kept and you can go back to an older version if you want to
+    undo some of the changes you applied to it. To see all available
+    versions of the current document press
+    <code>Tools->Rollback</code>. This will give you a list of all
+    previous versions. You can view a specific old version or rollback
+    to a specific old version by clicking on the appropriate links.</p>
+
+  </body>
+</html>

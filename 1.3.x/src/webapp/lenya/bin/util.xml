@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<project default="main" basedir=".">
+
+<target name="main" description="Says Hi">
+  <echo>Hi</echo>
+</target>
+
+<target name="init">
+  <property name="lenya.dir" value="../../../.."/>
+
+  <!-- Dummy arguments -->
+  <property name="password" value="levi"/>
+  <property name="jtidy-in.html" value="file:///home/lenya/html/index.html"/>
+  <!-- /Dummy arguments -->
+
+  <property name="lenya.dir.web-inf" value="${lenya.dir}/build/lenya/webapp/WEB-INF"/>
+
+  <path id="class.path">
+    <pathelement path="${lenya.dir.web-inf}/classes"/>
+    <fileset dir="${lenya.dir.web-inf}/lib">
+      <include name="**/*.jar"/>
+    </fileset>   
+  </path>
+</target>
+
+<target name="passwd" description="Generate a password. Usage: -Dpassword=levi" depends="init">
+  <echo>INFO: Generate a password (${password})</echo>
+
+  <java classname="org.apache.lenya.ac.Password">
+    <arg value="${password}"/>
+    <classpath refid="class.path"/>
+  </java>
+</target>
+
+<target name="ssi" description="Server Side Include" depends="init">
+  <echo>INFO: Server Side Include</echo>
+
+  <java classname="org.apache.lenya.util.SSI">
+    <arg value="ssi.html"/>
+<!--
+    <arg value="../../../../ssi.html"/>
+-->
+    <classpath refid="class.path"/>
+  </java>
+</target>
+
+
+<target name="jtidy" description="JTidy: -Djtidy-in.html=file:///home/lenya/html/index.html" depends="init">
+  <echo>INFO: JTidy</echo>
+
+  <java classname="org.apache.lenya.util.TidyCommandLine">
+    <arg value="${jtidy-in.html}"/>
+    <arg value="jtidy-out.xhtml"/>
+    <arg value="error.log"/>
+    <classpath refid="class.path"/>
+  </java>
+</target>
+
+<!-- e.g. tidying legacy "HTML" stylesheets -->
+<target name="u2l" description="Transforms upper to lower case"> 
+    <echo>INFO: Upper 2 lower case</echo>
+    <xslt
+        basedir="/home/username/upper_case"
+        destdir="/home/username/lower_case"
+        style="${lenya.dir}/src/webapp/lenya/xslt/util/upper2lower_case.xsl"
+        includes="**/*.xsl"
+        extension=".xsl"
+        />
+</target>
+
+
+</project>

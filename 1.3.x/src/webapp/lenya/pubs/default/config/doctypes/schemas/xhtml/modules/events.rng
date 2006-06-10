@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+    
+<!-- Events Module -->
+<grammar xmlns="http://relaxng.org/ns/structure/1.0">
+
+<define name="a.attlist" combine="interleave">
+  <optional>
+    <attribute name="onblur">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="onfocus">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+</define>
+
+<define name="area.attlist" combine="interleave">
+  <optional>
+    <attribute name="onblur">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="onfocus">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+</define>
+
+<define name="form.attlist" combine="interleave">
+  <optional>
+    <attribute name="onreset">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="onsubmit">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+</define>
+
+<define name="body.attlist" combine="interleave">
+  <optional>
+    <attribute name="onload">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="onunload">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+</define>
+
+<define name="label.attlist" combine="interleave">
+  <optional>
+    <attribute name="onblur">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="onfocus">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+</define>
+
+<define name="input.attlist" combine="interleave">
+  <optional>
+    <attribute name="onblur">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="onchange">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="onfocus">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="onselect">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+</define>
+
+<define name="select.attlist" combine="interleave">
+  <optional>
+    <attribute name="onblur">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="onchange">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="onfocus">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+</define>
+
+<define name="textarea.attlist" combine="interleave">
+  <optional>
+    <attribute name="onblur">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="onchange">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="onfocus">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="onselect">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+</define>
+
+<define name="button.attlist" combine="interleave">
+  <optional>
+    <attribute name="onblur">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="onfocus">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+</define>
+
+<define name="Events.attrib">
+  <optional>
+    <attribute name="onclick">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="ondblclick">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="onmousedown">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="onmouseup">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="onmouseover">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="onmousemove">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="onmouseout">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="onkeypress">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="onkeydown">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+  <optional>
+    <attribute name="onkeyup">
+      <ref name="Script.datatype"/>
+    </attribute>
+  </optional>
+</define>
+
+<define name="Common.attrib" combine="interleave">
+  <ref name="Events.attrib"/>
+</define>
+
+<define name="CommonIdRequired.attrib" combine="interleave">
+  <ref name="Events.attrib"/>
+</define>
+
+</grammar>

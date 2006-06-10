@@ -1,0 +1,278 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:components/>
+
+  <map:flow language="javascript">
+    <map:script src="content/ac/passwd.js"/>
+    <map:script src="content/admin/common/access-control.js"/>
+    <map:script src="content/admin/users/user-admin.js"/>
+    <map:script src="content/admin/groups/group-admin.js"/>
+    <map:script src="content/admin/ipranges/iprange-admin.js"/>
+  </map:flow>
+  
+    <map:resources>
+      <map:resource name="style-cms-page">
+      <map:transform type="i18n">      
+        <map:parameter name="locale" value="{request:locale}"/>
+      </map:transform>    
+      <map:transform src="xslt/admin/page2xhtml.xsl">
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:transform src="xslt/util/strip_namespaces.xsl"/>
+      <map:serialize type="xhtml"/>
+    </map:resource>
+    
+    <map:resource name="fallback-generation">
+      <map:select type="resource-exists">
+        <map:when test="pubs/{page-envelope:publication-id}/lenya/content/admin/{serverpage}.xsp">
+          <map:generate type="serverpages" src="pubs/{page-envelope:publication-id}/lenya/content/admin/{serverpage}.xsp"/>
+        </map:when>
+        <map:otherwise>
+          <map:generate type="serverpages" src="content/admin/{serverpage}.xsp"/>
+        </map:otherwise>
+      </map:select>
+    </map:resource>
+    
+    <map:resource name="fallback-transformation">
+      <map:select type="resource-exists">
+        <map:when test="pubs/{page-envelope:publication-id}/lenya/xslt/admin/{stylesheet}.xsl">
+          <map:transform src="pubs/{page-envelope:publication-id}/lenya/xslt/admin/{stylesheet}.xsl"/>
+        </map:when>
+        <map:otherwise>
+          <map:transform src="xslt/admin/{stylesheet}.xsl"/>
+        </map:otherwise>
+      </map:select>
+    </map:resource>
+    
+    <map:resource name="fallback-page">
+      <map:call resource="fallback-generation">
+        <map:parameter name="serverpage" value="{serverpage}"/>
+      </map:call>
+      <map:call resource="fallback-transformation">
+        <map:parameter name="stylesheet" value="{stylesheet}"/>
+      </map:call>
+      <map:serialize type="xml"/>
+    </map:resource>
+    
+  </map:resources>
+
+  <map:pipelines>
+    
+    <!-- =================================================================== -->
+    <!-- FlowScript views -->
+    <!-- =================================================================== -->
+    
+    <map:pipeline>
+
+      <!-- Shared resources. -->      
+      <!-- The '{type}' URI step is needed to highlight the corresponding menu item. -->
+      <!-- pattern: internal/{type}/{page}.xml -->
+      <map:match pattern="internal/*/**-common.xml">
+        <map:call resource="fallback-page">
+          <map:parameter name="serverpage" value="common/{2}"/>
+          <map:parameter name="stylesheet" value="common/{2}"/>
+        </map:call>
+      </map:match>
+      
+      <!-- The '{type}' URI step is needed to highlight the corresponding menu item. -->
+      <!-- pattern: internal/{page}.xml -->
+      <map:match pattern="internal/**.xml">
+        <map:call resource="fallback-page">
+          <map:parameter name="serverpage" value="{1}"/>
+          <map:parameter name="stylesheet" value="{1}"/>
+        </map:call>
+      </map:match>
+      
+      <map:match pattern="**.xml">
+        <map:aggregate element="cmsbody">
+          <map:part src="cocoon://navigation/{page-envelope:publication-id}/admin/menu/{1}.xml.xml"/>
+          <map:part src="cocoon:/internal/{1}.xml"/>
+        </map:aggregate>
+        <map:transform src="xslt/admin/page2xhtml.xsl">
+          <map:parameter name="contextprefix" value="{request:contextPath}"/>
+        </map:transform>
+        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/admin/{1}.xml" label="content"/>
+        <map:transform type="i18n">
+          <map:parameter name="locale" value="{request:locale}"/>
+        </map:transform>
+        <map:transform src="xslt/util/strip_namespaces.xsl"/>
+        <map:serialize type="xhtml"/>
+      </map:match>
+           
+    </map:pipeline>
+    
+    <!-- =================================================================== -->
+    <!-- FlowScript entry points -->
+    <!-- =================================================================== -->
+    
+    <map:pipeline>
+      
+      <!-- continuation -->
+      <map:match type="request-parameter" pattern="lenya.continuation">
+        <map:call continuation="{1}"/>
+      </map:match>
+
+        <map:match pattern="deleteTrash" type="usecase">
+          
+          <map:match pattern="showscreen" type="step">
+            <map:generate src="content/admin/content/deleteTrash.xsp" type="serverpages"/>
+            <map:transform src="xslt/admin/content/deleteTrash.xsl"/>
+            <map:transform src="cocoon://lenya-screen.xsl"/>
+            <map:serialize/>
+          </map:match>
+          
+          <map:match pattern="deleteTrash" type="step">
+            <map:act type="task">
+              <map:redirect-to session="true" uri="{request:requestURI}"/>
+            </map:act>
+          </map:match>
+          
+        </map:match>
+
+
+      <!-- usecase entry -->
+      <map:match type="usecase" pattern="*">
+        <map:call function="{1}">
+          <map:parameter name="requestUri" value="{request:requestURI}"/>
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:call>
+      </map:match>
+      
+    </map:pipeline>
+      
+    <map:pipeline>
+      
+      <!-- ============================================================ -->
+      <!-- Admin Homepage -->
+      <!-- ============================================================ -->
+      
+      <map:match pattern="internal/index.html">
+        <map:generate src="content/admin/index.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+
+      <!-- ============================================================ -->
+      <!-- Status Page -->
+      <!-- ============================================================ -->
+      
+      <map:match pattern="internal/status.html">
+        <map:generate src="status" type="status"/>
+        <map:transform src="xslt/admin/status2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+        <map:serialize type="xhtml"/>
+      </map:match>
+      
+      <!-- ============================================================ -->
+      <!-- Lucene Page -->
+      <!-- ============================================================ -->
+      
+      <map:match pattern="internal/lucene.html">
+        <map:generate type="xpathdirectory" src="pubs/{page-envelope:publication-id}/config/search">
+          <map:parameter name="xpath" value="/crawler|/lucene"/>
+          <map:parameter name="xmlFiles" value="\.x.*$"/>
+        </map:generate>
+        <map:transform src="xslt/search/admin.xsl"/>
+        <map:serialize type="xhtml"/>
+        <!--<map:call resource="style-cms-page"/>-->
+
+
+<!-- TODO: Replace create-index.xsp -->
+<!--
+        <map:generate type="serverpages" src="content/search/create-index.xsp"/>
+        <map:call resource="style-cms-page"/>
+-->
+      </map:match>
+
+      <!-- ============================================================ -->
+      <!-- Common Admin Pages -->
+      <!-- ============================================================ -->
+      
+      <!-- list page (type = users|groups) -->
+      <!-- pattern: internal/{type}.html -->
+      <map:match pattern="internal/*.html">
+        <map:call resource="fallback-page">
+          <map:parameter name="serverpage" value="{1}/{1}"/>
+          <map:parameter name="stylesheet" value="{1}/{1}"/>
+        </map:call>
+      </map:match>
+
+      <!-- overview page (type = user|group) -->
+      <!-- pattern: internal/{type}s/{id}/index.html -->
+      <map:match pattern="internal/*s/*.html">
+        <map:generate src="content/admin/{1}s/overview.xsp" type="serverpages">
+          <map:parameter name="{1}-id" value="{2}"/>
+        </map:generate>
+        <map:call resource="fallback-transformation">
+          <map:parameter name="stylesheet" value="{1}s/overview"/>
+        </map:call>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+      <!-- ============================================================ -->
+      <!-- Passwd -->
+      <!-- ============================================================ -->
+      
+      <map:match pattern="passwd/continuation-*">
+        <map:call continuation="{1}"/>
+      </map:match>
+      <map:match pattern="passwd/index.html">
+        <map:call function="passwd"/>
+      </map:match>
+      <map:match pattern="passwd-*-screen">
+        <map:generate type="serverpages" src="content/ac/passwd-input-screen.xsp"/>
+        <map:transform src="xslt/ac/simple-page2html.xsl"/>
+       <map:transform src="xslt/util/strip_namespaces.xsl"/>
+          <map:serialize type="xhtml"/>
+      </map:match>
+    </map:pipeline>
+    
+    <!-- =================================================================== -->
+    <!-- Aggregated Pages -->
+    <!-- =================================================================== -->
+    
+    <map:pipeline>
+      
+      <map:match pattern="">
+        <map:redirect-to uri="index.html"/>
+      </map:match>
+
+      <map:match pattern="**">
+        <map:aggregate element="cmsbody">
+          <map:part src="cocoon://navigation/{page-envelope:publication-id}/admin/menu/{1}.xml"/>
+          <map:part src="cocoon:/internal/{1}"/>
+        </map:aggregate>
+        <map:transform src="xslt/admin/page2xhtml.xsl">
+          <map:parameter name="contextprefix" value="{request:contextPath}"/>
+        </map:transform>
+        <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/admin/{1}" label="content" />
+        <map:transform type="i18n">
+          <map:parameter name="locale" value="{request:locale}"/>
+        </map:transform>
+        <map:transform src="xslt/util/strip_namespaces.xsl"/>
+        <map:serialize type="xhtml"/>
+      </map:match>
+      
+    </map:pipeline>
+    
+  </map:pipelines>
+</map:sitemap>

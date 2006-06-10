@@ -1,0 +1,307 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<project name="webapp">
+
+  <description>
+    Webapp Targets
+  </description>
+
+  <target name="check-cocoon" description="Check if Cocoon webapp exists">
+    <available file="${cocoon.webapp.dir}" property="cocoon.exists"/>
+    <antcall target="cocoon-does-not-exist"/>
+  </target>
+
+  <target name="cocoon-does-not-exist" description="Check if Cocoon webapp exists" unless="cocoon.exists">
+    <fail message="Cocoon webapp does not exist: ${cocoon.webapp.dir}. Build Cocoon with the local properties from lenya/src/cocoon directory."/>
+  </target>
+
+  <!-- ============================================================ -->
+  <!-- Produce the webapp                                           -->
+  <!-- ============================================================ -->
+
+  <!-- 
+  This target creates a webapp directory which exactly mirrors how
+  the war file will look. It is used to create the war file for
+  the "war" target but it can also be used by developers
+  directly.
+  This is useful if the reloadable attribute of the context
+  in the server.xml configuration is set to true so changes in the classes
+  are reflected immediately.
+  -->
+  <target name="webapp" depends="check-cocoon, compile" description="Builds the webapp directory ready to be linked into a servlet engines context directory" if="cocoon.exists">
+  
+    <!--
+    Copy CMS files and overwrite some parts of the previously unpacked cocoon webapp package with our customized files
+    -->
+    <copy todir="${build.webapp}">
+      <fileset dir="${src.webapp.dir}">
+        <exclude name="lenya/pubs/**"/>
+        <exclude name="WEB-INF/*-xconf.xsl"/>
+        <exclude name="WEB-INF/*-xml.xsl"/>
+      </fileset>
+    </copy>
+
+    <!-- Copy publications -->
+    <copyPubs todir="${build.webapp}/lenya/pubs" pubsrootdirs="${pubs.root.dirs}" excludes="CVS,.svn">
+    </copyPubs>
+
+    <!-- Patch cocoon.xconf -->
+    <copy file="${build.webapp}/WEB-INF/cocoon.xconf"
+          toFile="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"/>
+    <xpatch file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
+            srcdir="${build.webapp}/lenya/pubs" 
+            includes="*/config/*.xconf"
+            excludes="*/config/publication.xconf"
+            addComments="true"/>
+    <checksum
+        file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
+        property="cocoon.xconf.md5"/>
+    <checksum
+        file="${build.webapp}/WEB-INF/cocoon.xconf"
+        property="${cocoon.xconf.md5}"
+        verifyProperty="cocoon.xconf.isEqual"/>
+    <condition property="cocoon.xconf.copy">
+      <isfalse value="${cocoon.xconf.isEqual}"/>
+    </condition>
+    <antcall target="copy-cocoon.xconf"/>
+    <delete file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch" deleteonexit="true"/>
+             
+    <!-- Patch web.xml -->
+    <!--
+    <xpatch file="${build.webapp}/WEB-INF/web.xml"
+            srcdir="${build.webapp}/lenya/pubs" 
+            includes="*/config/web.xml"
+            addComments="false"/>
+    -->
+            
+    <!-- Patch publication tests -->
+    <copy file="./src/targets/publication-test-build-template.xml"
+          tofile="./src/targets/publication-test-build.xml"
+          overwrite="true"/>
+    <xpatch file="./src/targets/publication-test-build.xml"
+            srcdir="${build.webapp}/lenya/pubs" 
+            includes="*/targets/test-build.xconf"
+            addComments="true"/>
+            
+    <!-- create directory classes within webapp -->
+    <mkdir dir="${build.webapp}/WEB-INF/classes"/>
+
+    <!-- now copy our compiled classes -->
+    <copy todir="${build.webapp}/WEB-INF/classes">
+      <fileset dir="${build.dest}">
+        <include name="**/*.class"/>
+      </fileset>
+    </copy>
+
+    <!--  copy properties, logicsheets, xml configuration files and roles -->
+    <copy todir="${build.webapp}/WEB-INF/classes">
+      <fileset dir="${build.src}">
+        <include name="**/*.properties"/>
+        <include name="**/*.roles"/>
+        <include name="**/*.xml"/>
+        <include name="**/*.xsl"/>
+      </fileset>
+    </copy>
+
+    <!-- now create logs directory, where log4j can write to -->
+    <mkdir dir="${build.webapp}/WEB-INF/logs"/>
+    
+    <!-- now copy any additional libraries in ./lib -->
+    <mkdir dir="${build.webapp}/WEB-INF/lib"/>
+
+    <!-- Copy libraries from ${lib.dir} and ${tools.lib.dir} to ${build.webapp}/WEB-INF/lib -->
+    <copy todir="${build.webapp}/WEB-INF/lib">
+      <fileset dir="${lib.dir}">
+        <include name="**/*"/>
+      </fileset>
+      <fileset dir="${tools.lib.dir}">
+        <include name="**/*"/>
+      </fileset>
+    </copy>
+
+    <!-- now create directory for endorsed libraries -->
+    <mkdir dir="${build.webapp}/WEB-INF/lib/endorsed"/>
+
+    <!-- Copy libraries from ${cocoon.endorsed.lib.dir} to ${build.webapp}/WEB-INF/lib/endorsed -->
+    <copy todir="${build.webapp}/WEB-INF/lib/endorsed">
+      <fileset dir="${cocoon.endorsed.lib.dir}">
+        <include name="**/*"/>
+      </fileset>
+    </copy>
+
+    <!-- Delete endorsed libraries from common webapp lib directory -->
+    <delete>
+      <fileset dir="${build.webapp}/WEB-INF/lib">
+        <present present="both" targetdir="${cocoon.endorsed.lib.dir}"/>
+      </fileset>
+      <fileset dir="${build.webapp}/WEB-INF/lib">
+        <include name="xml-apis.jar"/>
+        <include name="xercesImpl-2.6.2.jar"/>
+      </fileset>
+    </delete>
+
+  	<!-- Replace version placeholder with build version -->
+  	<replace dir="${build.webapp}">
+	  <include name="**/publication.xml"/>
+  	  <include name="**/introduction.xml"/>
+  	  <include name="**/about.xml"/>
+  	  <replacefilter token="@lenya.version@" value="${version}"/>
+  	</replace>
+
+    <condition property="servlet.engine.wls">
+      <equals arg1="${web.app.server}" arg2="WLS"/>
+    </condition>
+    <antcall target="install-wls"/>
+    <antcall target="successfully-built-message-wls"/>
+
+    <condition property="servlet.engine.tomcat">
+      <equals arg1="${web.app.server}" arg2="Tomcat"/>
+    </condition>
+    <antcall target="install-tomcat"/>
+    <antcall target="successfully-built-message-tomcat"/>
+
+    <condition property="servlet.engine.jetty">
+      <equals arg1="${web.app.server}" arg2="Jetty"/>
+    </condition>
+    <antcall target="successfully-built-message-jetty"/>
+
+  </target>
+
+  <!-- Copy cocoon.xconf -->
+  <target name="copy-cocoon.xconf" if="cocoon.xconf.copy">
+    <copy
+       file="${build.webapp}/WEB-INF/cocoon.xconf.ant_patch"
+       toFile="${build.webapp}/WEB-INF/cocoon.xconf"/>
+  </target>
+
+  <!--
+  The war target just packs up what was created in the webapp target
+  (and triggers the javadoc target with the dependency)
+  -->
+  <target name="war" depends="webapp" description="Builds the deployable war file">
+    <mkdir dir="${dist.bin.dir}"/>
+    <jar jarfile="${dist.bin.warfile}" basedir="${build.webapp}" excludes="META-INF/MANIFEST.MF"/>
+  </target>
+
+  <!-- ============================================================ -->
+  <!-- Clean targets                                                -->
+  <!-- ============================================================ -->
+  <target name="clean" depends="init" description="Cleans the build directories">
+    <mkdir dir="${build.root}"/> <!-- Create dir in case it doesn't exist and build does not fail -->
+    <delete includeEmptyDirs="true">
+      <fileset dir="${build.root}" excludes="${target.reset.excludes}" />
+    </delete>
+    <delete dir="${dist.root}"/>
+
+    <condition property="servlet.engine.tomcat">
+      <equals arg1="${web.app.server}" arg2="Tomcat"/>
+    </condition>
+    <antcall target="clean-tomcat"/>
+  </target>
+
+  <target name="clean-tomcat" description="Resets the deployment by also cleaning the servlet engine context" if="servlet.engine.tomcat">
+    <!-- Empty server cache - this directory is set in the "local.build.properties" file -->
+    <delete dir="${tomcat.cache.dir}"/>
+    <mkdir dir="${tomcat.webapps.dir}" />
+    <delete includeEmptyDirs="true">
+      <fileset dir="${tomcat.webapps.dir}" excludes="${target.reset.excludes}" />
+    </delete>
+  </target>
+
+  <!-- ============================================================ -->
+  <!-- Install webapp                                               -->
+  <!-- ============================================================ -->
+  <target name="install-tomcat" description="Install the webapp into Tomcat servlet engine context" if="servlet.engine.tomcat">
+    <!-- Copy From build.webapp=${build.webapp} To tomcat.webapps.dir=${tomcat.webapps.dir} -->
+    <copy todir="${tomcat.webapps.dir}" filtering="off">
+      <fileset dir="${build.webapp}" excludes="${target.install.excludes}"/>
+    </copy>
+
+    <!-- tomcat 5.0.28 already contains some endorsed libs, but
+         they cause conflicts with lenya's endorsed libs,
+         so we move them to the 'old' directory -->
+    <mkdir dir="${tomcat.endorsed.dir}/old"/>
+    <move todir="${tomcat.endorsed.dir}/old">
+      <fileset dir="${tomcat.endorsed.dir}">
+        <include name="xml-apis.jar"/>
+        <include name="xercesImpl.jar"/>
+      </fileset>
+    </move>
+    
+    <!-- Copy endorsed libraries -->
+    <copy todir="${tomcat.endorsed.dir}">
+      <fileset dir="${build.webapp}/WEB-INF/lib/endorsed">
+        <include name="*.jar"/>
+      </fileset>
+    </copy>
+    
+  </target>
+
+  <!-- ============================================================ -->
+  <!-- Install webapp into WLS                                      -->
+  <!-- ============================================================ -->
+  <target name="install-wls" description="Install the webapp into WLS servlet engine context" if="servlet.engine.wls">
+    <!-- Copy From build.webapp=${build.webapp} To wls.webapps.dir=${wls.webapps.dir} -->
+    <copy todir="${wls.webapps.dir}" filtering="off">
+      <fileset dir="${build.webapp}" excludes="${target.install.excludes}"/>
+    </copy>
+
+<!--
+    <copy todir="${tomcat.endorsed.dir}">
+      <fileset dir="${build.webapp}/WEB-INF/lib/">
+        <include name="xercesImpl-*.jar"/>
+        <include name="xalan-*.jar"/>
+        <include name="jakarta-regexp-*.jar"/>
+        <include name="jakarta-bcel-*.jar"/>
+      </fileset>
+    </copy>
+    <copy file="${build.webapp}/WEB-INF/lib/xml-apis.jar" todir="${tomcat.endorsed.dir}"/>
+-->
+  </target>
+
+  <!-- ============================================================ -->
+  <!-- Install publication                                          -->
+  <!-- ============================================================ -->
+  <target name="install-pub" depends="webapp" description="Install a single publication into servlet engine context (e.g. Tomcat). This target is being used to speed up development. Usage: -Dpub.prefix=blog">
+    <!-- Copy From build.webapp=${build.webapp}/lenya/pubs/${pub.prefix} To tomcat.webapps.dir=${tomcat.webapps.dir}/lenya/pubs/${pub.prefix} -->
+    <copy todir="${tomcat.webapps.dir}/lenya/pubs/${pub.prefix}" filtering="off">
+      <fileset dir="${build.webapp}/lenya/pubs/${pub.prefix}" excludes="${target.install.excludes}"/>
+    </copy>
+  </target>
+
+  <!-- ============================================================ -->
+  <!-- Reload Tomcat                                                -->
+  <!-- ============================================================ -->
+  <target name="reload">
+      <!-- For Tomcat Tasks -->
+    <path id="tomcat.classpath">
+        <fileset dir="${tomcat.webapps.dir}/../../server/lib" 
+            includes="catalina-ant.jar" />
+    </path>
+    <taskdef name="reload" 
+        classname="org.apache.catalina.ant.ReloadTask"
+        classpathref="tomcat.classpath" /> 
+    <reload
+    		url="http://localhost:8080/manager"
+    		username="user"
+    		password="password"
+    	  path="/lenya"/>
+  </target>
+</project>

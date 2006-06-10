@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:components/>
+
+  <map:views>
+  </map:views>
+
+  <map:resources/>
+
+  <map:pipelines>
+
+    <!-- View Revision? -->
+    <map:pipeline>
+      <map:match pattern="*/*/*/**.xml">
+        <map:match type="step" pattern="view-revision">
+          <map:generate type="serverpages" src="../../content/rc/view.xsp">
+          </map:generate>
+          <map:transform src="../../xslt/rc/toDoc.xsl"/>
+        <map:transform src="xslt/{../3}2xhtml.xsl">
+          <map:parameter name="rendertype" value="{1}"/>
+          <map:parameter name="nodeid" value="{page-envelope:document-node-id}"/>
+          <map:parameter name="language" value="{page-envelope:document-language}"/>
+        </map:transform>
+          <map:serialize type="xml"/>
+        </map:match>
+      </map:match>
+
+      <!-- parametrized doctype matcher -->
+      <!-- pattern="{rendertype}/{area}/{doctype}/{document-path}" -->
+      <map:match pattern="*/*/*/**.xml">
+        <map:generate src="{content-dir:{page-envelope:publication-id},{2}}/{4}.xml"/>
+        <map:transform src="xslt/{3}2xhtml.xsl">
+          <map:parameter name="rendertype" value="{1}"/>
+          <map:parameter name="nodeid" value="{page-envelope:document-node-id}"/>
+          <map:parameter name="language" value="{page-envelope:document-language}"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+
+    </map:pipeline>
+    
+  </map:pipelines>
+</map:sitemap>

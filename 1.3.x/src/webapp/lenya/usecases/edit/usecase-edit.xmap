@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  <!-- =========================== Components ================================ -->
+  <map:components/>
+  <!-- =========================== Resources ================================ -->
+  <map:resources>
+    <map:resource name="style-cms-page">
+      <map:transform type="i18n">      
+        <map:parameter name="locale" value="{request:locale}"/>
+      </map:transform>    
+      <map:transform src="{global:basedir}/xslt/util/page2xhtml.xsl">
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:transform src="{global:basedir}/xslt/util/strip_namespaces.xsl"/>
+      <map:serialize type="xhtml"/>
+    </map:resource>    
+  </map:resources>  
+  <!-- =========================== Flow ===================================== -->
+  <map:flow language="javascript">
+    <map:script src="../edit-document.js"/>
+  </map:flow>
+  <!-- =========================== Pipelines ================================ -->  
+  <map:pipelines>
+    
+    <map:component-configurations>
+      <global-variables>
+        <!-- To access core resources -->
+        <basedir>../..</basedir>
+      </global-variables>
+    </map:component-configurations>
+
+
+    <map:pipeline internal-only="true">     
+      <map:match pattern="request2document">
+        <map:generate src="{global:basedir}/pubs/{page-envelope:publication-id}/work/editor/authoring/{page-envelope:document-path}"/>
+        <map:transform src="{global:basedir}/xslt/authoring/edit/unnumberTags.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>   
+    
+    <!-- Usecase pipeline -->  
+    <map:pipeline>           
+        <map:match pattern="edit" type="usecase">
+          <map:match pattern="open" type="step">
+            <map:match pattern="*/authoring/**.html">
+              <map:act type="reserved-checkout">
+                <map:generate type="serverpages" src="{global:basedir}/content/rc/{exception}.xsp">
+                  <map:parameter name="user" value="{user}"/>
+                  <map:parameter name="filename" value="{filename}"/>
+                  <map:parameter name="date" value="{date}"/>
+                  <map:parameter name="message" value="{message}"/>
+                </map:generate>
+                <map:transform src="{global:basedir}/xslt/rc/rco-exception.xsl"/>
+                <map:call resource="style-cms-page"/>
+              </map:act>
+              <map:generate src="{global:basedir}/pubs/{1}/content/authoring/{page-envelope:document-path}"/>
+              <map:transform src="{global:basedir}/xslt/authoring/edit/numberTags.xsl"/>
+              <map:transform src="{global:basedir}/xslt/authoring/edit/addSourceTags.xsl">
+                <map:parameter name="source" value="{global:basedir}/pubs/{1}/work/editor/authoring/{page-envelope:document-path}"/>
+              </map:transform>
+              <map:transform type="write-source">
+                <map:parameter name="serializer" value="xml"/>
+              </map:transform>
+              <map:transform src="{global:basedir}/xslt/authoring/edit/removeSourceTags.xsl"/>
+              <map:transform src="{global:basedir}/pubs/{1}/lenya/xslt/formeditor/{request-param:form}.xsl">
+                <map:parameter name="docid" value="{page-envelope:document-path}"/>
+                <map:parameter name="nodeid" value="{page-envelope:document-node-id}"/>
+                <map:parameter name="form" value="{request-param:form}"/>
+              </map:transform>
+              <map:transform src="{fallback:xslt/authoring/edit/form-layout.xsl}">
+                <map:parameter name="contextPrefix" value="{page-envelope:context-prefix}"/>
+                <map:parameter name="wfevent" value="{request-param:lenya.event}"/>
+                <map:parameter name="nodeid" value="{page-envelope:document-node-id}"/>
+              </map:transform>
+              <map:call resource="style-cms-page"/>
+
+            </map:match>
+          </map:match>
+
+          <map:match pattern="close" type="step">
+            <map:match pattern="*/authoring/**.html">
+              <map:act type="save">
+                <map:parameter name="file" value="{global:basedir}/pubs/{1}/work/editor/authoring/{page-envelope:document-path}"/>
+                <map:parameter name="schema" value="{global:basedir}/pubs/{1}/config/doctypes/schemas/{request-param:form}.rng"/>
+                <map:parameter name="unnumberTagsXSL" value="{global:basedir}/xslt/authoring/edit/unnumberTags.xsl"/>
+                <map:parameter name="numberTagsXSL" value="{global:basedir}/xslt/authoring/edit/numberTags.xsl"/>
+
+                <!-- Continue editing: Insert, Delete, etc. -->
+                <map:generate src="{global:basedir}/pubs/{../1}/work/editor/authoring/{page-envelope:document-path}"/>
+
+                <map:transform src="{global:basedir}/pubs/{../1}/lenya/xslt/formeditor/{request-param:form}.xsl">
+                  <map:parameter name="docid" value="{page-envelope:document-path}"/>
+                  <map:parameter name="form" value="{request-param:form}"/>
+                  <map:parameter name="message" value="{message}"/>
+                </map:transform>
+                <map:transform src="{fallback:xslt/authoring/edit/form-layout.xsl}">
+                  <map:parameter name="contextPrefix" value="{page-envelope:context-prefix}"/>
+                  <map:parameter name="nodeid" value="{page-envelope:document-node-id}"/>
+                  <map:parameter name="edit" value="{editSelect}"/>
+                  <map:parameter name="wfevent" value="{request-param:lenya.event}"/>
+                </map:transform>
+                <map:call resource="style-cms-page"/>
+              </map:act>
+
+              <!-- Stop Editing: Save and Cancel -->
+              <!-- If temporary file exists, then SAVE else CANCEL -->
+              <map:act type="resource-exists" src="{global:basedir}/pubs/{1}/work/editor/authoring/{page-envelope:document-path}">
+                <map:call function="editDocument">
+                  <map:parameter name="sourceUri" value="cocoon:/request2document"/>
+                  <map:parameter name="useBuffer" value="false"/>
+                  <map:parameter name="noStatus" value="true"/>
+                  <map:parameter name="redirectUrl" value="{request:requestURI}"/>
+                </map:call>               
+              </map:act>
+
+              <!-- If CANCEL then the document also needs to be checked in -->
+              <map:act type="reserved-checkin">
+                <map:parameter name="backup" value="false"/>
+                <map:generate src="{global:basedir}/content/rc/{exception}.xsp" type="serverpages">
+                  <map:parameter name="user" value="{user}"/>
+                  <map:parameter name="filename" value="{filename}"/>
+                  <map:parameter name="checkType" value="{checkType}"/>
+                  <map:parameter name="date" value="{date}"/>
+                  <map:parameter name="message" value="{message}"/>
+                </map:generate>
+                <map:transform src="{global:basedir}/xslt/rc/rco-exception.xsl"/>
+                <map:call resource="style-cms-page"/>
+              </map:act>
+              
+              <map:redirect-to uri="{request:requestURI}"/>
+            </map:match>
+          </map:match>
+        </map:match>
+    </map:pipeline>
+  </map:pipelines>
+
+</map:sitemap>

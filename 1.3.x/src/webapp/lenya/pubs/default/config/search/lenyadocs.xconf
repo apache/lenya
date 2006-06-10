@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<luc:document xmlns:luc="http://apache.org/cocoon/lenya/lucene/1.0">
+<luc:field name="title" type="Text">
+<namespace prefix="lenya">http://apache.org/cocoon/lenya/page-envelope/1.0</namespace>
+<namespace prefix="dc">http://purl.org/dc/elements/1.1/</namespace>
+<xpath>/*/lenya:meta/dc:subject</xpath>
+</luc:field>
+<luc:field name="htmltitle" type="Text">
+<namespace prefix="xhtml">http://www.w3.org/1999/xhtml</namespace>
+<xpath>/xhtml:html/xhtml:head/xhtml:title</xpath>
+</luc:field>
+<luc:field name="language" type="Text">
+<namespace prefix="lenya">http://apache.org/cocoon/lenya/page-envelope/1.0</namespace>
+<namespace prefix="dc">http://purl.org/dc/elements/1.1/</namespace>
+<xpath>/*/lenya:meta/dc:language</xpath>
+</luc:field>
+<luc:field name="description" type="Text">
+<namespace prefix="lenya">http://apache.org/cocoon/lenya/page-envelope/1.0</namespace>
+<namespace prefix="dc">http://purl.org/dc/elements/1.1/</namespace>
+<xpath>/*/lenya:meta/dc:description</xpath>
+</luc:field>
+<luc:field name="htmlbody" type="Text">
+<namespace prefix="xhtml">http://www.w3.org/1999/xhtml</namespace>
+<xpath>/xhtml:html/xhtml:body</xpath>
+</luc:field>
+<luc:field name="contents" type="UnStored" xpath="/"/>
+</luc:document> 

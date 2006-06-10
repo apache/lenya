@@ -1,0 +1,5 @@
+cd public_html/children
+lcd ~/htdocs/children
+lls -R
+mput *
+quit

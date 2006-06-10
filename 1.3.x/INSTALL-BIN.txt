@@ -1,0 +1,37 @@
+
+   +----------------------+
+   |    INSTALL BINARY    |
+   +----------------------+
+   
+
+Using the built-in Jetty
+------------------------
+
+
+1) Start up Apache Lenya by executing lenya.bat on Windows or
+
+   sh lenya.sh servlet
+   
+   on Unix.
+
+
+2) Open http://localhost:8888/ with your browser
+
+
+
+Tomcat
+------
+
+
+1) Copy lenya.war into .../TOMCAT_PREFIX/webapps directory
+
+2) Copy endorsed libraries into .../TOMCAT_PREFIX/common/endorsed directory
+
+3) Startup Tomcat
+
+
+
+Known issues
+------------
+Please read the "Known issues" section in the README.txt file
+to find out more about known bugs/issues in Apache Lenya.

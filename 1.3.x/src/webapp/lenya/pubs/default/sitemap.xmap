@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:components/>
+
+  <map:resources>
+    <map:resource name="style-cms-page">
+      <map:transform type="i18n">      
+        <map:parameter name="locale" value="{request:locale}"/>
+      </map:transform>    
+      <map:transform src="../../xslt/util/page2xhtml.xsl">
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:transform src="../../xslt/util/strip_namespaces.xsl"/>
+      <map:select type="parameter">
+        <map:parameter name="statusCode" value="{statusCode}"/>
+        <map:when test="">
+          <map:serialize/>
+        </map:when>
+        <map:otherwise>
+          <map:serialize status-code="{statusCode}"/>
+        </map:otherwise>
+      </map:select>
+    </map:resource>
+  </map:resources>
+
+  <map:pipelines>
+
+    <map:pipeline>
+      <map:match pattern="**">
+        <map:mount uri-prefix="" src="publication-sitemap.xmap"/>
+      </map:match>
+
+      <map:handle-errors>
+        <map:select type="exception">
+           <map:when test="resourcenotfound">
+             <map:generate src="../../content/util/empty.xml" />
+            <map:transform src="../../xslt/exception/document-does-not-exist.xsl">
+              <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+              <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
+            </map:transform>
+            <map:call resource="style-cms-page">
+              <map:parameter name="statusCode" value="404"/>
+            </map:call>
+          </map:when>
+        <map:otherwise>
+        <map:generate type="notifying"/>
+        <map:transform src="../../../stylesheets/system/error2html.xslt">
+          <map:parameter name="contextPath" value="{request:contextPath}"/>
+        </map:transform>
+         </map:otherwise>
+        </map:select>
+        <map:serialize type="html"/>
+      </map:handle-errors>
+    </map:pipeline>
+
+  </map:pipelines>
+</map:sitemap>

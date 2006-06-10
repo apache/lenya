@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<project default="main" basedir=".">
+
+<target name="main" description="main" depends="init">
+  <echo>INFO: webapp.dir=${webapp.dir}</echo>
+</target>
+
+<target name="init">
+  <property file="local.search.properties"/>
+  <property file="search.properties"/>
+
+  <!-- Dummy arguments -->
+  <property name="crawler.xconf" value="src/webapp/lenya/pubs/default/config/search/crawler.xconf"/>
+  <property name="lucene.xconf" value="src/webapp/lenya/pubs/default/config/search/lucene-cmfsMatrix.xconf"/>
+  <property name="htdocs.dump.dir" value="src/webapp/lenya/pubs/default/content/live"/>
+  <property name="file" value="src/webapp/lenya/pubs/default/content/live/index.xml"/>
+  <property name="index.dir" value="src/webapp/lenya/pubs/default/work/search/lucene/index/index"/>
+  <property name="search.term" value="Lenya"/>
+  <!-- /Dummy arguments -->
+
+  <property name="web-inf.dir" value="${webapp.dir}/WEB-INF"/>
+
+  <path id="class.path">
+    <pathelement path="${web-inf.dir}/classes"/>
+    <fileset dir="${web-inf.dir}/lib">
+      <include name="**/*.jar"/>
+    </fileset>   
+  </path>
+
+  <chmod file="${webapp.dir}/lenya/bin/crawl_and_index.sh" perm="755"/>
+</target>
+
+<target name="crawl" description="Crawl and dump hypertext documents. Usage: -Dcrawler.xconf=/foo/bar/crawler.xconf (IMPORTANT NOTE: Use an absolute path to specify the crawler.xconf file" depends="init">
+  <echo>INFO: Crawl and dump hypertext documents (${crawler.xconf})</echo>
+
+  <echo>INFO: Show configuration</echo>
+  <java classname="org.apache.lenya.search.crawler.CrawlerConfiguration">
+    <arg value="${crawler.xconf}"/>
+    <classpath refid="class.path"/>
+  </java>
+
+  <echo>INFO: START crawling ...</echo>
+  <java classname="org.apache.lenya.search.crawler.IterativeHTMLCrawler">
+    <arg value="${crawler.xconf}"/>
+    <classpath refid="class.path"/>
+  </java>
+  <echo>INFO: Crawling finished</echo>
+</target>
+
+
+<target name="index" description="Index hypertext documents. Usage: -Dlucene.xconf=/foo/bar/lucene.xconf" depends="init">
+  <echo>INFO: Index hypertext documents</echo>
+
+  <echo>INFO: Show configuration</echo>
+  <java classname="org.apache.lenya.lucene.IndexConfiguration">
+    <arg value="${lucene.xconf}"/>
+    <classpath refid="class.path"/>
+  </java>
+
+  <echo>INFO: Create index ...</echo>
+  <java classname="org.apache.lenya.lucene.index.Index">
+    <arg value="${lucene.xconf}"/>
+    <classpath refid="class.path"/>
+  </java>
+  <echo>INFO: Index has been created</echo>
+</target>
+
+<target name="indexOneDocument" description="Index one document. Usage: -Dlucene.xconf=/foo/bar/lucene.xconf -Dfile=/foo/bar/document" depends="init">
+  <echo>INFO: Index one document</echo>
+
+  <echo>INFO: Show configuration</echo>
+  <java classname="org.apache.lenya.lucene.IndexConfiguration">
+    <arg value="${lucene.xconf}"/>
+    <classpath refid="class.path"/>
+  </java>
+
+  <echo>INFO: Update index for ${file}</echo>
+  <java classname="org.apache.lenya.lucene.index.Index">
+    <arg value="${lucene.xconf}"/>
+    <arg value="${file}"/>
+    <classpath refid="class.path"/>
+  </java>
+  <echo>INFO: Document has been indexed</echo>
+</target>
+
+
+
+<target name="test-index" description="Regression Test of Index" depends="init">
+  <echo>INFO: Regression Test of Index</echo>
+</target>
+
+<target name="search" description="Search within Index. Usage: -Dindex.dir=... -Dsearch.term=Lenya" depends="init">
+  <echo>INFO: Search within Index</echo>
+
+  <exec executable="${webapp.dir}/lenya/bin/crawl_and_index.sh">
+    <arg value="search"/>
+    <arg value="${index.dir}"/>
+    <arg value="${search.term}"/>
+  </exec>
+
+<!-- NOTE: problem with modifiers "public static" -->
+<!--
+  <java classname="org.apache.lenya.lucene.SearchFiles">
+    <arg value="${index.dir}"/>
+    <arg value="${search.term}"/>
+    <classpath refid="class.path"/>
+  </java>
+-->
+</target>
+
+<target name="publish-index" description="Publish Index" depends="init">
+  <echo>INFO: Publish Index</echo>
+</target>
+
+<target name="xpdf" description="Extract text from PDF with Xpdf. Usage: -Dhtdocs.dump.dir=/usr/local/apache/htdocs" depends="init">
+  <echo>INFO: Extract text from PDF with Xpdf (${htdocs.dump.dir})</echo>
+
+  <exec executable="${webapp.dir}/lenya/bin/crawl_and_index.sh">
+    <arg value="xpdf"/>
+    <arg value="${htdocs.dump.dir}"/>
+  </exec>
+</target>
+
+<target name="pdfbox" description="Extract text from PDF with PDFBox" depends="init">
+  <echo>INFO: Extract text from PDF with PDFBox</echo>
+
+  <echo>FIXME: Not implemented yet</echo>
+<!--
+PDFBOX=$HOME/src/PDFBox-0.5.5
+CLASSPATH=$CLASSPATH:$PDFBOX/classes
+##$JAVA -cp $CLASSPATH org.pdfbox.Main $FILE_PDF $FILE_PDF.txt
+-->
+</target>
+
+<target name="pdfadobe" description="Extract text from PDF via Adobe PDF Conversion webpage" depends="init">
+  <echo>INFO: Extract text from PDF via Adobe PDF Conversion webpage</echo>
+
+  <echo>INFO: http://www.adobe.com/products/acrobat/access_simple_form.html</echo>
+</target>
+
+<target name="show-config" description="Show configuration" depends="init">
+  <echo>INFO: Show configuration</echo>
+
+  <echo>INFO: crawler.xconf</echo>
+  <java classname="org.apache.lenya.search.crawler.CrawlerConfiguration">
+    <arg value="${crawler.xconf}"/>
+    <classpath refid="class.path"/>
+  </java>
+
+  <echo>INFO: lucene.xconf</echo>
+  <java classname="org.apache.lenya.lucene.IndexConfiguration">
+    <arg value="${lucene.xconf}"/>
+    <classpath refid="class.path"/>
+  </java>
+</target>
+
+</project>

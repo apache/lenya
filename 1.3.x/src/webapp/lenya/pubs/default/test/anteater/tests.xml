@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<property name="publication-id" value="default"/>
+
+<target name="pubs.default" depends="
+        pubs.default.intro,
+        pubs.default.login,
+        pubs.default.admin
+    "/>
+
+<target name="pubs.default.intro">
+  <echo>Testing the default publication</echo>
+  <echo>Testing introduction</echo>
+  <httpRequest path="/${publication-id}/introduction.html">
+    <match>
+      <responseCode value="200"/>
+      <regexp>Default Publication</regexp>
+    </match>
+  </httpRequest>
+</target>
+
+<target name="pubs.default.login">
+  <echo>Testing login</echo>
+  
+  <httpRequest
+      path="/${publication-id}/admin/index.html"
+      followRedirects="true">
+    <match>
+      <responseCode value="200"/>
+      <regexp>Username:</regexp>
+    </match>
+  </httpRequest>
+  
+  <httpRequest
+      path="/${publication-id}/admin/index.html"
+      followRedirects="true">
+    <parameter name="username" value="lenya"/>
+    <parameter name="password" value="levi"/>
+    <match>
+      <responseCode value="200"/>
+      <regexp>Welcome</regexp>
+    </match>
+  </httpRequest>
+  
+</target>
+
+<target name="pubs.default.admin" depends="pubs.default.admin.user"/>
+
+<target name="pubs.default.admin.user">
+  <echo>Testing user administration</echo>
+  <httpRequest path="/${publication-id}/admin/index.html">
+    <match>
+      <responseCode value="200"/>
+      <regexp>Default Publication</regexp>
+    </match>
+  </httpRequest>
+</target>

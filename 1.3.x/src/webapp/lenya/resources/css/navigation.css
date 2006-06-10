@@ -1,0 +1,67 @@
+/*
+* Copyright 1999-2004 The Apache Software Foundation
+*
+* Licensed under the Apache License, Version 2.0 (the "License");
+* you may not use this file except in compliance with the License.
+* You may obtain a copy of the License at
+*
+*     http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+
+/* menu */
+
+#menu {
+	margin: 20px 0px;
+}
+
+#menu a {
+    text-decoration: none;
+}
+
+#menu a:hover {
+    text-decoration: underline;
+}
+
+#menu .menublock-1 {
+    padding: 5px 0px 5px 20px;
+    list-style: none;
+}
+
+#menu .menublock-selected-1 {
+    padding: 5px 0px 5px 20px;
+    list-style: none;
+}
+
+#menu .menublock-1 a { color: #909090; background-color: transparent;}
+#menu .menublock-1 a:visited { }
+
+#menu .menublock-1 .menublock-2 { display: none; }
+
+#menu .menublock-selected-1 .menuitem-1 { font-weight: bold; }
+
+#menu .menuitem-1 {
+    padding: 0px;
+    margin: 3px 0px;
+    border-bottom: solid 1px #DDDCCF;
+}
+
+#menu .menuitem-2 { padding-left: 20px; padding-top: 2px; padding-bottom: 2px; font-size: 70%; }
+#menu .menuitem-2 a { color: #9090C0; background-color: transparent;}
+#menu .menuitem-3 { padding-left: 30px; padding-right: .5em; padding-top: .2em; padding-bottom: .2em; font-size: 60%; }
+
+#menu .menuitem-selected-1 {
+	font-weight: bold;
+    padding: 0px;
+    margin: 3px 0px;
+    border-bottom: solid 1px #DDDCCF;
+}
+
+#menu .menuitem-selected-2 { padding-left: 20px; margin-top: 2px; margin-bottom: 2px; font-size: 70%; }
+#menu .menuitem-selected-3 { padding-left: 30px; font-size: 60%; padding-right: .5em; padding-top: .2em; padding-bottom: .2em; }
+
