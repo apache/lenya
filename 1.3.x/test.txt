@@ -1,3 +1,0 @@
-This is a test of the Revolutionary Content Management System.
-If this were a real revolution, there would be code with correct newlines.
-Thank you for reading.
