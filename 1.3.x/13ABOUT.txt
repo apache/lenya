@@ -1,0 +1,57 @@
+About Lenya 1.3
+
+=== History
+In February 2006, I started a private fork of Lenya 1.2.2.  In June 2006, the other Committers expressed interest in (or demanded) the code.  I stopped new development, and integrated my code with Lenya1.2.x.  That merger is what you see.
+
+Lenya1.3 is not finished.  Specifically, it does not have the ability to edit documents directly in the flat datastore.  See the 13TODO.txt for everything still under development.
+
+Enjoy,
+solprovider
+
+
+=== Features
+There were 3 major design goals for Lenya 1.3:
+1. Improved plugins with better URLs (Modules).
+2. Flat datastore for content.
+3. Sensible working security.
+
+The new Module system was easy.  Using flat content is still under development; The migration code is complete, but content maintenance is not.  The new security system is designed, but no code has been written yet; it should not require much programming, but the ability to edit resources is a higher priority.
+
+
+== Modules
+Lenya1.3 Modules are an evolution of Lenya1.2's Usecases.  Eventually, all XMAP code (below global-sitemap.xmap) will be moved to Modules.  The advantages are:
+
+1. Standard directory naming.
+All Modules are in either {pub}/modules or webapp/lenya/modules.  A Module is referenced by the directory name.
+
+2. All files for a function in one location.
+All Flow (JavaScript) code for a function can be in a file named "code.js", and every Module can habe one.
+
+The homepage XSL is in a file "page2xhtml.xsl" in the "homepage" Module, rather than "page2xhtml-homepage.xsl" mixed with other XSLT files in one directory.
+
+The code for caching Resources is in the "cache" module, and is used only if the "cache" Module is included in the Publication.  Other Modules use its API when they desire caching.
+
+3. File Inheritance.
+Any files not in a Module are inherited from the parent Module, which inherits from its parent Module, ad infinitum.  If the file is not found in a Publication Module, Lenya checks a global Module.
+
+That means a Publication can have a local "homepage" Module that only contains "page2xhtml.xsl".  The rest of the functionality is retrieved from the global Module.
+
+4. Integrated into URL.
+Lenya1.2's "Area" portion of the URL defines functionality rather than revision.  Lenya1.2's Usecases are dynamically converted to this format.
+
+My belief is all Lenya configuration should be dynamically configurable while Lenya is running.  (Do not look at Module Inheritance or Indexing yet.  I said Lenya1.3 was not finished.)  Note that Lenya1.3 Modules cannot contain Java classes.  Programming that requires compilation is the domain of Java programmers who should be capable of integrating their code.  I have yet to find a function that cannot be implemented with XMAPs, XSLTs, JS (Flow), and XSP (ServerPages) that does not belong in Lenya's core.  Of course, other developers have different opinions.
+
+
+== Flat Content
+Resources may be type "xml" (Documents), "file" (Assets), or "link".  "xml" Resources have a doctype.  "file" Resources have an extension associated with each Revision.  Architectural files, such as Structures and CSS, will be moved into the datastore after the security system is implemented.
+
+The "flat" Module migrates Lenya1.2's Documents and Assets to the new format.  See 13UPGRADE.txt.
+
+All Resources are siblings.  This allows flat views such as all Resources, all Files, all PDFs, etc..  It also allows any Resource to be easily used by another, avoiding Lenya1.2's "An Asset belongs to a Document."
+
+Hierarchical Structures maintain tree relationships.  This allows multiple trees.
+
+Multiple document XML is created by defining Indexes.  Indexes can filter either all Resources, or just Resources in a Structure.
+
+Most of the benefits will not be evident until Lenya1.3 is finished.
+

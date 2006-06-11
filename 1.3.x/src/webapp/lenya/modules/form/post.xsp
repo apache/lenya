@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xsp:page language="java" xmlns:xsp="http://apache.org/xsp" xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
+<xsp:structure><xsp:include>java.util.*</xsp:include></xsp:structure>
+<form><xsp:logic>
+	Enumeration pns = request.getParameterNames();
+while(pns.hasMoreElements()){
+	String pn = (String) pns.nextElement(); 
+	String pv = request.getParameter(pn);
+</xsp:logic><field><xsp:attribute name="name"><xsp:expr>pn</xsp:expr></xsp:attribute><xsp:expr>pv</xsp:expr></field><xsp:logic>
+}
+</xsp:logic></form></xsp:page>

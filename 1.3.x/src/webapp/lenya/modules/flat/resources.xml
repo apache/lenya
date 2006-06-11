@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<content xmlns:cinclude="http://apache.org/cocoon/include/1.0">
+<cinclude:include src="cocoon:/rfiles/live"/>
+<cinclude:include src="cocoon:/rfiles/authoring"/>
+</content>

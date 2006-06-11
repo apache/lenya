@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:components/>
+
+  <map:views></map:views>
+
+  <map:resources/>
+
+  <map:pipelines>
+
+    <!-- View Revision? -->
+    <map:pipeline>
+      <map:match pattern="*/*/*/**.xml">
+        <map:match type="step" pattern="view-revision">
+          <map:generate type="serverpages" src="module:///../../../../content/rc/view.xsp">
+          </map:generate>
+          <map:transform src="module:///../../../../xslt/rc/toDoc.xsl"/>
+        <map:transform src="module:///../../xslt/{../3}2xhtml.xsl">
+          <map:parameter name="rendertype" value="{1}"/>
+          <map:parameter name="nodeid" value="{page-envelope:document-node-id}"/>
+          <map:parameter name="language" value="{page-envelope:document-language}"/>
+        </map:transform>
+          <map:serialize type="xml"/>
+        </map:match>
+      </map:match>
+
+      <!-- parametrized doctype matcher -->
+      <!-- pattern="{rendertype}/{area}/{doctype}/{document-path}" -->
+      <map:match pattern="*/*/*/**.xml">
+        <map:generate src="module:///../../content/{2}/{4}.xml"/>
+        <map:transform src="module:///../../xslt/{3}2xhtml.xsl">
+          <map:parameter name="rendertype" value="{1}"/>
+          <map:parameter name="nodeid" value="{page-envelope:document-node-id}"/>
+          <map:parameter name="language" value="{page-envelope:document-language}"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+  </map:pipelines>
+</map:sitemap>

@@ -26,6 +26,7 @@
   <document-builder>org.apache.lenya.cms.publication.DefaultDocumentBuilder</document-builder>
   <breadcrumb-prefix/>
 
+<!-- Set the content directory for Lenya 1.2 -->
   <!-- NOTE: The configuration of content directories has NOT been fully tested yet and might lead to unexpected results. Use at own risk;-) -->
 <!--
   <content-dir area="authoring">content/authoring</content-dir>
@@ -35,6 +36,13 @@
   <content-dir area="authoring">/home/USERNAME/data/default/authoring</content-dir>
   <content-dir area="live">D:\tmp\default\live</content-dir>
 -->
+
+<!-- Set the content directory for Lenya 1.3 -->
+<!-- SYNTAX: <content type="hierarchical|flat|jcr">content directory</content>  -->
+<!-- The following line is the default if no content element is present.  -->
+<content type="hierarchical">content</content>
+<!-- Use the following line after using the "flat" migration Module. -->
+<!-- <content type="flat">content</content> -->
   
   <!-- 
        For information about these settings, read 
@@ -47,5 +55,17 @@
   -->
   
   <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@href"/>
-  
+
+<!-- Example Module parameters for Lenya 1.3
+<modules include="all">
+<inherit publication="template"/>
+<module name="live" external="true"/>
+<module name="xhtml" external="false"/>
+<module name="navigation" external="false"/>
+<module name="cache" external="false">
+   <variable name="cache-dir">module:///cache</variable>
+</module>
+</modules>
+-->
+
 </publication>

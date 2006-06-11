@@ -22,6 +22,10 @@ package org.apache.lenya.cms.publication;
 import java.io.File;
 
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
+// LENYA1.3 - BEGIN
+import org.apache.lenya.cms.content.Content;
+// LENYA1.3 - END
+
 
 /**
  * A Lenya publication.
@@ -252,5 +256,12 @@ public interface Publication {
      * @return An array of strings.
      */
     String[] getRewriteAttributeXPaths();
-    
+
+//Lenya1.3 - BEGIN
+    Modules getModules();
+    Content getContent();
+    File getContentDirectory();
+    String getContentType();
+//Lenya1.3 - END
+
 }

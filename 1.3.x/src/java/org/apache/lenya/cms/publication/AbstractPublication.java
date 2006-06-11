@@ -31,6 +31,12 @@ import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.lenya.cms.publishing.PublishingEnvironment;
 import org.apache.log4j.Category;
 
+//Lenya1.3 - BEGIN
+import org.apache.lenya.cms.content.Content;
+import org.apache.lenya.cms.content.flat.FlatContent;
+import org.apache.lenya.cms.content.hierarchical.HierarchicalContent;
+//Lenya1.3 - END
+
 /**
  * A publication.
  */
@@ -62,6 +68,14 @@ public abstract class AbstractPublication implements Publication {
     private static final String ELEMENT_REWRITE_ATTRIBUTE = "link-attribute";
     private static final String ATTRIBUTE_XPATH = "xpath";
 	private static final String ELEMENT_CONTENT_DIR = "content-dir";
+
+//Lenya1.3 - BEGIN
+   private Modules modules;
+   private Content content;
+   private File publicationDirectory;
+   private File contentDirectory;
+   private String contentType = "hierarchical";
+//Lenya1.3 - END
 
     /**
      * Creates a new instance of Publication
@@ -170,6 +184,21 @@ public abstract class AbstractPublication implements Publication {
             	this.areaContentDir.put(key, dir);
             }
 
+//Lenya1.3 - BEGIN
+//Content
+            Configuration contentConfig = config.getChild("content");
+            contentType = contentConfig.getAttribute("type", "hierarchical");
+            String contentConfigValue = contentConfig.getValue(CONTENT_PATH);
+            publicationDirectory = new File(getServletContext(), PUBLICATION_PREFIX + File.separator + getId());
+            contentDirectory = new File(publicationDirectory, contentConfigValue);
+            if(contentType.equalsIgnoreCase("flat")){
+               content = (Content) new FlatContent(contentDirectory, getLanguages());
+            }else{
+               content = (Content) new HierarchicalContent(contentDirectory, getLanguages());
+            }
+//Modules
+            modules = new Modules(id, servletContextPath, config.getChild("modules"));
+//Lenya1.3 - END
             
         } catch (PublicationException e) {
             throw e;
@@ -186,6 +215,20 @@ public abstract class AbstractPublication implements Publication {
         livemountpoint = config.getChild(LIVE_MOUNT_POINT).getValue("");
 
     }
+//Lenya1.3 - BEGIN
+    public Modules getModules() {
+        return modules;
+    }
+    public Content getContent() {
+        return content;
+    }
+    public File getContentDirectory() {
+        return contentDirectory;
+    }
+    public String getContentType() {
+        return contentType;
+    }
+//Lenya1.3 - END    
 
     /**
      * Returns the publication ID.
@@ -213,21 +256,26 @@ public abstract class AbstractPublication implements Publication {
         return servletContext;
     }
 
+//Lenya1.3 BEGIN - changed
     /**
      * Returns the publication directory.
      * @return A <code>File</code> object.
      */
     public File getDirectory() {
-        return new File(getServletContext(), PUBLICATION_PREFIX + File.separator + getId());
+        if(null == publicationDirectory)
+            publicationDirectory = new File(getServletContext(), PUBLICATION_PREFIX + File.separator + getId());
+        return publicationDirectory;
     }
-
+//Lenya1.3 - deprecated
     /**
      * Return the directory of a specific area.
      * 
      * @param area a <code>File</code> representing the root of the area content directory.
      * 
      * @return the directory of the given content area.
+     * @deprecated Areas are bad.  Do not use them.
      */
+//Lenya1.3 END
     public File getContentDirectory(String area) {
     	Object key = getContentDirKey(area);
     	String contentDir = (String) this.areaContentDir.get(key);

@@ -1,0 +1,5 @@
+<module id="navigation" name="Navigation">
+<version>1.3</version>
+<content>Hierarchical</content>
+<description>Handles backwards-compatible navigation framework for hierarchical storage.</description>
+</module>

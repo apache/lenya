@@ -265,12 +265,16 @@ public class DefaultDocument implements Document {
      * Sets the area.
      * @param area A string.
      */
+// LENYA1.3 BEGIN - Area as Module cannot error, so assume "live".
     protected void setArea(String area) {
         if (!AbstractPublication.isValidArea(area)) {
-            throw new IllegalArgumentException("The area [" + area + "] is not valid!");
+           this.area = Publication.LIVE_AREA;
+        }else{
+           this.area = area;
         }
-        this.area = area;
     }
+// LENYA1.3 END
+
 
     private String extension = "html";
 

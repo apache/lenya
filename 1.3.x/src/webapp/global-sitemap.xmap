@@ -92,7 +92,9 @@
    
     <map:resource name="i18n">
       <map:transform type="i18n">
-        <map:parameter name="locale" value="{request:locale}"/>
+<!-- Lenya1.3 - BEGIN : Fix for 1.2 -->
+        <map:parameter name="locale" value="{page-envelope:document-language}"/>
+<!-- Lenya1.3 - END -->
       </map:transform>
     </map:resource>
  </map:resources>
@@ -372,8 +374,10 @@
       <!-- Internal usecases -->
       <map:pipeline internal-only="true">
         <map:match type="usecase" pattern="*">
-          <map:match pattern="*/**">
-            <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
+<!-- LENYA1.3 BEGIN -->
+          <map:match pattern="*/*/**">
+            <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/modules/{2}/module.xmap" check-reload="true" reload-method="synchron"/>
+<!-- LENYA1.3 END -->
           </map:match>
         </map:match>
       </map:pipeline>
@@ -436,6 +440,30 @@
       
       <!-- Enter the actual publication -->
       <map:match pattern="*/**">
+<!-- LENYA1.3 BEGIN: Area as Module -->
+<!-- Just Module -->
+         <map:match pattern="*/*">
+            <map:select type="resource-exists">
+              <map:when test="lenya/pubs/{1}/modules/{2}/module.xmap">
+                 <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/modules/{2}/module.xmap" check-reload="true" reload-method="synchron"/>
+              </map:when>
+              <map:when test="lenya/modules/{2}/module.xmap">
+                 <map:mount uri-prefix="{1}" src="lenya/modules/{2}/module.xmap" check-reload="true" reload-method="synchron"/>
+              </map:when>
+            </map:select>
+         </map:match>
+<!-- With param -->
+         <map:match pattern="*/*/**">
+            <map:select type="resource-exists">
+              <map:when test="lenya/pubs/{1}/modules/{2}/module.xmap">
+                 <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/modules/{2}/module.xmap" check-reload="true" reload-method="synchron"/>
+              </map:when>
+              <map:when test="lenya/modules/{2}/module.xmap">
+                 <map:mount uri-prefix="{1}" src="lenya/modules/{2}/module.xmap" check-reload="true" reload-method="synchron"/>
+              </map:when>
+            </map:select>
+         </map:match>
+<!-- LENYA1.3 END -->
         <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
 

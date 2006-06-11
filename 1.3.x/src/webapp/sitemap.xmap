@@ -46,8 +46,12 @@
     <!--
     <map:generator label="content,data" logger="sitemap.generator.profiler" name="profiler" src="org.apache.cocoon.generation.ProfilerGenerator"/>
     -->
-    <map:generator name="sitetree" logger="sitemap.generator.sitetree" pool-grow="2" pool-max="16" pool-min="2" src="org.apache.lenya.cms.cocoon.generation.SiteTreeGenerator"/>
-  </map:generators>
+<!-- LENYA1.3 BEGIN -->
+    <map:generator name="sitetree" label="content,data" logger="sitemap.generator.sitetree" src="org.apache.lenya.cms.content.flat.SitetreeGenerator"/>
+<!-- From Lenya-1.2.x -->
+    <map:generator name="sitetree2" logger="sitemap.generator.sitetree" pool-grow="2" pool-max="16" pool-min="2" src="org.apache.lenya.cms.cocoon.generation.SiteTreeGenerator"/>
+<!-- LENYA1.3 END -->
+</map:generators>
 
   <!-- ========================================================================== -->
   <!-- Transformers -->
@@ -127,6 +131,11 @@
       <xslt-processor-role>xsltc</xslt-processor-role>
       <check-includes>true</check-includes>
     </map:transformer>
+
+<!-- Lenya 1.3 BEGIN -->
+    <map:transformer name="create-revision" logger="sitemap.transformer.create-revision" src="org.apache.lenya.cms.content.flat.CreateRevisionTransformer"/>
+<!-- Lenya 1.3 END -->
+
   </map:transformers>
 
   <!-- ========================================================================== -->

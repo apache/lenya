@@ -76,7 +76,7 @@ This sitemap creates default navigation components.
           <map:generate src="content/admin/sitetree.xml"/>
         </map:when>
         <map:otherwise>
-	  <map:generate type="sitetree">
+	  <map:generate type="sitetree2">
 	    <map:parameter name="area" value="{2}"/>
           </map:generate>
         </map:otherwise>

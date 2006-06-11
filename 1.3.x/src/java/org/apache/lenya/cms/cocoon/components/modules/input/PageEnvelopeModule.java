@@ -124,6 +124,9 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Se
                 value = envelope.getPublication().getDefaultLanguage();
             } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGE)) {
                 value = envelope.getDocument().getLanguage();
+//LENYA1.3 - BEGIN
+                if(((String) value).length() < 1) value = envelope.getPublication().getDefaultLanguage();
+//LENYA1.3 - END
             } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGES)) {
                 value = envelope.getDocument().getLanguages();
             } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGES_CSV)) {
@@ -168,12 +171,13 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule implements Se
             } else {
                 throw new ConfigurationException("The attribute [" + name + "] is not supported!");
             }
-        } catch (ConfigurationException e) {
-            throw e;
+//Lenya1.3 - BEGIN
+//        } catch (ConfigurationException e) {
+//            throw e;
         } catch (Exception e) {
-            throw new ConfigurationException(
-                "Getting attribute for name [" + name + "] failed: ",
-                e);
+//            throw new ConfigurationException("Getting attribute for name [" + name + "] failed: ", e);
+              value = "";
+//Lenya1.3 - END
         }
 
         if (getLogger().isDebugEnabled()) {

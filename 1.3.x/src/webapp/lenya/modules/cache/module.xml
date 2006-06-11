@@ -1,0 +1,7 @@
+<module id="cache" name="Cache">
+<version>1.3</version>
+<content>All</content>
+<description>Handles smart caching of Resources.</description>
+<usage></usage>
+<parameter name="cache-dir">module:///work/</parameter>
+</module>

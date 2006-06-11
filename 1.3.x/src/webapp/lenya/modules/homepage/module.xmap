@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Homepage Module -->
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  <map:views>
+    <map:view name="debug" from-label="debug">
+       <map:serialize type="xml"/>
+    </map:view> 
+  </map:views>
+
+<!-- ************************************************************** -->
+   <map:pipelines>
+      <map:pipeline type="noncaching">
+         <map:match pattern="**">
+            <map:match pattern="**/">
+               <map:redirect-to uri="index.html"  session="false"/>
+            </map:match>
+            <!-- Get the current document -->
+            <map:match pattern="*/cocoon/**">
+               <map:aggregate element="cmsbody">
+                  <map:part src="cocoon://{page-envelope:publication-id}/session/info"/>
+                  <map:part src="cocoon://{page-envelope:publication-id}/navigation/breadcrumb{page-envelope:document-id}_{page-envelope:document-language}"/>
+                  <map:part src="cocoon://{page-envelope:publication-id}/navigation/tabs{page-envelope:document-id}_{page-envelope:document-language}"/>
+                  <map:part src="cocoon://{page-envelope:publication-id}/navigation/menu{page-envelope:document-id}_{page-envelope:document-language}"/>
+                  <map:part src="cocoon://{page-envelope:publication-id}/navigation/search{page-envelope:document-id}_{page-envelope:document-language}"/>
+                  <map:part src="cocoon://{page-envelope:publication-id}/xhtml/view/live/index_{page-envelope:document-language}.html"/>
+               </map:aggregate>
+               <map:transform type="i18n" label="debug">
+                  <map:parameter name="locale" value="{page-envelope:document-language}"/>
+               </map:transform>
+               <map:transform src="module:///page2xhtml.xsl" label="debug">
+                 <map:parameter name="root" value="{page-envelope:context-prefix}/{page-envelope:publication-id}/live"/>
+                 <map:parameter name="url" value="{2}"/>
+                 <map:parameter name="document-id" value="{page-envelope:document-id}"/>
+                 <map:parameter name="document-name" value="{page-envelope:document-name}"/>
+                 <map:parameter name="document-type" value="{page-envelope:document-type}"/>
+                 <map:parameter name="language" value="{page-envelope:document-language}"/>
+                 <map:parameter name="querystring" value="{request:queryString}"/>
+               </map:transform>
+               <map:transform type="i18n" label="debug">
+                  <map:parameter name="locale" value="{page-envelope:document-language}"/>
+               </map:transform>
+               <map:serialize type="html"/>
+             </map:match>
+<!-- HACK: Could not get just language from locale -->
+            <map:match pattern="*/index_*_*.*">
+                <map:redirect-to uri="index_{2}.{4}"  session="false"/>
+            </map:match>
+            <map:match pattern="*/index_*.*">
+<!-- Valid URL -->
+               <map:act type="resource-exists" src="module://cache">
+                  <map:mount uri-prefix="" src="module://cache/module.xmap"/> 
+                  <map:serialize type="html"/>
+               </map:act>
+               <map:generate src="cocoon:/{module:module}/cocoon/{page-envelope:publication-id}/{page-envelope:document-type}/view/{page-envelope:area}/index_{page-envelope:document-language}.xml"/>
+               <map:serialize type="html"/>
+            </map:match>
+<!-- Default: Add Language -->
+        <map:select type="parameter">
+           <map:parameter name="parameter-selector-test" value="{request:locale}"/>
+           <map:when test="">
+           </map:when>
+           <map:otherwise>
+             <map:redirect-to uri="index_{request:locale}.html"  session="false"/>
+<!-- BROKEN  <map:redirect-to uri="index_{session:substring({request:locale},1, 2)}.html"  session="false"/> -->
+          </map:otherwise>
+        </map:select>
+         <map:select type="parameter">
+             <map:parameter name="parameter-selector-test" value="{page-envelope:default-language}"/>
+             <map:when test="">
+             </map:when>
+             <map:otherwise>
+                <map:redirect-to uri="index_{page-envelope:default-language}.html"  session="false"/>
+              </map:otherwise>
+           </map:select>
+           <map:redirect-to uri="index_en.html" session="false"/>
+         </map:match>
+      </map:pipeline>
+   </map:pipelines>
+</map:sitemap>

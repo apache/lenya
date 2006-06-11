@@ -111,8 +111,29 @@
       class="org.apache.lenya.cms.cocoon.components.modules.input.PublicationContentDirModule">
     </component-instance>
 
+<!-- Lenya1.3 BEGIN -->
+<component-instance class="org.apache.lenya.cms.cocoon.components.modules.input.ContentModule" name="content" logger="core.modules.input.module"/>
+<component-instance class="org.apache.lenya.cms.cocoon.components.modules.input.ModuleModule" name="module" logger="core.modules.input.module"/>
+<component-instance class="org.apache.lenya.cms.cocoon.components.modules.input.PublicationModule" name="publication" logger="core.modules.input.module"/>
+<component-instance class="org.apache.lenya.cms.cocoon.components.modules.input.Usecase2ModuleModule" name="u2m" logger="core.modules.input.usecase2module"/>
+<!-- Lenya1.3 END -->
+
   </xsl:copy>
 </xsl:template>
+
+<!-- LENYA1.3 BEGIN: Changed "module:" protocol from Cocoon to Lenya1.3. -->
+<xsl:template match="source-factories">
+  <xsl:copy>
+    <xsl:copy-of select="@*"/>
+    <xsl:apply-templates/>
+    <component-instance class="org.apache.lenya.cms.cocoon.components.source.impl.ModuleSourceFactory" name="module"/>
+    <component-instance class="org.apache.lenya.cms.cocoon.components.source.impl.ContentSourceFactory" name="content"/>
+  </xsl:copy>
+</xsl:template>
+
+<xsl:template match="source-factories/component-instance[@name = 'module']"  priority="3"/>
+<!-- LENYA1.3 END -->
+
 
 <xsl:template match="cocoon">
   <xsl:copy>

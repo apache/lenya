@@ -1,0 +1,79 @@
+How to Upgrade to Lenya 1.3
+
+You must have a Lenya1.2 Publication.  Lenya1.3 knows nothing about Lenya1.4.  Until Lenya1.3 can edit documents in the flat datastore, you must use Lenya1.2's edit capabilities with Lenya1.2's hierarchical content.
+
+First, install Lenya1.3.  Follow the instructions from the Release Notes for Lenya1.2, except download the code from Lenya1.3's SVN.
+
+=== Converting Publications
+The only required conversion is to change XSL references in page2xhtml.xsl and similar files:
+CHANGE:
+select="xhtml:div[@id = 'body']"
+TO:
+select="xhtml:html/xhtml:div[@id = 'body']"
+
+
+=== Converting data to flat datastore
+Open the URL:
+http://{yourServer}/{yourPublication}/flat/migrate
+
+To use the flat datastore, 
+FILE: {pub}/config/publication.xconf
+ADD the following line:
+<content type="flat">content</content>
+If you move the content directory, change the value.
+
+
+=== Converting Usecases to Modules
+In your {pub} directory, create a directory names "modules".
+
+In the {pub}/modules directory, create one directory for each Usecase.  The Usecase directories should have the name from the Usecase XMAPs.  So if you have {pub}/usecase-search.xmap, create a directory {pub}/modules/search.
+
+COPY each of the Usecase XMAPs to the appropriate directory.  
+
+RENAME the copied files (in {pub}/modules/{moduleID} to "module.xmap".
+
+Open each of those files and fix the filepaths.  No changes are necessary for "cocoon:",  "fallback:" and "http:", but every "file:" src parameter must be fixed, including entries without a protocol.  For now, just add "module:///../../" to the beginning of each src parameter.
+EXAMPLE:
+src="xxx"
+src="file:/xxx
+BECOMES:
+src="module:///../../xxx"
+
+When accessing the content directory, use the content: protocol.
+
+Once the Modules are created, Lenya1.3 will automatically use them, even when the request uses the "?lenya.usecase=" format.
+
+If you may revert the Publication to Lenya1.2, make the following changes.  Otherwise, delete all the {pub}/usecase-{usecaseID}.xmap files.
+
+MODIFY FILES: {pub}/usecase-{usecaseID}.xmap
+Change the  {usecaseID} appropriately.
+<?xml version="1.0" encoding="UTF-8"?>
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  <map:pipelines>
+    <map:pipeline>
+        <map:mount uri-prefix="" src="modules/{usecaseID}/module.xmap"/>
+    </map:pipeline>
+  </map:pipelines>
+</map:sitemap>
+
+
+=== Converting to Live and Authoring Modules
+We do not recommend creating a "live" Module from these instructions so the global "live" Module is used, but it may be better to use the existing code if your publication is heavily customized.
+
+In the {pub}/modules directory, create directories named "live" and "authoring".
+
+Copy {pub}/publication-sitemap.xmap to {pubs}/modules/live/module.xmap and {pub}/modules/authoring/module.xmap
+
+Fix the SRC tags as discussed in the preceding section.
+
+MODIFY FILE:{pub}/publication-sitemap.xmap
+<?xml version="1.0" encoding="UTF-8"?>
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  <map:pipelines>
+    <map:pipeline>
+        <map:mount uri-prefix="" src="modules/authoring/module.xmap"/>
+    </map:pipeline>
+  </map:pipelines>
+</map:sitemap>
+
+The "authoring" Module will be used in case publication-sitemap.xmap is processed.

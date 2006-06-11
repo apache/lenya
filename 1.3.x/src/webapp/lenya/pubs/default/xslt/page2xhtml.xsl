@@ -79,7 +79,7 @@
             <div id="main">
               <xsl:apply-templates select="xhtml:div[@id = 'breadcrumb']"/>
               <xsl:apply-templates select="xhtml:div[@id = 'search']"/>
-              <xsl:apply-templates select="xhtml:div[@id = 'body']"/>
+              <xsl:apply-templates select="xhtml:html/xhtml:div[@id = 'body']"/>
             </div>
           </td>
         </tr>

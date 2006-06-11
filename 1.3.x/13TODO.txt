@@ -1,0 +1,178 @@
+=== 1.2.x Conversion
+Session Module: login.xsp -> NullPointerException
+
+===
+Modules.java - Add EXCLUDE parameter to config
+
+== Menu Module
+Fix XSL
+Started fixing menu.xsl.  All others have not been touched.
+DESIGN: Pass prefix ("root" parameter) from parent module?
+
+=== Modules.java
+synchronize setting of static variables.
+
+Move inherit to static (publication.module.name=publication.module.name).
+Module variable inheritance must follow name changes (inherit="differentModuleName").
+Fix getVariable() to use inherit.
+New "inherit": publication.module -> list(array) of publication.module
+There may be more than one publication.  Each Module inherits from only one Module name.
+Use for both File and Variable inheritance.
+
+
+=== CreateRevisionTransformer
+Create new Resource if none specified or does not exist.  Allow a Title parameter, and default to "NEW" + datetime.
+
+TEST If request has file upload, save uploaded file with newrevision.
+Save upload Part.  Do not depend on field name.
+
+Add userid and datetime (and extension if fileupload) to root element of revisionUNID.xml
+
+Set "edit"=newRevision in Translation.xml [FlatContent.getNewFilename()]
+
+=== "flat" Module
+Use Content directory from publication.xconf
+
+Rethink structures.  
+Need "live" or "homepage"?.  Rename livemenu to live?  What variations are useful?
+All = all relations, use for authoring
+Live = use for menus.  Do not include /index.
+StructureEditor should use "visible in menu" flag to build "live".  Checkboxes on Structure editor.
+
+=== Indexer
+Currently indexes everything in Flat Publications every time (and only when) Lenya1.3 starts.
+
+Need sensible test to reindex after a Resource or Structure is changed.  Development must wait until Resource Editor is ready, since saving a Resource should trigger the Indexer.
+
+=== ContentModule.java
+content:type|doctype|...:docid
+(Currently always returns "test".)
+Return specified variable from current Resource/Translation.
+Use FlatIndexPart for retrieval?
+
+=== ModuleModule.java
+module variables: publication.xconf (implemented), then get defaults from module.xconf, follow inheritance until found.
+
+=== XML Serializer
+Automatically pass through i18n Transformer using current module and current language.
+Build catalog using Module Inheritance.  Cannot be file level inheritance; local overrides only local tags, and others are from ancestors.
+
+i18n Transformer must not remove i18n tags that are not in current catalog.  Unknown messages must wait for other Modules and HTMLSerializer.
+
+=== HTML Serializer
+Add link rewriting.  
+Change <LINK UNID="xxx"> to appropriate A tag.
+Change <LINK UNID="xxx" TAG="img"> to appropriate IMG tag.
+
+Automatically pass through i18n Transformer using current language.  Build catalog from current module (including inheritance), publication, and global.
+Replace unfound i18n tags with default.
+
+=== CreateRevisionTransformer
+Replace all A and IMG tags with appropriate LINK tags, creating new Resources as necessary.
+
+=== Admin Screens
+Admin screen: Navigation between User/Group maintenance and Site maintenance.
+
+Admin screen: Structure editor
+Move structures to Resources so editing uses revision control.
+Create new structure.  Copy existing.  Add Resources not in structure.  Move Resource to new parent or root.
+Careful: must keep Resource even if does not exist in current language.  Show greyed, but still allow move.
+
+Admin screen: Language chooser
+Since all code is based on current language, may need method to have Admin menus in different language than Resource displayed.  Probably add langauge as parameter:
+http:server/pub/admin/en/docid_xx.html
+
+Admin screens: Revision chooser
+Show all revisions (*.xml from Translation directory, not including "translation.xml").  Sort by datetime.
+Mark the Live and Edit (last saved) revisions.
+"Publish" sets live revision.
+"Edit" opens specified revision.
+Use slider at top.  Start at "edit" revision.  WYSIWYG RichText fields (must open in XHTML editor to edit).
+
+Admin screens: Document fields editor 
+Pull from Resource, Translation, and Meta
+Update structures if "id" has changed.
+Upload control if type="file".  How to save?
+
+Admin screens: Document editor for rich text (XHTML) fields.  Integrate Kupu etc. for editing rich text field.  Use a transform to place into Revision XML, then call CreateRevisionTransformer.
+
+Create Resource
+Add Language
+
+Resource @defaultlanguage used to return one Translation for all requests.  Does it work?
+
+=== PageEnvelope
+Smart attempts to find document.
+/publication/module + 
+/structure/path/page.html
+/path/page.html  (Assume module is structure, then assume "live")
+/parameters/structure/path/page.html
+/parameters/path/page.html
+Also check if last element is a UNID.
+
+=== Modules
+ContentModule.java "content:" Variables: type, doctype, extension.
+
+Each type and most subtypes (doctype, extension) has own Module, defines read format (div=body), fields for editing (Title is assumed), workflow, search fields (title, blurb, body)
+
+
+=== Search
+Wait until doctype Modules.
+Doctype Configuration should define Body.
+Title is assumed from Revision Title?  Or allow override?
+Multiple Languages?  Or separate indexes for each language?
+Filter by type?  doctype?  IndexPart?
+URLs: Use a Structure?  All flat (UNIDs)?  Choice?  (I dislike UNIDs in URLs, but a Structure limits the results to what it contains.)
+
+
+=======================
+====    Security   ====
+=======================
+Resource-level Security.
+Access Control List in Resource.xml
+"admin" Group bypasses security and is allowed to do anything.
+<acl><read default="yes"><person|group|role id="name" access="yes|no"></read><edit default="yes">same as read</edit></acl>
+Implement in SitetreeGenerator and ContentSourceFactory.
+"Not allowed" returns Sorry page (rather than error).
+"Does not exist" returns same Sorry page.
+Sorry: This resource is not available, either it does not exist or you do not have access to it.  (Link to Login page if not logged in.)
+
+DESIGN: How to handle inheritance?  Multiple parents?  Assume "live" structure?
+
+=======================
+====  Enhancements ====
+=======================
+Resource: Active dates: start, expire
+Careful: All children will disappear from Index when parent is deactivated.
+
+Resources: Deleting index kills a structure.  Maintain Structures as Resources with automatic versioning for easy rollback.
+
+Admin screen: User/Group editor
+
+Admin screen: User editor
+Change FileUser to allow dynamic fields.  Show all fields.  Pub can configure list of fields with default values.
+
+Editor: Save checks for static links and replaces with ResourceLink.  Create new Resource type=link for external links if they do not exist.  Need syntax for embedded links.  <link structure="live" unid="####"/>.  Structure needed to create human-readable URLs.  HTMLSerializer should replace with Anchor tag containing Title.  Need marker for link in editor, or use WYSIWYG (Replace with HTML for editing, then replace with link tag during save)?
+
+Editor: Create reusable CSS classes?  Create "style" with settings of current location.  Maintenance?  For one RichText field, all RichText fields of the same type, for whole Publication, or Lenya server?  Will be easier when CSS are Resources.
+
+Editor: Fix tables.  Is there a better plugin?
+
+
+== FlatIndexPart
+Parse using / forcing begining, * for any element, and // for any number of elements 
+Example: token = "/xml" must be root
+Example: token = "/*/*" must be second level
+Example: token = "//xml/file" must be file under xml, but xml can be at any level.
+
+
+== Indexer
+Pull confs from Modules.
+Queue background indexing.
+Thread check next index.
+Send changes to indexes with return of needsIndexing so add to queue.
+If exists and does not need updating, return
+If exists and needs updating, check update freq.  If cache-and-update (assume true), start new thread for update.
+Match identical indexconfs, same filters.  ?superset include unless different value for same name.  Could cause issues if poor code copies extra attributes.
+
+

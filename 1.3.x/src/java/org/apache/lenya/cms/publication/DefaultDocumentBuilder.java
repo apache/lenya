@@ -67,9 +67,20 @@ public class DefaultDocumentBuilder implements DocumentBuilder {
         String documentId = documentURL;
 
         if (!documentId.startsWith("/")) {
-            throw new DocumentBuildException(
-                "Document ID [" + documentId + "] does not start with '/'!");
+//Lenya 1.3 - BEGIN
+//         throw new DocumentBuildException("Document ID [" + documentId + "] does not start with '/'!");
+           documentId = "/index";
+//Lenya 1.3 - END
         }
+//TODO: If documentId starts with parameters, remove each possible parameter, and check if document exists
+//try each of these with remaining docID.
+//   last parameter = structure
+//   first parameter = structure
+//   structure = "live"
+//NEED Content.documentExists(structure, docID)
+//Then try: for each part from end, is UNID?
+//NEED Content.documentExists(UNID)
+//Lenya 1.3 - END
 
         DefaultDocument document =
             createDocument(publication, info.getArea(), documentId, language);
