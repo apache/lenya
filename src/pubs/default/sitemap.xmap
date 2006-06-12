@@ -20,11 +20,6 @@
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
   <map:components>
-    <map:generators default="file">
-      <map:generator label="content" logger="sitemap.generator.directory"
-        name="lenyaMetaData" pool-max="16"
-        src="org.apache.lenya.cms.cocoon.generation.LenyaMetaDataGenerator"/>
-    </map:generators>
     <map:serializers default="xhtml">
       <map:serializer logger="sitemap.serializer.links" name="links" src="org.apache.lenya.cms.cocoon.serialization.LinkSerializer"/>
     </map:serializers>
