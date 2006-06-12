@@ -37,11 +37,19 @@
 
     <!-- search pipeline -->
     <map:pipeline>
+      
+      <map:match pattern="metadata.xml">
+        <map:generate type="lenyaMetaData">
+          <map:parameter name="docid" value="{page-envelope:document-id}"/>
+          <map:parameter name="lang" value="{page-envelope:document-language}"/>
+        </map:generate>
+        <map:serialize type="xml"/>
+      </map:match>
+      
       <map:match pattern="lucene-index.xml">
         <map:aggregate element="cmsbody">
-          <!-- TODO aggregate meta file -->
-          <!-- <map:part src="cocoon:/modules/{page-envelope:document-type}/view.xml"/> -->
           <map:part src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-id}"/>
+          <map:part src="cocoon:/metadata.xml"/>
         </map:aggregate>
   
         <map:transform src="fallback://lenya/modules/xhtml/xslt/xhtml2index.xsl">
