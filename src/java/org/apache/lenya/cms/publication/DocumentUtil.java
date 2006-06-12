@@ -18,7 +18,11 @@ package org.apache.lenya.cms.publication;
 
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.cocoon.environment.Request;
+import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * Document utility class.
@@ -39,13 +43,32 @@ public class DocumentUtil {
             map = docManager.createDocumentIdentityMap(session);
         } catch (ServiceException e) {
             throw new RuntimeException(e);
-        }
-        finally {
+        } finally {
             if (docManager != null) {
                 manager.release(docManager);
             }
         }
         return map;
     }
-    
+
+    /**
+     * Returns the currently requested document or <code>null</code> if no document is requested.
+     * @param manager The service manager.
+     * @param request The request.
+     * @return A document.
+     * @throws RepositoryException if an error occurs.
+     * @throws DocumentBuildException if an error occurs.
+     */
+    public static Document getCurrentDocument(ServiceManager manager, Request request)
+            throws RepositoryException, DocumentBuildException {
+        Session session = RepositoryUtil.getSession(manager, request);
+        DocumentFactory factory = DocumentUtil.createDocumentIdentityMap(manager, session);
+        String url = ServletHelper.getWebappURI(request);
+        Document doc = null;
+        if (factory.isDocument(url)) {
+            doc = factory.getFromURL(url);
+        }
+        return doc;
+    }
+
 }
