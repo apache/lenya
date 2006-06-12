@@ -42,16 +42,6 @@ public class Assets extends SiteUsecase {
      */
     void validate() throws UsecaseException {
 
-        if (getParameterAsString("title").length() == 0) {
-            addErrorMessage("Please enter a title.");
-        }
-        if (getParameterAsString("creator").length() == 0) {
-            addErrorMessage("Please enter a creator.");
-        }
-        if (getParameterAsString("rights").length() == 0) {
-            addErrorMessage("Please enter the rights.");
-        }
-
         /*
          * The <input type="file"/> value cannot be passed to the next screen because
          * the browser doesn't allow this for security reasons.
@@ -63,7 +53,7 @@ public class Assets extends SiteUsecase {
 
         Part file = getPart("file");
         if (file == null) {
-            addErrorMessage("Please choose a file to upload.");
+            addErrorMessage("Please choose a file to upload. Your previous choice could not be preselected for security reasons.");
         }
         
     }
@@ -92,14 +82,7 @@ public class Assets extends SiteUsecase {
 
             User user = getSession().getIdentity().getUser();
             if (user != null) {
-                String creator;
-                String name = user.getName();
-                if (name != null && !name.trim().equals("")) {
-                    creator = name;
-                } else {
-                    creator = user.getId();
-                }
-                setParameter("creator", creator);
+                setParameter("creator", user.getId());
             }
 
         } catch (final Exception e) {
