@@ -106,10 +106,6 @@
       </fileset>
     </copy>
 
-    <!-- patch sitemap.xmap -->
-    <xpatch file="${build.webapp}/sitemap.xmap" 
-            includes="src/webapp/lenya/config/sitemap/*.xmap"/> 
-
     <!-- patch logkit.xconf -->
     <xpatch file="${build.webapp}/WEB-INF/logkit.xconf"
         includes="src/confpatch/logkit-*.xconf"/> 
