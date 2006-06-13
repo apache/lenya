@@ -147,6 +147,8 @@
               <map:parameter name="language" value="{page-envelope:document-language}"/>
               <map:parameter name="contextprefix" value="{request:contextPath}"/>
               <map:parameter name="title" value="{dublincore:title}"/>
+              <map:parameter name="lastPublishedUser" value="{workflow:lastUser.publish}"/>
+              <map:parameter name="lastPublishedDate" value="{workflow:lastDate.publish}"/>
             </map:transform>
           </map:when>
           <map:otherwise>
@@ -160,6 +162,8 @@
               <map:parameter name="language" value="{page-envelope:document-language}"/>
               <map:parameter name="contextprefix" value="{request:contextPath}"/>
               <map:parameter name="title" value="{dublincore:title}"/>
+              <map:parameter name="lastPublishedUser" value="{workflow:lastUser.publish}"/>
+              <map:parameter name="lastPublishedDate" value="{workflow:lastDate.publish}"/>
             </map:transform>
           </map:otherwise>
         </map:select>

@@ -24,6 +24,7 @@
     xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
     xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" 
     xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
     exclude-result-prefixes="page xhtml dc lenya"
     >
     
@@ -41,6 +42,9 @@
 <xsl:param name="language"/>
 <xsl:param name="title"/>
 
+<xsl:param name="lastPublishedUser"/>
+<xsl:param name="lastPublishedDate"/>
+  
 <xsl:template match="cmsbody">
   <html>
     <head>
@@ -87,6 +91,7 @@
               <xsl:apply-templates select="xhtml:div[@id = 'breadcrumb']"/>
               <xsl:apply-templates select="xhtml:div[@id = 'search']"/>
               <xsl:apply-templates select="xhtml:div[@id = 'body']"/>
+              <xsl:call-template name="footer"/>
             </div>
           </td>
         </tr>
@@ -95,6 +100,27 @@
     </body>
   </html>
 </xsl:template>
+
+
+  <xsl:template name="footer">
+    <div id="footer">
+      <p>
+        <xsl:choose>
+          <xsl:when test="$lastPublishedUser != ''">
+            <i18n:translate>
+              <i18n:text>last-published</i18n:text>
+              <i18n:param><i18n:date-time src-pattern="yyyy-MM-dd hh:mm:ss"><xsl:value-of select="$lastPublishedDate"/></i18n:date-time></i18n:param>
+              <i18n:param><xsl:value-of select="$lastPublishedUser"/></i18n:param>
+            </i18n:translate>
+          </xsl:when>
+          <xsl:otherwise>
+            <i18n:text>never-published</i18n:text>
+          </xsl:otherwise>
+        </xsl:choose>
+      </p>
+    </div>
+  </xsl:template>
+
 
 <xsl:template match="@*|node()" priority="-1">
   <xsl:copy>

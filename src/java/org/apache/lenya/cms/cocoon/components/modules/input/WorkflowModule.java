@@ -17,6 +17,8 @@
 
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Map;
@@ -49,6 +51,19 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
      */
     public static final String VARIABLE_PREFIX = "variable.";
 
+    /**
+     * The prefix to get the last user who invoked a certain event.
+     */
+    public static final String LAST_USER_PREFIX = "lastUser.";
+
+    /**
+     * The prefix to get the last date at which a certain event was invoked.
+     * @see #DATE_FORMAT
+     */
+    public static final String LAST_DATE_PREFIX = "lastDate.";
+
+    protected static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+
     static final String[] PARAMETER_NAMES = { STATE };
 
     /**
@@ -66,7 +81,8 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
             Document document = envelope.getDocument();
             if (document != null && document.exists()) {
                 wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-                Session session = RepositoryUtil.getSession(this.manager, ObjectModelHelper.getRequest(objectModel));
+                Session session = RepositoryUtil.getSession(this.manager,
+                        ObjectModelHelper.getRequest(objectModel));
                 DocumentWorkflowable workflowable = new DocumentWorkflowable(this.manager,
                         session,
                         document,
@@ -93,6 +109,18 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
                                 value = Boolean.valueOf(latestVersion.getValue(variableName));
                             }
                         }
+                    } else if (name.startsWith(LAST_USER_PREFIX)) {
+                        String event = name.substring(LAST_USER_PREFIX.length());
+                        Version latestEventVersion = getLatestVersion(workflowable, event);
+                        if (latestEventVersion != null) {
+                            value = latestEventVersion.getUserId();
+                        }
+                    } else if (name.startsWith(LAST_DATE_PREFIX)) {
+                        String event = name.substring(LAST_DATE_PREFIX.length());
+                        Version latestEventVersion = getLatestVersion(workflowable, event);
+                        if (latestEventVersion != null) {
+                            value = DATE_FORMAT.format(latestEventVersion.getDate());
+                        }
                     } else {
                         throw new ConfigurationException("The attribute [" + name
                                 + "] is not supported!");
@@ -109,6 +137,17 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
             }
         }
         return value;
+    }
+
+    protected Version getLatestVersion(DocumentWorkflowable workflowable, String event) {
+        Version latestEventVersion = null;
+        Version versions[] = workflowable.getVersions();
+        for (int i = versions.length - 1; i > 0; i--) {
+            if (versions[i].getEvent().equals(event)) {
+                latestEventVersion = versions[i];
+            }
+        }
+        return latestEventVersion;
     }
 
     /**
