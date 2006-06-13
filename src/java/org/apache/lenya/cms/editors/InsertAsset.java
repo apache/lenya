@@ -45,14 +45,7 @@ public class InsertAsset extends DocumentUsecase {
         try {
             User user = getSession().getIdentity().getUser();
             if (user != null) {
-                String creator;
-                String name = user.getName();
-                if (name != null && !name.trim().equals("")) {
-                    creator = name;
-                } else {
-                    creator = user.getId();
-                }
-                setParameter("creator", creator);
+                setParameter("creator", user.getId());
             }
         } catch (final Exception e) {
             throw new RuntimeException(e);
