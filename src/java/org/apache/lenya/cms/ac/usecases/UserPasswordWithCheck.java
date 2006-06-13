@@ -27,10 +27,12 @@ public class UserPasswordWithCheck extends UserPassword {
 
         super.doCheckExecutionConditions();
 
-        String oldPassword = getParameterAsString(OLD_PASSWORD);
-        boolean authenticated = getUser().authenticate(oldPassword);
-        if (!authenticated) {
-            addErrorMessage("The old password is not correct.");
+        if (getUser() != null) {
+            String oldPassword = getParameterAsString(OLD_PASSWORD);
+            boolean authenticated = getUser().authenticate(oldPassword);
+            if (!authenticated) {
+                addErrorMessage("The old password is not correct.");
+            }
         }
     }
 
