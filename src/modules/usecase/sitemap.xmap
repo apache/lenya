@@ -1,0 +1,99 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 1999-2005 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: usecase.xmap 407452 2006-05-18 04:14:16Z chestnut $ -->
+<!--
+    This sitemap handles calls to usecases which are registered in the
+    usecase framework.
+-->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:components>
+    <map:transformers default="xslt">    
+      <map:transformer name="browser-update" src="org.apache.cocoon.ajax.BrowserUpdateTransformer"/>
+    </map:transformers>
+    <map:selectors>
+      <map:selector name="ajax-request" src="org.apache.cocoon.ajax.AjaxRequestSelector"/>
+    </map:selectors>
+  </map:components>
+  
+  <!-- =========================== FlowScript =============================== -->
+
+  <map:flow language="javascript">
+    <map:script src="fallback://lenya/usecases/usecases.js"/>
+  </map:flow>
+  
+  <!-- =========================== Pipelines ================================ -->
+
+  <map:pipelines>
+    
+    <map:pipeline type="noncaching">
+      <map:match pattern="redirect">
+        <map:generate src="context://lenya/content/admin/common/redirect.xsp" type="serverpages"/>
+        <map:transform src="context://lenya/xslt/admin/common/redirect.xsl"/>
+        <map:serialize/>
+      </map:match>
+      
+      <!-- 
+        This internal sitemap fragment renders the usecase, once the
+        executeUsecase() flowscript has completed and issued a redirect,
+        which is matched here.
+        -->
+      <map:match pattern="view/*/**" internal-only="true">
+        
+        <map:generate type="jx" src="fallback://lenya/{2}"/>
+        <map:transform type="browser-update"/>
+        <map:transform type="cinclude"/>
+        <map:transform type="forms" />
+        <map:transform type="i18n">
+          <map:parameter name="locale" value="{request:locale}"/>
+        </map:transform>
+        
+        <!-- Strip xhtml namespace from <head> and <body> element -->
+        <map:transform src="fallback://lenya/xslt/cforms/strip-xhtml-namespace.xsl"/>
+        <map:transform src="fallback://lenya/xslt/cforms/forms-samples-styling.xsl">
+          <map:parameter name="resources-uri" value="{page-envelope:context-prefix}/cforms"/>
+        </map:transform>
+        <map:transform src="fallback://lenya/xslt/cforms/add-xhtml-namespace.xsl"/>
+        
+        <map:transform src="fallback://lenya/modules/xhtml/xslt/xhtml2xhtml.xsl">
+          <map:parameter name="rendertype" value="{request-param:rendertype}"/>
+          <map:parameter name="nodeid" value="{page-envelope:document-name}"/>
+          <map:parameter name="language" value="{page-envelope:document-language}"/>
+        </map:transform>
+        
+        <map:serialize type="xml"/>
+
+     </map:match>
+      
+    </map:pipeline>
+
+    <map:pipeline>
+      <map:match type="request-parameter" pattern="lenya.continuation">
+        <map:call continuation="{1}"/>
+      </map:match>
+      <map:match pattern="usecase.xml">
+        <map:call function="executeUsecase">
+          <map:parameter name="usecaseName" value="{usecase-document:usecase}"/>
+        </map:call>
+      </map:match>
+    </map:pipeline>
+    
+  </map:pipelines>
+	
+</map:sitemap>

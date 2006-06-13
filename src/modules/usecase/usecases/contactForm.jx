@@ -1,0 +1,77 @@
+<!--
+  Copyright 1999-2005 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<!-- $Id: changePassword.jx 412987 2006-06-09 09:01:58Z andreas $ -->
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+  
+  <body>
+    
+    <h2><i18n:text>Contact</i18n:text></h2>
+    
+    <jx:choose>
+      <jx:when test="${usecase.getParameter('sent').equals('true')}">
+        <p>
+          Sorry - your message was not sent because this is just a sample usecase.
+        </p>
+        <p>
+          <form id="form-contact">
+            <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+            <input type="submit" name="submit" value="Try again"/>
+          </form>
+        </p>
+      </jx:when>
+      <jx:otherwise>
+
+        <form id="form-contact">
+          <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+          <input type="hidden" name="sent" value="true"/>
+          
+          <table style="font-size: small">
+            <tr>
+              <td colspan="2">
+                <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
+              </td>
+            </tr>
+            
+            <tr>
+              <td><label for="name"><i18n:text>Your Name</i18n:text> *</label></td>
+              <td><input type="text" name="password" value="${usecase.getParameter('name')}"/></td>
+            </tr>
+            <tr>
+              <td><label for="email"><i18n:text>Your E-Mail Address</i18n:text> *</label></td>
+              <td><input type="text" name="email" value="${usecase.getParameter('email')}"/></td>
+            </tr>
+            <tr>
+              <td><label for="message"><i18n:text>Your Message</i18n:text> *</label></td>
+              <td><textarea name="message"><jx:out value="${usecase.getParameter('message')}"/></textarea></td>
+            </tr>
+            
+            <tr>
+              <td/>
+              <td>
+                <input i18n:attr="value" type="submit" value="Submit"/>
+              </td>
+            </tr>
+          </table>
+        </form>
+        
+      </jx:otherwise>
+    </jx:choose>
+    
+  </body>
+</html>
