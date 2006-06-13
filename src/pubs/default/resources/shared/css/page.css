@@ -180,6 +180,16 @@ input.searchsubmit:hover {
     font-family: Verdana, Arial, Sans-serif;
 }
 
+#footer {
+    border: none;
+    border-top: 1px solid #BBBB99;
+    padding: 0em 1em;
+    margin-left: 10px;
+    font-family: Verdana, Arial, Sans-serif;
+    font-style: italic;
+    color: Maroon;
+}
+
 #main {
 /*
     float: left;
@@ -202,6 +212,10 @@ table.simple {
     border-color: #909090;
 */
     width: auto;
+}
+
+div#body td {
+    font-size: small;
 }
 
 td.simple {
