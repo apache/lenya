@@ -46,7 +46,7 @@
 <xsl:variable name="editf"><xsl:value-of select="file[@area='authoring']/@time"/></xsl:variable>
 <xsl:variable name="edit"><xsl:choose>
    <xsl:when test="string-length($editf) &gt; 0"><xsl:value-of select="$editf"/></xsl:when>
-   <xsl:otherwise></xsl:otherwise>
+   <xsl:otherwise>1</xsl:otherwise>
 </xsl:choose></xsl:variable>
 
 <xsl:variable name="livef"><xsl:value-of select="file[@area='live']/@time"/></xsl:variable>

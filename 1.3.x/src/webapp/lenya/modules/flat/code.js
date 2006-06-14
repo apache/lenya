@@ -52,6 +52,7 @@ function migrate() {
    var resourcetableentry;
    var type;
    var extension;
+   var hasExtension;
    var id2unid = new Packages.java.util.HashMap();
    var homeunid = "0001";
    var nextunid = 1;
@@ -118,9 +119,14 @@ print("*** Resources ***");
       // Extension - BEGIN
       extension = "";
       pos = id.lastIndexOf(".");
-      if(pos > 0) extension = id.substring(pos + 1);
-// WORKAROUND: BUG with JS String.length.  If length > 0 returns function code rather than number.
-      var hasExtension = (extension.length == 0 ? false : true);
+      hasExtension = false;
+      if(pos > 0){
+         extension = id.substring(pos + 1);
+         id = id.substring(0, pos);
+         pos = fullid.lastIndexOf(id);
+         fullid = fullid.substring(0, pos) + id;
+         hasExtension = true;
+      }
       // Extension - END
       pos = fullid.lastIndexOf("/" + id);
       parentid = fullid.substring(0, pos);

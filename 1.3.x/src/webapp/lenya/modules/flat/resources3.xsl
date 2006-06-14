@@ -45,7 +45,7 @@
 <xsl:variable name="livef"><xsl:value-of select="file[@area='live']/@time"/></xsl:variable>
 <xsl:variable name="live"><xsl:choose>
    <xsl:when test="string-length($livef) &gt; 0"><xsl:value-of select="$livef"/></xsl:when>
-   <xsl:otherwise></xsl:otherwise>
+   <xsl:otherwise>1</xsl:otherwise>
 </xsl:choose></xsl:variable>
 
   <xsl:copy><xsl:apply-templates select="@*"/>

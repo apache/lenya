@@ -96,13 +96,13 @@ public class FlatResource implements Resource {
  * Get Navigation Title from live revision of current language.
  */
    public String getTitle(){
-      return getTitle(defaultLanguage, "live");
+      return getTitle(defaultLanguage, defaultRevision);
    }
 /**
  * Get Navigation Title from live revision of specified language.
  */
    public String getTitle(String language){
-      return getTitle(language, "live");
+      return getTitle(language, defaultRevision);
    }
 /**
  * Get Navigation Title from specified revision of specified language.
@@ -183,11 +183,4 @@ System.out.println("U=" + unid + " L=" + defaultLanguage + " R=" + defaultRevisi
          return false;
       }
    }
-/*
-   public Source getSource(String translation, String revision) throws SourceNotFoundException {
-      throw new SourceNotFoundException("FlatResource.getSource is not implemented yet");
-   }
-
-*/
-
 }
