@@ -17,18 +17,19 @@
             <!-- Get the current document -->
             <map:match pattern="*/cocoon/**">
                <map:aggregate element="cmsbody">
-                  <map:part src="cocoon://{page-envelope:publication-id}/session/info"/>
-                  <map:part src="cocoon://{page-envelope:publication-id}/navigation/breadcrumb{page-envelope:document-id}_{page-envelope:document-language}"/>
-                  <map:part src="cocoon://{page-envelope:publication-id}/navigation/tabs{page-envelope:document-id}_{page-envelope:document-language}"/>
-                  <map:part src="cocoon://{page-envelope:publication-id}/navigation/menu{page-envelope:document-id}_{page-envelope:document-language}"/>
-                  <map:part src="cocoon://{page-envelope:publication-id}/navigation/search{page-envelope:document-id}_{page-envelope:document-language}"/>
-                  <map:part src="cocoon://{page-envelope:publication-id}/xhtml/view/live/index_{page-envelope:document-language}.html"/>
+                  <map:part src="cocoon://{publication:publication}/session/info"/>
+                  <map:part src="cocoon://{publication:publication}/navigation/breadcrumb{page-envelope:document-id}_{page-envelope:document-language}"/>
+                  <map:part src="cocoon://{publication:publication}/navigation/tabs{page-envelope:document-id}_{page-envelope:document-language}"/>
+                  <map:part src="cocoon://{publication:publication}/navigation/menu{page-envelope:document-id}_{page-envelope:document-language}"/>
+                  <map:part src="cocoon://{publication:publication}/navigation/search{page-envelope:document-id}_{page-envelope:document-language}"/>
+                  <map:part src="cocoon://{publication:publication}/xhtml/view/live/index_{page-envelope:document-language}.html"/>
                </map:aggregate>
                <map:transform type="i18n" label="debug">
                   <map:parameter name="locale" value="{page-envelope:document-language}"/>
                </map:transform>
-               <map:transform src="module:///page2xhtml.xsl" label="debug">
-                 <map:parameter name="root" value="{page-envelope:context-prefix}/{page-envelope:publication-id}/live"/>
+               <map:transform src="module:///page2xhtml.xsl">
+                 <map:parameter name="contenttype" value="{publication:contenttype}"/>
+                 <map:parameter name="root" value="{page-envelope:context-prefix}/{publication:publication}/live"/>
                  <map:parameter name="url" value="{2}"/>
                  <map:parameter name="document-id" value="{page-envelope:document-id}"/>
                  <map:parameter name="document-name" value="{page-envelope:document-name}"/>
@@ -51,7 +52,7 @@
                   <map:mount uri-prefix="" src="module://cache/module.xmap"/> 
                   <map:serialize type="html"/>
                </map:act>
-               <map:generate src="cocoon:/{module:module}/cocoon/{page-envelope:publication-id}/{page-envelope:document-type}/view/{page-envelope:area}/index_{page-envelope:document-language}.xml"/>
+               <map:generate src="cocoon:/{module:module}/cocoon/{publication:publication}/{page-envelope:document-type}/view/{page-envelope:area}/index_{page-envelope:document-language}.xml"/>
                <map:serialize type="html"/>
             </map:match>
 <!-- Default: Add Language -->

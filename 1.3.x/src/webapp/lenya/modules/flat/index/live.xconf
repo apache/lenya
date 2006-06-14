@@ -1,2 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<index structure="live"/>
+<index structure="livemenu">
+<filter property="type">xml</filter>
+<filter property="doctype">xhtml|link</filter>
+</index>

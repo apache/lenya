@@ -1,0 +1,27 @@
+<module id="nav" name="Navigation">
+<version>Flat</version>
+<description>Handles navigation framework for flat storage using SitetreeGenerator.</description>
+<usage>
+<map:generate src="module://nav/{navigation-element}/{index}/{resource-fullid}"/>
+
+This Module strips irrelevant information, so:
+module://nav/menu/live/myPath/myDoc_xx.html
+BECOMES:
+menu/live/myPath/myDoc
+
+It tries to pass this to a file named nav.xmap in a Module named {navigation-element}.
+If that does not exist, it generates the index.  
+It then tries to transform using a file named nav.xsl in a Module named {navigation-element}.
+If that does not exist, it transforms using a file named {navigation-element}.xsl from this Module.
+
+These XSL should start with;
+<xsl:param name="current"/>
+<xsl:variable name="language"><xsl:value-of select="/index/@language"/></xsl:variable>
+<xsl:variable name="currentfull">/<xsl:value-of select="$current"/></xsl:variable>
+
+$currentfull contains the currently selected fullid.
+$language contains the current language.
+
+The results are specific to the Navigation Element.  Later XSL would usually add a prefix to anchor tags.
+</usage>
+</module>

@@ -29,7 +29,7 @@
     exclude-result-prefixes="page xhtml"
     >
     
-    
+<xsl:param name="contenttype"/>
 <!-- {context-prefix}/{publication-id}/{area} -->
 <xsl:param name="root"/>
 
@@ -126,6 +126,12 @@
     </xsl:choose>
   </xsl:if>
 </xsl:template>
+
+<!-- 1.3 Nav Module Path Correction -->
+<xsl:template match="//xhtml:div[@id != 'body']//*/@href"><xsl:choose>
+<xsl:when test="$contenttype='flat'"><xsl:attribute name="href"><xsl:value-of select="$root"/><xsl:value-of select="."/></xsl:attribute></xsl:when>
+<xsl:otherwise><xsl:copy/></xsl:otherwise>
+</xsl:choose></xsl:template>
 
 <xsl:template match="@*|node()" priority="-1">
   <xsl:copy>
