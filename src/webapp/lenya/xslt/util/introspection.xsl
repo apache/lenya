@@ -30,7 +30,11 @@
 
 <xsl:template match="/">
   <introspection>
-    <edit href="{$context}/{$publication}/authoring/{$page-id}.xml" mime-type="application/xml" version="xxx">
+    <edit mime-type="application/xml">
+      <!-- TODO: Re-use existing or create new lenya.usecase for opening and saving ... -->
+      <open url="http://127.0.0.1:8888{$context}/{$publication}/authoring/{$page-id}.xml?lenya.usecase=..."/>
+      <save url="http://127.0.0.1:8888{$context}/{$publication}/authoring/{$page-id}.xml?lenya.usecase=..."/>
+<!--
     <schemas>
       <schema href="http://foo.bar.com/lenya/modules/docbook/schemas/simple.rng" type="RelaxNG"/>
       <schema href="http://foo.bar.com/lenya/modules/docbook/schemas/default.rng" type="RelaxNG"/>
@@ -39,6 +43,7 @@
       <style href="http://foo.bar.com/lenya/modules/xhtml/styles/default.xsl"/>
       <style href="http://foo.bar.com/lenya/modules/xhtml/styles/simple.xsl"/>
     </styles>
+-->
     </edit>
   </introspection>
 </xsl:template>
