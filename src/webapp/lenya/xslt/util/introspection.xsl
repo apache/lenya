@@ -32,8 +32,12 @@
   <introspection>
     <edit mime-type="application/xml">
       <!-- TODO: Re-use existing or create new lenya.usecase for opening and saving ... -->
+      <open url="http://127.0.0.1:8888{$context}/{$publication}/authoring/{$page-id}.xml"/>
+<!--
       <open url="http://127.0.0.1:8888{$context}/{$publication}/authoring/{$page-id}.xml?lenya.usecase=..."/>
+-->
       <save url="http://127.0.0.1:8888{$context}/{$publication}/authoring/{$page-id}.xml?lenya.usecase=..."/>
+
 <!--
     <schemas>
       <schema href="http://foo.bar.com/lenya/modules/docbook/schemas/simple.rng" type="RelaxNG"/>
