@@ -1,23 +1,14 @@
 /*
- * Copyright  1999-2006 The Apache Software Foundation
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- *
+ * Copyright 1999-2006 The Apache Software Foundation Licensed under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with the License. You may obtain
+ * a copy of the License at http://www.apache.org/licenses/LICENSE-2.0 Unless required by applicable
+ * law or agreed to in writing, software distributed under the License is distributed on an "AS IS"
+ * BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License
+ * for the specific language governing permissions and limitations under the License.
  */
 
 package org.apache.lenya.config.impl;
 
-import java.awt.Component;
 import java.awt.Container;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -38,9 +29,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
+import javax.swing.UIManager;
 
 import org.apache.lenya.config.core.FileConfiguration;
 import org.apache.lenya.config.core.ContextEventQueue;
@@ -50,142 +41,132 @@ import org.apache.lenya.config.core.Parameter;
  * A GUI tool to configure Lenya 1.4 build
  */
 public class ConfigureGUI {
-    
-    protected static final Component Next = null;
-    protected static final Component Previous = null;
-    
-    private JFrame frame;
-    
+
+    protected JFrame frame;
     private JPanel contentPanel;
     private JPanel checkBoxPanel;
     private JPanel buttonPanel;
-    
     private JCheckBox[] checkBoxes;
-    
     private JLabel defaultValueLabel;
     private JLabel localValueLabel;
     private JLabel newLocalValueLabel;
-    
     private JLabel stepsLabel;
     private JLabel paraValueLabel;
-    
     private JLabel warning1;
     private JLabel warning2;
     private JLabel saveMessage;
-    
-    private JRadioButton radioButton1;
-    private JRadioButton radioButton2;
-    private JRadioButton radioButton3;
-    
+    private JRadioButton radioButtonDefault;
+    private JRadioButton radioButtonLocal;
+    private JRadioButton radioButtonNewLocal;
     private JTextField localValueTextField;
     private JTextField defaultValueTextField;
     private JTextField newLocalValueTextField;
-    
-    private JComboBox defaultValueComboBox;
-    private JComboBox localValueComboBox;
+    private JTextField defaultValueCTextField;
+    private JTextField localValueCTextField;
     private JComboBox newLocalValueComboBox;
-    
     private JButton cancelButton;
-    private JButton backButton;
-    private JButton nextButton;
+    protected JButton backButton;
+    protected JButton nextButton;
     private JButton saveButton;
     private JButton yesButton;
     private JButton noButton;
     private JButton exitButton;
-    
-    private JPopupMenu pop;
-    
     private Parameter[] params;
     private Parameter[] tmpParams;
-    private Parameter[] subParams; 
-    
+    private Parameter[] tmpSubParams;
+    protected Parameter[] subParams;
     private int steps = 0;
-    private int comboPlaceD = 0;
-    private int comboPlaceL = 0;
-    private int comboPlaceN = 0;
     private String rootDir;
-    
-    public final static boolean RIGHT_TO_LEFT = false;
-    
+    private SubParamsGUI spGui;
     private FileConfiguration buildProperties;
-    private FileConfiguration tmpBuildProperties;
-    
+    protected FileConfiguration tmpBuildProperties;
+
     /**
-     * Main method which creates the GUI 
+     * Main method which creates the GUI
+     * 
      * @param args
      */
     public static void main(String[] args) {
-        
+
         System.out
-        .println("\nWelcome to the GUI to configure the building process of Apache Lenya");
-        
+                .println("\nWelcome to the GUI to configure the building process of Apache Lenya");
+
         if (args.length != 1) {
-            
+
             System.err
-            .println("No root dir specified (e.g. /home/USERNAME/src/lenya/trunk)!");
+                    .println("No root dir specified (e.g. /home/USERNAME/src/lenya/trunk)!");
             return;
         }
         String rootDir = args[0];
-        
+
         new ConfigureGUI(rootDir);
     }
-    
+
     /**
      * .ctor
+     * 
      * @param rootDir
      */
     public ConfigureGUI(String rootDir) {
-        
+
         // pushes the eventQueue which will take care of copy/paste operations
         Toolkit.getDefaultToolkit().getSystemEventQueue().push(
                 new ContextEventQueue());
-        
+
         this.rootDir = rootDir;
         System.out.println("Starting GUI ...");
-        
+
         buildProperties = new BuildPropertiesConfiguration();
         buildProperties.setFilenameDefault(rootDir + "/build.properties");
         buildProperties.setFilenameLocal(rootDir + "/local.build.properties");
-        
+
         buildProperties.read();
         params = buildProperties.getConfigurableParameters();
-        
+
         tmpBuildProperties = new BuildPropertiesConfiguration();
         tmpBuildProperties.setFilenameDefault(rootDir + "/build.properties");
-        tmpBuildProperties.setFilenameLocal(rootDir + "/local.build.properties");
+        tmpBuildProperties
+                .setFilenameLocal(rootDir + "/local.build.properties");
         tmpBuildProperties.read();
         tmpParams = tmpBuildProperties.getConfigurableParameters();
         // Empty temporary local fields of temporary parameters
         for (int k = 0; k < tmpParams.length; k++) {
             tmpParams[k].setLocalValue("");
-        }
-        
+        }       
+
         JFrame.setDefaultLookAndFeelDecorated(true);
+        try {
+            UIManager.setLookAndFeel(UIManager
+                    .getCrossPlatformLookAndFeelClassName());
+        } catch (Exception e) {
+            e.getMessage();
+        }
+
         frame = new JFrame("Apache Lenya Configuration");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.getContentPane().setLayout(new FlowLayout(FlowLayout.LEFT));
-        
+
         contentPanel = new JPanel();
         checkBoxPanel = new JPanel();
         buttonPanel = new JPanel();
-        
+
         defaultValueLabel = new JLabel();
         localValueLabel = new JLabel();
         newLocalValueLabel = new JLabel();
-        
+
         defaultValueTextField = new JTextField(20);
         localValueTextField = new JTextField(20);
         newLocalValueTextField = new JTextField(20);
-        
-        defaultValueComboBox = new JComboBox();
-        localValueComboBox = new JComboBox();
+
+        defaultValueCTextField = new JTextField();
+        localValueCTextField = new JTextField();
         newLocalValueComboBox = new JComboBox();
-        
-        radioButton1 = new JRadioButton();
-        radioButton2 = new JRadioButton();
-        radioButton3 = new JRadioButton();
+
+        radioButtonDefault = new JRadioButton();
+        radioButtonLocal = new JRadioButton();
+        radioButtonNewLocal = new JRadioButton();
         ButtonGroup g = new ButtonGroup();
-        
+
         cancelButton = new JButton();
         backButton = new JButton();
         nextButton = new JButton();
@@ -193,24 +174,24 @@ public class ConfigureGUI {
         noButton = new JButton();
         yesButton = new JButton();
         exitButton = new JButton();
-        
+
         warning1 = new JLabel();
         warning2 = new JLabel();
-        
+
         saveMessage = new JLabel();
-        
+
         Container contentPane = frame.getContentPane();
         contentPane.setLayout(new FlowLayout(FlowLayout.LEFT));
-        
+
         contentPanel.setLayout(new GridBagLayout());
         GridBagConstraints c = new GridBagConstraints();
-        
+
         stepsLabel = new JLabel();
-        stepsLabel.setText("Parameters  ");
+        stepsLabel.setText("Parameters");
         c.gridx = 0;
         c.gridy = 0;
         contentPanel.add(stepsLabel, c);
-        
+
         checkBoxPanel = new JPanel();
         checkBoxPanel.setLayout(new BoxLayout(checkBoxPanel, BoxLayout.Y_AXIS));
         c.gridx = 0;
@@ -218,9 +199,9 @@ public class ConfigureGUI {
         c.gridheight = 4;
         c.ipadx = 20;
         contentPanel.add(checkBoxPanel, c);
-        
+
         checkBoxes = new JCheckBox[params.length];
-        
+
         for (int i = 0; i < params.length; ++i) {
             checkBoxes[i] = new JCheckBox();
             checkBoxes[i].setEnabled(false);
@@ -228,15 +209,14 @@ public class ConfigureGUI {
             checkBoxes[0].setSelected(true);
             checkBoxPanel.add(checkBoxes[i]);
         }
-        
-        paraValueLabel = new JLabel();
+
         c.gridx = 1;
         c.gridy = 0;
         c.gridwidth = 1;
         c.gridheight = 1;
-        paraValueLabel = new JLabel("Parameter: " + params[0].getName());
+        paraValueLabel = new JLabel(params[0].getName());
         contentPanel.add(paraValueLabel, c);
-        
+
         defaultValueLabel.setText("Default Value:");
         contentPanel.add(defaultValueLabel, new GridBagConstraints(1, 1, 1, 1,
                 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -245,21 +225,31 @@ public class ConfigureGUI {
                 1, 0.0, 0.0, GridBagConstraints.CENTER,
                 GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
         defaultValueTextField.setText(params[0].getDefaultValue());
+        defaultValueTextField.setEditable(false);
         defaultValueTextField.addMouseListener(new MouseListener() {
+
             public void mouseClicked(MouseEvent event) {
-                radioButton1.setSelected(true);
-            }            
-            public void mousePressed(MouseEvent event) {}
-            public void mouseReleased(MouseEvent event) {}            
-            public void mouseEntered(MouseEvent event) {}
-            public void mouseExited(MouseEvent event) {}
+                radioButtonDefault.setSelected(true);
+            }
+
+            public void mousePressed(MouseEvent event) {
+            }
+
+            public void mouseReleased(MouseEvent event) {
+            }
+
+            public void mouseEntered(MouseEvent event) {
+            }
+
+            public void mouseExited(MouseEvent event) {
+            }
         });
-        
-        contentPanel.add(radioButton1, new GridBagConstraints(3, 1, 1, 1, 0.0,
-                0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+
+        contentPanel.add(radioButtonDefault, new GridBagConstraints(3, 1, 1, 1,
+                0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 0, 0), 0, 0));
-        g.add(radioButton1);
-        
+        g.add(radioButtonDefault);
+
         localValueLabel.setText("Local Value:");
         contentPanel.add(localValueLabel, new GridBagConstraints(1, 2, 1, 1,
                 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -268,22 +258,32 @@ public class ConfigureGUI {
                 1, 0.0, 0.0, GridBagConstraints.CENTER,
                 GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
         localValueTextField.setText(params[0].getLocalValue());
+        localValueTextField.setEditable(false);
         localValueTextField.addMouseListener(new MouseListener() {
-            public void mouseClicked(MouseEvent event) {}            
-            public void mousePressed(MouseEvent event) {
-                radioButton2.setSelected(true);
+
+            public void mouseClicked(MouseEvent event) {
             }
-            public void mouseReleased(MouseEvent event) {}            
-            public void mouseEntered(MouseEvent event) {}
-            public void mouseExited(MouseEvent event) {}
+
+            public void mousePressed(MouseEvent event) {
+                radioButtonLocal.setSelected(true);
+            }
+
+            public void mouseReleased(MouseEvent event) {
+            }
+
+            public void mouseEntered(MouseEvent event) {
+            }
+
+            public void mouseExited(MouseEvent event) {
+            }
         });
-        
-        contentPanel.add(radioButton2, new GridBagConstraints(3, 2, 1, 1, 0.0,
-                0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,
+
+        contentPanel.add(radioButtonLocal, new GridBagConstraints(3, 2, 1, 1,
+                0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 0, 0), 0, 0));
-        g.add(radioButton2);
-        radioButton2.setSelected(true);
-        
+        g.add(radioButtonLocal);
+        radioButtonLocal.setSelected(true);
+
         newLocalValueLabel.setText("New Local Value:");
         contentPanel.add(newLocalValueLabel, new GridBagConstraints(1, 3, 1, 1,
                 0.0, 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,
@@ -292,47 +292,54 @@ public class ConfigureGUI {
                 1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
                 GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
         newLocalValueTextField.addMouseListener(new MouseListener() {
-            public void mouseClicked(MouseEvent event) {}            
-            public void mousePressed(MouseEvent event) {
-                radioButton3.setSelected(true);
+
+            public void mouseClicked(MouseEvent event) {
             }
-            public void mouseEntered(MouseEvent event) {}            
-            public void mouseExited(MouseEvent event) {}
-            public void mouseReleased(MouseEvent event) {}
+
+            public void mousePressed(MouseEvent event) {
+                radioButtonNewLocal.setSelected(true);
+            }
+
+            public void mouseEntered(MouseEvent event) {
+            }
+
+            public void mouseExited(MouseEvent event) {
+            }
+
+            public void mouseReleased(MouseEvent event) {
+            }
         });
-        
-        contentPanel.add(radioButton3, new GridBagConstraints(3, 3, 1, 1, 0.0,
-                0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                new Insets(0, 0, 0, 0), 0, 0));
-        g.add(radioButton3);
-        
+
+        contentPanel.add(radioButtonNewLocal, new GridBagConstraints(3, 3, 1,
+                1, 0.0, 0.0, GridBagConstraints.CENTER,
+                GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+        g.add(radioButtonNewLocal);
+
         buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.X_AXIS));
+
         cancelButton.setText("Cancel");
-        contentPanel.add(cancelButton, new GridBagConstraints(1, 4, 1, 1, 0.0,
-                0.0, GridBagConstraints.SOUTH, GridBagConstraints.PAGE_END,
-                new Insets(0, 0, 0, 0), 0, 0));
         cancelButton.setPreferredSize(new java.awt.Dimension(74, 22));
         cancelButton.addActionListener(new ActionListener() {
-            
+
             public void actionPerformed(ActionEvent evt) {
+
                 int n = JOptionPane
-                .showConfirmDialog((Component) null,
-                        "Do you want to Exit?", "Exit...",
-                        JOptionPane.YES_NO_OPTION,
-                        JOptionPane.QUESTION_MESSAGE);
+                        .showConfirmDialog(contentPanel,
+                                "Do you want to Exit?", "Exit...",
+                                JOptionPane.YES_NO_OPTION,
+                                JOptionPane.QUESTION_MESSAGE);
+
                 if (n == JOptionPane.YES_OPTION) {
                     System.exit(0);
                 }
             }
         });
-        
+
         backButton.setText("<Back");
-        contentPanel.add(backButton, new GridBagConstraints(2, 4, 1, 1, 0.0,
-                0.0, GridBagConstraints.SOUTH, GridBagConstraints.PAGE_END,
-                new Insets(0, 0, 0, 0), 0, 0));
         backButton.setPreferredSize(new java.awt.Dimension(74, 22));
         backButton.addActionListener(new ActionListener() {
-            
+
             public void actionPerformed(ActionEvent e) {
                 backButton.setEnabled(true);
                 if (contentPanel.isVisible())
@@ -343,16 +350,13 @@ public class ConfigureGUI {
                 moveBack();
             }
         });
-        
+
         backButton.setEnabled(false);
-        
+
         nextButton.setText("Next>");
-        contentPanel.add(nextButton, new GridBagConstraints(3, 4, 1, 1, 0.0,
-                0.0, GridBagConstraints.SOUTH, GridBagConstraints.PAGE_END,
-                new Insets(0, 0, 0, 0), 0, 0));
         nextButton.setPreferredSize(new java.awt.Dimension(74, 22));
         nextButton.addActionListener(new ActionListener() {
-            
+
             public void actionPerformed(ActionEvent e) {
                 backButton.setEnabled(true);
                 if (contentPanel.isVisible())
@@ -360,22 +364,22 @@ public class ConfigureGUI {
                 moveNext();
             }
         });
-        
+
         buttonPanel.add(cancelButton);
         buttonPanel.add(backButton);
         buttonPanel.add(nextButton);
-        contentPane.add(contentPanel);
-        contentPanel.add(buttonPanel, new GridBagConstraints(2, 4, 1, 1, 0.0,
+
+        contentPanel.add(buttonPanel, new GridBagConstraints(1, 4, 6, 0, 0.0,
                 0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,
                 new Insets(0, 0, 0, 0), 0, 0));
-        
+        contentPane.add(contentPanel);
+        contentPanel.revalidate();
         frame.pack();
         frame.setVisible(true);
     }
-    
+
     /**
      * Controls behavior if back button is pressed
-     *
      */
     public void moveBack() {
         steps--;
@@ -386,20 +390,39 @@ public class ConfigureGUI {
         showNormalOptions();
         comboBox();
         checkLast();
-        
         newLocalValueTextField.setText(tmpParams[getStep()].getLocalValue());
-
-        pop.setVisible(false);
         setRadioButton();
     }
-    
+
     /**
      * Controls behavior if next button is pressed
-     *
      */
     public void moveNext() {
+
         setLocalValue();
-        
+        String[] av = params[getStep()].getAvailableValues();
+
+        if (av != null) {
+
+            String selectedComboBoxValue = "";
+            // Grab the correct value out of the combobox
+            if (radioButtonDefault.isSelected())
+                selectedComboBoxValue = defaultValueCTextField.getText();
+            if (radioButtonLocal.isSelected())
+                selectedComboBoxValue = localValueCTextField.getText();
+            if (radioButtonNewLocal.isSelected())
+                selectedComboBoxValue = newLocalValueComboBox.getSelectedItem()
+                        .toString();
+
+            subParams = params[getStep()].getSubsequentParameters(
+                    selectedComboBoxValue, buildProperties);
+            tmpSubParams = params[getStep()].getSubsequentParameters(
+                    selectedComboBoxValue, tmpBuildProperties);
+
+            spGui = new SubParamsGUI(this, tmpSubParams, subParams,
+                    selectedComboBoxValue);
+        }
+
         steps++;
         frame.repaint();
         checkFirst();
@@ -407,58 +430,45 @@ public class ConfigureGUI {
         showNormalOptions();
         comboBox();
         checkLast();
-        
-        newLocalValueTextField.setText(tmpParams[getStep()].getLocalValue()); 
-        
+        newLocalValueTextField.setText(tmpParams[getStep()].getLocalValue());
         setRadioButton();
-        
     }
-    
+
     /**
      * Set radio button
      */
     public void setRadioButton() {
         if (tmpParams[getStep()].getLocalValue() != "") {
-            radioButton3.setSelected(true);
+            radioButtonNewLocal.setSelected(true);
         } else if (params[getStep()].getLocalValue() != "") {
-            radioButton2.setSelected(true);
+            radioButtonLocal.setSelected(true);
         } else {
-            radioButton1.setSelected(true);
+            radioButtonDefault.setSelected(true);
         }
     }
-    
+
     /**
      * Set local value depending on chosen value
      */
     public void setLocalValue() {
         String[] av = params[getStep()].getAvailableValues();
-        
+
         if (av == null) {
-            if (radioButton1.isSelected()) {
-                tmpParams[getStep()].setLocalValue(defaultValueTextField.getText());
-                System.out.print("Default Value: ");
-            } else if (radioButton2.isSelected()) {
-                tmpParams[getStep()].setLocalValue(localValueTextField.getText());
-                System.out.print("Local Value: ");
-            } else if (radioButton3.isSelected()) {
-                tmpParams[getStep()]
-                          .setLocalValue(newLocalValueTextField.getText());
-                System.out.print("New Local Value: ");
+            if (radioButtonDefault.isSelected()) {
+                tmpParams[getStep()].setLocalValue(defaultValueTextField
+                        .getText());
+            } else if (radioButtonLocal.isSelected()) {
+                tmpParams[getStep()].setLocalValue(localValueTextField
+                        .getText());
+            } else if (radioButtonNewLocal.isSelected()) {
+                tmpParams[getStep()].setLocalValue(newLocalValueTextField
+                        .getText());
             } else {
                 System.err.println("Fatal Error 0123456789!");
             }
-            
-            System.out.println(tmpParams[getStep()].getLocalValue());
-        } else {
-            comboPlaceD = defaultValueComboBox.getSelectedIndex();
-            comboPlaceL = localValueComboBox.getSelectedIndex();
-            comboPlaceN = newLocalValueComboBox.getSelectedIndex();
-            System.out.println("ComboBox: " + tmpParams[getStep()].getLocalValue());
-
-            checkSubParameters();
         }
     }
-    
+
     /**
      * Takes care about the steps progress (list on left side)
      * 
@@ -474,104 +484,99 @@ public class ConfigureGUI {
             checkBoxes[getStep() + 1].setSelected(false);
         }
     }
-    
+
     /**
      * Checks if its first step and disables the back button
-     *
      */
     public void checkFirst() {
-        
+
         if (getStep() == 0) {
             backButton.setEnabled(false);
         } else {
             backButton.setEnabled(true);
         }
     }
-    
+
     /**
      * Checks if its last step and disables next button but adding a save button
-     *
      */
     public void checkLast() {
         saveButton = new JButton("Save");
-        
+
         warning1 = new JLabel("WARNING: Local configuration already exists!");
         warning2 = new JLabel("Do you want to overwrite?");
         if (getStep() == params.length - 1) {
             nextButton.setEnabled(false);
             nextButton.setVisible(false);
-            
+
             buttonPanel.add(saveButton);
-            contentPanel.add(buttonPanel, new GridBagConstraints(2, 4, 1, 1,
-                    0.0, 0.0, GridBagConstraints.CENTER,
-                    GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-            
+            contentPanel.revalidate();
+
             saveButton.setPreferredSize(new java.awt.Dimension(74, 22));
             saveButton.addActionListener(new ActionListener() {
-                
+
                 public void actionPerformed(ActionEvent e) {
                     setLocalValue();
                     showSaveScreen();
                     showWarningScreen();
                 }
-                
             });
-            
+
         } else {
             nextButton.setEnabled(true);
             warning1.setVisible(false);
             warning2.setVisible(false);
-            
+
+            if (spGui != null && spGui.subFrame.isVisible()) {
+                frame.setEnabled(false);
+            }
         }
     }
-    
+
     /**
      * Shows the normal options (paramaters)
-     *
      */
     public void showNormalOptions() {
-        
+
         if (getStep() < params.length) {
             defaultValueTextField.setText(params[getStep()].getDefaultValue());
             localValueTextField.setText(params[getStep()].getLocalValue());
             paraValueLabel.setText(params[getStep()].getName());
+            frame.pack();
         }
-        
     }
-    
+
     /**
      * Shows the save screen
-     *
      */
     private void showSaveScreen() {
-        
+
         paraValueLabel.setVisible(false);
         defaultValueLabel.setVisible(false);
         localValueLabel.setVisible(false);
         newLocalValueLabel.setVisible(false);
-        
+
         defaultValueTextField.setVisible(false);
         localValueTextField.setVisible(false);
         newLocalValueTextField.setVisible(false);
-        
-        radioButton1.setVisible(false);
-        radioButton2.setVisible(false);
-        radioButton3.setVisible(false);
+
+        radioButtonDefault.setVisible(false);
+        radioButtonLocal.setVisible(false);
+        radioButtonNewLocal.setVisible(false);
         cancelButton.setVisible(false);
         nextButton.setVisible(false);
         backButton.setVisible(false);
         saveButton.setVisible(false);
-        
+
         yesButton.setVisible(true);
         noButton.setVisible(true);
-        
+
         warning1.setVisible(true);
         warning2.setVisible(true);
     }
-    
+
     /**
      * Shows the Warning screen
-     *
      */
     private void showWarningScreen() {
         contentPanel.add(warning1, new GridBagConstraints(2, 1, 1, 1, 0.0, 0.0,
@@ -582,46 +587,37 @@ public class ConfigureGUI {
                         0, 0, 0, 0), 0, 0));
         yesButton.setText("yes");
         buttonPanel.add(yesButton);
-        contentPanel.add(buttonPanel, new GridBagConstraints(2, 4, 1, 1, 0.0,
-                0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                new Insets(0, 0, 0, 0), 0, 0));
         yesButton.addActionListener(new ActionListener() {
-            
+
             public void actionPerformed(ActionEvent e) {
-                
+
                 showYesScreen();
-                
+
             }
         });
-        
+
         noButton.setText("no");
         buttonPanel.add(noButton);
-        contentPanel.add(buttonPanel, new GridBagConstraints(2, 4, 1, 1, 0.0,
-                0.0, GridBagConstraints.CENTER, GridBagConstraints.BOTH,
-                new Insets(0, 0, 0, 0), 0, 0));
         noButton.addActionListener(new ActionListener() {
-            
+
             public void actionPerformed(ActionEvent e) {
-                
+
                 showNoScreen();
-                
+
             }
         });
-        
     }
-    
+
     /**
      * Screen if Yes is pressed
-     *
      */
     private void showYesScreen() {
-        
+
         // TODO: Why doesn't it work with the reference only?
         for (int k = 0; k < tmpParams.length; k++) {
             tmpBuildProperties.setParameter(tmpParams[k]);
         }
         tmpBuildProperties.writeLocal();
-        
 
         saveMessage.setText("Successful saved to: " + rootDir
                 + "/local.build.properties");
@@ -629,7 +625,7 @@ public class ConfigureGUI {
                 0.0, GridBagConstraints.SOUTH, GridBagConstraints.PAGE_END,
                 new Insets(0, 0, 0, 0), 0, 0));
         saveMessage.setVisible(true);
-        
+
         yesButton.setVisible(false);
         noButton.setVisible(false);
         warning1.setVisible(false);
@@ -640,23 +636,23 @@ public class ConfigureGUI {
                 0.0, GridBagConstraints.SOUTH, GridBagConstraints.PAGE_END,
                 new Insets(0, 0, 0, 0), 0, 0));
         exitButton.addActionListener(new ActionListener() {
-            
+
             public void actionPerformed(ActionEvent evt) {
-                
+
                 System.exit(0);
             }
         });
-        
+
         contentPanel.revalidate();
         contentPanel.repaint();
+        frame.pack();
     }
-    
+
     /**
      * Screen if No is pressed
-     *
      */
     private void showNoScreen() {
-        
+
         saveMessage.setVisible(false);
         paraValueLabel.setVisible(true);
         defaultValueLabel.setVisible(true);
@@ -665,182 +661,186 @@ public class ConfigureGUI {
         defaultValueTextField.setVisible(true);
         localValueTextField.setVisible(true);
         newLocalValueTextField.setVisible(true);
-        
-        radioButton1.setVisible(true);
-        radioButton2.setVisible(true);
-        radioButton3.setVisible(true);
+
+        radioButtonDefault.setVisible(true);
+        radioButtonLocal.setVisible(true);
+        radioButtonNewLocal.setVisible(true);
         cancelButton.setVisible(true);
         nextButton.setVisible(false);
-        
+
         backButton.setVisible(true);
         saveButton.setVisible(true);
-        
+
         yesButton.setVisible(false);
         noButton.setVisible(false);
-        
+
         saveMessage.setVisible(false);
-        
+        frame.pack();
     }
-    
+
     /**
      * Method to create the Comboboxes
-     *
      */
     public void comboBox() {
         String[] availableValues = params[getStep()].getAvailableValues();
-        
+
         if (availableValues != null && availableValues.length > 0) {
-            warning1.setVisible(false);
-            warning2.setVisible(false);
-            
+
             defaultValueTextField.setVisible(false);
             localValueTextField.setVisible(false);
             newLocalValueTextField.setVisible(false);
-            
-            String[] labels = new String[availableValues.length];
+
+            // TODO: not nice solved, we need to exclude subParams without
+            // Values like WLS
+            String[] labels = new String[availableValues.length - 1];
             for (int i = 0; i < availableValues.length; i++) {
+                if (availableValues[i].equals("WLS")) {
+                    continue;
+                }
                 labels[i] = availableValues[i];
             }
-            
-            defaultValueComboBox = new JComboBox(labels);
-            defaultValueComboBox.setSelectedIndex(comboPlaceD);      
-            tmpParams[getStep()].setLocalValue("Jetty");
-            
-            
+
+            defaultValueCTextField = new JTextField(params[getStep()]
+                    .getDefaultValue());
+            defaultValueCTextField.setPreferredSize(new java.awt.Dimension(204,
+                    22));
+            defaultValueCTextField.setEditable(false);
+
             // MouseListener takes care to place radio button
-            defaultValueComboBox.addMouseListener(new MouseListener() {
+            defaultValueCTextField.addMouseListener(new MouseListener() {
+
                 public void mouseClicked(MouseEvent event) {
-                    radioButton1.setSelected(true);
-                }                
-                public void mousePressed(MouseEvent event) {}
-                public void mouseReleased(MouseEvent event) {}                
-                public void mouseEntered(MouseEvent event) {}
-                public void mouseExited(MouseEvent event) {}
+                    radioButtonDefault.setSelected(true);
+                }
+
+                public void mousePressed(MouseEvent event) {
+                }
+
+                public void mouseReleased(MouseEvent event) {
+                }
+
+                public void mouseEntered(MouseEvent event) {
+                }
+
+                public void mouseExited(MouseEvent event) {
+                }
+
             });
             // ActionListener which looks what is selected in the Dropdown list
-            defaultValueComboBox.addActionListener(new ActionListener() {
-                                    
+            defaultValueCTextField.addActionListener(new ActionListener() {
+
                 public void actionPerformed(ActionEvent event) {
                     JComboBox cb = (JComboBox) event.getSource();
                     tmpParams[getStep()].setLocalValue(cb.getSelectedItem()
                             .toString());
-                    subParams = params[getStep()].getSubsequentParameters(cb.getSelectedItem().toString(),tmpBuildProperties);
-                    
-               }
-            });
-            
-            defaultValueComboBox.setMaximumRowCount(availableValues.length);
-            
-            contentPanel.add(defaultValueComboBox, new GridBagConstraints(2, 1,
-                    1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
-                    GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-            
-            localValueComboBox = new JComboBox(labels);
-            localValueComboBox.setSelectedIndex(comboPlaceL);
-            tmpParams[getStep()].setLocalValue("Jetty");
-            
-            localValueComboBox.addMouseListener(new MouseListener() {                
-                public void mouseClicked(MouseEvent event) {
-                    radioButton2.setSelected(true);
-                }                
-                public void mousePressed(MouseEvent event) {}
-                public void mouseReleased(MouseEvent event) {}                
-                public void mouseEntered(MouseEvent event) {}
-                public void mouseExited(MouseEvent event) {}
-            });
-            // ActionListener which looks what is selected in the Dropdown list
-            localValueComboBox.addActionListener(new ActionListener() {
-                
-                public void actionPerformed(ActionEvent event) {
-                    JComboBox cb = (JComboBox) event.getSource();
-                    tmpParams[getStep()].setLocalValue(cb.getSelectedItem()
-                            .toString());
-                    subParams = params[getStep()].getSubsequentParameters(cb.getSelectedItem().toString(), tmpBuildProperties);
-               
+                    subParams = params[getStep()].getSubsequentParameters(cb
+                            .getSelectedItem().toString(), tmpBuildProperties);
                 }
             });
-            localValueComboBox.setMaximumRowCount(availableValues.length);
-            contentPanel.add(localValueComboBox, new GridBagConstraints(2, 2,
+
+            contentPanel.add(defaultValueCTextField, new GridBagConstraints(2,
+                    1, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
+                    GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
+
+            localValueCTextField = new JTextField(params[getStep()]
+                    .getLocalValue());
+            localValueCTextField.setPreferredSize(new java.awt.Dimension(204,
+                    22));
+            localValueCTextField.setEditable(false);
+
+            localValueCTextField.addMouseListener(new MouseListener() {
+
+                public void mouseClicked(MouseEvent event) {
+                    radioButtonLocal.setSelected(true);
+                }
+
+                public void mousePressed(MouseEvent event) {
+                }
+
+                public void mouseReleased(MouseEvent event) {
+                }
+
+                public void mouseEntered(MouseEvent event) {
+                }
+
+                public void mouseExited(MouseEvent event) {
+                }
+            });
+            // ActionListener which looks what is selected in the Dropdown list
+            localValueCTextField.addActionListener(new ActionListener() {
+
+                public void actionPerformed(ActionEvent event) {
+                    JComboBox cb = (JComboBox) event.getSource();
+                    tmpParams[getStep()].setLocalValue(cb.getSelectedItem()
+                            .toString());
+                    subParams = params[getStep()].getSubsequentParameters(cb
+                            .getSelectedItem().toString(), tmpBuildProperties);
+                }
+            });
+            contentPanel.add(localValueCTextField, new GridBagConstraints(2, 2,
                     1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
                     GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-            
+
             newLocalValueComboBox = new JComboBox(labels);
-            newLocalValueComboBox.setSelectedIndex(comboPlaceN);
-            tmpParams[getStep()].setLocalValue("Jetty");
-            
+            newLocalValueComboBox.setSelectedItem(tmpParams[getStep()].getLocalValue());
+
             newLocalValueComboBox.addMouseListener(new MouseListener() {
-                public void mouseClicked(MouseEvent event) {}
+
+                public void mouseClicked(MouseEvent event) {
+                    radioButtonNewLocal.setSelected(true);
+                }
+
                 public void mousePressed(MouseEvent event) {
-                    radioButton3.setSelected(true);
-                }                
-                public void mouseEntered(MouseEvent event) {}
-                public void mouseExited(MouseEvent event) {}               
-                public void mouseReleased(MouseEvent event) {}
+                }
+
+                public void mouseEntered(MouseEvent event) {
+                }
+
+                public void mouseExited(MouseEvent event) {
+                }
+
+                public void mouseReleased(MouseEvent event) {
+                }
             });
             // ActionListener which looks what is selected in the Dropdown list
             newLocalValueComboBox.addActionListener(new ActionListener() {
-                
+
                 public void actionPerformed(ActionEvent event) {
                     JComboBox cb = (JComboBox) event.getSource();
                     tmpParams[getStep()].setLocalValue(cb.getSelectedItem()
                             .toString());
-                    subParams = params[getStep()].getSubsequentParameters(cb.getSelectedItem().toString(),tmpBuildProperties);                    
+                    subParams = params[getStep()].getSubsequentParameters(cb
+                            .getSelectedItem().toString(), tmpBuildProperties);
                 }
             });
             newLocalValueComboBox.setMaximumRowCount(availableValues.length);
+            newLocalValueComboBox.setPreferredSize(new java.awt.Dimension(204,
+                    22));
             contentPanel.add(newLocalValueComboBox, new GridBagConstraints(2,
                     3, 1, 1, 0.0, 0.0, GridBagConstraints.CENTER,
                     GridBagConstraints.BOTH, new Insets(0, 0, 0, 0), 0, 0));
-            
+
             contentPanel.revalidate();
         } else {
-            defaultValueComboBox.setVisible(false);
-            localValueComboBox.setVisible(false);
+            defaultValueCTextField.setVisible(false);
+            localValueCTextField.setVisible(false);
             newLocalValueComboBox.setVisible(false);
             defaultValueTextField.setVisible(true);
             localValueTextField.setVisible(true);
             newLocalValueTextField.setVisible(true);
-            
+
             warning1.setVisible(false);
             warning2.setVisible(false);
         }
+        frame.pack();
     }
 
-    public void checkSubParameters() {
-
-        pop = new JPopupMenu();
-        pop.setLocation(contentPanel.getX(),contentPanel.getY());
-        
-        
-        if (subParams != null) {
-            String sp = "";
-
-            for (int j = 0; j < subParams.length; j++) {
-                sp = sp + subParams[j].getName();
-                if (j != subParams.length -1) sp = sp + ", ";
-            }
-
-            pop.add(new JLabel("WARNING: " + subParams.length + " subsequent parameters to be set!"));
-
-            System.out.println("  " + subParams.length + " Subsequent Params  : " + sp);
-
-            JButton popClose = new JButton("Close");
-            popClose.addActionListener(new ActionListener() {
-                public void actionPerformed(ActionEvent e) {
-                    pop.setVisible(false);                    
-                }                
-            });
-            pop.add(popClose);
-            pop.setVisible(true);    
-        }
-    }
-       
     /**
      * Returns the current step
+     * 
      * @return steps
      */
     public int getStep() {
         return steps;
     }
-    
 }
