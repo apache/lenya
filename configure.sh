@@ -36,7 +36,7 @@ fi
 OLD_CLASSPATH="$CLASSPATH"
 unset CLASSPATH
 #CLASSPATH="`echo tools/configure/build/classes | tr ' ' $S`"
-CLASSPATH="tools/configure/lib/apache-lenya-configure-core-1.4-dev-r407023.jar:tools/configure/lib/apache-lenya-configure-impl-1.4-dev-r407023.jar"
+CLASSPATH="tools/configure/lib/apache-lenya-configure-core-1.4-dev-r414579.jar:tools/configure/lib/apache-lenya-configure-impl-1.4-dev-r414579.jar"
 export CLASSPATH
 #echo "DEBUG: $CLASSPATH"
 

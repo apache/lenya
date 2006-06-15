@@ -17,7 +17,7 @@
 
 :: define variables for paths
 set LENYA_HOME=%CD%
-set CP=%LENYA_HOME%\tools\configure\lib\apache-lenya-configure-core-1.4-dev-r407023.jar;%LENYA_HOME%\tools\configure\lib\apache-lenya-configure-impl-1.4-dev-r407023.jar
+set CP=%LENYA_HOME%\tools\configure\lib\apache-lenya-configure-core-1.4-dev-r414579.jar;%LENYA_HOME%\tools\configure\lib\apache-lenya-configure-impl-1.4-dev-r414579.jar
 echo The classpath is set to: %CP%
 
 :: check if JAVA_HOME is set or goto end
