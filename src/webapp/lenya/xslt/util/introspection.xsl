@@ -19,7 +19,7 @@
 
 <xsl:stylesheet
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform" version="1.0"
-    xmlns="http://www.wyona.org/osr-101/1.0"
+    xmlns="http://www.wyona.org/neutron/1.0"
 >
 
 <xsl:param name="context" select="'context-null'"/>
@@ -30,23 +30,24 @@
 
 <xsl:template match="/">
   <introspection>
-    <edit mime-type="application/xml">
+    <edit mime-type="application/xml" name="Body Content">
+
       <!-- TODO: Re-use existing or create new lenya.usecase for opening and saving ... -->
-      <open url="http://127.0.0.1:8888{$context}/{$publication}/authoring/{$page-id}.xml"/>
-<!--
-      <open url="http://127.0.0.1:8888{$context}/{$publication}/authoring/{$page-id}.xml?lenya.usecase=..."/>
--->
-      <save url="http://127.0.0.1:8888{$context}/{$publication}/authoring/{$page-id}.xml?lenya.usecase=..."/>
+      <open url="{$context}/{$publication}/authoring/{$page-id}.xml"                               method="GET"/>
+      <save url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.usecase=neutron.checkin" method="PUT"/>
+
+      <checkout url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.usecase=neutron.checkout" method="GET"/>
+      <checkin  url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.usecase=neutron.checkin"  method="PUT"/>
 
 <!--
-    <schemas>
-      <schema href="http://foo.bar.com/lenya/modules/docbook/schemas/simple.rng" type="RelaxNG"/>
-      <schema href="http://foo.bar.com/lenya/modules/docbook/schemas/default.rng" type="RelaxNG"/>
-    </schemas>
-    <styles>
-      <style href="http://foo.bar.com/lenya/modules/xhtml/styles/default.xsl"/>
-      <style href="http://foo.bar.com/lenya/modules/xhtml/styles/simple.xsl"/>
-    </styles>
+      <schemas>
+        <schema href="http://foo.bar.com/lenya/modules/docbook/schemas/simple.rng" type="RelaxNG"/>
+        <schema href="http://foo.bar.com/lenya/modules/docbook/schemas/default.rng" type="RelaxNG"/>
+      </schemas>
+      <styles>
+        <style href="http://foo.bar.com/lenya/modules/xhtml/styles/default.xsl"/>
+        <style href="http://foo.bar.com/lenya/modules/xhtml/styles/simple.xsl"/>
+      </styles>
 -->
     </edit>
   </introspection>
