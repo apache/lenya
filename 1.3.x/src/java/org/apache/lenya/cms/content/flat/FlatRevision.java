@@ -49,20 +49,13 @@ public class FlatRevision {
    public String getHREF(){
       return href;
    }
-   public String getFilename(){
+   public String getURI(){
       return file.getPath();
    }
-   public String getMetaFilename(){
+   public String getMetaURI(){
       return metafile.getPath();
    }
    public boolean exists(){
       return file.exists();
    }
-
-
-/*
-   public Source getSource() throws SourceNotFoundException{
-      throw new SourceNotFoundException("FlatRevision.getSource is not implemented yet");
-   }
-*/
 }

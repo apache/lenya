@@ -57,7 +57,7 @@ public class CreateRevisionTransformer extends AbstractDOMTransformer{
        Content content = pub.getContent();
        String unid = this.source;
        String language = envelope.getDocument().getLanguage();
-       String sourceName = content.getNewFilename(unid, language);
+       String sourceName = content.getNewURI(unid, language);
        try{
            save(sourceName, doc);
        }catch(java.io.IOException ioe){

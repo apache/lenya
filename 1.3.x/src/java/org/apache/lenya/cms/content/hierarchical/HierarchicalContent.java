@@ -26,10 +26,15 @@ public class HierarchicalContent implements Content{
    public String[] getLanguages(){
       return languages;
    }
-   public String getNewFilename(String unid, String language){
+   public String getURI(String unid, String language, String revision){
+      return new File(directory, revision + File.separator + unid + File.separator + "index_" + language +"." + ".xml").getPath();
+   }
+   public String getMetaURI(String unid, String language, String revision){
+      return new File(directory, revision + File.separator + unid + File.separator + "index_" + language +"." + ".xml").getPath();
+   }
+   public String getNewURI(String unid, String language){
       return new File(directory, "live" + File.separator + unid + File.separator + getDateString() + "_" + language +"." + ".xml").getPath();
    }
-
    private String getDateString(){
       return Long.toString(new java.util.Date().getTime());
    }

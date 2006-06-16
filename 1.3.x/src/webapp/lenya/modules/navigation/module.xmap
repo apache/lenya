@@ -104,6 +104,8 @@
         </map:call>
       </map:match>
 <!-- Default -->
+        <map:generate src="cocoon:/sitetree/index"/>
+        <map:serialize type="xml"/>
    </map:match>
     </map:pipeline>
   </map:pipelines>

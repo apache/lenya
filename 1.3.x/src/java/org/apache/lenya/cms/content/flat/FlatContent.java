@@ -24,9 +24,17 @@ public class FlatContent implements Content{
    public String getIndexFilename(String indexName, String language){
      return indexer.getIndexFilename(indexName, language);
    }
-   public String getNewFilename(String unid, String language){
+   public String getURI(String unid, String language, String revision){
+      Resource resource = getResource(unid, language, revision);
+      return resource.getURI();
+   }
+   public String getMetaURI(String unid, String language, String revision){
+      Resource resource = getResource(unid, language, revision);
+      return resource.getMetaURI();
+   }
+   public String getNewURI(String unid, String language){
       Resource resource = getResource(unid, language, "live");
-      return resource.getNewFilename(language);
+      return resource.getNewURI();
    }
    public String getUNID(String structure, String id){
       FlatRelations relations = getRelations(structure);
@@ -45,21 +53,4 @@ public class FlatContent implements Content{
    public FlatRelations getRelations(String structure){
      return new FlatRelations(new File(directory, "relation" + File.separator + structure + ".xml"));
    }
-
-/* Obsolete 
-   public Resource getResource(String unid){
-      return (Resource) new FlatResource(directory, unid);
-   }
-   public Resource getResource(String unid, String language){
-      return (Resource) new FlatResource(directory, unid, language);
-   }
-
-   public Source getSource(String unid, String translation, String revision) throws SourceNotFoundException {
-      return (Source) null;
-   }
-   public Source getMeta(String unid, String translation, String revision) throws SourceNotFoundException {
-      return (Source) null;
-   }
-*/
-
 }

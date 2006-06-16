@@ -1,0 +1,24 @@
+This is a list of special filenames in Modules.  None are required.
+
+=== Lenya 1.3 Files ===
+module.xmap - Entry point when PageModule is called from a URL.
+
+module.xml - Description of Module.
+
+
+=== Specific Module Files ===
+navigation.xmap - Overrides Navigation Module.
+navigation.xsl - Overrides XSL in Navigation Module.
+
+nav.xmap - Overrides Nav Module.
+nav.xsl - Overrides XSL in Nav Module.
+
+edit.xmap - For additional fields in Edit Module. (Still in development)
+
+
+=== Common Naming Standards ===
+code.js - JavaScript Flow functions.
+
+page2xhtml.xsl - Transforms aggregated DIVs to HTML.
+
+xhtml.xsl - Transforms doctype XML to a <DIV id="body">.

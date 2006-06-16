@@ -21,6 +21,7 @@ public class FlatTranslation {
    String revision = "live";
    Document document;
    Element root;
+   FlatRevision fr;
 
    SortedSet revisions = new TreeSet();
    public FlatTranslation(File directory, String planguage, String pdefaultLanguage, String prevision){
@@ -75,18 +76,28 @@ System.out.println("FlatTranslation: IOException");
    public String getEdit() {
       return edit;
    }
-   public String getNewFilename(){
+   public String getURI(){
+      if(null == fr) fr = getRevision();
+      if(null == fr) return "";
+      return fr.getURI();
+   }
+   public String getMetaURI(){
+      if(null == fr) fr = getRevision();
+      if(null == fr) return "";
+      return fr.getMetaURI();
+   }
+   public String getNewURI(){
       String newRevision = getDateString();
 //WORK: Change Edit to newRevision
       return new File(translationDirectory, newRevision + ".xml").getPath();
    }
    public String getExtension() {
-      FlatRevision fr = getRevision();
+      if(null == fr) fr = getRevision();
       if(null == fr) return "";
       return fr.getExtension();
    }
    public String getHREF() {
-      FlatRevision fr = getRevision();
+      if(null == fr) fr = getRevision();
       if(null == fr) return "";
       return fr.getHREF();
    }
@@ -114,16 +125,4 @@ System.out.println("FlatTranslation: IOException");
    private String getDateString(){
       return Long.toString(new java.util.Date().getTime());
    }
-
-/*
-   public Source getSource(String revision) throws SourceNotFoundException {
-      throw new SourceNotFoundException("FlatTranslation.getSource is not implemented yet");
-   }
-   public Source getMeta() throws SourceNotFoundException {
-      throw new SourceNotFoundException("FlatTranslation.getMeta is not implemented yet");
-   }
-   public Source getTranslationMeta(String translation) throws SourceNotFoundException {
-      throw new SourceNotFoundException("FlatTranslation.getTranslationMeta is not implemented yet");
-   }
-*/
 }

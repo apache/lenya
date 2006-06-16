@@ -40,7 +40,7 @@ public class FlatResource implements Resource {
    public FlatResource(File directory, String punid){
       contentDirectory = directory;
       unid = punid;
-//WORK: defaultLanguage = Publication's default language.
+//TODO: defaultLanguage = Publication's default language.
       init(true);
    }
    private void init(boolean useDefaultLanguage){
@@ -52,7 +52,7 @@ public class FlatResource implements Resource {
             if(root.hasAttribute("defaultlanguage")){
               defaultLanguage = root.getAttribute("defaultlanguage");
             }else{
-//WORK: Use Publication's Default Language
+//TODO: Use Publication's Default Language
             }
          }
          if(root.hasAttribute("doctype")) doctype = root.getAttribute("doctype");
@@ -70,6 +70,16 @@ public class FlatResource implements Resource {
       }catch(java.io.IOException ioe){
       }
    }
+   public String getURI(){
+      return getTranslation(defaultLanguage).getURI();
+   }
+   public String getMetaURI(){
+      return getTranslation(defaultLanguage).getMetaURI();
+   }
+   public String getNewURI(){
+      return getTranslation(defaultLanguage).getNewURI();
+   }
+
    public String getUNID(){
       return unid;
    }
@@ -92,6 +102,7 @@ public class FlatResource implements Resource {
    public String[] getLanguages(){
      return languages;
    }
+
 /**
  * Get Navigation Title from live revision of current language.
  */
@@ -108,7 +119,12 @@ public class FlatResource implements Resource {
  * Get Navigation Title from specified revision of specified language.
  */
    public String getTitle(String language, String revision){
-      return getTranslation(language).getRevision(revision).getTitle();
+      try{
+         return getTranslation(language).getRevision(revision).getTitle();
+      }catch(java.lang.NullPointerException npe){
+System.out.println("FR.gTitle NPE UNID=" + unid);
+         return "";
+      }
    }
    public String getExtension(){
       return getTranslation().getExtension();
@@ -116,10 +132,6 @@ public class FlatResource implements Resource {
    public String getHREF(){
       return getTranslation().getHREF();
    }
-   public String getNewFilename(String language){
-      return getTranslation(language).getNewFilename();
-   }
-
 /**
  * Get variable for Index Filters
  */
@@ -168,15 +180,15 @@ public class FlatResource implements Resource {
       }else return new FlatTranslation(resourceDirectory, language);
    }
    public boolean hasRevision(){
-/*
-System.out.println("U=" + unid + " L=" + defaultLanguage + " R=" + defaultRevision);
-     FlatTranslation translation = getTranslation(defaultLanguage, false);
-     if(null == translation) System.out.println("Null Translation");
-     FlatRevision revision = translation.getRevision(defaultRevision);
-     if(null == revision) System.out.println("Null Revision");
-     boolean exists = revision.exists();
-     System.out.println("Exists=" + exists);
-*/
+      FlatTranslation translation = getTranslation(defaultLanguage, false);
+      if(null == translation) return false;
+      FlatRevision revision = translation.getRevision(defaultRevision);
+      if(null == revision) return false;
+      boolean exists = revision.exists();
+      if(getTitle().length() < 1){
+         System.out.println("Exists=" + exists + " U=" + unid + " L=" + defaultLanguage + " R=" + defaultRevision);
+         return false;
+      }
       try{
          return getTranslation(defaultLanguage, false).getRevision(defaultRevision).exists();
       }catch(java.lang.NullPointerException npe){

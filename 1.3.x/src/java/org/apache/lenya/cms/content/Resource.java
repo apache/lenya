@@ -4,24 +4,18 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceNotFoundException;
 
 public interface Resource{
- 
-//   public Source getSource(String translation, String revision) throws SourceNotFoundException;
+/* These 3 functions are called URI (in preparation for JCR) but return filenames. */
+   public String getURI();
+   public String getMetaURI();
+   public String getNewURI();
 
    public String getUNID();
    public String getID();
-
    public String getType();
-
    public String getDocumentType();
-
    public String getLanguage();
-
    public String getDefaultLanguage();
-
    public String[] getLanguages();
-
-   public String getNewFilename(String language);
-
 
 /**
  * Get Navigation Title from live revision of current language.
@@ -35,7 +29,4 @@ public interface Resource{
  * Get Navigation Title from specified revision of specified language.
  */
    public String getTitle(String language, String revision);
-
-//   public Translation getTranslation(String translation);
-
 }

@@ -1,14 +1,6 @@
 === 1.2.x Conversion
 Session Module: login.xsp -> NullPointerException
 
-===
-Modules.java - Add EXCLUDE parameter to config
-
-== Menu Module
-Fix XSL
-Started fixing menu.xsl.  All others have not been touched.
-DESIGN: Pass prefix ("root" parameter) from parent module?
-
 === Modules.java
 synchronize setting of static variables.
 
@@ -61,14 +53,14 @@ i18n Transformer must not remove i18n tags that are not in current catalog.  Unk
 
 === HTML Serializer
 Add link rewriting.  
-Change <LINK UNID="xxx"> to appropriate A tag.
-Change <LINK UNID="xxx" TAG="img"> to appropriate IMG tag.
+Change <RESOURCE UNID="xxx"> to appropriate A tag.
+Change <RESOURCE UNID="xxx" TAG="img"> to appropriate IMG tag.
 
 Automatically pass through i18n Transformer using current language.  Build catalog from current module (including inheritance), publication, and global.
 Replace unfound i18n tags with default.
 
 === CreateRevisionTransformer
-Replace all A and IMG tags with appropriate LINK tags, creating new Resources as necessary.
+Replace all A and IMG tags with appropriate RESOURCE tags, creating new Resources as necessary.
 
 === Admin Screens
 Admin screen: Navigation between User/Group maintenance and Site maintenance.
@@ -110,6 +102,16 @@ Smart attempts to find document.
 /parameters/path/page.html
 Also check if last element is a UNID.
 
+
+=== File Resource
+Changing XML and Uploading are different operations.  How to handle?
+XML must change when file is uploaded (new creator, change time)
+XML can change without upload.  
+New XML should reference old file?  Need another file to register all uses of revision binary
+Or make copy? (waste space, but safer when deleting revisions)
+
+
+
 === Modules
 ContentModule.java "content:" Variables: type, doctype, extension.
 
@@ -142,6 +144,9 @@ DESIGN: How to handle inheritance?  Multiple parents?  Assume "live" structure?
 =======================
 ====  Enhancements ====
 =======================
+publication:name - should return name, currently stored in publication.xml.  Why?  Move to publication.xconf?  Must be available from Publication.java and PublicationModule.java
+
+
 Resource: Active dates: start, expire
 Careful: All children will disappear from Index when parent is deactivated.
 
@@ -152,7 +157,8 @@ Admin screen: User/Group editor
 Admin screen: User editor
 Change FileUser to allow dynamic fields.  Show all fields.  Pub can configure list of fields with default values.
 
-Editor: Save checks for static links and replaces with ResourceLink.  Create new Resource type=link for external links if they do not exist.  Need syntax for embedded links.  <link structure="live" unid="####"/>.  Structure needed to create human-readable URLs.  HTMLSerializer should replace with Anchor tag containing Title.  Need marker for link in editor, or use WYSIWYG (Replace with HTML for editing, then replace with link tag during save)?
+Editor: Save checks for static links and replaces with RESOURCE link tag.  Create new Resource type=link for external links if they do not exist.  Need syntax for embedded links.  <RESOURCE structure="live" unid="####"/>.  Structure needed to create human-readable URLs.  HTMLSerializer should replace with Anchor tag containing Title.  
+Replace with HTML for editing, then replace with RESOURCE link tag during save.  
 
 Editor: Create reusable CSS classes?  Create "style" with settings of current location.  Maintenance?  For one RichText field, all RichText fields of the same type, for whole Publication, or Lenya server?  Will be easier when CSS are Resources.
 

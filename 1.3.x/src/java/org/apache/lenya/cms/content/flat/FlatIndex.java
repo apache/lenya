@@ -71,6 +71,7 @@ public class FlatIndex {
       include.put("id", new FlatIndexPart("id"));
       include.put("title", new FlatIndexPart("title"));
       include.put("href", new FlatIndexPart("href"));
+      include.put("extension", new FlatIndexPart("extension"));
    }
    public String getIndexFilename(){
       if(!indexFile.exists()) update();

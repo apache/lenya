@@ -84,3 +84,4 @@ content:///path/docid - Use default "live" structure.
 content://structure/path/docid - Get Resource using a specific structure to convert to a UNID.
 content:/unid - Get the Resource by the UNID.
 
+content::/ - Double colons return Meta document, guaranteed XML.  For binary files, this is the associated XML file.  For XML data, this is identical to single colon syntax.

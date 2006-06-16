@@ -57,7 +57,7 @@ public class PublicationModule extends AbstractPageEnvelopeModule implements Ser
            return "error";
         }
 
-        if(name.equalsIgnoreCase("defaultlanguage")){
+        if(name.equalsIgnoreCase("languages")){
            String[] langa = pub.getLanguages();
            String langs = langa[0];
            for(int l=1; l < langa.length; l++) langs += ";" + langa[l];
