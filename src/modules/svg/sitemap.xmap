@@ -16,12 +16,53 @@
 -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  
+  <map:flow language="javascript">
+    <map:script src="corner/corner.js"/>
+    <map:script src="corner/tab.js"/>
+  </map:flow>
 
   <map:pipelines>
 
     <map:pipeline>
+      
+      <!--
+      Views for shape flowscripts.
+      -->
+      <map:match pattern="view/*">
+        <map:generate type="jx" src="shape/{1}.jx"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+      <!--
+      Internal pipeline to generate shape SVGs.
+      shape/{type}-{where}-{radius}-{backgroundColor}-{lineColor}
+      example: shape/corner-topLeft-5-FF0000-000000
+      -->
+      <map:match pattern="shape/*-*-*-*-*.svg">
+        <map:call function="{1}">
+          <map:parameter name="where" value="{2}"/>
+          <map:parameter name="radius" value="{3}"/>
+          <map:parameter name="backgroundColor" value="#{4}"/>
+          <map:parameter name="lineColor" value="#{5}"/>
+        </map:call>
+      </map:match>
+      
+      <!--
+      This matches a shape URL.
+      {type}-{where}-{radius}-{backgroundColor}-{lineColor}
+      example: corner-topLeft-5-FF0000-000000
+      -->
+      <map:match pattern="*-*-*-*-*.png">
+        <map:generate src="cocoon:/shape/{1}-{2}-{3}-{4}-{5}.svg"/>
+        <map:serialize type="svg2png"/>
+      </map:match>
+      
+      <!--
+      image resizing pipelines
+      -->
       <map:match pattern="*/*/**.*">
-
+        
         <map:match type="regexp" pattern="(.*\.)(jpg|JPG|Jpg|jpeg|Jpeg|JPEG)$"> 
           <map:generate src="dummy.xml"/>
           <map:act type="resource-exists-enhanced">
@@ -107,7 +148,7 @@
           </map:act>  
         </map:match>
       </map:match>
-
+      
     </map:pipeline>
     
   </map:pipelines>

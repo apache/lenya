@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+  xmlns:svg="http://www.w3.org/2000/svg"
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  width="${width}" height="${height}">
+  
+  <svg:circle
+    cx="${x}" cy="${y}" r="${r}"
+    stroke="${lineColor}" stroke-width="1" fill="${backgroundColor}"/>
+  
+  <jx:if test="${rectangle}">
+    <svg:rect x="0" y="" width="" height=""
+      fill="" stroke-width="0"/>
+  </jx:if>
+  
+</svg>

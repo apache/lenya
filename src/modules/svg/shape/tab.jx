@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg
+  xmlns:svg="http://www.w3.org/2000/svg"
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:xlink="http://www.w3.org/1999/xlink"
+  width="${width}" height="${height}">
+  
+  <defs>
+    <clipPath id="circlePath">
+      <rect x="0" y="0" width="${r}" height="${r}"/>
+    </clipPath>
+    <clipPath id="rectPath">
+      <svg:circle
+        cx="${x}" cy="${r}" r="${r}"/>
+    </clipPath>
+  </defs>
+  
+  <svg:rect x="${x - r}" y="0" width="${width + r + 1}" height="${height + 1}"
+    fill="${backgroundColor}" stroke="${lineColor}" stroke-width="2"/>
+    
+  <svg:rect x="0" y="0" width="${r}" height="${r}"
+    fill="#FFFFFF" stroke-width="0"/>
+  
+  <g clip-path="url(#circlePath)">
+    <svg:circle
+      cx="${x}" cy="${r}" r="${r}"
+      stroke="${lineColor}" stroke-width="1" fill="${backgroundColor}"/>
+  </g>
+  
+</svg>
