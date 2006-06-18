@@ -62,10 +62,12 @@
 
 
 <xsl:template name="label">
-   <xsl:choose>
-    <xsl:when test="@current='true'"><xsl:apply-templates select="nav:label"/></xsl:when>
-    <xsl:otherwise><a href="{@href}"><xsl:apply-templates select="nav:label"/></a></xsl:otherwise>
-  </xsl:choose>	  
+  <a>
+    <xsl:if test="@current='true'">
+      <xsl:attribute name="href"><xsl:value-of select="@href"/></xsl:attribute>
+    </xsl:if>
+    <xsl:apply-templates select="nav:label"/>
+  </a>
 </xsl:template>
 
 
