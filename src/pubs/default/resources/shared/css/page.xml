@@ -48,17 +48,32 @@
     white-space: nowrap;
 }
 
+.tab a, .tab-selected a {
+    padding: .3em .6em;
+    display: block;
+}
+
 .tab {
-    padding: .2em .5em;
-    background-color: #FFEEEE;
-    border: solid 1px #BB9999;
+    /* background-color: #FFEEEE; */
+    /* border: solid 1px #BB9999; */
+    background: url('<context-prefix/>/modules/svg/tab-topLeft-5-FFEEEE-BB9999.png') left top no-repeat;
+    border-bottom: solid 1px #BB9999;
+}
+
+.tab a {
+    background: url('<context-prefix/>/modules/svg/tab-topRight-5-FFEEEE-BB9999.png') right top no-repeat;
 }
 
 .tab-selected {
-    padding: .2em .5em;
-    background-color: #FFCCCC;
-    border: solid 1px #BB9999;
+    /* background-color: #FFCCCC; */
+    /* border: solid 1px #BB9999; */
+    /* border-bottom: solid 1px #DDBBBB; */
+    background: url('<context-prefix/>/modules/svg/tab-topLeft-5-DDBBBB-BB9999.png') left top no-repeat;
     border-bottom: solid 1px #DDBBBB;
+}
+
+.tab-selected a {
+    background: url('<context-prefix/>/modules/svg/tab-topRight-5-DDBBBB-BB9999.png') right top no-repeat;
 }
 
 .tab-separator {
