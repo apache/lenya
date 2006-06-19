@@ -49,26 +49,39 @@
 }
 
 .tab a, .tab-selected a {
+    display: block;
+}
+
+.tab a span, .tab-selected a span {
     padding: .3em .6em;
     display: block;
 }
 
-.tab {
-    background: url('<context-prefix/>/modules/svg/tab-topLeft-5-FFEEEE-BB9999.png') left top no-repeat;
+.tab a span {
+    background: url('<context-prefix/>/modules/svg/tab-topRight-5-FFEEEE-BB9999.png') right top no-repeat;
     border-bottom: solid 1px #BB9999;
 }
 
 .tab a {
-    background: url('<context-prefix/>/modules/svg/tab-topRight-5-FFEEEE-BB9999.png') right top no-repeat;
+    background: url('<context-prefix/>/modules/svg/tab-topLeft-5-FFEEEE-BB9999.png') left top no-repeat;
 }
 
-.tab-selected {
-    background: url('<context-prefix/>/modules/svg/tab-topLeft-5-DDBBBB-BB9999.png') left top no-repeat;
+.tab a:hover span {
+    background: url('<context-prefix/>/modules/svg/tab-topRight-5-EECCCC-BB9999.png') right top no-repeat;
+    border-bottom: solid 1px #BB9999;
+}
+  
+.tab a:hover {
+    background: url('<context-prefix/>/modules/svg/tab-topLeft-5-EECCCC-BB9999.png') left top no-repeat;
+}
+  
+.tab-selected a span {
+    background: url('<context-prefix/>/modules/svg/tab-topRight-5-DDBBBB-BB9999.png') right top no-repeat;
     border-bottom: solid 1px #DDBBBB;
 }
 
 .tab-selected a {
-    background: url('<context-prefix/>/modules/svg/tab-topRight-5-DDBBBB-BB9999.png') right top no-repeat;
+    background: url('<context-prefix/>/modules/svg/tab-topLeft-5-DDBBBB-BB9999.png') left top no-repeat;
 }
 
 .tab-separator {

@@ -52,21 +52,24 @@
 
 
 <xsl:template name="tab">
-  <span class="tab"><xsl:call-template name="label"/></span>
+  <xsl:call-template name="label"/>
 </xsl:template>
 
 
 <xsl:template name="tab-selected">
-  <span class="tab-selected"><xsl:call-template name="label"/></span>
+  <xsl:call-template name="label">
+    <xsl:with-param name="suffix">-selected</xsl:with-param>
+  </xsl:call-template>
 </xsl:template>
 
 
 <xsl:template name="label">
-  <a>
+  <xsl:param name="suffix"/>
+  <a class="tab{$suffix}">
     <xsl:if test="not(@current = 'true')">
       <xsl:attribute name="href"><xsl:value-of select="@href"/></xsl:attribute>
     </xsl:if>
-    <xsl:apply-templates select="nav:label"/>
+    <span><xsl:apply-templates select="nav:label"/></span>
   </a>
 </xsl:template>
 
