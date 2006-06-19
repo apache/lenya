@@ -63,7 +63,7 @@
 
 <xsl:template name="label">
   <a>
-    <xsl:if test="@current='true'">
+    <xsl:if test="not(@current = 'true')">
       <xsl:attribute name="href"><xsl:value-of select="@href"/></xsl:attribute>
     </xsl:if>
     <xsl:apply-templates select="nav:label"/>
