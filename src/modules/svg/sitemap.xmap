@@ -18,8 +18,8 @@
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
   <map:flow language="javascript">
-    <map:script src="corner/corner.js"/>
-    <map:script src="corner/tab.js"/>
+    <map:script src="shape/corner.js"/>
+    <map:script src="shape/tab.js"/>
   </map:flow>
 
   <map:pipelines>
