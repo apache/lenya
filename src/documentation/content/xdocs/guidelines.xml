@@ -100,7 +100,8 @@ limitations under the License.
     <link href="http://www.apache.org/foundation/how-it-works.html#asf-members">ASF member</link>
     </p>
     <p>The current Apache Lenya committers and PMC members are
-      <link href="site:credits">listed</link>.
+      <link href="site:credits">listed</link>. The Lenya PMC has additionally granted commit access 
+      to committers from its sister projects Apache Cocoon and Apache Forrest. 
     </p>
   </section>
 
@@ -398,7 +399,20 @@ limitations under the License.
             This includes source code, documentation, website content, etc.
           </td>
           <td>
-            Lazy approval
+            Lazy approval for trunk, lazy majority for the release branch.
+          </td>
+          <td>
+            Active PMC members
+          </td>
+        </tr>
+        <tr>
+          <td><strong>Opening / Closing a branch</strong></td>
+          <td>
+            When a commiter wants to open a new branch in SVN, or close an existing branch, a vote
+            is required.
+          </td>
+          <td>
+            Lazy majority
           </td>
           <td>
             Active PMC members
@@ -601,10 +615,12 @@ limitations under the License.
     <p>
       We use the
       <link href="http://www.apache.org/foundation/glossary.html#CommitThenReview">Commit-then-review</link>
-      method for decision-making about code changes. Please refer to that
+      method for decision-making about code changes by commiters on trunk, and <link href="http://www.apache.org/foundation/glossary.html#ReviewThenCommit">Review-then-Commit</link>
+      on the release branch. Please refer to that
       glossary definition. Note that it does not preclude the committer
       from making changes to patches prior to their commit, nor mean that the
-      committer can be careless. Rather it is a policy for decision-making.
+      committer can be careless. Rather it is a policy for decision-making. 
+      Patches from non-commiters are applied according to the same rules by a commiter.
     </p>
 
     <p>
@@ -693,18 +709,14 @@ limitations under the License.
       </li>
       <li>
         Committers apply patches as soon as possible. This keeps the contributor
-        enthused and shows them that their work is valuable.
+        enthused and shows them that their work is valuable. Plus, it reduces the risk of bit rot,
+        ie, patches that no longer cleanly apply due to unrelated code changes.
       </li>
       <li>
-        Committers add an entry for each significant contribution to the
-        top-level <link href="site:changes">changes</link> document (site-author/status.xml)
-        and detailed entries to the relevant plugin's changes document. This enables linkage
+        Committers write descriptive commit messages, which are then aggegated into 
+        a top-level <link href="site:changes">changes</link> document. This enables linkage
         to the relevant issue and shows the contributor's name. It also shows
-        the initials of the committer who did the work to add the patch.
-      </li>
-      <li>
-        When committers are adding their own work, they similarly add entries
-        to the "changes" documents. Their initials are added to the entry.
+        the name of the committer who did the work to add the patch.
       </li>
       <li>
         The existing PMC will notice new contributors who are committed. It eventually
@@ -735,18 +747,14 @@ limitations under the License.
   not need to revisit the topic.
 </note>
 
-    <!--<p>
-     Development work is done on the trunk of SVN.
-     Wherever possible, functionality is contained in "plugins". 
-     There are "release branches" of SVN, e.g. forrest_07_branch.
-    </p>-->
+    <p>Development work is done on the trunk of SVN. If a commiter determines a need for a new branch,
+    he discusses the rationale on the developer list, and the decision is made by a vote.</p>
 
 <fixme author="open">
 The following issues still need to be added above.
 There are also some relevant email threads, from which we need to extract info.
 </fixme>
     <source>
-* Define our policy for adding changes to release branch.
 * Define the purpose of the "sandbox".
 * Declare that we only really maintain the current release branch
   (although contributed patches will be applied).
@@ -757,14 +765,6 @@ There are also some relevant email threads, from which we need to extract info.
 
 <!-- FIXME:
 
-The default is lazy consensus. So just get on with the job
-unless someone asks to stop, review, perhaps revert.
-
-==================
-> We should make mention somewhere of our relationship to other projects
-> Cocoon committers are Lenya committers; something with xml-commons
-
-==================
 Mention the "Contributer License Agreement".
 Who needs to send it? ... is it committers plus major contributers?
 
