@@ -28,6 +28,7 @@ import org.apache.lenya.cms.publication.Resource;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * Usecase to add Assets to a resource.
@@ -56,6 +57,15 @@ public class Assets extends SiteUsecase {
             addErrorMessage("Please choose a file to upload. Your previous choice could not be preselected for security reasons.");
         }
         
+    }
+
+    /**
+     * @see org.apache.lenya.cms.usecase.DocumentUsecase#doCheckPreconditions()
+     */
+    protected void doCheckPreconditions() throws Exception {    
+        if (!ServletHelper.isUploadEnabled(manager)) {
+            addErrorMessage("Upload is not enabled please check l.b.p!");
+        }
     }
 
     /**

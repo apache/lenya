@@ -19,11 +19,25 @@
 
 package org.apache.lenya.util;
 
+import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.environment.Request;
+import org.apache.excalibur.source.SourceNotFoundException;
+import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.xml.sax.SAXException;
+
+import com.sun.org.apache.xpath.internal.XPathAPI;
 
 /**
  * Servlet utility class.
@@ -88,5 +102,26 @@ public final class ServletHelper {
         }
         return requestParameters;
     }
+    
+    /**
+     * Returns the value of enable-uploads in web.xml
+     * @param manager The Service Manager.
+     * @return true if enable upload is true or not set in web.xml, else false
+     */
+    public static boolean isUploadEnabled(ServiceManager manager)
+            throws SourceNotFoundException, ServiceException,
+            ParserConfigurationException, SAXException, IOException,
+            TransformerException {
 
+        Node node;
+        String webappUrl = "context://WEB-INF/web.xml";
+        Document document = SourceUtil.readDOM(webappUrl, manager);
+        Element root = document.getDocumentElement();
+        node = XPathAPI.selectSingleNode(root,
+                "//init-param[param-name='enable-uploads']/param-value/text()");
+        if (node == null) {
+            return false;
+        }
+        return node.getNodeValue().equals("true");
+    }
 }

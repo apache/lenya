@@ -20,13 +20,17 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.cocoon.components.ContextHelper;
+import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Resource;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.UsecaseInvoker;
 import org.apache.lenya.cms.usecase.UsecaseMessage;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * Usecase to insert an image into a document.
@@ -51,10 +55,19 @@ public class InsertAsset extends DocumentUsecase {
             throw new RuntimeException(e);
         }
     }
+    
+    /**
+     * @see org.apache.lenya.cms.usecase.DocumentUsecase#doCheckPreconditions()
+     */
+    protected void doCheckPreconditions() throws Exception {
+        if (!ServletHelper.isUploadEnabled(manager)) {
+            addErrorMessage("Upload is not enabled please check l.b.p!");
+        }
+    }
 
     protected void loadResources() {
         ResourcesManager resourcesManager = null;
-
+        
         try {
             resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
             Resource[] resources = resourcesManager.getResources(getSourceDocument());
