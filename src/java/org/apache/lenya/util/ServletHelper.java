@@ -32,12 +32,12 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
-import com.sun.org.apache.xpath.internal.XPathAPI;
 
 /**
  * Servlet utility class.
