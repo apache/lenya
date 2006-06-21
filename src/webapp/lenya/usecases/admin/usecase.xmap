@@ -24,7 +24,7 @@
 
       <map:match pattern="status.xml">
         <map:generate src="status" type="status"/>
-        <map:transform src="fallback://lenya/xslt/admin/status2html.xslt">
+        <map:transform src="fallback://lenya/xslt/admin/status2html.xsl">
           <map:parameter name="contextPath" value="{request:contextPath}"/>
         </map:transform>
         <map:serialize type="xml"/>
