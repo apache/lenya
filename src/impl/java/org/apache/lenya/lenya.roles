@@ -174,14 +174,6 @@
         shorthand="publication-manager"
         default-class="org.apache.lenya.cms.publication.PublicationManagerImpl"/>
         
-  <role name="org.apache.lenya.cms.repository.NodeFactory"
-        shorthand="node-factory"
-        default-class="org.apache.lenya.cms.repository.SourceNodeFactory"/>
-        <!--
-        default-class="org.apache.lenya.cms.repo.adapter.RepoNodeFactory"/>
-        default-class="org.apache.lenya.cms.jcr.JCRNodeFactory"/>
-        -->
-
   <role name="org.apache.lenya.cms.repo.avalon.RepositoryFactory"
         shorthand="repository-factory"
         default-class="org.apache.lenya.cms.repo.avalon.RepositoryFactoryImpl"/>
