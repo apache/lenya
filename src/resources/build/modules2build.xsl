@@ -43,7 +43,7 @@
   
   
   <xsl:template match="mod:module" mode="call">
-    <antcall target="compile-module-{mod:id}"/>
+    <antcall target="deploy-module-{mod:id}"/>
   </xsl:template>
   
 
@@ -69,6 +69,7 @@
     <available file="{$srcDir}" property="compile.module.{$id}"/>
     
     <target name="compile-module-{$id}" if="compile.module.{$id}">
+      
       <xsl:variable name="destDir">${build.dir}/modules/<xsl:value-of select="$id"/></xsl:variable>
       <xsl:variable name="debug">${debug}</xsl:variable>
       <xsl:variable name="optimize">${optimize}</xsl:variable>
@@ -118,6 +119,69 @@
       </jar>
 
     </target>
+    
+    <xsl:variable name="dirName">
+      <xsl:call-template name="lastStep">
+        <xsl:with-param name="path" select="$src"/>
+      </xsl:call-template>
+    </xsl:variable>
+    
+    <target name="copy-module-{$id}">
+      <xsl:variable name="todir">${build.webapp}/lenya/modules/<xsl:value-of select="$dirName"/></xsl:variable>
+      <copy 
+        todir="{$todir}"
+        flatten="false">
+        <fileset dir="{$src}">
+          <exclude name="java/**"/>
+          <exclude name="*/java/**"/>
+          <exclude name="config/cocoon-xconf/**"/>
+          <exclude name="*/config/cocoon-xconf/**"/>
+          <exclude name="config/lenya-roles/**"/>
+          <exclude name="*/config/lenya-roles/**"/>
+          <exclude name="config/sitemap/**"/>
+          <exclude name="*/config/sitemap/**"/>
+        </fileset>
+      </copy>
+    </target>
+    
+    <target name="patch-module-{$id}">
+      <xsl:variable name="cocoon-xconf">${build.webapp}/WEB-INF/cocoon.xconf</xsl:variable>
+      <xpatch file="{$cocoon-xconf}"
+        srcdir="{$src}"
+        includes="config/cocoon-xconf/*.xconf"
+        addComments="false"/>
+        
+      <xsl:variable name="lenya-roles">${build.dir}/impl/org/apache/lenya/lenya.roles</xsl:variable>
+      <xpatch file="{$lenya-roles}"
+        srcdir="{$src}"
+        includes="config/lenya-roles/*.xroles"
+        addComments="false"/>
+      
+      <xsl:variable name="sitemap-xmap">${build.webapp}/sitemap.xmap</xsl:variable>
+      <xpatch file="{$sitemap-xmap}"
+        srcdir="{$src}" 
+        includes="config/sitemap/*.xmap"
+        addComments="false"/>
+      
+    </target>
+    
+    <target name="deploy-module-{$id}"
+      depends="compile-module-{$id}, copy-module-{$id}, patch-module-{$id}"/>
+  </xsl:template>
+  
+  
+  <xsl:template name="lastStep">
+    <xsl:param name="path"/>
+    <xsl:choose>
+      <xsl:when test="contains($path, '/')">
+        <xsl:call-template name="lastStep">
+          <xsl:with-param name="path" select="substring-after($path, '/')"/>
+        </xsl:call-template>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:value-of select="$path"/>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
   
 </xsl:stylesheet>
