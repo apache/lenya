@@ -26,7 +26,8 @@
   <property name="modules.root.dirs" value=""/>
   <property name="build.modules" value="${build.webapp}/lenya/modules"/>
   
-  <target name="compile-modules" depends="init-tasks">
+  
+  <target name="deploy-modules" depends="init-tasks">
     <generateModuleList
       moduleDirs="${modules.root.dirs}"
       moduleFile="${build.dir}/temp/modules.xml"/>
@@ -40,6 +41,7 @@
       inheritrefs="true"
       target="compile-modules"/>
   </target>
+  
   
   <target name="copy-modules">
     <!--
@@ -85,9 +87,6 @@
     </bulkCopy>
   </target>
   
-  <target name="deploy-modules"
-          depends="init, copy-modules">
-  </target>
 
   <!-- ================================================ -->
   <!-- Module tests -->
