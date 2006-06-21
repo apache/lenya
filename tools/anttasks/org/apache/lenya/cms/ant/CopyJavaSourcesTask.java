@@ -58,10 +58,9 @@ public class CopyJavaSourcesTask extends Task {
         if (translatedBuildDir != null && translatedBuildDir.startsWith(File.separator)) {
             absoluteBuildDir = new File(translatedBuildDir);
         } else {
-	    absoluteBuildDir = new File(getProject().getBaseDir(), 
-                    translatedBuildDir);
+            absoluteBuildDir = new File(getProject().getBaseDir(), translatedBuildDir);
         }
-       
+
         StringTokenizer st = new StringTokenizer(this.pubsRootDirs.toString(), File.pathSeparator);
 
         while (st.hasMoreTokens()) {
@@ -70,23 +69,33 @@ public class CopyJavaSourcesTask extends Task {
             File path = new File(pubsRootDir);
 
             if (path.isDirectory()) {
-                // In the case of a publication 
+                // In the case of a publication
                 if (new File(path, "publication.xml").isFile()) {
-                    copyContentOfDir(new File(path, this.javaDir), absoluteBuildDir, twoTuple,
-                            new JavaFilenameFilter(), this);
-                // In the case of a module
-		} else if (new File(path, "module.xml").isFile()) {
-                    copyContentOfDir(new File(path, this.javaDir), absoluteBuildDir, twoTuple,
-                            new JavaFilenameFilter(), this);
+                    copyContentOfDir(new File(path, this.javaDir),
+                            absoluteBuildDir,
+                            twoTuple,
+                            new JavaFilenameFilter(),
+                            this);
+                    // In the case of a module
+                } else if (new File(path, "module.xml").isFile()) {
+                    copyContentOfDir(new File(path, this.javaDir),
+                            absoluteBuildDir,
+                            twoTuple,
+                            new JavaFilenameFilter(),
+                            this);
                 } else {
-                    // FIXME: Look for publications defined by the file "publication.xml" or modules defined by the file "module.xml"
+                    // FIXME: Look for publications defined by the file "publication.xml" or modules
+                    // defined by the file "module.xml"
                     String[] pubs = path.list();
 
                     for (int i = 0; i < pubs.length; i++) {
                         File pubJavaDir = new File(path, new File(pubs[i], this.javaDir).toString());
 
-                        copyContentOfDir(pubJavaDir, absoluteBuildDir, twoTuple,
-                                new JavaFilenameFilter(), this);
+                        copyContentOfDir(pubJavaDir,
+                                absoluteBuildDir,
+                                twoTuple,
+                                new JavaFilenameFilter(),
+                                this);
                     }
                 }
             } else {
@@ -141,15 +150,18 @@ public class CopyJavaSourcesTask extends Task {
                 if (file.isFile()) {
                     copyFile(file, new File(destination, files[i]), twoTuple, client, false);
                 } else if (file.isDirectory()) {
-                    copyContentOfDir(file, new File(destination, files[i]), twoTuple,
-                            filenameFilter, client);
+                    copyContentOfDir(file,
+                            new File(destination, files[i]),
+                            twoTuple,
+                            filenameFilter,
+                            client);
                 } else {
-                    client.log(
-                            "CopyJavaSourcesTask.copyContentOfDir(): Neither file nor directory: "
-                                    + file, Project.MSG_ERR);
+                    client.log("CopyJavaSourcesTask.copyContentOfDir(): Neither file nor directory: "
+                            + file,
+                            Project.MSG_ERR);
                 }
             }
-        } 
+        }
     }
 
     /**
@@ -159,7 +171,8 @@ public class CopyJavaSourcesTask extends Task {
      * @param twoTuple The twoTuple to use
      * @param client The client task
      */
-    public static void copyFile(File source, File destination, TwoTuple twoTuple, Task client, boolean force) {
+    public static void copyFile(File source, File destination, TwoTuple twoTuple, Task client,
+            boolean force) {
         if (source.isFile()) {
             File parentDest = new File(destination.getParent());
 
