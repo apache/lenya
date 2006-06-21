@@ -56,9 +56,9 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     private String sourceURI;
     protected ServiceManager manager;
-    public static final String FILE_PREFIX = "file:/";
-    public static final String CONTEXT_PREFIX = "context://";
-    public static final String LENYA_META_SUFFIX = "meta";
+    protected static final String FILE_PREFIX = "file:/";
+    protected static final String CONTEXT_PREFIX = "context://";
+    protected static final String LENYA_META_SUFFIX = "meta";
 
     /**
      * Ctor.

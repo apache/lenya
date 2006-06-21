@@ -29,7 +29,6 @@ import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.metadata.MetaDataOwner;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.repository.SourceNode;
 
 /**
  * A resource (asset).
@@ -44,6 +43,9 @@ public class Resource extends AbstractLogEnabled implements MetaDataOwner {
     private MetaDataManager metaDataManager;
     private String contentDir = null;
 
+    protected static final String FILE_PREFIX = "file:/";
+    protected static final String CONTEXT_PREFIX = "context://";
+    
     /**
      * Ctor.
      * @param document The document the resource belongs to.
@@ -124,14 +126,14 @@ public class Resource extends AbstractLogEnabled implements MetaDataOwner {
         
         if (contentDir == null) {
             // Default
-            realSourceURI =  SourceNode.CONTEXT_PREFIX + Publication.PUBLICATION_PREFIX_URI + "/" +publicationId+ "/" +urlID;
+            realSourceURI =  CONTEXT_PREFIX + Publication.PUBLICATION_PREFIX_URI + "/" +publicationId+ "/" +urlID;
         } else {
             if (new File(contentDir).isAbsolute()) {
                 // Absolute
-                realSourceURI = SourceNode.FILE_PREFIX + contentDir + File.separator+urlID;
+                realSourceURI = FILE_PREFIX + contentDir + File.separator+urlID;
             } else {
                 // Relative
-                realSourceURI = SourceNode.CONTEXT_PREFIX + contentDir + File.separator+urlID;
+                realSourceURI = CONTEXT_PREFIX + contentDir + File.separator+urlID;
             }
         }
         if (getLogger().isDebugEnabled()) {

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xconf xpath="/cocoon" unless="/cocoon/component[@class = 'org.apache.lenya.cms.repository.SourceNodeFactory']">
+  <component
+    logger="lenya.nodefactory.source"
+    role="org.apache.lenya.cms.repository.NodeFactory"
+    class="org.apache.lenya.cms.repository.SourceNodeFactory"/>
+</xconf>
