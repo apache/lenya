@@ -17,11 +17,12 @@
 
 <!-- $Id: publication.xml 374687 2006-02-03 15:24:55Z michi $ -->
 
-<lenya:module xmlns:lenya="http://apache.org/lenya/module/1.0">
-  <lenya:id>org.apache.lenya.modules.jcr</lenya:id>
-  <lenya:package>org.apache.lenya.modules</lenya:package>
-  <lenya:version>0.1-dev</lenya:version>
-  <lenya:name>JCR Repository Module</lenya:name>
-  <lenya:lenya-version>@lenya.version@</lenya:lenya-version>
-  <lenya:description>JCR implementation of Lenya Repository API (Draft) (see org.apache.lenya.modules.repository Module)</lenya:description>
-</lenya:module>
+<module xmlns="http://apache.org/lenya/module/1.0">
+  <id>org.apache.lenya.modules.jcr</id>
+  <depends module="org.apache.lenya.modules.repository"/>
+  <package>org.apache.lenya.modules</package>
+  <version>0.1-dev</version>
+  <name>JCR Repository Module</name>
+  <lenya-version>@lenya.version@</lenya-version>
+  <description>JCR implementation of Lenya Repository API (Draft) (see org.apache.lenya.modules.repository Module)</description>
+</module>
