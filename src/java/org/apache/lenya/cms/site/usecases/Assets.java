@@ -64,7 +64,7 @@ public class Assets extends SiteUsecase {
      */
     protected void doCheckPreconditions() throws Exception {    
         if (!ServletHelper.isUploadEnabled(manager)) {
-            addInfoMessage("Upload is not enabled please check l.b.p!");
+            addInfoMessage("Upload is not enabled please check local.build.properties!");
         }
     }
 

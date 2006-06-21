@@ -20,10 +20,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.User;
-import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Resource;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
@@ -61,7 +58,7 @@ public class InsertAsset extends DocumentUsecase {
      */
     protected void doCheckPreconditions() throws Exception {
         if (!ServletHelper.isUploadEnabled(manager)) {
-            addErrorMessage("Upload is not enabled please check l.b.p!");
+            addErrorMessage("Upload is not enabled please check local.build.properties!");
         }
     }
 
