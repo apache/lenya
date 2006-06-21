@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- $Id: publication.xml 374687 2006-02-03 15:24:55Z michi $ -->
+
+<lenya:module xmlns:lenya="http://apache.org/lenya/module/1.0">
+  <lenya:id>org.wyona.lenya.modules.xdocs</lenya:id>
+  <lenya:package>org.wyona.lenya.modules</lenya:package>
+  <lenya:version>0.1-dev</lenya:version>
+  <lenya:name>Template/Blank Module</lenya:name>
+  <lenya:lenya-version>@lenya.version@</lenya:lenya-version>
+  <lenya:description>A template module to help create new modules from scratch</lenya:description>
+</lenya:module>

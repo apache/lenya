@@ -1,6 +1,0 @@
-cd public_html
-ls
-mkdir children
-cd children
-ls
-quit

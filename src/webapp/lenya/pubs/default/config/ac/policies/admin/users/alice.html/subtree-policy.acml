@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<ac:policy xmlns:ac="http://apache.org/cocoon/lenya/ac/1.0" ssl="false">
-  <ac:user id="alice">
-    <ac:role id="edit"/>
-  </ac:user>
-</ac:policy>
