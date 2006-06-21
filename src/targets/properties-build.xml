@@ -177,9 +177,12 @@
   <!-- Compile Configure Command Line Tool -->
   <target name="compile-configure" description="Compile configure command line tool">
 
-    <mkdir dir="tools/configure/build" />
-    <mkdir dir="tools/configure/build/classes" />
-    <mkdir dir="tools/configure/build/lib" />
+    <delete dir="tools/configure/build"/>
+
+    <mkdir dir="tools/configure/build"/>
+    <mkdir dir="tools/configure/build/classes"/>
+    <mkdir dir="tools/configure/build/lib"/>
+  	
     <javac srcdir="tools/configure/src/java"
            destdir="tools/configure/build/classes"
            debug="${debug}"
@@ -191,12 +194,18 @@
 	   <!--
            classpathref="classpath"
 	   -->
+
+
     <jar destfile="tools/configure/build/lib/apache-lenya-configure-core-1.4-dev-r${lenya.revision}.jar"
          basedir="tools/configure/build/classes" 
          includes="org/apache/lenya/config/core/**"/>
     <jar destfile="tools/configure/build/lib/apache-lenya-configure-impl-1.4-dev-r${lenya.revision}.jar"
          basedir="tools/configure/build/classes" 
          includes="org/apache/lenya/config/impl/**"/>
+
+    <delete>
+      <fileset dir="tools/configure/lib" includes="*.jar"/>
+    </delete>
 
     <copy file="tools/configure/build/lib/apache-lenya-configure-core-1.4-dev-r${lenya.revision}.jar"
           tofile="tools/configure/lib/apache-lenya-configure-core-1.4-dev-r${lenya.revision}.jar"/>
@@ -206,3 +215,4 @@
   </target>
 
 </project>
+
