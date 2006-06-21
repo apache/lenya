@@ -157,24 +157,13 @@
       includes="**/*.xconf"
       excludes="prepare/*.xconf"
       addComments="false"/>
+    
+    <antcall target="compile-modules"/>
       
-    <path id="classpath.modules">
-      <path refid="classpath"/>
-      <fileset dir="${build.webapp}/WEB-INF/lib" includes="lenya-*-api.jar"/>
-    </path>
-
-    <!-- compile and package modules -->
-    <antcall target="compile-src">
-      <param name="compile.src.dir" value="${build.dir}/java/modules"/>
-      <param name="compile.dest.dir" value="${build.dir}/modules"/>
-      <param name="compile.classpath" value="classpath.modules"/>
-      <param name="jar.name" value="modules"/>
-    </antcall>
-
     <path id="classpath.pubs">
       <path refid="classpath"/>
       <fileset dir="${build.webapp}/WEB-INF/lib" includes="lenya-*-api.jar"/>
-      <fileset dir="${build.webapp}/WEB-INF/lib" includes="lenya-*-modules.jar"/>
+      <fileset dir="${build.webapp}/WEB-INF/lib" includes="lenya-module-*.jar"/>
     </path>
     
     <!-- compile and package publications -->
