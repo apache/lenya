@@ -32,14 +32,11 @@
   <introspection>
     <edit mime-type="application/xml" name="Body Content">
 
-      <!-- TODO: Re-use existing or create new lenya.usecase for opening and saving ... -->
       <open url="{$context}/{$publication}/authoring/{$page-id}.xml" method="GET"/>
-      <save url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.usecase=neutron&amp;lenya.step=checkin" method="PUT"/>
 
       <checkout url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.usecase=neutron&amp;lenya.step=checkout" method="GET"/>
-      <checkin  url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.usecase=neutron&amp;lenya.step=checkin"  method="PUT"/>
 
-
+      <save url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.usecase=neutron&amp;lenya.step=checkin" method="PUT"/>
 
 
 
