@@ -77,7 +77,7 @@
       <xsl:variable name="target">${target.vm}</xsl:variable>
       <xsl:variable name="nowarn">${nowarn}</xsl:variable>
       
-      <path id="module.classpath">
+      <path id="module.classpath.{$id}">
         <path refid="classpath"/>
         <fileset includes="lenya-*-api.jar">
           <xsl:attribute name="dir">${build.webapp}/WEB-INF/lib</xsl:attribute>
@@ -107,7 +107,7 @@
         nowarn="{$nowarn}"
         source="1.4">
         <src path="{$srcDir}"/>
-        <classpath refid="module.classpath"/>
+        <classpath refid="module.classpath.{$id}"/>
       </javac>
       
       <xsl:variable name="jarfile">${build.webapp}/WEB-INF/lib/lenya-module-<xsl:value-of select="$id"/>.jar</xsl:variable>
@@ -148,7 +148,7 @@
       <xsl:variable name="cocoon-xconf">${build.webapp}/WEB-INF/cocoon.xconf</xsl:variable>
       <xpatch file="{$cocoon-xconf}"
         srcdir="{$src}"
-        includes="config/cocoon-xconf/*.xconf"
+        includes="config/cocoon-xconf/*.xconf, config/cocoon-xconf/*/*.xconf"
         addComments="false"/>
         
       <xsl:variable name="lenya-roles">${build.dir}/impl/org/apache/lenya/lenya.roles</xsl:variable>
