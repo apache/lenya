@@ -23,7 +23,7 @@
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'ac.login']">
 
     <component-instance name="ac.login" logger="lenya.ac" class="org.apache.lenya.cms.ac.usecases.Login">
-      <view template="usecases/ac/login.jx"/>
+      <view template="modules/ac-impl/usecases/login.jx"/>
     </component-instance>
     
   </xconf>
