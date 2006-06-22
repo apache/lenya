@@ -258,7 +258,9 @@
           
         </map:match>
 
+        <!-- To use this code, you need to add the legacy modules to your local.build.properties. -->
         <!-- initialize the workflow -->
+        <!--
         <map:match type="usecase" pattern="initworkflow">
           <map:act type="task">
             <map:parameter name="task-id" value="ant"/>
@@ -279,6 +281,7 @@
             <map:redirect-to session="true" uri="{request:requestURI}"/>
           </map:act>
         </map:match>
+        -->
         
       </map:match>
       
