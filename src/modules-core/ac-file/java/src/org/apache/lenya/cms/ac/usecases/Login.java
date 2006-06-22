@@ -28,7 +28,7 @@ import org.apache.lenya.cms.usecase.UsecaseException;
 /**
  * Usecase to login a user.
  * 
- * @version $Id$
+ * @version $Id: Login.java 407305 2006-05-17 16:21:49Z andreas $
  */
 public class Login extends AccessControlUsecase {
 

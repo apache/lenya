@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id$  */
+/* $Id: UsecaseMenuTransformer.java 407248 2006-05-17 13:20:01Z andreas $  */
 
 package org.apache.lenya.cms.cocoon.transformation;
 

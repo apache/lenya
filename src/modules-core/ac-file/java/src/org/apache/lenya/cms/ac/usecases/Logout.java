@@ -28,7 +28,7 @@ import org.apache.cocoon.environment.Session;
 /**
  * Usecase to log a user out.
  * 
- * @version $Id$
+ * @version $Id: Logout.java 407305 2006-05-17 16:21:49Z andreas $
  */
 public class Logout extends AccessControlUsecase {
 
