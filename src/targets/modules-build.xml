@@ -28,13 +28,18 @@
   
   
   <target name="deploy-modules" depends="init-tasks">
+    
+    <property name="cocoon.xconf" value="${build.webapp}/WEB-INF/cocoon.xconf"/>
+    
     <generateModuleList
       moduleDirs="${modules.root.dirs}"
       moduleFile="${build.dir}/temp/modules.xml"/>
     <xslt
       in="${build.dir}/temp/modules.xml"
       out="${build.dir}/temp/modules-build.xml"
-      style="${src.resource.dir}/build/modules2build.xsl"/>
+      style="${src.resource.dir}/build/modules2build.xsl">
+      <param name="cocoon-xconf" expression="${cocoon.xconf}"/>
+    </xslt>
 
     <ant antfile="${build.dir}/temp/modules-build.xml"
       inheritall="true"

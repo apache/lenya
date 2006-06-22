@@ -4,6 +4,8 @@
   xmlns:list="http://apache.org/lenya/module-list/1.0">
   
   <xsl:output indent="yes"/>
+  
+  <xsl:param name="cocoon-xconf"/>
 
   <xsl:template match="list:modules">
     <project name="lenya-modules">
@@ -145,7 +147,6 @@
     </target>
     
     <target name="patch-module-{$id}">
-      <xsl:variable name="cocoon-xconf">${build.webapp}/WEB-INF/cocoon.xconf</xsl:variable>
       <xpatch file="{$cocoon-xconf}"
         srcdir="{$src}"
         includes="config/cocoon-xconf/*.xconf, config/cocoon-xconf/*/*.xconf"

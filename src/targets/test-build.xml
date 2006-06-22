@@ -135,6 +135,10 @@
       includes="**/*.xconf"
       excludes="prepare/*.xconf"
       addComments="true"/>
+
+    <antcall target="deploy-modules">
+      <param name="cocoon.xconf" value="${build.temp}/test/xconf-template.xml"/>
+    </antcall>
     
     <xslt in="${build.temp}/test/xconf-template.xml"
       out="${build.temp}/test/components.xsl"
