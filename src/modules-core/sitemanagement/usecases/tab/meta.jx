@@ -1,0 +1,104 @@
+<?xml version="1.0"?>
+<!--
+  Copyright 1999-2005 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id$ -->
+
+<page:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
+           xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
+           xmlns="http://www.w3.org/1999/xhtml" 
+           xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
+  <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/tab/head.jx"/>
+  <page:body>
+    <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/tab/sitetree.jx"/>
+    <jx:import uri="fallback://lenya/usecases/templates/tabs.jx"/>
+    <div id="contentblock1" class="lenya-tab-sitetree">
+      <form id="form-meta">
+        <table class="lenya-table-noborder">
+          <tr>
+            <td colspan="2">
+              <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
+            </td>
+          </tr>
+          <tr>
+            <td class="lenya-entry-caption"><label for="title"><i18n:text>Title</i18n:text>:</label></td>
+            <td>
+              <input type="text" id="title" name="meta.dc.title" class="lenya-form-element" value="${usecase.getParameter('meta.dc.title')}"/>
+            </td>
+          </tr>
+          <tr>
+            <td class="lenya-entry-caption"><label for="subject"><i18n:text>Subject</i18n:text>:</label></td>
+            <td>
+              <input type="text" id="subject" name="meta.dc.subject" class="lenya-form-element" value="${usecase.getParameter('meta.dc.subject')}"/>
+            </td>
+          </tr>
+          <tr>
+            <td class="lenya-entry-caption"><label for="description"><i18n:text>Description</i18n:text>:</label></td>
+            <td>
+              <!-- N.B.: do not put spaces or carriage returns inside the
+                   textarea element - these would be rendered -->
+              <textarea id="description" name="meta.dc.description" rows="3" class="lenya-form-element"><jx:out value="${usecase.getParameter('meta.dc.description')}"/></textarea>
+            </td>
+          </tr>
+          <tr>
+            <td class="lenya-entry-caption"><label for="publisher"><i18n:text>Publisher</i18n:text>:</label></td>
+            <td>
+              <input type="text" id="publisher" name="meta.dc.publisher" class="lenya-form-element" value="${usecase.getParameter('meta.dc.publisher')}"/>
+            </td>
+          </tr>
+          <tr>
+            <td class="lenya-entry-caption"><label for="rights"><i18n:text>Rights</i18n:text>:</label></td>
+            <td>
+              <input type="text" id="rights" name="meta.dc.rights" class="lenya-form-element" value="${usecase.getParameter('meta.dc.rights')}"/>
+            </td>
+          </tr>
+          <tr>
+            <td class="lenya-entry-caption"><i18n:text>Creation Date</i18n:text>:</td>
+            <td>
+              <jx:out value="${usecase.getParameter('meta.dc.date')}"/>
+            </td>
+          </tr>
+          <tr>
+            <td class="lenya-entry-caption"><label for="creator"><i18n:text>Creator</i18n:text>:</label></td>
+            <td>
+              <input type="hidden" id="creator" name="meta.dc.creator" class="lenya-form-element" value="${usecase.getParameter('meta.dc.creator')}"/>
+              <jx:out value="${usecase.getParameter('meta.dc.creator')}"/>
+            </td>
+          </tr>
+          <tr>
+            <td/>
+            <td>
+              <br/>
+              <jx:choose>
+                <jx:when
+                  test="${usecase.getParameter('document').getArea().equals('authoring') &amp;&amp; ! usecase.hasErrors()}">
+                  <input i18n:attr="value" name="submit" type="submit"
+                    value="Save"/>
+                </jx:when>
+                <jx:otherwise>
+                  <input i18n:attr="value" name="submit" type="submit"
+                    disabled="disabled" value="Save"/>
+                </jx:otherwise>
+              </jx:choose>
+            </td>
+          </tr>
+        </table>
+        <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
+        <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+      </form>
+    </div>
+  </page:body>
+</page:page>
