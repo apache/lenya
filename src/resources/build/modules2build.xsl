@@ -165,8 +165,15 @@
       
     </target>
     
+    <xsl:variable name="dependencyList">
+      <xsl:for-each select="mod:depends">
+        <xsl:text>deploy-module-</xsl:text><xsl:value-of select="@module"/><xsl:text>, </xsl:text>
+      </xsl:for-each>
+    </xsl:variable>
+    
     <target name="deploy-module-{$id}"
-      depends="compile-module-{$id}, copy-module-{$id}, patch-module-{$id}"/>
+      depends="{$dependencyList} compile-module-{$id}, copy-module-{$id}, patch-module-{$id}"/>
+    
   </xsl:template>
   
   
