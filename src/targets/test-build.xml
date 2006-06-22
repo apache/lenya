@@ -116,8 +116,8 @@
       file="${src.java.impl.dir}/org/apache/lenya/lenya.roles"/>
     
     <xpatch file="${build.temp}/test/lenya.roles"
-      srcdir="${build.patch}/lenya-roles" 
-      includes="**/*.xroles"
+      srcdir="${build.patch}" 
+      includes="lenya-roles/**/*.xroles"
       addComments="true"/>
     
     <xslt in="${build.temp}/test/lenya.roles"
