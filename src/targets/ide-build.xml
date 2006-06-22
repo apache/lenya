@@ -48,6 +48,10 @@
         <include name="*/java/src"/>
         <include name="*/java/test"/>
       </dirset>
+      <dirset dir="src/modules-core">
+        <include name="*/java/src"/>
+        <include name="*/java/test"/>
+      </dirset>
       <dirset dir="src/modules-optional">
         <include name="*/java/src"/>
         <include name="*/java/test"/>
