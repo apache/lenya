@@ -19,6 +19,8 @@
 package org.apache.lenya.cms.ant;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import org.apache.lenya.xml.AntDocumentHelper;
@@ -41,7 +43,7 @@ public class GenerateModuleList extends Task {
      */
     public void execute() throws BuildException {
 
-        ModuleDescriptorList descriptors = new ModuleDescriptorList();
+        List descriptors = new ArrayList();
 
         StringTokenizer st = new StringTokenizer(this.moduleDirectories.toString(),
                 File.pathSeparator);
@@ -74,11 +76,10 @@ public class GenerateModuleList extends Task {
 
         try {
             Document doc = AntDocumentHelper.createDocument(NAMESPACE, "modules", null);
-            ModuleDescriptor[] modules = descriptors.getSortedDescriptors();
+            File[] modules = (File[]) descriptors.toArray(new File[descriptors.size()]);
             for (int i = 0; i < modules.length; i++) {
-                File path = modules[i].getSourceDir();
                 Element element = doc.createElementNS(NAMESPACE, "module");
-                element.setAttribute("src", path.getAbsolutePath());
+                element.setAttribute("src", modules[i].getAbsolutePath());
                 doc.getDocumentElement().appendChild(element);
             }
             File file = new File(this.moduleFile.replace('/', File.separatorChar));
