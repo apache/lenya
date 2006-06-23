@@ -21,39 +21,52 @@
 <usecases xmlns="http://apache.org/cocoon/lenya/ac/1.0">
   <usecase id="edit.bxe">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="edit.insertAsset">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="edit.insertImage">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="edit.cforms">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="insertAsset.fckeditor">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="insertImage.fckeditor">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="edit.fckeditor">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="linkcheck.getLinks">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="lucene.externalOpensearch">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="lucene.index">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="lucene.opensearch">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="lucene.search">
     <role id="admin"/>
+    <role id="edit"/>
+    <role id="visit"/>
   </usecase>
   <usecase id="site.archive">
     <role id="admin"/>
@@ -228,9 +241,11 @@
   </usecase>
   <usecase id="edit.forms">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="edit.oneform">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="publication.edit">
     <role id="admin"/>
@@ -246,24 +261,32 @@
   </usecase>
   <usecase id="blog/workflow.deactivate">
     <role id="admin"/>
+    <role id="review"/>
   </usecase>
   <usecase id="blog/workflow.publish">
     <role id="admin"/>
+    <role id="review"/>
   </usecase>
   <usecase id="default/workflow.deactivate">
     <role id="admin"/>
+    <role id="review"/>
   </usecase>
   <usecase id="default/workflow.publish">
     <role id="admin"/>
+    <role id="edit"/>
+    <role id="review"/>
   </usecase>
   <usecase id="default/workflow.reject">
     <role id="admin"/>
+    <role id="review"/>
   </usecase>
   <usecase id="default/workflow.submit">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="edit.kupu">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
 </usecases>
     
