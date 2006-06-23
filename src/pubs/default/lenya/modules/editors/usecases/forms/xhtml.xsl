@@ -24,7 +24,7 @@
   xmlns:dc="http://purl.org/dc/elements/1.1/"
 >
 
-<xsl:import href="../../../../../../usecases/edit/forms/form.xsl"/>
+<xsl:import href="../../../../../../../modules/editors/usecases/forms/form.xsl"/>
 <xsl:import href="xhtml-common.xsl"/>
 
 <xsl:template match="xhtml:html">

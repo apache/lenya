@@ -28,7 +28,7 @@
     
     <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
 
-    <form method="post" id="form-onformeditor">
+    <form method="post" id="form-edit">
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
       <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
       <jx:choose>
@@ -41,6 +41,14 @@
                 <tr>
                   <td class="lenya-entry-caption">Document:</td>
                   <td><jx:out value="${usecase.getParameter('document').getId()}"/></td>
+                </tr>
+                <tr>
+                  <td class="lenya-entry-caption">Form:</td>
+                  <td><jx:out value="${usecase.getParameter('form')}"/></td>
+                </tr>
+                <tr>
+                  <td class="lenya-entry-caption">Node:</td>
+                  <td><jx:out value="${usecase.getParameter('editSelect')}"/></td>
                 </tr>
                 <tr>
                   <td class="lenya-entry-caption">Workflow Event:</td>
@@ -59,7 +67,7 @@
           </div>
           
           <cinclude:includexml>
-            <cinclude:src>cocoon://core/edit/oneform</cinclude:src>
+            <cinclude:src>cocoon://modules/editors/form/<jx:out value="${usecase.getParameter('form')}"/>/<jx:out value="${usecase.getParameter('editSelect')}"/></cinclude:src>
           </cinclude:includexml>
         </jx:when>
         <jx:otherwise>

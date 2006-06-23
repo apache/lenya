@@ -20,11 +20,11 @@
     This file defines the publication specific use-cases
 -->
 
-  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'edit.oneform']">
-    <component-instance name="edit.oneform" logger="lenya.publication"
-      class="org.apache.lenya.cms.editors.forms.OneFormEditor">
+  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'edit.forms']">
+    <component-instance name="edit.forms" logger="lenya.publication"
+      class="org.apache.lenya.cms.editors.forms.FormsEditor">
       <transaction policy="pessimistic"/>
-      <view template="usecases/edit/forms/oneform.jx" menu="false"/>
+      <view template="modules/editors/usecases/forms/forms.jx" menu="false"/>
       <exit usecase="lucene.index">
         <parameter name="indexAction" value="index"/>
         <parameter name="indexArea" value="authoring"/>

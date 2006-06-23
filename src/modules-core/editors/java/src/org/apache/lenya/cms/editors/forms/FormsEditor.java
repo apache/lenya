@@ -129,8 +129,8 @@ public class FormsEditor extends DocumentUsecase {
     public void advance() throws UsecaseException {
         super.advance();
 
-        String unnumberTagsXslUri = "context://lenya/usecases/edit/forms/unnumberTags.xsl";
-        String numberTagsXslUri = "context://lenya/usecases/edit/forms/numberTags.xsl";
+        String unnumberTagsXslUri = "fallback://lenya/modules/editors/usecases/forms/unnumberTags.xsl";
+        String numberTagsXslUri = "fallback://lenya/modules/editors/usecases/forms/numberTags.xsl";
 
         ModifiableSource xmlSource = null;
         Source schemaSource = null;
