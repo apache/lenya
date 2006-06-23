@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <module xmlns="http://apache.org/lenya/module/1.0">
   <id>org.apache.lenya.modules.cforms</id>
+  <package>org.apache.lenya.modules</package>
+  <version>0.1-dev</version>
+  <name>CForms Editor</name>
+  <lenya-version>@lenya.version@</lenya-version>
+  <description>CForms Editor</description>
 </module>

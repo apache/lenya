@@ -21,4 +21,9 @@
   <id>org.apache.lenya.modules.administration</id>
   <depends module="org.apache.lenya.modules.ac-impl"/>
   <depends module="org.apache.lenya.modules.ldap"/>
+  <package>org.apache.lenya.modules</package>
+  <version>0.1-dev</version>
+  <name>Administration</name>
+  <lenya-version>@lenya.version@</lenya-version>
+  <description>Administration usecases</description>
 </module>

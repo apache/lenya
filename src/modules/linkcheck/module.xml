@@ -21,7 +21,7 @@
   <lenya:id>org.apache.lenya.modules.linkcheck</lenya:id>
   <lenya:package>org.apache.lenya.modules</lenya:package>
   <lenya:version>0.1-dev</lenya:version>
-  <lenya:name>Lucene Search Module</lenya:name>
+  <lenya:name>Link Checker</lenya:name>
   <lenya:lenya-version>@lenya.version@</lenya:lenya-version>
-  <lenya:description>Lucene Search Module in order to allow indexing and searching when content is being changed.</lenya:description>
+  <lenya:description>Link Checker</lenya:description>
 </lenya:module>

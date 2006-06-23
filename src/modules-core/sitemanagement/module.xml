@@ -19,4 +19,9 @@
 
 <module xmlns="http://apache.org/lenya/module/1.0">
   <id>org.apache.lenya.modules.sitemanagement</id>
+  <package>org.apache.lenya.modules</package>
+  <version>0.1-dev</version>
+  <name>Site management</name>
+  <lenya-version>@lenya.version@</lenya-version>
+  <description>Site management usecases</description>
 </module>
