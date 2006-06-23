@@ -275,7 +275,7 @@
         
         <map:select type="resource-exists">
           <!-- resource exists - serve statically -->
-          <map:when test="lenya/modules/{1}/resources/{2}">
+          <map:when test="fallback://lenya/modules/{1}/resources/{2}">
             <map:mount uri-prefix="modules/" src="fallback://lenya/module-resources.xmap" check-reload="true" reload-method="synchron" pass-through="true"/>
           </map:when>
         </map:select>
@@ -286,12 +286,12 @@
       </map:match>
       
       <!-- Publication specific Module requests -->
-      <!-- {publication-id}/mdoules/{module-id}/... -->
+      <!-- {publication-id}/modules/{module-id}/... -->
       <map:match pattern="*/modules/*/**">
         
         <map:select type="resource-exists">
           <!-- resource exists - serve statically -->
-          <map:when test="lenya/modules/{2}/resources/{3}">
+          <map:when test="fallback://lenya/modules/{2}/resources/{3}">
             <map:mount uri-prefix="{1}/modules/" src="fallback://lenya/module-resources.xmap" check-reload="true" reload-method="synchron" pass-through="true"/>
           </map:when>
         </map:select>
