@@ -20,8 +20,13 @@
     This file defines the publication specific use-cases
 -->
 
-  <xconf xpath="/cocoon/authorizers" unless="/cocoon/authorizers/component-instance[@name = 'usecase']">
-    <component-instance name="usecase"
-      class="org.apache.lenya.cms.ac.usecase.UsecaseAuthorizerImpl"
-      logger="lenya.ac.authorizer.usecase"/>
+  <xconf xpath="/cocoon" unless="/cocoon/authorizers">
+    <authorizers>
+      <component-instance name="policy"
+        class="org.apache.lenya.ac.impl.PolicyAuthorizer"
+        logger="lenya.ac.authorizer.policy"/>
+      <component-instance name="usecase"
+        class="org.apache.lenya.cms.ac.usecase.UsecaseAuthorizerImpl"
+        logger="lenya.ac.authorizer.usecase"/>
+    </authorizers>
   </xconf>
