@@ -64,6 +64,8 @@
           <map:parameter name="locale" value="{request:locale}"/>
         </map:transform>
         
+        <map:transform src="cocoon://lenya-screen.xsl"/>
+        
         <!-- Strip xhtml namespace from <head> and <body> element -->
         <map:transform src="fallback://lenya/xslt/cforms/strip-xhtml-namespace.xsl"/>
         <map:transform src="fallback://lenya/xslt/cforms/forms-samples-styling.xsl">
