@@ -135,7 +135,6 @@
     <!-- FIXME: Use bulkCopy task in the future; needs regexp mapper which is part of ant optional package. -->
     <!-- Copy java source files from ${pubs.root.dirs} to ${build.java.src} -->
     <copyJavaSources pubsrootdirs="${pubs.root.dirs}" javadir="java/src" builddir="${build.dir}/java/pubs" />
-    <copyJavaSources pubsrootdirs="${modules.root.dirs}" javadir="java/src" builddir="${build.dir}/java/modules" />
     
     <mkdir dir="${build.dir}/lib"/>
     
