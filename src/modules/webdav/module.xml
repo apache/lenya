@@ -17,13 +17,13 @@
 
 <!-- $Id: publication.xml 374687 2006-02-03 15:24:55Z michi $ -->
 
-<lenya:module xmlns:lenya="http://apache.org/lenya/module/1.0">
-  <lenya:id>org.apache.lenya.modules.webdav</lenya:id>
-  <lenya:depends module="org.apache.lenya.modules.sitemanagement"/>
-  <lenya:depends module="org.apache.lenya.modules.sitemanagement"/>
-  <lenya:package>org.apache.lenya.modules</lenya:package>
-  <lenya:version>0.1-dev</lenya:version>
-  <lenya:name>WebDAV Module</lenya:name>
-  <lenya:lenya-version>@lenya.version@</lenya:lenya-version>
-  <lenya:description>The WebDAV module provides the ability to use WebDAV clients to edit your content in Lenya</lenya:description>
-</lenya:module>
+<module xmlns="http://apache.org/lenya/module/1.0">
+  <id>org.apache.lenya.modules.webdav</id>
+  <depends module="org.apache.lenya.modules.usecase"/>
+  <depends module="org.apache.lenya.modules.sitemanagement"/>
+  <package>org.apache.lenya.modules</package>
+  <version>0.1-dev</version>
+  <name>WebDAV Module</name>
+  <lenya-version>@lenya.version@</lenya-version>
+  <description>The WebDAV module provides the ability to use WebDAV clients to edit your content in Lenya</description>
+</module>

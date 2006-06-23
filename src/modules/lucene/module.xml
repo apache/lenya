@@ -17,11 +17,12 @@
 
 <!-- $Id: publication.xml 374687 2006-02-03 15:24:55Z michi $ -->
 
-<lenya:module xmlns:lenya="http://apache.org/lenya/module/1.0">
-  <lenya:id>org.apache.lenya.modules.lucene</lenya:id>
-  <lenya:package>org.apache.lenya.modules</lenya:package>
-  <lenya:version>0.1-dev</lenya:version>
-  <lenya:name>Lucene Search Module</lenya:name>
-  <lenya:lenya-version>@lenya.version@</lenya:lenya-version>
-  <lenya:description>Lucene Search Module in order to allow indexing and searching when content is being changed.</lenya:description>
-</lenya:module>
+<module xmlns="http://apache.org/lenya/module/1.0">
+  <id>org.apache.lenya.modules.lucene</id>
+  <depends module="org.apache.lenya.modules.usecase"/>
+  <package>org.apache.lenya.modules</package>
+  <version>0.1-dev</version>
+  <name>Lucene Search Module</name>
+  <lenya-version>@lenya.version@</lenya-version>
+  <description>Lucene Search Module in order to allow indexing and searching when content is being changed.</description>
+</module>

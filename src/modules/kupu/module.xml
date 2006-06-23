@@ -19,6 +19,7 @@
 
 <module xmlns="http://apache.org/lenya/module/1.0">
   <id>org.apache.lenya.modules.kupu</id>
+  <depends module="org.apache.lenya.modules.usecase"/>
   <package>org.apache.lenya.modules</package>
   <version>0.1-dev</version>
   <name>Kupu editor</name>

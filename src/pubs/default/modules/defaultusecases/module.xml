@@ -19,6 +19,7 @@
 
 <module xmlns="http://apache.org/lenya/module/1.0">
   <id>org.apache.lenya.modules.defaultusecases</id>
+  <depends module="org.apache.lenya.modules.usecase"/>
   <depends module="org.apache.lenya.modules.sitemanagement"/>
   <depends module="org.apache.lenya.modules.notification"/>
   <package>org.apache.lenya.modules</package>
