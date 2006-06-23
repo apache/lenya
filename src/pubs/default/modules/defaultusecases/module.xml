@@ -23,7 +23,7 @@
   <depends module="org.apache.lenya.modules.notification"/>
   <package>org.apache.lenya.modules</package>
   <version>0.1-dev</version>
-  <name>Repository Module</name>
+  <name>Default publication usecases</name>
   <lenya-version>@lenya.version@</lenya-version>
-  <description>Lenya Repository API (Draft)</description>
+  <description>Default publication usecases.</description>
 </module>

@@ -19,4 +19,9 @@
 
 <module xmlns="http://apache.org/lenya/module/1.0">
   <id>org.apache.lenya.modules.homepage</id>
+  <package>org.apache.lenya.modules</package>
+  <version>0.1-dev</version>
+  <name>Homepage</name>
+  <lenya-version>@lenya.version@</lenya-version>
+  <description>Homepage resource type for default publication.</description>
 </module>
