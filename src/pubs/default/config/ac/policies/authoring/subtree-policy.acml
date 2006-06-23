@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: subtree-policy.acml,v 1.3 2004/03/13 12:34:17 gregor Exp $ -->
+<!-- $Id$ -->
 
 <policy xmlns="http://apache.org/cocoon/lenya/ac/1.0">
 
@@ -25,6 +25,10 @@
 
   <group id="reviewer">
     <role id="review"/>
+  </group>
+
+  <group id="admin">
+    <role id="admin"/>
   </group>
 
 </policy> 
