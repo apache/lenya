@@ -6,6 +6,7 @@
   <xsl:output indent="yes"/>
   
   <xsl:param name="cocoon-xconf"/>
+  <xsl:param name="module-schema"/>
 
   <xsl:template match="list:modules">
     <project name="lenya-modules">
@@ -42,8 +43,8 @@
   <xsl:template match="list:module" mode="call">
     <xsl:apply-templates select="document(concat(@src, '/module.xml'))/mod:module" mode="call"/>
   </xsl:template>
-  
-  
+
+
   <xsl:template match="mod:module" mode="call">
     <antcall target="deploy-module-{mod:id}"/>
   </xsl:template>
@@ -59,6 +60,10 @@
   <xsl:template match="mod:module" mode="target">
     <xsl:param name="src"/>
     <xsl:variable name="id" select="mod:id"/>
+
+    <target name="validate-module-{$id}">
+      <jing rngfile="{$module-schema}" file="{$src}/module.xml"/>
+    </target>
     
     <xsl:text>
       
@@ -173,7 +178,7 @@
     </xsl:variable>
     
     <target name="deploy-module-{$id}"
-      depends="{$dependencyList} compile-module-{$id}, copy-module-{$id}, patch-module-{$id}"/>
+      depends="{$dependencyList} validate-module-{$id}, compile-module-{$id}, copy-module-{$id}, patch-module-{$id}"/>
     
   </xsl:template>
   

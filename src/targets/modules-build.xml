@@ -34,17 +34,20 @@
     <generateModuleList
       moduleDirs="${modules.root.dirs}"
       moduleFile="${build.dir}/temp/modules.xml"/>
+      
     <xslt
       in="${build.dir}/temp/modules.xml"
       out="${build.dir}/temp/modules-build.xml"
       style="${src.resource.dir}/build/modules2build.xsl">
-      <param name="cocoon-xconf" expression="${cocoon.xconf}"/>
+      <param name="cocoon-xconf" expression="${cocoon.xconf}" />
+      <param name="module-schema" expression="${src.resource.dir}/build/module.rng"/>
     </xslt>
 
     <ant antfile="${build.dir}/temp/modules-build.xml"
       inheritall="true"
       inheritrefs="true"
       target="compile-modules"/>
+      
   </target>
   
   

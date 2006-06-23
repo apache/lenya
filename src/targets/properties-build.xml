@@ -157,6 +157,7 @@
     <taskdef name="copyPubs"        classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.CopyPublicationsTask"/>
     <taskdef name="xpatch"          classpath="${cocoon.src.dir}/tools/anttasks" classname="XConfToolTask" />
     <taskdef name="generateModuleList" classpath="${tools.tasks.dest}" classname="org.apache.lenya.cms.ant.GenerateModuleList" />
+    <taskdef name="jing" classname="com.thaiopensource.relaxng.util.JingTask"/>
   </target>
 
   <!-- Compile tasks -->
