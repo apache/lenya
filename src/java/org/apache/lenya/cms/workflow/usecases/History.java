@@ -17,8 +17,9 @@
 package org.apache.lenya.cms.workflow.usecases;
 
 import org.apache.lenya.cms.usecase.DocumentUsecase;
-import org.apache.lenya.cms.workflow.DocumentWorkflowable;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.workflow.Version;
+import org.apache.lenya.workflow.Workflowable;
 
 /**
  * Display the workflow history tab in the site area
@@ -34,10 +35,10 @@ public class History extends DocumentUsecase {
     protected void initParameters() {
         super.initParameters();
 
-        DocumentWorkflowable workflowable = new DocumentWorkflowable(this.manager,
+        Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
                 getSession(),
-                getSourceDocument(),
-                getLogger());
+                getLogger(),
+                getSourceDocument());
         Version[] versions = workflowable.getVersions();
         setParameter("versions", versions);
     }

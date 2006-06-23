@@ -30,10 +30,11 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.cms.workflow.DocumentWorkflowable;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowManager;
+import org.apache.lenya.workflow.Workflowable;
 
 /**
  * Module for workflow access.
@@ -83,10 +84,8 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
                 wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
                 Session session = RepositoryUtil.getSession(this.manager,
                         ObjectModelHelper.getRequest(objectModel));
-                DocumentWorkflowable workflowable = new DocumentWorkflowable(this.manager,
-                        session,
-                        document,
-                        getLogger());
+                Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, session,
+                        getLogger(), document);
                 if (wfManager.hasWorkflow(workflowable)) {
 
                     Version latestVersion = workflowable.getLatestVersion();
@@ -139,7 +138,7 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
         return value;
     }
 
-    protected Version getLatestVersion(DocumentWorkflowable workflowable, String event) {
+    protected Version getLatestVersion(Workflowable workflowable, String event) {
         Version latestEventVersion = null;
         Version versions[] = workflowable.getVersions();
         for (int i = versions.length - 1; i > 0; i--) {

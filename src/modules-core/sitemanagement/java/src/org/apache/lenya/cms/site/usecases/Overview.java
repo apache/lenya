@@ -25,10 +25,11 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.cms.workflow.DocumentWorkflowable;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowManager;
+import org.apache.lenya.workflow.Workflowable;
 
 /**
  * Usecase to display the overview tab in the site area for a document.
@@ -77,10 +78,10 @@ public class Overview extends SiteUsecase {
             boolean visible = SiteUtil.isVisibleInNavigation(this.manager, doc);
             setParameter(VISIBLE_IN_NAVIGATION, Boolean.valueOf(visible));
 
-            DocumentWorkflowable workflowable = new DocumentWorkflowable(this.manager,
+            Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
                     getSession(),
-                    doc,
-                    getLogger());
+                    getLogger(),
+                    doc);
             resolver = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
             if (resolver.hasWorkflow(workflowable)) {
                 Workflow workflow = resolver.getWorkflowSchema(workflowable);

@@ -49,7 +49,7 @@ public class WorkflowUtil {
         WorkflowManager wfManager = null;
         try {
             wfManager = (WorkflowManager) manager.lookup(WorkflowManager.ROLE);
-            Workflowable workflowable = new DocumentWorkflowable(manager, session, document, logger);
+            Workflowable workflowable = getWorkflowable(manager, session, logger, document);
             wfManager.invoke(workflowable, event);
         } catch (ServiceException e) {
             throw new WorkflowException(e);
@@ -78,7 +78,7 @@ public class WorkflowUtil {
         WorkflowManager wfManager = null;
         try {
             wfManager = (WorkflowManager) manager.lookup(WorkflowManager.ROLE);
-            Workflowable workflowable = new DocumentWorkflowable(manager, session, document, logger);
+            Workflowable workflowable = getWorkflowable(manager, session, logger, document);
             wfManager.invoke(workflowable, event, force);
         } catch (ServiceException e) {
             throw new WorkflowException(e);
@@ -230,7 +230,7 @@ public class WorkflowUtil {
         WorkflowManager wfManager = null;
         try {
             wfManager = (WorkflowManager) manager.lookup(WorkflowManager.ROLE);
-            Workflowable workflowable = new DocumentWorkflowable(manager, session, document, logger);
+            Workflowable workflowable = getWorkflowable(manager, session, logger, document);
             if (wfManager.hasWorkflow(workflowable)) {
                 return wfManager.getWorkflowSchema(workflowable);
             } else {
@@ -244,4 +244,19 @@ public class WorkflowUtil {
             }
         }
     }
+
+    /**
+     * Returns a workflowable for a document.
+     * @param manager The service manager.
+     * @param session The session.
+     * @param logger The logger.
+     * @param document The document.
+     * @return A workflowable.
+     */
+    public static Workflowable getWorkflowable(ServiceManager manager, Session session,
+            Logger logger, Document document) {
+        Workflowable workflowable = new DocumentWorkflowable(manager, session, document, logger);
+        return workflowable;
+    }
+
 }

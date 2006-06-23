@@ -32,7 +32,6 @@ import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.cms.workflow.DocumentWorkflowable;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflowable;
@@ -138,14 +137,16 @@ public class Publish extends DocumentUsecase {
 
     protected void updateFeed() throws Exception {
         DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, getSession());
-        
+
         Document[] docs = new Document[2];
         org.w3c.dom.Document[] doms = new org.w3c.dom.Document[2];
-        
+
         docs[0] = map.get(this.getSourceDocument().getPublication(),
-                Publication.LIVE_AREA, "/feeds/all/index");
+                Publication.LIVE_AREA,
+                "/feeds/all/index");
         docs[1] = map.get(this.getSourceDocument().getPublication(),
-                Publication.AUTHORING_AREA, "/feeds/all/index");
+                Publication.AUTHORING_AREA,
+                "/feeds/all/index");
 
         DateFormat datefmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         DateFormat ofsfmt = new SimpleDateFormat("Z");
@@ -154,22 +155,22 @@ public class Publish extends DocumentUsecase {
         String dateofs = ofsfmt.format(date);
         String datestr = datefmt.format(date) + dateofs.substring(0, 3) + ":"
                 + dateofs.substring(3, 5);
-        
-        for (int i=0; i<2; i++) {
+
+        for (int i = 0; i < 2; i++) {
             doms[i] = DocumentHelper.readDocument(docs[i].getFile());
             Element parent = doms[i].getDocumentElement();
             // set modified date on publish
             Element element = (Element) XPathAPI.selectSingleNode(parent,
-                "/*[local-name() = 'feed']/*[local-name() = 'modified']");
+                    "/*[local-name() = 'feed']/*[local-name() = 'modified']");
             DocumentHelper.setSimpleElementText(element, datestr);
             DocumentHelper.writeDocument(doms[i], docs[i].getFile());
         }
     }
-    
-    protected void updateBlogEntry(Document doc) throws Exception {        
+
+    protected void updateBlogEntry(Document doc) throws Exception {
         org.w3c.dom.Document dom = DocumentHelper.readDocument(doc.getFile());
         Element parent = dom.getDocumentElement();
-        
+
         DateFormat datefmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         DateFormat ofsfmt = new SimpleDateFormat("Z");
         Date date = new Date();
@@ -177,18 +178,20 @@ public class Publish extends DocumentUsecase {
         String dateofs = ofsfmt.format(date);
         String datestr = datefmt.format(date) + dateofs.substring(0, 3) + ":"
                 + dateofs.substring(3, 5);
-        
+
         // set modified date on re-publish
         Element element = (Element) XPathAPI.selectSingleNode(parent,
-            "/*[local-name() = 'entry']/*[local-name() = 'modified']");
+                "/*[local-name() = 'entry']/*[local-name() = 'modified']");
         DocumentHelper.setSimpleElementText(element, datestr);
-        
-        // set issued date on first time publish        
-        Workflowable dw = 
-            (Workflowable)new DocumentWorkflowable(this.manager, this.getSession(), doc, this.getLogger());
+
+        // set issued date on first time publish
+        Workflowable dw = WorkflowUtil.getWorkflowable(this.manager,
+                this.getSession(),
+                this.getLogger(),
+                doc);
         Version versions[] = dw.getVersions();
         boolean wasLive = false;
-        for (int i=0; i<versions.length; i++) {
+        for (int i = 0; i < versions.length; i++) {
             if (versions[i].getValue("is_live")) {
                 wasLive = true;
                 break;
@@ -196,13 +199,13 @@ public class Publish extends DocumentUsecase {
         }
         if (!wasLive) {
             element = (Element) XPathAPI.selectSingleNode(parent,
-                "/*[local-name() = 'entry']/*[local-name() = 'issued']");
-            DocumentHelper.setSimpleElementText(element, datestr);            
+                    "/*[local-name() = 'entry']/*[local-name() = 'issued']");
+            DocumentHelper.setSimpleElementText(element, datestr);
         }
 
         DocumentHelper.writeDocument(dom, doc.getFile());
     }
-    
+
     /**
      * @return The event to invoke.
      */

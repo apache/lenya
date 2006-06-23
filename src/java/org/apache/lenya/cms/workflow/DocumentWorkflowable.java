@@ -44,7 +44,7 @@ import org.apache.lenya.workflow.Workflowable;
  * 
  * @version $Id$
  */
-public class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
+class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
 
     /**
      * Ctor.

@@ -36,10 +36,11 @@ import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.cms.workflow.DocumentWorkflowable;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.util.ServletHelper;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowManager;
+import org.apache.lenya.workflow.Workflowable;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
@@ -143,10 +144,10 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
             }
 
             if (hasWorkflow()) {
-                DocumentWorkflowable workflowable = new DocumentWorkflowable(this.manager,
+                Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
                         session,
-                        document,
-                        getLogger());
+                        getLogger(),
+                        document);
                 Workflow workflow = workflowManager.getWorkflowSchema(workflowable);
                 String[] events = workflow.getEvents();
                 for (int i = 0; i < events.length; i++) {

@@ -46,10 +46,10 @@ import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.cms.workflow.DocumentWorkflowable;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
+import org.apache.lenya.workflow.Workflowable;
 
 /**
  * Overview over all documents.
@@ -107,10 +107,10 @@ public class SiteOverview extends AbstractUsecase {
                 entry.setValue(KEY_LAST_MODIFIED, lastModified);
 
                 if (WorkflowUtil.hasWorkflow(this.manager, getSession(), getLogger(), documents[i])) {
-                    DocumentWorkflowable workflowable = new DocumentWorkflowable(this.manager,
+                    Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
                             getSession(),
-                            documents[i],
-                            getLogger());
+                            getLogger(),
+                            documents[i]);
                     Version latestVersion = workflowable.getLatestVersion();
                     String state;
                     if (latestVersion != null) {
@@ -142,8 +142,7 @@ public class SiteOverview extends AbstractUsecase {
                     RCMLEntry lastEntry = rcml.getLatestCheckOutEntry();
                     String userId = lastEntry.getIdentity();
                     entry.setValue(KEY_CHECKED_OUT, userId);
-                }
-                else {
+                } else {
                     entry.setValue(KEY_CHECKED_OUT, "");
                 }
                 entries.add(entry);
