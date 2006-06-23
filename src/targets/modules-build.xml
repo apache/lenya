@@ -25,6 +25,7 @@
   
   <property name="modules.root.dirs" value=""/>
   <property name="build.modules" value="${build.webapp}/lenya/modules"/>
+  <property name="modules.copy" value="false"/>
   
   
   <target name="deploy-modules" depends="init-tasks">
@@ -41,8 +42,21 @@
       style="${src.resource.dir}/build/modules2build.xsl">
       <param name="cocoon-xconf" expression="${cocoon.xconf}" />
       <param name="module-schema" expression="${src.resource.dir}/build/module.rng"/>
+      <param name="copy-modules" expression="${modules.copy}"/>
     </xslt>
 
+    <xslt
+      in="${build.dir}/temp/modules.xml"
+      out="${build.dir}/temp/modules.xconf"
+      style="${src.resource.dir}/build/modules2patch.xsl">
+      <param name="copy-modules" expression="${modules.copy}"/>
+    </xslt>
+    
+    <xpatch addComments="false"
+      includes="modules.xconf"
+      srcdir="${build.dir}/temp/"
+      file="build/lenya/webapp/WEB-INF/cocoon.xconf"/>
+    
     <ant antfile="${build.dir}/temp/modules-build.xml"
       inheritall="true"
       inheritrefs="true"

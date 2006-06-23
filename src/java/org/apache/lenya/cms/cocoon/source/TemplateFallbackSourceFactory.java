@@ -36,6 +36,7 @@ import org.apache.excalibur.source.SourceFactory;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
 import org.apache.excalibur.source.URIAbsolutizer;
+import org.apache.lenya.cms.module.ModuleManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationManager;
 import org.apache.lenya.cms.publication.URLInformation;
@@ -47,8 +48,8 @@ import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
  * 
  * @version $Id: FallbackSourceFactory.java 264153 2005-08-29 15:11:14Z andreas $
  */
-public class TemplateFallbackSourceFactory extends AbstractLogEnabled implements SourceFactory, Serviceable,
-        Contextualizable, URIAbsolutizer {
+public class TemplateFallbackSourceFactory extends AbstractLogEnabled implements SourceFactory,
+        Serviceable, Contextualizable, URIAbsolutizer {
 
     /**
      * Ctor.
@@ -58,8 +59,7 @@ public class TemplateFallbackSourceFactory extends AbstractLogEnabled implements
     }
 
     /**
-     * @see org.apache.excalibur.source.SourceFactory#getSource(java.lang.String,
-     *      java.util.Map)
+     * @see org.apache.excalibur.source.SourceFactory#getSource(java.lang.String, java.util.Map)
      */
     public Source getSource(final String location, Map parameters) throws IOException,
             MalformedURLException {
@@ -93,27 +93,25 @@ public class TemplateFallbackSourceFactory extends AbstractLogEnabled implements
         Source source;
         try {
             sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            
-            templateManager = (PublicationTemplateManager) this.manager
-                    .lookup(PublicationTemplateManager.ROLE);
+
+            templateManager = (PublicationTemplateManager) this.manager.lookup(PublicationTemplateManager.ROLE);
 
             Request request = ContextHelper.getRequest(this.context);
             String webappUrl = request.getRequestURI().substring(request.getContextPath().length());
-            
+
             URLInformation info = new URLInformation(webappUrl);
             String publicationId = info.getPublicationId();
 
             pubMgr = (PublicationManager) this.manager.lookup(PublicationManager.ROLE);
             Publication pub = pubMgr.getPublication(publicationId);
-            
-            //Get the template publication
-            String pubTemplateId = pub.getTemplateIds()[0];
-            if (pubTemplateId.length() > 0)
-                pub = pubMgr.getPublication(pubTemplateId);
 
-            if (pub.exists()) {
+            // Get the template publication
+            if (pub.getTemplateIds().length > 0) {
+                String pubTemplateId = pub.getTemplateIds()[0];
+                Publication template = pubMgr.getPublication(pubTemplateId);
+
                 ExistingSourceResolver resolver = new ExistingSourceResolver();
-                templateManager.visit(pub, path, resolver);
+                templateManager.visit(template, path, resolver);
                 resolvedUri = resolver.getURI();
             }
 
@@ -122,8 +120,23 @@ public class TemplateFallbackSourceFactory extends AbstractLogEnabled implements
             }
 
             if (resolvedUri == null) {
-                final String contextUri = "context://" + location.substring("fallback://".length());
-                resolvedUri = contextUri;
+                if (path.startsWith("lenya/modules/")) {
+                    ModuleManager moduleMgr = null;
+                    try {
+                        moduleMgr = (ModuleManager) this.manager.lookup(ModuleManager.ROLE);
+                        final String moduleShortcut = path.split("/")[2];
+                        String baseUri = moduleMgr.getBaseURI(moduleShortcut);
+                        final String modulePath = path.substring(("lenya/modules/" + moduleShortcut).length());
+                        resolvedUri = baseUri + modulePath;
+                    } finally {
+                        if (moduleMgr != null) {
+                            this.manager.release(moduleMgr);
+                        }
+                    }
+                } else {
+                    String contextUri = "context://" + path;
+                    resolvedUri = contextUri;
+                }
             }
 
             source = sourceResolver.resolveURI(resolvedUri);
