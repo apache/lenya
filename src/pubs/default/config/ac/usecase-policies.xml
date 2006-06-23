@@ -1,13 +1,13 @@
 <?xml version="1.0"?>
 <!--
   Copyright 1999-2004 The Apache Software Foundation
-
+  
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -17,14 +17,294 @@
 
 <!-- $Id$ -->
     
-<usecases xmlns="http://apache.org/cocoon/lenya/ac/1.0">
-
-	<usecase id="admin.changePasswordAdmin"><role id="admin"/></usecase>
-	<usecase id="admin.changeGroups"><role id="admin"/></usecase>
-	
-	<usecase id="filePropfind"><role id="visit"/></usecase>
-	<usecase id="propfind"><role id="visit"/></usecase>
-	<usecase id="put"><role id="edit"/></usecase>
-	
-
-</usecases>
+    <usecases xmlns="http://apache.org/cocoon/lenya/ac/1.0">
+      <usecase id="edit.bxe">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="edit.insertAsset">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="edit.insertImage">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="edit.cforms">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="insertAsset.fckeditor">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="insertImage.fckeditor">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="edit.fckeditor">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="linkcheck.getLinks">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="lucene.externalOpensearch">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="lucene.index">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="lucene.opensearch">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="lucene.search">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="site.archive">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="site.changeLabel">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="site.changeNodeID">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="site.changeVisibility">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="site.copy">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="site.create">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="site.createLanguage">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="site.cut">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="site.delete">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="site.deleteLanguage">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="site.paste">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="site.restore">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="tab.acArchive">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="tab.acAuthoring">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="tab.acLive">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="tab.acTrash">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="tab.assets">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="tab.meta">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="tab.overview">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="tab.revisions">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="tab.scheduler">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="tab.workflow">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="module.odt.create">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="module.odt.upload">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="site.nudge">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="usecase.contactForm">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="usecase.createUsecaseDocument">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="webdav.delete">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="webdav.filePropfind">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="webdav.mkcol">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="webdav.propfind">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="webdav.put">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="ac.login">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="ac.logout">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.addGroup">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.addIPRange">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.addUser">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.changePassword">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.changePasswordAdmin">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.deleteGroup">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.deleteIPRange">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.deleteUser">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.emptyTrash">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.group">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.groupMembers">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.groupProfile">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.groups">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.ipRangeGroups">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.ipRangeProfile">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.ipRanges">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.serverStatus">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.sessions">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.siteOverview">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.user">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.userGroups">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.userProfile">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.users">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="edit.forms">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="edit.oneform">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="publication.edit">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="publication.createPublicationFromTemplate">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="blog/workflow.delete">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="blog/site.create">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="blog/workflow.deactivate">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="blog/workflow.publish">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="default/workflow.deactivate">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="default/workflow.publish">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="default/workflow.reject">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="default/workflow.submit">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="edit.kupu">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="entry.create">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="create.media.assets">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="mediatype.publish">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.addNewsletterUser">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.addNewsletterUsers">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.newsletter">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.newsletters">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="admin.delNewsletterUser">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="send.newsletter">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="edit.tinymce">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="wiki.create">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="wiki.edit">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="module.doc.create">
+        <role id="admin"/>
+      </usecase>
+      <usecase id="module.doc.upload">
+        <role id="admin"/>
+      </usecase>
+    </usecases>
+    

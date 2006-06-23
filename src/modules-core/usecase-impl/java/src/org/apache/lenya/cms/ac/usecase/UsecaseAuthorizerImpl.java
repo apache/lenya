@@ -148,7 +148,7 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
     public boolean authorizeUsecase(String usecase, Role[] roles, String _configurationUri,
             String requestURI) throws AccessControlException {
         getLogger().debug("Authorizing usecase [" + usecase + "]");
-        boolean authorized = true;
+        boolean authorized = false;
 
         UsecaseRolesBuilder builder = new UsecaseRolesBuilder();
         UsecaseRoles usecaseRoles;
@@ -164,13 +164,11 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
         }
 
         if (usecaseRoles.hasRoles(usecase)) {
-
             getLogger().debug("Roles for usecase found.");
 
             List usecaseRoleIds = Arrays.asList(usecaseRoles.getRoles(usecase));
 
             int i = 0;
-            authorized = false;
             while (!authorized && i < roles.length) {
                 authorized = usecaseRoleIds.contains(roles[i].getId());
                 getLogger().debug("Authorization for role [" + roles[i].getId() + "] is ["
@@ -178,7 +176,7 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
                 i++;
             }
         } else {
-            getLogger().debug("No roles for usecase found. Granting access.");
+            getLogger().debug("No roles for usecase [" + usecase + "] found. Denying access.");
         }
         return authorized;
     }
