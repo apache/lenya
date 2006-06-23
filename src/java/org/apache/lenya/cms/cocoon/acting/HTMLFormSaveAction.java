@@ -134,6 +134,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                     XUpdateQuery xq = new XUpdateQueryImpl();
 
                     String editSelect = null;
+                    String insertSelect = null;
                     Enumeration params = request.getParameterNames();
                     while (params.hasMoreElements()) {
                         String pname = (String) params.nextElement();
@@ -146,7 +147,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                             editSelect = pname.substring(5, pname.length() - 3);
                             getLogger().debug("Edit: " + editSelect);
                         }
-
+                        
                         // Make sure we are dealing with an xupdate statement,
                         // else skip
                         if (pname.indexOf("<xupdate:") == 0) {
@@ -202,6 +203,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                                     if (!request.getParameter(pname).equals("null")) {
                                         xupdateModifications = insertBefore(request
                                                 .getParameter(pname));
+                                        insertSelect = pname.substring(31,pname.length() - 3);
                                     }
                                     // insert-before: in case of image
                                 } else if (pname.indexOf("xupdate:insert-before") > 0
@@ -214,6 +216,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                                     if (!request.getParameter(pname).equals("null")) {
                                         xupdateModifications = insertAfter(request
                                                 .getParameter(pname));
+                                        insertSelect = pname.substring(30,pname.length() - 3);
                                     }
                                     // insert-after: in case of image
                                 } else if (pname.indexOf("xupdate:insert-after") > 0
@@ -224,6 +227,7 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                                         && pname.endsWith("/>.x")) {
                                     xupdateModifications = remove(pname.substring(0,
                                             pname.length() - 2));
+                                    insertSelect = pname.substring(24,pname.length() - 3);
                                 } else if (pname.endsWith(">.y")) {
                                     getLogger().debug("Don't handle this: " + pname);
                                 } else {
@@ -302,6 +306,10 @@ public class HTMLFormSaveAction extends AbstractConfigurableAction implements Th
                         if (editSelect != null) {
                             hmap.put("editSelect", editSelect);
                         }
+                        if (insertSelect != null) {
+                            hmap.put("insertSelect", insertSelect);
+                        }
+                        
                         return hmap;
                     }
                 } catch (NullPointerException e) {

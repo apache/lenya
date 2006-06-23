@@ -26,6 +26,7 @@
 
 <xsl:param name="contextPrefix" select="'/lenya'"/>
 <xsl:param name="edit" select="'No node selected yet'"/>
+<xsl:param name="insert" select="'No node selected yet'"/>
 <xsl:param name="wfevent" select="'null'"/>
 
 
@@ -145,6 +146,33 @@
 
       function goAnchor() {
          document.location.hash = '<xsl:value-of select="$currentTagID"/>';
+         window.scrollBy(0, -150);
+      }
+    </script>
+  </xsl:if>
+
+  <xsl:variable name="currentNeighbourID">
+    <xsl:value-of select="substring-before(substring-after($insert, &quot;@tagID='&quot;), &quot;'&quot;)"/>
+  </xsl:variable>
+  <xsl:if test="$currentNeighbourID != ''">
+    <script type="text/javascript">
+
+      function addLoadEvent(func) {
+        var oldonload = window.onload;
+        if (typeof window.onload != 'function') {
+          window.onload = func;
+        } else {
+          window.onload = function() {
+            oldonload();
+            func();
+          }
+        }
+      }
+
+     addLoadEvent(goAnchor);
+
+      function goAnchor() {
+         document.location.hash = '<xsl:value-of select="$currentNeighbourID"/>';
          window.scrollBy(0, -150);
       }
     </script>
