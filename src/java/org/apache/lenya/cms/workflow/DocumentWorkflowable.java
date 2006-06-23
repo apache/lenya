@@ -42,7 +42,7 @@ import org.apache.lenya.workflow.Workflowable;
 /**
  * Workflowable around a CMS document.
  * 
- * @version $Id$
+ * @version $Id: DocumentWorkflowable.java 416648 2006-06-23 09:15:28Z andreas $
  */
 class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
 
