@@ -18,13 +18,10 @@
 <!-- $Id: publication.xml 374687 2006-02-03 15:24:55Z michi $ -->
 
 <module xmlns="http://apache.org/lenya/module/1.0">
-  <id>org.apache.lenya.modules.administration</id>
-  <depends module="org.apache.lenya.modules.usecase"/>
-  <depends module="org.apache.lenya.modules.ac-impl"/>
-  <depends module="org.apache.lenya.modules.ldap"/>
+  <id>org.apache.lenya.modules.usecase</id>
   <package>org.apache.lenya.modules</package>
   <version>0.1-dev</version>
-  <name>Administration</name>
+  <name>Usecase framework API</name>
   <lenya-version>@lenya.version@</lenya-version>
-  <description>Administration usecases</description>
+  <description>Usecase framework API</description>
 </module>

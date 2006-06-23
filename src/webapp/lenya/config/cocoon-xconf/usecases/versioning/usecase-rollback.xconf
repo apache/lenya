@@ -20,10 +20,15 @@
     This file defines the publication specific use-cases
 -->
 
-  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'rollback']">
-    <component-instance name="rollback" logger="lenya.publication"
-      class="org.apache.lenya.cms.site.usecases.Rollback">
-      <transaction policy="pessimistic"/>
-      <exit usecase="tab.revisions"/>
-    </component-instance>
+  <!-- temporarily commented out -->
+  <xconf xpath="/cocoon" unless="/cocoon">
   </xconf>
+<!--
+    <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'rollback']">
+      <component-instance name="rollback" logger="lenya.publication"
+        class="org.apache.lenya.cms.site.usecases.Rollback">
+        <transaction policy="pessimistic"/>
+        <exit usecase="tab.revisions"/>
+      </component-instance>
+    </xconf>
+-->    
