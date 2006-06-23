@@ -265,47 +265,5 @@
   <usecase id="edit.kupu">
     <role id="admin"/>
   </usecase>
-  <usecase id="entry.create">
-    <role id="admin"/>
-  </usecase>
-  <usecase id="create.media.assets">
-    <role id="admin"/>
-  </usecase>
-  <usecase id="mediatype.publish">
-    <role id="admin"/>
-  </usecase>
-  <usecase id="admin.addNewsletterUser">
-    <role id="admin"/>
-  </usecase>
-  <usecase id="admin.addNewsletterUsers">
-    <role id="admin"/>
-  </usecase>
-  <usecase id="admin.newsletter">
-    <role id="admin"/>
-  </usecase>
-  <usecase id="admin.newsletters">
-    <role id="admin"/>
-  </usecase>
-  <usecase id="admin.delNewsletterUser">
-    <role id="admin"/>
-  </usecase>
-  <usecase id="send.newsletter">
-    <role id="admin"/>
-  </usecase>
-  <usecase id="edit.tinymce">
-    <role id="admin"/>
-  </usecase>
-  <usecase id="wiki.create">
-    <role id="admin"/>
-  </usecase>
-  <usecase id="wiki.edit">
-    <role id="admin"/>
-  </usecase>
-  <usecase id="module.doc.create">
-    <role id="admin"/>
-  </usecase>
-  <usecase id="module.doc.upload">
-    <role id="admin"/>
-  </usecase>
 </usecases>
     
