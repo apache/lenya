@@ -7,6 +7,11 @@
   </xsl:template>
 
   <xsl:template match="usecases">
+    <xsl:text>
+</xsl:text>
+    <xsl:comment>+++NOTE+++ The usecase list was initialized using modules/usecase-impl/xslt/initUsecasePolicies.xsl.</xsl:comment>
+    <xsl:text>
+</xsl:text>
     <usecases>
       <xsl:apply-templates select="component-instance"/>
     </usecases>
