@@ -20,8 +20,18 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * Tab in a tabbed multiple-usecase environment.
+ */
 public class Tab {
 
+    /**
+     * Ctor.
+     * @param group The name of the usecase group.
+     * @param name The name of the tab.
+     * @param usecase The usecase to be displayed.
+     * @param label The label to be displayed on the tab.
+     */
     public Tab(String group, String name, String usecase, String label) {
         this.name = name;
         this.group = group;
@@ -33,6 +43,9 @@ public class Tab {
 
     private String name;
 
+    /**
+     * @return The name of the tab.
+     */
     public String getName() {
         return this.name;
     }
@@ -41,16 +54,25 @@ public class Tab {
 
     private String label;
 
+    /**
+     * @return The label.
+     */
     public String getLabel() {
         return label;
     }
 
+    /**
+     * @return The usecase which is displayed on the tab.
+     */
     public String getUsecase() {
         return usecase;
     }
 
     private String group;
 
+    /**
+     * @return The group this tab belongs to.
+     */
     public String getGroup() {
         return this.group;
     }
