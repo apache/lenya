@@ -17,11 +17,13 @@
 
 package org.apache.lenya.cms.ac.usecase;
 
+import java.io.File;
 import java.util.Arrays;
 import java.util.List;
 
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.parameters.Parameterizable;
@@ -73,7 +75,7 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
     protected String getConfigurationURI(Publication publication, String requestURI) {
         String configURI = null;
         try {
-            Configuration config = new org.apache.lenya.cms.ac.PublicationAccessControllerResolver().getConfiguration(publication);
+            Configuration config = getConfiguration(publication);
             Configuration[] authorizerConfigs = config.getChildren("authorizer");
             for (int i = 0; i < authorizerConfigs.length; i++) {
                 if (authorizerConfigs[i].getAttribute("type").equals("usecase")) {
@@ -237,6 +239,29 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
 
     protected boolean authorize(Request request, String webappUrl) throws AccessControlException {
         return authorize(request);
+    }
+
+    protected static final String AC_CONFIGURATION_FILE = "config/ac/ac.xconf".replace('/', File.separatorChar);
+    
+    /**
+     * Retrieves access control configuration of a specific publication.
+     * @param publication The publication.
+     * @return Configuration
+     * @throws AccessControlException when something went wrong.
+     */
+    public Configuration getConfiguration(Publication publication) throws AccessControlException {
+        File configurationFile = new File(publication.getDirectory(), AC_CONFIGURATION_FILE);
+
+        if (configurationFile.isFile()) {
+            try {
+                Configuration configuration = new DefaultConfigurationBuilder().buildFromFile(configurationFile);
+                return configuration;
+            } catch (Exception e) {
+                throw new AccessControlException(e);
+            }
+        } else {
+            throw new AccessControlException("No such file or directory: " + configurationFile);
+        }
     }
 
 }
