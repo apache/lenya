@@ -24,7 +24,7 @@
     exclude-result-prefixes="nav"
     >
     
-<xsl:import href="../../../../../../../modules/sitetree/xslt/navigation/tabs.xsl"/>
+<xsl:import href="template-fallback://lenya/modules/sitetree/xslt/navigation/tabs.xsl"/>
 
 <xsl:template match="nav:site">
     
