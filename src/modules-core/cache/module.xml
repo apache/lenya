@@ -18,13 +18,11 @@
 <!-- $Id: publication.xml 374687 2006-02-03 15:24:55Z michi $ -->
 
 <module xmlns="http://apache.org/lenya/module/1.0">
-  <id>org.apache.lenya.modules.ac-impl</id>
-  <published>false</published>
+  <id>org.apache.lenya.modules.cache</id>
   <depends module="org.apache.lenya.modules.usecase"/>
-  <depends module="org.apache.lenya.modules.cache"/>
   <package>org.apache.lenya.modules</package>
   <version>0.1-dev</version>
-  <name>Access control implementation</name>
+  <name>Source cache</name>
   <lenya-version>@lenya.version@</lenya-version>
-  <description>Access control implementation</description>
+  <description>Source cache</description>
 </module>

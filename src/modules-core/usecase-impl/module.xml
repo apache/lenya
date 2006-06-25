@@ -21,7 +21,7 @@
   <id>org.apache.lenya.modules.usecase-impl</id>
   <published>false</published>
   <depends module="org.apache.lenya.modules.usecase"/>
-  <depends module="org.apache.lenya.modules.ac-impl"/>
+  <depends module="org.apache.lenya.modules.cache"/>
   <package>org.apache.lenya.modules</package>
   <version>0.1-dev</version>
   <name>Usecase framework implementation</name>
