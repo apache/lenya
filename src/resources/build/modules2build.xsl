@@ -86,6 +86,16 @@
       <jing rngfile="{$module-schema}" file="{$src}/module.xml"/>
     </target>
     
+    <target name="dependency-warning-{$id}">
+      <xsl:if test="mod:published = 'false'">
+        <property name="dependentModule" value=""/>
+        <echo>
+        WARNING: The module '${dependentModule}' depends on the module '<xsl:value-of select="$id"/>'.
+        This module is not published, which means that it is not part of the API and can change without notice.
+        </echo>
+      </xsl:if>
+    </target>
+    
     <xsl:text>
       
     </xsl:text>
@@ -194,6 +204,12 @@
       
     </target>
     
+    <target name="dependency-warnings-{$id}">
+      <xsl:apply-templates select="mod:depends" mode="dependencyWarning">
+        <xsl:with-param name="id" select="$id"/>
+      </xsl:apply-templates>
+    </target>
+    
     <xsl:variable name="dependencyList">
       <xsl:for-each select="mod:depends">
         <xsl:text>deploy-module-</xsl:text><xsl:value-of select="@module"/><xsl:text>, </xsl:text>
@@ -201,8 +217,15 @@
     </xsl:variable>
     
     <target name="deploy-module-{$id}"
-      depends="{$dependencyList} validate-module-{$id}, compile-module-{$id}, copy-module-{$id}, patch-module-{$id}"/>
+      depends="dependency-warnings-{$id}, {$dependencyList} validate-module-{$id}, compile-module-{$id}, copy-module-{$id}, patch-module-{$id}"/>
     
+  </xsl:template>
+  
+  <xsl:template match="mod:depends" mode="dependencyWarning">
+    <xsl:param name="id"/>
+    <antcall target="dependency-warning-{@module}">
+      <param name="dependentModule" value="{$id}"/>
+    </antcall>
   </xsl:template>
   
   

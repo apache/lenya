@@ -24,6 +24,9 @@
   <start>
     <element name="lenya:module" >
       <element name="lenya:id"><text/></element>
+      <optional>
+        <element name="lenya:published"><data type="boolean"/></element>
+      </optional>
       <zeroOrMore>
         <element name="lenya:depends">
           <attribute name="module"><text/></attribute>
