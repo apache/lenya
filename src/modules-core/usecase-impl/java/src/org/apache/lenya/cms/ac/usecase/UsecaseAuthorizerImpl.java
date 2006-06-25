@@ -73,9 +73,6 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
     protected String getConfigurationURI(Publication publication, String requestURI) {
         String configURI = null;
         try {
-            // org.apache.lenya.ac.AccessController ac = new
-            // org.apache.lenya.cms.ac.PublicationAccessControllerResolver().resolveAccessController(publication,
-            // requestURI);
             Configuration config = new org.apache.lenya.cms.ac.PublicationAccessControllerResolver().getConfiguration(publication);
             Configuration[] authorizerConfigs = config.getChildren("authorizer");
             for (int i = 0; i < authorizerConfigs.length; i++) {
