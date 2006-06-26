@@ -39,8 +39,8 @@
     -->
     <copy todir="${build.webapp}">
       <fileset dir="${src.webapp.dir}">
-        <exclude name="config/cocoon-xconf/**"/>
-        <exclude name="config/sitemap/**"/>
+        <exclude name="lenya/config/cocoon-xconf/**"/>
+        <exclude name="lenya/config/sitemap/**"/>
       </fileset>
     </copy>
 
