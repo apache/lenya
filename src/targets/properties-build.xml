@@ -125,7 +125,7 @@
   contents of the cocoon webapp are here
   -->
   <property name="src.webapp.dir" value="src/webapp"/>
-  <property name="tools.tasks.dest" value="tools/anttasks"/>
+  <property name="tools.tasks.dest" value="tools/anttasks/build/classes"/>
   <property name="src.resource.dir"  value="src/resources"/>
   <!-- hsqldb database config files directory -->
   <property name="src.database.dir" value="src/webapp/WEB-INF/db"/>
@@ -163,8 +163,8 @@
   <!-- Compile tasks -->
   <target name="compile-build-tasks" description="Target to compile tasks needed during build">
 
-    <javac srcdir="tools/anttasks"
-           destdir="tools/anttasks"
+    <javac srcdir="tools/anttasks/src"
+           destdir="tools/anttasks/build/classes"
            debug="${debug}"
            optimize="{optimize}"
            deprecation="${deprecation}"
