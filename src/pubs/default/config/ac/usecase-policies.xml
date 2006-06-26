@@ -85,27 +85,34 @@
   </usecase>
   <usecase id="site.create">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="site.createLanguage">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="site.cut">
     <role id="admin"/>
   </usecase>
   <usecase id="site.delete">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="site.deleteLanguage">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="site.paste">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="site.restore">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="tab.acArchive">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="tab.acAuthoring">
     <role id="admin"/>
@@ -118,57 +125,66 @@
   </usecase>
   <usecase id="tab.assets">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="tab.meta">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="tab.overview">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="tab.revisions">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="tab.scheduler">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="tab.workflow">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="module.odt.create">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="module.odt.upload">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="site.nudge">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="usecase.contactForm">
-    <role id="admin"/>
+    <role id="visit"/>
   </usecase>
   <usecase id="usecase.createUsecaseDocument">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="webdav.delete">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="webdav.filePropfind">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="webdav.mkcol">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="webdav.propfind">
     <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="webdav.put">
     <role id="admin"/>
-  </usecase>
-  <usecase id="ac.login">
-    <role id="admin"/>
-  </usecase>
-  <usecase id="ac.logout">
-    <role id="admin"/>
+    <role id="edit"/>
   </usecase>
   <usecase id="admin.addGroup">
     <role id="admin"/>
@@ -253,38 +269,26 @@
   <usecase id="publication.createPublicationFromTemplate">
     <role id="admin"/>
   </usecase>
-  <usecase id="blog/workflow.delete">
+  <usecase id="workflow.delete">
     <role id="admin"/>
   </usecase>
-  <usecase id="blog/site.create">
-    <role id="admin"/>
-  </usecase>
-  <usecase id="blog/workflow.deactivate">
+  <usecase id="workflow.publish">
     <role id="admin"/>
     <role id="review"/>
   </usecase>
-  <usecase id="blog/workflow.publish">
+  <usecase id="workflow.deactivate">
     <role id="admin"/>
     <role id="review"/>
   </usecase>
-  <usecase id="default/workflow.deactivate">
+  <usecase id="workflow.reject">
     <role id="admin"/>
     <role id="review"/>
   </usecase>
-  <usecase id="default/workflow.publish">
-    <role id="admin"/>
-    <role id="edit"/>
-    <role id="review"/>
-  </usecase>
-  <usecase id="default/workflow.reject">
-    <role id="admin"/>
-    <role id="review"/>
-  </usecase>
-  <usecase id="default/workflow.submit">
+  <usecase id="workflow.submit">
     <role id="admin"/>
     <role id="edit"/>
   </usecase>
-  <usecase id="edit.kupu">
+  <usecase id="kupu">
     <role id="admin"/>
     <role id="edit"/>
   </usecase>
