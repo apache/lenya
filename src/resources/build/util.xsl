@@ -27,6 +27,11 @@
           <xsl:with-param name="path" select="substring-after($path, '/')"/>
         </xsl:call-template>
       </xsl:when>
+      <xsl:when test="contains($path, '\')">
+        <xsl:call-template name="lastStep">
+          <xsl:with-param name="path" select="substring-after($path, '\')"/>
+        </xsl:call-template>
+      </xsl:when>
       <xsl:otherwise>
         <xsl:value-of select="$path"/>
       </xsl:otherwise>
