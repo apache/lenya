@@ -27,4 +27,8 @@
     <role id="review"/>
   </group>
 
+  <group id="admin">
+    <role id="admin"/>
+  </group>
+
 </policy> 
