@@ -49,12 +49,12 @@ function editDocument() {
     var usecase;
     
     try {
-        usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
-        usecase = usecaseResolver.resolve(usecaseName);
-
         var flowHelper = cocoon.getComponent("org.apache.lenya.cms.cocoon.flow.FlowHelper");
         var request = flowHelper.getRequest(cocoon);
         var sourceUrl = Packages.org.apache.lenya.util.ServletHelper.getWebappURI(request);
+
+        usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
+        usecase = usecaseResolver.resolve(sourceUrl, usecaseName);
 
         if (cocoon.log.isDebugEnabled()) {
             cocoon.log.debug("edit-document.js::editDocument() calling usecase methods, usecaseName [" + usecaseName + "], sourceUrl [" + sourceUrl + "]");    
