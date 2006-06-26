@@ -68,6 +68,7 @@
           <item uc:usecase="site.deleteLanguage" href="?"><i18n:text>Remove Language Version</i18n:text></item>
         </block>
         <block>
+          <item uc:usecase="admin.changePassword" href="?"><i18n:text>Change Password</i18n:text></item>
           <item uc:usecase="ac.logout" href="?"><i18n:text>Logout</i18n:text></item>
         </block>
       </menu>

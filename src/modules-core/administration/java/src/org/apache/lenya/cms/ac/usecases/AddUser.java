@@ -77,7 +77,7 @@ public class AddUser extends AccessControlUsecase {
         }
 
         else {
-            UserPassword.checkNewPassword(this);
+            ChangePassword.checkNewPassword(this);
         }
 
     }
@@ -109,7 +109,7 @@ public class AddUser extends AccessControlUsecase {
             String ldapId = getParameterAsString(LDAP_ID);
             user = new LDAPUser(configDir, userId, email, ldapId, getLogger());
         } else {
-            String password = getParameterAsString(UserPassword.NEW_PASSWORD);
+            String password = getParameterAsString(AbstractChangePassword.NEW_PASSWORD);
             user = new FileUser(configDir, userId, fullName, email, "");
             user.setName(fullName);
             user.setPassword(password);

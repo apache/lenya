@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <!--
   Copyright 1999-2005 The Apache Software Foundation
 
@@ -74,6 +75,17 @@
               <input type="hidden" name="lenya.usecase" value="admin.userProfile"/>
               <input type="hidden" name="userId" value="${user.getId()}"/>
               <input i18n:attr="value" type="submit" value="Edit Profile" name="input-edit_user_profile"/>
+            </form>
+          </td>
+        </tr>
+       
+        <tr>
+          <td/>
+          <td>
+            <form id="form-change_user_password">
+              <input type="hidden" name="lenya.usecase" value="admin.changePasswordAdmin"/>
+              <input type="hidden" name="userId" value="${user.getId()}"/>
+              <input i18n:attr="value" type="submit" value="Change Password" name="input-change_user_password"/>
             </form>
           </td>
         </tr>

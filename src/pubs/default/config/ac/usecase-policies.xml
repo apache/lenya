@@ -197,6 +197,8 @@
   </usecase>
   <usecase id="admin.changePassword">
     <role id="admin"/>
+    <role id="edit"/>
+    <role id="review"/>
   </usecase>
   <usecase id="admin.changePasswordAdmin">
     <role id="admin"/>
