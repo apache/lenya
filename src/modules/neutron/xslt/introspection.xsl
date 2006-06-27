@@ -34,9 +34,9 @@
 
       <open url="{$context}/{$publication}/authoring/{$page-id}.xml" method="GET"/>
 
-      <checkout url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.usecase=neutron&amp;lenya.step=checkout" method="GET"/>
+      <checkout url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.module=neutron&amp;lenya.step=checkout" method="GET"/>
 
-      <save url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.usecase=neutron&amp;lenya.step=checkin" method="PUT"/>
+      <save url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.module=neutron&amp;lenya.step=checkin" method="PUT"/>
 
 
 

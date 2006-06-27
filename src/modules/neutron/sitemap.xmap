@@ -37,16 +37,17 @@
   </map:pipeline>
   
     <map:pipeline>
-      <map:match pattern="neutron" type="usecase">
+      
         <map:match pattern="checkout" type="step">
           <map:select type="resource-exists">
-          <map:parameter name="prefix" value="lenya://"/>
+          <map:parameter name="prefix" value="context://"/>
           <map:when test="lenya/pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}">
             <map:act type="reserved-checkout">
               <map:generate src="context://lenya/content/util/empty.xml"/>
               <map:serialize type="xml"  status-code="423"/>
             </map:act>
-            <map:generate src="lenya://lenya/pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
+            <map:generate src="context://lenya/pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
+            <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl" />
             <map:serialize type="xml" status-code="200" />
           </map:when>
           <map:otherwise>
@@ -60,7 +61,7 @@
           <map:generate src="context://lenya/content/util/empty.xml"/>
           <map:serialize type="xml"/>
         </map:match>
-      </map:match>
+      
     </map:pipeline>
   </map:pipelines>
 
