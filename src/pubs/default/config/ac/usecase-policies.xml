@@ -19,6 +19,10 @@
     
 <!--+++NOTE+++ The usecase list was initialized using modules/usecase-impl/xslt/initUsecasePolicies.xsl.-->
 <usecases xmlns="http://apache.org/cocoon/lenya/ac/1.0">
+  <usecase id="neutron">
+    <role id="admin"/>
+    <role id="edit"/>
+  </usecase>
   <usecase id="edit.bxe">
     <role id="admin"/>
     <role id="edit"/>
