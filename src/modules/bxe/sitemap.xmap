@@ -154,7 +154,6 @@
       </map:match>
       
       <map:match pattern="**/*.html">
-        
         <!--+
           | Build the BXE configuration
           +-->
@@ -181,7 +180,7 @@
             <!-- Instead of an xsl we use the xhtml file to provide the basic layout
               <map:parameter name="BX_xslfile" value="{2}.xsl"/>
             -->
-            <map:parameter name="BX_xhtmlfile" value="{../2}.bxe.html?rendertype=edit"/>
+            <map:parameter name="BX_xhtmlfile" value="{request:contextPath}/{../1}/{../2}.bxe.html?rendertype=edit"/>
             <map:parameter name="BX_validationfile" value="{resource-type:httpSchemaUri}"/>
             <map:parameter name="css" value="{request:contextPath}/lenya/css/default.css"/>
             <!-- The document is checked in when we exit from bx (in case of save&exit and in case of exit), so we use the usecase
