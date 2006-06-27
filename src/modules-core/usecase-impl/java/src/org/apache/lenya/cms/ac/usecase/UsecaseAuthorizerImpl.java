@@ -200,7 +200,7 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
         }
     }
 
-    protected static final String CONFIGURATION_FILE = "/config/ac/usecase-policies.xml";
+    protected static String CONFIGURATION_FILE = null;
     protected static final String PARAMETER_CONFIGURATION = "configuration";
 
     /**
@@ -242,6 +242,9 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
     }
 
     protected static final String AC_CONFIGURATION_FILE = "config/ac/ac.xconf".replace('/', File.separatorChar);
+    protected static final String AUTHORIZER_ELEMENT = "authorizer"; 
+    protected static final String TYPE_ATTRIBUTE = "type";
+    protected static final String USECASE_TYPE = "usecase";
     
     /**
      * Retrieves access control configuration of a specific publication.
@@ -255,6 +258,12 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
         if (configurationFile.isFile()) {
             try {
                 Configuration configuration = new DefaultConfigurationBuilder().buildFromFile(configurationFile);
+                Configuration[] authorizers = configuration.getChildren(AUTHORIZER_ELEMENT);
+                for (int i = 0; i < authorizers.length; i++) {
+                    if (authorizers[i].getAttribute(TYPE_ATTRIBUTE) == USECASE_TYPE) {
+                        this.CONFIGURATION_FILE = authorizers[i].getValue();
+                    }
+                }
                 return configuration;
             } catch (Exception e) {
                 throw new AccessControlException(e);
