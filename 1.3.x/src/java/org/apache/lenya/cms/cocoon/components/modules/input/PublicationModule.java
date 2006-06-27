@@ -1,4 +1,5 @@
 package org.apache.lenya.cms.cocoon.components.modules.input;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;

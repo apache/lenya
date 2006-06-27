@@ -4,41 +4,29 @@
    <map:pipelines>
       <map:pipeline>
          <map:match pattern="**">
-         <map:match pattern="**.html">
-            <map:generate src="cocoon:/{1}.xml"/>
-            <map:serialize type="xml"/>
-         </map:match>
-         <!-- xhtml/{view|edit}/{area}/{docpath}_{language}.xml -->
-         <map:match pattern="*/*/*/**_*.xml">
+            <!-- Remove extension -->
+            <map:match pattern="**.*">
+               <map:generate src="cocoon:/{1}"/>
+               <map:serialize type="xml"/>
+            </map:match>
             <!-- Step: View Revision from Lenya 1.2 -->
             <map:match type="step" pattern="view-revision">
                <map:generate type="serverpages" src="module:///../../../../content/rc/view.xsp"/>
                <map:transform src="module:///../../../../xslt/rc/toDoc.xsl"/>
                <map:transform src="module:///xhtml.xsl">
-                  <map:parameter name="rendertype" value="{2}"/>
                   <map:parameter name="nodeid" value="{page-envelope:document-node-id}"/>
-                  <map:parameter name="language" value="{page-envelope:document-language}"/>
                </map:transform>
                <map:serialize type="xml"/>
             </map:match>
-<!-- Revision: ?revision=live|edit|xxx -->           
-            <map:select type="parameter">
-               <map:parameter name="parameter-selector-test" value="{request-param:revision}"/>
-               <map:when test="">
-                  <map:generate src="content://{page-envelope:area}/{4}_{5}"/>
-               </map:when>
-               <map:otherwise>
-                  <map:generate src="content://{page-envelope:area}/{4}_{5}!{request-param:revision}"/>
-               </map:otherwise>
-            </map:select>
-            <map:transform src="module:///xhtml.xsl">
-               <map:parameter name="rendertype" value="{2}"/>
-               <map:parameter name="nodeid" value="{page-envelope:document-node-id}"/>
-               <map:parameter name="language" value="{page-envelope:document-language}"/>
-            </map:transform>
-            <map:serialize type="xml"/>
-         </map:match>
-         </map:match>
+            <!-- xhtml/{view|edit}/{area}/{docpath}_{language}.xml -->
+            <map:match pattern="{module:module}/**">
+               <map:generate src="content://{1}"/>
+               <map:transform src="module:///xhtml.xsl">
+                  <map:parameter name="nodeid" value="{page-envelope:document-node-id}"/>
+               </map:transform>
+               <map:serialize type="xml"/>
+           </map:match>
+       </map:match>
       </map:pipeline>
    </map:pipelines>
 </map:sitemap>

@@ -50,6 +50,7 @@ public class ModuleSourceFactory
     }
 
     public Source getSource(String location, Map parameters) throws IOException, MalformedURLException {
+//System.out.println("MSF LOC=" + location);
        int pos;
        Map contextmap = ContextHelper.getObjectModel(context);
        org.apache.cocoon.environment.http.HttpContext httpcontext = 
@@ -99,6 +100,15 @@ public class ModuleSourceFactory
        pos = location.indexOf(":///");
        int endpos;
        String module = getModuleID(uri);
+       // BUG ALERT: 
+       // <map:mount> tries both module://module/filepath and module://module/
+       // If filepath has a default, the second attempt will error.
+       // Not having the default destroys Flow:
+       //    source = resolver.resolveURI("cocoon:/pipeline");
+       //    var is = new Packages.org.xml.sax.InputSource(source.getInputStream());
+       // This errors.
+       // Every Module must have a module.xmap (even if it is empty)!
+//       String filepath = "";
        String filepath = "module.xmap";
        if(pos != -1){
           // module:/filepath/filename.ext
@@ -109,12 +119,14 @@ public class ModuleSourceFactory
 	    if(pos != -1){
              // module://modulename/filepath/filename.ext
              pos += 3;
-             endpos = location.indexOf("/", pos);
+             endpos = location.indexOf("/", pos + 1);
              if(endpos > 0){
                 module = location.substring(pos, endpos);
                 filepath = location.substring(endpos + 1);
+//System.out.println("MSF MOD=" + module + "  FIL=" + filepath);
              }else{
                 module = location.substring(pos);
+//System.out.println("MSF MOD=" + module + "  POS=" + pos);
              }
           }else{
              pos = location.indexOf(":/");
@@ -144,6 +156,7 @@ public class ModuleSourceFactory
        // Verify
        if(publication.length() < 1) throw new MalformedURLException("No Publication ID found.");
        if(module.length() < 1) module = getModuleID(uri);
+       // BUG ALERT: See descrption above about no default 
        if(filepath.length() < 1) filepath = "module.xmap";
        //Check current publication
        if(!modules.isAllowed(module)) 
@@ -184,6 +197,7 @@ public class ModuleSourceFactory
        }catch(java.io.IOException ioe1){
        }
        if (resolver != null) manager.release(resolver);
+//System.out.println("Not found: " + publication + "/" + module + "/" + filepath);
        throw new SourceNotFoundException("Not found: " + publication + "/" + module + "/" + filepath);
     }
 

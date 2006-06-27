@@ -19,7 +19,7 @@
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   <map:components/>
   <map:views>
-    <map:view from-label="aggregation" name="aggregation">
+    <map:view from-label="debug" name="debug">
       <map:serialize type="xml"/>
     </map:view>
   </map:views>
@@ -57,13 +57,25 @@
     </map:component-configurations>
 
     <map:pipeline>
+<!-- For editing flat content.  Wait until the ResourceType Modules are complete.
+            <map:select type="parameter">
+               <map:parameter name="parameter-selector-test" value="{publication:contenttype}"/>
+               <map:when test="flat">
+                  <map:act type="resource-exists" src="module://edit/module.xmap">
+                     <map:generate src="cocoon://edit/module.xmap"/> 
+                     <map:serialize type="html"/>
+                  </map:act>
+               </map:when>
+            </map:select>
+-->
+
+      <map:match pattern="{module:module}">
+        <map:redirect-to uri="{module:module}/index.html"/>
+      </map:match>
       <map:match pattern="**/">
         <map:redirect-to uri="index.html"/>
-        <!--<map:redirect-to uri="{1}.html"/>-->
       </map:match>
-    </map:pipeline>
-    
-    <map:pipeline>
+
       <!-- pattern="{rendertype}/{area}/{doctype}/{document-path}" -->
       <!-- NOTE: rendertype seems to be 'edit' or 'view' -->
       <map:match pattern="lenya-document-*/*/*/**.xml">
@@ -112,12 +124,12 @@
     <map:pipeline>
       <!-- /lenyabody-{rendertype}/{publication-id}/{area}/{doctype}/{url} -->
       <map:match pattern="lenyabody-*/*/*/*/**">
-        <map:aggregate element="cmsbody">
+        <map:aggregate element="cmsbody" label="debug">
           <map:part src="cocoon://navigation/{2}/{3}/breadcrumb/{5}.xml"/>
           <map:part src="cocoon://navigation/{2}/{3}/tabs/{5}.xml"/>
           <map:part src="cocoon://navigation/{2}/{3}/menu/{5}.xml"/>
           <map:part src="cocoon://navigation/{2}/{3}/search/{5}.xml"/>
-          <map:part src="cocoon:/lenya-document-{1}/{3}/{4}/{page-envelope:document-path}"/>
+          <map:part src="cocoon:/lenya-document-{1}/{3}/{4}/{page-envelope:document-path}" label="xdebug"/>
         </map:aggregate>
         <map:transform src="module:///../../xslt/page2xhtml-{4}.xsl">
           <map:parameter name="root" value="{page-envelope:context-prefix}/{2}/{3}"/>
@@ -151,20 +163,11 @@
       
       <map:match pattern="**.html">
         <map:act type="language-exists">
-              <map:generate src="cocoon:/lenyabody-view/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-url}"/>
+              <map:generate src="cocoon:/lenyabody-view/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-url}" label="debug"/>
               <map:match pattern="authoring/**.html">
                 <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{../../1}.xml?doctype={page-envelope:document-type}"/>
               </map:match>
               <map:transform src="module:///../../../../xslt/util/strip_namespaces.xsl"/>
-              <map:match pattern="live/**.html">
-                <map:transform src="module:///../../../../xslt/authoring/edit/addSourceTags.xsl">
-                  <map:parameter name="source" value="{global:cache-dir}/live/{1}.html"/>
-                </map:transform>
-                <map:transform type="write-source">
-                  <map:parameter name="serializer" value="xhtml"/>
-                </map:transform>
-                <map:transform src="module:///../../../../xslt/authoring/edit/removeSourceTags.xsl"/>
-              </map:match>
               <map:serialize type="xhtml"/>
         </map:act>
 

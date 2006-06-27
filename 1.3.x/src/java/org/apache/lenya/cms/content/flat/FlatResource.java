@@ -1,10 +1,12 @@
 package org.apache.lenya.cms.content.flat;
 
 import java.io.File;
+import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.List;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.lenya.cms.content.Resource;
-//import org.apache.lenya.cms.content.Translation;
 import org.apache.lenya.xml.DocumentHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -20,37 +22,55 @@ public class FlatResource implements Resource {
    String type = "xml";
    String doctype = "";
    String defaultLanguage = "en";
+   String defaultLanguageParameter = "";
    String defaultRevision = "live";
    String extension = "";
-   String[] languages = {"en"};
+   String[] languages;
+   boolean isChanged = false;
 
    public FlatResource(File directory, String punid, String language, String revision){
       contentDirectory = directory;
       unid = punid;
-      defaultLanguage = language;
+      if(language.length() > 0) defaultLanguage = language;
       defaultRevision = revision;
       init(false);
    }
    public FlatResource(File directory, String punid, String language){
       contentDirectory = directory;
       unid = punid;
-      defaultLanguage = language;
+      if(language.length() > 0) defaultLanguage = language;
       init(false);
    }
    public FlatResource(File directory, String punid){
       contentDirectory = directory;
       unid = punid;
-//TODO: defaultLanguage = Publication's default language.
       init(true);
    }
-   private void init(boolean useDefaultLanguage){
+   private void init(boolean puseDefaultLanguage){
+      boolean useDefaultLanguage = puseDefaultLanguage;
+      //Check if unid_lang!revision format
+      int pos = unid.lastIndexOf("!");
+      if(pos > 0){
+         defaultRevision = unid.substring(pos);
+         unid = unid.substring(0, pos);
+      }
+      pos = unid.lastIndexOf("_");
+      if(pos > 0){
+         defaultLanguage = unid.substring(pos);
+         unid = unid.substring(0, pos);
+         useDefaultLanguage = false;
+      }
+//TODO: defaultLanguage = Publication's default language.
       resourceDirectory = new File(contentDirectory, "resource" + File.separator + unid);
       try{
          resource = DocumentHelper.readDocument(new File(resourceDirectory, "resource.xml"));
          root = resource.getDocumentElement();
+         if(root.hasAttribute("defaultlanguage")){
+            defaultLanguageParameter = root.getAttribute("defaultlanguage");
+         }
          if(useDefaultLanguage){
-            if(root.hasAttribute("defaultlanguage")){
-              defaultLanguage = root.getAttribute("defaultlanguage");
+            if(defaultLanguageParameter.length() > 0){
+               defaultLanguage = defaultLanguageParameter;
             }else{
 //TODO: Use Publication's Default Language
             }
@@ -58,13 +78,16 @@ public class FlatResource implements Resource {
          if(root.hasAttribute("doctype")) doctype = root.getAttribute("doctype");
          if(root.hasAttribute("type")) type = root.getAttribute("type");
          if(root.hasAttribute("id")) id = root.getAttribute("id");
-         NodeList ts = root.getElementsByTagName("translation");
-         int length = ts.getLength();
-         languages = new String[length];
+         String[] files = resourceDirectory.list();
+         int length = files.length;
+         int count = 0;
+         List list = new ArrayList();
          for(int i = 0; i < length; i++){
-            Element t = (Element) ts.item(i);
-            languages[i] = t.getAttribute("language");
+            File file = new File(resourceDirectory, files[i]);
+            if(file.isDirectory()) list.add(files[i]);
          }
+         languages = (String[]) list.toArray(new String[0]);
+         Arrays.sort(languages);
       }catch(javax.xml.parsers.ParserConfigurationException pce){
       }catch(org.xml.sax.SAXException saxe){
       }catch(java.io.IOException ioe){
@@ -122,7 +145,7 @@ public class FlatResource implements Resource {
       try{
          return getTranslation(language).getRevision(revision).getTitle();
       }catch(java.lang.NullPointerException npe){
-System.out.println("FR.gTitle NPE UNID=" + unid);
+System.out.println("FlatResource.getTitle NullPointerException UNID=" + unid);
          return "";
       }
    }
@@ -185,14 +208,150 @@ System.out.println("FR.gTitle NPE UNID=" + unid);
       FlatRevision revision = translation.getRevision(defaultRevision);
       if(null == revision) return false;
       boolean exists = revision.exists();
-      if(getTitle().length() < 1){
-         System.out.println("Exists=" + exists + " U=" + unid + " L=" + defaultLanguage + " R=" + defaultRevision);
-         return false;
-      }
+//DEV TEST
+//      if(getTitle().length() < 1){
+//         System.out.println("Exists=" + exists + " U=" + unid + " L=" + defaultLanguage + " R=" + defaultRevision);
+//         return false;
+//      }
       try{
          return getTranslation(defaultLanguage, false).getRevision(defaultRevision).exists();
       }catch(java.lang.NullPointerException npe){
          return false;
       }
+   }
+   public Document getInfoDocument(){
+      Document document;
+      try{
+         document = org.apache.lenya.xml.DocumentHelper.createDocument("", "resource", null);
+      }catch(javax.xml.parsers.ParserConfigurationException pce){
+         System.out.println("Resource InfoDocument: ParserConfigurationException");
+         return (Document) null;
+      }
+      Element root = document.getDocumentElement();
+      root.setAttribute("unid", unid);
+      root.setAttribute("type", type);
+      root.setAttribute("id", id);
+      if(defaultLanguageParameter.length() > 0) root.setAttribute("defaultlanguage", defaultLanguageParameter);
+      if(doctype.length() > 0) root.setAttribute("doctype", doctype);
+      String tmp;
+      for(int l = 0; l < languages.length; l++){
+         Element te = addElement(document, root, "translation");
+         te.setAttribute("language", languages[l]);
+         FlatTranslation translation = getTranslation(languages[l]);
+         tmp = translation.getEdit();
+         if(tmp.length() > 0) te.setAttribute("edit", tmp);
+         tmp = translation.getLive();
+         if(tmp.length() > 0) te.setAttribute("live", tmp);
+         String[] revisions = translation.getRevisions();
+         for(int r = 0; r < revisions.length; r++){
+            Element re = addElement(document, te, "revision");
+            re.setAttribute("revision", revisions[r]);
+            FlatRevision revision = translation.getRevision(revisions[r]);
+            tmp = revision.getTitle();
+            if(tmp.length() > 0) re.setAttribute("title", tmp);
+            tmp = revision.getExtension();
+            if(tmp.length() > 0) re.setAttribute("extension", tmp);
+            tmp = revision.getHREF();
+            if(tmp.length() > 0) re.setAttribute("href", tmp);
+         }            
+      }
+      return document;
+   }
+   /* Used by getInfoDocument() */
+   private Element addElement(Document document, Element parent, String newElementName){
+      Element newElement = document.createElement(newElementName);
+      parent.appendChild(newElement);
+      return newElement;
+   }
+   public Document update(Document document){
+      Element root = document.getDocumentElement();
+      if(root.hasAttribute("id")) setID(root.getAttribute("id"));
+      if(root.hasAttribute("defaultlanguage")) setDefaultLanguage(root.getAttribute("defaultlanguage"));
+      save();
+      NodeList translations = root.getElementsByTagName("translation");
+      int translationslength = translations.getLength();
+      FlatTranslation ft = null;
+      for(int t = 0; t < translationslength; t++){
+         Element translation = (Element) translations.item(t);
+         String language = translation.getAttribute("language");
+         boolean exist = true;
+         if(translation.hasAttribute("action")){
+            String action = translation.getAttribute("action");
+            if(action.equalsIgnoreCase("delete")){
+               deleteTranslation(language);
+               exist = false;
+            }
+         }
+         if(exist){
+            ft = getTranslation(language, false);
+            if(null == ft) exist = false;
+         }
+         if(exist){
+            if(translation.hasAttribute("live")) ft.setLive(translation.getAttribute("live"));
+            if(translation.hasAttribute("edit")) ft.setEdit(translation.getAttribute("edit"));
+            NodeList revisions = translation.getElementsByTagName("revision");
+            int revisionslength = revisions.getLength();
+            for(int r = 0; r < revisionslength; r++){
+              Element revision = (Element) revisions.item(t);
+              if(revision.hasAttribute("action")){
+                 String action = revision.getAttribute("action");
+                 if(action.equalsIgnoreCase("delete")){
+                    String revisionid = revision.getAttribute("revision");
+                    ft.deleteRevision(revisionid);
+                  }
+               }
+            }
+            ft.save();
+         }
+      }
+      return document;
+   }
+   private void setID(String newid){
+      if(!id.equals(newid)){
+//        id = newid;
+// TODO: Must update Structures
+      }   
+//      isChanged = true;
+   }
+   private void setDefaultLanguage(String language){
+      defaultLanguageParameter = language;
+      defaultLanguage = language;
+      isChanged = true;
+   }
+   private void deleteTranslation(String language){
+      File translationDirectory = new File(resourceDirectory, language);
+//TODO: Backup before delete.  Use renameTo() to move outside the resource directory.
+      translationDirectory.delete();
+   }
+   private void save(){
+      if(isChanged){
+         File file = new File(resourceDirectory, "resource.xml");
+         Document doc;
+         try{
+            doc = DocumentHelper.readDocument(file);
+         }catch(javax.xml.parsers.ParserConfigurationException pce){
+System.out.println("FlatResource.save - ParserConfigurationException:" + file.getAbsolutePath());
+            return;
+         }catch(org.xml.sax.SAXException saxe){
+System.out.println("FlatResource.save - SAXException:" + file.getAbsolutePath());
+            return;
+         }catch(java.io.IOException ioe){
+System.out.println("FlatResource.save - Could not read file:" + file.getAbsolutePath());
+            return;
+         }
+         root = doc.getDocumentElement();
+         root.setAttribute("defaultlanguage", defaultLanguageParameter);
+         root.setAttribute("id", id);
+         try{
+            DocumentHelper.writeDocument(doc, file);
+         }catch(javax.xml.transform.TransformerConfigurationException tce){
+System.out.println("FlatResource.save - TransformerConfigurationException:" + file.getAbsolutePath());
+         }catch(javax.xml.transform.TransformerException te){
+System.out.println("FlatResource.save - TransformerException:" + file.getAbsolutePath());
+         }catch(java.io.IOException ioe2){
+System.out.println("FlatResource.save - Could not write file:" + file.getAbsolutePath());
+         }
+      }
+      isChanged = false;
    }
 }

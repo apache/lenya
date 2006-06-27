@@ -133,7 +133,10 @@
     </map:transformer>
 
 <!-- Lenya 1.3 BEGIN -->
-    <map:transformer name="create-revision" logger="sitemap.transformer.create-revision" src="org.apache.lenya.cms.content.flat.CreateRevisionTransformer"/>
+    <map:transformer name="create-revision" logger="sitemap.transformer.create-revision"
+          src="org.apache.lenya.cms.content.flat.CreateRevisionTransformer"/>
+    <map:transformer name="resource" logger="sitemap.transformer.resource"
+          src="org.apache.lenya.cms.content.ResourceTransformer"/>
 <!-- Lenya 1.3 END -->
 
   </map:transformers>

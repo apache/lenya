@@ -33,8 +33,6 @@ import org.apache.lenya.cms.publication.Publication;
 
 /**
  * Retrieves Content Variables from the appropriate Resource
- * 
- * Variables are specified as <module name="modulename"><variable name="{variablename}">{value}</variable></module>
  */
 public class ContentModule extends AbstractPageEnvelopeModule implements Serviceable, Contextualizable, ThreadSafe {
     private ServiceManager manager;
@@ -52,13 +50,16 @@ public class ContentModule extends AbstractPageEnvelopeModule implements Service
         Publication pub = pe.getPublication();
         String publication = pub.getId();
         Content content = pub.getContent();
-//        Resource resource = content.getResource();
-//        if(name.equalsIgnoreCase("type")) return resource.getType();
-//        if(name.equalsIgnoreCase("doctype")) return resource.getDocumentType();
-//        if(name.equalsIgnoreCase("documenttype")) return resource.getDocumentType();
-//        if(name.equalsIgnoreCase("defaultlanguage")) return resource.getDefaultLanguage();
-//        if(name.equalsIgnoreCase("extension")) return resource.getExtension();
-        return "test";
+        String unid = "";
+        int pos = name.indexOf(":");
+        if(pos < 1) return "error";
+        unid = name.substring(pos + 1);
+        name = name.substring(0, pos);
+        Resource resource = content.getResource(unid);
+        if(name.equalsIgnoreCase("type")) return resource.getType();
+        if(name.equalsIgnoreCase("doctype") || name.equalsIgnoreCase("documenttype")) return resource.getDocumentType();
+        if(name.equalsIgnoreCase("defaultlanguage")) return resource.getDefaultLanguage();
+        return "";
     }
 
     /**

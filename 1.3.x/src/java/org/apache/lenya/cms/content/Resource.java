@@ -2,9 +2,9 @@ package org.apache.lenya.cms.content;
 
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceNotFoundException;
+import org.w3c.dom.Document;
 
 public interface Resource{
-/* These 3 functions are called URI (in preparation for JCR) but return filenames. */
    public String getURI();
    public String getMetaURI();
    public String getNewURI();
@@ -16,6 +16,8 @@ public interface Resource{
    public String getLanguage();
    public String getDefaultLanguage();
    public String[] getLanguages();
+   public Document getInfoDocument();
+   public Document update(Document document);
 
 /**
  * Get Navigation Title from live revision of current language.

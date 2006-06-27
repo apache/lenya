@@ -21,21 +21,29 @@ public class HierarchicalContent implements Content{
 //WORK?  Filter by language and transform sitetree to index XML.
    }
    public String getUNID(String structure, String id){
-      return structure + File.separator + id;
+      return id;
    }
    public String[] getLanguages(){
       return languages;
    }
    public String getURI(String unid, String language, String revision){
-      return new File(directory, revision + File.separator + unid + File.separator + "index_" + language +"." + ".xml").getPath();
+      String area = revision;
+      if(area.equalsIgnoreCase("edit")) area = "authoring";
+      return new File(directory, area + unid + File.separator + "index_" + language +".xml").getPath();
    }
    public String getMetaURI(String unid, String language, String revision){
-      return new File(directory, revision + File.separator + unid + File.separator + "index_" + language +"." + ".xml").getPath();
+      String area = revision;
+      if(area.equalsIgnoreCase("edit")) area = "authoring";
+      return new File(directory, area + unid + File.separator + "index_" + language +".xml").getPath();
    }
    public String getNewURI(String unid, String language){
-      return new File(directory, "live" + File.separator + unid + File.separator + getDateString() + "_" + language +"." + ".xml").getPath();
+      return new File(directory, "live" + unid + File.separator + getDateString() + "_" + language +".xml").getPath();
    }
    private String getDateString(){
       return Long.toString(new java.util.Date().getTime());
+   }
+   public Resource getResource(String unid){
+//TODO: HierarchicalResource
+      return (Resource) null;
    }
 }

@@ -42,21 +42,21 @@ public class ModuleModule extends AbstractPageEnvelopeModule implements Servicea
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
      *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
-
+    private String module = "";
+    private String program = "";  //Name of calling file
+    private String process = "";  //Name of calling file without extension
     public Object getAttribute(String name, Configuration modeConf, Map objectModel) throws ConfigurationException {
         if(getLogger().isDebugEnabled()) {
            getLogger().debug("Resolving [" + name + "]");
         }
+        init();
+        //Standard Variables
+        if(name.equalsIgnoreCase("module")) return module;
+        //Module Variables
         PageEnvelope pe = getEnvelope(objectModel);
         Publication pub = pe.getPublication();
         String publication = pub.getId();
         Modules modules = pub.getModules();
-        String module = getModuleID();
-        if(name.equalsIgnoreCase("module")) return module;
-//TEST
-//String ret = modules.getVariable(publication, module, name);
-//System.out.println("VAR:" + publication  + "." + module + "." + name+"="+ ret);
-//return ret;
         return modules.getVariable(publication, module, name);
     }
 
@@ -96,9 +96,8 @@ public class ModuleModule extends AbstractPageEnvelopeModule implements Servicea
     public void configure(Configuration conf) throws ConfigurationException {
         super.configure(conf);
     }
-   private String getModuleID() {
+   private void init() {
         String uri = "";
-        String module = "";
         try{
            SourceResolver resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
            Source source = resolver.resolveURI("");
@@ -115,17 +114,5 @@ public class ModuleModule extends AbstractPageEnvelopeModule implements Servicea
         StringTokenizer tokens = new StringTokenizer(uri, "/");
         while(tokens.hasMoreTokens() && !(tokens.nextToken().equals("modules")));
         if(tokens.hasMoreTokens()) module = tokens.nextToken();
-/* Obsolete
-        int pos = uri.indexOf("modules/");
-        if(pos > -1){
-             pos += "modules/".length();
-             int endpos = uri.indexOf("/", pos);
-             if(endpos > -1){
-               module = uri.substring(pos, endpos);
-             }else module = uri.substring(pos);
-        }
-*/
-        // Finish
-        return module;
    }
 }

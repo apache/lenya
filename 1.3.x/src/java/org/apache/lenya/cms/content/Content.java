@@ -12,4 +12,5 @@ public interface Content{
    public String getUNID(String structure, String id);
    public String getIndexFilename(String indexName, String language);
    public String[] getLanguages();
+   public Resource getResource(String unid);
 }

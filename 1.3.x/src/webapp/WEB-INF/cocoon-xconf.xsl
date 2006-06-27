@@ -128,6 +128,7 @@
     <xsl:apply-templates/>
     <component-instance class="org.apache.lenya.cms.cocoon.components.source.impl.ModuleSourceFactory" name="module"/>
     <component-instance class="org.apache.lenya.cms.cocoon.components.source.impl.ContentSourceFactory" name="content"/>
+    <component-instance class="org.apache.lenya.cms.cocoon.components.source.impl.VirtualSourceFactory" name="virtual"/>
   </xsl:copy>
 </xsl:template>
 

@@ -31,6 +31,11 @@ import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
+
+import org.apache.lenya.cms.content.Resource;
+import org.w3c.dom.Document;
+
+
 /**
  * Implements content: protocol.
  * This should call the Content API that calls a Content Impl.
@@ -47,6 +52,10 @@ import org.apache.lenya.cms.publication.PublicationFactory;
 
 public class ContentSourceFactory
     implements SourceFactory, ThreadSafe, URIAbsolutizer, Contextualizable {
+
+    private static final int REQUEST_DATA = 0;
+    private static final int REQUEST_META = 1;
+    private static final int REQUEST_INFO = 2;
 
     protected org.apache.avalon.framework.context.Context context;
     private String servletContextPath;
@@ -66,7 +75,7 @@ public class ContentSourceFactory
        org.apache.cocoon.environment.http.HttpContext httpcontext = 
              (org.apache.cocoon.environment.http.HttpContext) contextmap.get("context");
        servletContextPath = httpcontext.getRealPath("");
-//WORK: Move resolver, pubsPrefix and other init out of getSource().  Make static?
+//TODO: Move resolver, pubsPrefix and other init out of getSource().  Make static?
         ComponentManager manager = CocoonComponentManager.getSitemapComponentManager();
         try{
            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
@@ -87,11 +96,12 @@ public class ContentSourceFactory
         }
        String publication;
        String contentpath;
+       Publication pub;
        Content content;
        try{
             PageEnvelope envelope = 
                   PageEnvelopeFactory.getInstance().getPageEnvelope(ContextHelper.getObjectModel(context));
-            Publication pub = envelope.getPublication();
+            pub = envelope.getPublication();
             publication = pub.getId();
             content = pub.getContent();
             contentpath = pub.getContentDirectory().getAbsolutePath() + File.separator;
@@ -99,6 +109,15 @@ public class ContentSourceFactory
             throw new MalformedURLException("Could not get Publication ID.");
         }
        // Decide Usage
+       // Content or Meta
+       int requestType = REQUEST_DATA;
+       pos = location.indexOf(":::");
+       if(pos != -1){
+          requestType = REQUEST_INFO;
+       }else{
+          pos = location.indexOf("::");
+          if(pos != -1) requestType = REQUEST_META;
+       }
        //Revision
        String revision = "live";
        pos = location.lastIndexOf("!");
@@ -113,12 +132,12 @@ public class ContentSourceFactory
           language = location.substring(pos + 1);
           location = location.substring(0, pos);
        }
-//WORK: Set language to document or publication's default if not specified.
-       pos = location.indexOf(":///");
+//TODO: Set language to document or publication's default if not specified.
        int endpos;
        String structure = "";
        String unid = "";
        String fullid = "";
+       pos = location.indexOf(":///");
        if(pos != -1){
           // content:///parents/resourceID
           //Guess structure?
@@ -132,6 +151,7 @@ public class ContentSourceFactory
              if(endpos > 0){
                 structure = location.substring(pos, endpos);
                 fullid = location.substring(endpos + 1);
+//System.out.println("CSF SF S=" + structure + "  F=" + fullid);
              }else{
                 structure = location.substring(pos);
              }
@@ -157,45 +177,42 @@ public class ContentSourceFactory
        if(unid.length() < 1){
           unid = content.getUNID(structure, "/" + fullid);
        }
+       if(language.length() < 1){
+          Resource resource = content.getResource(unid);
+          if(resource != null) language = resource.getDefaultLanguage();
+       }
+       if(language.length() < 1) language = pub.getDefaultLanguage();
 
-       /********** Get Source *************/
-       String resourcepath = contentpath + "resource" + File.separator + unid + File.separator;
-       String resourcefile = resourcepath + "resource.xml";
-       String translationfile = resourcepath + language + File.separator + "translation.xml";
-       String revisionfile = resourcepath + language + File.separator + revision + ".xml";
-
-       //Revision as filename
-       try{
-          Source source = resolver.resolveURI(revisionfile);
+       /********** Get Source (uses Content) *************/
+       Source source;
+       if(REQUEST_INFO == requestType){
+//TODO: Catch errors
+          Resource resource = content.getResource(unid);
+if(resource == null) System.out.println("NO RESOURCE");
+          Document doc = resource.getInfoDocument();
+if(doc == null) System.out.println("NO DOC");
+          source = new StringSource(manager, doc);
+if(source == null) System.out.println("NO SOURCE");
+          return source;
+       }
+       if(REQUEST_META == requestType){
+          source = resolver.resolveURI(content.getMetaURI(unid, language, revision));
           if(source.exists()){
-            if (resolver != null) manager.release(resolver);
+             if (resolver != null) manager.release(resolver);
              return source;
           }
-       }catch(java.net.MalformedURLException mue2){
-       }catch(java.io.IOException ioe1){
        }
-       //Revision as translation parameter
-       try{
-//IOException!!!
-          File tf = new File(translationfile);
-          Configuration config = builder.buildFromFile(tf);
-          String newrevision = config.getAttribute(revision, null);
-          revisionfile = resourcepath + language + File.separator + newrevision + ".xml";
-System.out.println("REV2=" + revisionfile);
-             Source source = resolver.resolveURI(revisionfile);
-             if(source.exists()){
-               if (resolver != null) manager.release(resolver);
-                return source;
-             }
-       }catch(org.xml.sax.SAXException se){
-       }catch(org.apache.avalon.framework.configuration.ConfigurationException ce){
-       }catch(java.net.MalformedURLException mue2){
-       }catch(java.io.IOException ioe1){
-System.out.println("IOE=" + ioe1.getMessage());
+//System.out.println("CSF UNID=" + unid + " LANG=" + language + "  REV=" + revision);
+      
+       String curi = content.getURI(unid, language, revision);
+//System.out.println("CSF CURI=" + curi);
+       source = resolver.resolveURI(curi);
+       if(source.exists()){
+          if (resolver != null) manager.release(resolver);
+          return source;
        }
-
        if (resolver != null) manager.release(resolver);
-       throw new SourceNotFoundException("Not found: " + plocation);
+       throw new SourceNotFoundException("Not found: " + plocation + " (" + curi + ")");
     }
     public void release(Source source1) {
     }

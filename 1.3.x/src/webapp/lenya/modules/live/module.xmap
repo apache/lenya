@@ -17,28 +17,27 @@
                   <map:redirect-to uri="index.html"  session="false"/>
                </map:match>
                <map:match pattern="**/index*">
-                  <map:act type="resource-exists" src="module://homepage">
+                  <map:act type="resource-exists" src="module://homepage/module.xmap">
                      <map:mount uri-prefix="" src="module://homepage/module.xmap"/> 
                      <map:serialize type="html"/>
                   </map:act>
                </map:match>
             <!-- Get the current document -->
-            <map:match pattern="*/cocoon/live/**">
+            <map:match pattern="*/cocoon/{module:module}/**">
                <map:aggregate element="cmsbody">
-                  <map:part src="cocoon://{publication:publication}/session/info"/>
                   <map:part src="cocoon://{publication:publication}/navigation/breadcrumb{page-envelope:document-id}_{page-envelope:document-language}"/>
                   <map:part src="cocoon://{publication:publication}/navigation/tabs{page-envelope:document-id}_{page-envelope:document-language}"/>
                   <map:part src="cocoon://{publication:publication}/navigation/menu{page-envelope:document-id}_{page-envelope:document-language}"/>
                   <map:part src="cocoon://{publication:publication}/navigation/search{page-envelope:document-id}_{page-envelope:document-language}"/>
 <!--  WORK: Get doctype from Resource -->
-                  <map:part src="cocoon://{publication:publication}/xhtml/view/live/{2}"/>
+                  <map:part src="cocoon://{publication:publication}/xhtml/{module:module}/{2}"/>
                </map:aggregate>
-               <map:transform type="i18n" label="debug">
+               <map:transform type="i18n">
                   <map:parameter name="locale" value="{page-envelope:document-language}"/>
                </map:transform>
                <map:transform src="module:///page2xhtml.xsl">
                  <map:parameter name="contenttype" value="{publication:contenttype}"/>
-                 <map:parameter name="root" value="{page-envelope:context-prefix}/{publication:publication}/live"/>
+                 <map:parameter name="root" value="{page-envelope:context-prefix}/{publication:publication}/{module:module}"/>
                  <map:parameter name="url" value="{2}"/>
                  <map:parameter name="document-id" value="{page-envelope:document-id}"/>
                  <map:parameter name="document-name" value="{page-envelope:document-name}"/>

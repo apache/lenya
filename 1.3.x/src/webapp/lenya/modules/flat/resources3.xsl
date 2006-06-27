@@ -36,16 +36,17 @@
 </xsl:template>
 
 <xsl:template match="translation">
-<xsl:variable name="editf"><xsl:value-of select="file[@area='authoring']/@time"/></xsl:variable>
-<xsl:variable name="edit"><xsl:choose>
-   <xsl:when test="string-length($editf) &gt; 0"><xsl:value-of select="$editf"/></xsl:when>
-   <xsl:otherwise>1</xsl:otherwise>
-</xsl:choose></xsl:variable>
 
 <xsl:variable name="livef"><xsl:value-of select="file[@area='live']/@time"/></xsl:variable>
 <xsl:variable name="live"><xsl:choose>
    <xsl:when test="string-length($livef) &gt; 0"><xsl:value-of select="$livef"/></xsl:when>
    <xsl:otherwise>1</xsl:otherwise>
+</xsl:choose></xsl:variable>
+
+<xsl:variable name="editf"><xsl:value-of select="file[@area='authoring']/@time"/></xsl:variable>
+<xsl:variable name="edit"><xsl:choose>
+   <xsl:when test="string-length($editf) &gt; 0"><xsl:value-of select="$editf"/></xsl:when>
+   <xsl:otherwise><xsl:value-of select="$live"/></xsl:otherwise>
 </xsl:choose></xsl:variable>
 
   <xsl:copy><xsl:apply-templates select="@*"/>

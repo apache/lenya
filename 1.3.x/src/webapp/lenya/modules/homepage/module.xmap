@@ -17,12 +17,11 @@
             <!-- Get the current document -->
             <map:match pattern="*/cocoon/**">
                <map:aggregate element="cmsbody">
-                  <map:part src="cocoon://{publication:publication}/session/info"/>
                   <map:part src="cocoon://{publication:publication}/navigation/breadcrumb{page-envelope:document-id}_{page-envelope:document-language}"/>
                   <map:part src="cocoon://{publication:publication}/navigation/tabs{page-envelope:document-id}_{page-envelope:document-language}"/>
                   <map:part src="cocoon://{publication:publication}/navigation/menu{page-envelope:document-id}_{page-envelope:document-language}"/>
                   <map:part src="cocoon://{publication:publication}/navigation/search{page-envelope:document-id}_{page-envelope:document-language}"/>
-                  <map:part src="cocoon://{publication:publication}/xhtml/view/live/index_{page-envelope:document-language}.html"/>
+                  <map:part src="cocoon://{publication:publication}/xhtml/live/index_{page-envelope:document-language}.html"/>
                </map:aggregate>
                <map:transform type="i18n" label="debug">
                   <map:parameter name="locale" value="{page-envelope:document-language}"/>

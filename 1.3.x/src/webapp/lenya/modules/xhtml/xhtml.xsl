@@ -9,16 +9,13 @@
     exclude-result-prefixes="xhtml lenya"
     >
 
-<xsl:param name="rendertype" select="''"/>
 <xsl:param name="nodeid"/>
 
 <xsl:template match="/xhtml:html">
 <xhtml:html>
   <xsl:copy-of select="lenya:meta"/>
   <div id="body">
-    <xsl:if test="$rendertype = 'edit'">
-      <xsl:attribute name="bxe_xpath">/xhtml:html/xhtml:body</xsl:attribute>
-    </xsl:if>
+    <xsl:attribute name="bxe_xpath">/xhtml:html/xhtml:body</xsl:attribute>
     <xsl:apply-templates select="xhtml:body/node()"/>
   </div>
 </xhtml:html>

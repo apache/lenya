@@ -13,6 +13,7 @@ import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.caching.CacheableProcessingComponent;
 import org.apache.cocoon.components.source.SourceUtil;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.cocoon.generation.AbstractGenerator;
 import org.apache.cocoon.generation.ServiceableGenerator;
 import org.apache.excalibur.xml.sax.XMLConsumer;
 import org.apache.excalibur.source.Source;
@@ -23,16 +24,7 @@ import org.apache.lenya.cms.publication.PageEnvelopeException;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationFactory;
-
 import org.xml.sax.SAXException;
-/*
-import org.xml.sax.InputSource;
-import org.xml.sax.XMLReader;
-import org.xml.sax.XMLReaderFactory;
-*/
-
-import org.apache.cocoon.ProcessingException;
-import org.apache.cocoon.generation.AbstractGenerator;
 
 /**
  * The <code>SitetreeGenerator</code> is a class that reads XML from a source

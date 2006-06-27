@@ -97,11 +97,13 @@
             </map:call>
         </map:act>
 <!-- Navigation XSL -->
-        <map:generate src="cocoon:/sitetree/{2}"/>
-        <map:call resource="finish">
-           <map:parameter name="stylesheet" value="/{1}.xsl"/>
-           <map:parameter name="url" value="{2}.html"/>
-        </map:call>
+        <map:act type="resource-exists" src="module:///{1}.xsl">
+           <map:generate src="cocoon:/sitetree/{../2}"/>
+           <map:call resource="finish">
+              <map:parameter name="stylesheet" value="/{../1}.xsl"/>
+              <map:parameter name="url" value="{../2}.html"/>
+           </map:call>
+        </map:act>
       </map:match>
 <!-- Default -->
         <map:generate src="cocoon:/sitetree/index"/>

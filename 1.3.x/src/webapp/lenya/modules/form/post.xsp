@@ -5,7 +5,10 @@
 	Enumeration pns = request.getParameterNames();
 while(pns.hasMoreElements()){
 	String pn = (String) pns.nextElement(); 
-	String pv = request.getParameter(pn);
+	String[] pvs = request.getParameterValues(pn);
+      for(int p = 0; p &lt; pvs.length; p++){
+         String pv = pvs[p];
 </xsp:logic><field><xsp:attribute name="name"><xsp:expr>pn</xsp:expr></xsp:attribute><xsp:expr>pv</xsp:expr></field><xsp:logic>
+      }
 }
 </xsp:logic></form></xsp:page>
