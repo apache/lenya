@@ -15,9 +15,9 @@
   limitations under the License.
 -->
 
-<!-- $Id: empty.xml,v 1.2 2004/03/13 12:31:31 gregor Exp $ -->
+<!-- $Id$ -->
 
-<!-- This is a simple xml file that can bes used in pipelines where all the -->
+<!-- This is a simple xml file that can be used in pipelines where all the -->
 <!-- work is done in the xsl and they just need a dummy xml to start the -->
 <!-- pipeline. -->
 
