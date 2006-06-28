@@ -32,7 +32,9 @@
   <introspection>
     <edit mime-type="application/xml" name="Body Content">
 
+<!--
       <open url="{$context}/{$publication}/authoring/{$page-id}.xml" method="GET"/>
+-->
 
       <checkout url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.module=neutron&amp;lenya.step=checkout" method="GET"/>
 

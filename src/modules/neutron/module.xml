@@ -19,6 +19,8 @@
 
 <lenya:module xmlns:lenya="http://apache.org/lenya/module/1.0">
   <lenya:id>org.apache.lenya.modules.neutron</lenya:id>
+  <lenya:depends module="org.apache.lenya.modules.usecase"/>
+  <lenya:depends module="org.apache.lenya.modules.sitemanagement"/>
   <lenya:package>org.apache.lenya.modules</lenya:package>
   <lenya:version>0.1-dev</lenya:version>
   <lenya:name>Neutron Module</lenya:name>

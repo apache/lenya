@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!--
+    This file defines the publication specific use-cases
+-->
+
+  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'neutron.put']">
+    <component-instance name="neutron.put" logger="lenya.publication"
+      class="org.apache.lenya.cms.usecases.neutron.Put">
+      <!-- You can configure which resource type and extension are connected.
+        The idea is similar to the file system browser dialog that an operation system
+        offers (open with) where you can register applications to open certain file extensions-->
+      <extensions>
+        <extension resource-type="xhtml">xml</extension>
+        <extension resource-type="opendocument">odt</extension>
+        <extension resource-type="xhtml">html</extension>
+        <extension resource-type="xhtml">xhtml</extension>
+        <!--Next extension is a wildcard (all others)-->
+        <extension resource-type="xhtml">*</extension>
+      </extensions>
+    </component-instance>
+  </xconf>
