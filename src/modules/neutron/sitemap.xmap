@@ -49,8 +49,9 @@
         <map:parameter name="prefix" value="lenyadoc:/"/>
           <map:when test="{page-envelope:document-language}/{page-envelope:document-id}">
             <map:act type="reserved-checkout">
-              <map:generate src="context://lenya/content/util/empty.xml"/>
-              <map:serialize type="xml"  status-code="423"/>
+              <!-- TODO: add info from RCML ... -->
+              <map:generate src="checkout-exception.xml"/>
+              <map:serialize type="xml" status-code="500"/>
             </map:act>
             <map:read src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-id}"/>
           </map:when>
