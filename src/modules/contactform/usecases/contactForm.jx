@@ -26,20 +26,14 @@
     <jx:choose>
       <jx:when test="${usecase.getParameter('sent').equals('true')}">
         <p>
-          Sorry - your message was not sent because this is just a sample usecase.
-        </p>
-        <p>
-          <form id="form-contact">
-            <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
-            <input type="submit" name="submit" value="Try again"/>
-          </form>
+          Your message was sent.<br/>
+          Thanks a lot!
         </p>
       </jx:when>
       <jx:otherwise>
 
         <form id="form-contact">
           <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
-          <input type="hidden" name="sent" value="true"/>
           
           <table style="font-size: small">
             <tr>
@@ -50,7 +44,7 @@
             
             <tr>
               <td><label for="name"><i18n:text>Your Name</i18n:text> *</label></td>
-              <td><input type="text" name="password" value="${usecase.getParameter('name')}"/></td>
+              <td><input type="text" name="name" value="${usecase.getParameter('name')}"/></td>
             </tr>
             <tr>
               <td><label for="email"><i18n:text>Your E-Mail Address</i18n:text> *</label></td>
@@ -64,7 +58,7 @@
             <tr>
               <td/>
               <td>
-                <input i18n:attr="value" type="submit" value="Submit"/>
+                <input i18n:attr="value" name="submit" type="submit" value="Submit"/>
               </td>
             </tr>
           </table>

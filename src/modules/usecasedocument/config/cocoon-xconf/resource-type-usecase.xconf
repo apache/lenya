@@ -23,11 +23,11 @@
     logger="lenya.resourcetypes.usecase"
     class="org.apache.lenya.cms.publication.ResourceTypeImpl">
     <schema language="http://relaxng.org/ns/structure/0.9"
-      src="fallback://lenya/modules/usecase/resources/schemas/usecase.rng"/>
+      src="fallback://lenya/modules/usecasedocument/resources/schemas/usecase.rng"/>
     
-    <sample-name>fallback://lenya/modules/usecase/samples/usecase.xml</sample-name>
+    <sample-name>fallback://lenya/modules/usecasedocument/samples/usecase.xml</sample-name>
     
-    <format name="xhtml" uri="cocoon://modules/usecase/usecase.xml"/>
+    <format name="xhtml" uri="cocoon://modules/usecasedocument/usecase.xml"/>
   </component-instance>
   
 </xconf>

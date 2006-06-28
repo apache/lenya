@@ -23,8 +23,10 @@
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'usecase.contactForm']">
 
     <component-instance name="usecase.contactForm" logger="lenya.usecase"
-      class="org.apache.lenya.cms.usecase.DummyUsecase">
-      <view template="modules/usecase/usecases/contactForm.jx"/>
+      class="org.apache.lenya.cms.contactform.ContactForm">
+      <view template="modules/contactform/usecases/contactForm.jx"/>
+      <parameter name="sender" value="lenya"/>
+      <parameter name="recipient" value="alice"/>
     </component-instance>
     
   </xconf>
