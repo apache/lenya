@@ -64,7 +64,7 @@
         
       <map:match pattern="checkin" type="step">
         <map:act type="reserved-checkin">
-          <map:generate src="checkin-excpetion.xml"/>
+          <map:generate src="checkin-exception.xml"/>
           <map:serialize type="xml"  status-code="500"/>
         </map:act>
         <map:call function="put"/>
