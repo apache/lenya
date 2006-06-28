@@ -64,12 +64,12 @@
         
       <map:match pattern="checkin" type="step">
         <map:act type="reserved-checkin">
-          <map:generate src="context://lenya/content/util/empty.xml"/>
-          <map:serialize type="xml"  status-code="424"/>
+          <map:generate src="checkin-excpetion.xml"/>
+          <map:serialize type="xml"  status-code="500"/>
         </map:act>
-        <map:call function="put" />
+        <map:call function="put"/>
         <map:generate src="context://lenya/content/util/empty.xml"/>
-        <map:serialize type="xml" status-code="204" />
+        <map:serialize type="xml" status-code="200"/>
       </map:match> 
     </map:pipeline>
   </map:pipelines>
