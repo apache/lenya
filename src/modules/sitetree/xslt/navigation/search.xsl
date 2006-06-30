@@ -25,13 +25,15 @@
   exclude-result-prefixes="nav"
   >
   
-  <xsl:param name="root"/>
-  
   <xsl:template match="nav:site">
     <div id="search">
-      <form action="{$root}search.html" id="form-search">
+      <form action="?" id="form-search">
         <p>
           <input class="searchfield" type="text" name="queryString" alt="Search field"/>
+          <select name="lenya.usecase">
+            <option selected="true" value="lucene.search">Internal</option>
+            <option value="lucene.externalOpensearch">External</option>
+          </select>
           <input type="hidden" value="20" name="pageLength"/>
           <input class="searchsubmit" type="submit" value="Go" name="input-go"/>
         </p>
