@@ -605,6 +605,15 @@ limitations under the License.
   <section id="code">
     <title>Code management</title>
 
+    <p>Development on the Lenya codebase happens on the trunk, unless a vote to create a branch 
+       has passed. Experimental code not immediately intended for merging into trunk may 
+       be commited to the sandbox. In order to prevent a code graveyard, sandbox contents will 
+       be reviewed every 6 months and either merged into trunk, promoted to their own top-level directory, 
+       or deleted. At any one time, the Lenya project maintains one release branch. At appropriate 
+       times, the Lenya project may cut a new release branch from trunk, and retire the previous one. 
+       Old release branches are kept in SVN, but are clearly marked as unmaintained both in SVN and on the web site.
+    </p>
+
     <p>
       The term "patch" has two meanings: Developers provide a set of changes
       via our <link href="site:community/index_com">issue tracker</link> marked for inclusion,
