@@ -190,7 +190,9 @@ function executeUsecase() {
                     if (viewUri.startsWith("cocoon:/")) {
                         viewUri = viewUri.substring(new Packages.java.lang.String("cocoon:/").length());
                     }
-                    cocoon.sendPage(viewUri);
+                    cocoon.sendPage(viewUri, {
+                            "usecase" : proxy
+                        });
                     return;
                 }
             }
