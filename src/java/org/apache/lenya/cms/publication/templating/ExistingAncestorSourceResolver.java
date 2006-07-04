@@ -22,16 +22,16 @@ import org.apache.excalibur.source.Source;
 /**
  * Source visitor to obtain the first existing source.
  * 
- * @version $Id$
+ * @version $Id: ExistingSourceResolver.java 179568 2005-06-02 09:27:26Z jwkaltz $
  */
-public class ExistingSourceResolver implements URIResolver {
+public class ExistingAncestorSourceResolver implements URIResolver {
     
     private String uri;
 
     /**
      * Ctor.
      */
-    public ExistingSourceResolver() {
+    public ExistingAncestorSourceResolver() {
         super();
     }
     
@@ -42,13 +42,18 @@ public class ExistingSourceResolver implements URIResolver {
     public String getURI() {
         return this.uri;
     }
-    
+
+    private int matches = 0;
+
     /**
      * @see org.apache.lenya.cms.publication.templating.SourceVisitor#visit(org.apache.excalibur.source.Source)
      */
     public void visit(Source source) {
-        if (this.uri == null && source.exists()) {
-            this.uri = source.getURI();
+        if (source.exists()) {
+            matches++;
+            if (matches == 2) {
+                this.uri = source.getURI();
+            }
         }
     }
 

@@ -42,6 +42,7 @@ import org.apache.lenya.cms.publication.PublicationManager;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.templating.ExistingSourceResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
+import org.apache.lenya.cms.publication.templating.URIResolver;
 
 /**
  * Source factory following the fallback principle.
@@ -105,7 +106,7 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
             pubMgr = (PublicationManager) this.manager.lookup(PublicationManager.ROLE);
             Publication pub = pubMgr.getPublication(publicationId);
             if (pub.exists()) {
-                ExistingSourceResolver resolver = new ExistingSourceResolver();
+                URIResolver resolver = getSourceVisitor();
                 templateManager.visit(pub, path, resolver);
                 resolvedUri = resolver.getURI();
             }
@@ -158,6 +159,10 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
         }
 
         return source;
+    }
+
+    protected URIResolver getSourceVisitor() {
+        return new ExistingSourceResolver();
     }
 
     private org.apache.avalon.framework.context.Context context;

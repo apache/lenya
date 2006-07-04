@@ -14,42 +14,16 @@
  *  limitations under the License.
  *
  */
-
 package org.apache.lenya.cms.publication.templating;
 
-import org.apache.excalibur.source.Source;
-
 /**
- * Source visitor to obtain the first existing source.
- * 
- * @version $Id$
+ * URI resolver.
  */
-public class ExistingSourceResolver implements URIResolver {
-    
-    private String uri;
+public interface URIResolver extends SourceVisitor {
 
     /**
-     * Ctor.
+     * @return The resolved URI.
      */
-    public ExistingSourceResolver() {
-        super();
-    }
+    String getURI();
     
-    /**
-     * Returns the URI of the first existing source.
-     * @return The URI
-     */
-    public String getURI() {
-        return this.uri;
-    }
-    
-    /**
-     * @see org.apache.lenya.cms.publication.templating.SourceVisitor#visit(org.apache.excalibur.source.Source)
-     */
-    public void visit(Source source) {
-        if (this.uri == null && source.exists()) {
-            this.uri = source.getURI();
-        }
-    }
-
 }
