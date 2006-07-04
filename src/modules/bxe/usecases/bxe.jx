@@ -8,8 +8,12 @@
   >
   
   <page:head>
-    <link rel="stylesheet" href="${request.getContextPath()}/modules/bxe/bxe/css/editor.css" type="text/css"/>
-    <script src="${request.getContextPath()}/modules/bxe/bxe/bxeLoader.js" type="text/javascript"/>
+    <jx:set var="contextPath" value="${request.getContextPath()}"/>
+    <jx:set var="pathInfo" value="${request.getRequestURI().substring(contextPath.length())}"/>
+    <jx:set var="steps" value="${pathInfo.split('/')}"/>
+    <jx:set var="pubId" value="${java.util.Arrays.asList(steps).get(1)}"/>
+    <link rel="stylesheet" href="${request.getContextPath()}/${pubId}/modules/bxe/bxe/css/editor.css" type="text/css"/>
+    <script src="${request.getContextPath()}/${pubId}/modules/bxe/bxe/bxeLoader.js" type="text/javascript"/>
     
     <meta name="bxeNS" content="xhtml=http://www.w3.org/1999/xhtml"/>
     <meta name="bxeNS" content="lenya=http://apache.org/cocoon/lenya/page-envelope/1.0"/>
