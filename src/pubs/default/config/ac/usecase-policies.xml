@@ -298,5 +298,10 @@
     <role id="admin"/>
     <role id="edit"/>
   </usecase>
+  <usecase id="ac.logout">
+    <role id="admin"/>
+    <role id="edit"/>
+    <role id="review"/>
+  </usecase>
 </usecases>
     
