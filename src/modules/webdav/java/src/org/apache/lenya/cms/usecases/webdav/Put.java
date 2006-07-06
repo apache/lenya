@@ -25,7 +25,6 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
@@ -43,8 +42,10 @@ import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.site.usecases.CreateDocument;
 import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.cms.usecase.xml.UsecaseErrorHandler;
 import org.apache.lenya.workflow.WorkflowManager;
 import org.apache.lenya.xml.Schema;
+import org.apache.lenya.xml.ValidationUtil;
 
 /**
  * Supports WebDAV PUT.
@@ -128,15 +129,16 @@ public class Put extends CreateDocument {
             }
 
             String sourceUri = "cocoon:/request/PUT/" + extension;
+            org.w3c.dom.Document xmlDoc = SourceUtil.readDOM(sourceUri, manager);
             
             // validate if a schema is provided and we are not using any fallback
             if (doc.getResourceType().getSchema() != null & fallback==false){
-              validateDoc(resolver, sourceUri, doc);
+              validateDoc(resolver, xmlDoc, doc);
             }
 
             if (!hasErrors()) {
               try {
-                SourceUtil.copy(resolver, sourceUri, doc.getSourceURI(), true);
+                SourceUtil.writeDOM(xmlDoc, doc.getSourceURI(), this.manager);
               } catch (Exception e) {
                 addErrorMessage("invalid source xml. Full exception: "+ e);
               }
@@ -171,19 +173,10 @@ public class Put extends CreateDocument {
         return resourceType;
     }    
 
-    private void validateDoc(SourceResolver resolver, String uploadSourceUri, Document doc) throws Exception {
-          Source uploadSource = resolver.resolveURI(uploadSourceUri);
-          if (!uploadSource.exists()) {
-              throw new IllegalArgumentException("The upload file [" + uploadSource.getURI()
-                      + "] does not exist.");
-          }
-
+    private void validateDoc(SourceResolver resolver, org.w3c.dom.Document xmlDoc, Document doc) throws Exception {
           ResourceType resourceType = doc.getResourceType();
           Schema schema = resourceType.getSchema();
-
-          // FIXME not working yet, dunno why
-          //org.w3c.dom.Document xmlDoc = DocumentHelper.readDocument(uploadSource.getInputStream());
-          //ValidationUtil.validate(this.manager, xmlDoc, schema, new UsecaseErrorHandler(this));
+          ValidationUtil.validate(this.manager, xmlDoc, schema, new UsecaseErrorHandler(this));
     }
 
     /**
