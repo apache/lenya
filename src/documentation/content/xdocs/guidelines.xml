@@ -759,17 +759,6 @@ limitations under the License.
     <p>Development work is done on the trunk of SVN. If a commiter determines a need for a new branch,
     he discusses the rationale on the developer list, and the decision is made by a vote.</p>
 
-<fixme author="open">
-The following issues still need to be added above.
-There are also some relevant email threads, from which we need to extract info.
-</fixme>
-    <source>
-* Define the purpose of the "sandbox".
-* Declare that we only really maintain the current release branch
-  (although contributed patches will be applied).
-* When to create a temporary branch for development and when/how to merge.
-
-    </source>
   </section>
 
 <!-- FIXME:
