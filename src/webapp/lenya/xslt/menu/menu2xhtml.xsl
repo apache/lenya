@@ -148,10 +148,10 @@
 
     <xsl:choose>
       <xsl:when test="$tabName = $currentTab">
-        <li id="area-{$tab-area}-active"><a href="{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}{$queryString}" target="{$target}"><span><i18n:text><xsl:value-of select="$tabName"/></i18n:text></span></a></li>
+        <li id="area-{$tab-area}-active" class="area-active"><a href="{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}{$queryString}" target="{$target}"><span><i18n:text><xsl:value-of select="$tabName"/></i18n:text></span></a></li>
       </xsl:when>
       <xsl:otherwise>
-        <li id="area-{$tab-area}"><a href="{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}{$queryString}" target="{$target}"><span><i18n:text><xsl:value-of select="$tabName"/></i18n:text></span></a></li>
+        <li id="area-{$tab-area}" class="area-inactive"><a href="{$contextprefix}/{$publicationid}/{$tab-area}{normalize-space($tab-documenturl)}{$queryString}" target="{$target}"><span><i18n:text><xsl:value-of select="$tabName"/></i18n:text></span></a></li>
       </xsl:otherwise>
     </xsl:choose>
   </xsl:template>
