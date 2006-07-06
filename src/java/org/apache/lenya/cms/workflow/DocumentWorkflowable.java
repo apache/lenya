@@ -247,4 +247,8 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
         return uri;
     }
 
+    public String toString() {
+        return this.document.toString();
+    }
+
 }
