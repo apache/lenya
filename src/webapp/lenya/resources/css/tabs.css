@@ -56,7 +56,7 @@
 .lenya-tablink, .lenya-tablink-active {
   position: relative;
   left: 1px;
-  font-size: 10pt;
+  font-size: small;
   display: block;
   margin-bottom: .2em;
   padding: .2em 1em .2em .3em;

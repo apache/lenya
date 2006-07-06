@@ -74,7 +74,7 @@ body { background-color: #fff; margin: 0; padding: 0; }
 
 #lenya-areas ul li a { color: #454646; display: block; text-decoration: none; text-align: center; padding: 9px 9px 0 9px; height: 16px !important; height /**/: 25px; display: inline-block; }
 
-#lenya-areas ul li a span { font: bold 10px/1.0 Arial, Verdana, sans-serif; text-transform: uppercase; }
+#lenya-areas ul li a span { font: bold 10px/1.0 Arial, Verdana, sans-serif; text-transform: uppercase; vertical-align: top; }
 
 #lenya-areas ul li#area-admin-active a { color: #3975b3; background: url(<context-prefix/>/lenya/menu/images/active.gif) 0 0 repeat-x; }
 
