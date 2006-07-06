@@ -25,7 +25,7 @@ Lenya1.3 Modules are an evolution of Lenya1.2's Usecases.  Eventually, all XMAP 
 All Modules are in either {pub}/modules or webapp/lenya/modules.  A Module is referenced by the directory name.
 
 2. All files for a function in one location.
-All Flow (JavaScript) code for a function can be in a file named "code.js", and every Module can habe one.
+All Flow (JavaScript) code for a function can be in a file named "code.js", and every Module can have one.
 
 The homepage XSL is in a file "page2xhtml.xsl" in the "homepage" Module, rather than "page2xhtml-homepage.xsl" mixed with other XSLT files in one directory.
 
