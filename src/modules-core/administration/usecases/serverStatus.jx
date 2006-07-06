@@ -30,7 +30,7 @@
       <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
       
       <cinclude:includexml>
-        <cinclude:src>cocoon://core/admin/status.xml</cinclude:src>
+        <cinclude:src>cocoon://modules/administration/status.xml</cinclude:src>
       </cinclude:includexml>
       
     </div>
