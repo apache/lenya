@@ -20,6 +20,7 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.templating.ExistingSourceResolver;
@@ -54,11 +55,8 @@ public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModul
         }
 
         String resolvedUri = null;
-        PublicationTemplateManager templateManager = null;
 
         try {
-            templateManager = (PublicationTemplateManager) this.manager.lookup(PublicationTemplateManager.ROLE);
-            Publication publication;
             String targetUri = null;
 
             // check if publication ID is provided in attribute name
@@ -75,31 +73,24 @@ public class PublicationTemplateFallbackModule extends AbstractPageEnvelopeModul
                             + "]");
                 }
 
-                publication = PublicationUtil.getPublication(this.manager, publicationId);
             } else {
-                publication = PublicationUtil.getPublication(this.manager, objectModel);
                 targetUri = name;
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("Publication resolved from request: [" + publication.getId()
-                            + "]");
+            }
+
+            SourceResolver resolver = null;
+            try {
+                resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+                resolvedUri = resolver.resolveURI("fallback://" + targetUri).getURI();
+            } finally {
+                if (resolver != null) {
+                    this.manager.release(resolver);
                 }
             }
-            if (publication.exists()) {
-                ExistingSourceResolver resolver = new ExistingSourceResolver();
-                templateManager.visit(publication, targetUri, resolver);
-                resolvedUri = resolver.getURI();
-            } else {
-                //outside of a publication
-            	resolvedUri = "context://" + targetUri;
-            }
+            
         } catch (final Exception e) {
             String message = "Resolving path [" + name + "] failed: ";
             getLogger().error(message, e);
             throw new ConfigurationException(message, e);
-        } finally {
-            if (templateManager != null) {
-                this.manager.release(templateManager);
-            }
         }
         return resolvedUri;
     }
