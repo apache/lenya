@@ -1,10 +1,10 @@
 Lenya 1.3 Technical Help 
 
-=== Definitions
+=== Definitions ===
 A UNID (Universal Identifier) is a string specifying a Resource.  A UNID may be any string that can be used as a directory name.  A UNID could be a UUID (Universally Unique Identifier).  A UUID must be a 16 byte number.  A UNID does not have that restriction.  The "flat" migration Module assigns UNIDs: 0001, 0002, 0003, etc.
 
 
-=== URLs
+=== URLs ===
 Lenya 1.2 URLs were:
 http://server/publication/area/path/documentID[_language].extension
 
@@ -20,7 +20,7 @@ http://server/publication/module/parameters
 - A documentID is not required.  Many functions (Search, Login) do not require a document.  Each Module developer decides the parameters.  If a documentID is used, it should be the last parameter, directly after the structure name.
 
 
-=== Content Storage
+=== Content Storage ===
 The content directory can be configured in publication.xconf.  The "flat" migration Module always uses the {pub}/content directory (until it learns to check publication.xconf.  It is on the TODO list.)  Lenya 1.3 can use Lenya 1.2's file structure, although most of the new functionality has not been tested against the old structure.  The new structure is:
 
 content/index/{index-name}.xconf
@@ -37,7 +37,7 @@ Indexes are used by the SitetreeGenerator, used for creating navigation elements
 
 The migration routine creates content/relations.xml.  This file stores information for running the "flat" migration multiple times to remember the UNID assigned to each Resource.
 
-=== File access
+=== File access ===
 The new Module protocol should be used for access to all files.
 
 The syntax is:
@@ -70,18 +70,87 @@ Module variables will be retrieved from the current Module, not the target Modul
 <map:mount uri-prefix="" src="module://homepage/module.xmap"/> 
 
 
-=== Module variables
+=== Module variables ===
 module:module returns name of module.  Always use for the module name so the Module can be renamed without breaking functionality.
 
 module:parameterName returns parameter from publication.xconf.  If the local Module does not configure the variable, it follows inheritance to the publication.xconf in each Publication containing parent Modules. Default variables can be specified in module.xconf for use if no inherited Publication's publication.xconf has the variable.  The defaults also follow inheritance.  
 
 (As of 2006-06-08, variables do not follow inheritance when inheriting from a Module with a different name.  This will be fixed soon.)
 
-=== Content protocol
+=== Content protocol ===
 Retrieves content.
 
-content:///path/docid - Use default "live" structure.
-content://structure/path/docid - Get Resource using a specific structure to convert to a UNID.
-content:/unid - Get the Resource by the UNID.
+The syntax is:
+"content" {colons} {slashes} [{requestType} {slashes}] {request} ["_" {language}] ["!" {revision}]
 
-content::/ - Double colons return Meta document, guaranteed XML.  For binary files, this is the associated XML file.  For XML data, this is identical to single colon syntax.
+{colons} = ":", "::", ":::"
+2 colons sets the requestType to META, unless overridden by the optional requestType.
+3 colons sets the requestType to INFO, unless overridden by the optional requestType.
+
+{requestType} = "DATA", "META", "INFO"
+   DATA returns the Resource.
+   META returns the META document, guaranteed XML.  If the ResourceType is "xml", this is identical to single colon syntax.  Otherwise this is the associated XML file.
+   INFO returns the INFO document.  This is XML describing the Resource, all Translations and all their Revisions.
+
+
+{slashes} = "", "/", "//", or "///"
+If {requestType} is specified, it must be followed by at least 1 slash, and the higher number of slashes of the two places is used to determine the format of the request:
+- 3 slashes
+   {request} is the hierarchical ID in the "live" Structure.
+- 1 slash:
+   {request} is the UNID unless {request} contains a slash.
+- Otherwise:
+   {request} = {structure} "/" {hierarchical ID}
+
+{language} is the 2 letter language code specifying the Translation.  If it is missing, the default language for the Resource is used.  If the Resource does not have a default language, the Publication's default language is used.
+
+{revision} = "live", "edit", {revision UNID}
+If {revision} is missing, "live" is assumed.
+
+Setting the language and revision has no effect on INFO requests.
+
+= Content Protocol Examples =
+content:/12345
+content:DATA/12345
+content:/DATA/12345
+These returns the data of the "live" Revision of the default Translation of the Resource with UNID "12345".
+
+content:/12345_en!edit
+content:DATA/12345_en!edit
+content:/DATA/12345_en!edit
+These returns the data of the "edit" Revision of the English Translation of the Resource with UNID "12345".
+
+content::/12345
+content:META/12345
+content:/META/12345
+These returns XML for the "live" Revision of the default Translation of the Resource with UNID "12345".
+
+content:::/12345
+content:::/12345_en!live
+content:INFO/12345
+content:/INFO/12345
+These returns the INFO document for the Resource with UNID "12345".  Language and Revision are ignored.
+
+content:/myStructure/index_en!live
+content://myStructure/index_en
+content:DATA/myStructure/index_en!live
+content:DATA//myStructure/index_en
+content://DATA/myStructure/index_en!live
+These returns the data of the "live" Revision of the English Translation of the Resource with the ID "index" in the "myStructure" Structure.
+
+content:/myStructure/path/index_en!live
+content://myStructure/path/index_en
+content:DATA/myStructure/path/index_en!live
+content:DATA//myStructure/path/index_en
+content://DATA/myStructure/path/index_en!live
+These returns the data of the "live" Revision of the English Translation of the Resource with the ID "path/index" in the "myStructure" Structure.
+
+content:///path/doc_en!edit
+content:/DATA///path/doc_en!edit
+content:///DATA/path/doc_en!edit
+These returns the data of the "edit" Revision of the English Translation of the Resource with the ID "path/doc" in the "live" Structure.  No single slash format can be used because "path" would be assumed as the Structure.
+
+content:///doc_en!edit
+content:/DATA///doc_en!edit
+content:///DATA/doc_en!edit
+These returns the data of the "edit" Revision of the English Translation of the Resource with the ID "path/doc" in the "live" Structure.  No single slash format can be used because "doc" would be assumed as the UNID.
