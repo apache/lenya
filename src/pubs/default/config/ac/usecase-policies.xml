@@ -114,6 +114,10 @@
     <role id="admin"/>
     <role id="edit"/>
   </usecase>
+  <usecase id="site.rollback">
+    <role id="admin"/>
+    <role id="edit"/>
+  </usecase>  
   <usecase id="tab.acArchive">
     <role id="admin"/>
     <role id="edit"/>
