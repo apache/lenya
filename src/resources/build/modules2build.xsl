@@ -55,6 +55,10 @@
         <xsl:apply-templates select="list:module" mode="call"/>
       </target>
       
+      <target name="test-modules">
+        <xsl:apply-templates select="list:module" mode="call-test"/>
+      </target>
+      
       <xsl:apply-templates select="list:module" mode="target"/>
       
     </project>
@@ -71,6 +75,16 @@
   </xsl:template>
   
 
+  <xsl:template match="list:module" mode="call-test">
+    <xsl:apply-templates select="document(concat(@src, '/module.xml'))/mod:module" mode="call-test"/>
+  </xsl:template>
+  
+  
+  <xsl:template match="mod:module" mode="call-test">
+    <antcall target="test-module-{mod:id}"/>
+  </xsl:template>
+  
+  
   <xsl:template match="list:module" mode="target">
     <xsl:apply-templates select="document(concat(@src, '/module.xml'))/mod:module" mode="target">
       <xsl:with-param name="src" select="@src"/>
@@ -105,15 +119,15 @@
     
     <xsl:variable name="srcDir"><xsl:value-of select="$src"/>/java/src</xsl:variable>
     <available file="{$srcDir}" property="compile.module.{$id}"/>
+
+    <xsl:variable name="destDir">${build.dir}/modules/<xsl:value-of select="$id"/></xsl:variable>
+    <xsl:variable name="debug">${debug}</xsl:variable>
+    <xsl:variable name="optimize">${optimize}</xsl:variable>
+    <xsl:variable name="deprecation">${deprecation}</xsl:variable>
+    <xsl:variable name="target">${target.vm}</xsl:variable>
+    <xsl:variable name="nowarn">${nowarn}</xsl:variable>
     
     <target name="compile-module-{$id}" if="compile.module.{$id}">
-      
-      <xsl:variable name="destDir">${build.dir}/modules/<xsl:value-of select="$id"/></xsl:variable>
-      <xsl:variable name="debug">${debug}</xsl:variable>
-      <xsl:variable name="optimize">${optimize}</xsl:variable>
-      <xsl:variable name="deprecation">${deprecation}</xsl:variable>
-      <xsl:variable name="target">${target.vm}</xsl:variable>
-      <xsl:variable name="nowarn">${nowarn}</xsl:variable>
       
       <path id="module.classpath.{$id}">
         <path refid="classpath"/>
@@ -218,6 +232,65 @@
     
     <target name="deploy-module-{$id}"
       depends="dependency-warnings-{$id}, {$dependencyList} validate-module-{$id}, compile-module-{$id}, copy-module-{$id}, patch-module-{$id}"/>
+      
+    <!-- ============================================================ -->
+    <!-- Test -->
+    <!-- ============================================================ -->
+    
+    <xsl:variable name="testSrcDir"><xsl:value-of select="$src"/>/java/test</xsl:variable>
+    
+    <available file="{$testSrcDir}" property="test.module.{$id}"/>
+    
+    <target name="test-module-{$id}" if="test.module.{$id}">
+      
+      <xsl:variable name="testDestDir">${build.dir}/modules/<xsl:value-of select="$id"/>-test</xsl:variable>
+      
+      <mkdir dir="{$testDestDir}"/>
+      
+      <xsl:variable name="build-webapp">${build.webapp}</xsl:variable>
+      <xsl:variable name="build-test">${build.test}</xsl:variable>
+      
+      <path id="module.test-classpath.{$id}">
+        <path refid="module.classpath.{$id}"/>
+        <fileset dir="{$build-webapp}/WEB-INF/lib">
+          <include name="lenya-module-{$id}.jar"/>
+        </fileset>
+        <path location="{$build-test}"/>
+      </path>
+      
+      <javac
+        destdir="{$testDestDir}"
+        debug="{$debug}"
+        optimize="{$optimize}"
+        deprecation="{$deprecation}"
+        target="{$target}"
+        nowarn="{$nowarn}"
+        source="1.4">
+        <src path="{$testSrcDir}"/>
+        <classpath refid="module.test-classpath.{$id}"/>
+      </javac>
+      
+      <xsl:variable name="loglevel">${junit.test.loglevel}</xsl:variable>
+      <xsl:variable name="junit-dir">${junit.dir}</xsl:variable>
+      <xsl:variable name="repository-factory">${repository.factory}</xsl:variable>
+      
+      <junit printsummary="yes" showoutput="true" haltonerror="on" haltonfailure="on">
+        <classpath>
+          <fileset dir="{$build-webapp}/WEB-INF/lib" includes="*.jar, endorsed/*.jar"/>
+          <path location="{$build-webapp}/WEB-INF/classes"/>
+          <path location="{$build-test}"/>
+          <path location="{$testDestDir}"/>
+        </classpath>
+        <formatter type="plain" usefile="false" />
+        <formatter type="xml" />
+        <sysproperty key="junit.test.loglevel" value="{$loglevel}"/>
+        <sysproperty key="test.repo.webappDirectory" value="{$build-webapp}"/>
+        <sysproperty key="test.repo.repositoryFactory" value="{$repository-factory}"/>
+        <batchtest todir="{$junit-dir}">
+          <fileset dir="{$testDestDir}" includes="**/*.class"/>
+        </batchtest>
+      </junit>
+    </target>
     
   </xsl:template>
   

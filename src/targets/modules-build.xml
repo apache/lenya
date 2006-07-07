@@ -55,7 +55,7 @@
     <xpatch addComments="false"
       includes="modules.xconf"
       srcdir="${build.dir}/temp/"
-      file="build/lenya/webapp/WEB-INF/cocoon.xconf"/>
+      file="${cocoon.xconf}"/>
     
     <ant antfile="${build.dir}/temp/modules-build.xml"
       inheritall="true"
@@ -65,61 +65,18 @@
   </target>
   
   
-  <target name="copy-modules">
-    <!--
-    <copyPubs todir="${build.webapp}/lenya/modules"
-              pubsrootdirs="${modules.root.dirs}"
-              excludes="CVS,.svn,cocoon-xconf,lenya-roles"/>
-              -->
-    <bulkCopy 
-      sourcedirs="${modules.root.dirs}" 
-      todir="${build.webapp}/lenya/modules"
-      flatten="false">
-      <fileset>
-        <exclude name="java/**"/>
-        <exclude name="*/java/**"/>
-        <exclude name="config/cocoon-xconf/**"/>
-        <exclude name="*/config/cocoon-xconf/**"/>
-        <exclude name="config/lenya-roles/**"/>
-        <exclude name="*/config/lenya-roles/**"/>
-        <exclude name="config/sitemap/**"/>
-        <exclude name="*/config/sitemap/**"/>
-      </fileset>
-    </bulkCopy>
-    <bulkCopy 
-      sourcedirs="${modules.root.dirs}" 
-      todir="${build.patch}/sitemap/modules"
-      flatten="false">
-      <fileset includes="config/sitemap/**.xmap"/>
-      <fileset includes="*/config/sitemap/**.xmap"/>
-    </bulkCopy>
-    <bulkCopy 
-      sourcedirs="${modules.root.dirs}" 
-      todir="${build.patch}/cocoon-xconf/modules"
-      flatten="false">
-      <fileset includes="config/cocoon-xconf/**.xconf"/>
-      <fileset includes="*/config/cocoon-xconf/**.xconf"/>
-    </bulkCopy>
-    <bulkCopy 
-      sourcedirs="${modules.root.dirs}" 
-      todir="${build.patch}/lenya-roles/modules"
-      flatten="false">
-      <fileset includes="config/lenya-roles/**.xroles"/>
-      <fileset includes="*/config/lenya-roles/**.xroles"/>
-    </bulkCopy>
-  </target>
-  
-
   <!-- ================================================ -->
   <!-- Module tests -->
   <!-- ================================================ -->
   
-  <target name="modules.test" depends="tests.prepare, deploy-modules">
-    <property name="module" value="*"/>
-    <subant target="test" inheritall="true">
-      <property name="build.webapp" value="${build.webapp}"/>
-      <fileset dir="${build.webapp}/lenya/modules" includes="${module}/targets/test-build.xml"/>
-    </subant>
+  <target name="modules.test" depends="tests.prepare">
+    <antcall target="deploy-modules">
+      <param name="cocoon.xconf" value="${build.temp}/test/components.xsl"/>
+    </antcall>
+    <ant antfile="${build.dir}/temp/modules-build.xml"
+      inheritall="true"
+      inheritrefs="true"
+      target="test-modules"/>
   </target>
   
 </project>

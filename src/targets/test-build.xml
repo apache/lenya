@@ -61,7 +61,6 @@
   <target name="test.pub.prepare">
     <property name="test.pub.dir" value="${build.webapp}/lenya/pubs/${test.pub.id}"/>
     <echo>Creating test publication at ${test.pub.dir}</echo>
-    <mkdir dir="${junit.dir}" />
     <delete dir="${test.pub.dir}"/>
     <mkdir dir="${test.pub.dir}"/>
     <copy todir="${test.pub.dir}">
@@ -72,14 +71,14 @@
   <!-- prepares the tests. -->
   <target name="tests.prepare" depends="init">
     <mkdir dir="${build.test}"/>
-
+    <mkdir dir="${junit.dir}" />
+    
     <!-- Copy test files to build test dir -->
     <copy todir="${build.java.test}" filtering="on">
       <fileset dir="${src.test.impl.dir}"/>
     </copy>
 
     <copyJavaSources pubsrootdirs="${pubs.root.dirs}" javadir="java/test" builddir="${build.java.test}" />
-    <copyJavaSources pubsrootdirs="${modules.root.dirs}" javadir="java/test" builddir="${build.java.test}" />
     
     <path id="classpath.test">
       <path refid="classpath"/>
@@ -136,10 +135,6 @@
       excludes="prepare/*.xconf"
       addComments="true"/>
 
-    <antcall target="deploy-modules">
-      <param name="cocoon.xconf" value="${build.temp}/test/xconf-template.xml"/>
-    </antcall>
-    
     <xslt in="${build.temp}/test/xconf-template.xml"
       out="${build.temp}/test/components.xsl"
       style="${src.resource.dir}/test/meta.xsl">
