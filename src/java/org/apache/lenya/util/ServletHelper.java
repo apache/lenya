@@ -117,8 +117,8 @@ public final class ServletHelper {
         String webappUrl = "context://WEB-INF/web.xml";
         Document document = SourceUtil.readDOM(webappUrl, manager);
         Element root = document.getDocumentElement();
-        node = XPathAPI.selectSingleNode(root,
-                "//init-param[param-name='enable-uploads']/param-value/text()");
+        node = XPathAPI.selectSingleNode(root,"/web-app/servlet/init-param[param-name='enable-uploads']/param-value/text()");
+        
         if (node == null) {
             return false;
         }
