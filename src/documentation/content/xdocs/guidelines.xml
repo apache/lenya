@@ -722,7 +722,7 @@ limitations under the License.
         ie, patches that no longer cleanly apply due to unrelated code changes.
       </li>
       <li>
-        Committers write descriptive commit messages, which are then aggegated into 
+        Committers write descriptive commit messages, which are then aggregated into 
         a top-level <link href="site:changes">changes</link> document. This enables linkage
         to the relevant issue and shows the contributor's name. It also shows
         the name of the committer who did the work to add the patch.
