@@ -33,8 +33,7 @@ public class FlatContent implements Content{
       return resource.getMetaURI();
    }
    public String getNewURI(String unid, String language){
-
-      Resource resource = getResource(unid, language, "live");
+      Resource resource = getResource(unid, language, "edit");
       return resource.getNewURI();
    }
    public String getUNID(String structure, String id){

@@ -56,7 +56,7 @@ public class FlatResource implements Resource {
       }
       pos = unid.lastIndexOf("_");
       if(pos > 0){
-         defaultLanguage = unid.substring(pos);
+         defaultLanguage = unid.substring(pos + 1);
          unid = unid.substring(0, pos);
          useDefaultLanguage = false;
       }
@@ -264,6 +264,7 @@ System.out.println("FlatResource.getTitle NullPointerException UNID=" + unid);
       return newElement;
    }
    public Document update(Document document){
+System.out.println("FlatResource.update - BEGIN");
       Element root = document.getDocumentElement();
       if(root.hasAttribute("id")) setID(root.getAttribute("id"));
       if(root.hasAttribute("defaultlanguage")) setDefaultLanguage(root.getAttribute("defaultlanguage"));
@@ -278,24 +279,30 @@ System.out.println("FlatResource.getTitle NullPointerException UNID=" + unid);
          if(translation.hasAttribute("action")){
             String action = translation.getAttribute("action");
             if(action.equalsIgnoreCase("delete")){
+System.out.println("FlatResource.update - Delete Translation");
                deleteTranslation(language);
                exist = false;
             }
          }
+System.out.println("FlatResource.update - Get translation");
          if(exist){
             ft = getTranslation(language, false);
             if(null == ft) exist = false;
          }
+System.out.println("FlatResource.update - Update Translation");
          if(exist){
             if(translation.hasAttribute("live")) ft.setLive(translation.getAttribute("live"));
             if(translation.hasAttribute("edit")) ft.setEdit(translation.getAttribute("edit"));
             NodeList revisions = translation.getElementsByTagName("revision");
             int revisionslength = revisions.getLength();
             for(int r = 0; r < revisionslength; r++){
-              Element revision = (Element) revisions.item(t);
+System.out.println("FlatResource.update - BEFORE");
+              Element revision = (Element) revisions.item(r);
+System.out.println("FlatResource.update - AFTER");
               if(revision.hasAttribute("action")){
                  String action = revision.getAttribute("action");
                  if(action.equalsIgnoreCase("delete")){
+System.out.println("FlatResource.update - Delete Revision");
                     String revisionid = revision.getAttribute("revision");
                     ft.deleteRevision(revisionid);
                   }
@@ -304,6 +311,7 @@ System.out.println("FlatResource.getTitle NullPointerException UNID=" + unid);
             ft.save();
          }
       }
+System.out.println("FlatResource.update - RETURN");
       return document;
    }
    private void setID(String newid){
@@ -320,8 +328,17 @@ System.out.println("FlatResource.getTitle NullPointerException UNID=" + unid);
    }
    private void deleteTranslation(String language){
       File translationDirectory = new File(resourceDirectory, language);
+System.out.println("DELETE=" + translationDirectory.getAbsolutePath());
+      deleteFile(translationDirectory);
+   }
 //TODO: Backup before delete.  Use renameTo() to move outside the resource directory.
-      translationDirectory.delete();
+   private void deleteFile(File file){
+      if(!file.exists()) return;
+      if(file.isDirectory()){
+         File[] files = file.listFiles();
+         for(int f = 0; f < files.length; f++) deleteFile(files[f]);
+      }
+      file.delete();
    }
    private void save(){
       if(isChanged){

@@ -195,6 +195,8 @@ print("*** Resources ***");
                   }
                }
             }
+//TODO: Remove lenya:meta element but copy the children
+
             if(file.hasAttribute("href")) fileroot.setAttribute("href", file.getAttribute("href"));
             if(hasExtension) fileroot.setAttribute("extension", extension);
             writeDocument(filedoc, ResourcesDirectory + unid + file.getAttribute("filename"));
@@ -259,10 +261,11 @@ print("*** Resources ***");
    for(var f = 0; f < indexfilenameslength; f++){
       var filename = indexfilenames[f];
       var newfile = new Packages.java.io.File(newindexdirectory, filename);
-      if(!newfile.exists()){
+//CHANGE: Overwrite Indexes because they changed.
+//      if(!newfile.exists()){
          var oldfile = new Packages.java.io.File(oldindexdirectory, filename);
          copyfile(oldfile.getAbsolutePath(), newfile.getAbsolutePath());
-      }
+//      }
    }
    //### Return
    cocoon.sendPage("finish");

@@ -18,8 +18,6 @@ import org.xml.sax.InputSource;
 import org.xml.sax.SAXException;
 import org.apache.avalon.framework.component.ComponentManager;
 import org.apache.avalon.framework.component.ComponentSelector;
-import org.apache.cocoon.serialization.Serializer;
-
 
 /**
  * Creates a Source from a String, Document, Node, or XMLizable.
@@ -73,18 +71,12 @@ public class StringSource extends AbstractSource {
            inputStream = new ByteArrayInputStream(temp.getBytes(ENCODING));
         }else{
            // Serialize the SAX events to the XMLSerializer:
-           ComponentSelector serializerSelector = null;
-           Serializer serializer = null;
+           ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
            try{
-              serializerSelector = (ComponentSelector) manager.lookup(Serializer.ROLE + "Selector");
-              serializer = (Serializer)serializerSelector.select("xml");
-              ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-              serializer.setOutputStream((OutputStream) outputStream );
+org.apache.xml.serialize.OutputFormat format = new org.apache.xml.serialize.OutputFormat("xml", "UTF-8", true);
+org.apache.xml.serialize.XMLSerializer serializer = new org.apache.xml.serialize.XMLSerializer(outputStream, format);
               toSAX( serializer );
-              inputStream = new ByteArrayInputStream( outputStream.toByteArray() );
-           }catch(org.apache.avalon.framework.component.ComponentException ce){
-              exists = false;
-              throw new SourceException("StringSource: ComponentException", ce );
+              inputStream = new ByteArrayInputStream(outputStream.toByteArray());
            }catch(SAXException se){
               exists = false;
               throw new SourceException("Could not serialize to a ByteArray.", se );

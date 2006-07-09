@@ -1,0 +1,39 @@
+/* Header Menu */
+body {
+   font-family: Tahoma, Verdana, sans-serif;
+   background-color: #EEFFEE;
+}
+
+h1 {  padding: 0px 0px 0px 0px; }
+
+table {
+   padding: 1 1 1 1px;
+   border: solid 0px #336633;
+   background-color: #EEFFEE;
+   border-collapse: collapse;
+   border-color: #669966;
+   width: auto;
+}
+
+th{
+    font-size: 80%;
+    padding: 3px;
+    background-color: #EEFFEE;
+   border: solid 1px #336633;
+    vertical-align: center;
+}
+
+td{
+    font-size: 80%;
+    padding: 3px;
+    background-color: #EEFFEE;
+   border: solid 1px #336633;
+    vertical-align: center;
+}
+.spacer{
+   border: solid 0px #336633;
+}
+.dark{
+    background-color: #DDEEDD;
+}
+

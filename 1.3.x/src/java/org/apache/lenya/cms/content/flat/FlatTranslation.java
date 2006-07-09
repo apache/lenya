@@ -49,17 +49,31 @@ public class FlatTranslation {
       translationDirectory = new File(resourceDirectory, language);
       if(!translationDirectory.exists()) translationDirectory = new File(resourceDirectory, defaultLanguage);
       if(!translationDirectory.exists()) return;
-      try{
-         document = DocumentHelper.readDocument(new File(translationDirectory, "translation.xml"));
+      File translationFile = new File(translationDirectory, "translation.xml");
+      if(translationFile.exists()){
+         try{
+            document = DocumentHelper.readDocument(translationFile);
+            root = document.getDocumentElement();
+            if(root.hasAttribute("live")) live = root.getAttribute("live");
+            if(root.hasAttribute("edit")) edit = root.getAttribute("edit");
+         }catch(javax.xml.parsers.ParserConfigurationException pce){
+System.out.println("FlatTranslation - ParserConfigurationException: " + translationFile.getAbsolutePath());
+         }catch(org.xml.sax.SAXException saxe){
+System.out.println("FlatTranslation - SAXException: " + translationFile.getAbsolutePath());
+         }catch(java.io.IOException ioe){
+System.out.println("FlatTranslation - IOException: " + translationFile.getAbsolutePath());
+         }
+      }else{
+         try{
+            document = DocumentHelper.createDocument("", "translation", null);
+         }catch(javax.xml.parsers.ParserConfigurationException pce){
+System.out.println("New FlatTranslation - ParserConfigurationException:" + translationFile.getAbsolutePath());
+            return;
+         }
+
          root = document.getDocumentElement();
-         if(root.hasAttribute("live")) live = root.getAttribute("live");
-         if(root.hasAttribute("edit")) edit = root.getAttribute("edit");
-      }catch(javax.xml.parsers.ParserConfigurationException pce){
-System.out.println("FlatTranslation: ParserConfigurationException");
-      }catch(org.xml.sax.SAXException saxe){
-System.out.println("FlatTranslation: SAXException");
-      }catch(java.io.IOException ioe){
-System.out.println("FlatTranslation: IOException");
+         root.setAttribute("language", language);
+         isChanged = true;
       }
    }
    public String[] getRevisions() {
@@ -141,6 +155,7 @@ System.out.println("FlatTranslation: IOException");
    void save(){
       if(isChanged){
          File file = new File(translationDirectory, "translation.xml");
+/*
          Document doc;
          try{
             doc = DocumentHelper.readDocument(file);
@@ -155,10 +170,12 @@ System.out.println("FlatTranslation.save - Could not read file:" + file.getAbsol
             return;
          }
          root = doc.getDocumentElement();
+*/
          root.setAttribute("live", live);
          root.setAttribute("edit", edit);
          try{
-            DocumentHelper.writeDocument(doc, file);
+//            DocumentHelper.writeDocument(doc, file);
+            DocumentHelper.writeDocument(document, file);
          }catch(javax.xml.transform.TransformerConfigurationException tce){
 System.out.println("FlatTranslation.save - TransformerConfigurationException:" + file.getAbsolutePath());
          }catch(javax.xml.transform.TransformerException te){

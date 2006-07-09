@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Edit Module -->
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+   <map:resources>
+      <map:resource name="all">
+         <map:select type="parameter">
+            <map:parameter name="parameter-selector-test" value="{publication:contenttype}"/>
+            <map:when test="flat">
+               <map:generate type="sitetree" src="all"/>
+               <map:transform src="module:///all.xsl">
+                  <map:parameter name="publication" value="{publication:publication}"/>
+                  <map:parameter name="module" value="{module:module}"/>
+                  <map:parameter name="publicationname" value="{publication:name}"/>
+                  <map:parameter name="publicationlanguages" value="{publication:languages}"/>
+               </map:transform>
+               <map:transform type="i18n"/>           
+               <map:serialize type="html"/>
+            </map:when>
+            <map:otherwise>
+               <map:act type="resource-exists" src="module://authoring/module.xmap">
+                  <map:redirect-to uri="/{publication:publication}/authoring"/>
+               </map:act>
+            </map:otherwise>
+         </map:select>
+         <map:generate src="module:///hierarchical.html"/> 
+         <map:serialize type="html"/>
+      </map:resource>
+   </map:resources>
+  <!-- =========================== Pipelines ================================ -->
+   <map:pipelines>
+      <map:pipeline>
+         <map:match pattern="**">
+            <!-- module/unid -->
+<!-- Request does not specify anything after the slash -->
+            <map:match pattern="{module:module}/">
+               <map:call resource="all"/>
+            </map:match>
+<!-- Resource -->
+            <map:match pattern="{module:module}/*">
+               <map:act type="resource-exists" src="module://{content:type:{1}}/edit.xmap">
+                  <map:mount uri-prefix="" src="module://{content:type:{../1}}/edit.xmap"/> 
+                  <map:serialize type="html"/>
+               </map:act>
+               <map:aggregate element="content">
+                  <map:part src="content:::/{1}"/>
+                  <map:part src="content::/{1}"/>
+               </map:aggregate>
+               <map:transform src="module:///resource.xsl">
+                  <map:parameter name="module" value="{module:module}"/>
+                  <map:parameter name="publication" value="{publication:publication}"/>
+                  <map:parameter name="publicationname" value="{publication:name}"/>
+                  <map:parameter name="type" value="{content:type:{1}}"/>
+               </map:transform>
+               <map:transform type="i18n"/>
+               <map:serialize type="html"/>
+            </map:match>
+<!-- Default = Show list of all Resources -->
+            <map:call resource="all"/>
+         </map:match>
+      </map:pipeline>
+   </map:pipelines>
+</map:sitemap>

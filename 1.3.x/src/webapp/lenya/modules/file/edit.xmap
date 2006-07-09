@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Link Module: Edit -->
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  <!-- =========================== Pipelines ================================ -->
+   <map:pipelines>
+      <map:pipeline>
+<!-- Remove Revision -->
+            <map:match pattern="edit/*!*">
+               <map:generate src="cocoon:/edit/{1}"/>
+               <map:serialize type="html"/>
+            </map:match>
+<!-- Show Resource -->
+            <map:match pattern="edit/*">
+               <map:aggregate element="content">
+                  <map:part src="content:::/{1}!edit"/>
+               </map:aggregate>
+               <map:transform src="module:///resource.xsl">
+                  <map:parameter name="module" value="{module:module}"/>
+                  <map:parameter name="publication" value="{publication:publication}"/>
+                  <map:parameter name="publicationname" value="{publication:name}"/>
+                  <map:parameter name="languages" value="{publication:languages}"/>
+               </map:transform>
+               <map:transform type="i18n"/>
+               <map:serialize type="html"/>
+            </map:match>
+      </map:pipeline>
+   </map:pipelines>
+</map:sitemap>

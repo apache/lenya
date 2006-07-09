@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.StringTokenizer;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceFactory;
@@ -108,16 +109,7 @@ public class ContentSourceFactory
         }catch(org.apache.lenya.cms.publication.PageEnvelopeException pee){
             throw new MalformedURLException("Could not get Publication ID.");
         }
-       // Decide Usage
-       // Content or Meta
-       int requestType = REQUEST_DATA;
-       pos = location.indexOf(":::");
-       if(pos != -1){
-          requestType = REQUEST_INFO;
-       }else{
-          pos = location.indexOf("::");
-          if(pos != -1) requestType = REQUEST_META;
-       }
+
        //Revision
        String revision = "live";
        pos = location.lastIndexOf("!");
@@ -133,50 +125,66 @@ public class ContentSourceFactory
           location = location.substring(0, pos);
        }
 //TODO: Set language to document or publication's default if not specified.
-       int endpos;
+
+//System.out.println("LOC="+location);
+       // Decide Usage
+       StringTokenizer tokens = new StringTokenizer(location, "/:", true);
+       if(!tokens.hasMoreTokens()) throw new MalformedURLException("Nothing specified.");
+       String token = tokens.nextToken();
+       if(location.indexOf(":") > 0) token = tokens.nextToken();  //Remove protocol
+       int colonCount = 0;
+       while(token.equals(":")){
+         colonCount++;
+         token = tokens.nextToken();
+       }
+       int slashCount = 0;
+       while(token.equals("/")){
+         slashCount++;
+         token = tokens.nextToken();
+       }
+       int requestType = colonCount - 1;
+       boolean isFormat2 = false;
+       if(token.equals("DATA")){
+          requestType = REQUEST_DATA;
+          isFormat2 = true;
+       }else if(token.equals("META")){
+          requestType = REQUEST_META;
+          isFormat2 = true;
+       }else if(token.equals("INFO")){
+          requestType = REQUEST_INFO;
+          isFormat2 = true;
+       }
+       if(isFormat2){
+          token = tokens.nextToken();
+          int slashCount2 = 0;
+          while(token.equals("/")){
+             slashCount2++;
+             token = tokens.nextToken();
+          }
+          slashCount = (slashCount > slashCount2 ? slashCount : slashCount2);
+       }
+//System.out.println("SL=" + slashCount + "TOK=" + token);
        String structure = "";
        String unid = "";
        String fullid = "";
-       pos = location.indexOf(":///");
-       if(pos != -1){
-          // content:///parents/resourceID
-          //Guess structure?
-          fullid = location.substring(pos + 4);
-       }else{
-          pos = location.indexOf("://");
-	    if(pos != -1){
-          // content://structure/parents/resourceID
-             pos += 3;
-             endpos = location.indexOf("/", pos);
-             if(endpos > 0){
-                structure = location.substring(pos, endpos);
-                fullid = location.substring(endpos + 1);
-//System.out.println("CSF SF S=" + structure + "  F=" + fullid);
-             }else{
-                structure = location.substring(pos);
-             }
-          }else{
-             //Use UNID
-             // content:/resourceUNID
-             pos = location.indexOf(":/");
-             if(pos != -1){
-                // module:/unid
-                pos += 2;
-                unid = location.substring(pos);
-             }else{
-                // (Default protocol)
-                pos = location.indexOf("/");
-                if(pos != -1){
-                   fullid = location;
-                }else{
-                   unid = location;
-                }
-             }
-          }
+       if(slashCount == 1){
+          if(tokens.hasMoreTokens()){
+             slashCount = 0;
+          }else unid = token;
        }
+       if((slashCount == 0) || (slashCount == 2)){
+          structure = token;
+       }
+       if((slashCount == 0) || (slashCount == 2)|| (slashCount == 3)){
+          StringBuffer buffer = new StringBuffer();
+          while(tokens.hasMoreTokens()) buffer.append(tokens.nextToken());
+          fullid = buffer.toString();
+       }
+       // Convert fullid to unid
        if(unid.length() < 1){
-          unid = content.getUNID(structure, "/" + fullid);
+          unid = content.getUNID(structure, fullid);
        }
+       // Defaults
        if(language.length() < 1){
           Resource resource = content.getResource(unid);
           if(resource != null) language = resource.getDefaultLanguage();

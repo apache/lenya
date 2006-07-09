@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Link Module -->
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  <map:flow language="javascript">
+     <map:script src="module:///code.js"/>
+  </map:flow>
+   <map:pipelines>
+      <map:pipeline type="noncaching">
+         <map:match pattern="{module:module}/*.css">
+            <map:read src="module:///{1}.css" mime-type="text/css"/>
+         </map:match>
+         <map:match pattern="formdata">
+            <map:generate type="serverpages" src="module://form/post.xsp"/>
+            <map:serialize type="xml"/>
+         </map:match>
+         <map:match pattern="{module:module}/save/*">
+            <map:call function="update">
+             <map:parameter name="publication" value="{page-envelope:publication-id}"/>
+             <map:parameter name="module" value="{module:module}"/>
+             <map:parameter name="unid" value="{1}"/>
+           </map:call>
+         </map:match>
+         <map:match pattern="{module:module}/savedata/*">
+            <map:aggregate element="save">
+               <map:part src="content:/INFO/{1}!edit"/>
+               <map:part src="cocoon:/formdata"/>
+            </map:aggregate>
+            <map:transform src="module:///save.xsl">
+               <map:parameter name="unid" value="{1}"/>
+            </map:transform>
+            <map:serialize type="xml"/>
+         </map:match>
+         <map:match pattern="edit/*">
+            <map:act type="resource-exists" src="module://edit/module.xmap">
+               <map:redirect-to uri="/{publication:publication}/edit/{../1}"/>
+            </map:act>
+            <map:mount uri-prefix="" src="module:///edit.xmap"/> 
+            <map:serialize type="html"/>
+         </map:match>
+      </map:pipeline>
+   </map:pipelines>
+</map:sitemap>

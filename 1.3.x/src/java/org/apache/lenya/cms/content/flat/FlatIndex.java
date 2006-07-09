@@ -78,6 +78,7 @@ public class FlatIndex {
       return indexFile.getPath();
    }
    public void update(){
+//TODO: Add publication ID to the log.
 System.out.println("Indexer updating " + indexName + "(" + language + ")");
       loadConfiguration();
       // Init Document
@@ -111,7 +112,11 @@ System.out.println("Indexer updating " + indexName + "(" + language + ")");
    private void updateStructure(Document document, Element root){
       FlatRelations relations = content.getRelations(structure);
       Element resourceElement = relations.getRoot();
-      addStructureResource(document, root, resourceElement, "", "");
+      if(null == resourceElement){
+         System.out.println("Error creating Index " + indexName + "_" + language + ".  Could not find Structure " + structure);
+      }else{
+         addStructureResource(document, root, resourceElement, "", "");
+      }
    }
 /**
  * Add child "resource" elements of resourceElement to root, and recurse for each.  Must pass filters.
