@@ -32,13 +32,13 @@
   <introspection>
     <edit mime-type="application/xml" name="Body Content">
 
-<!--
-      <open url="{$context}/{$publication}/authoring/{$page-id}.xml" method="GET"/>
--->
+      <!--<open url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.module=neutron&amp;lenya.step=open" method="GET"/>-->
 
       <checkout url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.module=neutron&amp;lenya.step=checkout" method="GET"/>
 
-      <save url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.module=neutron&amp;lenya.step=checkin" method="PUT"/>
+      <save url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.module=neutron&amp;lenya.step=save" method="PUT"/>
+      
+      <checkin url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.module=neutron&amp;lenya.step=checkin" method="PUT"/>
 
 
 
