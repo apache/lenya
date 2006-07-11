@@ -270,9 +270,16 @@
         <classpath refid="module.test-classpath.{$id}"/>
       </javac>
       
+      <!-- Copy test resources -->
+      <copy todir="{$testDestDir}" filtering="on">
+        <fileset dir="{$testSrcDir}" excludes="**.java"/>
+      </copy>
+      
       <xsl:variable name="loglevel">${junit.test.loglevel}</xsl:variable>
       <xsl:variable name="junit-dir">${junit.dir}</xsl:variable>
       <xsl:variable name="repository-factory">${repository.factory}</xsl:variable>
+      <xsl:variable name="contextRoot">${basedir}/build/lenya/webapp</xsl:variable>
+      <xsl:variable name="tempDir">${basedir}/build/lenya/temp</xsl:variable>
       
       <junit printsummary="yes" showoutput="true" haltonerror="on" haltonfailure="on">
         <classpath>
@@ -284,6 +291,8 @@
         <formatter type="plain" usefile="false" />
         <formatter type="xml" />
         <sysproperty key="junit.test.loglevel" value="{$loglevel}"/>
+        <sysproperty key="contextRoot" value="{$contextRoot}"/>
+        <sysproperty key="tempDir" value="{$tempDir}"/>
         <sysproperty key="test.repo.webappDirectory" value="{$build-webapp}"/>
         <sysproperty key="test.repo.repositoryFactory" value="{$repository-factory}"/>
         <batchtest todir="{$junit-dir}">

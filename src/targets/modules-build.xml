@@ -70,9 +70,6 @@
   <!-- ================================================ -->
   
   <target name="modules.test" depends="tests.prepare">
-    <antcall target="deploy-modules">
-      <param name="cocoon.xconf" value="${build.temp}/test/components.xsl"/>
-    </antcall>
     <ant antfile="${build.dir}/temp/modules-build.xml"
       inheritall="true"
       inheritrefs="true"
