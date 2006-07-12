@@ -101,6 +101,8 @@ public class Fckeditor extends DocumentUsecase {
                 + addNamespaces(namespaces, getParameterAsString("content"));
         // ToDo: set replacements in an properties file
         content = content.replaceAll("&nbsp;","&#160;");
+        content = content.replaceAll("&ldquo;","&#8220;");
+        content = content.replaceAll("&rdquo;","&#8221;");
         saveDocument(encoding, content);
     }
 
