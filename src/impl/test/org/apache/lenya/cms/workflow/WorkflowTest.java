@@ -19,6 +19,7 @@
 
 package org.apache.lenya.cms.workflow;
 
+import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.impl.AccessControlTest;
@@ -26,8 +27,10 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.Workflowable;
 
 /**
@@ -55,39 +58,22 @@ public class WorkflowTest extends AccessControlTest {
 
         document.getRepositoryNode().lock();
 
-        for (int situationIndex = 0; situationIndex < situations.length; situationIndex++) {
-
-            login(situations[situationIndex].getUser());
-
-            Identity identity = (Identity) getRequest().getSession()
-                    .getAttribute(Identity.class.getName());
-            User user = identity.getUser();
-            getLogger().info("User: [" + user + "]");
-
-            Session session = RepositoryUtil.createSession(getManager(), identity);
-            Workflowable instance = new DocumentWorkflowable(getManager(),
-                    session,
-                    document,
-                    getLogger());
-            assertNotNull(instance);
-
-            if (situationIndex > 0) {
-                getLogger().info("Current state: " + instance.getLatestVersion().getState());
+        Session session = getSession(submitSituation);
+        Workflowable workflowable = WorkflowUtil.getWorkflowable(getManager(),
+                session,
+                getLogger(),
+                document);
+        if (workflowable.getVersions().length > 0) {
+            if (workflowable.getLatestVersion().getState().equals("review")) {
+                invoke(document, rejectSituation);
+            } else if (workflowable.getLatestVersion().getState().equals("live")) {
+                invoke(document, deactivateSituation);
             }
+        }
 
-            String event = situations[situationIndex].getEvent();
-
-            getLogger().info("Event: " + event);
-
-            WorkflowUtil.invoke(getManager(), session, getLogger(), document, event);
-
-            boolean value = instance.getLatestVersion().getValue(variableName);
-
-            getLogger().info("Variable: " + variableName + " = " + value);
-            getLogger().info("------------------------------------------------------");
-
-            assertEquals(value, situations[situationIndex].getValue());
-
+        for (int situationIndex = 0; situationIndex < situations.length; situationIndex++) {
+            TestSituation situation = situations[situationIndex];
+            invoke(document, situation);
         }
 
         document.getRepositoryNode().unlock();
@@ -95,12 +81,53 @@ public class WorkflowTest extends AccessControlTest {
         getLogger().info("Test completed.");
     }
 
-    private static final TestSituation[] situations = {
-            new TestSituation("lenya", "submit", false),
-            new TestSituation("alice", "reject", false),
-            new TestSituation("lenya", "submit", false),
-            new TestSituation("alice", "publish", true),
-            new TestSituation("alice", "deactivate", false) };
+    protected void invoke(Document document, TestSituation situation)
+            throws AccessControlException, RepositoryException, WorkflowException {
+        Session session = getSession(situation);
+        Workflowable instance = new DocumentWorkflowable(getManager(),
+                session,
+                document,
+                getLogger());
+        assertNotNull(instance);
+
+        String event = situation.getEvent();
+
+        getLogger().info("Event: " + event);
+
+        WorkflowUtil.invoke(getManager(), session, getLogger(), document, event);
+
+        boolean value = instance.getLatestVersion().getValue(variableName);
+
+        getLogger().info("Variable: " + variableName + " = " + value);
+        getLogger().info("------------------------------------------------------");
+
+        assertEquals(value, situation.getValue());
+    }
+
+    protected Session getSession(TestSituation situation) throws AccessControlException,
+            RepositoryException {
+        login(situation.getUser());
+
+        Identity identity = (Identity) getRequest().getSession()
+                .getAttribute(Identity.class.getName());
+        User user = identity.getUser();
+        getLogger().info("User: [" + user + "]");
+
+        Session session = RepositoryUtil.createSession(getManager(), identity);
+        return session;
+    }
+
+    private static final TestSituation submitSituation = new TestSituation("lenya", "submit", false);
+    private static final TestSituation rejectSituation = new TestSituation("alice", "reject", false);
+    private static final TestSituation deactivateSituation = new TestSituation("alice",
+            "deactivate",
+            false);
+    private static final TestSituation publishSituation = new TestSituation("alice",
+            "publish",
+            true);
+
+    private static final TestSituation[] situations = { submitSituation, rejectSituation,
+            submitSituation, publishSituation, deactivateSituation };
 
     /**
      * A test situation.
