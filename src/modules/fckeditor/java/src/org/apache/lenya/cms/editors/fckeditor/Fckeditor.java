@@ -20,10 +20,14 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.xml.XMLUtils;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
@@ -32,10 +36,10 @@ import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.xml.UsecaseErrorHandler;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
-import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.Schema;
 import org.apache.lenya.xml.ValidationUtil;
 import org.w3c.dom.Document;
+import org.w3c.tidy.Tidy;
 import org.xml.sax.SAXException;
 
 /**
@@ -122,14 +126,28 @@ public class Fckeditor extends DocumentUsecase {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             xmlSource = (ModifiableSource) resolver.resolveURI(getSourceDocument().getSourceURI());
             saveXMLFile(encoding, content, xmlSource);
+            
+            // Setup an instance of Tidy.
+            Tidy tidy = new Tidy();
+            tidy.setXmlOut(true);
+            tidy.setNumEntities(true);
+            
+            //Set Jtidy warnings on-off
+            tidy.setShowWarnings(getLogger().isWarnEnabled());
+            //Set Jtidy final result summary on-off
+            tidy.setQuiet(!getLogger().isInfoEnabled());
+            //Set Jtidy infos to a String (will be logged) instead of System.out
+            StringWriter stringWriter = new StringWriter();
+            PrintWriter errorWriter = new PrintWriter(stringWriter);
+            tidy.setErrout(errorWriter);
 
             Document xmlDoc = null;
 
-            try {
-                xmlDoc = DocumentHelper.readDocument(xmlSource.getInputStream());
-            } catch (SAXException e) {
-                addErrorMessage("error-document-form", new String[] { e.getMessage() });
-            }
+            xmlDoc = tidy.parseDOM(xmlSource.getInputStream(), null);
+            
+            // FIXME: Jtidy doesn't warn or strip duplicate attributes in same
+            // tag; stripping.
+            XMLUtils.stripDuplicateAttributes(xmlDoc, null);
 
             if (xmlDoc != null) {
                 ResourceType resourceType = getSourceDocument().getResourceType();
