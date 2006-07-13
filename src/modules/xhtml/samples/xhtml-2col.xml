@@ -4,50 +4,31 @@
       xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
 >
   <head>
-    <title>Related Projects</title>
+    <title></title>
   </head>
   <body>  
   
-    <h2>Related Projects</h2>
-    <p>
-        This list is featuring projects which are closely related to Apache Lenya. 
-        Open Source Content Management Systems overviews can be found at 
-        <a href="http://www.oscom.org">oscom.org</a> or <a href="http://www.cmsinfo.org">cmsinfo.org</a>. 
-        More information on Cocoon-based projects can be found at
-        <a href="http://cocoon.apache.org/link/projects.html">http://cocoon.apache.org/link/projects.html</a>.
+    <h2>New 2-column XHTML document</h2>
+    
+    <p>Here comes the text of your new document...</p>
+    <p>Click on the menu "File", "edit with BXE" (Firefox users) 
+       or "File", "edit with Kupu" (Explorer users) 
     </p>
+ 
     <div class="column1of2"> 
-      <h3>Cocoon</h3>
-      <p>Apache Cocoon is an XML publishing framework that raises the usage of XML and XSLT
-      technologies for server applications to a new level. Designed for performance and
-      scalability around pipelined SAX processing, Cocoon offers a flexible environment
-      based on a separation of concerns between content, logic, and style. To top this all
-      off, Cocoons centralized configuration system and sophisticated caching help you to
-      create, deploy, and maintain rock-solid XML server applications.</p>
-      <p><a href="http://cocoon.apache.org">http://cocoon.apache.org</a></p>
+      <h3>Column 1</h3>
+      <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+      Fusce volutpat aliquam risus. Proin in dui nec arcu sagittis placerat. 
+      </p>
+   </div>
 
-      <h3>Slide</h3>
-      <p>The Slide project main module is a Content Management and Integration System, which
-      can be seen as a low-level content management framework. Conceptually, it provides
-      a hierarchical organization of binary content which can be stored into arbitrary,
-      heterogenous, distributed data stores. In addition, Slide integrates security, locking,
-      versioning, as well as many other services.</p>
-      <p><a href="http://jakarta.apache.org/slide/">http://jakarta.apache.org/slide/</a></p>
+   <div class="column2of2">
+      <h3>Column 2</h3>
+      <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. 
+      Fusce volutpat aliquam risus. Proin in dui nec arcu sagittis placerat. 
+      </p>
     </div>
 
-    <div class="column2of2">
-      <h3>Jackrabbit</h3>
-      <p>The Jackrabbit Project has been formed to develop an open source implementation of the 
-      Content Repository for Java Technology API (JCR), being specified within the Java Community 
-      Process as JSR-170.</p>
-      <p><a href="http://incubator.apache.org/jackrabbit/">http://incubator.apache.org/jackrabbit/</a></p>
-
-      <h3>Forrest</h3>
-      <p>Apache Forrest is an XML standards-oriented documentation framework based on Apache Cocoon, 
-      providing XSLT stylesheets and schemas, images and other resources. Forrest uses these to render 
-      the XML source content into a website via command-line, robot, or a dynamic web application.</p>
-      <p><a href="http://forrest.apache.org/">http://forrest.apache.org/</a></p>
-    </div>
     <div>
       <br class="clear" />
       <br /><br />
