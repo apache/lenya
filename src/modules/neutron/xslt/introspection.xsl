@@ -31,12 +31,19 @@
 <xsl:template match="/">
   <introspection>
     <edit mime-type="application/xml" name="Body Content">
+<!-- TODO: In order to get the WYSIWYG view one needs to change the mime-type to xhtml+xml, but somehow this causes problems re saving ... -->
+<!--
+    <edit mime-type="application/xhtml+xml" name="Body Content">
+-->
 
       <!--<open url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.module=neutron&amp;lenya.step=open" method="GET"/>-->
 
       <checkout url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.module=neutron&amp;lenya.step=checkout" method="GET"/>
 
+<!-- Save without releasing the lock, e.g. for "global" temporary saving -->
+<!--
       <save url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.module=neutron&amp;lenya.step=save" method="PUT"/>
+-->
       
       <checkin url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.module=neutron&amp;lenya.step=checkin" method="PUT"/>
 
