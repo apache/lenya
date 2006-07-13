@@ -28,7 +28,7 @@ import junit.framework.TestCase;
 /**
  * JCR repository test.
  */
-public abstract class RepositoryTest extends TestCase {
+public abstract class AbstractRepositoryTest extends TestCase {
 
     protected static final String AREA_ID = "authoring";
     protected static final String PUBLICATION_ID = "test";
@@ -39,7 +39,7 @@ public abstract class RepositoryTest extends TestCase {
     /**
      * Ctor.
      */
-    public RepositoryTest() {
+    public AbstractRepositoryTest() {
         setWebappDirectory(System.getProperty("test.repo.webappDirectory"));
         setRepositoryFactory(System.getProperty("test.repo.repositoryFactory"));
     }

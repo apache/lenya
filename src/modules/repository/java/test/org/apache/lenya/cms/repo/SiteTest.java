@@ -21,7 +21,7 @@ import javax.jcr.ItemExistsException;
 import org.apache.avalon.framework.logger.ConsoleLogger;
 import org.apache.lenya.cms.url.URLUtil;
 
-public class SiteTest extends RepositoryTest {
+public class SiteTest extends AbstractRepositoryTest {
     
     public void testSite() throws RepositoryException {
         

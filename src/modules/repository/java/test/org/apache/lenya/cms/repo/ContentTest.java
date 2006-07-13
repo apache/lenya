@@ -26,7 +26,7 @@ import org.apache.lenya.cms.repo.metadata.MetaDataRegistry;
 import org.apache.lenya.cms.repo.mock.TestElementSet;
 import org.apache.lenya.xml.DocumentHelper;
 
-public class ContentTest extends RepositoryTest {
+public class ContentTest extends AbstractRepositoryTest {
 
     /**
      * Test.

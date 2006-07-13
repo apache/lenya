@@ -16,7 +16,7 @@
  */
 package org.apache.lenya.cms.repo;
 
-public class VersioningTest extends RepositoryTest {
+public class VersioningTest extends AbstractRepositoryTest {
 
     public void testVersioning() throws RepositoryException {
         Session session = getSession();
