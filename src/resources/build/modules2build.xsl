@@ -296,7 +296,7 @@
         <sysproperty key="test.repo.webappDirectory" value="{$build-webapp}"/>
         <sysproperty key="test.repo.repositoryFactory" value="{$repository-factory}"/>
         <batchtest todir="{$junit-dir}">
-          <fileset dir="{$testDestDir}" includes="**/*.class"/>
+          <fileset dir="{$testDestDir}" includes="**/*.class" excludes="**/Abstract*.class"/>
         </batchtest>
       </junit>
     </target>
