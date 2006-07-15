@@ -119,7 +119,7 @@
                 <!-- Only used to display the document path of the edited doc  -->
                 <map:parameter name="document-path" value="{page-envelope:document-path}"/>
                 <map:parameter name="save-destination" 
-                  value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=save"/>
+                  value="{request:requestURI}"/>
                 <map:parameter name="exit-destination" 
                   value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=exit"/>
                 <map:parameter name="reload-after-save" value="1"/>
@@ -226,37 +226,7 @@
           <map:redirect-to uri="{request:requestURI}"/>
         </map:match>
       
-        <!-- 
-             Kupu uses PUT to transmit the edited file for save.
-             The problem is, Kupu removes namespace information. 
-             That means we can not use the StreamGenerator, because 
-             it complains about an unbound element.
-        -->
-        <map:match pattern="save" type="step">
-          <map:select type="request-method">
-            <map:when test="PUT">
-              <map:act type="reserved-checkout-test">
-                <map:generate type="serverpages" 
-                  src="fallback://lenya/content/rc/{exception}.xsp">
-                  <map:parameter name="user" value="{user}"/>
-                  <map:parameter name="filename" value="{filename}"/>
-                  <map:parameter name="date" value="{date}"/>
-                  <map:parameter name="message" value="{message}"/>
-                </map:generate>
-                <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
-                <map:call resource="style-cms-page"/>
-                <map:serialize />
-              </map:act>
-              
-              <map:call function="editDocument">
-                <map:parameter name="sourceUri" value="cocoon:/request2document"/>
-                <map:parameter name="useBuffer" value="true"/>
-                <map:parameter name="noCheckin" value="true"/>
-                <map:parameter name="lenya.usecase" value="edit.bxe"/>
-              </map:call>
-            </map:when>
-          </map:select>
-        </map:match>
+
       </map:match>
     </map:pipeline>
   </map:pipelines>
