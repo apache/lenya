@@ -1,5 +1,1835 @@
 <?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN" "http://my.netscape.com/publish/formats/rss-0.91.dtd">
-<rss version="0.91"><channel><title> (2006-05) Changes</title><link>changes.html</link><description> (2006-05) Changes</description><language>en-us</language><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+<rss version="0.91"><channel><title> (2006-07) Changes</title><link>changes.html</link><description> (2006-07) Changes</description><language>en-us</language><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        thorsten
+        :
+        [Docs] 
+            Removing draft note for the project guidelines since they are official now. Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
+        by
+        thorsten
+        :
+        [Zone] 
+            Using clean-all instead of shell commands. Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
+        by
+        thorsten
+        :
+        [Zone] 
+            Fixing spaces for the JAVA_OPTIONS Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
+        by
+        thorsten
+        :
+        [Zone] 
+            Setting the server to -Djava.awt.headless=true via the JAVA_OPTIONS env Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            don't utilize webdav uri for content since it doesn't use existing session Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        thorsten
+        :
+        [1.4] 
+            ASF Bugzilla Bug 39906 - Move Xopus integration code to a module
+From Jonathan Addison. Thank you.
+
+This patch moves all of the xopus files and pipelines from the core to a new
+xopus module.
+
+It also fixes some issues left over from migrating xopus from 1.2 to 1.4:
+- deleted old stylesheets
+- added xopus.path parameter next to xopus.context parameter in xopus.xconf
+(previously the pipeline had to be updated with the relative path of the xopus
+location)
+- added a basic xhtml schema (thanks to Josias)
+- added strip_namespaces.xsl to the xopus transformation pipeline
+
+There is a README.txt that covers what needs to be set up. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            note about bug which is causing the save problem Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            use webdav module for kupu PUT Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            note about mime-type and WYSIWYG added and save commented, because Neutron protocol doesn't allow save after checkout Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Ajax is still not working correctly in usecases. Meaning we need to set the @ajax to false. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            exclude abstract test classes from being executed, because junit fails if no tests are defined in a class. Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        josias
+        :
+        [1.4] 
+            renamed RepositoryTest to AbstractRepositoryTest because it's an abstract class Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            more meaningful samples for xhtml
+thanks to Renaud Richardet for the patch
+fixes bug 40033 Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            use tidy to clean up entities and xml from fck editor Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            replacing &amp;ldquo; and &amp;rdquo; during doc save
+ Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Allow WorkflowTest to be applied to different initial states Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Fixed some test build issues Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            thanks to Jonathan Addison Neutron implementation has been finished Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        by
+        solprovider
+        :
+        [] 
+            Added Edit, Link, and File Modules for editing Flat content.  
+Still need editor for XML Resources, and the ability to create a new Resource.
+
+To use (after migrating a Publication to Flat content), browse http://server/pub/edit Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        chestnut
+        :
+        [1.4] 
+            fixes for rollback usecase (define it and allow it) Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Made RepositoryTest abstract so it isn't executed by JUnit Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Updated test build process to work with modules correctly Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Improved XPath to check upload enabling in web.xml. This fixes bug #39976. Thanks to Oliver Schalch for the patch. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        josias
+        :
+        [Docs] 
+            fixed typo Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        by
+        solprovider
+        :
+        [] 
+            Minor additions to the HELP.
+Changed some Indexes. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        thorsten
+        :
+        [Docs] 
+            Removing the fixme note since we incorporated them 
+into the latest draft. Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        by
+        thorsten
+        :
+        [] 
+            Fixing typo Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Added cleanup XSLT for homepage resource type Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Fixed URL reference to Kupu XSLT Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            WebDAV sitemap: fixed fallback:// URI (don't use input module and protocol together) Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            WebDAV Put: enabled validation Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Replaced context:// with fallback:// so that it works with modules.copy=false Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            PublicationTemplateFallbackModule uses fallback:// source. Now it works with modules.copy=false. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            added toString method to get more meaningful error messages (e.g. if a workflow event cannot be invoked). Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            added policy for logout usecase to enable the logout menu item. this is a temporary fix until we find a better solution. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            removed redundant css code: use the same css for all areas in the lenya menu. special css for certain areas is still possible using the id attribute. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            applied patch by Oliver Schalch to fix the server status tab in the admin area. fixes bug #39978 Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            minor layout adjustments: fixed vertical alignment of areas in the menubar in firefox, fixed font size of tabs in the site area in IE Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            BXE: load bxe relatively to publication to allow fallback Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Use ExistingAncestorSourceResolver for template-fallback://. This should fix bug #39959. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            pass the usecase object to the view pipeline also for non-template uris to allow handling of usecases in a different sitemap, e.g. a module sitemap. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        gregor
+        :
+        [Docs] 
+            add sandbox and branch policies Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            [minor] added xml prolog Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            reverted commit 416749 on this file which was probably accidental (related to bug #39801). now search should work as before. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            Disable caching for webdav/authoring area Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
+        by
+        thorsten
+        :
+        [Zone] 
+            Updating shell scripts, removing a whitespace Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            utilize PUT method from the webDAV protocol for bxe Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            ability to preprocess PUT content with xslt Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            typo fixed Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        michi
+        :
+        [1.4] 
+            obsolete Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            missing slash added Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            checkin exception added Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            checkout exception started Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            typo fixed Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            save and checkout implemented Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Fixed usecasedocument module references, moved contact form to separate module Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        by
+        solprovider
+        :
+        [] 
+            Working on the Link ResourceType Module, I kept finding bugs in Cocoon2.1.6, so I reinstalled/reorganized my development system with Cocoon2.1.9 and a fresh copy of Lenya1.3.  Fixed some bugs with Hierarchical content while testing the new installation.
+
+Updated INSTALL-SRC.txt with instructions based on new installation (especially how Cocoon's BAT files are formatted wrong.)
+Bug fixes for Hierarchical Content.
+Migrate: Use live revision for edit revision if no authoring revision (unlikely in Lenya1.2).
+Added Edit Module for entry into Flat Resource maintenance.
+Fixed Form Module's post.xsp to handle checkboxes (multiple fields with the same name).
+Added ResourceTransformer for changing structural information of Resources.  Still being tested.
+Added StringSource and VirtualSourceFactory.  The Cocoon project might benefit from them.  VirtualSourceFactory needs to be thread-safe. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            checkout fixed Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        michi
+        :
+        [1.4] 
+            neutron removed from core Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        michi
+        :
+        [1.4] 
+            neutron removed from core Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            neutron added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            use the neutron module instead files within core Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            neutron module added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            BXE: added workaround for http://issues.apache.org/jira/browse/COCOON-1873 Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            remove junk I didn't mean to commit Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            read usecase-policies.xml uri from ac.xconf Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Moved defaultpub usecase declarations to correct directory Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Deleted externals declaration for kupu Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Updated Kupu sitemap references to use resources from module, fixed API call n edit-document.js Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed empty directories Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved GUI manager declaration to usecsae module Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Moved kupu usecase declaration to module Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Added svn:externals for Kupu in kupu module Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved default pub usecase declarations to module Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            classpath fixed Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            classes and sources separated Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        michi
+        :
+        [1.4] 
+            src and classes separated Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            src dir added to separate source from classes Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            applied patch by Jörn Nettingsmeier (with some modifications): reworked usecases to change passwords and made usecases available in the gui. fixes bug #39765. Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed empty directory Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed empty directories Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Build process: updated webapp build excludes Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Build process: updated webapp build excludes Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed empty directory Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed empty directory Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Udpated usecase policies Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Updated trash+archive policies, removed obsolete info policices Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Check for Windows path backslashes. See bug #39880. Thanks to Jonathan Addison for the patch. Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Moved SourceCache from ac-impl to cache module. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Don't reference ac-impl code. This requires some code duplication, but reading the config file directly is a hack anyway. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] code formatting, removed dead code Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Added warning messages for dependencies to unpublished modules Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Added warning messages for dependencies to unpublished modules Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Removed obsolete module declaration Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Default pub: reference imported tab XSL using template-fallback:// instead of a relative URL Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved access control input module to ac-impl module Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed empty directory Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Updated version of build.properties Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Added option if modules should be copied by the build process Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Added ModuleManager, added option not to copy modules during the build Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Build process: Don't copy module java sources Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Added some usecase policy roles Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Fixed URLs in global-sitemap.xmap (added fallback) Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Removed invalid usecases Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Set admin role in authoring area Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Added note how to initialize the usecase policies. Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Made UsecaseAuthorizerImpl permissive. Added usecase policies for admins. Added XSLT to initialize usecase policies. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        jann
+        :
+        [1.2] 
+            small improvment to the form editor i.e. to prevent th editor to jump to the top of the page if a new element is added Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved UsecaseAuthorizerImpl from ac-impl to usecase-impl Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Updated module descriptors: added usecase module dependency Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved usecase framework to modules Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] added license header Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved templating implementation code to templating-impl module Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Renamed module usecase to usecasedocument Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed empty directory Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed empty directory Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved workflow implementation code to workflow-impl module Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Reduced visibility of DocumentWorkflowable class to reduce dependencies on implementation code Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved editor usecases from core to editors module Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved Kupu class to Kupu module. The rest of the Kupu-related files will be moved later. Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed empty directories Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Moved PublishingEnvironment from core API to task module Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] added some javadocs Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Build process: Added module descriptor validation. This fixes bug #39872. Thanks to Renaud Richardet for the patch. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Updated module descriptors Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Updated module descriptors Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved create JX templates from default pub to sitemanagement module. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            changed name and description  Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            webdav module depends on the sitemanagement module
+ Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Added dependencies to sitemanagement module Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved site management usecases to sitemanagement module Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Parameterize module patches to support test configuration Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Test build: don't require lenya-roles patch directory Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Commented out legacy code in usecase.xmap (requires legacy modules) Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Use separate classpath property for each module Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved TaskAction declaration from core to task module Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Removed reference to obsolete ExecutionException Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed empty directories Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed empty directories Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Moved LenyaProject class to task module Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed empty directories Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved access control actions to ac-impl module Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Moved legacy code (task) from core to task module Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Updated version of build.properties Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Added core modules to build.properties Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Moved login/logout usecases from core to ac-impl module Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Renamed ac-file module to ac-impl Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Added AC classes from core-API to ac-impl module Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Added missing administration module descriptor Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved CredentialWrapper to administration module Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Added module-core directory to IDE build Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Moved access control configuration to ac-impl module Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Adding missing files to core modules Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Moved AC impl and admin usecases to modules Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            [minor change] added xml prolog Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Build process: Use ant target dependencies to resolve module dependencies Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Build process: Use ant target dependencies to resolve module dependencies Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Build process: copy&amp;patch modules separately Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Build process: copy&amp;patch modules separately Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Added some missing module descriptors Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Build process: Building modules separately, dependencies are resolved Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Removed NodeFactory role from lenya.roles (now provided by sourcerepository module in cocoon.xconf) Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Added some missing module descriptors Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Updated + added module descriptor files Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Updated + added module descriptor files Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] code formatting Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved ant tasks to directory which resembles the package Diff </description></item><item><title>Sandbox remove</title><link>changes.html</link><description>Sandbox remove
+        by
+        gregor
+        :
+        [Sandbox] 
+            move repository to branches Diff </description></item><item><title> add</title><link>changes.html</link><description> add
+        by
+        gregor
+        :
+        [] 
+            move doco to branches Diff </description></item><item><title> remove</title><link>changes.html</link><description> remove
+        by
+        gregor
+        :
+        [] 
+            remove old branches Diff </description></item><item><title> remove</title><link>changes.html</link><description> remove
+        by
+        gregor
+        :
+        [] 
+            remove old branches Diff </description></item><item><title> remove</title><link>changes.html</link><description> remove
+        by
+        gregor
+        :
+        [] 
+            remove old branches Diff </description></item><item><title> remove</title><link>changes.html</link><description> remove
+        by
+        gregor
+        :
+        [] 
+            remove old branches Diff </description></item><item><title> remove</title><link>changes.html</link><description> remove
+        by
+        gregor
+        :
+        [] 
+            remove old branches Diff </description></item><item><title> remove</title><link>changes.html</link><description> remove
+        by
+        gregor
+        :
+        [] 
+            remove old branches Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved SourceNode + factory to separate module Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed empty bxe directory Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            checkin started Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            neutron does differentiate between save and checkin Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            slightly improved error message and removed unused imports. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            use info message instead of error message, s.t. the asset tab is still displayed in the site area if uploads are disabled. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            delete build and old libs during compile process Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            changed file extension for consistency reasons Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            neutron usecase started Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            links fixed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            fixed import: use XPathAPI from apache, not from sun Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Added a static Method to the ServletHelper which checks the enable-upload parameter in web.xml. This fixes bug #39836. Thanks to Oliver Schalch for the patch. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        gregor
+        :
+        [Docs] 
+            add discussion results to guidelines, add proposal for branch creation Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Switched &lt;a&gt; and &lt;span&gt; for tabs to allow hover effects Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            fixed directory name Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed dead code Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Fixed tab links in sitetree module Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Default pub: round corners for tabs using SVG module Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Default pub: added page.css dummy to make page.xml work Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Default pub: converted CSS to XML to allow images with context prefix Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            SVG module: Added support for corner and tab rendering Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Tabs: add &lt;a&gt; also for non-link tabs to support CSS backgrounds Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            syntax of link fixed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            syntax fixed Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        by
+        solprovider
+        :
+        [] 
+            General cleanup and preparation for the "edit" Module (which will be delayed by the weekend.)
+ Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            introspection fixed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            introspection fixed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            license added Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            put compile target in here such that it can be used standalone Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        michi
+        :
+        [1.4] 
+            obsolete Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            lib updated Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            libs updated Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            subsequent parameters fixed Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        by
+        solprovider
+        :
+        [] 
+            Changed index live.xconf to use "livemenu" structure.  If you have previously migrated content, rename {pub}/content/index/livemenu* -&gt; live*  (overwrite the old files)
+
+Navigation Module: Fixed bug and passes to "nav" Module if flat content.
+Nav Module: Navigation elements for flat content.
+Added backwards-compatible instructions to 13UPGRADE.txt for fixing links when using the Nav Module. Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        by
+        solprovider
+        :
+        [] 
+            FlatRevision: Fixed bug with getTitle() not using current revision.
+Migrate: Restored edit and live revisions default to "1".
+Migrate: Removed extension from id and fullid.  This changes the content datastore, so please migrate again. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Added lastUser and lastDate attributes to WorkflowModule, added footer to default publication which uses these attributes. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Default publication CSS: added footer support, set small font for &lt;td&gt; Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            BXE asset upload: user ID as creator default, creator+title+rights are optional. This fixes bug #39510. Thanks to Joern Nettingsmeier for the patch. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            UserPasswordWithCheck: Don't try to authenticate if the user is null. Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Added usecase resource type module - this allows to execute usecases as documents. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Add meta data to lucune-index.xml for xhtml resource type Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Moved declaration of LenyaMetaDataGenerator from default publication to core Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Build process: don't patch sitemap.xmap twice Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] code formatting Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Asset upload: creator, rights, and title are optional. The creator defaults to the user ID instead of the name. This fixes bug #39510. Thanks to Joern Nettingsmeier for the patch. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Added method to get the currently requested document to DocumentUtil Diff </description></item><item><title> add</title><link>changes.html</link><description> add
+        by
+        solprovider
+        :
+        [] 
+            This is (hopefully) all the changes and new files to convert 1.2.x to 1.3.  There are 4 new documentation files at the root. Diff </description></item><item><title> remove</title><link>changes.html</link><description> remove
+        by
+        solprovider
+        :
+        [] 
+             Diff </description></item><item><title> add</title><link>changes.html</link><description> add
+        by
+        solprovider
+        :
+        [] 
+             Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        by
+        thorsten
+        :
+        [] 
+            Adding the 1.2.x branch as base for 1.3.x Diff </description></item><item><title> remove</title><link>changes.html</link><description> remove
+        by
+        thorsten
+        :
+        [] 
+            Making place for the 1.2.x on which 1.3 is based on Diff </description></item><item><title> remove</title><link>changes.html</link><description> remove
+        by
+        solprovider
+        :
+        [] 
+             Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Modified sitemap patch files so that they are not applied during each build Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed debug statements. sorry for the noise Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Issue a global redirect after a usecase is completed, otherwise the continuation will be added to the redirect. Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        by
+        solprovider
+        :
+        [] 
+             Diff </description></item><item><title> add</title><link>changes.html</link><description> add
+        by
+        solprovider
+        :
+        [] 
+             Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Use separate usecase for changing password with check of old password. This avoids the security issue that the checkPassword parameter can be set by the client. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Updated usecase names in usecase-policies.xml Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Pass usecase name as parameter to usecases.js. This allows to invoke the flowscript in different ways than just using a request parameter. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        jann
+        :
+        [1.2] 
+            do nothing if an empty href occurs Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Menus: check if the current document object as returned from the page envelope is really a document, because the input module logicsheet returns an empty string instead of null values. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Added check for document existence to module menus to avoid exception for non-existing documents in the site area. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Added sitetree entry for /concepts (en). The document exists but has to be translated. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            InsertAsset usecase: clear uload field values when upload was successful, clear file parameter value before next screen Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Asset upload: When errors occur, remove the value of the 'file' parameter. The value can't be passed to the next screen for security reasons, so the user has to be prompted to choose the asset again. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Asset upload: Completed validation, use name/id of logged-in user as default creator value, don't rely on file parameter when delegating the asset upload from the editor upload screen. This fixes bug 39510. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed unused import Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            IDE build: don't include non-existing API test directory, include modules-optional src directories Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Updated code after refactoring: DocumentIdentityMap renamed to DocumentFactory (thanks to Edith Chevrier for spotting) Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+        by
+        thorsten
+        :
+        [Site] 
+            Automatic publish from forrestbot Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        thorsten
+        :
+        [Docs] 
+            Adding apachecon button and removing all news section or outdated release dates Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        thorsten
+        :
+        [Docs] 
+            Adding new lenya site. repported by Vik Tara. Diff </description></item><item><title> add</title><link>changes.html</link><description> add
+        by
+        thorsten
+        :
+        [] 
+            Opening a revolution branch and added an initial 1.3 directory for solproviders code revolution 1.3 which is backwards compatible to 1.2 Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Applying patch from Cayetano. Fixing orthographic errors. Thanks Cayetano. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        cheche
+        :
+        [1.4] 
+            Update Descriptions 
+FIX bug: 39676
+ Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Cleaning up the odt create usecase like recommended by Andreas. I tested as well with an external content dir. Thanks Andreas for this headsup and the effort to make this possible. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            extension not needed for PUT, uses default extenstion * as resource type Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Don't use source extensions when creating ODT documents. This fixes bug #18348. Thanks to Renaud Richardet for the patch! Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Added message to migration target that it doesn't work with external content Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            contextPath fixes for webdav module (should fix webDAV via Tomcat) Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        chestnut
+        :
+        [1.4] 
+            instructions on how to use fckeditor in lenya Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] code formatting Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            more ContextPath fixes Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            added contextpath to javascript includes Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            styles and meta clarified Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Session extends UnitOfWork. This removes the dependency from SourceNode to SessionImpl. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [refactoring] renamed DocumentIdentityMap to DocumentFactory for consistency reasons, removed most of the dependencies from the API to o.a.lenya.transaction Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Removed obsolete Operation interface + implementation Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved PublicationTemplateManagerImpl from API to impl Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [refactoring] renamed DefaultDocument to DocumentImpl Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Moved some publication classes from API to impl. Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Moved some publication classes from API to impl. The collection interface doesn't extend Document anymore, now the CollectionImpl uses delegation instead of inheritance. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Removed dependency from DefaultDocumentBuilder to DefaultDocument Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Updated publish usecase to new API (session.getUnitOfWork().getIdentity() -&gt; session.getIdentity()) Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Use LRUMap instead of deprecated CacheMap. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Use LRUMap instead of deprecated CacheMap. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Fix bug 37881. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Removed references to DocumentIdentityMapImpl Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed unused import Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Don't use DocumentIdentityMapImpl directly Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [Refactoring] splitted Session and DocumentIdentityMap into interface and implementation. This will hopefully allow to move the transaction handling code from API to impl. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed unused import Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Obtain ODT content using the lenyadoc:/ protocol. This works now because the extension isn't part of the source path anymore. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Obtain ODT content using the lenyadoc:/ protocol. This works now because the extension isn't part of the source path anymore. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Removed deprecated + obsolete Creator interface. The functionality of the NewBlogEntryCreator has been moved to the CreateBlogEntry usecase. Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Blog: moved index.xml content file to index (removed extension) Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            [temporary] removed feed meta file to make room for the new content file, added meta file in new location Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Removed source extensions from content. This way, source files can be read without knowing the source extension, i.e., without accessing the meta data. This solves several problems and simplifies the code. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        antonio
+        :
+        [1.2] 
+            Handle GZIP Content-Encoding properly. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            parameters added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            context prefix added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            introspection pipeline added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            introspection link added Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            introspection added Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] removed empty ac/impl directory Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved some usecase implementation classes from API to impl Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved usecase scheduler implementation from API to impl Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Removed notification + default pub classes from API, moved defaultpub usecases to module to make them available to other modules Diff </description></item><item><title>1.2 add</title><link>changes.html</link><description>1.2 add
+        by
+        michi
+        :
+        [1.2] 
+            configure core lib added Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            defaultpub and notification added such that Lenya compiles again Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            moved some workflow classes from API to impl Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Moved workflow implementation from API to impl Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Build process: create build/lenya/lib directory before using it Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Build process: Make pub + module libs available for compiling pubs + modules Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            enable ajax in cforms example Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Re-added AddUser usecase Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Moved AC usecases back from impl to API, improved AC API for a better separation between API and impl Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Moved AC cache classes from API to impl Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Build Process: fixed src.test.impl.dir value Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Build process: Fixed classpath parameter (refid attribute changed to value) Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Moved tests to impl/test, fixed test classpath Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Improved build process: use specific classpath when compiling modules, pubs, and core implementation Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Added missing UsecaseAuthorizer after separating API from implementation (sorry) Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        michi
+        :
+        [Docs] 
+            paths fixed Diff </description></item><item><title>Docs add</title><link>changes.html</link><description>Docs add
+        by
+        michi
+        :
+        [Docs] 
+            helper XSLTs added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Starting to separate API from implementation. The API Java files are left where they were to keep the impact minimal for the moment. Implementation files will be moved to the src/impl directory. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            ignore build directory Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        michi
+        :
+        [1.4] 
+            obsolete Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            classpath set to libraries instead classes Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            create jars Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            use jars instead of classes Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            actual libs added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            configuration updated and note about environment variables for Windows added Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        by
+        michi
+        :
+        [1.2] 
+            ignore build Diff </description></item><item><title>1.2 add</title><link>changes.html</link><description>1.2 add
+        by
+        michi
+        :
+        [1.2] 
+            backporting the configuration tool from lenya 1.4 to 1.2 Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            for jar location Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            combo bug workaround Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            copy paste functionality added Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        josias
+        :
+        [Docs] 
+            fixed typos Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            kupu drawers must have moved as some point, this should fix the ability to add links in kupu Diff </description></item><item><title>Docs add</title><link>changes.html</link><description>Docs add
+        by
+        thorsten
+        :
+        [Docs] 
+            Adding guidelines proposal based on the one from forrest. Replaced forrest with lenya and updated links to reflect the important ones from lenya. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            GUI and api updated Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            formatting Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            differentiate between comboBox and textField Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            TODOs added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            available parameters made accessible Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            combox set dynamically Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            set radio button correctly Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            back bug fixed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            bugs fixed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            removed strange chars. thanks to Oliver Schalch for spotting this Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        antonio
+        :
+        [1.4] 
+            Don't copy from lenya/lib/endorsed. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        antonio
+        :
+        [1.4] 
+            Activating java 1.5 compile and run for Linux. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            classes for GUI added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            thanks to Ilhan Parmaksiz and Oliver Schalch we now have a nice GUI to configure Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            the actual link added Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            links to source added Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        michi
+        :
+        [1.4] 
+            obsolete Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            moved into core Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        michi
+        :
+        [1.4] 
+            abstract configure command line class moved to core Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        michi
+        :
+        [1.4] 
+            moved Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            classes moved into implementation dir Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            classes moved into implementation dir Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            moved Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            Configure Command line abstractized Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            Configure abstractized Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            new dir structure added. TODO should be replaced by jar ... Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        michi
+        :
+        [1.4] 
+            removed for making space of new dir structure Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            source splitted into API and implementation Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            slightly refactored to make it easier to extend. included a patch by Renaud Richardet. thanks Renaud. Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+        by
+        chestnut
+        :
+        [Site] 
+            updated live-sites Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        chestnut
+        :
+        [Docs] 
+            updated live-sites Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
         by
         antonio
         :
@@ -53111,39 +54941,231 @@ These actions are used in the html-form-editor.xmap sitemap
         
         :
         [0.8] 
-            New repository initialized by cvs2svn. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+            New repository initialized by cvs2svn. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
         by
-        antonio
+        thorsten
         :
-        [1.2] 
-            Don't check 2 time expression 'cie != null'. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        [Docs] 
+            Removing draft note for the project guidelines since they are official now. Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
         by
-        antonio
+        thorsten
         :
-        [1.2] 
-            Don't create unnecesary Long Objects. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        [Zone] 
+            Using clean-all instead of shell commands. Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
         by
-        antonio
+        thorsten
         :
-        [1.2] 
-            Formatting. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+        [Zone] 
+            Fixing spaces for the JAVA_OPTIONS Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
         by
-        antonio
+        thorsten
         :
-        [1.2] 
-            Code formatting. Remove unused imports and Use imports. Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
-        by
-        antonio
-        :
-        [1.2] 
-            Don't create unnecesary Long Objects. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        [Zone] 
+            Setting the server to -Djava.awt.headless=true via the JAVA_OPTIONS env Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         chestnut
         :
         [1.4] 
-            allow client editors to save (should allow kupu to save) Diff </description></item><item><title>1.2 update</title><link>changes.html</link><description>1.2 update
+            don't utilize webdav uri for content since it doesn't use existing session Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
         by
-        antonio
+        thorsten
         :
-        [1.2] 
-            Use StringBuffer inside cycles. Diff </description></item></channel></rss>
+        [1.4] 
+            ASF Bugzilla Bug 39906 - Move Xopus integration code to a module
+From Jonathan Addison. Thank you.
+
+This patch moves all of the xopus files and pipelines from the core to a new
+xopus module.
+
+It also fixes some issues left over from migrating xopus from 1.2 to 1.4:
+- deleted old stylesheets
+- added xopus.path parameter next to xopus.context parameter in xopus.xconf
+(previously the pipeline had to be updated with the relative path of the xopus
+location)
+- added a basic xhtml schema (thanks to Josias)
+- added strip_namespaces.xsl to the xopus transformation pipeline
+
+There is a README.txt that covers what needs to be set up. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            note about bug which is causing the save problem Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            use webdav module for kupu PUT Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            note about mime-type and WYSIWYG added and save commented, because Neutron protocol doesn't allow save after checkout Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Ajax is still not working correctly in usecases. Meaning we need to set the @ajax to false. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            exclude abstract test classes from being executed, because junit fails if no tests are defined in a class. Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        josias
+        :
+        [1.4] 
+            renamed RepositoryTest to AbstractRepositoryTest because it's an abstract class Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            more meaningful samples for xhtml
+thanks to Renaud Richardet for the patch
+fixes bug 40033 Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            use tidy to clean up entities and xml from fck editor Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            replacing &amp;ldquo; and &amp;rdquo; during doc save
+ Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Allow WorkflowTest to be applied to different initial states Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Fixed some test build issues Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        michi
+        :
+        [1.4] 
+            thanks to Jonathan Addison Neutron implementation has been finished Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        by
+        solprovider
+        :
+        [] 
+            Added Edit, Link, and File Modules for editing Flat content.  
+Still need editor for XML Resources, and the ability to create a new Resource.
+
+To use (after migrating a Publication to Flat content), browse http://server/pub/edit Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        chestnut
+        :
+        [1.4] 
+            fixes for rollback usecase (define it and allow it) Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Made RepositoryTest abstract so it isn't executed by JUnit Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Updated test build process to work with modules correctly Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Improved XPath to check upload enabling in web.xml. This fixes bug #39976. Thanks to Oliver Schalch for the patch. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        josias
+        :
+        [Docs] 
+            fixed typo Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        by
+        solprovider
+        :
+        [] 
+            Minor additions to the HELP.
+Changed some Indexes. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        thorsten
+        :
+        [Docs] 
+            Removing the fixme note since we incorporated them 
+into the latest draft. Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        by
+        thorsten
+        :
+        [] 
+            Fixing typo Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Added cleanup XSLT for homepage resource type Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Fixed URL reference to Kupu XSLT Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            WebDAV sitemap: fixed fallback:// URI (don't use input module and protocol together) Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            WebDAV Put: enabled validation Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Replaced context:// with fallback:// so that it works with modules.copy=false Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            PublicationTemplateFallbackModule uses fallback:// source. Now it works with modules.copy=false. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            added toString method to get more meaningful error messages (e.g. if a workflow event cannot be invoked). Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            added policy for logout usecase to enable the logout menu item. this is a temporary fix until we find a better solution. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            removed redundant css code: use the same css for all areas in the lenya menu. special css for certain areas is still possible using the id attribute. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            applied patch by Oliver Schalch to fix the server status tab in the admin area. fixes bug #39978 Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            minor layout adjustments: fixed vertical alignment of areas in the menubar in firefox, fixed font size of tabs in the site area in IE Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            BXE: load bxe relatively to publication to allow fallback Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Use ExistingAncestorSourceResolver for template-fallback://. This should fix bug #39959. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        josias
+        :
+        [1.4] 
+            pass the usecase object to the view pipeline also for non-template uris to allow handling of usecases in a different sitemap, e.g. a module sitemap. Diff </description></item></channel></rss>

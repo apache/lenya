@@ -193,12 +193,6 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <h1>Apache Lenya project guidelines</h1> 
   
-<div class="warning">
-<div class="label">Proposal draft document</div>
-<div class="content">This document is a proposal and 
-    currently under discussions on the dev list.</div>
-</div>
-  
 <p>
    This document provides the guidelines under which the Apache Lenya
    project operates. It defines the roles and responsibilities, who may vote,
@@ -215,7 +209,7 @@ document.write("Last Published: " + document.lastModified);
   </p>
 
   
-<a name="N10018"></a><a name="mission"></a>
+<a name="N10014"></a><a name="mission"></a>
 <h2 class="h3">The mission of Apache Lenya</h2>
 <div class="section">
 <p>
@@ -225,7 +219,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 
   
-<a name="N10022"></a><a name="way"></a>
+<a name="N1001E"></a><a name="way"></a>
 <h2 class="h3">Open development</h2>
 <div class="section">
 <p>
@@ -268,7 +262,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 
   
-<a name="N1005A"></a><a name="roles"></a>
+<a name="N10056"></a><a name="roles"></a>
 <h2 class="h3">Roles and responsibilities</h2>
 <div class="section">
 <p>The meritocracy enables various roles as defined in the
@@ -284,12 +278,13 @@ document.write("Last Published: " + document.lastModified);
     
 </p>
 <p>The current Apache Lenya committers and PMC members are
-      <a href="community/acknowledgements.html">listed</a>.
+      <a href="community/acknowledgements.html">listed</a>. The Lenya PMC has additionally granted commit access 
+      to committers from its sister projects Apache Cocoon and Apache Forrest. 
     </p>
 </div>
 
   
-<a name="N10086"></a><a name="pmc"></a>
+<a name="N10082"></a><a name="pmc"></a>
 <h2 class="h3">Project Management Committee (PMC)</h2>
 <div class="section">
 <p>The Apache Lenya project was established in spring 2003 and became a
@@ -367,7 +362,7 @@ document.write("Last Published: " + document.lastModified);
       <a href="http://www.apache.org/dev/pmc.html#chair">PMC FAQ</a>
     
 </p>
-<a name="N100D3"></a><a name="report"></a>
+<a name="N100CF"></a><a name="report"></a>
 <h3 class="h4">Quarterly reports to ASF Board</h3>
 <p>
         Every three months, it is the responsibility of our PMC chair to
@@ -380,7 +375,7 @@ document.write("Last Published: " + document.lastModified);
         <a href="http://www.apache.org/foundation/board/calendar.html">
         board meeting</a>. Our reporting schedule is: Feb, May, Aug, Nov.
       </p>
-<a name="N100E4"></a><a name="elect"></a>
+<a name="N100E0"></a><a name="elect"></a>
 <h3 class="h4">Electing new committers and PMC members</h3>
 <p>
         We conduct the vote on the private PMC mailing list to enable a frank
@@ -396,7 +391,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 
   
-<a name="N100EF"></a><a name="decision"></a>
+<a name="N100EB"></a><a name="decision"></a>
 <h2 class="h3">Decision making</h2>
 <div class="section">
 <p>
@@ -410,7 +405,7 @@ document.write("Last Published: " + document.lastModified);
       Most day-to-day operations do not require explicit voting - just get on
       and do the work. See the "Lazy approval" type described below.
     </p>
-<a name="N100FB"></a><a name="voting"></a>
+<a name="N100F7"></a><a name="voting"></a>
 <h3 class="h4">Voting</h3>
 <p>
         Certain actions and decisions regarding the project are made by votes
@@ -499,7 +494,7 @@ document.write("Last Published: " + document.lastModified);
         typically take the form of a veto (-1) in reply to the commit message
         sent when the commit is made.
       </p>
-<a name="N1015F"></a><a name="approvals"></a>
+<a name="N1015B"></a><a name="approvals"></a>
 <h3 class="h4">Types of approval</h3>
 <p>
         Different actions require different types of approval:
@@ -565,7 +560,7 @@ document.write("Last Published: " + document.lastModified);
 </tr>
       
 </table>
-<a name="N101B2"></a><a name="veto"></a>
+<a name="N101AE"></a><a name="veto"></a>
 <h3 class="h4">Vetoes</h3>
 <p>
         A valid veto cannot be over-ruled, it can only be withdrawn by its issuer.
@@ -587,7 +582,7 @@ document.write("Last Published: " + document.lastModified);
         If a veto is not withdrawn, the action that has been vetoed must
         be reversed in a timely manner.
       </p>
-<a name="N101C5"></a><a name="actions"></a>
+<a name="N101C1"></a><a name="actions"></a>
 <h3 class="h4">Actions</h3>
 <p>
         This section describes the various actions which are undertaken within
@@ -613,7 +608,23 @@ document.write("Last Published: " + document.lastModified);
             This includes source code, documentation, website content, etc.
           </td>
           <td colspan="1" rowspan="1">
-            Lazy approval
+            Lazy approval for trunk, lazy majority for the release branch.
+          </td>
+          <td colspan="1" rowspan="1">
+            Active PMC members
+          </td>
+        
+</tr>
+        
+<tr>
+          
+<td colspan="1" rowspan="1"><strong>Opening / Closing a branch</strong></td>
+          <td colspan="1" rowspan="1">
+            When a commiter wants to open a new branch in SVN, or close an existing branch, a vote
+            is required.
+          </td>
+          <td colspan="1" rowspan="1">
+            Lazy majority
           </td>
           <td colspan="1" rowspan="1">
             Active PMC members
@@ -751,7 +762,7 @@ document.write("Last Published: " + document.lastModified);
 </tr>
       
 </table>
-<a name="N102C1"></a><a name="timeframe"></a>
+<a name="N102D5"></a><a name="timeframe"></a>
 <h3 class="h4">Voting timeframes</h3>
 <p>
         Votes are normally open for a period of one week to allow all active voters
@@ -761,7 +772,7 @@ document.write("Last Published: " + document.lastModified);
         Votes relating to code changes are not subject to a strict timetable,
         but should be made as timely as possible.
       </p>
-<a name="N102CB"></a><a name="procedure"></a>
+<a name="N102DF"></a><a name="procedure"></a>
 <h3 class="h4">Voting procedure</h3>
 <p>
         Discussion about the topic would have already happened in a [Proposal]
@@ -780,7 +791,7 @@ document.write("Last Published: " + document.lastModified);
         At the end of the vote period, the instigator tallies the number of
         final votes and reports the results.
       </p>
-<a name="N102DF"></a><a name="ultimatum"></a>
+<a name="N102F3"></a><a name="ultimatum"></a>
 <h3 class="h4">Ultimatum and breakdown</h3>
 <p>
         For breakdown situations and those requiring unanimous consensus,
@@ -791,7 +802,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 
   
-<a name="N102EA"></a><a name="communication"></a>
+<a name="N102FE"></a><a name="communication"></a>
 <h2 class="h3">Communication channels</h2>
 <div class="section">
 <p>
@@ -825,9 +836,17 @@ document.write("Last Published: " + document.lastModified);
 </div>
 
   
-<a name="N10300"></a><a name="code"></a>
+<a name="N10314"></a><a name="code"></a>
 <h2 class="h3">Code management</h2>
 <div class="section">
+<p>Development on the Lenya codebase happens on the trunk, unless a vote to create a branch 
+       has passed. Experimental code not immediately intended for merging into trunk may 
+       be commited to the sandbox. In order to prevent a code graveyard, sandbox contents will 
+       be reviewed every 6 months and either merged into trunk, promoted to their own top-level directory, 
+       or deleted. At any one time, the Lenya project maintains one release branch. At appropriate 
+       times, the Lenya project may cut a new release branch from trunk, and retire the previous one. 
+       Old release branches are kept in SVN, but are clearly marked as unmaintained both in SVN and on the web site.
+    </p>
 <p>
       The term "patch" has two meanings: Developers provide a set of changes
       via our <a href="community/index.html">issue tracker</a> marked for inclusion,
@@ -837,10 +856,12 @@ document.write("Last Published: " + document.lastModified);
 <p>
       We use the
       <a href="http://www.apache.org/foundation/glossary.html#CommitThenReview">Commit-then-review</a>
-      method for decision-making about code changes. Please refer to that
+      method for decision-making about code changes by commiters on trunk, and <a href="http://www.apache.org/foundation/glossary.html#ReviewThenCommit">Review-then-Commit</a>
+      on the release branch. Please refer to that
       glossary definition. Note that it does not preclude the committer
       from making changes to patches prior to their commit, nor mean that the
-      committer can be careless. Rather it is a policy for decision-making.
+      committer can be careless. Rather it is a policy for decision-making. 
+      Patches from non-commiters are applied according to the same rules by a commiter.
     </p>
 <p>
       There is an important issue where both developers and committers need
@@ -876,7 +897,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 
   
-<a name="N10325"></a><a name="contribution"></a>
+<a name="N10340"></a><a name="contribution"></a>
 <h2 class="h3">Contribution and acknowledgement</h2>
 <div class="section">
 <p>
@@ -930,20 +951,15 @@ document.write("Last Published: " + document.lastModified);
       
 <li>
         Committers apply patches as soon as possible. This keeps the contributor
-        enthused and shows them that their work is valuable.
+        enthused and shows them that their work is valuable. Plus, it reduces the risk of bit rot,
+        ie, patches that no longer cleanly apply due to unrelated code changes.
       </li>
       
 <li>
-        Committers add an entry for each significant contribution to the
-        top-level <a href="changes.html">changes</a> document (site-author/status.xml)
-        and detailed entries to the relevant plugin's changes document. This enables linkage
+        Committers write descriptive commit messages, which are then aggregated into 
+        a top-level <a href="changes.html">changes</a> document. This enables linkage
         to the relevant issue and shows the contributor's name. It also shows
-        the initials of the committer who did the work to add the patch.
-      </li>
-      
-<li>
-        When committers are adding their own work, they similarly add entries
-        to the "changes" documents. Their initials are added to the entry.
+        the name of the committer who did the work to add the patch.
       </li>
       
 <li>
@@ -969,7 +985,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 
   
-<a name="N10377"></a><a name="develop"></a>
+<a name="N1038F"></a><a name="develop"></a>
 <h2 class="h3">Development procedure</h2>
 <div class="section">
 <div class="note">
@@ -980,33 +996,12 @@ document.write("Last Published: " + document.lastModified);
   not need to revisit the topic.
 </div>
 </div>
-<div class="fixme">
-<div class="label">Fixme (open)</div>
-<div class="content">
-The following issues still need to be added above.
-There are also some relevant email threads, from which we need to extract info.
-</div>
-</div>
-<pre class="code">
-* Define our policy for adding changes to release branch.
-* Define the purpose of the "sandbox".
-* Declare that we only really maintain the current release branch
-  (although contributed patches will be applied).
-* When to create a temporary branch for development and when/how to merge.
-
-    </pre>
+<p>Development work is done on the trunk of SVN. If a commiter determines a need for a new branch,
+    he discusses the rationale on the developer list, and the decision is made by a vote.</p>
 </div>
 
 <!-- FIXME:
 
-The default is lazy consensus. So just get on with the job
-unless someone asks to stop, review, perhaps revert.
-
-==================
-> We should make mention somewhere of our relationship to other projects
-> Cocoon committers are Lenya committers; something with xml-commons
-
-==================
 Mention the "Contributer License Agreement".
 Who needs to send it? ... is it committers plus major contributers?
 
