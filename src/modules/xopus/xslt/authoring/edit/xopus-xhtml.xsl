@@ -21,7 +21,6 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
 >
 
-<xsl:param name="documentType"/>
 <xsl:param name="documentId"/>
 <xsl:param name="documentUrl"/>
 <xsl:param name="publicationId"/>
@@ -44,17 +43,18 @@
       ...Xopus hasn't started yet...
       <xml>
         <pipeline
-            xml="{$lenyaDocumentUrl}?lenya.usecase=xopus&amp;lenya.step=xml"
-            xsd="{$lenyaDocumentUrl}?lenya.usecase=xopus&amp;lenya.step=xsd&amp;doctype={$documentType}">
+            xml="{$lenyaDocumentUrl}?lenya.module=xopus&amp;lenya.step=xml"
+            xsd="{$lenyaDocumentUrl}?lenya.module=xopus&amp;lenya.step=xsd">
             
           <view id="defaultView" default="true">
             <transform xsl="/{$xopusContext}/xopusPlugins/preparexinclude.xsl"/>
             <resolveXIncludes/>
-            <transform xsl="{$lenyaDocumentUrl}?lenya.usecase=xopus&amp;lenya.step=xslt&amp;doctype={$documentType}">
+            <transform xsl="{$lenyaContext}/util/strip_namespaces.xsl?lenya.module=xopus&amp;lenya.step=xslt"/>
+            <transform xsl="{$lenyaDocumentUrl}?lenya.module=xopus&amp;lenya.step=xslt">
               <param name="contextprefix"><xsl:value-of select="$contextPrefix"/></param>
               <param name="publicationid"><xsl:value-of select="$publicationId"/></param>
               <param name="completearea"><xsl:value-of select="$completeArea"/></param>
-	      <param name="documentid"><xsl:value-of select="$documentId"/></param>
+	          <param name="documentid"><xsl:value-of select="$documentId"/></param>
             </transform>
           </view>
           

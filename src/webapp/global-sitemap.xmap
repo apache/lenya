@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id$ -->
+<!-- $Id: global-sitemap.xmap 417349 2006-06-27 06:00:29Z chestnut $ -->
     
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -93,13 +93,6 @@
         <map:transform src="lenya/xslt/util/xinclude.xsl"/>
         <map:transform type="xinclude"/>
         <map:serialize type="xml"/>
-      </map:match>
-    </map:pipeline>
-
-    <!-- Editor Xopus -->
-    <map:pipeline>
-      <map:match pattern="xopus/**">
-        <map:mount uri-prefix="xopus" src="lenya/xopus.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
     </map:pipeline>
 

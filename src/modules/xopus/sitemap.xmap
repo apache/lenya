@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2005 The Apache Software Foundation
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: $ -->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  
+  
+  <!-- =========================== Views ================================= -->
+
+  <map:views>
+    <map:view from-label="aggregation" name="aggregation">
+      <map:serialize type="xml"/>
+    </map:view>
+    <map:view from-label="xsp" name="xsp">
+      <map:serialize type="xml"/>
+    </map:view>
+  </map:views>
+  
+  <!-- =========================== Resources ================================= -->
+
+  <map:resources>
+    <map:resource name="style-cms-page">
+      <map:transform type="i18n">      
+        <map:parameter name="locale" value="{request:locale}"/>
+      </map:transform>    
+      <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl">
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:transform src="context://lenya/xslt/util/strip_namespaces.xsl"/>
+    </map:resource>
+  </map:resources>
+  
+  <!-- =========================== Pipelines ================================= -->
+  
+  <map:pipelines>
+  
+    <map:pipeline>
+        
+        <!-- ************************************************************** -->
+        <!-- ** Xopus                                                    ** -->
+        <!-- **                                                          ** -->
+        <!-- ** NOTE: page-envelope:document-path depends on the         ** -->
+        <!-- **       publication specific DocumentIdToPathMapper which  ** -->
+        <!-- **       is configured within config/publication.xconf      ** -->
+        <!-- ************************************************************** -->
+        
+          <map:match pattern="open" type="step">
+            <map:match pattern="*/authoring/**.html">
+              <!-- Check for Xopus (set xopus:path and xopus:context in xopus.xconf) -->
+              <map:act type="resource-exists" src="{xopus:path}/{xopus:context}/xopus/xopus.js">
+              
+                <map:act type="reserved-checkout">
+                  <map:generate type="serverpages" src="fallback://lenya/content/rc/{exception}.xsp">
+                    <map:parameter name="user" value="{user}"/>
+                    <map:parameter name="filename" value="{filename}"/>
+                    <map:parameter name="date" value="{date}"/>
+                    <map:parameter name="message" value="{message}"/>
+                  </map:generate>
+                  <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
+                  <map:call resource="style-cms-page"/>
+                  <map:serialize />
+                </map:act>
+                
+                <map:generate src="context://lenya/content/util/empty.xml"/>
+                <map:transform src="fallback://lenya/modules/xopus/xslt/authoring/edit/xopus-xhtml.xsl">
+                  <map:parameter name="contextPrefix" value="{request:contextPath}"/>
+                  <map:parameter name="publicationId" value="{page-envelope:publication-id}"/>
+                  <map:parameter name="completeArea" value="authoring"/>
+                  <map:parameter name="documentUrl" value="{page-envelope:document-url}"/>
+                  <map:parameter name="documentId" value="{page-envelope:document-id}"/>
+                  <map:parameter name="xopusContext" value="{xopus:context}"/>
+                </map:transform>
+                <!-- NOTE: IE or Xopus doesn't appreciate the DTD which is being inserted by Cocoon -->
+                <map:serialize type="html-no-dtd"/>
+              </map:act>
+              <map:generate src="resources/misc/download.xhtml"/>
+              <map:call resource="style-cms-page"/>
+              <map:serialize />
+            </map:match>
+          </map:match>
+          
+          
+          <map:match pattern="xml" type="step">
+            <map:match pattern="*/*/**.html">
+              <map:select type="request-method">
+                <map:when test="POST"> <!-- Save -->
+
+                  <!-- test if the document is checked out -->
+        	        <map:act type="reserved-checkout-test">
+            	      <map:generate type="serverpages" src="fallback://lenya/content/rc/{exception}.xsp">
+                	    <map:parameter name="user" value="{user}"/>
+                    	<map:parameter name="filename" value="{filename}"/>
+        	            <map:parameter name="date" value="{date}"/>
+                        <map:parameter name="message" value="{message}"/>
+            	      </map:generate>
+                	  <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
+        	          <map:call resource="style-cms-page"/>
+        	          <map:serialize />
+                	</map:act>
+        
+                  <map:generate type="stream"/>
+                  <map:transform src="fallback://lenya/xslt/authoring/edit/addSourceTags.xsl">
+                    <map:parameter name="source" value="context://lenya/pubs/{1}/content/{2}/{page-envelope:document-path}"/>
+                  </map:transform>
+                  <map:transform type="write-source">
+                    <map:parameter name="serializer" value="xml"/>
+                  </map:transform>
+                  <map:serialize type="xml"/>
+                </map:when>
+                <map:otherwise> <!-- GET: Open -->
+                  <map:act type="set-header">
+                    <!-- prevent caching in the browser -->
+                    <map:parameter name="Cache-Control" value="pre-check=0" />
+                    <map:parameter name="Expires" value="-1" />
+                  </map:act>
+                  <map:generate src="context://lenya/pubs/{1}/content/{2}/{page-envelope:document-path}"/>
+                  <map:serialize type="xml"/>
+                </map:otherwise>
+              </map:select>
+            </map:match>
+          </map:match>
+          
+          
+          <map:match pattern="xsd" type="step">
+            <map:match pattern="*/authoring/**.html">
+              <map:select type="resource-exists">
+              <map:parameter name="prefix" value="fallback://"/>
+                <map:when test="lenya/modules/xopus/resources/schemas/{page-envelope:document-type}.xsd">
+                  <map:generate src="fallback://lenya/modules/xopus/resources/schemas/{page-envelope:document-type}.xsd"/>
+                  <map:serialize type="xml" />
+                </map:when>
+                <map:otherwise>
+                  <map:generate src="fallback://lenya/modules/xopus/resources/schemas/xhtml.xsd"/>
+                  <map:serialize type="xml" />
+                </map:otherwise>
+              </map:select>
+            </map:match>
+          </map:match>
+          
+          <map:match pattern="xslt" type="step">
+            <map:match pattern="*/authoring/**.html">
+              <map:select type="resource-exists">
+              <map:parameter name="prefix" value="fallback://"/>
+                <map:when test="lenya/modules/xopus/xslt/{page-envelope:document-type}.xsl">
+                  <map:generate src="fallback://lenya/modules/xopus/xslt/{page-envelope:document-type}.xsl"/>
+                  <map:serialize type="xml" />
+                </map:when>
+                <map:otherwise>
+                  <map:generate src="fallback://lenya/modules/xopus/xslt/xhtml.xsl"/>
+                  <map:serialize type="xml" />
+                </map:otherwise>
+              </map:select>
+            </map:match>
+            
+            <!-- This is needed to access secondary xsl files from within xopus-xhtml.xsl -->
+            <map:match pattern="*/authoring/**.xsl">
+              <map:select type="resource-exists">
+                <map:when test="xslt/{2}.xsl">
+                  <map:read src="xslt/{2}.xsl" mime-type="application/xml"/>
+                </map:when>
+                <map:when test="fallback://lenya/xslt/{2}.xsl">
+                  <map:read src="fallback://lenya/xslt/{2}.xsl" mime-type="application/xml"/>
+                </map:when>
+                <map:otherwise>
+                  <map:generate src="context://lenya/content/util/empty.xml"/>
+                  <map:serialize status-code="500" />
+                </map:otherwise>
+              </map:select>
+            </map:match>
+          </map:match>
+
+        <!-- ************************************************************** -->
+        <!-- ********  /Xopus Editor ************************************** -->
+        <!-- ************************************************************** -->
+      
+    </map:pipeline>
+    
+  </map:pipelines>
+
+</map:sitemap>

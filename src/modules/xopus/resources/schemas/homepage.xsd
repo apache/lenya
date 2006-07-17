@@ -1,0 +1,608 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.w3.org/1999/xhtml" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" targetNamespace="http://www.w3.org/1999/xhtml" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <xs:element name="html">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="head"/>
+        <xs:element ref="body"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="head">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="head.content"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="body">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+          <xs:element ref="h1"/>
+          <xs:element ref="h2"/>
+          <xs:element ref="p"/>
+          <xs:element ref="table"/>
+          <xs:element ref="h3"/>
+          <xs:element ref="ul"/>
+          <xs:element ref="ol"/>
+          <xs:element ref="div"/>
+          <xs:element ref="a"/>
+        </xs:choice>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  
+<xs:group name="Table.class">
+    <xs:choice>
+      <xs:element ref="table"/>
+    </xs:choice>
+  </xs:group>
+
+  <xs:attributeGroup name="CellVAlign.attrib">
+    <xs:attribute name="valign">
+      <xs:simpleType>
+        <xs:restriction base="xs:NMTOKEN">
+          <xs:enumeration value="top"/>
+          <xs:enumeration value="middle"/>
+          <xs:enumeration value="bottom"/>
+          <xs:enumeration value="baseline"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="CellHAlign.attrib">
+    <xs:attribute name="align">
+      <xs:simpleType>
+        <xs:restriction base="xs:NMTOKEN">
+          <xs:enumeration value="left"/>
+          <xs:enumeration value="center"/>
+          <xs:enumeration value="right"/>
+          <xs:enumeration value="justify"/>
+          <xs:enumeration value="char"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:attribute>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="td.attlist">
+    <xs:attributeGroup ref="Common.attrib"/>
+    <xs:attribute name="rowspan" type="Number" use="optional" default="1"/>
+    <xs:attribute name="colspan" type="Number" use="optional" default="1"/>
+    <xs:attributeGroup ref="CellHAlign.attrib"/>
+    <xs:attributeGroup ref="CellVAlign.attrib"/>
+    <xs:attribute name="width" type="Pixels" use="optional" />
+    <xs:attribute name="height" type="Pixels" use="optional" />
+  </xs:attributeGroup>
+  <xs:complexType name="td.type" mixed="true">
+    <xs:group ref="Flow.mix" minOccurs="0" maxOccurs="unbounded"/>
+    <xs:attributeGroup ref="td.attlist"/>
+  </xs:complexType>
+  <xs:element name="td" type="td.type"/>
+  <xs:attributeGroup name="th.attlist">
+    <xs:attributeGroup ref="Common.attrib"/>
+    <xs:attribute name="rowspan" type="Number" use="optional" default="1"/>
+    <xs:attribute name="colspan" type="Number" use="optional" default="1"/>
+    <xs:attributeGroup ref="CellHAlign.attrib"/>
+    <xs:attributeGroup ref="CellVAlign.attrib"/>
+    <xs:attribute name="width" type="Pixels" use="optional" />
+    <xs:attribute name="height" type="Pixels" use="optional" />    
+  </xs:attributeGroup>
+  <xs:complexType name="th.type" mixed="true">
+    <xs:group ref="Flow.mix" minOccurs="0" maxOccurs="unbounded"/>
+    <xs:attributeGroup ref="th.attlist"/>
+  </xs:complexType>
+  <xs:element name="th" type="th.type"/>
+
+  <xs:attributeGroup name="tr.attlist">
+    <xs:attributeGroup ref="Common.attrib"/>
+    <xs:attributeGroup ref="CellHAlign.attrib"/>
+    <xs:attributeGroup ref="CellVAlign.attrib"/>
+  </xs:attributeGroup>
+  <xs:group name="tr.content">
+    <xs:choice>
+      <xs:element ref="td"/>
+      <xs:element ref="th"/>
+    </xs:choice>
+  </xs:group>
+  <xs:complexType name="tr.type">
+    <xs:group ref="tr.content" minOccurs="1" maxOccurs="unbounded"/>
+    <xs:attributeGroup ref="tr.attlist"/>
+  </xs:complexType>
+  <xs:element name="tr" type="tr.type"/>
+  <xs:group name="tbody.content">
+    <xs:sequence>
+      <xs:element ref="tr" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:complexType name="tbody.type">
+    <xs:group ref="tbody.content"/>
+  </xs:complexType>
+  <xs:element name="tbody" type="tbody.type"/>
+  <xs:attributeGroup name="tfoot.attlist">
+    <xs:attributeGroup ref="Common.attrib"/>
+    <xs:attributeGroup ref="CellHAlign.attrib"/>
+    <xs:attributeGroup ref="CellVAlign.attrib"/>
+  </xs:attributeGroup>
+  <xs:group name="tfoot.content">
+    <xs:sequence>
+      <xs:element ref="tr" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:complexType name="tfoot.type">
+    <xs:group ref="tfoot.content"/>
+    <xs:attributeGroup ref="tfoot.attlist"/>
+  </xs:complexType>
+  <xs:element name="tfoot" type="tfoot.type"/>
+  <xs:attributeGroup name="thead.attlist">
+    <xs:attributeGroup ref="Common.attrib"/>
+    <xs:attributeGroup ref="CellHAlign.attrib"/>
+    <xs:attributeGroup ref="CellVAlign.attrib"/>
+  </xs:attributeGroup>
+  <xs:group name="thead.content">
+    <xs:sequence>
+      <xs:element ref="tr" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:complexType name="thead.type">
+    <xs:group ref="thead.content"/>
+    <xs:attributeGroup ref="thead.attlist"/>
+  </xs:complexType>
+  <xs:element name="thead" type="thead.type"/>
+  <xs:attributeGroup name="table.attlist">
+    <xs:attributeGroup ref="Common.attrib"/>
+    <xs:attribute name="width" type="Length"/>
+    <xs:attribute name="border" type="Pixels" use="optional" />
+    <xs:attribute name="cellspacing" type="Pixels" use="optional" />
+    <xs:attribute name="cellpadding" type="Pixels" use="optional" />
+  </xs:attributeGroup>
+  <xs:group name="table.content">
+    <xs:sequence>
+      <xs:choice>
+        <xs:sequence>
+          <xs:element ref="thead" minOccurs="0"/>
+          <xs:element ref="tfoot" minOccurs="0"/>
+          <xs:element ref="tbody" maxOccurs="unbounded"/>
+        </xs:sequence>
+      </xs:choice>
+    </xs:sequence>
+  </xs:group>
+  <xs:complexType name="table.type" mixed="true">
+    <xs:group ref="table.content"/>
+    <xs:attributeGroup ref="table.attlist"/>
+  </xs:complexType>
+  <xs:element name="table" type="table.type"/>
+
+  <xs:attributeGroup name="InlPres.attlist">
+    <xs:attributeGroup ref="Common.attrib"/>
+  </xs:attributeGroup>
+  <xs:complexType name="InlPres.type" mixed="true">
+    <xs:group minOccurs="0" maxOccurs="unbounded" ref="Inline.mix"/>
+    <xs:attributeGroup ref="InlPres.attlist"/>
+  </xs:complexType>
+  <xs:element name="sub" type="InlPres.type"/>
+  <xs:element name="sup" type="InlPres.type"/>
+
+  <xs:attributeGroup name="title.attlist">
+  </xs:attributeGroup>
+  <xs:complexType name="title.type" mixed="true">
+    <xs:attributeGroup ref="title.attlist"/>
+  </xs:complexType>
+  <xs:element name="title" type="title.type"/>
+
+  <xs:group name="head.content">
+    <xs:sequence>
+      <xs:element ref="title"/>
+    </xs:sequence>
+  </xs:group>
+  <xs:attributeGroup name="head.attlist">
+  </xs:attributeGroup>
+  <xs:complexType name="head.type">
+    <xs:group ref="head.content"/>
+    <xs:attributeGroup ref="head.attlist"/>
+  </xs:complexType>
+  <xs:element name="head" type="head.type"/>
+
+  <!-- <xs:attributeGroup name="body.attlist">
+    <xs:attributeGroup ref="Common.attrib"/>
+  </xs:attributeGroup>
+  <xs:complexType name="body.type" mixed="true">
+    <xs:group maxOccurs="unbounded" ref="Block.mix"/>
+    <xs:attributeGroup ref="body.attlist"/>
+  </xs:complexType>
+  <xs:element name="body" type="body.type"/> -->
+
+  <!-- <xs:attributeGroup name="html.attlist">
+  </xs:attributeGroup>
+  <xs:complexType name="html.type">
+    <xs:sequence>
+      <xs:element ref="lenya:meta" minOccurs="0"/>
+      <xs:element ref="head"/>
+      <xs:element ref="body"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="html.attlist"/>
+  </xs:complexType>
+  <xs:element name="html" type="html.type"/>
+ -->
+ 
+  <xs:element name="object">
+    <xs:annotation>
+      <xs:appinfo xmlns:xopus="http://www.xopus.com/xmlns/xsd">
+        <xopus:documentation>
+          <xopus:name xml:lang="en">Object</xopus:name>
+          <xopus:name xml:lang="de">Objekt</xopus:name>
+        </xopus:documentation>
+      </xs:appinfo>
+    </xs:annotation>
+    <xs:complexType mixed="true">
+      <xs:attribute name="title" type="xs:string"/>
+      <xs:attribute name="href" type="URI" />
+      <xs:attribute name="type" type="xs:string"/>
+      <xs:attribute name="data" type="xs:string" use="required"/>
+    </xs:complexType>
+  </xs:element>  
+ 
+ 
+<!--   <xs:attributeGroup name="object.attlist">
+    <xs:attributeGroup ref="Common.attrib"/>
+      <xs:attribute name="title" type="xs:string"/>
+      <xs:attribute name="href" type="URI" use="required"/>
+      <xs:attribute name="type" type="xs:string"/>
+      <xs:attribute name="data" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:complexType name="object.type">
+    <xs:attributeGroup ref="object.attlist"/>
+  </xs:complexType>
+  <xs:element name="object" type="object.type">
+    <xs:annotation>
+      <xs:appinfo xmlns:xopus="http://www.xopus.com/xmlns/xsd">
+        <xopus:documentation>
+          <xopus:name xml:lang="en">hallo_obj_en</xopus:name>
+          <xopus:name xml:lang="de">hallo_obj_de</xopus:name>
+        </xopus:documentation>
+      </xs:appinfo>
+    </xs:annotation>
+  </xs:element>
+ -->  
+  <xs:element name="a">
+    <xs:complexType mixed="true">
+      <xs:group minOccurs="0" maxOccurs="unbounded" ref="InlNoAnchor.mix"/>  
+      <!-- <xs:sequence>
+        <xs:element minOccurs="0" ref="img"/>
+      </xs:sequence> -->
+      <xs:attribute name="name" type="xs:string"/>
+      <xs:attribute name="popup" type="xs:boolean"/>
+      <xs:attribute name="href" type="URI" use="required"/>
+      <!-- <xs:attribute name="target" type="TargetType"/> -->
+    </xs:complexType>
+  </xs:element>
+
+  
+  <xs:complexType name="li.type" mixed="true">
+    <xs:group minOccurs="0" maxOccurs="unbounded" ref="Flow.mix"/>
+  </xs:complexType>
+  <xs:element name="li" type="li.type"/>
+  <xs:attributeGroup name="ol.attlist">
+    <xs:attributeGroup ref="Common.attrib"/>
+  </xs:attributeGroup>
+  <xs:complexType name="ol.type">
+    <xs:sequence>
+      <xs:element ref="li" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="ol.attlist"/>
+  </xs:complexType>
+  <xs:element name="ol" type="ol.type"/>
+
+  <xs:attributeGroup name="ul.attlist">
+    <xs:attributeGroup ref="Common.attrib"/>
+  </xs:attributeGroup>
+  <xs:complexType name="ul.type">
+    <xs:sequence>
+      <xs:element ref="li" minOccurs="1" maxOccurs="unbounded"/>
+    </xs:sequence>
+    <xs:attributeGroup ref="ul.attlist"/>
+  </xs:complexType>
+  <xs:element name="ul" type="ul.type"/>
+
+  <xs:attributeGroup name="link.attlist">
+    <xs:attributeGroup ref="Common.attrib"/>
+    <xs:attribute name="href" type="URI"/>
+    <xs:attribute name="target" type="TargetType"/>
+    <xs:attribute name="name" type="xs:string"/>    
+  </xs:attributeGroup>
+  <xs:complexType name="link.type" mixed="true">
+    <xs:group minOccurs="0" maxOccurs="unbounded" ref="InlNoAnchor.mix"/>
+    <xs:attributeGroup ref="link.attlist"/>
+  </xs:complexType>
+  <xs:element name="link" type="link.type"/>
+  
+  <xs:complexType name="br.type"/>
+  <xs:element name="br" type="br.type"/>  
+
+  <xs:complexType name="span.type" mixed="true">
+    <xs:group ref="Inline.mix" minOccurs="0" maxOccurs="unbounded"/>
+    <xs:attributeGroup ref="class"/>
+  </xs:complexType>
+  <xs:element name="span" type="span.type"/>
+  <xs:element name="b" type="span.type"/>  
+  
+  <xs:complexType name="font.type" mixed="true">
+    <xs:group ref="Inline.mix" minOccurs="0" maxOccurs="unbounded"/>
+    <xs:attributeGroup ref="class"/>
+    <xs:attribute name="size" type="xs:integer"/>
+    <xs:attribute name="face" type="xs:string"/>
+  </xs:complexType>
+  <xs:element name="font" type="font.type"/>  
+
+  <xs:attributeGroup name="img.attlist">
+    <xs:attributeGroup ref="Common.attrib"/>
+    <xs:attribute name="src" type="URI" use="required"/>
+    <xs:attribute name="width" type="Pixels"/>
+    <xs:attribute name="height" type="Pixels"/>
+  </xs:attributeGroup>
+  <xs:complexType name="img.type">
+    <xs:attributeGroup ref="img.attlist"/>
+  </xs:complexType>
+  <xs:element name="img" type="img.type">
+    <xs:annotation>
+      <xs:appinfo xmlns:xopus="http://www.xopus.com/xmlns/xsd">
+        <xopus:documentation>
+          <xopus:name xml:lang="en">Image</xopus:name>
+          <xopus:name xml:lang="de">Bild</xopus:name>
+        </xopus:documentation>
+      </xs:appinfo>
+    </xs:annotation>
+  </xs:element>
+
+  <xs:attributeGroup name="InlPhras.attlist">
+    <xs:attributeGroup ref="Common.attrib"/>
+  </xs:attributeGroup>
+  <xs:complexType name="InlPhras.type" mixed="true">
+    <xs:group minOccurs="0" maxOccurs="unbounded" ref="Inline.mix"/>
+    <xs:attributeGroup ref="InlPhras.attlist"/>
+  </xs:complexType>
+  <xs:element name="emphasis" type="InlPhras.type"/>
+  <xs:element name="strong" type="InlPhras.type"/>
+  <xs:element name="u" type="InlPhras.type"/>
+
+  <xs:attributeGroup name="div.attlist">
+    <xs:attributeGroup ref="Common.attrib"/>
+  </xs:attributeGroup>
+  <xs:complexType name="div.type" mixed="true">
+    <xs:group maxOccurs="unbounded" ref="Block.mix"/>
+    <xs:attributeGroup ref="div.attlist"/>
+  </xs:complexType>
+  <xs:element name="div" type="div.type"/>
+
+   <xs:attributeGroup name="p.attlist">
+    <xs:attributeGroup ref="Common.attrib"/>
+  </xs:attributeGroup>
+  <xs:complexType name="p.type" mixed="true">
+    <xs:group minOccurs="0" maxOccurs="unbounded" ref="Inline.mix"/> 
+    <xs:attributeGroup ref="p.attlist"/>
+  </xs:complexType>
+  <xs:element name="p" type="p.type"/>
+ 
+  <xs:complexType name="heading.type" mixed="true">
+    <xs:group ref="Inline.mix" minOccurs="0" maxOccurs="unbounded"/>
+    <xs:attributeGroup ref="class"/>
+  </xs:complexType>
+  <xs:element name="h1" type="heading.type"/>
+  <xs:element name="h2" type="heading.type"/>
+  <xs:element name="h3" type="heading.type"/>
+  <xs:element name="h4" type="heading.type"/>
+  <xs:element name="h5" type="heading.type"/>
+  <xs:element name="h6" type="heading.type"/>
+
+  <xs:group name="InlPhras.class">
+    <xs:choice>
+      <xs:element ref="emphasis"/>
+      <xs:element ref="strong"/>
+      <!-- <xs:element ref="u"/> -->
+    </xs:choice>
+  </xs:group>
+  <xs:group name="InlPres.class">
+    <xs:choice>
+      <xs:element ref="sub"/>
+      <xs:element ref="sup"/>
+    </xs:choice>
+  </xs:group>
+  <xs:group name="Anchor.class">
+    <xs:choice>
+      <xs:element ref="a"/>
+      <!-- <xs:element ref="link"/> -->
+    </xs:choice>
+  </xs:group>
+  <xs:group name="InlSpecial.class">
+    <xs:choice>
+      <xs:element ref="img"/>
+      <xs:element ref="object"/>
+    </xs:choice>
+  </xs:group>
+  <xs:group name="Inline.extra">
+    <xs:choice>
+        <xs:element ref="br"/>
+        <!-- <xs:element ref="b"/> -->
+        <xs:element ref="span"/>
+        <xs:element ref="font"/>        
+    </xs:choice>
+  </xs:group>
+  <xs:group name="Inline.class">
+    <xs:choice>
+      <xs:group ref="InlPhras.class"/>
+      <xs:group ref="InlPres.class"/>
+      <xs:group ref="Anchor.class"/>
+      <xs:group ref="InlSpecial.class"/>
+      <xs:group ref="Inline.extra"/>
+    </xs:choice>
+  </xs:group>
+  <xs:group name="InlNoAnchor.class">
+    <xs:choice>
+      <xs:group ref="InlPhras.class"/>
+      <xs:group ref="InlPres.class"/>
+      <xs:group ref="InlSpecial.class"/>
+      <xs:group ref="Inline.extra"/>
+    </xs:choice>
+  </xs:group>
+  <xs:group name="InlNoAnchor.mix">
+    <xs:choice>
+      <xs:group ref="InlNoAnchor.class"/>
+    </xs:choice>
+  </xs:group>
+  <xs:group name="Inline.mix">
+    <xs:choice>
+      <xs:group ref="Inline.class"/>
+    </xs:choice>
+  </xs:group>
+  <xs:group name="Heading.class">
+    <xs:choice>
+      <xs:element ref="h1"/>
+      <xs:element ref="h2"/>
+      <xs:element ref="h3"/>
+      <xs:element ref="h4"/>
+      <xs:element ref="h5"/>
+      <xs:element ref="h6"/>
+    </xs:choice>
+  </xs:group>
+  <xs:group name="List.class">
+    <xs:choice>
+      <xs:element ref="ul"/>
+      <xs:element ref="ol"/>
+    </xs:choice>
+  </xs:group>
+  <xs:group name="BlkStruct.class">
+    <xs:choice>
+      <xs:element ref="p"/>
+      <xs:element ref="div"/>
+      <!-- <xs:element ref="link"/> -->      
+    </xs:choice>
+  </xs:group>
+  <xs:group name="BlkSpecial.class">
+    <xs:choice>
+      <xs:element ref="table"/>
+    </xs:choice>
+  </xs:group>
+  <xs:group name="Block.extra">
+    <xs:choice>
+    <!-- <xs:choice minOccurs="0" maxOccurs="unbounded"> -->
+        <xs:element ref="br"/>
+        <!-- <xs:element ref="b"/> -->
+        <xs:element ref="span"/>
+        <xs:element ref="font"/>        
+    </xs:choice>
+  </xs:group>
+  <xs:group name="Block.class">
+    <xs:choice>
+      <xs:group ref="BlkStruct.class"/>
+      <xs:group ref="BlkSpecial.class"/>
+      <xs:group ref="Block.extra"/>
+    </xs:choice>
+  </xs:group>
+  <xs:group name="Block.mix">
+    <xs:choice>
+      <xs:group ref="Heading.class"/>
+      <xs:group ref="List.class"/>
+      <xs:group ref="Block.class"/>
+    </xs:choice>
+  </xs:group>
+  <xs:group name="Flow.mix">
+    <xs:choice>
+      <xs:group ref="Heading.class"/>
+      <xs:group ref="List.class"/>
+      <xs:group ref="Block.class"/>
+      <xs:group ref="Inline.class"/>
+    </xs:choice>
+  </xs:group>
+
+  <xs:attributeGroup name="id">
+    <xs:attribute name="id" type="xs:ID"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="class">
+    <xs:attribute name="class" type="xs:NMTOKENS"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="title">
+    <xs:attribute name="title" type="xs:string"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="Core.extra.attrib">
+    <!-- add your attribute here -->
+  </xs:attributeGroup>
+  <xs:attributeGroup name="Core.attrib">
+    <xs:attributeGroup ref="id"/>
+    <xs:attributeGroup ref="class"/>
+    <xs:attributeGroup ref="title"/>
+    <xs:attributeGroup ref="Core.extra.attrib"/>
+  </xs:attributeGroup>
+  <xs:attributeGroup name="Common.extra">
+    <!-- add your attributes here -->
+  </xs:attributeGroup>
+  <xs:attributeGroup name="Common.attrib">
+    <xs:attributeGroup ref="Core.attrib"/>
+    <xs:attributeGroup ref="Common.extra"/>
+  </xs:attributeGroup>
+
+  <xs:simpleType name="Length">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="LinkTypes">
+    <xs:list itemType="xs:NMTOKEN"/>
+  </xs:simpleType>
+  <xs:simpleType name="MediaDesc">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="MultiLength">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="Number">
+    <xs:restriction base="xs:nonNegativeInteger"/>
+  </xs:simpleType>
+  <xs:simpleType name="Pixels">
+    <xs:restriction base="xs:nonNegativeInteger"/>
+  </xs:simpleType>
+  <xs:simpleType name="Script">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="Color">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="Text">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="Character">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="Charset">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="Charsets">
+    <xs:list itemType="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="ContentType">
+    <xs:list itemType="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="ContentTypes">
+    <xs:list itemType="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="Datetime">
+    <xs:restriction base="xs:normalizedString"/>
+  </xs:simpleType>
+  <xs:simpleType name="LanguageCode">
+    <xs:restriction base="xs:NMTOKEN"/>
+  </xs:simpleType>
+  <xs:simpleType name="TargetType">
+    <xs:restriction base="xs:NMTOKEN">
+      <xs:enumeration value="_blank"/>
+      <xs:enumeration value="_top"/>
+      <xs:enumeration value="_self"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="URI">
+    <xs:restriction base="xs:anyURI"/>
+  </xs:simpleType>
+  <xs:simpleType name="URIs">
+    <xs:list itemType="xs:string"/>
+  </xs:simpleType>
+  <xs:simpleType name="MultiLengths">
+    <xs:restriction base="xs:string"/>
+  </xs:simpleType>
+  
+ </xs:schema>
