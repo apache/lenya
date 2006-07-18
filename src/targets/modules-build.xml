@@ -76,4 +76,12 @@
       target="test-modules"/>
   </target>
   
+  <target name="module.test" depends="tests.prepare">
+    <property name="module" value=""/>
+    <ant antfile="${build.dir}/temp/modules-build.xml"
+      inheritall="true"
+      inheritrefs="true"
+      target="test-module-${module}"/>
+  </target>
+  
 </project>

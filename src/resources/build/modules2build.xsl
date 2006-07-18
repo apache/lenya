@@ -290,6 +290,7 @@
         </classpath>
         <formatter type="plain" usefile="false" />
         <formatter type="xml" />
+        <jvmarg value="-Djava.endorsed.dirs {$build-webapp}/WEB-INF/lib/endorsed"/>
         <sysproperty key="junit.test.loglevel" value="{$loglevel}"/>
         <sysproperty key="contextRoot" value="{$contextRoot}"/>
         <sysproperty key="tempDir" value="{$tempDir}"/>
