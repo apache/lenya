@@ -16,7 +16,9 @@
  */
 package org.apache.lenya.cms.publication;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -111,8 +113,11 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
 
     }
     
-    public long getExpires() {
-        return this.expires;
+    public String getExpires() {
+        Date date = new Date();
+        date.setTime(date.getTime() + this.expires * 1000l);
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss zzz");
+        return sdf.format(date);
     }
 
     public Schema getSchema() {

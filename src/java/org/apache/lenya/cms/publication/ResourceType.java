@@ -45,10 +45,10 @@ public interface ResourceType {
     String ROLE = ResourceType.class.getName();
     
     /**
-     * Returns the expires time in num of seconds
-     * @return A long value.
+     * Returns the date at which point the requested resource is considered expired
+     * @return a string in RFC 1123 date format
      */
-    long getExpires();
+    String getExpires();
     
     /**
      * Returns the name of this document type.

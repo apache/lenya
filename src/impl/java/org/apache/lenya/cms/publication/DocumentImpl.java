@@ -18,10 +18,12 @@
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
@@ -31,6 +33,7 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.LenyaMetaData;
+import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
@@ -80,6 +83,37 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         }
     }
 
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getExpires()
+     */
+    public String getExpires() throws DocumentException {
+        String expires = null;
+        long secs = 0;
+        
+        MetaData metaData = null;
+        String expiresMeta = null;
+        try {
+            metaData = this.getMetaDataManager().getLenyaMetaData();
+            expiresMeta = metaData.getFirstValue("expires");
+        } catch (DocumentException e) {
+            throw new DocumentException(e);
+        }
+        if (expiresMeta != null) {
+            secs = Long.parseLong(expiresMeta);
+        }
+
+        if (secs != 0) {
+            Date date = new Date();
+            date.setTime(date.getTime() + secs * 1000l);
+            SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss zzz");
+            expires = sdf.format(date);
+        } else {
+            expires = this.getResourceType().getExpires();
+        }
+
+        return expires;
+    }
+    
     /**
      * @see org.apache.lenya.cms.publication.Document#getId()
      */

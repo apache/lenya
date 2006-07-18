@@ -136,9 +136,11 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
                     throw new ConfigurationException("Attribute '" + attribute + "' not defined ["
                             + name + "]");
             } else if (attribute.equals(EXPIRES)) {
-                
-                value = getExpires(document, params.getParameter(PARAM_AREA));
-                
+                try {
+                    value = document.getExpires();
+                } catch (DocumentException e) {
+                    throw new ConfigurationException("Error getting expires date from document.", e);
+                }
             } else if (attribute.equals(VISIBLE_IN_NAVIGATION)) {
                 value = Boolean.toString(isVisibleInNavigation(document));
             } else {
@@ -160,37 +162,6 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
                     + document.getId() + "]: " + e.getMessage(), e);
         }
 
-    }
-
-    protected String getExpires(Document document, String area) throws ConfigurationException {
-        String expires = null;
-        long secs = 0;
-        if (area.equals("live")) {
-            try {
-                //use resource-types seconds to expire as default
-                secs = document.getResourceType().getExpires();
-            } catch (DocumentException e) {
-                throw new ConfigurationException("Error getting Resource Type of document.", e);
-            }
-        
-            MetaData metaData = null;
-            try {
-                metaData = document.getMetaDataManager().getLenyaMetaData();
-                String expiresMeta = metaData.getFirstValue(META_EXPIRES);
-                if (expiresMeta != null) {
-                    secs = Long.parseLong(metaData.getFirstValue(META_EXPIRES));
-                }
-            } catch (DocumentException e) {
-                throw new ConfigurationException("Obtaining custom meta data value for ["
-                        + document.getSourceURI() + "] failed: " + e.getMessage(), e);
-            }
-        }
-        Date date = new Date();
-        date.setTime(date.getTime() + secs * 1000l);
-        SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss zzz");
-        expires = sdf.format(date);
-
-        return expires;
     }
     
     protected String getResourceType(Document document) throws ConfigurationException {
