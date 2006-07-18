@@ -60,6 +60,7 @@
                     <xsl:when test="contains(paths/path[1], 'lenya/sandbox')">Sandbox</xsl:when>
                     <xsl:when test="contains(paths/path[1], 'site')">Site</xsl:when>
                     <xsl:when test="contains(paths/path[1], 'zone')">Zone</xsl:when>
+                    <xsl:when test="contains(paths/path[1], 'branches/revolution')">Revolution</xsl:when>
                 </xsl:choose>
             </xsl:variable>
             <xsl:attribute name="context">
