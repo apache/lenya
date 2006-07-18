@@ -113,11 +113,10 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
 
     }
     
-    public String getExpires() {
+    public Date getExpires() {
         Date date = new Date();
         date.setTime(date.getTime() + this.expires * 1000l);
-        SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss zzz");
-        return sdf.format(date);
+        return date;
     }
 
     public Schema getSchema() {

@@ -86,8 +86,8 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     /**
      * @see org.apache.lenya.cms.publication.Document#getExpires()
      */
-    public String getExpires() throws DocumentException {
-        String expires = null;
+    public Date getExpires() throws DocumentException {
+        Date expires = null;
         long secs = 0;
         
         MetaData metaData = null;
@@ -100,13 +100,14 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         }
         if (expiresMeta != null) {
             secs = Long.parseLong(expiresMeta);
+        } else {
+            secs = -1;
         }
 
-        if (secs != 0) {
+        if (secs != -1) {
             Date date = new Date();
             date.setTime(date.getTime() + secs * 1000l);
-            SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss zzz");
-            expires = sdf.format(date);
+            expires = date;
         } else {
             expires = this.getResourceType().getExpires();
         }

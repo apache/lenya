@@ -55,7 +55,7 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      * Returns the date at which point the requested document is considered expired
      * @return a string in RFC 1123 date format
      */
-    String getExpires() throws DocumentException;
+    Date getExpires() throws DocumentException;
 
     /**
      * Returns the document ID of this document.

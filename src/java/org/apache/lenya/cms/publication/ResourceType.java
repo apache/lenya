@@ -32,6 +32,7 @@
  */
 package org.apache.lenya.cms.publication;
 
+import java.util.Date;
 import org.apache.lenya.xml.Schema;
 
 /**
@@ -48,7 +49,7 @@ public interface ResourceType {
      * Returns the date at which point the requested resource is considered expired
      * @return a string in RFC 1123 date format
      */
-    String getExpires();
+    Date getExpires();
     
     /**
      * Returns the name of this document type.

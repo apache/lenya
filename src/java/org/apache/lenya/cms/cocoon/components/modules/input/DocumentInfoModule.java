@@ -137,7 +137,9 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
                             + name + "]");
             } else if (attribute.equals(EXPIRES)) {
                 try {
-                    value = document.getExpires();
+                    Date expires = document.getExpires();
+                    SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss zzz");
+                    value = sdf.format(expires);
                 } catch (DocumentException e) {
                     throw new ConfigurationException("Error getting expires date from document.", e);
                 }

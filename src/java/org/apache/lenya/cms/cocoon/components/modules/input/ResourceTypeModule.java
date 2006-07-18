@@ -99,7 +99,9 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
                 String prefix = request.getContextPath();
                 value = transformFallbackUriToHttp(pub.getId(), prefix, uri);
             } else if (attribute.equals(EXPIRES)) {
-                value = resourceType.getExpires();
+                Date expires = resourceType.getExpires();
+                SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss zzz");
+                value = sdf.format(expires);
             } else {
                 throw new ConfigurationException("Attribute [" + name + "] not supported!");
             }
