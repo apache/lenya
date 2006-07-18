@@ -20,6 +20,7 @@
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
@@ -51,6 +52,8 @@ import org.apache.lenya.cms.site.SiteUtil;
  * <li>resourceType</li>
  * <li>lastModified</li>
  * <li>mimeType</li>
+ * <li>expires</li>
+ * <li>visibleInNav</li>
  * </ul>
  */
 public class DocumentInfoModule extends AbstractInputModule implements Serviceable {
@@ -68,12 +71,14 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
     protected final static String RESOURCE_TYPE = "resourceType";
     protected final static String LAST_MODIFIED = "lastModified";
     protected final static String MIME_TYPE = "mimeType";
+    protected final static String EXPIRES = "expires";
     protected final static String VISIBLE_IN_NAVIGATION = "visibleInNav";
 
     protected final static String[] PARAMS = { PARAM_PUBLICATION_ID, PARAM_AREA, PARAM_DOCUMENT_ID,
             PARAM_DOCUMENT_LANGUAGE, PARAM_PROPERTY, VISIBLE_IN_NAVIGATION };
 
     protected final static String META_RESOURCE_TYPE = "resourceType";
+    protected final static String META_EXPIRES = "expires";
 
     /**
      * Parse the parameters and return a document.
@@ -130,6 +135,10 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
                 if (value == null)
                     throw new ConfigurationException("Attribute '" + attribute + "' not defined ["
                             + name + "]");
+            } else if (attribute.equals(EXPIRES)) {
+                
+                value = getExpires(document, params.getParameter(PARAM_AREA));
+                
             } else if (attribute.equals(VISIBLE_IN_NAVIGATION)) {
                 value = Boolean.toString(isVisibleInNavigation(document));
             } else {
@@ -153,6 +162,37 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
 
     }
 
+    protected String getExpires(Document document, String area) throws ConfigurationException {
+        String expires = null;
+        long secs = 0;
+        if (area.equals("live")) {
+            try {
+                //use resource-types seconds to expire as default
+                secs = document.getResourceType().getExpires();
+            } catch (DocumentException e) {
+                throw new ConfigurationException("Error getting Resource Type of document.", e);
+            }
+        
+            MetaData metaData = null;
+            try {
+                metaData = document.getMetaDataManager().getLenyaMetaData();
+                String expiresMeta = metaData.getFirstValue(META_EXPIRES);
+                if (expiresMeta != null) {
+                    secs = Long.parseLong(metaData.getFirstValue(META_EXPIRES));
+                }
+            } catch (DocumentException e) {
+                throw new ConfigurationException("Obtaining custom meta data value for ["
+                        + document.getSourceURI() + "] failed: " + e.getMessage(), e);
+            }
+        }
+        Date date = new Date();
+        date.setTime(date.getTime() + secs * 1000l);
+        SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss zzz");
+        expires = sdf.format(date);
+
+        return expires;
+    }
+    
     protected String getResourceType(Document document) throws ConfigurationException {
         String resourceType = null;
         MetaData metaData = null;

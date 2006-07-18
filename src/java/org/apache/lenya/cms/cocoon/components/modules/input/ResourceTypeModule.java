@@ -17,6 +17,8 @@
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
 import java.util.Map;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
@@ -50,6 +52,7 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
 
     protected static final String SCHEMA_URI = "schemaUri";
     protected static final String HTTP_SCHEMA_URI = "httpSchemaUri";
+    protected static final String EXPIRES = "expires";
 
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
@@ -95,6 +98,12 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
                 String uri = resourceType.getSchema().getURI();
                 String prefix = request.getContextPath();
                 value = transformFallbackUriToHttp(pub.getId(), prefix, uri);
+            } else if (attribute.equals(EXPIRES)) {
+                Date date = new Date();
+                long secs = resourceType.getExpires();
+                date.setTime(date.getTime() + secs * 1000l);
+                SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss zzz");
+                value = sdf.format(date);
             } else {
                 throw new ConfigurationException("Attribute [" + name + "] not supported!");
             }

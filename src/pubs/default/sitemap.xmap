@@ -246,6 +246,9 @@
                           <map:parameter name="serializer" value="xhtml"/>
                         </map:transform>
                         <map:transform src="fallback://lenya/xslt/authoring/edit/removeSourceTags.xsl"/>
+                        <map:act type="set-header">
+                          <map:parameter name="Expires" value="{doc-info:{page-envelope:publication-id}:{page-envelope:area}:{page-envelope:document-id}:{page-envelope:document-language}:expires}"/>
+                        </map:act>
                       </map:when>
                       <!-- Turn off caching in authoring area -->
                       <map:otherwise>

@@ -49,6 +49,11 @@ public class LenyaMetaData extends MetaDataImpl {
     public static final String ELEMENT_CONTENT_TYPE = "contentType";
     
     /**
+     * The number of seconds from the request that a document can be cached before it expires
+     */
+    public static final String ELEMENT_EXPIRES = "expires";
+    
+    /**
      * The extension to use for the document source.
      */
     public static final String ELEMENT_EXTENSION = "extension";
@@ -75,6 +80,7 @@ public class LenyaMetaData extends MetaDataImpl {
        ELEMENT_PLACEHOLDER,
        ELEMENTE_HEIGHT,
        ELEMENT_WIDTH,
+       ELEMENT_EXPIRES,
        ELEMENT_EXTENSION
     };
 

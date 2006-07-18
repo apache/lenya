@@ -48,12 +48,15 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     protected static final String ATTRIBUTE_URI = "uri";
     protected static final String ATTRIBUTE_NAME = "name";
     protected static final String ATTRIBUTE_LANGUAGE = "language";
+    protected static final String EXPIRES_ELEMENT = "expires";
+    protected static final String SECONDS_ATTRIBUTE = "seconds";
 
     private Schema schema = null;
     private String sampleUri = null;
     private String defaultSampleUri = null;
     private Map sampleUris = new HashMap();
     private String[] linkAttributeXPaths;
+    private long expires = 0;
 
     /**
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
@@ -96,11 +99,20 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
                 String uri = formatConfigs[i].getAttribute(ATTRIBUTE_URI);
                 this.formats.put(name, new Format(uri));
             }
+            
+            Configuration expiresConf = config.getChild(EXPIRES_ELEMENT, false);
+            if (expiresConf != null) {
+                this.expires = expiresConf.getAttributeAsLong(SECONDS_ATTRIBUTE);
+            }
 
         } catch (Exception e) {
             throw new ConfigurationException("Configuring resource type failed: ", e);
         }
 
+    }
+    
+    public long getExpires() {
+        return this.expires;
     }
 
     public Schema getSchema() {

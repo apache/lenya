@@ -25,6 +25,9 @@
     <schema language="http://relaxng.org/ns/structure/0.9"
       src="fallback://lenya/modules/xhtml/resources/schemas/xhtml.rng"/>
     
+    <!-- Default time in seconds until the resource-type has expired -->  
+    <expires seconds="3600" />
+    
     <sample-name>fallback://lenya/modules/xhtml/samples/xhtml.xml</sample-name>
     <!-- <sample-name name="Two Column Layout">fallback://lenya/modules/xhtml/samples/xhtml-2col.xml</sample-name> -->
     
