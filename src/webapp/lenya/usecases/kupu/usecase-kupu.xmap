@@ -115,7 +115,7 @@
               <map:transform src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/kupumacros.xsl">
                 <map:parameter name="contentfile" 
                   value="{request:requestURI}?lenya.usecase=kupu&amp;lenya.step=content"/>
-                <map:parameter name="context-prefix" value="{request:contextPath}"/>
+                <map:parameter name="context-prefix" value="{request:contextPath}/{page-envelope:publication-id}/modules/kupu"/>
                 <!-- Only used to display the document path of the edited doc  -->
                 <map:parameter name="document-path" value="{page-envelope:document-path}"/>
                 <map:parameter name="save-destination" 
