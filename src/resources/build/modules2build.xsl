@@ -117,54 +117,37 @@
     <xsl:text>
     </xsl:text>
     
-    <xsl:variable name="srcDir"><xsl:value-of select="$src"/>/java/src</xsl:variable>
-    <available file="{$srcDir}" property="compile.module.{$id}"/>
+    <available file="{$src}/java/src" property="compile.module.{$id}"/>
 
-    <xsl:variable name="destDir">${build.dir}/modules/<xsl:value-of select="$id"/></xsl:variable>
-    <xsl:variable name="debug">${debug}</xsl:variable>
-    <xsl:variable name="optimize">${optimize}</xsl:variable>
-    <xsl:variable name="deprecation">${deprecation}</xsl:variable>
-    <xsl:variable name="target">${target.vm}</xsl:variable>
-    <xsl:variable name="nowarn">${nowarn}</xsl:variable>
+    <xsl:variable name="destDir">${build.dir}/modules/<xsl:value-of select="$id"/>/java/classes</xsl:variable>
     
     <target name="compile-module-{$id}" if="compile.module.{$id}">
       
       <path id="module.classpath.{$id}">
         <path refid="classpath"/>
-        <fileset includes="lenya-*-api.jar">
-          <xsl:attribute name="dir">${build.webapp}/WEB-INF/lib</xsl:attribute>
-        </fileset>
+        <fileset dir="${{build.webapp}}/WEB-INF/lib" includes="lenya-*-api.jar"/>
         <xsl:for-each select="mod:depends">
-          <fileset includes="lenya-module-{@module}.jar">
-            <xsl:attribute name="dir">${build.webapp}/WEB-INF/lib</xsl:attribute>
-          </fileset>
+          <fileset dir="${{build.webapp}}/WEB-INF/lib" includes="lenya-module-{@module}.jar"/>
         </xsl:for-each>
-        <fileset dir="{$src}">
-          <include name="java/lib/*.jar"/>
-        </fileset>
-        <fileset>
-          <xsl:attribute name="dir">${lib.dir}</xsl:attribute>
-          <include name="*.jar"/>
-        </fileset>
+        <fileset dir="{$src}" includes="java/lib/*.jar"/>
+        <fileset dir="${{lib.dir}}" includes="*.jar"/>
       </path>
       
       <mkdir dir="{$destDir}"/>
       
       <javac
         destdir="{$destDir}"
-        debug="{$debug}"
-        optimize="{$optimize}"
-        deprecation="{$deprecation}"
-        target="{$target}"
-        nowarn="{$nowarn}"
+        debug="${{debug}}"
+        optimize="${{optimize}}"
+        deprecation="${{deprecation}}"
+        target="${{target.vm}}"
+        nowarn="${{nowarn}}"
         source="1.4">
-        <src path="{$srcDir}"/>
+        <src path="{$src}/java/src"/>
         <classpath refid="module.classpath.{$id}"/>
       </javac>
       
-      <xsl:variable name="jarfile">${build.webapp}/WEB-INF/lib/lenya-module-<xsl:value-of select="$id"/>.jar</xsl:variable>
-      
-      <jar jarfile="{$jarfile}" index="true">
+      <jar jarfile="${{build.webapp}}/WEB-INF/lib/lenya-module-{$id}.jar" index="true">
         <fileset dir="{$destDir}">
           <exclude name="**/Manifest.mf"/>
         </fileset>
@@ -180,9 +163,8 @@
     
     <target name="copy-module-{$id}">
       <xsl:if test="$copy-modules = 'true'">
-        <xsl:variable name="todir">${build.webapp}/lenya/modules/<xsl:value-of select="$dirName"/></xsl:variable>
         <copy 
-          todir="{$todir}"
+          todir="${{build.webapp}}/lenya/modules/{$dirName}"
           flatten="false">
           <fileset dir="{$src}">
             <exclude name="java/**"/>
@@ -204,14 +186,12 @@
         includes="config/cocoon-xconf/*.xconf, config/cocoon-xconf/*/*.xconf"
         addComments="false"/>
         
-      <xsl:variable name="lenya-roles">${build.dir}/impl/org/apache/lenya/lenya.roles</xsl:variable>
-      <xpatch file="{$lenya-roles}"
+      <xpatch file="${{build.dir}}/impl/org/apache/lenya/lenya.roles"
         srcdir="{$src}"
         includes="config/lenya-roles/*.xroles"
         addComments="false"/>
       
-      <xsl:variable name="sitemap-xmap">${build.webapp}/sitemap.xmap</xsl:variable>
-      <xpatch file="{$sitemap-xmap}"
+      <xpatch file="${{build.webapp}}/sitemap.xmap"
         srcdir="{$src}" 
         includes="config/sitemap/*.xmap"
         addComments="false"/>
@@ -237,66 +217,79 @@
     <!-- Test -->
     <!-- ============================================================ -->
     
-    <xsl:variable name="testSrcDir"><xsl:value-of select="$src"/>/java/test</xsl:variable>
+    <available file="{$src}/java/test" property="test.module.{$id}"/>
     
-    <available file="{$testSrcDir}" property="test.module.{$id}"/>
+    <xsl:variable name="testDependencyList">
+      <xsl:for-each select="mod:depends">
+        <xsl:text>patch-module-test-</xsl:text><xsl:value-of select="@module"/>
+        <xsl:if test="following-sibling::mod:depends">
+          <xsl:text>, </xsl:text>
+        </xsl:if>
+      </xsl:for-each>
+    </xsl:variable>
     
-    <target name="test-module-{$id}" if="test.module.{$id}">
-      
-      <xsl:variable name="testDestDir">${build.dir}/modules/<xsl:value-of select="$id"/>-test</xsl:variable>
+    <target name="patch-module-test-{$id}">
+      <xsl:if test="normalize-space($testDependencyList) != ''">
+        <xsl:attribute name="depends"><xsl:value-of select="$testDependencyList"/></xsl:attribute>
+      </xsl:if>
+      <xslt basedir="{$src}/config/cocoon-xconf"
+        destdir="${{build.dir}}/modules/{$id}/config/xtest"
+        style="${{src.resource.dir}}/test/xpatch2testpatch.xsl"
+        extension=".xtest">
+      </xslt>
+      <xpatch file="${{build.test}}/org/apache/lenya/cms/LenyaTestCase.xtest"
+        srcdir="${{build.dir}}/modules/{$id}"
+        includes="config/xtest/*.xtest, config/xtest/*/*.xtest"
+        addComments="false"/>
+    </target>
+    
+    <target name="test-module-{$id}" if="test.module.{$id}" depends="patch-module-test-{$id}, compile-module-{$id}">
+
+      <xsl:variable name="testDestDir">${build.dir}/modules/<xsl:value-of select="$id"/>/java/test</xsl:variable>
       
       <mkdir dir="{$testDestDir}"/>
       
-      <xsl:variable name="build-webapp">${build.webapp}</xsl:variable>
-      <xsl:variable name="build-test">${build.test}</xsl:variable>
-      
       <path id="module.test-classpath.{$id}">
         <path refid="module.classpath.{$id}"/>
-        <fileset dir="{$build-webapp}/WEB-INF/lib">
+        <fileset dir="${{build.webapp}}/WEB-INF/lib">
           <include name="lenya-module-{$id}.jar"/>
         </fileset>
-        <path location="{$build-test}"/>
+        <path location="${{build.test}}"/>
       </path>
       
       <javac
         destdir="{$testDestDir}"
-        debug="{$debug}"
-        optimize="{$optimize}"
-        deprecation="{$deprecation}"
-        target="{$target}"
-        nowarn="{$nowarn}"
+        debug="${{debug}}"
+        optimize="${{optimize}}"
+        deprecation="${{deprecation}}"
+        target="${{target.vm}}"
+        nowarn="${{nowarn}}"
         source="1.4">
-        <src path="{$testSrcDir}"/>
+        <src path="{$src}/java/test"/>
         <classpath refid="module.test-classpath.{$id}"/>
       </javac>
       
       <!-- Copy test resources -->
       <copy todir="{$testDestDir}" filtering="on">
-        <fileset dir="{$testSrcDir}" excludes="**.java"/>
+        <fileset dir="{$src}/java/test" excludes="**.java"/>
       </copy>
-      
-      <xsl:variable name="loglevel">${junit.test.loglevel}</xsl:variable>
-      <xsl:variable name="junit-dir">${junit.dir}</xsl:variable>
-      <xsl:variable name="repository-factory">${repository.factory}</xsl:variable>
-      <xsl:variable name="contextRoot">${basedir}/build/lenya/webapp</xsl:variable>
-      <xsl:variable name="tempDir">${basedir}/build/lenya/temp</xsl:variable>
       
       <junit printsummary="yes" showoutput="true" haltonerror="on" haltonfailure="on">
         <classpath>
-          <fileset dir="{$build-webapp}/WEB-INF/lib" includes="*.jar, endorsed/*.jar"/>
-          <path location="{$build-webapp}/WEB-INF/classes"/>
-          <path location="{$build-test}"/>
+          <fileset dir="${{build.webapp}}/WEB-INF/lib" includes="*.jar, endorsed/*.jar"/>
+          <path location="${{build.webapp}}/WEB-INF/classes"/>
+          <path location="${{build.test}}"/>
           <path location="{$testDestDir}"/>
         </classpath>
         <formatter type="plain" usefile="false" />
         <formatter type="xml" />
-        <jvmarg value="-Djava.endorsed.dirs {$build-webapp}/WEB-INF/lib/endorsed"/>
-        <sysproperty key="junit.test.loglevel" value="{$loglevel}"/>
-        <sysproperty key="contextRoot" value="{$contextRoot}"/>
-        <sysproperty key="tempDir" value="{$tempDir}"/>
-        <sysproperty key="test.repo.webappDirectory" value="{$build-webapp}"/>
-        <sysproperty key="test.repo.repositoryFactory" value="{$repository-factory}"/>
-        <batchtest todir="{$junit-dir}">
+        <jvmarg value="-Djava.endorsed.dirs ${{build-webapp}}/WEB-INF/lib/endorsed"/>
+        <sysproperty key="junit.test.loglevel" value="${{junit.test.loglevel}}"/>
+        <sysproperty key="contextRoot" value="${{basedir}}/build/lenya/webapp"/>
+        <sysproperty key="tempDir" value="${{basedir}}/build/lenya/temp"/>
+        <sysproperty key="test.repo.webappDirectory" value="${{build-webapp}}"/>
+        <sysproperty key="test.repo.repositoryFactory" value="${{repository.factory}}"/>
+        <batchtest todir="${{junit.dir}}">
           <fileset dir="{$testDestDir}" includes="**/*.class" excludes="**/Abstract*.class"/>
         </batchtest>
       </junit>

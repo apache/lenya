@@ -28,14 +28,14 @@
   <property name="modules.copy" value="false"/>
   
   
-  <target name="deploy-modules" depends="init-tasks">
+  <target name="prepare-modules" depends="init-tasks">
     
     <property name="cocoon.xconf" value="${build.webapp}/WEB-INF/cocoon.xconf"/>
     
     <generateModuleList
       moduleDirs="${modules.root.dirs}"
       moduleFile="${build.dir}/temp/modules.xml"/>
-      
+    
     <xslt
       in="${build.dir}/temp/modules.xml"
       out="${build.dir}/temp/modules-build.xml"
@@ -44,7 +44,7 @@
       <param name="module-schema" expression="${src.resource.dir}/build/module.rng"/>
       <param name="copy-modules" expression="${modules.copy}"/>
     </xslt>
-
+    
     <xslt
       in="${build.dir}/temp/modules.xml"
       out="${build.dir}/temp/modules.xconf"
@@ -57,11 +57,14 @@
       srcdir="${build.dir}/temp/"
       file="${cocoon.xconf}"/>
     
+  </target>
+  
+  
+  <target name="deploy-modules" depends="prepare-modules">
     <ant antfile="${build.dir}/temp/modules-build.xml"
       inheritall="true"
       inheritrefs="true"
       target="compile-modules"/>
-      
   </target>
   
   
@@ -69,14 +72,14 @@
   <!-- Module tests -->
   <!-- ================================================ -->
   
-  <target name="modules.test" depends="tests.prepare">
+  <target name="modules.test" depends="tests.prepare, prepare-modules">
     <ant antfile="${build.dir}/temp/modules-build.xml"
       inheritall="true"
       inheritrefs="true"
       target="test-modules"/>
   </target>
   
-  <target name="module.test" depends="tests.prepare">
+  <target name="module.test" depends="tests.prepare, prepare-modules">
     <property name="module" value=""/>
     <ant antfile="${build.dir}/temp/modules-build.xml"
       inheritall="true"
