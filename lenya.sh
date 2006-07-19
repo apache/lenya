@@ -84,7 +84,7 @@ if [ "$JAVA_HOME" = "" ] ; then
 fi
 
 if [ "$JAVA_OPTIONS" = "" ] ; then
-  JAVA_OPTIONS='-Xms32M -Xmx512M'
+  JAVA_OPTIONS='-Xms32M -Xmx512M -Djava.awt.headless=true'
 fi
 
 if [ "$LENYA_HOME" = "" ] ; then
