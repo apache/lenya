@@ -19,6 +19,7 @@ package org.apache.lenya.cms.repo.adapter;
 import java.util.Arrays;
 import java.util.HashMap;
 
+import org.apache.lenya.cms.metadata.ElementSet;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.repo.RepositoryException;
@@ -113,6 +114,11 @@ public class RepoMetaData implements MetaData {
 
     public long getLastModified() throws DocumentException {
         throw new RuntimeException("not implemented");
+    }
+
+    public ElementSet getElementSet() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }
