@@ -40,4 +40,11 @@ public interface ElementSet {
      */
     String getNamespaceUri();
     
+    /**
+     * Checks if an element with a certain name is contained.
+     * @param name The name.
+     * @return A boolean value.
+     */
+    boolean containsElement(String name);
+    
 }

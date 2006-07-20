@@ -46,6 +46,7 @@ import org.apache.jackrabbit.core.nodetype.PropDef;
 import org.apache.jackrabbit.core.nodetype.PropDefImpl;
 import org.apache.jackrabbit.name.QName;
 import org.apache.lenya.cms.metadata.LenyaMetaData;
+import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.metadata.dublincore.DublinCoreImpl;
 
 /**
@@ -141,7 +142,7 @@ public class LenyaRepository extends org.apache.cocoon.jcr.JackrabbitRepository 
             List dcKeyList = DublinCoreImpl.getAttributeNames();
             String[] dcKeys = (String[]) dcKeyList.toArray(new String[dcKeyList.size()]);
             for (int i = 0; i < dcKeys.length; i++) {
-                key2namespace.put(dcKeys[i], DublinCoreImpl.DC_NAMESPACE);
+                key2namespace.put(dcKeys[i], DublinCore.DC_NAMESPACE);
             }
 
             NodeTypeDef def = new NodeTypeDef();

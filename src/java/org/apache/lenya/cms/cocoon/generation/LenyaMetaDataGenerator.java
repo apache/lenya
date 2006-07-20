@@ -35,9 +35,9 @@ import org.apache.excalibur.source.impl.validity.TimeStampValidity;
 import org.apache.excalibur.xml.dom.DOMParser;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataManager;
+import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
@@ -197,13 +197,14 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
         long lastModified = 0;
         try {
             MetaDataManager metaMgr = document.getMetaDataManager();
+            MetaData dcElements = document.getMetaData(DublinCore.DC_NAMESPACE);
             if (lastModified < metaMgr.getCustomMetaData().getLastModified())
                 lastModified = metaMgr.getCustomMetaData().getLastModified();
-            if (lastModified < metaMgr.getDublinCoreMetaData().getLastModified())
-                lastModified = metaMgr.getDublinCoreMetaData().getLastModified();
+            if (lastModified < dcElements.getLastModified())
+                lastModified = dcElements.getLastModified();
             if (lastModified < metaMgr.getLenyaMetaData().getLastModified())
                 lastModified = metaMgr.getLenyaMetaData().getLastModified();
-        } catch (DocumentException e) {
+        } catch (Exception e) {
             getLogger().error("Error determining last modification date", e);
             return null;
         }
@@ -308,9 +309,9 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
             } else if ("internal".equals(type)) {
                 metaData = this.document.getMetaDataManager().getLenyaMetaData();
             } else if ("dc".equals(type)) {
-                metaData = this.document.getMetaDataManager().getDublinCoreMetaData();
+                metaData = this.document.getMetaData(DublinCore.DC_NAMESPACE);
             }
-        } catch (DocumentException e1) {
+        } catch (Exception e1) {
             throw new ProcessingException("Obtaining custom meta data value for ["
                     + document.getSourceURI() + "] failed: ", e1);
         }

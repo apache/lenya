@@ -32,6 +32,16 @@ import org.apache.lenya.cms.metadata.MetaData;
 public interface DublinCore extends MetaData {
 
     /**
+     * The dublin core elements namespace.
+     */
+    String DC_NAMESPACE = "http://purl.org/dc/elements/1.1/";
+    
+    /**
+     * The dublin core terms namespace. 
+     */
+    String DCTERMS_NAMESPACE = "http://purl.org/dc/terms/";
+    
+    /**
      * A name given to the resource. Typically, Title will be a name by which the resource is
      * formally known.
      */

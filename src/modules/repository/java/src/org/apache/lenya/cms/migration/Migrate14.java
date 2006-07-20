@@ -25,7 +25,7 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import org.apache.lenya.cms.metadata.LenyaMetaData;
-import org.apache.lenya.cms.metadata.dublincore.DublinCoreImpl;
+import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.repo.Area;
 import org.apache.lenya.cms.repo.Asset;
 import org.apache.lenya.cms.repo.AssetType;
@@ -306,13 +306,13 @@ public class Migrate14 {
                     LenyaElements.ELEMENTS);
             importMetaData(trans,
                     xmlDoc,
-                    DublinCoreImpl.DC_NAMESPACE,
+                    DublinCore.DC_NAMESPACE,
                     "dc",
                     DublinCoreElements.ELEMENT_SET,
                     DublinCoreElements.getElements());
             importMetaData(trans,
                     xmlDoc,
-                    DublinCoreImpl.DCTERMS_NAMESPACE,
+                    DublinCore.DCTERMS_NAMESPACE,
                     "dc",
                     DublinCoreElements.ELEMENT_SET,
                     DublinCoreElements.getElements());

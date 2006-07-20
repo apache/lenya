@@ -24,15 +24,18 @@ public class ElementImpl implements Element {
     private String name;
     private boolean multiple;
     private String description = "";
+    private boolean editable;
     
     /**
      * Ctor.
      * @param name The name.
      * @param isMultiple if the element can have multiple values.
+     * @param isEditable if the element can be edited.
      */
-    public ElementImpl(String name, boolean isMultiple) {
+    public ElementImpl(String name, boolean isMultiple, boolean isEditable) {
         this.name = name;
         this.multiple = isMultiple;
+        this.editable = isEditable;
     }
 
     /**
@@ -57,6 +60,10 @@ public class ElementImpl implements Element {
 
     public String getDescription() {
         return this.description;
+    }
+
+    public boolean isEditable() {
+        return this.editable;
     }
 
 }

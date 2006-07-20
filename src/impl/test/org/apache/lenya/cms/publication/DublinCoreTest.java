@@ -53,20 +53,18 @@ public class DublinCoreTest extends AccessControlTest {
         
         doc.getRepositoryNode().lock();
         
-        MetaData dcCore = doc.getMetaDataManager().getDublinCoreMetaData();
+        MetaData dcCore = doc.getMetaData(DublinCore.DC_NAMESPACE);
         String title = dcCore.getFirstValue(DublinCore.ELEMENT_TITLE);
         String subject = dcCore.getFirstValue(DublinCore.ELEMENT_SUBJECT);
         String creator = dcCore.getFirstValue(DublinCore.ELEMENT_CREATOR);
-        String dateIssued = dcCore.getFirstValue(DublinCore.TERM_ISSUED);
 
         dcCore.setValue(DublinCore.ELEMENT_CREATOR, CREATOR);
 
         Document doc2 = map.get(publication, AREA, DOCUMENT_ID, LANGUAGE);
 
-        MetaData dcCore2 = doc2.getMetaDataManager().getDublinCoreMetaData();
+        MetaData dcCore2 = doc2.getMetaData(DublinCore.DC_NAMESPACE);
         assertEquals(title, dcCore2.getFirstValue(DublinCore.ELEMENT_TITLE));
         assertEquals(subject, dcCore2.getFirstValue(DublinCore.ELEMENT_SUBJECT));
-        assertEquals(dateIssued, dcCore2.getFirstValue(DublinCore.TERM_ISSUED));
         assertFalse(creator.equals(dcCore2.getFirstValue(DublinCore.ELEMENT_CREATOR)));
         assertEquals(CREATOR, dcCore2.getFirstValue(DublinCore.ELEMENT_CREATOR));
         

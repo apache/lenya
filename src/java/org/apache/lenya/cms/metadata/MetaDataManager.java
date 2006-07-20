@@ -53,7 +53,7 @@ public class MetaDataManager extends AbstractLogEnabled {
      * @return the dublin core meta-data
      * @throws DocumentException if the meta-data could not be retrieved
      */
-    public MetaData getDublinCoreMetaData() throws DocumentException {
+    public MetaData getDublinCoreMetaData1() throws DocumentException {
         if (dublinCoreMetaData == null) {
             dublinCoreMetaData = new DublinCoreImpl(this.sourceUri, this.serviceManager, getLogger());
         }
@@ -120,7 +120,7 @@ public class MetaDataManager extends AbstractLogEnabled {
      */
     public void setMetaData(Map dcMetaData, Map lenyaMetaData, Map customMetaData) throws DocumentException {
         if (dcMetaData != null)
-            setMetaData(getDublinCoreMetaData(), dcMetaData);
+            setMetaData(getDublinCoreMetaData1(), dcMetaData);
         if (lenyaMetaData != null)
             setMetaData(getLenyaMetaData(), lenyaMetaData);
         if (customMetaData != null)
@@ -143,8 +143,8 @@ public class MetaDataManager extends AbstractLogEnabled {
      * @throws DocumentException if something goes wrong
      */
     public void replaceMetaData(MetaDataManager sourceManager) throws DocumentException {
-        MetaData source = sourceManager.getDublinCoreMetaData();
-        MetaData dest = this.getDublinCoreMetaData();
+        MetaData source = sourceManager.getDublinCoreMetaData1();
+        MetaData dest = this.getDublinCoreMetaData1();
         dest.replaceBy(source);
         source = sourceManager.getLenyaMetaData();
         dest = this.getLenyaMetaData();

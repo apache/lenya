@@ -47,7 +47,8 @@ public class ConfigurableElementSet extends AbstractLogEnabled implements Elemen
         for (int i = 0; i < attributeConfigs.length; i++) {
             String name = attributeConfigs[i].getAttribute("name");
             boolean isMultiple = attributeConfigs[i].getAttributeAsBoolean("multiple", false);
-            this.elements.put(name, new ElementImpl(name, isMultiple));
+            boolean isEditable = attributeConfigs[i].getAttributeAsBoolean("editable", false);
+            this.elements.put(name, new ElementImpl(name, isMultiple, isEditable));
         }
 
     }
@@ -63,6 +64,10 @@ public class ConfigurableElementSet extends AbstractLogEnabled implements Elemen
 
     public String getNamespaceUri() {
         return this.namespaceUri;
+    }
+
+    public boolean containsElement(String name) {
+        return this.elements.keySet().contains(name);
     }
 
 }

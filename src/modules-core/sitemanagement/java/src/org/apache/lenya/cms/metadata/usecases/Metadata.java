@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 
 import org.apache.lenya.cms.metadata.MetaData;
+import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -61,11 +62,10 @@ public class Metadata extends SiteUsecase {
         super.initParameters();
         showCustom = getParameterAsBoolean(SHOW_CUSTOM_PARAMETER, false);
         setParameter(SHOW_CUSTOM_PARAMETER, String.valueOf(showCustom));
-
+        
         // dc metadata
         try {
-            MetaData meta = getSourceDocument().getMetaDataManager()
-                    .getDublinCoreMetaData();
+            MetaData meta = getSourceDocument().getMetaData(DublinCore.DC_NAMESPACE);
 
             String[] keys = meta.getPossibleKeys();
             for (int i = 0; i < keys.length; i++) {
@@ -126,8 +126,7 @@ public class Metadata extends SiteUsecase {
         super.doExecute();
 
         // dc metadata
-        MetaData meta = getSourceDocument().getMetaDataManager()
-                .getDublinCoreMetaData();
+        MetaData meta = getSourceDocument().getMetaData(DublinCore.DC_NAMESPACE);
 
         String[] keys = meta.getPossibleKeys();
         for (int i = 0; i < keys.length; i++) {

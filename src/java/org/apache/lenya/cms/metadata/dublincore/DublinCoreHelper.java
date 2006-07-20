@@ -73,7 +73,7 @@ public final class DublinCoreHelper {
                     Document document = map.get(publication, area, documentId, languages[i]);
                     if (getLogger().isDebugEnabled())
                         getLogger().debug("document file : " + document.getSourceURI());
-                    MetaData dublincore = document.getMetaDataManager().getDublinCoreMetaData();
+                    MetaData dublincore = document.getMetaData(DublinCore.DC_NAMESPACE);
                     if (getLogger().isDebugEnabled())
                         getLogger().debug("dublincore title : "
                             + dublincore.getFirstValue(DublinCore.ELEMENT_TITLE));
@@ -82,7 +82,7 @@ public final class DublinCoreHelper {
                 }
             }
             if (languages.length < 1 || identifier == null) {
-                MetaData dublincore = baseDocument.getMetaDataManager().getDublinCoreMetaData();
+                MetaData dublincore = baseDocument.getMetaData(DublinCore.DC_NAMESPACE);
                 identifier = dublincore.getFirstValue(DublinCore.ELEMENT_IDENTIFIER);
             }
         } catch (final DocumentException e) {

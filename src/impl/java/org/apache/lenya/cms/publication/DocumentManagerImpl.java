@@ -30,10 +30,10 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.LenyaMetaData;
-import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteManager;
@@ -78,11 +78,15 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 navigationTitle,
                 visibleInNav,
                 contentsURI);
-        MetaDataManager mgr = document.getMetaDataManager();
-        MetaDataManager srcMgr = sourceDocument.getMetaDataManager();
-        mgr.getLenyaMetaData().replaceBy(srcMgr.getLenyaMetaData());
-        mgr.getDublinCoreMetaData().replaceBy(srcMgr.getDublinCoreMetaData());
-        mgr.getCustomMetaData().replaceBy(srcMgr.getCustomMetaData());
+
+        try {
+            String[] uris = sourceDocument.getMetaDataNamespaceUris();
+            for (int i = 0; i < uris.length; i++) {
+                document.getMetaData(uris[i]).replaceBy(sourceDocument.getMetaData(uris[i]));
+            }
+        } catch (RepositoryException e) {
+            throw new PublicationException(e);
+        }
     }
 
     /**

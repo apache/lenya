@@ -24,6 +24,7 @@ import org.apache.lenya.cms.metadata.CustomMetaData;
 import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataManager;
+import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.metadata.dublincore.DublinCoreImpl;
 import org.apache.lenya.cms.publication.DocumentException;
 
@@ -55,7 +56,7 @@ public class JCRMetaDataManager extends MetaDataManager {
 
     public MetaData getDublinCoreMetaData() throws DocumentException {
         if (this.dublinCore == null) {
-            this.dublinCore = new JCRMetaData(DublinCoreImpl.DC_NAMESPACE,
+            this.dublinCore = new JCRMetaData(DublinCore.DC_NAMESPACE,
                     getSourceURI(),
                     this.serviceManager,
                     getLogger());

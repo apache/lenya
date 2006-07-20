@@ -35,5 +35,10 @@ public interface Element {
      * @return the description of the element.
      */
     String getDescription();
+    
+    /**
+     * @return if the element value can be edited.
+     */
+    boolean isEditable();
 
 }

@@ -26,6 +26,7 @@ import java.util.Map;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.lenya.cms.metadata.MetaData;
+import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.metadata.dublincore.DublinCoreImpl;
 import org.apache.lenya.cms.publication.Document;
 
@@ -48,8 +49,7 @@ public class DublinCoreModule extends AbstractPageEnvelopeModule {
             if (document == null) {
                 throw new ConfigurationException("There is no document for this page envelope!");
             }
-            MetaData dc = document.getMetaDataManager().getDublinCoreMetaData();
-
+            MetaData dc = document.getMetaData(DublinCore.DC_NAMESPACE);
             if (! dc.isValidAttribute(name)) {
                 throw new ConfigurationException("The attribute [" + name + "] is not supported!");
             }

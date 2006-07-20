@@ -259,7 +259,11 @@ public class Resource extends AbstractLogEnabled implements MetaDataOwner {
     }
 
     public MetaData getMetaData(String namespaceUri) throws RepositoryException {
-        return null;
+        return getRepositoryNodes()[0].getMetaData(namespaceUri);
+    }
+
+    public String[] getMetaDataNamespaceUris() throws RepositoryException {
+        return getRepositoryNodes()[0].getMetaDataNamespaceUris();
     }
     
 }

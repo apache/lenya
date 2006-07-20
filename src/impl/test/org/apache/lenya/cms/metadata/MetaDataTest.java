@@ -46,7 +46,7 @@ public class MetaDataTest extends AccessControlTest {
         }
         assertNotNull(e);
 
-        namespaceUri = DublinCoreImpl.DC_NAMESPACE;
+        namespaceUri = DublinCore.DC_NAMESPACE;
         MetaData dc = doc.getMetaData(namespaceUri);
         
         doc.getRepositoryNode().lock();

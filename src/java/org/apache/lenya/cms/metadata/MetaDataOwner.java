@@ -40,4 +40,11 @@ public interface MetaDataOwner {
      */
     MetaData getMetaData(String namespaceUri) throws RepositoryException;
     
+    /**
+     * Returns the URIs of the meta data currently supported by the owner.
+     * @return An array of strings.
+     * @throws RepositoryException if an error occurs.
+     */
+    String[] getMetaDataNamespaceUris() throws RepositoryException;
+    
 }

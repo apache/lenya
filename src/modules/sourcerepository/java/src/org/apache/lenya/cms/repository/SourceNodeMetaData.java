@@ -18,7 +18,6 @@ package org.apache.lenya.cms.repository;
 
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
@@ -142,7 +141,12 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
             for (int i = 0; i < elements.length; i++) {
                 String key = elements[i].getName();
                 String[] values = getValues(key);
-                map.put(key, Arrays.asList(values));
+                if (values.length == 1) {
+                    map.put(key, values[0]);
+                }
+                else if (values.length > 1) {
+                    map.put(key, Arrays.asList(values));
+                }
             }
         } catch (DocumentException e) {
             throw new RuntimeException(e);

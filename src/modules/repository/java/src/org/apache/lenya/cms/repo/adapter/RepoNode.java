@@ -198,4 +198,9 @@ public class RepoNode extends AbstractLogEnabled implements Node {
         return null;
     }
 
+    public String[] getMetaDataNamespaceUris() throws RepositoryException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

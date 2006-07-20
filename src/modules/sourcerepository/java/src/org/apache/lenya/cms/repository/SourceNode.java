@@ -29,14 +29,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
-import javax.xml.parsers.ParserConfigurationException;
+import java.util.Set;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.commons.collections.set.CompositeSet.SetMutator;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceNotFoundException;
@@ -45,9 +43,12 @@ import org.apache.excalibur.source.TraversableSource;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.metadata.ElementSet;
+import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.metadata.MetaDataRegistry;
+import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.Publication;
@@ -62,7 +63,6 @@ import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import org.xml.sax.SAXException;
 
 /**
  * A repository node.
@@ -696,25 +696,24 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     private Map namespace2metadata = new HashMap();
 
     public MetaData getMetaData(String namespaceUri) throws RepositoryException {
-        
+
         MetaDataRegistry registry = null;
         try {
-            Object obj = this.manager.lookup(MetaDataRegistry.ROLE);
             registry = (MetaDataRegistry) this.manager.lookup(MetaDataRegistry.ROLE);
             if (!registry.isRegistered(namespaceUri)) {
-                throw new RepositoryException("The namespace [" + namespaceUri + "] is not registered!");
+                throw new RepositoryException("The namespace [" + namespaceUri
+                        + "] is not registered!");
             }
         } catch (ServiceException e) {
             throw new RepositoryException(e);
         } catch (DocumentException e) {
             throw new RepositoryException(e);
-        }
-        finally {
+        } finally {
             if (registry != null) {
                 this.manager.release(registry);
             }
         }
-        
+
         MetaData meta = (MetaData) this.namespace2metadata.get(namespaceUri);
         if (meta == null) {
             meta = new SourceNodeMetaData(namespaceUri, this, this.manager);
@@ -754,25 +753,84 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         try {
             this.namespace2metamap = new HashMap();
             Document xml = SourceUtil.readDOM(getMetaSourceURI(), this.manager);
-            NamespaceHelper helper = new NamespaceHelper(META_DATA_NAMESPACE, "", xml);
-            Element[] setElements = helper.getChildren(xml.getDocumentElement(), ELEMENT_SET);
-            for (int setIndex = 0; setIndex < setElements.length; setIndex++) {
-                String namespace = setElements[setIndex].getAttribute(ATTRIBUTE_NAMESPACE);
-                Element[] elementElements = helper.getChildren(setElements[setIndex],
-                        ELEMENT_ELEMENT);
-                for (int elemIndex = 0; elemIndex < elementElements.length; elemIndex++) {
-                    String key = elementElements[elemIndex].getAttribute(ATTRIBUTE_KEY);
-                    Element[] valueElements = helper.getChildren(elementElements[elemIndex],
-                            ELEMENT_VALUE);
-                    for (int valueIndex = 0; valueIndex < valueElements.length; valueIndex++) {
-                        String value = DocumentHelper.getSimpleElementText(valueElements[valueIndex]);
-                        addValue(namespace, key, value);
+
+            if (!xml.getDocumentElement().getNamespaceURI().equals(META_DATA_NAMESPACE)) {
+                loadLegacyMetaData(xml);
+            } else {
+                NamespaceHelper helper = new NamespaceHelper(META_DATA_NAMESPACE, "", xml);
+                Element[] setElements = helper.getChildren(xml.getDocumentElement(), ELEMENT_SET);
+                for (int setIndex = 0; setIndex < setElements.length; setIndex++) {
+                    String namespace = setElements[setIndex].getAttribute(ATTRIBUTE_NAMESPACE);
+                    Element[] elementElements = helper.getChildren(setElements[setIndex],
+                            ELEMENT_ELEMENT);
+                    for (int elemIndex = 0; elemIndex < elementElements.length; elemIndex++) {
+                        String key = elementElements[elemIndex].getAttribute(ATTRIBUTE_KEY);
+                        Element[] valueElements = helper.getChildren(elementElements[elemIndex],
+                                ELEMENT_VALUE);
+                        for (int valueIndex = 0; valueIndex < valueElements.length; valueIndex++) {
+                            String value = DocumentHelper.getSimpleElementText(valueElements[valueIndex]);
+                            List values = getValueList(namespace, key);
+                            values.add(value);
+                        }
                     }
                 }
             }
         } catch (Exception e) {
             throw new RepositoryException(e);
         }
+    }
+
+    protected void loadLegacyMetaData(Document xml) throws RepositoryException {
+        NamespaceHelper helper = new NamespaceHelper(PageEnvelope.NAMESPACE, "", xml);
+
+        Element metaElement = helper.getFirstChild(xml.getDocumentElement(), "meta");
+
+        Element internalElement = helper.getFirstChild(metaElement, "internal");
+
+        Element[] internalElements = helper.getChildren(internalElement);
+        for (int i = 0; i < internalElements.length; i++) {
+            String value = DocumentHelper.getSimpleElementText(internalElements[i]);
+            String key = internalElements[i].getLocalName();
+            List values = getValueList(LenyaMetaData.NAMESPACE, key);
+            values.add(value);
+        }
+
+        NamespaceHelper dcHelper = new NamespaceHelper(DublinCore.DC_NAMESPACE, "", xml);
+        Element dcElement = helper.getFirstChild(metaElement, "dc");
+
+        MetaDataRegistry registry = null;
+        try {
+            registry = (MetaDataRegistry) this.manager.lookup(MetaDataRegistry.ROLE);
+            ElementSet dcElementSet = registry.getElementSet(DublinCore.DC_NAMESPACE);
+            ElementSet dcTermSet = registry.getElementSet(DublinCore.DCTERMS_NAMESPACE);
+
+            Element[] dcElements = dcHelper.getChildren(dcElement);
+            for (int i = 0; i < dcElements.length; i++) {
+                String value = DocumentHelper.getSimpleElementText(dcElements[i]);
+
+                String key = dcElements[i].getLocalName();
+
+                if (dcElementSet.containsElement(key)) {
+                    List values = getValueList(DublinCore.DC_NAMESPACE, key);
+                    values.add(value);
+                } else if (dcTermSet.containsElement(key)) {
+                    List values = getValueList(DublinCore.DCTERMS_NAMESPACE, key);
+                    values.add(value);
+                } else {
+                    throw new RepositoryException("The dublin core key [" + key
+                            + "] is not supported.");
+                }
+            }
+        } catch (RepositoryException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new RepositoryException(e);
+        } finally {
+            if (registry != null) {
+                this.manager.release(registry);
+            }
+        }
+
     }
 
     protected void saveMetaData() throws RepositoryException {
@@ -793,13 +851,17 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
                     Element elementElement = helper.createElement(ELEMENT_ELEMENT);
                     elementElement.setAttribute(ATTRIBUTE_KEY, key);
-                    setElement.appendChild(elementElement);
 
                     List values = (List) map.get(key);
                     for (Iterator valueIterator = values.iterator(); valueIterator.hasNext();) {
                         String value = (String) valueIterator.next();
-                        Element valueElement = helper.createElement(ELEMENT_VALUE, value);
-                        elementElement.appendChild(valueElement);
+                        if (!value.equals("")) {
+                            Element valueElement = helper.createElement(ELEMENT_VALUE, value);
+                            elementElement.appendChild(valueElement);
+                        }
+                    }
+                    if (elementElement.hasChildNodes()) {
+                        setElement.appendChild(elementElement);
                     }
                 }
             }
@@ -824,16 +886,25 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         return values;
     }
 
-    protected void addValue(String namespaceUri, String key, String value) throws RepositoryException {
+    protected void addValue(String namespaceUri, String key, String value)
+            throws RepositoryException {
         List values = getValueList(namespaceUri, key);
         values.add(value);
         saveMetaData();
     }
-    
+
     protected void removeAllValues(String namespaceUri, String key) throws RepositoryException {
         List values = getValueList(namespaceUri, key);
         values.clear();
         saveMetaData();
+    }
+
+    public String[] getMetaDataNamespaceUris() throws RepositoryException {
+        if (this.namespace2metamap == null) {
+            loadMetaData();
+        }
+        Set uris = this.namespace2metamap.keySet();
+        return (String[]) uris.toArray(new String[uris.size()]);
     }
 
 }

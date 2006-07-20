@@ -35,7 +35,6 @@ public class DublinCoreImpl extends MetaDataImpl {
 
     private static final String LOCAL_META = "dc";
 
-    public static final String DC_NAMESPACE = "http://purl.org/dc/elements/1.1/";
     public static final String DC_PREFIX = "dc";
 
     /**
@@ -58,7 +57,6 @@ public class DublinCoreImpl extends MetaDataImpl {
             DublinCore.ELEMENT_COVERAGE, 
             DublinCore.ELEMENT_RIGHTS };
 
-    public static final String DCTERMS_NAMESPACE = "http://purl.org/dc/terms/";
     public static final String DCTERMS_PREFIX = "dcterms";
 
     /**
@@ -112,7 +110,7 @@ public class DublinCoreImpl extends MetaDataImpl {
      * @see org.apache.lenya.cms.metadata.MetaDataImpl#getNamespaces()
      */
     protected String[] getNamespaces() {
-        return new String[] { DC_NAMESPACE, DCTERMS_NAMESPACE };
+        return new String[] { DublinCore.DC_NAMESPACE, DublinCore.DCTERMS_NAMESPACE };
     }
 
     /**

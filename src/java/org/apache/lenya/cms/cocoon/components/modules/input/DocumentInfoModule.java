@@ -39,6 +39,7 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteException;
@@ -206,8 +207,8 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
         String mimeType = null;
         MetaData metaData = null;
         try {
-            metaData = document.getMetaDataManager().getDublinCoreMetaData();
-        } catch (DocumentException e) {
+            metaData = document.getMetaData(DublinCore.DC_NAMESPACE);
+        } catch (RepositoryException e) {
             throw new ConfigurationException("Obtaining custom meta data value failed ["
                     + document.getSourceURI() + "]: " + e.getMessage(), e);
         }

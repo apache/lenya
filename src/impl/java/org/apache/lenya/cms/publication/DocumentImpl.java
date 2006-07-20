@@ -18,12 +18,10 @@
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
@@ -537,6 +535,10 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
 
     public MetaData getMetaData(String namespaceUri) throws RepositoryException {
         return getRepositoryNode().getMetaData(namespaceUri);
+    }
+
+    public String[] getMetaDataNamespaceUris() throws RepositoryException {
+        return getRepositoryNode().getMetaDataNamespaceUris();
     }
 
 }
