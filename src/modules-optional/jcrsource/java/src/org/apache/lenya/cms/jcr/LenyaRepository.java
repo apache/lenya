@@ -133,12 +133,12 @@ public class LenyaRepository extends org.apache.cocoon.jcr.JackrabbitRepository 
 
             List propDefs = new ArrayList();
             Map key2namespace = new HashMap();
-
+/*
             String[] lenyaKeys = LenyaMetaData.ELEMENTS;
             for (int i = 0; i < lenyaKeys.length; i++) {
                 key2namespace.put(lenyaKeys[i], LenyaMetaData.NAMESPACE);
             }
-
+*/
             List dcKeyList = DublinCoreImpl.getAttributeNames();
             String[] dcKeys = (String[]) dcKeyList.toArray(new String[dcKeyList.size()]);
             for (int i = 0; i < dcKeys.length; i++) {

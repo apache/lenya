@@ -791,8 +791,14 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         for (int i = 0; i < internalElements.length; i++) {
             String value = DocumentHelper.getSimpleElementText(internalElements[i]);
             String key = internalElements[i].getLocalName();
-            List values = getValueList(LenyaMetaData.NAMESPACE, key);
-            values.add(value);
+
+            if (key.equals("workflowVersion")) {
+                List values = getValueList("http://apache.org/lenya/metadata/workflow/1.0", key);
+                values.add(value);
+            } else {
+                List values = getValueList("http://apache.org/lenya/metadata/document/1.0", key);
+                values.add(value);
+            }
         }
 
         NamespaceHelper dcHelper = new NamespaceHelper(DublinCore.DC_NAMESPACE, "", xml);

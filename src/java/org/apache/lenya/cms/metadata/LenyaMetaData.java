@@ -39,41 +39,41 @@ public class LenyaMetaData extends MetaDataImpl {
      * An XML resource has a resource type; this information can be 
      * used e.g. for different rendering of different types.
      */
-    public static final String ELEMENT_RESOURCE_TYPE = "resourceType";
+    private static final String ELEMENT_RESOURCE_TYPE = "resourceType";
 
     /**
      * The name of the content type attribute.
      * Any content managed by Lenya has a type; this information can
      * be used e.g. to provide an appropriate management interface.
      */
-    public static final String ELEMENT_CONTENT_TYPE = "contentType";
+    private static final String ELEMENT_CONTENT_TYPE = "contentType";
     
     /**
      * The number of seconds from the request that a document can be cached before it expires
      */
-    public static final String ELEMENT_EXPIRES = "expires";
+    private static final String ELEMENT_EXPIRES = "expires";
     
     /**
      * The extension to use for the document source.
      */
-    public static final String ELEMENT_EXTENSION = "extension";
+    private static final String ELEMENT_EXTENSION = "extension";
 
     /**
      * A workflow version.
      * @see org.apache.lenya.cms.workflow.DocumentWorkflowable
      */
-    public static final String ELEMENT_WORKFLOW_VERSION = "workflowVersion";
+    private static final String ELEMENT_WORKFLOW_VERSION = "workflowVersion";
 
     /**
      * Determines if the document is just a placeholder in the trash and archive areas.
      * @see org.apache.lenya.cms.site.usecases.MoveSubsite
      */
-    public static final String ELEMENT_PLACEHOLDER = "placeholder";
+    private static final String ELEMENT_PLACEHOLDER = "placeholder";
 
-    public static final String ELEMENTE_HEIGHT = "height";
-    public static final String ELEMENT_WIDTH = "width";
+    private static final String ELEMENTE_HEIGHT = "height";
+    private static final String ELEMENT_WIDTH = "width";
 
-    public static final String[] ELEMENTS = {
+    private static final String[] ELEMENTS = {
        ELEMENT_RESOURCE_TYPE,
        ELEMENT_CONTENT_TYPE,
        ELEMENT_WORKFLOW_VERSION,

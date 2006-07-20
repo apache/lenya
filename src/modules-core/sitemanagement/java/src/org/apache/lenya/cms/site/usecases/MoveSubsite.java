@@ -23,8 +23,6 @@ import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.lenya.cms.metadata.LenyaMetaData;
-import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -181,8 +179,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
                 Document targetDoc = map.getAreaVersion(existingSourceDoc, getTargetArea());
                 documentManager.copyDocument(existingSourceDoc, targetDoc);
                 if (!targetDoc.getArea().equals(Publication.AUTHORING_AREA)) {
-                    MetaData meta = targetDoc.getMetaDataManager().getLenyaMetaData();
-                    meta.setValue(LenyaMetaData.ELEMENT_PLACEHOLDER, "true");
+                    targetDoc.setPlaceholder();
                 }
             }
 
@@ -289,7 +286,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
                 String[] languages = requiredDoc.getLanguages();
                 for (int l = 0; l < languages.length; l++) {
                     Document langVersion = map.getLanguageVersion(requiredDoc, languages[l]);
-                    if (!sources.contains(langVersion) && !isPlaceholder(langVersion)) {
+                    if (!sources.contains(langVersion) && !langVersion.isPlaceholder()) {
                         delete = false;
                     }
                 }
@@ -302,7 +299,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
                     languages = reqDoc.getLanguages();
                     for (int l = 0; l < languages.length; l++) {
                         Document langVersion = map.getLanguageVersion(reqDoc, languages[l]);
-                        if (!sources.contains(langVersion) && !isPlaceholder(langVersion)) {
+                        if (!sources.contains(langVersion) && !langVersion.isPlaceholder()) {
                             delete = false;
                         }
                     }
@@ -333,18 +330,4 @@ public abstract class MoveSubsite extends DocumentUsecase {
         return docsToDelete;
     }
     
-    /**
-     * Checks if a document is a placeholder.
-     * @param document
-     * @return
-     * @throws DocumentException
-     */
-    protected boolean isPlaceholder(Document document) throws DocumentException {
-        MetaData meta = document.getMetaDataManager().getLenyaMetaData();
-        String placeholder = meta.getFirstValue(LenyaMetaData.ELEMENT_PLACEHOLDER);
-        if (placeholder == null || !placeholder.equals("true")) {
-            return false;
-        }
-        return true;
-    }
 }

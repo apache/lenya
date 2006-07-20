@@ -21,18 +21,16 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.Locale;
+import java.util.Map;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.workflow.Version;
@@ -104,15 +102,18 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
     private Version[] versions = null;
 
     private long lastModified = 0;
+    
+    protected static final String METADATA_NAMESPACE = "http://apache.org/lenya/metadata/workflow/1.0";
+    protected static final String METADATA_VERSION = "workflowVersion";
 
     /**
      * @see org.apache.lenya.workflow.Workflowable#getVersions()
      */
     public Version[] getVersions() {
         try {
-            MetaData meta = this.document.getMetaDataManager().getLenyaMetaData();
+            MetaData meta = this.document.getMetaData(METADATA_NAMESPACE);
             if (this.versions == null || meta.getLastModified() > this.lastModified) {
-                String[] versionStrings = meta.getValues(LenyaMetaData.ELEMENT_WORKFLOW_VERSION);
+                String[] versionStrings = meta.getValues(METADATA_VERSION);
                 this.versions = new Version[versionStrings.length];
                 for (int i = 0; i < versionStrings.length; i++) {
                     String string = versionStrings[i];
@@ -125,7 +126,7 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
                 }
                 this.lastModified = meta.getLastModified();
             }
-        } catch (DocumentException e) {
+        } catch (Exception e) {
             throw new RuntimeException();
         }
         return this.versions;
@@ -158,9 +159,9 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
 
         String string = number + " " + encodeVersion(workflow, version);
         try {
-            MetaData meta = this.document.getMetaDataManager().getLenyaMetaData();
-            meta.addValue(LenyaMetaData.ELEMENT_WORKFLOW_VERSION, string);
-        } catch (DocumentException e) {
+            MetaData meta = this.document.getMetaData(METADATA_NAMESPACE);
+            meta.addValue(METADATA_VERSION, string);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }

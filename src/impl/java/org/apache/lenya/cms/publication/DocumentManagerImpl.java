@@ -29,7 +29,7 @@ import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.cms.metadata.LenyaMetaData;
+import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
@@ -112,11 +112,11 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             node.lock();
 
             // Write Lenya-internal meta-data
-            Map lenyaMetaData = new HashMap();
-            lenyaMetaData.put(LenyaMetaData.ELEMENT_RESOURCE_TYPE, documentType.getName());
-            lenyaMetaData.put(LenyaMetaData.ELEMENT_CONTENT_TYPE, "xml");
-            lenyaMetaData.put(LenyaMetaData.ELEMENT_EXTENSION, extension);
-            document.getMetaDataManager().setLenyaMetaData(lenyaMetaData);
+            MetaData lenyaMetaData = document.getMetaData(DocumentImpl.METADATA_NAMESPACE);
+            
+            lenyaMetaData.setValue(DocumentImpl.METADATA_RESOURCE_TYPE, documentType.getName());
+            lenyaMetaData.setValue(DocumentImpl.METADATA_CONTENT_TYPE, "xml");
+            lenyaMetaData.setValue(DocumentImpl.METADATA_EXTENSION, extension);
 
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Create");

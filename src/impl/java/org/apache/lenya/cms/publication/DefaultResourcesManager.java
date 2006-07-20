@@ -24,7 +24,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
@@ -35,13 +34,11 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
-
 import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.repository.Node;
 
@@ -112,6 +109,11 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
     public void addResource(Document document, Part part, Map metadata) throws Exception {
       addResource(document,part,metadata,null);
     }
+    
+    protected static final String METADATA_IMAGE_WIDTH = "width";
+    protected static final String METADATA_IMAGE_HEIGHT = "height";
+    protected static final String METADATA_MEDIA_NAMESPACE = "http://apache.org/lenya/metadata/media/1.0";
+    
     /**
      * @see org.apache.lenya.cms.publication.ResourcesManager#addResource(org.apache.lenya.cms.publication.Document,
      *      org.apache.cocoon.servlet.multipart.Part, java.util.Map)
@@ -141,29 +143,23 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
             /*
              * complement and create the meta description for the resource.
              */
-            metadata.put("format", mimeType);
-            metadata.put("extent", Integer.toString(fileSize));
-            if(customMeta!=null){
-              customMeta.addValue("media-filename", fileName);
-              customMeta.addValue("media-format", mimeType);
-              customMeta.addValue("media-extent", Integer.toString(fileSize));
-            }
-            Map lenyaMetaData = new HashMap(1);
-            lenyaMetaData.put(LenyaMetaData.ELEMENT_CONTENT_TYPE, "asset");
+            
+            MetaData mediaMetaData = resource.getMetaData(METADATA_MEDIA_NAMESPACE);
+            
+            mediaMetaData.setValue("filename", fileName);
+            mediaMetaData.setValue("format", mimeType);
+            mediaMetaData.setValue("extent", Integer.toString(fileSize));
+            
+            MetaData lenyaMetaData = resource.getMetaData(DocumentImpl.METADATA_NAMESPACE);
+            lenyaMetaData.setValue(DocumentImpl.METADATA_CONTENT_TYPE, "asset");
 
             if (canReadMimeType(mimeType)) {
                 BufferedImage input = ImageIO.read(part.getInputStream());
                 String width = Integer.toString(input.getWidth());
                 String height = Integer.toString(input.getHeight());
-                lenyaMetaData.put(LenyaMetaData.ELEMENT_WIDTH, width);
-                lenyaMetaData.put(LenyaMetaData.ELEMENTE_HEIGHT, height);
-                if(customMeta!=null){
-                  customMeta.addValue("media-"+LenyaMetaData.ELEMENTE_HEIGHT, height);
-                  customMeta.addValue("media-"+LenyaMetaData.ELEMENT_WIDTH, width);
-                }
+                mediaMetaData.setValue(METADATA_IMAGE_WIDTH, width);
+                mediaMetaData.setValue(METADATA_IMAGE_HEIGHT, height);
             }    
-
-            resource.getMetaDataManager().setMetaData(metadata, lenyaMetaData, null);
 
             saveResource(resource, part);
         } catch (final DocumentException e) {

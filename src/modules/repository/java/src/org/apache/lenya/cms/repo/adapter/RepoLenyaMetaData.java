@@ -32,7 +32,7 @@ public class RepoLenyaMetaData extends RepoMetaData {
     }
 
     public String getFirstValue(String key) throws DocumentException {
-        if (key.equals(LenyaMetaData.ELEMENT_RESOURCE_TYPE)) {
+        if (key.equals("resourceType")) {
             try {
                 return translation.getAsset().getAssetType().getName();
             } catch (RepositoryException e) {
@@ -43,7 +43,7 @@ public class RepoLenyaMetaData extends RepoMetaData {
     }
 
     public String[] getValues(String key) throws DocumentException {
-        if (key.equals(LenyaMetaData.ELEMENT_RESOURCE_TYPE)) {
+        if (key.equals("resourceType")) {
             try {
                 return new String[] { translation.getAsset().getAssetType().getName() };
             } catch (RepositoryException e) {

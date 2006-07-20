@@ -224,8 +224,7 @@ public class Migrate14 {
             NamespaceHelper helper = new NamespaceHelper(LenyaMetaData.NAMESPACE, "", xmlDoc);
             Element metaElement = helper.getFirstChild(xmlDoc.getDocumentElement(), "meta");
             Element internalElement = helper.getFirstChild(metaElement, "internal");
-            Element resourceTypeElement = helper.getFirstChild(internalElement,
-                    LenyaMetaData.ELEMENT_RESOURCE_TYPE);
+            Element resourceTypeElement = helper.getFirstChild(internalElement, "resourceType");
             String resourceType = DocumentHelper.getSimpleElementText(resourceTypeElement);
             AssetType doctype;
 
@@ -340,12 +339,11 @@ public class Migrate14 {
             if (!registry.isRegistered(elementSetName)) {
                 registry.register(elementSetName, elements);
             }
-            
+
             MetaData meta = trans.getMetaData(elementSetName);
             if (meta.getElementSet().getElement(key).isMultiple()) {
                 meta.addValue(key, value);
-            }
-            else {
+            } else {
                 meta.setValue(key, value);
             }
         }

@@ -54,6 +54,7 @@ public interface Document extends MetaDataOwner, RepositoryItem {
     /**
      * Returns the date at which point the requested document is considered expired
      * @return a string in RFC 1123 date format
+     * @throws DocumentException if an error occurs.
      */
     Date getExpires() throws DocumentException;
 
@@ -208,4 +209,14 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      * @return The source extension used by this document.
      */
     String getSourceExtension();
+    
+    /**
+     * @return if this is placeholder document (in trash / archive areas).
+     */
+    boolean isPlaceholder();
+    
+    /**
+     *  Set if this is placeholder document (in trash / archive areas).
+     */
+    void setPlaceholder();
 }

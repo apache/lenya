@@ -30,7 +30,6 @@ import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
@@ -48,6 +47,39 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     private DocumentFactory identityMap;
     protected ServiceManager manager;
     private MetaDataManager metaDataManager;
+
+    /**
+     * The meta data namespace.
+     */
+    public static final String METADATA_NAMESPACE = "http://apache.org/lenya/metadata/document/1.0";
+
+    /**
+     * The name of the resource type attribute. An XML resource has a resource type; this
+     * information can be used e.g. for different rendering of different types.
+     */
+    public static final String METADATA_RESOURCE_TYPE = "resourceType";
+
+    /**
+     * The name of the content type attribute. Any content managed by Lenya has a type; this
+     * information can be used e.g. to provide an appropriate management interface.
+     */
+    public static final String METADATA_CONTENT_TYPE = "contentType";
+
+    /**
+     * The number of seconds from the request that a document can be cached before it expires
+     */
+    public static final String METADATA_EXPIRES = "expires";
+
+    /**
+     * The extension to use for the document source.
+     */
+    public static final String METADATA_EXTENSION = "extension";
+
+    /**
+     * Determines if the document is just a placeholder in the trash and archive areas.
+     * @see org.apache.lenya.cms.site.usecases.MoveSubsite
+     */
+    public static final String METADATA_PLACEHOLDER = "placeholder";
 
     /**
      * Creates a new instance of DefaultDocument.
@@ -88,7 +120,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     public Date getExpires() throws DocumentException {
         Date expires = null;
         long secs = 0;
-        
+
         MetaData metaData = null;
         String expiresMeta = null;
         try {
@@ -113,7 +145,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
 
         return expires;
     }
-    
+
     /**
      * @see org.apache.lenya.cms.publication.Document#getId()
      */
@@ -279,9 +311,8 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     public String getSourceExtension() {
         String sourceExtension;
         try {
-            sourceExtension = getMetaDataManager().getLenyaMetaData()
-                    .getFirstValue(LenyaMetaData.ELEMENT_EXTENSION);
-        } catch (DocumentException e) {
+            sourceExtension = getMetaData(METADATA_NAMESPACE).getFirstValue(METADATA_EXTENSION);
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         if (sourceExtension == null) {
@@ -517,13 +548,13 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      */
     public ResourceType getResourceType() throws DocumentException {
         if (this.resourceType == null) {
-            String name = getMetaDataManager().getLenyaMetaData()
-                    .getFirstValue(LenyaMetaData.ELEMENT_RESOURCE_TYPE);
-            if (name == null) {
-                throw new DocumentException("No resource type defined for document [" + this + "]!");
-            }
             ServiceSelector selector = null;
             try {
+                String name = getMetaData(METADATA_NAMESPACE).getFirstValue(METADATA_RESOURCE_TYPE);
+                if (name == null) {
+                    throw new DocumentException("No resource type defined for document [" + this
+                            + "]!");
+                }
                 selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
                 this.resourceType = (ResourceType) selector.select(name);
             } catch (Exception e) {
@@ -539,6 +570,30 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
 
     public String[] getMetaDataNamespaceUris() throws RepositoryException {
         return getRepositoryNode().getMetaDataNamespaceUris();
+    }
+
+    public boolean isPlaceholder() {
+        try {
+            MetaData meta = getMetaData(METADATA_NAMESPACE);
+            String value = meta.getFirstValue(METADATA_PLACEHOLDER);
+            if (value == null) {
+                return false;
+            }
+            else {
+                return Boolean.valueOf(value).booleanValue();
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setPlaceholder() {
+        try {
+            MetaData meta = getMetaData(METADATA_NAMESPACE);
+            meta.setValue(METADATA_PLACEHOLDER, "true");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

@@ -73,7 +73,7 @@ public class JCRMetaDataManager extends MetaDataManager {
                     getSourceURI(),
                     this.serviceManager,
                     getLogger());
-            this.lenyaMetaData.setPossibleKeys(LenyaMetaData.ELEMENTS);
+//            this.lenyaMetaData.setPossibleKeys(LenyaMetaData.ELEMENTS);
         }
         return this.lenyaMetaData;
     }

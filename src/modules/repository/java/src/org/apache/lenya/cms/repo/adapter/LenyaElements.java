@@ -24,11 +24,11 @@ public interface LenyaElements {
 
     String ELEMENT_SET = LenyaElements.class.getName();
 
-    Element[] ELEMENTS = { new ElementImpl(LenyaMetaData.ELEMENT_RESOURCE_TYPE, false),
-            new ElementImpl(LenyaMetaData.ELEMENT_CONTENT_TYPE, false),
-            new ElementImpl(LenyaMetaData.ELEMENT_WORKFLOW_VERSION, true),
-            new ElementImpl(LenyaMetaData.ELEMENT_PLACEHOLDER, false),
-            new ElementImpl(LenyaMetaData.ELEMENTE_HEIGHT, false),
-            new ElementImpl(LenyaMetaData.ELEMENT_WIDTH, false) };
+    Element[] ELEMENTS = { new ElementImpl("resourceType", false),
+            new ElementImpl("contentType", false),
+            new ElementImpl("workflowVersion", true),
+            new ElementImpl("placeholder", false),
+            new ElementImpl("height", false),
+            new ElementImpl("width", false) };
 
 }
