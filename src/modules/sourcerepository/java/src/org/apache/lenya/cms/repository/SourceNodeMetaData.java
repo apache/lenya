@@ -37,6 +37,12 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
     private ServiceManager manager;
     private SourceNode node;
 
+    /**
+     * Ctor.
+     * @param namespaceUri The namespace URI.
+     * @param node The node.
+     * @param manager The service manager.
+     */
     public SourceNodeMetaData(String namespaceUri, SourceNode node, ServiceManager manager) {
         this.namespaceUri = namespaceUri;
         this.node = node;
@@ -166,6 +172,11 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
         }
     }
 
+    /**
+     * Removes all values for a certain key.
+     * @param key The key.
+     * @throws DocumentException if an error occurs.
+     */
     public void removeAllValues(String key) throws DocumentException {
         checkKey(key);
         try {
