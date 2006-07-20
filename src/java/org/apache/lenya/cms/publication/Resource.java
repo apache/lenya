@@ -26,9 +26,11 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.RepositorySource;
+import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.metadata.MetaDataOwner;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.repository.RepositoryException;
 
 /**
  * A resource (asset).
@@ -254,6 +256,10 @@ public class Resource extends AbstractLogEnabled implements MetaDataOwner {
                 this.manager.release(resolver);
             }
         }
+    }
+
+    public MetaData getMetaData(String namespaceUri) throws RepositoryException {
+        return null;
     }
     
 }

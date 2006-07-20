@@ -23,6 +23,7 @@ import java.util.Collection;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
+import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.repo.Translation;
@@ -190,6 +191,11 @@ public class RepoNode extends AbstractLogEnabled implements Node {
 
     public String getIdentifiableType() {
         return Node.IDENTIFIABLE_TYPE;
+    }
+
+    public MetaData getMetaData(String namespaceUri) throws RepositoryException {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

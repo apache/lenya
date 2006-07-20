@@ -37,6 +37,7 @@ import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataManager;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.site.SiteManager;
 
 /**
@@ -532,6 +533,10 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
             }
         }
         return this.resourceType;
+    }
+
+    public MetaData getMetaData(String namespaceUri) throws RepositoryException {
+        return getRepositoryNode().getMetaData(namespaceUri);
     }
 
 }

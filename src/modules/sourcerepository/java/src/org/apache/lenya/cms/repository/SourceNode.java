@@ -22,12 +22,21 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.commons.collections.set.CompositeSet.SetMutator;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceNotFoundException;
@@ -36,8 +45,11 @@ import org.apache.excalibur.source.TraversableSource;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataManager;
+import org.apache.lenya.cms.metadata.MetaDataRegistry;
 import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.rc.RCEnvironment;
@@ -46,6 +58,11 @@ import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.transaction.Transactionable;
+import org.apache.lenya.xml.DocumentHelper;
+import org.apache.lenya.xml.NamespaceHelper;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 /**
  * A repository node.
@@ -674,6 +691,149 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         } catch (Exception e) {
             throw new RepositoryException(e);
         }
+    }
+
+    private Map namespace2metadata = new HashMap();
+
+    public MetaData getMetaData(String namespaceUri) throws RepositoryException {
+        
+        MetaDataRegistry registry = null;
+        try {
+            Object obj = this.manager.lookup(MetaDataRegistry.ROLE);
+            registry = (MetaDataRegistry) this.manager.lookup(MetaDataRegistry.ROLE);
+            if (!registry.isRegistered(namespaceUri)) {
+                throw new RepositoryException("The namespace [" + namespaceUri + "] is not registered!");
+            }
+        } catch (ServiceException e) {
+            throw new RepositoryException(e);
+        } catch (DocumentException e) {
+            throw new RepositoryException(e);
+        }
+        finally {
+            if (registry != null) {
+                this.manager.release(registry);
+            }
+        }
+        
+        MetaData meta = (MetaData) this.namespace2metadata.get(namespaceUri);
+        if (meta == null) {
+            meta = new SourceNodeMetaData(namespaceUri, this, this.manager);
+            this.namespace2metadata.put(namespaceUri, meta);
+        }
+        return meta;
+    }
+
+    private Map namespace2metamap = null;
+
+    protected Map getMetaDataMap(String namespaceUri) throws RepositoryException {
+        if (this.namespace2metamap == null) {
+            loadMetaData();
+        }
+        Map map = (Map) this.namespace2metamap.get(namespaceUri);
+        if (map == null) {
+            map = new HashMap();
+            this.namespace2metamap.put(namespaceUri, map);
+        }
+        return map;
+    }
+
+    protected static final String META_DATA_NAMESPACE = "http://apache.org/lenya/metadata/1.0";
+    protected static final String ELEMENT_METADATA = "metadata";
+    protected static final String ELEMENT_SET = "element-set";
+    protected static final String ELEMENT_ELEMENT = "element";
+    protected static final String ELEMENT_VALUE = "value";
+    protected static final String ATTRIBUTE_NAMESPACE = "namespace";
+    protected static final String ATTRIBUTE_KEY = "key";
+
+    protected void loadMetaData() throws RepositoryException {
+
+        if (this.namespace2metamap != null) {
+            throw new IllegalStateException("The meta data have already been loaded!");
+        }
+
+        try {
+            this.namespace2metamap = new HashMap();
+            Document xml = SourceUtil.readDOM(getMetaSourceURI(), this.manager);
+            NamespaceHelper helper = new NamespaceHelper(META_DATA_NAMESPACE, "", xml);
+            Element[] setElements = helper.getChildren(xml.getDocumentElement(), ELEMENT_SET);
+            for (int setIndex = 0; setIndex < setElements.length; setIndex++) {
+                String namespace = setElements[setIndex].getAttribute(ATTRIBUTE_NAMESPACE);
+                Element[] elementElements = helper.getChildren(setElements[setIndex],
+                        ELEMENT_ELEMENT);
+                for (int elemIndex = 0; elemIndex < elementElements.length; elemIndex++) {
+                    String key = elementElements[elemIndex].getAttribute(ATTRIBUTE_KEY);
+                    Element[] valueElements = helper.getChildren(elementElements[elemIndex],
+                            ELEMENT_VALUE);
+                    for (int valueIndex = 0; valueIndex < valueElements.length; valueIndex++) {
+                        String value = DocumentHelper.getSimpleElementText(valueElements[valueIndex]);
+                        addValue(namespace, key, value);
+                    }
+                }
+            }
+        } catch (Exception e) {
+            throw new RepositoryException(e);
+        }
+    }
+
+    protected void saveMetaData() throws RepositoryException {
+        try {
+            NamespaceHelper helper = new NamespaceHelper(META_DATA_NAMESPACE, "", ELEMENT_METADATA);
+            Collection namespaces = this.namespace2metamap.keySet();
+            for (Iterator i = namespaces.iterator(); i.hasNext();) {
+                String namespace = (String) i.next();
+
+                Element setElement = helper.createElement(ELEMENT_SET);
+                setElement.setAttribute(ATTRIBUTE_NAMESPACE, namespace);
+                helper.getDocument().getDocumentElement().appendChild(setElement);
+
+                Map map = getMetaDataMap(namespace);
+                Collection keys = map.keySet();
+                for (Iterator keyIterator = keys.iterator(); keyIterator.hasNext();) {
+                    String key = (String) keyIterator.next();
+
+                    Element elementElement = helper.createElement(ELEMENT_ELEMENT);
+                    elementElement.setAttribute(ATTRIBUTE_KEY, key);
+                    setElement.appendChild(elementElement);
+
+                    List values = (List) map.get(key);
+                    for (Iterator valueIterator = values.iterator(); valueIterator.hasNext();) {
+                        String value = (String) valueIterator.next();
+                        Element valueElement = helper.createElement(ELEMENT_VALUE, value);
+                        elementElement.appendChild(valueElement);
+                    }
+                }
+            }
+            SourceUtil.writeDOM(helper.getDocument(), getMetaSourceURI(), this.manager);
+        } catch (Exception e) {
+            throw new RepositoryException(e);
+        }
+    }
+
+    protected String[] getValues(String namespaceUri, String key) throws RepositoryException {
+        List values = getValueList(namespaceUri, key);
+        return (String[]) values.toArray(new String[values.size()]);
+    }
+
+    protected List getValueList(String namespaceUri, String key) throws RepositoryException {
+        Map map = getMetaDataMap(namespaceUri);
+        List values = (List) map.get(key);
+        if (values == null) {
+            values = new ArrayList();
+            map.put(key, values);
+        }
+        return values;
+    }
+
+    protected void addValue(String namespaceUri, String key, String value) throws RepositoryException {
+        List values = getValueList(namespaceUri, key);
+        values.add(value);
+        saveMetaData();
+    }
+    
+    protected void removeAllValues(String namespaceUri, String key) throws RepositoryException {
+        List values = getValueList(namespaceUri, key);
+        values.clear();
+        saveMetaData();
     }
 
 }

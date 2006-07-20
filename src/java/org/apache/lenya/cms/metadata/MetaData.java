@@ -95,4 +95,5 @@ public interface MetaData {
      * @throws DocumentException if an error occurs.
      */
      long getLastModified() throws DocumentException;
+     
 }

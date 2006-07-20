@@ -19,6 +19,8 @@
 
 <module xmlns="http://apache.org/lenya/module/1.0">
   <id>org.apache.lenya.modules.sourcerepository</id>
+  <depends module="org.apache.lenya.modules.ac-impl"/>
+  <depends module="org.apache.lenya.modules.usecase-impl"/>
   <package>org.apache.lenya.modules</package>
   <version>0.1-dev</version>
   <name>Repository Module</name>

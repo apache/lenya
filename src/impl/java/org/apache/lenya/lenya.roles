@@ -166,6 +166,10 @@
   	    shorthand="resource-types"
   	    default-class="org.apache.lenya.cms.publication.ResourceTypeSelector"/>
         
+  <role name="org.apache.lenya.cms.metadata.ElementSetSelector"
+  	    shorthand="meta-data"
+  	    default-class="org.apache.cocoon.components.ExtendedComponentSelector"/>
+        
   <role name="org.apache.lenya.cms.repository.RepositoryManager"
         shorthand="repository-manager"
         default-class="org.apache.lenya.cms.repository.RepositoryManagerImpl"/>

@@ -17,27 +17,30 @@
 package org.apache.lenya.cms.metadata;
 
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.repository.RepositoryException;
 
 /**
- * Owner of meta-data.
- *
- * @version $Id$
+ * Meta data registry.
  */
-public interface MetaDataOwner {
-
-    /**
-     * @return A manager for the meta data.
-     * @deprecated Use {@link #getMetaData(String)}Êinstead.
-     */
-    MetaDataManager getMetaDataManager() throws DocumentException;
+public interface MetaDataRegistry {
     
     /**
-     * Returns a meta data object.
-     * @param namespaceUri The namespace URI.
-     * @return A meta data object.
-     * @throws RepositoryException if an error occurs.
+     * The Avalon role.
      */
-    MetaData getMetaData(String namespaceUri) throws RepositoryException;
+    String ROLE = MetaDataRegistry.class.getName();
+
+    /**
+     * @param namespaceUri The namespace URI of the element set.
+     * @return the element set.
+     * @throws DocumentException if an error occurs. 
+     */
+    ElementSet getElementSet(String namespaceUri) throws DocumentException;
+    
+    /**
+     * Checks if an element set is registered.
+     * @param namespaceUri The namespace URI.
+     * @return A boolean value.
+     * @throws DocumentException if an error occurs.
+     */
+    boolean isRegistered(String namespaceUri) throws DocumentException;
     
 }

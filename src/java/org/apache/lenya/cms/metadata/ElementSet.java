@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2005 The Apache Software Foundation
+ * Copyright  1999-2004 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,28 +16,28 @@
  */
 package org.apache.lenya.cms.metadata;
 
-import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.repository.RepositoryException;
 
 /**
- * Owner of meta-data.
- *
- * @version $Id$
+ * Definition of a set of meta data elements.
  */
-public interface MetaDataOwner {
-
-    /**
-     * @return A manager for the meta data.
-     * @deprecated Use {@link #getMetaData(String)}Êinstead.
-     */
-    MetaDataManager getMetaDataManager() throws DocumentException;
+public interface ElementSet {
     
     /**
-     * Returns a meta data object.
-     * @param namespaceUri The namespace URI.
-     * @return A meta data object.
-     * @throws RepositoryException if an error occurs.
+     * @return The supported elements.
      */
-    MetaData getMetaData(String namespaceUri) throws RepositoryException;
+    Element[] getElements();
+    
+    /**
+     * @param name The name.
+     * @return The element.
+     * @throws RepositoryException if the element with this name does not exist.
+     */
+    Element getElement(String name) throws RepositoryException;
+    
+    /**
+     * @return The namespace URI of this element set.
+     */
+    String getNamespaceUri();
     
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2005 The Apache Software Foundation
+ * Copyright  1999-2004 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -16,28 +16,24 @@
  */
 package org.apache.lenya.cms.metadata;
 
-import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.repository.RepositoryException;
-
 /**
- * Owner of meta-data.
- *
- * @version $Id$
+ * A meta data element.
  */
-public interface MetaDataOwner {
+public interface Element {
+    
+    /**
+     * @return the name of the element.
+     */
+    String getName();
+    
+    /**
+     * @return if the element can have multiple values.
+     */
+    boolean isMultiple();
+    
+    /**
+     * @return the description of the element.
+     */
+    String getDescription();
 
-    /**
-     * @return A manager for the meta data.
-     * @deprecated Use {@link #getMetaData(String)}Êinstead.
-     */
-    MetaDataManager getMetaDataManager() throws DocumentException;
-    
-    /**
-     * Returns a meta data object.
-     * @param namespaceUri The namespace URI.
-     * @return A meta data object.
-     * @throws RepositoryException if an error occurs.
-     */
-    MetaData getMetaData(String namespaceUri) throws RepositoryException;
-    
 }
