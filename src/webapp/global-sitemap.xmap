@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: global-sitemap.xmap 417349 2006-06-27 06:00:29Z chestnut $ -->
+<!-- $Id$ -->
     
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -338,6 +338,7 @@
             <map:generate type="file" src="context://lenya/content/util/empty.xml"/>
             <map:transform src="fallback://lenya/modules/webdav/xslt/init.xsl">
               <map:parameter name="pubid" value="{page-envelope:publication-id}"/>
+              <map:parameter name="context" value="{request:contextPath}"/>
             </map:transform>
             <map:serialize type="xml" status-code="207"/>
           </map:when>
@@ -352,7 +353,8 @@
           <map:when test="PROPFIND">
            <map:generate type="file" src="context://lenya/content/util/empty.xml"/>
             <map:transform src="fallback://lenya/modules/webdav/xslt/init.xsl">
-              <map:parameter name="pubid" value="{page-envelope:publication-id}"/>            
+              <map:parameter name="pubid" value="{page-envelope:publication-id}"/>
+              <map:parameter name="context" value="{request:contextPath}"/>            
             </map:transform>
             <map:serialize type="xml" status-code="207"/>
           </map:when>
