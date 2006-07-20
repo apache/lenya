@@ -24,41 +24,41 @@
     unless="/cocoon/meta-data/component-instance[@name = 'http://purl.org/dc/terms/']">
     <component-instance name="http://purl.org/dc/terms/"
       class="org.apache.lenya.cms.metadata.ConfigurableElementSet">
-      <element name="abstract" multiple="false"/>
-      <element name="accessRights" multiple="false"/>
-      <element name="alternative" multiple="false"/>
-      <element name="audience" multiple="false"/>
-      <element name="available" multiple="false"/>
-      <element name="bibliographicCitation" multiple="false"/>
-      <element name="conformsTo" multiple="false"/>
-      <element name="created" multiple="false"/>
-      <element name="dateAccepted" multiple="false"/>
-      <element name="dateCopyrighted" multiple="false"/>
-      <element name="dateSubmitted" multiple="false"/>
-      <element name="educationLevel" multiple="false"/>
-      <element name="extent" multiple="false"/>
-      <element name="hasFormat" multiple="false"/>
-      <element name="hasPart" multiple="false"/>
-      <element name="hasVersion" multiple="false"/>
-      <element name="isFormatOf" multiple="false"/>
-      <element name="isPartOf" multiple="false"/>
-      <element name="isReferencedBy" multiple="false"/>
-      <element name="isReplacedBy" multiple="false"/>
-      <element name="isRequiredBy" multiple="false"/>
-      <element name="issued" multiple="false"/>
-      <element name="isVersionOf" multiple="false"/>
-      <element name="license" multiple="false"/>
-      <element name="mediator" multiple="false"/>
-      <element name="medium" multiple="false"/>
-      <element name="modified" multiple="false"/>
-      <element name="references" multiple="false"/>
-      <element name="replaces" multiple="false"/>
-      <element name="requires" multiple="false"/>
-      <element name="rightsHolder" multiple="false"/>
-      <element name="spatial" multiple="false"/>
-      <element name="tableOfContents" multiple="false"/>
-      <element name="temporal" multiple="false"/>
-      <element name="valid" multiple="false"/>
+      <element name="abstract" multiple="false" editable="true"/>
+      <element name="accessRights" multiple="false" editable="true"/>
+      <element name="alternative" multiple="false" editable="true"/>
+      <element name="audience" multiple="false" editable="true"/>
+      <element name="available" multiple="false" editable="true"/>
+      <element name="bibliographicCitation" multiple="false" editable="true"/>
+      <element name="conformsTo" multiple="false" editable="true"/>
+      <element name="created" multiple="false" editable="true"/>
+      <element name="dateAccepted" multiple="false" editable="true"/>
+      <element name="dateCopyrighted" multiple="false" editable="true"/>
+      <element name="dateSubmitted" multiple="false" editable="true"/>
+      <element name="educationLevel" multiple="false" editable="true"/>
+      <element name="extent" multiple="false" editable="true"/>
+      <element name="hasFormat" multiple="false" editable="true"/>
+      <element name="hasPart" multiple="false" editable="true"/>
+      <element name="hasVersion" multiple="false" editable="true"/>
+      <element name="isFormatOf" multiple="false" editable="true"/>
+      <element name="isPartOf" multiple="false" editable="true"/>
+      <element name="isReferencedBy" multiple="false" editable="true"/>
+      <element name="isReplacedBy" multiple="false" editable="true"/>
+      <element name="isRequiredBy" multiple="false" editable="true"/>
+      <element name="issued" multiple="false" editable="true"/>
+      <element name="isVersionOf" multiple="false" editable="true"/>
+      <element name="license" multiple="false" editable="true"/>
+      <element name="mediator" multiple="false" editable="true"/>
+      <element name="medium" multiple="false" editable="true"/>
+      <element name="modified" multiple="false" editable="true"/>
+      <element name="references" multiple="false" editable="true"/>
+      <element name="replaces" multiple="false" editable="true"/>
+      <element name="requires" multiple="false" editable="true"/>
+      <element name="rightsHolder" multiple="false" editable="true"/>
+      <element name="spatial" multiple="false" editable="true"/>
+      <element name="tableOfContents" multiple="false" editable="true"/>
+      <element name="temporal" multiple="false" editable="true"/>
+      <element name="valid" multiple="false" editable="true"/>
     </component-instance>
   </xconf>
   

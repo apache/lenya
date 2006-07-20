@@ -24,21 +24,21 @@
     unless="/cocoon/meta-data/component-instance[@name = 'http://purl.org/dc/elements/1.1/']">
     <component-instance name="http://purl.org/dc/elements/1.1/"
       class="org.apache.lenya.cms.metadata.ConfigurableElementSet">
-      <element name="title" multiple="false"/>
-      <element name="creator" multiple="false"/>
-      <element name="subject" multiple="false"/>
-      <element name="description" multiple="false"/>
-      <element name="publisher" multiple="false"/>
-      <element name="contributor" multiple="false"/>
-      <element name="date" multiple="false"/>
-      <element name="type" multiple="false"/>
-      <element name="format" multiple="false"/>
-      <element name="identifier" multiple="false"/>
-      <element name="source" multiple="false"/>
-      <element name="language" multiple="false"/>
-      <element name="relation" multiple="false"/>
-      <element name="coverage" multiple="false"/>
-      <element name="rights" multiple="false"/>
+      <element name="title" multiple="false" editable="true"/>
+      <element name="creator" multiple="false" editable="true"/>
+      <element name="subject" multiple="false" editable="true"/>
+      <element name="description" multiple="false" editable="true"/>
+      <element name="publisher" multiple="false" editable="true"/>
+      <element name="contributor" multiple="false" editable="true"/>
+      <element name="date" multiple="false" editable="true"/>
+      <element name="type" multiple="false" editable="true"/>
+      <element name="format" multiple="false" editable="true"/>
+      <element name="identifier" multiple="false" editable="true"/>
+      <element name="source" multiple="false" editable="true"/>
+      <element name="language" multiple="false" editable="true"/>
+      <element name="relation" multiple="false" editable="true"/>
+      <element name="coverage" multiple="false" editable="true"/>
+      <element name="rights" multiple="false" editable="true"/>
     </component-instance>
   </xconf>
   
