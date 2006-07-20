@@ -16,11 +16,13 @@
  */
 package org.apache.lenya.cms.metadata.usecases;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
-import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.lenya.cms.metadata.MetaData;
-import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -39,14 +41,6 @@ public class Metadata extends SiteUsecase {
         super();
     }
 
-    public static final String DC_FORM_PREFIX = "meta.dc.";
-
-    public static final String CUSTOM_FORM_PREFIX = "meta.custom.";
-
-    public static final String SHOW_CUSTOM_PARAMETER = "showCustom";
-
-    private boolean showCustom;
-
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
@@ -60,44 +54,49 @@ public class Metadata extends SiteUsecase {
      */
     protected void initParameters() {
         super.initParameters();
-        showCustom = getParameterAsBoolean(SHOW_CUSTOM_PARAMETER, false);
-        setParameter(SHOW_CUSTOM_PARAMETER, String.valueOf(showCustom));
         
         // dc metadata
+        
         try {
-            MetaData meta = getSourceDocument().getMetaData(DublinCore.DC_NAMESPACE);
-
-            String[] keys = meta.getPossibleKeys();
-            for (int i = 0; i < keys.length; i++) {
-                String value = meta.getFirstValue(keys[i]);
-                if (value != null) {
-                    setParameter(DC_FORM_PREFIX + keys[i], value);
+            
+            List numbers = new ArrayList();
+            
+            Map num2namespace = new HashMap();
+            
+            List keyList = new ArrayList();
+            
+            String[] namespaces = getSourceDocument().getMetaDataNamespaceUris();
+            
+            for (int nsIndex = 0; nsIndex < namespaces.length; nsIndex++) {
+                MetaData meta = getSourceDocument().getMetaData(namespaces[nsIndex]);
+                boolean matched = false;
+                String[] keys = meta.getPossibleKeys();
+                for (int keyIndex = 0; keyIndex < keys.length; keyIndex++) {
+                    if (meta.getElementSet().getElement(keys[keyIndex]).isEditable()) {
+                        String value = meta.getFirstValue(keys[keyIndex]);
+                        if (value != null) {
+                            String key = nsIndex + "." + keys[keyIndex];
+                            setParameter(key, value);
+                            keyList.add(key);
+                            matched = true;
+                        }
+                    }
+                }
+                if (matched) {
+                    numbers.add("" + nsIndex);
+                    num2namespace.put("" + nsIndex, namespaces[nsIndex]);
                 }
             }
+            
+            setParameter("numbers", numbers);
+            setParameter("namespaces", num2namespace);
+            
+            Collections.sort(keyList);
+            setParameter("keys", keyList);
 
         } catch (Exception e) {
-            getLogger().error("Unable to load Dublin Core metadata.", e);
-            addErrorMessage("Unable to load Dublin Core metadata.");
-        }
-
-        // custom metadata
-        try {
-            MetaData customMeta = getSourceDocument().getMetaDataManager()
-                    .getCustomMetaData();
-
-            HashMap customMetaHash = customMeta.getAvailableKey2Value();
-            Iterator customKeys = customMetaHash.keySet().iterator();
-            while (customKeys.hasNext()) {
-                String key = (String) customKeys.next();
-                String value = (String) customMetaHash.get(key);
-                if (value != null) {
-                    setParameter(CUSTOM_FORM_PREFIX + key, value);
-                }
-            }
-
-        } catch (Exception e) {
-            getLogger().error("Unable to load custom metadata.", e);
-            addErrorMessage("Unable to load custom metadata.");
+            getLogger().error("Unable to load meta data.", e);
+            addErrorMessage("Unable to load meta data: " + e.getMessage());
         }
 
     }
@@ -105,8 +104,7 @@ public class Metadata extends SiteUsecase {
     /**
      * Validates the request parameters.
      * 
-     * @throws UsecaseException
-     *             if an error occurs.
+     * @throws UsecaseException if an error occurs.
      */
     void validate() throws UsecaseException {
         // do nothing
@@ -125,42 +123,20 @@ public class Metadata extends SiteUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
 
-        // dc metadata
-        MetaData meta = getSourceDocument().getMetaData(DublinCore.DC_NAMESPACE);
+        String[] namespaces = getSourceDocument().getMetaDataNamespaceUris();
 
-        String[] keys = meta.getPossibleKeys();
-        for (int i = 0; i < keys.length; i++) {
-            String value = getParameterAsString(DC_FORM_PREFIX + keys[i]);
-            if (value != null) {
-                meta.setValue(keys[i], value);
-            }
-        }
+        for (int nsIndex = 0; nsIndex < namespaces.length; nsIndex++) {
+            MetaData meta = getSourceDocument().getMetaData(namespaces[nsIndex]);
 
-        // custom metadata
-        MetaData customMeta = getSourceDocument().getMetaDataManager()
-                .getCustomMetaData();
-        String[] parameterNames = getParameterNames();
-        for (int i = 0; i < parameterNames.length; i++) {
-            String id = parameterNames[i];
-            if (id.startsWith(CUSTOM_FORM_PREFIX)) {
-                String key = id.substring(CUSTOM_FORM_PREFIX.length());
-                String value = getParameterAsString(id);
+            String[] keys = meta.getPossibleKeys();
+            for (int keyIndex = 0; keyIndex < keys.length; keyIndex++) {
+                String value = getParameterAsString(nsIndex + "." + keys[keyIndex]);
                 if (value != null) {
-                    customMeta.setValue(key, value);
+                    meta.setValue(keys[keyIndex], value);
                 }
             }
         }
 
-        // TODO set workflow situation to edit here.
     }
 
-    public String getTargetURL(boolean success) {
-        showCustom = getParameterAsBoolean(SHOW_CUSTOM_PARAMETER, false);
-        if (showCustom) {
-            String transfer = getSourceDocument().getCanonicalWebappURL()
-                    + "?lenya.usecase=tab.meta&showCustom=true";
-            return transfer;
-        } else
-            return super.getTargetURL(success);
-    }
 }

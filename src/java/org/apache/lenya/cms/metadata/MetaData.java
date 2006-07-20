@@ -96,4 +96,9 @@ public interface MetaData {
      */
      long getLastModified() throws DocumentException;
      
+     /**
+     * @return The element set this meta data object belongs to.
+     */
+    ElementSet getElementSet();
+     
 }

@@ -183,8 +183,8 @@ public class CreateDocument extends Create {
         MetaData customMeta = document.getMetaDataManager().getCustomMetaData();
         String[] paramNames = getParameterNames();
         for (int i=0; i<paramNames.length; i++) {
-            if (paramNames[i].startsWith(Metadata.CUSTOM_FORM_PREFIX)) {
-                String key = paramNames[i].substring(Metadata.CUSTOM_FORM_PREFIX.length());
+            if (paramNames[i].startsWith("custom.")) {
+                String key = paramNames[i].substring("custom.".length());
                 String value = getParameterAsString(paramNames[i]);
                 customMeta.addValue(key, value);
             }

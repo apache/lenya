@@ -126,4 +126,9 @@ public class LenyaMetaData extends MetaDataImpl {
         return LOCAL_META;
     }
 
+    public ElementSet getElementSet() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
 }

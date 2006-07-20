@@ -33,6 +33,7 @@ import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.jcr.source.JCRNodeSource;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.metadata.ElementSet;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.publication.DocumentException;
 
@@ -226,6 +227,11 @@ public class JCRMetaData extends AbstractLogEnabled implements MetaData {
 
     public String[] getAvailableKeys() {
         // FIXME: Not implemented yet.
+        return null;
+    }
+
+    public ElementSet getElementSet() {
+        // TODO Auto-generated method stub
         return null;
     }
 }

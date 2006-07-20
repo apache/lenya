@@ -33,51 +33,33 @@
               <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
             </td>
           </tr>
-          <tr>
-            <td class="lenya-entry-caption"><label for="title"><i18n:text>Title</i18n:text>:</label></td>
-            <td>
-              <input type="text" id="title" name="meta.dc.title" class="lenya-form-element" value="${usecase.getParameter('meta.dc.title')}"/>
-            </td>
-          </tr>
-          <tr>
-            <td class="lenya-entry-caption"><label for="subject"><i18n:text>Subject</i18n:text>:</label></td>
-            <td>
-              <input type="text" id="subject" name="meta.dc.subject" class="lenya-form-element" value="${usecase.getParameter('meta.dc.subject')}"/>
-            </td>
-          </tr>
-          <tr>
-            <td class="lenya-entry-caption"><label for="description"><i18n:text>Description</i18n:text>:</label></td>
-            <td>
-              <!-- N.B.: do not put spaces or carriage returns inside the
-                   textarea element - these would be rendered -->
-              <textarea id="description" name="meta.dc.description" rows="3" class="lenya-form-element"><jx:out value="${usecase.getParameter('meta.dc.description')}"/></textarea>
-            </td>
-          </tr>
-          <tr>
-            <td class="lenya-entry-caption"><label for="publisher"><i18n:text>Publisher</i18n:text>:</label></td>
-            <td>
-              <input type="text" id="publisher" name="meta.dc.publisher" class="lenya-form-element" value="${usecase.getParameter('meta.dc.publisher')}"/>
-            </td>
-          </tr>
-          <tr>
-            <td class="lenya-entry-caption"><label for="rights"><i18n:text>Rights</i18n:text>:</label></td>
-            <td>
-              <input type="text" id="rights" name="meta.dc.rights" class="lenya-form-element" value="${usecase.getParameter('meta.dc.rights')}"/>
-            </td>
-          </tr>
-          <tr>
-            <td class="lenya-entry-caption"><i18n:text>Creation Date</i18n:text>:</td>
-            <td>
-              <jx:out value="${usecase.getParameter('meta.dc.date')}"/>
-            </td>
-          </tr>
-          <tr>
-            <td class="lenya-entry-caption"><label for="creator"><i18n:text>Creator</i18n:text>:</label></td>
-            <td>
-              <input type="hidden" id="creator" name="meta.dc.creator" class="lenya-form-element" value="${usecase.getParameter('meta.dc.creator')}"/>
-              <jx:out value="${usecase.getParameter('meta.dc.creator')}"/>
-            </td>
-          </tr>
+          
+          <jx:set var="num2namespace" value="${usecase.getParameter('namespaces')}"/>
+
+          <jx:forEach var="num" items="${usecase.getParameter('numbers')}">
+            
+            <tr>
+              <td>
+                <strong><i18n:text>Namespace: </i18n:text></strong>
+              </td>
+              <td>
+                <i18n:text><jx:out value="${num2namespace.get(num)}"/></i18n:text>
+              </td>
+            </tr>
+            
+            <jx:forEach var="key" items="${usecase.getParameter('keys')}">
+              <jx:if test="${key.startsWith(num + '.')}">
+                <tr>
+                  <td class="lenya-entry-caption"><label for="title"><i18n:text><jx:out value="${key.substring(key.indexOf('.')).substring(1)}"/></i18n:text>:</label></td>
+                  <td>
+                    <input type="text" id="title" name="${key}" class="lenya-form-element" value="${usecase.getParameter(key)}"/>
+                  </td>
+                </tr>
+              </jx:if>
+            </jx:forEach>
+            
+          </jx:forEach>
+            
           <tr>
             <td/>
             <td>
@@ -85,12 +67,10 @@
               <jx:choose>
                 <jx:when
                   test="${usecase.getParameter('document').getArea().equals('authoring') &amp;&amp; ! usecase.hasErrors()}">
-                  <input i18n:attr="value" name="submit" type="submit"
-                    value="Save"/>
+                  <input i18n:attr="value" name="submit" type="submit" value="Save"/>
                 </jx:when>
                 <jx:otherwise>
-                  <input i18n:attr="value" name="submit" type="submit"
-                    disabled="disabled" value="Save"/>
+                  <input i18n:attr="value" name="submit" type="submit" disabled="disabled" value="Save"/>
                 </jx:otherwise>
               </jx:choose>
             </td>

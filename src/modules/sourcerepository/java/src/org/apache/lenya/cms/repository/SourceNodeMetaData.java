@@ -20,7 +20,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.metadata.Element;
 import org.apache.lenya.cms.metadata.ElementSet;
@@ -51,13 +50,13 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
 
     private ElementSet elementSet;
 
-    protected ElementSet getElementSet() throws DocumentException {
+    public ElementSet getElementSet() {
         if (this.elementSet == null) {
             try {
                 MetaDataRegistry registry = (MetaDataRegistry) this.manager.lookup(MetaDataRegistry.ROLE);
                 this.elementSet = registry.getElementSet(this.namespaceUri);
-            } catch (ServiceException e) {
-                throw new DocumentException(e);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
             }
 
         }
@@ -85,11 +84,7 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
 
     public String[] getAvailableKeys() {
         Element[] elements;
-        try {
-            elements = getElementSet().getElements();
-        } catch (DocumentException e) {
-            throw new RuntimeException(e);
-        }
+        elements = getElementSet().getElements();
         String[] keys = new String[elements.length];
         for (int i = 0; i < elements.length; i++) {
             keys[i] = elements[i].getName();
@@ -149,8 +144,7 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
                 String[] values = getValues(key);
                 if (values.length == 1) {
                     map.put(key, values[0]);
-                }
-                else if (values.length > 1) {
+                } else if (values.length > 1) {
                     map.put(key, Arrays.asList(values));
                 }
             }

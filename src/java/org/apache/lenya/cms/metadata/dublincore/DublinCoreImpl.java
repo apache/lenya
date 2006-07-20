@@ -23,6 +23,7 @@ import java.util.List;
 
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.logger.Logger;
+import org.apache.lenya.cms.metadata.ElementSet;
 import org.apache.lenya.cms.metadata.MetaDataImpl;
 import org.apache.lenya.cms.publication.DocumentException;
 
@@ -151,5 +152,10 @@ public class DublinCoreImpl extends MetaDataImpl {
         names.addAll(Arrays.asList(ELEMENTS));
         names.addAll(Arrays.asList(TERMS));
         return names;
+    }
+
+    public ElementSet getElementSet() {
+        // TODO Auto-generated method stub
+        return null;
     }
 }
