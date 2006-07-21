@@ -1,5 +1,210 @@
 <?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN" "http://my.netscape.com/publish/formats/rss-0.91.dtd">
-<rss version="0.91"><channel><title> (2006-07) Changes</title><link>changes.html</link><description> (2006-07) Changes</description><language>en-us</language><item><title>Docs update</title><link>changes.html</link><description>Docs update
+<rss version="0.91"><channel><title> (2006-07) Changes</title><link>changes.html</link><description> (2006-07) Changes</description><language>en-us</language><item><title>Zone update</title><link>changes.html</link><description>Zone update
+        by
+        thorsten
+        :
+        [Zone] 
+            Removing cocoon from the nightly script since we are now using the 
+cocoon that we deliver with lenya. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Updated resource page layout to match default publication Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Doh! Forgot to change the package name in the module.xml to apache instead of wyona. Thanks for the headsup Andreas. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Forgot to change the id to apache instead of wyona. Thanks for the headsup Andreas. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            module cleaned and xhtml mime-type enabled Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Renamed LDAPUserTest to Abstract... so that it isn't executed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Refactored module build process Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Activating the resource module for the default pub Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        thorsten
+        :
+        [1.4] 
+            Donation of the resource module from the Wyona AG. 
+This module is an alternative way of keeping resources in lenya.
+
+This code is based on https://svn.wyona.com/repos/public/lenya/modules/resource revision 15504.
+I did some adjustments to workaround the missing icons which cannot be included in this module 
+due to license issues.
+
+Please submit us icons.
+ Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Re-added accidentially removed AccessControlTest Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Refactored module + test build process Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved AC tests to modules Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Merged CustomMetaDataModule and DublinCoreModule to MetaDataModule Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Updated meta data documentation Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Advancing towards component-based meta data Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Generic editing of meta data Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Generic editing of meta data Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Enable editing of dublin core meta data Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Moving toward configurable meta data Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Added more meta data declarations Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] Split meta data config Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved meta data declaration to prepare directory Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] added some javadocs Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Fixed some issues in new meta data handling, use owner.getMetaData(DublinCore.DC_NAMESPACE) instead of metaDataManager.getDublinCoreMetaData() Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Added DC terms + elements to meta data config Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Starting implementation of configurable meta data Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            fix typo Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            added context to paths Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Build process: Patch xtest file for each module separately Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Build process: Patch xtest file for each module separately Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Fixed authorizer configuration Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Like discussed in the dev ml, we are setting headless default to true. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            fix references to kupu module resources (for kupu editor files) Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            Document and ResourceType should return Date object instead of a formatted String Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Allow to execute tests of single modules, added endorsed libraries dir to test execution Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            refine expires functionality Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        thorsten
+        :
+        [Docs] 
+            Adding the revolution branch to the sort criteria. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            Added ability to set an expires value by resource type and/or by document.  
+Can be fetched by using the DocumentInfoModule or ResourceTypeModule in RFC 1123 date format Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+        by
+        thorsten
+        :
+        [Site] 
+            Automatic publish from forrestbot Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
         by
         thorsten
         :
@@ -54941,7 +55146,212 @@ These actions are used in the html-form-editor.xmap sitemap
         
         :
         [0.8] 
-            New repository initialized by cvs2svn. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+            New repository initialized by cvs2svn. Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
+        by
+        thorsten
+        :
+        [Zone] 
+            Removing cocoon from the nightly script since we are now using the 
+cocoon that we deliver with lenya. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Updated resource page layout to match default publication Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Doh! Forgot to change the package name in the module.xml to apache instead of wyona. Thanks for the headsup Andreas. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Forgot to change the id to apache instead of wyona. Thanks for the headsup Andreas. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        michi
+        :
+        [1.4] 
+            module cleaned and xhtml mime-type enabled Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Renamed LDAPUserTest to Abstract... so that it isn't executed Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Refactored module build process Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Activating the resource module for the default pub Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        thorsten
+        :
+        [1.4] 
+            Donation of the resource module from the Wyona AG. 
+This module is an alternative way of keeping resources in lenya.
+
+This code is based on https://svn.wyona.com/repos/public/lenya/modules/resource revision 15504.
+I did some adjustments to workaround the missing icons which cannot be included in this module 
+due to license issues.
+
+Please submit us icons.
+ Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Re-added accidentially removed AccessControlTest Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Refactored module + test build process Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved AC tests to modules Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Merged CustomMetaDataModule and DublinCoreModule to MetaDataModule Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        andreas
+        :
+        [Docs] 
+            Updated meta data documentation Diff </description></item><item><title>1.4 remove</title><link>changes.html</link><description>1.4 remove
+        by
+        andreas
+        :
+        [1.4] 
+            Advancing towards component-based meta data Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Generic editing of meta data Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Generic editing of meta data Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Enable editing of dublin core meta data Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Moving toward configurable meta data Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Added more meta data declarations Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] Split meta data config Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Moved meta data declaration to prepare directory Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            [minor change] added some javadocs Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Fixed some issues in new meta data handling, use owner.getMetaData(DublinCore.DC_NAMESPACE) instead of metaDataManager.getDublinCoreMetaData() Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Added DC terms + elements to meta data config Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Starting implementation of configurable meta data Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            fix typo Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            added context to paths Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
+        by
+        andreas
+        :
+        [1.4] 
+            Build process: Patch xtest file for each module separately Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Build process: Patch xtest file for each module separately Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Fixed authorizer configuration Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        thorsten
+        :
+        [1.4] 
+            Like discussed in the dev ml, we are setting headless default to true. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            fix references to kupu module resources (for kupu editor files) Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            Document and ResourceType should return Date object instead of a formatted String Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        andreas
+        :
+        [1.4] 
+            Allow to execute tests of single modules, added endorsed libraries dir to test execution Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            refine expires functionality Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
+        by
+        thorsten
+        :
+        [Docs] 
+            Adding the revolution branch to the sort criteria. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
+        by
+        chestnut
+        :
+        [1.4] 
+            Added ability to set an expires value by resource type and/or by document.  
+Can be fetched by using the DocumentInfoModule or ResourceTypeModule in RFC 1123 date format Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+        by
+        thorsten
+        :
+        [Site] 
+            Automatic publish from forrestbot Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
         by
         thorsten
         :
