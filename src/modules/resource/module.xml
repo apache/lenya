@@ -3,7 +3,7 @@
 <!-- $Id: publication.xml 374687 2006-02-03 15:24:55Z michi $ -->
 
 <lenya:module xmlns:lenya="http://apache.org/lenya/module/1.0">
-  <lenya:id>org.wyona.lenya.modules.resource</lenya:id>
+  <lenya:id>org.apache.lenya.modules.resource</lenya:id>
   <lenya:depends module="org.apache.lenya.modules.usecase"/>
   <lenya:depends module="org.apache.lenya.modules.defaultusecases"/>
   <lenya:depends module="org.apache.lenya.modules.sitemanagement"/>
