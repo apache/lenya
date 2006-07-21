@@ -22,5 +22,6 @@
 
   <xconf xpath="/cocoon/input-modules" unless="/cocoon/input-modules/component-instance[@name = 'dublincore']">
     <component-instance logger="sitemap.modules.input.dublincore" name="dublincore"
-      class="org.apache.lenya.cms.cocoon.components.modules.input.DublinCoreModule"/>
+      class="org.apache.lenya.cms.cocoon.components.modules.input.MetaDataModule"
+      namespace="http://purl.org/dc/elements/1.1/"/>
   </xconf>

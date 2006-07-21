@@ -15,7 +15,7 @@
  *
  */
 
-/* $Id$  */
+/* $Id: DublinCoreModule.java 169299 2005-05-09 12:00:43Z jwkaltz $  */
 
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
@@ -27,37 +27,33 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.lenya.cms.metadata.Element;
 import org.apache.lenya.cms.metadata.MetaData;
+import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.MetaDataRegistry;
-import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 
 /**
- * Input module to access the dublin core values.
+ * Input module to access custom meta data values.
  */
-public class DublinCoreModule extends AbstractPageEnvelopeModule {
+public class MetaDataModule extends AbstractPageEnvelopeModule {
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
-     *      org.apache.avalon.framework.configuration.Configuration,
-     *      java.util.Map)
+     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
-
         Object value;
-        try {
-            Document document = getEnvelope(objectModel, name).getDocument();
-            if (document == null) {
-                throw new ConfigurationException("There is no document for this page envelope!");
-            }
-            MetaData dc = document.getMetaData(DublinCore.DC_NAMESPACE);
-            if (! dc.isValidAttribute(name)) {
-                throw new ConfigurationException("The attribute [" + name + "] is not supported!");
-            }
 
-            value = dc.getFirstValue(name);
-        } catch (Exception e) {
-            throw new ConfigurationException("Obtaining dublin core value for [" + name
+        MetaData metaData = getCustomMetaData(objectModel);
+
+        if (!metaData.isValidAttribute(name)) {
+            throw new ConfigurationException("The attribute [" + name + "] is not supported!");
+        }
+
+        try {
+            value = metaData.getFirstValue(name);
+        } catch (MetaDataException e) {
+            throw new ConfigurationException("Obtaining custom meta data value for [" + name
                     + "] failed: ", e);
         }
 
@@ -70,11 +66,11 @@ public class DublinCoreModule extends AbstractPageEnvelopeModule {
      */
     public Iterator getAttributeNames(Configuration modeConf, Map objectModel)
             throws ConfigurationException {
-        
+
         MetaDataRegistry registry = null;
         try {
             registry = (MetaDataRegistry) this.manager.lookup(MetaDataRegistry.ROLE);
-            Element[] elements = registry.getElementSet(DublinCore.DC_NAMESPACE).getElements();
+            Element[] elements = registry.getElementSet(this.namespaceUri).getElements();
             String[] keys = new String[elements.length];
             for (int i = 0; i < keys.length; i++) {
                 keys[i] = elements[i].getName();
@@ -86,18 +82,54 @@ public class DublinCoreModule extends AbstractPageEnvelopeModule {
         finally {
             this.manager.release(registry);
         }
-
     }
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String,
-     *      org.apache.avalon.framework.configuration.Configuration,
-     *      java.util.Map)
+     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
-        Object[] objects = { getAttribute(name, modeConf, objectModel) };
-        return objects;
+        Object[] values;
+        MetaData metaData = getCustomMetaData(objectModel);
+
+        if (!metaData.isValidAttribute(name)) {
+            throw new ConfigurationException("The attribute [" + name + "] is not supported!");
+        }
+
+        try {
+            values = metaData.getValues(name);
+        } catch (MetaDataException e) {
+            throw new ConfigurationException("Obtaining custom meta data value for [" + name
+                    + "] failed: ", e);
+        }
+
+        return values;
     }
 
+    protected MetaData getCustomMetaData(Map objectModel) throws ConfigurationException {
+        // FIXME: There seems to be no reason to pass the attribute name to get the page envelope.
+        Document document = getEnvelope(objectModel, "").getDocument();
+        if (document == null) {
+            throw new ConfigurationException("There is no document for this page envelope!");
+        }
+        MetaData metaData = null;
+        try {
+            metaData = document.getMetaData(this.namespaceUri);
+        } catch (MetaDataException e) {
+            throw new ConfigurationException("Obtaining custom meta data value for ["
+                    + document.getSourceURI() + "] failed: ", e);
+        }
+        return metaData;
+    }
+
+    private String namespaceUri;
+    
+    public void configure(Configuration conf) throws ConfigurationException {
+        super.configure(conf);
+        this.namespaceUri = conf.getAttribute("namespace");
+    }
+    
+    
+    
 }
