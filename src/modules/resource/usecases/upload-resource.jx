@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!--
+Copyright 1999-2005 The Apache Software Foundation
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!-- $Id: assets.jx 374391 2006-02-02 14:02:17Z andreas $ -->
+
+<page:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+  
+  <page:body>
+    <div class="lenya-box-title">
+      <i18n:text>Upload Resource</i18n:text>
+    </div>
+    <div class="lenya-box-body">
+      <form method="POST" enctype="multipart/form-data" id="form-upload">
+        <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
+        <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+        <table class="lenya-table-noborder">
+          <tr>
+            <td colspan="2">
+              <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="2">
+              <strong><i18n:text>WARNING:</i18n:text> <i18n:text>The existing document will be overwritten!</i18n:text></strong>
+            </td>
+          </tr>
+          <tr>
+            <td class="lenya-entry-caption"><label for="file">
+              <i18n:text>File</i18n:text> *</label></td>
+            <td><input type="file" name="file" class="lenya-form-element"/></td>
+          </tr>
+          <tr>
+            <td class="lenya-entry-caption">*
+              <i18n:text>required fields</i18n:text>
+            </td>
+          </tr>
+          <tr>
+            <td/>
+            <td>
+              <input i18n:attr="value" name="submit" type="submit"
+                value="Upload Resource"/>
+            </td>
+          </tr>
+        </table>
+      </form>
+    </div>
+  </page:body>
+</page:page>

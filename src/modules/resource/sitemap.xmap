@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+Copyright 1999-2004 The Apache Software Foundation
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+
+<!-- $Id: doctypes.xmap 179488 2005-06-02 02:29:39Z gregor $ -->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+  <map:components>
+    <map:generators default="file">
+      <map:generator label="content" logger="sitemap.generator.directory"
+        name="lenyaMetaData" pool-max="16"
+        src="org.apache.lenya.cms.cocoon.generation.LenyaMetaDataGenerator"/>
+    </map:generators>
+    <map:serializers default="xhtml">
+      <map:serializer logger="sitemap.serializer.links" name="links" src="org.apache.lenya.cms.cocoon.serialization.LinkSerializer"/>
+    </map:serializers>
+  </map:components>
+  
+  <map:pipelines>
+    <!-- Generates the lenya metadata to be aggregated for each page -->
+    <map:pipeline>
+      <map:match pattern="lenyametadata.xml">
+        <map:generate type="lenyaMetaData">
+          <map:parameter name="docid" value="{page-envelope:document-id}"/>
+          <map:parameter name="lang" value="{page-envelope:document-language}"/>
+        </map:generate>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+    <map:pipeline>
+      
+      <!-- View Revision? -->
+      <map:match pattern="*.xml">
+        <map:match type="step" pattern="view-revision">
+          <map:generate type="serverpages"
+            src="fallback://lenya/content/rc/view.xsp">
+          </map:generate>
+          <map:transform src="fallback://lenya/xslt/rc/toDoc.xsl"/>
+          <map:transform
+          src="fallback://lenya/modules/resource/xslt/resource2xhtml.xsl">
+          <map:parameter name="document-type" value="{page-envelope:document-type}"/>
+          <map:parameter name="nodeid" value="{page-envelope:document-name}"/>
+          <map:parameter name="language"
+            value="{page-envelope:document-language}"/>
+          <map:parameter name="context-prefix"
+                value="{page-envelope:context-prefix}"/>
+          <map:parameter name="title" value="{dublincore:title}"/>
+          <map:parameter name="root" value="{base-url:{page-envelope:publication-id}:{page-envelope:area}}"/>
+        </map:transform>
+          <map:serialize type="xml"/>
+        </map:match>
+      </map:match>
+      
+      <!-- parametrized doctype matcher -->
+      <!-- pattern="{rendertype}" -->
+      <map:match pattern="*.xml">
+        <map:generate src="cocoon:/lenyametadata.xml"/>
+        <map:transform
+          src="fallback://lenya/modules/resource/xslt/resource2xhtml.xsl">
+          <map:parameter name="document-type" value="{page-envelope:document-type}"/>
+          <map:parameter name="nodeId" value="{page-envelope:document-name}"/>
+          <map:parameter name="documentId" value="{page-envelope:document-id}"/>
+          <map:parameter name="documentParent" value="{page-envelope:document-parent}"/>
+          <map:parameter name="language"
+            value="{page-envelope:document-language}"/>
+          <map:parameter name="context-prefix"
+                value="{page-envelope:context-prefix}"/>
+          <map:parameter name="title" value="{dublincore:title}"/>
+          <map:parameter name="root" value="{base-url:{page-envelope:publication-id}:{page-envelope:area}}"/>
+        </map:transform>
+        <map:serialize type="xml"/>
+      </map:match>
+      <map:match pattern="icons/**.*">
+        <map:act type="resource-exists-enhanced">
+          <map:parameter name="url"
+            value="fallback://lenya/modules/resource/resources/icons/{1}.{2}"/>
+          <map:parameter name="type" value="file"/>
+          <map:read
+            src="fallback://lenya/modules/resource/resources/icons/{1}.{2}"/>
+        </map:act>
+        <map:read
+          src="fallback://lenya/modules/resource/resources/icons/default_med.gif"/>
+      </map:match>
+    </map:pipeline>
+    
+  </map:pipelines>
+</map:sitemap>

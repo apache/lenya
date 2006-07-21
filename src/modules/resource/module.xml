@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- $Id: publication.xml 374687 2006-02-03 15:24:55Z michi $ -->
+
+<lenya:module xmlns:lenya="http://apache.org/lenya/module/1.0">
+  <lenya:id>org.wyona.lenya.modules.resource</lenya:id>
+  <lenya:depends module="org.apache.lenya.modules.usecase"/>
+  <lenya:depends module="org.apache.lenya.modules.defaultusecases"/>
+  <lenya:depends module="org.apache.lenya.modules.sitemanagement"/>
+  <lenya:package>org.wyona.lenya.modules</lenya:package>
+  <lenya:version>0.1-dev</lenya:version>
+  <lenya:name>Resource Module</lenya:name>
+  <lenya:lenya-version>@lenya.version@</lenya:lenya-version>
+  <lenya:description>A module to manage arbitrary resources (PDF, GIF, ...)</lenya:description>
+  <lenya:readme>
+    
+    
+    
+See: http://www.idautomation.com/kb/xwindow-error.html
+     http://www.jguru.com/faq/view.jsp?EID=222296
+
+resp. try java.awt.headless=true in the case of Java 1.4 or
+
+running X servere, e.g.
+
+Virtual framebuffer X server:
+
+installation instructions for debian
+
+apt-get install xvfb
+apt-get install xlibs
+apt-get install xfonts-base
+
+nohup Xvfb :0 -screen 0 1024x786x16 &amp;
+export DISPLAY=:0
+
+Also you might want to add "export DISPLAY=:0" in lenya.sh, such that the DISPLAY variable is set during
+startup of Jetty, e.g.
+
+# ----- Verify and Set Required Environment Variables -------------------------
+
+if [ "$DISPLAY" = "" ] ; then
+  export DISPLAY=:0
+  fi
+  </lenya:readme>
+  <lenya:installation>
+<![CDATA[
+
+    add to yourpub/conf/publication.xconf
+    <module name="resource"/>
+    <resource-type name="resource" workflow="fallback://config/workflow/workflow.xml"/>
+    
+    add to yourpub/config/ac/usecase-policies.xml
+    <usecase id="create.resource">
+      <role id="admin"/>
+      <role id="edit"/>
+    </usecase>  
+    <usecase id="upload.resource">
+      <role id="admin"/>
+      <role id="edit"/>
+    </usecase>  
+    
+]]>    
+  </lenya:installation>
+</lenya:module>
