@@ -51,13 +51,12 @@
       </xsl:choose>
     </xsl:variable>
     
-    <table width="500" cellpadding="2" cellspacing="0" border="0" bgcolor="#f2f2f2"
-      style="border-width:1pt;border-color:#d6d6d6;border-style:line">
+    <table width="500" cellpadding="2" cellspacing="0" border="0" bgcolor="#FFEEEE"
+      style="padding: 20px; border: solid 1px #BB9999;">
       <tr>
         <td> <a href="{$mediaURI}" target="_new">
           <xsl:call-template name="icon">
-            <xsl:with-param name="mimetype"
-              select="mediameta:elements/mediameta:format"/>
+            <xsl:with-param name="mimetype" select="mediameta:elements/mediameta:format"/>
             <xsl:with-param name="imageprefix" select="$imageprefix"/>
           </xsl:call-template> </a>
         </td>
@@ -93,7 +92,7 @@
       </xsl:if>
       <tr>
         <td colspan="2"><i><i18n:text>Preview</i18n:text>:</i><br/><br/>
-        <div align="center">
+        <div style="text-align: center">
           <xsl:call-template name="preview">
             <xsl:with-param name="mimetype"
               select="mediameta:elements/mediameta:format"/>
