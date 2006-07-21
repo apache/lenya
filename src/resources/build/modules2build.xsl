@@ -51,9 +51,15 @@
         </fileset>
       </path>
       
-      <target name="compile-modules">
-        <xsl:apply-templates select="list:module" mode="call"/>
-      </target>
+      <xsl:variable name="compileDependencyList">
+        <xsl:for-each select="list:module">
+          <xsl:apply-templates select="document(concat(@src, '/module.xml'))/mod:module" mode="call"/>
+          <xsl:if test="following-sibling::list:module">
+            <xsl:text>, </xsl:text>
+          </xsl:if>
+        </xsl:for-each>
+      </xsl:variable>
+      <target name="compile-modules" depends="{$compileDependencyList}"/>
       
       <target name="test-modules">
         <xsl:apply-templates select="list:module" mode="call-test"/>
@@ -65,13 +71,8 @@
   </xsl:template>
   
   
-  <xsl:template match="list:module" mode="call">
-    <xsl:apply-templates select="document(concat(@src, '/module.xml'))/mod:module" mode="call"/>
-  </xsl:template>
-
-
   <xsl:template match="mod:module" mode="call">
-    <antcall target="deploy-module-{mod:id}"/>
+    <xsl:text>deploy-module-</xsl:text><xsl:value-of select="mod:id"/>
   </xsl:template>
   
 
@@ -118,7 +119,7 @@
     </xsl:text>
     
     <available file="{$src}/java/src" property="compile.module.{$id}"/>
-
+    
     <xsl:variable name="destDir">${build.dir}/modules/<xsl:value-of select="$id"/>/java/classes</xsl:variable>
     
     <target name="compile-module-{$id}" if="compile.module.{$id}">
@@ -232,14 +233,15 @@
       <xsl:if test="normalize-space($testDependencyList) != ''">
         <xsl:attribute name="depends"><xsl:value-of select="$testDependencyList"/></xsl:attribute>
       </xsl:if>
-      <xslt basedir="{$src}/config/cocoon-xconf"
-        destdir="${{build.dir}}/modules/{$id}/config/xtest"
+      <xslt basedir="{$src}"
+        includes="config/cocoon-xconf/**.xconf"
+        destdir="${{build.dir}}/modules/{$id}"
         style="${{src.resource.dir}}/test/xpatch2testpatch.xsl"
         extension=".xtest">
       </xslt>
       <xpatch file="${{build.test}}/org/apache/lenya/cms/LenyaTestCase.xtest"
         srcdir="${{build.dir}}/modules/{$id}"
-        includes="config/xtest/*.xtest, config/xtest/*/*.xtest"
+        includes="config/cocoon-xconf/*.xtest, config/cocoon-xconf/*/*.xtest"
         addComments="false"/>
     </target>
     
@@ -283,11 +285,11 @@
         </classpath>
         <formatter type="plain" usefile="false" />
         <formatter type="xml" />
-        <jvmarg value="-Djava.endorsed.dirs ${{build-webapp}}/WEB-INF/lib/endorsed"/>
+        <jvmarg value="-Djava.endorsed.dirs='${{basedir}}/build/lenya/webapp/WEB-INF/lib/endorsed'"/>
         <sysproperty key="junit.test.loglevel" value="${{junit.test.loglevel}}"/>
         <sysproperty key="contextRoot" value="${{basedir}}/build/lenya/webapp"/>
         <sysproperty key="tempDir" value="${{basedir}}/build/lenya/temp"/>
-        <sysproperty key="test.repo.webappDirectory" value="${{build-webapp}}"/>
+        <sysproperty key="test.repo.webappDirectory" value="${{build.webapp}}"/>
         <sysproperty key="test.repo.repositoryFactory" value="${{repository.factory}}"/>
         <batchtest todir="${{junit.dir}}">
           <fileset dir="{$testDestDir}" includes="**/*.class" excludes="**/Abstract*.class"/>

@@ -26,8 +26,7 @@
   <property name="modules.root.dirs" value=""/>
   <property name="build.modules" value="${build.webapp}/lenya/modules"/>
   <property name="modules.copy" value="false"/>
-  
-  
+
   <target name="prepare-modules" depends="init-tasks">
     
     <property name="cocoon.xconf" value="${build.webapp}/WEB-INF/cocoon.xconf"/>
@@ -56,7 +55,7 @@
       includes="modules.xconf"
       srcdir="${build.dir}/temp/"
       file="${cocoon.xconf}"/>
-    
+
   </target>
   
   

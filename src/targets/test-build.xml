@@ -52,7 +52,7 @@
   <!-- Runs all tests -->
   <target name="test"
       description="Runs all tests"
-      depends="tests.junit, modules.test"/>
+    depends="modules.test, tests.junit"/>
   <!--
   depends="tests.junit, tests.anteater, tests.webtest"/>
   -->
@@ -174,21 +174,6 @@
         </fileset>
         <pathelement path="${src.test.impl.dir}"/>
       </classpath>
-      
-      <test name="org.apache.lenya.ac.impl.IdentityTest" todir="${junit.dir}"/>
-      <test name="org.apache.lenya.ac.impl.AccessControllerTest" todir="${junit.dir}"/>
-      <test name="org.apache.lenya.ac.impl.AccreditableManagerTest" todir="${junit.dir}"/>
-      <test name="org.apache.lenya.ac.impl.UserManagerTest" todir="${junit.dir}"/>
-      <test name="org.apache.lenya.ac.impl.GroupManagerTest" todir="${junit.dir}"/>
-      <test name="org.apache.lenya.ac.impl.RoleManagerTest" todir="${junit.dir}"/>
-      <test name="org.apache.lenya.ac.impl.PolicyManagerTest" todir="${junit.dir}"/>
-      <test name="org.apache.lenya.ac.impl.PolicyTest" todir="${junit.dir}"/>
-
-      <test name="org.apache.lenya.ac.file.FileUserTest" todir="${junit.dir}"/>
-      <test name="org.apache.lenya.ac.file.FileGroupTest" todir="${junit.dir}"/>
-      <test name="org.apache.lenya.ac.file.FileRoleTest" todir="${junit.dir}"/>
-      
-      <test name="org.apache.lenya.cms.ac.usecases.LoginTest" todir="${junit.dir}"/>
       
       <test name="org.apache.lenya.cms.publication.DefaultDocumentTest" todir="${junit.dir}"/>
       <test name="org.apache.lenya.cms.publication.DefaultDocumentBuilderTest" todir="${junit.dir}"/>
