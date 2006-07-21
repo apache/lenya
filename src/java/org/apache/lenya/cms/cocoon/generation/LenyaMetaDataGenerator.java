@@ -17,8 +17,6 @@ package org.apache.lenya.cms.cocoon.generation;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
@@ -34,8 +32,7 @@ import org.apache.excalibur.source.SourceValidity;
 import org.apache.excalibur.source.impl.validity.TimeStampValidity;
 import org.apache.excalibur.xml.dom.DOMParser;
 import org.apache.lenya.cms.metadata.MetaData;
-import org.apache.lenya.cms.metadata.MetaDataManager;
-import org.apache.lenya.cms.metadata.dublincore.DublinCore;
+import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentFactory;
@@ -65,7 +62,7 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
     protected static final String ROOT_META_NODE_NAME = "meta";
 
     /** The URI of the namespace of the metadata */
-    protected static final String URI_META = "http://apache.org/cocoon/lenya/page-envelope/1.0";
+    protected static final String URI_META = "http://apache.org/cocoon/lenya/metadata/1.0";
 
     /** The namespace prefix for this namespace */
     protected static final String PREFIX_META = "lenya";
@@ -194,16 +191,9 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
      *         not cacheable.
      */
     public SourceValidity getValidity() {
-        long lastModified = 0;
+        long lastModified;
         try {
-            MetaDataManager metaMgr = document.getMetaDataManager();
-            MetaData dcElements = document.getMetaData(DublinCore.DC_NAMESPACE);
-            if (lastModified < metaMgr.getCustomMetaData().getLastModified())
-                lastModified = metaMgr.getCustomMetaData().getLastModified();
-            if (lastModified < dcElements.getLastModified())
-                lastModified = dcElements.getLastModified();
-            if (lastModified < metaMgr.getLenyaMetaData().getLastModified())
-                lastModified = metaMgr.getLenyaMetaData().getLastModified();
+            lastModified = document.getLastModified().getTime();
         } catch (Exception e) {
             getLogger().error("Error determining last modification date", e);
             return null;
@@ -215,102 +205,76 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
      * Generate XML data.
      */
     public void generate() throws IOException, SAXException, ProcessingException {
-        // START metadata
-        startNodeRoot(ROOT_META_NODE_NAME);
-        // lenya document meta
+        startNodeRoot();
         performIncludesMeta();
-        // END metadata
-        endNodeRoot(ROOT_META_NODE_NAME);
+        endNodeRoot();
     }
 
     private void performIncludesMeta() throws SAXException, ProcessingException {
-        // custom metadata
-        startNodeMeta(ROOT_CUSTOM_META_NODE_NAME);
-        parseMetaData("custom");
-        endNodeMeta(ROOT_CUSTOM_META_NODE_NAME);
-        // internal metadata
-        startNodeMeta(ROOT_INTERNAL_META_NODE_NAME);
-        parseMetaData("internal");
-        endNodeMeta(ROOT_INTERNAL_META_NODE_NAME);
-        // dc metadata
-        startNodeMeta(ROOT_DC_META_NODE_NAME);
-        parseMetaData("dc");
-        endNodeMeta(ROOT_DC_META_NODE_NAME);
+        
+        try {
+            String[] namespaces = this.document.getMetaDataNamespaceUris();
+            for (int i = 0; i < namespaces.length; i++) {
+                startNodeMeta(namespaces[i]);
+                parseMetaData(namespaces[i]);
+                endNodeMeta(namespaces[i]);
+            }
+        } catch (MetaDataException e) {
+            throw new ProcessingException(e);
+        }
+        
     }
 
-    private void parseMetaData(String type) throws ProcessingException, SAXException {
-        MetaData metaData = getMetaData(type);
-        HashMap elementMap;
-        elementMap = metaData.getAvailableKey2Value();
-        if ("dc".equals(type)) {
-            Iterator iteratorMap = elementMap.entrySet().iterator();
-            while (iteratorMap.hasNext()) {
-                Map.Entry entry = (Map.Entry) iteratorMap.next();
-                this.contentHandler.startPrefixMapping(PREFIX_META_DC, URI_META_DC);
-                startNodeMetaDC((String) entry.getKey());
-                String valueNode = (String) entry.getValue();
-                char[] textNode = valueNode.toCharArray();
-                this.contentHandler.characters(textNode, 0, textNode.length);
-                endNodeMetaDC((String) entry.getKey());
-                this.contentHandler.endPrefixMapping(PREFIX_META_DC);
+    private void parseMetaData(String namespace) throws ProcessingException, SAXException {
+        MetaData metaData = getMetaData(namespace);
+        
+        String[] names = metaData.getAvailableKeys();
+        for (int i = 0; i < names.length; i++) {
+            String[] values;
+            try {
+                values = metaData.getValues(names[i]);
+            } catch (MetaDataException e) {
+                throw new ProcessingException(e);
             }
-        } else if ("custom".equals(type) | "internal".equals(type)) {
-            Iterator iteratorMap = elementMap.entrySet().iterator();
-            while (iteratorMap.hasNext()) {
-                Map.Entry entry = (Map.Entry) iteratorMap.next();
-                startNodeMeta((String) entry.getKey());
-                String valueNode = (String) entry.getValue();
-                char[] textNode = valueNode.toCharArray();
-                this.contentHandler.characters(textNode, 0, textNode.length);
-                endNodeMeta((String) entry.getKey());
+            for (int j = 0; j < values.length; j++) {
+                this.contentHandler.startElement(namespace, names[i], names[i], new AttributesImpl());
+                char[] valueChars = values[j].toCharArray();
+                this.contentHandler.characters(valueChars, 0, valueChars.length);
+                this.contentHandler.endElement(namespace, names[i], names[i]);
             }
         }
     }
 
-    private void endNodeRoot(String nodeName) throws SAXException {
-        endNodeMeta(nodeName);
+    private void endNodeRoot() throws SAXException {
+        this.contentHandler.endElement(URI_META, "metadata", PREFIX_META + ":metadata");
         this.contentHandler.endPrefixMapping(PREFIX_META);
         this.contentHandler.endDocument();
     }
 
-    private void startNodeRoot(String nodeName) throws SAXException {
+    private void startNodeRoot() throws SAXException {
         this.contentHandler.startDocument();
         this.contentHandler.startPrefixMapping(PREFIX_META, URI_META);
-        startNodeMeta(nodeName);
-    }
-
-    private void startNodeMeta(String nodeName) throws SAXException {
         this.contentHandler.startElement(URI_META,
-                nodeName,
-                PREFIX_META + ":" + nodeName,
+                "metadata",
+                PREFIX_META + ":metadata",
                 attributes);
     }
 
-    private void endNodeMeta(String nodeName) throws SAXException {
-        this.contentHandler.endElement(URI_META, nodeName, PREFIX_META + ":" + nodeName);
-    }
-
-    private void startNodeMetaDC(String nodeName) throws SAXException {
-        this.contentHandler.startElement(URI_META_DC,
-                nodeName,
-                PREFIX_META_DC + ":" + nodeName,
+    private void startNodeMeta(String namespace) throws SAXException {
+        this.contentHandler.startElement(namespace,
+                "elements",
+                "elements",
                 attributes);
     }
 
-    private void endNodeMetaDC(String nodeName) throws SAXException {
-        this.contentHandler.endElement(URI_META_DC, nodeName, PREFIX_META_DC + ":" + nodeName);
+    private void endNodeMeta(String namespace) throws SAXException {
+        this.contentHandler.endElement(namespace, "elements", "elements");
     }
 
-    protected MetaData getMetaData(String type) throws ProcessingException {
+    protected MetaData getMetaData(String namespaceUri) throws ProcessingException {
         MetaData metaData = null;
         try {
-            if ("custom".equals(type)) {
-                metaData = this.document.getMetaDataManager().getCustomMetaData();
-            } else if ("internal".equals(type)) {
-                metaData = this.document.getMetaDataManager().getLenyaMetaData();
-            } else if ("dc".equals(type)) {
-                metaData = this.document.getMetaData(DublinCore.DC_NAMESPACE);
-            }
+            metaData = this.document.getMetaData(namespaceUri);
         } catch (Exception e1) {
             throw new ProcessingException("Obtaining custom meta data value for ["
                     + document.getSourceURI() + "] failed: ", e1);

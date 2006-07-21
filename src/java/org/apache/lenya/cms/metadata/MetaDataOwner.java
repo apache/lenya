@@ -16,9 +16,6 @@
  */
 package org.apache.lenya.cms.metadata;
 
-import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.repository.RepositoryException;
-
 /**
  * Owner of meta-data.
  *
@@ -27,24 +24,18 @@ import org.apache.lenya.cms.repository.RepositoryException;
 public interface MetaDataOwner {
 
     /**
-     * @return A manager for the meta data.
-     * @deprecated Use {@link #getMetaData(String)}Êinstead.
-     */
-    MetaDataManager getMetaDataManager() throws DocumentException;
-    
-    /**
      * Returns a meta data object.
      * @param namespaceUri The namespace URI.
      * @return A meta data object.
-     * @throws RepositoryException if an error occurs.
+     * @throws MetaDataException if an error occurs.
      */
-    MetaData getMetaData(String namespaceUri) throws RepositoryException;
+    MetaData getMetaData(String namespaceUri) throws MetaDataException;
     
     /**
      * Returns the URIs of the meta data currently supported by the owner.
      * @return An array of strings.
-     * @throws RepositoryException if an error occurs.
+     * @throws MetaDataException if an error occurs.
      */
-    String[] getMetaDataNamespaceUris() throws RepositoryException;
+    String[] getMetaDataNamespaceUris() throws MetaDataException;
     
 }

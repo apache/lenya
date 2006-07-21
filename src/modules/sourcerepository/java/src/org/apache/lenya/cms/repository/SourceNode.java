@@ -44,12 +44,10 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.ElementSet;
-import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.metadata.MetaData;
-import org.apache.lenya.cms.metadata.MetaDataManager;
+import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.MetaDataRegistry;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
-import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
@@ -653,20 +651,6 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         return sourceUri + "." + LENYA_META_SUFFIX;
     }
 
-    private MetaDataManager metaDataManager;
-
-    /**
-     * @see org.apache.lenya.cms.metadata.MetaDataOwner#getMetaDataManager()
-     */
-    public MetaDataManager getMetaDataManager() throws DocumentException {
-        if (this.metaDataManager == null) {
-            this.metaDataManager = new MetaDataManager(getMetaSourceURI(),
-                    this.manager,
-                    getLogger());
-        }
-        return this.metaDataManager;
-    }
-
     private Session session;
 
     /**
@@ -695,19 +679,17 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     private Map namespace2metadata = new HashMap();
 
-    public MetaData getMetaData(String namespaceUri) throws RepositoryException {
+    public MetaData getMetaData(String namespaceUri) throws MetaDataException {
 
         MetaDataRegistry registry = null;
         try {
             registry = (MetaDataRegistry) this.manager.lookup(MetaDataRegistry.ROLE);
             if (!registry.isRegistered(namespaceUri)) {
-                throw new RepositoryException("The namespace [" + namespaceUri
+                throw new MetaDataException("The namespace [" + namespaceUri
                         + "] is not registered!");
             }
         } catch (ServiceException e) {
-            throw new RepositoryException(e);
-        } catch (DocumentException e) {
-            throw new RepositoryException(e);
+            throw new MetaDataException(e);
         } finally {
             if (registry != null) {
                 this.manager.release(registry);
@@ -724,7 +706,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     private Map namespace2metamap = null;
 
-    protected Map getMetaDataMap(String namespaceUri) throws RepositoryException {
+    protected Map getMetaDataMap(String namespaceUri) throws MetaDataException {
         if (this.namespace2metamap == null) {
             loadMetaData();
         }
@@ -744,7 +726,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     protected static final String ATTRIBUTE_NAMESPACE = "namespace";
     protected static final String ATTRIBUTE_KEY = "key";
 
-    protected void loadMetaData() throws RepositoryException {
+    protected void loadMetaData() throws MetaDataException {
 
         if (this.namespace2metamap != null) {
             throw new IllegalStateException("The meta data have already been loaded!");
@@ -752,35 +734,37 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
         try {
             this.namespace2metamap = new HashMap();
-            Document xml = SourceUtil.readDOM(getMetaSourceURI(), this.manager);
-
-            if (!xml.getDocumentElement().getNamespaceURI().equals(META_DATA_NAMESPACE)) {
-                loadLegacyMetaData(xml);
-            } else {
-                NamespaceHelper helper = new NamespaceHelper(META_DATA_NAMESPACE, "", xml);
-                Element[] setElements = helper.getChildren(xml.getDocumentElement(), ELEMENT_SET);
-                for (int setIndex = 0; setIndex < setElements.length; setIndex++) {
-                    String namespace = setElements[setIndex].getAttribute(ATTRIBUTE_NAMESPACE);
-                    Element[] elementElements = helper.getChildren(setElements[setIndex],
-                            ELEMENT_ELEMENT);
-                    for (int elemIndex = 0; elemIndex < elementElements.length; elemIndex++) {
-                        String key = elementElements[elemIndex].getAttribute(ATTRIBUTE_KEY);
-                        Element[] valueElements = helper.getChildren(elementElements[elemIndex],
-                                ELEMENT_VALUE);
-                        for (int valueIndex = 0; valueIndex < valueElements.length; valueIndex++) {
-                            String value = DocumentHelper.getSimpleElementText(valueElements[valueIndex]);
-                            List values = getValueList(namespace, key);
-                            values.add(value);
+            if (SourceUtil.exists(getMetaSourceURI(), this.manager)) {
+                Document xml = SourceUtil.readDOM(getMetaSourceURI(), this.manager);
+                if (!xml.getDocumentElement().getNamespaceURI().equals(META_DATA_NAMESPACE)) {
+                    loadLegacyMetaData(xml);
+                } else {
+                    NamespaceHelper helper = new NamespaceHelper(META_DATA_NAMESPACE, "", xml);
+                    Element[] setElements = helper.getChildren(xml.getDocumentElement(),
+                            ELEMENT_SET);
+                    for (int setIndex = 0; setIndex < setElements.length; setIndex++) {
+                        String namespace = setElements[setIndex].getAttribute(ATTRIBUTE_NAMESPACE);
+                        Element[] elementElements = helper.getChildren(setElements[setIndex],
+                                ELEMENT_ELEMENT);
+                        for (int elemIndex = 0; elemIndex < elementElements.length; elemIndex++) {
+                            String key = elementElements[elemIndex].getAttribute(ATTRIBUTE_KEY);
+                            Element[] valueElements = helper.getChildren(elementElements[elemIndex],
+                                    ELEMENT_VALUE);
+                            for (int valueIndex = 0; valueIndex < valueElements.length; valueIndex++) {
+                                String value = DocumentHelper.getSimpleElementText(valueElements[valueIndex]);
+                                List values = getValueList(namespace, key);
+                                values.add(value);
+                            }
                         }
                     }
                 }
             }
         } catch (Exception e) {
-            throw new RepositoryException(e);
+            throw new MetaDataException(e);
         }
     }
 
-    protected void loadLegacyMetaData(Document xml) throws RepositoryException {
+    protected void loadLegacyMetaData(Document xml) throws MetaDataException {
         NamespaceHelper helper = new NamespaceHelper(PageEnvelope.NAMESPACE, "", xml);
 
         Element metaElement = helper.getFirstChild(xml.getDocumentElement(), "meta");
@@ -827,10 +811,10 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                             + "] is not supported.");
                 }
             }
-        } catch (RepositoryException e) {
+        } catch (MetaDataException e) {
             throw e;
         } catch (Exception e) {
-            throw new RepositoryException(e);
+            throw new MetaDataException(e);
         } finally {
             if (registry != null) {
                 this.manager.release(registry);
@@ -839,7 +823,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     }
 
-    protected void saveMetaData() throws RepositoryException {
+    protected void saveMetaData() throws MetaDataException {
         try {
             NamespaceHelper helper = new NamespaceHelper(META_DATA_NAMESPACE, "", ELEMENT_METADATA);
             Collection namespaces = this.namespace2metamap.keySet();
@@ -873,16 +857,16 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             }
             SourceUtil.writeDOM(helper.getDocument(), getMetaSourceURI(), this.manager);
         } catch (Exception e) {
-            throw new RepositoryException(e);
+            throw new MetaDataException(e);
         }
     }
 
-    protected String[] getValues(String namespaceUri, String key) throws RepositoryException {
+    protected String[] getValues(String namespaceUri, String key) throws MetaDataException {
         List values = getValueList(namespaceUri, key);
         return (String[]) values.toArray(new String[values.size()]);
     }
 
-    protected List getValueList(String namespaceUri, String key) throws RepositoryException {
+    protected List getValueList(String namespaceUri, String key) throws MetaDataException {
         Map map = getMetaDataMap(namespaceUri);
         List values = (List) map.get(key);
         if (values == null) {
@@ -892,20 +876,19 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         return values;
     }
 
-    protected void addValue(String namespaceUri, String key, String value)
-            throws RepositoryException {
+    protected void addValue(String namespaceUri, String key, String value) throws MetaDataException {
         List values = getValueList(namespaceUri, key);
         values.add(value);
         saveMetaData();
     }
 
-    protected void removeAllValues(String namespaceUri, String key) throws RepositoryException {
+    protected void removeAllValues(String namespaceUri, String key) throws MetaDataException {
         List values = getValueList(namespaceUri, key);
         values.clear();
         saveMetaData();
     }
 
-    public String[] getMetaDataNamespaceUris() throws RepositoryException {
+    public String[] getMetaDataNamespaceUris() throws MetaDataException {
         if (this.namespace2metamap == null) {
             loadMetaData();
         }

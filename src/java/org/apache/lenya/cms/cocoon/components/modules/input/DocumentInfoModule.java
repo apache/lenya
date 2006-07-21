@@ -24,7 +24,6 @@ import java.util.Date;
 import java.util.Map;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.parameters.ParameterException;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
@@ -32,6 +31,7 @@ import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.metadata.MetaData;
+import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -39,7 +39,6 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
-import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteException;
@@ -128,7 +127,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
             String attribute = params.getParameter(PARAM_PROPERTY);
 
             if (attribute.equals(RESOURCE_TYPE)) {
-                value = getResourceType(document);
+                value = document.getResourceType().getName();
             } else if (attribute.equals(LAST_MODIFIED)) {
                 value = getLastModified(document);
             } else if (attribute.equals(MIME_TYPE)) {
@@ -150,7 +149,9 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
                 throw new ConfigurationException("Attribute '" + attribute + "' not supported ["
                         + name + "]");
             }
-        } catch (ParameterException e) {
+        } catch (ConfigurationException e) {
+            throw e;
+        } catch (Exception e) {
             throw new ConfigurationException("Error getting input module parameters.", e);
         }
 
@@ -167,25 +168,6 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
 
     }
     
-    protected String getResourceType(Document document) throws ConfigurationException {
-        String resourceType = null;
-        MetaData metaData = null;
-        try {
-            metaData = document.getMetaDataManager().getLenyaMetaData();
-        } catch (DocumentException e) {
-            throw new ConfigurationException("Obtaining custom meta data value for ["
-                    + document.getSourceURI() + "] failed: " + e.getMessage(), e);
-        }
-
-        try {
-            resourceType = metaData.getFirstValue(META_RESOURCE_TYPE);
-        } catch (DocumentException e) {
-            throw new ConfigurationException("Obtaining resource type for [" + document.getId()
-                    + "] failed: " + e.getMessage(), e);
-        }
-        return resourceType;
-    }
-
     /**
      * Returns last modification date in HTTP date format (see RFC 1123).
      * @param document
@@ -208,14 +190,14 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
         MetaData metaData = null;
         try {
             metaData = document.getMetaData(DublinCore.DC_NAMESPACE);
-        } catch (RepositoryException e) {
+        } catch (MetaDataException e) {
             throw new ConfigurationException("Obtaining custom meta data value failed ["
                     + document.getSourceURI() + "]: " + e.getMessage(), e);
         }
 
         try {
             mimeType = metaData.getFirstValue(DublinCore.ELEMENT_FORMAT);
-        } catch (DocumentException e) {
+        } catch (MetaDataException e) {
             throw new ConfigurationException("Obtaining resource type failed [" + document.getId()
                     + "]: " + e.getMessage(), e);
         }

@@ -24,8 +24,7 @@ import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.cms.metadata.MetaData;
-import org.apache.lenya.cms.metadata.MetaDataManager;
-import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.repo.Translation;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryException;
@@ -170,35 +169,16 @@ public class RepoNode extends AbstractLogEnabled implements Node {
         throw new RuntimeException("not implemented");
     }
 
-    private MetaDataManager metaDataManager;
-
-    public MetaDataManager getMetaDataManager() throws DocumentException {
-        if (this.metaDataManager == null) {
-            org.apache.lenya.cms.repo.Session session;
-            try {
-                session = getTranslation().getAsset()
-                        .getContent()
-                        .getArea()
-                        .getPublication()
-                        .getSession();
-            } catch (org.apache.lenya.cms.repo.RepositoryException e) {
-                throw new DocumentException(e);
-            }
-            this.metaDataManager = new RepoMetaDataManager(session, getTranslation(), getLogger());
-        }
-        return this.metaDataManager;
-    }
-
     public String getIdentifiableType() {
         return Node.IDENTIFIABLE_TYPE;
     }
 
-    public MetaData getMetaData(String namespaceUri) throws RepositoryException {
+    public MetaData getMetaData(String namespaceUri) throws MetaDataException {
         // TODO Auto-generated method stub
         return null;
     }
 
-    public String[] getMetaDataNamespaceUris() throws RepositoryException {
+    public String[] getMetaDataNamespaceUris() throws MetaDataException {
         // TODO Auto-generated method stub
         return null;
     }

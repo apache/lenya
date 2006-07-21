@@ -20,24 +20,24 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.avalon.framework.activity.Initializable;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
 
 /**
  * Avalon-based element set.
  */
 public class ConfigurableElementSet extends AbstractLogEnabled implements ElementSet, Configurable,
-        ThreadSafe {
+        ThreadSafe, Initializable, Serviceable {
 
     private String namespaceUri;
     private Map elements = new HashMap();
-
-    protected String getNamespaceURI() {
-        return this.namespaceUri;
-    }
 
     public void configure(Configuration config) throws ConfigurationException {
 
@@ -68,6 +68,25 @@ public class ConfigurableElementSet extends AbstractLogEnabled implements Elemen
 
     public boolean containsElement(String name) {
         return this.elements.keySet().contains(name);
+    }
+
+    public void initialize() throws Exception {
+        MetaDataRegistry registry = null;
+        try {
+            registry = (MetaDataRegistry) this.manager.lookup(MetaDataRegistry.ROLE);
+            registry.register(getNamespaceUri(), this);
+        }
+        finally {
+            if (registry != null) {
+                this.manager.release(registry);
+            }
+        }
+    }
+    
+    private ServiceManager manager;
+
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
     }
 
 }

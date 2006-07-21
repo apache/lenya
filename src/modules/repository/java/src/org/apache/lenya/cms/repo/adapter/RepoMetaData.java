@@ -21,7 +21,7 @@ import java.util.HashMap;
 
 import org.apache.lenya.cms.metadata.ElementSet;
 import org.apache.lenya.cms.metadata.MetaData;
-import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.repo.RepositoryException;
 import org.apache.lenya.cms.repo.metadata.Element;
 
@@ -37,18 +37,18 @@ public class RepoMetaData implements MetaData {
         return this.delegate;
     }
 
-    public void save() throws DocumentException {
+    public void save() throws RepositoryException {
     }
 
-    public String[] getValues(String key) throws DocumentException {
+    public String[] getValues(String key) throws MetaDataException {
         try {
             return delegate.getValues(key);
         } catch (RepositoryException e) {
-            throw new DocumentException(e);
+            throw new MetaDataException(e);
         }
     }
 
-    public String getFirstValue(String key) throws DocumentException {
+    public String getFirstValue(String key) throws MetaDataException {
         try {
             if (delegate.getElementSet().getElement(key).isMultiple()) {
                 String[] values = delegate.getValues(key);
@@ -57,7 +57,7 @@ public class RepoMetaData implements MetaData {
                 return delegate.getValue(key);
             }
         } catch (RepositoryException e) {
-            throw new DocumentException(e);
+            throw new MetaDataException(e);
         }
     }
 
@@ -65,7 +65,7 @@ public class RepoMetaData implements MetaData {
         throw new RuntimeException("not implemented");
     }
 
-    public void setValue(String key, String value) throws DocumentException {
+    public void setValue(String key, String value) throws MetaDataException {
         try {
             if (delegate.getElementSet().getElement(key).isMultiple()) {
                 delegate.clear(key);
@@ -74,19 +74,19 @@ public class RepoMetaData implements MetaData {
                 delegate.setValue(key, value);
             }
         } catch (RepositoryException e) {
-            throw new DocumentException(e);
+            throw new MetaDataException(e);
         }
     }
 
-    public void addValue(String key, String value) throws DocumentException {
+    public void addValue(String key, String value) throws MetaDataException {
         try {
             delegate.addValue(key, value);
         } catch (RepositoryException e) {
-            throw new DocumentException(e);
+            throw new MetaDataException(e);
         }
     }
 
-    public void replaceBy(MetaData other) throws DocumentException {
+    public void replaceBy(MetaData other) throws MetaDataException {
         throw new RuntimeException("not implemented");
     }
 
@@ -94,7 +94,7 @@ public class RepoMetaData implements MetaData {
         Element[] elements;
         try {
             elements = delegate.getElementSet().getElements();
-        } catch (RepositoryException e) {
+        } catch (org.apache.lenya.cms.repo.RepositoryException e) {
             throw new RuntimeException(e);
         }
         String[] names = new String[elements.length];
@@ -112,7 +112,7 @@ public class RepoMetaData implements MetaData {
         return Arrays.asList(getPossibleKeys()).contains(key);
     }
 
-    public long getLastModified() throws DocumentException {
+    public long getLastModified() throws MetaDataException {
         throw new RuntimeException("not implemented");
     }
 

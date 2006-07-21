@@ -19,7 +19,6 @@ package org.apache.lenya.cms.usecases.webdav;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
@@ -27,9 +26,10 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.metadata.MetaData;
+import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
@@ -205,23 +205,21 @@ public class Put extends CreateDocument {
      * Sets the meta data of the created document.
      * 
      * @param document The document.
-     * @throws DocumentException if an error occurs.
+     * @throws MetaDataException if an error occurs.
      */
-    protected void setMetaData(Document document) throws DocumentException {
+    protected void setMetaData(Document document) throws MetaDataException {
 
         if (document == null)
             throw new IllegalArgumentException("parameter document may not be null");
 
-        Map dcMetaData = new HashMap();
-        dcMetaData.put(DublinCore.ELEMENT_TITLE, document.getName());
-        dcMetaData.put(DublinCore.ELEMENT_CREATOR, "");
-        dcMetaData.put(DublinCore.ELEMENT_PUBLISHER, "");
-        dcMetaData.put(DublinCore.ELEMENT_SUBJECT, "");
-        dcMetaData.put(DublinCore.ELEMENT_DATE, "");
-        dcMetaData.put(DublinCore.ELEMENT_RIGHTS, "");
-        dcMetaData.put(DublinCore.ELEMENT_LANGUAGE, document.getLanguage());
-
-        document.getMetaDataManager().setDublinCoreMetaData(dcMetaData);
+        MetaData dcMetaData = document.getMetaData(DublinCore.DC_NAMESPACE);
+        dcMetaData.setValue(DublinCore.ELEMENT_TITLE, document.getName());
+        dcMetaData.setValue(DublinCore.ELEMENT_CREATOR, "");
+        dcMetaData.setValue(DublinCore.ELEMENT_PUBLISHER, "");
+        dcMetaData.setValue(DublinCore.ELEMENT_SUBJECT, "");
+        dcMetaData.setValue(DublinCore.ELEMENT_DATE, "");
+        dcMetaData.setValue(DublinCore.ELEMENT_RIGHTS, "");
+        dcMetaData.setValue(DublinCore.ELEMENT_LANGUAGE, document.getLanguage());
     }
 
     private Publication publication;

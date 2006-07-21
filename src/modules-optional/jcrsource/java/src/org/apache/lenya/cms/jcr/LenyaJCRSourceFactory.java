@@ -20,13 +20,13 @@ import javax.jcr.Node;
 import javax.jcr.RepositoryException;
 
 import org.apache.cocoon.jcr.source.JCRSourceFactory;
-import org.apache.lenya.cms.metadata.LenyaMetaData;
+import org.apache.lenya.cms.publication.PageEnvelope;
 
 public class LenyaJCRSourceFactory extends JCRSourceFactory {
 
     public Node createFileNode(Node folderNode, String name) throws RepositoryException {
         Node node = super.createFileNode(folderNode, name);
-        String prefix = node.getSession().getNamespacePrefix(LenyaMetaData.NAMESPACE);
+        String prefix = node.getSession().getNamespacePrefix(PageEnvelope.NAMESPACE);
         if (!prefix.equals("")) {
             prefix = prefix + ":";
         }

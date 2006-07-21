@@ -16,8 +16,6 @@
  */
 package org.apache.lenya.cms.metadata;
 
-import org.apache.lenya.cms.publication.DocumentException;
-
 /**
  * Meta data registry.
  */
@@ -31,16 +29,30 @@ public interface MetaDataRegistry {
     /**
      * @param namespaceUri The namespace URI of the element set.
      * @return the element set.
-     * @throws DocumentException if an error occurs. 
+     * @throws MetaDataException if an error occurs. 
      */
-    ElementSet getElementSet(String namespaceUri) throws DocumentException;
+    ElementSet getElementSet(String namespaceUri) throws MetaDataException;
     
     /**
      * Checks if an element set is registered.
      * @param namespaceUri The namespace URI.
      * @return A boolean value.
-     * @throws DocumentException if an error occurs.
+     * @throws MetaDataException if an error occurs.
      */
-    boolean isRegistered(String namespaceUri) throws DocumentException;
+    boolean isRegistered(String namespaceUri) throws MetaDataException;
+    
+    /**
+     * Register an element set.
+     * @param namespaceUri The namespace URI.
+     * @param elementSet The element set.
+     * @throws MetaDataException if a set is already registered for this name.
+     */
+    void register(String namespaceUri, ElementSet elementSet) throws MetaDataException;
+    
+    /**
+     * @return The registered namespace URIs.
+     * @throws MetaDataException if an error occurs.
+     */
+    String[] getNamespaceUris() throws MetaDataException;
     
 }

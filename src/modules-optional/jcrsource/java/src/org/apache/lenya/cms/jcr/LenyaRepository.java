@@ -45,9 +45,7 @@ import org.apache.jackrabbit.core.nodetype.NodeTypeRegistry;
 import org.apache.jackrabbit.core.nodetype.PropDef;
 import org.apache.jackrabbit.core.nodetype.PropDefImpl;
 import org.apache.jackrabbit.name.QName;
-import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
-import org.apache.lenya.cms.metadata.dublincore.DublinCoreImpl;
 
 /**
  * Lenya-specific repository implementation.
@@ -129,16 +127,17 @@ public class LenyaRepository extends org.apache.cocoon.jcr.JackrabbitRepository 
         NodeTypeManagerImpl nodeTypeManager = (NodeTypeManagerImpl) jcrSession.getWorkspace()
                 .getNodeTypeManager();
         NodeTypeRegistry registry = nodeTypeManager.getNodeTypeRegistry();
+        /*
         if (!registry.isRegistered(new QName(LenyaMetaData.NAMESPACE, CONTENT_NODE))) {
-
+            
             List propDefs = new ArrayList();
             Map key2namespace = new HashMap();
-/*
+
             String[] lenyaKeys = LenyaMetaData.ELEMENTS;
             for (int i = 0; i < lenyaKeys.length; i++) {
                 key2namespace.put(lenyaKeys[i], LenyaMetaData.NAMESPACE);
             }
-*/
+
             List dcKeyList = DublinCoreImpl.getAttributeNames();
             String[] dcKeys = (String[]) dcKeyList.toArray(new String[dcKeyList.size()]);
             for (int i = 0; i < dcKeys.length; i++) {
@@ -165,6 +164,7 @@ public class LenyaRepository extends org.apache.cocoon.jcr.JackrabbitRepository 
 
             registry.registerNodeType(def);
         }
+        */
     }
 
 }

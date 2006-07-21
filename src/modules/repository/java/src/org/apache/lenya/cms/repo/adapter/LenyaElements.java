@@ -16,7 +16,6 @@
  */
 package org.apache.lenya.cms.repo.adapter;
 
-import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.repo.metadata.Element;
 import org.apache.lenya.cms.repo.metadata.impl.ElementImpl;
 

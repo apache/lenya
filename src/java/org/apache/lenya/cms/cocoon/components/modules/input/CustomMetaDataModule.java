@@ -22,18 +22,17 @@ package org.apache.lenya.cms.cocoon.components.modules.input;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Map;
+
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.lenya.cms.metadata.MetaData;
+import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentException;
 
 /**
  * Input module to access custom meta data values.
  */
 public class CustomMetaDataModule extends AbstractPageEnvelopeModule {
-
-    final static String NS_PREFIX = "lenya:";
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
@@ -45,13 +44,13 @@ public class CustomMetaDataModule extends AbstractPageEnvelopeModule {
 
         MetaData metaData = getCustomMetaData(objectModel);
 
-        if (!metaData.isValidAttribute(NS_PREFIX + name)) {
+        if (!metaData.isValidAttribute(name)) {
             throw new ConfigurationException("The attribute [" + name + "] is not supported!");
         }
 
         try {
-            value = metaData.getFirstValue(NS_PREFIX + name);
-        } catch (DocumentException e) {
+            value = metaData.getFirstValue(name);
+        } catch (MetaDataException e) {
             throw new ConfigurationException("Obtaining custom meta data value for [" + name
                     + "] failed: ", e);
         }
@@ -79,13 +78,13 @@ public class CustomMetaDataModule extends AbstractPageEnvelopeModule {
         Object[] values;
         MetaData metaData = getCustomMetaData(objectModel);
 
-        if (!metaData.isValidAttribute(NS_PREFIX + name)) {
+        if (!metaData.isValidAttribute(name)) {
             throw new ConfigurationException("The attribute [" + name + "] is not supported!");
         }
 
         try {
-            values = metaData.getValues(NS_PREFIX + name);
-        } catch (DocumentException e) {
+            values = metaData.getValues(name);
+        } catch (MetaDataException e) {
             throw new ConfigurationException("Obtaining custom meta data value for [" + name
                     + "] failed: ", e);
         }
@@ -101,11 +100,21 @@ public class CustomMetaDataModule extends AbstractPageEnvelopeModule {
         }
         MetaData metaData = null;
         try {
-            metaData = document.getMetaDataManager().getCustomMetaData();
-        } catch (DocumentException e) {
+            metaData = document.getMetaData(this.namespaceUri);
+        } catch (MetaDataException e) {
             throw new ConfigurationException("Obtaining custom meta data value for ["
                     + document.getSourceURI() + "] failed: ", e);
         }
         return metaData;
     }
+
+    private String namespaceUri;
+    
+    public void configure(Configuration conf) throws ConfigurationException {
+        super.configure(conf);
+        this.namespaceUri = conf.getAttribute("namespace", null);
+    }
+    
+    
+    
 }

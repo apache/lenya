@@ -19,11 +19,8 @@ package org.apache.lenya.cms.site.usecases;
 import java.util.Arrays;
 
 import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.lenya.cms.metadata.MetaData;
-import org.apache.lenya.cms.metadata.usecases.Metadata;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
-import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.Publication;
 
 /**
@@ -174,23 +171,6 @@ public class CreateDocument extends Create {
         return getParameterAsString(DOCUMENT_TYPE);
     }
     
-    /**
-     * @see org.apache.lenya.cms.site.usecases.Create#setMetaData(org.apache.lenya.cms.publication.Document)
-     */
-    protected void setMetaData(Document document) throws DocumentException {
-        super.setMetaData(document);
-
-        MetaData customMeta = document.getMetaDataManager().getCustomMetaData();
-        String[] paramNames = getParameterNames();
-        for (int i=0; i<paramNames.length; i++) {
-            if (paramNames[i].startsWith("custom.")) {
-                String key = paramNames[i].substring("custom.".length());
-                String value = getParameterAsString(paramNames[i]);
-                customMeta.addValue(key, value);
-            }
-        }
-    }
-
     protected String getSourceExtension() {
         return "xml";
     }

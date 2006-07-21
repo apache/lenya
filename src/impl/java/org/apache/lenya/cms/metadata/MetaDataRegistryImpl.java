@@ -16,51 +16,44 @@
  */
 package org.apache.lenya.cms.metadata;
 
-import org.apache.avalon.framework.component.ComponentException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
+
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.cocoon.components.ExtendedComponentSelector;
-import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.avalon.framework.thread.ThreadSafe;
 
-public class MetaDataRegistryImpl extends AbstractLogEnabled implements MetaDataRegistry, Serviceable {
-    
-    public ElementSet getElementSet(String namespaceUri) throws DocumentException {
-        ServiceSelector selector = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(ElementSet.class.getName() + "Selector");
-            return (ElementSet) selector.select(namespaceUri);
-        } catch (ServiceException e) {
-            throw new DocumentException(e);
+/**
+ * Meta data registry implementation.
+ */
+public class MetaDataRegistryImpl extends AbstractLogEnabled implements MetaDataRegistry,
+        ThreadSafe {
+
+    public ElementSet getElementSet(String namespaceUri) throws MetaDataException {
+        if (!isRegistered(namespaceUri)) {
+            throw new MetaDataException("The namespace URI [" + namespaceUri
+                    + "] is not registered.");
         }
-        finally {
-            if (selector != null) {
-                this.manager.release(selector);
-            }
-        }
+        return (ElementSet) this.namespace2set.get(namespaceUri);
     }
 
-    public boolean isRegistered(String namespaceUri) throws DocumentException {
-        ServiceSelector selector = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(ElementSet.class.getName() + "Selector");
-            return selector.isSelectable(namespaceUri);
-        } catch (ServiceException e) {
-            throw new DocumentException(e);
-        }
-        finally {
-            if (selector != null) {
-                this.manager.release(selector);
-            }
-        }
+    public boolean isRegistered(String namespaceUri) throws MetaDataException {
+        return this.namespace2set.containsKey(namespaceUri);
     }
 
-    private ServiceManager manager;
-    
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
+    private Map namespace2set = new HashMap();
+
+    public void register(String namespaceUri, ElementSet elementSet) throws MetaDataException {
+        if (this.namespace2set.containsKey(namespaceUri)) {
+            throw new MetaDataException("The namespace [" + namespaceUri
+                    + "] is already registered.");
+        }
+        this.namespace2set.put(namespaceUri, elementSet);
+    }
+
+    public String[] getNamespaceUris() throws MetaDataException {
+        Set keys = this.namespace2set.keySet();
+        return (String[]) keys.toArray(new String[keys.size()]);
     }
 
 }

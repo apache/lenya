@@ -24,8 +24,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 
-import org.apache.lenya.cms.metadata.LenyaMetaData;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
+import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.repo.Area;
 import org.apache.lenya.cms.repo.Asset;
 import org.apache.lenya.cms.repo.AssetType;
@@ -221,7 +221,7 @@ public class Migrate14 {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-            NamespaceHelper helper = new NamespaceHelper(LenyaMetaData.NAMESPACE, "", xmlDoc);
+            NamespaceHelper helper = new NamespaceHelper(PageEnvelope.NAMESPACE, "", xmlDoc);
             Element metaElement = helper.getFirstChild(xmlDoc.getDocumentElement(), "meta");
             Element internalElement = helper.getFirstChild(metaElement, "internal");
             Element resourceTypeElement = helper.getFirstChild(internalElement, "resourceType");
@@ -299,7 +299,7 @@ public class Migrate14 {
             org.w3c.dom.Document xmlDoc = DocumentHelper.readDocument(metaFile);
             importMetaData(trans,
                     xmlDoc,
-                    LenyaMetaData.NAMESPACE,
+                    PageEnvelope.NAMESPACE,
                     "internal",
                     LenyaElements.ELEMENT_SET,
                     LenyaElements.ELEMENTS);
@@ -324,7 +324,7 @@ public class Migrate14 {
             String namespaceUri, String parentElement, String elementSetName,
             org.apache.lenya.cms.repo.metadata.Element[] elements) throws RepositoryException {
 
-        NamespaceHelper lenyaHelper = new NamespaceHelper(LenyaMetaData.NAMESPACE, "", xmlDoc);
+        NamespaceHelper lenyaHelper = new NamespaceHelper(PageEnvelope.NAMESPACE, "", xmlDoc);
         Element metaElement = lenyaHelper.getFirstChild(xmlDoc.getDocumentElement(), "meta");
         Element parent = lenyaHelper.getFirstChild(metaElement, parentElement);
 

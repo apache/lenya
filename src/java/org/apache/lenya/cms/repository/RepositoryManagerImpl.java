@@ -37,7 +37,10 @@ public class RepositoryManagerImpl extends AbstractLogEnabled implements Reposit
         SourceResolver resolver = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            destination.getMetaDataManager().replaceMetaData(source.getMetaDataManager());
+            String[] namespaces = source.getMetaDataNamespaceUris();
+            for (int i = 0; i < namespaces.length; i++) {
+                destination.getMetaData(namespaces[i]).replaceBy(source.getMetaData(namespaces[i]));
+            }
             SourceUtil.copy(resolver, source.getSourceURI(), destination.getSourceURI());
         } catch (Exception e) {
             throw new RepositoryException(e);

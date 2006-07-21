@@ -40,6 +40,7 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.MetaData;
+import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.repository.Node;
 
 /**
@@ -162,7 +163,7 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
             }    
 
             saveResource(resource, part);
-        } catch (final DocumentException e) {
+        } catch (final MetaDataException e) {
             getLogger().error("Document exception " + e.toString());
             throw new RuntimeException(e);
         } catch (final IOException e) {

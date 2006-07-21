@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.lenya.cms.metadata.MetaData;
+import org.apache.lenya.cms.metadata.MetaDataRegistry;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -54,32 +55,30 @@ public class Metadata extends SiteUsecase {
      */
     protected void initParameters() {
         super.initParameters();
-        
-        // dc metadata
-        
+
+        MetaDataRegistry registry = null;
         try {
-            
+            registry = (MetaDataRegistry) this.manager.lookup(MetaDataRegistry.ROLE);
+
             List numbers = new ArrayList();
-            
             Map num2namespace = new HashMap();
-            
             List keyList = new ArrayList();
-            
-            String[] namespaces = getSourceDocument().getMetaDataNamespaceUris();
-            
+
+            String[] namespaces = registry.getNamespaceUris();
+
             for (int nsIndex = 0; nsIndex < namespaces.length; nsIndex++) {
                 MetaData meta = getSourceDocument().getMetaData(namespaces[nsIndex]);
                 boolean matched = false;
                 String[] keys = meta.getPossibleKeys();
                 for (int keyIndex = 0; keyIndex < keys.length; keyIndex++) {
                     if (meta.getElementSet().getElement(keys[keyIndex]).isEditable()) {
+                        String key = nsIndex + "." + keys[keyIndex];
                         String value = meta.getFirstValue(keys[keyIndex]);
                         if (value != null) {
-                            String key = nsIndex + "." + keys[keyIndex];
                             setParameter(key, value);
-                            keyList.add(key);
-                            matched = true;
                         }
+                        keyList.add(key);
+                        matched = true;
                     }
                 }
                 if (matched) {
@@ -87,16 +86,20 @@ public class Metadata extends SiteUsecase {
                     num2namespace.put("" + nsIndex, namespaces[nsIndex]);
                 }
             }
-            
+
             setParameter("numbers", numbers);
             setParameter("namespaces", num2namespace);
-            
+
             Collections.sort(keyList);
             setParameter("keys", keyList);
 
         } catch (Exception e) {
             getLogger().error("Unable to load meta data.", e);
             addErrorMessage("Unable to load meta data: " + e.getMessage());
+        } finally {
+            if (registry != null) {
+                this.manager.release(registry);
+            }
         }
 
     }

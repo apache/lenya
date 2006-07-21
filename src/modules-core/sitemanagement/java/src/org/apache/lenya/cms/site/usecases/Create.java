@@ -20,7 +20,6 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,6 +30,8 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.cms.metadata.MetaData;
+import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -219,22 +220,21 @@ public abstract class Create extends AbstractUsecase {
      * @param document The document.
      * @throws DocumentException if an error occurs.
      */
-    protected void setMetaData(Document document) throws DocumentException {
+    protected void setMetaData(Document document) throws MetaDataException {
 
         if (document == null)
             throw new IllegalArgumentException("parameter document may not be null");
 
-        Map dcMetaData = new HashMap();
-        dcMetaData.put(DublinCore.ELEMENT_TITLE, getParameterAsString(DublinCore.ELEMENT_TITLE));
-        dcMetaData.put(DublinCore.ELEMENT_CREATOR, getParameterAsString(DublinCore.ELEMENT_CREATOR));
-        dcMetaData.put(DublinCore.ELEMENT_PUBLISHER,
+        MetaData dcMetaData = document.getMetaData(DublinCore.DC_NAMESPACE);
+        
+        dcMetaData.setValue(DublinCore.ELEMENT_TITLE, getParameterAsString(DublinCore.ELEMENT_TITLE));
+        dcMetaData.setValue(DublinCore.ELEMENT_CREATOR, getParameterAsString(DublinCore.ELEMENT_CREATOR));
+        dcMetaData.setValue(DublinCore.ELEMENT_PUBLISHER,
                 getParameterAsString(DublinCore.ELEMENT_PUBLISHER));
-        dcMetaData.put(DublinCore.ELEMENT_SUBJECT, getParameterAsString(DublinCore.ELEMENT_SUBJECT));
-        dcMetaData.put(DublinCore.ELEMENT_DATE, getParameterAsString(DublinCore.ELEMENT_DATE));
-        dcMetaData.put(DublinCore.ELEMENT_RIGHTS, getParameterAsString(DublinCore.ELEMENT_RIGHTS));
-        dcMetaData.put(DublinCore.ELEMENT_LANGUAGE, getParameterAsString(LANGUAGE));
-
-        document.getMetaDataManager().setDublinCoreMetaData(dcMetaData);
+        dcMetaData.setValue(DublinCore.ELEMENT_SUBJECT, getParameterAsString(DublinCore.ELEMENT_SUBJECT));
+        dcMetaData.setValue(DublinCore.ELEMENT_DATE, getParameterAsString(DublinCore.ELEMENT_DATE));
+        dcMetaData.setValue(DublinCore.ELEMENT_RIGHTS, getParameterAsString(DublinCore.ELEMENT_RIGHTS));
+        dcMetaData.setValue(DublinCore.ELEMENT_LANGUAGE, getParameterAsString(LANGUAGE));
     }
 
     /**

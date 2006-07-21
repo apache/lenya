@@ -18,7 +18,6 @@ package org.apache.lenya.cms.metadata;
 
 import org.apache.lenya.ac.impl.AccessControlTest;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
-import org.apache.lenya.cms.metadata.dublincore.DublinCoreImpl;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
@@ -55,7 +54,7 @@ public class MetaDataTest extends AccessControlTest {
         
     }
     
-    protected void checkSetTitle(MetaData dc) throws DocumentException {
+    protected void checkSetTitle(MetaData dc) throws MetaDataException {
         Exception e = null;
         try {
             dc.setValue("foo", "bar");

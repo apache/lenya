@@ -1,5 +1,5 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
+ * Copyright  1999-2005 The Apache Software Foundation
  *
  *  Licensed under the Apache License, Version 2.0 (the "License");
  *  you may not use this file except in compliance with the License.
@@ -17,32 +17,37 @@
 package org.apache.lenya.cms.metadata;
 
 /**
- * Definition of a set of meta data elements.
+ * Meta data exception.
  */
-public interface ElementSet {
-    
+public class MetaDataException extends Exception {
+
     /**
-     * @return The supported elements.
+     * 
      */
-    Element[] getElements();
-    
+    public MetaDataException() {
+        super();
+    }
+
     /**
-     * @param name The name.
-     * @return The element.
-     * @throws MetaDataException if the element with this name does not exist.
+     * @param arg0
+     * @param arg1
      */
-    Element getElement(String name) throws MetaDataException;
-    
+    public MetaDataException(String arg0, Throwable arg1) {
+        super(arg0, arg1);
+    }
+
     /**
-     * @return The namespace URI of this element set.
+     * @param arg0
      */
-    String getNamespaceUri();
-    
+    public MetaDataException(String arg0) {
+        super(arg0);
+    }
+
     /**
-     * Checks if an element with a certain name is contained.
-     * @param name The name.
-     * @return A boolean value.
+     * @param arg0
      */
-    boolean containsElement(String name);
-    
+    public MetaDataException(Throwable arg0) {
+        super(arg0);
+    }
+
 }

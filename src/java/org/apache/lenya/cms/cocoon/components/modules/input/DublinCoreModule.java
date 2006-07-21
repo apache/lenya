@@ -19,15 +19,16 @@
 
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
+import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.lenya.cms.metadata.Element;
 import org.apache.lenya.cms.metadata.MetaData;
+import org.apache.lenya.cms.metadata.MetaDataRegistry;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
-import org.apache.lenya.cms.metadata.dublincore.DublinCoreImpl;
 import org.apache.lenya.cms.publication.Document;
 
 /**
@@ -69,13 +70,23 @@ public class DublinCoreModule extends AbstractPageEnvelopeModule {
      */
     public Iterator getAttributeNames(Configuration modeConf, Map objectModel)
             throws ConfigurationException {
+        
+        MetaDataRegistry registry = null;
+        try {
+            registry = (MetaDataRegistry) this.manager.lookup(MetaDataRegistry.ROLE);
+            Element[] elements = registry.getElementSet(DublinCore.DC_NAMESPACE).getElements();
+            String[] keys = new String[elements.length];
+            for (int i = 0; i < keys.length; i++) {
+                keys[i] = elements[i].getName();
+            }
+            return Arrays.asList(keys).iterator();
+        } catch (Exception e) {
+            throw new ConfigurationException(e.getMessage(), e);
+        }
+        finally {
+            this.manager.release(registry);
+        }
 
-        // calling static method on DublinCoreImpl is a work-around
-        // because we do not have access to an instance here, because
-        // the page envelope cannot be read here.
-        List names = DublinCoreImpl.getAttributeNames();
-
-        return names.iterator();
     }
 
     /**

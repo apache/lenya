@@ -35,7 +35,9 @@ import org.apache.cocoon.jcr.source.JCRNodeSource;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.metadata.ElementSet;
 import org.apache.lenya.cms.metadata.MetaData;
+import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.repository.RepositoryException;
 
 /**
  * JCR based meta data.
@@ -113,7 +115,7 @@ public class JCRMetaData extends AbstractLogEnabled implements MetaData {
         }
     }
 
-    public void save() throws DocumentException {
+    public void save() throws MetaDataException {
         SourceResolver resolver = null;
         JCRNodeSource source = null;
         try {
@@ -154,11 +156,11 @@ public class JCRMetaData extends AbstractLogEnabled implements MetaData {
         }
     }
 
-    public String[] getValues(String key) throws DocumentException {
+    public String[] getValues(String key) throws MetaDataException {
         return (String[]) getKey2Values().get(key);
     }
 
-    public String getFirstValue(String key) throws DocumentException {
+    public String getFirstValue(String key) throws MetaDataException {
         String value = null;
         String[] values = (String[]) getKey2Values().get(key);
         if (values.length > 0) {
@@ -167,12 +169,12 @@ public class JCRMetaData extends AbstractLogEnabled implements MetaData {
         return value;
     }
 
-    public void setValue(String key, String value) throws DocumentException {
+    public void setValue(String key, String value) throws MetaDataException {
         String[] values = { value };
         getKey2Values().put(key, values);
     }
 
-    public void addValue(String key, String value) throws DocumentException {
+    public void addValue(String key, String value) throws MetaDataException {
         String[] values = (String[]) getKey2Values().get(key);
         List valueList = new ArrayList(Arrays.asList(values));
         valueList.add(value);
@@ -180,7 +182,7 @@ public class JCRMetaData extends AbstractLogEnabled implements MetaData {
         getKey2Values().put(key, values);
     }
 
-    public void replaceBy(MetaData other) throws DocumentException {
+    public void replaceBy(MetaData other) throws MetaDataException {
         this.key2values = new HashMap();
         String[] keys = getPossibleKeys();
         for (int i = 0; i < keys.length; i++) {
@@ -213,14 +215,14 @@ public class JCRMetaData extends AbstractLogEnabled implements MetaData {
         return null;
     }
 
-    public long getLastModified() throws DocumentException {
+    public long getLastModified() throws MetaDataException {
         long lastModified = 0;
         try {
             SourceResolver resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             JCRNodeSource source = (JCRNodeSource) resolver.resolveURI(this.sourceUri);
             lastModified = source.getLastModified();
         } catch (Exception e) {
-            throw new DocumentException("Error resolving meta data source", e);
+            throw new MetaDataException("Error resolving meta data source", e);
         }
         return lastModified;
     }

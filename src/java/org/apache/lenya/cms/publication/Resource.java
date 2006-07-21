@@ -27,10 +27,9 @@ import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.metadata.MetaData;
-import org.apache.lenya.cms.metadata.MetaDataManager;
+import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.MetaDataOwner;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.repository.RepositoryException;
 
 /**
  * A resource (asset).
@@ -42,7 +41,6 @@ public class Resource extends AbstractLogEnabled implements MetaDataOwner {
     private Document document;
     private String name;
     private ServiceManager manager;
-    private MetaDataManager metaDataManager;
     private String contentDir = null;
 
     protected static final String FILE_PREFIX = "file:/";
@@ -74,31 +72,6 @@ public class Resource extends AbstractLogEnabled implements MetaDataOwner {
      */
     public String getName() {
         return name;
-    }
-
-    /**
-     * @see org.apache.lenya.cms.metadata.MetaDataOwner#getMetaDataManager()
-     */
-    public MetaDataManager getMetaDataManager() {
-        if (this.metaDataManager == null) {
-            SourceResolver resolver = null;
-            RepositorySource source = null;
-            try {
-                resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-                source = (RepositorySource) resolver.resolveURI(getSourceURI());
-                this.metaDataManager = source.getNode().getMetaDataManager();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            } finally {
-                if (resolver != null) {
-                    if (source != null) {
-                        resolver.release(source);
-                    }
-                    this.manager.release(resolver);
-                }
-            }
-        }
-        return metaDataManager;
     }
 
     /**
@@ -258,11 +231,11 @@ public class Resource extends AbstractLogEnabled implements MetaDataOwner {
         }
     }
 
-    public MetaData getMetaData(String namespaceUri) throws RepositoryException {
+    public MetaData getMetaData(String namespaceUri) throws MetaDataException {
         return getRepositoryNodes()[0].getMetaData(namespaceUri);
     }
 
-    public String[] getMetaDataNamespaceUris() throws RepositoryException {
+    public String[] getMetaDataNamespaceUris() throws MetaDataException {
         return getRepositoryNodes()[0].getMetaDataNamespaceUris();
     }
     

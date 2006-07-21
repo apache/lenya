@@ -24,8 +24,8 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.metadata.Element;
 import org.apache.lenya.cms.metadata.ElementSet;
 import org.apache.lenya.cms.metadata.MetaData;
+import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.MetaDataRegistry;
-import org.apache.lenya.cms.publication.DocumentException;
 
 /**
  * Source-node-based meta data.
@@ -63,16 +63,12 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
         return this.elementSet;
     }
 
-    public String[] getValues(String key) throws DocumentException {
+    public String[] getValues(String key) throws MetaDataException {
         checkKey(key);
-        try {
-            return this.node.getValues(this.namespaceUri, key);
-        } catch (RepositoryException e) {
-            throw new DocumentException(e);
-        }
+        return this.node.getValues(this.namespaceUri, key);
     }
 
-    public String getFirstValue(String key) throws DocumentException {
+    public String getFirstValue(String key) throws MetaDataException {
         checkKey(key);
         String[] values = getValues(key);
         if (values.length == 0) {
@@ -92,34 +88,26 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
         return keys;
     }
 
-    protected void checkKey(String key) throws DocumentException {
+    protected void checkKey(String key) throws MetaDataException {
         if (!isValidAttribute(key)) {
-            throw new DocumentException("The meta data element set ["
+            throw new MetaDataException("The meta data element set ["
                     + getElementSet().getNamespaceUri() + "] does not support the key [" + key
                     + "]!");
         }
     }
 
-    public void setValue(String key, String value) throws DocumentException {
+    public void setValue(String key, String value) throws MetaDataException {
         checkKey(key);
-        try {
-            this.node.removeAllValues(this.namespaceUri, key);
-            addValue(key, value);
-        } catch (RepositoryException e) {
-            throw new DocumentException(e);
-        }
+        this.node.removeAllValues(this.namespaceUri, key);
+        addValue(key, value);
     }
 
-    public void addValue(String key, String value) throws DocumentException {
+    public void addValue(String key, String value) throws MetaDataException {
         checkKey(key);
-        try {
-            this.node.addValue(this.namespaceUri, key, value);
-        } catch (RepositoryException e) {
-            throw new DocumentException(e);
-        }
+        this.node.addValue(this.namespaceUri, key, value);
     }
 
-    public void replaceBy(MetaData other) throws DocumentException {
+    public void replaceBy(MetaData other) throws MetaDataException {
         Element[] elements = getElementSet().getElements();
         for (int i = 0; i < elements.length; i++) {
             String key = elements[i].getName();
@@ -148,7 +136,7 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
                     map.put(key, Arrays.asList(values));
                 }
             }
-        } catch (DocumentException e) {
+        } catch (MetaDataException e) {
             throw new RuntimeException(e);
         }
         return map;
@@ -158,26 +146,22 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
         return Arrays.asList(getAvailableKeys()).contains(key);
     }
 
-    public long getLastModified() throws DocumentException {
+    public long getLastModified() throws MetaDataException {
         try {
             return this.node.getLastModified();
         } catch (RepositoryException e) {
-            throw new DocumentException(e);
+            throw new MetaDataException(e);
         }
     }
 
     /**
      * Removes all values for a certain key.
      * @param key The key.
-     * @throws DocumentException if an error occurs.
+     * @throws MetaDataException if an error occurs.
      */
-    public void removeAllValues(String key) throws DocumentException {
+    public void removeAllValues(String key) throws MetaDataException {
         checkKey(key);
-        try {
-            this.node.removeAllValues(this.namespaceUri, key);
-        } catch (RepositoryException e) {
-            throw new DocumentException(e);
-        }
+        this.node.removeAllValues(this.namespaceUri, key);
     }
 
 }

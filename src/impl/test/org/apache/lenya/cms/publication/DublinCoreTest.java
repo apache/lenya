@@ -20,6 +20,7 @@ package org.apache.lenya.cms.publication;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.impl.AccessControlTest;
 import org.apache.lenya.cms.metadata.MetaData;
+import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.repository.RepositoryException;
 
@@ -38,11 +39,13 @@ public class DublinCoreTest extends AccessControlTest {
     /**
      * Test the fetching, modification and refetching of a dc core object.
      * @throws PublicationException 
+     * @throws MetaDataException
      * @throws RepositoryException 
      * @throws AccessControlException 
+     * @throws RepositoryException 
      */
-    final public void testModifySaveAndReload() throws PublicationException, RepositoryException,
-            AccessControlException {
+    final public void testModifySaveAndReload() throws PublicationException, MetaDataException,
+            AccessControlException, RepositoryException {
         
         login("lenya");
         

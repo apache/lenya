@@ -18,8 +18,6 @@ package org.apache.lenya.cms.metadata;
 
 import java.util.HashMap;
 
-import org.apache.lenya.cms.publication.DocumentException;
-
 /**
  * Generic meta data interface.
  * 
@@ -31,17 +29,17 @@ public interface MetaData {
      * Returns the values for a certain key.
      * @param key The key.
      * @return An array of strings.
-     * @throws DocumentException when something went wrong.
+     * @throws MetaDataException when something went wrong.
      */
-    String[] getValues(String key) throws DocumentException;
+    String[] getValues(String key) throws MetaDataException;
 
     /**
      * Returns the first value for a certain key.
      * @param key The key.
      * @return A string or <code>null</code> if no value is set for this key.
-     * @throws DocumentException if an error occurs.
+     * @throws MetaDataException if an error occurs.
      */
-    String getFirstValue(String key) throws DocumentException;
+    String getFirstValue(String key) throws MetaDataException;
     
     /**
      * Get all available keys.
@@ -53,24 +51,24 @@ public interface MetaData {
      * Sets the value for a certain key. All existing values will be removed.
      * @param key The key.
      * @param value The value to set.
-     * @throws DocumentException when something went wrong.
+     * @throws MetaDataException when something went wrong.
      */
-    void setValue(String key, String value) throws DocumentException;
+    void setValue(String key, String value) throws MetaDataException;
     
     /**
      * Addds a value for a certain key. The existing values will not be removed.
      * @param key The key.
      * @param value The value to add.
-     * @throws DocumentException when something went wrong.
+     * @throws MetaDataException when something went wrong.
      */
-    void addValue(String key, String value) throws DocumentException;
+    void addValue(String key, String value) throws MetaDataException;
 
     /**
      * Replace the contents of the current meta data by the contents of other.
      * @param other The other meta data manager.
-     * @throws DocumentException if an error occurs.
+     * @throws MetaDataException if an error occurs.
      */
-    void replaceBy(MetaData other) throws DocumentException;
+    void replaceBy(MetaData other) throws MetaDataException;
     
     /**
      * @return All keys that can be used.
@@ -92,9 +90,9 @@ public interface MetaData {
     /**
      * Get last modification date.
      * @return last modification date
-     * @throws DocumentException if an error occurs.
+     * @throws MetaDataException if an error occurs.
      */
-     long getLastModified() throws DocumentException;
+     long getLastModified() throws MetaDataException;
      
      /**
      * @return The element set this meta data object belongs to.

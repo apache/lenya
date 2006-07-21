@@ -31,10 +31,9 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.MetaData;
-import org.apache.lenya.cms.metadata.MetaDataManager;
+import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.site.SiteManager;
 
 /**
@@ -46,7 +45,6 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     private DocumentIdentifier identifier;
     private DocumentFactory identityMap;
     protected ServiceManager manager;
-    private MetaDataManager metaDataManager;
 
     /**
      * The meta data namespace.
@@ -124,9 +122,9 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         MetaData metaData = null;
         String expiresMeta = null;
         try {
-            metaData = this.getMetaDataManager().getLenyaMetaData();
+            metaData = this.getMetaData(METADATA_NAMESPACE);
             expiresMeta = metaData.getFirstValue("expires");
-        } catch (DocumentException e) {
+        } catch (MetaDataException e) {
             throw new DocumentException(e);
         }
         if (expiresMeta != null) {
@@ -467,35 +465,6 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     /**
-     * @see org.apache.lenya.cms.metadata.MetaDataOwner#getMetaDataManager()
-     */
-    public MetaDataManager getMetaDataManager() {
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Publication source URI for document [" + this + "]: "
-                    + getPublication().getSourceURI());
-        }
-        if (this.metaDataManager == null) {
-            SourceResolver resolver = null;
-            RepositorySource source = null;
-            try {
-                resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-                source = (RepositorySource) resolver.resolveURI(getSourceURI());
-                this.metaDataManager = source.getNode().getMetaDataManager();
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            } finally {
-                if (resolver != null) {
-                    if (source != null) {
-                        resolver.release(source);
-                    }
-                    this.manager.release(resolver);
-                }
-            }
-        }
-        return metaDataManager;
-    }
-
-    /**
      * @see org.apache.lenya.cms.publication.Document#delete()
      */
     public void delete() throws DocumentException {
@@ -564,11 +533,11 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         return this.resourceType;
     }
 
-    public MetaData getMetaData(String namespaceUri) throws RepositoryException {
+    public MetaData getMetaData(String namespaceUri) throws MetaDataException {
         return getRepositoryNode().getMetaData(namespaceUri);
     }
 
-    public String[] getMetaDataNamespaceUris() throws RepositoryException {
+    public String[] getMetaDataNamespaceUris() throws MetaDataException {
         return getRepositoryNode().getMetaDataNamespaceUris();
     }
 
