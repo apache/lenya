@@ -7,7 +7,7 @@
   <lenya:depends module="org.apache.lenya.modules.usecase"/>
   <lenya:depends module="org.apache.lenya.modules.defaultusecases"/>
   <lenya:depends module="org.apache.lenya.modules.sitemanagement"/>
-  <lenya:package>org.wyona.lenya.modules</lenya:package>
+  <lenya:package>org.apache.lenya.modules</lenya:package>
   <lenya:version>0.1-dev</lenya:version>
   <lenya:name>Resource Module</lenya:name>
   <lenya:lenya-version>@lenya.version@</lenya:lenya-version>
