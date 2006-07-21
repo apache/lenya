@@ -30,11 +30,11 @@
 
 <xsl:template match="/">
   <introspection>
-    <edit mime-type="application/xml" name="Body Content">
-<!-- TODO: In order to get the WYSIWYG view one needs to change the mime-type to xhtml+xml, but somehow this causes problems re saving ... See missing mime-type within cocoon_2_1_x/src/java/org/apache/cocoon/generation/StreamGenerator.java -->
 <!--
-    <edit mime-type="application/xhtml+xml" name="Body Content">
+    <edit mime-type="application/xml" name="Body Content">
 -->
+<!-- TODO: In order to get the WYSIWYG view one needs to change the mime-type to xhtml+xml, but somehow this causes problems re saving ... See missing mime-type within cocoon_2_1_x/src/java/org/apache/cocoon/generation/StreamGenerator.java -->
+    <edit mime-type="application/xhtml+xml" name="Body Content">
 
       <!--<open url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.module=neutron&amp;lenya.step=open" method="GET"/>-->
 
