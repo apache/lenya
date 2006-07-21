@@ -35,10 +35,11 @@ import org.apache.lenya.cms.publication.PublicationUtil;
 
 /**
  * LDAP user test.
+ * The name "Abstract..." is used to prevent it from being executed.
  * 
  * @version $Id$
  */
-public class LDAPUserTest extends AccessControlTest {
+public class AbstractLDAPUserTest extends AccessControlTest {
 
     /**
      * get a publication
