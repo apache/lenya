@@ -307,5 +307,15 @@
     <role id="edit"/>
     <role id="review"/>
   </usecase>
+  <usecase id="upload.resource">
+    <role id="admin"/>
+    <role id="edit"/>
+    <role id="review"/>
+  </usecase>
+  <usecase id="create.resource">
+    <role id="admin"/>
+    <role id="edit"/>
+    <role id="review"/>
+  </usecase>
 </usecases>
     

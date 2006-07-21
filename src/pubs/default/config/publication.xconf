@@ -43,6 +43,7 @@
   <module name="opendocument"/>
   <module name="cforms"/>
   <module name="homepage"/>
+  <module name="resource"/>
   <!-- TODO: The goal is to have a blog module ;-) -->
   <!--
   <module name="blog"/>
