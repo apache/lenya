@@ -24,61 +24,133 @@
   <body>
     <section>
       <title>Introduction</title>
-      <p>In 1.4.x meta data is kept apart from the xml document but in the same 
-        directory (index_{lang}.xml.meta). There are differnt types of meta 
-        data. </p>
-      <ol>
-        <li>The default is based on the <a href="http://dublincore.org">Dublin 
-          Core</a> standard (like in 1.2.x).</li>
-        <li>Besides we introduced internal (used by lenya internally and not 
-          exposed to the user)</li>
-        <li>and custom metadata (added from the developer to enable user to 
-          maintain their extra informations about the document)</li>
-      </ol>
-      <p>There are basically two use cases as example:</p>
-      <ol>
-        <li>Create meta data</li>
-        <li>Display/modify meta data</li>
-      </ol>
+      <p>
+        Meta data are organized in <em>element sets</em>.
+        An element set is identified using a namespace URI.
+        Each element set can supply a fixed set of elements.
+        An element is identified using a name. An element can
+        be <em>editable</em>, and it can support <em>multiple values</em>.
+      </p>
     </section>
+    
     <section>
-      <title>Example</title>
-      <p>A typical sample for meta data may be the following:</p>
-      <source><![CDATA[<lenya:document xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" 
-  xmlns:dc="http://purl.org/dc/elements/1.1/">
-  <lenya:meta>
-    <lenya:custom>
-      <lenya:myCustom>My custom metadata</lenya:myCustom>
-    </lenya:custom>
-    <lenya:internal>
-      <lenya:resourceType>xhtml</lenya:resourceType>
-      <lenya:contentType>xml</lenya:contentType>
-    </lenya:internal>
-    <lenya:dc>
-      <dc:title>Some Lenya Features quickly explained</dc:title>
-      <dc:creator>Lenya Development Team</dc:creator>
-      <dc:subject>Lenya Features</dc:subject>
-      <dc:description>Explains some Lenya features</dc:description>
-      <dc:publisher>Apache Software Foundation</dc:publisher>
-      <dc:contributor/>
-      <dc:date>2005-01-31</dc:date>
-      <dc:type/>
-      <dc:format/>
-      <dc:identifier/>
-      <dc:source/>
-      <dc:language>en</dc:language>
-      <dc:relation/>
-      <dc:coverage/>
-      <dc:rights>All rights reserved</dc:rights>
-    </lenya:dc>
-  </lenya:meta>
-</lenya:document>]]> </source>
+      <title>Registering Meta Data Element Sets</title>
+      <p>Element sets are declared using patch files for <code>cocoon.xconf</code>.
+      When the application starts up, they are registered with the <code>MetaDataRegistry</code>.
+      Here's an example:</p>
+<source xml:space="preserve"><![CDATA[<xconf xpath="/cocoon/meta-data"
+    unless="/cocoon/meta-data/component-instance
+      [@name = 'http://apache.org/lenya/metadata/media/1.0']">
+  <component-instance name="http://apache.org/lenya/metadata/media/1.0"
+    class="org.apache.lenya.cms.metadata.ConfigurableElementSet">
+    <element name="filename" multiple="false"/>
+    <element name="format" multiple="false"/>
+    <element name="extent" multiple="false"/>
+    <element name="width" multiple="false"/>
+    <element name="height" multiple="false"/>
+    <element name="caption" multiple="false" editable="true"/>
+  </component-instance>
+</xconf>]]></source>
+    </section>
+    
+    <section>
+      <title>Accessing Meta Data</title>
+      <p>Here's an example for accessing the meta data of a document:</p>
+      <source xml:space="preserve"><![CDATA[
+MetaData meta = document.getMetaData("http://myproject.org/metadata/1.0");
+String description = meta.getFirstValue("description");
+String[] references = meta.getValues("references");
+]]></source>
+      <p>To find out which element sets are registered, you can access
+      the <code>MetaDataRegistry</code>:</p>
+      <source xml:space="preserve"><![CDATA[
+MetaDataRegistry registry = null;
+try {
+    registry = (MetaDataRegistry) this.manager.lookup(MetaDataRegistry.ROLE);
+    String[] namespaces = registry.getNamespaceUris();
+    ...
+}
+finally {
+    if (registry != null) {
+        this.manager.release(registry);
+    }
+}      
+]]></source>
+    </section>
+    
+    <section>
+      <title>The Meta Data Input Module</title>
+      <p>You can use the <code>MetaDataModule</code> to make an element set accessible
+      in Cocoon sitemaps. To declare it, use a patch file for <code>cocoon.xconf</code>:</p>
+      <source xml:space="preserve"><![CDATA[<xconf xpath="/cocoon/input-modules"
+  unless="/cocoon/input-modules/component-instance[@name = 'mymeta']">
+  <component-instance logger="sitemap.modules.input.mymeta" name="mymeta"
+    class="org.apache.lenya.cms.cocoon.components.modules.input.MetaDataModule"
+    namespace="http://myproject.org/metadata/1.0"/>
+</xconf>]]></source>
+      <p>Now you can access the meta data in your pipelines:</p>
+      <source xml:space="preserve"><![CDATA[<map:transform src="...">
+  <map:parameter name="description" value="{mymeta:description}"/>
+</map:transform>]]></source>
+    </section>
+    
+    <section>
+      <title>Storage</title>
+      <p>In 1.4.x meta data is stored separately from the document content but in the same 
+        directory (index_{lang}.meta).
+        A typical sample for a meta data XML document may be the following:
+      </p>
+      <source><![CDATA[<metadata xmlns="http://apache.org/lenya/metadata/1.0">
+  <element-set namespace="http://apache.org/lenya/metadata/media/1.0">
+    <element key="width">
+      <value>300</value>
+    </element>
+    <element key="height">
+      <value>374</value>
+    </element>
+    <element key="extent">
+      <value>30291</value>
+    </element>
+    <element key="filename">
+      <value>hello-world.jpg</value>
+    </element>
+    <element key="format">
+      <value>image/jpeg</value>
+    </element>
+  </element-set>
+  <element-set namespace="http://purl.org/dc/elements/1.1/">
+    <element key="creator">
+      <value>lenya</value>
+    </element>
+    <element key="title">
+      <value>Hello World</value>
+    </element>
+    <element key="date">
+      <value>2006-07-20 22:44:37</value>
+    </element>
+    <element key="language">
+      <value>en</value>
+    </element>
+  </element-set>
+  <element-set namespace="http://apache.org/lenya/metadata/document/1.0">
+    <element key="extension">
+      <value>jpg</value>
+    </element>
+    <element key="resourceType">
+      <value>resource</value>
+    </element>
+    <element key="contentType">
+      <value>xml</value>
+    </element>
+  </element-set>
+</metadata>
+]]> </source>
     </section>
     <section>
       <title>Implementation</title>
       <p>Like nearly all new modules/functionality the meta data usecases are 
         following the new <strong>fallback</strong> concept. Meaning you are 
-        using the core contracts as long you are *not* overriding them with 
+        using the core contracts as long you are <strong>not</strong> overriding them with 
         your own implementation. To override a core implementation you just 
         need to place your custom implementation to the right path in you pub 
         and lenya will try to pick it up from there.</p>
@@ -89,10 +161,10 @@
           (subject, desciption, etc.) and partly by the system (creator, 
           creation data). This is done with the <code>site.create</code> 
           usecase (lenya.usecase=site.create).</p>
-        <p> We activated that all custom meta data will be picked up from the 
-          form and saved to the meta data doc. To tell lenya that you want as 
-          well create a set of custom meta data, you need to modify your 
-          implementation of the create.jx. form.</p>
+        <p> To tell lenya that you want as 
+          well create a set of custom meta data, you need to extend the
+          usecase handler and modify your 
+          implementation of the <code>create.jx</code> form.</p>
         <note label="Custom implementation of create.jx"> An 
           <strong>example</strong> of an implementation can be found in 
           <code>{$default-pub}/lenya/usecases/site/create.jx</code>. Just 
@@ -102,13 +174,7 @@
       <section>
         <title>Display/modify meta data</title>
         <p>The display of meta data is handled by the usecase 
-          <code>tab.meta</code>. We activated that all custom meta data are 
-          passed to the form. However you will need to add the fields you want 
-          to edit in your own implementation of the meta.jx.</p>
-        <note label="Custom implementation of meta.jx"> An <strong>example</strong> of an 
-          implementation can be found in 
-          <code>{$default-pub}/lenya/usecases/tab/meta.jx</code>. If you need 
-          it in your custom pub just mind the path. </note>
+          <code>tab.meta</code>. All editable meta data are presented by the form.</p>
       </section>
     </section>
   </body>
