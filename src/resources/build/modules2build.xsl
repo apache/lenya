@@ -233,6 +233,7 @@
       <xsl:if test="normalize-space($testDependencyList) != ''">
         <xsl:attribute name="depends"><xsl:value-of select="$testDependencyList"/></xsl:attribute>
       </xsl:if>
+      <mkdir dir="${{build.dir}}/modules/{$id}"/>
       <xslt basedir="{$src}"
         includes="config/cocoon-xconf/**.xconf"
         destdir="${{build.dir}}/modules/{$id}"
