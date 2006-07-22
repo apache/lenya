@@ -173,7 +173,16 @@ document.write("Last Published: " + document.lastModified);
 <a href="#Introduction">Introduction</a>
 </div>
 <div class="menupageitem">
-<a href="#Example">Example</a>
+<a title="Registering Meta Data Element Sets" href="#Registering+Meta+Data+Element+Sets">Registering Meta Da...</a>
+</div>
+<div class="menupageitem">
+<a title="Accessing Meta Data" href="#Accessing+Meta+Data">Accessing Meta Data...</a>
+</div>
+<div class="menupageitem">
+<a title="The Meta Data Input Module" href="#The+Meta+Data+Input+Module">The Meta Data Input...</a>
+</div>
+<div class="menupageitem">
+<a href="#Storage">Storage</a>
 </div>
 <div class="menupageitem">
 <a href="#Implementation">Implementation</a>
@@ -232,86 +241,157 @@ document.write("Last Published: " + document.lastModified);
 <a name="N1000E"></a><a name="Introduction"></a>
 <h2 class="h3">Introduction</h2>
 <div class="section">
-<p>In 1.4.x meta data is kept apart from the xml document but in the same 
-        directory (index_{lang}.xml.meta). There are differnt types of meta 
-        data. </p>
-<ol>
-        
-<li>The default is based on the <a href="http://dublincore.org">Dublin 
-          Core</a> standard (like in 1.2.x).</li>
-        
-<li>Besides we introduced internal (used by lenya internally and not 
-          exposed to the user)</li>
-        
-<li>and custom metadata (added from the developer to enable user to 
-          maintain their extra informations about the document)</li>
-      
-</ol>
-<p>There are basically two use cases as example:</p>
-<ol>
-        
-<li>Create meta data</li>
-        
-<li>Display/modify meta data</li>
-      
-</ol>
+<p>
+        Meta data are organized in <em>element sets</em>.
+        An element set is identified using a namespace URI.
+        Each element set can supply a fixed set of elements.
+        An element is identified using a name. An element can
+        be <em>editable</em>, and it can support <em>multiple values</em>.
+      </p>
 </div>
     
-<a name="N10034"></a><a name="Example"></a>
-<h2 class="h3">Example</h2>
+    
+<a name="N10021"></a><a name="Registering+Meta+Data+Element+Sets"></a>
+<h2 class="h3">Registering Meta Data Element Sets</h2>
 <div class="section">
-<p>A typical sample for meta data may be the following:</p>
-<pre class="code">&lt;lenya:document xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0" 
-  xmlns:dc="http://purl.org/dc/elements/1.1/"&gt;
-  &lt;lenya:meta&gt;
-    &lt;lenya:custom&gt;
-      &lt;lenya:myCustom&gt;My custom metadata&lt;/lenya:myCustom&gt;
-    &lt;/lenya:custom&gt;
-    &lt;lenya:internal&gt;
-      &lt;lenya:resourceType&gt;xhtml&lt;/lenya:resourceType&gt;
-      &lt;lenya:contentType&gt;xml&lt;/lenya:contentType&gt;
-    &lt;/lenya:internal&gt;
-    &lt;lenya:dc&gt;
-      &lt;dc:title&gt;Some Lenya Features quickly explained&lt;/dc:title&gt;
-      &lt;dc:creator&gt;Lenya Development Team&lt;/dc:creator&gt;
-      &lt;dc:subject&gt;Lenya Features&lt;/dc:subject&gt;
-      &lt;dc:description&gt;Explains some Lenya features&lt;/dc:description&gt;
-      &lt;dc:publisher&gt;Apache Software Foundation&lt;/dc:publisher&gt;
-      &lt;dc:contributor/&gt;
-      &lt;dc:date&gt;2005-01-31&lt;/dc:date&gt;
-      &lt;dc:type/&gt;
-      &lt;dc:format/&gt;
-      &lt;dc:identifier/&gt;
-      &lt;dc:source/&gt;
-      &lt;dc:language&gt;en&lt;/dc:language&gt;
-      &lt;dc:relation/&gt;
-      &lt;dc:coverage/&gt;
-      &lt;dc:rights&gt;All rights reserved&lt;/dc:rights&gt;
-    &lt;/lenya:dc&gt;
-  &lt;/lenya:meta&gt;
-&lt;/lenya:document&gt; </pre>
+<p>Element sets are declared using patch files for <span class="codefrag">cocoon.xconf</span>.
+      When the application starts up, they are registered with the <span class="codefrag">MetaDataRegistry</span>.
+      Here's an example:</p>
+<pre class="code">&lt;xconf xpath="/cocoon/meta-data"
+    unless="/cocoon/meta-data/component-instance
+      [@name = 'http://apache.org/lenya/metadata/media/1.0']"&gt;
+  &lt;component-instance name="http://apache.org/lenya/metadata/media/1.0"
+    class="org.apache.lenya.cms.metadata.ConfigurableElementSet"&gt;
+    &lt;element name="filename" multiple="false"/&gt;
+    &lt;element name="format" multiple="false"/&gt;
+    &lt;element name="extent" multiple="false"/&gt;
+    &lt;element name="width" multiple="false"/&gt;
+    &lt;element name="height" multiple="false"/&gt;
+    &lt;element name="caption" multiple="false" editable="true"/&gt;
+  &lt;/component-instance&gt;
+&lt;/xconf&gt;</pre>
 </div>
     
-<a name="N10042"></a><a name="Implementation"></a>
+    
+<a name="N10035"></a><a name="Accessing+Meta+Data"></a>
+<h2 class="h3">Accessing Meta Data</h2>
+<div class="section">
+<p>Here's an example for accessing the meta data of a document:</p>
+<pre class="code">
+MetaData meta = document.getMetaData("http://myproject.org/metadata/1.0");
+String description = meta.getFirstValue("description");
+String[] references = meta.getValues("references");
+</pre>
+<p>To find out which element sets are registered, you can access
+      the <span class="codefrag">MetaDataRegistry</span>:</p>
+<pre class="code">
+MetaDataRegistry registry = null;
+try {
+    registry = (MetaDataRegistry) this.manager.lookup(MetaDataRegistry.ROLE);
+    String[] namespaces = registry.getNamespaceUris();
+    ...
+}
+finally {
+    if (registry != null) {
+        this.manager.release(registry);
+    }
+}      
+</pre>
+</div>
+    
+    
+<a name="N1004D"></a><a name="The+Meta+Data+Input+Module"></a>
+<h2 class="h3">The Meta Data Input Module</h2>
+<div class="section">
+<p>You can use the <span class="codefrag">MetaDataModule</span> to make an element set accessible
+      in Cocoon sitemaps. To declare it, use a patch file for <span class="codefrag">cocoon.xconf</span>:</p>
+<pre class="code">&lt;xconf xpath="/cocoon/input-modules"
+  unless="/cocoon/input-modules/component-instance[@name = 'mymeta']"&gt;
+  &lt;component-instance logger="sitemap.modules.input.mymeta" name="mymeta"
+    class="org.apache.lenya.cms.cocoon.components.modules.input.MetaDataModule"
+    namespace="http://myproject.org/metadata/1.0"/&gt;
+&lt;/xconf&gt;</pre>
+<p>Now you can access the meta data in your pipelines:</p>
+<pre class="code">&lt;map:transform src="..."&gt;
+  &lt;map:parameter name="description" value="{mymeta:description}"/&gt;
+&lt;/map:transform&gt;</pre>
+</div>
+    
+    
+<a name="N10068"></a><a name="Storage"></a>
+<h2 class="h3">Storage</h2>
+<div class="section">
+<p>In 1.4.x meta data is stored separately from the document content but in the same 
+        directory (index_{lang}.meta).
+        A typical sample for a meta data XML document may be the following:
+      </p>
+<pre class="code">&lt;metadata xmlns="http://apache.org/lenya/metadata/1.0"&gt;
+  &lt;element-set namespace="http://apache.org/lenya/metadata/media/1.0"&gt;
+    &lt;element key="width"&gt;
+      &lt;value&gt;300&lt;/value&gt;
+    &lt;/element&gt;
+    &lt;element key="height"&gt;
+      &lt;value&gt;374&lt;/value&gt;
+    &lt;/element&gt;
+    &lt;element key="extent"&gt;
+      &lt;value&gt;30291&lt;/value&gt;
+    &lt;/element&gt;
+    &lt;element key="filename"&gt;
+      &lt;value&gt;hello-world.jpg&lt;/value&gt;
+    &lt;/element&gt;
+    &lt;element key="format"&gt;
+      &lt;value&gt;image/jpeg&lt;/value&gt;
+    &lt;/element&gt;
+  &lt;/element-set&gt;
+  &lt;element-set namespace="http://purl.org/dc/elements/1.1/"&gt;
+    &lt;element key="creator"&gt;
+      &lt;value&gt;lenya&lt;/value&gt;
+    &lt;/element&gt;
+    &lt;element key="title"&gt;
+      &lt;value&gt;Hello World&lt;/value&gt;
+    &lt;/element&gt;
+    &lt;element key="date"&gt;
+      &lt;value&gt;2006-07-20 22:44:37&lt;/value&gt;
+    &lt;/element&gt;
+    &lt;element key="language"&gt;
+      &lt;value&gt;en&lt;/value&gt;
+    &lt;/element&gt;
+  &lt;/element-set&gt;
+  &lt;element-set namespace="http://apache.org/lenya/metadata/document/1.0"&gt;
+    &lt;element key="extension"&gt;
+      &lt;value&gt;jpg&lt;/value&gt;
+    &lt;/element&gt;
+    &lt;element key="resourceType"&gt;
+      &lt;value&gt;resource&lt;/value&gt;
+    &lt;/element&gt;
+    &lt;element key="contentType"&gt;
+      &lt;value&gt;xml&lt;/value&gt;
+    &lt;/element&gt;
+  &lt;/element-set&gt;
+&lt;/metadata&gt;
+ </pre>
+</div>
+    
+<a name="N10076"></a><a name="Implementation"></a>
 <h2 class="h3">Implementation</h2>
 <div class="section">
 <p>Like nearly all new modules/functionality the meta data usecases are 
         following the new <strong>fallback</strong> concept. Meaning you are 
-        using the core contracts as long you are *not* overriding them with 
+        using the core contracts as long you are <strong>not</strong> overriding them with 
         your own implementation. To override a core implementation you just 
         need to place your custom implementation to the right path in you pub 
         and lenya will try to pick it up from there.</p>
-<a name="N1004E"></a><a name="Create+meta+data"></a>
+<a name="N10085"></a><a name="Create+meta+data"></a>
 <h3 class="h4">Create meta data</h3>
 <p>Upon creation of a document a set of sample meta data is presented 
           in the creation form. This values are partially filled in by the user 
           (subject, desciption, etc.) and partly by the system (creator, 
           creation data). This is done with the <span class="codefrag">site.create</span> 
           usecase (lenya.usecase=site.create).</p>
-<p> We activated that all custom meta data will be picked up from the 
-          form and saved to the meta data doc. To tell lenya that you want as 
-          well create a set of custom meta data, you need to modify your 
-          implementation of the create.jx. form.</p>
+<p> To tell lenya that you want as 
+          well create a set of custom meta data, you need to extend the
+          usecase handler and modify your 
+          implementation of the <span class="codefrag">create.jx</span> form.</p>
 <div class="note">
 <div class="label">Custom implementation of create.jx</div>
 <div class="content"> An 
@@ -320,19 +400,10 @@ document.write("Last Published: " + document.lastModified);
           change it and see what comes out. BTW if you need it in your custom 
           pub just mind the path. ;-)</div>
 </div>
-<a name="N10068"></a><a name="Display%2Fmodify+meta+data"></a>
+<a name="N100A2"></a><a name="Display%2Fmodify+meta+data"></a>
 <h3 class="h4">Display/modify meta data</h3>
 <p>The display of meta data is handled by the usecase 
-          <span class="codefrag">tab.meta</span>. We activated that all custom meta data are 
-          passed to the form. However you will need to add the fields you want 
-          to edit in your own implementation of the meta.jx.</p>
-<div class="note">
-<div class="label">Custom implementation of meta.jx</div>
-<div class="content"> An <strong>example</strong> of an 
-          implementation can be found in 
-          <span class="codefrag">{$default-pub}/lenya/usecases/tab/meta.jx</span>. If you need 
-          it in your custom pub just mind the path. </div>
-</div>
+          <span class="codefrag">tab.meta</span>. All editable meta data are presented by the form.</p>
 </div>
   
 </div>

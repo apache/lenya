@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="ISO-8859-1"?><!DOCTYPE rss PUBLIC "-//Netscape Communications//DTD RSS 0.91//EN" "http://my.netscape.com/publish/formats/rss-0.91.dtd">
-<rss version="0.91"><channel><title> (2006-07) Changes</title><link>changes.html</link><description> (2006-07) Changes</description><language>en-us</language><item><title>Zone update</title><link>changes.html</link><description>Zone update
+<rss version="0.91"><channel><title> (2006-07) Changes</title><link>changes.html</link><description> (2006-07) Changes</description><language>en-us</language><item><title>Site update</title><link>changes.html</link><description>Site update
+        by
+        thorsten
+        :
+        [Site] 
+            Automatic publish from forrestbot Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
         by
         thorsten
         :
@@ -311,11 +316,11 @@ fixes bug 40033 Diff </description></item><item><title>1.4 update</title><link>c
         michi
         :
         [1.4] 
-            thanks to Jonathan Addison Neutron implementation has been finished Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+            thanks to Jonathan Addison Neutron implementation has been finished Diff </description></item><item><title>Revolution update</title><link>changes.html</link><description>Revolution update
         by
         solprovider
         :
-        [] 
+        [Revolution] 
             Added Edit, Link, and File Modules for editing Flat content.  
 Still need editor for XML Resources, and the ability to create a new Resource.
 
@@ -344,11 +349,11 @@ To use (after migrating a Publication to Flat content), browse http://server/pub
         josias
         :
         [Docs] 
-            fixed typo Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+            fixed typo Diff </description></item><item><title>Revolution update</title><link>changes.html</link><description>Revolution update
         by
         solprovider
         :
-        [] 
+        [Revolution] 
             Minor additions to the HELP.
 Changed some Indexes. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
         by
@@ -356,11 +361,11 @@ Changed some Indexes. Diff </description></item><item><title>Docs update</title>
         :
         [Docs] 
             Removing the fixme note since we incorporated them 
-into the latest draft. Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+into the latest draft. Diff </description></item><item><title>Revolution update</title><link>changes.html</link><description>Revolution update
         by
         thorsten
         :
-        [] 
+        [Revolution] 
             Fixing typo Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
         by
         andreas
@@ -506,11 +511,11 @@ into the latest draft. Diff </description></item><item><title> update</title><li
         andreas
         :
         [1.4] 
-            Fixed usecasedocument module references, moved contact form to separate module Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+            Fixed usecasedocument module references, moved contact form to separate module Diff </description></item><item><title>Revolution update</title><link>changes.html</link><description>Revolution update
         by
         solprovider
         :
-        [] 
+        [Revolution] 
             Working on the Link ResourceType Module, I kept finding bugs in Cocoon2.1.6, so I reinstalled/reorganized my development system with Cocoon2.1.9 and a fresh copy of Lenya1.3.  Fixed some bugs with Hierarchical content while testing the new installation.
 
 Updated INSTALL-SRC.txt with instructions based on new installation (especially how Cocoon's BAT files are formatted wrong.)
@@ -1230,11 +1235,11 @@ Added StringSource and VirtualSourceFactory.  The Cocoon project might benefit f
         michi
         :
         [1.4] 
-            syntax fixed Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+            syntax fixed Diff </description></item><item><title>Revolution update</title><link>changes.html</link><description>Revolution update
         by
         solprovider
         :
-        [] 
+        [Revolution] 
             General cleanup and preparation for the "edit" Module (which will be delayed by the weekend.)
  Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
@@ -1276,20 +1281,20 @@ Added StringSource and VirtualSourceFactory.  The Cocoon project might benefit f
         michi
         :
         [1.4] 
-            subsequent parameters fixed Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+            subsequent parameters fixed Diff </description></item><item><title>Revolution update</title><link>changes.html</link><description>Revolution update
         by
         solprovider
         :
-        [] 
+        [Revolution] 
             Changed index live.xconf to use "livemenu" structure.  If you have previously migrated content, rename {pub}/content/index/livemenu* -&gt; live*  (overwrite the old files)
 
 Navigation Module: Fixed bug and passes to "nav" Module if flat content.
 Nav Module: Navigation elements for flat content.
-Added backwards-compatible instructions to 13UPGRADE.txt for fixing links when using the Nav Module. Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+Added backwards-compatible instructions to 13UPGRADE.txt for fixing links when using the Nav Module. Diff </description></item><item><title>Revolution update</title><link>changes.html</link><description>Revolution update
         by
         solprovider
         :
-        [] 
+        [Revolution] 
             FlatRevision: Fixed bug with getTitle() not using current revision.
 Migrate: Restored edit and live revisions default to "1".
 Migrate: Removed extension from id and fullid.  This changes the content datastore, so please migrate again. Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
@@ -1347,36 +1352,36 @@ Migrate: Removed extension from id and fullid.  This changes the content datasto
         andreas
         :
         [1.4] 
-            Added method to get the currently requested document to DocumentUtil Diff </description></item><item><title> add</title><link>changes.html</link><description> add
+            Added method to get the currently requested document to DocumentUtil Diff </description></item><item><title>Revolution add</title><link>changes.html</link><description>Revolution add
         by
         solprovider
         :
-        [] 
-            This is (hopefully) all the changes and new files to convert 1.2.x to 1.3.  There are 4 new documentation files at the root. Diff </description></item><item><title> remove</title><link>changes.html</link><description> remove
+        [Revolution] 
+            This is (hopefully) all the changes and new files to convert 1.2.x to 1.3.  There are 4 new documentation files at the root. Diff </description></item><item><title>Revolution remove</title><link>changes.html</link><description>Revolution remove
         by
         solprovider
         :
-        [] 
-             Diff </description></item><item><title> add</title><link>changes.html</link><description> add
+        [Revolution] 
+             Diff </description></item><item><title>Revolution add</title><link>changes.html</link><description>Revolution add
         by
         solprovider
         :
-        [] 
-             Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+        [Revolution] 
+             Diff </description></item><item><title>Revolution update</title><link>changes.html</link><description>Revolution update
         by
         thorsten
         :
-        [] 
-            Adding the 1.2.x branch as base for 1.3.x Diff </description></item><item><title> remove</title><link>changes.html</link><description> remove
+        [Revolution] 
+            Adding the 1.2.x branch as base for 1.3.x Diff </description></item><item><title>Revolution remove</title><link>changes.html</link><description>Revolution remove
         by
         thorsten
         :
-        [] 
-            Making place for the 1.2.x on which 1.3 is based on Diff </description></item><item><title> remove</title><link>changes.html</link><description> remove
+        [Revolution] 
+            Making place for the 1.2.x on which 1.3 is based on Diff </description></item><item><title>Revolution remove</title><link>changes.html</link><description>Revolution remove
         by
         solprovider
         :
-        [] 
+        [Revolution] 
              Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         andreas
@@ -1392,16 +1397,16 @@ Migrate: Removed extension from id and fullid.  This changes the content datasto
         andreas
         :
         [1.4] 
-            Issue a global redirect after a usecase is completed, otherwise the continuation will be added to the redirect. Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+            Issue a global redirect after a usecase is completed, otherwise the continuation will be added to the redirect. Diff </description></item><item><title>Revolution update</title><link>changes.html</link><description>Revolution update
         by
         solprovider
         :
-        [] 
-             Diff </description></item><item><title> add</title><link>changes.html</link><description> add
+        [Revolution] 
+             Diff </description></item><item><title>Revolution add</title><link>changes.html</link><description>Revolution add
         by
         solprovider
         :
-        [] 
+        [Revolution] 
              Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         andreas
@@ -1482,11 +1487,11 @@ Migrate: Removed extension from id and fullid.  This changes the content datasto
         thorsten
         :
         [Docs] 
-            Adding new lenya site. repported by Vik Tara. Diff </description></item><item><title> add</title><link>changes.html</link><description> add
+            Adding new lenya site. repported by Vik Tara. Diff </description></item><item><title>Revolution add</title><link>changes.html</link><description>Revolution add
         by
         thorsten
         :
-        [] 
+        [Revolution] 
             Opening a revolution branch and added an initial 1.3 directory for solproviders code revolution 1.3 which is backwards compatible to 1.2 Diff </description></item><item><title>1.4 update</title><link>changes.html</link><description>1.4 update
         by
         thorsten
@@ -55146,7 +55151,12 @@ These actions are used in the html-form-editor.xmap sitemap
         
         :
         [0.8] 
-            New repository initialized by cvs2svn. Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
+            New repository initialized by cvs2svn. Diff </description></item><item><title>Site update</title><link>changes.html</link><description>Site update
+        by
+        thorsten
+        :
+        [Site] 
+            Automatic publish from forrestbot Diff </description></item><item><title>Zone update</title><link>changes.html</link><description>Zone update
         by
         thorsten
         :
@@ -55458,11 +55468,11 @@ fixes bug 40033 Diff </description></item><item><title>1.4 update</title><link>c
         michi
         :
         [1.4] 
-            thanks to Jonathan Addison Neutron implementation has been finished Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+            thanks to Jonathan Addison Neutron implementation has been finished Diff </description></item><item><title>Revolution update</title><link>changes.html</link><description>Revolution update
         by
         solprovider
         :
-        [] 
+        [Revolution] 
             Added Edit, Link, and File Modules for editing Flat content.  
 Still need editor for XML Resources, and the ability to create a new Resource.
 
@@ -55491,11 +55501,11 @@ To use (after migrating a Publication to Flat content), browse http://server/pub
         josias
         :
         [Docs] 
-            fixed typo Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+            fixed typo Diff </description></item><item><title>Revolution update</title><link>changes.html</link><description>Revolution update
         by
         solprovider
         :
-        [] 
+        [Revolution] 
             Minor additions to the HELP.
 Changed some Indexes. Diff </description></item><item><title>Docs update</title><link>changes.html</link><description>Docs update
         by
@@ -55503,11 +55513,11 @@ Changed some Indexes. Diff </description></item><item><title>Docs update</title>
         :
         [Docs] 
             Removing the fixme note since we incorporated them 
-into the latest draft. Diff </description></item><item><title> update</title><link>changes.html</link><description> update
+into the latest draft. Diff </description></item><item><title>Revolution update</title><link>changes.html</link><description>Revolution update
         by
         thorsten
         :
-        [] 
+        [Revolution] 
             Fixing typo Diff </description></item><item><title>1.4 add</title><link>changes.html</link><description>1.4 add
         by
         andreas
