@@ -71,11 +71,13 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
     protected final static String RESOURCE_TYPE = "resourceType";
     protected final static String LAST_MODIFIED = "lastModified";
     protected final static String MIME_TYPE = "mimeType";
+    protected final static String CONTENT_LENGTH = "contentLength";
     protected final static String EXPIRES = "expires";
     protected final static String VISIBLE_IN_NAVIGATION = "visibleInNav";
 
     protected final static String[] PARAMS = { PARAM_PUBLICATION_ID, PARAM_AREA, PARAM_DOCUMENT_ID,
-            PARAM_DOCUMENT_LANGUAGE, PARAM_PROPERTY, VISIBLE_IN_NAVIGATION };
+            PARAM_DOCUMENT_LANGUAGE, PARAM_PROPERTY, VISIBLE_IN_NAVIGATION, MIME_TYPE,
+            CONTENT_LENGTH };
 
     protected final static String META_RESOURCE_TYPE = "resourceType";
     protected final static String META_EXPIRES = "expires";
@@ -98,7 +100,8 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
 
         try {
             Session session = RepositoryUtil.getSession(this.manager, request);
-            DocumentFactory docFactory = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+            DocumentFactory docFactory = DocumentUtil.createDocumentIdentityMap(this.manager,
+                    session);
             Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
             document = docFactory.get(publication, area, docId, docLang);
         } catch (Exception e) {
@@ -131,10 +134,9 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
             } else if (attribute.equals(LAST_MODIFIED)) {
                 value = getLastModified(document);
             } else if (attribute.equals(MIME_TYPE)) {
-                value = getMimeType(document);
-                if (value == null)
-                    throw new ConfigurationException("Attribute '" + attribute + "' not defined ["
-                            + name + "]");
+                value = document.getMimeType();
+            } else if (attribute.equals(CONTENT_LENGTH)) {
+                value = Long.toString(document.getContentLength());
             } else if (attribute.equals(EXPIRES)) {
                 try {
                     Date expires = document.getExpires();
@@ -167,7 +169,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
         }
 
     }
-    
+
     /**
      * Returns last modification date in HTTP date format (see RFC 1123).
      * @param document
@@ -177,31 +179,6 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
     protected String getLastModified(Document document) throws ConfigurationException {
         SimpleDateFormat httpDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
         return httpDateFormat.format(document.getLastModified());
-    }
-
-    /**
-     * Get mime-type of document.
-     * @param document
-     * @return Mime-type of document.
-     * @throws ConfigurationException
-     */
-    protected String getMimeType(Document document) throws ConfigurationException {
-        String mimeType = null;
-        MetaData metaData = null;
-        try {
-            metaData = document.getMetaData(DublinCore.DC_NAMESPACE);
-        } catch (MetaDataException e) {
-            throw new ConfigurationException("Obtaining custom meta data value failed ["
-                    + document.getSourceURI() + "]: " + e.getMessage(), e);
-        }
-
-        try {
-            mimeType = metaData.getFirstValue(DublinCore.ELEMENT_FORMAT);
-        } catch (MetaDataException e) {
-            throw new ConfigurationException("Obtaining resource type failed [" + document.getId()
-                    + "]: " + e.getMessage(), e);
-        }
-        return mimeType;
     }
 
     public void service(ServiceManager manager) throws ServiceException {

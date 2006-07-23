@@ -59,7 +59,9 @@ limitations under the License.
                 value="{page-envelope:context-prefix}"/>
           <map:parameter name="title" value="{dublincore:title}"/>
           <map:parameter name="root" value="{base-url:{page-envelope:publication-id}:{page-envelope:area}}"/>
-        </map:transform>
+            <map:parameter name="mimeType" value="{doc-info:mimeType}"/>
+            <map:parameter name="contentLength" value="{doc-info:contentLength}"/>
+          </map:transform>
           <map:serialize type="xml"/>
         </map:match>
       </map:match>
@@ -74,12 +76,12 @@ limitations under the License.
           <map:parameter name="nodeId" value="{page-envelope:document-name}"/>
           <map:parameter name="documentId" value="{page-envelope:document-id}"/>
           <map:parameter name="documentParent" value="{page-envelope:document-parent}"/>
-          <map:parameter name="language"
-            value="{page-envelope:document-language}"/>
-          <map:parameter name="context-prefix"
-                value="{page-envelope:context-prefix}"/>
+          <map:parameter name="language" value="{page-envelope:document-language}"/>
+          <map:parameter name="context-prefix" value="{page-envelope:context-prefix}"/>
           <map:parameter name="title" value="{dublincore:title}"/>
           <map:parameter name="root" value="{base-url:{page-envelope:publication-id}:{page-envelope:area}}"/>
+          <map:parameter name="mimeType" value="{doc-info:{page-envelope:publication-id}:{page-envelope:area}:{page-envelope:document-id}:{page-envelope:document-language}:mimeType}"/>
+          <map:parameter name="contentLength" value="{doc-info:{page-envelope:publication-id}:{page-envelope:area}:{page-envelope:document-id}:{page-envelope:document-language}:contentLength}"/>
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>

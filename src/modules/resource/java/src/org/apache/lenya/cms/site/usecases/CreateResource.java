@@ -129,6 +129,9 @@ public class CreateResource extends CreateDocument {
             final ByteArrayOutputStream sourceBos = new ByteArrayOutputStream();
             IOUtils.copy(inputStream, sourceBos);
             IOUtils.write(sourceBos.toByteArray(), destOutputStream);
+            
+            document.setMimeType(file.getMimeType());
+            
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {

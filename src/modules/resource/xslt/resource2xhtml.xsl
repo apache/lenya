@@ -9,6 +9,7 @@
   xmlns:dc="http://purl.org/dc/elements/1.1/"
   xmlns:media="http://apache.org/lenya/pubs/default/media/1.0"
   xmlns:mediameta="http://apache.org/lenya/metadata/media/1.0"
+  xmlns:docmeta="http://apache.org/lenya/metadata/document/1.0"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
   xmlns:dcterms="http://purl.org/dc/terms/"
   exclude-result-prefixes="xhtml meta dc">
@@ -22,6 +23,9 @@
   <xsl:param name="document-type"/>
   <xsl:param name="documentParent"/>
   <xsl:param name="title"/>
+  <xsl:param name="contentLength"/>
+  <xsl:param name="mimeType"/>
+  
   <xsl:variable name="imageprefix"
     select="concat($context-prefix,'/modules/resource')"/>
   <xsl:variable name="nodeid"
@@ -43,12 +47,7 @@
     </xsl:variable>
     
     <xsl:variable name="size">
-      <xsl:choose>
-        <xsl:when test="mediameta:elements/mediameta:extent = ''">??</xsl:when>
-        <xsl:otherwise><xsl:value-of
-          select="format-number(mediameta:elements/mediameta:extent div 1024, '#,###.##')"/>
-        </xsl:otherwise>
-      </xsl:choose>
+      <xsl:value-of select="format-number($contentLength div 1024, '#,###.##')"/>
     </xsl:variable>
     
     <table width="500" cellpadding="2" cellspacing="0" border="0" bgcolor="#FFEEEE"
@@ -56,7 +55,7 @@
       <tr>
         <td> <a href="{$mediaURI}" target="_new">
           <xsl:call-template name="icon">
-            <xsl:with-param name="mimetype" select="mediameta:elements/mediameta:format"/>
+            <xsl:with-param name="mimetype" select="$mimeType"/>
             <xsl:with-param name="imageprefix" select="$imageprefix"/>
           </xsl:call-template> </a>
         </td>
@@ -81,7 +80,7 @@
       </tr>
       <tr>
         <td><i><i18n:text>MimeType</i18n:text>:</i></td>
-        <td><xsl:value-of select="mediameta:elements/mediameta:format"/></td>
+        <td><xsl:value-of select="$mimeType"/></td>
       </tr>
       <xsl:if test="mediameta:elements/mediameta:width != ''">
         <tr>
@@ -94,8 +93,7 @@
         <td colspan="2"><i><i18n:text>Preview</i18n:text>:</i><br/><br/>
         <div style="text-align: center">
           <xsl:call-template name="preview">
-            <xsl:with-param name="mimetype"
-              select="mediameta:elements/mediameta:format"/>
+            <xsl:with-param name="mimetype" select="$mimeType"/>
             <xsl:with-param name="mediaURI" select="$mediaURI"/>
           </xsl:call-template><br/><br/>
         </div>

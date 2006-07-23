@@ -26,6 +26,7 @@
       class="org.apache.lenya.cms.metadata.ConfigurableElementSet">
       <element name="resourceType" multiple="false"/>
       <element name="contentType" multiple="false"/>
+      <element name="mimeType" multiple="false"/>
       <element name="expires" multiple="false"/>
       <element name="extension" multiple="false"/>
       <element name="placeholder" multiple="false"/>

@@ -99,6 +99,8 @@ public class UploadResource extends DocumentUsecase {
             final ByteArrayOutputStream sourceBos = new ByteArrayOutputStream();
             IOUtils.copy(inputStream, sourceBos);
             IOUtils.write(sourceBos.toByteArray(), destOutputStream);
+            
+            document.setMimeType(file.getMimeType());
         } catch (RepositoryException e) {
             throw new RuntimeException(e);
         } finally {
@@ -140,19 +142,16 @@ public class UploadResource extends DocumentUsecase {
             IOException {
         String fileName = part.getFileName();
         String mimeType = part.getMimeType();
-        int fileSize = part.getSize();
         if (customMeta != null) {
-            customMeta.addValue("media-filename", fileName);
-            customMeta.addValue("media-format", mimeType);
-            customMeta.addValue("media-extent", Integer.toString(fileSize));
+            customMeta.setValue("filename", fileName);
         }
         if (CreateResource.canReadMimeType(mimeType)) {
             BufferedImage input = ImageIO.read(part.getInputStream());
             String width = Integer.toString(input.getWidth());
             String height = Integer.toString(input.getHeight());
             if (customMeta != null) {
-                customMeta.addValue("media-height", height);
-                customMeta.addValue("media-width", width);
+                customMeta.setValue("height", height);
+                customMeta.setValue("width", width);
             }
         }
     }

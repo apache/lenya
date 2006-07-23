@@ -16,16 +16,25 @@
  */
 package org.apache.lenya.cms.site;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.Resource;
+import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 
 /**
@@ -403,4 +412,62 @@ public class SiteUtil {
         }
     }
 
+    /**
+     * Returns all documents in a certain area.
+     * @param manager The service manager.
+     * @param factory The document factory.
+     * @param pub The publication.
+     * @param area The area.
+     * @return An array of documents.
+     * @throws SiteException if an error occurs.
+     */
+    public static Document[] getDocuments(ServiceManager manager, DocumentFactory factory,
+            Publication pub, String area) throws SiteException {
+        SiteManager siteManager = null;
+        ServiceSelector selector = null;
+
+        try {
+            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
+            String siteManagerHint = pub.getSiteManagerHint();
+            siteManager = (SiteManager) selector.select(siteManagerHint);
+
+            Document[] docs = siteManager.getDocuments(factory, pub, area);
+            return docs;
+        } catch (ServiceException e) {
+            throw new SiteException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                manager.release(siteManager);
+            }
+        }
+    }
+
+    /**
+     * Returns all documents in a certain area which have a certain resource type.
+     * @param manager The service manager.
+     * @param factory The document factory.
+     * @param pub The publication.
+     * @param area The area.
+     * @param resourceType The resource type name.
+     * @return An array of documents.
+     * @throws SiteException if an error occurs.
+     */
+    public static Document[] getDocuments(ServiceManager manager, DocumentFactory factory,
+            Publication pub, String area, String resourceType) throws SiteException {
+        Document[] docs = getDocuments(manager, factory, pub, area);
+        Set documents = new HashSet();
+        try {
+            for (int i = 0; i < docs.length; i++) {
+                if (docs[i].getResourceType().getName().equals(resourceType)) {
+                    documents.add(docs[i]);
+                }
+            }
+        } catch (DocumentException e) {
+            throw new SiteException(e);
+        }
+        return (Document[]) documents.toArray(new Document[documents.size()]);
+    }
 }

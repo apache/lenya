@@ -22,11 +22,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Resource;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.util.ServletHelper;
 
@@ -44,10 +48,10 @@ public class Assets extends SiteUsecase {
     void validate() throws UsecaseException {
 
         /*
-         * The <input type="file"/> value cannot be passed to the next screen because
-         * the browser doesn't allow this for security reasons.
+         * The <input type="file"/> value cannot be passed to the next screen because the browser
+         * doesn't allow this for security reasons.
          */
-        
+
         if (hasErrors()) {
             deleteParameter("file");
         }
@@ -56,13 +60,13 @@ public class Assets extends SiteUsecase {
         if (file == null) {
             addErrorMessage("Please choose a file to upload. Your previous choice could not be preselected for security reasons.");
         }
-        
+
     }
 
     /**
      * @see org.apache.lenya.cms.usecase.DocumentUsecase#doCheckPreconditions()
      */
-    protected void doCheckPreconditions() throws Exception {    
+    protected void doCheckPreconditions() throws Exception {
         if (!ServletHelper.isUploadEnabled(manager)) {
             addInfoMessage("Upload is not enabled please check local.build.properties!");
         }
@@ -89,6 +93,13 @@ public class Assets extends SiteUsecase {
             resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
             Resource[] resources = resourcesManager.getResources(getSourceDocument());
             setParameter("assets", Arrays.asList(resources));
+
+            Document[] resourceDocs = SiteUtil.getDocuments(this.manager,
+                    getSourceDocument().getIdentityMap(),
+                    getSourceDocument().getPublication(),
+                    getSourceDocument().getArea(),
+                    "resource");
+            setParameter("resourceDocuments", resourceDocs);
 
             User user = getSession().getIdentity().getUser();
             if (user != null) {
