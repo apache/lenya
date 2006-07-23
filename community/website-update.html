@@ -147,7 +147,7 @@ document.write("Last Published: " + document.lastModified);
 <a title="First time checkout" href="#First+time+checkout">First time checkout...</a>
 </div>
 <div class="menupageitem">
-<a title="Generating changes.html" href="#Generating+changes.html">Generating changes....</a>
+<a title="Generating changes based on svn" href="#Generating+changes+based+on+svn">Generating changes ...</a>
 </div>
 <div class="menupageitem">
 <a title="Understanding the Apache infrastructure" href="#Understanding+the+Apache+infrastructure">Understanding the A...</a>
@@ -186,8 +186,13 @@ document.write("Last Published: " + document.lastModified);
         PDF</a>
 </div>
 <h1>Updating the Lenya Website</h1>
+    
+<div class="fixme">
+<div class="label">Fixme (thorsten)</div>
+<div class="content">Need to describe the usage of the forrestbot which is cutting down the deployment steps.</div>
+</div>
 		
-<a name="N1000E"></a><a name="Prerequisites"></a>
+<a name="N10012"></a><a name="Prerequisites"></a>
 <h2 class="h3">Prerequisites</h2>
 <div class="section">
 <p>Before you try to update the Lenya website, make sure you meet the following requirements:</p>
@@ -205,7 +210,7 @@ document.write("Last Published: " + document.lastModified);
     Let us know about it on the developer's mailing list. A committer will happily pick your patch up from the bug tracker and apply it.</p>
 </div>        
     
-<a name="N10038"></a><a name="First+time+checkout"></a>
+<a name="N1003C"></a><a name="First+time+checkout"></a>
 <h2 class="h3">First time checkout</h2>
 <div class="section">
 <p>You will have to do this only the first time when doing the website.</p>
@@ -226,32 +231,27 @@ document.write("Last Published: " + document.lastModified);
 </ul>
 </div>
 		
-<a name="N10059"></a><a name="Generating+changes.html"></a>
-<h2 class="h3">Generating changes.html</h2>
+<a name="N1005D"></a><a name="Generating+changes+based+on+svn"></a>
+<h2 class="h3">Generating changes based on svn</h2>
 <div class="section">
-<p>changes.html can be directly generated from the SVN commit logs with the following procedure:</p>
+<p>The multiple changes files can be directly generated from the SVN commit logs with the following procedure:</p>
 <ul>
+        
+<li>run <span class="codefrag">svn log -v $LAST:HEAD --xml 
+          http://svn.apache.org/repos/asf/lenya &gt; 
+          src/documentation/content/svn-log/tlp-HEAD.svn.xml</span> in the root 
+          of the docu branch. Where $LAST is the revision number of the last commit from the last month.</li>
+        
+<li>Each month somebody need to create a new log file for the last month and link it to the changes section.</li>
 				
-<li>install <a href="http://saxon.sf.net">Saxon 8</a> (the svn2changes stylesheet requires a XSLT 2.0 processor)</li>
-				
-<li>run <span class="codefrag">svn log -v --xml http://svn.apache.org/repos/asf/lenya &gt; log.xml</span> in the root of the docu branch. This might take a while as the log file is several MB in size.</li>
-				
-<li>run <span class="codefrag">java -jar saxon8.jar -o status.xml log.xml tools/svn2changes.xsl</span>
-				
+<li>run <span class="codefrag">forrest</span>
 </li>
-				
-<li>run <span class="codefrag">forrest</span> - Forrest will take a LONG TIME to generate changes.html.</li>
 			
 </ul>
-<div class="note">
-<div class="label">Note</div>
-<div class="content">You may have to increase <span class="codefrag">forrest.maxmemory</span> in forrest.properties to get around out of memory exceptions.</div>
-</div>
-<p>If everything went alright, you will find changes.html, changes.pdf and changes.rss inside your xdocs directory.</p>
 </div>
 
 		
-<a name="N10088"></a><a name="Understanding+the+Apache+infrastructure"></a>
+<a name="N1007A"></a><a name="Understanding+the+Apache+infrastructure"></a>
 <h2 class="h3">Understanding the Apache infrastructure</h2>
 <div class="section">
 <p>The Website at <span class="codefrag">http://lenya.apache.org/</span> is a static site, which is served from the checkout dir <span class="codefrag">lenya.apache.org</span> on the server based on
@@ -264,7 +264,7 @@ document.write("Last Published: " + document.lastModified);
 		</p>
 </div>
 		
-<a name="N100B6"></a><a name="Roundtrip+website+update"></a>
+<a name="N100A8"></a><a name="Roundtrip+website+update"></a>
 <h2 class="h3">Roundtrip website update</h2>
 <div class="section">
 <p>The typical roundtrip process to update the website has the following steps.</p>
@@ -274,7 +274,7 @@ document.write("Last Published: " + document.lastModified);
 <li>
 <span class="codefrag">cd $lenya.docu; svn up</span> - change to your local checkout of the docu and update it.</li>
     
-<li>Follow "Generating changes.html"!</li>
+<li>Follow "Generating changes based on svn"!</li>
 		
 <li>Run <span class="codefrag">forrest run</span> locally on your machine. You can now browse the website at
 		<span class="codefrag">http://localhost:8888/</span>.</li>

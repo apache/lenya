@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<paths>
+  <path context="1.4">/lenya/trunk</path>
+  <path context="1.2">/lenya/branches/BRANCH_1_2_X</path>
+  <path context="Site">/lenya/site</path>
+  <path context="Documentation">/lenya/docu</path>
+  <path context="Sandbox">/lenya/sandbox</path>
+  <path context="Revolution">/lenya/branches/revolution</path>
+  <path context="Incubator">/incubator</path>
+</paths>

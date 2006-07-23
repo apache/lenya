@@ -113,8 +113,122 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="index.html">About</a>
 </div>
+<div onclick="SwitchMenu('menu_1.1.2', 'skin/')" id="menu_1.1.2Title" class="menutitle">Changes</div>
+<div id="menu_1.1.2" class="menuitemgroup">
 <div class="menuitem">
-<a href="changes.html">Changes</a>
+<a href="tlp-HEAD.svn.html">tlp-HEAD</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2006-06.svn.html">tlp-2006-06</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2006-05.svn.html">tlp-2006-05</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2006-04.svn.html">tlp-2006-04</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2006-03.svn.html">tlp-2006-03</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2006-02.svn.html">tlp-2006-02</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2006-01.svn.html">tlp-2006-01</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2005-12.svn.html">tlp-2005-12</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2005-11.svn.html">tlp-2005-11</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2005-10.svn.html">tlp-2005-10</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2005-09.svn.html">tlp-2005-09</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2005-08.svn.html">tlp-2005-08</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2005-07.svn.html">tlp-2005-07</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2005-06.svn.html">tlp-2005-06</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2005-05.svn.html">tlp-2005-05</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2005-04.svn.html">tlp-2005-04</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2005-03.svn.html">tlp-2005-03</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2005-02.svn.html">tlp-2005-02</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2005-01.svn.html">tlp-2005-01</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2004-12.svn.html">tlp-2004-12</a>
+</div>
+<div class="menuitem">
+<a href="tlp-2004-11.svn.html">tlp-2004-11</a>
+</div>
+<div class="menuitem">
+<a href="incubator-2004-07-10.svn.html">inc-2004-07-10</a>
+</div>
+<div class="menuitem">
+<a href="incubator-2004-04-06.svn.html">inc-2004-04-06</a>
+</div>
+<div class="menuitem">
+<a href="incubator-2004-01-03.svn.html">inc-2004-01-03</a>
+</div>
+<div class="menuitem">
+<a href="incubator-2003-11-12.svn.html">inc-2003-11-12</a>
+</div>
+<div class="menuitem">
+<a href="incubator-2003-10.svn.html">inc-2003-10</a>
+</div>
+<div class="menuitem">
+<a href="incubator-2003-09.svn.html">inc-2003-09</a>
+</div>
+<div class="menuitem">
+<a href="incubator-2003-08.svn.html">inc-2003-08</a>
+</div>
+<div class="menuitem">
+<a href="incubator-2003-07.svn.html">inc-2003-07</a>
+</div>
+<div class="menuitem">
+<a href="incubator-2003-06.svn.html">inc-2003-06</a>
+</div>
+<div class="menuitem">
+<a href="incubator-2003-05.svn.html">inc-2003-05</a>
+</div>
+<div class="menuitem">
+<a href="incubator-2003-04.svn.html">inc-2003-04</a>
+</div>
+<div class="menuitem">
+<a href="incubator-2003-03.svn.html">inc-2003-03</a>
+</div>
+<div class="menuitem">
+<a href="incubator-2003-01-02.svn.html">inc-2003-01-02</a>
+</div>
+<div class="menuitem">
+<a href="incubator-2002-10-12.svn.html">inc-2002-10-12</a>
+</div>
+<div class="menuitem">
+<a href="incubator-2002-08-09.svn.html">inc-2002-08-09</a>
+</div>
+<div class="menuitem">
+<a href="incubator-2002-05-07.svn.html">inc-2002-05-07</a>
+</div>
+<div class="menuitem">
+<a href="incubator-2002-01-04.svn.html">inc-2002-01-04</a>
+</div>
 </div>
 <div class="menuitem">
 <a href="charter.html">Charter</a>
@@ -957,7 +1071,7 @@ document.write("Last Published: " + document.lastModified);
       
 <li>
         Committers write descriptive commit messages, which are then aggregated into 
-        a top-level <a href="changes.html">changes</a> document. This enables linkage
+        a top-level changes document. This enables linkage
         to the relevant issue and shows the contributor's name. It also shows
         the name of the committer who did the work to add the patch.
       </li>
@@ -980,12 +1094,12 @@ document.write("Last Published: " + document.lastModified);
       mechanisms: Use general internet search services; use search services provided
       by various third-party mail archives; search the "svn" mailing list using
       committer IDs and using contributor names; browse the
-      <a href="changes.html">changes</a> page; use 'svn log' and 'svn blame'.
+      changes pages; use 'svn log' and 'svn blame'.
     </p>
 </div>
 
   
-<a name="N1038F"></a><a name="develop"></a>
+<a name="N10387"></a><a name="develop"></a>
 <h2 class="h3">Development procedure</h2>
 <div class="section">
 <div class="note">
