@@ -27,6 +27,8 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
@@ -52,10 +54,15 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     public static final String METADATA_NAMESPACE = "http://apache.org/lenya/metadata/document/1.0";
 
     /**
-     * The name of the resource type attribute. An XML resource has a resource type; this
-     * information can be used e.g. for different rendering of different types.
+     * The name of the resource type attribute. A resource has a resource type; this information can
+     * be used e.g. for different rendering of different types.
      */
     public static final String METADATA_RESOURCE_TYPE = "resourceType";
+
+    /**
+     * The name of the mime type attribute.
+     */
+    public static final String METADATA_MIME_TYPE = "mimeType";
 
     /**
      * The name of the content type attribute. Any content managed by Lenya has a type; this
@@ -547,8 +554,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
             String value = meta.getFirstValue(METADATA_PLACEHOLDER);
             if (value == null) {
                 return false;
-            }
-            else {
+            } else {
                 return Boolean.valueOf(value).booleanValue();
             }
         } catch (Exception e) {
@@ -565,4 +571,47 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         }
     }
 
+    public String getMimeType() throws DocumentException {
+        try {
+            String mimeType = getMetaData(METADATA_NAMESPACE).getFirstValue(METADATA_MIME_TYPE);
+            if (mimeType == null) {
+                mimeType = "";
+            }
+            return mimeType;
+        } catch (MetaDataException e) {
+            throw new DocumentException(e);
+        }
+    }
+
+    public long getContentLength() throws DocumentException {
+        SourceResolver resolver = null;
+        Source source = null;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI(getSourceURI());
+            if (source.exists()) {
+                return source.getContentLength();
+            } else {
+                throw new SourceNotFoundException("The source [" + getSourceURI()
+                        + "] does not exist!");
+            }
+        } catch (Exception e) {
+            throw new DocumentException(e);
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                this.manager.release(resolver);
+            }
+        }
+    }
+
+    public void setMimeType(String mimeType) throws DocumentException {
+        try {
+            getMetaData(METADATA_NAMESPACE).setValue(METADATA_MIME_TYPE, mimeType);
+        } catch (MetaDataException e) {
+            throw new DocumentException(e);
+        }
+    }
 }
