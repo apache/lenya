@@ -1492,4 +1492,214 @@ cocoon that we deliver with lenya.</msg>
 </paths>
 <msg>Automatic publish from forrestbot</msg>
 </logentry>
+<logentry
+   revision="424591">
+<author>thorsten</author>
+<date>2006-07-22T15:10:38.085295Z</date>
+<paths>
+<path
+   action="M">/lenya/site/1_2_x/how-to/usecase-search.xmap</path>
+<path
+   action="M">/lenya/site/1_4/reference/metadata.pdf</path>
+<path
+   action="M">/lenya/site/1_2_x/how-to/searchfixer.xsl</path>
+<path
+   action="M">/lenya/site/1_2_x/how-to/search-and-results.xsp</path>
+</paths>
+<msg>Automatic publish from forrestbot</msg>
+</logentry>
+<logentry
+   revision="424625">
+<author>thorsten</author>
+<date>2006-07-22T19:35:03.955088Z</date>
+<paths>
+<path
+   action="M">/lenya/site/skin/profile.css.xslt</path>
+<path
+   action="M">/lenya/site/skin/images/dc.svg.xslt</path>
+<path
+   action="M">/lenya/site/roadmap.pdf</path>
+<path
+   action="M">/lenya/site/skin/images/rc.svg.xslt</path>
+<path
+   action="M">/lenya/site/1_4/reference/metadata.html</path>
+<path
+   action="M">/lenya/site/skin/images/txtdoc.svg.xslt</path>
+<path
+   action="M">/lenya/site/skin/images/poddoc.svg.xslt</path>
+<path
+   action="M">/lenya/site/skin/forrest.css.xslt</path>
+<path
+   action="M">/lenya/site/skin/screen.css</path>
+<path
+   action="M">/lenya/site/changes.html</path>
+<path
+   action="M">/lenya/site/changes.rss</path>
+<path
+   action="M">/lenya/site/index.pdf</path>
+<path
+   action="M">/lenya/site/1_4/reference/repository/index.pdf</path>
+<path
+   action="M">/lenya/site/changes.pdf</path>
+<path
+   action="M">/lenya/site/1_2_x/components/layout/navigation.pdf</path>
+<path
+   action="M">/lenya/site/1_2_x/components/layout/lenya-menubar.pdf</path>
+<path
+   action="M">/lenya/site/skin/skinconf.xsl</path>
+<path
+   action="M">/lenya/site/1_4/reference/usecase-framework/index.pdf</path>
+<path
+   action="M">/lenya/site/skin/images/corner-imports.svg.xslt</path>
+</paths>
+<msg>Changes that the forestbot forgot and me too.</msg>
+</logentry>
+<logentry
+   revision="424826">
+<author>andreas</author>
+<date>2006-07-23T21:27:39.592383Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/metadata/MetaData.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sourcerepository/java/src/org/apache/lenya/cms/repository/SourceNodeMetaData.java</path>
+</paths>
+<msg>Don't allow multiple values for non-multiple meta data elements</msg>
+</logentry>
+<logentry
+   revision="424827">
+<author>andreas</author>
+<date>2006-07-23T21:28:29.077481Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/Document.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentImpl.java</path>
+</paths>
+<msg>Added mimeType and contentLength methods to Document interface</msg>
+</logentry>
+<logentry
+   revision="424828">
+<author>andreas</author>
+<date>2006-07-23T21:29:36.556734Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/DocumentInfoModule.java</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/config/cocoon-xconf/metadata/document.xconf</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/config/cocoon-xconf/metadata/media.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/tab/assets.jx</path>
+<path
+   action="M">/lenya/trunk/src/modules/resource/java/src/org/apache/lenya/cms/site/usecases/CreateResource.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/resource/java/src/org/apache/lenya/cms/site/usecases/UploadResource.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/resource/xslt/resource2xhtml.xsl</path>
+<path
+   action="M">/lenya/trunk/src/modules/resource/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/SiteUtil.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Assets.java</path>
+</paths>
+<msg>Fixed some meta data issues with resources, added resources to asset tab</msg>
+</logentry>
+<logentry
+   revision="424850">
+<author>thorsten</author>
+<date>2006-07-23T23:08:52.461461Z</date>
+<paths>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-2005-01.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-2004-11.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-2005-02.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-2004-12.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-2005-03.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-2005-04.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-2005-05.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/incubator-2002-10-12.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/incubator-2003-01-02.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-2005-06.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/incubator-2002-01-04.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-2005-07.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/incubator-2004-01-03.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-2005-08.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-2005-09.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/incubator-2002-05-07.svn.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/guidelines.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/incubator-2003-03.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/incubator-2003-04.svn.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/site.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/incubator-2003-05.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/incubator-2003-06.svn.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/community/website-update.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/incubator-2003-07.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/incubator-2003-08.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-HEAD.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/incubator-2003-09.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-2005-10.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-2005-11.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-2006-01.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-2006-02.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-2005-12.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/path-to-context.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-2006-03.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-2006-04.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-2006-05.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/incubator-2003-11-12.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/tlp-2006-06.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/incubator-2004-07-10.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/locationmap.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/incubator-2004-04-06.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/incubator-2002-08-09.svn.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/svn-log/incubator-2003-10.svn.xml</path>
+</paths>
+<msg>Refactoring the document changes. The log file was way to big to build and to request on the web. I extended the projectInfo plugin in forrest with the svn functionality that we had her in lenya. Doing this I developed as well a handy way to split our big svn log apart. When I needed nearly 45 min before to build the documentation this change cuts down the build time to 3 minutes 48 seconds. :) Further this was a oft requested change from our user.</msg>
+</logentry>
 </log>
