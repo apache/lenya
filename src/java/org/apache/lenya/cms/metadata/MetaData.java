@@ -59,7 +59,7 @@ public interface MetaData {
      * Addds a value for a certain key. The existing values will not be removed.
      * @param key The key.
      * @param value The value to add.
-     * @throws MetaDataException when something went wrong.
+     * @throws MetaDataException if there's already a value set and the element doesn't support multiple values.
      */
     void addValue(String key, String value) throws MetaDataException;
 

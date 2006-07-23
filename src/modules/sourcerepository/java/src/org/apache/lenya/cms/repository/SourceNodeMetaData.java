@@ -104,6 +104,10 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
 
     public void addValue(String key, String value) throws MetaDataException {
         checkKey(key);
+        if (!getElementSet().getElement(key).isMultiple() && getValues(key).length > 0) {
+            throw new MetaDataException("The element [" + key
+                    + "] doesn't support multiple values!");
+        }
         this.node.addValue(this.namespaceUri, key, value);
     }
 
