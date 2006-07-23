@@ -22,6 +22,7 @@
 		<title>Updating the Lenya Website</title>
 	</header>
 	<body>
+    <fixme author="thorsten">Need to describe the usage of the forrestbot which is cutting down the deployment steps.</fixme>
 		<section>
 		<title>Prerequisites</title>
 		<p>Before you try to update the Lenya website, make sure you meet the following requirements:</p>
@@ -44,17 +45,18 @@
     </ul>
     </section>
 		<section>
-			<title>Generating changes.html</title>
-			<p>changes.html can be directly generated from the SVN commit logs with the following procedure:</p>
+			<title>Generating changes based on svn</title>
+			<p>The multiple changes files can be directly generated from the SVN commit logs with the following procedure:</p>
 			<ul>
-				<li>install <a href="http://saxon.sf.net">Saxon 8</a> (the svn2changes stylesheet requires a XSLT 2.0 processor)</li>
-				<li>run <code>svn log -v --xml http://svn.apache.org/repos/asf/lenya > log.xml</code> in the root of the docu branch. This might take a while as the log file is several MB in size.</li>
-				<li>run <code>java -jar saxon8.jar -o status.xml log.xml tools/svn2changes.xsl</code>
-				</li>
-				<li>run <code>forrest</code> - Forrest will take a LONG TIME to generate changes.html.</li>
+        <li>run <code>svn log -v $LAST:HEAD --xml 
+          http://svn.apache.org/repos/asf/lenya > 
+          src/documentation/content/svn-log/tlp-HEAD.svn.xml</code> in the root 
+          of the docu branch. Where $LAST is the revision number of the last commit from the last month.</li>
+        <li>Each month somebody need to create a new log file for the last month and link it to the changes section.</li>
+				<li>run <code>forrest</code></li>
 			</ul>
-      <note>You may have to increase <code>forrest.maxmemory</code> in forrest.properties to get around out of memory exceptions.</note>
-			<p>If everything went alright, you will find changes.html, changes.pdf and changes.rss inside your xdocs directory.</p>
+     <!-- <note>You may have to increase <code>forrest.maxmemory</code> in forrest.properties to get around out of memory exceptions.</note>
+			<p>If everything went alright, you will find changes.html, changes.pdf and changes.rss inside your xdocs directory.</p>-->
 
 		</section>
 
@@ -76,7 +78,7 @@
     <p>1) edit the documentation src -> lenya.docu</p>
 		<ul>
 		<li><code>cd $lenya.docu; svn up</code> - change to your local checkout of the docu and update it.</li>
-    <li>Follow "Generating changes.html"!</li>
+    <li>Follow "Generating changes based on svn"!</li>
 		<li>Run <code>forrest run</code> locally on your machine. You can now browse the website at
 		<code>http://localhost:8888/</code>.</li>
 		<li>Edit the content using your favourite editor. Refer to the forrest documentation if necessary.

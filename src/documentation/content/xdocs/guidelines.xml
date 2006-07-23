@@ -721,7 +721,7 @@ limitations under the License.
       </li>
       <li>
         Committers write descriptive commit messages, which are then aggregated into 
-        a top-level <link href="site:changes">changes</link> document. This enables linkage
+        a top-level changes document. This enables linkage
         to the relevant issue and shows the contributor's name. It also shows
         the name of the committer who did the work to add the patch.
       </li>
@@ -741,7 +741,7 @@ limitations under the License.
       mechanisms: Use general internet search services; use search services provided
       by various third-party mail archives; search the "svn" mailing list using
       committer IDs and using contributor names; browse the
-      <link href="site:changes">changes</link> page; use 'svn log' and 'svn blame'.
+      changes pages; use 'svn log' and 'svn blame'.
     </p>
   </section>
 

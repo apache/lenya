@@ -25,7 +25,63 @@
   
   <project-information href="" label="Project" tab="project">
     <index_pm href="index.html" label="About"/>
-    <changes href="changes.html" label="Changes"/>
+    <changes label="Changes">
+      <tlp-2006-07 href="tlp-HEAD.svn.html" label="tlp-HEAD" />
+      <tlp-2006-06 href="tlp-2006-06.svn.html" label="tlp-2006-06" />
+      <tlp-2006-05 href="tlp-2006-05.svn.html" label="tlp-2006-05" />
+      <tlp-2006-04 href="tlp-2006-04.svn.html" label="tlp-2006-04" />
+      <tlp-2006-03 href="tlp-2006-03.svn.html" label="tlp-2006-03" />
+      <tlp-2006-02 href="tlp-2006-02.svn.html" label="tlp-2006-02" />
+      <tlp-2006-01 href="tlp-2006-01.svn.html" label="tlp-2006-01" />
+      <tlp-2005-12 href="tlp-2005-12.svn.html" label="tlp-2005-12" />
+      <tlp-2005-11 href="tlp-2005-11.svn.html" label="tlp-2005-11" />
+      <tlp-2005-10 href="tlp-2005-10.svn.html" label="tlp-2005-10" />
+      <tlp-2005-09 href="tlp-2005-09.svn.html" label="tlp-2005-09" />
+      <tlp-2005-08 href="tlp-2005-08.svn.html" label="tlp-2005-08" />
+      <tlp-2005-07 href="tlp-2005-07.svn.html" label="tlp-2005-07" />
+      <tlp-2005-06 href="tlp-2005-06.svn.html" label="tlp-2005-06" />
+      <tlp-2005-05 href="tlp-2005-05.svn.html" label="tlp-2005-05" />
+      <tlp-2005-04 href="tlp-2005-04.svn.html" label="tlp-2005-04" />
+      <tlp-2005-03 href="tlp-2005-03.svn.html" label="tlp-2005-03" />
+      <tlp-2005-02 href="tlp-2005-02.svn.html" label="tlp-2005-02" />
+      <tlp-2005-01 href="tlp-2005-01.svn.html" label="tlp-2005-01" />
+      <tlp-2004-12 href="tlp-2004-12.svn.html" label="tlp-2004-12" />
+      <tlp-2004-11 href="tlp-2004-11.svn.html" label="tlp-2004-11" />
+      <incubator-2004-07-10 href="incubator-2004-07-10.svn.html" 
+        label="inc-2004-07-10" />
+      <incubator-2004-04-06 href="incubator-2004-04-06.svn.html" 
+        label="inc-2004-04-06" />
+      <incubator-2004-01-03 href="incubator-2004-01-03.svn.html" 
+        label="inc-2004-01-03" />
+      <incubator-2003-11-12 href="incubator-2003-11-12.svn.html" 
+        label="inc-2003-11-12" />
+      <incubator-2003-10 href="incubator-2003-10.svn.html" 
+        label="inc-2003-10" />
+      <incubator-2003-09 href="incubator-2003-09.svn.html" 
+        label="inc-2003-09" />
+      <incubator-2003-08 href="incubator-2003-08.svn.html" 
+        label="inc-2003-08" />
+      <incubator-2003-07 href="incubator-2003-07.svn.html" 
+        label="inc-2003-07" />
+      <incubator-2003-06 href="incubator-2003-06.svn.html" 
+        label="inc-2003-06" />
+      <incubator-2003-05 href="incubator-2003-05.svn.html" 
+        label="inc-2003-05" />
+      <incubator-2003-04 href="incubator-2003-04.svn.html" 
+        label="inc-2003-04" />
+      <incubator-2003-03 href="incubator-2003-03.svn.html" 
+        label="inc-2003-03" />
+      <incubator-2003-01-02 href="incubator-2003-01-02.svn.html" 
+        label="inc-2003-01-02" />
+      <incubator-2002-10-12 href="incubator-2002-10-12.svn.html" 
+        label="inc-2002-10-12" />
+      <incubator-2002-08-09 href="incubator-2002-08-09.svn.html" 
+        label="inc-2002-08-09" />
+      <incubator-2002-05-07 href="incubator-2002-05-07.svn.html" 
+        label="inc-2002-05-07" />
+      <incubator-2002-01-04 href="incubator-2002-01-04.svn.html" 
+        label="inc-2002-01-04" />
+    </changes>
     <charter href="charter.html" label="Charter"/>
     <guidelines href="guidelines.html" label="Project guidelines"/>
     <history href="history.html" label="History"/>
