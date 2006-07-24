@@ -43,7 +43,7 @@ import org.apache.lenya.cms.repository.RepositoryUtil;
  * To change the template for this generated type comment go to Window>Preferences>Java>Code
  * Generation>Code and Comments
  */
-public class AccessControlTest extends LenyaTestCase {
+public class AbstractAccessControlTest extends LenyaTestCase {
 
     private ServiceSelector accessControllerResolverSelector;
     private AccessControllerResolver accessControllerResolver;
