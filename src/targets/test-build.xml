@@ -175,20 +175,9 @@
         <pathelement path="${src.test.impl.dir}"/>
       </classpath>
       
-      <test name="org.apache.lenya.cms.publication.DefaultDocumentTest" todir="${junit.dir}"/>
-      <test name="org.apache.lenya.cms.publication.DefaultDocumentBuilderTest" todir="${junit.dir}"/>
-      <test name="org.apache.lenya.cms.publication.DublinCoreTest" todir="${junit.dir}"/>
-      <test name="org.apache.lenya.cms.publication.file.FilePublicationTest" todir="${junit.dir}"/>
-      <test name="org.apache.lenya.cms.publication.util.XLinkCollectionTest" todir="${junit.dir}"/>
-
-      <!--
-        <test name="org.apache.lenya.ac.ldap.LDAPUserTest" todir="${junit.dir}"/>
-        <test name="org.apache.lenya.cms.rc.RCMLTest" todir="${junit.dir}"/>
-        <test name="org.apache.lenya.cms.rc.RevisionControllerTest" todir="${junit.dir}"/>
-      -->
-      
-      <test name="org.apache.lenya.cms.workflow.WorkflowTest" todir="${junit.dir}"/>
-      <test name="org.apache.lenya.cms.site.usecases.LinkRewriterTest" todir="${junit.dir}"/>
+      <batchtest todir="${junit.dir}">
+        <fileset dir="${build.test}" includes="**/*Test.class" excludes="**/Abstract*.class"/>
+      </batchtest>
       
     </junit>
   </target>
