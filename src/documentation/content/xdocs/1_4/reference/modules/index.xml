@@ -65,6 +65,7 @@ mymodule/
     src/                     Java source files
     lib/                     Java libraries
   xslt/                      XSLT stylesheets
+  module.xml                 module descriptor
   sitemap.xmap               main module sitemap
 </source>
 
@@ -82,6 +83,37 @@ modules.root.dirs=src/modules:src/webapp/lenya/pubs/default/modules:/home/john/m
         <li><code>cocoon.xconf</code> is patched</li>
       </ul>
 
+    </section>
+    
+    <section>
+      <title>The Module Descriptor File</title>
+      <p>
+        Each module must be described using a <em>module descriptor</em> XML file
+        <code>module.xml</code>, located in the root directory of the module.
+        The descriptor is validated when the module is deployed, so be careful! :)
+      </p>
+      <p>
+        A typical module descriptor looks like this:
+      </p>
+      <source xml:space="preserve"><![CDATA[<module xmlns="http://apache.org/lenya/module/1.0">
+  <id>org.myproject.lenya.modules.myeditor</id>
+  <depends module="org.apache.lenya.modules.usecase"/>
+  <depends module="org.apache.lenya.modules.webdav"/>
+  <package>org.myproject.lenya.modules</package>
+  <version>0.1-dev</version>
+  <name>My Own Editor</name>
+  <lenya-version>1.4-dev</lenya-version>
+  <description>
+    This is my own editor.
+    For more information, visit http://myproject.org/editor.
+  </description>
+</module>]]></source>
+      <p>
+        The <code>id</code> must start with the <code>package</code> of the module.
+        It is not allowed to deploy two modules with the same ID.
+      </p>
+      <p>If your module uses code from other modules, you have to add 
+       a <code><![CDATA[<depends>]]></code> for each of these modules.</p>
     </section>
     
     <section>
