@@ -146,6 +146,7 @@ which will be used to configure the chosen Forrest skin.
         e.g. <p class="quote"/>
   -->
     
+    pre.code { padding: 10px; background-color: #E5E4D9; }
 
   </extra-css>
 
@@ -169,7 +170,7 @@ which will be used to configure the chosen Forrest skin.
 
     <color name="menu" value="#E5E4D9" font="#000000" link="#000000" vlink="#000000" hlink="#000000"/>
     <color name="dialog" value="#CFDCED"/>
-	<color name="body" value="#ffffff" />
+    <color name="body" value="#ffffff" />
 
     <color name="table" value="#ccc"/>
     <color name="table-cell" value="#ffffff"/>
@@ -178,7 +179,7 @@ which will be used to configure the chosen Forrest skin.
     <color name="note" value="#006699"/>
     <color name="warning" value="#990000"/>
     <color name="code" value="#003366"/>
-
+    
     <color name="footer" value="#E5E4D9"/>
 
   </colors>
