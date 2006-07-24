@@ -26,7 +26,7 @@ import org.apache.lenya.ac.PolicyManager;
 /**
  * Test for the Policy Manager
  */
-public class PolicyManagerTest extends AccessControlTest {
+public class PolicyManagerTest extends AbstractAccessControlTest {
 
     private static String[] URLS = { "/test/authoring/index.html" };
 

@@ -36,7 +36,7 @@ import org.apache.lenya.ac.file.FileUserManager;
  * 
  * @version $Id$
  */
-public class UserManagerTest extends AccessControlTest {
+public class UserManagerTest extends AbstractAccessControlTest {
 
     /**
      * @see junit.framework.TestCase#setUp()

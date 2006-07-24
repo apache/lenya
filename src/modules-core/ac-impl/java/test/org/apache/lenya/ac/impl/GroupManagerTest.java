@@ -27,7 +27,7 @@ import org.apache.lenya.ac.file.FileGroupManager;
  *
  * @version $Id$
  */
-public class GroupManagerTest extends AccessControlTest {
+public class GroupManagerTest extends AbstractAccessControlTest {
 
     /**
      * The test

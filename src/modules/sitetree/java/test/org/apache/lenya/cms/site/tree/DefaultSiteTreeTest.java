@@ -22,7 +22,7 @@ package org.apache.lenya.cms.site.tree;
 import junit.framework.TestCase;
 
 import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.lenya.ac.impl.AccessControlTest;
+import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
@@ -35,7 +35,7 @@ import org.apache.lenya.cms.site.tree.SiteTreeNode;
 /**
  * Test class for the default site tree
  */
-public class DefaultSiteTreeTest extends AccessControlTest {
+public class DefaultSiteTreeTest extends AbstractAccessControlTest {
 
     private DefaultSiteTree siteTree = null;
 

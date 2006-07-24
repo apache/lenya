@@ -19,7 +19,7 @@
 
 package org.apache.lenya.cms.publication.file;
 
-import org.apache.lenya.ac.impl.AccessControlTest;
+import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
@@ -32,7 +32,7 @@ import org.apache.lenya.cms.site.SiteException;
  * To change the template for this generated type comment go to
  * Window&gt;Preferences&gt;Java&gt;Code Generation&gt;Code and Comments
  */
-public class FilePublicationTest extends AccessControlTest {
+public class FilePublicationTest extends AbstractAccessControlTest {
 
     /**
      * <code>sourceDocumentId</code> The source document id

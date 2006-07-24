@@ -27,7 +27,7 @@ import org.apache.lenya.ac.file.FileAccreditableManager;
 import org.apache.lenya.ac.file.FileGroup;
 import org.apache.lenya.ac.file.FileRole;
 import org.apache.lenya.ac.file.FileUserManager;
-import org.apache.lenya.ac.impl.AccessControlTest;
+import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.ac.ldap.LDAPUser;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -39,7 +39,7 @@ import org.apache.lenya.cms.publication.PublicationUtil;
  * 
  * @version $Id$
  */
-public class AbstractLDAPUserTest extends AccessControlTest {
+public class AbstractLDAPUserTest extends AbstractAccessControlTest {
 
     /**
      * get a publication

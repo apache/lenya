@@ -23,12 +23,12 @@ import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.lenya.ac.AccessControlException;
-import org.apache.lenya.ac.impl.AccessControlTest;
+import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 
 /**
  * Usecase test base class.
  */
-public abstract class UsecaseTestCase extends AccessControlTest {
+public abstract class UsecaseTestCase extends AbstractAccessControlTest {
 
     /**
      * The test.

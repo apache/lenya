@@ -18,7 +18,7 @@
 package org.apache.lenya.cms.publication;
 
 import org.apache.lenya.ac.AccessControlException;
-import org.apache.lenya.ac.impl.AccessControlTest;
+import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
@@ -29,7 +29,7 @@ import org.apache.lenya.cms.repository.RepositoryException;
  * 
  * @version $Id$
  */
-public class DublinCoreTest extends AccessControlTest {
+public class DublinCoreTest extends AbstractAccessControlTest {
 
     private static final String AREA = "authoring";
     private static final String DOCUMENT_ID = "/tutorial";

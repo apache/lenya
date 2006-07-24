@@ -19,7 +19,7 @@
 
 package org.apache.lenya.cms.publication;
 
-import org.apache.lenya.ac.impl.AccessControlTest;
+import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 
@@ -28,7 +28,7 @@ import org.apache.lenya.cms.repository.Session;
  * To change the template for this generated type comment go to Window>Preferences>Java>Code
  * Generation>Code and Comments
  */
-public class DefaultDocumentTest extends AccessControlTest {
+public class DefaultDocumentTest extends AbstractAccessControlTest {
     
     protected static final DocumentTestSet[] testSets = {
             new DocumentTestSet("/index.html", "/index", Publication.AUTHORING_AREA, "en", "html"),

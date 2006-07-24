@@ -29,14 +29,14 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.UserType;
-import org.apache.lenya.ac.impl.AccessControlTest;
+import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 
 /**
  * File user test.
  * 
  * @version $Id$
  */
-public class FileUserTest extends AccessControlTest {
+public class FileUserTest extends AbstractAccessControlTest {
     private HashMap groups = new HashMap();
 
     /**

@@ -22,7 +22,7 @@ package org.apache.lenya.ac.impl;
 /**
  * Access controller test
  */
-public class AccessControllerTest extends AccessControlTest {
+public class AccessControllerTest extends AbstractAccessControlTest {
 
     /**
      * The test.

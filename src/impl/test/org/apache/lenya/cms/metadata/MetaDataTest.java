@@ -16,7 +16,7 @@
  */
 package org.apache.lenya.cms.metadata;
 
-import org.apache.lenya.ac.impl.AccessControlTest;
+import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -27,7 +27,7 @@ import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 
-public class MetaDataTest extends AccessControlTest {
+public class MetaDataTest extends AbstractAccessControlTest {
 
     public void testMetaData() throws Exception {
         Session session = RepositoryUtil.getSession(getManager(), getRequest());
@@ -63,6 +63,15 @@ public class MetaDataTest extends AccessControlTest {
         }
         assertNotNull(e);
         dc.setValue("title", "This is the title");
+        
+        e = null;
+        // addValue() should throw an exception because a value is already set
+        try {
+            dc.addValue("title", "bar");
+        } catch (Exception e1) {
+            e = e1;
+        }
+        assertNotNull(e);
     }
 
 }

@@ -23,7 +23,7 @@ import org.apache.lenya.ac.User;
 /**
  * Tests the identity
  */
-public class IdentityTest extends AccessControlTest {
+public class IdentityTest extends AbstractAccessControlTest {
 
     /**
      * <code>USER_ID</code> The user id to test

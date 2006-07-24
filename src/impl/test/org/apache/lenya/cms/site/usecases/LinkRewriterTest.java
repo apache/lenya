@@ -16,7 +16,7 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import org.apache.lenya.ac.impl.AccessControlTest;
+import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
@@ -31,7 +31,7 @@ import org.w3c.dom.NodeList;
 /**
  * Link rewriter test.
  */
-public class LinkRewriterTest extends AccessControlTest {
+public class LinkRewriterTest extends AbstractAccessControlTest {
 
     protected static final String DOCUMENT_ID = "/index";
     protected static final String SOURCE_DOCUMENT_ID = "/concepts";

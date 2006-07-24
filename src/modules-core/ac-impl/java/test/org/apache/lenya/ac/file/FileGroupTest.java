@@ -28,13 +28,13 @@ import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Groupable;
-import org.apache.lenya.ac.impl.AccessControlTest;
+import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.xml.sax.SAXException;
 
 /**
  * Test for file-based groups
  */
-public class FileGroupTest extends AccessControlTest {
+public class FileGroupTest extends AbstractAccessControlTest {
 
     /**
      * <code>GROUP_ID</code> The group id

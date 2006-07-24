@@ -36,7 +36,7 @@ import org.apache.lenya.cms.publication.PublicationUtil;
  * Policy Test
  * 
  */
-public class PolicyTest extends AccessControlTest {
+public class PolicyTest extends AbstractAccessControlTest {
     protected static final String URL = "/test/authoring/index.html";
     protected static final String SAVE_URL = "/test/authoring/tutorial.html";
 

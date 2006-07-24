@@ -18,14 +18,14 @@ package org.apache.lenya.ac.file;
 import java.io.File;
 
 import org.apache.lenya.ac.AccessControlException;
-import org.apache.lenya.ac.impl.AccessControlTest;
+import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 
 /**
  * File role test.
  *
  * @version $Id$
  */
-public class FileRoleTest extends AccessControlTest {
+public class FileRoleTest extends AbstractAccessControlTest {
     
     /**
      * DOCUMENT ME!

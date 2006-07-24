@@ -26,18 +26,18 @@ import org.apache.avalon.excalibur.testcase.ExcaliburTestCase;
 /**
  * Abstract base class for excalibur tests
  */
-public abstract class ExcaliburTest extends ExcaliburTestCase {
+public abstract class AbstractExcaliburTest extends ExcaliburTestCase {
 
     /**
      * <code>CONFIGURATION</code> The path to the configuration
      */
     public static final String CONFIGURATION = "/" +
-    ExcaliburTest.class.getPackage().getName().replace('.', '/') + "/lenya.xtest";
+    AbstractExcaliburTest.class.getPackage().getName().replace('.', '/') + "/lenya.xtest";
 
     /**
      * @param test The test.
      */
-    public ExcaliburTest(String test) {
+    public AbstractExcaliburTest(String test) {
         super(test);
     }
 
@@ -46,7 +46,7 @@ public abstract class ExcaliburTest extends ExcaliburTestCase {
      */
     protected void prepare() throws Exception {
         System.out.println(CONFIGURATION);
-        InputStream stream = ExcaliburTest.class.getResourceAsStream(CONFIGURATION);
+        InputStream stream = AbstractExcaliburTest.class.getResourceAsStream(CONFIGURATION);
         prepare(stream);
     }
 

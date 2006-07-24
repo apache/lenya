@@ -22,7 +22,7 @@ package org.apache.lenya.cms.workflow;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
-import org.apache.lenya.ac.impl.AccessControlTest;
+import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
@@ -37,7 +37,7 @@ import org.apache.lenya.workflow.Workflowable;
  * To change the template for this generated type comment go to Window>Preferences>Java>Code
  * Generation>Code and Comments
  */
-public class WorkflowTest extends AccessControlTest {
+public class WorkflowTest extends AbstractAccessControlTest {
 
     private static final String variableName = "is_live";
     protected static final String URL = "/authoring/index.html";

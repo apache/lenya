@@ -27,7 +27,7 @@ import org.apache.lenya.ac.file.FileRoleManager;
  *
  * @version $Id$
  */
-public class RoleManagerTest extends AccessControlTest {
+public class RoleManagerTest extends AbstractAccessControlTest {
 
     /**
      * Run the test

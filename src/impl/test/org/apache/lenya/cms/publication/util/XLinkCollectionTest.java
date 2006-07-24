@@ -19,7 +19,7 @@ package org.apache.lenya.cms.publication.util;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.ac.AccessControlException;
-import org.apache.lenya.ac.impl.AccessControlTest;
+import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.DocumentFactory;
@@ -37,7 +37,7 @@ import org.apache.lenya.transaction.TransactionException;
 /**
  * XLink collection teest.
  */
-public class XLinkCollectionTest extends AccessControlTest {
+public class XLinkCollectionTest extends AbstractAccessControlTest {
 
     public void testXLinkCollection() throws PublicationException, AccessControlException,
             TransactionException, ServiceException {
