@@ -19,7 +19,6 @@ package org.apache.lenya.cms.metadata;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
@@ -27,8 +26,15 @@ import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 
+/**
+ * Meta data test.
+ */
 public class MetaDataTest extends AbstractAccessControlTest {
 
+    /**
+     * Tests the meta data.
+     * @throws Exception
+     */
     public void testMetaData() throws Exception {
         Session session = RepositoryUtil.getSession(getManager(), getRequest());
         DocumentFactory factory = DocumentUtil.createDocumentIdentityMap(getManager(), session);
@@ -51,9 +57,10 @@ public class MetaDataTest extends AbstractAccessControlTest {
         doc.getRepositoryNode().lock();
         
         checkSetTitle(dc);
+        checkRemoveAllValues(dc);
         
     }
-    
+
     protected void checkSetTitle(MetaData dc) throws MetaDataException {
         Exception e = null;
         try {
@@ -75,4 +82,9 @@ public class MetaDataTest extends AbstractAccessControlTest {
         
     }
 
+    protected void checkRemoveAllValues(MetaData dc) throws MetaDataException {
+        dc.removeAllValues("title");
+        assertTrue(dc.getValues("title").length == 0);
+    }
+    
 }
