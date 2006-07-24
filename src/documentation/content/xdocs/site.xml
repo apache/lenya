@@ -137,6 +137,7 @@
       <link-management href="link-management.html" label="Link Management"/>
       <notification href="notification.html" label="Notification"/>
       <repository href="repository/index.html" label="Repository"/>
+      <tests14 href="tests.html" label="Writing Tests"/>
     </reference>
     
     <javadoc1.4 href="../../../../apidocs/1.4/index.html" label="1.4 API (Javadoc)"/>
