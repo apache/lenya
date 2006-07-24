@@ -169,8 +169,6 @@ public class CreateResource extends CreateDocument {
         int fileSize = part.getSize();
         if (customMeta != null) {
             customMeta.setValue("filename", fileName);
-            customMeta.setValue("format", mimeType);
-            customMeta.setValue("extent", Integer.toString(fileSize));
         }
         if (canReadMimeType(mimeType)) {
             BufferedImage input = ImageIO.read(part.getInputStream());
