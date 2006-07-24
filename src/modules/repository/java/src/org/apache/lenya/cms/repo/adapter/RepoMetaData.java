@@ -117,8 +117,11 @@ public class RepoMetaData implements MetaData {
     }
 
     public ElementSet getElementSet() {
-        // TODO Auto-generated method stub
-        return null;
+        throw new RuntimeException("not implemented");
+    }
+
+    public void removeAllValues(String key) throws MetaDataException {
+        throw new RuntimeException("not implemented");
     }
 
 }

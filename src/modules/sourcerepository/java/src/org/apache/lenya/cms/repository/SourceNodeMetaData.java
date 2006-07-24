@@ -17,7 +17,6 @@
 package org.apache.lenya.cms.repository;
 
 import java.util.Arrays;
-import java.util.HashMap;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceManager;
@@ -127,25 +126,6 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
         return getAvailableKeys();
     }
 
-    public HashMap getAvailableKey2Value() {
-        HashMap map = new HashMap();
-        try {
-            Element[] elements = getElementSet().getElements();
-            for (int i = 0; i < elements.length; i++) {
-                String key = elements[i].getName();
-                String[] values = getValues(key);
-                if (values.length == 1) {
-                    map.put(key, values[0]);
-                } else if (values.length > 1) {
-                    map.put(key, Arrays.asList(values));
-                }
-            }
-        } catch (MetaDataException e) {
-            throw new RuntimeException(e);
-        }
-        return map;
-    }
-
     public boolean isValidAttribute(String key) {
         return Arrays.asList(getAvailableKeys()).contains(key);
     }
@@ -158,11 +138,6 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
         }
     }
 
-    /**
-     * Removes all values for a certain key.
-     * @param key The key.
-     * @throws MetaDataException if an error occurs.
-     */
     public void removeAllValues(String key) throws MetaDataException {
         checkKey(key);
         this.node.removeAllValues(this.namespaceUri, key);

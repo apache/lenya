@@ -16,8 +16,6 @@
  */
 package org.apache.lenya.cms.metadata;
 
-import java.util.HashMap;
-
 /**
  * Generic meta data interface.
  * 
@@ -76,11 +74,6 @@ public interface MetaData {
     String[] getPossibleKeys();
     
     /**
-     * @return All keys and values that exist in the metadata doc.
-     */
-    HashMap getAvailableKey2Value();
-
-    /**
      * Checks if a key represents a valid metadata attribute.
      * @param key The key.
      * @return A boolean value.
@@ -98,5 +91,12 @@ public interface MetaData {
      * @return The element set this meta data object belongs to.
      */
     ElementSet getElementSet();
+    
+    /**
+     * Removes all values for a certain key.
+     * @param key The key.
+     * @throws MetaDataException if the key is not supported.
+     */
+    void removeAllValues(String key) throws MetaDataException;
      
 }

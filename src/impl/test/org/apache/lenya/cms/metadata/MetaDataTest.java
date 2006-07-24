@@ -72,6 +72,7 @@ public class MetaDataTest extends AbstractAccessControlTest {
             e = e1;
         }
         assertNotNull(e);
+        
     }
 
 }

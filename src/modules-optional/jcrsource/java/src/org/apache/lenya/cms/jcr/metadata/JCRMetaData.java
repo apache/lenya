@@ -228,12 +228,14 @@ public class JCRMetaData extends AbstractLogEnabled implements MetaData {
     }
 
     public String[] getAvailableKeys() {
-        // FIXME: Not implemented yet.
-        return null;
+        throw new RuntimeException("not implemented");
     }
 
     public ElementSet getElementSet() {
-        // TODO Auto-generated method stub
-        return null;
+        throw new RuntimeException("not implemented");
+    }
+
+    public void removeAllValues(String key) throws MetaDataException {
+        throw new RuntimeException("not implemented");
     }
 }
