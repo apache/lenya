@@ -23,12 +23,12 @@ import org.apache.cocoon.environment.Session;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
-import org.apache.lenya.cms.usecase.UsecaseTestCase;
+import org.apache.lenya.cms.usecase.AbstractUsecaseTest;
 
 /**
  * Login test.
  */
-public class LoginTest extends UsecaseTestCase {
+public class LoginTest extends AbstractUsecaseTest {
 
     protected static final String USER_ID = "lenya";
     protected static final String PASSWORD = "levi";

@@ -28,7 +28,7 @@ import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 /**
  * Usecase test base class.
  */
-public abstract class UsecaseTestCase extends AbstractAccessControlTest {
+public abstract class AbstractUsecaseTest extends AbstractAccessControlTest {
 
     /**
      * The test.
