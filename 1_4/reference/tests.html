@@ -5,7 +5,7 @@
 <meta content="Apache Forrest" name="Generator">
 <meta name="Forrest-version" content="0.8-dev">
 <meta name="Forrest-skin-name" content="pelt">
-<title>Lenya 1.4 Subversion Guide</title>
+<title>Writing Tests</title>
 <link type="text/css" href="../../skin/basic.css" rel="stylesheet">
 <link media="screen" type="text/css" href="../../skin/screen.css" rel="stylesheet">
 <link media="print" type="text/css" href="../../skin/print.css" rel="stylesheet">
@@ -116,27 +116,13 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../1_4/faq.html">FAQs</a>
 </div>
-<div onclick="SwitchMenu('menu_selected_1.1.3', '../../skin/')" id="menu_selected_1.1.3Title" class="menutitle" style="background-image: url('../../skin/images/chapter_open.gif');">Installation</div>
-<div id="menu_selected_1.1.3" class="selectedmenuitemgroup" style="display: block;">
+<div onclick="SwitchMenu('menu_1.1.3', '../../skin/')" id="menu_1.1.3Title" class="menutitle">Installation</div>
+<div id="menu_1.1.3" class="menuitemgroup">
 <div class="menuitem">
 <a href="../../1_4/installation/index.html">Download</a>
 </div>
-<div class="menupage">
-<div class="menupagetitle">Subversion Access</div>
-<div class="menupageitemgroup">
-<div class="menupageitem">
-<a href="#For+the+public">For the public</a>
-</div>
-<div class="menupageitem">
-<a href="#For+committers">For committers</a>
-</div>
-<div class="menupageitem">
-<a href="#View+Subversion">View Subversion</a>
-</div>
-<div class="menupageitem">
-<a href="#Subversion+Tips">Subversion Tips</a>
-</div>
-</div>
+<div class="menuitem">
+<a href="../../1_4/installation/subversion.html">Subversion Access</a>
 </div>
 <div class="menuitem">
 <a href="../../1_4/installation/source_version.html">Install Instructions</a>
@@ -157,8 +143,8 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../1_4/concepts/wysiwyg.html">WYSIWYG</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.5', '../../skin/')" id="menu_1.1.5Title" class="menutitle">Technical Reference</div>
-<div id="menu_1.1.5" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_selected_1.1.5', '../../skin/')" id="menu_selected_1.1.5Title" class="menutitle" style="background-image: url('../../skin/images/chapter_open.gif');">Technical Reference</div>
+<div id="menu_selected_1.1.5" class="selectedmenuitemgroup" style="display: block;">
 <div class="menuitem">
 <a href="../../1_4/reference/lenya-sitemaps.html">Overview of Lenya Sitemaps</a>
 </div>
@@ -204,8 +190,19 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../1_4/reference/repository/index.html">Repository</a>
 </div>
-<div class="menuitem">
-<a href="../../1_4/reference/tests.html">Writing Tests</a>
+<div class="menupage">
+<div class="menupagetitle">Writing Tests</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a href="#Running+Tests">Running Tests</a>
+</div>
+<div class="menupageitem">
+<a title="Adding Tests to Modules" href="#Adding+Tests+to+Modules">Adding Tests to Mod...</a>
+</div>
+<div class="menupageitem">
+<a title="Testing Usecases" href="#Testing+Usecases">Testing Usecases...</a>
+</div>
+</div>
 </div>
 </div>
 <div class="menuitem">
@@ -230,68 +227,170 @@ document.write("Last Published: " + document.lastModified);
     +-->
 <div id="content">
 <div title="Portable Document Format" class="pdflink">
-<a class="dida" href="subversion.pdf"><img alt="PDF -icon" src="../../skin/images/pdfdoc.gif" class="skin"><br>
+<a class="dida" href="tests.pdf"><img alt="PDF -icon" src="../../skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
 </div>
-<h1>Lenya 1.4 Subversion Guide</h1> 
-
-
-<a name="N1000E"></a><a name="For+the+public"></a>
-<h2 class="h3">For the public</h2>
+<h1>Writing Tests</h1>
+    
+    
+<a name="N1000E"></a><a name="Running+Tests"></a>
+<h2 class="h3">Running Tests</h2>
+<div class="section">
+<ul>
+        
+<li>
+<p>To run all tests:</p>
+          
+<span class="codefrag">./build.sh test</span>
+          
+<br>
+<br>
+        
+</li>
+        
+<li>
+<p>To run all module tests:</p>
+          
+<span class="codefrag">./build.sh modules.test</span>
+          
+<br>
+<br>
+        
+</li>
+        
+<li>
+<p>To run the tests of a single module:</p>
+          
+<span class="codefrag">./build.sh module.test -Dmodule=org.myproject.lenya.modules.MyModule</span>
+          
+<br>
+<br>
+        
+</li>
+      
+</ul>
+</div>
+    
+    
+<a name="N10039"></a><a name="Adding+Tests+to+Modules"></a>
+<h2 class="h3">Adding Tests to Modules</h2>
 <div class="section">
 <p>
-Start the shell of your choice and enter:
-</p>
-<pre class="code">
-svn co http://svn.apache.org/repos/asf/lenya/trunk lenya-1.4.x
-</pre>
-</div>
-
-
-<a name="N1001C"></a><a name="For+committers"></a>
-<h2 class="h3">For committers</h2>
-<div class="section">
+        Adding unit tests to a module is very simple - you just have to put
+        a Java file in the <span class="codefrag">{yourmodule}/java/test</span>. The most
+        convenient way to get started is to extend <span class="codefrag">AbstractAccessControlTest</span>.
+        This class provides the infrastructure to create a session and invoke
+        operations on documents.
+      </p>
 <p>
-Start the shell of your choice and enter:
-</p>
-<pre class="code">
-svn co https://svn.apache.org/repos/asf/lenya/trunk lenya-1.4.x
-ssh -l username svn.apache.org
-svnpasswd username
-exit
-</pre>
+        Here's an example:
+      </p>
+<pre class="code">mymodule/java/test/MyModuleTest.java</pre>
+<p>The source code:</p>
+<pre class="code">package org.myproject.lenya;
+
+import org.apache.lenya.ac.impl.AbstractAccessControlTest;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
+
+public class MetaDataTest extends AbstractAccessControlTest {
+
+    /**
+     * Tests my module.
+     */
+    public void testMyModule() throws Exception {
+        Session session = RepositoryUtil.getSession(getManager(), getRequest());
+        DocumentFactory factory = DocumentUtil.createDocumentIdentityMap(getManager(), session);
+
+        Publication publication = PublicationUtil.getPublication(getManager(), "test");
+        Document doc = factory.get(publication, Publication.AUTHORING_AREA, "/index", "en");
+
+        assertNotNull(doc);
+        ...        
+    }
+}</pre>
 </div>
-
-
-<a name="N1002A"></a><a name="View+Subversion"></a>
-<h2 class="h3">View Subversion</h2>
+    
+    
+<a name="N10057"></a><a name="Testing+Usecases"></a>
+<h2 class="h3">Testing Usecases</h2>
 <div class="section">
-<p>
+<p>To implement a unit test for a usecase, you can extend the class
+        <span class="codefrag">AbstractUsecaseTest</span> and override the following methods:
+      </p>
+<ul>
+        
+<li>
+<span class="codefrag">String getUsecaseName()</span> - return the name of the usecase to test</li>
+        
+<li>
+<span class="codefrag">void prepareUsecase()</span> - setup the initial envorionment</li>
+        
+<li>
+<span class="codefrag">Map getParameters()</span> - return a map containing the usecase parameters</li>
+        
+<li>
+<span class="codefrag">void checkPostconditions()</span> - check the post conditions after the usecase was executed</li>
+      
+</ul>
+<p>  
+        Here's an example:
+      </p>
+<pre class="code">package org.apache.lenya.cms.ac.usecases;
 
-<a href="http://svn.apache.org/viewcvs.cgi/lenya/#dirlist">http://svn.apache.org/viewcvs.cgi/lenya/#dirlist</a>
+import java.util.HashMap;
+import java.util.Map;
 
-</p>
+import org.apache.cocoon.environment.Session;
+import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.Identity;
+import org.apache.lenya.ac.User;
+import org.apache.lenya.cms.usecase.AbstractUsecaseTest;
+
+/**
+ * Login test.
+ */
+public class LoginTest extends AbstractUsecaseTest {
+
+    protected static final String USER_ID = "lenya";
+    protected static final String PASSWORD = "levi";
+
+    protected Map getRequestParameters() {
+        return getParameters();
+    }
+    
+    protected Map getParameters() {
+        Map params = new HashMap();
+        params.put(Login.USERNAME, USER_ID);
+        params.put(Login.PASSWORD, PASSWORD);
+        return params;
+    }
+
+    protected String getUsecaseName() {
+        return "ac.login";
+    }
+
+    protected void checkPostconditions() {
+        Session session = getRequest().getSession();
+        Identity identity = (Identity) session.getAttribute(Identity.class.getName());
+        User user = identity.getUser();
+        assertNotNull(user);
+        assertEquals(user.getId(), USER_ID);
+    }
+    
+    protected void login() throws AccessControlException {
+        getAccessController().setupIdentity(getRequest());
+    }
+
+}</pre>
 </div>
-
-
-<a name="N10038"></a><a name="Subversion+Tips"></a>
-<h2 class="h3">Subversion Tips</h2>
-<div class="section">
-<p>
-Installing the SVN client with SSL enabled on Debian Woody:
-</p>
-<pre class="code">
-apt-get install openssl
-apt-get install libssl-dev (Important Header Files)
-
-./configure --with-ssl
-make
-make install (su)
-svn --version
-</pre>
-</div>
-
-
+    
+  
 </div>
 <!--+
     |end content
@@ -313,7 +412,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div id="feedback">
     Send feedback about the website to:
-  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A01_4/installation/subversion.html">dev@lenya.apache.org</a>
+  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A01_4/reference/tests.html">dev@lenya.apache.org</a>
 </div>
 <!--+
     |end bottomstrip

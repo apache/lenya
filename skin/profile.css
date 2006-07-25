@@ -145,5 +145,6 @@ color: #000000;
 /* extra-css */
   
     
+    pre.code { padding: 10px; background-color: #E5E4D9; }
 
   

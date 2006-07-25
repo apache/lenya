@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <!--
-  Licensed to the Apache Software Foundation (ASF) under one or more
-  license agreements.  See the NOTICE file distributed with
-  this work for additional information regarding copyright ownership.
-  The ASF licenses this file to You under the Apache License, Version 2.0
-  (the "License"); you may not use this file except in compliance with
-  the License.  You may obtain a copy of the License at
+  Copyright 2002-2004 The Apache Software Foundation or its licensors,
+  as applicable.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
       http://www.apache.org/licenses/LICENSE-2.0
 
@@ -113,8 +113,7 @@ background: <xsl:value-of select="@value"/>;
 }
 </xsl:template> 
 <xsl:template match="color[@name='toolbox']">
-#menu .menupagetitle  { background-color: <xsl:value-of select="@value"/>;
-  color: <xsl:value-of select="@font"/>;}
+#menu .menupagetitle  { background-color: <xsl:value-of select="@value"/>}
 </xsl:template> 
 
 <xsl:template match="color[@name='border']">
@@ -133,6 +132,7 @@ background-color: <xsl:value-of select="@value"/>;
 color: <xsl:value-of select="@hlink"/>;} 
 </xsl:template> 
 <xsl:template match="color[@name='dialog']"> 
+#menu .menupagetitle  { color: <xsl:value-of select="@font"/>;}    
 #menu .menupageitemgroup     { 
 background-color: <xsl:value-of select="@value"/>;
 }

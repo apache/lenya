@@ -124,6 +124,9 @@ document.write("Last Published: " + document.lastModified);
 <div class="menupageitem">
 <a title="Version 2006-07 ()" href="#version_2006-07">Version 2006-07 ()...</a>
 </div>
+<div class="menupageitem">
+<a title="Version 2006-06 ()" href="#version_2006-06">Version 2006-06 ()...</a>
+</div>
 </div>
 </div>
 <div class="menuitem">
@@ -379,6 +382,9 @@ Please submit us icons.
 <img class="icon" alt="remove" src="images/remove.jpg">[1.4] Renamed tests to allow batch execution <a href="http://svn.apache.org/viewcvs.cgi?rev=424976&view=rev">Diff</a> 
       Committed by andreas.</li>
 <li>
+<img class="icon" alt="remove" src="images/remove.jpg">[1.4] Renamed UsecaseTestCase to AbstractUsecaseTest <a href="http://svn.apache.org/viewcvs.cgi?rev=425056&view=rev">Diff</a> 
+      Committed by andreas.</li>
+<li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] pass the usecase object to the view pipeline also for non-template uris to allow handling of usecases in a different sitemap, e.g. a module sitemap. <a href="http://svn.apache.org/viewcvs.cgi?rev=418787&view=rev">Diff</a> 
       Committed by josias.</li>
 <li>
@@ -556,13 +562,22 @@ Can be fetched by using the DocumentInfoModule or ResourceTypeModule in RFC 1123
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Sitetree module needs ac-impl module to run tests <a href="http://svn.apache.org/viewcvs.cgi?rev=424988&view=rev">Diff</a> 
       Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] set mimetype via document method <a href="http://svn.apache.org/viewcvs.cgi?rev=425190&view=rev">Diff</a> 
+      Committed by chestnut.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Patch all modules to the xtest file before running tests <a href="http://svn.apache.org/viewcvs.cgi?rev=425367&view=rev">Diff</a> 
+      Committed by andreas.</li>
 </ul>
-<a name="N102D4"></a><a name="Documentation"></a>
+<a name="N102EF"></a><a name="Documentation"></a>
 <h3 class="h4">Documentation</h3>
 <ul>
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[Documentation] Refactoring the document changes. The log file was way to big to build and to request on the web. I extended the projectInfo plugin in forrest with the svn functionality that we had her in lenya. Doing this I developed as well a handy way to split our big svn log apart. When I needed nearly 45 min before to build the documentation this change cuts down the build time to 3 minutes 48 seconds. :) Further this was a oft requested change from our user. <a href="http://svn.apache.org/viewcvs.cgi?rev=424850&view=rev">Diff</a> 
       Committed by thorsten.</li>
+<li>
+<img class="icon" alt="add" src="images/add.jpg">[Documentation] Added documentation for 1.4 tests <a href="http://svn.apache.org/viewcvs.cgi?rev=425074&view=rev">Diff</a> 
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[Documentation] Removing the fixme note since we incorporated them 
 into the latest draft. <a href="http://svn.apache.org/viewcvs.cgi?rev=419654&view=rev">Diff</a> 
@@ -588,8 +603,14 @@ into the latest draft. <a href="http://svn.apache.org/viewcvs.cgi?rev=419654&vie
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[Documentation] fixing typo <a href="http://svn.apache.org/viewcvs.cgi?rev=424868&view=rev">Diff</a> 
       Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Use background for &lt;source&gt; <a href="http://svn.apache.org/viewcvs.cgi?rev=425073&view=rev">Diff</a> 
+      Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Added information about the module descriptor <a href="http://svn.apache.org/viewcvs.cgi?rev=425078&view=rev">Diff</a> 
+      Committed by andreas.</li>
 </ul>
-<a name="N1032A"></a><a name="Revolution"></a>
+<a name="N10360"></a><a name="Revolution"></a>
 <h3 class="h4">Revolution</h3>
 <ul>
 <li>
@@ -606,7 +627,7 @@ Still need editor for XML Resources, and the ability to create a new Resource.
 To use (after migrating a Publication to Flat content), browse http://server/pub/edit <a href="http://svn.apache.org/viewcvs.cgi?rev=420311&view=rev">Diff</a> 
       Committed by solprovider.</li>
 </ul>
-<a name="N1034A"></a><a name="Site"></a>
+<a name="N10380"></a><a name="Site"></a>
 <h3 class="h4">Site</h3>
 <ul>
 <li>
@@ -624,8 +645,11 @@ To use (after migrating a Publication to Flat content), browse http://server/pub
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[Site] Changes that the forestbot forgot and me too. <a href="http://svn.apache.org/viewcvs.cgi?rev=424625&view=rev">Diff</a> 
       Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Site] Automatic publish from forrestbot <a href="http://svn.apache.org/viewcvs.cgi?rev=425335&view=rev">Diff</a> 
+      Committed by thorsten.</li>
 </ul>
-<a name="N1037C"></a><a name="Zone"></a>
+<a name="N103BB"></a><a name="Zone"></a>
 <h3 class="h4">Zone</h3>
 <ul>
 <li>
@@ -657,10 +681,25 @@ cocoon that we deliver with lenya. <a href="http://svn.apache.org/viewcvs.cgi?re
 <img class="icon" alt="update" src="images/update.jpg">[Zone] Updating lenya zones documentation to the current dispatcher. <a href="http://svn.apache.org/viewcvs.cgi?rev=425019&view=rev">Diff</a> 
       Committed by thorsten.</li>
 </ul>
-<a name="N103D2"></a><a name="Contributors+to+this+release"></a>
+<a name="N10411"></a><a name="Contributors+to+this+release"></a>
 <h3 class="h4">Contributors to this release</h3>
 <p>We thank the following people for their contributions to this release.</p>
 <p>This is a list of all people who participated as committers:<br> (andreas),  (chestnut),  (josias),  (michi),  (solprovider),  (thorsten).</p>
+</div>
+<a name="N1041B"></a><a name="version_2006-06"></a>
+<h2 class="h3">Version 2006-06 ()</h2>
+<div class="section">
+<a name="N1041F"></a><a name="Documentation-N1041F"></a>
+<h3 class="h4">Documentation</h3>
+<ul>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] add sandbox and branch policies <a href="http://svn.apache.org/viewcvs.cgi?rev=418289&view=rev">Diff</a> 
+      Committed by gregor.</li>
+</ul>
+<a name="N1042D"></a><a name="Contributors+to+this+release-N1042D"></a>
+<h3 class="h4">Contributors to this release</h3>
+<p>We thank the following people for their contributions to this release.</p>
+<p>This is a list of all people who participated as committers:<br> (gregor).</p>
 </div>
 </div>
 <!--+

@@ -1,6 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <log>
 <logentry
+   revision="418289">
+<author>gregor</author>
+<date>2006-06-30T14:07:06.129957Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/guidelines.xml</path>
+</paths>
+<msg>add sandbox and branch policies</msg>
+</logentry>
+<logentry
    revision="418787">
 <author>josias</author>
 <date>2006-07-03T15:09:41.452561Z</date>
@@ -2187,5 +2197,261 @@ cocoon that we deliver with lenya.</msg>
    action="A">/lenya/zone/htdocs/src/documentation/resources/themes/common</path>
 </paths>
 <msg>Updating lenya zones documentation to the current dispatcher.</msg>
+</logentry>
+<logentry
+   revision="425056">
+<author>andreas</author>
+<date>2006-07-24T14:08:13.899621Z</date>
+<paths>
+<path
+   action="D">/lenya/trunk/src/impl/test/org/apache/lenya/cms/usecase/UsecaseTestCase.java</path>
+<path
+   copyfrom-path="/lenya/trunk/src/impl/test/org/apache/lenya/cms/usecase/UsecaseTestCase.java"
+   copyfrom-rev="425047"
+   action="A">/lenya/trunk/src/impl/test/org/apache/lenya/cms/usecase/AbstractUsecaseTest.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/ac-impl/java/test/org/apache/lenya/cms/ac/usecases/LoginTest.java</path>
+</paths>
+<msg>Renamed UsecaseTestCase to AbstractUsecaseTest</msg>
+</logentry>
+<logentry
+   revision="425073">
+<author>andreas</author>
+<date>2006-07-24T14:43:21.206079Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/skinconf.xml</path>
+</paths>
+<msg>Use background for &lt;source&gt;</msg>
+</logentry>
+<logentry
+   revision="425074">
+<author>andreas</author>
+<date>2006-07-24T14:43:43.443907Z</date>
+<paths>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/1_4/reference/tests.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/site.xml</path>
+</paths>
+<msg>Added documentation for 1.4 tests</msg>
+</logentry>
+<logentry
+   revision="425078">
+<author>andreas</author>
+<date>2006-07-24T14:51:45.811044Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/1_4/reference/modules/index.xml</path>
+</paths>
+<msg>Added information about the module descriptor</msg>
+</logentry>
+<logentry
+   revision="425190">
+<author>chestnut</author>
+<date>2006-07-24T21:31:05.809306Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/resource/java/src/org/apache/lenya/cms/site/usecases/CreateResource.java</path>
+</paths>
+<msg>set mimetype via document method</msg>
+</logentry>
+<logentry
+   revision="425335">
+<author>thorsten</author>
+<date>2006-07-25T08:54:50.973546Z</date>
+<paths>
+<path
+   action="M">/lenya/site/incubator-2003-11-12.svn.pdf</path>
+<path
+   action="M">/lenya/site/1_2_x/how-to/usecase-search.xmap</path>
+<path
+   action="M">/lenya/site/tlp-2005-07.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-08.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-09.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2004-07-10.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2002-08-09.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-05.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-09.svn.html</path>
+<path
+   action="M">/lenya/site/skin/images/poddoc.svg.xslt</path>
+<path
+   action="M">/lenya/site/tlp-2005-01.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-01.svn.html</path>
+<path
+   action="M">/lenya/site/skin/screen.css</path>
+<path
+   action="M">/lenya/site/tlp-2005-05.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-05.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-10.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-11.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-12.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-09.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2002-01-04.svn.pdf</path>
+<path
+   action="M">/lenya/site/skin/skinconf.xsl</path>
+<path
+   action="M">/lenya/site/incubator-2004-01-03.svn.pdf</path>
+<path
+   action="M">/lenya/site/svn-log/tlp-HEAD.svn.xml</path>
+<path
+   action="M">/lenya/site/incubator-2002-05-07.svn.pdf</path>
+<path
+   action="M">/lenya/site/1_2_x/how-to/searchfixer.xsl</path>
+<path
+   action="M">/lenya/site/path-to-context.xml</path>
+<path
+   action="M">/lenya/site/incubator-2003-10.svn.html</path>
+<path
+   action="M">/lenya/site/1_2_x/how-to/search-and-results.xsp</path>
+<path
+   action="M">/lenya/site/incubator-2003-06.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-HEAD.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-10.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-02.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-02.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2004-11.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-06.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-06.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2004-12.svn.pdf</path>
+<path
+   action="M">/lenya/site/skin/profile.css.xslt</path>
+<path
+   action="M">/lenya/site/incubator-2002-05-07.svn.html</path>
+<path
+   action="M">/lenya/site/skin/images/dc.svg.xslt</path>
+<path
+   action="M">/lenya/site/incubator-2004-04-06.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2002-08-09.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2003-03.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-07.svn.html</path>
+<path
+   action="M">/lenya/site/skin/images/rc.svg.xslt</path>
+<path
+   action="M">/lenya/site/skin/images/txtdoc.svg.xslt</path>
+<path
+   action="M">/lenya/site/incubator-2003-03.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2003-04.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2003-05.svn.pdf</path>
+<path
+   action="M">/lenya/site/skin/forrest.css.xslt</path>
+<path
+   action="M">/lenya/site/incubator-2003-06.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2004-11.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-07.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-11.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-08.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-03.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-09.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2006-03.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2002-01-04.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-11-12.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-01.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-07.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-02.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2006-03.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2002-10-12.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2003-01-02.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2006-04.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2006-05.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2004-07-10.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-06.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2004-04-06.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-04.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-10.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2003-08.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2004-12.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-12.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-HEAD.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-04.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-04.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-01-02.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2002-10-12.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-01.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-02.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2004-01-03.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-03.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-08.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-04.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-05.svn.pdf</path>
+<path
+   action="M">/lenya/site/skin/images/corner-imports.svg.xslt</path>
+<path
+   action="M">/lenya/site/tlp-2005-06.svn.pdf</path>
+</paths>
+<msg>Automatic publish from forrestbot</msg>
+</logentry>
+<logentry
+   revision="425367">
+<author>andreas</author>
+<date>2006-07-25T10:41:52.635311Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/resources/build/modules2build.xsl</path>
+</paths>
+<msg>Patch all modules to the xtest file before running tests</msg>
 </logentry>
 </log>
