@@ -26,27 +26,29 @@
   <project-information href="" label="Project" tab="project">
     <index_pm href="index.html" label="About"/>
     <changes label="Changes">
-      <tlp-2006-07 href="tlp-HEAD.svn.html" label="tlp-HEAD" />
-      <tlp-2006-06 href="tlp-2006-06.svn.html" label="tlp-2006-06" />
-      <tlp-2006-05 href="tlp-2006-05.svn.html" label="tlp-2006-05" />
-      <tlp-2006-04 href="tlp-2006-04.svn.html" label="tlp-2006-04" />
-      <tlp-2006-03 href="tlp-2006-03.svn.html" label="tlp-2006-03" />
-      <tlp-2006-02 href="tlp-2006-02.svn.html" label="tlp-2006-02" />
-      <tlp-2006-01 href="tlp-2006-01.svn.html" label="tlp-2006-01" />
-      <tlp-2005-12 href="tlp-2005-12.svn.html" label="tlp-2005-12" />
-      <tlp-2005-11 href="tlp-2005-11.svn.html" label="tlp-2005-11" />
-      <tlp-2005-10 href="tlp-2005-10.svn.html" label="tlp-2005-10" />
-      <tlp-2005-09 href="tlp-2005-09.svn.html" label="tlp-2005-09" />
-      <tlp-2005-08 href="tlp-2005-08.svn.html" label="tlp-2005-08" />
-      <tlp-2005-07 href="tlp-2005-07.svn.html" label="tlp-2005-07" />
-      <tlp-2005-06 href="tlp-2005-06.svn.html" label="tlp-2005-06" />
-      <tlp-2005-05 href="tlp-2005-05.svn.html" label="tlp-2005-05" />
-      <tlp-2005-04 href="tlp-2005-04.svn.html" label="tlp-2005-04" />
-      <tlp-2005-03 href="tlp-2005-03.svn.html" label="tlp-2005-03" />
-      <tlp-2005-02 href="tlp-2005-02.svn.html" label="tlp-2005-02" />
-      <tlp-2005-01 href="tlp-2005-01.svn.html" label="tlp-2005-01" />
-      <tlp-2004-12 href="tlp-2004-12.svn.html" label="tlp-2004-12" />
-      <tlp-2004-11 href="tlp-2004-11.svn.html" label="tlp-2004-11" />
+      <tlp-HEAD-rev href="tlp-HEAD.svn-revision.xml" label="current revision number" />
+      <tlp-HEAD-sh href="tlp-HEAD.svn-sh.xml" label="create svn log shell" />
+      <tlp-HEAD href="tlp-HEAD.svn.html" label="log HEAD" />
+      <tlp-2006-06 href="tlp-2006-06.svn.html" label="log 2006-06" />
+      <tlp-2006-05 href="tlp-2006-05.svn.html" label="log 2006-05" />
+      <tlp-2006-04 href="tlp-2006-04.svn.html" label="log 2006-04" />
+      <tlp-2006-03 href="tlp-2006-03.svn.html" label="log 2006-03" />
+      <tlp-2006-02 href="tlp-2006-02.svn.html" label="log 2006-02" />
+      <tlp-2006-01 href="tlp-2006-01.svn.html" label="log 2006-01" />
+      <tlp-2005-12 href="tlp-2005-12.svn.html" label="log 2005-12" />
+      <tlp-2005-11 href="tlp-2005-11.svn.html" label="log 2005-11" />
+      <tlp-2005-10 href="tlp-2005-10.svn.html" label="log 2005-10" />
+      <tlp-2005-09 href="tlp-2005-09.svn.html" label="log 2005-09" />
+      <tlp-2005-08 href="tlp-2005-08.svn.html" label="log 2005-08" />
+      <tlp-2005-07 href="tlp-2005-07.svn.html" label="log 2005-07" />
+      <tlp-2005-06 href="tlp-2005-06.svn.html" label="log 2005-06" />
+      <tlp-2005-05 href="tlp-2005-05.svn.html" label="log 2005-05" />
+      <tlp-2005-04 href="tlp-2005-04.svn.html" label="log 2005-04" />
+      <tlp-2005-03 href="tlp-2005-03.svn.html" label="log 2005-03" />
+      <tlp-2005-02 href="tlp-2005-02.svn.html" label="log 2005-02" />
+      <tlp-2005-01 href="tlp-2005-01.svn.html" label="log 2005-01" />
+      <tlp-2004-12 href="tlp-2004-12.svn.html" label="log 2004-12" />
+      <tlp-2004-11 href="tlp-2004-11.svn.html" label="log 2004-11" />
       <incubator-2004-07-10 href="incubator-2004-07-10.svn.html" 
         label="inc-2004-07-10" />
       <incubator-2004-04-06 href="incubator-2004-04-06.svn.html" 
@@ -344,6 +346,7 @@
       <asl href="licenses/"/>
       <how-it-works href="foundation/how-it-works.html"/>
       <voting href="foundation/voting.html"/>
+      <svn href="dev/version-control.html#https-svn"/>
     </asf>
     <apachecon href="http://apachecon.com/"/>
     <cocoon href="http://cocoon.apache.org/">
@@ -370,6 +373,7 @@
       <forrest.install href="docs/your-project.html#installing"/>
       <forrest.contrib href="contrib.html"/>
       <forrest.committed href="committed.html"/>
+      <pdf href="docs_0_80/faq.html#pdf_images"/>
     </forrest.apache.org>
     <issues href="http://issues.apache.org/bugzilla/">
       <issue.add href="enter_bug.cgi?reporter=&amp;product=Lenya&amp;version=Current+CVS&amp;component=core&amp;rep_platform=Other&amp;op_sys=other&amp;priority=Other&amp;bug_severity=Enhancement&amp;bug_status=NEW&amp;assigned_to=&amp;cc=&amp;bug_file_loc=&amp;short_desc=%5BPatch%5D&amp;comment=&amp;maketemplate=Remember+values+as+bookmarkable+template&amp;form_name=enter_bug"/>

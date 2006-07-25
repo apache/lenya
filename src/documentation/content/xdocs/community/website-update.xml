@@ -22,14 +22,17 @@
 		<title>Updating the Lenya Website</title>
 	</header>
 	<body>
-    <fixme author="thorsten">Need to describe the usage of the forrestbot which is cutting down the deployment steps.</fixme>
 		<section>
 		<title>Prerequisites</title>
 		<p>Before you try to update the Lenya website, make sure you meet the following requirements:</p>
 		<ul>
-			<li>You have <a href="http://forrest.apache.org">Apache Forrest</a> installed on your machine (v 0.7 or greater). This means you have your environment set up
+			<li>You have <a href="ext:forrest.apache.org">Apache Forrest</a> installed on your machine (v 0.8-dev). This means you have your environment set up
 			in a way that you can call <code>forrest</code> in any directory.</li>
+      <li>You have enabled <a href="http://forrest.apache.org">Apache 
+        Forrest</a> to handle all image types natively. (see <a 
+        href="ext:forrest.apache.org/pdf">note</a>)</li>
 			<li>You are an active Lenya committer with write access to SVN.</li>
+      <li>Your subversion is configured correctly (see <a href="ext:asf/svn">note</a>) </li>
 		</ul>
 		<p>If you are not a committer but like to contribute to the documentation, you're most welcome as well. If you
 		 want to make additions or corrections to the lenya documentation/website, please keep on reading.</p>
@@ -52,9 +55,15 @@
           http://svn.apache.org/repos/asf/lenya > 
           src/documentation/content/svn-log/tlp-HEAD.svn.xml</code> in the root 
           of the docu branch. Where $LAST is the revision number of the last commit from the last month.</li>
-        <li>Each month somebody need to create a new log file for the last month and link it to the changes section.</li>
-				<li>run <code>forrest</code></li>
+        <li>Each month somebody need to create a new log file for the last month and link it to the changes section. Do <code>forrest run</code></li>
 			</ul>
+      <p>You can find out the first and last revision (till it was updated) of 
+        the current HEAD by requesting <a 
+        href="site:tlp-HEAD-rev">http://localhost:8888/tlp-HEAD.svn-revision.xml</a> 
+        numbers. If this file contains more then one month then you can request 
+        <a href="site:tlp-HEAD-sh">http://localhost:8888/tlp-HEAD.svn-sh.xml</a> to generate 
+        shell commands, which you can execute in the 
+        src/documentation/content/svn-log dir (you need to edit them before execute).</p>
      <!-- <note>You may have to increase <code>forrest.maxmemory</code> in forrest.properties to get around out of memory exceptions.</note>
 			<p>If everything went alright, you will find changes.html, changes.pdf and changes.rss inside your xdocs directory.</p>-->
 
@@ -71,7 +80,7 @@
       of the server every 24 hours via a simple <code>svn up</code>.
 		</p>
    	</section>
-		<section>
+		<section id="trip">
 			<title>Roundtrip website update</title>
     
 		<p>The typical roundtrip process to update the website has the following steps.</p>
@@ -87,8 +96,8 @@
     </ul>
     <p>2) deploy and commit your changes to the documentation src -> lenya.docu</p>
     <ul>
-      <li>Run <code>forrest</code> -> This will create the site in <code>lenya.docu/build/site</code><br/>(Note that Forrest may claim that the build failed, most of the time this is only because of entries in brokenlinks that
-    can be ignored. If the site looks ok to you, and there were no validation errors, go for it.)</li>
+      <li>Run <code>forrest</code> -> This will create the site in <code>lenya.docu/build/site</code><br/>(Note that Forrest sometimes claims that the build failed, please see the broken-links.xml.
+        Here you can find the pages that have errors and which pages refer to them.)</li>
 		<li>Check in your changes (if you are a committer) <code>svn ci -m "my changes message"</code> or prepare a patch (if you aren't) <code>svn diff > patch.txt</code> of <code>lenya.docu</code></li>
     </ul>
     <p>3) copy deployed changes from the documentation src to the website checkout-> lenya.apache.org</p>
@@ -99,17 +108,51 @@
     <code>lenya/site/apidocs/1.4</code>)</li>
 		<li>Commit your changes to lenya.apache.org <code>svn ci -m "my changes message"</code>.</li>
 		</ul>
-		<p>There is a cron job on minotaur which will do 'svn update' in the server <code>lenya.apache.org</code> dir
-every 24 hours (see ~thorsten/thorsten.ct). If you want to do it manually then ...</p>
-			<ul>
-				<li>Login to <code>minotaur.apache.org</code>
-				</li>
-				<li>
-					<code>minotaur@apache.org &gt; /x1/home/thorsten/bin/lenya-update.sh</code>
-				</li>
-			</ul>
 		</section>
-
+    <section>
+      <title>Let forrestbot help you</title>
+      <p>If you are looking into a way to short the steps described in the <a 
+        href="#trip">Roundtrip website update</a>, then do the following 
+        (please still test your changes first). </p>
+      <p>Do once, create $lenya.docu/deploy.svn.settings file. These 
+        credentials are needed by forrestbot so that it can do your 'svn add' 
+        and 'svn commit' etc. to the lenya/site/ repository. The 
+        deploy.svn.settings file looks like:</p>
+      <source><![CDATA[<?xml version="1.0"?>
+<project>
+    <property name="deploy.svn.user" value="myApacheUsername"/>
+    <property name="deploy.svn.password" value="myPassword"/>
+</project>]]> </source>
+      <p>Generating and publishing the main docs is very easy using a local forrestbot:
+       </p>
+          <source>cd $lenya.docu
+forrest -f publish.xml build
+forrest -f publish.xml deploy</source>
+          <p>This builds the documentation locally then deploys it by committing
+            it to the <a href="https://svn.apache.org/repos/asf/lenya/site">lenya/site SVN</a>.
+            Then a cronjob on the server will automatically publish it (see next section). 
+          </p>
+          <p>You can use a similar script we are using on the zones server in $lenya.docu.</p>
+          <source>#!/bin/sh
+svn up
+# the last revision number should be set automatic (first commit of this month)
+LAST=418787
+svn log -r $LAST:HEAD -v --xml http://svn.apache.org/repos/asf/lenya > src/documentation/content/svn-log/tlp-HEAD.svn.xml
+forrest -f publish.xml build
+forrest -f publish.xml deploy</source>
+    </section>
+    <section>
+      <title>Update of the Apache httpd server on people.apache.org</title>
+      <p>There is a cron job on people which will do 'svn update' in the server <code>lenya.apache.org</code> dir
+every 24 hours (see /x1/home/thorsten/thorsten.ct). If you want to invoke the script manually then ...</p>
+			<source>ssh people.apache.org
+/x1/home/thorsten/bin/lenya-update.sh</source>
+      <p>Alternatively you can do the following (this is basicly what the script does).</p>
+      <source>ssh people.apache.org
+cd /www/lenya.apache.org
+umask 0002
+svn update</source>
+    </section>
 		
 	</body>
 </document>
