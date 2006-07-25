@@ -48,7 +48,7 @@
 			<title>Generating changes based on svn</title>
 			<p>The multiple changes files can be directly generated from the SVN commit logs with the following procedure:</p>
 			<ul>
-        <li>run <code>svn log -v $LAST:HEAD --xml 
+        <li>run <code>svn log -v -r $LAST:HEAD --xml 
           http://svn.apache.org/repos/asf/lenya > 
           src/documentation/content/svn-log/tlp-HEAD.svn.xml</code> in the root 
           of the docu branch. Where $LAST is the revision number of the last commit from the last month.</li>
