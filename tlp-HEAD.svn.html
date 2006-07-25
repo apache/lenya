@@ -117,6 +117,14 @@ document.write("Last Published: " + document.lastModified);
 <div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
 <div class="menupage">
 <div class="menupagetitle">tlp-HEAD</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a title="Introduction and explanation of symbols" href="#introduction">Introduction and ex...</a>
+</div>
+<div class="menupageitem">
+<a title="Version 2006-07 ()" href="#version_2006-07">Version 2006-07 ()...</a>
+</div>
+</div>
 </div>
 <div class="menuitem">
 <a href="tlp-2006-06.svn.html">tlp-2006-06</a>
@@ -280,27 +288,35 @@ document.write("Last Published: " + document.lastModified);
 <p>
 <a href="changes.rss"><img alt="RSS" src="images/rss.png"></a>
 </p>
-<a name="N1000D"></a><a name="version_2006-07"></a>
+<a name="N1000D"></a><a name="introduction"></a>
+<h2 class="h3">Introduction and explanation of symbols</h2>
+<div class="section">
+<p>Changes are sorted
+        by "type" and then chronologically with the most recent at the top.
+        These symbols denote the various action types:
+        <img class="icon" alt="add" src="images/add.jpg">=add, <img class="icon" alt="remove" src="images/remove.jpg">=remove, <img class="icon" alt="update" src="images/update.jpg">=update</p>
+</div>
+<a name="N1001F"></a><a name="version_2006-07"></a>
 <h2 class="h3">Version 2006-07 ()</h2>
 <div class="section">
-<a name="N10011"></a><a name="1.4"></a>
+<a name="N10023"></a><a name="1.4"></a>
 <h3 class="h4">1.4</h3>
 <ul>
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[1.4] Use ExistingAncestorSourceResolver for template-fallback://. This should fix bug #39959. <a href="http://svn.apache.org/viewcvs.cgi?rev=418990&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[1.4] Added cleanup XSLT for homepage resource type <a href="http://svn.apache.org/viewcvs.cgi?rev=419602&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[1.4] fixes for rollback usecase (define it and allow it) <a href="http://svn.apache.org/viewcvs.cgi?rev=419964&view=rev">Diff</a> 
-      (chestnut)</li>
+      Committed by chestnut.</li>
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[1.4] thanks to Jonathan Addison Neutron implementation has been finished <a href="http://svn.apache.org/viewcvs.cgi?rev=420643&view=rev">Diff</a> 
-      (michi)</li>
+      Committed by michi.</li>
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[1.4] renamed RepositoryTest to AbstractRepositoryTest because it's an abstract class <a href="http://svn.apache.org/viewcvs.cgi?rev=421550&view=rev">Diff</a> 
-      (josias)</li>
+      Committed by josias.</li>
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[1.4] ASF Bugzilla Bug 39906 - Move Xopus integration code to a module
 From Jonathan Addison. Thank you.
@@ -317,28 +333,28 @@ location)
 - added strip_namespaces.xsl to the xopus transformation pipeline
 
 There is a README.txt that covers what needs to be set up. <a href="http://svn.apache.org/viewcvs.cgi?rev=422748&view=rev">Diff</a> 
-      (thorsten)</li>
+      Committed by thorsten.</li>
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[1.4] Build process: Patch xtest file for each module separately <a href="http://svn.apache.org/viewcvs.cgi?rev=423491&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[1.4] Starting implementation of configurable meta data <a href="http://svn.apache.org/viewcvs.cgi?rev=423814&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[1.4] Moved meta data declaration to prepare directory <a href="http://svn.apache.org/viewcvs.cgi?rev=423904&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[1.4] [minor change] Split meta data config <a href="http://svn.apache.org/viewcvs.cgi?rev=423911&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[1.4] Added more meta data declarations <a href="http://svn.apache.org/viewcvs.cgi?rev=423944&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[1.4] Moved AC tests to modules <a href="http://svn.apache.org/viewcvs.cgi?rev=424274&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[1.4] Re-added accidentially removed AccessControlTest <a href="http://svn.apache.org/viewcvs.cgi?rev=424289&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[1.4] Donation of the resource module from the Wyona AG. 
 This module is an alternative way of keeping resources in lenya.
@@ -349,253 +365,302 @@ due to license issues.
 
 Please submit us icons.
  <a href="http://svn.apache.org/viewcvs.cgi?rev=424292&view=rev">Diff</a> 
-      (thorsten)</li>
+      Committed by thorsten.</li>
 <li>
 <img class="icon" alt="remove" src="images/remove.jpg">[1.4] Advancing towards component-based meta data <a href="http://svn.apache.org/viewcvs.cgi?rev=424224&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="remove" src="images/remove.jpg">[1.4] Merged CustomMetaDataModule and DublinCoreModule to MetaDataModule <a href="http://svn.apache.org/viewcvs.cgi?rev=424241&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="remove" src="images/remove.jpg">[1.4] Renamed LDAPUserTest to Abstract... so that it isn't executed <a href="http://svn.apache.org/viewcvs.cgi?rev=424303&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
+<li>
+<img class="icon" alt="remove" src="images/remove.jpg">[1.4] Renamed tests to allow batch execution <a href="http://svn.apache.org/viewcvs.cgi?rev=424976&view=rev">Diff</a> 
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] pass the usecase object to the view pipeline also for non-template uris to allow handling of usecases in a different sitemap, e.g. a module sitemap. <a href="http://svn.apache.org/viewcvs.cgi?rev=418787&view=rev">Diff</a> 
-      (josias)</li>
+      Committed by josias.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] BXE: load bxe relatively to publication to allow fallback <a href="http://svn.apache.org/viewcvs.cgi?rev=419042&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] minor layout adjustments: fixed vertical alignment of areas in the menubar in firefox, fixed font size of tabs in the site area in IE <a href="http://svn.apache.org/viewcvs.cgi?rev=419508&view=rev">Diff</a> 
-      (josias)</li>
+      Committed by josias.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] applied patch by Oliver Schalch to fix the server status tab in the admin area. fixes bug #39978 <a href="http://svn.apache.org/viewcvs.cgi?rev=419523&view=rev">Diff</a> 
-      (josias)</li>
+      Committed by josias.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] removed redundant css code: use the same css for all areas in the lenya menu. special css for certain areas is still possible using the id attribute. <a href="http://svn.apache.org/viewcvs.cgi?rev=419530&view=rev">Diff</a> 
-      (josias)</li>
+      Committed by josias.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] added policy for logout usecase to enable the logout menu item. this is a temporary fix until we find a better solution. <a href="http://svn.apache.org/viewcvs.cgi?rev=419534&view=rev">Diff</a> 
-      (josias)</li>
+      Committed by josias.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] added toString method to get more meaningful error messages (e.g. if a workflow event cannot be invoked). <a href="http://svn.apache.org/viewcvs.cgi?rev=419540&view=rev">Diff</a> 
-      (josias)</li>
+      Committed by josias.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] PublicationTemplateFallbackModule uses fallback:// source. Now it works with modules.copy=false. <a href="http://svn.apache.org/viewcvs.cgi?rev=419572&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Replaced context:// with fallback:// so that it works with modules.copy=false <a href="http://svn.apache.org/viewcvs.cgi?rev=419582&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] WebDAV Put: enabled validation <a href="http://svn.apache.org/viewcvs.cgi?rev=419589&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] WebDAV sitemap: fixed fallback:// URI (don't use input module and protocol together) <a href="http://svn.apache.org/viewcvs.cgi?rev=419590&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Fixed URL reference to Kupu XSLT <a href="http://svn.apache.org/viewcvs.cgi?rev=419596&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Improved XPath to check upload enabling in web.xml. This fixes bug #39976. Thanks to Oliver Schalch for the patch. <a href="http://svn.apache.org/viewcvs.cgi?rev=419873&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Updated test build process to work with modules correctly <a href="http://svn.apache.org/viewcvs.cgi?rev=419917&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Made RepositoryTest abstract so it isn't executed by JUnit <a href="http://svn.apache.org/viewcvs.cgi?rev=419918&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Fixed some test build issues <a href="http://svn.apache.org/viewcvs.cgi?rev=420766&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Allow WorkflowTest to be applied to different initial states <a href="http://svn.apache.org/viewcvs.cgi?rev=421227&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] replacing &amp;ldquo; and &amp;rdquo; during doc save
  <a href="http://svn.apache.org/viewcvs.cgi?rev=421329&view=rev">Diff</a> 
-      (chestnut)</li>
+      Committed by chestnut.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] use tidy to clean up entities and xml from fck editor <a href="http://svn.apache.org/viewcvs.cgi?rev=421425&view=rev">Diff</a> 
-      (chestnut)</li>
+      Committed by chestnut.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] more meaningful samples for xhtml
 thanks to Renaud Richardet for the patch
 fixes bug 40033 <a href="http://svn.apache.org/viewcvs.cgi?rev=421469&view=rev">Diff</a> 
-      (chestnut)</li>
+      Committed by chestnut.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] exclude abstract test classes from being executed, because junit fails if no tests are defined in a class. <a href="http://svn.apache.org/viewcvs.cgi?rev=421551&view=rev">Diff</a> 
-      (josias)</li>
+      Committed by josias.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Ajax is still not working correctly in usecases. Meaning we need to set the @ajax to false. <a href="http://svn.apache.org/viewcvs.cgi?rev=421571&view=rev">Diff</a> 
-      (thorsten)</li>
+      Committed by thorsten.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] note about mime-type and WYSIWYG added and save commented, because Neutron protocol doesn't allow save after checkout <a href="http://svn.apache.org/viewcvs.cgi?rev=421714&view=rev">Diff</a> 
-      (michi)</li>
+      Committed by michi.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] use webdav module for kupu PUT <a href="http://svn.apache.org/viewcvs.cgi?rev=422214&view=rev">Diff</a> 
-      (chestnut)</li>
+      Committed by chestnut.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] note about bug which is causing the save problem <a href="http://svn.apache.org/viewcvs.cgi?rev=422741&view=rev">Diff</a> 
-      (michi)</li>
+      Committed by michi.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] don't utilize webdav uri for content since it doesn't use existing session <a href="http://svn.apache.org/viewcvs.cgi?rev=422807&view=rev">Diff</a> 
-      (chestnut)</li>
+      Committed by chestnut.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Added ability to set an expires value by resource type and/or by document.  
 Can be fetched by using the DocumentInfoModule or ResourceTypeModule in RFC 1123 date format <a href="http://svn.apache.org/viewcvs.cgi?rev=422950&view=rev">Diff</a> 
-      (chestnut)</li>
+      Committed by chestnut.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] refine expires functionality <a href="http://svn.apache.org/viewcvs.cgi?rev=423080&view=rev">Diff</a> 
-      (chestnut)</li>
+      Committed by chestnut.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Allow to execute tests of single modules, added endorsed libraries dir to test execution <a href="http://svn.apache.org/viewcvs.cgi?rev=423120&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Document and ResourceType should return Date object instead of a formatted String <a href="http://svn.apache.org/viewcvs.cgi?rev=423122&view=rev">Diff</a> 
-      (chestnut)</li>
+      Committed by chestnut.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] fix references to kupu module resources (for kupu editor files) <a href="http://svn.apache.org/viewcvs.cgi?rev=423198&view=rev">Diff</a> 
-      (chestnut)</li>
+      Committed by chestnut.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Like discussed in the dev ml, we are setting headless default to true. <a href="http://svn.apache.org/viewcvs.cgi?rev=423431&view=rev">Diff</a> 
-      (thorsten)</li>
+      Committed by thorsten.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Fixed authorizer configuration <a href="http://svn.apache.org/viewcvs.cgi?rev=423487&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Build process: Patch xtest file for each module separately <a href="http://svn.apache.org/viewcvs.cgi?rev=423490&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] added context to paths <a href="http://svn.apache.org/viewcvs.cgi?rev=423756&view=rev">Diff</a> 
-      (chestnut)</li>
+      Committed by chestnut.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] fix typo <a href="http://svn.apache.org/viewcvs.cgi?rev=423769&view=rev">Diff</a> 
-      (chestnut)</li>
+      Committed by chestnut.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Added DC terms + elements to meta data config <a href="http://svn.apache.org/viewcvs.cgi?rev=423816&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Fixed some issues in new meta data handling, use owner.getMetaData(DublinCore.DC_NAMESPACE) instead of metaDataManager.getDublinCoreMetaData() <a href="http://svn.apache.org/viewcvs.cgi?rev=423862&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] [minor change] added some javadocs <a href="http://svn.apache.org/viewcvs.cgi?rev=423865&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Moving toward configurable meta data <a href="http://svn.apache.org/viewcvs.cgi?rev=423945&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Enable editing of dublin core meta data <a href="http://svn.apache.org/viewcvs.cgi?rev=423956&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Generic editing of meta data <a href="http://svn.apache.org/viewcvs.cgi?rev=423957&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Generic editing of meta data <a href="http://svn.apache.org/viewcvs.cgi?rev=423958&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Refactored module + test build process <a href="http://svn.apache.org/viewcvs.cgi?rev=424275&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Activating the resource module for the default pub <a href="http://svn.apache.org/viewcvs.cgi?rev=424299&view=rev">Diff</a> 
-      (thorsten)</li>
+      Committed by thorsten.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Refactored module build process <a href="http://svn.apache.org/viewcvs.cgi?rev=424302&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] module cleaned and xhtml mime-type enabled <a href="http://svn.apache.org/viewcvs.cgi?rev=424330&view=rev">Diff</a> 
-      (michi)</li>
+      Committed by michi.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Forgot to change the id to apache instead of wyona. Thanks for the headsup Andreas. <a href="http://svn.apache.org/viewcvs.cgi?rev=424342&view=rev">Diff</a> 
-      (thorsten)</li>
+      Committed by thorsten.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Doh! Forgot to change the package name in the module.xml to apache instead of wyona. Thanks for the headsup Andreas. <a href="http://svn.apache.org/viewcvs.cgi?rev=424347&view=rev">Diff</a> 
-      (thorsten)</li>
+      Committed by thorsten.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Updated resource page layout to match default publication <a href="http://svn.apache.org/viewcvs.cgi?rev=424367&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Don't allow multiple values for non-multiple meta data elements <a href="http://svn.apache.org/viewcvs.cgi?rev=424826&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Added mimeType and contentLength methods to Document interface <a href="http://svn.apache.org/viewcvs.cgi?rev=424827&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[1.4] Fixed some meta data issues with resources, added resources to asset tab <a href="http://svn.apache.org/viewcvs.cgi?rev=424828&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Renamed tests to allow batch execution <a href="http://svn.apache.org/viewcvs.cgi?rev=424975&view=rev">Diff</a> 
+      Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Renamed tests to allow batch execution <a href="http://svn.apache.org/viewcvs.cgi?rev=424977&view=rev">Diff</a> 
+      Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Removed method MetaData.getAvailableKey2Value(). The semantics of this method is not clear (what about multiple values), and it is not appropriate for an interface. <a href="http://svn.apache.org/viewcvs.cgi?rev=424983&view=rev">Diff</a> 
+      Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Added more tests to MetaDataTest <a href="http://svn.apache.org/viewcvs.cgi?rev=424986&view=rev">Diff</a> 
+      Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[1.4] Sitetree module needs ac-impl module to run tests <a href="http://svn.apache.org/viewcvs.cgi?rev=424988&view=rev">Diff</a> 
+      Committed by andreas.</li>
 </ul>
-<a name="N1028C"></a><a name="Documentation"></a>
+<a name="N102D4"></a><a name="Documentation"></a>
 <h3 class="h4">Documentation</h3>
 <ul>
 <li>
 <img class="icon" alt="add" src="images/add.jpg">[Documentation] Refactoring the document changes. The log file was way to big to build and to request on the web. I extended the projectInfo plugin in forrest with the svn functionality that we had her in lenya. Doing this I developed as well a handy way to split our big svn log apart. When I needed nearly 45 min before to build the documentation this change cuts down the build time to 3 minutes 48 seconds. :) Further this was a oft requested change from our user. <a href="http://svn.apache.org/viewcvs.cgi?rev=424850&view=rev">Diff</a> 
-      (thorsten)</li>
+      Committed by thorsten.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[Documentation] Removing the fixme note since we incorporated them 
 into the latest draft. <a href="http://svn.apache.org/viewcvs.cgi?rev=419654&view=rev">Diff</a> 
-      (thorsten)</li>
+      Committed by thorsten.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[Documentation] fixed typo <a href="http://svn.apache.org/viewcvs.cgi?rev=419832&view=rev">Diff</a> 
-      (josias)</li>
+      Committed by josias.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[Documentation] Removing draft note for the project guidelines since they are official now. <a href="http://svn.apache.org/viewcvs.cgi?rev=422887&view=rev">Diff</a> 
-      (thorsten)</li>
+      Committed by thorsten.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[Documentation] Adding the revolution branch to the sort criteria. <a href="http://svn.apache.org/viewcvs.cgi?rev=423042&view=rev">Diff</a> 
-      (thorsten)</li>
+      Committed by thorsten.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[Documentation] Updated meta data documentation <a href="http://svn.apache.org/viewcvs.cgi?rev=424234&view=rev">Diff</a> 
-      (andreas)</li>
+      Committed by andreas.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Updating the svn log. <a href="http://svn.apache.org/viewcvs.cgi?rev=424852&view=rev">Diff</a> 
+      Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] Adding zones to the mapper <a href="http://svn.apache.org/viewcvs.cgi?rev=424867&view=rev">Diff</a> 
+      Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Documentation] fixing typo <a href="http://svn.apache.org/viewcvs.cgi?rev=424868&view=rev">Diff</a> 
+      Committed by thorsten.</li>
 </ul>
-<a name="N102C7"></a><a name="No+context+matched"></a>
-<h3 class="h4">No context matched</h3>
-<ul>
-<li>
-<img class="icon" alt="update" src="images/update.jpg">[No context matched] Setting the server to -Djava.awt.headless=true via the JAVA_OPTIONS env <a href="http://svn.apache.org/viewcvs.cgi?rev=422860&view=rev">Diff</a> 
-      (thorsten)</li>
-<li>
-<img class="icon" alt="update" src="images/update.jpg">[No context matched] Fixing spaces for the JAVA_OPTIONS <a href="http://svn.apache.org/viewcvs.cgi?rev=422865&view=rev">Diff</a> 
-      (thorsten)</li>
-<li>
-<img class="icon" alt="update" src="images/update.jpg">[No context matched] Using clean-all instead of shell commands. <a href="http://svn.apache.org/viewcvs.cgi?rev=422875&view=rev">Diff</a> 
-      (thorsten)</li>
-<li>
-<img class="icon" alt="update" src="images/update.jpg">[No context matched] Removing cocoon from the nightly script since we are now using the 
-cocoon that we deliver with lenya. <a href="http://svn.apache.org/viewcvs.cgi?rev=424393&view=rev">Diff</a> 
-      (thorsten)</li>
-</ul>
-<a name="N102F0"></a><a name="Revolution"></a>
+<a name="N1032A"></a><a name="Revolution"></a>
 <h3 class="h4">Revolution</h3>
 <ul>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[Revolution] Fixing typo <a href="http://svn.apache.org/viewcvs.cgi?rev=419643&view=rev">Diff</a> 
-      (thorsten)</li>
+      Committed by thorsten.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[Revolution] Minor additions to the HELP.
 Changed some Indexes. <a href="http://svn.apache.org/viewcvs.cgi?rev=419721&view=rev">Diff</a> 
-      (solprovider)</li>
+      Committed by solprovider.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[Revolution] Added Edit, Link, and File Modules for editing Flat content.  
 Still need editor for XML Resources, and the ability to create a new Resource.
 
 To use (after migrating a Publication to Flat content), browse http://server/pub/edit <a href="http://svn.apache.org/viewcvs.cgi?rev=420311&view=rev">Diff</a> 
-      (solprovider)</li>
+      Committed by solprovider.</li>
 </ul>
-<a name="N10310"></a><a name="Site"></a>
+<a name="N1034A"></a><a name="Site"></a>
 <h3 class="h4">Site</h3>
 <ul>
 <li>
+<img class="icon" alt="add" src="images/add.jpg">[Site] Automatic publish from forrestbot <a href="http://svn.apache.org/viewcvs.cgi?rev=424853&view=rev">Diff</a> 
+      Committed by thorsten.</li>
+<li>
 <img class="icon" alt="update" src="images/update.jpg">[Site] Automatic publish from forrestbot <a href="http://svn.apache.org/viewcvs.cgi?rev=422897&view=rev">Diff</a> 
-      (thorsten)</li>
+      Committed by thorsten.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[Site] Automatic publish from forrestbot <a href="http://svn.apache.org/viewcvs.cgi?rev=424416&view=rev">Diff</a> 
-      (thorsten)</li>
+      Committed by thorsten.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[Site] Automatic publish from forrestbot <a href="http://svn.apache.org/viewcvs.cgi?rev=424591&view=rev">Diff</a> 
-      (thorsten)</li>
+      Committed by thorsten.</li>
 <li>
 <img class="icon" alt="update" src="images/update.jpg">[Site] Changes that the forestbot forgot and me too. <a href="http://svn.apache.org/viewcvs.cgi?rev=424625&view=rev">Diff</a> 
-      (thorsten)</li>
+      Committed by thorsten.</li>
 </ul>
+<a name="N1037C"></a><a name="Zone"></a>
+<h3 class="h4">Zone</h3>
+<ul>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Zone] Setting the server to -Djava.awt.headless=true via the JAVA_OPTIONS env <a href="http://svn.apache.org/viewcvs.cgi?rev=422860&view=rev">Diff</a> 
+      Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Zone] Fixing spaces for the JAVA_OPTIONS <a href="http://svn.apache.org/viewcvs.cgi?rev=422865&view=rev">Diff</a> 
+      Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Zone] Using clean-all instead of shell commands. <a href="http://svn.apache.org/viewcvs.cgi?rev=422875&view=rev">Diff</a> 
+      Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Zone] Removing cocoon from the nightly script since we are now using the 
+cocoon that we deliver with lenya. <a href="http://svn.apache.org/viewcvs.cgi?rev=424393&view=rev">Diff</a> 
+      Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Zone] Updating the staging docu deployment to meet current changes. <a href="http://svn.apache.org/viewcvs.cgi?rev=424859&view=rev">Diff</a> 
+      Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Zone] Fixing documentation because the zones documentation will be builded each hour. <a href="http://svn.apache.org/viewcvs.cgi?rev=424861&view=rev">Diff</a> 
+      Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Zone] Removing obsolete code. <a href="http://svn.apache.org/viewcvs.cgi?rev=424863&view=rev">Diff</a> 
+      Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Zone] Updating requiered plugins  <a href="http://svn.apache.org/viewcvs.cgi?rev=424866&view=rev">Diff</a> 
+      Committed by thorsten.</li>
+<li>
+<img class="icon" alt="update" src="images/update.jpg">[Zone] Updating lenya zones documentation to the current dispatcher. <a href="http://svn.apache.org/viewcvs.cgi?rev=425019&view=rev">Diff</a> 
+      Committed by thorsten.</li>
+</ul>
+<a name="N103D2"></a><a name="Contributors+to+this+release"></a>
+<h3 class="h4">Contributors to this release</h3>
+<p>We thank the following people for their contributions to this release.</p>
+<p>This is a list of all people who participated as committers:<br> (andreas),  (chestnut),  (josias),  (michi),  (solprovider),  (thorsten).</p>
 </div>
 </div>
 <!--+
