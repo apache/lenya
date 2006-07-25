@@ -61,7 +61,18 @@
       </xsl:variable>
       <target name="compile-modules" depends="{$compileDependencyList}"/>
       
-      <target name="test-modules">
+      <xsl:variable name="testDependencyList">
+        <xsl:for-each select="list:module">
+          <xsl:apply-templates select="document(concat(@src, '/module.xml'))/mod:module" mode="patch-test"/>
+          <xsl:if test="following-sibling::list:module">
+            <xsl:text>, </xsl:text>
+          </xsl:if>
+        </xsl:for-each>
+      </xsl:variable>
+      
+      <target name="patch-modules-test" depends="{$testDependencyList}"/>
+      
+      <target name="test-modules" depends="patch-modules-test">
         <xsl:apply-templates select="list:module" mode="call-test"/>
       </target>
       
@@ -76,6 +87,11 @@
   </xsl:template>
   
 
+  <xsl:template match="mod:module" mode="patch-test">
+    <xsl:text>patch-module-test-</xsl:text><xsl:value-of select="mod:id"/>
+  </xsl:template>
+  
+  
   <xsl:template match="list:module" mode="call-test">
     <xsl:apply-templates select="document(concat(@src, '/module.xml'))/mod:module" mode="call-test"/>
   </xsl:template>
@@ -246,7 +262,7 @@
         addComments="false"/>
     </target>
     
-    <target name="test-module-{$id}" if="test.module.{$id}" depends="patch-module-test-{$id}, compile-module-{$id}">
+    <target name="test-module-{$id}" if="test.module.{$id}" depends="compile-module-{$id}">
 
       <xsl:variable name="testDestDir">${build.dir}/modules/<xsl:value-of select="$id"/>/java/test</xsl:variable>
       
