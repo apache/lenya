@@ -1,0 +1,1 @@
+svn log -r 418787:425481 --xml -v http://svn.apache.org/repos/asf/lenya > 2006-07.svn.xml

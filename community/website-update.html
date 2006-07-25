@@ -153,7 +153,13 @@ document.write("Last Published: " + document.lastModified);
 <a title="Understanding the Apache infrastructure" href="#Understanding+the+Apache+infrastructure">Understanding the A...</a>
 </div>
 <div class="menupageitem">
-<a title="Roundtrip website update" href="#Roundtrip+website+update">Roundtrip website u...</a>
+<a title="Roundtrip website update" href="#trip">Roundtrip website u...</a>
+</div>
+<div class="menupageitem">
+<a title="Let forrestbot help you" href="#Let+forrestbot+help+you">Let forrestbot help...</a>
+</div>
+<div class="menupageitem">
+<a title="Update of the Apache httpd server on people.apache.org" href="#Update+of+the+Apache+httpd+server+on+people.apache.org">Update of the Apach...</a>
 </div>
 </div>
 </div>
@@ -186,22 +192,22 @@ document.write("Last Published: " + document.lastModified);
         PDF</a>
 </div>
 <h1>Updating the Lenya Website</h1>
-    
-<div class="fixme">
-<div class="label">Fixme (thorsten)</div>
-<div class="content">Need to describe the usage of the forrestbot which is cutting down the deployment steps.</div>
-</div>
 		
-<a name="N10012"></a><a name="Prerequisites"></a>
+<a name="N1000E"></a><a name="Prerequisites"></a>
 <h2 class="h3">Prerequisites</h2>
 <div class="section">
 <p>Before you try to update the Lenya website, make sure you meet the following requirements:</p>
 <ul>
 			
-<li>You have <a href="http://forrest.apache.org">Apache Forrest</a> installed on your machine (v 0.7 or greater). This means you have your environment set up
+<li>You have <a href="http://forrest.apache.org/">Apache Forrest</a> installed on your machine (v 0.8-dev). This means you have your environment set up
 			in a way that you can call <span class="codefrag">forrest</span> in any directory.</li>
+      
+<li>You have enabled <a href="http://forrest.apache.org">Apache 
+        Forrest</a> to handle all image types natively. (see <a href="http://forrest.apache.org/docs_0_80/faq.html#pdf_images">note</a>)</li>
 			
 <li>You are an active Lenya committer with write access to SVN.</li>
+      
+<li>Your subversion is configured correctly (see <a href="http://www.apache.org/dev/version-control.html#https-svn">note</a>) </li>
 		
 </ul>
 <p>If you are not a committer but like to contribute to the documentation, you're most welcome as well. If you
@@ -210,7 +216,7 @@ document.write("Last Published: " + document.lastModified);
     Let us know about it on the developer's mailing list. A committer will happily pick your patch up from the bug tracker and apply it.</p>
 </div>        
     
-<a name="N1003C"></a><a name="First+time+checkout"></a>
+<a name="N1004A"></a><a name="First+time+checkout"></a>
 <h2 class="h3">First time checkout</h2>
 <div class="section">
 <p>You will have to do this only the first time when doing the website.</p>
@@ -231,27 +237,31 @@ document.write("Last Published: " + document.lastModified);
 </ul>
 </div>
 		
-<a name="N1005D"></a><a name="Generating+changes+based+on+svn"></a>
+<a name="N1006B"></a><a name="Generating+changes+based+on+svn"></a>
 <h2 class="h3">Generating changes based on svn</h2>
 <div class="section">
 <p>The multiple changes files can be directly generated from the SVN commit logs with the following procedure:</p>
 <ul>
         
-<li>run <span class="codefrag">svn log -v $LAST:HEAD --xml 
+<li>run <span class="codefrag">svn log -v -r $LAST:HEAD --xml 
           http://svn.apache.org/repos/asf/lenya &gt; 
           src/documentation/content/svn-log/tlp-HEAD.svn.xml</span> in the root 
           of the docu branch. Where $LAST is the revision number of the last commit from the last month.</li>
         
-<li>Each month somebody need to create a new log file for the last month and link it to the changes section.</li>
-				
-<li>run <span class="codefrag">forrest</span>
+<li>Each month somebody need to create a new log file for the last month and link it to the changes section. Do <span class="codefrag">forrest run</span>
 </li>
 			
 </ul>
+<p>You can find out the first and last revision (till it was updated) of 
+        the current HEAD by requesting <a href="../tlp-HEAD.svn-revision.xml">http://localhost:8888/tlp-HEAD.svn-revision.xml</a> 
+        numbers. If this file contains more then one month then you can request 
+        <a href="../tlp-HEAD.svn-sh.xml">http://localhost:8888/tlp-HEAD.svn-sh.xml</a> to generate 
+        shell commands, which you can execute in the 
+        src/documentation/content/svn-log dir (you need to edit them before execute).</p>
 </div>
 
 		
-<a name="N1007A"></a><a name="Understanding+the+Apache+infrastructure"></a>
+<a name="N10090"></a><a name="Understanding+the+Apache+infrastructure"></a>
 <h2 class="h3">Understanding the Apache infrastructure</h2>
 <div class="section">
 <p>The Website at <span class="codefrag">http://lenya.apache.org/</span> is a static site, which is served from the checkout dir <span class="codefrag">lenya.apache.org</span> on the server based on
@@ -264,7 +274,7 @@ document.write("Last Published: " + document.lastModified);
 		</p>
 </div>
 		
-<a name="N100A8"></a><a name="Roundtrip+website+update"></a>
+<a name="N100BE"></a><a name="trip"></a>
 <h2 class="h3">Roundtrip website update</h2>
 <div class="section">
 <p>The typical roundtrip process to update the website has the following steps.</p>
@@ -288,8 +298,8 @@ document.write("Last Published: " + document.lastModified);
 <ul>
       
 <li>Run <span class="codefrag">forrest</span> -&gt; This will create the site in <span class="codefrag">lenya.docu/build/site</span>
-<br>(Note that Forrest may claim that the build failed, most of the time this is only because of entries in brokenlinks that
-    can be ignored. If the site looks ok to you, and there were no validation errors, go for it.)</li>
+<br>(Note that Forrest sometimes claims that the build failed, please see the broken-links.xml.
+        Here you can find the pages that have errors and which pages refer to them.)</li>
 		
 <li>Check in your changes (if you are a committer) <span class="codefrag">svn ci -m "my changes message"</span> or prepare a patch (if you aren't) <span class="codefrag">svn diff &gt; patch.txt</span> of <span class="codefrag">lenya.docu</span>
 </li>
@@ -310,23 +320,54 @@ document.write("Last Published: " + document.lastModified);
 <li>Commit your changes to lenya.apache.org <span class="codefrag">svn ci -m "my changes message"</span>.</li>
 		
 </ul>
-<p>There is a cron job on minotaur which will do 'svn update' in the server <span class="codefrag">lenya.apache.org</span> dir
-every 24 hours (see ~thorsten/thorsten.ct). If you want to do it manually then ...</p>
-<ul>
-				
-<li>Login to <span class="codefrag">minotaur.apache.org</span>
-				
-</li>
-				
-<li>
-					
-<span class="codefrag">minotaur@apache.org &gt; /x1/home/thorsten/bin/lenya-update.sh</span>
-				
-</li>
-			
-</ul>
 </div>
-
+    
+<a name="N10122"></a><a name="Let+forrestbot+help+you"></a>
+<h2 class="h3">Let forrestbot help you</h2>
+<div class="section">
+<p>If you are looking into a way to short the steps described in the <a href="#trip">Roundtrip website update</a>, then do the following 
+        (please still test your changes first). </p>
+<p>Do once, create $lenya.docu/deploy.svn.settings file. These 
+        credentials are needed by forrestbot so that it can do your 'svn add' 
+        and 'svn commit' etc. to the lenya/site/ repository. The 
+        deploy.svn.settings file looks like:</p>
+<pre class="code">&lt;?xml version="1.0"?&gt;
+&lt;project&gt;
+    &lt;property name="deploy.svn.user" value="myApacheUsername"/&gt;
+    &lt;property name="deploy.svn.password" value="myPassword"/&gt;
+&lt;/project&gt; </pre>
+<p>Generating and publishing the main docs is very easy using a local forrestbot:
+       </p>
+<pre class="code">cd $lenya.docu
+forrest -f publish.xml build
+forrest -f publish.xml deploy</pre>
+<p>This builds the documentation locally then deploys it by committing
+            it to the <a href="https://svn.apache.org/repos/asf/lenya/site">lenya/site SVN</a>.
+            Then a cronjob on the server will automatically publish it (see next section). 
+          </p>
+<p>You can use a similar script we are using on the zones server in $lenya.docu.</p>
+<pre class="code">#!/bin/sh
+svn up
+# the last revision number should be set automatic (first commit of this month)
+LAST=418787
+svn log -r $LAST:HEAD -v --xml http://svn.apache.org/repos/asf/lenya &gt; src/documentation/content/svn-log/tlp-HEAD.svn.xml
+forrest -f publish.xml build
+forrest -f publish.xml deploy</pre>
+</div>
+    
+<a name="N1014C"></a><a name="Update+of+the+Apache+httpd+server+on+people.apache.org"></a>
+<h2 class="h3">Update of the Apache httpd server on people.apache.org</h2>
+<div class="section">
+<p>There is a cron job on people which will do 'svn update' in the server <span class="codefrag">lenya.apache.org</span> dir
+every 24 hours (see /x1/home/thorsten/thorsten.ct). If you want to invoke the script manually then ...</p>
+<pre class="code">ssh people.apache.org
+/x1/home/thorsten/bin/lenya-update.sh</pre>
+<p>Alternatively you can do the following (this is basicly what the script does).</p>
+<pre class="code">ssh people.apache.org
+cd /www/lenya.apache.org
+umask 0002
+svn update</pre>
+</div>
 		
 	
 </div>
