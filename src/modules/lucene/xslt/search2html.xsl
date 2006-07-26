@@ -19,6 +19,7 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:search="http://apache.org/cocoon/search/1.0"
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
+  xmlns="http://www.w3.org/1999/xhtml"
   xmlns:cinclude="http://apache.org/cocoon/include/1.0"
   exclude-result-prefixes="cinclude search xhtml"
 >
@@ -30,15 +31,9 @@
 <xsl:param name="lenya.usecase"/>
 
   <xsl:template match="search:results">  
-    <cmsbody>
-      <cinclude:include src="cocoon:/modules/sitetree/{$pub}/{$area}/breadcrumb{$url}.xml"/>
-      <cinclude:include src="cocoon:/modules/sitetree/{$pub}/{$area}/menu{$url}.xml"/>
-      <cinclude:include src="cocoon:/modules/sitetree/{$pub}/{$area}/tabs{$url}.xml"/>
-      <cinclude:include src="cocoon:/modules/sitetree/{$pub}/{$area}/search{$url}.xml"/>      
-      <xhtml:div id="body">
-        <xsl:apply-templates/>
-      </xhtml:div>
-    </cmsbody>
+    <div id="body">
+      <xsl:apply-templates/>
+    </div>
   </xsl:template>
 
   <xsl:template match="search:hits">

@@ -103,6 +103,7 @@
 
         <map:transform type="cinclude"/>
 
+<!--
         <map:transform src="fallback://xslt/page2xhtml.xsl">
           <map:parameter name="root" value="{base-url:{page-envelope:publication-id}:{page-envelope:area}}"/>
           <map:parameter name="document-id" value="{page-envelope:document-id}"/>
@@ -110,7 +111,7 @@
           <map:parameter name="language" value="{page-envelope:document-language}"/>
           <map:parameter name="url" value="{page-envelope:document-url}"/>
         </map:transform>
-
+-->
         <map:transform type="link-rewrite"/>
 
         <map:serialize type="xml"/>
