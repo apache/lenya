@@ -254,8 +254,7 @@
         includes="config/cocoon-xconf/**.xconf"
         destdir="${{build.dir}}/modules/{$id}"
         style="${{src.resource.dir}}/test/xpatch2testpatch.xsl"
-        extension=".xtest">
-      </xslt>
+        extension=".xtest"/>
       <xpatch file="${{build.test}}/org/apache/lenya/cms/LenyaTestCase.xtest"
         srcdir="${{build.dir}}/modules/{$id}"
         includes="config/cocoon-xconf/*.xtest, config/cocoon-xconf/*/*.xtest"
