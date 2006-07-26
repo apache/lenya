@@ -24,7 +24,6 @@
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
     <schema src="fallback://lenya/modules/resource/resources/schemas/resource.rng" language="http://relaxng.org/ns/structure/0.9"/>
     <sample-name>fallback://lenya/modules/resource/samples/resource.xml</sample-name>
-    <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@href"/>
     <format name="xhtml" uri="cocoon://modules/resource/xhtml.xml"/>
   </component-instance>
 
