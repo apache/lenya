@@ -95,6 +95,10 @@
     <ant antfile="${build.dir}/temp/modules-build.xml"
       inheritall="true"
       inheritrefs="true"
+      target="patch-modules-test"/>
+    <ant antfile="${build.dir}/temp/modules-build.xml"
+      inheritall="true"
+      inheritrefs="true"
       target="test-module-${module}"/>
   </target>
   
