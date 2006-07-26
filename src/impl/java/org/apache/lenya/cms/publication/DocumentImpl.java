@@ -409,7 +409,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
 
     }
 
-    protected DocumentIdentifier getIdentifier() {
+    public DocumentIdentifier getIdentifier() {
         return this.identifier;
     }
 
@@ -597,4 +597,5 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
             throw new DocumentException(e);
         }
     }
+
 }

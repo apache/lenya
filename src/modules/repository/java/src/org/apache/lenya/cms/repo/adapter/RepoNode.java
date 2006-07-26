@@ -19,6 +19,8 @@ package org.apache.lenya.cms.repo.adapter;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
@@ -27,6 +29,7 @@ import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.repo.Translation;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.repository.NodeListener;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.Session;
 
@@ -181,6 +184,20 @@ public class RepoNode extends AbstractLogEnabled implements Node {
     public String[] getMetaDataNamespaceUris() throws MetaDataException {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    private Set listeners = new HashSet();
+
+    public void addListener(NodeListener listener) throws RepositoryException {
+        if (this.listeners.contains(listener)) {
+            throw new RepositoryException("The listener [" + listener
+                    + "] is already registered for node [" + this + "]!");
+        }
+        this.listeners.add(listener);
+    }
+
+    public boolean isListenerRegistered(NodeListener listener) {
+        return this.listeners.contains(listener);
     }
 
 }

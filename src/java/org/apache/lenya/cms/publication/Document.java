@@ -238,4 +238,9 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      * @throws DocumentException if an error occurs.
      */
     long getContentLength() throws DocumentException;
+    
+    /**
+     * @return The document identifier for this document.
+     */
+    DocumentIdentifier getIdentifier();
 }

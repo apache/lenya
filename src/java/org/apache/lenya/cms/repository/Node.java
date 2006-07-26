@@ -20,7 +20,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collection;
 
-import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataOwner;
 
 /**
@@ -153,4 +152,16 @@ public interface Node extends MetaDataOwner, RepositoryItem {
      */
     void registerRemoved() throws RepositoryException;
     
+    /**
+     * @param listener The listener to add.
+     * @throws RepositoryException if the listener is already registered.
+     */
+    void addListener(NodeListener listener) throws RepositoryException;
+    
+    /**
+     * Checks if a listener is registered.
+     * @param listener The listener.
+     * @return A boolean value.
+     */
+    boolean isListenerRegistered(NodeListener listener);
 }

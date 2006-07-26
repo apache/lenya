@@ -26,6 +26,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -310,6 +311,11 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                 while (read > 0) {
                     out.write(buf, 0, read);
                     read = in.read(buf);
+                }
+                
+                for (Iterator i = this.listeners.iterator(); i.hasNext(); ) {
+                    NodeListener listener = (NodeListener) i.next();
+                    listener.nodeChanged(this);
                 }
 
             } catch (Exception e) {
@@ -875,6 +881,20 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         }
         Set uris = this.namespace2metamap.keySet();
         return (String[]) uris.toArray(new String[uris.size()]);
+    }
+
+    private Set listeners = new HashSet();
+
+    public void addListener(NodeListener listener) throws RepositoryException {
+        if (this.listeners.contains(listener)) {
+            throw new RepositoryException("The listener [" + listener
+                    + "] is already registered for node [" + this + "]!");
+        }
+        this.listeners.add(listener);
+    }
+
+    public boolean isListenerRegistered(NodeListener listener) {
+        return this.listeners.contains(listener);
     }
 
 }
