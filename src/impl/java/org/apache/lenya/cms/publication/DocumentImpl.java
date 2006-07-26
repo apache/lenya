@@ -27,8 +27,6 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
@@ -36,6 +34,7 @@ import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.site.SiteManager;
 
 /**
@@ -584,26 +583,10 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     public long getContentLength() throws DocumentException {
-        SourceResolver resolver = null;
-        Source source = null;
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI(getSourceURI());
-            if (source.exists()) {
-                return source.getContentLength();
-            } else {
-                throw new SourceNotFoundException("The source [" + getSourceURI()
-                        + "] does not exist!");
-            }
-        } catch (Exception e) {
+            return getRepositoryNode().getContentLength();
+        } catch (RepositoryException e) {
             throw new DocumentException(e);
-        } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
-            }
         }
     }
 

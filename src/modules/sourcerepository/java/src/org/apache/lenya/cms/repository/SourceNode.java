@@ -547,27 +547,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
      * @see org.apache.lenya.cms.repository.Node#getContentLength()
      */
     public long getContentLength() throws RepositoryException {
-        SourceResolver resolver = null;
-        Source source = null;
-        try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI(getRealSourceURI());
-            if (source.exists()) {
-                return source.getContentLength();
-            } else {
-                throw new SourceNotFoundException("The source [" + getRealSourceURI()
-                        + "] does not exist!");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
-            }
-        }
+        loadData();
+        return this.data.length;
     }
 
     private long lastModified = -1;
