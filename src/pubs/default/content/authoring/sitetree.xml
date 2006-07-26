@@ -58,5 +58,9 @@
       <label xml:lang="en">CForms Doctype</label>
     </node>
  </node>
+
+  <node id="search" visibleinnav="false">
+    <label xml:lang="en">Search</label>
+  </node>
   
 </site>
