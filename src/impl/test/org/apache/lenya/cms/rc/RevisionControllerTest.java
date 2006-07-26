@@ -36,11 +36,10 @@ public class RevisionControllerTest extends TestCase {
         super(test);
     }
 
-    /**
-     * The main method.
-     * @param args The command-line arguments.
-     */
-    public static void main(String[] args) {
+    public static void testRevisionController() {
+        
+        String[] args = { "", "", "", "" };
+        
         //       TestRunner.run(getSuite());
 
         if (args.length != 4) {

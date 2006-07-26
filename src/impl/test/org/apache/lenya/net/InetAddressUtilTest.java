@@ -17,15 +17,17 @@ package org.apache.lenya.net;
 
 import java.net.InetAddress;
 
+import junit.framework.TestCase;
+
 /**
  * Inet address util test
  */
-public class InetAddressUtilTest {
-    /**
-     * @param args
-     *
-     */
-    public static void main(String[] args) {
+public class InetAddressUtilTest extends TestCase {
+    
+    public void testInetAddressUtil() {
+        
+        String[] args = { "195.226.6.64", "255.255.255.0", "195.226.6.70" };
+        
         if (args.length != 3) {
             System.out.println("Usage: InetAddressUtilTest network subnet ip");
             return;

@@ -47,8 +47,13 @@ public class RCMLTest extends TestCase {
      * Constructor.
      * @param test The test to execute.
      */
-    public RCMLTest(String test) {
-        super(test);
+    public RCMLTest() {
+        super();
+    }
+    
+    public void testRCML() {
+        String[] args = { "", "", "" };
+        testRCML(args);
     }
 
     public void testRCML(String[] args) {
