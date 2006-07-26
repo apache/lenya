@@ -301,7 +301,7 @@
         </classpath>
         <formatter type="plain" usefile="false" />
         <formatter type="xml" />
-        <jvmarg value="-Djava.endorsed.dirs='${{basedir}}/build/lenya/webapp/WEB-INF/lib/endorsed'"/>
+        <jvmarg value="-Djava.endorsed.dirs='${{basedir}}/build/lenya/webapp/WEB-INF/lib/endorsed' -Djava.awt.headless=true"/>
         <sysproperty key="junit.test.loglevel" value="${{junit.test.loglevel}}"/>
         <sysproperty key="contextRoot" value="${{basedir}}/build/lenya/webapp"/>
         <sysproperty key="tempDir" value="${{basedir}}/build/lenya/temp"/>
