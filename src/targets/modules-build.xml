@@ -71,14 +71,26 @@
   <!-- Module tests -->
   <!-- ================================================ -->
   
-  <target name="modules.test" depends="tests.prepare, prepare-modules">
+  <target name="prepare-module-test">
+    <xslt basedir="${build.dir}/temp"
+      includes="*.xconf"
+      destdir="${build.dir}/temp"
+      style="${src.resource.dir}/test/xpatch2testpatch.xsl"
+      extension=".xtest"/>
+    <xpatch addComments="false"
+      includes="modules.xtest"
+      srcdir="${build.dir}/temp"
+      file="${build.test}/org/apache/lenya/cms/LenyaTestCase.xtest"/>
+  </target>
+  
+  <target name="modules.test" depends="tests.prepare, prepare-modules, prepare-module-test">
     <ant antfile="${build.dir}/temp/modules-build.xml"
       inheritall="true"
       inheritrefs="true"
       target="test-modules"/>
   </target>
   
-  <target name="module.test" depends="tests.prepare, prepare-modules">
+  <target name="module.test" depends="tests.prepare, prepare-modules, prepare-module-test">
     <property name="module" value=""/>
     <ant antfile="${build.dir}/temp/modules-build.xml"
       inheritall="true"
