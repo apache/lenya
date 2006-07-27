@@ -112,7 +112,7 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
             throw new IllegalStateException("The source URI [" + sourceUri
                     + "] doesn't start with lenya://");
         }
-
+        
         String path = sourceUri.substring("lenya://lenya/pubs/".length());
 
         String[] steps = path.split("/");
@@ -139,7 +139,8 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
             }
             
             if (!matched) {
-                throw new RuntimeException("The document for node [" + sourceUri + "] was not found!");
+                // this happens if the node was not a document node
+                this.getLogger().info("No document found for node [" + sourceUri + "]");
             }
 
         } catch (Exception e) {
