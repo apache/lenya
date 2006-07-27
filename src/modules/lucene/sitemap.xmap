@@ -116,7 +116,7 @@
         <map:generate src="{resource-type:{doc-info:{2}:{3}:/{4}:{5}:resourceType}:format-luceneIndex}/{2}/{3}/{4}/{5}"/>
         <map:transform src="fallback://lenya/modules/lucene/xslt/index.xsl">
           <map:parameter name="index" value="{2}-{3}"/>
-          <map:parameter name="id" value="{doc-info:{2}:{3}:/{4}:{5}:webappUrl}"/>
+          <map:parameter name="id" value="{doc-info:{2}:{3}:/{4}:{5}:documentUrl}"/>
         </map:transform>
         <map:transform type="index2"/>
         <map:serialize type="xml"/>

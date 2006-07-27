@@ -24,9 +24,7 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.cocoon.components.source.SourceUtil;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.observation.ObservationRegistry;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryListener;
@@ -40,9 +38,8 @@ public class IndexUpdater extends AbstractLogEnabled implements RepositoryListen
 
     public void documentChanged(RepositoryEvent event) {
         Document doc = event.getDocument();
-        SourceResolver resolver = null;
-        Source source = null;
 
+        String uri = null;
         try {
             String[] formats = doc.getResourceType().getFormats();
             if (!Arrays.asList(formats).contains("luceneIndex")) {
@@ -51,22 +48,14 @@ public class IndexUpdater extends AbstractLogEnabled implements RepositoryListen
                         + doc.getResourceType().getName() + "] does not support indexing!");
                 return;
             }
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            
-            String docString = 
-                doc.getPublication().getId() + "/" + doc.getArea() + doc.getId() + "/" + doc.getLanguage();
-            
-            source = resolver.resolveURI("cocoon://modules/lucene/index-document-index/" + docString + ".xml");
-            SourceUtil.getInputSource(source);
+
+            String docString = doc.getPublication().getId() + "/" + doc.getArea() + doc.getId()
+                    + "/" + doc.getLanguage();
+            uri = "cocoon://modules/lucene/index-document-index/" + docString + ".xml";
+            SourceUtil.readDOM(uri, this.manager);
         } catch (Exception e) {
+            getLogger().error("Invoking indexing failed for URL [" + uri + "]: ", e);
             throw new RuntimeException(e);
-        } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
-            }
         }
     }
 

@@ -16,8 +16,8 @@
 -->
 
 <xconf xpath="/cocoon"
-  if-prop="patch.webapp"
   unless="/cocoon/component[@role = 'org.apache.lenya.cms.lucene.IndexUpdater']">
+  <!-- if-prop="patch.webapp" -->
   
   <component logger="lucene.indexupdater"
     role="org.apache.lenya.cms.lucene.IndexUpdater"
