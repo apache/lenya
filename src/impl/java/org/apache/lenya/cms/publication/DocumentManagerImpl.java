@@ -298,8 +298,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      */
     public void copyToArea(Document sourceDocument, String destinationArea)
             throws PublicationException {
-        Document destinationDocument = sourceDocument.getIdentityMap()
-                .getAreaVersion(sourceDocument, destinationArea);
+        DocumentLocator destination = sourceDocument.getLocator().getAreaVersion(destinationArea);
+        Document destinationDocument = sourceDocument.getIdentityMap().get(destination);
         copy(sourceDocument, destinationDocument);
     }
 
@@ -399,8 +399,10 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         String[] languages = source.getLanguages();
         for (int i = 0; i < languages.length; i++) {
 
-            Document sourceVersion = identityMap.getLanguageVersion(source, languages[i]);
-            DocumentLocator targetLocator = sourceVersion.getLocator().getLanguageVersion(languages[i]);
+            DocumentLocator sourceLocator = source.getLocator().getLanguageVersion(languages[i]);
+            Document sourceVersion = identityMap.get(sourceLocator);
+            DocumentLocator targetLocator = sourceVersion.getLocator()
+                    .getLanguageVersion(languages[i]);
             Document targetVersion = identityMap.get(targetLocator);
             copy(sourceVersion, targetVersion);
         }
@@ -547,8 +549,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         DocumentFactory identityMap = document.getIdentityMap();
         String[] languages = document.getLanguages();
         for (int i = 0; i < languages.length; i++) {
-            Document version = identityMap.getLanguageVersion(document, languages[i]);
-            delete(version);
+            DocumentLocator version = document.getLocator().getLanguageVersion(languages[i]);
+            delete(identityMap.get(version));
         }
     }
 

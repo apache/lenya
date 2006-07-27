@@ -27,6 +27,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
@@ -78,10 +79,10 @@ public abstract class MoveSubsite extends DocumentUsecase {
             DocumentSet set = SiteUtil.getSubSite(this.manager, document);
             Document[] documents = set.getDocuments();
             for (int i = 0; i < documents.length; i++) {
-                Document liveVersion = identityMap.getAreaVersion(documents[i],
-                        Publication.LIVE_AREA);
+                DocumentLocator loc = documents[i].getLocator().getAreaVersion(Publication.LIVE_AREA);
+                Document liveVersion = identityMap.get(loc);
                 if (liveVersion.exists()) {
-                    addErrorMessage("delete-doc-live", new String[] { liveVersion.getId() });
+                    addErrorMessage("delete-doc-live", new String[] { liveVersion.toString() });
                 }
             }
             if (!WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), set, getEvent())) {
@@ -156,7 +157,8 @@ public abstract class MoveSubsite extends DocumentUsecase {
         DocumentSet sources = SiteUtil.getSubSite(this.manager, doc);
         DocumentFactory map = getDocumentIdentityMap();
 
-        Document target = doc.getIdentityMap().getAreaVersion(doc, getTargetArea());
+        DocumentLocator loc = doc.getLocator().getAreaVersion(getTargetArea());
+        Document target = doc.getIdentityMap().get(loc);
         target = SiteUtil.getAvailableDocument(this.manager, target);
 
         DocumentSet docsToCopy = getTargetDocsToCopy();
@@ -173,10 +175,12 @@ public abstract class MoveSubsite extends DocumentUsecase {
             SiteUtil.sortAscending(this.manager, docsToCopy);
             Document[] targetDocs = docsToCopy.getDocuments();
             for (int i = 0; i < targetDocs.length; i++) {
-                Document sourceDoc = map.getAreaVersion(targetDocs[i], doc.getArea());
+                DocumentLocator sourceLoc = targetDocs[i].getLocator().getAreaVersion(doc.getArea());
+                Document sourceDoc = map.get(sourceLoc);
                 Document existingSourceDoc = DocumentHelper.getExistingLanguageVersion(sourceDoc,
                         doc.getLanguage());
-                Document targetDoc = map.getAreaVersion(existingSourceDoc, getTargetArea());
+                DocumentLocator targetLoc = existingSourceDoc.getLocator().getAreaVersion(getTargetArea());
+                Document targetDoc = map.get(targetLoc);
                 documentManager.copyDocument(existingSourceDoc, targetDoc);
                 if (!targetDoc.getArea().equals(Publication.AUTHORING_AREA)) {
                     targetDoc.setPlaceholder();

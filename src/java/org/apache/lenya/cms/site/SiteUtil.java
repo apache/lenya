@@ -145,7 +145,8 @@ public class SiteUtil {
         Document document = map.get(node.getPublication(), node.getArea(), node.getPath());
         String[] languages = document.getLanguages();
         for (int i = 0; i < languages.length; i++) {
-            Document version = document.getIdentityMap().getLanguageVersion(document, languages[i]);
+            DocumentLocator loc = document.getLocator().getLanguageVersion(languages[i]);
+            Document version = document.getIdentityMap().get(loc);
             set.add(version);
         }
         return set;
@@ -335,7 +336,8 @@ public class SiteUtil {
     public static Document getTransferedDocument(SiteManager siteManager, Document source,
             String targetArea, int mode) throws SiteException, DocumentException,
             DocumentBuildException {
-        Document target = source.getIdentityMap().getAreaVersion(source, targetArea);
+        DocumentLocator targetLoc = source.getLocator().getAreaVersion(targetArea);
+        Document target = source.getIdentityMap().get(targetLoc);
         switch (mode) {
         case MODE_REPLACE:
             break;

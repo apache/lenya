@@ -90,9 +90,8 @@ public class ChangeNodeID extends DocumentUsecase {
         String[] languages = doc.getLanguages();
         List nodes = new ArrayList();
         for (int i = 0; i < languages.length; i++) {
-            nodes.add(doc.getIdentityMap()
-                    .getLanguageVersion(doc, languages[i])
-                    .getRepositoryNode());
+            DocumentLocator loc = doc.getLocator().getLanguageVersion(languages[i]);
+            nodes.add(doc.getIdentityMap().get(loc).getRepositoryNode());
         }
         return nodes;
     }
@@ -109,8 +108,9 @@ public class ChangeNodeID extends DocumentUsecase {
         if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
             addErrorMessage("This usecase can only be invoked in the authoring area!");
         } else {
-            Document liveVersion = getDocumentIdentityMap().getAreaVersion(getSourceDocument(),
-                    Publication.LIVE_AREA);
+            DocumentLocator liveLoc = getSourceDocument().getLocator()
+                    .getAreaVersion(Publication.LIVE_AREA);
+            Document liveVersion = getDocumentIdentityMap().get(liveLoc);
             if (liveVersion.exists()) {
                 addErrorMessage("This usecase cannot be invoked when the live version exists!");
             }

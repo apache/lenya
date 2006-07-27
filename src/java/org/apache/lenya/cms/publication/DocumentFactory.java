@@ -60,6 +60,7 @@ public interface DocumentFactory extends RepositoryItemFactory {
      * @param language The language of the target document.
      * @return A document.
      * @throws DocumentBuildException if an error occurs.
+     * @deprecated use {@link DocumentLocator#getLanguageVersion(String)} instead.
      */
     Document getLanguageVersion(Document document, String language) throws DocumentBuildException;
 
@@ -69,6 +70,7 @@ public interface DocumentFactory extends RepositoryItemFactory {
      * @param area The area of the target document.
      * @return A document.
      * @throws DocumentBuildException if an error occurs.
+     * @deprecated use {@link DocumentLocator#getAreaVersion(String)} instead.
      */
     Document getAreaVersion(Document document, String area) throws DocumentBuildException;
 

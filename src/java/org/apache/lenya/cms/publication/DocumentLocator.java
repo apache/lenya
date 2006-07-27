@@ -126,6 +126,9 @@ public class DocumentLocator {
     public String toString() {
         return getKey();
     }
-    
-    
+
+    public DocumentLocator getAreaVersion(String area) {
+        return DocumentLocator.getLocator(getPublicationId(), area, getPath(), getLanguage());
+    }
+
 }
