@@ -22,9 +22,6 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
-import org.apache.lenya.cms.publication.templating.ExistingSourceResolver;
-import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
 
 /**
  * This module uses publication templating to resolve the real path for a resource. The current
