@@ -35,6 +35,7 @@ import org.apache.lenya.cms.repository.Node;
  * A resource (asset).
  * 
  * @version $Id$
+ * @deprecated use resource module instead.
  */
 public class Resource extends AbstractLogEnabled implements MetaDataOwner {
 
