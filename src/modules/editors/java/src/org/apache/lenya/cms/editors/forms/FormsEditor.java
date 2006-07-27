@@ -40,7 +40,9 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import org.apache.cocoon.ProcessingException;
+import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.components.source.SourceUtil;
+import org.apache.cocoon.environment.Request;
 import org.apache.commons.lang.StringUtils;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
@@ -152,7 +154,9 @@ public class FormsEditor extends DocumentUsecase {
                 return;
             }
 
-            save(resolver, xmlSource, unnumberTagsXslSource, numberTagsXslSource);
+            Request request = ContextHelper.getRequest(this.context);
+            String encoding = request.getCharacterEncoding();
+            save(resolver, xmlSource, unnumberTagsXslSource, numberTagsXslSource, encoding);
 
             if (hasErrors()) {
                 setParameter(VALIDATION_ERRORS, getErrorMessages());
@@ -217,7 +221,7 @@ public class FormsEditor extends DocumentUsecase {
      * @throws TransformerException
      */
     private void save(SourceResolver resolver, ModifiableSource xmlSource,
-            Source unnumberTagsXslSource, Source numberTagsXslSource) throws ProcessingException,
+            Source unnumberTagsXslSource, Source numberTagsXslSource,String encoding) throws ProcessingException,
             FactoryConfigurationError, ParserConfigurationException, IOException, SAXException,
             XPathQueryConfigurationException, Exception, MalformedURLException,
             TransformerConfigurationException, TransformerException {
@@ -227,7 +231,8 @@ public class FormsEditor extends DocumentUsecase {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Save modifications to [" + xmlSource.getURI() + "]");
         }
-
+        
+        Document doc = null;
         DocumentBuilderFactory parserFactory = DocumentBuilderFactory.newInstance();
         parserFactory.setValidating(false);
         parserFactory.setNamespaceAware(true);
@@ -236,11 +241,14 @@ public class FormsEditor extends DocumentUsecase {
 
         InputSource xmlInputSource = SourceUtil.getInputSource(xmlSource);
         Document document = builder.parse(xmlInputSource);
+
+        Document renumberedDocument = renumberDocument(document, unnumberTagsXslSource,numberTagsXslSource);
+        
         System.setProperty(XPathQueryFactory.class.getName(), XPathQueryFactoryImpl.class.getName());
 
         XUpdateQuery xUpdateQuery = new XUpdateQueryImpl();
 
-        String editSelect = processElements(document, xUpdateQuery);
+        String editSelect = processElements(renumberedDocument, xUpdateQuery);
         setParameter("editSelect", editSelect);
 
         Source validationSource = null;
@@ -255,7 +263,7 @@ public class FormsEditor extends DocumentUsecase {
             unnumberTagsSource = resolver.resolveURI(unnumberTagsUri);
             checkModifiability(unnumberTagsSource);
 
-            javax.xml.transform.Source transformXmlSource = new DOMSource(document);
+            javax.xml.transform.Source transformXmlSource = new DOMSource(renumberedDocument);
             javax.xml.transform.Source transformXslSource = new StreamSource(unnumberTagsXslSource.getInputStream());
 
             ByteArrayOutputStream out = new ByteArrayOutputStream();
@@ -266,8 +274,8 @@ public class FormsEditor extends DocumentUsecase {
             transformer.transform(transformXmlSource, unnumberXmlResult);
 
             ByteArrayInputStream in = new ByteArrayInputStream(out.toByteArray());
-            Document doc = DocumentHelper.readDocument(in);
-
+            doc = DocumentHelper.readDocument(in);
+            
             ValidationUtil.validate(this.manager, doc, getSourceDocument().getResourceType()
                     .getSchema(), new UsecaseErrorHandler(this));
 
@@ -280,10 +288,9 @@ public class FormsEditor extends DocumentUsecase {
             }
         }
 
-        Document renumberedDocument = renumberDocument(document,
-                unnumberTagsXslSource,
-                numberTagsXslSource);
-        writeDocument(renumberedDocument, xmlSource);
+        if (doc != null){
+        	writeDocument(doc, xmlSource, encoding);
+        }
     }
 
     /**
@@ -351,20 +358,25 @@ public class FormsEditor extends DocumentUsecase {
                     } else if (pname.indexOf("xupdate:insert-before") > 0 && pname.endsWith("/>")) {
                         if (!getParameterAsString(pname).equals("null")) {
                             xupdateModifications = insertBefore(getParameterAsString(pname));
+                            editSelect = pname.substring(31,pname.length() - 3);
+                            editSelect = changeTagNumber(editSelect, -1);
                         }
                         // insert-before: in case of image
                     } else if (pname.indexOf("xupdate:insert-before") > 0 && pname.endsWith(">.x")) {
-                        xupdateModifications = insertBefore(pname.substring(0, pname.length() - 2));
+                    	xupdateModifications = insertBefore(pname.substring(0, pname.length() - 2));
                         // insert-after: in case of select/option
                     } else if (pname.indexOf("xupdate:insert-after") > 0 && pname.endsWith("/>")) {
                         if (!getParameterAsString(pname).equals("null")) {
                             xupdateModifications = insertAfter(getParameterAsString(pname));
+                            editSelect = pname.substring(30,pname.length() - 3);
+                            editSelect = changeTagNumber(editSelect, 1);
                         }
                         // insert-after: in case of image
                     } else if (pname.indexOf("xupdate:insert-after") > 0 && pname.endsWith(">.x")) {
                         xupdateModifications = insertAfter(pname.substring(0, pname.length() - 2));
                     } else if (pname.indexOf("xupdate:remove") > 0 && pname.endsWith("/>.x")) {
                         xupdateModifications = remove(pname.substring(0, pname.length() - 2));
+                        editSelect = pname.substring(24,pname.length() - 3);
                     } else if (pname.endsWith(">.y")) {
                         getLogger().debug("Don't handle this: " + pname);
                     } else {
@@ -398,6 +410,21 @@ public class FormsEditor extends DocumentUsecase {
     }
 
     /**
+     * Change the tag number of the selected node.
+     * The variable is used in a javascript in order to jump to the 
+     * appropriate node after deleting or inserting a node.
+     * @param tagID The tagID where the new node is inserted.
+     * @param step  int value for changing the tagID.
+     */   
+    protected String changeTagNumber(String tagID, int step){
+        String number = tagID.substring(tagID.lastIndexOf(".")+1,tagID.lastIndexOf("]")-1);
+        int num = Integer.parseInt(number) + step;
+        String newTagNumber = tagID.substring(0, tagID.lastIndexOf(".")+1);
+        return newTagNumber.concat(Integer.toString(num)+"']");
+    }
+ 
+
+    /**
      * Writes a document to a modifiable source.
      * @param document The document.
      * @param source The source.
@@ -406,10 +433,10 @@ public class FormsEditor extends DocumentUsecase {
      * @throws TransformerException if an error occurs.
      * @throws ProcessingException if an error occurs.
      */
-    protected void writeDocument(Document document, ModifiableSource source) throws IOException,
+    protected void writeDocument(Document document, ModifiableSource source, String encoding) throws IOException,
             TransformerConfigurationException, TransformerException, ProcessingException {
         OutputStream oStream = source.getOutputStream();
-        Writer writer = new OutputStreamWriter(oStream);
+        Writer writer = new OutputStreamWriter(oStream, encoding);
         DocumentHelper.writeDocument(document, writer);
         if (oStream != null) {
             oStream.flush();
