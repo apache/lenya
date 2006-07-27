@@ -132,6 +132,9 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
                 throw new MalformedURLException("Malformed lenyadoc: Publication [" + publicationId
                         + "] does not exist or could not be initialized");
             }
+            if (pub == null || !pub.exists()) {
+                throw new SourceException("The publication [" + publicationId + "] does not exist!");
+            }
 
             // Area
             start = end + 1;
