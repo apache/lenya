@@ -23,21 +23,29 @@ public class DocumentIdentifier {
 
     private Publication publication;
     private String area;
-    private String id;
     private String language;
-    
+    private String uuid;
+
     /**
      * Ctor.
      * @param publication The publication.
      * @param area The area.
      * @param id The document ID.
      * @param language The language.
+     * @param uuid The UUID.
      */
-    public DocumentIdentifier(Publication publication, String area, String id, String language) {
+    public DocumentIdentifier(Publication publication, String area, String uuid, String language) {
         this.publication = publication;
         this.area = area;
-        this.id = id;
         this.language = language;
+        this.uuid = uuid;
+    }
+    
+    /**
+     * @return The UUID.
+     */
+    public String getUUID() {
+        return this.uuid;
     }
 
     /**
@@ -45,13 +53,6 @@ public class DocumentIdentifier {
      */
     public String getArea() {
         return area;
-    }
-
-    /**
-     * @return The document ID.
-     */
-    public String getId() {
-        return id;
     }
 
     /**
@@ -67,19 +68,19 @@ public class DocumentIdentifier {
     public Publication getPublication() {
         return publication;
     }
-    
+
     public boolean equals(Object obj) {
         return (obj instanceof DocumentIdentifier) && obj.hashCode() == hashCode();
     }
-    
+
     public int hashCode() {
         return getKey().hashCode();
     }
-    
+
     protected String getKey() {
-        return this.publication.getId() + ":" + this.area + ":" + this.id + ":" + this.language;
+        return this.publication.getId() + ":" + this.area + ":" + this.uuid + ":" + this.language;
     }
-    
+
     public String toString() {
         return getKey();
     }

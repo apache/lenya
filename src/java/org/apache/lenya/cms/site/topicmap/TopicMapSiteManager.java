@@ -20,7 +20,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.AbstractSiteManager;
-import org.apache.lenya.cms.site.Node;
+import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteStructure;
 
@@ -31,9 +31,9 @@ public class TopicMapSiteManager extends AbstractSiteManager {
 
     /**
      * @see org.apache.lenya.cms.site.SiteManager#requires(org.apache.lenya.cms.publication.DocumentFactory,
-     *      org.apache.lenya.cms.site.Node, org.apache.lenya.cms.site.Node)
+     *      org.apache.lenya.cms.site.SiteNode, org.apache.lenya.cms.site.SiteNode)
      */
-    public boolean requires(DocumentFactory map, Node dependingResource, Node requiredResource)
+    public boolean requires(DocumentFactory map, SiteNode dependingResource, SiteNode requiredResource)
             throws SiteException {
         // TODO Auto-generated method stub
         return false;
@@ -41,18 +41,18 @@ public class TopicMapSiteManager extends AbstractSiteManager {
 
     /**
      * @see org.apache.lenya.cms.site.SiteManager#getRequiredResources(org.apache.lenya.cms.publication.DocumentFactory,
-     *      org.apache.lenya.cms.site.Node)
+     *      org.apache.lenya.cms.site.SiteNode)
      */
-    public Node[] getRequiredResources(DocumentFactory map, Node resource) throws SiteException {
+    public SiteNode[] getRequiredResources(DocumentFactory map, SiteNode resource) throws SiteException {
         // TODO Auto-generated method stub
         return null;
     }
 
     /**
      * @see org.apache.lenya.cms.site.SiteManager#getRequiringResources(org.apache.lenya.cms.publication.DocumentFactory,
-     *      org.apache.lenya.cms.site.Node)
+     *      org.apache.lenya.cms.site.SiteNode)
      */
-    public Node[] getRequiringResources(DocumentFactory map, Node resource)
+    public SiteNode[] getRequiringResources(DocumentFactory map, SiteNode resource)
             throws SiteException {
         // TODO Auto-generated method stub
         return null;
@@ -161,6 +161,16 @@ public class TopicMapSiteManager extends AbstractSiteManager {
 
     public boolean isVisibleInNav(Document document) throws SiteException {
         return true;
+    }
+
+    public String getPath(String area, String uuid) throws SiteException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public String getUUID(String area, String path) throws SiteException {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

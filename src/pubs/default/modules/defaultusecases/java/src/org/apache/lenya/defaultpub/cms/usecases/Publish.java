@@ -33,13 +33,14 @@ import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
-import org.apache.lenya.cms.site.Node;
+import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.NodeFactory;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteUtil;
@@ -160,8 +161,8 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
                 selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
                 siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
 
-                Node liveNode = NodeFactory.getNode(liveDocument);
-                Node[] requiredNodes = siteManager.getRequiredResources(map, liveNode);
+                SiteNode liveNode = NodeFactory.getNode(liveDocument);
+                SiteNode[] requiredNodes = siteManager.getRequiredResources(map, liveNode);
 
                 for (int i = 0; i < requiredNodes.length; i++) {
 
@@ -169,7 +170,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
                     if (liveDocs.isEmpty()) {
                         Document authoringDoc = map.get(requiredNodes[i].getPublication(),
                                 Publication.AUTHORING_AREA,
-                                requiredNodes[i].getDocumentId());
+                                requiredNodes[i].getPath());
                         if (authoringDoc.exists()) {
                             missingDocuments.add(authoringDoc);
                         } else {
@@ -348,7 +349,8 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
         }
 
         try {
-            Document parent = document.getIdentityMap().getParent(document);
+            DocumentLocator parentLocator = document.getLocator().getParent();
+            Document parent = document.getIdentityMap().get(parentLocator);
             boolean publish = true;
             if (parent != null) {
                 Document liveParent = parent.getIdentityMap().getAreaVersion(parent,

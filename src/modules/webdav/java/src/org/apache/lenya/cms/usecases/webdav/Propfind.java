@@ -25,7 +25,7 @@ import java.util.Vector;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
-import org.apache.lenya.cms.publication.DocumentIdentifier;
+import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
@@ -127,8 +127,8 @@ public class Propfind extends SiteUsecase {
             // get assets if we are currently looking at a document
             if (!request.equals("/" + _publication.getId() + "/authoring/")) {
                 String url = request.substring(0, request.length() - 1) + ".html";
-                DocumentIdentifier identifier = docBuilder.getIdentitfier(url);
-                Document currentDoc = getDocumentIdentityMap().get(identifier);
+                DocumentLocator locator = docBuilder.getLocator(url);
+                Document currentDoc = getDocumentIdentityMap().get(locator);
                 if (currentDoc.exists()) {
                     resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
                     Resource[] resources = resourcesManager.getResources(currentDoc);

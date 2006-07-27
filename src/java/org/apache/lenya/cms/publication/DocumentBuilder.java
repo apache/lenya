@@ -30,12 +30,13 @@ public interface DocumentBuilder {
     String ROLE = DocumentBuilder.class.getName();
     
     /**
-     * Returns a document identifier for a web application URL.
+     * Returns a document for a web application URL.
+     * @param factory The factory.
      * @param webappUrl The web application URL.
      * @return A document identifier.
      * @throws DocumentBuildException if an error occurs.
      */
-    DocumentIdentifier getIdentitfier(String webappUrl) throws DocumentBuildException;
+    DocumentLocator getLocator(String webappUrl) throws DocumentBuildException;
 
     /**
      * Checks if an URL corresponds to a CMS document.
@@ -47,10 +48,10 @@ public interface DocumentBuilder {
 
     /**
      * Builds an URL corresponding to a CMS document.
-     * @param identifier The document identifier.
+     * @param locator The locator.
      * @return a String The corresponding URL.
      */
-    String buildCanonicalUrl(DocumentIdentifier identifier);
+    String buildCanonicalUrl(DocumentLocator locator);
 
     /**
      * Checks if a document name is valid.

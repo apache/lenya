@@ -31,6 +31,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -143,7 +144,8 @@ public class DocumentHelper {
 
             contextPath = request.getContextPath();
 
-            Document parent = this.identityMap.getParent(document, "/index");
+            DocumentLocator parentLocator = document.getLocator().getParent("/index");
+            Document parent = this.identityMap.get(parentLocator);
             parentUrl = parent.getCanonicalWebappURL();
         } catch (final DocumentBuildException e) {
             throw new ProcessingException(e);

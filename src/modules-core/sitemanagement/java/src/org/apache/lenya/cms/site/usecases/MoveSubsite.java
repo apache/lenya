@@ -31,7 +31,7 @@ import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
 import org.apache.lenya.cms.publication.util.DocumentSet;
-import org.apache.lenya.cms.site.Node;
+import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.NodeFactory;
 import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteException;
@@ -233,12 +233,12 @@ public abstract class MoveSubsite extends DocumentUsecase {
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(doc.getPublication().getSiteManagerHint());
 
-            Node node = NodeFactory.getNode(doc);
-            Node[] requiredNodes = siteManager.getRequiredResources(map, node);
+            SiteNode node = NodeFactory.getNode(doc);
+            SiteNode[] requiredNodes = siteManager.getRequiredResources(map, node);
             for (int i = 0; i < requiredNodes.length; i++) {
                 Document targetDoc = map.get(getSourceDocument().getPublication(),
                         getTargetArea(),
-                        requiredNodes[i].getDocumentId(),
+                        requiredNodes[i].getPath(),
                         doc.getLanguage());
                 if (!siteManager.containsInAnyLanguage(targetDoc)) {
                     docsToCopy.add(targetDoc);
@@ -276,13 +276,13 @@ public abstract class MoveSubsite extends DocumentUsecase {
 
             NodeSet nodesToDelete = new NodeSet();
 
-            Node sourceNode = NodeFactory.getNode(doc);
-            Node[] requiredSourceNodes = siteManager.getRequiredResources(map, sourceNode);
+            SiteNode sourceNode = NodeFactory.getNode(doc);
+            SiteNode[] requiredSourceNodes = siteManager.getRequiredResources(map, sourceNode);
             for (int i = 0; i < requiredSourceNodes.length; i++) {
-                Node node = requiredSourceNodes[i];
+                SiteNode node = requiredSourceNodes[i];
                 boolean delete = true;
 
-                Document requiredDoc = map.get(node.getPublication(), node.getArea(), node.getDocumentId());
+                Document requiredDoc = map.get(node.getPublication(), node.getArea(), node.getPath());
                 String[] languages = requiredDoc.getLanguages();
                 for (int l = 0; l < languages.length; l++) {
                     Document langVersion = map.getLanguageVersion(requiredDoc, languages[l]);
@@ -291,11 +291,11 @@ public abstract class MoveSubsite extends DocumentUsecase {
                     }
                 }
                 
-                Node[] requiringNodes = siteManager.getRequiringResources(map, node);
+                SiteNode[] requiringNodes = siteManager.getRequiringResources(map, node);
                 
                 for (int j = 0; j < requiringNodes.length; j++) {
-                    Node n = requiringNodes[j];
-                    Document reqDoc = map.get(n.getPublication(), n.getArea(), n.getDocumentId());
+                    SiteNode n = requiringNodes[j];
+                    Document reqDoc = map.get(n.getPublication(), n.getArea(), n.getPath());
                     languages = reqDoc.getLanguages();
                     for (int l = 0; l < languages.length; l++) {
                         Document langVersion = map.getLanguageVersion(reqDoc, languages[l]);
@@ -309,10 +309,10 @@ public abstract class MoveSubsite extends DocumentUsecase {
                 }
             }
 
-            Node[] nodes = nodesToDelete.getNodes();
+            SiteNode[] nodes = nodesToDelete.getNodes();
             for (int i = 0; i < nodes.length; i++) {
-                Node n = nodes[i];
-                Document d = map.get(n.getPublication(), n.getArea(), n.getDocumentId());
+                SiteNode n = nodes[i];
+                Document d = map.get(n.getPublication(), n.getArea(), n.getPath());
                 String[] languages = d.getLanguages();
                 for (int l = 0; l < languages.length; l++) {
                     Document langVersion = map.getLanguageVersion(d, languages[l]);

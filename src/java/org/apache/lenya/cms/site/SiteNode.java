@@ -18,25 +18,25 @@ package org.apache.lenya.cms.site;
 
 import org.apache.lenya.cms.publication.Publication;
 
-public final class Node {
+public final class SiteNode {
 
-    private String documentId;
+    private String path;
     private String area;
     private Publication publication;
     
-    protected Node(Publication publication, String area, String documentId) {
+    protected SiteNode(Publication publication, String area, String path) {
         super();
         this.publication = publication;
         this.area = area;
-        this.documentId = documentId;
+        this.path = path;
     }
 
     public String getArea() {
         return area;
     }
 
-    public String getDocumentId() {
-        return documentId;
+    public String getPath() {
+        return path;
     }
 
     public Publication getPublication() {
@@ -44,25 +44,25 @@ public final class Node {
     }
 
     public boolean equals(Object obj) {
-        if (obj == null || !(obj instanceof Node)) {
+        if (obj == null || !(obj instanceof SiteNode)) {
             return false;
         }
-        String thisKey = getKey(getPublication(), getArea(), getDocumentId());
-        Node node = (Node) obj;
-        String nodeKey = getKey(node.getPublication(), node.getArea(), node.getDocumentId());
+        String thisKey = getKey(getPublication(), getArea(), getPath());
+        SiteNode node = (SiteNode) obj;
+        String nodeKey = getKey(node.getPublication(), node.getArea(), node.getPath());
         return thisKey.equals(nodeKey);
     }
 
     public int hashCode() {
-        return getKey(getPublication(), getArea(), getDocumentId()).hashCode();
+        return getKey(getPublication(), getArea(), getPath()).hashCode();
     }
     
     protected static String getKey(Publication pub, String area, String docId) {
         return pub.getId() + ":" + area + ":" + docId;
     }
     
-    public Node getParent() {
-        String id = getDocumentId().substring(1);
+    public SiteNode getParent() {
+        String id = getPath().substring(1);
         String[] steps = id.split("/");
         if (steps.length == 1) {
             return null;

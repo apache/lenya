@@ -38,12 +38,12 @@ public interface DocumentFactory extends RepositoryItemFactory {
      * Returns a document.
      * @param publication The publication.
      * @param area The area.
-     * @param documentId The document ID.
+     * @param uuid The document ID.
      * @param language The language.
      * @return A document.
      * @throws DocumentBuildException if an error occurs.
      */
-    Document get(Publication publication, String area, String documentId, String language)
+    Document get(Publication publication, String area, String uuid, String language)
             throws DocumentBuildException;
 
     /**
@@ -73,39 +73,15 @@ public interface DocumentFactory extends RepositoryItemFactory {
     Document getAreaVersion(Document document, String area) throws DocumentBuildException;
 
     /**
-     * Returns the parent of a document.
-     * @param document A document.
-     * @return A document or <code>null</code> if the document has no parent.
-     * @throws DocumentBuildException if an error occurs.
-     */
-    Document getParent(Document document) throws DocumentBuildException;
-
-    /**
-     * Returns the parent of a document.
-     * @param document A document.
-     * @param defaultDocumentId The document ID to use if the document has no parent.
-     * @return A document.
-     * @throws DocumentBuildException if an error occurs.
-     */
-    Document getParent(Document document, String defaultDocumentId) throws DocumentBuildException;
-
-    /**
      * Builds a document for the default language.
      * @param publication The publication.
      * @param area The area.
-     * @param documentId The document ID.
+     * @param uuid The document UUID.
      * @return A document.
      * @throws DocumentBuildException if an error occurs.
      */
-    Document get(Publication publication, String area, String documentId)
+    Document get(Publication publication, String area, String uuid)
             throws DocumentBuildException;
-
-    /**
-     * Checks if a string represents a valid document ID.
-     * @param id The string.
-     * @return A boolean value.
-     */
-    boolean isValidDocumentId(String id);
 
     /**
      * Checks if a webapp URL represents a document.
@@ -119,5 +95,12 @@ public interface DocumentFactory extends RepositoryItemFactory {
      * @return The session.
      */
     Session getSession();
+    
+    /**
+     * @param locator The locator.
+     * @return A document.
+     * @throws DocumentBuildException if an error occurs.
+     */
+    Document get(DocumentLocator locator) throws DocumentBuildException;
     
 }

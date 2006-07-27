@@ -26,8 +26,8 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
-import org.apache.lenya.cms.site.Node;
 import org.apache.lenya.cms.site.NodeFactory;
+import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.site.usecases.AssetUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
@@ -76,7 +76,7 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
             DocumentFactory map = getSourceDocument().getIdentityMap();
             Document liveDoc = map.getAreaVersion(getSourceDocument(), Publication.LIVE_AREA);
             DocumentSet subSite = SiteUtil.getSubSite(this.manager, liveDoc);
-            Node node = NodeFactory.getNode(liveDoc);
+            SiteNode node = NodeFactory.getNode(liveDoc);
             subSite.removeAll(SiteUtil.getExistingDocuments(map, node));
 
             if (!subSite.isEmpty()) {

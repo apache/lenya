@@ -27,13 +27,11 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.environment.ObjectModelHelper;
-import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
-import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.site.SiteManager;
@@ -84,8 +82,6 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
                 this.manager.release(selector);
             }
         }
-
-        Request request = ObjectModelHelper.getRequest(this.objectModel);
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Rewriting source: [" + originalTargetDocument + "]");
@@ -216,12 +212,10 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
             selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
             builder = (DocumentBuilder) selector.select(originalTargetDocument.getPublication()
                     .getDocumentBuilderHint());
-
-            DocumentIdentifier identifier = new DocumentIdentifier(newTargetDocument.getPublication(),
-                    newTargetDocument.getArea(),
-                    newTargetDocument.getId() + childString,
-                    targetDocument.getLanguage());
-            String newTargetUrl = builder.buildCanonicalUrl(identifier);
+            
+            DocumentLocator locator = newTargetDocument.getLocator();
+            DocumentLocator child = locator.getDescendant(childString);
+            String newTargetUrl = builder.buildCanonicalUrl(child);
             return newTargetUrl;
         } catch (ServiceException e) {
             throw new RuntimeException(e);

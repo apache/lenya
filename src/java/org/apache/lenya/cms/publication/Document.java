@@ -145,9 +145,8 @@ public interface Document extends MetaDataOwner, RepositoryItem {
     /**
      * Returns the UUID.
      * @return A string.
-     * @throws DocumentException if an error occurs.
      */
-    String getUUID() throws DocumentException;
+    String getUUID();
     
     /**
      * Check if a document with the given document-id, language and in the given
@@ -243,4 +242,9 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      * @return The document identifier for this document.
      */
     DocumentIdentifier getIdentifier();
+    
+    /**
+     * @return The locator for this document.
+     */
+    DocumentLocator getLocator();
 }

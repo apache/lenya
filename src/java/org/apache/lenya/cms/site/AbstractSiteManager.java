@@ -81,7 +81,7 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
      * @throws SiteException when something went wrong.
      */
     protected boolean isAntisymmetric(DocumentFactory map, NodeSet set) throws SiteException {
-        Node[] resources = set.getNodes();
+        SiteNode[] resources = set.getNodes();
         boolean isAntisymmetric = true;
         for (int i = 0; i < resources.length; i++) {
             for (int j = i + 1; j < resources.length; j++) {
@@ -104,7 +104,7 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
      * @throws SiteException when something went wrong.
      */
     protected boolean isTransitive(DocumentFactory map, NodeSet set) throws SiteException {
-        Node[] resources = set.getNodes();
+        SiteNode[] resources = set.getNodes();
         boolean isTransitive = true;
         for (int i = 0; i < resources.length; i++) {
             for (int j = i + 1; j < resources.length; j++) {
@@ -129,7 +129,7 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
      * @throws SiteException
      */
     protected boolean isIrreflexive(DocumentFactory map, NodeSet set) throws SiteException {
-        Node[] resources = set.getNodes();
+        SiteNode[] resources = set.getNodes();
         boolean isIrreflexive = true;
         for (int i = 0; i < resources.length; i++) {
             if (requires(map, resources[i], resources[i])) {
@@ -160,9 +160,9 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
          */
         public int compare(Object arg0, Object arg1) {
             int result = 0;
-            if (arg0 instanceof Node && arg1 instanceof Node) {
-                Node doc1 = (Node) arg0;
-                Node doc2 = (Node) arg1;
+            if (arg0 instanceof SiteNode && arg1 instanceof SiteNode) {
+                SiteNode doc1 = (SiteNode) arg0;
+                SiteNode doc2 = (SiteNode) arg1;
 
                 try {
                     if (AbstractSiteManager.this.requires(map, doc1, doc2)) {
@@ -203,8 +203,8 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
             if (arg0 instanceof Document && arg1 instanceof Document) {
                 Document doc1 = (Document) arg0;
                 Document doc2 = (Document) arg1;
-                Node node1 = NodeFactory.getNode(doc1);
-                Node node2 = NodeFactory.getNode(doc2);
+                SiteNode node1 = NodeFactory.getNode(doc1);
+                SiteNode node2 = NodeFactory.getNode(doc2);
 
                 try {
                     if (AbstractSiteManager.this.requires(map, node1, node2)) {

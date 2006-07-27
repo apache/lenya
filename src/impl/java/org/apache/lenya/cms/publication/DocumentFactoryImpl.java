@@ -25,6 +25,7 @@ import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.site.SiteUtil;
 
 /**
  * A DocumentIdentityMap avoids the multiple instanciation of a document object.
@@ -59,20 +60,20 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
      * Returns a document.
      * @param publication The publication.
      * @param area The area.
-     * @param documentId The document ID.
+     * @param uuid The document UUID.
      * @param language The language.
      * @return A document.
      * @throws DocumentBuildException if an error occurs.
      */
-    public Document get(Publication publication, String area, String documentId, String language)
+    public Document get(Publication publication, String area, String uuid, String language)
             throws DocumentBuildException {
 
         if (getLogger().isDebugEnabled())
             getLogger().debug("DocumentIdentityMap::get() called on publication ["
-                    + publication.getId() + "], area [" + area + "], documentId [" + documentId
+                    + publication.getId() + "], area [" + area + "], UUID [" + uuid
                     + "], language [" + language + "]");
 
-        String key = getKey(publication, area, documentId, language);
+        String key = getKey(publication, area, uuid, language);
 
         if (getLogger().isDebugEnabled())
             getLogger().debug("DocumentIdentityMap::get() got key [" + key
@@ -109,7 +110,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
      */
     public Document getLanguageVersion(Document document, String language)
             throws DocumentBuildException {
-        return get(document.getPublication(), document.getArea(), document.getId(), language);
+        return get(document.getPublication(), document.getArea(), document.getUUID(), language);
     }
 
     /**
@@ -120,45 +121,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
      * @throws DocumentBuildException if an error occurs.
      */
     public Document getAreaVersion(Document document, String area) throws DocumentBuildException {
-        return get(document.getPublication(), area, document.getId(), document.getLanguage());
-    }
-
-    /**
-     * Returns the parent of a document.
-     * @param document A document.
-     * @return A document or <code>null</code> if the document has no parent.
-     * @throws DocumentBuildException if an error occurs.
-     */
-    public Document getParent(Document document) throws DocumentBuildException {
-        Document parent = null;
-        int lastSlashIndex = document.getId().lastIndexOf("/");
-        if (lastSlashIndex > 0) {
-            String parentId = document.getId().substring(0, lastSlashIndex);
-            parent = get(document.getPublication(),
-                    document.getArea(),
-                    parentId,
-                    document.getLanguage());
-        }
-        return parent;
-    }
-
-    /**
-     * Returns the parent of a document.
-     * @param document A document.
-     * @param defaultDocumentId The document ID to use if the document has no parent.
-     * @return A document.
-     * @throws DocumentBuildException if an error occurs.
-     */
-    public Document getParent(Document document, String defaultDocumentId)
-            throws DocumentBuildException {
-        Document parent = getParent(document);
-        if (parent == null) {
-            parent = get(document.getPublication(),
-                    document.getArea(),
-                    defaultDocumentId,
-                    document.getLanguage());
-        }
-        return parent;
+        return get(document.getPublication(), area, document.getUUID(), document.getLanguage());
     }
 
     /**
@@ -241,12 +204,12 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
      * Builds a document key.
      * @param publication The publication.
      * @param area The area.
-     * @param documentId The document ID.
+     * @param uuid The document UUID.
      * @param language The language.
      * @return A key.
      */
-    public String getKey(Publication publication, String area, String documentId, String language) {
-        return publication.getId() + ":" + area + ":" + documentId + ":" + language;
+    public String getKey(Publication publication, String area, String uuid, String language) {
+        return publication.getId() + ":" + area + ":" + uuid + ":" + language;
     }
 
     /**
@@ -257,12 +220,15 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
     public String getKey(String webappUrl) {
         ServiceSelector selector = null;
         DocumentBuilder builder = null;
-        DocumentIdentifier identifier;
         try {
             Publication publication = PublicationUtil.getPublicationFromUrl(this.manager, webappUrl);
             selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
             builder = (DocumentBuilder) selector.select(publication.getDocumentBuilderHint());
-            identifier = builder.getIdentitfier(webappUrl);
+            DocumentLocator locator = builder.getLocator(webappUrl);
+
+            String area = locator.getArea();
+            String uuid = SiteUtil.getUUID(this.manager, publication, area, locator.getPath());
+            return getKey(publication, area, uuid, locator.getLanguage());
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -273,10 +239,6 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
                 this.manager.release(selector);
             }
         }
-        return getKey(identifier.getPublication(),
-                identifier.getArea(),
-                identifier.getId(),
-                identifier.getLanguage());
     }
 
     /**
@@ -290,7 +252,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
         String[] snippets = key.split(":");
         String publicationId = snippets[0];
         String area = snippets[1];
-        String documentId = snippets[2];
+        String uuid = snippets[2];
         String language = snippets[3];
 
         ServiceSelector selector = null;
@@ -304,7 +266,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
             builder = (DocumentBuilder) selector.select(publication.getDocumentBuilderHint());
             DocumentIdentifier identifier = new DocumentIdentifier(publication,
                     area,
-                    documentId,
+                    uuid,
                     language);
             document = buildDocument(this, identifier, builder);
         } catch (Exception e) {
@@ -343,7 +305,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
     protected DocumentImpl createDocument(DocumentFactory map, DocumentIdentifier identifier,
             DocumentBuilder builder) throws DocumentBuildException {
         DocumentImpl document = new DocumentImpl(this.manager, map, identifier, getLogger());
-        final String canonicalUrl = builder.buildCanonicalUrl(identifier);
+        final String canonicalUrl = builder.buildCanonicalUrl(document.getLocator());
         final String prefix = "/" + identifier.getPublication().getId() + "/"
                 + identifier.getArea();
         final String canonicalDocumentUrl = canonicalUrl.substring(prefix.length());
@@ -354,11 +316,22 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
     public Document get(DocumentIdentifier identifier) throws DocumentBuildException {
         return get(identifier.getPublication(),
                 identifier.getArea(),
-                identifier.getId(),
+                identifier.getUUID(),
                 identifier.getLanguage());
     }
 
     public String getItemType() {
         return Document.TRANSACTIONABLE_TYPE;
+    }
+
+    public Document get(DocumentLocator locator) throws DocumentBuildException {
+        try {
+            Publication pub = PublicationUtil.getPublication(this.manager,
+                    locator.getPublicationId());
+            String uuid = SiteUtil.getUUID(this.manager, pub, locator.getArea(), locator.getPath());
+            return get(pub, locator.getArea(), uuid, locator.getLanguage());
+        } catch (PublicationException e) {
+            throw new DocumentBuildException(e);
+        }
     }
 }

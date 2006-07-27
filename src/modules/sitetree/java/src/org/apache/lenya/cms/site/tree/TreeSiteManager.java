@@ -30,7 +30,7 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.RepositoryItemFactory;
 import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.Label;
-import org.apache.lenya.cms.site.Node;
+import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.NodeFactory;
 import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteException;
@@ -86,9 +86,9 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      * @return A list of resources.
      * @throws SiteException if an error occurs.
      */
-    protected List getAncestors(Node node) throws SiteException {
+    protected List getAncestors(SiteNode node) throws SiteException {
         List ancestors = new ArrayList();
-        Node parent;
+        SiteNode parent;
         try {
             parent = node.getParent();
             if (parent != null) {
@@ -105,27 +105,27 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
 
     /**
      * @see org.apache.lenya.cms.site.SiteManager#requires(org.apache.lenya.cms.publication.DocumentFactory,
-     *      org.apache.lenya.cms.site.Node, org.apache.lenya.cms.site.Node)
+     *      org.apache.lenya.cms.site.SiteNode, org.apache.lenya.cms.site.SiteNode)
      */
-    public boolean requires(DocumentFactory map, Node dependingResource, Node requiredResource)
+    public boolean requires(DocumentFactory map, SiteNode dependingResource, SiteNode requiredResource)
             throws SiteException {
         return getAncestors(dependingResource).contains(requiredResource);
     }
 
     /**
      * @see org.apache.lenya.cms.site.SiteManager#getRequiredResources(org.apache.lenya.cms.publication.DocumentFactory,
-     *      org.apache.lenya.cms.site.Node)
+     *      org.apache.lenya.cms.site.SiteNode)
      */
-    public Node[] getRequiredResources(DocumentFactory map, Node resource) throws SiteException {
+    public SiteNode[] getRequiredResources(DocumentFactory map, SiteNode resource) throws SiteException {
         List ancestors = getAncestors(resource);
-        return (Node[]) ancestors.toArray(new Node[ancestors.size()]);
+        return (SiteNode[]) ancestors.toArray(new SiteNode[ancestors.size()]);
     }
 
     /**
      * @see org.apache.lenya.cms.site.SiteManager#getRequiringResources(org.apache.lenya.cms.publication.DocumentFactory,
-     *      org.apache.lenya.cms.site.Node)
+     *      org.apache.lenya.cms.site.SiteNode)
      */
-    public Node[] getRequiringResources(DocumentFactory map, Node resource)
+    public SiteNode[] getRequiringResources(DocumentFactory map, SiteNode resource)
             throws SiteException {
 
         if (getLogger().isDebugEnabled()) {
@@ -137,7 +137,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         String area = resource.getArea();
         SiteTree tree = getTree(map, pub, area);
 
-        SiteTreeNode node = tree.getNode(resource.getDocumentId());
+        SiteTreeNode node = tree.getNode(resource.getPath());
         if (node != null) {
             List preOrder = node.preOrder();
 
@@ -146,7 +146,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
 
             for (int i = 0; i < preOrder.size(); i++) {
                 SiteTreeNode descendant = (SiteTreeNode) preOrder.get(i);
-                Node descendantNode = NodeFactory.getNode(pub, area, descendant.getAbsoluteId());
+                SiteNode descendantNode = NodeFactory.getNode(pub, area, descendant.getAbsoluteId());
                 nodes.add(descendantNode);
             }
 
@@ -492,5 +492,13 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
     public boolean isVisibleInNav(Document document) throws SiteException {
         SiteTree tree = getTree(document);
         return tree.isVisibleInNav(document.getId());
+    }
+
+    public String getPath(String area, String uuid) throws SiteException {
+        return uuid;
+    }
+
+    public String getUUID(String area, String path) throws SiteException {
+        return path;
     }
 }

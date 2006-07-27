@@ -38,7 +38,7 @@ public class NodeSet {
      * Ctor.
      * @param _nodes The initial nodes.
      */
-    public NodeSet(Node[] _nodes) {
+    public NodeSet(SiteNode[] _nodes) {
         for (int i = 0; i < _nodes.length; i++) {
             add(_nodes[i]);
         }
@@ -51,7 +51,7 @@ public class NodeSet {
     public NodeSet(DocumentSet documents) {
         Document[] docs = documents.getDocuments();
         for (int i = 0; i < docs.length; i++) {
-            Node node = new Node(docs[i].getPublication(), docs[i].getArea(), docs[i].getId());
+            SiteNode node = new SiteNode(docs[i].getPublication(), docs[i].getArea(), docs[i].getId());
             if (!contains(node)) {
                 add(node);
             }
@@ -62,7 +62,7 @@ public class NodeSet {
      * @param node A node.
      * @return If the node is contained.
      */
-    public boolean contains(Node node) {
+    public boolean contains(SiteNode node) {
         return getList().contains(node);
     }
 
@@ -81,15 +81,15 @@ public class NodeSet {
      * 
      * @return An array of documents.
      */
-    public Node[] getNodes() {
-        return (Node[]) this.nodes.toArray(new Node[this.nodes.size()]);
+    public SiteNode[] getNodes() {
+        return (SiteNode[]) this.nodes.toArray(new SiteNode[this.nodes.size()]);
     }
 
     /**
      * Adds a node to this set.
      * @param node The node to add.
      */
-    public void add(Node node) {
+    public void add(SiteNode node) {
         assert node != null;
         assert !this.nodes.contains(node);
         this.nodes.add(node);
@@ -107,7 +107,7 @@ public class NodeSet {
      * Removes a node.
      * @param resource The node.
      */
-    public void remove(Node resource) {
+    public void remove(SiteNode resource) {
         assert resource != null;
         assert getList().contains(resource);
         getList().remove(resource);

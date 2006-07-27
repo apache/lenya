@@ -115,37 +115,44 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
 
     /**
      * Builds the canonical document URL.
-     * @param identifier The identifier.
+     * @param locator The document.
      * @return A string.
      */
-    protected String buildCanonicalDocumentUrl(DocumentIdentifier identifier) {
+    protected String buildCanonicalDocumentUrl(DocumentLocator locator) {
 
         String languageSuffix = "";
-        String language = identifier.getLanguage();
-        if (!language.equals(identifier.getPublication().getDefaultLanguage())) {
+        String language = locator.getLanguage();
+
+        Publication pub;
+        try {
+            pub = PublicationUtil.getPublication(this.manager, locator.getPublicationId());
+        } catch (PublicationException e) {
+            throw new RuntimeException(e);
+        }
+
+        if (!language.equals(pub.getDefaultLanguage())) {
             languageSuffix = "_" + language;
         }
 
-        String url = identifier.getId() + languageSuffix + ".html";
+        String url = locator.getPath() + languageSuffix + ".html";
         return url;
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.DocumentBuilder#buildCanonicalUrl(org.apache.lenya.cms.publication.DocumentIdentifier)
+     * @see org.apache.lenya.cms.publication.DocumentBuilder#buildCanonicalUrl(
+     *      org.apache.lenya.cms.publication.DocumentLocator)
      */
-    public String buildCanonicalUrl(DocumentIdentifier identifier) {
+    public String buildCanonicalUrl(DocumentLocator doc) {
 
-        String documentUrl = buildCanonicalDocumentUrl(identifier);
-        String url = "/" + identifier.getPublication().getId() + "/" + identifier.getArea()
-                + documentUrl;
-
+        String documentUrl = buildCanonicalDocumentUrl(doc);
+        String url = "/" + doc.getPublicationId() + "/" + doc.getArea() + documentUrl;
         return url;
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.DocumentBuilder#getIdentitfier(java.lang.String)
+     * @see org.apache.lenya.cms.publication.DocumentBuilder#getLocator( java.lang.String)
      */
-    public DocumentIdentifier getIdentitfier(String webappUrl) throws DocumentBuildException {
+    public DocumentLocator getLocator(String webappUrl) throws DocumentBuildException {
 
         if (!isDocument(webappUrl)) {
             throw new DocumentBuildException("The webapp URL [" + webappUrl
@@ -173,18 +180,13 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
             language = publication.getDefaultLanguage();
         }
 
-        String documentId = documentURL;
+        String path = documentURL;
 
-        if (!documentId.startsWith("/")) {
-            throw new DocumentBuildException("Document ID [" + documentId
-                    + "] does not start with '/'!");
+        if (!path.startsWith("/")) {
+            throw new DocumentBuildException("Path [" + path + "] does not start with '/'!");
         }
 
-        DocumentIdentifier identifier = new DocumentIdentifier(publication,
-                info.getArea(),
-                documentId,
-                language);
-        return identifier;
+        return DocumentLocator.getLocator(publication.getId(), info.getArea(), path, language);
     }
 
     /**

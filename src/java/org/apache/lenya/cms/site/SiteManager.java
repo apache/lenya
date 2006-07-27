@@ -57,7 +57,7 @@ public interface SiteManager {
      * @return A boolean value.
      * @throws SiteException if an error occurs.
      */
-    boolean requires(DocumentFactory map, Node dependingResource, Node requiredResource)
+    boolean requires(DocumentFactory map, SiteNode dependingResource, SiteNode requiredResource)
             throws SiteException;
 
     /**
@@ -68,7 +68,7 @@ public interface SiteManager {
      * @return An array of resources.
      * @throws SiteException if an error occurs.
      */
-    Node[] getRequiredResources(DocumentFactory map, Node resource) throws SiteException;
+    SiteNode[] getRequiredResources(DocumentFactory map, SiteNode resource) throws SiteException;
 
     /**
      * Returns the resources which require a certain resource.
@@ -78,7 +78,7 @@ public interface SiteManager {
      * @return An array of resources.
      * @throws SiteException if an error occurs.
      */
-    Node[] getRequiringResources(DocumentFactory map, Node resource) throws SiteException;
+    SiteNode[] getRequiringResources(DocumentFactory map, SiteNode resource) throws SiteException;
 
     /**
      * Adds a document to the site structure.
@@ -98,13 +98,22 @@ public interface SiteManager {
     boolean contains(Document resource) throws SiteException;
 
     /**
-     * Return the UUID of a certain resource in a certain area.
-     * 
-     * @param resource The resource.
+     * Return the path of a certain resource in a certain area.
+     * @param area The area.
+     * @param uuid The uuid.
      * @return A string.
-     * @throws SiteException if an error occurs.
+     * @throws SiteException if the document is not referenced in the site structure.
      */
-    String getUUID(Document resource) throws SiteException;
+    String getPath(String area, String uuid) throws SiteException;
+    
+    /**
+     * Return the UUID for a given path.
+     * @param area The area.
+     * @param path The path.
+     * @return The UUID.
+     * @throws SiteException if the path does not exist.
+     */
+    String getUUID(String area, String path) throws SiteException;
 
     /**
      * Checks if the site structure contains any language version of a certain resource in a certain

@@ -16,25 +16,19 @@
  */
 package org.apache.lenya.cms.site;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.Resource;
-import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 
 /**
@@ -116,10 +110,10 @@ public class SiteUtil {
                     .getSiteManagerHint());
 
             DocumentFactory map = document.getIdentityMap();
-            Node node = NodeFactory.getNode(document);
+            SiteNode node = NodeFactory.getNode(document);
             set = getExistingDocuments(map, node);
 
-            Node[] requiringNodes = siteManager.getRequiringResources(map, node);
+            SiteNode[] requiringNodes = siteManager.getRequiringResources(map, node);
             for (int i = 0; i < requiringNodes.length; i++) {
                 set.addAll(getExistingDocuments(map, requiringNodes[i]));
             }
@@ -144,10 +138,10 @@ public class SiteUtil {
      * @throws DocumentBuildException if an error occurs.
      * @throws DocumentException if an error occurs.
      */
-    public static DocumentSet getExistingDocuments(DocumentFactory map, Node node)
+    public static DocumentSet getExistingDocuments(DocumentFactory map, SiteNode node)
             throws DocumentBuildException, DocumentException {
         DocumentSet set = new DocumentSet();
-        Document document = map.get(node.getPublication(), node.getArea(), node.getDocumentId());
+        Document document = map.get(node.getPublication(), node.getArea(), node.getPath());
         String[] languages = document.getLanguages();
         for (int i = 0; i < languages.length; i++) {
             Document version = document.getIdentityMap().getLanguageVersion(document, languages[i]);
@@ -469,5 +463,48 @@ public class SiteUtil {
             throw new SiteException(e);
         }
         return (Document[]) documents.toArray(new Document[documents.size()]);
+    }
+
+    public static String getPath(ServiceManager manager, Document doc) throws SiteException {
+        SiteManager siteManager = null;
+        ServiceSelector selector = null;
+
+        try {
+            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
+            String siteManagerHint = doc.getPublication().getSiteManagerHint();
+            siteManager = (SiteManager) selector.select(siteManagerHint);
+            return siteManager.getPath(doc.getArea(), doc.getId());
+        } catch (ServiceException e) {
+            throw new SiteException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                manager.release(siteManager);
+            }
+        }
+    }
+
+    public static String getUUID(ServiceManager manager, Publication pub, String area, String path)
+            throws SiteException {
+        SiteManager siteManager = null;
+        ServiceSelector selector = null;
+
+        try {
+            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
+            String siteManagerHint = pub.getSiteManagerHint();
+            siteManager = (SiteManager) selector.select(siteManagerHint);
+            return siteManager.getUUID(area, path);
+        } catch (ServiceException e) {
+            throw new SiteException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                manager.release(siteManager);
+            }
+        }
     }
 }

@@ -35,7 +35,9 @@ import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.SiteUtil;
 
 /**
  * A typical CMS document.
@@ -98,15 +100,15 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         ContainerUtil.enableLogging(this, _logger);
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("DefaultDocument() creating new instance with id ["
-                    + identifier.getId() + "], language [" + identifier.getLanguage() + "]");
+                    + identifier.getUUID() + "], language [" + identifier.getLanguage() + "]");
         }
 
         this.manager = manager;
         this.identifier = identifier;
-        if (identifier.getId() == null) {
+        if (identifier.getUUID() == null) {
             throw new IllegalArgumentException("The document ID must not be null!");
         }
-        if (!identifier.getId().startsWith("/")) {
+        if (!identifier.getUUID().startsWith("/")) {
             throw new IllegalArgumentException("The document ID must start with a slash!");
         }
 
@@ -114,7 +116,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("DefaultDocument() done building instance with _id ["
-                    + identifier.getId() + "], _language [" + identifier.getLanguage() + "]");
+                    + identifier.getUUID() + "], _language [" + identifier.getLanguage() + "]");
         }
     }
 
@@ -154,7 +156,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.cms.publication.Document#getId()
      */
     public String getId() {
-        return this.identifier.getId();
+        return this.identifier.getUUID();
     }
 
     /**
@@ -275,36 +277,8 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     /**
      * @see org.apache.lenya.cms.publication.Document#getUUID()
      */
-    public String getUUID() throws DocumentException {
-        String uuid = null;
-        String hint = getPublication().getSiteManagerHint();
-        if (hint == null) {
-            getLogger().error("SiteManagerHint is null!");
-        } else {
-            SiteManager siteManager = null;
-            ServiceSelector selector = null;
-            try {
-                selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-                siteManager = (SiteManager) selector.select(hint);
-                uuid = siteManager.getUUID(this);
-                if (uuid == null) {
-                    uuid = getCanonicalDocumentURL();
-                    getLogger().warn("No UUID found for document [" + this
-                            + "]. Use canonical document URL: " + uuid);
-                }
-                return uuid;
-            } catch (Exception e) {
-                throw new DocumentException(e);
-            } finally {
-                if (selector != null) {
-                    if (siteManager != null) {
-                        selector.release(siteManager);
-                    }
-                    this.manager.release(selector);
-                }
-            }
-        }
-        return uuid;
+    public String getUUID() {
+        return getIdentifier().getUUID();
     }
 
     private String defaultSourceExtension = "xml";
@@ -598,4 +572,21 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         }
     }
 
+    private DocumentLocator locator;
+
+    public DocumentLocator getLocator() {
+        if (this.locator == null) {
+            String path;
+            try {
+                path = SiteUtil.getPath(this.manager, this);
+            } catch (SiteException e) {
+                throw new RuntimeException(e);
+            }
+            this.locator = DocumentLocator.getLocator(getPublication().getId(),
+                    getArea(),
+                    path,
+                    getLanguage());
+        }
+        return this.locator;
+    }
 }

@@ -26,19 +26,20 @@ public class NodeFactory {
 
     private static Map nodes = new WeakHashMap();
     
-    public static Node getNode(Publication pub, String area, String docId) {
-        String key = Node.getKey(pub, area, docId);
-        Node node = null;
+    public static SiteNode getNode(Publication pub, String area, String docId) {
+        String key = SiteNode.getKey(pub, area, docId);
+        SiteNode node = null;
         if (nodes.containsKey(key)) {
-            node = (Node) nodes.get(key);
+            node = (SiteNode) nodes.get(key);
         }
         else {
-            node = new Node(pub, area, docId);
+            node = new SiteNode(pub, area, docId);
+            nodes.put(key, node);
         }
         return node;
     }
     
-    public static Node getNode(Document document) {
+    public static SiteNode getNode(Document document) {
         return getNode(document.getPublication(), document.getArea(), document.getId());
     }
     
