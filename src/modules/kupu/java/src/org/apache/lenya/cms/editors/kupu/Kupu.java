@@ -46,7 +46,7 @@ public class Kupu extends DocumentUsecase {
 
             Document doc = getSourceDocument();
             DocumentIdToPathMapper mapper = doc.getPublication().getPathMapper();
-            String path = mapper.getPath(doc.getId(), getSourceDocument().getLanguage());
+            String path = mapper.getPath(doc.getUUID(), doc.getLanguage());
             String sourceUri = doc.getSourceURI();
             String pubId = doc.getPublication().getId();
             String tempSourceUri = "context://lenya/pubs/" + pubId + "/work/bxe/content/"
@@ -80,7 +80,7 @@ public class Kupu extends DocumentUsecase {
                 getSourceDocument(),
                 getEvent())) {
             addErrorMessage("error-workflow-document", new String[] { getEvent(),
-                    getSourceDocument().getId() });
+                    getSourceDocument().toString() });
         }
     }
 
