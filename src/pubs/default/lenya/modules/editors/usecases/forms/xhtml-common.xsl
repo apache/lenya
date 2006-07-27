@@ -35,7 +35,7 @@
 <insert-after select="{$path}[@tagID='{@tagID}']">
   <element name="Paragraph" xupdate="&lt;xupdate:insert-after select=&quot;{$path}[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;xhtml:p&quot; {$ns}&gt;New Paragraph&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;"/>
   <element name="Table" xupdate="&lt;xupdate:insert-after select=&quot;{$path}[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;xhtml:table&quot; {$ns}&gt;&lt;tr&gt;&lt;td&gt;New Table&lt;/td&gt;&lt;/tr&gt;&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;"/>
-  <element name="Unordered List" xupdate="&lt;xupdate:insert-after select=&quot;{$path}[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;xhtml:ul&quot; {$ns}&gt;&lt;li&gt;New Unordered List&lt;/li&gt;;&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;"/>
+  <element name="Unordered List" xupdate="&lt;xupdate:insert-after select=&quot;{$path}[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;xhtml:ul&quot; {$ns}&gt;&lt;li&gt;New Unordered List&lt;/li&gt;&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;"/>
   <element name="Ordered List" xupdate="&lt;xupdate:insert-after select=&quot;{$path}[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;xhtml:ol&quot; {$ns}&gt;&lt;li&gt;New Ordered List&lt;/li&gt;&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;"/>
   <element name="Headline 1" xupdate="&lt;xupdate:insert-after select=&quot;{$path}[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;xhtml:h1&quot; {$ns}&gt;New Headline 1&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;"/>
   <element name="Headline 2" xupdate="&lt;xupdate:insert-after select=&quot;{$path}[@tagID='{@tagID}']&quot;&gt;&lt;xupdate:element name=&quot;xhtml:h2&quot; {$ns}&gt;New Headline 2&lt;/xupdate:element&gt;&lt;/xupdate:insert-after&gt;"/>
@@ -53,7 +53,7 @@
 	<node name="Paragraph" select="/*/xhtml:body/xhtml:p[@tagID='{@tagID}']">
 	  <action><delete name="&lt;xupdate:remove select=&quot;/*/xhtml:body/xhtml:p[@tagID='{@tagID}']&quot;/&gt;"/></action>
 	  <content>
-	    <textarea name="&lt;xupdate:update select=&quot;/*/xhtml:body/xhtml:p[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="30">
+	    <textarea name="&lt;xupdate:update select=&quot;/*/xhtml:body/xhtml:p[@tagID='{@tagID}']&quot;&gt;" cols="80" rows="30">
 	      <xsl:copy-of select="node()"/>
 	    </textarea>
 	  </content>
@@ -68,8 +68,8 @@
 <node name="Table" select="/*/xhtml:body/xhtml:table[@tagID='{@tagID}']">
   <action><delete name="&lt;xupdate:remove select=&quot;/*/xhtml:body/xhtml:table[@tagID='{@tagID}']&quot;/&gt;"/></action>
   <content>
-    <textarea name="&lt;xupdate:update select=&quot;/*/xhtml:body/xhtml:table[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="30">
-      <xsl:copy-of select="."/>
+    <textarea name="&lt;xupdate:update select=&quot;/*/xhtml:body/xhtml:table[@tagID='{@tagID}']&quot;&gt;" cols="80" rows="30">
+      <xsl:copy-of select="node()"/>
     </textarea>
   </content>
 </node>
@@ -82,7 +82,7 @@
 <node name="Unordered List" select="/*/xhtml:body/xhtml:ul[@tagID='{@tagID}']">
   <action><delete name="&lt;xupdate:remove select=&quot;/*/xhtml:body/xhtml:ul[@tagID='{@tagID}']&quot;/&gt;"/></action>
   <content>
-    <textarea name="&lt;xupdate:update select=&quot;/*/xhtml:body/xhtml:ul[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="30">
+    <textarea name="&lt;xupdate:update select=&quot;/*/xhtml:body/xhtml:ul[@tagID='{@tagID}']&quot;&gt;" cols="80" rows="30">
       <xsl:copy-of select="node()"/>
     </textarea>
   </content>
@@ -96,7 +96,7 @@
 <node name="Ordered List" select="/*/xhtml:body/xhtml:ol[@tagID='{@tagID}']">
   <action><delete name="&lt;xupdate:remove select=&quot;/*/xhtml:body/xhtml:ol[@tagID='{@tagID}']&quot;/&gt;"/></action>
   <content>
-    <textarea name="&lt;xupdate:update select=&quot;/*/xhtml:body/xhtml:ol[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="30">
+    <textarea name="&lt;xupdate:update select=&quot;/*/xhtml:body/xhtml:ol[@tagID='{@tagID}']&quot;&gt;" cols="80" rows="30">
       <xsl:copy-of select="node()"/>
     </textarea>
   </content>
@@ -110,7 +110,7 @@
 <node name="Headline 1" select="/*/xhtml:body/xhtml:h1[@tagID='{@tagID}']">
   <action><delete name="&lt;xupdate:remove select=&quot;/*/xhtml:body/xhtml:h1[@tagID='{@tagID}']&quot;/&gt;"/></action>
   <content>
-    <textarea name="&lt;xupdate:update select=&quot;/*/xhtml:body/xhtml:h1[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="3">
+    <textarea name="&lt;xupdate:update select=&quot;/*/xhtml:body/xhtml:h1[@tagID='{@tagID}']&quot;&gt;" cols="80" rows="3">
       <xsl:copy-of select="node()"/>
     </textarea>
   </content>
@@ -124,7 +124,7 @@
 <node name="Headline 2" select="/*/xhtml:body/xhtml:h2[@tagID='{@tagID}']">
   <action><delete name="&lt;xupdate:remove select=&quot;/*/xhtml:body/xhtml:h2[@tagID='{@tagID}']&quot;/&gt;"/></action>
   <content>
-    <textarea name="&lt;xupdate:update select=&quot;/*/xhtml:body/xhtml:h2[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="3">
+    <textarea name="&lt;xupdate:update select=&quot;/*/xhtml:body/xhtml:h2[@tagID='{@tagID}']&quot;&gt;" cols="80" rows="3">
       <xsl:copy-of select="node()"/>
     </textarea>
   </content>
@@ -138,7 +138,7 @@
 <node name="Headline 3" select="/*/xhtml:body/xhtml:h3[@tagID='{@tagID}']">
   <action><delete name="&lt;xupdate:remove select=&quot;/*/xhtml:body/xhtml:h3[@tagID='{@tagID}']&quot;/&gt;"/></action>
   <content>
-    <textarea name="&lt;xupdate:update select=&quot;/*/xhtml:body/xhtml:h3[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="3">
+    <textarea name="&lt;xupdate:update select=&quot;/*/xhtml:body/xhtml:h3[@tagID='{@tagID}']&quot;&gt;" cols="80" rows="3">
       <xsl:copy-of select="node()"/>
     </textarea>
   </content>
@@ -152,7 +152,7 @@
 <node name="Headline 4" select="/*/xhtml:body/xhtml:h4[@tagID='{@tagID}']">
   <action><delete name="&lt;xupdate:remove select=&quot;/*/xhtml:body/xhtml:h4[@tagID='{@tagID}']&quot;/&gt;"/></action>
   <content>
-    <textarea name="&lt;xupdate:update select=&quot;/*/xhtml:body/xhtml:h4[@tagID='{@tagID}']&quot;&gt;" cols="40" rows="3">
+    <textarea name="&lt;xupdate:update select=&quot;/*/xhtml:body/xhtml:h4[@tagID='{@tagID}']&quot;&gt;" cols="80" rows="3">
       <xsl:copy-of select="node()"/>
     </textarea>
   </content>
@@ -175,7 +175,7 @@
     <node name="Object">
       <action><delete name="&lt;xupdate:remove select=&quot;/*/xhtml:body/xhtml:p/xhtml:object[@tagID='{@tagID}']&quot;/&gt;"/></action>
       <content>
-	<input type="text" name="&lt;xupdate:update select=&quot;/*/xhtml:body/xhtml:p/xhtml:object[@tagID='{@tagID}']&quot;&gt;" size="40">
+	<input type="text" name="&lt;xupdate:update select=&quot;/*/xhtml:body/xhtml:p/xhtml:object[@tagID='{@tagID}']&quot;&gt;" size="80">
 	  <xsl:attribute name="value">
       <xsl:value-of select="@data"/>
 	  </xsl:attribute>
@@ -193,7 +193,7 @@
 	<delete name="&lt;xupdate:remove select=&quot;/*/xhtml:body/lenya:asset[@tagID='{@tagID}']&quot;/&gt;"/>
       </action>
       <content>
-	<input type="text" name="&lt;xupdate:update select=&quot;/*/xhtml:body/lenya:asset[@tagID='{@tagID}']&quot;&gt;" size="40">
+	<input type="text" name="&lt;xupdate:update select=&quot;/*/xhtml:body/lenya:asset[@tagID='{@tagID}']&quot;&gt;" size="80">
 	  <xsl:attribute name="value">
 	    <xsl:value-of select="@src"/>
 	  </xsl:attribute>
