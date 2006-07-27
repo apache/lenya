@@ -108,18 +108,19 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
      *      org.apache.cocoon.servlet.multipart.Part, java.util.Map)
      */
     public void addResource(Document document, Part part, Map metadata) throws Exception {
-      addResource(document,part,metadata,null);
+        addResource(document, part, metadata, null);
     }
-    
+
     protected static final String METADATA_IMAGE_WIDTH = "width";
     protected static final String METADATA_IMAGE_HEIGHT = "height";
     protected static final String METADATA_MEDIA_NAMESPACE = "http://apache.org/lenya/metadata/media/1.0";
-    
+
     /**
      * @see org.apache.lenya.cms.publication.ResourcesManager#addResource(org.apache.lenya.cms.publication.Document,
      *      org.apache.cocoon.servlet.multipart.Part, java.util.Map)
      */
-    public void addResource(Document document, Part part, Map metadata, MetaData customMeta) throws Exception {
+    public void addResource(Document document, Part part, Map metadata, MetaData customMeta)
+            throws Exception {
 
         if (getLogger().isDebugEnabled())
             getLogger().debug("DefaultResourcesManager::addResource() called");
@@ -144,13 +145,13 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
             /*
              * complement and create the meta description for the resource.
              */
-            
+
             MetaData mediaMetaData = resource.getMetaData(METADATA_MEDIA_NAMESPACE);
-            
+
             mediaMetaData.setValue("filename", fileName);
             mediaMetaData.setValue("format", mimeType);
             mediaMetaData.setValue("extent", Integer.toString(fileSize));
-            
+
             MetaData lenyaMetaData = resource.getMetaData(DocumentImpl.METADATA_NAMESPACE);
             lenyaMetaData.setValue(DocumentImpl.METADATA_CONTENT_TYPE, "asset");
 
@@ -160,7 +161,7 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
                 String height = Integer.toString(input.getHeight());
                 mediaMetaData.setValue(METADATA_IMAGE_WIDTH, width);
                 mediaMetaData.setValue(METADATA_IMAGE_HEIGHT, height);
-            }    
+            }
 
             saveResource(resource, part);
         } catch (final MetaDataException e) {
@@ -178,7 +179,8 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
     public static boolean canReadMimeType(String mimeType) {
         Iterator iter = ImageIO.getImageReadersByMIMEType(mimeType);
         return iter.hasNext();
-    } 
+    }
+
     /**
      * Saves the resource to a file.
      * @param resource The resource.
@@ -274,7 +276,9 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
                 }
                 resources = new Resource[files.length];
                 for (int i = 0; i < files.length; i++) {
-                    resources[i] = new Resource(document, files[i].getName(), this.manager,
+                    resources[i] = new Resource(document,
+                            files[i].getName(),
+                            this.manager,
                             getLogger());
                 }
             } else {
@@ -318,9 +322,8 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
             throws Exception {
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug(
-                    "Copying resources from [" + sourceDocument + "] to [" + destinationDocument
-                            + "]");
+            getLogger().debug("Copying resources from [" + sourceDocument + "] to ["
+                    + destinationDocument + "]");
         }
 
         SourceResolver resolver = null;
@@ -328,8 +331,10 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
             Resource[] resources = getResources(sourceDocument);
             for (int i = 0; i < resources.length; i++) {
                 Resource sourceResource = resources[i];
-                Resource destinationResource = new Resource(destinationDocument, sourceResource
-                        .getName(), this.manager, getLogger());
+                Resource destinationResource = new Resource(destinationDocument,
+                        sourceResource.getName(),
+                        this.manager,
+                        getLogger());
 
                 Source sourceSource = null;
                 ModifiableSource destSource = null;
@@ -338,8 +343,7 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
                 try {
                     resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
                     sourceSource = resolver.resolveURI(sourceResource.getSourceURI());
-                    destSource = (ModifiableSource) resolver.resolveURI(destinationResource
-                            .getSourceURI());
+                    destSource = (ModifiableSource) resolver.resolveURI(destinationResource.getSourceURI());
 
                     SourceUtil.copy(sourceSource, destSource, true);
                 } finally {
@@ -401,8 +405,8 @@ public class DefaultResourcesManager extends AbstractLogEnabled implements Resou
     public void deleteResource(Document document, String name) throws Exception {
         Resource theResource = getResource(document, name);
         if (theResource == null)
-            throw new Exception("no such resource [" + name + "] exists for document [ "
-                    + document.getId() + "]");
+            throw new Exception("no such resource [" + name + "] exists for document [ " + document
+                    + "]");
 
         deleteResource(theResource);
     }
