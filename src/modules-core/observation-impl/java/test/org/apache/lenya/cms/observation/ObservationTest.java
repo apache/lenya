@@ -92,6 +92,7 @@ public class ObservationTest extends AbstractAccessControlTest {
         Thread.currentThread().sleep(100);
         
         assertTrue(listener.wasNotified());
+        listener.reset();
     }
 
 }
