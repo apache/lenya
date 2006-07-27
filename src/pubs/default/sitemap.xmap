@@ -116,6 +116,8 @@
       <!-- pattern="meta?docid={docid}&lang={lang}" -->
       <map:match pattern="**meta">
         <map:generate type="lenyaMetaData">
+          <map:parameter name="pubid" value="{request-param:pubid}"/>
+          <map:parameter name="area" value="{request-param:area}"/>
           <map:parameter name="docid" value="{request-param:docid}"/>
           <map:parameter name="lang" value="{request-param:lang}"/>
         </map:generate>
