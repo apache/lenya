@@ -30,4 +30,10 @@ public interface NodeListener {
      */
     void nodeChanged(Node node, Identity identity);
     
+    /**
+     * @param node The node which has been removed.
+     * @param identity The identity who removed the node.
+     */
+    void nodeRemoved(Node node, Identity identity);
+    
 }

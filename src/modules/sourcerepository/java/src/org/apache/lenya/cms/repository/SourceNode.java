@@ -231,6 +231,12 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             } else {
                 SourceUtil.delete(getRealSourceURI(), this.manager);
             }
+            Node node = getDocumentNode();
+            for (Iterator i = this.listeners.iterator(); i.hasNext(); ) {
+                NodeListener listener = (NodeListener) i.next();
+                listener.nodeChanged(node, getSession().getIdentity());
+            }
+
         } catch (Exception e) {
             throw new RepositoryException(e);
         }
@@ -313,29 +319,9 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                     read = in.read(buf);
                 }
 
-                Node node;
-                String sourceUri = getSourceURI();
-                if (sourceUri.endsWith(".meta")) {
-                    String documentSourceUri = sourceUri.substring(0, sourceUri.length() - ".meta".length());
-                    NodeFactory factory = null;
-                    try {
-                        factory = (NodeFactory) this.manager.lookup(NodeFactory.ROLE);
-                        node = (Node) factory.buildItem(getSession(), documentSourceUri);
-                    }
-                    finally {
-                        if (factory != null) {
-                            this.manager.release(factory);
-                        }
-                    }
-                }
-                else {
-                    node = this;
-                }
-                
-                
+                Node node = getDocumentNode();
                 for (Iterator i = this.listeners.iterator(); i.hasNext(); ) {
                     NodeListener listener = (NodeListener) i.next();
-                    
                     listener.nodeChanged(node, getSession().getIdentity());
                 }
 
@@ -363,6 +349,33 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                 }
             }
         }
+    }
+
+    /**
+     * @return The document node, if this is a meta data node, or the node itself otherwise.
+     * @throws ServiceException
+     * @throws RepositoryException
+     */
+    protected Node getDocumentNode() throws ServiceException, RepositoryException {
+        Node node;
+        String sourceUri = getSourceURI();
+        if (sourceUri.endsWith(".meta")) {
+            String documentSourceUri = sourceUri.substring(0, sourceUri.length() - ".meta".length());
+            NodeFactory factory = null;
+            try {
+                factory = (NodeFactory) this.manager.lookup(NodeFactory.ROLE);
+                node = (Node) factory.buildItem(getSession(), documentSourceUri);
+            }
+            finally {
+                if (factory != null) {
+                    this.manager.release(factory);
+                }
+            }
+        }
+        else {
+            node = this;
+        }
+        return node;
     }
 
     /**

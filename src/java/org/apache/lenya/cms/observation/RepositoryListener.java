@@ -22,9 +22,15 @@ package org.apache.lenya.cms.observation;
 public interface RepositoryListener {
 
     /**
-     * Called when a node was changed.
+     * Called when a document was changed.
      * @param event The event.
      */
     void documentChanged(RepositoryEvent event);
+
+    /**
+     * Called when a document was removed.
+     * @param event The event.
+     */
+    void documentRemoved(RepositoryEvent event);
     
 }

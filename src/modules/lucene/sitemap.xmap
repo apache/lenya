@@ -111,32 +111,22 @@
         <map:serialize type="xml"/>
       </map:match>
 
-      <!-- {index-operation}/{pub-id}/{area}{doc-id}/{language} -->
-      <map:match pattern="index-document-*/*/*/*/*.xml">
-        <map:generate src="{resource-type:{doc-info:{2}:{3}:/{4}:{5}:resourceType}:format-luceneIndex}/{2}/{3}/{4}/{5}"/>
+      <!-- {pub-id}/{area}{doc-id}/{language} -->
+      <map:match pattern="index-document/*/*/*/*.xml">
+        <map:generate src="{resource-type:{doc-info:{1}:{2}:/{3}:{4}:resourceType}:format-luceneIndex}/{1}/{2}/{3}/{4}"/>
         <map:transform src="fallback://lenya/modules/lucene/xslt/index.xsl">
-          <map:parameter name="index" value="{2}-{3}"/>
-          <map:parameter name="id" value="{doc-info:{2}:{3}:/{4}:{5}:documentUrl}"/>
+          <map:parameter name="index" value="{1}-{2}"/>
+          <map:parameter name="id" value="{doc-info:{1}:{2}:/{3}:{4}:documentUrl}"/>
         </map:transform>
         <map:transform type="index2"/>
         <map:serialize type="xml"/>
       </map:match>
       
-      <map:match pattern="index-*.xml">
-        <map:generate src="{resource-type:format-luceneIndex}"/>
-        <map:transform src="fallback://lenya/modules/lucene/xslt/index.xsl">
-          <map:parameter name="index" value="{page-envelope:publication-id}-{1}"/>
-          <map:parameter name="id" value="{page-envelope:document-url}"/>
-        </map:transform>
-        <map:transform type="index2"/>
-        <map:serialize type="xml"/>
-      </map:match>
-
-      <map:match pattern="delete-*.xml">
+      <map:match pattern="delete-document/*/*/*/*.xml">
         <map:generate src="context://lenya/content/util/empty.xml"/>
         <map:transform src="fallback://lenya/modules/lucene/xslt/delete.xsl">
-          <map:parameter name="index" value="{page-envelope:publication-id}-{1}"/>
-          <map:parameter name="id" value="{page-envelope:document-url}"/>
+          <map:parameter name="index" value="{1}-{2}"/>
+          <map:parameter name="id" value="{doc-info:{1}:{2}:/{3}:{4}:documentUrl}"/>
         </map:transform>
 
         <map:transform type="index2"/>

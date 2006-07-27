@@ -37,7 +37,14 @@ public class IndexUpdater extends AbstractLogEnabled implements RepositoryListen
         Serviceable, ThreadSafe {
 
     public void documentChanged(RepositoryEvent event) {
-        Document doc = event.getDocument();
+        updateIndex("index", event.getDocument());
+    }
+
+    public void documentRemoved(RepositoryEvent event) {
+        updateIndex("delete", event.getDocument());
+    }
+
+    protected void updateIndex(String operation, Document doc) {
 
         String uri = null;
         try {
@@ -45,7 +52,7 @@ public class IndexUpdater extends AbstractLogEnabled implements RepositoryListen
             if (Arrays.asList(formats).contains("luceneIndex")) {
                 String docString = doc.getPublication().getId() + "/" + doc.getArea() + doc.getId()
                         + "/" + doc.getLanguage();
-                uri = "cocoon://modules/lucene/index-document-index/" + docString + ".xml";
+                uri = "cocoon://modules/lucene/" + operation + "-document/" + docString + ".xml";
                 SourceUtil.readDOM(uri, this.manager);
             } else {
                 getLogger().info("Document [" + doc

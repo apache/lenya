@@ -78,16 +78,36 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
 
     public void documentChanged(Document doc) {
         RepositoryEvent event = new RepositoryEvent(doc);
+        Set allListeners = getAllListeners(doc);
+        Notifier notifier = new Notifier(allListeners, event) {
+            public void notify(RepositoryListener listener, RepositoryEvent event) {
+                listener.documentChanged(event);
+            }
+        };
+        new Thread(notifier).run();
+    }
+
+    public void documentRemoved(Document doc) {
+        RepositoryEvent event = new RepositoryEvent(doc);
+        Set allListeners = getAllListeners(doc);
+        Notifier notifier = new Notifier(allListeners, event) {
+            public void notify(RepositoryListener listener, RepositoryEvent event) {
+                listener.documentRemoved(event);
+            }
+        };
+        new Thread(notifier).run();
+    }
+
+    protected Set getAllListeners(Document doc) {
         Set allListeners = new HashSet();
         synchronized (this) {
             allListeners.addAll(this.listeners);
             allListeners.addAll(getListeners(doc));
         }
-        Notifier notifier = new Notifier(allListeners, event);
-        new Thread(notifier).run();
+        return allListeners;
     }
 
-    public class Notifier implements Runnable {
+    public abstract class Notifier implements Runnable {
 
         private Set listeners;
         private RepositoryEvent event;
@@ -100,19 +120,36 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
         public void run() {
             for (Iterator i = listeners.iterator(); i.hasNext();) {
                 RepositoryListener listener = (RepositoryListener) i.next();
-                listener.documentChanged(event);
+                notify(listener, event);
             }
         }
+        
+        public abstract void notify(RepositoryListener listener, RepositoryEvent event);
     }
 
     public void nodeChanged(Node node, Identity identity) {
+        Document doc = getDocument(node, identity);
+        if (doc != null) {
+            documentChanged(doc);
+        }
+    }
+
+    public void nodeRemoved(Node node, Identity identity) {
+        Document doc = getDocument(node, identity);
+        if (doc != null) {
+            documentRemoved(doc);
+        }
+    }
+
+    protected Document getDocument(Node node, Identity identity) {
+        Document doc = null;
 
         final String sourceUri = node.getSourceURI();
         if (!sourceUri.startsWith("lenya://")) {
             throw new IllegalStateException("The source URI [" + sourceUri
                     + "] doesn't start with lenya://");
         }
-        
+
         String path = sourceUri.substring("lenya://lenya/pubs/".length());
 
         String[] steps = path.split("/");
@@ -127,17 +164,17 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
             DocumentFactory factory = DocumentUtil.createDocumentIdentityMap(this.manager, session);
 
             Document[] docs = SiteUtil.getDocuments(this.manager, factory, pub, area);
-            
+
             boolean matched = false;
 
             for (int i = 0; i < docs.length; i++) {
                 String docUri = docs[i].getRepositoryNode().getSourceURI();
                 if (docUri.equals(node.getSourceURI())) {
-                    documentChanged(docs[i]);
+                    doc = docs[i];
                     matched = true;
                 }
             }
-            
+
             if (!matched) {
                 // this happens if the node was not a document node
                 this.getLogger().info("No document found for node [" + sourceUri + "]");
@@ -146,7 +183,7 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
+        return doc;
     }
 
     private ServiceManager manager;
