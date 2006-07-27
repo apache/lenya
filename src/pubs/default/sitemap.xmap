@@ -277,6 +277,12 @@
       
     <map:pipeline>
       <map:match pattern="*/**.*">
+        <!-- TODO: http://marc.theaimsgroup.com/?l=xml-cocoon-dev&amp;m=112496255207733&amp;w=2 -->
+        <map:match type="regexp" pattern="(.*\.)(pdf|PDF|Pdf)$"> 
+            <map:read src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-id}" mime-type="application/pdf">
+              <map:parameter name="byte-ranges" value="false"/>
+            </map:read>
+        </map:match>      
         <map:act type="language-exists">
           <map:read src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-id}"/>
         </map:act>
