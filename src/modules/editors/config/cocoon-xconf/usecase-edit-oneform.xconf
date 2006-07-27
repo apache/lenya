@@ -25,9 +25,5 @@
       class="org.apache.lenya.cms.editors.forms.OneFormEditor">
       <transaction policy="pessimistic"/>
       <view template="modules/editors/usecases/forms/oneform.jx" menu="false"/>
-      <exit usecase="lucene.index">
-        <parameter name="indexAction" value="index"/>
-        <parameter name="indexArea" value="authoring"/>
-      </exit>
     </component-instance>
   </xconf>
