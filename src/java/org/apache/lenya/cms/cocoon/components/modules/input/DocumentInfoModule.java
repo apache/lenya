@@ -22,6 +22,7 @@ package org.apache.lenya.cms.cocoon.components.modules.input;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
+
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.service.ServiceException;
@@ -30,9 +31,6 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
-import org.apache.lenya.cms.metadata.MetaData;
-import org.apache.lenya.cms.metadata.MetaDataException;
-import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
@@ -68,6 +66,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
     protected final static String PARAM_PROPERTY = "property";
     protected final static int MIN_MANDATORY_PARAMS = 5;
 
+    protected final static String WEBAPP_URL = "webappUrl";
     protected final static String RESOURCE_TYPE = "resourceType";
     protected final static String LAST_MODIFIED = "lastModified";
     protected final static String MIME_TYPE = "mimeType";
@@ -77,7 +76,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
 
     protected final static String[] PARAMS = { PARAM_PUBLICATION_ID, PARAM_AREA, PARAM_DOCUMENT_ID,
             PARAM_DOCUMENT_LANGUAGE, PARAM_PROPERTY, VISIBLE_IN_NAVIGATION, MIME_TYPE,
-            CONTENT_LENGTH };
+            CONTENT_LENGTH, WEBAPP_URL };
 
     protected final static String META_RESOURCE_TYPE = "resourceType";
     protected final static String META_EXPIRES = "expires";
@@ -137,6 +136,8 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
                 value = document.getMimeType();
             } else if (attribute.equals(CONTENT_LENGTH)) {
                 value = Long.toString(document.getContentLength());
+            } else if (attribute.equals(WEBAPP_URL)) {
+                value = document.getCanonicalWebappURL();
             } else if (attribute.equals(EXPIRES)) {
                 try {
                     Date expires = document.getExpires();
