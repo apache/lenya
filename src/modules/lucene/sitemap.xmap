@@ -86,13 +86,17 @@
 
         <map:serialize type="xml"/>
       </map:match>
+      
+      <map:match pattern="search/*/*.xml">
+        <map:generate type="search">
+          <map:parameter name="index" value="{index-path:{1}-{2}}"/>
+        </map:generate>
+        <map:serialize type="xml"/>
+      </map:match>
 
       <map:match pattern="search.xml">
-        <map:generate type="search">
-          <map:parameter name="index" value="{index-path:{page-envelope:publication-id}-{page-envelope:area}}"/>
-        </map:generate>
+        <map:generate src="cocoon:/search/{page-envelope:publication-id}/{page-envelope:area}.xml"/>
 
-        <!-- TODO: This needs to be generalized, otherwise it's working only for the default publication and it's derivatives -->
         <map:transform src="fallback://lenya/modules/lucene/xslt/search2html.xsl">
           <map:parameter name="url" value="{page-envelope:document-url}"/>
           <map:parameter name="area" value="{page-envelope:area}"/>
@@ -102,21 +106,22 @@
         </map:transform>
 
         <map:transform type="cinclude"/>
-
-<!--
-        <map:transform src="fallback://xslt/page2xhtml.xsl">
-          <map:parameter name="root" value="{base-url:{page-envelope:publication-id}:{page-envelope:area}}"/>
-          <map:parameter name="document-id" value="{page-envelope:document-id}"/>
-          <map:parameter name="document-type" value="homepage"/>
-          <map:parameter name="language" value="{page-envelope:document-language}"/>
-          <map:parameter name="url" value="{page-envelope:document-url}"/>
-        </map:transform>
--->
         <map:transform type="link-rewrite"/>
 
         <map:serialize type="xml"/>
       </map:match>
 
+      <!-- {index-operation}/{pub-id}/{area}{doc-id}/{language} -->
+      <map:match pattern="index-document-*/*/*/*/*.xml">
+        <map:generate src="{resource-type:{doc-info:{2}:{3}:/{4}:{5}:resourceType}:format-luceneIndex}/{2}/{3}/{4}/{5}"/>
+        <map:transform src="fallback://lenya/modules/lucene/xslt/index.xsl">
+          <map:parameter name="index" value="{2}-{3}"/>
+          <map:parameter name="id" value="{doc-info:{2}:{3}:/{4}:{5}:webappUrl}"/>
+        </map:transform>
+        <map:transform type="index2"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      
       <map:match pattern="index-*.xml">
         <map:generate src="{resource-type:format-luceneIndex}"/>
         <map:transform src="fallback://lenya/modules/lucene/xslt/index.xsl">

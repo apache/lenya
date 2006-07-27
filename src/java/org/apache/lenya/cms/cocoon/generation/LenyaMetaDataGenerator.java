@@ -39,10 +39,8 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
-import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
@@ -132,6 +130,16 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
 
         super.setup(resolver, objectModel, src, par);
 
+        this.publicationId = par.getParameter("pubid", null);
+        if (this.publicationId == null) {
+            throw new ProcessingException("The pubid is not set! Please set like e.g. <map:parameter name='pubid' value='{request-param:pubid}'/>");
+        }
+
+        this.area = par.getParameter("area", null);
+        if (this.area == null) {
+            throw new ProcessingException("The area is not set! Please set like e.g. <map:parameter name='area' value='{request-param:area}'/>");
+        }
+
         docId = par.getParameter("docid", null);
         if (this.docId == null) {
             throw new ProcessingException("The docid is not set! Please set like e.g. <map:parameter name='docid' value='{request-param:docid}'/>");
@@ -157,18 +165,10 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
         Session session;
         try {
             session = RepositoryUtil.getSession(this.manager, request);
-            pub = PublicationUtil.getPublication(this.manager, objectModel);
+            pub = PublicationUtil.getPublication(this.manager, this.publicationId);
         } catch (Exception e) {
             throw new ProcessingException("Error geting publication id / area from page envelope",
                     e);
-        }
-        if (pub != null && pub.exists()) {
-            this.publicationId = pub.getId();
-            String url = ServletHelper.getWebappURI(request);
-            this.area = new URLInformation(url).getArea();
-            if (this.language == null) {
-                this.language = pub.getDefaultLanguage();
-            }
         }
 
         DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
