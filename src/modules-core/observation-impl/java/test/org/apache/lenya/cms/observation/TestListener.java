@@ -15,4 +15,8 @@ public class TestListener implements RepositoryListener {
         return this.notified;
     }
     
+    public void reset() {
+        this.notified = false;
+    }
+    
 }

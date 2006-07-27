@@ -16,6 +16,14 @@
  */
 package org.apache.lenya.cms.observation;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+
+import javax.xml.parsers.ParserConfigurationException;
+import javax.xml.transform.TransformerConfigurationException;
+import javax.xml.transform.TransformerException;
+
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
@@ -23,6 +31,7 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.xml.NamespaceHelper;
@@ -43,8 +52,12 @@ public class ObservationTest extends AbstractAccessControlTest {
         ObservationRegistry registry = null;
         try {
             registry = (ObservationRegistry) getManager().lookup(ObservationRegistry.ROLE);
-            registry.registerListener(docListener, doc);
+
+            // check if it works if only the allListener is registered
+            registry.registerListener(allListener);
+            testListener(doc, allListener);
             
+            registry.registerListener(docListener, doc);
             Exception e = null;
             try {
                 registry.registerListener(docListener, doc);
@@ -53,8 +66,10 @@ public class ObservationTest extends AbstractAccessControlTest {
                 e = e1;
             }
             assertNotNull(e);
+
+            testListener(doc, docListener);
+            testListener(doc, allListener);
             
-            registry.registerListener(allListener);
         }
         finally {
             if (registry != null) {
@@ -62,20 +77,21 @@ public class ObservationTest extends AbstractAccessControlTest {
             }
         }
         
+        
+    }
+
+    protected void testListener(Document doc, TestListener listener) throws Exception {
         NamespaceHelper xml = new NamespaceHelper("http://apache.org/lenya/test", "", "test");
         doc.getRepositoryNode().lock();
         SourceUtil.writeDOM(xml.getDocument(), doc.getSourceURI(), getManager());
         
-        assertFalse(docListener.wasNotified());
-        assertFalse(allListener.wasNotified());
+        assertFalse(listener.wasNotified());
         
         doc.getRepositoryNode().getSession().commit();
         
         Thread.currentThread().sleep(100);
         
-        assertTrue(docListener.wasNotified());
-        assertTrue(allListener.wasNotified());
-        
+        assertTrue(listener.wasNotified());
     }
 
 }
