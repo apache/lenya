@@ -93,7 +93,7 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
     private DocumentStore getStore(Document document) throws SiteException {
         Publication publication = document.getPublication();
         String area = document.getArea();
-        DocumentFactory map = document.getIdentityMap();
+        DocumentFactory map = document.getFactory();
         return getStore(map, publication, area);
     }
 
@@ -159,7 +159,7 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
 
             String[] languages = resource.getPublication().getLanguages();
             for (int i = 0; i < languages.length; i++) {
-                Document doc = resource.getIdentityMap().getLanguageVersion(resource, languages[i]);
+                Document doc = resource.getFactory().getLanguageVersion(resource, languages[i]);
                 DocumentStore store = getStore(doc);
                 contains = contains || store.contains(doc);
             }

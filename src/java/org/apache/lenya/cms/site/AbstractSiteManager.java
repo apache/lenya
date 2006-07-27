@@ -44,7 +44,7 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
     public void sortAscending(DocumentSet set) throws SiteException {
         if (!set.isEmpty()) {
 
-            DocumentFactory map = set.getDocuments()[0].getIdentityMap();
+            DocumentFactory map = set.getDocuments()[0].getFactory();
             if (!check(map, new NodeSet(set))) {
                 throw new SiteException("The dependence relation is not a strict partial order!");
             }

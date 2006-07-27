@@ -76,7 +76,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
     }
 
     protected SiteTree getTree(Document document) throws SiteException {
-        return getTree(document.getIdentityMap(), document.getPublication(), document.getArea());
+        return getTree(document.getFactory(), document.getPublication(), document.getArea());
     }
 
     /**
@@ -269,7 +269,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      * @see org.apache.lenya.cms.site.SiteManager#delete(org.apache.lenya.cms.publication.Document)
      */
     public void delete(Document document) throws SiteException {
-        SiteTree tree = getTree(document.getIdentityMap(),
+        SiteTree tree = getTree(document.getFactory(),
                 document.getPublication(),
                 document.getArea());
 
@@ -433,7 +433,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         String availableDocumentId = computeUniqueDocumentId(document);
         Document availableDocument;
         try {
-            availableDocument = document.getIdentityMap().get(document.getPublication(),
+            availableDocument = document.getFactory().get(document.getPublication(),
                     document.getArea(),
                     availableDocumentId,
                     document.getLanguage());

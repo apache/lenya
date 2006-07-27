@@ -73,7 +73,7 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
                 addInfoMessage("The single document cannot be deactivated because the workflow event cannot be invoked.");
             }
 
-            DocumentFactory map = getSourceDocument().getIdentityMap();
+            DocumentFactory map = getSourceDocument().getFactory();
             Document liveDoc = map.getAreaVersion(getSourceDocument(), Publication.LIVE_AREA);
             DocumentSet subSite = SiteUtil.getSubSite(this.manager, liveDoc);
             SiteNode node = NodeFactory.getNode(liveDoc);
@@ -98,7 +98,7 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
             Document doc = getSourceDocument();
             set.addAll(SiteUtil.getSubSite(this.manager, doc));
 
-            Document liveDoc = doc.getIdentityMap().getAreaVersion(doc, Publication.LIVE_AREA);
+            Document liveDoc = doc.getFactory().getAreaVersion(doc, Publication.LIVE_AREA);
             set.addAll(SiteUtil.getSubSite(this.manager, liveDoc));
 
             Document[] documents = set.getDocuments();
@@ -140,7 +140,7 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
         SourceResolver resolver = null;	
 	Source source = null;
         try {
-            Document liveDocument = authoringDocument.getIdentityMap()
+            Document liveDocument = authoringDocument.getFactory()
                     .getAreaVersion(authoringDocument, Publication.LIVE_AREA);
 
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
@@ -243,7 +243,7 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
             WorkflowException {
         String[] languages = document.getPublication().getLanguages();
         for (int i = 0; i < languages.length; i++) {
-            Document version = document.getIdentityMap().getLanguageVersion(document, languages[i]);
+            Document version = document.getFactory().getLanguageVersion(document, languages[i]);
             if (version.exists()
                     && WorkflowUtil.canInvoke(this.manager,
                             getSession(),

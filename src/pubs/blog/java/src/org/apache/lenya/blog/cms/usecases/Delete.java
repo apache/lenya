@@ -47,7 +47,7 @@ public class Delete extends DocumentUsecase {
                 addErrorMessage("This usecase can only be invoked from the authoring area.");
                 return;
             }
-            Document liveDocument = getSourceDocument().getIdentityMap()
+            Document liveDocument = getSourceDocument().getFactory()
             .getAreaVersion(getSourceDocument(), Publication.LIVE_AREA);
             if (liveDocument.exists()) {
                 addErrorMessage("The document cannot be deleted because it's Live, deactivate it first");

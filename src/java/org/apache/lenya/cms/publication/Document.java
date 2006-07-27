@@ -173,7 +173,7 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      * Returns the identity map this document belongs to.
      * @return A document identity map.
      */
-    DocumentFactory getIdentityMap();
+    DocumentFactory getFactory();
     
     /**
      * Returns the URI to resolve the document's source.

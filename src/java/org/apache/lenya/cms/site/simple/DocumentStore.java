@@ -80,7 +80,7 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
     protected Document loadDocument(Element documentElement) throws DocumentBuildException {
         String documentId = documentElement.getAttribute(ATTRIBUTE_UUID);
         String language = documentElement.getAttribute(ATTRIBUTE_LANGUAGE);
-        Document document = getDelegate().getIdentityMap().get(getDelegate().getPublication(),
+        Document document = getDelegate().getFactory().get(getDelegate().getPublication(),
                 getDelegate().getArea(),
                 documentId,
                 language);

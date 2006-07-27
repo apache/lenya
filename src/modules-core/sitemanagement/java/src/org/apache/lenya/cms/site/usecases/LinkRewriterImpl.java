@@ -62,7 +62,7 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
 
         Publication publication = originalTargetDocument.getPublication();
         String area = originalTargetDocument.getArea();
-        DocumentFactory identityMap = originalTargetDocument.getIdentityMap();
+        DocumentFactory identityMap = originalTargetDocument.getFactory();
 
         Document[] documents;
 

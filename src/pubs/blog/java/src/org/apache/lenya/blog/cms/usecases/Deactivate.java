@@ -65,7 +65,7 @@ public class Deactivate extends DocumentUsecase {
         try {
             List nodes = new ArrayList();
             Document doc = getSourceDocument();
-            Document liveDoc = doc.getIdentityMap().getAreaVersion(doc, Publication.LIVE_AREA);            
+            Document liveDoc = doc.getFactory().getAreaVersion(doc, Publication.LIVE_AREA);            
             nodes.add(doc.getRepositoryNode());
             nodes.add(liveDoc.getRepositoryNode());            
             nodes.add(SiteUtil.getSiteStructure(this.manager, liveDoc).getRepositoryNode());
@@ -95,7 +95,7 @@ public class Deactivate extends DocumentUsecase {
 
         DocumentManager documentManager = null;
         try {
-            Document liveDocument = authoringDocument.getIdentityMap()
+            Document liveDocument = authoringDocument.getFactory()
                     .getAreaVersion(authoringDocument, Publication.LIVE_AREA);
 
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);

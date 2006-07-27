@@ -204,7 +204,7 @@ public class DocumentHelper {
 
         Document existingVersion = null;
         try {
-            existingVersion = document.getIdentityMap().getLanguageVersion(document,
+            existingVersion = document.getFactory().getLanguageVersion(document,
                     existingLanguage);
         } catch (DocumentBuildException e) {
             throw new DocumentException(e);

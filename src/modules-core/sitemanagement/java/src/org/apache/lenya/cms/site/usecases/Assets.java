@@ -93,7 +93,7 @@ public class Assets extends SiteUsecase {
             setParameter("assets", Arrays.asList(resources));
 
             Document[] resourceDocs = SiteUtil.getDocuments(this.manager,
-                    getSourceDocument().getIdentityMap(),
+                    getSourceDocument().getFactory(),
                     getSourceDocument().getPublication(),
                     getSourceDocument().getArea(),
                     "resource");

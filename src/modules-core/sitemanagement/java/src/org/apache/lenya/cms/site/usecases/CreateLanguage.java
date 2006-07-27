@@ -69,7 +69,7 @@ public class CreateLanguage extends Create {
         Document source = getSourceDocument();
         List nonExistingLanguages = new ArrayList();
         String[] languages = source.getPublication().getLanguages();
-        DocumentFactory map = source.getIdentityMap();
+        DocumentFactory map = source.getFactory();
         for (int i = 0; i < languages.length; i++) {
             Document version = map.get(source.getPublication(),
                     source.getArea(),

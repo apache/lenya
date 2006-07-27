@@ -299,7 +299,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     public void copyToArea(Document sourceDocument, String destinationArea)
             throws PublicationException {
         DocumentLocator destination = sourceDocument.getLocator().getAreaVersion(destinationArea);
-        Document destinationDocument = sourceDocument.getIdentityMap().get(destination);
+        Document destinationDocument = sourceDocument.getFactory().get(destination);
         copy(sourceDocument, destinationDocument);
     }
 
@@ -395,7 +395,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      */
     public void copyAllLanguageVersions(Document source, Document target)
             throws PublicationException {
-        DocumentFactory identityMap = source.getIdentityMap();
+        DocumentFactory identityMap = source.getFactory();
         String[] languages = source.getLanguages();
         for (int i = 0; i < languages.length; i++) {
 
@@ -484,7 +484,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             String rootTargetPath = getRootTarget().getPath();
             String childId = source.getPath().substring(rootSourcePath.length());
             String targetId = rootTargetPath + childId;
-            return getRootTarget().getIdentityMap().get(getRootTarget().getPublication(),
+            return getRootTarget().getFactory().get(getRootTarget().getPublication(),
                     getRootTarget().getArea(),
                     targetId,
                     source.getLanguage());
@@ -546,7 +546,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * @see org.apache.lenya.cms.publication.DocumentManager#deleteAllLanguageVersions(org.apache.lenya.cms.publication.Document)
      */
     public void deleteAllLanguageVersions(Document document) throws PublicationException {
-        DocumentFactory identityMap = document.getIdentityMap();
+        DocumentFactory identityMap = document.getFactory();
         String[] languages = document.getLanguages();
         for (int i = 0; i < languages.length; i++) {
             DocumentLocator version = document.getLocator().getLanguageVersion(languages[i]);

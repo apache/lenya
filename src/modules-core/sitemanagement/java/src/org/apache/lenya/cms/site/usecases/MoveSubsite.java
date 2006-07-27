@@ -158,7 +158,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
         DocumentFactory map = getDocumentIdentityMap();
 
         DocumentLocator loc = doc.getLocator().getAreaVersion(getTargetArea());
-        Document target = doc.getIdentityMap().get(loc);
+        Document target = doc.getFactory().get(loc);
         target = SiteUtil.getAvailableDocument(this.manager, target);
 
         DocumentSet docsToCopy = getTargetDocsToCopy();

@@ -101,7 +101,7 @@ public class CreateDocument extends Create {
             } else {
                 Publication publication = getSourceDocument().getPublication();
                 String newDocumentId = getNewDocumentPath();
-                Document document = getSourceDocument().getIdentityMap().get(publication,
+                Document document = getSourceDocument().getFactory().get(publication,
                         getSourceDocument().getArea(),
                         newDocumentId,
                         language);

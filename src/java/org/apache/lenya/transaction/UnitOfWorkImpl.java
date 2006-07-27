@@ -46,7 +46,7 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
     private IdentityMap identityMap;
 
     /**
-     * @see org.apache.lenya.transaction.UnitOfWork#getIdentityMap()
+     * @see org.apache.lenya.transaction.UnitOfWork#getFactory()
      */
     public IdentityMap getIdentityMap() {
         return this.identityMap;

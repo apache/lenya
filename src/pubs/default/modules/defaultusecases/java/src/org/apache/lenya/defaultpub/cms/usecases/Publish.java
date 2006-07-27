@@ -149,7 +149,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
             }
 
             Publication publication = document.getPublication();
-            DocumentFactory map = document.getIdentityMap();
+            DocumentFactory map = document.getFactory();
 
             Document liveDocument = map.getAreaVersion(document, Publication.LIVE_AREA);
 
@@ -350,10 +350,10 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
 
         try {
             DocumentLocator parentLocator = document.getLocator().getParent();
-            Document parent = document.getIdentityMap().get(parentLocator);
+            Document parent = document.getFactory().get(parentLocator);
             boolean publish = true;
             if (parent != null) {
-                Document liveParent = parent.getIdentityMap().getAreaVersion(parent,
+                Document liveParent = parent.getFactory().getAreaVersion(parent,
                         Publication.LIVE_AREA);
                 if (!liveParent.exists()) {
                     publish = false;
@@ -380,7 +380,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
 
         try {
             for (int i = 0; i < languages.length; i++) {
-                Document version = document.getIdentityMap().getLanguageVersion(document,
+                Document version = document.getFactory().getLanguageVersion(document,
                         languages[i]);
                 if (version.exists()) {
                     if (WorkflowUtil.canInvoke(this.manager,

@@ -91,7 +91,7 @@ public class ChangeNodeID extends DocumentUsecase {
         List nodes = new ArrayList();
         for (int i = 0; i < languages.length; i++) {
             DocumentLocator loc = doc.getLocator().getLanguageVersion(languages[i]);
-            nodes.add(doc.getIdentityMap().get(loc).getRepositoryNode());
+            nodes.add(doc.getFactory().get(loc).getRepositoryNode());
         }
         return nodes;
     }

@@ -173,7 +173,7 @@ public class CollectionImpl extends AbstractLogEnabled implements Collection {
      */
     protected Document loadDocument(Element documentElement) throws DocumentBuildException {
         String documentId = documentElement.getAttribute(ATTRIBUTE_UUID);
-        Document document = getDelegate().getIdentityMap().get(getDelegate().getPublication(),
+        Document document = getDelegate().getFactory().get(getDelegate().getPublication(),
                 getDelegate().getArea(),
                 documentId,
                 getDelegate().getLanguage());

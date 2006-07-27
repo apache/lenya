@@ -57,7 +57,7 @@ public class Nudge extends DocumentUsecase {
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
             SiteStructure structure = siteManager.getSiteStructure(getSourceDocument()
-                    .getIdentityMap(), publication, getSourceDocument().getArea());
+                    .getFactory(), publication, getSourceDocument().getArea());
             if (structure instanceof SiteTree) {
 
                 SiteTree tree = (SiteTree) structure;
@@ -118,7 +118,7 @@ public class Nudge extends DocumentUsecase {
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
             SiteStructure structure = siteManager.getSiteStructure(getSourceDocument()
-                    .getIdentityMap(), publication, getSourceDocument().getArea());
+                    .getFactory(), publication, getSourceDocument().getArea());
             if (structure instanceof SiteTree) {
 
                 SiteTree tree = (SiteTree) structure;

@@ -59,7 +59,7 @@ public class Publish extends DocumentUsecase {
             Document doc = getSourceDocument();
             set.addAll(SiteUtil.getSubSite(this.manager, doc));
 
-            Document liveDoc = doc.getIdentityMap().getAreaVersion(doc, Publication.LIVE_AREA);
+            Document liveDoc = doc.getFactory().getAreaVersion(doc, Publication.LIVE_AREA);
             if (liveDoc.exists())
                 set.addAll(SiteUtil.getSubSite(this.manager, liveDoc));
             else

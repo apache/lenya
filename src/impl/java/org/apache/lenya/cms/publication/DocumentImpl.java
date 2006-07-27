@@ -215,7 +215,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("Try to create document: " + allLanguages[i] + " " + this);
                 }
-                version = getIdentityMap().getLanguageVersion(this, allLanguages[i]);
+                version = getFactory().getLanguageVersion(this, allLanguages[i]);
             } catch (DocumentBuildException e) {
                 throw new DocumentException(e);
             }
@@ -417,9 +417,9 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Document#getIdentityMap()
+     * @see org.apache.lenya.cms.publication.Document#getFactory()
      */
-    public DocumentFactory getIdentityMap() {
+    public DocumentFactory getFactory() {
         return this.identityMap;
     }
 

@@ -94,7 +94,7 @@ public class ObservationTest extends AbstractAccessControlTest {
         DocumentManager docManager = null;
         try {
             docManager = (DocumentManager) getManager().lookup(DocumentManager.ROLE);
-            Document target = doc.getIdentityMap().get(doc.getPublication(), doc.getArea(), "/testTarget", doc.getLanguage());
+            Document target = doc.getFactory().get(doc.getPublication(), doc.getArea(), "/testTarget", doc.getLanguage());
             docManager.move(doc, target);
 
             assertFalse(listener.wasRemoved());

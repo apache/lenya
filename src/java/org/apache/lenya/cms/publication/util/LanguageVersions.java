@@ -41,7 +41,7 @@ public class LanguageVersions extends DocumentSet {
             if (!document.getLanguage().equals(languages[i])) {
                 Document languageVersion;
                 try {
-                    languageVersion = document.getIdentityMap()
+                    languageVersion = document.getFactory()
                             .getLanguageVersion(document, languages[i]);
                 } catch (DocumentBuildException e) {
                     throw new DocumentException(e);

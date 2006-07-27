@@ -86,7 +86,7 @@ public class SiteUtil {
     public static SiteStructure getSiteStructure(ServiceManager manager, Document document)
             throws SiteException {
         return SiteUtil.getSiteStructure(manager,
-                document.getIdentityMap(),
+                document.getFactory(),
                 document.getPublication(),
                 document.getArea());
     }
@@ -110,7 +110,7 @@ public class SiteUtil {
             siteManager = (SiteManager) selector.select(document.getPublication()
                     .getSiteManagerHint());
 
-            DocumentFactory map = document.getIdentityMap();
+            DocumentFactory map = document.getFactory();
             SiteNode node = NodeFactory.getNode(document);
             set = getExistingDocuments(map, node);
 
@@ -146,7 +146,7 @@ public class SiteUtil {
         String[] languages = document.getLanguages();
         for (int i = 0; i < languages.length; i++) {
             DocumentLocator loc = document.getLocator().getLanguageVersion(languages[i]);
-            Document version = document.getIdentityMap().get(loc);
+            Document version = document.getFactory().get(loc);
             set.add(version);
         }
         return set;
@@ -271,7 +271,7 @@ public class SiteUtil {
                 targetArea,
                 targetId,
                 source.getLanguage());
-        Document target = source.getIdentityMap().get(targetLocator);
+        Document target = source.getFactory().get(targetLocator);
         switch (mode) {
         case MODE_REPLACE:
             break;
@@ -337,7 +337,7 @@ public class SiteUtil {
             String targetArea, int mode) throws SiteException, DocumentException,
             DocumentBuildException {
         DocumentLocator targetLoc = source.getLocator().getAreaVersion(targetArea);
-        Document target = source.getIdentityMap().get(targetLoc);
+        Document target = source.getFactory().get(targetLoc);
         switch (mode) {
         case MODE_REPLACE:
             break;
