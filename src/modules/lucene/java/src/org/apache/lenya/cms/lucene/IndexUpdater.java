@@ -42,17 +42,16 @@ public class IndexUpdater extends AbstractLogEnabled implements RepositoryListen
         String uri = null;
         try {
             String[] formats = doc.getResourceType().getFormats();
-            if (!Arrays.asList(formats).contains("luceneIndex")) {
+            if (Arrays.asList(formats).contains("luceneIndex")) {
+                String docString = doc.getPublication().getId() + "/" + doc.getArea() + doc.getId()
+                        + "/" + doc.getLanguage();
+                uri = "cocoon://modules/lucene/index-document-index/" + docString + ".xml";
+                SourceUtil.readDOM(uri, this.manager);
+            } else {
                 getLogger().info("Document [" + doc
                         + "] is not being indexed because resource type ["
                         + doc.getResourceType().getName() + "] does not support indexing!");
-                return;
             }
-
-            String docString = doc.getPublication().getId() + "/" + doc.getArea() + doc.getId()
-                    + "/" + doc.getLanguage();
-            uri = "cocoon://modules/lucene/index-document-index/" + docString + ".xml";
-            SourceUtil.readDOM(uri, this.manager);
         } catch (Exception e) {
             getLogger().error("Invoking indexing failed for URL [" + uri + "]: ", e);
             throw new RuntimeException(e);
