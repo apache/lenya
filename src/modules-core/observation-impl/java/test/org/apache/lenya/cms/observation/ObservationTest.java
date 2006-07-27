@@ -28,6 +28,7 @@ import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
@@ -55,7 +56,7 @@ public class ObservationTest extends AbstractAccessControlTest {
 
             // check if it works if only the allListener is registered
             registry.registerListener(allListener);
-            testListener(doc, allListener);
+            testChanged(doc, allListener);
             
             registry.registerListener(docListener, doc);
             Exception e = null;
@@ -67,8 +68,8 @@ public class ObservationTest extends AbstractAccessControlTest {
             }
             assertNotNull(e);
 
-            testListener(doc, docListener);
-            testListener(doc, allListener);
+            testChanged(doc, docListener);
+            testChanged(doc, allListener);
             
         }
         finally {
@@ -80,7 +81,7 @@ public class ObservationTest extends AbstractAccessControlTest {
         
     }
 
-    protected void testListener(Document doc, TestListener listener) throws Exception {
+    protected void testChanged(Document doc, TestListener listener) throws Exception {
         listener.reset();
         NamespaceHelper xml = new NamespaceHelper("http://apache.org/lenya/test", "", "test");
         doc.getRepositoryNode().lock();
@@ -90,13 +91,38 @@ public class ObservationTest extends AbstractAccessControlTest {
         doc.setMimeType("");
         doc.setMimeType(mimeType);
         
-        assertFalse(listener.wasNotified());
-        
+        assertFalse(listener.wasChanged());
         doc.getRepositoryNode().getSession().commit();
-        
         Thread.currentThread().sleep(100);
+        assertTrue(listener.wasChanged());
+    }
+
+    protected void testRemoved(Document doc, TestListener listener) throws Exception {
+        listener.reset();
+
+        DocumentManager docManager = null;
+        try {
+            docManager = (DocumentManager) getManager().lookup(DocumentManager.ROLE);
+            Document target = doc.getIdentityMap().get(doc.getPublication(), doc.getArea(), "/testTarget", doc.getLanguage());
+            docManager.move(doc, target);
+
+            assertFalse(listener.wasRemoved());
+            doc.getRepositoryNode().getSession().commit();
+            Thread.currentThread().sleep(100);
+            assertTrue(listener.wasRemoved());
         
-        assertTrue(listener.wasNotified());
+            docManager.move(target, doc);
+            assertFalse(listener.wasChanged());
+            doc.getRepositoryNode().getSession().commit();
+            Thread.currentThread().sleep(100);
+            assertTrue(listener.wasChanged());
+        }
+        finally {
+            if (docManager != null) {
+                getManager().release(docManager);
+            }
+        }
+        
     }
 
 }
