@@ -106,4 +106,26 @@ public class DocumentLocator {
     public DocumentLocator getLanguageVersion(String language) {
         return DocumentLocator.getLocator(getPublicationId(), getArea(), getPath(), language);
     }
+
+    protected String getKey() {
+        return DocumentLocator.getKey(getPublicationId(), getArea(), getPath(), getLanguage());
+    }
+
+    public boolean equals(Object obj) {
+        if (!(obj instanceof DocumentLocator)) {
+            return false;
+        }
+        DocumentLocator locator = (DocumentLocator) obj;
+        return locator.getKey().equals(getKey());
+    }
+
+    public int hashCode() {
+        return getKey().hashCode();
+    }
+
+    public String toString() {
+        return getKey();
+    }
+    
+    
 }
