@@ -90,22 +90,22 @@ public class SitetreeModule extends AbstractPageEnvelopeModule {
                 SiteTree authoringTree = _manager.getTree(map,
                         publication,
                         Publication.AUTHORING_AREA);
-                value = authoringTree.getNode(envelope.getDocument().getId());
+                value = authoringTree.getNode(envelope.getDocument().getPath());
             }
 
             if (name.equals(LIVE_NODE)) {
                 SiteTree liveTree = _manager.getTree(map, publication, Publication.LIVE_AREA);
-                value = liveTree.getNode(envelope.getDocument().getId());
+                value = liveTree.getNode(envelope.getDocument().getPath());
             }
 
             if (name.equals(TRASH_NODE)) {
                 SiteTree trashTree = _manager.getTree(map, publication, Publication.TRASH_AREA);
-                value = trashTree.getNode(envelope.getDocument().getId());
+                value = trashTree.getNode(envelope.getDocument().getPath());
             }
 
             if (name.equals(ARCHIVE_NODE)) {
                 SiteTree archiveTree = _manager.getTree(map, publication, Publication.ARCHIVE_AREA);
-                value = archiveTree.getNode(envelope.getDocument().getId());
+                value = archiveTree.getNode(envelope.getDocument().getPath());
             }
         } catch (Exception e) {
             throw new ConfigurationException("Obtaining value for [" + name + "] failed: ", e);

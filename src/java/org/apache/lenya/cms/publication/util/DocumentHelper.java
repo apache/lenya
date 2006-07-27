@@ -77,13 +77,13 @@ public class DocumentHelper {
      * Creates a document URL. <br/>If the document ID is null, the current document ID is used.
      * <br/>If the document area is null, the current area is used. <br/>If the language is null,
      * the current language is used.
-     * @param documentId The target document ID.
+     * @param uuid The target document UUID.
      * @param documentArea The target area.
      * @param language The target language.
      * @return A string.
      * @throws ProcessingException if something went wrong.
      */
-    public String getDocumentUrl(String documentId, String documentArea, String language)
+    public String getDocumentUrl(String uuid, String documentArea, String language)
             throws ProcessingException {
 
         String url = null;
@@ -92,8 +92,8 @@ public class DocumentHelper {
             Request request = ObjectModelHelper.getRequest(this.objectModel);
             String webappUrl = ServletHelper.getWebappURI(request);
             Document envDocument = this.identityMap.getFromURL(webappUrl);
-            if (documentId == null) {
-                documentId = envDocument.getId();
+            if (uuid == null) {
+                uuid = envDocument.getUUID();
             }
 
             if (documentArea == null) {
@@ -106,10 +106,7 @@ public class DocumentHelper {
                 language = envDocument.getLanguage();
             }
 
-            Document document = this.identityMap.get(this.publication,
-                    documentArea,
-                    documentId,
-                    language);
+            Document document = this.identityMap.get(this.publication, documentArea, uuid, language);
             url = document.getCanonicalWebappURL();
 
             String contextPath = request.getContextPath();
@@ -189,7 +186,7 @@ public class DocumentHelper {
         String[] languages = document.getLanguages();
 
         if (languages.length == 0) {
-            throw new DocumentException("The document [" + document.getId()
+            throw new DocumentException("The document [" + document
                     + "] does not exist in any language!");
         }
 

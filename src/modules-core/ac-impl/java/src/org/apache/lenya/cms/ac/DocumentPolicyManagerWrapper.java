@@ -84,10 +84,10 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
             if (map.isDocument(webappUrl)) {
                 Document document = map.getFromURL(webappUrl);
                 if (document.existsInAnyLanguage()) {
-                    url = "/" + document.getArea() + document.getId();
+                    url = "/" + document.getArea() + document.getPath();
                     if (getLogger().isDebugEnabled()) {
                         getLogger().debug("    Document exists");
-                        getLogger().debug("    Document ID: [" + document.getId() + "]");
+                        getLogger().debug("    Document path: [" + document.getPath() + "]");
                     }
                 }
             }

@@ -83,7 +83,7 @@ public class IndexDocument extends DocumentUsecase {
     protected Node[] getNodesToLock() throws UsecaseException {
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("IndexDocument::getObjectsToLock() called on source document ["
-                    + getSourceDocument().getId() + "]");
+                    + getSourceDocument() + "]");
         }
 
         Node[] objects = { getSourceDocument().getRepositoryNode() };

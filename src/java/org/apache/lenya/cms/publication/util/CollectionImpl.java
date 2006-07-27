@@ -172,7 +172,7 @@ public class CollectionImpl extends AbstractLogEnabled implements Collection {
      * @throws DocumentBuildException when something went wrong.
      */
     protected Document loadDocument(Element documentElement) throws DocumentBuildException {
-        String documentId = documentElement.getAttribute(ATTRIBUTE_ID);
+        String documentId = documentElement.getAttribute(ATTRIBUTE_UUID);
         Document document = getDelegate().getIdentityMap().get(getDelegate().getPublication(),
                 getDelegate().getArea(),
                 documentId,
@@ -189,9 +189,9 @@ public class CollectionImpl extends AbstractLogEnabled implements Collection {
 
             NamespaceHelper helper = getNamespaceHelper();
             Element collectionElement = helper.getDocument().getDocumentElement();
-            if (collectionElement.getAttributeNS(null, ATTRIBUTE_ID) == null
-                    | collectionElement.getAttribute(ATTRIBUTE_ID).equals("")) {
-                collectionElement.setAttributeNS(null, ATTRIBUTE_ID, getDelegate().getId());
+            if (collectionElement.getAttributeNS(null, ATTRIBUTE_UUID) == null
+                    | collectionElement.getAttribute(ATTRIBUTE_UUID).equals("")) {
+                collectionElement.setAttributeNS(null, ATTRIBUTE_UUID, getDelegate().getUUID());
             }
             Element[] existingDocumentElements = helper.getChildren(collectionElement,
                     ELEMENT_DOCUMENT);
@@ -230,7 +230,7 @@ public class CollectionImpl extends AbstractLogEnabled implements Collection {
             throws DocumentException {
         try {
             Element documentElement = helper.createElement(ELEMENT_DOCUMENT);
-            documentElement.setAttributeNS(null, ATTRIBUTE_ID, document.getId());
+            documentElement.setAttributeNS(null, ATTRIBUTE_UUID, document.getUUID());
             return documentElement;
         } catch (final DOMException e) {
             throw new DocumentException(e);

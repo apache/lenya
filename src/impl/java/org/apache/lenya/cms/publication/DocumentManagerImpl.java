@@ -113,7 +113,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
             // Write Lenya-internal meta-data
             MetaData lenyaMetaData = document.getMetaData(DocumentImpl.METADATA_NAMESPACE);
-            
+
             lenyaMetaData.setValue(DocumentImpl.METADATA_RESOURCE_TYPE, documentType.getName());
             lenyaMetaData.setValue(DocumentImpl.METADATA_CONTENT_TYPE, "xml");
             lenyaMetaData.setValue(DocumentImpl.METADATA_EXTENSION, extension);
@@ -400,10 +400,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         for (int i = 0; i < languages.length; i++) {
 
             Document sourceVersion = identityMap.getLanguageVersion(source, languages[i]);
-            Document targetVersion = identityMap.get(target.getPublication(),
-                    target.getArea(),
-                    target.getId(),
-                    languages[i]);
+            DocumentLocator targetLocator = sourceVersion.getLocator().getLanguageVersion(languages[i]);
+            Document targetVersion = identityMap.get(targetLocator);
             copy(sourceVersion, targetVersion);
         }
     }
@@ -480,10 +478,10 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
          * @throws DocumentBuildException if the target could not be built.
          */
         protected Document getTarget(Document source) throws DocumentBuildException {
-            String rootSourceId = getRootSource().getId();
-            String rootTargetId = getRootTarget().getId();
-            String childId = source.getId().substring(rootSourceId.length());
-            String targetId = rootTargetId + childId;
+            String rootSourcePath = getRootSource().getPath();
+            String rootTargetPath = getRootTarget().getPath();
+            String childId = source.getPath().substring(rootSourcePath.length());
+            String targetId = rootTargetPath + childId;
             return getRootTarget().getIdentityMap().get(getRootTarget().getPublication(),
                     getRootTarget().getArea(),
                     targetId,

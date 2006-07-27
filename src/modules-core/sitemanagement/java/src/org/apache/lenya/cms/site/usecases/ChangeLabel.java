@@ -80,7 +80,7 @@ public class ChangeLabel extends DocumentUsecase {
                     .getSiteManagerHint());
 
             if (document.exists()) {
-                setParameter(DOCUMENT_ID, document.getId());
+                setParameter(DOCUMENT_ID, document.getUUID());
                 setParameter(LABEL, siteManager.getLabel(document));
             }
         } catch (final Exception e) {

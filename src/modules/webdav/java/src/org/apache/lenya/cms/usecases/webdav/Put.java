@@ -108,7 +108,7 @@ public class Put extends CreateDocument {
                     DocumentFactory map = getDocumentIdentityMap();
                     Document document = map.get(getPublication(),
                             doc.getArea(),
-                            doc.getId(),
+                            doc.getUUID(),
                             doc.getLanguage());
                     //lookupResourceType(extension)
                     resourceType = lookUpExtension(extension, selector);
@@ -262,9 +262,9 @@ public class Put extends CreateDocument {
     }
 
 
-    protected String getNewDocumentId() {
+    protected String getNewDocumentPath() {
         Document doc = getSourceDocument();
-        return doc.getId();
+        return doc.getUUID();
     }
 
     protected boolean getVisibleInNav(){

@@ -31,7 +31,7 @@ public class Clipboard {
 
     private String publicationId;
     private String area;
-    private String documentId;
+    private String uuid;
     private String language;
     private int method;
 
@@ -46,7 +46,7 @@ public class Clipboard {
     public Clipboard(Document document, int _method) {
         this.publicationId = document.getPublication().getId();
         this.area = document.getArea();
-        this.documentId = document.getId();
+        this.uuid = document.getUUID();
         this.language = document.getLanguage();
         this.method = _method;
     }
@@ -59,7 +59,7 @@ public class Clipboard {
      * @throws DocumentBuildException if the document could not be built.
      */
     public Document getDocument(DocumentFactory identityMap, Publication publication) throws DocumentBuildException {
-        Document document = identityMap.get(publication, this.area, this.documentId, this.language);
+        Document document = identityMap.get(publication, this.area, this.uuid, this.language);
         return document;
     }
 

@@ -163,7 +163,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      */
     public boolean contains(Document resource) throws SiteException {
         SiteTree tree = getTree(resource);
-        SiteTreeNode node = tree.getNode(resource.getId());
+        SiteTreeNode node = tree.getNode(resource.getPath());
         boolean exists = node != null && node.getLabel(resource.getLanguage()) != null;
         return exists;
     }
@@ -174,7 +174,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
     public String getUUID(Document resource) throws SiteException {
         String uuid = null;
         SiteTree tree = getTree(resource);
-        SiteTreeNode node = tree.getNode(resource.getId());
+        SiteTreeNode node = tree.getNode(resource.getPath());
         if (node != null) {
             uuid = node.getUUID();
         }
@@ -189,7 +189,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      */
     public boolean containsInAnyLanguage(Document resource) throws SiteException {
         SiteTree tree = getTree(resource);
-        SiteTreeNode node = tree.getNode(resource.getId());
+        SiteTreeNode node = tree.getNode(resource.getPath());
         return node != null;
     }
 
@@ -201,9 +201,9 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         SiteTree sourceTree = getTree(sourceDocument);
         SiteTree destinationTree = getTree(destinationDocument);
 
-        SiteTreeNode sourceNode = sourceTree.getNode(sourceDocument.getId());
+        SiteTreeNode sourceNode = sourceTree.getNode(sourceDocument.getPath());
         if (sourceNode == null) {
-            throw new SiteException("The node for source document [" + sourceDocument.getId()
+            throw new SiteException("The node for source document [" + sourceDocument
                     + "] doesn't exist!");
         }
 
@@ -217,7 +217,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         String siblingDocId = null;
 
         // same document ID -> insert at the same position
-        if (sourceDocument.getId().equals(destinationDocument.getId())) {
+        if (sourceDocument.getPath().equals(destinationDocument.getPath())) {
             for (int i = 0; i < siblings.length; i++) {
                 String docId = parentId + "/" + siblings[i].getId();
                 sibling = destinationTree.getNode(docId);
@@ -232,22 +232,22 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         if (label == null) {
             // the node that we're trying to publish
             // doesn't have this language
-            throw new SiteException("The node " + sourceDocument.getId()
+            throw new SiteException("The node " + sourceDocument.getPath()
                     + " doesn't contain a label for language " + sourceDocument.getLanguage());
         }
-        SiteTreeNode destinationNode = destinationTree.getNode(destinationDocument.getId());
+        SiteTreeNode destinationNode = destinationTree.getNode(destinationDocument.getPath());
         if (destinationNode == null) {
             Label[] labels = { label };
 
             if (siblingDocId == null) {
-                destinationTree.addNode(destinationDocument.getId(),
+                destinationTree.addNode(destinationDocument.getPath(),
                         labels,
                         sourceNode.visibleInNav(),
                         sourceNode.getHref(),
                         sourceNode.getSuffix(),
                         sourceNode.hasLink());
             } else {
-                destinationTree.addNode(destinationDocument.getId(),
+                destinationTree.addNode(destinationDocument.getPath(),
                         labels,
                         sourceNode.visibleInNav(),
                         sourceNode.getHref(),
@@ -260,7 +260,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
             // if the node already exists in the live
             // tree simply insert the label in the
             // live tree
-            destinationTree.setLabel(destinationDocument.getId(), label);
+            destinationTree.setLabel(destinationDocument.getPath(), label);
         }
 
     }
@@ -273,7 +273,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
                 document.getPublication(),
                 document.getArea());
 
-        SiteTreeNode node = tree.getNode(document.getId());
+        SiteTreeNode node = tree.getNode(document.getPath());
 
         if (node == null) {
             throw new SiteException("Sitetree node for document [" + document + "] does not exist!");
@@ -294,7 +294,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         node.removeLabel(label);
 
         if (node.getLabels().length == 0) {
-            tree.removeNode(document.getId());
+            tree.removeNode(document.getPath());
         } else {
             tree.save();
         }
@@ -317,7 +317,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         labelObject.setLabel(label);
 
         SiteTree tree = getTree(document);
-        tree.setLabel(document.getId(), labelObject);
+        tree.setLabel(document.getPath(), labelObject);
     }
 
     /**
@@ -326,7 +326,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      */
     public void setVisibleInNav(Document document, boolean visibleInNav) throws SiteException {
         SiteTree tree = getTree(document);
-        tree.setVisibleInNav(document.getId(), visibleInNav);
+        tree.setVisibleInNav(document.getPath(), visibleInNav);
     }
 
     /**
@@ -340,7 +340,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         Label label = null;
         SiteTree siteTree = getTree(document);
         if (siteTree != null) {
-            SiteTreeNode node = siteTree.getNode(document.getId());
+            SiteTreeNode node = siteTree.getNode(document.getPath());
             if (node == null) {
                 throw new SiteException("Node for document [" + document + "] does not exist!");
             }
@@ -389,12 +389,12 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         SiteTree tree = getTree(document);
         Label label = new Label("", document.getLanguage());
 
-        SiteTreeNode node = tree.getNode(document.getId());
+        SiteTreeNode node = tree.getNode(document.getPath());
         if (node == null) {
             Label[] labels = { label };
-            tree.addNode(document.getId(), labels, true, null, null, false);
+            tree.addNode(document.getPath(), labels, true, null, null, false);
         } else {
-            tree.addLabel(document.getId(), label);
+            tree.addLabel(document.getPath(), label);
         }
 
     }
@@ -451,7 +451,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      * @throws SiteException if an error occurs.
      */
     protected String computeUniqueDocumentId(Document document) throws SiteException {
-        String documentId = document.getId();
+        String documentId = document.getPath();
 
         SiteTree tree = getTree(document);
 
@@ -491,7 +491,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
 
     public boolean isVisibleInNav(Document document) throws SiteException {
         SiteTree tree = getTree(document);
-        return tree.isVisibleInNav(document.getId());
+        return tree.isVisibleInNav(document.getPath());
     }
 
     public String getPath(String area, String uuid) throws SiteException {

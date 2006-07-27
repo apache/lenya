@@ -73,7 +73,7 @@ public class CreateLanguage extends Create {
         for (int i = 0; i < languages.length; i++) {
             Document version = map.get(source.getPublication(),
                     source.getArea(),
-                    source.getId(),
+                    source.getUUID(),
                     languages[i]);
             if (!version.exists()) {
                 nonExistingLanguages.add(languages[i]);
@@ -90,7 +90,7 @@ public class CreateLanguage extends Create {
 
         Document source = getSourceDocument();
         if (source != null) {
-            setParameter(DOCUMENT_ID, source.getId());
+            setParameter(DOCUMENT_ID, source.getUUID());
             try {
                 List nonExistingLanguages = getNonExistingLanguages();
                 setParameter(LANGUAGES, nonExistingLanguages
@@ -111,10 +111,10 @@ public class CreateLanguage extends Create {
 
     /**
      * For new language version of a document, id is the same as that document's
-     * @see Create#getNewDocumentId()
+     * @see Create#getNewDocumentPath()
      */
-    protected String getNewDocumentId() {
-        return getSourceDocument().getId();
+    protected String getNewDocumentPath() {
+        return getSourceDocument().getPath();
     }
 
     /**

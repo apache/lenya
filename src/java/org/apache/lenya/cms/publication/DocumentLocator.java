@@ -86,7 +86,7 @@ public class DocumentLocator {
 
     public DocumentLocator getParent() {
         int lastSlashIndex = getPath().lastIndexOf("/");
-        if (lastSlashIndex > 0) {
+        if (lastSlashIndex > -1) {
             String parentPath = getPath().substring(0, lastSlashIndex);
             return getPathVersion(parentPath);
         } else {
@@ -101,5 +101,9 @@ public class DocumentLocator {
         } else {
             return getPathVersion(defaultPath);
         }
+    }
+
+    public DocumentLocator getLanguageVersion(String language) {
+        return DocumentLocator.getLocator(getPublicationId(), getArea(), getPath(), language);
     }
 }

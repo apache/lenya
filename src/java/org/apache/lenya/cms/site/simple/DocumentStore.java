@@ -38,7 +38,7 @@ import org.w3c.dom.Element;
  */
 public class DocumentStore extends CollectionImpl implements SiteStructure {
 
-    protected static final String DOCUMENT_ID = "/site";
+    protected static final String DOCUMENT_PATH = "/site";
 
     /**
      * The identifiable type.
@@ -57,7 +57,7 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
             String area, Logger _logger) throws DocumentException {
         super(manager, map, new DocumentIdentifier(publication,
                 area,
-                DOCUMENT_ID,
+                DOCUMENT_PATH,
                 publication.getDefaultLanguage()), _logger);
     }
 
@@ -78,7 +78,7 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
      * @see org.apache.lenya.cms.publication.util.CollectionImpl#loadDocument(org.w3c.dom.Element)
      */
     protected Document loadDocument(Element documentElement) throws DocumentBuildException {
-        String documentId = documentElement.getAttribute(ATTRIBUTE_ID);
+        String documentId = documentElement.getAttribute(ATTRIBUTE_UUID);
         String language = documentElement.getAttribute(ATTRIBUTE_LANGUAGE);
         Document document = getDelegate().getIdentityMap().get(getDelegate().getPublication(),
                 getDelegate().getArea(),

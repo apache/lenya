@@ -153,12 +153,9 @@ public class ChangeNodeID extends DocumentUsecase {
         String nodeId = getParameterAsString(NODE_ID);
         DocumentLocator parentLocator = getSourceDocument().getLocator().getParent();
         Document parent = identityMap.get(parentLocator);
-        String parentId = "";
-        // if the document is at the top level, the parent is null
-        if (parent != null)
-            parentId = parent.getId();
+        String parentPath = parent.getPath();
         Publication publication = getSourceDocument().getPublication();
-        Document document = identityMap.get(publication, getSourceDocument().getArea(), parentId
+        Document document = identityMap.get(publication, getSourceDocument().getArea(), parentPath
                 + "/" + nodeId, getSourceDocument().getLanguage());
         return document;
     }
@@ -221,9 +218,9 @@ public class ChangeNodeID extends DocumentUsecase {
 
         Document document = getSourceDocument();
 
-        String oldDocumentId = document.getId();
-        int lastSlashIndex = oldDocumentId.lastIndexOf("/");
-        String strippedDocumentId = oldDocumentId.substring(0, lastSlashIndex + 1);
+        String oldPath = document.getPath();
+        int lastSlashIndex = oldPath.lastIndexOf("/");
+        String strippedDocumentId = oldPath.substring(0, lastSlashIndex + 1);
         String newDocumentId = strippedDocumentId + nodeId;
 
         return newDocumentId;

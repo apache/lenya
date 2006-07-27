@@ -45,7 +45,7 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
      */
     protected void doDocumentTest(DocumentTestSet testSet) throws PublicationException {
         Document document = getDocument(testSet);
-        getLogger().info("ID:           " + document.getId());
+        getLogger().info("UUID:         " + document.getUUID());
         getLogger().info("Area:         " + document.getArea());
         getLogger().info("Language:     " + document.getLanguage());
         getLogger().info("Document URL: " + document.getCanonicalDocumentURL());
@@ -54,7 +54,7 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
 
         Publication publication = PublicationUtil.getPublication(getManager(), "test");
         assertEquals(document.getPublication(), publication);
-        assertEquals(document.getId(), testSet.getId());
+        assertEquals(document.getUUID(), testSet.getUUId());
         assertEquals(document.getArea(), testSet.getArea());
         assertEquals(document.getLanguage(), testSet.getLanguage());
         assertEquals(document.getCanonicalDocumentURL(), testSet.getUrl());
@@ -102,7 +102,7 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
         Publication pub = PublicationUtil.getPublication(getManager(), "test");
         DocumentIdentifier id = new DocumentIdentifier(pub,
                 testSet.getArea(),
-                testSet.getId(),
+                testSet.getUUId(),
                 testSet.getLanguage());
         DocumentImpl document = new DocumentImpl(getManager(), getIdentityMap(), id, getLogger());
         document.setDocumentURL(testSet.getUrl());
@@ -153,9 +153,9 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
         }
 
         /**
-         * @return The ID.
+         * @return The UUID.
          */
-        public String getId() {
+        public String getUUId() {
             return this.id;
         }
 

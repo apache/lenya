@@ -25,11 +25,9 @@ import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.ResourceType;
-import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.site.usecases.Create;
 import org.apache.lenya.workflow.WorkflowManager;
 
@@ -81,7 +79,7 @@ public class Mkcol extends Create {
                     DocumentFactory map = getDocumentIdentityMap();
                     Document document = map.get(getPublication(),
                             doc.getArea(),
-                            doc.getId(),
+                            doc.getUUID(),
                             doc.getLanguage());
 
                     resourceType = (ResourceType) selector.select(TYPE);
@@ -148,7 +146,7 @@ public class Mkcol extends Create {
         return null;
     }
 
-    protected String getNewDocumentId() {
+    protected String getNewDocumentPath() {
         // TODO Auto-generated method stub
         return null;
     }

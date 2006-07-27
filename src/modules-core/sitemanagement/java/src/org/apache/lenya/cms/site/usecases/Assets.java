@@ -22,14 +22,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Resource;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.util.ServletHelper;
@@ -142,7 +140,7 @@ public class Assets extends SiteUsecase {
             Resource theResource = resourcesManager.getResource(getSourceDocument(), assetName);
             if (theResource == null)
                 throw new Exception("no such resource [" + assetName + "] exists for document [ "
-                        + getSourceDocument().getId() + "]");
+                        + getSourceDocument() + "]");
 
             // Lock the resource nodes
             List nodes = new ArrayList();

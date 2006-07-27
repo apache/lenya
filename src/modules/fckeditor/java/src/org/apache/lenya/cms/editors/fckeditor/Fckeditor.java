@@ -40,7 +40,6 @@ import org.apache.lenya.xml.Schema;
 import org.apache.lenya.xml.ValidationUtil;
 import org.w3c.dom.Document;
 import org.w3c.tidy.Tidy;
-import org.xml.sax.SAXException;
 
 /**
  * Fckeditor Usecase
@@ -82,7 +81,7 @@ public class Fckeditor extends DocumentUsecase {
                 getSourceDocument(),
                 getEvent())) {
             addErrorMessage("error-workflow-document", new String[] { getEvent(),
-                    getSourceDocument().getId() });
+                    getSourceDocument().toString() });
         }
     }
 

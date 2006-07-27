@@ -225,7 +225,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
 
                             targetDocument = this.identityMap.get(publication,
                                     getCurrentDocument().getArea(),
-                                    targetDocument.getId(),
+                                    targetDocument.getUUID(),
                                     targetDocument.getLanguage());
 
                             if (targetDocument.exists()) {

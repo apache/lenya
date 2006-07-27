@@ -76,7 +76,7 @@ public class LanguageExistsAction extends ServiceableAction {
         String language = doc.getLanguage();
 
         if (!doc.existsInAnyLanguage()) {
-            throw new DocumentDoesNotExistException("Document " + doc.getId()
+            throw new DocumentDoesNotExistException("Document " + doc
                     + " does not exist. Check sitetree, it might need to be reloaded.");
         }
         List availableLanguages = Arrays.asList(doc.getLanguages());

@@ -41,7 +41,7 @@ public interface Collection {
     String ELEMENT_DOCUMENT = "document";
     
     /** attribute for document IDs */
-    String ATTRIBUTE_ID = "id";
+    String ATTRIBUTE_UUID = "uuid";
 
     /**
      * Returns the documents in this collection.

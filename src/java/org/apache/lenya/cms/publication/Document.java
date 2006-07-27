@@ -61,6 +61,7 @@ public interface Document extends MetaDataOwner, RepositoryItem {
     /**
      * Returns the document ID of this document.
      * @return the document-id of this document.
+     * @deprecated use {@link #getUUID()} or {@link #getPath()}, respectively, instead.
      */
     String getId();
     
@@ -247,4 +248,9 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      * @return The locator for this document.
      */
     DocumentLocator getLocator();
+    
+    /**
+     * @return The path of this document in the site structure.
+     */
+    String getPath();
 }

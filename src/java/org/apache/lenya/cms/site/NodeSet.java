@@ -51,7 +51,7 @@ public class NodeSet {
     public NodeSet(DocumentSet documents) {
         Document[] docs = documents.getDocuments();
         for (int i = 0; i < docs.length; i++) {
-            SiteNode node = new SiteNode(docs[i].getPublication(), docs[i].getArea(), docs[i].getId());
+            SiteNode node = new SiteNode(docs[i].getPublication(), docs[i].getArea(), docs[i].getPath());
             if (!contains(node)) {
                 add(node);
             }

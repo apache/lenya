@@ -205,7 +205,7 @@ public class PageEnvelope {
         return "Resolving page envelope failed:" + "\n  URI: " + request.getRequestURI()
                 + "\n  Context: " + getContext() + "\n  Publication ID: "
                 + getPublication().getId() + "\n  Area: " + this.document.getArea()
-                + "\n  Document ID: " + this.document.getId();
+                + "\n  Document UUID: " + this.document.getUUID();
     }
 
     /**

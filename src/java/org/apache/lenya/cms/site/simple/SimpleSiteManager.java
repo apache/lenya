@@ -139,7 +139,7 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
      */
     public boolean contains(Document resource) throws SiteException {
 
-        if (resource.getId().equals(DocumentStore.DOCUMENT_ID)) {
+        if (resource.getPath().equals(DocumentStore.DOCUMENT_PATH)) {
             return true;
         }
 

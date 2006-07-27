@@ -589,4 +589,8 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         }
         return this.locator;
     }
+
+    public String getPath() {
+        return getLocator().getPath();
+    }
 }

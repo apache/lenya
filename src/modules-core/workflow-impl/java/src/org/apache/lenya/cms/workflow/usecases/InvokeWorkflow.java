@@ -65,7 +65,7 @@ public class InvokeWorkflow extends DocumentUsecase implements Configurable {
                 getSourceDocument(),
                 getEvent())) {
             addErrorMessage("error-workflow-document", new String[] { getEvent(),
-                    getSourceDocument().getId() });
+                    getSourceDocument().toString() });
         }
     }
 

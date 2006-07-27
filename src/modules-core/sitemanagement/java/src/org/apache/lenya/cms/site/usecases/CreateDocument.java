@@ -21,6 +21,7 @@ import java.util.Arrays;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
+import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
 
 /**
@@ -30,7 +31,7 @@ import org.apache.lenya.cms.publication.Publication;
  */
 public class CreateDocument extends Create {
 
-    protected static final String PARENT_ID = "parentId";
+    protected static final String PARENT_PATH = "parentId";
 
     protected static final String DOCUMENT_TYPE = "doctype";
 
@@ -49,9 +50,9 @@ public class CreateDocument extends Create {
 
         Document parent = getSourceDocument();
         if (parent == null) {
-            setParameter(PARENT_ID, "");
+            setParameter(PARENT_PATH, "");
         } else {
-            setParameter(PARENT_ID, parent.getId());
+            setParameter(PARENT_PATH, parent.getPath());
             String[] languages = parent.getPublication().getLanguages();
             setParameter(LANGUAGES, languages);
         }
@@ -99,7 +100,7 @@ public class CreateDocument extends Create {
                 addErrorMessage("The document ID may not contain any special characters.");
             } else {
                 Publication publication = getSourceDocument().getPublication();
-                String newDocumentId = getNewDocumentId();
+                String newDocumentId = getNewDocumentPath();
                 Document document = getSourceDocument().getIdentityMap().get(publication,
                         getSourceDocument().getArea(),
                         newDocumentId,
@@ -140,26 +141,20 @@ public class CreateDocument extends Create {
     }
 
     /**
-     * @see Create#getNewDocumentId()
+     * @see Create#getNewDocumentPath()
      */
-    protected String getNewDocumentId() {
+    protected String getNewDocumentPath() {
         if (getParameterAsBoolean(DOCUMENT_ID_PROVIDED, false)) {
             return getParameterAsString(DOCUMENT_ID);
         } else {
             String relation = getRelation();
-            Document sourceDoc = getSourceDocument();
+            DocumentLocator sourceLoc = getSourceDocument().getLocator();
             if (relation.equals(RELATION_CHILD)) {
-                return sourceDoc.getId() + "/" + getNewDocumentName();
-            } else if (relation.equals(RELATION_BEFORE)) {
-                return sourceDoc.getId().substring(0,
-                        sourceDoc.getId().lastIndexOf(sourceDoc.getName()))
-                        + getNewDocumentName();
-            } else if (relation.equals(RELATION_AFTER)) {
-                return sourceDoc.getId().substring(0,
-                        sourceDoc.getId().lastIndexOf(sourceDoc.getName()))
-                        + getNewDocumentName();
+                return sourceLoc.getChild(getNewDocumentName()).getPath();
+            } else if (relation.equals(RELATION_BEFORE) || relation.equals(RELATION_AFTER)) {
+                return sourceLoc.getParent().getChild(getNewDocumentName()).getPath();
             } else {
-                return getSourceDocument().getId() + "/" + getNewDocumentName();
+                throw new IllegalStateException("unsupported relation " + relation);
             }
         }
     }

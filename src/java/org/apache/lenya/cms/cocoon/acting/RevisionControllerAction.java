@@ -135,7 +135,7 @@ public class RevisionControllerAction extends ServiceableAction {
         // cannot be get from
         // the page-envelope
 
-        String documentid = document.getId();
+        String documentid = document.getPath();
         int bx = documentid.lastIndexOf("-bxe");
 
         if (bx > 0) {

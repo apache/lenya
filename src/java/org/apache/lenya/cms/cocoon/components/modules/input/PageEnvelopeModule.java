@@ -38,6 +38,7 @@ import org.apache.lenya.cms.publication.ResourceType;
  * related information such as document-id, area, publication-id.
  * 
  * @see org.apache.lenya.cms.publication.PageEnvelope
+ * @deprecated use DocumentInfoModule instead.
  */
 public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
 

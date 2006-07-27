@@ -169,7 +169,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
             return SiteUtil.isVisibleInNavigation(this.manager, document);
         } catch (SiteException e) {
             throw new ConfigurationException("Obtaining navigation visibility failed ["
-                    + document.getId() + "]: " + e.getMessage(), e);
+                    + document + "]: " + e.getMessage(), e);
         }
 
     }

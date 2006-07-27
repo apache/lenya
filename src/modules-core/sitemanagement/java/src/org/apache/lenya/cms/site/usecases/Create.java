@@ -141,7 +141,7 @@ public abstract class Create extends AbstractUsecase {
             DocumentFactory map = getDocumentIdentityMap();
             Document document = map.get(getPublication(),
                     getArea(),
-                    getNewDocumentId(),
+                    getNewDocumentPath(),
                     getParameterAsString(LANGUAGE));
 
             Document initialDocument = getInitialDocument();
@@ -197,7 +197,7 @@ public abstract class Create extends AbstractUsecase {
     /**
      * @return the id of the new document being created in the usecase
      */
-    protected abstract String getNewDocumentId();
+    protected abstract String getNewDocumentPath();
 
     /**
      * If the document created in the usecase shall have initial contents copied from an existing
@@ -318,7 +318,7 @@ public abstract class Create extends AbstractUsecase {
             DocumentFactory map = getDocumentIdentityMap();
             document = map.get(getPublication(),
                     getArea(),
-                    getNewDocumentId(),
+                    getNewDocumentPath(),
                     getParameterAsString(LANGUAGE));
 
         } catch (Exception e) {

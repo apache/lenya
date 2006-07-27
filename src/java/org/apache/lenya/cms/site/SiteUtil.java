@@ -28,6 +28,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 
@@ -260,15 +261,16 @@ public class SiteUtil {
             DocumentException, DocumentBuildException {
 
         String targetArea = baseTarget.getArea();
-        String sourceId = baseSource.getId();
+        String sourceId = baseSource.getPath();
 
-        String suffix = source.getId().substring(sourceId.length());
-        String targetId = baseTarget.getId() + suffix;
+        String suffix = source.getPath().substring(sourceId.length());
+        String targetId = baseTarget.getPath() + suffix;
 
-        Document target = source.getIdentityMap().get(baseTarget.getPublication(),
+        DocumentLocator targetLocator = DocumentLocator.getLocator(baseTarget.getPublication().getId(),
                 targetArea,
                 targetId,
                 source.getLanguage());
+        Document target = source.getIdentityMap().get(targetLocator);
         switch (mode) {
         case MODE_REPLACE:
             break;
@@ -473,7 +475,7 @@ public class SiteUtil {
             selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
             String siteManagerHint = doc.getPublication().getSiteManagerHint();
             siteManager = (SiteManager) selector.select(siteManagerHint);
-            return siteManager.getPath(doc.getArea(), doc.getId());
+            return siteManager.getPath(doc.getArea(), doc.getUUID());
         } catch (ServiceException e) {
             throw new SiteException(e);
         } finally {
