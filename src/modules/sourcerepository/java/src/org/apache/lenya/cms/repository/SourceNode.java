@@ -315,7 +315,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                 
                 for (Iterator i = this.listeners.iterator(); i.hasNext(); ) {
                     NodeListener listener = (NodeListener) i.next();
-                    listener.nodeChanged(this);
+                    listener.nodeChanged(this, getSession().getIdentity());
                 }
 
             } catch (Exception e) {

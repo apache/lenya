@@ -23,16 +23,26 @@ import java.util.Map;
 import java.util.Set;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
+import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.repository.NodeListener;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.site.SiteUtil;
 
 /**
  * Observation manager. Works as an observation registry and sends the notifications.
  */
 public class ObservationManager extends AbstractLogEnabled implements ObservationRegistry,
-        ThreadSafe {
+        ThreadSafe, Serviceable {
 
     private Map identifier2listeners = new HashMap();
     private Map identifier2doc = new HashMap();
@@ -95,15 +105,53 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
         }
     }
 
-    public void nodeChanged(Node node) {
-        for (Iterator i = this.identifier2doc.values().iterator(); i.hasNext();) {
-            Document doc = (Document) i.next();
-            String docUri = doc.getRepositoryNode().getSourceURI();
-            if (docUri.equals(node.getSourceURI())) {
-                documentChanged(doc);
-            }
+    public void nodeChanged(Node node, Identity identity) {
+
+        final String sourceUri = node.getSourceURI();
+        if (!sourceUri.startsWith("lenya://")) {
+            throw new IllegalStateException("The source URI [" + sourceUri
+                    + "] doesn't start with lenya://");
         }
 
+        String path = sourceUri.substring("lenya://lenya/pubs/".length());
+
+        String[] steps = path.split("/");
+        String pubId = steps[0];
+        String area = steps[2];
+
+        try {
+
+            Publication pub = PublicationUtil.getPublication(this.manager, pubId);
+
+            Session session = RepositoryUtil.createSession(manager, identity);
+            DocumentFactory factory = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+
+            Document[] docs = SiteUtil.getDocuments(this.manager, factory, pub, area);
+            
+            boolean matched = false;
+
+            for (int i = 0; i < docs.length; i++) {
+                String docUri = docs[i].getRepositoryNode().getSourceURI();
+                if (docUri.equals(node.getSourceURI())) {
+                    documentChanged(docs[i]);
+                    matched = true;
+                }
+            }
+            
+            if (!matched) {
+                throw new RuntimeException("The document for node [" + sourceUri + "] was not found!");
+            }
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    private ServiceManager manager;
+
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
     }
 
 }

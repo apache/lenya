@@ -16,6 +16,8 @@
  */
 package org.apache.lenya.cms.repository;
 
+import org.apache.lenya.ac.Identity;
+
 
 /**
  * Listener for nodes.
@@ -24,7 +26,8 @@ public interface NodeListener {
 
     /**
      * @param node The node which has changed.
+     * @param identity The identity who changed the node.
      */
-    void nodeChanged(Node node);
+    void nodeChanged(Node node, Identity identity);
     
 }
