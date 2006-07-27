@@ -36,7 +36,6 @@ import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.cms.site.SiteUtil;
 
 /**
  * Observation manager. Works as an observation registry and sends the notifications.
@@ -142,6 +141,11 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
     }
 
     protected Document getDocument(Node node, Identity identity) {
+        
+        if (node.getSourceURI().endsWith(".xml")) {
+            return null;
+        }
+        
         Document doc = null;
 
         final String sourceUri = node.getSourceURI();
@@ -162,20 +166,14 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
 
             Session session = RepositoryUtil.createSession(manager, identity);
             DocumentFactory factory = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+            
+            String docPath = path.substring((pubId + "/content/" + area).length());
+            String docId = docPath.substring(0, docPath.length() - "/index_en".length());
+            String language = docPath.substring(docPath.length() - "en".length());
+            
+            doc = factory.get(pub, area, docId, language);
 
-            Document[] docs = SiteUtil.getDocuments(this.manager, factory, pub, area);
-
-            boolean matched = false;
-
-            for (int i = 0; i < docs.length; i++) {
-                String docUri = docs[i].getRepositoryNode().getSourceURI();
-                if (docUri.equals(node.getSourceURI())) {
-                    doc = docs[i];
-                    matched = true;
-                }
-            }
-
-            if (!matched) {
+            if (doc == null) {
                 // this happens if the node was not a document node
                 this.getLogger().info("No document found for node [" + sourceUri + "]");
             }
