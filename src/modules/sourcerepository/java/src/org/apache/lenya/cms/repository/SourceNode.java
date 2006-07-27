@@ -312,10 +312,31 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                     out.write(buf, 0, read);
                     read = in.read(buf);
                 }
+
+                Node node;
+                String sourceUri = getSourceURI();
+                if (sourceUri.endsWith(".meta")) {
+                    String documentSourceUri = sourceUri.substring(0, sourceUri.length() - ".meta".length());
+                    NodeFactory factory = null;
+                    try {
+                        factory = (NodeFactory) this.manager.lookup(NodeFactory.ROLE);
+                        node = (Node) factory.buildItem(getSession(), documentSourceUri);
+                    }
+                    finally {
+                        if (factory != null) {
+                            this.manager.release(factory);
+                        }
+                    }
+                }
+                else {
+                    node = this;
+                }
+                
                 
                 for (Iterator i = this.listeners.iterator(); i.hasNext(); ) {
                     NodeListener listener = (NodeListener) i.next();
-                    listener.nodeChanged(this, getSession().getIdentity());
+                    
+                    listener.nodeChanged(node, getSession().getIdentity());
                 }
 
             } catch (Exception e) {
