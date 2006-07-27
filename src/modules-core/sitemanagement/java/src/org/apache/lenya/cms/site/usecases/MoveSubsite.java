@@ -74,7 +74,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
         } else {
 
             Document document = getSourceDocument();
-            DocumentFactory identityMap = getDocumentIdentityMap();
+            DocumentFactory identityMap = getDocumentFactory();
 
             DocumentSet set = SiteUtil.getSubSite(this.manager, document);
             Document[] documents = set.getDocuments();
@@ -139,7 +139,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
 
             nodes.add(SiteUtil.getSiteStructure(this.manager, doc).getRepositoryNode());
             nodes.add(SiteUtil.getSiteStructure(this.manager,
-                    getDocumentIdentityMap(),
+                    getDocumentFactory(),
                     doc.getPublication(),
                     getTargetArea()).getRepositoryNode());
         } catch (Exception e) {
@@ -155,7 +155,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
 
         Document doc = getSourceDocument();
         DocumentSet sources = SiteUtil.getSubSite(this.manager, doc);
-        DocumentFactory map = getDocumentIdentityMap();
+        DocumentFactory map = getDocumentFactory();
 
         DocumentLocator loc = doc.getLocator().getAreaVersion(getTargetArea());
         Document target = doc.getFactory().get(loc);
@@ -229,7 +229,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
     protected DocumentSet getTargetDocsToCopy() throws ServiceException, SiteException,
             DocumentBuildException {
         Document doc = getSourceDocument();
-        DocumentFactory map = getDocumentIdentityMap();
+        DocumentFactory map = getDocumentFactory();
         DocumentSet docsToCopy = new DocumentSet();
         ServiceSelector selector = null;
         SiteManager siteManager = null;
@@ -271,7 +271,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
             SiteException, DocumentBuildException, DocumentException {
         DocumentSet docsToDelete = new DocumentSet();
         Document doc = getSourceDocument();
-        DocumentFactory map = getDocumentIdentityMap();
+        DocumentFactory map = getDocumentFactory();
         ServiceSelector selector = null;
         SiteManager siteManager = null;
         try {

@@ -68,7 +68,7 @@ public class Paste extends DocumentUsecase {
             String id;
             try {
                 Publication pub = getSourceDocument().getPublication();
-                id = clipboard.getDocument(getDocumentIdentityMap(), pub).getId();
+                id = clipboard.getDocument(getDocumentFactory(), pub).getId();
             } catch (DocumentBuildException e) {
                 throw new RuntimeException(e);
             }
@@ -88,7 +88,7 @@ public class Paste extends DocumentUsecase {
             nodes.add(siteNode);
 
             Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
-            DocumentFactory map = getDocumentIdentityMap();
+            DocumentFactory map = getDocumentFactory();
             Publication pub = getSourceDocument().getPublication();
             String area = getSourceDocument().getArea();
             Document clippedDocument = clipboard.getDocument(map, pub);
@@ -125,7 +125,7 @@ public class Paste extends DocumentUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
 
-        DocumentFactory identityMap = getDocumentIdentityMap();
+        DocumentFactory identityMap = getDocumentFactory();
         Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
         Publication pub = getSourceDocument().getPublication();
         Document clippedDocument = clipboard.getDocument(identityMap, pub);
@@ -151,7 +151,7 @@ public class Paste extends DocumentUsecase {
 
     protected Document getTargetDocument() throws SiteException, DocumentBuildException,
             ServiceException {
-        DocumentFactory identityMap = getDocumentIdentityMap();
+        DocumentFactory identityMap = getDocumentFactory();
         Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
         Publication pub = getSourceDocument().getPublication();
         Document clippedDocument = clipboard.getDocument(identityMap, pub);

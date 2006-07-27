@@ -99,7 +99,7 @@ public class Propfind extends SiteUsecase {
             siteManagerSelector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE
                     + "Selector");
             siteManager = (SiteManager) siteManagerSelector.select(_publication.getSiteManagerHint());
-            Document[] documents = siteManager.getDocuments(getDocumentIdentityMap(),
+            Document[] documents = siteManager.getDocuments(getDocumentFactory(),
                     _publication,
                     Publication.AUTHORING_AREA);
 
@@ -128,7 +128,7 @@ public class Propfind extends SiteUsecase {
             if (!request.equals("/" + _publication.getId() + "/authoring/")) {
                 String url = request.substring(0, request.length() - 1) + ".html";
                 DocumentLocator locator = docBuilder.getLocator(url);
-                Document currentDoc = getDocumentIdentityMap().get(locator);
+                Document currentDoc = getDocumentFactory().get(locator);
                 if (currentDoc.exists()) {
                     resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
                     Resource[] resources = resourcesManager.getResources(currentDoc);

@@ -480,7 +480,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
 
     private DocumentFactory documentFactory;
 
-    protected DocumentFactory getDocumentIdentityMap() {
+    protected DocumentFactory getDocumentFactory() {
         if (this.documentFactory == null) {
             this.documentFactory = DocumentUtil.createDocumentIdentityMap(this.manager, session);
         }

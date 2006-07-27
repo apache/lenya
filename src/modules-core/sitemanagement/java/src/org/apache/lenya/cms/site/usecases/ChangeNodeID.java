@@ -110,7 +110,7 @@ public class ChangeNodeID extends DocumentUsecase {
         } else {
             DocumentLocator liveLoc = getSourceDocument().getLocator()
                     .getAreaVersion(Publication.LIVE_AREA);
-            Document liveVersion = getDocumentIdentityMap().get(liveLoc);
+            Document liveVersion = getDocumentFactory().get(liveLoc);
             if (liveVersion.exists()) {
                 addErrorMessage("This usecase cannot be invoked when the live version exists!");
             }
@@ -149,7 +149,7 @@ public class ChangeNodeID extends DocumentUsecase {
     }
 
     protected Document getTargetDocument() throws DocumentBuildException {
-        DocumentFactory identityMap = getDocumentIdentityMap();
+        DocumentFactory identityMap = getDocumentFactory();
         String nodeId = getParameterAsString(NODE_ID);
         DocumentLocator parentLocator = getSourceDocument().getLocator().getParent();
         Document parent = identityMap.get(parentLocator);

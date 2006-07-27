@@ -74,7 +74,7 @@ public class EmptyTrash extends AbstractUsecase {
  
         try {
             Publication publication = PublicationUtil.getPublicationFromUrl(this.manager, getSourceURL());
-            DocumentFactory identityMap = getDocumentIdentityMap();
+            DocumentFactory identityMap = getDocumentFactory();
             Document[] docs = getTrashDocuments();
             for (int i = 0; i < docs.length; i++) {
                 nodes.add(docs[i].getRepositoryNode());
@@ -127,7 +127,7 @@ public class EmptyTrash extends AbstractUsecase {
      */
     protected Document[] getTrashDocuments() throws PublicationException, SiteException {
         Publication publication = PublicationUtil.getPublicationFromUrl(this.manager, getSourceURL());
-        DocumentFactory identityMap = getDocumentIdentityMap();
+        DocumentFactory identityMap = getDocumentFactory();
         Document[] documents;
         
         ServiceSelector selector = null;

@@ -109,7 +109,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
             }
 
             nodes.add(SiteUtil.getSiteStructure(this.manager,
-                    getDocumentIdentityMap(),
+                    getDocumentFactory(),
                     doc.getPublication(),
                     Publication.LIVE_AREA).getRepositoryNode());
             return (org.apache.lenya.cms.repository.Node[]) nodes.toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
@@ -272,7 +272,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
             NotificationException {
         User sender = getSession().getIdentity().getUser();
         Identifiable[] recipients = { sender };
-        Document liveVersion = getDocumentIdentityMap().getAreaVersion(authoringDocument,
+        Document liveVersion = getDocumentFactory().getAreaVersion(authoringDocument,
                 Publication.LIVE_AREA);
 
         String url;

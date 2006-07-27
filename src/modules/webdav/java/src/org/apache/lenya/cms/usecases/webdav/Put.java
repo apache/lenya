@@ -105,7 +105,7 @@ public class Put extends CreateDocument {
 
                     documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
-                    DocumentFactory map = getDocumentIdentityMap();
+                    DocumentFactory map = getDocumentFactory();
                     Document document = map.get(getPublication(),
                             doc.getArea(),
                             doc.getUUID(),

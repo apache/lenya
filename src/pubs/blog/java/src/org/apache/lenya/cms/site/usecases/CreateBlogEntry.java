@@ -119,7 +119,7 @@ public class CreateBlogEntry extends DocumentUsecase {
 
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
-            DocumentFactory map = getDocumentIdentityMap();
+            DocumentFactory map = getDocumentFactory();
 
             String documentId = getDocumentID();
             Document document = map.get(getSourceDocument().getPublication(),

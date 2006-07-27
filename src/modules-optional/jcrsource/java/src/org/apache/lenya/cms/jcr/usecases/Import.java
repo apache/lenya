@@ -57,7 +57,7 @@ public class Import extends AbstractUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
         String pubId = getParameterAsString(PUBLICATION);
-        DocumentFactory map = getDocumentIdentityMap();
+        DocumentFactory map = getDocumentFactory();
         ServiceSelector selector = null;
         SiteManager siteManager = null;
         SourceResolver resolver = null;

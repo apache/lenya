@@ -74,7 +74,7 @@ public class AccessControl extends AccessControlUsecase {
             URLInformation info = new URLInformation(getSourceURL());
             setParameter(COMPLETE_AREA, info.getCompleteArea());
 
-            DocumentFactory map = getDocumentIdentityMap();
+            DocumentFactory map = getDocumentFactory();
             Document sourceDocument = map.getFromURL(getSourceURL());
             setParameter(DOCUMENT, sourceDocument);
 

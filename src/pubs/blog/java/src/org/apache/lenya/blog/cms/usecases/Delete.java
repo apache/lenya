@@ -85,7 +85,7 @@ public class Delete extends DocumentUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
         delete(getSourceDocument());        
-        setTargetDocument(getDocumentIdentityMap().get(getSourceDocument().getPublication(), Publication.AUTHORING_AREA,"/feeds/all/index"));
+        setTargetDocument(getDocumentFactory().get(getSourceDocument().getPublication(), Publication.AUTHORING_AREA,"/feeds/all/index"));
     }
 
     /**

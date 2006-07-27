@@ -199,7 +199,7 @@ public class SiteOverview extends AbstractUsecase {
      */
     protected Document[] getDocuments() throws PublicationException, SiteException {
         Publication publication = getPublication();
-        DocumentFactory identityMap = getDocumentIdentityMap();
+        DocumentFactory identityMap = getDocumentFactory();
         Document[] documents;
 
         ServiceSelector selector = null;

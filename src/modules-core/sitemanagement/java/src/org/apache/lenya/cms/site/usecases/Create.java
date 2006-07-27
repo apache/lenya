@@ -138,7 +138,7 @@ public abstract class Create extends AbstractUsecase {
 
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
-            DocumentFactory map = getDocumentIdentityMap();
+            DocumentFactory map = getDocumentFactory();
             Document document = map.get(getPublication(),
                     getArea(),
                     getNewDocumentPath(),
@@ -294,8 +294,8 @@ public abstract class Create extends AbstractUsecase {
         Document document = null;
         String url = getSourceURL();
         try {
-            if (getDocumentIdentityMap().isDocument(url)) {
-                document = getDocumentIdentityMap().getFromURL(url);
+            if (getDocumentFactory().isDocument(url)) {
+                document = getDocumentFactory().getFromURL(url);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -315,7 +315,7 @@ public abstract class Create extends AbstractUsecase {
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
-            DocumentFactory map = getDocumentIdentityMap();
+            DocumentFactory map = getDocumentFactory();
             document = map.get(getPublication(),
                     getArea(),
                     getNewDocumentPath(),

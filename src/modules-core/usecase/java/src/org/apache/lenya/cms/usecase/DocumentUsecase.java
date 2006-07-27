@@ -58,8 +58,8 @@ public class DocumentUsecase extends AbstractUsecase {
      */
     public void setSourceURL(String url) {
         try {
-            if (getDocumentIdentityMap().isDocument(url)) {
-                Document document = getDocumentIdentityMap().getFromURL(url);
+            if (getDocumentFactory().isDocument(url)) {
+                Document document = getDocumentFactory().getFromURL(url);
                 setParameter(DOCUMENT, document);
             }
         } catch (Exception e) {
@@ -129,7 +129,7 @@ public class DocumentUsecase extends AbstractUsecase {
      */
     protected void setTargetURL(String url) {
         try {
-            Document target = getDocumentIdentityMap().getFromURL(url);
+            Document target = getDocumentFactory().getFromURL(url);
             setParameter(TARGET_DOCUMENT, target);
         } catch (DocumentBuildException e) {
             throw new RuntimeException(e);
