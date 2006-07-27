@@ -66,13 +66,13 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
             Publication pub = null;
             String attribute;
 
-            DocumentFactory docFactory = DocumentUtil.createDocumentIdentityMap(this.manager, session);
-            String webappUrl = ServletHelper.getWebappURI(request);
-            Document document = docFactory.getFromURL(webappUrl);
-            pub = document.getPublication();
-            
             String[] steps = name.split(":");
             if (steps.length == 1) {
+                DocumentFactory docFactory = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+                String webappUrl = ServletHelper.getWebappURI(request);
+                Document document = docFactory.getFromURL(webappUrl);
+                pub = document.getPublication();
+                
                 attribute = name;
                 resourceType = document.getResourceType();
             } else {
@@ -126,7 +126,7 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
      * @param pubid publication id of the current document
      * @param prefix prefix which will be prepended to the resulting URL
      * @param uri fallback uri, must start with fallback://
-     * @return
+     * @return A string.
      * @throws ConfigurationException
      */
     protected String transformFallbackUriToHttp(String pubid, String prefix, String uri) throws ConfigurationException {
