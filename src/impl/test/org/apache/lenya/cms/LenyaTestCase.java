@@ -49,8 +49,8 @@ public class LenyaTestCase extends ContainerTestCase {
 
         this.context = context;
 
-        String tempPath = System.getProperty("tempDir");
-        String contextRoot = System.getProperty("contextRoot");
+        String tempPath = System.getProperty("tempDir", "build/lenya/temp");
+        String contextRoot = System.getProperty("contextRoot", "build/lenya/webapp");
         getLogger().info("Adding context root entry [" + contextRoot + "]");
 
         File contextRootDir = new File(contextRoot);
