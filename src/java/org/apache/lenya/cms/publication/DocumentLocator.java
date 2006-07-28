@@ -74,6 +74,9 @@ public class DocumentLocator {
     }
 
     public DocumentLocator getDescendant(String relativePath) {
+        if (relativePath.length() == 0) {
+            throw new IllegalArgumentException("The relative path must not be empty!");
+        }
         return getPathVersion(getPath() + "/" + relativePath);
     }
 
