@@ -108,9 +108,6 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         if (identifier.getUUID() == null) {
             throw new IllegalArgumentException("The document ID must not be null!");
         }
-        if (!identifier.getUUID().startsWith("/")) {
-            throw new IllegalArgumentException("The document ID must start with a slash!");
-        }
 
         this.identityMap = map;
 
@@ -215,7 +212,8 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("Try to create document: " + allLanguages[i] + " " + this);
                 }
-                version = getFactory().getLanguageVersion(this, allLanguages[i]);
+                DocumentLocator loc = getLocator().getLanguageVersion(allLanguages[i]);
+                version = getFactory().get(loc);
             } catch (DocumentBuildException e) {
                 throw new DocumentException(e);
             }
