@@ -32,7 +32,7 @@
     <div class="lenya-tabs">
       <jx:forEach var="language" items="${document.getPublication().getLanguages()}">
         <jx:set var="languageVersion"
-          value="${document.getIdentityMap().getLanguageVersion(document, language)}"/>
+          value="${document.getFactory().getLanguageVersion(document, language)}"/>
         <jx:set var="languageUrl"
           value="${request.contextPath + '/' + publicationId + '/' + area + languageVersion.getCanonicalDocumentURL()}"/>
         <jx:choose>
