@@ -188,8 +188,8 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
      * @return A boolean value.
      */
     protected boolean matches(Document targetDocument, Document originalTargetDocument) {
-        String matchString = originalTargetDocument.getId() + "/";
-        String testString = targetDocument.getId() + "/";
+        String matchString = originalTargetDocument.getPath() + "/";
+        String testString = targetDocument.getPath() + "/";
         return testString.startsWith(matchString);
     }
 
@@ -202,21 +202,26 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
      */
     protected String getNewTargetURL(Document targetDocument, Document originalTargetDocument,
             Document newTargetDocument) {
-        String originalId = originalTargetDocument.getId();
-        String targetId = targetDocument.getId();
+        String originalId = originalTargetDocument.getPath();
+        String targetId = targetDocument.getPath();
         String childString = targetId.substring(originalId.length());
-
+        
         ServiceSelector selector = null;
         DocumentBuilder builder = null;
         try {
             selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
             builder = (DocumentBuilder) selector.select(originalTargetDocument.getPublication()
                     .getDocumentBuilderHint());
-            
+
             DocumentLocator locator = newTargetDocument.getLocator();
-            DocumentLocator child = locator.getDescendant(childString);
-            String newTargetUrl = builder.buildCanonicalUrl(child);
-            return newTargetUrl;
+            DocumentLocator newLocator;
+            if (childString.length() == 0) {
+                newLocator = locator;
+            }
+            else {
+                newLocator = locator.getDescendant(childString);
+            }
+            return builder.buildCanonicalUrl(newLocator);
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         } finally {
