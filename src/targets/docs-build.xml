@@ -56,8 +56,10 @@
              source="1.4">
       <!-- sources -->
       <sourcepath>
-         <pathelement path="${src.java.dir}"/>
+         <pathelement path="${src.java.api.dir}"/>
+         <!--
          <pathelement path="${build.java.src}"/>
+         -->
       </sourcepath>
 
       <!-- pass ant in the classpath to avoid class not found errors -->
