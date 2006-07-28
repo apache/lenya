@@ -46,6 +46,7 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
     private IdentityMap identityMap;
 
     /**
+     * @return The identity map.
      * @see org.apache.lenya.transaction.UnitOfWork#getFactory()
      */
     public IdentityMap getIdentityMap() {
@@ -162,6 +163,24 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
                     }
                 }
             }
+        }
+        
+        notifyTransactionables();
+        
+    }
+
+    protected void notifyTransactionables() {
+        for (Iterator i = this.newObjects.iterator(); i.hasNext();) {
+            Transactionable t = (Transactionable) i.next();
+            t.changed();
+        }
+        for (Iterator i = this.modifiedObjects.iterator(); i.hasNext();) {
+            Transactionable t = (Transactionable) i.next();
+            t.changed();
+        }
+        for (Iterator i = this.removedObjects.iterator(); i.hasNext();) {
+            Transactionable t = (Transactionable) i.next();
+            t.removed();
         }
     }
 

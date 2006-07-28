@@ -41,4 +41,14 @@ public interface Transactionable extends Versionable {
      */
     void createTransactionable() throws TransactionException;
     
+    /**
+     * Notify the transactionable that it has been changed.
+     */
+    void changed();
+    
+    /**
+     * Notify the transactionable that it has been removed.
+     */
+    void removed();
+    
 }

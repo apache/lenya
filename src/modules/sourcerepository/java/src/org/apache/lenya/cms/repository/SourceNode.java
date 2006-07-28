@@ -231,14 +231,23 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             } else {
                 SourceUtil.delete(getRealSourceURI(), this.manager);
             }
-            Node node = getDocumentNode();
-            for (Iterator i = this.listeners.iterator(); i.hasNext(); ) {
-                NodeListener listener = (NodeListener) i.next();
-                listener.nodeRemoved(node, getSession().getIdentity());
-            }
+            removed();
 
         } catch (Exception e) {
             throw new RepositoryException(e);
+        }
+    }
+
+    public void removed() {
+        Node node;
+        try {
+            node = getDocumentNode();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        for (Iterator i = this.listeners.iterator(); i.hasNext(); ) {
+            NodeListener listener = (NodeListener) i.next();
+            listener.nodeRemoved(node, getSession().getIdentity());
         }
     }
 
@@ -319,11 +328,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                     read = in.read(buf);
                 }
 
-                Node node = getDocumentNode();
-                for (Iterator i = this.listeners.iterator(); i.hasNext(); ) {
-                    NodeListener listener = (NodeListener) i.next();
-                    listener.nodeChanged(node, getSession().getIdentity());
-                }
+                changed();
 
             } catch (Exception e) {
                 throw new RepositoryException(e);
@@ -348,6 +353,19 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                     manager.release(resolver);
                 }
             }
+        }
+    }
+
+    public void changed() {
+        Node node;
+        try {
+            node = getDocumentNode();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        for (Iterator i = this.listeners.iterator(); i.hasNext(); ) {
+            NodeListener listener = (NodeListener) i.next();
+            listener.nodeChanged(node, getSession().getIdentity());
         }
     }
 
