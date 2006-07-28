@@ -51,7 +51,10 @@ public class DocumentLanguagesHelper {
         this.identityMap = map;
         try {
             Publication pub = PublicationUtil.getPublication(manager, objectModel);
-            this.pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel, pub);
+            this.pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(manager,
+                    map,
+                    objectModel,
+                    pub);
         } catch (Exception e) {
             throw new ProcessingException(e);
         }

@@ -19,6 +19,7 @@ package org.apache.lenya.cms.site.usecases;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
@@ -62,12 +63,18 @@ public class LinkRewriterTest extends AbstractAccessControlTest {
                     "en");
             source.getRepositoryNode().lock();
 
-            target = getIdentityMap().get(pub, Publication.AUTHORING_AREA, TARGET_DOCUMENT_ID, "en");
-            target.getRepositoryNode().lock();
+            DocumentLocator targetLoc = DocumentLocator.getLocator(pub.getId(),
+                    Publication.AUTHORING_AREA,
+                    TARGET_DOCUMENT_ID,
+                    "en");
 
-            SiteUtil.getSiteStructure(getManager(), target).getRepositoryNode().lock();
+            SiteUtil.getSiteStructure(getManager(),
+                    source.getFactory(),
+                    source.getPublication(),
+                    source.getArea()).getRepositoryNode().lock();
 
-            docManager.move(source, target);
+            docManager.move(source, targetLoc);
+            target = source.getFactory().get(targetLoc);
 
             rewriter = (LinkRewriter) getManager().lookup(LinkRewriter.ROLE);
             rewriter.rewriteLinks(source, target);

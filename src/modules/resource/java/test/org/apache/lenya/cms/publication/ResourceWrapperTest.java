@@ -95,12 +95,11 @@ public class ResourceWrapperTest extends AbstractAccessControlTest {
      * @throws DocumentException
      * @throws MetaDataException
      */
-    public static Document createResource(DocumentFactory factory, Publication pub, String documentId,
-            ServiceManager manager, Logger logger)
-            throws ServiceException, DocumentBuildException, PublicationException,
-            MalformedURLException, IOException, RepositoryException, DocumentException,
-            MetaDataException {
-        
+    public static Document createResource(DocumentFactory factory, Publication pub,
+            String documentId, ServiceManager manager, Logger logger) throws ServiceException,
+            DocumentBuildException, PublicationException, MalformedURLException, IOException,
+            RepositoryException, DocumentException, MetaDataException {
+
         String extension = "png";
 
         Document doc = null;
@@ -111,14 +110,19 @@ public class ResourceWrapperTest extends AbstractAccessControlTest {
 
         try {
             docManager = (DocumentManager) manager.lookup(DocumentManager.ROLE);
-            doc = factory.get(pub, Publication.AUTHORING_AREA, documentId, pub.getDefaultLanguage());
+            DocumentLocator loc = DocumentLocator.getLocator(pub.getId(),
+                    Publication.AUTHORING_AREA,
+                    documentId,
+                    pub.getDefaultLanguage());
 
-            SiteUtil.getSiteStructure(manager, doc).getRepositoryNode().lock();
-            
+            SiteUtil.getSiteStructure(manager, factory, pub, Publication.AUTHORING_AREA)
+                    .getRepositoryNode()
+                    .lock();
+
             selector = (ServiceSelector) manager.lookup(ResourceType.ROLE + "Selector");
             resourceType = (ResourceType) selector.select("resource");
 
-            docManager.add(doc, resourceType, extension, "Test Resource", true);
+            doc = docManager.add(factory, loc, resourceType, extension, "Test Resource", true);
 
             ResourceWrapper resource = new ResourceWrapper(doc, manager, logger);
             resource.write(IMAGE_URL);

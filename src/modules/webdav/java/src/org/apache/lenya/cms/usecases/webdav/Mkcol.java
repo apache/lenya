@@ -26,8 +26,10 @@ import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.ResourceType;
+import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.site.usecases.Create;
 import org.apache.lenya.workflow.WorkflowManager;
 
@@ -77,16 +79,17 @@ public class Mkcol extends Create {
                     documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
                     DocumentFactory map = getDocumentFactory();
-                    Document document = map.get(getPublication(),
+                    String path = SiteUtil.getPath(this.manager, doc);
+                    DocumentLocator locator = DocumentLocator.getLocator(getPublication().getId(),
                             doc.getArea(),
-                            doc.getUUID(),
+                            path,
                             doc.getLanguage());
 
                     resourceType = (ResourceType) selector.select(TYPE);
-                    documentManager.add(document, resourceType, EXTENSION, doc.getName(), true);
+                    documentManager.add(map, locator, resourceType, EXTENSION, doc.getName(), true);
 
-                    setMetaData(document);
-                    doc = document;
+                    doc = map.get(locator);
+                    setMetaData(doc);
                 } finally {
                     if (documentManager != null) {
                         this.manager.release(documentManager);

@@ -34,21 +34,21 @@ public interface DocumentManager {
     /**
      * Copies a document from one location to another location.
      * @param sourceDocument The document to copy.
-     * @param destinationDocument The destination document.
+     * @param destination The destination document.
      * @throws PublicationException if a document which destinationDocument depends on does not
      *             exist.
      */
-    void copy(Document sourceDocument, Document destinationDocument) throws PublicationException;
+    void copy(Document sourceDocument, DocumentLocator destination) throws PublicationException;
 
     /**
      * Copies a document from one location to another location. Does not copy the documents
      * resources
      * @param sourceDocument The document to copy.
-     * @param destinationDocument The destination document.
+     * @param destination The destination document.
      * @throws PublicationException if a document which destinationDocument depends on does not
      *             exist.
      */
-    void copyDocument(Document sourceDocument, Document destinationDocument)
+    void copyDocument(Document sourceDocument, DocumentLocator destination)
             throws PublicationException;
 
     /**
@@ -72,35 +72,38 @@ public interface DocumentManager {
     /**
      * Creates a new document in the same publication the <code>parentDocument</code> belongs to
      * with the given parameters:
-     * 
-     * @param document The document to add.
+     * @param factory The document factory.
+     * @param locator The locator for the document to add.
      * @param resourceType the document type (aka resource type) of the new document
      * @param extension The extension to use for the document source.
      * @param navigationTitle navigation title
      * @param visibleInNav determines the visibility of a node in the navigation
+     * @return The added document.
      * 
      * @throws DocumentBuildException if the document can not be created
      * @throws PublicationException if the document is already contained.
      */
-    void add(Document document, ResourceType resourceType, String extension,
-            String navigationTitle, boolean visibleInNav) throws DocumentBuildException,
-            PublicationException;
+    Document add(DocumentFactory factory, DocumentLocator locator, ResourceType resourceType,
+            String extension, String navigationTitle, boolean visibleInNav)
+            throws DocumentBuildException, PublicationException;
 
     /**
      * Creates a new document in the same publication the <code>parentDocument</code> belongs to
      * with the given parameters:
      * 
-     * @param document The document to add.
+     * @param locator The locator for the document to add.
      * @param sourceDocument The document to initialize the contents and meta data from.
      * @param extension The extension to use for the document source.
      * @param navigationTitle navigation title
      * @param visibleInNav determines the visibility of a node in the navigation
+     * @return The added document.
      * 
      * @throws DocumentBuildException if the document can not be created
      * @throws PublicationException if the document is already contained.
      */
-    void add(Document document, Document sourceDocument, String extension, String navigationTitle,
-            boolean visibleInNav) throws DocumentBuildException, PublicationException;
+    Document add(DocumentLocator locator, Document sourceDocument, String extension,
+            String navigationTitle, boolean visibleInNav) throws DocumentBuildException,
+            PublicationException;
 
     /**
      * Deletes a document.
@@ -112,11 +115,11 @@ public interface DocumentManager {
     /**
      * Moves a document from one location to another.
      * @param sourceDocument The source document.
-     * @param destinationDocument The destination document.
+     * @param destination The destination document.
      * @throws PublicationException if a document which the destination document depends on does not
      *             exist.
      */
-    void move(Document sourceDocument, Document destinationDocument) throws PublicationException;
+    void move(Document sourceDocument, DocumentLocator destination) throws PublicationException;
 
     /**
      * Moves a document set from one location to another. A source is moved to the destination of
@@ -145,7 +148,7 @@ public interface DocumentManager {
      * @param target The target document.
      * @throws PublicationException if an error occurs.
      */
-    void moveAll(Document source, Document target) throws PublicationException;
+    void moveAll(Document source, DocumentLocator target) throws PublicationException;
 
     /**
      * Moves all language versions of a document to another location.
@@ -153,7 +156,8 @@ public interface DocumentManager {
      * @param target The target.
      * @throws PublicationException if the documents could not be moved.
      */
-    void moveAllLanguageVersions(Document source, Document target) throws PublicationException;
+    void moveAllLanguageVersions(Document source, DocumentLocator target)
+            throws PublicationException;
 
     /**
      * Copies a document to another location, incl. all requiring documents. If a sitetree is used,
@@ -162,7 +166,7 @@ public interface DocumentManager {
      * @param target The target document.
      * @throws PublicationException if an error occurs.
      */
-    void copyAll(Document source, Document target) throws PublicationException;
+    void copyAll(Document source, DocumentLocator target) throws PublicationException;
 
     /**
      * Copies all language versions of a document to another location.
@@ -170,7 +174,8 @@ public interface DocumentManager {
      * @param target The target.
      * @throws PublicationException if the documents could not be copied.
      */
-    void copyAllLanguageVersions(Document source, Document target) throws PublicationException;
+    void copyAllLanguageVersions(Document source, DocumentLocator target)
+            throws PublicationException;
 
     /**
      * Deletes a document, incl. all requiring documents. If a sitetree is used, this means that the
@@ -193,7 +198,7 @@ public interface DocumentManager {
      * @throws PublicationException if an error occurs.
      */
     void delete(DocumentSet documents) throws PublicationException;
-    
+
     /**
      * Creates a new document identity map.
      * @param session The session.

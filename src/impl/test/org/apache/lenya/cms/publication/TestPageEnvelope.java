@@ -37,6 +37,7 @@ public class TestPageEnvelope extends PageEnvelope {
      */
     public TestPageEnvelope(Publication publication, String url, ServiceManager manager,
             Logger logger) throws PageEnvelopeException {
+        super(manager);
         setContext("");
 
         try {

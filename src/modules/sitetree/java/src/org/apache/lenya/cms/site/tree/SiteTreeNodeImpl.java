@@ -105,7 +105,13 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
             getLogger().warn("Node equals OwnerDocument: " + this);
             return "";
         }
-        return this.node.getAttributes().getNamedItem(UUID_ATTRIBUTE_NAME).getNodeValue();
+        Element element = (Element) this.node;
+        if (element.hasAttribute(UUID_ATTRIBUTE_NAME)) {
+            return element.getAttribute(UUID_ATTRIBUTE_NAME);
+        }
+        else {
+            return getAbsoluteId();
+        }
     }
 
     /**

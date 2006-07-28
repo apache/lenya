@@ -39,6 +39,10 @@ public class DocumentIdentifier {
         this.area = area;
         this.language = language;
         this.uuid = uuid;
+        
+        if (uuid.equals("/copied")) {
+            throw new NullPointerException();
+        }
     }
     
     /**

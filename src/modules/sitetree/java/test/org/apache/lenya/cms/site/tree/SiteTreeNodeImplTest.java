@@ -50,11 +50,11 @@ public class SiteTreeNodeImplTest extends LenyaTestCase {
         
         Label label = new Label("Foo", "en");
         Label[] fooLabels = { label };
-        siteTree.addNode("/foo", fooLabels, true, null, null, false);
+        siteTree.addNode("/foo", "foo-uuid", fooLabels, true, null, null, false);
         label = new Label("Bar", "en");
         Label label_de = new Label("Stab", "de");
         Label[] barLabels = { label, label_de };
-        siteTree.addNode("/foo/bar", barLabels, true, "http://exact.biz", "suffix", true);
+        siteTree.addNode("/foo/bar", "foo-bar-uuid", barLabels, true, "http://exact.biz", "suffix", true);
 
         this.node = siteTree.getNode("/foo/bar");
     }

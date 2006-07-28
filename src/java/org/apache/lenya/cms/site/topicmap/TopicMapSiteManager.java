@@ -18,6 +18,7 @@ package org.apache.lenya.cms.site.topicmap;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.SiteNode;
@@ -33,8 +34,8 @@ public class TopicMapSiteManager extends AbstractSiteManager {
      * @see org.apache.lenya.cms.site.SiteManager#requires(org.apache.lenya.cms.publication.DocumentFactory,
      *      org.apache.lenya.cms.site.SiteNode, org.apache.lenya.cms.site.SiteNode)
      */
-    public boolean requires(DocumentFactory map, SiteNode dependingResource, SiteNode requiredResource)
-            throws SiteException {
+    public boolean requires(DocumentFactory map, SiteNode dependingResource,
+            SiteNode requiredResource) throws SiteException {
         // TODO Auto-generated method stub
         return false;
     }
@@ -43,7 +44,8 @@ public class TopicMapSiteManager extends AbstractSiteManager {
      * @see org.apache.lenya.cms.site.SiteManager#getRequiredResources(org.apache.lenya.cms.publication.DocumentFactory,
      *      org.apache.lenya.cms.site.SiteNode)
      */
-    public SiteNode[] getRequiredResources(DocumentFactory map, SiteNode resource) throws SiteException {
+    public SiteNode[] getRequiredResources(DocumentFactory map, SiteNode resource)
+            throws SiteException {
         // TODO Auto-generated method stub
         return null;
     }
@@ -61,7 +63,7 @@ public class TopicMapSiteManager extends AbstractSiteManager {
     /**
      * @see org.apache.lenya.cms.site.SiteManager#add(org.apache.lenya.cms.publication.Document)
      */
-    public void add(Document document) throws SiteException {
+    public void add(String path, Document document) throws SiteException {
         // TODO Auto-generated method stub
 
     }
@@ -123,14 +125,13 @@ public class TopicMapSiteManager extends AbstractSiteManager {
         // TODO Auto-generated method stub
 
     }
-    
+
     /**
      * @see org.apache.lenya.cms.site.SiteManager#setVisibleInNav(org.apache.lenya.cms.publication.Document,
      *      boolean)
      */
     public void setVisibleInNav(Document document, boolean visibleInNav) throws SiteException {
     }
-
 
     /**
      * @see org.apache.lenya.cms.site.SiteManager#getDocuments(org.apache.lenya.cms.publication.DocumentFactory,
@@ -146,8 +147,8 @@ public class TopicMapSiteManager extends AbstractSiteManager {
      * @see org.apache.lenya.cms.site.SiteManager#getSiteStructure(org.apache.lenya.cms.publication.DocumentFactory,
      *      org.apache.lenya.cms.publication.Publication, java.lang.String)
      */
-    public SiteStructure getSiteStructure(DocumentFactory map, Publication publiation,
-            String area) throws SiteException {
+    public SiteStructure getSiteStructure(DocumentFactory map, Publication publiation, String area)
+            throws SiteException {
         // TODO Auto-generated method stub
         return null;
     }
@@ -155,7 +156,8 @@ public class TopicMapSiteManager extends AbstractSiteManager {
     /**
      * @see org.apache.lenya.cms.site.SiteManager#getAvailableDocument(org.apache.lenya.cms.publication.Document)
      */
-    public Document getAvailableDocument(Document document) throws SiteException {
+    public DocumentLocator getAvailableLocator(DocumentFactory factory, DocumentLocator document)
+            throws SiteException {
         return document;
     }
 
@@ -163,14 +165,25 @@ public class TopicMapSiteManager extends AbstractSiteManager {
         return true;
     }
 
-    public String getPath(String area, String uuid) throws SiteException {
+    public String getPath(DocumentFactory factory, Publication pub, String area, String uuid) throws SiteException {
         // TODO Auto-generated method stub
         return null;
     }
 
-    public String getUUID(String area, String path) throws SiteException {
+    public String getUUID(DocumentFactory factory, Publication pub, String area, String path) throws SiteException {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    public boolean contains(DocumentFactory factory, Publication pub, String area, String path)
+            throws SiteException {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    public boolean contains(DocumentFactory factory, DocumentLocator locator) throws SiteException {
+        // TODO Auto-generated method stub
+        return false;
     }
 
 }

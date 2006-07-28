@@ -26,11 +26,16 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.util.DocumentSet;
+import org.apache.lenya.util.Assert;
 
 /**
  * Utility to handle site structures.
@@ -85,6 +90,8 @@ public class SiteUtil {
      */
     public static SiteStructure getSiteStructure(ServiceManager manager, Document document)
             throws SiteException {
+        Assert.notNull("manager", manager);
+        Assert.notNull("document", document);
         return SiteUtil.getSiteStructure(manager,
                 document.getFactory(),
                 document.getPublication(),
@@ -222,7 +229,7 @@ public class SiteUtil {
      * @throws SiteException if an error occurs.
      */
     public static Map getTransferedSubSite(ServiceManager manager, Document source,
-            Document target, int mode) throws SiteException {
+            DocumentLocator target, int mode) throws SiteException {
         Map map = new HashMap();
         ServiceSelector selector = null;
         SiteManager siteManager = null;
@@ -234,13 +241,13 @@ public class SiteUtil {
             DocumentSet subSite = SiteUtil.getSubSite(manager, source);
             Document[] docs = subSite.getDocuments();
             for (int i = 0; i < docs.length; i++) {
-                Document targetDoc = SiteUtil.getTransferedDocument(siteManager,
+                DocumentLocator targetLoc = SiteUtil.getTransferedDocument(siteManager,
                         docs[i],
                         source,
                         target,
                         mode);
-                if (targetDoc != null) {
-                    map.put(docs[i], targetDoc);
+                if (targetLoc != null) {
+                    map.put(docs[i], targetLoc);
                 }
             }
 
@@ -257,31 +264,37 @@ public class SiteUtil {
         return map;
     }
 
-    public static Document getTransferedDocument(SiteManager siteManager, Document source,
-            Document baseSource, Document baseTarget, int mode) throws SiteException,
+    public static DocumentLocator getTransferedDocument(SiteManager siteManager, Document source,
+            Document baseSource, DocumentLocator baseTarget, int mode) throws SiteException,
             DocumentException, DocumentBuildException {
 
         String targetArea = baseTarget.getArea();
-        String sourceId = baseSource.getPath();
+        String baseSourcePath = siteManager.getPath(baseSource.getFactory(),
+                baseSource.getPublication(),
+                baseSource.getArea(),
+                baseSource.getUUID());
 
-        String suffix = source.getPath().substring(sourceId.length());
+        String sourcePath = siteManager.getPath(source.getFactory(),
+                source.getPublication(),
+                source.getArea(),
+                source.getUUID());
+        String suffix = sourcePath.substring(baseSourcePath.length());
         String targetId = baseTarget.getPath() + suffix;
 
-        DocumentLocator targetLocator = DocumentLocator.getLocator(baseTarget.getPublication().getId(),
+        DocumentLocator target = DocumentLocator.getLocator(baseTarget.getPublicationId(),
                 targetArea,
                 targetId,
                 source.getLanguage());
-        Document target = source.getFactory().get(targetLocator);
         switch (mode) {
         case MODE_REPLACE:
             break;
         case MODE_CANCEL:
-            if (target.exists()) {
+            if (siteManager.contains(source.getFactory(), target)) {
                 target = null;
             }
             break;
         case MODE_CHANGE_ID:
-            target = siteManager.getAvailableDocument(target);
+            target = siteManager.getAvailableLocator(source.getFactory(), target);
             break;
         }
         return target;
@@ -311,7 +324,7 @@ public class SiteUtil {
             DocumentSet subSite = SiteUtil.getSubSite(manager, source);
             Document[] docs = subSite.getDocuments();
             for (int i = 0; i < docs.length; i++) {
-                Document target = SiteUtil.getTransferedDocument(siteManager,
+                DocumentLocator target = SiteUtil.getTransferedDocument(siteManager,
                         docs[i],
                         targetArea,
                         mode);
@@ -333,21 +346,20 @@ public class SiteUtil {
         return map;
     }
 
-    public static Document getTransferedDocument(SiteManager siteManager, Document source,
+    public static DocumentLocator getTransferedDocument(SiteManager siteManager, Document source,
             String targetArea, int mode) throws SiteException, DocumentException,
             DocumentBuildException {
-        DocumentLocator targetLoc = source.getLocator().getAreaVersion(targetArea);
-        Document target = source.getFactory().get(targetLoc);
+        DocumentLocator target = source.getLocator().getAreaVersion(targetArea);
         switch (mode) {
         case MODE_REPLACE:
             break;
         case MODE_CANCEL:
-            if (target.exists()) {
+            if (siteManager.contains(source.getFactory(), target)) {
                 target = null;
             }
             break;
         case MODE_CHANGE_ID:
-            target = siteManager.getAvailableDocument(target);
+            target = siteManager.getAvailableLocator(source.getFactory(), target);
             break;
         }
         return target;
@@ -356,20 +368,20 @@ public class SiteUtil {
     /**
      * @see org.apache.lenya.cms.site.SiteManager#getAvailableDocument(Document)
      * @param manager The service manager.
-     * @param document The document.
+     * @param factory The factory.
+     * @param locator The locator.
      * @return A document.
      * @throws SiteException if an error occurs.
      */
-    public static Document getAvailableDocument(ServiceManager manager, Document document)
-            throws SiteException {
+    public static DocumentLocator getAvailableLocator(ServiceManager manager,
+            DocumentFactory factory, DocumentLocator locator) throws SiteException {
         ServiceSelector selector = null;
         SiteManager siteManager = null;
         try {
             selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(document.getPublication()
-                    .getSiteManagerHint());
-
-            return siteManager.getAvailableDocument(document);
+            Publication pub = PublicationUtil.getPublication(manager, locator.getPublicationId());
+            siteManager = (SiteManager) selector.select(pub.getSiteManagerHint());
+            return siteManager.getAvailableLocator(factory, locator);
         } catch (Exception e) {
             throw new SiteException(e);
         } finally {
@@ -477,7 +489,10 @@ public class SiteUtil {
             selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
             String siteManagerHint = doc.getPublication().getSiteManagerHint();
             siteManager = (SiteManager) selector.select(siteManagerHint);
-            return siteManager.getPath(doc.getArea(), doc.getUUID());
+            return siteManager.getPath(doc.getFactory(),
+                    doc.getPublication(),
+                    doc.getArea(),
+                    doc.getUUID());
         } catch (ServiceException e) {
             throw new SiteException(e);
         } finally {
@@ -490,8 +505,8 @@ public class SiteUtil {
         }
     }
 
-    public static String getUUID(ServiceManager manager, Publication pub, String area, String path)
-            throws SiteException {
+    public static String getUUID(ServiceManager manager, DocumentFactory factory, Publication pub,
+            String area, String path) throws SiteException {
         SiteManager siteManager = null;
         ServiceSelector selector = null;
 
@@ -499,7 +514,7 @@ public class SiteUtil {
             selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
             String siteManagerHint = pub.getSiteManagerHint();
             siteManager = (SiteManager) selector.select(siteManagerHint);
-            return siteManager.getUUID(area, path);
+            return siteManager.getUUID(factory, pub, area, path);
         } catch (ServiceException e) {
             throw new SiteException(e);
         } finally {
@@ -508,6 +523,78 @@ public class SiteUtil {
                     selector.release(siteManager);
                 }
                 manager.release(siteManager);
+            }
+        }
+    }
+
+    public static boolean contains(ServiceManager manager, DocumentFactory factory,
+            DocumentLocator locator) throws SiteException {
+        SiteManager siteManager = null;
+        ServiceSelector selector = null;
+
+        try {
+            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
+            Publication pub = PublicationUtil.getPublication(manager, locator.getPublicationId());
+            String siteManagerHint = pub.getSiteManagerHint();
+            siteManager = (SiteManager) selector.select(siteManagerHint);
+            return siteManager.contains(factory, locator);
+        } catch (SiteException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new SiteException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                manager.release(siteManager);
+            }
+        }
+    }
+    
+    public static boolean isDocument(ServiceManager manager, DocumentFactory factory,
+            String webappUrl) throws SiteException {
+        DocumentLocator locator = getLocator(manager, webappUrl);
+        return contains(manager, factory, locator);
+    }
+
+    public static Document getDocument(ServiceManager manager, DocumentFactory factory,
+            String webappUrl) throws SiteException {
+
+        DocumentLocator locator = getLocator(manager, webappUrl);
+        if (contains(manager, factory, locator)) {
+            try {
+                return factory.get(locator);
+            } catch (DocumentBuildException e) {
+                throw new SiteException(e);
+            }
+        } else {
+            throw new SiteException("No document for webapp URL [" + webappUrl + "]");
+        }
+    }
+
+    public static DocumentLocator getLocator(ServiceManager manager, String webappUrl)
+            throws SiteException {
+        DocumentLocator locator;
+        URLInformation info = new URLInformation(webappUrl);
+        DocumentBuilder builder = null;
+        ServiceSelector selector = null;
+        try {
+            Publication pub = PublicationUtil.getPublication(manager, info.getPublicationId());
+            selector = (ServiceSelector) manager.lookup(DocumentBuilder.ROLE + "Selector");
+            builder = (DocumentBuilder) selector.select(pub.getDocumentBuilderHint());
+            return builder.getLocator(webappUrl);
+
+        } catch (SiteException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new SiteException(e);
+        } finally {
+            if (selector != null) {
+                if (builder != null) {
+                    selector.release(builder);
+                }
+                manager.release(selector);
             }
         }
     }

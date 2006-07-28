@@ -73,7 +73,8 @@ public abstract class AbstractPageEnvelopeModule extends OperationModule {
             try {
                 DocumentFactory map = getDocumentIdentityMap();
                 Publication pub = PublicationUtil.getPublicationFromUrl(this.manager, webappUrl);
-                envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map,
+                envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(this.manager,
+                        map,
                         contextPath,
                         webappUrl,
                         new File(servletContextPath),

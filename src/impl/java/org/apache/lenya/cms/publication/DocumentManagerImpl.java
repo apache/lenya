@@ -36,6 +36,8 @@ import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.repository.UUIDGenerator;
+import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteUtil;
 
@@ -48,31 +50,34 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         Serviceable, Contextualizable {
 
     /**
-     * The instance of Document will be built by the implementation of DocumentBuilder; the physical
-     * representation will be built by the implementation of NodeCreatorInterface, where the
-     * implementation to be used is specified in doctypes.xconf (and thus depends on the publication
-     * and the resource type to be used)
-     * 
-     * @see DocumentManager#add(Document, ResourceType, String, String, boolean)
+     * @see DocumentManager#add(sourceDocument, DocumentLocator, ResourceType, String, String,
+     *      boolean)
      * @see org.apache.lenya.cms.publication.DocumentBuilder
      */
-    public void add(Document document, ResourceType documentType, String extension,
-            String navigationTitle, boolean visibleInNav) throws DocumentBuildException,
-            PublicationException {
+    public Document add(DocumentFactory factory, DocumentLocator locator,
+            ResourceType documentType, String extension, String navigationTitle,
+            boolean visibleInNav) throws DocumentBuildException, PublicationException {
 
         String contentsURI = documentType.getSampleURI();
-        add(document, documentType, extension, navigationTitle, visibleInNav, contentsURI);
+        return add(factory,
+                locator,
+                documentType,
+                extension,
+                navigationTitle,
+                visibleInNav,
+                contentsURI);
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.DocumentManager#add(org.apache.lenya.cms.publication.Document,
+     * @see org.apache.lenya.cms.publication.DocumentManager#add(org.apache.lenya.cms.publication.DocumentLocator,
      *      org.apache.lenya.cms.publication.Document, String, java.lang.String, boolean)
      */
-    public void add(Document document, Document sourceDocument, String extension,
+    public Document add(DocumentLocator locator, Document sourceDocument, String extension,
             String navigationTitle, boolean visibleInNav) throws DocumentBuildException,
             PublicationException {
         String contentsURI = sourceDocument.getSourceURI();
-        add(document,
+        Document document = add(sourceDocument.getFactory(),
+                locator,
                 sourceDocument.getResourceType(),
                 extension,
                 navigationTitle,
@@ -87,11 +92,12 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         } catch (MetaDataException e) {
             throw new PublicationException(e);
         }
+        return document;
     }
 
     /**
      * Adds a document.
-     * @param document The document.
+     * @param locator The locator.
      * @param documentType The document type.
      * @param extension The extension for the document source.
      * @param navigationTitle The navigation title.
@@ -102,11 +108,20 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * @throws PublicationException if an error occurs.
      */
 
-    protected void add(Document document, ResourceType documentType, String extension,
-            String navigationTitle, boolean visibleInNav, String initialContentsURI)
-            throws DocumentBuildException, DocumentException, PublicationException {
+    protected Document add(DocumentFactory factory, DocumentLocator locator,
+            ResourceType documentType, String extension, String navigationTitle,
+            boolean visibleInNav, String initialContentsURI) throws DocumentBuildException,
+            DocumentException, PublicationException {
 
+        UUIDGenerator generator = null;
         try {
+
+            generator = (UUIDGenerator) this.manager.lookup(UUIDGenerator.ROLE);
+            String uuid = generator.nextUUID();
+
+            Publication pub = PublicationUtil.getPublication(this.manager,
+                    locator.getPublicationId());
+            Document document = factory.get(pub, locator.getArea(), uuid, locator.getLanguage());
 
             Node node = document.getRepositoryNode();
             node.lock();
@@ -126,12 +141,12 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             }
 
             create(initialContentsURI, document);
+            addToSiteManager(locator.getPath(), document, navigationTitle, visibleInNav);
+            return document;
         } catch (Exception e) {
             throw new DocumentBuildException("call to creator for new document failed", e);
         }
 
-        // Notify site manager about new document
-        addToSiteManager(document, navigationTitle, visibleInNav);
     }
 
     protected void create(String initialContentsURI, Document document) throws Exception {
@@ -152,8 +167,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         }
     }
 
-    private void addToSiteManager(Document document, String navigationTitle, boolean visibleInNav)
-            throws PublicationException {
+    private void addToSiteManager(String path, Document document, String navigationTitle,
+            boolean visibleInNav) throws PublicationException {
         Publication publication = document.getPublication();
         SiteManager siteManager = null;
         ServiceSelector selector = null;
@@ -165,7 +180,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                         + "] is already contained in this publication!");
             }
 
-            siteManager.add(document);
+            siteManager.add(path, document);
             siteManager.setLabel(document, navigationTitle);
             siteManager.setVisibleInNav(document, visibleInNav);
         } catch (final ServiceException e) {
@@ -184,66 +199,34 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * Template method to copy a document. Override {@link #copyDocumentSource(Document, Document)}
      * to implement access to a custom repository.
      * @see org.apache.lenya.cms.publication.DocumentManager#copy(org.apache.lenya.cms.publication.Document,
-     *      org.apache.lenya.cms.publication.Document)
+     *      org.apache.lenya.cms.publication.DocumentLocator)
      */
-    public void copy(Document sourceDocument, Document destinationDocument)
+    public void copy(Document sourceDocument, DocumentLocator destination)
             throws PublicationException {
 
-        Publication publication = sourceDocument.getPublication();
-        copyDocumentSource(sourceDocument, destinationDocument);
+        copyDocument(sourceDocument, destination);
+        Document destinationDocument = sourceDocument.getFactory().get(destination);
 
         ResourcesManager resourcesManager = null;
-        SiteManager siteManager = null;
-        ServiceSelector selector = null;
         try {
             resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
             resourcesManager.copyResources(sourceDocument, destinationDocument);
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
-            siteManager.copy(sourceDocument, destinationDocument);
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {
             if (resourcesManager != null) {
                 this.manager.release(resourcesManager);
             }
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
         }
     }
 
-    /**
-     * Method to copy a document without it's resources. Override
-     * {@link #copyDocumentSource(Document, Document)} to implement access to a custom repository.
-     * @see org.apache.lenya.cms.publication.DocumentManager#copy(org.apache.lenya.cms.publication.Document,
-     *      org.apache.lenya.cms.publication.Document)
-     */
-    public void copyDocument(Document sourceDocument, Document destinationDocument)
-            throws PublicationException {
-
-        Publication publication = sourceDocument.getPublication();
-        copyDocumentSource(sourceDocument, destinationDocument);
-
-        SiteManager siteManager = null;
-        ServiceSelector selector = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
-            siteManager.copy(sourceDocument, destinationDocument);
-        } catch (Exception e) {
-            throw new PublicationException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
-        }
+    public void copyDocument(Document sourceDocument, DocumentLocator destination)
+            throws DocumentBuildException, PublicationException, DocumentException, SiteException {
+        add(destination,
+                sourceDocument,
+                sourceDocument.getExtension(),
+                sourceDocument.getLabel(),
+                SiteUtil.isVisibleInNavigation(this.manager, sourceDocument));
     }
 
     /**
@@ -284,12 +267,43 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#move(org.apache.lenya.cms.publication.Document,
-     *      org.apache.lenya.cms.publication.Document)
+     *      org.apache.lenya.cms.publication.DocumentLocator)
      */
-    public void move(Document sourceDocument, Document destinationDocument)
+    public void move(Document sourceDocument, DocumentLocator destination)
             throws PublicationException {
-        copy(sourceDocument, destinationDocument);
-        delete(sourceDocument);
+
+        Publication publication = sourceDocument.getPublication();
+        SiteManager siteManager = null;
+        ServiceSelector selector = null;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
+            if (siteManager.contains(sourceDocument.getFactory(),
+                    sourceDocument.getPublication(),
+                    destination.getArea(),
+                    destination.getPath())) {
+                throw new PublicationException("The path [" + destination
+                        + "] is already contained in this publication!");
+            }
+
+            String label = sourceDocument.getLabel();
+            boolean visible = siteManager.isVisibleInNav(sourceDocument);
+            siteManager.delete(sourceDocument);
+            
+            siteManager.add(destination.getPath(), sourceDocument);
+            siteManager.setLabel(sourceDocument, label);
+            siteManager.setVisibleInNav(sourceDocument, visible);
+        } catch (final ServiceException e) {
+            throw new PublicationException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
+        }
+
     }
 
     /**
@@ -299,8 +313,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     public void copyToArea(Document sourceDocument, String destinationArea)
             throws PublicationException {
         DocumentLocator destination = sourceDocument.getLocator().getAreaVersion(destinationArea);
-        Document destinationDocument = sourceDocument.getFactory().get(destination);
-        copy(sourceDocument, destinationDocument);
+        copy(sourceDocument, destination);
     }
 
     /**
@@ -342,28 +355,53 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#moveAll(org.apache.lenya.cms.publication.Document,
-     *      org.apache.lenya.cms.publication.Document)
+     *      org.apache.lenya.cms.publication.DocumentLocator)
      */
-    public void moveAll(Document source, Document target) throws PublicationException {
-        copyAll(source, target);
-        deleteAll(source);
+    public void moveAll(Document source, DocumentLocator target) throws PublicationException {
+        SiteManager siteManager = null;
+        ServiceSelector selector = null;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(source.getPublication()
+                    .getSiteManagerHint());
+
+            DocumentSet subsite = SiteUtil.getSubSite(this.manager, source);
+            siteManager.sortAscending(subsite);
+
+            DocumentVisitor visitor = new MoveVisitor(this, source, target);
+            subsite.visit(visitor);
+        } catch (ServiceException e) {
+            throw new PublicationException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
+        }
     }
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#moveAllLanguageVersions(org.apache.lenya.cms.publication.Document,
      *      org.apache.lenya.cms.publication.Document)
      */
-    public void moveAllLanguageVersions(Document source, Document target)
+    public void moveAllLanguageVersions(Document source, DocumentLocator target)
             throws PublicationException {
-        copyAllLanguageVersions(source, target);
-        deleteAllLanguageVersions(source);
+        String[] languages = source.getLanguages();
+        for (int i = 0; i < languages.length; i++) {
+            DocumentLocator sourceLoc = source.getLocator().getLanguageVersion(languages[i]);
+            Document sourceVersion = source.getFactory().get(sourceLoc);
+            DocumentLocator targetLoc = target.getLanguageVersion(languages[i]);
+            move(sourceVersion, targetLoc);
+        }
     }
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#copyAll(org.apache.lenya.cms.publication.Document,
-     *      org.apache.lenya.cms.publication.Document)
+     *      org.apache.lenya.cms.publication.DocumentLocator)
      */
-    public void copyAll(Document source, Document target) throws PublicationException {
+    public void copyAll(Document source, DocumentLocator target) throws PublicationException {
 
         SiteManager siteManager = null;
         ServiceSelector selector = null;
@@ -391,20 +429,17 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
     /**
      * @see org.apache.lenya.cms.publication.DocumentManager#copyAllLanguageVersions(org.apache.lenya.cms.publication.Document,
-     *      org.apache.lenya.cms.publication.Document)
+     *      org.apache.lenya.cms.publication.DocumentLocator)
      */
-    public void copyAllLanguageVersions(Document source, Document target)
+    public void copyAllLanguageVersions(Document source, DocumentLocator target)
             throws PublicationException {
         DocumentFactory identityMap = source.getFactory();
         String[] languages = source.getLanguages();
         for (int i = 0; i < languages.length; i++) {
-
             DocumentLocator sourceLocator = source.getLocator().getLanguageVersion(languages[i]);
             Document sourceVersion = identityMap.get(sourceLocator);
-            DocumentLocator targetLocator = sourceVersion.getLocator()
-                    .getLanguageVersion(languages[i]);
-            Document targetVersion = identityMap.get(targetLocator);
-            copy(sourceVersion, targetVersion);
+            DocumentLocator targetLocator = target.getLanguageVersion(languages[i]);
+            copy(sourceVersion, targetLocator);
         }
     }
 
@@ -436,8 +471,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      */
     public abstract class SourceTargetVisitor implements DocumentVisitor {
 
-        private Document rootSource;
-        private Document rootTarget;
+        private DocumentLocator rootSource;
+        private DocumentLocator rootTarget;
         private DocumentManager manager;
 
         /**
@@ -446,23 +481,23 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
          * @param source The root source.
          * @param target The root target.
          */
-        public SourceTargetVisitor(DocumentManager manager, Document source, Document target) {
+        public SourceTargetVisitor(DocumentManager manager, Document source, DocumentLocator target) {
             this.manager = manager;
-            this.rootSource = source;
+            this.rootSource = source.getLocator();
             this.rootTarget = target;
         }
 
         /**
          * @return the root source
          */
-        protected Document getRootSource() {
+        protected DocumentLocator getRootSource() {
             return rootSource;
         }
 
         /**
          * @return the root target
          */
-        protected Document getRootTarget() {
+        protected DocumentLocator getRootTarget() {
             return rootTarget;
         }
 
@@ -479,15 +514,11 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
          * @return A document.
          * @throws DocumentBuildException if the target could not be built.
          */
-        protected Document getTarget(Document source) throws DocumentBuildException {
+        protected DocumentLocator getTarget(Document source) throws DocumentBuildException {
+            DocumentLocator sourceLocator = source.getLocator();
             String rootSourcePath = getRootSource().getPath();
-            String rootTargetPath = getRootTarget().getPath();
-            String childId = source.getPath().substring(rootSourcePath.length());
-            String targetId = rootTargetPath + childId;
-            return getRootTarget().getFactory().get(getRootTarget().getPublication(),
-                    getRootTarget().getArea(),
-                    targetId,
-                    source.getLanguage());
+            String relativePath = sourceLocator.getPath().substring(rootSourcePath.length());
+            return rootTarget.getDescendant(relativePath);
         }
     }
 
@@ -502,7 +533,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
          * @param source The root source.
          * @param target The root target.
          */
-        public CopyVisitor(DocumentManager manager, Document source, Document target) {
+        public CopyVisitor(DocumentManager manager, Document source, DocumentLocator target) {
             super(manager, source, target);
         }
 
@@ -510,7 +541,32 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
          * @see org.apache.lenya.cms.publication.util.DocumentVisitor#visitDocument(org.apache.lenya.cms.publication.Document)
          */
         public void visitDocument(Document source) throws PublicationException {
-            Document target = getTarget(source);
+            DocumentLocator target = getTarget(source);
+            getDocumentManager().copyAllLanguageVersions(source, target);
+        }
+
+    }
+
+    /**
+     * DocumentVisitor to copy documents.
+     */
+    public class MoveVisitor extends SourceTargetVisitor {
+
+        /**
+         * Ctor.
+         * @param manager The document manager.
+         * @param source The root source.
+         * @param target The root target.
+         */
+        public MoveVisitor(DocumentManager manager, Document source, DocumentLocator target) {
+            super(manager, source, target);
+        }
+
+        /**
+         * @see org.apache.lenya.cms.publication.util.DocumentVisitor#visitDocument(org.apache.lenya.cms.publication.Document)
+         */
+        public void visitDocument(Document source) throws PublicationException {
+            DocumentLocator target = getTarget(source);
             getDocumentManager().copyAllLanguageVersions(source, target);
         }
 
@@ -665,7 +721,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         Document[] sortedSourceDocs = sortedSources.getDocuments();
 
         for (int i = 0; i < sortedSourceDocs.length; i++) {
-            copy(sortedSourceDocs[i], (Document) source2target.get(sortedSourceDocs[i]));
+            copy(sortedSourceDocs[i],
+                    ((Document) source2target.get(sortedSourceDocs[i])).getLocator());
         }
     }
 

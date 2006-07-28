@@ -21,8 +21,10 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.rc.RCEnvironment;
+import org.apache.lenya.cms.site.SiteUtil;
 
 /**
  * A page envelope carries a set of information that are needed during the presentation of a
@@ -160,11 +162,13 @@ public class PageEnvelope {
     private String area;
     private Publication publication;
 
+    private ServiceManager manager;
+
     /**
      * Constructor.
      */
-    protected PageEnvelope() {
-        // do nothing
+    protected PageEnvelope(ServiceManager manager) {
+        this.manager = manager;
     }
 
     /**
@@ -176,12 +180,14 @@ public class PageEnvelope {
      * @param publication The publication.
      * @throws PageEnvelopeException when something went wrong.
      */
-    public PageEnvelope(DocumentFactory map, String contextPath, String webappUrl,
-            File servletContext, Publication publication) throws PageEnvelopeException {
+    public PageEnvelope(ServiceManager manager, DocumentFactory map, String contextPath,
+            String webappUrl, File servletContext, Publication publication)
+            throws PageEnvelopeException {
         this.identityMap = map;
         this.context = contextPath;
         this.webappUrl = webappUrl;
         this.publication = publication;
+        this.manager = manager;
     }
 
     private String webappUrl;
@@ -258,7 +264,7 @@ public class PageEnvelope {
      * @return a <code>File<code> value
      */
     public String getDocumentPath() {
-        return getPublication().getPathMapper().getPath(getDocument().getId(),
+        return getPublication().getPathMapper().getPath(getDocument().getUUID(),
                 getDocument().getLanguage());
     }
 
@@ -280,10 +286,10 @@ public class PageEnvelope {
         if (!documentChecked) {
             try {
                 documentChecked = true;
-                if (getIdentityMap().isDocument(this.webappUrl)) {
+                if (SiteUtil.isDocument(this.manager, getIdentityMap(), this.webappUrl)) {
                     this.document = getIdentityMap().getFromURL(this.webappUrl);
                 }
-            } catch (final DocumentBuildException e) {
+            } catch (final Exception e) {
                 throw new RuntimeException(e);
             }
         }

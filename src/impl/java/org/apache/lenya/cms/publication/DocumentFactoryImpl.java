@@ -227,7 +227,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
             DocumentLocator locator = builder.getLocator(webappUrl);
 
             String area = locator.getArea();
-            String uuid = SiteUtil.getUUID(this.manager, publication, area, locator.getPath());
+            String uuid = SiteUtil.getUUID(this.manager, this, publication, area, locator.getPath());
             return getKey(publication, area, uuid, locator.getLanguage());
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -304,13 +304,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
      */
     protected DocumentImpl createDocument(DocumentFactory map, DocumentIdentifier identifier,
             DocumentBuilder builder) throws DocumentBuildException {
-        DocumentImpl document = new DocumentImpl(this.manager, map, identifier, getLogger());
-        final String canonicalUrl = builder.buildCanonicalUrl(document.getLocator());
-        final String prefix = "/" + identifier.getPublication().getId() + "/"
-                + identifier.getArea();
-        final String canonicalDocumentUrl = canonicalUrl.substring(prefix.length());
-        document.setDocumentURL(canonicalDocumentUrl);
-        return document;
+        return new DocumentImpl(this.manager, map, identifier, getLogger());
     }
 
     public Document get(DocumentIdentifier identifier) throws DocumentBuildException {
@@ -328,7 +322,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
         try {
             Publication pub = PublicationUtil.getPublication(this.manager,
                     locator.getPublicationId());
-            String uuid = SiteUtil.getUUID(this.manager, pub, locator.getArea(), locator.getPath());
+            String uuid = SiteUtil.getUUID(this.manager, this, pub, locator.getArea(), locator.getPath());
             return get(pub, locator.getArea(), uuid, locator.getLanguage());
         } catch (PublicationException e) {
             throw new DocumentBuildException(e);

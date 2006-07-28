@@ -73,7 +73,7 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Se
             DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
             PageEnvelopeFactory factory = PageEnvelopeFactory.getInstance();
             Publication publication = PublicationUtil.getPublication(this.manager, request);
-            return factory.getPageEnvelope(map, cocoon.getObjectModel(), publication);
+            return factory.getPageEnvelope(this.manager, map, cocoon.getObjectModel(), publication);
         } catch (Exception e) {
             throw new PageEnvelopeException(e);
         }

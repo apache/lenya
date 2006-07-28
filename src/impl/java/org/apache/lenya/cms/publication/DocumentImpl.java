@@ -25,6 +25,7 @@ import java.util.List;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.excalibur.source.SourceResolver;
@@ -153,6 +154,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.cms.publication.Document#getId()
      */
     public String getId() {
+        // throw new IllegalStateException("Use getUUID() or getPath() instead");
         return this.identifier.getUUID();
     }
 
@@ -183,7 +185,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     public File getFile() {
         return getPublication().getPathMapper().getFile(getPublication(),
                 getArea(),
-                getId(),
+                getUUID(),
                 getLanguage());
     }
 
@@ -411,7 +413,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        return getPublication().getId() + ":" + getArea() + ":" + getId() + ":" + getLanguage();
+        return getIdentifier().toString();
     }
 
     /**
@@ -432,6 +434,26 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.cms.publication.Document#getCanonicalDocumentURL()
      */
     public String getCanonicalDocumentURL() {
+        if (this.documentURL == null) {
+            DocumentBuilder builder = null;
+            ServiceSelector selector = null;
+            try {
+                selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
+                builder = (DocumentBuilder) selector.select(getPublication().getDocumentBuilderHint());
+                String webappUrl = builder.buildCanonicalUrl(getLocator());
+                String prefix = "/" + getPublication().getId() + "/" + getArea();
+                this.documentURL = webappUrl.substring(prefix.length());
+            } catch (ServiceException e) {
+                throw new RuntimeException(e);
+            } finally {
+                if (selector != null) {
+                    if (builder != null) {
+                        selector.release(builder);
+                    }
+                    this.manager.release(selector);
+                }
+            }
+        }
         return this.documentURL;
     }
 

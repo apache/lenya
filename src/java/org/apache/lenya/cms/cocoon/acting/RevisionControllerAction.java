@@ -96,7 +96,8 @@ public class RevisionControllerAction extends ServiceableAction {
 
         try {
             publication = PublicationUtil.getPublication(this.manager, objectModel);
-            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map,
+            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(this.manager,
+                    map,
                     objectModel,
                     publication);
             document = envelope.getDocument();

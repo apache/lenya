@@ -158,8 +158,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
         DocumentFactory map = getDocumentFactory();
 
         DocumentLocator loc = doc.getLocator().getAreaVersion(getTargetArea());
-        Document target = doc.getFactory().get(loc);
-        target = SiteUtil.getAvailableDocument(this.manager, target);
+        loc = SiteUtil.getAvailableLocator(this.manager, map, loc);
 
         DocumentSet docsToCopy = getTargetDocsToCopy();
 
@@ -180,9 +179,9 @@ public abstract class MoveSubsite extends DocumentUsecase {
                 Document existingSourceDoc = DocumentHelper.getExistingLanguageVersion(sourceDoc,
                         doc.getLanguage());
                 DocumentLocator targetLoc = existingSourceDoc.getLocator().getAreaVersion(getTargetArea());
-                Document targetDoc = map.get(targetLoc);
-                documentManager.copyDocument(existingSourceDoc, targetDoc);
-                if (!targetDoc.getArea().equals(Publication.AUTHORING_AREA)) {
+                documentManager.copyDocument(existingSourceDoc, targetLoc);
+                if (!targetLoc.getArea().equals(Publication.AUTHORING_AREA)) {
+                    Document targetDoc = getDocumentFactory().get(targetLoc);
                     targetDoc.setPlaceholder();
                 }
             }
@@ -216,7 +215,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
             }
         }
 
-        setTargetDocument(target);
+        setTargetDocument(getDocumentFactory().get(loc));
 
     }
 

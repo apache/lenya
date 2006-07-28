@@ -251,6 +251,7 @@ public interface Document extends MetaDataOwner, RepositoryItem {
     
     /**
      * @return The path of this document in the site structure.
+     * @deprecated use {@link SiteUtil} instead.
      */
     String getPath();
 }

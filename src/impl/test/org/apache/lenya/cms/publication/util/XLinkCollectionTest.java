@@ -64,7 +64,7 @@ public class XLinkCollectionTest extends AbstractAccessControlTest {
             selector = (ServiceSelector) getManager().lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(pub.getSiteManagerHint());
 
-            siteManager.add(collection.getDelegate());
+            siteManager.add("/collection", collection.getDelegate());
         } finally {
             selector.release(siteManager);
             getManager().release(selector);

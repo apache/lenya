@@ -19,6 +19,7 @@ package org.apache.lenya.cms.site;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 
@@ -82,11 +83,11 @@ public interface SiteManager {
 
     /**
      * Adds a document to the site structure.
-     * 
+     * @param path The path.
      * @param document The document to add.
      * @throws SiteException if the document is already contained.
      */
-    void add(Document document) throws SiteException;
+    void add(String path, Document document) throws SiteException;
 
     /**
      * Checks if the site structure contains a certain resource in a certain area.
@@ -98,22 +99,47 @@ public interface SiteManager {
     boolean contains(Document resource) throws SiteException;
 
     /**
+     * Checks if the site structure contains a certain resource in a certain area.
+     * @param factory The document factory.
+     * @param pub The publication.
+     * @param area The area.
+     * @param path The path.
+     * @return A boolean value.
+     * @throws SiteException if an error occurs.
+     */
+    boolean contains(DocumentFactory factory, Publication pub, String area, String path)
+            throws SiteException;
+
+    /**
+     * Checks if the site structure contains a certain resource in a certain area.
+     * @param factory The document factory.
+     * @param locator The locator.
+     * @return A boolean value.
+     * @throws SiteException if an error occurs.
+     */
+    boolean contains(DocumentFactory factory, DocumentLocator locator) throws SiteException;
+
+    /**
      * Return the path of a certain resource in a certain area.
+     * @param factory The factory.
+     * @param pub The publication.
      * @param area The area.
      * @param uuid The uuid.
      * @return A string.
      * @throws SiteException if the document is not referenced in the site structure.
      */
-    String getPath(String area, String uuid) throws SiteException;
-    
+    String getPath(DocumentFactory factory, Publication pub, String area, String uuid) throws SiteException;
+
     /**
      * Return the UUID for a given path.
+     * @param factory The factory.
+     * @param pub The publication.
      * @param area The area.
      * @param path The path.
      * @return The UUID.
      * @throws SiteException if the path does not exist.
      */
-    String getUUID(String area, String path) throws SiteException;
+    String getUUID(DocumentFactory factory, Publication pub, String area, String path) throws SiteException;
 
     /**
      * Checks if the site structure contains any language version of a certain resource in a certain
@@ -161,17 +187,17 @@ public interface SiteManager {
     void setLabel(Document document, String label) throws SiteException;
 
     /**
-     * Sets the visibility of a node in the navigation. 
-     * It is meant to hide specific nodes within the "public" navigation whereas the node is visible within the info/site area.
+     * Sets the visibility of a node in the navigation. It is meant to hide specific nodes within
+     * the "public" navigation whereas the node is visible within the info/site area.
      * 
      * @param document The document.
      * @param visibleInNav The visibility.
      * @throws SiteException if an error occurs.
      */
     void setVisibleInNav(Document document, boolean visibleInNav) throws SiteException;
-    
+
     /**
-     * Returns the visibility of a node in the navigation. 
+     * Returns the visibility of a node in the navigation.
      * 
      * @param document The document.
      * @return A boolean value.
@@ -212,11 +238,11 @@ public interface SiteManager {
     /**
      * Checks if the document does already exist. If it does, returns a non-existing document with a
      * similar document ID. If it does not, the original document is returned.
-     * 
-     * @param document The document.
-     * @return A document.
+     * @param factory The document factory.
+     * @param locator The locator.
+     * @return A locator.
      * @throws SiteException if the new document could not be built.
      */
-    Document getAvailableDocument(Document document) throws SiteException;
+    DocumentLocator getAvailableLocator(DocumentFactory factory, DocumentLocator locator) throws SiteException;
 
 }

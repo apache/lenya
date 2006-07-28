@@ -64,7 +64,10 @@ public class DocumentReferencesHelper {
         this.identityMap = map;
         try {
             Publication pub = PublicationUtil.getPublication(manager, objectModel);
-            this.pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(map, objectModel, pub);
+            this.pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(manager,
+                    map,
+                    objectModel,
+                    pub);
         } catch (Exception e) {
             throw new ProcessingException(e);
         }
@@ -148,10 +151,10 @@ public class DocumentReferencesHelper {
                             .getLanguage();
                     String defaultLanguage = this.pageEnvelope.getPublication()
                             .getDefaultLanguage();
-                    Pattern referencesSearchStringWithLanguage = Pattern
-                            .compile(getReferencesSearchString() + "_" + languageOfCurrentDocument);
-                    Pattern referencesSearchStringWithOutLanguage = Pattern
-                            .compile(getReferencesSearchString() + "\\.html");
+                    Pattern referencesSearchStringWithLanguage = Pattern.compile(getReferencesSearchString()
+                            + "_" + languageOfCurrentDocument);
+                    Pattern referencesSearchStringWithOutLanguage = Pattern.compile(getReferencesSearchString()
+                            + "\\.html");
                     log.debug("languageOfCurrentDocument: " + languageOfCurrentDocument);
                     log.debug("defaultLanguage: " + defaultLanguage);
                     log.debug("referencesSearchStringWithOutLanguage: "
@@ -162,18 +165,17 @@ public class DocumentReferencesHelper {
                     // conditions
                     // are met:
                     // 1. the link is to foo_xx and the language of the current
-                    //    document is xx.
+                    // document is xx.
                     // 2. or the link is to foo.html and the language of the
                     // current
-                    //    document is the default language.
+                    // document is the default language.
                     // Now negate the expression because we continue if above
                     // (1) and (2) are
                     // false, and you'll get the following if statement
                     if (!Grep.containsPattern(inconsistentFiles[i],
                             referencesSearchStringWithLanguage)
                             && !(Grep.containsPattern(inconsistentFiles[i],
-                                    referencesSearchStringWithOutLanguage) && languageOfCurrentDocument
-                                    .equals(defaultLanguage))) {
+                                    referencesSearchStringWithOutLanguage) && languageOfCurrentDocument.equals(defaultLanguage))) {
                         // the reference foo_xx is neither to the language of
                         // the current
                         // document.
@@ -263,7 +265,6 @@ public class DocumentReferencesHelper {
             throw new ProcessingException(e);
         }
 
-        return (Document[]) unpublishedReferences
-                .toArray(new Document[unpublishedReferences.size()]);
+        return (Document[]) unpublishedReferences.toArray(new Document[unpublishedReferences.size()]);
     }
 }

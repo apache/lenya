@@ -95,14 +95,14 @@ public class ObservationTest extends AbstractAccessControlTest {
         try {
             docManager = (DocumentManager) getManager().lookup(DocumentManager.ROLE);
             Document target = doc.getFactory().get(doc.getPublication(), doc.getArea(), "/testTarget", doc.getLanguage());
-            docManager.move(doc, target);
+            docManager.move(doc, target.getLocator());
 
             assertFalse(listener.wasRemoved());
             doc.getRepositoryNode().getSession().commit();
             Thread.currentThread().sleep(100);
             assertTrue(listener.wasRemoved());
         
-            docManager.move(target, doc);
+            docManager.move(target, doc.getLocator());
             assertFalse(listener.wasChanged());
             doc.getRepositoryNode().getSession().commit();
             Thread.currentThread().sleep(100);

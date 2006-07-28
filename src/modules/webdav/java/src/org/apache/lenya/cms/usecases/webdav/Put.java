@@ -31,6 +31,7 @@ import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -106,15 +107,16 @@ public class Put extends CreateDocument {
                     documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
                     DocumentFactory map = getDocumentFactory();
-                    Document document = map.get(getPublication(),
+                    String path = SiteUtil.getPath(this.manager, doc);
+                    DocumentLocator locator = DocumentLocator.getLocator(getPublication().getId(),
                             doc.getArea(),
-                            doc.getUUID(),
+                            path,
                             doc.getLanguage());
                     //lookupResourceType(extension)
                     resourceType = lookUpExtension(extension, selector);
-                    documentManager.add(document, resourceType, extension, doc.getName(), true);
-                    setMetaData(document);
-                    doc = document;
+                    documentManager.add(map, locator, resourceType, extension, doc.getName(), true);
+                    doc = map.get(locator);
+                    setMetaData(doc);
                 } finally {
                     if (documentManager != null) {
                         this.manager.release(documentManager);

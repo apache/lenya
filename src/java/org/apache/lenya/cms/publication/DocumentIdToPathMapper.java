@@ -42,12 +42,12 @@ public interface DocumentIdToPathMapper {
      * 
      * @param publication the publication of the document
      * @param area the area of the document
-     * @param documentId the document-id of the document
+     * @param uuid the uuid of the document
      * @param language the language of the document
      * 
      * @return the path to the document
      */
-    File getFile(Publication publication, String area, String documentId, String language);
+    File getFile(Publication publication, String area, String uuid, String language);
 
     /**
      * Compute the document-path for a given publication, area and document-id. As there are

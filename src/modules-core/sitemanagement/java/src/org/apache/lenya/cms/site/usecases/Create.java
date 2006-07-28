@@ -36,6 +36,7 @@ import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -138,8 +139,7 @@ public abstract class Create extends AbstractUsecase {
 
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
-            DocumentFactory map = getDocumentFactory();
-            Document document = map.get(getPublication(),
+            DocumentLocator locator = DocumentLocator.getLocator(getPublication().getId(),
                     getArea(),
                     getNewDocumentPath(),
                     getParameterAsString(LANGUAGE));
@@ -151,19 +151,22 @@ public abstract class Create extends AbstractUsecase {
                 if (getParameterAsString(SAMPLE) != null
                         && getParameterAsString(SAMPLE).length() > 0)
                     resourceType.setSampleURI(getParameterAsString(SAMPLE));
-                documentManager.add(document,
+                documentManager.add(getDocumentFactory(),
+                        locator,
                         resourceType,
                         getSourceExtension(),
                         getParameterAsString(DublinCore.ELEMENT_TITLE),
                         getVisibleInNav());
                 resourceType.setSampleURI(""); // reset to default sample
             } else {
-                documentManager.add(document,
+                documentManager.add(locator,
                         initialDocument,
                         getSourceExtension(),
                         getParameterAsString(DublinCore.ELEMENT_TITLE),
                         getVisibleInNav());
             }
+
+            Document document = getDocumentFactory().get(locator);
 
             setMetaData(document);
 
@@ -226,14 +229,18 @@ public abstract class Create extends AbstractUsecase {
             throw new IllegalArgumentException("parameter document may not be null");
 
         MetaData dcMetaData = document.getMetaData(DublinCore.DC_NAMESPACE);
-        
-        dcMetaData.setValue(DublinCore.ELEMENT_TITLE, getParameterAsString(DublinCore.ELEMENT_TITLE));
-        dcMetaData.setValue(DublinCore.ELEMENT_CREATOR, getParameterAsString(DublinCore.ELEMENT_CREATOR));
+
+        dcMetaData.setValue(DublinCore.ELEMENT_TITLE,
+                getParameterAsString(DublinCore.ELEMENT_TITLE));
+        dcMetaData.setValue(DublinCore.ELEMENT_CREATOR,
+                getParameterAsString(DublinCore.ELEMENT_CREATOR));
         dcMetaData.setValue(DublinCore.ELEMENT_PUBLISHER,
                 getParameterAsString(DublinCore.ELEMENT_PUBLISHER));
-        dcMetaData.setValue(DublinCore.ELEMENT_SUBJECT, getParameterAsString(DublinCore.ELEMENT_SUBJECT));
+        dcMetaData.setValue(DublinCore.ELEMENT_SUBJECT,
+                getParameterAsString(DublinCore.ELEMENT_SUBJECT));
         dcMetaData.setValue(DublinCore.ELEMENT_DATE, getParameterAsString(DublinCore.ELEMENT_DATE));
-        dcMetaData.setValue(DublinCore.ELEMENT_RIGHTS, getParameterAsString(DublinCore.ELEMENT_RIGHTS));
+        dcMetaData.setValue(DublinCore.ELEMENT_RIGHTS,
+                getParameterAsString(DublinCore.ELEMENT_RIGHTS));
         dcMetaData.setValue(DublinCore.ELEMENT_LANGUAGE, getParameterAsString(LANGUAGE));
     }
 

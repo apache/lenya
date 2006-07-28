@@ -52,17 +52,23 @@ public class DefaultSiteTreeTest extends AbstractAccessControlTest {
 
         Label label = new Label("Foo", "en");
         Label[] fooLabels = { label };
-        this.siteTree.addNode("/foo", fooLabels, true, null, null, false);
+        this.siteTree.addNode("/foo", "foo-uuid", fooLabels, true, null, null, false);
         label = new Label("Home", "en");
         Label[] homeLabels = { label };
-        this.siteTree.addNode("/index", homeLabels, true, null, null, false);
+        this.siteTree.addNode("/index", "index-uuid", homeLabels, true, null, null, false);
         label = new Label("Bar", "en");
         Label label_de = new Label("Stab", "de");
         Label[] barLabels = { label, label_de };
-        this.siteTree.addNode("/foo/bar", barLabels, true, "http://exact.biz", "suffix", true);
+        this.siteTree.addNode("/foo/bar",
+                "foo-bar-uuid",
+                barLabels,
+                true,
+                "http://exact.biz",
+                "suffix",
+                true);
         label = new Label("Lala", "en");
         Label[] lalaLabels = { label };
-        this.siteTree.addNode("/foo/lala", lalaLabels, true, null, null, false);
+        this.siteTree.addNode("/foo/lala", "foo-lala-uuid", lalaLabels, true, null, null, false);
     }
 
     /**
@@ -96,10 +102,12 @@ public class DefaultSiteTreeTest extends AbstractAccessControlTest {
         Label label = new Label("Tutorial", null);
         Label[] labels = { label };
 
-        this.siteTree.addNode("/foo", "tutorial", labels, true);
+        String uuid = "12345";
+        this.siteTree.addNode("/foo", "tutorial", uuid, labels, true);
         SiteTreeNode node = this.siteTree.getNode("/foo/tutorial");
         assertNotNull(node);
         assertEquals(node.getId(), "tutorial");
+        assertEquals(node.getUUID(), uuid);
     }
 
     /**
@@ -119,7 +127,7 @@ public class DefaultSiteTreeTest extends AbstractAccessControlTest {
         Label label2 = new Label("Ding", "en");
         Label[] labels = { label1, label2 };
 
-        this.siteTree.addNode("/foo/ding", labels, true, null, null, false);
+        this.siteTree.addNode("/foo/ding", "foo-ding-uuid", labels, true, null, null, false);
 
         assertNotNull(this.siteTree.getNode("/foo/ding"));
         assertEquals(this.siteTree.getNode("/foo/ding").getId(), "ding");
@@ -133,8 +141,10 @@ public class DefaultSiteTreeTest extends AbstractAccessControlTest {
         Label label1 = new Label("Doh", "en");
         Label label2 = new Label("Ding", "en");
         Label[] labels = { label1, label2 };
+        
+        String uuid = "123";
 
-        this.siteTree.addNode("/foo", "baz", labels, true, null, null, false);
+        this.siteTree.addNode("/foo", "baz", uuid, labels, true, null, null, false);
 
         assertNotNull(this.siteTree.getNode("/foo/baz"));
         assertEquals(this.siteTree.getNode("/foo/baz").getId(), "baz");
@@ -181,11 +191,11 @@ public class DefaultSiteTreeTest extends AbstractAccessControlTest {
         Label label2 = new Label("Ho", "en");
         Label[] labels1 = { label1, label2 };
 
-        this.siteTree.addNode("/hi", labels1, true, null, null, false);
+        this.siteTree.addNode("/hi", "hi-uuid", labels1, true, null, null, false);
 
         Label[] labels2 = { label1, label2 };
 
-        this.siteTree.addNode("/hi/ho", labels2, true, null, null, false);
+        this.siteTree.addNode("/hi/ho", "hi-ho-uuid", labels2, true, null, null, false);
 
         assertNotNull(this.siteTree.getNode("/hi/ho"));
 
@@ -247,13 +257,14 @@ public class DefaultSiteTreeTest extends AbstractAccessControlTest {
 
         Label label = new Label("root", "en");
         Label[] rootLabels = { label };
-        newSiteTree.addNode("/root", rootLabels, true, null, null, false);
+        newSiteTree.addNode("/root", "root-uuid", rootLabels, true, null, null, false);
         label = new Label("foo", "en");
         Label[] fooLabels = { label };
-        newSiteTree.addNode("/root/foo", fooLabels, true, null, null, false);
+        newSiteTree.addNode("/root/foo", "root-foo-uuid", fooLabels, true, null, null, false);
         label = new Label("subtree", "en");
         Label[] subtreeLabels = { label };
         newSiteTree.addNode("/root/subtree",
+                "root-subtree-uuid",
                 subtreeLabels,
                 true,
                 "http://exact.biz",
@@ -261,7 +272,7 @@ public class DefaultSiteTreeTest extends AbstractAccessControlTest {
                 true);
         label = new Label("child", "en");
         Label[] childLabels = { label };
-        newSiteTree.addNode("/root/subtree/child", childLabels, true, null, null, false);
+        newSiteTree.addNode("/root/subtree/child", "root-subtree-child-uuid", childLabels, true, null, null, false);
         SiteTreeNode node = newSiteTree.getNode("/root/subtree");
         assertNotNull(node);
         SiteTreeNode parentNode = this.siteTree.getNode("/foo/lala");

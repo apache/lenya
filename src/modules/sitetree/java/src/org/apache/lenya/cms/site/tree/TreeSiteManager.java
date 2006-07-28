@@ -24,9 +24,11 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryItemFactory;
 import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.Label;
@@ -107,8 +109,8 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      * @see org.apache.lenya.cms.site.SiteManager#requires(org.apache.lenya.cms.publication.DocumentFactory,
      *      org.apache.lenya.cms.site.SiteNode, org.apache.lenya.cms.site.SiteNode)
      */
-    public boolean requires(DocumentFactory map, SiteNode dependingResource, SiteNode requiredResource)
-            throws SiteException {
+    public boolean requires(DocumentFactory map, SiteNode dependingResource,
+            SiteNode requiredResource) throws SiteException {
         return getAncestors(dependingResource).contains(requiredResource);
     }
 
@@ -116,7 +118,8 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      * @see org.apache.lenya.cms.site.SiteManager#getRequiredResources(org.apache.lenya.cms.publication.DocumentFactory,
      *      org.apache.lenya.cms.site.SiteNode)
      */
-    public SiteNode[] getRequiredResources(DocumentFactory map, SiteNode resource) throws SiteException {
+    public SiteNode[] getRequiredResources(DocumentFactory map, SiteNode resource)
+            throws SiteException {
         List ancestors = getAncestors(resource);
         return (SiteNode[]) ancestors.toArray(new SiteNode[ancestors.size()]);
     }
@@ -163,25 +166,9 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      */
     public boolean contains(Document resource) throws SiteException {
         SiteTree tree = getTree(resource);
-        SiteTreeNode node = tree.getNode(resource.getPath());
+        SiteTreeNode node = tree.getNodeByUUID(resource.getUUID());
         boolean exists = node != null && node.getLabel(resource.getLanguage()) != null;
         return exists;
-    }
-
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#getUUID(org.apache.lenya.cms.publication.Document)
-     */
-    public String getUUID(Document resource) throws SiteException {
-        String uuid = null;
-        SiteTree tree = getTree(resource);
-        SiteTreeNode node = tree.getNode(resource.getPath());
-        if (node != null) {
-            uuid = node.getUUID();
-        }
-        if (uuid == null) {
-            getLogger().warn("No UUID: " + resource);
-        }
-        return uuid;
     }
 
     /**
@@ -241,6 +228,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
 
             if (siblingDocId == null) {
                 destinationTree.addNode(destinationDocument.getPath(),
+                        destinationDocument.getUUID(),
                         labels,
                         sourceNode.visibleInNav(),
                         sourceNode.getHref(),
@@ -248,6 +236,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
                         sourceNode.hasLink());
             } else {
                 destinationTree.addNode(destinationDocument.getPath(),
+                        destinationDocument.getUUID(),
                         labels,
                         sourceNode.visibleInNav(),
                         sourceNode.getHref(),
@@ -340,7 +329,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         Label label = null;
         SiteTree siteTree = getTree(document);
         if (siteTree != null) {
-            SiteTreeNode node = siteTree.getNode(document.getPath());
+            SiteTreeNode node = siteTree.getNodeByUUID(document.getUUID());
             if (node == null) {
                 throw new SiteException("Node for document [" + document + "] does not exist!");
             }
@@ -348,7 +337,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         }
 
         if (label == null) {
-            throw new SiteException("The label of document [" + document + "] is null!");
+            throw new SiteException("The label of document [" + document + "] is null!");
         }
 
         return label;
@@ -366,7 +355,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
 
             for (int i = 1; i < allNodes.size(); i++) {
                 SiteTreeNode node = (SiteTreeNode) allNodes.get(i);
-                Document doc = map.get(publication, area, node.getAbsoluteId());
+                Document doc = map.get(publication, area, node.getUUID());
                 String[] languages = doc.getLanguages();
                 for (int l = 0; l < languages.length; l++) {
                     documents.add(map.getLanguageVersion(doc, languages[l]));
@@ -381,7 +370,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
     /**
      * @see org.apache.lenya.cms.site.SiteManager#add(org.apache.lenya.cms.publication.Document)
      */
-    public void add(Document document) throws SiteException {
+    public void add(String path, Document document) throws SiteException {
 
         if (contains(document)) {
             throw new SiteException("The document [" + document + "] is already contained!");
@@ -389,12 +378,12 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         SiteTree tree = getTree(document);
         Label label = new Label("", document.getLanguage());
 
-        SiteTreeNode node = tree.getNode(document.getPath());
+        SiteTreeNode node = tree.getNode(path);
         if (node == null) {
             Label[] labels = { label };
-            tree.addNode(document.getPath(), labels, true, null, null, false);
+            tree.addNode(path, document.getUUID(), labels, true, null, null, false);
         } else {
-            tree.addLabel(document.getPath(), label);
+            tree.addLabel(path, label);
         }
 
     }
@@ -421,26 +410,21 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      * @see org.apache.lenya.cms.site.SiteManager#getSiteStructure(org.apache.lenya.cms.publication.DocumentFactory,
      *      org.apache.lenya.cms.publication.Publication, java.lang.String)
      */
-    public SiteStructure getSiteStructure(DocumentFactory map, Publication publiation,
-            String area) throws SiteException {
+    public SiteStructure getSiteStructure(DocumentFactory map, Publication publiation, String area)
+            throws SiteException {
         return getTree(map, publiation, area);
     }
 
     /**
-     * @see org.apache.lenya.cms.site.SiteManager#getAvailableDocument(org.apache.lenya.cms.publication.Document)
+     * @see org.apache.lenya.cms.site.SiteManager#getAvailableLocator(DocumentFactory,
+     *      org.apache.lenya.cms.publication.DocumentLocator)
      */
-    public Document getAvailableDocument(Document document) throws SiteException {
-        String availableDocumentId = computeUniqueDocumentId(document);
-        Document availableDocument;
-        try {
-            availableDocument = document.getFactory().get(document.getPublication(),
-                    document.getArea(),
-                    availableDocumentId,
-                    document.getLanguage());
-        } catch (DocumentBuildException e) {
-            throw new SiteException(e);
-        }
-        return availableDocument;
+    public DocumentLocator getAvailableLocator(DocumentFactory factory, DocumentLocator locator)
+            throws SiteException {
+        return DocumentLocator.getLocator(locator.getPublicationId(),
+                locator.getArea(),
+                computeUniquePath(factory, locator),
+                locator.getLanguage());
     }
 
     /**
@@ -450,23 +434,30 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      * @return the unique documentid
      * @throws SiteException if an error occurs.
      */
-    protected String computeUniqueDocumentId(Document document) throws SiteException {
-        String documentId = document.getPath();
+    protected String computeUniquePath(DocumentFactory factory, DocumentLocator locator)
+            throws SiteException {
+        String path = locator.getPath();
 
-        SiteTree tree = getTree(document);
+        Publication pub;
+        try {
+            pub = PublicationUtil.getPublication(this.manager, locator.getPublicationId());
+        } catch (PublicationException e) {
+            throw new SiteException(e);
+        }
+        SiteTree tree = getTree(factory, pub, locator.getArea());
 
-        SiteTreeNode node = tree.getNode(documentId);
+        SiteTreeNode node = tree.getNode(path);
         String suffix = null;
         int version = 0;
         String idwithoutsuffix = null;
 
         if (node != null) {
-            int n = documentId.lastIndexOf("/");
+            int n = path.lastIndexOf("/");
             String lastToken = "";
-            String substring = documentId;
-            if ((n < documentId.length()) && (n > 0)) {
-                lastToken = documentId.substring(n);
-                substring = documentId.substring(0, n);
+            String substring = path;
+            if ((n < path.length()) && (n > 0)) {
+                lastToken = path.substring(n);
+                substring = path.substring(0, n);
             }
 
             int l = lastToken.length();
@@ -481,12 +472,12 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
 
             while (node != null) {
                 version = version + 1;
-                documentId = idwithoutsuffix + "-" + version;
-                node = tree.getNode(documentId);
+                path = idwithoutsuffix + "-" + version;
+                node = tree.getNode(path);
             }
         }
 
-        return documentId;
+        return path;
     }
 
     public boolean isVisibleInNav(Document document) throws SiteException {
@@ -494,11 +485,48 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         return tree.isVisibleInNav(document.getPath());
     }
 
-    public String getPath(String area, String uuid) throws SiteException {
-        return uuid;
+    public String getPath(DocumentFactory factory, Publication pub, String area, String uuid)
+            throws SiteException {
+        SiteTree tree = getTree(factory, pub, area);
+        SiteTreeNode node = tree.getNodeByUUID(uuid);
+        if (node == null) {
+            throw new SiteException("No node found for [" + pub.getId() + ":" + area + ":" + uuid
+                    + "]");
+        }
+        return node.getAbsoluteId();
     }
 
-    public String getUUID(String area, String path) throws SiteException {
-        return path;
+    public String getUUID(DocumentFactory factory, Publication pub, String area, String path)
+            throws SiteException {
+        SiteTree tree = getTree(factory, pub, area);
+        SiteTreeNode node = tree.getNode(path);
+        if (node == null) {
+            throw new SiteException("No node found for [" + pub.getId() + ":" + area + ":" + path
+                    + "]");
+        }
+        return node.getUUID();
     }
+
+    public boolean contains(DocumentFactory factory, Publication pub, String area, String path)
+            throws SiteException {
+        SiteTree tree = getTree(factory, pub, area);
+        return tree.getNode(path) != null;
+    }
+
+    public boolean contains(DocumentFactory factory, DocumentLocator locator) throws SiteException {
+        Publication pub;
+        try {
+            pub = PublicationUtil.getPublication(this.manager, locator.getPublicationId());
+        } catch (PublicationException e) {
+            throw new SiteException(e);
+        }
+        SiteTree tree = getTree(factory, pub, locator.getArea());
+        SiteTreeNode node = tree.getNode(locator.getPath());
+        if (node == null) {
+            return false;
+        } else {
+            return node.getLabel(locator.getLanguage()) != null;
+        }
+    }
+
 }

@@ -26,12 +26,12 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -133,8 +133,8 @@ public class ChangeNodeID extends DocumentUsecase {
             if (!builder.isValidDocumentName(nodeId)) {
                 addErrorMessage("The document ID is not valid.");
             } else {
-                Document document = getTargetDocument();
-                if (document.exists()) {
+                DocumentLocator target = getTargetLocator();
+                if (SiteUtil.contains(this.manager, getDocumentFactory(), target)) {
                     addErrorMessage("The document does already exist.");
                 }
             }
@@ -148,16 +148,10 @@ public class ChangeNodeID extends DocumentUsecase {
         }
     }
 
-    protected Document getTargetDocument() throws DocumentBuildException {
-        DocumentFactory identityMap = getDocumentFactory();
+    protected DocumentLocator getTargetLocator() throws DocumentBuildException {
         String nodeId = getParameterAsString(NODE_ID);
-        DocumentLocator parentLocator = getSourceDocument().getLocator().getParent();
-        Document parent = identityMap.get(parentLocator);
-        String parentPath = parent.getPath();
-        Publication publication = getSourceDocument().getPublication();
-        Document document = identityMap.get(publication, getSourceDocument().getArea(), parentPath
-                + "/" + nodeId, getSourceDocument().getLanguage());
-        return document;
+        DocumentLocator parent = getSourceDocument().getLocator().getParent();
+        return parent.getChild(nodeId);
     }
 
     /**
@@ -166,8 +160,9 @@ public class ChangeNodeID extends DocumentUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
 
+        Document targetDoc;
         Document source = getSourceDocument();
-        Document target = getTargetDocument();
+        DocumentLocator target = getTargetLocator();
         DocumentManager documentManager = null;
         LinkRewriter rewriter = null;
         try {
@@ -175,7 +170,7 @@ public class ChangeNodeID extends DocumentUsecase {
             DocumentSet subsite = SiteUtil.getSubSite(this.manager, source);
             Map targets = SiteUtil.getTransferedSubSite(this.manager,
                     source,
-                    getTargetDocument(),
+                    getTargetLocator(),
                     SiteUtil.MODE_CANCEL);
             Document[] subsiteDocs = subsite.getDocuments();
             List nodes = new ArrayList();
@@ -195,8 +190,10 @@ public class ChangeNodeID extends DocumentUsecase {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             documentManager.moveAll(source, target);
 
+            targetDoc = getDocumentFactory().get(target);
+            
             rewriter = (LinkRewriter) this.manager.lookup(LinkRewriter.ROLE);
-            rewriter.rewriteLinks(source, target);
+            rewriter.rewriteLinks(source, targetDoc);
         } finally {
             if (documentManager != null) {
                 this.manager.release(documentManager);
@@ -206,7 +203,7 @@ public class ChangeNodeID extends DocumentUsecase {
             }
         }
 
-        setTargetDocument(getTargetDocument());
+        setTargetDocument(targetDoc);
     }
 
     /**
@@ -216,9 +213,12 @@ public class ChangeNodeID extends DocumentUsecase {
     protected String getNewDocumentId() {
         String nodeId = getParameterAsString(NODE_ID);
 
-        Document document = getSourceDocument();
-
-        String oldPath = document.getPath();
+        String oldPath;
+        try {
+            oldPath = SiteUtil.getPath(this.manager, getSourceDocument());
+        } catch (SiteException e) {
+            throw new RuntimeException(e);
+        }
         int lastSlashIndex = oldPath.lastIndexOf("/");
         String strippedDocumentId = oldPath.substring(0, lastSlashIndex + 1);
         String newDocumentId = strippedDocumentId + nodeId;

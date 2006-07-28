@@ -22,6 +22,7 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.RepositoryItemFactory;
 import org.apache.lenya.cms.site.AbstractSiteManager;
@@ -50,8 +51,8 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
      * @see org.apache.lenya.cms.site.SiteManager#requires(org.apache.lenya.cms.publication.DocumentFactory,
      *      org.apache.lenya.cms.site.SiteNode, org.apache.lenya.cms.site.SiteNode)
      */
-    public boolean requires(DocumentFactory map, SiteNode dependingResource, SiteNode requiredResource)
-            throws SiteException {
+    public boolean requires(DocumentFactory map, SiteNode dependingResource,
+            SiteNode requiredResource) throws SiteException {
         return false;
     }
 
@@ -59,7 +60,8 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
      * @see org.apache.lenya.cms.site.SiteManager#getRequiredResources(org.apache.lenya.cms.publication.DocumentFactory,
      *      org.apache.lenya.cms.site.SiteNode)
      */
-    public SiteNode[] getRequiredResources(DocumentFactory map, SiteNode resource) throws SiteException {
+    public SiteNode[] getRequiredResources(DocumentFactory map, SiteNode resource)
+            throws SiteException {
         return new SiteNode[0];
     }
 
@@ -104,7 +106,8 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
      * @return A document store.
      * @throws SiteException if an error occurs.
      */
-    protected DocumentStore getStore(DocumentFactory map, Publication publication, String area) throws SiteException {
+    protected DocumentStore getStore(DocumentFactory map, Publication publication, String area)
+            throws SiteException {
         String key = getKey(publication, area);
         DocumentStore store;
         RepositoryItemFactory factory = new DocumentStoreFactory(this.manager, getLogger());
@@ -126,12 +129,9 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
         return publication.getId() + ":" + area;
     }
 
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#getUUID(org.apache.lenya.cms.publication.Document)
-     */
-    public String getUUID(Document resource) throws SiteException {
-        getLogger().warn("NOT implemented yet!");
-        return null;
+    public String getUUID(DocumentFactory factory, Publication pub, String area, String path)
+            throws SiteException {
+        throw new IllegalStateException("Not implemented yet!");
     }
 
     /**
@@ -224,8 +224,8 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
      * @see org.apache.lenya.cms.site.SiteManager#getDocuments(org.apache.lenya.cms.publication.DocumentFactory,
      *      org.apache.lenya.cms.publication.Publication, java.lang.String)
      */
-    public Document[] getDocuments(DocumentFactory identityMap, Publication publication,
-            String area) throws SiteException {
+    public Document[] getDocuments(DocumentFactory identityMap, Publication publication, String area)
+            throws SiteException {
         DocumentStore store = getStore(identityMap, publication, area);
         try {
             return store.getDocuments();
@@ -238,15 +238,16 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
      * @see org.apache.lenya.cms.site.SiteManager#getSiteStructure(org.apache.lenya.cms.publication.DocumentFactory,
      *      org.apache.lenya.cms.publication.Publication, java.lang.String)
      */
-    public SiteStructure getSiteStructure(DocumentFactory map, Publication publication,
-            String area) throws SiteException {
+    public SiteStructure getSiteStructure(DocumentFactory map, Publication publication, String area)
+            throws SiteException {
         return getStore(map, publication, area);
     }
 
     /**
      * @see org.apache.lenya.cms.site.SiteManager#getAvailableDocument(org.apache.lenya.cms.publication.Document)
      */
-    public Document getAvailableDocument(Document document) throws SiteException {
+    public DocumentLocator getAvailableLocator(DocumentFactory factory, DocumentLocator document)
+            throws SiteException {
         return document;
     }
 
@@ -254,7 +255,8 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
         return true;
     }
 
-    public String getPath(String area, String uuid) throws SiteException {
+    public String getPath(DocumentFactory factory, Publication pub, String area, String uuid)
+            throws SiteException {
         // TODO Auto-generated method stub
         return null;
     }
@@ -262,6 +264,22 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
     public String getUUID(String area, String path) throws SiteException {
         // TODO Auto-generated method stub
         return null;
+    }
+
+    public void add(String path, Document document) throws SiteException {
+        // TODO Auto-generated method stub
+
+    }
+
+    public boolean contains(DocumentFactory factory, Publication pub, String area, String path)
+            throws SiteException {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+    public boolean contains(DocumentFactory factory, DocumentLocator locator) throws SiteException {
+        // TODO Auto-generated method stub
+        return false;
     }
 
 }

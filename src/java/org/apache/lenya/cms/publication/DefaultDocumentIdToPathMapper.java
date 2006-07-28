@@ -63,11 +63,15 @@ public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper,
      * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getPath(java.lang.String,
      *      java.lang.String)
      */
-    public String getPath(String documentId, String language) {
-        assert documentId.startsWith("/");
-        // remove leading slash
-        documentId = documentId.substring(1);
-        return documentId + "/" + getFilename(language);
+    public String getPath(String uuid, String language) {
+        if (uuid.startsWith("/")) {
+            // remove leading slash
+            uuid = uuid.substring(1);
+            return uuid + "/" + getFilename(language);
+        }
+        else {
+            return uuid + "/" + language;
+        }
     }
 
     /**
