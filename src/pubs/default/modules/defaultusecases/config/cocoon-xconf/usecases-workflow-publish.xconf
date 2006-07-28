@@ -26,10 +26,6 @@
                         logger="lenya.usecases.workflow"
                         class="org.apache.lenya.defaultpub.cms.usecases.Publish">
       <view template="usecases/workflow/publish.jx"/>
-      <exit usecase="lucene.index">
-        <parameter name="indexAction" value="index"/>
-        <parameter name="indexArea" value="live"/>
-      </exit>      
     </component-instance>
 
   </xconf>
