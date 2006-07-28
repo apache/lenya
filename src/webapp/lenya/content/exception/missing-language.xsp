@@ -36,7 +36,7 @@
     <available-languages>
       <xsp:logic>
 	Document doc = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
-	DocumentLanguagesHelper helper = new DocumentLanguagesHelper(doc.getIdentityMap(), objectModel, new WrapperServiceManager(this.manager));
+	DocumentLanguagesHelper helper = new DocumentLanguagesHelper(doc.getFactory(), objectModel, new WrapperServiceManager(this.manager));
 	try {
 	  String[] availableLanguages = doc.getLanguages();
 	  String language = null;
