@@ -22,10 +22,6 @@
 
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'site.rollback']">
     <component-instance name="site.rollback" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Rollback">
-      <exit usecase="lucene.index">
-        <parameter name="indexAction" value="index"/>
-        <parameter name="indexArea" value="authoring"/>
-        <parameter name="lenya.exitUsecase" value="tab.revisions"/>
-      </exit>
+      <exit usecase="tab.revisions" />
     </component-instance>
   </xconf>

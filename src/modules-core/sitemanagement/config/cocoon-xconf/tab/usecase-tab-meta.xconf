@@ -25,10 +25,6 @@
       <view template="modules/sitemanagement/usecases/tab/meta.jx" menu="true">
         <tab group="site" name="meta"/>
       </view>
-      <exit usecase="lucene.index">
-        <parameter name="indexAction" value="index"/>
-        <parameter name="indexArea" value="authoring"/>
-        <parameter name="lenya.exitUsecase" value="tab.meta"/>
-      </exit>
+      <exit usecase="tab.meta" />
     </component-instance>
   </xconf>

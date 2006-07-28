@@ -23,10 +23,6 @@
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'site.delete']">
     <component-instance name="site.delete" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Delete">
       <view template="modules/sitemanagement/usecases/site/delete.jx"/>
-      <exit usecase="lucene.index">
-        <parameter name="indexAction" value="delete"/>
-        <parameter name="indexArea" value="authoring"/>
-        <parameter name="lenya.exitUsecase" value="tab.overview"/>
-      </exit>
+      <exit usecase="tab.overview" />
     </component-instance>
   </xconf>

@@ -26,6 +26,7 @@
     <!-- NOTE: Will be matched within sitemap of this module (modules/opendocument/sitemap.xmap) -->
     <format name="xhtml" uri="cocoon://modules/opendocument/xhtml.xml"/>
     <format name="webdavGET" uri="cocoon://modules/opendocument/davget.xml"/>
+    <format name="odt" uri="cocoon://modules/opendocument/davget.xml"/>
   </component-instance>
 
 </xconf>
