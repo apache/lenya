@@ -43,6 +43,8 @@
       <dirset dir="src/pubs">
         <include name="*/java/src"/>
         <include name="*/java/test"/>
+        <include name="*/modules/*/java/src"/>
+        <include name="*/modules/*/java/test"/>
       </dirset>
       <dirset dir="src/modules">
         <include name="*/java/src"/>
