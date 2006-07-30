@@ -96,6 +96,12 @@
   
   <docu href="docs/" label="Documentation" tab="docu">
     <index href="index.html" label="Index"/>
+    <coding href="coding-guidelines.html" label="Coding Guidelines"/>
+    <tests href="tests.html" label="Writing Tests"/>
+    <unit-test href="unittests.html" label="Unit Tests"/>
+    <website-update href="website-update.html" label="Website Update"/>
+    <rm href="release.html" label="Release Management"/>
+    <zone href="zone.html" label="Zone notes"/>
     <!--+
     | Version 1.4 tab
     +-->
@@ -141,7 +147,6 @@
       <link-management href="link-management.html" label="Link Management"/>
       <notification href="notification.html" label="Notification"/>
       <repository href="repository/index.html" label="Repository"/>
-      <tests14 href="tests.html" label="Writing Tests"/>
     </reference>
     
     <javadoc1.4 href="../../../../apidocs/1.4/index.html" label="1.4 API (Javadoc)"/>
@@ -305,9 +310,7 @@
     
     <misc href="misc/" label="Miscellaneous" wholesite="true">
       <namespaces href="namespaces.html" label="Namespaces"/>
-      <coding href="coding-guidelines.html" label="Coding Guidelines"/>
       <reservednames href="reserved_names.html" label="Reserved Names"/>
-      <node-e href="unittests.html" label="Unit Tests"/>
       <node-e href="xinclude-processor.html" label="XInclude Processor"/>
     </misc>
     
@@ -332,9 +335,6 @@
     <ml href="mailing-lists.html" label="Mailing Lists"/>
     <irc href="irc.html" label="IRC"/>
     <live-sites href="live-sites.html" label="Live Sites"/>
-    <website-update href="website-update.html" label="Website Update"/>
-    <zone href="release.html" label="Release Management"/>
-    <zone href="zone.html" label="Zone notes"/>
   </community>
   
   <images href="images/">

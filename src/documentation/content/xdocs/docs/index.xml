@@ -18,7 +18,7 @@
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 <document>
   <header>
-    <title>Version Specific Documentation</title>
+    <title>Version specific documentation and developer instructions</title>
   </header>
   <body>
     <p>
@@ -29,5 +29,8 @@
       <li><a href="site:docu1.2.x/index">1.2.x</a> - the stable version of Lenya</li>
       <li><a href="site:modules/index">Modules</a> - for the different modules of Lenya</li>
     </ul>
+    <p>Besides above documentation you can find as well different instructions 
+      to common development topics here, like how to write tests, our coding 
+      guidelines and how to update our website.</p>
   </body>
 </document>
