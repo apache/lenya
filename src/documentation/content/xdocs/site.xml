@@ -94,12 +94,14 @@
     <node-i href="related-projects.html" label="Related Projects"/>
   </project-information>
   
-  <!--+
+  <docu href="docs/" label="Documentation" tab="docu">
+    <index href="index.html" label="Index"/>
+    <!--+
     | Version 1.4 tab
     +-->
   
   <docu1.4 href="1_4/" label="Version 1.4" target="1.4" tab="1_4">
-    <index_pm href="index.html" label="Index"/>
+    <index href="index.html" label="Index"/>
      <faq label="FAQs" href="faq.html">
           <i18n href="#i18n"/>
           <bxe-css href="#bxe-css"/>
@@ -163,7 +165,7 @@
   -->        
   
   <docu1.2.x href="1_2_x/" label="Version 1.2" target="1.2" tab="1_2">
-    <index_pm href="index.html" label="Index"/>
+    <index href="index.html" label="Index"/>
     <!--          <whole_docu href="../documentation-1-2.pdf" label="1.2 PDF docs (all in one)" />
       <whole_docu href="../documentation-1-2.html" label="1.2 HTML docs (all in one)" />
     -->          
@@ -311,6 +313,8 @@
     
     <javadoc1.2 href="../../apidocs/1.2/index.html" label="1.2 API (Javadoc)"/>
   </docu1.2.x>
+  
+  </docu>
   
   <!--+
     | Community tab
