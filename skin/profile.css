@@ -46,10 +46,15 @@ a.external  {
 #tabs li a:visited { color: #000000; }
 #tabs li a:hover { color: #000000; }
 
-#level2tabs       { background-color: #000000 ;} 
+#level2tabs a.selected      { background-color: #E5E4D9 ;} 
 #level2tabs a:link {  color: #000000;  }
 #level2tabs a:visited { color: #000000; }
 #level2tabs a:hover { color: #000000; }
+
+#level2tabs { background-color: #F5F4E9;}
+#level2tabs a.unselected:link {  color: #000000;  }
+#level2tabs a.unselected:visited { color: #000000; }
+#level2tabs a.unselected:hover { color: #000000; }
 
 .heading { background-color: #E5E4D9;} 
 

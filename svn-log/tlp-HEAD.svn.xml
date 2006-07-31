@@ -3057,4 +3057,1529 @@ Further changed the message when test fails.</msg>
 - adding notes about svn configuration and extending forrest for pdf
 - adding section about how to use the forrestbot</msg>
 </logentry>
+<logentry
+   revision="425483">
+<author>thorsten</author>
+<date>2006-07-25T19:01:47.437970Z</date>
+<paths>
+<path
+   action="M">/lenya/site/1_2_x/how-to/usecase-search.xmap</path>
+<path
+   action="M">/lenya/site/incubator-2003-11-12.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-07.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-08.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-09.svn.pdf</path>
+<path
+   action="M">/lenya/site/skin/images/rc-b-r-15-1body-2menu-3menu.png</path>
+<path
+   action="M">/lenya/site/incubator-2004-07-10.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2002-08-09.svn.html</path>
+<path
+   action="M">/lenya/site/roadmap.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2003-05.svn.html</path>
+<path
+   action="M">/lenya/site/history.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-09.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-01.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-01.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-05.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-10.svn.pdf</path>
+<path
+   action="M">/lenya/site/community/website-update.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2006-05.svn.html</path>
+<path
+   action="M">/lenya/site/1_4/reference/repository/index.pdf</path>
+<path
+   action="M">/lenya/site/index.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-11.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-12.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-09.svn.html</path>
+<path
+   action="M">/lenya/site/1_2_x/components/layout/lenya-menubar.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2002-01-04.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2004-01-03.svn.pdf</path>
+<path
+   action="M">/lenya/site/svn-log/tlp-HEAD.svn.xml</path>
+<path
+   action="M">/lenya/site/incubator-2002-05-07.svn.pdf</path>
+<path
+   action="M">/lenya/site/1_2_x/how-to/searchfixer.xsl</path>
+<path
+   action="A">/lenya/site/tlp-HEAD.svn-revision.xml</path>
+<path
+   action="M">/lenya/site/linkmap.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-10.svn.html</path>
+<path
+   action="M">/lenya/site/1_2_x/how-to/search-and-results.xsp</path>
+<path
+   action="M">/lenya/site/skin/images/rc-t-l-5-1header-2tab-unselected-3tab-unselected.png</path>
+<path
+   action="M">/lenya/site/incubator-2003-06.svn.html</path>
+<path
+   action="M">/lenya/site/screenshots.html</path>
+<path
+   action="M">/lenya/site/tlp-HEAD.svn.html</path>
+<path
+   action="M">/lenya/site/skin/images/rc-t-r-5-1header-2tab-unselected-3tab-unselected.png</path>
+<path
+   action="M">/lenya/site/tlp-2005-10.svn.html</path>
+<path
+   action="M">/lenya/site/community/website-update.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-02.svn.html</path>
+<path
+   action="M">/lenya/site/related-projects.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-02.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2004-11.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-06.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-06.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2004-12.svn.pdf</path>
+<path
+   action="M">/lenya/site/skin/images/rc-b-l-15-1body-2menu-3menu.png</path>
+<path
+   action="M">/lenya/site/1_2_x/components/layout/navigation.pdf</path>
+<path
+   action="M">/lenya/site/1_4/reference/usecase-framework/index.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2002-05-07.svn.html</path>
+<path
+   action="M">/lenya/site/license.html</path>
+<path
+   action="M">/lenya/site/roadmap.html</path>
+<path
+   action="M">/lenya/site/incubator-2004-04-06.svn.pdf</path>
+<path
+   action="M">/lenya/site/charter.html</path>
+<path
+   action="M">/lenya/site/incubator-2002-08-09.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2003-03.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-07.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-03.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2003-04.svn.pdf</path>
+<path
+   action="M">/lenya/site/resolution.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-05.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2003-06.svn.pdf</path>
+<path
+   action="M">/lenya/site/skin/images/rc-t-r-15-1body-2menu-3menu.png</path>
+<path
+   action="M">/lenya/site/tlp-2004-11.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-07.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-11.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-08.svn.pdf</path>
+<path
+   action="M">/lenya/site/index.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-03.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-09.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2006-03.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2002-01-04.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-07.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-01.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2003-11-12.svn.html</path>
+<path
+   action="M">/lenya/site/skin/images/rc-b-r-5-1header-2tab-selected-3tab-selected.png</path>
+<path
+   action="M">/lenya/site/tlp-2006-02.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2006-03.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2003-01-02.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2002-10-12.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2006-04.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2006-05.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2004-07-10.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-06.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2004-04-06.svn.html</path>
+<path
+   action="M">/lenya/site/guidelines.html</path>
+<path
+   action="M">/lenya/site/skin/images/rc-t-l-5-1header-2tab-selected-3tab-selected.png</path>
+<path
+   action="M">/lenya/site/skin/images/rc-t-l-5-1header-2searchbox-3searchbox.png</path>
+<path
+   action="M">/lenya/site/incubator-2003-04.svn.html</path>
+<path
+   action="M">/lenya/site/skin/images/rc-t-r-5-1header-2tab-selected-3tab-selected.png</path>
+<path
+   action="M">/lenya/site/linkmap.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2003-10.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2003-08.svn.html</path>
+<path
+   action="M">/lenya/site/skin/images/rc-t-r-5-1header-2searchbox-3searchbox.png</path>
+<path
+   action="A">/lenya/site/tlp-HEAD.svn-sh.xml</path>
+<path
+   action="M">/lenya/site/tlp-2004-12.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-12.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-HEAD.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-04.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-04.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2002-10-12.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-01-02.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-01.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-02.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2004-01-03.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-03.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-08.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-04.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-05.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-06.svn.pdf</path>
+</paths>
+<msg>Automatic publish from forrestbot</msg>
+</logentry>
+<logentry
+   revision="425656">
+<author>andreas</author>
+<date>2006-07-26T07:54:04.763441Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/resource/config/cocoon-xconf/module.xconf</path>
+</paths>
+<msg>Removed link rewriting configuration from resource module</msg>
+</logentry>
+<logentry
+   revision="425657">
+<author>andreas</author>
+<date>2006-07-26T07:54:39.468976Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/impl/test/org/apache/lenya/cms/rc/RCMLTest.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/test/org/apache/lenya/cms/rc/RevisionControllerTest.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/test/org/apache/lenya/net/InetAddressUtilTest.java</path>
+</paths>
+<msg>Make tests run again. But this doesn't mean that they work ...</msg>
+</logentry>
+<logentry
+   revision="425686">
+<author>andreas</author>
+<date>2006-07-26T09:14:08.216788Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/resources/build/modules2build.xsl</path>
+</paths>
+<msg>[minor change] formatting</msg>
+</logentry>
+<logentry
+   revision="425705">
+<author>andreas</author>
+<date>2006-07-26T11:23:46.286186Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/impl/test/org/apache/lenya/net/InetAddressUtilTest.java</path>
+</paths>
+<msg>Throw exception instead of System.out when InetAddressUtilTest has errors</msg>
+</logentry>
+<logentry
+   revision="425706">
+<author>andreas</author>
+<date>2006-07-26T11:27:11.666994Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/targets/modules-build.xml</path>
+</paths>
+<msg>Apply ModuleManager patch to xtest file before module tests are run</msg>
+</logentry>
+<logentry
+   revision="425714">
+<author>andreas</author>
+<date>2006-07-26T11:57:09.895259Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/sourcerepository/java/src/org/apache/lenya/cms/repository/SourceNode.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentImpl.java</path>
+</paths>
+<msg>Get content length from source node data, not from source. This also works when the node has not been saved.</msg>
+</logentry>
+<logentry
+   revision="425715">
+<author>andreas</author>
+<date>2006-07-26T11:59:29.418650Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/modules/resource/java/test</path>
+<path
+   action="A">/lenya/trunk/src/modules/resource/java/test/org/apache/lenya</path>
+<path
+   action="A">/lenya/trunk/src/modules/resource/java/test/org/apache/lenya/cms/site/usecases</path>
+<path
+   action="A">/lenya/trunk/src/modules/resource/java/test/org/apache/lenya/cms</path>
+<path
+   action="A">/lenya/trunk/src/modules/resource/java/src/org/apache/lenya/cms/publication</path>
+<path
+   action="A">/lenya/trunk/src/modules/resource/java/test/org/apache/lenya/cms/publication/ResourceWrapperTest.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/resource/java/src/org/apache/lenya/cms/site/usecases/CreateResource.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/resource/java/src/org/apache/lenya/cms/site/usecases/UploadResource.java</path>
+<path
+   action="A">/lenya/trunk/src/modules/resource/java/test/org/apache/lenya/cms/site</path>
+<path
+   action="A">/lenya/trunk/src/modules/resource/java/test/org</path>
+<path
+   action="A">/lenya/trunk/src/modules/resource/java/test/org/apache</path>
+<path
+   action="A">/lenya/trunk/src/modules/resource/java/test/org/apache/lenya/cms/site/usecases/ResourceLinkRewriterTest.java</path>
+<path
+   action="A">/lenya/trunk/src/modules/resource/java/test/org/apache/lenya/cms/publication</path>
+<path
+   action="A">/lenya/trunk/src/modules/resource/java/src/org/apache/lenya/cms/publication/ResourceWrapper.java</path>
+</paths>
+<msg>Introduced ResourceWrapper, added tests for resource module</msg>
+</logentry>
+<logentry
+   revision="425722">
+<author>josias</author>
+<date>2006-07-26T12:37:15.263469Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/resources/build/modules2build.xsl</path>
+</paths>
+<msg>allow to run the tests on a system without a running xserver</msg>
+</logentry>
+<logentry
+   revision="425745">
+<author>josias</author>
+<date>2006-07-26T14:36:57.660006Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/resources/build/modules2build.xsl</path>
+</paths>
+<msg>reverted last commit, it doesn't help.</msg>
+</logentry>
+<logentry
+   revision="425883">
+<author>andreas</author>
+<date>2006-07-26T22:37:54.161322Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/pubs/default/lenya/modules/sitetree/xslt/navigation/search.xsl</path>
+<path
+   action="A">/lenya/trunk/src/pubs/default/content/authoring/search/index_en</path>
+<path
+   action="A">/lenya/trunk/src/pubs/default/content/authoring/search/index_en.meta</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/content/authoring/sitetree.xml</path>
+<path
+   action="A">/lenya/trunk/src/pubs/default/content/authoring/search</path>
+</paths>
+<msg>Use usecasedocument module for search page</msg>
+</logentry>
+<logentry
+   revision="425884">
+<author>andreas</author>
+<date>2006-07-26T22:38:47.907853Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/xslt/search2html.xsl</path>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/sitemap.xmap</path>
+</paths>
+<msg>Use usecasedocument module for search page</msg>
+</logentry>
+<logentry
+   revision="425885">
+<author>andreas</author>
+<date>2006-07-26T22:40:08.350443Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/resources/build/modules2build.xsl</path>
+</paths>
+<msg>Only execute module tests ending with 'Test'</msg>
+</logentry>
+<logentry
+   revision="425886">
+<author>andreas</author>
+<date>2006-07-26T22:40:41.014994Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/targets/modules-build.xml</path>
+</paths>
+<msg>Patch module tests before running module test</msg>
+</logentry>
+<logentry
+   revision="425889">
+<author>andreas</author>
+<date>2006-07-26T22:42:35.583158Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/modules-core/observation-impl/java/test/org/apache/lenya/cms/observation/ObservationTest.java</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/observation-impl/java/src</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/observation-impl/java/test/org/apache</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/observation-impl/config/cocoon-xconf/observation-registry.xconf</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/repository/Node.java</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/observation/ObservationException.java</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/observation-impl/java/test/org/apache/lenya</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/observation-impl/java</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/observation-impl/module.xml</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentImpl.java</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/repository/NodeListener.java</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/observation</path>
+<path
+   action="A">/lenya/trunk/src/impl/java/org/apache/lenya/cms/observation</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/observation-impl/java/test/org</path>
+<path
+   action="M">/lenya/trunk/src/modules/sourcerepository/java/src/org/apache/lenya/cms/repository/SourceNodeFactory.java</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/observation/RepositoryEvent.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/repository/java/src/org/apache/lenya/cms/repo/adapter/RepoNode.java</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/observation/ObservationRegistry.java</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/observation/RepositoryListener.java</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/observation-impl/java/test/org/apache/lenya/cms/observation</path>
+<path
+   action="A">/lenya/trunk/src/impl/java/org/apache/lenya/cms/observation/ObservationManager.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sourcerepository/java/src/org/apache/lenya/cms/repository/SourceNode.java</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/observation-impl/java/test</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/observation-impl/config/cocoon-xconf</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/observation-impl</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/observation-impl/java/test/org/apache/lenya/cms</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/observation-impl/java/test/org/apache/lenya/cms/observation/TestListener.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/Document.java</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/observation-impl/config</path>
+</paths>
+<msg>Added initial version of observation implementation</msg>
+</logentry>
+<logentry
+   revision="426015">
+<author>andreas</author>
+<date>2006-07-27T09:30:05.314965Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/observation-impl/java/test/org/apache/lenya/cms/observation/ObservationTest.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/observation-impl/java/test/org/apache/lenya/cms/observation/TestListener.java</path>
+</paths>
+<msg>Added failing test for observation manager (only allListener is registered -&gt; no notification), thanks to Josias</msg>
+</logentry>
+<logentry
+   revision="426017">
+<author>andreas</author>
+<date>2006-07-27T09:30:41.019296Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/observation-impl/java/test/org/apache/lenya/cms/observation/ObservationTest.java</path>
+</paths>
+<msg>Resetting listener after test</msg>
+</logentry>
+<logentry
+   revision="426025">
+<author>andreas</author>
+<date>2006-07-27T10:00:15.011729Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/observation/ObservationManager.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sourcerepository/java/src/org/apache/lenya/cms/repository/SourceNode.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/repository/NodeListener.java</path>
+</paths>
+<msg>Notify repository listeners also when no listener was registered specifically for a document</msg>
+</logentry>
+<logentry
+   revision="426039">
+<author>andreas</author>
+<date>2006-07-27T12:11:56.532460Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/observation-impl/java/test/org/apache/lenya/cms/observation/ObservationTest.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sourcerepository/java/src/org/apache/lenya/cms/repository/SourceNode.java</path>
+</paths>
+<msg>When a meta data node is changed, send notification for the document node</msg>
+</logentry>
+<logentry
+   revision="426045">
+<author>josias</author>
+<date>2006-07-27T12:38:05.828694Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/observation/ObservationManager.java</path>
+</paths>
+<msg>don't throw an exception if no document was found for the changed node. (not all repository nodes are documents, e.g. the sitetree has a node also).</msg>
+</logentry>
+<logentry
+   revision="426047">
+<author>jann</author>
+<date>2006-07-27T12:43:45.956464Z</date>
+<paths>
+<path
+   action="D">/lenya/trunk/src/modules-core/editors</path>
+</paths>
+<msg>Deleting editors from core modules</msg>
+</logentry>
+<logentry
+   revision="426049">
+<author>jann</author>
+<date>2006-07-27T12:44:28.999844Z</date>
+<paths>
+<path
+   copyfrom-path="/lenya/trunk/src/modules-core/editors"
+   copyfrom-rev="426044"
+   action="A">/lenya/trunk/src/modules/editors</path>
+</paths>
+<msg>Adding editors to modules</msg>
+</logentry>
+<logentry
+   revision="426053">
+<author>andreas</author>
+<date>2006-07-27T12:59:17.659271Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/DocumentInfoModule.java</path>
+</paths>
+<msg>Added webappUrl attribute to DocumentInfoModule</msg>
+</logentry>
+<logentry
+   revision="426054">
+<author>andreas</author>
+<date>2006-07-27T12:59:44.641757Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/ResourceTypeModule.java</path>
+</paths>
+<msg>Don't resolve document if not necessary to get resource type</msg>
+</logentry>
+<logentry
+   revision="426059">
+<author>andreas</author>
+<date>2006-07-27T13:11:59.607770Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/lenyadoc/java/src/org/apache/lenya/cms/cocoon/source/LenyaDocSourceFactory.java</path>
+</paths>
+<msg>lenyadoc:// throws exception for invalid publication IDs</msg>
+</logentry>
+<logentry
+   revision="426061">
+<author>andreas</author>
+<date>2006-07-27T13:13:44.504487Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/generation/LenyaMetaDataGenerator.java</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/modules/homepage/config/cocoon-xconf/resource-type-homepage.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/xhtml/config/cocoon-xconf/resource-type-xhtml.xconf</path>
+<path
+   action="A">/lenya/trunk/src/modules/lucene/java/src/org/apache/lenya/cms/lucene/IndexUpdater.java</path>
+<path
+   action="A">/lenya/trunk/src/modules/lucene/config/cocoon-xconf/index-updater.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/modules/xhtml/sitemap.xmap</path>
+</paths>
+<msg>Added IndexUpdater for lucene index</msg>
+</logentry>
+<logentry
+   revision="426062">
+<author>andreas</author>
+<date>2006-07-27T13:16:55.869438Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/bxe/config/cocoon-xconf/usecase-bxe.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/editors/config/cocoon-xconf/usecase-edit-oneform.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/editors/config/cocoon-xconf/usecase-edit-forms.xconf</path>
+</paths>
+<msg>Removed exit usecases from editor usecases</msg>
+</logentry>
+<logentry
+   revision="426063">
+<author>andreas</author>
+<date>2006-07-27T13:17:26.622735Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/sitemap.xmap</path>
+</paths>
+<msg>Added new parameters to meta data generator call</msg>
+</logentry>
+<logentry
+   revision="426076">
+<author>andreas</author>
+<date>2006-07-27T13:49:42.335565Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/DocumentInfoModule.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/java/src/org/apache/lenya/cms/lucene/IndexUpdater.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/config/cocoon-xconf/index-updater.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/sitemap.xmap</path>
+</paths>
+<msg>Added documentUrl attribute to DocumentInfoModule</msg>
+</logentry>
+<logentry
+   revision="426078">
+<author>andreas</author>
+<date>2006-07-27T13:55:37.781249Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/java/src/org/apache/lenya/cms/lucene/IndexUpdater.java</path>
+</paths>
+<msg>[minor change] refactoring</msg>
+</logentry>
+<logentry
+   revision="426079">
+<author>jann</author>
+<date>2006-07-27T13:58:36.255168Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/editors/java/src/org/apache/lenya/cms/editors/forms/FormsEditor.java</path>
+</paths>
+<msg>Fixes: http://issues.apache.org/bugzilla/show_bug.cgi?id=39878
+and  
+- documents were saved including tagID's
+- FormEditor did throw an error due to encoding problems (e.g. german umlaute) 
+</msg>
+</logentry>
+<logentry
+   revision="426080">
+<author>jann</author>
+<date>2006-07-27T14:02:25.432299Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/lenya/modules/editors/usecases/forms/xhtml-common.xsl</path>
+</paths>
+<msg>[Minor changes]: 
+- An error occured if an ul has been added by the FormEditor. 
+- Making form fields a bit wider
+</msg>
+</logentry>
+<logentry
+   revision="426083">
+<author>jann</author>
+<date>2006-07-27T14:15:46.871517Z</date>
+<paths>
+<path
+   action="D">/lenya/trunk/src/pubs/default/lenya/xslt/formeditor</path>
+</paths>
+<msg>Removing unused xsl-files. They are now located in pubs/default/lenya/modules/editors/usecases/forms/</msg>
+</logentry>
+<logentry
+   revision="426090">
+<author>andreas</author>
+<date>2006-07-27T14:33:10.629723Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/observation/RepositoryListener.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/java/src/org/apache/lenya/cms/lucene/IndexUpdater.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/observation/ObservationManager.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sourcerepository/java/src/org/apache/lenya/cms/repository/SourceNode.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/repository/NodeListener.java</path>
+</paths>
+<msg>Starting to implement observation for deleted documents</msg>
+</logentry>
+<logentry
+   revision="426129">
+<author>andreas</author>
+<date>2006-07-27T16:34:39.925797Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/observation/ObservationManager.java</path>
+</paths>
+<msg>Derive document from node source URI directly. This is a hack, but it allows to track deleted documents.</msg>
+</logentry>
+<logentry
+   revision="426130">
+<author>andreas</author>
+<date>2006-07-27T16:35:12.202539Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/observation-impl/java/test/org/apache/lenya/cms/observation/ObservationTest.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sourcerepository/java/src/org/apache/lenya/cms/repository/SourceNode.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/observation-impl/java/test/org/apache/lenya/cms/observation/TestListener.java</path>
+</paths>
+<msg>Fixed notification for deleted documents</msg>
+</logentry>
+<logentry
+   revision="426145">
+<author>chestnut</author>
+<date>2006-07-27T17:07:23.334745Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/sitemap.xmap</path>
+</paths>
+<msg>fix pdf byte-range requests for pdf resources</msg>
+</logentry>
+<logentry
+   revision="426230">
+<author>andreas</author>
+<date>2006-07-27T20:41:28.783499Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/modules/defaultusecases/java/src/org/apache/lenya/defaultpub/cms/usecases/Deactivate.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/DocumentBuilder.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentFactoryImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/SiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/DefaultDocumentBuilder.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/util/DocumentHelper.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/TreeSiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/NodeSet.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/SiteUtil.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/simple/SimpleSiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/LinkRewriterImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/MoveSubsite.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/webdav/java/src/org/apache/lenya/cms/usecases/webdav/Propfind.java</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/publication/DocumentLocator.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/topicmap/TopicMapSiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/ChangeNodeID.java</path>
+<path
+   copyfrom-path="/lenya/trunk/src/java/org/apache/lenya/cms/site/Node.java"
+   copyfrom-rev="426061"
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/site/SiteNode.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/DocumentFactory.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/NodeFactory.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/Document.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/AbstractSiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/modules/defaultusecases/java/src/org/apache/lenya/defaultpub/cms/usecases/Publish.java</path>
+<path
+   action="D">/lenya/trunk/src/java/org/apache/lenya/cms/site/Node.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/DocumentIdentifier.java</path>
+</paths>
+<msg>Introducing DocumentLocator, starting to decouple document ID from path (towards UUIDs)</msg>
+</logentry>
+<logentry
+   revision="426233">
+<author>andreas</author>
+<date>2006-07-27T20:52:06.702638Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/observation-impl/java/test/org/apache/lenya/cms/observation/ObservationTest.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DefaultResourcesManager.java</path>
+</paths>
+<msg>[minor change] removed unused imports</msg>
+</logentry>
+<logentry
+   revision="426234">
+<author>andreas</author>
+<date>2006-07-27T20:53:57.664829Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/PublicationTemplateFallbackModule.java</path>
+</paths>
+<msg>[minor change] removed unused imports</msg>
+</logentry>
+<logentry
+   revision="426235">
+<author>andreas</author>
+<date>2006-07-27T20:57:03.598245Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/Resource.java</path>
+</paths>
+<msg>Made Resource class deprecated</msg>
+</logentry>
+<logentry
+   revision="426254">
+<author>andreas</author>
+<date>2006-07-27T21:27:04.069469Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/impl/test/org/apache/lenya/cms/publication/DefaultDocumentTest.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/webdav/java/src/org/apache/lenya/cms/usecases/webdav/Mkcol.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/transformation/LinkRewritingTransformer.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/cocoon/transformation/DocumentIndexTransformer.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/webdav/java/src/org/apache/lenya/cms/usecases/webdav/Put.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/util/CollectionImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/util/DocumentHelper.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/TreeSiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/SiteUtil.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/LanguageExistsAction.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/CreateDocument.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/workflow-impl/java/src/org/apache/lenya/cms/workflow/usecases/InvokeWorkflow.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/DocumentLocator.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/DocumentInfoModule.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/CreateLanguage.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/ChangeNodeID.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/NodeFactory.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/java/src/org/apache/lenya/cms/lucene/IndexUpdater.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/util/Collection.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/PageEnvelope.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/DocumentURLModule.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/Document.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/DocumentIdToPathMapper.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/cocoon/components/modules/input/SitetreeModule.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/java/src/org/apache/lenya/cms/lucene/IndexDocument.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/PageEnvelopeModule.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Clipboard.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/NodeSet.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentManagerImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/simple/SimpleSiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/java/src/org/apache/lenya/cms/editors/fckeditor/Fckeditor.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Assets.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Create.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/bxe/java/src/org/apache/lenya/cms/editors/bxe/BXE.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/ac-impl/java/src/org/apache/lenya/cms/ac/DocumentPolicyManagerWrapper.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/RevisionControllerAction.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/ResourceTypeImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/simple/DocumentStore.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/ChangeLabel.java</path>
+</paths>
+<msg>Made Document.getId() deprecated, replaced by getUUID() or getPath()</msg>
+</logentry>
+<logentry
+   revision="426258">
+<author>andreas</author>
+<date>2006-07-27T21:36:04.304051Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/modules/lucene/java/test/org/apache/lenya/cms/lucene</path>
+<path
+   action="A">/lenya/trunk/src/modules/lucene/java/test</path>
+<path
+   action="A">/lenya/trunk/src/modules/lucene/java/test/org/apache/lenya</path>
+<path
+   action="A">/lenya/trunk/src/modules/lucene/java/test/org/apache/lenya/cms</path>
+<path
+   action="A">/lenya/trunk/src/modules/lucene/java/test/org</path>
+<path
+   action="A">/lenya/trunk/src/modules/lucene/java/test/org/apache</path>
+<path
+   action="A">/lenya/trunk/src/modules/lucene/java/test/org/apache/lenya/cms/lucene/IndexUpdaterTest.java</path>
+</paths>
+<msg>Added index updater test (doesn't yet do anything because of the cocoon:// protocol problem)</msg>
+</logentry>
+<logentry
+   revision="426259">
+<author>andreas</author>
+<date>2006-07-27T21:38:39.097975Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/kupu/java/src/org/apache/lenya/cms/editors/kupu/Kupu.java</path>
+</paths>
+<msg>Removed references to Document.getId()</msg>
+</logentry>
+<logentry
+   revision="426261">
+<author>andreas</author>
+<date>2006-07-27T21:56:53.831898Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/DocumentLocator.java</path>
+</paths>
+<msg>Implemented DocumentLocator.equals() and hashCode()</msg>
+</logentry>
+<logentry
+   revision="426273">
+<author>andreas</author>
+<date>2006-07-27T22:09:30.382453Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/DocumentLocator.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/ChangeNodeID.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/DocumentFactory.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentManagerImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/SiteUtil.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/MoveSubsite.java</path>
+</paths>
+<msg>Deprecated obsolete methods in DocumentFactory</msg>
+</logentry>
+<logentry
+   revision="426277">
+<author>andreas</author>
+<date>2006-07-27T22:17:09.628319Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/modules/defaultusecases/java/src/org/apache/lenya/defaultpub/cms/usecases/Deactivate.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/transaction/UnitOfWorkImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/observation-impl/java/test/org/apache/lenya/cms/observation/ObservationTest.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/util/LanguageVersions.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/util/CollectionImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/usecases/Nudge.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/util/DocumentHelper.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentManagerImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/TreeSiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/SiteUtil.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/simple/SimpleSiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/CreateDocument.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Assets.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/LinkRewriterImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/MoveSubsite.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/CreateLanguage.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/ChangeNodeID.java</path>
+<path
+   action="M">/lenya/trunk/src/pubs/blog/java/src/org/apache/lenya/cms/workflow/usecases/Publish.java</path>
+<path
+   action="M">/lenya/trunk/src/pubs/blog/java/src/org/apache/lenya/blog/cms/usecases/Delete.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/Document.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/AbstractSiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/modules/defaultusecases/java/src/org/apache/lenya/defaultpub/cms/usecases/Publish.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/simple/DocumentStore.java</path>
+<path
+   action="M">/lenya/trunk/src/pubs/blog/java/src/org/apache/lenya/blog/cms/usecases/Deactivate.java</path>
+</paths>
+<msg>[refactoring] renamed Document.getIdentityMap() to getFactory()</msg>
+</logentry>
+<logentry
+   revision="426284">
+<author>andreas</author>
+<date>2006-07-27T22:27:06.375432Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/blog/java/src/org/apache/lenya/cms/site/usecases/CreateBlogEntry.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/usecase/java/src/org/apache/lenya/cms/usecase/DocumentUsecase.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/webdav/java/src/org/apache/lenya/cms/usecases/webdav/Mkcol.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/SiteOverview.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/webdav/java/src/org/apache/lenya/cms/usecases/webdav/Put.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/EmptyTrash.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Create.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/MoveSubsite.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/administration/java/src/org/apache/lenya/cms/ac/usecases/AccessControl.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/webdav/java/src/org/apache/lenya/cms/usecases/webdav/Propfind.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/ChangeNodeID.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/usecase/java/src/org/apache/lenya/cms/usecase/AbstractUsecase.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Paste.java</path>
+<path
+   action="M">/lenya/trunk/src/pubs/blog/java/src/org/apache/lenya/blog/cms/usecases/Delete.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-optional/jcrsource/java/src/org/apache/lenya/cms/jcr/usecases/Import.java</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/modules/defaultusecases/java/src/org/apache/lenya/defaultpub/cms/usecases/Publish.java</path>
+</paths>
+<msg>[refactoring] renamed AbstractUsecase.getDocumentIdentityMap() to getDocumentFactory()</msg>
+</logentry>
+<logentry
+   revision="426304">
+<author>andreas</author>
+<date>2006-07-27T22:51:37.520767Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/impl/test/org/apache/lenya/cms/publication/DocumentLocatorTest.java</path>
+</paths>
+<msg>Added DocumentLocatorTest</msg>
+</logentry>
+<logentry
+   revision="426391">
+<author>chestnut</author>
+<date>2006-07-28T05:43:31.520757Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/modules/xhtml/sitemap.xmap</path>
+</paths>
+<msg>Allow nested documents to be indexed</msg>
+</logentry>
+<logentry
+   revision="426414">
+<author>chestnut</author>
+<date>2006-07-28T07:04:40.494332Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/tab/sitetree.jx</path>
+</paths>
+<msg>[refactoring] renamed Document.getIdentityMap() to getFactory()</msg>
+</logentry>
+<logentry
+   revision="426416">
+<author>chestnut</author>
+<date>2006-07-28T07:12:52.942422Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/content/exception/missing-language.xsp</path>
+</paths>
+<msg>[refactoring] renamed Document.getIdentityMap() to getFactory()</msg>
+</logentry>
+<logentry
+   revision="426432">
+<author>andreas</author>
+<date>2006-07-28T08:25:15.178342Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/targets/docs-build.xml</path>
+</paths>
+<msg>Javadocs build: fixed source dir parameter</msg>
+</logentry>
+<logentry
+   revision="426433">
+<author>andreas</author>
+<date>2006-07-28T08:30:34.680226Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentImpl.java</path>
+</paths>
+<msg>Don't check if UUID starts with a slash</msg>
+</logentry>
+<logentry
+   revision="426442">
+<author>thorsten</author>
+<date>2006-07-28T08:58:29.063087Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/build.bat</path>
+</paths>
+<msg>ASF Bugzilla Bug 34191 - JDK 1.5 build fails with NoClassDefFoundError: org/apache/xpath/XPathAPI
+Applying patch from Michael Wohlfart to fix Windows Build (the last remaining issue with 1.5). 
+Thx Michael and everyone else who help solving the issue.</msg>
+</logentry>
+<logentry
+   revision="426449">
+<author>andreas</author>
+<date>2006-07-28T09:22:44.083043Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/transaction/Transactionable.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/transaction/UnitOfWorkImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sourcerepository/java/src/org/apache/lenya/cms/repository/SourceNode.java</path>
+</paths>
+<msg>Notify node listeners after transaction is successfully committed, not during the commit.</msg>
+</logentry>
+<logentry
+   revision="426450">
+<author>andreas</author>
+<date>2006-07-28T09:23:06.298035Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/DocumentLocator.java</path>
+</paths>
+<msg>DocumentLocator: throw exception for empty descendant paths</msg>
+</logentry>
+<logentry
+   revision="426451">
+<author>andreas</author>
+<date>2006-07-28T09:23:44.515674Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/LinkRewriterImpl.java</path>
+</paths>
+<msg>Fixed LinkRewriter URL handling</msg>
+</logentry>
+<logentry
+   revision="426572">
+<author>chestnut</author>
+<date>2006-07-28T15:42:44.049655Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/modules/defaultusecases/config/cocoon-xconf/usecases-workflow-publish.xconf</path>
+</paths>
+<msg>exit index usecase is no longer needed</msg>
+</logentry>
+<logentry
+   revision="426579">
+<author>chestnut</author>
+<date>2006-07-28T15:57:19.024334Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-rollback.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/tab/usecase-tab-meta.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-cut.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/opendocument/config/cocoon-xconf/resource-type-opendocument.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-archive.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-delete.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-restore.xconf</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/modules/defaultusecases/config/cocoon-xconf/usecases-workflow-deactivate.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-deleteLanguage.xconf</path>
+</paths>
+<msg>exit index usecase is no longer needed</msg>
+</logentry>
+<logentry
+   revision="426585">
+<author>chestnut</author>
+<date>2006-07-28T16:03:21.026132Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/opendocument/config/cocoon-xconf/resource-type-opendocument.xconf</path>
+</paths>
+<msg>revert, sorry, didn't mean to commit this</msg>
+</logentry>
+<logentry
+   revision="426600">
+<author>andreas</author>
+<date>2006-07-28T16:31:26.743345Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/util/Assert.java</path>
+</paths>
+<msg>Added assertion utility class</msg>
+</logentry>
+<logentry
+   revision="426602">
+<author>andreas</author>
+<date>2006-07-28T16:32:02.968844Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/impl/test/org/apache/lenya/cms/LenyaTestCase.java</path>
+</paths>
+<msg>LenyaTestCase: use default values for system properties</msg>
+</logentry>
+<logentry
+   revision="426603">
+<author>andreas</author>
+<date>2006-07-28T16:33:10.746249Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/cocoon/local.blocks.properties</path>
+</paths>
+<msg>Activate Cocoon's axis block, is used to generate UUIDs</msg>
+</logentry>
+<logentry
+   revision="426605">
+<author>andreas</author>
+<date>2006-07-28T16:34:16.007089Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/impl/java/org/apache/lenya/cms/repository/UUIDGenerator.java</path>
+<path
+   action="A">/lenya/trunk/src/impl/java/org/apache/lenya/cms/repository/AxisUUIDGenerator.java</path>
+<path
+   action="A">/lenya/trunk/src/webapp/lenya/config/cocoon-xconf/misc/uuid-generator.xconf</path>
+</paths>
+<msg>Add UUID generator service</msg>
+</logentry>
+<logentry
+   revision="426608">
+<author>andreas</author>
+<date>2006-07-28T16:37:34.966519Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/observation-impl/java/test/org/apache/lenya/cms/observation/ObservationTest.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/webdav/java/src/org/apache/lenya/cms/usecases/webdav/Mkcol.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/test/org/apache/lenya/cms/site/usecases/LinkRewriterTest.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/webdav/java/src/org/apache/lenya/cms/usecases/webdav/Put.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/SiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/TreeSiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/SiteUtil.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/PageEnvelopeFactory.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/topicmap/TopicMapSiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/ChangeNodeID.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/DefaultSiteTree.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/DocumentManager.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/test/org/apache/lenya/cms/publication/TestPageEnvelope.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/PageEnvelope.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/Document.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/AbstractSiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/DocumentIdToPathMapper.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/DocumentIdentifier.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/util/DocumentLanguagesHelper.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/DefaultDocumentIdToPathMapper.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentFactoryImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/SiteTreeNodeImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentManagerImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/util/DocumentReferencesHelper.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/simple/SimpleSiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/test/org/apache/lenya/cms/site/tree/DefaultSiteTreeTest.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Create.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/MoveSubsite.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/SiteTree.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/resource/java/test/org/apache/lenya/cms/publication/ResourceWrapperTest.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/flow/FlowHelperImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/AbstractPageEnvelopeModule.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Paste.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/RevisionControllerAction.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/test/org/apache/lenya/cms/publication/util/XLinkCollectionTest.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/test/org/apache/lenya/cms/site/tree/SiteTreeNodeImplTest.java</path>
+</paths>
+<msg>Next steps towards UUID support.</msg>
+</logentry>
+<logentry
+   revision="426772">
+<author>andreas</author>
+<date>2006-07-29T09:48:26.142432Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/targets/ide-build.xml</path>
+</paths>
+<msg>Include publication module java code in eclipse project</msg>
+</logentry>
+<logentry
+   revision="426773">
+<author>andreas</author>
+<date>2006-07-29T09:48:43.949549Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/blog/java/src/org/apache/lenya/cms/site/usecases/CreateBlogEntry.java</path>
+</paths>
+<msg>Reflecting API changes in CreateBlogEntry</msg>
+</logentry>
+<logentry
+   revision="426955">
+<author>thorsten</author>
+<date>2006-07-30T22:02:03.027983Z</date>
+<paths>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/modules/index.xml"
+   copyfrom-rev="426952"
+   action="R">/lenya/docu/src/documentation/content/xdocs/docs/modules/index.xml</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/1_2_x/index.xml"
+   copyfrom-rev="426952"
+   action="R">/lenya/docu/src/documentation/content/xdocs/docs/1_2_x/index.xml</path>
+<path
+   action="D">/lenya/docu/src/documentation/content/xdocs/modules</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/modules/webdav"
+   copyfrom-rev="426952"
+   action="R">/lenya/docu/src/documentation/content/xdocs/docs/modules/webdav</path>
+<path
+   action="D">/lenya/docu/src/documentation/content/xdocs/1_2_x</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/1_4/reference"
+   copyfrom-rev="426952"
+   action="R">/lenya/docu/src/documentation/content/xdocs/docs/1_4/reference</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/1_4"
+   copyfrom-rev="425407"
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/1_4</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/1_4/installation"
+   copyfrom-rev="426952"
+   action="R">/lenya/docu/src/documentation/content/xdocs/docs/1_4/installation</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/1_2_x/how-to"
+   copyfrom-rev="426952"
+   action="R">/lenya/docu/src/documentation/content/xdocs/docs/1_2_x/how-to</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/1_4/faq.xml"
+   copyfrom-rev="426952"
+   action="R">/lenya/docu/src/documentation/content/xdocs/docs/1_4/faq.xml</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/1_4/index.xml"
+   copyfrom-rev="426952"
+   action="R">/lenya/docu/src/documentation/content/xdocs/docs/1_4/index.xml</path>
+<path
+   action="D">/lenya/docu/src/documentation/content/xdocs/1_4</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/1_2_x/components"
+   copyfrom-rev="426952"
+   action="R">/lenya/docu/src/documentation/content/xdocs/docs/1_2_x/components</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/tabs.xml</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/1_4/concepts"
+   copyfrom-rev="426952"
+   action="R">/lenya/docu/src/documentation/content/xdocs/docs/1_4/concepts</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/1_2_x/misc"
+   copyfrom-rev="426952"
+   action="R">/lenya/docu/src/documentation/content/xdocs/docs/1_2_x/misc</path>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/index.xml</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/1_2_x"
+   copyfrom-rev="425407"
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/1_2_x</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/modules"
+   copyfrom-rev="425407"
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/modules</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/1_2_x/installation"
+   copyfrom-rev="426952"
+   action="R">/lenya/docu/src/documentation/content/xdocs/docs/1_2_x/installation</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/1_2_x/tutorial"
+   copyfrom-rev="426952"
+   action="R">/lenya/docu/src/documentation/content/xdocs/docs/1_2_x/tutorial</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/site.xml</path>
+</paths>
+<msg>Refactoring documentation into a tab on its on. Moving all version specific documentation into the docs dir.</msg>
+</logentry>
+<logentry
+   revision="426977">
+<author>thorsten</author>
+<date>2006-07-30T22:56:15.943556Z</date>
+<paths>
+<path
+   action="D">/lenya/docu/src/documentation/content/xdocs/community/website-update.xml</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/community/release.xml"
+   copyfrom-rev="426955"
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/release.xml</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/docs/1_4/reference/tests.xml"
+   copyfrom-rev="426955"
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/tests.xml</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/docs/1_2_x/misc/unittests.xml"
+   copyfrom-rev="426955"
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/unittests.xml</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/community/website-update.xml"
+   copyfrom-rev="426955"
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/website-update.xml</path>
+<path
+   action="D">/lenya/docu/src/documentation/content/xdocs/docs/1_4/reference/tests.xml</path>
+<path
+   action="D">/lenya/docu/src/documentation/content/xdocs/docs/1_2_x/misc/unittests.xml</path>
+<path
+   action="D">/lenya/docu/src/documentation/content/xdocs/community/zone.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/index.xml</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/docs/1_2_x/misc/coding-guidelines.xml"
+   copyfrom-rev="426955"
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/coding-guidelines.xml</path>
+<path
+   copyfrom-path="/lenya/docu/src/documentation/content/xdocs/community/zone.xml"
+   copyfrom-rev="426955"
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/zone.xml</path>
+<path
+   action="D">/lenya/docu/src/documentation/content/xdocs/community/release.xml</path>
+<path
+   action="D">/lenya/docu/src/documentation/content/xdocs/docs/1_2_x/misc/coding-guidelines.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/site.xml</path>
+</paths>
+<msg>Moving all developing notes to the docs dir, to have one entry point for this kind of documentation.</msg>
+</logentry>
+<logentry
+   revision="426979">
+<author>thorsten</author>
+<date>2006-07-30T22:59:31.500031Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/skinconf.xml</path>
+</paths>
+<msg>Updating skinconf with new style values</msg>
+</logentry>
 </log>
