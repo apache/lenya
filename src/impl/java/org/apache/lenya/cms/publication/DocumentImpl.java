@@ -652,4 +652,21 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         return pub.getSourceURI() + "/content/" + area + "/" + path;
     }
 
+    public boolean existsVersion(String area, String language) {
+        String sourceUri = getSourceURI(getPublication(), area, getUUID(), language);
+        try {
+            return SourceUtil.exists(sourceUri, this.manager);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public Document getVersion(String area, String language) throws DocumentException {
+        try {
+            return getFactory().get(getPublication(), area, getUUID(), language);
+        } catch (DocumentBuildException e) {
+            throw new DocumentException(e);
+        }
+    }
+
 }

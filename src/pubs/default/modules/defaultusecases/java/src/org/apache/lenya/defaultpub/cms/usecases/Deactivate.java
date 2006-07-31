@@ -64,26 +64,30 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
             String event = getEvent();
             boolean allowSingle = true;
 
-            if (!WorkflowUtil.canInvoke(this.manager,
-                    getSession(),
-                    getLogger(),
-                    getSourceDocument(),
-                    event)) {
-                allowSingle = false;
-                addInfoMessage("The single document cannot be deactivated because the workflow event cannot be invoked.");
-            }
+            if (!getSourceDocument().existsAreaVersion(Publication.LIVE_AREA)) {
+                addErrorMessage("This usecase can only be invoked when the live version exists.");
+            } else {
+                if (!WorkflowUtil.canInvoke(this.manager,
+                        getSession(),
+                        getLogger(),
+                        getSourceDocument(),
+                        event)) {
+                    allowSingle = false;
+                    addInfoMessage("The single document cannot be deactivated because the workflow event cannot be invoked.");
+                }
 
-            DocumentFactory map = getSourceDocument().getFactory();
-            Document liveDoc = map.getAreaVersion(getSourceDocument(), Publication.LIVE_AREA);
-            DocumentSet subSite = SiteUtil.getSubSite(this.manager, liveDoc);
-            SiteNode node = NodeFactory.getNode(liveDoc);
-            subSite.removeAll(SiteUtil.getExistingDocuments(map, node));
+                DocumentFactory map = getSourceDocument().getFactory();
+                Document liveDoc = getSourceDocument().getAreaVersion(Publication.LIVE_AREA);
+                DocumentSet subSite = SiteUtil.getSubSite(this.manager, liveDoc);
+                SiteNode node = NodeFactory.getNode(liveDoc);
+                subSite.removeAll(SiteUtil.getExistingDocuments(map, node));
 
-            if (!subSite.isEmpty()) {
-                allowSingle = false;
-                addInfoMessage("You have to deactivate the whole subtree because descendants are live.");
+                if (!subSite.isEmpty()) {
+                    allowSingle = false;
+                    addInfoMessage("You have to deactivate the whole subtree because descendants are live.");
+                }
+                setParameter(Publish.ALLOW_SINGLE_DOCUMENT, Boolean.toString(allowSingle));
             }
-            setParameter(Publish.ALLOW_SINGLE_DOCUMENT, Boolean.toString(allowSingle));
         }
     }
 
@@ -98,13 +102,13 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
             Document doc = getSourceDocument();
             set.addAll(SiteUtil.getSubSite(this.manager, doc));
 
-            Document liveDoc = doc.getFactory().getAreaVersion(doc, Publication.LIVE_AREA);
+            Document liveDoc = doc.getAreaVersion(Publication.LIVE_AREA);
             set.addAll(SiteUtil.getSubSite(this.manager, liveDoc));
 
             Document[] documents = set.getDocuments();
             for (int i = 0; i < documents.length; i++) {
                 nodes.add(documents[i].getRepositoryNode());
-                nodes.addAll(AssetUtil.getAssetNodes(documents[i], this.manager, getLogger()));		
+                nodes.addAll(AssetUtil.getAssetNodes(documents[i], this.manager, getLogger()));
             }
 
             nodes.add(SiteUtil.getSiteStructure(this.manager, liveDoc).getRepositoryNode());
@@ -137,11 +141,10 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
         boolean success = false;
 
         DocumentManager documentManager = null;
-        SourceResolver resolver = null;	
-	Source source = null;
+        SourceResolver resolver = null;
+        Source source = null;
         try {
-            Document liveDocument = authoringDocument.getFactory()
-                    .getAreaVersion(authoringDocument, Publication.LIVE_AREA);
+            Document liveDocument = authoringDocument.getAreaVersion(Publication.LIVE_AREA);
 
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             documentManager.delete(liveDocument);
@@ -156,12 +159,12 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
-	    if (resolver != null) {
-		    if (source != null) {
-			    resolver.release(source);
-		    }
-		    this.manager.release(resolver);
-	    }		
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                this.manager.release(resolver);
+            }
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Deactivate document [" + authoringDocument + "]. Success: ["
                         + success + "]");
@@ -243,16 +246,16 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
             WorkflowException {
         String[] languages = document.getPublication().getLanguages();
         for (int i = 0; i < languages.length; i++) {
-            Document version = document.getFactory().getLanguageVersion(document, languages[i]);
-            if (version.exists()
-                    && WorkflowUtil.canInvoke(this.manager,
-                            getSession(),
-                            getLogger(),
-                            version,
-                            getEvent())) {
-                deactivate(version);
+            if (document.existsVersion(Publication.LIVE_AREA, languages[i])) {
+                Document version = document.getVersion(Publication.LIVE_AREA, languages[i]);
+                if (WorkflowUtil.canInvoke(this.manager,
+                        getSession(),
+                        getLogger(),
+                        version,
+                        getEvent())) {
+                    deactivate(version);
+                }
             }
         }
     }
-
 }

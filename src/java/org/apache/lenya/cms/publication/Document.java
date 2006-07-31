@@ -285,4 +285,21 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      */
     Document getAreaVersion(String area) throws DocumentException;
 
+    /**
+     * Checks if a translation of this document exists in a certain area.
+     * @param area The area.
+     * @param language The language.
+     * @return A boolean value.
+     */
+    boolean existsVersion(String area, String language);
+    
+    /**
+     * Returns a translation of this document in a certain area.
+     * @param area The area.
+     * @param language The language.
+     * @return A document.
+     * @throws DocumentException if the area version doesn't exist.
+     */
+    Document getVersion(String area, String language) throws DocumentException;
+
 }

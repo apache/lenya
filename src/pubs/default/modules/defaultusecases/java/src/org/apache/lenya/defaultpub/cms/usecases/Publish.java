@@ -31,7 +31,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.Identifiable;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
@@ -40,9 +40,9 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
-import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.NodeFactory;
 import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.site.usecases.AssetUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
@@ -151,8 +151,6 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
             Publication publication = document.getPublication();
             DocumentFactory map = document.getFactory();
 
-            Document liveDocument = map.getAreaVersion(document, Publication.LIVE_AREA);
-
             List missingDocuments = new ArrayList();
 
             ServiceSelector selector = null;
@@ -161,7 +159,10 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
                 selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
                 siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
 
-                SiteNode liveNode = NodeFactory.getNode(liveDocument);
+                String path = SiteUtil.getPath(this.manager, document);
+                SiteNode liveNode = NodeFactory.getNode(document.getPublication(),
+                        Publication.LIVE_AREA,
+                        path);
                 SiteNode[] requiredNodes = siteManager.getRequiredResources(map, liveNode);
 
                 for (int i = 0; i < requiredNodes.length; i++) {
@@ -174,8 +175,8 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
                         if (authoringDoc.exists()) {
                             missingDocuments.add(authoringDoc);
                         } else {
-                            missingDocuments.add(map.getLanguageVersion(authoringDoc,
-                                    authoringDoc.getPublication().getDefaultLanguage()));
+                            missingDocuments.add(authoringDoc.getTranslation(authoringDoc.getPublication()
+                                    .getDefaultLanguage()));
                         }
                     }
 
@@ -268,12 +269,11 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
         }
     }
 
-    protected void sendNotification(Document authoringDocument) throws DocumentBuildException,
-            NotificationException {
+    protected void sendNotification(Document authoringDocument) throws NotificationException,
+            DocumentException {
         User sender = getSession().getIdentity().getUser();
         Identifiable[] recipients = { sender };
-        Document liveVersion = getDocumentFactory().getAreaVersion(authoringDocument,
-                Publication.LIVE_AREA);
+        Document liveVersion = authoringDocument.getAreaVersion(Publication.LIVE_AREA);
 
         String url;
 
@@ -353,8 +353,7 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
             Document parent = document.getFactory().get(parentLocator);
             boolean publish = true;
             if (parent != null) {
-                Document liveParent = parent.getFactory().getAreaVersion(parent,
-                        Publication.LIVE_AREA);
+                Document liveParent = parent.getAreaVersion(Publication.LIVE_AREA);
                 if (!liveParent.exists()) {
                     publish = false;
                 }
@@ -380,9 +379,8 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
 
         try {
             for (int i = 0; i < languages.length; i++) {
-                Document version = document.getFactory().getLanguageVersion(document,
-                        languages[i]);
-                if (version.exists()) {
+                if (document.existsTranslation(languages[i])) {
+                    Document version = document.getTranslation(languages[i]);
                     if (WorkflowUtil.canInvoke(this.manager,
                             getSession(),
                             getLogger(),
