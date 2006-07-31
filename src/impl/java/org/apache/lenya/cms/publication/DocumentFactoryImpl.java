@@ -16,12 +16,16 @@
  */
 package org.apache.lenya.cms.publication;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
+
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.Session;
@@ -326,6 +330,14 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
             return get(pub, locator.getArea(), uuid, locator.getLanguage());
         } catch (PublicationException e) {
             throw new DocumentBuildException(e);
+        }
+    }
+
+    public boolean exists(DocumentIdentifier identifier) {
+        try {
+            return SourceUtil.exists(identifier.getSourceURI(), this.manager);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

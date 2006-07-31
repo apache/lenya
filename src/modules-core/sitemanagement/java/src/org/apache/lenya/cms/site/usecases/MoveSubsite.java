@@ -27,6 +27,7 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
@@ -74,14 +75,13 @@ public abstract class MoveSubsite extends DocumentUsecase {
         } else {
 
             Document document = getSourceDocument();
-            DocumentFactory identityMap = getDocumentFactory();
 
             DocumentSet set = SiteUtil.getSubSite(this.manager, document);
             Document[] documents = set.getDocuments();
             for (int i = 0; i < documents.length; i++) {
-                DocumentLocator loc = documents[i].getLocator().getAreaVersion(Publication.LIVE_AREA);
-                Document liveVersion = identityMap.get(loc);
-                if (liveVersion.exists()) {
+                DocumentIdentifier liveVersion = documents[i].getIdentifier().getAreaVersion(
+                        Publication.LIVE_AREA);
+                if (getDocumentFactory().exists(liveVersion)) {
                     addErrorMessage("delete-doc-live", new String[] { liveVersion.toString() });
                 }
             }
@@ -111,9 +111,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
         Document doc = getSourceDocument();
         try {
             DocumentSet sources = SiteUtil.getSubSite(this.manager, doc);
-            Map targets = SiteUtil.getTransferedSubSite(this.manager,
-                    doc,
-                    getTargetArea(),
+            Map targets = SiteUtil.getTransferedSubSite(this.manager, doc, getTargetArea(),
                     SiteUtil.MODE_CHANGE_ID);
 
             Document[] docs = sources.getDocuments();
@@ -123,9 +121,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
 
                 Document target = (Document) targets.get(docs[i]);
                 nodes.add(target.getRepositoryNode());
-                nodes.addAll(AssetUtil.getCopiedAssetNodes(docs[i],
-                        target,
-                        this.manager,
+                nodes.addAll(AssetUtil.getCopiedAssetNodes(docs[i], target, this.manager,
                         getLogger()));
             }
 
@@ -138,14 +134,13 @@ public abstract class MoveSubsite extends DocumentUsecase {
             }
 
             nodes.add(SiteUtil.getSiteStructure(this.manager, doc).getRepositoryNode());
-            nodes.add(SiteUtil.getSiteStructure(this.manager,
-                    getDocumentFactory(),
-                    doc.getPublication(),
-                    getTargetArea()).getRepositoryNode());
+            nodes.add(SiteUtil.getSiteStructure(this.manager, getDocumentFactory(),
+                    doc.getPublication(), getTargetArea()).getRepositoryNode());
         } catch (Exception e) {
             throw new UsecaseException(e);
         }
-        return (org.apache.lenya.cms.repository.Node[]) nodes.toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
+        return (org.apache.lenya.cms.repository.Node[]) nodes
+                .toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
     }
 
     /**
@@ -174,11 +169,13 @@ public abstract class MoveSubsite extends DocumentUsecase {
             SiteUtil.sortAscending(this.manager, docsToCopy);
             Document[] targetDocs = docsToCopy.getDocuments();
             for (int i = 0; i < targetDocs.length; i++) {
-                DocumentLocator sourceLoc = targetDocs[i].getLocator().getAreaVersion(doc.getArea());
+                DocumentLocator sourceLoc = targetDocs[i].getLocator()
+                        .getAreaVersion(doc.getArea());
                 Document sourceDoc = map.get(sourceLoc);
                 Document existingSourceDoc = DocumentHelper.getExistingLanguageVersion(sourceDoc,
                         doc.getLanguage());
-                DocumentLocator targetLoc = existingSourceDoc.getLocator().getAreaVersion(getTargetArea());
+                DocumentLocator targetLoc = existingSourceDoc.getLocator().getAreaVersion(
+                        getTargetArea());
                 documentManager.copyDocument(existingSourceDoc, targetLoc);
                 if (!targetLoc.getArea().equals(Publication.AUTHORING_AREA)) {
                     Document targetDoc = getDocumentFactory().get(targetLoc);
@@ -186,9 +183,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
                 }
             }
 
-            Map targetMap = SiteUtil.getTransferedSubSite(this.manager,
-                    doc,
-                    getTargetArea(),
+            Map targetMap = SiteUtil.getTransferedSubSite(this.manager, doc, getTargetArea(),
                     SiteUtil.MODE_CHANGE_ID);
             DocumentSet targets = new DocumentSet();
             Document[] docs = sources.getDocuments();
@@ -239,10 +234,8 @@ public abstract class MoveSubsite extends DocumentUsecase {
             SiteNode node = NodeFactory.getNode(doc);
             SiteNode[] requiredNodes = siteManager.getRequiredResources(map, node);
             for (int i = 0; i < requiredNodes.length; i++) {
-                Document targetDoc = map.get(getSourceDocument().getPublication(),
-                        getTargetArea(),
-                        requiredNodes[i].getPath(),
-                        doc.getLanguage());
+                Document targetDoc = map.get(getSourceDocument().getPublication(), getTargetArea(),
+                        requiredNodes[i].getPath(), doc.getLanguage());
                 if (!siteManager.containsInAnyLanguage(targetDoc)) {
                     docsToCopy.add(targetDoc);
                 }
@@ -285,7 +278,8 @@ public abstract class MoveSubsite extends DocumentUsecase {
                 SiteNode node = requiredSourceNodes[i];
                 boolean delete = true;
 
-                Document requiredDoc = map.get(node.getPublication(), node.getArea(), node.getPath());
+                Document requiredDoc = map.get(node.getPublication(), node.getArea(), node
+                        .getPath());
                 String[] languages = requiredDoc.getLanguages();
                 for (int l = 0; l < languages.length; l++) {
                     Document langVersion = map.getLanguageVersion(requiredDoc, languages[l]);
@@ -293,9 +287,9 @@ public abstract class MoveSubsite extends DocumentUsecase {
                         delete = false;
                     }
                 }
-                
+
                 SiteNode[] requiringNodes = siteManager.getRequiringResources(map, node);
-                
+
                 for (int j = 0; j < requiringNodes.length; j++) {
                     SiteNode n = requiringNodes[j];
                     Document reqDoc = map.get(n.getPublication(), n.getArea(), n.getPath());
@@ -332,5 +326,5 @@ public abstract class MoveSubsite extends DocumentUsecase {
         }
         return docsToDelete;
     }
-    
+
 }

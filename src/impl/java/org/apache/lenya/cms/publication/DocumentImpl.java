@@ -477,38 +477,6 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
 
     protected static final String IDENTIFIABLE_TYPE = "document";
 
-    /**
-     * @see org.apache.lenya.cms.publication.Document#getSourceURI()
-     */
-    public String getSourceURI() {
-        String path = getPublication().getPathMapper().getPath(getId(), getLanguage());
-        return getPublication().getSourceURI() + "/content/" + getArea() + "/" + path;
-    }
-
-    /**
-     * @see org.apache.lenya.cms.publication.Document#getRepositoryNode()
-     */
-    public Node getRepositoryNode() {
-        Node node = null;
-        SourceResolver resolver = null;
-        RepositorySource documentSource = null;
-        try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            documentSource = (RepositorySource) resolver.resolveURI(getSourceURI());
-            node = documentSource.getNode();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (resolver != null) {
-                if (documentSource != null) {
-                    resolver.release(documentSource);
-                }
-                this.manager.release(resolver);
-            }
-        }
-        return node;
-    }
-
     private ResourceType resourceType;
 
     /**
@@ -612,5 +580,13 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
 
     public String getPath() {
         return getLocator().getPath();
+    }
+
+    public String getSourceURI() {
+        return getIdentifier().getSourceURI();
+    }
+
+    public Node getRepositoryNode() {
+        return getIdentifier().getRepositoryNode(this.manager);
     }
 }

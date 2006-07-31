@@ -16,6 +16,11 @@
  */
 package org.apache.lenya.cms.publication;
 
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.cocoon.source.RepositorySource;
+import org.apache.lenya.cms.repository.Node;
+
 /**
  * Value object to identify documents.
  */
@@ -30,7 +35,7 @@ public class DocumentIdentifier {
      * Ctor.
      * @param publication The publication.
      * @param area The area.
-     * @param id The document ID.
+     * @param uuid The document UUID.
      * @param language The language.
      * @param uuid The UUID.
      */
@@ -39,10 +44,6 @@ public class DocumentIdentifier {
         this.area = area;
         this.language = language;
         this.uuid = uuid;
-        
-        if (uuid.equals("/copied")) {
-            throw new NullPointerException();
-        }
     }
     
     /**
@@ -88,4 +89,55 @@ public class DocumentIdentifier {
     public String toString() {
         return getKey();
     }
+    
+    /**
+     * Returns a version of this identifier from another area.
+     * @param area The area.
+     * @return A document identifier.
+     */
+    public DocumentIdentifier getAreaVersion(String area) {
+        return new DocumentIdentifier(getPublication(), area, getUUID(), getLanguage());
+    }
+
+    /**
+     * Returns a version of this identifier in a different language.
+     * @param language The language.
+     * @return A document identifier.
+     */
+    public DocumentIdentifier getLanguageVersion(String language) {
+        return new DocumentIdentifier(getPublication(), getArea(), getUUID(), language);
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getRepositoryNode()
+     */
+    public Node getRepositoryNode(ServiceManager manager) {
+        Node node = null;
+        SourceResolver resolver = null;
+        RepositorySource documentSource = null;
+        try {
+            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+            documentSource = (RepositorySource) resolver.resolveURI(getSourceURI());
+            node = documentSource.getNode();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (resolver != null) {
+                if (documentSource != null) {
+                    resolver.release(documentSource);
+                }
+                manager.release(resolver);
+            }
+        }
+        return node;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getSourceURI()
+     */
+    public String getSourceURI() {
+        String path = getPublication().getPathMapper().getPath(getUUID(), getLanguage());
+        return getPublication().getSourceURI() + "/content/" + getArea() + "/" + path;
+    }
+
 }

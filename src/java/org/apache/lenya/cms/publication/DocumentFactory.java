@@ -104,5 +104,12 @@ public interface DocumentFactory extends RepositoryItemFactory {
      * @throws DocumentBuildException if an error occurs.
      */
     Document get(DocumentLocator locator) throws DocumentBuildException;
+
+    /**
+     * Checks if a document exists.
+     * @param identifier the identifier of the document.
+     * @return A boolean value.
+     */
+    boolean exists(DocumentIdentifier identifier);
     
 }
