@@ -554,8 +554,33 @@ public class SiteUtil {
     
     public static boolean isDocument(ServiceManager manager, DocumentFactory factory,
             String webappUrl) throws SiteException {
-        DocumentLocator locator = getLocator(manager, webappUrl);
-        return contains(manager, factory, locator);
+        
+        URLInformation info = new URLInformation(webappUrl);
+        DocumentBuilder builder = null;
+        ServiceSelector selector = null;
+        try {
+            Publication pub = PublicationUtil.getPublication(manager, info.getPublicationId());
+            selector = (ServiceSelector) manager.lookup(DocumentBuilder.ROLE + "Selector");
+            builder = (DocumentBuilder) selector.select(pub.getDocumentBuilderHint());
+            if (builder.isDocument(webappUrl)) {
+                DocumentLocator locator = builder.getLocator(webappUrl);
+                return contains(manager, factory, locator);
+            }
+            else {
+                return false;
+            }
+        } catch (SiteException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new SiteException(e);
+        } finally {
+            if (selector != null) {
+                if (builder != null) {
+                    selector.release(builder);
+                }
+                manager.release(selector);
+            }
+        }
     }
 
     public static Document getDocument(ServiceManager manager, DocumentFactory factory,
