@@ -1,0 +1,519 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.8-dev">
+<meta name="Forrest-skin-name" content="pelt">
+<title>The AbstractUsecase Class</title>
+<link type="text/css" href="../../../../skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="../../../../skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="../../../../skin/print.css" rel="stylesheet">
+<link type="text/css" href="../../../../skin/profile.css" rel="stylesheet">
+<script src="../../../../skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="../../../../skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="../../../../skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="../../../../favicon.ico">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+<a href="http://www.apache.org/">apache</a> &gt; <a href="http://lenya.apache.org/">lenya</a><script src="../../../../skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>
+</div>
+<!--+
+    |header
+    +-->
+<div class="header">
+<!--+
+    |start group logo
+    +-->
+<div class="grouplogo">
+<a href=""><img class="logoImage" alt="Lenya" src="../../../../images/apache-lenya-light.png" title=""></a>
+</div>
+<!--+
+    |end group logo
+    +-->
+<!--+
+    |start Project Logo
+    +-->
+<div class="projectlogo">
+<a href=""></a>
+</div>
+<!--+
+    |end Project Logo
+    +-->
+<!--+
+    |start Search
+    +-->
+<div class="searchbox">
+<form action="http://www.google.com/search" method="get" class="roundtopsmall">
+<input value="lenya.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with ');" size="25" name="q" id="query" type="text" value="Search the site with ">&nbsp; 
+                    <input name="Search" value="Search" type="submit">
+</form>
+</div>
+<!--+
+    |end search
+    +-->
+<!--+
+    |start Tabs
+    +-->
+<ul id="tabs">
+<li>
+<a class="unselected" href="../../../../index.html">Project</a>
+</li>
+<li class="current">
+<a class="selected" href="../../../../docs/index.html">Documentation</a>
+</li>
+<li>
+<a class="unselected" href="../../../../community/index.html">Community</a>
+</li>
+</ul>
+<!--+
+    |end Tabs
+    +-->
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<!--+
+    |start Subtabs
+    +-->
+<div id="level2tabs">
+<a class="selected" href="../../../../docs/1_4/index.html">Version 1.4</a><a class="unselected" href="../../../../docs/modules/index.html">Modules</a><a class="unselected" href="../../../../docs/1_2_x/index.html">Version 1.2</a>
+</div>
+<!--+
+    |end Endtabs
+    +-->
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<!--+
+    |start Menu, mainarea
+    +-->
+<!--+
+    |start Menu
+    +-->
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', '../../../../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Version 1.4</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../../../../docs/1_4/index.html">Index</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/faq.html">FAQs</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', '../../../../skin/')" id="menu_1.1.3Title" class="menutitle">Installation</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/1_4/installation/index.html">Download</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/installation/subversion.html">Subversion Access</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/installation/source_version.html">Install Instructions</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4', '../../../../skin/')" id="menu_1.1.4Title" class="menutitle">Concepts</div>
+<div id="menu_1.1.4" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/1_4/concepts/publication.html">Publication</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/concepts/urlMapping.html">URL Mapping</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/concepts/authoring_live.html">Authoring and Live mode</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/concepts/wysiwyg.html">WYSIWYG</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.5', '../../../../skin/')" id="menu_selected_1.1.5Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Technical Reference</div>
+<div id="menu_selected_1.1.5" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/lenya-sitemaps.html">Overview of Lenya Sitemaps</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.5.2', '../../../../skin/')" id="menu_selected_1.1.5.2Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Usecase Framework</div>
+<div id="menu_selected_1.1.5.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/usecase-framework/index.html">Overview</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">AbstractUsecase</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a href="#Introduction">Introduction</a>
+</div>
+<div class="menupageitem">
+<a href="#Configuration">Configuration</a>
+</div>
+<div class="menupageitem">
+<a title="Extending AbstractUsecase" href="#Extending+AbstractUsecase">Extending AbstractU...</a>
+</div>
+</div>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/publication-templating/index.html">Publication Templating</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/resource-types.html">Resource Types</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/modules/index.html">Modules</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/metadata.html">Meta data</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.7', '../../../../skin/')" id="menu_1.1.5.7Title" class="menutitle">Protocols</div>
+<div id="menu_1.1.5.7" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/protocols/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/protocols/lenya.html">lenya:</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/protocols/lenyadoc.html">lenyadoc:</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/link-management.html">Link Management</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/notification.html">Notification</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/repository/index.html">Repository</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/index.html">1.4 API (Javadoc)</a>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="../../../../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<!--+
+  |alternative credits
+  +-->
+<div id="credit2">
+<a href="http://apachecon.com/"><img border="0" title="ApacheCon EU 2006" alt="ApacheCon EU 2006 - logo" src="http://www.eu.apachecon.com/konferenzen/apachecon06/images/header-left.gif" style="width: 150px;height: 50px;"></a>
+</div>
+</div>
+<!--+
+    |end Menu
+    +-->
+<!--+
+    |start content
+    +-->
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="abstractusecase.pdf"><img alt="PDF -icon" src="../../../../skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>The AbstractUsecase Class</h1>
+    
+    
+<a name="N1000D"></a><a name="Introduction"></a>
+<h2 class="h3">Introduction</h2>
+<div class="section">
+<p>
+        When you implement a custom usecase, you're very likely to extend
+        <span class="codefrag">org.apache.lenya.cms.usecase.AbstractUsecase</span>. This class provides a set of
+        functionality to simplify the implementation of usecases.
+      </p>
+</div>
+    
+    
+<a name="N1001A"></a><a name="Configuration"></a>
+<h2 class="h3">Configuration</h2>
+<div class="section">
+<p>
+        The usecase is configured in <span class="codefrag">cocoon.xconf</span>.
+        A typical configuration looks like this:
+      </p>
+<pre class="code">
+&lt;component-instance name="edit.forms" logger="lenya.publication"
+                    class="org.apache.lenya.cms.editors.forms.FormsEditor"&gt;
+  &lt;transaction policy="pessimistic"/&gt;
+  &lt;view template="edit/forms/forms" menu="false"/&gt;
+&lt;/component-instance&gt;
+</pre>
+<p>
+        The following configuration options are available:
+      </p>
+<ul>
+        
+<li>Element <span class="codefrag">&lt;transaction&gt;</span> (optional)
+          <ul>
+            
+<li>Attribute <span class="codefrag">policy = (optimistic | pessimistic)</span>
+</li>
+          
+</ul>
+          
+<br>
+          
+<p>
+            This element is used to determine the transaction policy of the usecase
+            (<em>optimistic</em> or <em>pessimistic offline lock</em>). It can be omitted,
+            the default is optimistic behaviour.
+            You should only use pessimistic behaviour for complex usecases when the user
+            can't afford to lose all changes.
+          </p>
+          
+<br>
+        
+</li>
+        
+        
+<li>Element <span class="codefrag">&lt;parameter&gt;</span> (arbitrary number)
+          <ul>
+            
+<li>Attribute <span class="codefrag">name</span>
+</li>
+            
+<li>Attribute <span class="codefrag">value</span>
+</li>
+          
+</ul>
+          
+<br>
+          
+<p>
+            An arbitrary number of initial parameters can be passed to the usecase.
+          </p>
+          
+<br>
+        
+</li>
+        
+        
+<li>Element <span class="codefrag">&lt;view&gt;</span> (optional)
+          <ul>
+            
+<li>Attribute <span class="codefrag">template</span> (required)</li>
+            
+<li>Attribute <span class="codefrag">menu = (true | false)</span> (optional)</li>
+            
+<li>Element <span class="codefrag">&lt;parameter name="..." value="..."/&gt;</span> (arbitrary number)</li>
+          
+</ul>
+          
+<br>
+          
+<p>
+            This element declares the view of the usecase. The <span class="codefrag">template</span> attribute
+            points to the JX template to use, relatively to the <span class="codefrag">lenya/usecases</span>
+            directory. The suffix <span class="codefrag">.jx</span> is added automatically. The attribute <span class="codefrag">menu</span>
+            determines if the menu should be visible. It can be omitted and defaults to <span class="codefrag">false</span>.
+          </p>
+          
+<br>
+        
+</li>
+
+        
+<li>Element <span class="codefrag">&lt;exit&gt;</span> (optional)
+          <ul>
+            
+<li>Attribute <span class="codefrag">usecase</span> (required)</li>
+            
+<li>Element <span class="codefrag">&lt;parameter name="..." value="..."/&gt;</span> (arbitrary number)</li>
+          
+</ul>
+          
+<br>
+          
+<p>
+            This element declares the exit usecase. By default, a usecase exits on the
+            URL it was started from, without any request parameters. Using this method,
+            is is possible to specify a usecase that should be called after this usecase
+            has exited. Additional parameter elements can be supplied.
+          </p>
+          
+<br>
+        
+</li>
+      
+</ul>
+</div>
+    
+    
+<a name="N100B3"></a><a name="Extending+AbstractUsecase"></a>
+<h2 class="h3">Extending AbstractUsecase</h2>
+<div class="section">
+<p>
+        The following methods of the <span class="codefrag">AbstractUsecase</span> class are meant to be overridden
+        or invoked by subclasses:
+      </p>
+<ul>
+      
+<li>
+        
+<span class="codefrag">protected void initParameters()</span>
+        
+<p>
+          This method is called to initialize the parameters of the usecase. For instance, if
+          your usecase shall display meta data on the view screen, <span class="codefrag">initParameters()</span>
+          reads the meta data from the document and puts them into the parameter map using
+          <span class="codefrag">setParameter(String, Object)</span> to make them available to the JX template.
+        </p>
+        
+<p>
+          Note that you can't access the request parameters in this method yet, because it
+          is executed before the request parameters are passed to the usecase.
+        </p>
+        
+<br>
+      
+</li>
+      
+      
+<li>
+        
+<span class="codefrag">protected void doCheckPreconditions()</span>
+        
+<p>
+          The method <span class="codefrag">checkPreconditions()</span> is a template method which calls this
+          method. For details on <span class="codefrag">checkPreconditions()</span>, see section
+          <a href="index.html">Overview</a>.
+        </p>
+        
+<br>
+      
+</li>
+      
+      
+<li>
+        
+<span class="codefrag">protected void doCheckExecutionConditions()</span>
+        
+<p>
+          The method <span class="codefrag">checkExecutionConditions()</span> is a template method which calls this
+          method. For details on <span class="codefrag">checkExecutionConditions()</span>, see section
+          <a href="index.html">Overview</a>.
+        </p>
+        
+<br>
+      
+</li>
+      
+      
+<li>
+        
+<span class="codefrag">protected void doCheckPostconditions()</span>
+        
+<p>
+          The method <span class="codefrag">checkPostonditions()</span> is a template method which calls this
+          method. For details on <span class="codefrag">checkPostonditions()</span>, see section
+          <a href="index.html">Overview</a>.
+        </p>
+        
+<br>
+      
+</li>
+      
+      
+<li>
+        
+<span class="codefrag">protected void doExecute()</span>
+        
+<p>
+          The method <span class="codefrag">execute()</span> is a template method which calls this
+          method. For details on <span class="codefrag">execute()</span>, see section
+          <a href="index.html">Overview</a>.
+        </p>
+        
+<br>
+      
+</li>
+      
+      
+<li>
+        
+<span class="codefrag">public void advance()</span>
+        
+<p>
+          For details on <span class="codefrag">advance()</span>, see section
+          <a href="index.html">Overview</a>.
+        </p>
+        
+<br>
+      
+</li>
+      
+      
+<li>
+        
+<span class="codefrag">protected Transactionable[] getObjectsToLock()</span>
+        
+<p>
+          This method is supposed to return all objects which should be locked before
+          the usecase is started. If the transaction policy is <em>pessimistic offline lock</em>,
+          these objects are checked out immediately.
+        </p>
+        
+<br>
+      
+</li>
+      
+      
+<li>
+        
+<span class="codefrag">protected void setExitParameter(String name, String value)</span>
+        
+<p>
+          Call this method to set a parameter that should be added to the exit request.
+          For instance, imagine a usecase which edits a user's groups. The exit usecase
+          might be <em>userProfile</em>, with the additional parameter <em>userId</em>.
+        </p>
+      
+</li>
+      
+      
+</ul>
+</div>
+    
+  
+</div>
+<!--+
+    |end content
+    +-->
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<!--+
+    |start bottomstrip
+    +-->
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2002-2005 <a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software Foundation.</a>
+</div>
+<div id="feedback">
+    Send feedback about the website to:
+  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A0docs/1_4/reference/usecase-framework/abstractusecase.html">dev@lenya.apache.org</a>
+</div>
+<!--+
+    |end bottomstrip
+    +-->
+</div>
+</body>
+</html>
