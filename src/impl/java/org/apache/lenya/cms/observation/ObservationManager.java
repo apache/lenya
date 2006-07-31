@@ -168,10 +168,18 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
             DocumentFactory factory = DocumentUtil.createDocumentIdentityMap(this.manager, session);
             
             String docPath = path.substring((pubId + "/content/" + area).length());
-            String docId = docPath.substring(0, docPath.length() - "/index_en".length());
+            
+            String uuid;
+            if (docPath.charAt(docPath.length() - 3) == '_') {
+                uuid = docPath.substring(0, docPath.length() - "/index_en".length());
+            }
+            else {
+                uuid = docPath.substring(1, docPath.length() - "/en".length());
+            }
+            
             String language = docPath.substring(docPath.length() - "en".length());
             
-            doc = factory.get(pub, area, docId, language);
+            doc = factory.get(pub, area, uuid, language);
 
             if (doc == null) {
                 // this happens if the node was not a document node
