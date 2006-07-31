@@ -22,12 +22,10 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.cocoon.components.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
@@ -110,9 +108,7 @@ public class ChangeNodeID extends DocumentUsecase {
         if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
             addErrorMessage("This usecase can only be invoked in the authoring area!");
         } else {
-            DocumentIdentifier liveVersion = getSourceDocument().getIdentifier()
-                    .getAreaVersion(Publication.LIVE_AREA);
-            if (getDocumentFactory().exists(liveVersion)) {
+            if (getSourceDocument().existsAreaVersion(Publication.LIVE_AREA)) {
                 addErrorMessage("This usecase cannot be invoked when the live version exists!");
             }
         }

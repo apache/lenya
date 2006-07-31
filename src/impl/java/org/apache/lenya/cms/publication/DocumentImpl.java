@@ -582,11 +582,74 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         return getLocator().getPath();
     }
 
-    public String getSourceURI() {
-        return getIdentifier().getSourceURI();
+    public boolean existsAreaVersion(String area) {
+        String sourceUri = getSourceURI(getPublication(), area, getUUID(), getLanguage());
+        try {
+            return SourceUtil.exists(sourceUri, this.manager);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public Node getRepositoryNode() {
-        return getIdentifier().getRepositoryNode(this.manager);
+    public boolean existsTranslation(String language) {
+        String sourceUri = getSourceURI(getPublication(), getArea(), getUUID(), language);
+        try {
+            return SourceUtil.exists(sourceUri, this.manager);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
+
+    public Document getAreaVersion(String area) throws DocumentException {
+        try {
+            return getFactory().get(getPublication(), area, getUUID(), getLanguage());
+        } catch (DocumentBuildException e) {
+            throw new DocumentException(e);
+        }
+    }
+
+    public Document getTranslation(String language) throws DocumentException {
+        try {
+            return getFactory().get(getPublication(), getArea(), getUUID(), language);
+        } catch (DocumentBuildException e) {
+            throw new DocumentException(e);
+        }
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getRepositoryNode()
+     */
+    public Node getRepositoryNode() {
+        Node node = null;
+        SourceResolver resolver = null;
+        RepositorySource documentSource = null;
+        try {
+            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+            documentSource = (RepositorySource) resolver.resolveURI(getSourceURI());
+            node = documentSource.getNode();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (resolver != null) {
+                if (documentSource != null) {
+                    resolver.release(documentSource);
+                }
+                manager.release(resolver);
+            }
+        }
+        return node;
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.Document#getSourceURI()
+     */
+    public String getSourceURI() {
+        return getSourceURI(getPublication(), getArea(), getUUID(), getLanguage());
+    }
+
+    protected static String getSourceURI(Publication pub, String area, String uuid, String language) {
+        String path = pub.getPathMapper().getPath(uuid, language);
+        return pub.getSourceURI() + "/content/" + area + "/" + path;
+    }
+
 }

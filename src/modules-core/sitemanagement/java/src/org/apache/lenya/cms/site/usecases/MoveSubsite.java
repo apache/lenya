@@ -27,17 +27,16 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
 import org.apache.lenya.cms.publication.util.DocumentSet;
-import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.NodeFactory;
 import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -79,9 +78,8 @@ public abstract class MoveSubsite extends DocumentUsecase {
             DocumentSet set = SiteUtil.getSubSite(this.manager, document);
             Document[] documents = set.getDocuments();
             for (int i = 0; i < documents.length; i++) {
-                DocumentIdentifier liveVersion = documents[i].getIdentifier().getAreaVersion(
-                        Publication.LIVE_AREA);
-                if (getDocumentFactory().exists(liveVersion)) {
+                if (documents[i].existsAreaVersion(Publication.LIVE_AREA)) {
+                    Document liveVersion = documents[i].getAreaVersion(Publication.LIVE_AREA);
                     addErrorMessage("delete-doc-live", new String[] { liveVersion.toString() });
                 }
             }
@@ -282,7 +280,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
                         .getPath());
                 String[] languages = requiredDoc.getLanguages();
                 for (int l = 0; l < languages.length; l++) {
-                    Document langVersion = map.getLanguageVersion(requiredDoc, languages[l]);
+                    Document langVersion = requiredDoc.getTranslation(languages[l]);
                     if (!sources.contains(langVersion) && !langVersion.isPlaceholder()) {
                         delete = false;
                     }
@@ -295,7 +293,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
                     Document reqDoc = map.get(n.getPublication(), n.getArea(), n.getPath());
                     languages = reqDoc.getLanguages();
                     for (int l = 0; l < languages.length; l++) {
-                        Document langVersion = map.getLanguageVersion(reqDoc, languages[l]);
+                        Document langVersion = reqDoc.getTranslation(languages[l]);
                         if (!sources.contains(langVersion) && !langVersion.isPlaceholder()) {
                             delete = false;
                         }
@@ -312,7 +310,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
                 Document d = map.get(n.getPublication(), n.getArea(), n.getPath());
                 String[] languages = d.getLanguages();
                 for (int l = 0; l < languages.length; l++) {
-                    Document langVersion = map.getLanguageVersion(d, languages[l]);
+                    Document langVersion = d.getTranslation(languages[l]);
                     docsToDelete.add(langVersion);
                 }
             }

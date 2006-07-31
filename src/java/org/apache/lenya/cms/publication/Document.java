@@ -254,4 +254,35 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      * @deprecated use {@link SiteUtil} instead.
      */
     String getPath();
+
+    /**
+     * Checks if a certain translation (language version) of this document exists.
+     * @param language The language.
+     * @return A boolean value.
+     */
+    boolean existsTranslation(String language);
+    
+    /**
+     * Returns a certain translation (language version) of this document.
+     * @param language The language.
+     * @return A document.
+     * @throws DocumentException if the language version doesn't exist.
+     */
+    Document getTranslation(String language) throws DocumentException;
+    
+    /**
+     * Checks if this document exists in a certain area.
+     * @param area The area.
+     * @return A boolean value.
+     */
+    boolean existsAreaVersion(String area);
+    
+    /**
+     * Returns the document in a certain area.
+     * @param area The area.
+     * @return A document.
+     * @throws DocumentException if the area version doesn't exist.
+     */
+    Document getAreaVersion(String area) throws DocumentException;
+
 }

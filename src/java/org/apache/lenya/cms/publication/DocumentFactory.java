@@ -30,7 +30,7 @@ public interface DocumentFactory extends RepositoryItemFactory {
      * Returns a document.
      * @param identifier The identifier of the document.
      * @return A document.
-     * @throws DocumentBuildException if an error occurs.
+     * @throws DocumentBuildException if the document does not exist.
      */
     Document get(DocumentIdentifier identifier) throws DocumentBuildException;
     
@@ -41,7 +41,7 @@ public interface DocumentFactory extends RepositoryItemFactory {
      * @param uuid The document ID.
      * @param language The language.
      * @return A document.
-     * @throws DocumentBuildException if an error occurs.
+     * @throws DocumentBuildException if the document does not exist.
      */
     Document get(Publication publication, String area, String uuid, String language)
             throws DocumentBuildException;
@@ -105,11 +105,4 @@ public interface DocumentFactory extends RepositoryItemFactory {
      */
     Document get(DocumentLocator locator) throws DocumentBuildException;
 
-    /**
-     * Checks if a document exists.
-     * @param identifier the identifier of the document.
-     * @return A boolean value.
-     */
-    boolean exists(DocumentIdentifier identifier);
-    
 }
