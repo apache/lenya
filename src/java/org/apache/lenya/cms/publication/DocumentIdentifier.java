@@ -36,6 +36,11 @@ public class DocumentIdentifier {
      * @param uuid The UUID.
      */
     public DocumentIdentifier(Publication publication, String area, String uuid, String language) {
+        
+        if (uuid.startsWith("/") && uuid.indexOf("-") > -1) {
+            throw new IllegalStateException("The UUID must not begin with a '/' and contain a '-'!");
+        }
+        
         this.publication = publication;
         this.area = area;
         this.language = language;

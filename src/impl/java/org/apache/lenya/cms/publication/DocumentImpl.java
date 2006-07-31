@@ -209,17 +209,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         }
 
         for (int i = 0; i < allLanguages.length; i++) {
-            Document version;
-            try {
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("Try to create document: " + allLanguages[i] + " " + this);
-                }
-                DocumentLocator loc = getLocator().getLanguageVersion(allLanguages[i]);
-                version = getFactory().get(loc);
-            } catch (DocumentBuildException e) {
-                throw new DocumentException(e);
-            }
-            if (version.exists()) {
+            if (existsTranslation(allLanguages[i])) {
                 documentLanguages.add(allLanguages[i]);
             }
         }

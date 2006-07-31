@@ -152,8 +152,7 @@ public class SiteUtil {
         Document document = map.get(node.getPublication(), node.getArea(), node.getPath());
         String[] languages = document.getLanguages();
         for (int i = 0; i < languages.length; i++) {
-            DocumentLocator loc = document.getLocator().getLanguageVersion(languages[i]);
-            Document version = document.getFactory().get(loc);
+            Document version = document.getTranslation(languages[i]);
             set.add(version);
         }
         return set;

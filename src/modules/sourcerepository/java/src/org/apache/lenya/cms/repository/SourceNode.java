@@ -231,8 +231,6 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             } else {
                 SourceUtil.delete(getRealSourceURI(), this.manager);
             }
-            removed();
-
         } catch (Exception e) {
             throw new RepositoryException(e);
         }
@@ -327,9 +325,6 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                     out.write(buf, 0, read);
                     read = in.read(buf);
                 }
-
-                changed();
-
             } catch (Exception e) {
                 throw new RepositoryException(e);
             } finally {

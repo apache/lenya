@@ -17,7 +17,7 @@
 package org.apache.lenya.cms;
 
 import java.io.File;
-import java.net.URL;
+import java.io.FileInputStream;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
@@ -56,6 +56,10 @@ public class LenyaTestCase extends ContainerTestCase {
         File contextRootDir = new File(contextRoot);
         context.put("context-root", contextRootDir);
 
+        String testPath = System.getProperty("testPath", "build/test");
+        File testRootDir = new File(testPath);
+        context.put("test-path", testRootDir);
+
         Context envContext = new CommandLineContext(contextRoot);
         ContainerUtil.enableLogging(envContext, getLogger());
         context.put(Constants.CONTEXT_ENVIRONMENT_CONTEXT, envContext);
@@ -84,12 +88,13 @@ public class LenyaTestCase extends ContainerTestCase {
     }
 
     protected void prepare() throws Exception {
+        File testPath = (File) this.context.get("test-path");
         final String resourceName = LenyaTestCase.class.getName().replace('.', '/') + ".xtest";
-        URL resource = getClass().getClassLoader().getResource(resourceName);
-
-        if (resource != null) {
-            getLogger().debug("Loading resource " + resourceName);
-            prepare(resource.openStream());
+        File resourceFile = new File(testPath, resourceName.replace('/', File.separatorChar));
+        
+        if (resourceFile.isFile()) {
+            getLogger().debug("Loading resource " + resourceFile.getAbsolutePath());
+            prepare(new FileInputStream(resourceFile));
         } else {
             getLogger().debug("Resource not found " + resourceName);
         }
