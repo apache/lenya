@@ -29,6 +29,7 @@
       <tlp-HEAD-rev href="tlp-HEAD.svn-revision.xml" label="current revision number" />
       <tlp-HEAD-sh href="tlp-HEAD.svn-sh.xml" label="create svn log shell" />
       <tlp-HEAD href="tlp-HEAD.svn.html" label="log HEAD" />
+      <tlp-2006-07 href="tlp-2006-07.svn.html" label="log 2006-07" />
       <tlp-2006-06 href="tlp-2006-06.svn.html" label="log 2006-06" />
       <tlp-2006-05 href="tlp-2006-05.svn.html" label="log 2006-05" />
       <tlp-2006-04 href="tlp-2006-04.svn.html" label="log 2006-04" />
