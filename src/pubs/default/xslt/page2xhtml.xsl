@@ -31,6 +31,7 @@
     
 <!-- {context-prefix}/{publication-id}/{area} -->
 <xsl:param name="root"/>
+<xsl:param name="context-prefix"/>
 
 <!-- i.e. doctypes/xhtml-document -->
 <xsl:param name="document-type"/>
@@ -54,6 +55,9 @@
       <xsl:choose>
         <xsl:when test="$document-type">
             <link rel="stylesheet" href="{$root}/css/{$document-type}.css" type="text/css"/>
+          <!-- The following only work if the module is called like the {$document-type}
+            This makes it possible to provide css e.g. for bxe on a module basis -->
+            <link rel="stylesheet" href="{$context-prefix}/modules/{$document-type}/css/{$document-type}.css" type="text/css"/>
         </xsl:when>
         <xsl:otherwise>
             <!-- do nothing -->
