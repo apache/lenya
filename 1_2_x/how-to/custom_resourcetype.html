@@ -1,0 +1,961 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.8-dev">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Custom Resource Type How-To</title>
+<link type="text/css" href="../../skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="../../skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="../../skin/print.css" rel="stylesheet">
+<link type="text/css" href="../../skin/profile.css" rel="stylesheet">
+<script src="../../skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="../../skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="../../skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="../../favicon.ico">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+<a href="http://www.apache.org/">apache</a> &gt; <a href="http://lenya.apache.org/">lenya</a><script src="../../skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>
+</div>
+<!--+
+    |header
+    +-->
+<div class="header">
+<!--+
+    |start group logo
+    +-->
+<div class="grouplogo">
+<a href=""><img class="logoImage" alt="Lenya" src="../../images/apache-lenya-light.png" title=""></a>
+</div>
+<!--+
+    |end group logo
+    +-->
+<!--+
+    |start Project Logo
+    +-->
+<div class="projectlogo">
+<a href=""></a>
+</div>
+<!--+
+    |end Project Logo
+    +-->
+<!--+
+    |start Search
+    +-->
+<div class="searchbox">
+<form action="http://www.google.com/search" method="get" class="roundtopsmall">
+<input value="lenya.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with ');" size="25" name="q" id="query" type="text" value="Search the site with ">&nbsp; 
+                    <input name="Search" value="Search" type="submit">
+</form>
+</div>
+<!--+
+    |end search
+    +-->
+<!--+
+    |start Tabs
+    +-->
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="../../index.html">Project</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../1_4/index.html">Version 1.4</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../modules/index.html">Modules</a>
+</li>
+<li class="current">
+<a class="base-selected" href="../../1_2_x/index.html">Version 1.2</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../community/index.html">Community</a>
+</li>
+</ul>
+<!--+
+    |end Tabs
+    +-->
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<!--+
+    |start Subtabs
+    +-->
+<div id="level2tabs"></div>
+<!--+
+    |end Endtabs
+    +-->
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<!--+
+    |start Menu, mainarea
+    +-->
+<!--+
+    |start Menu
+    +-->
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', '../../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../../skin/images/chapter_open.gif');">Version 1.2</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../../1_2_x/index.html">Index</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.2', '../../skin/')" id="menu_1.1.2Title" class="menutitle">Installation</div>
+<div id="menu_1.1.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/installation/index.html">Download</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/installation/subversion.html">Subversion Access</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/installation/source_version.html">Install Instructions</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', '../../skin/')" id="menu_1.1.3Title" class="menutitle">Tutorial</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/index.html">Introduction</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/understanding_lenya.html">1. Understanding Lenya</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/installing_lenya.html">2. Installing Lenya</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/anatomy_of_the_pipeline.html">3. Anatomy of the Pipeline</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/editing_in_lenya.html">4. Editing in Lenya</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/custom_navigation.html">5. Custom Navigation in Lenya</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/mod_proxy_and_lenya.html">6a. Mod Proxy and Lenya</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/mod_proxy_and_lenya_continued.html">6b. Mod Proxy and Lenya</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.4', '../../skin/')" id="menu_selected_1.1.4Title" class="menutitle" style="background-image: url('../../skin/images/chapter_open.gif');">How-To</div>
+<div id="menu_selected_1.1.4" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../../1_2_x/how-to/faq.html">FAQ</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/new_publication.html">New Publication</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/deploy_publication.html">Deploy Publication</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/look_and_feel.html">Look and Feel</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Custom Resource Type</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a title="Decide if you really need a new resource type" href="#Decide+if+you+really+need+a+new+resource+type">Decide if you reall...</a>
+</div>
+<div class="menupageitem">
+<a href="#Choose+a+name">Choose a name</a>
+</div>
+<div class="menupageitem">
+<a title="Define the resource type ID" href="#Define+the+resource+type+ID">Define the resource...</a>
+</div>
+<div class="menupageitem">
+<a title="Create the schema" href="#Create+the+schema">Create the schema...</a>
+</div>
+<div class="menupageitem">
+<a title="Resource type matcher" href="#Resource+type+matcher">Resource type match...</a>
+</div>
+<div class="menupageitem">
+<a href="#Sample+File">Sample File</a>
+</div>
+<div class="menupageitem">
+<a href="#Presentation">Presentation</a>
+</div>
+<div class="menupageitem">
+<a href="#Menus">Menus</a>
+</div>
+<div class="menupageitem">
+<a title="Using an existing menu" href="#Using+an+existing+menu">Using an existing m...</a>
+</div>
+<div class="menupageitem">
+<a title="using a custom menu" href="#using+a+custom+menu">using a custom menu...</a>
+</div>
+<div class="menupageitem">
+<a href="#Workflow">Workflow</a>
+</div>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/new_mime_type.html">Adding Mime Types</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/site_navigation.html">Site Navigation</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/ldap_authentication.html">LDAP Authentication</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/cms_menus.html">CMS Menus</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/cms_screens.html">CMS Screens</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/search.html">Search Publications</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/external_data.html">External Data</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5', '../../skin/')" id="menu_1.1.5Title" class="menutitle">Components</div>
+<div id="menu_1.1.5" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.5.1', '../../skin/')" id="menu_1.1.5.1Title" class="menutitle">Access&nbsp;Control</div>
+<div id="menu_1.1.5.1" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/terms.html">Basic Terms</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/accesscontrollers.html">Access&nbsp;Controllers</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/accesscontrollerresolvers.html">Access Controller Resolvers</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/authenticators.html">Authenticators</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/authorizers.html">Authorizers</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/policymanagers.html">Policies and Policy&nbsp;Managers</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/accreditablemanagers.html">Accreditable&nbsp;Managers</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/ssl.html">SSL Encryption</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.2', '../../skin/')" id="menu_1.1.5.2Title" class="menutitle">Authoring</div>
+<div id="menu_1.1.5.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/authoring/adding-document-creator.html">Adding a new document creator</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/authoring/image-upload.html">Image Upload</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/authoring/openoffice.html">OpenOffice</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.3', '../../skin/')" id="menu_1.1.5.3Title" class="menutitle">Deployment</div>
+<div id="menu_1.1.5.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/deployment/proxying.html">Proxying</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.4', '../../skin/')" id="menu_1.1.5.4Title" class="menutitle">Editors</div>
+<div id="menu_1.1.5.4" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/editors/htmlform.html">HTML Form Editor</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/editors/1form.html">HTML One Form Editor</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/editors/bxe.html">Bitflux Editor</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/editors/kupu.html">Kupu</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/editors/xopus.html">Xopus</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.5', '../../skin/')" id="menu_1.1.5.5Title" class="menutitle">Layout</div>
+<div id="menu_1.1.5.5" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/layout/navigation.html">Navigation</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/layout/xhtml-templating.html">XHTML templating</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/layout/static-resources.html">Serving static resources</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/layout/lenya-menubar.html">Lenya Menubar</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.6', '../../skin/')" id="menu_1.1.5.6Title" class="menutitle">Publication</div>
+<div id="menu_1.1.5.6" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/publication/pageenvelopemodule.html">PageEnvelopeModule</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/publication/siteTree.html">Site tree</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.7', '../../skin/')" id="menu_1.1.5.7Title" class="menutitle">Resource&nbsp;Types</div>
+<div id="menu_1.1.5.7" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/resource-types/resource-types.html">Resource&nbsp;Types</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.8', '../../skin/')" id="menu_1.1.5.8Title" class="menutitle">Revision Control</div>
+<div id="menu_1.1.5.8" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/revisioncontrol/revisioncontroller.html">Revision Controller</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/revisioncontrol/rcml.html">RCML</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/revisioncontrol/checkin.html">Check In</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/revisioncontrol/checkout.html">Check Out</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/revisioncontrol/version.html">Revisions</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/revisioncontrol/rollback.html">Rollback</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.9', '../../skin/')" id="menu_1.1.5.9Title" class="menutitle">Repository</div>
+<div id="menu_1.1.5.9" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/repository/index.html">WebDAV Servers</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.10', '../../skin/')" id="menu_1.1.5.10Title" class="menutitle">Search</div>
+<div id="menu_1.1.5.10" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/search/lucene.html">Searching with Lucene</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.11', '../../skin/')" id="menu_1.1.5.11Title" class="menutitle">URI Handling</div>
+<div id="menu_1.1.5.11" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/uri-handling/URIParametrizer.html">URI Parametrizer</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/uri-handling/standardURI.html">URI Scheme</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/uri-handling/usecases.html">Usecases</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.12', '../../skin/')" id="menu_1.1.5.12Title" class="menutitle">Asset Management</div>
+<div id="menu_1.1.5.12" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/asset-management/management.html">Asset Management</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.13', '../../skin/')" id="menu_1.1.5.13Title" class="menutitle">Link Management</div>
+<div id="menu_1.1.5.13" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/link-management/link-management.html">Link Management</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.14', '../../skin/')" id="menu_1.1.5.14Title" class="menutitle">Meta Data</div>
+<div id="menu_1.1.5.14" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/metadata/metadata.html">Meta Data Handling</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.15', '../../skin/')" id="menu_1.1.5.15Title" class="menutitle">Multilingual Documents</div>
+<div id="menu_1.1.5.15" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/multilingual/multilingual.html">Multilingual Document Handling</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.16', '../../skin/')" id="menu_1.1.5.16Title" class="menutitle">Tasks</div>
+<div id="menu_1.1.5.16" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/concept.html">The Task Concept</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/defining.html">Defining Tasks</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/taskaction.html">The TaskAction</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/scheduling.html">Scheduling a Task</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.16.5', '../../skin/')" id="menu_1.1.5.16.5Title" class="menutitle">Included tasks</div>
+<div id="menu_1.1.5.16.5" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/anttask.html">AntTask</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/publisher.html">DefaultFilePublisher</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/exporter.html">StaticHTMLExporter</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/mailtask.html">MailTask</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/development.html">Developing Tasks</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.17', '../../skin/')" id="menu_1.1.5.17Title" class="menutitle">Workflow</div>
+<div id="menu_1.1.5.17" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/workflow/terms.html">Terms</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/workflow/state-machine.html">The State Machine</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/workflow/configuration.html">Configuration</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/workflow/implementation.html">Implementation</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.18', '../../skin/')" id="menu_1.1.5.18Title" class="menutitle">Site Management</div>
+<div id="menu_1.1.5.18" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/archive.html">Archive</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/copy.html">Copy</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/deactivate.html">Deactivate</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/delete.html">Delete</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/deletetrash.html">Delete the trash</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/move.html">Move</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/moveupdown.html">Move Up/Down</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/rename.html">Rename</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/restore.html">Restore</a>
+</div>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.6', '../../skin/')" id="menu_1.1.6Title" class="menutitle">Miscellaneous</div>
+<div id="menu_1.1.6" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/misc/namespaces.html">Namespaces</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/misc/coding-guidelines.html">Coding Guidelines</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/misc/reserved_names.html">Reserved Names</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/misc/unittests.html">Unit Tests</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/misc/xinclude-processor.html">XInclude Processor</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.2/index.html">1.2 API (Javadoc)</a>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="../../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<!--+
+  |alternative credits
+  +-->
+<div id="credit2">
+<a href="http://apachecon.com/"><img border="0" title="ApacheCon EU 2006" alt="ApacheCon EU 2006 - logo" src="http://www.eu.apachecon.com/konferenzen/apachecon06/images/header-left.gif" style="width: 150px;height: 50px;"></a>
+</div>
+</div>
+<!--+
+    |end Menu
+    +-->
+<!--+
+    |start content
+    +-->
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="custom_resourcetype.pdf"><img alt="PDF -icon" src="../../skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Custom Resource Type How-To</h1>
+
+<p>This tutorial explains how to add a custom resource type to the Default publication in order to mix free page editing (as in XHTML) and constrained editing 
+(as you get with a custom resource type). </p>
+
+
+<a name="N10011"></a><a name="Decide+if+you+really+need+a+new+resource+type"></a>
+<h2 class="h3">Decide if you really need a new resource type</h2>
+<div class="section">
+<p>Introducing a new resource type where you don't need one is a time consuming and often unnecessary excercise. Therefore you should ask yourself first if you really need a new 
+resource type for what you are trying to achieve or if you should be looking for other means of solving your problem. </p>
+<p>As a rule of thumb, you should use a new resource type if you are going to render documents which are fundamentally different from XHTML.
+ A resource type is all about Lenya turning an arbitraty XML document into XHTML which then will be put into the content page of your publication's page. </p>
+<p>It might make sense for example to introduce resource types for well known XML schemas such as: </p>
+<ul>
+
+<li> RSS</li>
+
+<li>
+<a href="http://docbook.sourceforge.net/">DocBook</a>
+</li>
+
+<li>
+<p> NewsML, SportsML, <a href="http://nitf.org/">NITF</a> or <a href="http://www.iptc.org">IPTC</a> 
+</p>
+
+</li>
+
+<li>
+<a href="http://xmlns.com/foaf/0.1/">FOAF</a>
+</li>
+
+</ul>
+<p>It may also make sense to introduce resource types for custom XML schemas such as </p>
+<ul>
+
+<li>
+<p> the XML format you use for a catalog item in your company </p>
+
+</li>
+
+</ul>
+<p>In contrast, it is not a good idea to introduce a custom resource type if you want to render documents that are basically XHTML but just contain some non-XHTML tags such as </p>
+<ul>
+
+<li>
+<p> &lt;xi:include ...&gt; </p>
+
+</li>
+
+<li>
+<p> &lt;ft:...&gt; (Cocoon Form tags) </p>
+
+</li>
+
+</ul>
+<p>In this case you should rather add some extra transformers to the pipeline that renders these tags into XHTML. </p>
+<p>Also resource types are not XHTML templates. </p>
+</div>
+<a name="N1005E"></a><a name="Choose+a+name"></a>
+<h2 class="h3">Choose a name</h2>
+<div class="section">
+<p>Choose a name for the resource type ID: <em>myresourcetype</em> 
+</p>
+</div>
+<a name="N1006A"></a><a name="Define+the+resource+type+ID"></a>
+<h2 class="h3">Define the resource type ID</h2>
+<div class="section">
+<p>Define the resource type ID in <em>mypub/config/doctypes/doctypes.xconf</em> Note that resource types were historically called doctypes, thus the names of the config files. </p>
+<pre class="code">
+&lt;doctypes&gt; 
+  &lt;!-- Here is the document ID --&gt;
+  &lt;doc type="myresourcetype"&gt;
+    &lt;!-- if the document is allowed to have children, define what resource types they can be --&gt;
+    &lt;children&gt;
+      &lt;!-- this resource type is allowed to have xhtml and/or myresourcetype documents as children --&gt;
+
+      &lt;doc type="xhtml"/&gt;
+      &lt;doc type="myresourcetype"/&gt;
+    &lt;/children&gt;
+    &lt;!-- This is the class that creates a new instance of this resource type --&gt;
+    &lt;creator src="org.apache.lenya.cms.authoring.DefaultBranchCreator"&gt;
+      &lt;!-- this is the sample file that is used when creating a new instance of this resource type. Can be found in config/doctypes/samples --&gt;
+
+      &lt;sample-name&gt;myresourcetype.xml&lt;/sample-name&gt;
+    &lt;/creator&gt;
+    &lt;!-- These tasks here refer to ant tasks that should be called for this resource type. For instance, you can have a special publish task. --&gt;
+    &lt;!-- tasks are defined in mypub/config/tasks/tasks.xconf --&gt;
+    &lt;tasks&gt;
+
+      &lt;task id="publish"/&gt;
+    &lt;/tasks&gt;
+    &lt;!-- Specify the workflow definition for this resource type. You can define a seperate workflow for each resource type, for instance with one or two levels of approval. --&gt;
+    &lt;!-- workflow process is defined in mypub/config/workflow/workflow.xml (see below) --&gt;
+    &lt;workflow src="workflow.xml"/&gt;
+  &lt;/doc&gt;
+
+&lt;/doctypes&gt;</pre>
+</div>
+<a name="N1007A"></a><a name="Create+the+schema"></a>
+<h2 class="h3">Create the schema</h2>
+<div class="section">
+<p>Create relax NG schema: <em>mypub/config/doctypes/schemas/myresourcetype.rng</em> 
+</p>
+<p>Note: This is optional, but important if you want to use the form editors. If you get your XML files that you try to render as a custom resource type from 
+somewhere else you can omit this step. You can also omit it if you want to create a sample document manually first to see all the rest working and come back to this point later. </p>
+<pre class="code">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt; 
+&lt;!--+
+    | myresourcetype resource type
+    +--&gt;
+
+&lt;grammar ns="http://www.w3.org/1999/xhtml"
+         xmlns="http://relaxng.org/ns/structure/1.0"
+         xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xmlns:dcterms="http://purl.org/dc/terms/"
+         xmlns:xhtml="http://www.w3.org/1999/xhtml"
+         &gt;
+
+&lt;!-- include the general lenya schema --&gt;
+&lt;!-- you should include the lenya schema if you want to use meta data or assets --&gt;
+&lt;include href="lenya.rng"/&gt;
+
+&lt;!-- include original XHTML transitional schema --&gt;
+&lt;include href="xhtml/xhtml-basic.rng"&gt;
+
+  &lt;define name="html"&gt;
+
+    &lt;element name="html"&gt;
+      &lt;ref name="html.attlist"/&gt;
+      &lt;ref name="lenya.meta"/&gt; &lt;!-- this is the Lenya meta data wrapper --&gt;
+      &lt;ref name="head"/&gt;
+      &lt;ref name="body"/&gt;
+
+    &lt;/element&gt;
+  &lt;/define&gt;
+
+  &lt;define name="html.attlist"&gt;
+    &lt;ref name="XHTML.version.attrib"/&gt;
+    &lt;ref name="I18n.attrib"/&gt;
+    &lt;ref name="dummy.attlist"/&gt; &lt;!-- this is deprecated --&gt;
+
+  &lt;/define&gt;
+
+&lt;/include&gt;
+
+
+&lt;!-- additional block elements --&gt;
+&lt;define name="Block.class" combine="choice"&gt;
+  &lt;choice&gt;
+    &lt;ref name="lenya.asset"/&gt;
+
+  &lt;/choice&gt;
+&lt;/define&gt;
+
+
+&lt;/grammar&gt;</pre>
+<p>Note that you can generate Relax NG schemas from sample files by using <a href="http://www.thaiopensource.com/relaxng/trang.html">
+ Trang</a> or <a href="http://wwws.sun.com/software/xml/developers/relaxngconverter/"> Sun RELAX NG Converter</a> 
+</p>
+</div>
+<a name="N10098"></a><a name="Resource+type+matcher"></a>
+<h2 class="h3">Resource type matcher</h2>
+<div class="section">
+<p>Add a sourcetype matcher in <em>mypub/parameter-doctype.xmap</em> 
+
+</p>
+<pre class="code">
+&lt;!-- This file is map:mounted from mypub/publication-sitemap.xmap --&gt;
+
+&lt;map:action name="sourcetype" src="org.apache.cocoon.acting.sourcetype.SourceTypeAction"&gt;
+  &lt;sourcetype name="myresourcetype"&gt;
+
+    &lt;document-element local-name="myroottag"/&gt;
+    &lt;!-- this matches the root tag --&gt;
+  &lt;/sourcetype&gt;
+&lt;/map:action&gt;
+
+</pre>
+<p>The parameter-doctype.xmap allows Lenya to determine the resource type of any URI. the mapping provided in here allows to mix and match resource types freely.
+ It makes use of the <a href="http://forrest.apache.org/docs/cap.html"> Source Type action</a>. There are several ways to identify a resource type, 
+ such as by its root tag, the namespace of its root element or its schema. Please note that the name of the resource type you specify here is used throughout 
+ Lenya as a naming convention, for instance for the resourcetype2xhtml.xsl. </p>
+<p>The root-tag is just the doctype within your publication (i.e., 'homepage', if you have a homepage.rng doctype definition).  For more background, see:  
+<a href="http://forrest.apache.org/docs/cap.html"> http://forrest.apache.org/docs/cap.html</a> 
+</p>
+<p>For great examples of complex custom types, please also go to <a href="http://www.wyona.org"> http://www.wyona.org</a> and do a Subversion 
+update to download the example publication (University of Zurich and others). </p>
+<p>Many problems with resource types not rendering correctly result from this matcher not recognizing the resource type and therefore using the default. 
+So pay special attention to this. Check the overview page in the site area where it will tell you what resource type the document has. </p>
+</div>
+<a name="N100C0"></a><a name="Sample+File"></a>
+<h2 class="h3">Sample File</h2>
+<div class="section">
+<p>Add a sample file: <em>mypub/config/doctypes/samples/myresourcetype.xml</em> 
+</p>
+<p>The sample file will be used as a template. If you create a new document with this resource type a copy of the sample file will be placed as a starting point. 
+Therefore it makes sense to set some good defaults here. </p>
+<pre class="code">
+&lt;?xml version="1.0" encoding="UTF-8"?&gt; 
+&lt;html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:xhtml="http://www.w3.org/1999/xhtml"
+      xmlns:dc="http://purl.org/dc/elements/1.1/"
+      xmlns:dcterms="http://purl.org/dc/terms/"
+      xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
+      xhtml:dummy="FIXME:keepNamespace" dc:dummy="FIXME:keepNamespace"
+      lenya:dummy="FIXME:keepNamespace" dcterms:dummy="FIXME:keepNamespace"&gt;
+    &lt;lenya:meta&gt;
+        &lt;dc:title&gt;dctitle&lt;/dc:title&gt;
+
+        &lt;dc:creator&gt;dccreator&lt;/dc:creator&gt;
+        &lt;dc:subject&gt;dcsubject&lt;/dc:subject&gt;
+        &lt;dc:description&gt;An empty page for a new resource type&lt;/dc:description&gt;
+        &lt;dc:publisher/&gt;
+
+        &lt;dc:contributor/&gt;
+        &lt;dc:date&gt;2004-4-6&lt;/dc:date&gt;
+        &lt;dc:type/&gt;
+        &lt;dc:format/&gt;
+        &lt;dc:identifier/&gt;
+
+        &lt;dc:source/&gt;
+        &lt;dc:language&gt;en&lt;/dc:language&gt;
+        &lt;dc:relation/&gt;
+        &lt;dc:coverage/&gt;
+        &lt;dc:rights&gt;dcrights&lt;/dc:rights&gt;
+
+    &lt;/lenya:meta&gt;
+  &lt;head&gt;
+    &lt;title&gt;Sample new resource type&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+
+    &lt;h1&gt;New resource type sample&lt;/h1&gt;
+    &lt;p&gt;This sample page is the basis for pages based on this resource type&lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</pre>
+</div>
+<a name="N100D3"></a><a name="Presentation"></a>
+<h2 class="h3">Presentation</h2>
+<div class="section">
+<ul>
+
+<li>
+<p> Create presentation XSLT and CSS.  If the XSLT and CSS are specific to the publication, you may want to store them in <em>mypub/xslt/myresourcetype2xhtml.xsl</em>
+ and <em>mypub/resources/shared/css/myresourcetype.css</em>, respectively. Take care of the naming conventions for the XSLT files. </p>
+
+</li>
+
+<li class="gap">
+<p> Copy <em>mypub/xslt/page2xhtml-xhtml.xsl</em> to <em>mypub/xslt/page2xhtml-myresourcetype.xsl</em>. This will style your new document type
+ like your old documents. If you wish to change how the new documents look, create your own stylesheet at <em>mypub/xslt/page2xhtml-myresourcetype.xsl</em> 
+</p>
+
+
+</li>
+
+<li class="gap">
+<p> If you wish to edit your new documents using BXE (Kupu works only with XHTML), you should place a CSS file for styling your documents in
+ <em>mypub/resources/misc/myresourcetype-bxeng.css</em> 
+</p>
+
+</li>
+
+<li class="gap">
+<p> Add presentation pipelines in <em>mypub/sitemap.xmap</em> if you need special pipelines for your resource type </p>
+
+</li>
+
+</ul>
+<p>Make sure you understand that for your new resource type you don't need a replacement for page2xhtml.xsl but for xhtml2xhtml. The reason is this: </p>
+<p>Transforming a document to a page in the browser is always a two-step process, </p>
+<ol>
+
+<li>
+<p>Using {resourcetype}2xhtml.xsl the document (which might be any arbritary XML such as the link list, Docbook, a RSS feed, etc.) is turned into an XHTML presentation. </p>
+
+</li>
+
+<li>
+<p>This XHTML is then processed to contain nagivation, menus and the like using page2xhtml. </p>
+
+</li>
+
+<li>
+<p>The stylesheet {resourcetype}2xhtml.xsl must return a document of the form 
+<em>&lt;div&nbsp;id="body"&nbsp;xmlns="http://www.w3.org/1999/xhtml"&gt;&nbsp;...&nbsp;&lt;/div&gt;</em>. </p>
+
+
+</li>
+
+</ol>
+<p>If you have 5 resource types in your publication, for example: </p>
+<ul>
+
+<li>rss</li>
+
+<li>
+<p> linklist </p>
+
+</li>
+
+<li>
+<p> gallery </p>
+
+</li>
+
+
+<li>
+<p> docbook </p>
+
+</li>
+
+<li>
+<p> xhtml </p>
+
+</li>
+
+</ul>
+<p>the concept would be </p>
+<pre class="code">
+document -&gt; rss2xhtml.xsl       --+
+document -&gt; linklist2xhtml.xsl  --+
+document -&gt; gallery2xhtml.xsl   --+---&gt; page2xhtml.xsl -&gt; Browser
+document -&gt; docbook2xhtml.xsl   --+
+document -&gt; xhtml2xhtml.xsl     --+
+
+</pre>
+</div>
+<a name="N10147"></a><a name="Menus"></a>
+<h2 class="h3">Menus</h2>
+<div class="section">
+<p>Configure the menus (either 1. or 2.) </p>
+</div>
+<a name="N10150"></a><a name="Using+an+existing+menu"></a>
+<h2 class="h3">Using an existing menu</h2>
+<div class="section">
+<p>Use an existing menu and add necessary menu items </p>
+<ul>
+
+<li>
+<p> Edit <em>mypub/config/menus/generic.xsp</em> and add an entry for the new resource type </p>
+
+
+</li>
+
+<li>
+<p> 
+</p>
+
+<pre class="code">
+... 
+    &lt;menus&gt;
+      &lt;menu i18n:attr="name" name="File" label="File"&gt;
+        &lt;block&gt;
+          &lt;xsp:logic&gt;
+            {
+        if (Publication.ARCHIVE_AREA.equals(area) || Publication.TRASH_AREA.equals(area)) {
+          &lt;item&gt;&lt;i18n:text&gt;New Document&lt;/i18n:text&gt;&lt;/item&gt;
+
+        }
+        else {
+          &lt;item uc:usecase="create" uc:step="showscreen" href="?doctype=xhtml"&gt;&lt;i18n:text&gt;New Document&lt;/i18n:text&gt;&lt;/item&gt;
+          &lt;item uc:usecase="create" uc:step="showscreen" href="?doctype=myresourcetype"&gt;New "Doc type" Document&lt;/item&gt;
+        }
+            }
+          &lt;/xsp:logic&gt;
+
+        &lt;/block&gt;
+...</pre>
+
+</li>
+
+</ul>
+</div>
+<a name="N1016D"></a><a name="using+a+custom+menu"></a>
+<h2 class="h3">using a custom menu</h2>
+<div class="section">
+<p>or Create a custom menu for this resource type </p>
+<ul>
+
+<li>
+<p> edit <em>mypub/menus.xmap</em> 
+</p>
+
+
+</li>
+
+<li>
+<p> create a menu file <em>mypub/config/menus/myresourcetype.xsp</em> 
+</p>
+
+</li>
+
+</ul>
+</div>
+<a name="N10189"></a><a name="Workflow"></a>
+<h2 class="h3">Workflow</h2>
+<div class="section">
+<p>(optional) define a specific workflow </p>
+<ul>
+
+<li>
+<p> add the workflow schema to <em>mypub/config/workflow/</em> 
+</p>
+
+
+</li>
+
+<li>
+<p> assign the workflow schema to the resource type in <em>mypub/config/doctypes/doctypes.xconf</em> 
+</p>
+
+</li>
+
+</ul>
+</div>   
+</div>
+<!--+
+    |end content
+    +-->
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<!--+
+    |start bottomstrip
+    +-->
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2002-2005 <a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software Foundation.</a>
+</div>
+<div id="feedback">
+    Send feedback about the website to:
+  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A01_2_x/how-to/custom_resourcetype.html">dev@lenya.apache.org</a>
+</div>
+<!--+
+    |end bottomstrip
+    +-->
+</div>
+</body>
+</html>

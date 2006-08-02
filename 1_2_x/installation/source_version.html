@@ -1,0 +1,1197 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.8-dev">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Apache Lenya 1.2 Install instructions</title>
+<link type="text/css" href="../../skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="../../skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="../../skin/print.css" rel="stylesheet">
+<link type="text/css" href="../../skin/profile.css" rel="stylesheet">
+<script src="../../skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="../../skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="../../skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="../../favicon.ico">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+<a href="http://www.apache.org/">apache</a> &gt; <a href="http://lenya.apache.org/">lenya</a><script src="../../skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>
+</div>
+<!--+
+    |header
+    +-->
+<div class="header">
+<!--+
+    |start group logo
+    +-->
+<div class="grouplogo">
+<a href=""><img class="logoImage" alt="Lenya" src="../../images/apache-lenya-light.png" title=""></a>
+</div>
+<!--+
+    |end group logo
+    +-->
+<!--+
+    |start Project Logo
+    +-->
+<div class="projectlogo">
+<a href=""></a>
+</div>
+<!--+
+    |end Project Logo
+    +-->
+<!--+
+    |start Search
+    +-->
+<div class="searchbox">
+<form action="http://www.google.com/search" method="get" class="roundtopsmall">
+<input value="lenya.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with ');" size="25" name="q" id="query" type="text" value="Search the site with ">&nbsp; 
+                    <input name="Search" value="Search" type="submit">
+</form>
+</div>
+<!--+
+    |end search
+    +-->
+<!--+
+    |start Tabs
+    +-->
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="../../index.html">Project</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../1_4/index.html">Version 1.4</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../modules/index.html">Modules</a>
+</li>
+<li class="current">
+<a class="base-selected" href="../../1_2_x/index.html">Version 1.2</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../community/index.html">Community</a>
+</li>
+</ul>
+<!--+
+    |end Tabs
+    +-->
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<!--+
+    |start Subtabs
+    +-->
+<div id="level2tabs"></div>
+<!--+
+    |end Endtabs
+    +-->
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<!--+
+    |start Menu, mainarea
+    +-->
+<!--+
+    |start Menu
+    +-->
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', '../../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../../skin/images/chapter_open.gif');">Version 1.2</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../../1_2_x/index.html">Index</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.2', '../../skin/')" id="menu_selected_1.1.2Title" class="menutitle" style="background-image: url('../../skin/images/chapter_open.gif');">Installation</div>
+<div id="menu_selected_1.1.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../../1_2_x/installation/index.html">Download</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/installation/subversion.html">Subversion Access</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Install Instructions</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a href="#introduction">Introduction</a>
+</div>
+<div class="menupageitem">
+<a href="#prerequisites">Prerequisites</a>
+</div>
+<div class="menupageitem">
+<a title="Standalone Install" href="#Standalone+Install">Standalone Install...</a>
+</div>
+<div class="menupageitem">
+<a title="Install with Tomcat" href="#Install+with+Tomcat">Install with Tomcat...</a>
+</div>
+</div>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', '../../skin/')" id="menu_1.1.3Title" class="menutitle">Tutorial</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/index.html">Introduction</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/understanding_lenya.html">1. Understanding Lenya</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/installing_lenya.html">2. Installing Lenya</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/anatomy_of_the_pipeline.html">3. Anatomy of the Pipeline</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/editing_in_lenya.html">4. Editing in Lenya</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/custom_navigation.html">5. Custom Navigation in Lenya</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/mod_proxy_and_lenya.html">6a. Mod Proxy and Lenya</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/mod_proxy_and_lenya_continued.html">6b. Mod Proxy and Lenya</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4', '../../skin/')" id="menu_1.1.4Title" class="menutitle">How-To</div>
+<div id="menu_1.1.4" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/how-to/faq.html">FAQ</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/new_publication.html">New Publication</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/deploy_publication.html">Deploy Publication</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/look_and_feel.html">Look and Feel</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/custom_resourcetype.html">Custom Resource Type</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/new_mime_type.html">Adding Mime Types</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/site_navigation.html">Site Navigation</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/ldap_authentication.html">LDAP Authentication</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/cms_menus.html">CMS Menus</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/cms_screens.html">CMS Screens</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/search.html">Search Publications</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/external_data.html">External Data</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5', '../../skin/')" id="menu_1.1.5Title" class="menutitle">Components</div>
+<div id="menu_1.1.5" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.5.1', '../../skin/')" id="menu_1.1.5.1Title" class="menutitle">Access&nbsp;Control</div>
+<div id="menu_1.1.5.1" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/terms.html">Basic Terms</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/accesscontrollers.html">Access&nbsp;Controllers</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/accesscontrollerresolvers.html">Access Controller Resolvers</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/authenticators.html">Authenticators</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/authorizers.html">Authorizers</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/policymanagers.html">Policies and Policy&nbsp;Managers</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/accreditablemanagers.html">Accreditable&nbsp;Managers</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/ssl.html">SSL Encryption</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.2', '../../skin/')" id="menu_1.1.5.2Title" class="menutitle">Authoring</div>
+<div id="menu_1.1.5.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/authoring/adding-document-creator.html">Adding a new document creator</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/authoring/image-upload.html">Image Upload</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/authoring/openoffice.html">OpenOffice</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.3', '../../skin/')" id="menu_1.1.5.3Title" class="menutitle">Deployment</div>
+<div id="menu_1.1.5.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/deployment/proxying.html">Proxying</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.4', '../../skin/')" id="menu_1.1.5.4Title" class="menutitle">Editors</div>
+<div id="menu_1.1.5.4" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/editors/htmlform.html">HTML Form Editor</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/editors/1form.html">HTML One Form Editor</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/editors/bxe.html">Bitflux Editor</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/editors/kupu.html">Kupu</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/editors/xopus.html">Xopus</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.5', '../../skin/')" id="menu_1.1.5.5Title" class="menutitle">Layout</div>
+<div id="menu_1.1.5.5" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/layout/navigation.html">Navigation</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/layout/xhtml-templating.html">XHTML templating</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/layout/static-resources.html">Serving static resources</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/layout/lenya-menubar.html">Lenya Menubar</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.6', '../../skin/')" id="menu_1.1.5.6Title" class="menutitle">Publication</div>
+<div id="menu_1.1.5.6" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/publication/pageenvelopemodule.html">PageEnvelopeModule</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/publication/siteTree.html">Site tree</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.7', '../../skin/')" id="menu_1.1.5.7Title" class="menutitle">Resource&nbsp;Types</div>
+<div id="menu_1.1.5.7" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/resource-types/resource-types.html">Resource&nbsp;Types</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.8', '../../skin/')" id="menu_1.1.5.8Title" class="menutitle">Revision Control</div>
+<div id="menu_1.1.5.8" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/revisioncontrol/revisioncontroller.html">Revision Controller</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/revisioncontrol/rcml.html">RCML</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/revisioncontrol/checkin.html">Check In</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/revisioncontrol/checkout.html">Check Out</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/revisioncontrol/version.html">Revisions</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/revisioncontrol/rollback.html">Rollback</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.9', '../../skin/')" id="menu_1.1.5.9Title" class="menutitle">Repository</div>
+<div id="menu_1.1.5.9" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/repository/index.html">WebDAV Servers</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.10', '../../skin/')" id="menu_1.1.5.10Title" class="menutitle">Search</div>
+<div id="menu_1.1.5.10" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/search/lucene.html">Searching with Lucene</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.11', '../../skin/')" id="menu_1.1.5.11Title" class="menutitle">URI Handling</div>
+<div id="menu_1.1.5.11" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/uri-handling/URIParametrizer.html">URI Parametrizer</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/uri-handling/standardURI.html">URI Scheme</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/uri-handling/usecases.html">Usecases</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.12', '../../skin/')" id="menu_1.1.5.12Title" class="menutitle">Asset Management</div>
+<div id="menu_1.1.5.12" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/asset-management/management.html">Asset Management</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.13', '../../skin/')" id="menu_1.1.5.13Title" class="menutitle">Link Management</div>
+<div id="menu_1.1.5.13" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/link-management/link-management.html">Link Management</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.14', '../../skin/')" id="menu_1.1.5.14Title" class="menutitle">Meta Data</div>
+<div id="menu_1.1.5.14" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/metadata/metadata.html">Meta Data Handling</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.15', '../../skin/')" id="menu_1.1.5.15Title" class="menutitle">Multilingual Documents</div>
+<div id="menu_1.1.5.15" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/multilingual/multilingual.html">Multilingual Document Handling</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.16', '../../skin/')" id="menu_1.1.5.16Title" class="menutitle">Tasks</div>
+<div id="menu_1.1.5.16" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/concept.html">The Task Concept</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/defining.html">Defining Tasks</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/taskaction.html">The TaskAction</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/scheduling.html">Scheduling a Task</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.16.5', '../../skin/')" id="menu_1.1.5.16.5Title" class="menutitle">Included tasks</div>
+<div id="menu_1.1.5.16.5" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/anttask.html">AntTask</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/publisher.html">DefaultFilePublisher</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/exporter.html">StaticHTMLExporter</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/mailtask.html">MailTask</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/development.html">Developing Tasks</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.17', '../../skin/')" id="menu_1.1.5.17Title" class="menutitle">Workflow</div>
+<div id="menu_1.1.5.17" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/workflow/terms.html">Terms</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/workflow/state-machine.html">The State Machine</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/workflow/configuration.html">Configuration</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/workflow/implementation.html">Implementation</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.18', '../../skin/')" id="menu_1.1.5.18Title" class="menutitle">Site Management</div>
+<div id="menu_1.1.5.18" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/archive.html">Archive</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/copy.html">Copy</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/deactivate.html">Deactivate</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/delete.html">Delete</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/deletetrash.html">Delete the trash</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/move.html">Move</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/moveupdown.html">Move Up/Down</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/rename.html">Rename</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/restore.html">Restore</a>
+</div>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.6', '../../skin/')" id="menu_1.1.6Title" class="menutitle">Miscellaneous</div>
+<div id="menu_1.1.6" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/misc/namespaces.html">Namespaces</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/misc/coding-guidelines.html">Coding Guidelines</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/misc/reserved_names.html">Reserved Names</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/misc/unittests.html">Unit Tests</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/misc/xinclude-processor.html">XInclude Processor</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.2/index.html">1.2 API (Javadoc)</a>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="../../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<!--+
+  |alternative credits
+  +-->
+<div id="credit2">
+<a href="http://apachecon.com/"><img border="0" title="ApacheCon EU 2006" alt="ApacheCon EU 2006 - logo" src="http://www.eu.apachecon.com/konferenzen/apachecon06/images/header-left.gif" style="width: 150px;height: 50px;"></a>
+</div>
+</div>
+<!--+
+    |end Menu
+    +-->
+<!--+
+    |start content
+    +-->
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="source_version.pdf"><img alt="PDF -icon" src="../../skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Apache Lenya 1.2 Install instructions</h1>
+  	
+<a name="N1000E"></a><a name="introduction"></a>
+<h2 class="h3">Introduction</h2>
+<div class="section">
+<p>
+  			This document explains how to install Lenya 1.2.x from source.
+  			There are different ways to install and run Lenya:
+  			<br>
+  			Choose between
+  		</p>
+<ol>
+            
+<li>running Lenya standalone using the built-in Jetty servlet container</li>
+            
+<li>using Tomcat and have the build process taking care of deploying Lenya in Tomcat</li>
+        
+</ol>
+<p>
+  			Please note that you can use other servlet
+        	containers as well, but Jetty and Tomcat are the tested ones.
+        </p>
+<p>
+  			In all cases, you will need to meet the following prerequisites,
+  			that describe the setup that is tested and recommended. 
+  		</p>
+</div>
+    
+<a name="N10029"></a><a name="prerequisites"></a>
+<h2 class="h3">Prerequisites</h2>
+<div class="section">
+<ul>
+      	      	
+        
+<li>
+          
+<p>
+            
+<strong>Java 2 Platform, Standard Edition</strong>
+            
+<br>
+            We recommend version 1.4.2 or newer, though 1.4.1 has been reported to work as well. Version 1.5 works with <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=32923">limitations</a> (see Bugzilla).
+            <br>
+            Get it from <a href="http://java.sun.com/j2se/1.4.2/download.html">http://java.sun.com/j2se/1.4.2/download.html</a>
+          
+</p>
+        
+</li>
+        
+        
+<li>
+      		
+<p>
+      		
+<strong>Recommended: Create a directory</strong> to better organise the various source files
+      		<br>
+      		In this document, we will assume the name <span class="codefrag">src/</span> for that directory. 
+      		This directory will contain the Lenya distribution as well as Cocoon.
+      		</p>
+      		
+      		
+<p>
+      		After expanding the	downloaded archives or after a <a href="subversion.html">svn checkout</a>,
+      		the directory structure should look like this:
+      		</p>
+      		
+      		
+<pre class="code">
+            your_home/ (or c:\ on Windows, NOT My Documents)
+              `-- src/
+                   |-- lenya-1.2.x/            $LENYA_HOME
+                   `-- cocoon-2.1.7/           $COCOON_HOME
+                        `-- build/
+                             `-- webapp/       $COCOON_WEBAPP
+     		</pre>
+     		
+     		
+<p>
+     		The directories inside cocoon-2.1.7/ will be created when you build Cocoon. 
+     		The variables will later be used in the local.build.properties file that configures the Lenya build process.
+      		</p>
+      		
+      	
+</li>
+      	
+      	
+<li>
+          
+<p>
+            
+<strong>Get Apache Lenya</strong>
+            
+<br>
+            (see <a href="../../1_2_x/installation/index.html">Download Lenya</a>)
+            <br>
+            Extract the downloaded Lenya archive in the
+            <span class="codefrag">src/</span> directory described above. This will create <span class="codefrag">lenya-1.2.x/</span> inside <span class="codefrag">src/</span>.
+            If you use <a href="http://subversion.tigris.org/">Subversion</a>, <a href="subversion.html">checkout Lenya</a> inside the
+            <span class="codefrag">src/</span> directory.
+          </p>
+        
+</li>
+
+        
+<li>
+          
+<p>
+            
+<strong>Get Apache Cocoon</strong>
+            
+<br>
+            version: 2.1.7
+            <br>
+            Get it from <a href="http://cocoon.apache.org/mirror.cgi">http://cocoon.apache.org/mirror.cgi</a>
+<br>
+            Unpack Cocoon in <span class="codefrag">src/</span>.
+          </p>
+
+			
+<br>
+			
+          
+<p>
+            Note that Cocoon is needed to build the source
+            version of Lenya, but the resulting Lenya webapp is
+            completely self contained and therefore  does not need
+            the Cocoon webapp to be installed. See the <a href="../how-to/faq.html">FAQ</a>
+            for details of configuration changes required when running
+            multiple Cocoon based applications.
+          </p>
+        
+</li>
+
+        
+        
+<li>
+          
+<p>
+            
+<strong>Build Cocoon</strong>
+          
+</p>
+
+          
+<p>
+       		Copy the Cocoon build properties supplied by Lenya
+          </p>
+
+          
+<ul>
+            
+<li>
+<span class="codefrag">local.build.properties</span>
+</li>
+            
+<li>
+<span class="codefrag">local.blocks.properties</span>
+</li>
+          
+</ul>
+
+          
+<p>
+            from <span class="codefrag">$LENYA_HOME/src/cocoon/</span> to
+            <span class="codefrag">$COCOON_HOME</span>.
+          </p>
+        
+</li>
+
+        
+<li>
+          
+<p>
+            
+<strong>Compile Cocoon</strong>
+          
+</p>
+
+          
+<p>
+            
+<strong>MS Windows</strong>
+          
+</p>
+
+          
+<pre class="code">
+            $COCOON_HOME &gt; build.bat
+          </pre>
+
+          
+<p>
+            
+<strong>Unix</strong>
+          
+</p>
+
+          
+<pre class="code">
+            $COCOON_HOME &gt; ./build.sh
+          </pre>
+        
+</li>
+        
+      
+</ul>
+</div>
+
+
+    
+<a name="N100E4"></a><a name="Standalone+Install"></a>
+<h2 class="h3">Standalone Install</h2>
+<div class="section">
+<ol>
+
+        
+<li>
+          
+<p>
+            
+<strong>Configure Lenya to point to Cocoon</strong>
+          
+</p>
+
+          
+<p>
+            If your Cocoon source tree is set up as described above, you
+            can skip this step.  If your Cocoon source tree is not at
+            <span class="codefrag">../cocoon-2.1.7</span> relative to Lenya, you need
+            to edit your build properties. To do this, copy
+            <span class="codefrag">$LENYA_HOME/build.properties</span> to
+            <span class="codefrag">$LENYA_HOME/local.build.properties</span>.
+          </p>
+
+          
+<p>
+            Edit <span class="codefrag">local.build.properties</span>. For the described
+            configuration the following settings will work (<strong>MS
+            Windows:</strong> Don't use backslashes "<span class="codefrag">\</span>" for
+            directory separation.)
+          </p>
+
+          
+<ul>
+            
+<li>
+<span class="codefrag">cocoon.src.dir=$COCOON_HOME</span>
+</li>
+          
+</ul>
+        
+</li>
+
+        
+<li>
+          
+<p>
+            
+<strong>Build Lenya</strong>
+          
+</p>
+
+          
+<p>
+            Execute <span class="codefrag">build.bat</span> or <span class="codefrag">build.sh</span> in
+            your Lenya source directory, depending on your platform.
+          </p>
+
+          
+<p>
+            
+<strong>MS Windows</strong>
+          
+</p>
+
+          
+<pre class="code">
+            $LENYA_HOME &gt; build.bat
+          </pre>
+
+          
+<p>
+            
+<strong>Unix</strong>
+          
+</p>
+
+          
+<pre class="code">
+            $LENYA_HOME &gt; ./build.sh
+          </pre>
+        
+</li>
+
+        
+<li>
+          
+<p>
+            
+<strong>Start Lenya</strong>
+          
+</p>
+
+          
+<p>
+            Execute <span class="codefrag">lenya.bat</span> or <span class="codefrag">lenya.sh
+            servlet</span> in your Lenya source directory, depending on
+            your platform.  Make sure that you have the environment
+            variable <span class="codefrag">JAVA_HOME</span> defined to point to the
+            location of the Java SDK you installed (see <a href="#prerequisites">Prerequisites</a>).
+          </p>
+
+          
+<p>
+            
+<strong>MS Windows</strong>
+          
+</p>
+
+          
+<pre class="code">
+            $LENYA_HOME &gt; lenya.bat
+          </pre>
+
+          
+<p>
+            
+<strong>Unix</strong>
+          
+</p>
+
+          
+<pre class="code">
+            $LENYA_HOME &gt; ./lenya.sh servlet
+          </pre>
+        
+</li>
+
+        
+<li>
+          
+<p>
+            
+<strong>Test the installation</strong>
+          
+</p>
+
+          
+<p>
+            
+<a href="http://localhost:8888">http://localhost:8888/</a>
+          
+</p>
+        
+</li>
+      
+</ol>
+</div>
+
+    
+<a name="N10179"></a><a name="Install+with+Tomcat"></a>
+<h2 class="h3">Install with Tomcat</h2>
+<div class="section">
+<ol>
+
+		
+<li>
+          
+<p>
+            
+<strong>Get Apache Tomcat</strong> for JDK 1.4
+            <br>
+Lenya is developed and tested with Tomcat 5.0.28; this version is assumed in the following instructions, and we highly recommend it. Tomcat 4.0.0+, 4.1.24+, 5.0.18+ and 5.5.0+ should work too.            <br>
+            Get it from  <a href="http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0">http://jakarta.apache.org/site/binindex.cgi#tomcat-5.0</a>
+          
+</p>
+
+        
+</li>
+        
+        
+<li>
+          
+<p>
+            
+<strong>Install Apache Tomcat</strong>
+          
+</p>
+
+          
+<p>
+            See <a href="http://jakarta.apache.org/tomcat/tomcat-5.0-doc/setup.html">Tomcat 5.0 Setup</a>
+          
+</p>
+
+          
+<p>
+            
+<strong>MS Windows:</strong>
+
+            
+<br>
+
+            Basically you only need to set the <span class="codefrag">JAVA_HOME</span>
+            environment variable and run the Tomcat
+            installer. Decide to run Tomcat as a Windows
+            NT/2000/XP-Service.
+          </p>
+        
+</li>
+
+        
+<li>
+          
+<p>
+            
+<strong>Configure Lenya</strong>
+          
+</p>
+
+          
+<p>
+            To install Lenya with Tomcat, you need to edit your build
+            properties. To do this, copy
+            <span class="codefrag">$LENYA_HOME/build.properties</span> to
+            <span class="codefrag">$LENYA_HOME/local.build.properties</span>.
+          </p>
+
+          
+<p>
+            Edit <span class="codefrag">local.build.properties</span>. For the described
+            configuration the following settings will work (<strong>MS
+            Windows:</strong> Don't use backslashes "<span class="codefrag">\</span>" for
+            directory separation.) It is important that
+            <span class="codefrag">tomcat.home.dir</span> is an absolute path. Replace
+            <span class="codefrag">$TOMCAT_HOME</span> by your Tomcat installation
+            directory.  If your Cocoon source directory is not at
+            <span class="codefrag">../cocoon-2.1.7</span> relative to Lenya, then change
+            the <span class="codefrag">cocoon.webapp.dir</span>, <span class="codefrag">web.app.server</span> and
+            <span class="codefrag">cocoon.src.dir</span> properties.
+          </p>
+
+          
+<ul>
+            
+<li>
+<span class="codefrag">web.app.server=Tomcat</span>
+</li>
+            
+<li>
+<span class="codefrag">cocoon.src.dir=$COCOON_HOME</span>
+</li>
+            
+<li>
+<span class="codefrag">tomcat.home.dir=$TOMCAT_HOME</span>
+</li>
+          
+</ul>
+        
+</li>
+
+        
+<li>
+          
+<p>
+            
+<strong>Build Lenya</strong>
+          
+</p>
+
+          
+<p>
+            Execute <span class="codefrag">build</span> in your Lenya source directory.
+          </p>
+        
+</li>
+
+      
+<li>
+        
+<p>
+          
+<strong>Checked versions of endorsed libraries</strong>
+        
+</p>
+    
+        
+<p>
+          Lenya and Tomcat will inter-operate correctly only if the proper
+          versions of the Xalan and Xerces libraries are used consistently
+          throughout the deployment.  Unfortunately this can be difficult
+          to get to work correctly since both of these libraries are
+          shipped with Java 2 SDK, Tomcat, Cocoon and Lenya.
+        </p>
+    
+        
+<p>
+          The following libraries must be placed in the endorsed library
+          directory for your deployment.
+        </p>
+    
+        
+<ul>
+          
+<li>
+<span class="codefrag">jakarta-bcel-20040329.jar</span>
+</li>
+          
+<li>
+<span class="codefrag">jakarta-regexp-1.3.jar</span>
+</li>
+          
+<li>
+<span class="codefrag">xalan-2.6.0.jar</span>
+</li>
+          
+<li>
+<span class="codefrag">xercesImpl-2.6.2.jar</span>
+</li>
+          
+<li>
+<span class="codefrag">xml-apis.jar</span>
+</li>
+        
+</ul>
+    
+        
+<p>
+          They are placed by the build process in the directory specified
+          by <span class="codefrag">tomcat.endorsed.dir</span> in
+          <span class="codefrag">build.properties</span>.  You should validate that these
+          files are indeed in the proper location for your deployment.
+          You must then validate that no other instances of these
+          libraries exist in any of the following directories:
+        </p>
+    
+        
+<ul>
+          
+<li>
+            The Java 2 SDK endorsed standards directories.  This is
+            usually <span class="codefrag">${JAVA_HOME}/lib/endorsed/</span>.
+          </li>
+    
+          
+<li>
+            Any other location in your Tomcat deployment.  Specifically,
+            check <span class="codefrag">shared/lib/</span>, <span class="codefrag">common/lib/</span> and
+            <span class="codefrag">server/lib/</span>.
+          </li>
+    
+          
+<li>
+            Any other location in your Lenya deployment.  Specifically,
+            check <span class="codefrag">webapps/lenya/WEB-INF/lib/</span>.
+          </li>
+        
+</ul>
+    
+        
+<p>
+          A common symptom of incorrect library version are blank pages
+          after starting Lenya.  Try carefully checking the location and
+          version numbers of each of the libraries.
+        </p>
+    
+        
+<p>
+          References:
+        </p>
+    
+        
+<ul>
+          
+<li>
+            
+<a href="http://jakarta.apache.org/tomcat/tomcat-5.0-doc/class-loader-howto.html">
+              Tomcat Class Loader HOWTO (http://jakarta.apache.org/tomcat/tomcat-5.0-doc/class-loader-howto.html)
+            </a>
+          
+</li>
+    
+          
+<li>
+            
+<a href="http://java.sun.com/j2se/1.4.2/docs/guide/standards/index.html">
+              Java 2 Endorsed Standards Override Mechanism
+              (http://java.sun.com/j2se/1.4.2/docs/guide/standards/index.html)
+            </a>
+          
+</li>
+        
+</ul>
+      
+</li>
+         
+<li>
+           
+<p>
+            
+<strong>Clear Tomcat work directory</strong>
+          
+</p>
+
+          
+<p>
+            Tomcat's work cache may not be consistent with your newly installed
+            Lenya.  This can lead to any number of errors and exceptions.  To
+            prevent this, clear the work directory by executing
+            <span class="codefrag">build.bat</span> or <span class="codefrag">build.sh</span> in your Lenya source
+            directory, depending on your platform.
+          </p>
+
+          
+<p>
+            
+<strong>MS Windows</strong>
+          
+</p>
+
+          
+<pre class="code">
+            $LENYA_HOME &gt; build.bat clean 
+          </pre>
+
+          
+<p>
+            
+<strong>Unix</strong>
+          
+</p>
+
+          
+<pre class="code">
+            $LENYA_HOME &gt; ./build.sh clean
+          </pre>
+        
+</li>
+        
+<li>
+          
+<p>
+            
+<strong>Restart Tomcat</strong>
+          
+</p>
+
+          
+<p>
+            Restart Tomcat to load the Lenya webapp.
+          </p>
+        
+</li>
+
+        
+<li>
+          
+<p>
+            
+<strong>Test the installation</strong>
+          
+</p>
+
+          
+<p>
+            
+<a href="http://localhost:8080/lenya">http://localhost:8080/lenya/</a>
+          
+</p>
+        
+</li>
+      
+</ol>
+</div>
+  
+</div>
+<!--+
+    |end content
+    +-->
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<!--+
+    |start bottomstrip
+    +-->
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2002-2005 <a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software Foundation.</a>
+</div>
+<div id="feedback">
+    Send feedback about the website to:
+  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A01_2_x/installation/source_version.html">dev@lenya.apache.org</a>
+</div>
+<!--+
+    |end bottomstrip
+    +-->
+</div>
+</body>
+</html>

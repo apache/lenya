@@ -1,0 +1,515 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.8-dev">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Overview of the Lenya Sitemaps</title>
+<link type="text/css" href="../../skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="../../skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="../../skin/print.css" rel="stylesheet">
+<link type="text/css" href="../../skin/profile.css" rel="stylesheet">
+<script src="../../skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="../../skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="../../skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="../../favicon.ico">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+<a href="http://www.apache.org/">apache</a> &gt; <a href="http://lenya.apache.org/">lenya</a><script src="../../skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>
+</div>
+<!--+
+    |header
+    +-->
+<div class="header">
+<!--+
+    |start group logo
+    +-->
+<div class="grouplogo">
+<a href=""><img class="logoImage" alt="Lenya" src="../../images/apache-lenya-light.png" title=""></a>
+</div>
+<!--+
+    |end group logo
+    +-->
+<!--+
+    |start Project Logo
+    +-->
+<div class="projectlogo">
+<a href=""></a>
+</div>
+<!--+
+    |end Project Logo
+    +-->
+<!--+
+    |start Search
+    +-->
+<div class="searchbox">
+<form action="http://www.google.com/search" method="get" class="roundtopsmall">
+<input value="lenya.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with ');" size="25" name="q" id="query" type="text" value="Search the site with ">&nbsp; 
+                    <input name="Search" value="Search" type="submit">
+</form>
+</div>
+<!--+
+    |end search
+    +-->
+<!--+
+    |start Tabs
+    +-->
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="../../index.html">Project</a>
+</li>
+<li class="current">
+<a class="base-selected" href="../../1_4/index.html">Version 1.4</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../modules/index.html">Modules</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../1_2_x/index.html">Version 1.2</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../community/index.html">Community</a>
+</li>
+</ul>
+<!--+
+    |end Tabs
+    +-->
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<!--+
+    |start Subtabs
+    +-->
+<div id="level2tabs"></div>
+<!--+
+    |end Endtabs
+    +-->
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<!--+
+    |start Menu, mainarea
+    +-->
+<!--+
+    |start Menu
+    +-->
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', '../../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../../skin/images/chapter_open.gif');">Version 1.4</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../../1_4/index.html">Index</a>
+</div>
+<div class="menuitem">
+<a href="../../1_4/faq.html">FAQs</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', '../../skin/')" id="menu_1.1.3Title" class="menutitle">Installation</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_4/installation/index.html">Download</a>
+</div>
+<div class="menuitem">
+<a href="../../1_4/installation/subversion.html">Subversion Access</a>
+</div>
+<div class="menuitem">
+<a href="../../1_4/installation/source_version.html">Install Instructions</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4', '../../skin/')" id="menu_1.1.4Title" class="menutitle">Concepts</div>
+<div id="menu_1.1.4" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_4/concepts/publication.html">Publication</a>
+</div>
+<div class="menuitem">
+<a href="../../1_4/concepts/urlMapping.html">URL Mapping</a>
+</div>
+<div class="menuitem">
+<a href="../../1_4/concepts/authoring_live.html">Authoring and Live mode</a>
+</div>
+<div class="menuitem">
+<a href="../../1_4/concepts/wysiwyg.html">WYSIWYG</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.5', '../../skin/')" id="menu_selected_1.1.5Title" class="menutitle" style="background-image: url('../../skin/images/chapter_open.gif');">Technical Reference</div>
+<div id="menu_selected_1.1.5" class="selectedmenuitemgroup" style="display: block;">
+<div class="menupage">
+<div class="menupagetitle">Overview of Lenya Sitemaps</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a href="#Introduction">Introduction</a>
+</div>
+<div class="menupageitem">
+<a title="Authoring Area, Live Area, CMS GUI and several Publications" href="#Authoring+Area%2C+Live+Area%2C+CMS+GUI+and+several+Publications">Authoring Area, Liv...</a>
+</div>
+<div class="menupageitem">
+<a title="The Lenya URI space" href="#The+Lenya+URI+space">The Lenya URI space...</a>
+</div>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.2', '../../skin/')" id="menu_1.1.5.2Title" class="menutitle">Usecase Framework</div>
+<div id="menu_1.1.5.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_4/reference/usecase-framework/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../1_4/reference/usecase-framework/abstractusecase.html">AbstractUsecase</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../1_4/reference/publication-templating/index.html">Publication Templating</a>
+</div>
+<div class="menuitem">
+<a href="../../1_4/reference/resource-types.html">Resource Types</a>
+</div>
+<div class="menuitem">
+<a href="../../1_4/reference/modules/index.html">Modules</a>
+</div>
+<div class="menuitem">
+<a href="../../1_4/reference/metadata.html">Meta data</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.7', '../../skin/')" id="menu_1.1.5.7Title" class="menutitle">Protocols</div>
+<div id="menu_1.1.5.7" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_4/reference/protocols/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../1_4/reference/protocols/lenya.html">lenya:</a>
+</div>
+<div class="menuitem">
+<a href="../../1_4/reference/protocols/lenyadoc.html">lenyadoc:</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../1_4/reference/link-management.html">Link Management</a>
+</div>
+<div class="menuitem">
+<a href="../../1_4/reference/notification.html">Notification</a>
+</div>
+<div class="menuitem">
+<a href="../../1_4/reference/repository/index.html">Repository</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/index.html">1.4 API (Javadoc)</a>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="../../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<!--+
+  |alternative credits
+  +-->
+<div id="credit2">
+<a href="http://apachecon.com/"><img border="0" title="ApacheCon EU 2006" alt="ApacheCon EU 2006 - logo" src="http://www.eu.apachecon.com/konferenzen/apachecon06/images/header-left.gif" style="width: 150px;height: 50px;"></a>
+</div>
+</div>
+<!--+
+    |end Menu
+    +-->
+<!--+
+    |start content
+    +-->
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="lenya-sitemaps.pdf"><img alt="PDF -icon" src="../../skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Overview of the Lenya Sitemaps</h1>
+
+		
+<a name="N1000D"></a><a name="Introduction"></a>
+<h2 class="h3">Introduction</h2>
+<div class="section">
+<p>Lenya is based on Apache Cocoon. To understand how Lenya works, you should have at least some basic
+			Cocoon knowlege. Make sure you know what a Cocoon sitemap is and you understand matchers, generators,
+			transformers and serializers at least.</p>
+<p>Lenya uses some more Cocoon components, but if you can spot the matchers, generators, transformers and
+			serizalizers, you will be able to get a good first overview of the Lenya sitemaps.</p>
+<p>But Lenya is much more than just a collection of sitemaps and some XSLT stylesheets. Lenya builds on 
+			the Cocoon foundation and extends the Cocoon framework with custom</p>
+<ul>
+			
+<li>Matchers</li>
+			
+<li>Actions</li>
+			
+</ul>
+<p>Beyond these components, Lenya also defines two proprietary schemes:</p>
+<ul>
+			
+<li>lenya:</li>
+			
+<li>fallback:</li>
+			
+</ul>
+<p>These schemes are linked to a custom input module that comes with Lenya, the</p>
+<ul>
+			
+<li>PageEnvelope input module</li>
+			
+</ul>
+</div>
+			
+			
+<a name="N1003B"></a><a name="Authoring+Area%2C+Live+Area%2C+CMS+GUI+and+several+Publications"></a>
+<h2 class="h3">Authoring Area, Live Area, CMS GUI and several Publications</h2>
+<div class="section">
+<p>A Lenya installation aggregates a number of different parts into
+				a single Cocoon application. By default, one instance of Lenya can be used
+				to edit and render an arbitrary number of publications which are entirely
+				independent of each other.</p>
+<p>There are different concepts of what a publication is, but for now,
+				let's assume each publication represents an independent website.</p>
+<p>Inside each publication, there are</p>
+<ul>
+				
+<li>The authoring area</li>
+				
+<li>The live area</li>
+				
+<li>The CMS GUI components (Drop Down Menu, CMS screens, editos, ...)</li>
+				
+</ul>
+<p>The URI space is used to organize all this.</p>
+</div>
+			
+			
+<a name="N1005A"></a><a name="The+Lenya+URI+space"></a>
+<h2 class="h3">The Lenya URI space</h2>
+<div class="section">
+<p>If you run Lenya in built-in Jetty servlet container, the Lenya webapp
+				is the root application of the container. Therefore http://localhost:8888/ will
+				already hit the Lenya root sitemap.</p>
+<p>In case you deployed lenya into a non-root context of any servlet container, the first
+				part of the URI will be handled by the container itself to match the responsible webapp.</p>
+<p>If you deployed lenya.war into Tomcat for example, you will most likely have to use
+				http://localhost:8080/lenya/ to get into the Lenya root sitemap.</p>
+<p>For the rest of this document, we pretend Lenya is the root webapp in your container
+				as this is the case with the built-in Jetty. Let's examine , what Lenya does in order to 
+				render the document you see when you enter this URL:
+				<span class="codefrag">http://localhost:8888/default/authoring/tutorial/new_doctype.html</span>
+</p>
+<a name="N1006E"></a><a name="Part+1%3A+The+publication+ID"></a>
+<h3 class="h4">Part 1: The publication ID</h3>
+<p>The first part is the publication id <span class="codefrag">default</span> which selects the <em>Default
+					Publication</em>. There is a difference between the publication ID and the name of the publication.
+					The ID should be compatible to both the filesystem implementation as well as the URI encoding
+					because it will become both the name of the publication directory and a part of the URL. Therefore
+					it is good practice to stick to 7-bit ASCII with no spaces or special characters.</p>
+<p>In contrast, the display name of the publication (which will show up in the list of publications
+					on the main Lenya entry screen) can be longer and it can contain spaces as well as any
+					Unicode characters.</p>
+<p>The publication ID is used to mount the publication specific sitemap.xmap from
+					<span class="codefrag">$LENYA_HOME/pubs/{publication-id}</span>. The <span class="codefrag">map:mount</span> will strip the publication ID
+					from the URL, so the publication sitemap will just see the 
+					<span class="codefrag">authoring/tutorial/new_doctype.html</span> portion. Nevertheless a publication has its ID
+					available through the page envelope. More on that later as we're not yet really inside the publication's
+					content.</p>
+<a name="N1008D"></a><a name="Part+2%3A+The+area"></a>
+<h3 class="h4">Part 2: The area</h3>
+<p>There are two possible areas.</p>
+<ul>
+					
+<li>Authoring</li>
+					
+<li>Live</li>
+					
+</ul>
+<p>You can think of areas as of modes, as in "live mode" and "authoring mode". Live mode is
+					the view of the publication as it is supposed to be displayed on the website to the site
+					visitor. The authoring mode is used by editors and reviewers to edit the publication's content.</p>
+<p>Technically speaking, the first major difference between the authoring area and the live area is just
+					that in authoring mode the CMS menus are displayed. Following the WYSIWYG principle of Lenya,
+					the publication content is rendered the same way in authoring mode as it would be in live mode.</p>
+<p>Besides displaying the CMS menus or not, there are different copies of the underlying content
+					repository for the authoring and live areas. This allows the editors to edit a working copy
+					without affecting the live site. When a document is published after it was reviewed, it is
+					just beeing copied over to the live repository.</p>
+<p>If you're using the default filesystem repository of Lenya, you will find the two different
+					repositories under <span class="codefrag">$LENYA_HOME/lenya/pubs/content/authoring</span> and 
+					<span class="codefrag">$LENYA_HOME/lenya/pubs/content/live</span>.</p>
+<p>As well as the publication ID the area is also stored in the page envelope. This will make
+					the actual area available to both the sitemap through the page envelope input module as well as
+					to the components in the Java layer of Lenya.</p>
+<p>At this point, Lenya parsed the URL to the point that is knows:</p>
+<ul>
+					
+<li>which publication the request belongs to</li>
+					
+<li>which repository is to be used, authoring or live</li>
+					
+<li>wether to display the CMS menus or not</li>
+					
+</ul>
+<a name="N100C3"></a><a name="CMS+Menus%2C+Usecases+and+CMS+screens"></a>
+<h4>CMS Menus, Usecases and CMS screens</h4>
+<p>Prior to finally turning over to the actual publication content, some remarks
+					on the CMS menus and CMS screens.</p>
+<p>Lenya uses so-called usecases to perform actions. There are usecases such as</p>
+<ul>
+					
+<li>submit (a document)</li>
+					
+<li>publish (a document)</li>
+					
+<li>...</li>
+					
+</ul>
+<p>The CMS menus are nothing but a convenience mechanism for the CMS user to trigger usecases.
+					As an alternative to choosing the "Workflow"-&gt;"Submit" menu option, you could as well append
+					<span class="codefrag">?lenya.usecase=submit</span> to the document URL. As soon as Lenya finds a lenya.usecase
+					request parameter it will branch into the <span class="codefrag">lenya/usecases/usecase.xmap</span> sitemap.</p>
+<p>All usecases start in the Lenya core. The core contains most of the common access control,
+					workflow and editing usecases. A publication can introduce publication specific usecases.</p>
+<p>Some usecases require CMS screens to be displayed. These are rendered through the usecase 
+					sitemap portions as well. That way one could for example introduce a new skin for the CMS
+					screens just by means of the Cocoon sitemap.</p>
+<p>For details on usecases, have a look at the Lenya Usecase Framework.</p>
+<a name="N100EF"></a><a name="Part+3%3A+The+document+URL"></a>
+<h3 class="h4">Part 3: The document URL</h3>
+<p>Now it's the publication sitemap's task to take the document URL portion of the
+					original URL (<span class="codefrag">tutorial/new_doctype.html</span> in our example) and generate and
+					render the content page. This sounds easy, but turns out to be quite complex. This
+					portion is actually the heart and soul of every CMS. This is also where differnt
+					CMS have a lot of differences in terms of features and configurability.</p>
+<p>The easiest way to deal with this would be:</p>
+<ul>
+					
+<li>Choose the appropriate content repository (authoring or live)</li>
+					
+<li>Use the document URL to look for a file with that name and generate it.</li>
+					
+<li>If necessary: Apply an XSLT stylesheet and serialize the result.</li>
+					
+</ul>
+<p>Lenya can do a lot more here, such as:</p>
+<ul>
+					
+<li>Use a publication specific mapper class to map the document URL to a backend
+					repository URL. This will allow you to hide the actual repository structure from
+					the website visitor.</li>
+					
+<li>Apply some intelligence to decide what language version of the document to use.
+					For example, it no specific language version is requested, Lenya will choose the 
+					default language. If there is a specific language requested, Lenya will apply a mapping
+					to built a back-end respository path to query for the requested language and generate this
+					if it is available. If the document is not available in the requested language, Lenya will
+					fall back to the default language again.</li>
+					
+<li>Choose among a selection of different rendering pipelines based on the source document's
+					resource type. A resource type can be XHTML, but also any other XML format such as RSS, 
+					SVG, SlideML or whatever.</li> 
+					
+</ul>
+<p>Most of this logic is implemented in the Java layer. The components are Avalon components
+					which are configured on a per-publication basis. In other words: One could implement and plug
+					in custom versions of these components.</p>
+<p>Only the mapping between input URL and the path used to access the repository in the backend
+					is implemented as an Avalon component in Java. The actual rendering of the document is done
+					by the means of Cocoon sitemaps, thus allowing anyone with Cocoon knowledge to make changes to
+					the rendering pipelines whithout having to write Java code.</p>
+<p>An example of an entirely different mapping between the document URL and the repository
+					is the Lenya Weblog publication that comes as a second sample with the Lenya distribution.</p>
+<a name="N10123"></a><a name="Part+4%3A+The+usecase+and+workflow+parameters+%28optional%29"></a>
+<h3 class="h4">Part 4: The usecase and workflow parameters (optional)</h3>
+<p>Right after the document URL there may be additional paramters, especially</p>
+<ul>
+					
+<li>lenya.usecase and mabye</li>
+					
+<li>lenya.step</li>
+					
+</ul>
+<p>as well as maybe</p>
+<ul>
+					
+<li>wf.event</li>
+					
+</ul>
+<p>For an explaination of the usecase parameters, see the usecase framework.</p>
+<p>For an explaination of the workflow engine, see the workflow engine (coming soon).</p>
+<a name="N10145"></a><a name="The+%22lenya%3A%22+scheme"></a>
+<h3 class="h4">The "lenya:" scheme</h3>
+<p>When reading the sitemaps in Lenya 1.4 you probably came across the lenya-scheme, often also referred to as the lenya protocol. For example, in the doctypes.xmap, you will find this section: </p>
+<pre class="code">
+      &lt;!-- parametrized doctype matcher --&gt;
+      &lt;!-- pattern="{rendertype}/{area}/{doctype}/{document-path}" --&gt;
+      &lt;map:match pattern="*/*/*/**.xml"&gt;
+        &lt;map:generate src="lenya:/{4}.xml"/&gt;
+        &lt;map:transform src="fallback://xslt/{3}2xhtml.xsl"&gt;
+
+</pre>
+<p>The lenya: scheme just needs the document path to locate the source document, i.e. lenya:/concepts/index_en.xml. All other elements of the actual storage location of the document (publication id and area) will be read from the page envelope and interpreted in the LenyaSourceFactory. </p>
+<p>In other words: The lenya: scheme hides the storage implementation details from the sitemap. </p>
+<a name="N10158"></a><a name="What+is+a+scheme%3F"></a>
+<h4>What is a scheme?</h4>
+<p>The lenya scheme is a virtual protocol in Cocoon, similar to the cocoon and context scheme. </p>
+<p>Note: In case you are not familiar with the latest official naming of the components of a URI or you still think that a URL is the same as a URI, please read this: <a href="http://www.bernzilla.com/item.php?id=100"> http://www.bernzilla.com/item.php?id=100</a>. </p>
+<p>The two sentence summary: </p>
+<p>The URI <a href="http://lenya.apache.org/"> http://lenya.apache.org/</a> is a URL. The URL is a special case of a URI. "http" is the scheme, which in a URL referes directly to a TCP/IP protocol. The part left of the colon (http) defines how the part right of the colon (//lenya.apache.org/) is to be interpreted by selecting an appropriate handler. </p>
+<p>The JDK provides build-in mechanisms to handle many common schemes such as file, http, ftp and some more. But Cocoon adds an additional layer through its Excalibur SourceResolver system, see: <a href="http://excalibur.apache.org/sourceresolve/index.html"> http://excalibur.apache.org/sourceresolve/index.html</a>. </p>
+<p>Lenya hooks in there with the LenyaSourceFactory which defines the lenya schema. The actual implementation is in the org.apache.lenya.cms.cocoon.source.LenyaSourceFactory class, see </p>
+<ul>
+
+<li>
+<p> 
+<a href="http://lenya.apache.org/apidocs/1.4/org/apache/lenya/cms/cocoon/source/LenyaSourceFactory.html">LenyaSourceFactory JavaDoc</a> 
+</p>
+
+
+</li>
+
+<li>
+<p> 
+<a href="http://svn.apache.org/viewcvs.cgi/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/source/LenyaSourceFactory.java"> LenyaSourceFactory source code</a> 
+</p>
+
+</li>
+
+</ul>
+</div>	
+			
+		
+	
+</div>
+<!--+
+    |end content
+    +-->
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<!--+
+    |start bottomstrip
+    +-->
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2002-2005 <a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software Foundation.</a>
+</div>
+<div id="feedback">
+    Send feedback about the website to:
+  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A01_4/reference/lenya-sitemaps.html">dev@lenya.apache.org</a>
+</div>
+<!--+
+    |end bottomstrip
+    +-->
+</div>
+</body>
+</html>

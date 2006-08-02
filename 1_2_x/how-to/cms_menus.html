@@ -1,0 +1,687 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.8-dev">
+<meta name="Forrest-skin-name" content="pelt">
+<title>CMS Menus How-To</title>
+<link type="text/css" href="../../skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="../../skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="../../skin/print.css" rel="stylesheet">
+<link type="text/css" href="../../skin/profile.css" rel="stylesheet">
+<script src="../../skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="../../skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="../../skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="../../favicon.ico">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+<a href="http://www.apache.org/">apache</a> &gt; <a href="http://lenya.apache.org/">lenya</a><script src="../../skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>
+</div>
+<!--+
+    |header
+    +-->
+<div class="header">
+<!--+
+    |start group logo
+    +-->
+<div class="grouplogo">
+<a href=""><img class="logoImage" alt="Lenya" src="../../images/apache-lenya-light.png" title=""></a>
+</div>
+<!--+
+    |end group logo
+    +-->
+<!--+
+    |start Project Logo
+    +-->
+<div class="projectlogo">
+<a href=""></a>
+</div>
+<!--+
+    |end Project Logo
+    +-->
+<!--+
+    |start Search
+    +-->
+<div class="searchbox">
+<form action="http://www.google.com/search" method="get" class="roundtopsmall">
+<input value="lenya.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with ');" size="25" name="q" id="query" type="text" value="Search the site with ">&nbsp; 
+                    <input name="Search" value="Search" type="submit">
+</form>
+</div>
+<!--+
+    |end search
+    +-->
+<!--+
+    |start Tabs
+    +-->
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="../../index.html">Project</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../1_4/index.html">Version 1.4</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../modules/index.html">Modules</a>
+</li>
+<li class="current">
+<a class="base-selected" href="../../1_2_x/index.html">Version 1.2</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../community/index.html">Community</a>
+</li>
+</ul>
+<!--+
+    |end Tabs
+    +-->
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<!--+
+    |start Subtabs
+    +-->
+<div id="level2tabs"></div>
+<!--+
+    |end Endtabs
+    +-->
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<!--+
+    |start Menu, mainarea
+    +-->
+<!--+
+    |start Menu
+    +-->
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', '../../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../../skin/images/chapter_open.gif');">Version 1.2</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../../1_2_x/index.html">Index</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.2', '../../skin/')" id="menu_1.1.2Title" class="menutitle">Installation</div>
+<div id="menu_1.1.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/installation/index.html">Download</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/installation/subversion.html">Subversion Access</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/installation/source_version.html">Install Instructions</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', '../../skin/')" id="menu_1.1.3Title" class="menutitle">Tutorial</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/index.html">Introduction</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/understanding_lenya.html">1. Understanding Lenya</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/installing_lenya.html">2. Installing Lenya</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/anatomy_of_the_pipeline.html">3. Anatomy of the Pipeline</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/editing_in_lenya.html">4. Editing in Lenya</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/custom_navigation.html">5. Custom Navigation in Lenya</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/mod_proxy_and_lenya.html">6a. Mod Proxy and Lenya</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/tutorial/mod_proxy_and_lenya_continued.html">6b. Mod Proxy and Lenya</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.4', '../../skin/')" id="menu_selected_1.1.4Title" class="menutitle" style="background-image: url('../../skin/images/chapter_open.gif');">How-To</div>
+<div id="menu_selected_1.1.4" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../../1_2_x/how-to/faq.html">FAQ</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/new_publication.html">New Publication</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/deploy_publication.html">Deploy Publication</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/look_and_feel.html">Look and Feel</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/custom_resourcetype.html">Custom Resource Type</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/new_mime_type.html">Adding Mime Types</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/site_navigation.html">Site Navigation</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/ldap_authentication.html">LDAP Authentication</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">CMS Menus</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a title="Why care about CMS Menus" href="#Why+care+about+CMS+Menus">Why care about CMS ...</a>
+</div>
+<div class="menupageitem">
+<a title="Lenya Core Documentation" href="#Lenya+Core+Documentation">Lenya Core Document...</a>
+</div>
+<div class="menupageitem">
+<a title="Introducing a new menu option" href="#Introducing+a+new+menu+option">Introducing a new m...</a>
+</div>
+<div class="menupageitem">
+<a title="Edit generic.xsp to add the item for the menu option" href="#Edit+generic.xsp+to+add+the+item+for+the+menu+option">Edit generic.xsp to...</a>
+</div>
+<div class="menupageitem">
+<a title="Double-check usecase and workflow configuration" href="#Double-check+usecase+and+workflow+configuration">Double-check usecas...</a>
+</div>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/cms_screens.html">CMS Screens</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/search.html">Search Publications</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/how-to/external_data.html">External Data</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5', '../../skin/')" id="menu_1.1.5Title" class="menutitle">Components</div>
+<div id="menu_1.1.5" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_1.1.5.1', '../../skin/')" id="menu_1.1.5.1Title" class="menutitle">Access&nbsp;Control</div>
+<div id="menu_1.1.5.1" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/terms.html">Basic Terms</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/accesscontrollers.html">Access&nbsp;Controllers</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/accesscontrollerresolvers.html">Access Controller Resolvers</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/authenticators.html">Authenticators</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/authorizers.html">Authorizers</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/policymanagers.html">Policies and Policy&nbsp;Managers</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/accreditablemanagers.html">Accreditable&nbsp;Managers</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/accesscontrol/ssl.html">SSL Encryption</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.2', '../../skin/')" id="menu_1.1.5.2Title" class="menutitle">Authoring</div>
+<div id="menu_1.1.5.2" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/authoring/adding-document-creator.html">Adding a new document creator</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/authoring/image-upload.html">Image Upload</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/authoring/openoffice.html">OpenOffice</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.3', '../../skin/')" id="menu_1.1.5.3Title" class="menutitle">Deployment</div>
+<div id="menu_1.1.5.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/deployment/proxying.html">Proxying</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.4', '../../skin/')" id="menu_1.1.5.4Title" class="menutitle">Editors</div>
+<div id="menu_1.1.5.4" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/editors/htmlform.html">HTML Form Editor</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/editors/1form.html">HTML One Form Editor</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/editors/bxe.html">Bitflux Editor</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/editors/kupu.html">Kupu</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/editors/xopus.html">Xopus</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.5', '../../skin/')" id="menu_1.1.5.5Title" class="menutitle">Layout</div>
+<div id="menu_1.1.5.5" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/layout/navigation.html">Navigation</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/layout/xhtml-templating.html">XHTML templating</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/layout/static-resources.html">Serving static resources</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/layout/lenya-menubar.html">Lenya Menubar</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.6', '../../skin/')" id="menu_1.1.5.6Title" class="menutitle">Publication</div>
+<div id="menu_1.1.5.6" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/publication/pageenvelopemodule.html">PageEnvelopeModule</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/publication/siteTree.html">Site tree</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.7', '../../skin/')" id="menu_1.1.5.7Title" class="menutitle">Resource&nbsp;Types</div>
+<div id="menu_1.1.5.7" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/resource-types/resource-types.html">Resource&nbsp;Types</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.8', '../../skin/')" id="menu_1.1.5.8Title" class="menutitle">Revision Control</div>
+<div id="menu_1.1.5.8" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/revisioncontrol/revisioncontroller.html">Revision Controller</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/revisioncontrol/rcml.html">RCML</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/revisioncontrol/checkin.html">Check In</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/revisioncontrol/checkout.html">Check Out</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/revisioncontrol/version.html">Revisions</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/revisioncontrol/rollback.html">Rollback</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.9', '../../skin/')" id="menu_1.1.5.9Title" class="menutitle">Repository</div>
+<div id="menu_1.1.5.9" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/repository/index.html">WebDAV Servers</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.10', '../../skin/')" id="menu_1.1.5.10Title" class="menutitle">Search</div>
+<div id="menu_1.1.5.10" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/search/lucene.html">Searching with Lucene</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.11', '../../skin/')" id="menu_1.1.5.11Title" class="menutitle">URI Handling</div>
+<div id="menu_1.1.5.11" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/uri-handling/URIParametrizer.html">URI Parametrizer</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/uri-handling/standardURI.html">URI Scheme</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/uri-handling/usecases.html">Usecases</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.12', '../../skin/')" id="menu_1.1.5.12Title" class="menutitle">Asset Management</div>
+<div id="menu_1.1.5.12" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/asset-management/management.html">Asset Management</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.13', '../../skin/')" id="menu_1.1.5.13Title" class="menutitle">Link Management</div>
+<div id="menu_1.1.5.13" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/link-management/link-management.html">Link Management</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.14', '../../skin/')" id="menu_1.1.5.14Title" class="menutitle">Meta Data</div>
+<div id="menu_1.1.5.14" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/metadata/metadata.html">Meta Data Handling</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.15', '../../skin/')" id="menu_1.1.5.15Title" class="menutitle">Multilingual Documents</div>
+<div id="menu_1.1.5.15" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/multilingual/multilingual.html">Multilingual Document Handling</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.16', '../../skin/')" id="menu_1.1.5.16Title" class="menutitle">Tasks</div>
+<div id="menu_1.1.5.16" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/concept.html">The Task Concept</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/defining.html">Defining Tasks</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/taskaction.html">The TaskAction</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/scheduling.html">Scheduling a Task</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.16.5', '../../skin/')" id="menu_1.1.5.16.5Title" class="menutitle">Included tasks</div>
+<div id="menu_1.1.5.16.5" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/anttask.html">AntTask</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/publisher.html">DefaultFilePublisher</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/exporter.html">StaticHTMLExporter</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/mailtask.html">MailTask</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/tasks/development.html">Developing Tasks</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.17', '../../skin/')" id="menu_1.1.5.17Title" class="menutitle">Workflow</div>
+<div id="menu_1.1.5.17" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/workflow/terms.html">Terms</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/workflow/state-machine.html">The State Machine</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/workflow/configuration.html">Configuration</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/workflow/implementation.html">Implementation</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.18', '../../skin/')" id="menu_1.1.5.18Title" class="menutitle">Site Management</div>
+<div id="menu_1.1.5.18" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/archive.html">Archive</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/copy.html">Copy</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/deactivate.html">Deactivate</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/delete.html">Delete</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/deletetrash.html">Delete the trash</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/move.html">Move</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/moveupdown.html">Move Up/Down</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/rename.html">Rename</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/components/sitemanagement/restore.html">Restore</a>
+</div>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.6', '../../skin/')" id="menu_1.1.6Title" class="menutitle">Miscellaneous</div>
+<div id="menu_1.1.6" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../1_2_x/misc/namespaces.html">Namespaces</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/misc/coding-guidelines.html">Coding Guidelines</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/misc/reserved_names.html">Reserved Names</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/misc/unittests.html">Unit Tests</a>
+</div>
+<div class="menuitem">
+<a href="../../1_2_x/misc/xinclude-processor.html">XInclude Processor</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.2/index.html">1.2 API (Javadoc)</a>
+</div>
+</div>
+<div id="credit"></div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="../../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<!--+
+  |alternative credits
+  +-->
+<div id="credit2">
+<a href="http://apachecon.com/"><img border="0" title="ApacheCon EU 2006" alt="ApacheCon EU 2006 - logo" src="http://www.eu.apachecon.com/konferenzen/apachecon06/images/header-left.gif" style="width: 150px;height: 50px;"></a>
+</div>
+</div>
+<!--+
+    |end Menu
+    +-->
+<!--+
+    |start content
+    +-->
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="cms_menus.pdf"><img alt="PDF -icon" src="../../skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>CMS Menus How-To</h1>
+
+<p>The CMS Menus are the menu options in Lenya that are available only in authoring mode and that are used by the editor, reviewer or admin to trigger operations such as editing, deleting or publishing a page and the like. CMS Menus are completely different and have nothing in common with the navigational menus in your publication! </p>
+
+<p>In other words: The site navigation is what the readers in the Live view will see, while the CMS Menus are only visible in the authoring area. </p>
+
+
+<a name="N10014"></a><a name="Why+care+about+CMS+Menus"></a>
+<h2 class="h3">Why care about CMS Menus</h2>
+<div class="section">
+<p>Most of the time the CMS Menus can be seen as a part of the Lenya application and should just work. But sometimes it will be necessary to introduce additional menu options if your publication has any special operations that need to be accessible through a menu option. Sometimes you might also find that a menu option is grayed out when you think it should be accessible. In that case understanding the anatomy of the CMS menus will help you in debugging the problem. </p>
+</div>
+<a name="N1001D"></a><a name="Lenya+Core+Documentation"></a>
+<h2 class="h3">Lenya Core Documentation</h2>
+<div class="section">
+<p>There is some information on the CMS Menus in the official Lenya documentation, but it's hidden in a place where you might not expect it. So here's a link: <a href="../../1_2_x/components/layout/lenya-menubar.html">Menubar documentation</a> 
+</p>
+<p>Make sure you read that before continuing reading this page here! </p>
+<p>Unfortunately the picture on the page mentioned above is a bit misleading. You might think that "Usecases" and "Workflow" steps in read in the right part of the picture refer to XSLT stylesheets which are applied using the XSLT transformer. This is not the case! They are own transformers implemented directly in the Lenya Java layer: </p>
+<pre class="code">
+    &lt;map:transformer name="workflowmenu" logger="lenya.sitemap.transformer.workflowmenu" src="org.apache.lenya.cms.cocoon.transformation.WorkflowMenuTransformer"/&gt;
+    &lt;map:transformer name="usecasemenu" logger="lenya.sitemap.transformer.usecasemenu" src="org.apache.lenya.cms.cocoon.transformation.UsecaseMenuTransformer"/&gt;
+</pre>
+<p>Nevertheless they do exactly what is described in the picture: They disable menu options if they are not accessible because  </p>
+<ul>
+
+<li>
+<p> executing the usecase requires a role which the user belonging to the current session is lacking or  </p>
+</li>
+
+<li>
+<p> the current workflow state of the document forbids the usecase </p>
+</li>
+
+</ul>
+</div>
+<a name="N10042"></a><a name="Introducing+a+new+menu+option"></a>
+<h2 class="h3">Introducing a new menu option</h2>
+<div class="section">
+<p>First of all, before you start adding a new menu option to the CMS menus, ask yourself what usecase should be linked to that menu option and if the usecase exists already. If you find out that you need a new usecase as well, it is up to you if you first implement the new usecase and test it manually by invoking the appropriate URIs and then add the menu option or do it vice versa. It is just important that you understand that it will take both: The usecase and the menu option to enable new functionality for the user. </p>
+<p>According to the page on the core documentation mentioned above, the CMS menus are defined in an XML document like this: </p>
+<pre class="code">
+&lt;menu
+    xmlns="http://apache.org/cocoon/lenya/menubar/1.0"
+    xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
+    xmlns:wf="http://apache.org/cocoon/lenya/workflow/1.0"&gt;
+
+  ...
+
+  &lt;item wf:event="edit"
+        uc:usecase="edit-forms"
+        uc:step="open" href="?..."&gt;Edit with Forms&lt;/item&gt;
+  
+  ...
+
+
+&lt;/menu&gt;
+</pre>
+</div>
+<a name="N10052"></a><a name="Edit+generic.xsp+to+add+the+item+for+the+menu+option"></a>
+<h2 class="h3">Edit generic.xsp to add the item for the menu option</h2>
+<div class="section">
+<p>In practice this XML is generated of an XSP which you can find in </p>
+<p>
+<em>lenya/pubs/&lt;your-pub&gt;/config/menus/generic.xsp</em> 
+</p>
+<p>Edit this XSP to add your new menu item! </p>
+<p>The XSP is used in the following section of global-sitemap.xmap: </p>
+<pre class="code">
+      &lt;map:match pattern="lenya-page/*/*/**"&gt;
+        &lt;map:generate src="cocoon:/menu-xml/{1}/{2}/{3}"/&gt;
+
+        &lt;map:call resource="i18n"/&gt;
+
+        &lt;map:act type="resource-exists" src="lenya/pubs/{1}/config/workflow/"&gt;
+          &lt;map:transform type="workflowmenu"/&gt;
+
+        &lt;/map:act&gt;
+
+        &lt;map:act type="resource-exists" src="lenya/pubs/{1}/config/ac/usecase-policies.xml"&gt;
+          &lt;map:transform type="usecasemenu"/&gt;
+        &lt;/map:act&gt;
+
+        &lt;map:transform src="lenya/xslt/menu/menu2xhtml.xsl"&gt;
+
+          &lt;map:parameter name="contextprefix" value="{request:contextPath}"/&gt;
+          &lt;map:parameter name="publicationid" value="{1}"/&gt;
+          &lt;map:parameter name="completearea" value="{2}"/&gt;
+          &lt;map:parameter name="documentarea" value="{page-envelope:area}"/&gt;
+          &lt;map:parameter name="documenturl" value="{page-envelope:document-url}"/&gt;
+          &lt;map:parameter name="documentid" value="{page-envelope:document-id}"/&gt;
+
+          &lt;map:parameter name="userid" value="{access-control:user-id}"/&gt;
+          &lt;map:parameter name="servertime" value="{date-i18n:currentDate}"/&gt;
+          &lt;map:parameter name="workflowstate" value="{workflow:state}"/&gt;
+          &lt;map:parameter name="islive" value="{workflow:variable.is_live}"/&gt;
+        &lt;/map:transform&gt;
+
+        &lt;map:call resource="i18n"/&gt;
+
+        &lt;map:transform src="lenya/xslt/menu/menu2xslt.xsl"&gt;
+          &lt;map:parameter name="contextprefix" value="{request:contextPath}"/&gt;
+          &lt;map:parameter name="publicationid" value="{1}"/&gt;
+          &lt;map:parameter name="area" value="{2}"/&gt;
+          &lt;map:parameter name="documenturl" value="{page-envelope:document-url}"/&gt;
+        &lt;/map:transform&gt;
+
+        &lt;map:serialize type="xml"/&gt;
+      &lt;/map:match&gt;
+</pre>
+<p>The <em>&lt;map:generate&nbsp;src="cocoon:/menu-xml/{1}/{2}/{3}"/&gt;</em> is an internal pipeline, which can be found in the same file: </p>
+<pre class="code">
+      &lt;!-- menu-xml/{publication-id}/... --&gt;
+
+      &lt;map:match pattern="menu-xml/*/**" internal-only="true"&gt;
+        &lt;map:mount uri-prefix="menu-xml/{1}/" src="lenya/pubs/{1}/menus.xmap" check-reload="true" reload-method="synchron"/&gt;
+      &lt;/map:match&gt;
+</pre>
+<p>This mounts the <em>lenya/pubs/&lt;your-pub&gt;/menus.xmap</em> sitemap snippet from the publication which then will decide weather we are in live or authoring mode and generate the menu definition from the publication specific menu.xsp: </p>
+<pre class="code">
+      &lt;map:match pattern="live/**"&gt;
+        &lt;map:generate type="serverpages" src="../../content/menus/live.xsp"/&gt;
+        &lt;map:serialize type="xml"/&gt;
+      &lt;/map:match&gt;
+
+      &lt;map:match pattern="**"&gt;
+
+        &lt;map:generate type="serverpages" src="config/menus/generic.xsp"/&gt;
+        &lt;map:serialize type="xml"/&gt;
+      &lt;/map:match&gt;
+
+    &lt;/map:pipeline&gt;
+</pre>
+</div>
+<a name="N1007E"></a><a name="Double-check+usecase+and+workflow+configuration"></a>
+<h2 class="h3">Double-check usecase and workflow configuration</h2>
+<div class="section">
+<p>If you look back at the <em>lenya-page/*/*/**</em> matcher in global-sitemap.xmap above, the menus are built by: </p>
+<ul>
+
+<li>
+<p> generating the menu definition from the XSP (which we edited already) </p>
+
+</li>
+
+<li>
+<p> applying the workflowmenu and usecasemenu transformers </p>
+
+</li>
+
+<li>
+<p> using <em>lenya/xslt/menu/menu2xhtml.xsl</em> to generate the XHTML </p>
+
+
+</li>
+
+</ul>
+<p>This means if you added your new menu option to the XSP it should show up in the menu. But it might be grayed out. </p>
+<p>If this is the case, either the workflowmenu or the usecasemneu transformer decided based on the workflow configuration or based on the usecase policy that this option is not available to this user at this point in time. You may want to check the appropriate configurations to check why this is the case. </p>
+<p>The usecase configuration can be found in <em>lenya/pubs/&lt;your-pub&gt;/config/ac/usecase-policies.xml</em> 
+</p>
+</div>   
+</div>
+<!--+
+    |end content
+    +-->
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<!--+
+    |start bottomstrip
+    +-->
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2002-2005 <a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software Foundation.</a>
+</div>
+<div id="feedback">
+    Send feedback about the website to:
+  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A01_2_x/how-to/cms_menus.html">dev@lenya.apache.org</a>
+</div>
+<!--+
+    |end bottomstrip
+    +-->
+</div>
+</body>
+</html>

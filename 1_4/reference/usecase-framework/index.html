@@ -1,0 +1,781 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.8-dev">
+<meta name="Forrest-skin-name" content="pelt">
+<title>The Usecase Framework</title>
+<link type="text/css" href="../../../skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="../../../skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="../../../skin/print.css" rel="stylesheet">
+<link type="text/css" href="../../../skin/profile.css" rel="stylesheet">
+<script src="../../../skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="../../../skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="../../../skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="../../../favicon.ico">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+<a href="http://www.apache.org/">apache</a> &gt; <a href="http://lenya.apache.org/">lenya</a><script src="../../../skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>
+</div>
+<!--+
+    |header
+    +-->
+<div class="header">
+<!--+
+    |start group logo
+    +-->
+<div class="grouplogo">
+<a href=""><img class="logoImage" alt="Lenya" src="../../../images/apache-lenya-light.png" title=""></a>
+</div>
+<!--+
+    |end group logo
+    +-->
+<!--+
+    |start Project Logo
+    +-->
+<div class="projectlogo">
+<a href=""></a>
+</div>
+<!--+
+    |end Project Logo
+    +-->
+<!--+
+    |start Search
+    +-->
+<div class="searchbox">
+<form action="http://www.google.com/search" method="get" class="roundtopsmall">
+<input value="lenya.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with ');" size="25" name="q" id="query" type="text" value="Search the site with ">&nbsp; 
+                    <input name="Search" value="Search" type="submit">
+</form>
+</div>
+<!--+
+    |end search
+    +-->
+<!--+
+    |start Tabs
+    +-->
+<ul id="tabs">
+<li>
+<a class="base-not-selected" href="../../../index.html">Project</a>
+</li>
+<li class="current">
+<a class="base-selected" href="../../../1_4/index.html">Version 1.4</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../../modules/index.html">Modules</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../../1_2_x/index.html">Version 1.2</a>
+</li>
+<li>
+<a class="base-not-selected" href="../../../community/index.html">Community</a>
+</li>
+</ul>
+<!--+
+    |end Tabs
+    +-->
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<!--+
+    |start Subtabs
+    +-->
+<div id="level2tabs"></div>
+<!--+
+    |end Endtabs
+    +-->
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<!--+
+    |start Menu, mainarea
+    +-->
+<!--+
+    |start Menu
+    +-->
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', '../../../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Version 1.4</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../../../1_4/index.html">Index</a>
+</div>
+<div class="menuitem">
+<a href="../../../1_4/faq.html">FAQs</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', '../../../skin/')" id="menu_1.1.3Title" class="menutitle">Installation</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../1_4/installation/index.html">Download</a>
+</div>
+<div class="menuitem">
+<a href="../../../1_4/installation/subversion.html">Subversion Access</a>
+</div>
+<div class="menuitem">
+<a href="../../../1_4/installation/source_version.html">Install Instructions</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.4', '../../../skin/')" id="menu_1.1.4Title" class="menutitle">Concepts</div>
+<div id="menu_1.1.4" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../1_4/concepts/publication.html">Publication</a>
+</div>
+<div class="menuitem">
+<a href="../../../1_4/concepts/urlMapping.html">URL Mapping</a>
+</div>
+<div class="menuitem">
+<a href="../../../1_4/concepts/authoring_live.html">Authoring and Live mode</a>
+</div>
+<div class="menuitem">
+<a href="../../../1_4/concepts/wysiwyg.html">WYSIWYG</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.5', '../../../skin/')" id="menu_selected_1.1.5Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Technical Reference</div>
+<div id="menu_selected_1.1.5" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../../../1_4/reference/lenya-sitemaps.html">Overview of Lenya Sitemaps</a>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.5.2', '../../../skin/')" id="menu_selected_1.1.5.2Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Usecase Framework</div>
+<div id="menu_selected_1.1.5.2" class="selectedmenuitemgroup" style="display: block;">
+<div class="menupage">
+<div class="menupagetitle">Overview</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a href="#Introduction">Introduction</a>
+</div>
+<div class="menupageitem">
+<a title="Directory Structure" href="#Directory+Structure">Directory Structure...</a>
+</div>
+<div class="menupageitem">
+<a href="#Architecture">Architecture</a>
+</div>
+<div class="menupageitem">
+<a title="The Contract Between Flowscript And Usecase Handler" href="#The+Contract+Between+Flowscript+And+Usecase+Handler">The Contract Betwee...</a>
+</div>
+<div class="menupageitem">
+<a title="Implementing a Custom Usecase" href="#Implementing+a+Custom+Usecase">Implementing a Cust...</a>
+</div>
+<div class="menupageitem">
+<a title="Overriding Core Usecases in Publications" href="#Overriding+Core+Usecases+in+Publications">Overriding Core Use...</a>
+</div>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../../1_4/reference/usecase-framework/abstractusecase.html">AbstractUsecase</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../../1_4/reference/publication-templating/index.html">Publication Templating</a>
+</div>
+<div class="menuitem">
+<a href="../../../1_4/reference/resource-types.html">Resource Types</a>
+</div>
+<div class="menuitem">
+<a href="../../../1_4/reference/modules/index.html">Modules</a>
+</div>
+<div class="menuitem">
+<a href="../../../1_4/reference/metadata.html">Meta data</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5.7', '../../../skin/')" id="menu_1.1.5.7Title" class="menutitle">Protocols</div>
+<div id="menu_1.1.5.7" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../1_4/reference/protocols/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../1_4/reference/protocols/lenya.html">lenya:</a>
+</div>
+<div class="menuitem">
+<a href="../../../1_4/reference/protocols/lenyadoc.html">lenyadoc:</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../../1_4/reference/link-management.html">Link Management</a>
+</div>
+<div class="menuitem">
+<a href="../../../1_4/reference/notification.html">Notification</a>
+</div>
+<div class="menuitem">
+<a href="../../../1_4/reference/repository/index.html">Repository</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/index.html">1.4 API (Javadoc)</a>
+</div>
+</div>
+<div id="credit">
+<hr>
+<a href="http://forrest.apache.org/"><img border="0" title="Built with Apache Forrest" alt="Built with Apache Forrest - logo" src="../../../images/built-with-forrest-button.png" style="width: 88px;height: 31px;"></a>
+</div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="../../../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<!--+
+  |alternative credits
+  +-->
+<div id="credit2">
+<a href="http://apachecon.com/"><img border="0" title="ApacheCon EU 2006" alt="ApacheCon EU 2006 - logo" src="http://www.eu.apachecon.com/konferenzen/apachecon06/images/header-left.gif" style="width: 150px;height: 50px;"></a>
+</div>
+</div>
+<!--+
+    |end Menu
+    +-->
+<!--+
+    |start content
+    +-->
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="index.pdf"><img alt="PDF -icon" src="../../../skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>The Usecase Framework</h1>
+    
+    
+<a name="N1000D"></a><a name="Introduction"></a>
+<h2 class="h3">Introduction</h2>
+<div class="section">
+<p>A usecase in Lenya means a user triggered action. In most cases, a usecase is triggered by a CMS menu option on
+      a specific document of the publication. This document is the object of the usecases' action (such as edit, delete, publish, ...).</p>
+<p>There are usecases which are independent of a specific document, such as the <span class="codefrag">ac.logout</span> usecase. In that case it does 
+      not matter on what document the usecase is triggered. The part of the request which specifies the document is simply ignored
+      by usecases that are document independent.</p>
+<p>The CMS menus trigger usecases by setting the <span class="codefrag">lenya.usecase</span> request parameter on the current document. If for example
+      the user selects the <em>Publish</em> option from the <em>Workflow</em> menu, a request will be triggered such as:
+      
+<span class="codefrag">
+      GET http://www.server.com/lenya/default/authoring/tutorial.html?&amp;lenya.usecase=publish
+</span>
+</p>
+<p>The Lenya <span class="codefrag">global-sitemap.xmap</span> will redirect requests with a <span class="codefrag">lenya.usecase</span> request parameter to the 
+      <span class="codefrag">$LENYA_WEBAPP/lenya/usecase.xmap</span>
+      sub-sitemap. From version 1.4 on, the following pipeline in this sitemap is used to recognonize usecases which are implemented 
+      in Java using the new 1.4 usecase framework:</p>
+<pre class="code">
+&lt;map:pipeline&gt;
+  &lt;map:match type="registered-usecase"&gt;
+    &lt;map:mount src="usecases/usecase.xmap" uri-prefix="" check-reload="yes" reload-method="synchron"/&gt;
+  &lt;/map:match&gt;
+&lt;/map:pipeline&gt;
+</pre>
+<p>The <span class="codefrag">registered-usecase</span> matcher's default implementation 
+	(<span class="codefrag">org.apache.lenya.cms.cocoon.matching.UsecaseRegistrationMatcher</span>) will use the Avalon
+	component resolver mechanism to resolve the name of the usecase to a an Avalon component. In case it cannot
+	resolve the usecase to an Avalon component, sitemap processing will continue and the usecase is treated in the
+	traditional way using the <span class="codefrag">usecase</span> and <span class="codefrag">step</span> matchers 
+	(<span class="codefrag">org.apache.cocoon.matching.WildcardRequestParameterMatcher</span>). In order for this to work
+	correctly, there should be a <span class="codefrag">lenya.step</span> parameter in the request.</p>
+<p>If the usecase could be resolved successfully into an Avalon component, processing will continue in the 
+	<span class="codefrag">$LENYA_WEBAPP/lenya/usecases/usecase.xmap</span> (as opposed to <span class="codefrag">$LENYA_WEBAPP/lenya/usecase.xmap</span>) with
+	the new JX and Java based 1.4 usecase framework.</p>
+<p>
+        The <em>usecase framework</em> in Lenya 1.4 is a simple framework to implement usecases using JX templates and Java.
+        This approach is an "85% solution". It enables the user to implement a big range of common usecases.
+      </p>
+<div class="note">
+<div class="label">Note</div>
+<div class="content">
+        Some special complex usecases might require a custom flowscript, in this case you can't use this framework.
+      </div>
+</div>
+</div>
+    
+    
+<a name="N10062"></a><a name="Directory+Structure"></a>
+<h2 class="h3">Directory Structure</h2>
+<div class="section">
+<a name="N10068"></a><a name="The+Lenya+Core"></a>
+<h3 class="h4">The Lenya Core</h3>
+<pre class="code">
+$LENYA_WEBAPP
+  /lenya/usecases                     usecase-related files
+                 /usecase.xmap        usecase dispatching sitemap
+                 /usecases.js         flowscript for usecase control flow
+                 /admin               Lenya admin usecases
+                       /addUser.jx    JX templates for usecase views
+                 ...                  more Lenya core usecases
+</pre>
+<a name="N10073"></a><a name="Your+Publication"></a>
+<h3 class="h4">Your Publication</h3>
+<pre class="code">
+$PUB_HOME
+  /lenya/usecases                     usecase-related files
+                 /editHeadline.jx     JX templates for usecase views
+  /java/src/...                       usecase handler classes
+</pre>
+</div>
+    
+    
+    
+<a name="N1007F"></a><a name="Architecture"></a>
+<h2 class="h3">Architecture</h2>
+<div class="section">
+<p>
+        A usecase request - denoted by the request parameter <span class="codefrag">lenya.usecase</span> - is dispatched by <span class="codefrag">$LENYA_WEBAPP/lenya/usecases/usecase.xmap</span>.
+        All usecases are handled by a single flowscript <span class="codefrag">$LENYA_WEBAPP/lenya/usecases/usecases.js</span>. This keeps javascript maintenance costs at a minimum.
+      </p>
+<p>
+        The flowscript <span class="codefrag">usecases.js</span> determines the usecase handler class using the <span class="codefrag">org.apache.lenya.cms.usecase.UsecaseResolver</span>.
+        All business code operations are delegated to the usecase handler class.
+      </p>
+<div id="" style="text-align: center;">
+<img id="" class="figure" alt="Usecase framework architecture" src="../../../images/live/usecase-framework-architecture.png"></div>
+</div>
+    
+    
+<a name="N1009F"></a><a name="The+Contract+Between+Flowscript+And+Usecase+Handler"></a>
+<h2 class="h3">The Contract Between Flowscript And Usecase Handler</h2>
+<div class="section">
+<p>
+        The usecase handler class has to implement the interface <span class="codefrag">org.apache.lenya.cms.usecase.Usecase</span>.
+        The methods of this interface are called in a certain order when the usecase is invoked:
+      </p>
+<ol>
+        
+<li>
+<span class="codefrag">setSourceURL(String sourceUrl)</span>
+            
+<br>
+            
+<span class="codefrag">setName(String)</span>
+          
+<p>Initialize the handler.</p>
+          
+<br>
+        
+</li>
+        
+<li>
+<span class="codefrag">Passing request parameters</span>
+          
+<br>
+          
+<p>
+            In the next step, all request parameters are passed as parameters to the usecase,
+            except the following reserved parameters:
+          </p>
+          
+<ul>
+            
+<li>
+<span class="codefrag">lenya.usecase</span>
+</li>
+            
+<li>
+<span class="codefrag">lenya.continutation</span>
+</li>
+            
+<li>
+<span class="codefrag">submit</span>
+</li>
+          
+</ul>
+          
+<p>
+            If the request parameter value is a string, the value can be accessed inside the usecase
+            handler using <span class="codefrag">getParameterAsString(name)</span>. If the request parameter
+            is a part of a multipart request, e.g., in a file upload form, it will be available
+            using <span class="codefrag">getPart(name)</span>. 
+          </p>
+          
+<br>
+        
+</li>
+        
+<li>
+<span class="codefrag">checkPreconditions()</span>
+          
+<p>
+            This method is called to check the pre-conditions of the usecase. The pre-conditions
+            are checked before the usecase is started, i.e., before the first screen is presented
+            to the user. To denote that a condition does not comply, add an appropriate error message
+            using <span class="codefrag">addErrorMessage(String)</span>. If an error message was added, the usecase
+            is not started. Alternatively, you can provide information to the user using
+            <span class="codefrag">addInfoMessage(String)</span>. This doesn't prevent the usecase from being executed.
+          </p>
+          
+<br>
+        
+</li>
+        
+<li>
+<span class="codefrag">lockInvolvedObjects()</span>
+          
+<p>
+            This method is called to lock all objects which could be changed during the usecase.
+          </p>
+          
+<br>
+        
+</li>
+      
+</ol>
+<p>
+        The following methods are called in a loop while the user interacts with the usecase,
+        until a request parameter with the name <span class="codefrag">submit</span> was sent.
+      </p>
+<ol>
+        
+<li>
+<span class="codefrag">getView()</span>
+          
+<p>
+            Requests the next view to be displayed. The view may be <span class="codefrag">null</span> if no
+            screen should be presented to the user.
+          </p>
+          
+<br>
+        
+</li>
+        
+<li>
+<span class="codefrag">advance()</span>
+          
+<p>
+            This method is called to advance the usecase after the a user interaction.
+            In contrast to <span class="codefrag">execute()</span>, this method is not called when the
+            <span class="codefrag">&lt;input type="submit" name="submit"&gt;</span> was pressed, but for every
+            other submitting of the form. A typical usecase is the <em>multiple forms editor</em> where
+            <span class="codefrag">advance()</span> is used to update the document when the user switched to
+            another element.
+          </p>
+          
+<br>
+        
+</li>
+      
+</ol>
+<p>
+        When the form is submitted using the <span class="codefrag">&lt;input type="submit" name="submit"&gt;</span>
+        button, the usecase is finished:
+      </p>
+<ol>
+        
+<li>
+<span class="codefrag">checkExecutionConditions()</span>
+          
+<p>
+            This method is called before the usecase is actually executed. A typical example
+            is the validation of form data.
+          </p>
+          
+<br>
+        
+</li>
+        
+<li>
+<span class="codefrag">execute()</span>
+          
+<p>
+            This method actually executes the final step of the usecase.
+          </p>
+          
+<br>
+        
+</li>
+      
+</ol>
+<p>
+        When the form is submitted using the <span class="codefrag">&lt;input type="submit" name="cancel"&gt;</span>
+        button, the usecase is cancelled:
+      </p>
+<ol>
+        
+<li>
+<span class="codefrag">cancel()</span>
+          
+<p>
+            This method cancels the usecase. The transaction is rolled back.
+          </p>
+          
+<br>
+        
+</li>
+      
+</ol>
+</div>
+    
+    
+<a name="N10158"></a><a name="Implementing+a+Custom+Usecase"></a>
+<h2 class="h3">Implementing a Custom Usecase</h2>
+<div class="section">
+<a name="N1015E"></a><a name="Prerequisites"></a>
+<h3 class="h4">Prerequisites</h3>
+<ol>
+          
+<li>Choose a name to identify the usecase, e.g. editHeadline. It is possible to group usecases
+              using "." as delimiter, for instance <span class="codefrag">article.editHeadline</span>.
+          </li>
+        
+</ol>
+<a name="N1016E"></a><a name="Add+a+Menu+Item"></a>
+<h3 class="h4">Add a Menu Item</h3>
+<div class="note">
+<div class="label">Note</div>
+<div class="content">
+          This step is necessary if you want to call the usecase from the Lenya menubar.
+        </div>
+</div>
+<ol>
+          
+<li>Add the corresponding menu item:
+            <pre class="code">&lt;item uc:usecase="article.editHeadline"&gt;Edit Headline&lt;/item&gt;</pre>
+          
+</li>
+        
+</ol>
+<a name="N10182"></a><a name="Implement+the+Usecase+Handler+Class"></a>
+<h3 class="h4">Implement the Usecase Handler Class</h3>
+<ol>
+          
+<li>Choose a name for your business logic class, e.g. <span class="codefrag">org.myproject.lenya.usecases.EditHeadline</span>.</li>
+          
+<li>The class must implement the interface <span class="codefrag">org.apache.lenya.cms.usecase.Usecase</span>.</li>
+          
+<li>
+            To simplify development, you can extend one of the following classes:
+            <ul>
+              
+<li>
+<span class="codefrag">org.apache.lenya.cms.usecase.AbstractUsecase</span>
+</li>
+              
+<li>
+<span class="codefrag">org.apache.lenya.cms.usecase.DocumentUsecase</span> (only for usecases invoked on document pages)</li>
+              
+<li>
+<span class="codefrag">org.apache.lenya.cms.usecase.SiteUsecase</span>
+</li>
+            
+</ul>
+            They have built-in support for the unit-of-work pattern (which will evolve into
+            an ACID transaction someday) as well as functionality specific to the area they are
+            supposed to be used with, e.g. the site area.
+          </li>
+          
+<li>
+            Add the usecase handler class declaration to an XPatch file, e.g.
+            <span class="codefrag">$PUB_HOME/config/cocoon-xconf/usecases.xconf</span>:
+<pre class="code">&lt;xconf xpath="/cocoon/usecases"
+       unless="/cocoon/usecases/component-instance[@name = 'article.editHeadline']"&gt;
+  &lt;component-instance name="article.editHeadline"
+                      logger="lenya.usecases.editHeadline"
+                      class="org.myproject.lenya.usecases.EditHeadline"/&gt;
+&lt;/xconf&gt;</pre>
+          
+</li>
+        
+</ol>
+<a name="N101B5"></a><a name="Implement+the+View"></a>
+<h3 class="h4">Implement the View</h3>
+<p>
+            The view of a usecase is optional. If you omit the view declaration, no screen is presented
+            to the user. The view is declared in the usecase configuration:
+          </p>
+<pre class="code">  &lt;component-instance ...&gt;
+    &lt;view template="usecases/article/editHeadline.jx" menu="false"&gt;
+      &lt;parameter name="title" value="Edit Headline"/&gt;
+      &lt;parameter name="..." value="..."/&gt;
+    &lt;/view&gt;
+  &lt;/component-instance&gt;</pre>
+<p>
+          The <span class="codefrag">&lt;view&gt;</span> element takes an optional <span class="codefrag">menu</span> attribute
+          which denotes if the menubar should be visible when the usecase screen is presented.
+          If omitted, it defaults to <span class="codefrag">false</span>.
+        </p>
+<p>
+          The <span class="codefrag">&lt;view&gt;</span> element can contain an arbitrary number of <span class="codefrag">&lt;parameter&gt;</span>
+          elements, each containing a <span class="codefrag">name</span> and <span class="codefrag">value</span> attribute. These
+          parameters can be accessed in the JX template using
+          <span class="codefrag">${usecase.getView().getParameter('...')}</span>.
+        </p>
+<p>
+          One option is to implement view for a usecase as a JX template. The location of the
+          JX template is defined using the <span class="codefrag">&lt;view&gt;</span> element's <span class="codefrag">template</span>
+          attribute (relatively to the <span class="codefrag">context://lenya</span> directory).
+          The output of the template has to be a Lenya page:
+        </p>
+<pre class="code">&lt;page:page
+  xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
+  &gt;
+
+  &lt;page:title&gt;
+    &lt;i18n:text&gt;&lt;jx:out value="${usecase.getView().getParameter('title')}"/&gt;&lt;/i18n:text&gt;
+  &lt;/page:title&gt;
+  &lt;page:body&gt;
+  
+    &lt;form&gt;
+      &lt;input type="hidden" name="lenya.continuation" value="${continuation.id}"/&gt;
+      &lt;input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/&gt;
+
+      ...
+
+    &lt;/form&gt;
+
+  &lt;/page:body&gt;
+&lt;/page:page&gt;</pre>
+<p>
+          Take care of adding the hidden <span class="codefrag">lenya.usecase</span> and <span class="codefrag">lenya.continuation</span> fields as shown above.
+          </p>
+<p>
+          If you don't want to display a form, but output arbitrary XML, text, an SVG-generated image
+          or something like that, you can use a <span class="codefrag">uri</span> attribute instead of the <span class="codefrag">template</span>
+          attribute. In this case, the <span class="codefrag">menu</span> attribute can be omitted.
+        </p>
+<pre class="code">  &lt;component-instance ...&gt;
+    &lt;view uri="cocoon://modules/reports/generateReport.pdf" /&gt;
+  &lt;/component-instance&gt;</pre>
+<a name="N1020A"></a><a name="Displaying+Usecases+in+Tabs"></a>
+<h3 class="h4">Displaying Usecases in Tabs</h3>
+<p>
+              It is possible to use a tab-based layout to assemble a set of usecases.
+              The admin and site areas are displayed using this style.
+              To add a tab-based usecase to a tab set, two steps are required: 
+            </p>
+<ol>
+              
+<li>
+                Add the tab to the GUI manager configuration:
+<pre class="code">&lt;xconf xpath="/cocoon/gui-manager/tab-group[@name = 'admin']"
+       unless="/cocoon/gui-manager/tab-group[@name = 'admin']/tab[@name = 'search']"&gt;
+
+  &lt;tab name="search" label="Search" usecase="admin.search"/&gt;
+  
+&lt;/xconf&gt;</pre>
+              
+</li>
+              
+<li>
+                Add the tab configuration to the usecase view declaration:
+<pre class="code">&lt;component-instance name="admin.search" logger="lenya.admin" class="org.apache.lenya.cms.usecase.DummyUsecase"&gt;
+  &lt;view template="usecases/admin/search.jx" menu="true"&gt;
+    &lt;tab group="admin" name="search"/&gt;
+  &lt;/view&gt;
+  &lt;exit usecase="admin.search"/&gt;
+&lt;/component-instance&gt;</pre>
+              
+</li>
+            
+</ol>
+<a name="N10225"></a><a name="dyn_exit"></a>
+<h3 class="h4">Dynamically Setting the Exit URL</h3>
+<p> Like you see above you can specify the "exit" URL of the 
+                usecase via the component configuration, however this is 
+                sometimes not enough because you may need to set the exit URL 
+                of a usecase dynamically.</p>
+<p>Consider the use case is that you have a form and you need two 
+                possibilities to exit the usecase. </p>
+<ol>
+                
+<li>Pressing on "submit" will save and exit to the same page in 
+                  the authoring area. </li>
+                
+<li>The other exit point could be a dynamic link based on a <span class="codefrag">&lt;a href=""/&gt;</span>
+                   where the user get redirected after submitting the form (e.g. to edit the linked document
+                    with the <a href="../../../1_2_x/components/editors/bxe.html">BXE</a> editor).</li>
+              
+</ol>
+<p>First you need to add another request parameter (e.g., 
+                <span class="codefrag">TRANSFER_FIELD</span>) denoting that the user clicked the link. This 
+                could be e.g. a hidden field which contains the URL to transfer 
+                the request. Further you need to override 
+                <span class="codefrag">Usecase.getTargetURL()</span> to return the BXE usecase URL if the 
+                <span class="codefrag">TRANSFER_FIELD</span> parameter is set, and <span class="codefrag">super.getTargetURL()</span> 
+                otherwise.</p>
+<pre class="code">public String getTargetURL(boolean success) {
+    String tmpTransfer = getParameterAsString("TRANSFER_FIELD", null);
+    if (!tmpTransfer.equals("") &amp; tmpTransfer != null)
+        return tmpTransfer;
+    else
+        return super.getTargetURL(success);
+}</pre>
+</div>
+    
+    
+<a name="N10256"></a><a name="Overriding+Core+Usecases+in+Publications"></a>
+<h2 class="h3">Overriding Core Usecases in Publications</h2>
+<div class="section">
+<a name="N1025C"></a><a name="Overriding+Usecase+Handler+Classes"></a>
+<h3 class="h4">Overriding Usecase Handler Classes</h3>
+<p>
+          The usecase resolver, which is responsible for obtaining the handler class for a usecase,
+          looks first if the current publication overrides the core usecase handler.
+          This can be done by declaring a usecase called <span class="codefrag">&lt;pub-id&gt;/&lt;usecase-name&gt;</span>,
+          for instance <span class="codefrag">mypub/admin.addUser</span>. To implement a core usecase using a custom
+          handler class, you need to
+        </p>
+<ol>
+          
+<li>Implement the handler class and put it in <span class="codefrag">$PUB_HOME/java/src</span>.
+          In most cases, you will extend the core usecase handler class to inherit the basic functionality.</li>
+          
+<li>
+            Declare it in an <em>xpatch</em> file, for instance
+            <span class="codefrag">$PUB_HOME/config/cocoon-xconf/usecases.xconf</span>:
+<pre class="code">&lt;xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'mypub/admin.addUser']"&gt;
+  &lt;component-instance name="mypub/admin.addUser"
+                      logger="lenya.usecases.editHeadline"
+                      class="org.myproject.lenya.usecases.AddUser"/&gt;
+&lt;/xconf&gt;</pre>
+          
+</li>
+        
+</ol>
+<p>
+          Now, when the usecase is invoked from inside the publication mypub, the custom
+          handler class will be used.
+        </p>
+<a name="N10285"></a><a name="Overriding+JX+Templates"></a>
+<h3 class="h4">Overriding JX Templates</h3>
+<p>
+          Overriding the JX template of a usecase follows the
+          <a href="../publication-templating/index.html">publication templating</a> principle.
+          You just have to put a JX template with the same name in <span class="codefrag">$PUB_HOME/lenya/usecases</span>,
+          for instance <span class="codefrag">$PUB_HOME/lenya/usecases/admin/addUser.jx</span>.
+        </p>
+</div>
+    
+  
+</div>
+<!--+
+    |end content
+    +-->
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<!--+
+    |start bottomstrip
+    +-->
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2002-2005 <a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software Foundation.</a>
+</div>
+<div id="logos"></div>
+<div id="feedback">
+    Send feedback about the website to:
+  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A01_4/reference/usecase-framework/index.html">dev@lenya.apache.org</a>
+</div>
+<!--+
+    |end bottomstrip
+    +-->
+</div>
+</body>
+</html>
