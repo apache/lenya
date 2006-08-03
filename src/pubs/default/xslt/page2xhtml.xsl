@@ -45,6 +45,9 @@
 
 <xsl:param name="lastPublishedUser"/>
 <xsl:param name="lastPublishedDate"/>
+
+<!--Following is a show off to explain lenya.properties.xml -->
+<xsl:param name="author"/>
   
 <xsl:template match="cmsbody">
   <html>
@@ -75,10 +78,10 @@
           <td id="publication-title">
             <xsl:choose>
               <xsl:when test="$language = 'de'">
-                Willkommen zur Default Publikation!
+                Willkommen zur Default Publikation von <xsl:value-of select="$author"/>!
               </xsl:when>
               <xsl:otherwise>
-                Welcome to the Default Publication!
+                Welcome to the Default Publication from <xsl:value-of select="$author"/>!
               </xsl:otherwise>
             </xsl:choose>
           </td>
