@@ -21,6 +21,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.MalformedURLException;
+import java.util.Iterator;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerConfigurationException;
@@ -31,6 +32,7 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.excalibur.source.ModifiableSource;
+import org.apache.excalibur.source.ModifiableTraversableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceNotFoundException;
@@ -221,13 +223,48 @@ public final class SourceUtil {
     public static void delete(String sourceUri, ServiceManager manager) throws ServiceException,
             MalformedURLException, IOException {
         SourceResolver resolver = null;
-        ModifiableSource source = null;
+        ModifiableTraversableSource source = null;
         try {
 
             resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-            source = (ModifiableSource) resolver.resolveURI(sourceUri);
+            source = (ModifiableTraversableSource) resolver.resolveURI(sourceUri);
             if (source.exists()) {
                 source.delete();
+            }
+
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                manager.release(resolver);
+            }
+        }
+    }
+
+    /**
+     * Deletes all empty collections in a subtree.
+     * @param sourceUri The root source URI.
+     * @param manager The service manager.
+     * @throws ServiceException
+     * @throws MalformedURLException
+     * @throws IOException
+     */
+    public static void deleteEmptyCollections(String sourceUri, ServiceManager manager)
+            throws ServiceException, MalformedURLException, IOException {
+        SourceResolver resolver = null;
+        ModifiableTraversableSource source = null;
+        try {
+            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+            source = (ModifiableTraversableSource) resolver.resolveURI(sourceUri);
+            if (source.isCollection()) {
+                for (Iterator i = source.getChildren().iterator(); i.hasNext();) {
+                    ModifiableTraversableSource child = (ModifiableTraversableSource) i.next();
+                    deleteEmptyCollections(child.getURI(), manager);
+                }
+                if (source.getChildren().size() == 0) {
+                    source.delete();
+                }
             }
         } finally {
             if (resolver != null) {
@@ -401,7 +438,7 @@ public final class SourceUtil {
             resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
             source = (RepositorySource) resolver.resolveURI(sourceUri);
             source.getNode().registerDirty();
-            
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {

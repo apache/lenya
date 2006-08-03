@@ -90,8 +90,7 @@ public class ChangeNodeID extends DocumentUsecase {
         String[] languages = doc.getLanguages();
         List nodes = new ArrayList();
         for (int i = 0; i < languages.length; i++) {
-            DocumentLocator loc = doc.getLocator().getLanguageVersion(languages[i]);
-            nodes.add(doc.getFactory().get(loc).getRepositoryNode());
+            nodes.add(doc.getTranslation(languages[i]).getRepositoryNode());
         }
         return nodes;
     }
@@ -145,9 +144,15 @@ public class ChangeNodeID extends DocumentUsecase {
         }
     }
 
-    protected DocumentLocator getTargetLocator() throws DocumentBuildException {
+    protected DocumentLocator getTargetLocator() throws DocumentBuildException, SiteException {
         String nodeId = getParameterAsString(NODE_ID);
-        DocumentLocator parent = getSourceDocument().getLocator().getParent();
+        Document doc = getSourceDocument();
+        String path = SiteUtil.getPath(this.manager, doc);
+        DocumentLocator loc = DocumentLocator.getLocator(doc.getPublication().getId(),
+                doc.getArea(),
+                path,
+                doc.getLanguage());
+        DocumentLocator parent = loc.getParent();
         return parent.getChild(nodeId);
     }
 
@@ -188,7 +193,7 @@ public class ChangeNodeID extends DocumentUsecase {
             documentManager.moveAll(source, target);
 
             targetDoc = getDocumentFactory().get(target);
-            
+
             rewriter = (LinkRewriter) this.manager.lookup(LinkRewriter.ROLE);
             rewriter.rewriteLinks(source, targetDoc);
         } finally {

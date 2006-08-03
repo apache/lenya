@@ -62,7 +62,7 @@
           var tree = new NavTree(document, document.getElementById('tree'));
           tree.init(PUBLICATION_ID);
           tree.render();
-          tree.loadInitialTree('<jx:out value="${area}"/>', '<jx:out value="${document.getId()}"/>');
+          tree.loadInitialTree('<jx:out value="${area}"/>', '<jx:out value="${document.getPath()}"/>');
         </script>
       </div>
     </div>

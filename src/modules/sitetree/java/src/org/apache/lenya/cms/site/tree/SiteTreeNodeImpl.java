@@ -516,4 +516,8 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         return element.getAttribute(attributeName);
     }
 
+    public void setUUID(String uuid) {
+        setNodeAttribute(UUID_ATTRIBUTE_NAME, uuid);
+    }
+
 }

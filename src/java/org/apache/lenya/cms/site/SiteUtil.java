@@ -31,7 +31,6 @@ import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.util.DocumentSet;
@@ -449,7 +448,7 @@ public class SiteUtil {
                 if (siteManager != null) {
                     selector.release(siteManager);
                 }
-                manager.release(siteManager);
+                manager.release(selector);
             }
         }
     }
@@ -499,7 +498,7 @@ public class SiteUtil {
                 if (siteManager != null) {
                     selector.release(siteManager);
                 }
-                manager.release(siteManager);
+                manager.release(selector);
             }
         }
     }
@@ -521,7 +520,7 @@ public class SiteUtil {
                 if (siteManager != null) {
                     selector.release(siteManager);
                 }
-                manager.release(siteManager);
+                manager.release(selector);
             }
         }
     }
@@ -546,7 +545,7 @@ public class SiteUtil {
                 if (siteManager != null) {
                     selector.release(siteManager);
                 }
-                manager.release(siteManager);
+                manager.release(selector);
             }
         }
     }
@@ -622,4 +621,28 @@ public class SiteUtil {
             }
         }
     }
+
+    public static boolean contains(ServiceManager manager, Document document) throws SiteException {
+        SiteManager siteManager = null;
+        ServiceSelector selector = null;
+
+        try {
+            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
+            String siteManagerHint = document.getPublication().getSiteManagerHint();
+            siteManager = (SiteManager) selector.select(siteManagerHint);
+            return siteManager.contains(document);
+        } catch (SiteException e) {
+            throw e;
+        } catch (Exception e) {
+            throw new SiteException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                manager.release(selector);
+            }
+        }
+    }
+
 }

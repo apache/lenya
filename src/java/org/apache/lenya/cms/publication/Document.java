@@ -245,11 +245,6 @@ public interface Document extends MetaDataOwner, RepositoryItem {
     DocumentIdentifier getIdentifier();
     
     /**
-     * @return The locator for this document.
-     */
-    DocumentLocator getLocator();
-    
-    /**
      * @return The path of this document in the site structure.
      * @deprecated use {@link SiteUtil} instead.
      */
@@ -301,5 +296,10 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      * @throws DocumentException if the area version doesn't exist.
      */
     Document getVersion(String area, String language) throws DocumentException;
+    
+    /**
+     * @return A document locator.
+     */
+    DocumentLocator getLocator();
 
 }

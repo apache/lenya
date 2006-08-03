@@ -383,9 +383,26 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
             Label[] labels = { label };
             tree.addNode(path, document.getUUID(), labels, true, null, null, false);
         } else {
+            if (node.getUUID() != null) {
+                ((SiteTreeNodeImpl) node).setUUID(document.getUUID());
+            }
             tree.addLabel(path, label);
         }
 
+    }
+
+    /**
+     * @see org.apache.lenya.cms.site.SiteManager#set(org.apache.lenya.cms.publication.Document)
+     */
+    public void set(String path, Document document) throws SiteException {
+
+        if (contains(document)) {
+            throw new SiteException("The document [" + document + "] is already contained!");
+        }
+        SiteTree tree = getTree(document);
+        SiteTreeNode node = tree.getNode(path);
+        node.setUUID(document.getUUID());
+        tree.save();
     }
 
     /**

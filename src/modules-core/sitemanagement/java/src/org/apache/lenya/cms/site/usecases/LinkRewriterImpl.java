@@ -59,7 +59,8 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
      *      org.apache.lenya.cms.publication.Document)
      */
     public void rewriteLinks(Document originalTargetDocument, Document newTargetDocument) {
-
+        if (true)
+            return;
         Publication publication = originalTargetDocument.getPublication();
         String area = originalTargetDocument.getArea();
         DocumentFactory identityMap = originalTargetDocument.getFactory();
@@ -165,8 +166,9 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
                                         this.manager);
                             }
                         } catch (Exception e) {
-                            throw new RuntimeException("Error rewriting document: [" + examinedDocument
-                                    + "] - source URI: [" + examinedDocument.getSourceURI() + "]", e);
+                            throw new RuntimeException("Error rewriting document: ["
+                                    + examinedDocument + "] - source URI: ["
+                                    + examinedDocument.getSourceURI() + "]", e);
                         }
                     }
 
@@ -205,7 +207,7 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
         String originalId = originalTargetDocument.getPath();
         String targetId = targetDocument.getPath();
         String childString = targetId.substring(originalId.length());
-        
+
         ServiceSelector selector = null;
         DocumentBuilder builder = null;
         try {
@@ -217,8 +219,7 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
             DocumentLocator newLocator;
             if (childString.length() == 0) {
                 newLocator = locator;
-            }
-            else {
+            } else {
                 newLocator = locator.getDescendant(childString);
             }
             return builder.buildCanonicalUrl(newLocator);

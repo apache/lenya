@@ -25,7 +25,6 @@ import java.util.List;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
-import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.excalibur.source.SourceResolver;
@@ -258,7 +257,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      */
     public String getExtension() {
         if (extension == null) {
-            getLogger().warn("Default extension will be used: " + defaultExtension);
+            getLogger().info("Default extension will be used: " + defaultExtension);
             return defaultExtension;
         }
         return this.extension;
@@ -433,7 +432,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
                 String webappUrl = builder.buildCanonicalUrl(getLocator());
                 String prefix = "/" + getPublication().getId() + "/" + getArea();
                 this.documentURL = webappUrl.substring(prefix.length());
-            } catch (ServiceException e) {
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             } finally {
                 if (selector != null) {
@@ -550,22 +549,20 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         }
     }
 
-    private DocumentLocator locator;
-
     public DocumentLocator getLocator() {
-        if (this.locator == null) {
-            String path;
-            try {
-                path = SiteUtil.getPath(this.manager, this);
-            } catch (SiteException e) {
-                throw new RuntimeException(e);
+        try {
+            String path = SiteUtil.getPath(this.manager, this);
+            if (path == null) {
+                throw new RuntimeException("The document [" + this
+                        + "] is not referenced in the site structure.");
             }
-            this.locator = DocumentLocator.getLocator(getPublication().getId(),
+            return DocumentLocator.getLocator(getPublication().getId(),
                     getArea(),
                     path,
                     getLanguage());
+        } catch (SiteException e) {
+            throw new RuntimeException(e);
         }
-        return this.locator;
     }
 
     public String getPath() {

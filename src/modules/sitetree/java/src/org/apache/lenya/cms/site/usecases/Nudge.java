@@ -124,9 +124,9 @@ public class Nudge extends DocumentUsecase {
                 SiteTree tree = (SiteTree) structure;
                 String direction = getParameterAsString(DIRECTION);
                 if (direction.equals(UP)) {
-                    tree.moveUp(getSourceDocument().getId());
+                    tree.moveUp(getSourceDocument().getPath());
                 } else if (direction.equals(DOWN)) {
-                    tree.moveDown(getSourceDocument().getId());
+                    tree.moveDown(getSourceDocument().getPath());
                 } else {
                     throw new IllegalArgumentException("The direction [" + direction
                             + "] is not supported.");

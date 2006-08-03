@@ -90,6 +90,14 @@ public interface SiteManager {
     void add(String path, Document document) throws SiteException;
 
     /**
+     * Sets a document to the site structure.
+     * @param path The path.
+     * @param document The document to add.
+     * @throws SiteException if the document is already contained or if the path doesn't exist.
+     */
+    void set(String path, Document document) throws SiteException;
+
+    /**
      * Checks if the site structure contains a certain resource in a certain area.
      * 
      * @param resource The resource.

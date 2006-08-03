@@ -50,8 +50,8 @@ public class IndexUpdater extends AbstractLogEnabled implements RepositoryListen
         try {
             String[] formats = doc.getResourceType().getFormats();
             if (Arrays.asList(formats).contains("luceneIndex")) {
-                String docString = doc.getPublication().getId() + "/" + doc.getArea() + doc.getUUID()
-                        + "/" + doc.getLanguage();
+                String docString = doc.getPublication().getId() + "/" + doc.getArea()
+                        + doc.getPath() + "/" + doc.getLanguage();
                 uri = "cocoon://modules/lucene/" + operation + "-document/" + docString + ".xml";
                 SourceUtil.readDOM(uri, this.manager);
             } else {

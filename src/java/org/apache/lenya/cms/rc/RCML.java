@@ -36,6 +36,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
+import org.xml.sax.SAXParseException;
 
 /**
  * Handle with the RCML file
@@ -111,7 +112,12 @@ public class RCML {
 
             write();
         } else {
-            this.document = DocumentHelper.readDocument(this.rcmlFile);
+            try {
+                this.document = DocumentHelper.readDocument(this.rcmlFile);
+            } catch (SAXParseException e) {
+                throw new RevisionControlException("Could not read RC file ["
+                        + this.rcmlFile.getAbsolutePath() + "]");
+            }
         }
     }
 
@@ -141,7 +147,10 @@ public class RCML {
      * @throws IOException if an error occurs
      * @throws Exception if an error occurs
      */
-    public void write() throws IOException, Exception {
+    public void write() throws Exception {
+        if (this.document == null) {
+            throw new IllegalStateException("The XML for RC file [" + this.rcmlFile + "] is null!");
+        }
         DocumentHelper.writeDocument(this.document, this.rcmlFile);
         clearDirty();
     }
@@ -158,6 +167,10 @@ public class RCML {
      */
     public void checkOutIn(short type, String identity, long time, boolean backup)
             throws IOException, Exception {
+        
+        if (identity == null) {
+            throw new IllegalArgumentException("The identity must not be null!");
+        }
 
         if (type != co && type != ci) {
             throw new IllegalArgumentException("ERROR: " + this.getClass().getName()
@@ -305,7 +318,9 @@ public class RCML {
         for (int i = 0; i < entries.getLength(); i++) {
             Element elem = (Element) entries.item(i);
             String time = elem.getElementsByTagName("Time").item(0).getFirstChild().getNodeValue();
-            String identity = elem.getElementsByTagName("Identity").item(0).getFirstChild()
+            String identity = elem.getElementsByTagName("Identity")
+                    .item(0)
+                    .getFirstChild()
                     .getNodeValue();
 
             if (elem.getTagName().equals("CheckOut")) {
@@ -324,7 +339,7 @@ public class RCML {
 
         return RCMLEntries;
     }
-    
+
     /**
      * get all backup entries
      * @return Vector of all entries in this RCML-file with a backup
@@ -332,14 +347,16 @@ public class RCML {
      */
     public Vector getBackupEntries() throws Exception {
         Element parent = this.document.getDocumentElement();
-        NodeList entries = XPathAPI.selectNodeList(parent,
-                "/XPSRevisionControl/CheckOut["+ELEMENT_BACKUP+"]|/XPSRevisionControl/CheckIn["+ELEMENT_BACKUP+"]");
+        NodeList entries = XPathAPI.selectNodeList(parent, "/XPSRevisionControl/CheckOut["
+                + ELEMENT_BACKUP + "]|/XPSRevisionControl/CheckIn[" + ELEMENT_BACKUP + "]");
         Vector RCMLEntries = new Vector();
 
         for (int i = 0; i < entries.getLength(); i++) {
             Element elem = (Element) entries.item(i);
             String time = elem.getElementsByTagName("Time").item(0).getFirstChild().getNodeValue();
-            String identity = elem.getElementsByTagName("Identity").item(0).getFirstChild()
+            String identity = elem.getElementsByTagName("Identity")
+                    .item(0)
+                    .getFirstChild()
                     .getNodeValue();
 
             NodeList versionElements = elem.getElementsByTagName("Version");
@@ -370,7 +387,9 @@ public class RCML {
             Element current = (Element) entries.item(i);
 
             // remove the backup file associated with this entry
-            String time = current.getElementsByTagName("Time").item(0).getFirstChild()
+            String time = current.getElementsByTagName("Time")
+                    .item(0)
+                    .getFirstChild()
                     .getNodeValue();
             File backupFile = new File(backupDir + "/" + time + ".bak");
             backupFile.delete();
@@ -387,8 +406,7 @@ public class RCML {
     public org.w3c.dom.Document getDOMDocumentClone() throws Exception {
         Document documentClone = DocumentHelper.createDocument(null, "dummy", null);
         documentClone.removeChild(documentClone.getDocumentElement());
-        documentClone.appendChild(documentClone
-                .importNode(this.document.getDocumentElement(), true));
+        documentClone.appendChild(documentClone.importNode(this.document.getDocumentElement(), true));
 
         return documentClone;
     }

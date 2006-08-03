@@ -186,4 +186,9 @@ public class TopicMapSiteManager extends AbstractSiteManager {
         return false;
     }
 
+    public void set(String path, Document document) throws SiteException {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

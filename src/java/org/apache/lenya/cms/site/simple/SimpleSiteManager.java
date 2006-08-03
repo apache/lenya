@@ -282,4 +282,9 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
         return false;
     }
 
+    public void set(String path, Document document) throws SiteException {
+        // TODO Auto-generated method stub
+        
+    }
+
 }

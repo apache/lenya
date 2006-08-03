@@ -181,7 +181,13 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
                     selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE
                             + "Selector");
                     builder = (DocumentBuilder) selector.select(publication.getDocumentBuilderHint());
-                    return builder.isDocument(webappUrl);
+                    if (builder.isDocument(webappUrl)) {
+                        DocumentLocator locator = builder.getLocator(webappUrl);
+                        return SiteUtil.contains(this.manager, this, locator);
+                    }
+                    else {
+                        return false;
+                    }
                 } finally {
                     if (selector != null) {
                         if (builder != null) {

@@ -106,7 +106,57 @@ public interface DocumentManager {
             PublicationException;
 
     /**
-     * Deletes a document.
+     * Creates a new document in the same publication the <code>parentDocument</code> belongs to
+     * with the given parameters:
+     * @param factory The document factory.
+     * @param resourceType the document type (aka resource type) of the new document
+     * @param pub The publication.
+     * @param area The area.
+     * @param language The language.
+     * @param extension The extension to use for the document source.
+     * @return The added document.
+     * 
+     * @throws DocumentBuildException if the document can not be created
+     * @throws PublicationException if the document is already contained.
+     */
+    Document add(DocumentFactory factory, ResourceType resourceType, Publication pub, String area,
+            String language, String extension) throws DocumentBuildException, PublicationException;
+
+    /**
+     * Creates a new document in the same publication the <code>parentDocument</code> belongs to
+     * with the given parameters:
+     * @param factory The document factory.
+     * @param resourceType the document type (aka resource type) of the new document
+     * @param contentSourceUri The URI to read the content from.
+     * @param pub The publication.
+     * @param area The area.
+     * @param language The language.
+     * @param extension The extension to use for the document source.
+     * @return The added document.
+     * 
+     * @throws DocumentBuildException if the document can not be created
+     * @throws PublicationException if the document is already contained.
+     */
+    Document add(DocumentFactory factory, ResourceType resourceType, String contentSourceUri,
+            Publication pub, String area, String language, String extension)
+            throws DocumentBuildException, PublicationException;
+
+    /**
+     * Adds a new version of a document with a different language and / or in a different area.
+     * 
+     * @param sourceDocument The document to initialize the contents and meta data from.
+     * @param area The area.
+     * @param language The language of the new document.
+     * @return The added document.
+     * 
+     * @throws DocumentBuildException if the document can not be created
+     * @throws PublicationException if the document is already contained.
+     */
+    Document addVersion(Document sourceDocument, String area, String language)
+            throws DocumentBuildException, PublicationException;
+
+    /**
+     * Deletes a document from the content repository and from the site structure.
      * @param document The document to delete.
      * @throws PublicationException when something went wrong.
      */

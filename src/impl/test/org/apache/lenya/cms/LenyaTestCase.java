@@ -88,7 +88,7 @@ public class LenyaTestCase extends ContainerTestCase {
     }
 
     protected void prepare() throws Exception {
-        File testPath = (File) this.context.get("test-path");
+        File testPath = new File("build/test");
         final String resourceName = LenyaTestCase.class.getName().replace('.', '/') + ".xtest";
         File resourceFile = new File(testPath, resourceName.replace('/', File.separatorChar));
         

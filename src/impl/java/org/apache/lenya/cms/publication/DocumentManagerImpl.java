@@ -113,16 +113,29 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             boolean visibleInNav, String initialContentsURI) throws DocumentBuildException,
             DocumentException, PublicationException {
 
-        UUIDGenerator generator = null;
+        Publication pub = PublicationUtil.getPublication(this.manager, locator.getPublicationId());
+        String area = locator.getArea();
+        String language = locator.getLanguage();
+        String uuid = generateUUID();
+
+        Document document = add(factory,
+                documentType,
+                uuid,
+                initialContentsURI,
+                pub,
+                area,
+                language,
+                extension);
+
+        addToSiteManager(locator.getPath(), document, navigationTitle, visibleInNav);
+        return document;
+    }
+
+    private Document add(DocumentFactory factory, ResourceType documentType, String uuid,
+            String initialContentsURI, Publication pub, String area, String language,
+            String extension) throws DocumentBuildException {
         try {
-
-            generator = (UUIDGenerator) this.manager.lookup(UUIDGenerator.ROLE);
-            String uuid = generator.nextUUID();
-
-            Publication pub = PublicationUtil.getPublication(this.manager,
-                    locator.getPublicationId());
-            Document document = factory.get(pub, locator.getArea(), uuid, locator.getLanguage());
-
+            Document document = factory.get(pub, area, uuid, language);
             Node node = document.getRepositoryNode();
             node.lock();
 
@@ -136,17 +149,32 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Create");
                 getLogger().debug("    document:     [" + document + "]");
-                getLogger().debug("    nav title:    [" + navigationTitle + "]");
                 getLogger().debug("    contents URI: [" + initialContentsURI + "]");
             }
 
             create(initialContentsURI, document);
-            addToSiteManager(locator.getPath(), document, navigationTitle, visibleInNav);
             return document;
         } catch (Exception e) {
             throw new DocumentBuildException("call to creator for new document failed", e);
         }
+    }
 
+    protected String generateUUID() throws DocumentBuildException {
+        String uuid;
+        UUIDGenerator generator = null;
+        try {
+
+            generator = (UUIDGenerator) this.manager.lookup(UUIDGenerator.ROLE);
+            uuid = generator.nextUUID();
+
+        } catch (Exception e) {
+            throw new DocumentBuildException("call to creator for new document failed", e);
+        } finally {
+            if (generator != null) {
+                this.manager.release(generator);
+            }
+        }
+        return uuid;
     }
 
     protected void create(String initialContentsURI, Document document) throws Exception {
@@ -237,18 +265,14 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             throw new PublicationException("Document [" + document + "] does not exist!");
         }
 
-        SiteManager siteManager = null;
-        ServiceSelector selector = null;
+        if (SiteUtil.contains(this.manager, document)) {
+            deleteFromSiteStructure(document);
+        }
+
         ResourcesManager resourcesManager = null;
         try {
             resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
             resourcesManager.deleteResources(document);
-
-            Publication publication = document.getPublication();
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
-            siteManager.delete(document);
-
             document.delete();
         } catch (Exception e) {
             throw new PublicationException(e);
@@ -256,6 +280,20 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             if (resourcesManager != null) {
                 this.manager.release(resourcesManager);
             }
+        }
+    }
+
+    protected void deleteFromSiteStructure(Document document) throws PublicationException {
+        ServiceSelector selector = null;
+        SiteManager siteManager = null;
+        try {
+            Publication publication = document.getPublication();
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
+            siteManager.delete(document);
+        } catch (Exception e) {
+            throw new PublicationException(e);
+        } finally {
             if (selector != null) {
                 if (siteManager != null) {
                     selector.release(siteManager);
@@ -289,7 +327,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             String label = sourceDocument.getLabel();
             boolean visible = siteManager.isVisibleInNav(sourceDocument);
             siteManager.delete(sourceDocument);
-            
+
             siteManager.add(destination.getPath(), sourceDocument);
             siteManager.setLabel(sourceDocument, label);
             siteManager.setVisibleInNav(sourceDocument, visible);
@@ -728,6 +766,43 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
     public DocumentFactory createDocumentIdentityMap(Session session) {
         return new DocumentFactoryImpl(session, this.manager, getLogger());
+    }
+
+    public Document add(DocumentFactory factory, ResourceType resourceType, Publication pub,
+            String area, String language, String extension) throws DocumentBuildException,
+            PublicationException {
+        String contentsUri = resourceType.getSampleURI();
+        String uuid = generateUUID();
+        return add(factory, resourceType, uuid, contentsUri, pub, area, language, extension);
+    }
+
+    public Document addVersion(Document sourceDocument, String area, String language)
+            throws DocumentBuildException, PublicationException {
+        Document document = add(sourceDocument.getFactory(),
+                sourceDocument.getResourceType(),
+                sourceDocument.getUUID(),
+                sourceDocument.getSourceURI(),
+                sourceDocument.getPublication(),
+                area,
+                language,
+                sourceDocument.getSourceExtension());
+
+        try {
+            String[] uris = sourceDocument.getMetaDataNamespaceUris();
+            for (int i = 0; i < uris.length; i++) {
+                document.getMetaData(uris[i]).replaceBy(sourceDocument.getMetaData(uris[i]));
+            }
+        } catch (MetaDataException e) {
+            throw new PublicationException(e);
+        }
+        return document;
+    }
+
+    public Document add(DocumentFactory factory, ResourceType resourceType,
+            String contentSourceUri, Publication pub, String area, String language, String extension)
+            throws DocumentBuildException, PublicationException {
+        String uuid = generateUUID();
+        return add(factory, resourceType, uuid, contentSourceUri, pub, area, language, extension);
     }
 
 }

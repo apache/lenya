@@ -230,5 +230,11 @@ public interface SiteTreeNode {
 	 * @return The list
 	 */
 	List postOrder();
-    
+
+    /**
+     * Sets the UUID of a node.
+     * @param uuid The UUID.
+     */
+    void setUUID(String uuid);
+
 }
