@@ -47,6 +47,10 @@ public class ModuleManagerImpl extends AbstractLogEnabled implements ModuleManag
         }
         return baseUri;
     }
+    
+    public Map getModuleList(){
+        return module2src;
+    }
 
     private boolean modulesCopied = false;
     private Map module2src = new HashMap();

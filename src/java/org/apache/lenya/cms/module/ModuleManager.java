@@ -16,6 +16,8 @@
  */
 package org.apache.lenya.cms.module;
 
+import java.util.Map;
+
 /**
  * Module manager.
  */
@@ -33,5 +35,11 @@ public interface ModuleManager {
      * @throws ModuleException if there is no module for this shortcut.
      */
     String getBaseURI(String moduleShortcut) throws ModuleException;
+
+    /**
+     * Returns the list of all modules
+     * @return Map
+     */
+    Map getModuleList();
     
 }
