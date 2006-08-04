@@ -118,11 +118,11 @@ public class SiteUtil {
 
             DocumentFactory map = document.getFactory();
             SiteNode node = NodeFactory.getNode(document);
-            set = getExistingDocuments(map, node);
+            set = getExistingDocuments(manager, map, node);
 
             SiteNode[] requiringNodes = siteManager.getRequiringResources(map, node);
             for (int i = 0; i < requiringNodes.length; i++) {
-                set.addAll(getExistingDocuments(map, requiringNodes[i]));
+                set.addAll(getExistingDocuments(manager, map, requiringNodes[i]));
             }
 
         } catch (Exception e) {
@@ -139,16 +139,24 @@ public class SiteUtil {
     }
 
     /**
+     * @param manager The service manager.
+     * @param factory The document factory.
      * @param map An identity map.
      * @param node A node.
      * @return All existing documents belonging to the node.
      * @throws DocumentBuildException if an error occurs.
      * @throws DocumentException if an error occurs.
+     * @throws SiteException
      */
-    public static DocumentSet getExistingDocuments(DocumentFactory map, SiteNode node)
-            throws DocumentBuildException, DocumentException {
+    public static DocumentSet getExistingDocuments(ServiceManager manager, DocumentFactory factory,
+            SiteNode node) throws DocumentBuildException, DocumentException, SiteException {
         DocumentSet set = new DocumentSet();
-        Document document = map.get(node.getPublication(), node.getArea(), node.getPath());
+        String uuid = SiteUtil.getUUID(manager,
+                factory,
+                node.getPublication(),
+                node.getArea(),
+                node.getPath());
+        Document document = factory.get(node.getPublication(), node.getArea(), uuid);
         String[] languages = document.getLanguages();
         for (int i = 0; i < languages.length; i++) {
             Document version = document.getTranslation(languages[i]);
@@ -549,10 +557,10 @@ public class SiteUtil {
             }
         }
     }
-    
+
     public static boolean isDocument(ServiceManager manager, DocumentFactory factory,
             String webappUrl) throws SiteException {
-        
+
         URLInformation info = new URLInformation(webappUrl);
         DocumentBuilder builder = null;
         ServiceSelector selector = null;
@@ -563,8 +571,7 @@ public class SiteUtil {
             if (builder.isDocument(webappUrl)) {
                 DocumentLocator locator = builder.getLocator(webappUrl);
                 return contains(manager, factory, locator);
-            }
-            else {
+            } else {
                 return false;
             }
         } catch (SiteException e) {

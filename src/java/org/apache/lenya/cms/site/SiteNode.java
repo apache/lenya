@@ -16,6 +16,7 @@
  */
 package org.apache.lenya.cms.site;
 
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.publication.Publication;
 
 public final class SiteNode {
@@ -73,5 +74,5 @@ public final class SiteNode {
             return NodeFactory.getNode(getPublication(), getArea(), "/" + parentId);
         }
     }
-    
+
 }

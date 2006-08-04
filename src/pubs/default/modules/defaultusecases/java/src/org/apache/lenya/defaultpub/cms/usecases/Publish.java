@@ -23,7 +23,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.components.ContextHelper;
@@ -44,7 +43,6 @@ import org.apache.lenya.cms.site.NodeFactory;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteUtil;
-import org.apache.lenya.cms.site.usecases.AssetUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler;
@@ -93,20 +91,6 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
 
             Document doc = getSourceDocument();
             set.addAll(SiteUtil.getSubSite(this.manager, doc));
-            Map targets = SiteUtil.getTransferedSubSite(this.manager,
-                    doc,
-                    Publication.LIVE_AREA,
-                    SiteUtil.MODE_REPLACE);
-            Document[] docs = set.getDocuments();
-            for (int i = 0; i < docs.length; i++) {
-                nodes.add(docs[i].getRepositoryNode());
-                Document target = (Document) targets.get(docs[i]);
-                nodes.add(target.getRepositoryNode());
-                nodes.addAll(AssetUtil.getCopiedAssetNodes(docs[i],
-                        target,
-                        this.manager,
-                        getLogger()));
-            }
 
             nodes.add(SiteUtil.getSiteStructure(this.manager,
                     getDocumentFactory(),
@@ -167,7 +151,9 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
 
                 for (int i = 0; i < requiredNodes.length; i++) {
 
-                    DocumentSet liveDocs = SiteUtil.getExistingDocuments(map, requiredNodes[i]);
+                    DocumentSet liveDocs = SiteUtil.getExistingDocuments(this.manager,
+                            map,
+                            requiredNodes[i]);
                     if (liveDocs.isEmpty()) {
                         Document authoringDoc = map.get(requiredNodes[i].getPublication(),
                                 Publication.AUTHORING_AREA,

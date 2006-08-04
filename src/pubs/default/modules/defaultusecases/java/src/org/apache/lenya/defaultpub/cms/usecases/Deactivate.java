@@ -80,7 +80,7 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
                 Document liveDoc = getSourceDocument().getAreaVersion(Publication.LIVE_AREA);
                 DocumentSet subSite = SiteUtil.getSubSite(this.manager, liveDoc);
                 SiteNode node = NodeFactory.getNode(liveDoc);
-                subSite.removeAll(SiteUtil.getExistingDocuments(map, node));
+                subSite.removeAll(SiteUtil.getExistingDocuments(this.manager, map, node));
 
                 if (!subSite.isEmpty()) {
                     allowSingle = false;
