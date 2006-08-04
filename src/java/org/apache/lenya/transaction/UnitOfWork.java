@@ -80,4 +80,13 @@ public interface UnitOfWork {
      * @return If the transactionable is registered as dirty.
      */
     boolean isDirty(Transactionable transactionable);
+    
+    /**
+     * Creates a lock.
+     * @param lockable The lockable.
+     * @param version The version.
+     * @return A lock.
+     * @throws TransactionException if a lock is already placed on this transactionable.
+     */
+    Lock createLock(Lockable lockable, int version) throws TransactionException;
 }

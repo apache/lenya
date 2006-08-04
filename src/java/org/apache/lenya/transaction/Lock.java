@@ -19,7 +19,7 @@ package org.apache.lenya.transaction;
 /**
  * A lock on a transactionable.
  *
- * @version $Id:$
+ * @version $Id$
  */
 public class Lock {
 
@@ -27,7 +27,7 @@ public class Lock {
      * Ctor.
      * @param version The version of the transactionable when it was locked.
      */
-    public Lock(int version) {
+    protected Lock(int version) {
         this.version = version;
     }
     

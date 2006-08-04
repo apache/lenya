@@ -413,7 +413,11 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         } catch (Exception e) {
             throw new RepositoryException(e);
         }
-        this.lock = new Lock(currentVersion);
+        try {
+            this.lock = getSession().createLock(this, currentVersion);
+        } catch (TransactionException e) {
+            throw new RepositoryException(e);
+        }
 
         if (!getSourceURI().endsWith("." + LENYA_META_SUFFIX)) {
             lockMetaData();
@@ -571,10 +575,6 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         if (getLogger().isDebugEnabled())
             getLogger().debug("Get OutputStream for " + getSourceURI());
         try {
-            if (!isLocked()) {
-                throw new RuntimeException("Cannot write to source [" + getSourceURI()
-                        + "]: not locked!");
-            }
             registerDirty();
         } catch (Exception e) {
             throw new RuntimeException(e);

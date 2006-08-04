@@ -16,8 +16,10 @@
  */
 package org.apache.lenya.transaction;
 
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.avalon.framework.container.ContainerUtil;
@@ -52,19 +54,18 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
     public IdentityMap getIdentityMap() {
         return this.identityMap;
     }
-    
+
     private boolean isTransaction = false;
-    
+
     /**
-     * This starts the actual transaction. The unit of work starts to use a distinct
-     * identity map.
+     * This starts the actual transaction. The unit of work starts to use a distinct identity map.
      */
     public void startTransaction() {
         this.identityMap = new IdentityMapImpl(getLogger());
         this.identityMap.setUnitOfWork(this);
         this.isTransaction = true;
     }
-    
+
     /**
      * @return if the unit of work is in a transaction.
      */
@@ -80,10 +81,6 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
      * @see org.apache.lenya.transaction.UnitOfWork#registerNew(org.apache.lenya.transaction.Transactionable)
      */
     public void registerNew(Transactionable object) throws TransactionException {
-        if (!object.isLocked()) {
-            throw new LockException("Object [" + object
-                    + "] cannot be registered, it is not locked.");
-        }
         this.newObjects.add(object);
     }
 
@@ -93,10 +90,6 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
      * @see org.apache.lenya.transaction.UnitOfWork#registerDirty(org.apache.lenya.transaction.Transactionable)
      */
     public void registerDirty(Transactionable object) throws TransactionException {
-        if (!object.isLocked()) {
-            throw new LockException("Object [" + object
-                    + "] cannot be registered, it is not locked.");
-        }
         this.modifiedObjects.add(object);
     }
 
@@ -104,10 +97,6 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
      * @see org.apache.lenya.transaction.UnitOfWork#registerRemoved(org.apache.lenya.transaction.Transactionable)
      */
     public void registerRemoved(Transactionable object) throws TransactionException {
-        if (!object.isLocked()) {
-            throw new LockException("Object [" + object
-                    + "] cannot be registered, it is not locked.");
-        }
         this.removedObjects.add(object);
     }
 
@@ -119,12 +108,9 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
             getLogger().debug("UnitOfWorkImpl::commit() called");
         }
 
-        Set involvedObjects = new HashSet();
-        involvedObjects.addAll(this.newObjects);
-        involvedObjects.addAll(this.modifiedObjects);
-        involvedObjects.addAll(this.removedObjects);
-        
-        for (Iterator i = involvedObjects.iterator(); i.hasNext();) {
+        Set lockedObjects = this.locks.keySet();
+
+        for (Iterator i = lockedObjects.iterator(); i.hasNext();) {
             Transactionable t = (Transactionable) i.next();
             if (t.hasChanged()) {
                 throw new LockException("Cannot commit transaction: The object [" + t
@@ -164,9 +150,9 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
                 }
             }
         }
-        
+
         notifyTransactionables();
-        
+
     }
 
     protected void notifyTransactionables() {
@@ -228,6 +214,17 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
                 }
             }
         }
+    }
+
+    private Map locks = new HashMap();
+
+    public Lock createLock(Lockable lockable, int version) throws TransactionException {
+        if (this.locks.containsKey(lockable)) {
+            throw new TransactionException("A lock is already placed on [" + lockable + "]");
+        }
+        Lock lock = new Lock(version);
+        this.locks.put(lockable, lock);
+        return lock;
     }
 
 }

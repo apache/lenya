@@ -21,6 +21,8 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.transaction.IdentityMap;
+import org.apache.lenya.transaction.Lock;
+import org.apache.lenya.transaction.Lockable;
 import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.transaction.Transactionable;
 import org.apache.lenya.transaction.UnitOfWork;
@@ -109,6 +111,10 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
 
     public boolean isDirty(Transactionable transactionable) {
         return getUnitOfWork().isDirty(transactionable);
+    }
+
+    public Lock createLock(Lockable lockable, int version) throws TransactionException {
+        return getUnitOfWork().createLock(lockable, version);
     }
 
 }
