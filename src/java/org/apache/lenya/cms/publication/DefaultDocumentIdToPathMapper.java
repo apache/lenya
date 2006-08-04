@@ -54,10 +54,8 @@ public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper,
      *      java.lang.String)
      */
     public String getPath(String uuid, String language) {
-        if (uuid.startsWith("legacy_")) {
-            // remove leading slash
-            String path = uuid.substring("legacy_".length()).replace('_', '/');
-            return path + "/" + getFilename(language);
+        if (uuid.startsWith("/")) {
+            return uuid.substring(1) + "/" + getFilename(language);
         }
         else {
             return uuid + "/" + language;
