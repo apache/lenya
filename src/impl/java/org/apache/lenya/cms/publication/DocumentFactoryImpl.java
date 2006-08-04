@@ -25,6 +25,7 @@ import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.repository.UUIDGenerator;
 import org.apache.lenya.cms.site.SiteUtil;
 
 /**
@@ -233,7 +234,13 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
             DocumentLocator locator = builder.getLocator(webappUrl);
 
             String area = locator.getArea();
-            String uuid = SiteUtil.getUUID(this.manager, this, publication, area, locator.getPath());
+            String uuid = null;
+            if (SiteUtil.isDocument(this.manager,this,webappUrl)) {
+                uuid = SiteUtil.getUUID(this.manager, this, publication, area, locator.getPath());
+            } else {
+                UUIDGenerator generator = (UUIDGenerator) this.manager.lookup(UUIDGenerator.ROLE);
+                uuid = generator.nextUUID();       
+            }
             return getKey(publication, area, uuid, locator.getLanguage());
         } catch (Exception e) {
             throw new RuntimeException(e);
