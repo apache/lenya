@@ -176,7 +176,7 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
         }
         language = location.substring(start, end);
 
-        // Document id
+        // UUID
         start = end + 1;
         uuid = location.substring(start);
 
