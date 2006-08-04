@@ -128,12 +128,10 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
                 debug("Unable to find local.lenya.properties.xml, ignoring.");
         }
 
-        Map module2src = moduleManager.getModuleList();
-        Iterator iterator = module2src.keySet().iterator();
-        while (iterator.hasNext()) {
-            Object key = iterator.next();
-            Object value = module2src.get(key);
-
+        String[] module2src = moduleManager.getModuleIds();
+        for (int i = 0; i < module2src.length; i++) {
+            String id = module2src[i];
+            Object value = moduleManager.getBaseURI(id);
             if (value != null) {
                 lenyaPropertiesStringURI = value
                         + SystemUtils.FILE_SEPARATOR + PROPERTY_NAME;

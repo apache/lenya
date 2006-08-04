@@ -18,7 +18,9 @@ package org.apache.lenya.cms.module;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
@@ -48,8 +50,9 @@ public class ModuleManagerImpl extends AbstractLogEnabled implements ModuleManag
         return baseUri;
     }
     
-    public Map getModuleList(){
-        return module2src;
+    public String[] getModuleIds(){
+        Set set = module2src.keySet();
+        return (String[]) set.toArray(new String[set.size()]);
     }
 
     private boolean modulesCopied = false;
