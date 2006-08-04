@@ -41,20 +41,10 @@ public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper,
         return file;
     }
 
-    /**
-     * (non-Javadoc)
-     * 
-     * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getDirectory(org.apache.lenya.cms.publication.Publication,
-     *      java.lang.String, java.lang.String)
-     */
-    public File getDirectory(Publication publication, String area, String documentId) {
-        assert documentId.startsWith("/");
-        // remove leading slash
-        documentId = documentId.substring(1);
-        documentId = documentId.replace('/', File.separatorChar);
+    protected File getDirectory(Publication publication, String area, String uuid) {
 
         File file = new File(publication.getDirectory(), Publication.CONTENT_PATH + File.separator
-                + area + File.separator + documentId);
+                + area + File.separator + uuid);
 
         return file;
     }
@@ -64,10 +54,10 @@ public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper,
      *      java.lang.String)
      */
     public String getPath(String uuid, String language) {
-        if (uuid.startsWith("/")) {
+        if (uuid.startsWith("legacy_")) {
             // remove leading slash
-            uuid = uuid.substring(1);
-            return uuid + "/" + getFilename(language);
+            String path = uuid.substring("legacy_".length()).replace('_', '/');
+            return path + "/" + getFilename(language);
         }
         else {
             return uuid + "/" + language;

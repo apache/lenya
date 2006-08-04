@@ -49,16 +49,4 @@ public interface DocumentIdToPathMapper {
      */
     File getFile(Publication publication, String area, String uuid, String language);
 
-    /**
-     * Compute the document-path for a given publication, area and document-id. As there are
-     * possibly multiple files for the same document-id (for different languages) the return value
-     * is a directory.
-     * 
-     * @param publication The publication.
-     * @param area The area.
-     * @param documentId The document id.
-     * 
-     * @return The directory where all the files with the same document-id are located
-     */
-    File getDirectory(Publication publication, String area, String documentId);
 }
