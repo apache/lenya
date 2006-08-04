@@ -54,8 +54,8 @@ import org.apache.lenya.util.ServletHelper;
  * A factory for the "lenyadoc" scheme (virtual protocol), which is used to resolve any
  * src="lenyadoc:<...>" attributes in sitemaps.
  * 
- * <code>lenyadoc://<publication>/<area>/<language>/<document-id></code>
- * <code>lenyadoc:/<language>/<document-id></code>
+ * <code>lenyadoc://<publication>/<area>/<language>/<uuid></code>
+ * <code>lenyadoc:/<language>/<uuid></code>
  * 
  * @version $Id:$
  */
@@ -96,7 +96,7 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
         String scheme = null;
         String area = null;
         String language = null;
-        String docId = null;
+        String uuid = null;
         Publication pub;
 
         // Parse the url
@@ -178,7 +178,7 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
 
         // Document id
         start = end + 1;
-        docId = location.substring(start);
+        uuid = location.substring(start);
 
         Request request = ContextHelper.getRequest(this.context);
         Session session;
@@ -194,9 +194,10 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
         DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
         Document document;
         try {
-            document = map.get(pub, area, docId, language);
+            document = map.get(pub, area, uuid, language);
         } catch (DocumentBuildException e) {
-            throw new MalformedURLException("Malformed lenyadoc: Document [" + docId + "] could not be created.");
+            throw new MalformedURLException("Malformed lenyadoc: Document [" + uuid + ":"
+                    + language + "] could not be created.");
         }
 
         String lenyaURL = document.getSourceURI();
