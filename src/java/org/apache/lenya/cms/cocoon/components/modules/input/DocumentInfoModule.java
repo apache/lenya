@@ -62,15 +62,12 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
     protected final static String PARAM_PUBLICATION_ID = "publication-id";
     protected final static String PARAM_AREA = "area";
     protected final static String PARAM_DOCUMENT_ID = "document-id";
-    /**
-     * @deprecated use {@link #PARAM_LANGUAGE} instead.
-     */
     protected final static String PARAM_DOCUMENT_LANGUAGE = "document-language";
-    protected final static String PARAM_LANGUAGE = "language";
     protected final static String PARAM_PROPERTY = "property";
     protected final static int MIN_MANDATORY_PARAMS = 5;
 
     protected final static String UUID = "uuid";
+    protected final static String LANGUAGE = "language";
     protected final static String PATH = "path";
     protected final static String WEBAPP_URL = "webappUrl";
     protected final static String DOCUMENT_URL = "documentUrl";
@@ -82,8 +79,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
     protected final static String VISIBLE_IN_NAVIGATION = "visibleInNav";
 
     protected final static String[] PARAMS = { PARAM_PUBLICATION_ID, PARAM_AREA, PARAM_DOCUMENT_ID,
-            PARAM_DOCUMENT_LANGUAGE, PARAM_LANGUAGE, PARAM_PROPERTY, VISIBLE_IN_NAVIGATION,
-            MIME_TYPE, CONTENT_LENGTH, WEBAPP_URL, DOCUMENT_URL, UUID, PATH };
+            PARAM_DOCUMENT_LANGUAGE, PARAM_PROPERTY };
 
     protected final static String META_RESOURCE_TYPE = "resourceType";
     protected final static String META_EXPIRES = "expires";
@@ -143,6 +139,8 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
                 value = document.getMimeType();
             } else if (attribute.equals(CONTENT_LENGTH)) {
                 value = Long.toString(document.getContentLength());
+            } else if (attribute.equals(LANGUAGE)) {
+                value = document.getLanguage();
             } else if (attribute.equals(PATH)) {
                 value = SiteUtil.getPath(this.manager, document);
             } else if (attribute.equals(UUID)) {
