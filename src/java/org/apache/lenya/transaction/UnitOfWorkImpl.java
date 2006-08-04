@@ -116,9 +116,18 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
                 throw new LockException("Cannot commit transaction: The object [" + t
                         + "] was modified after it has been locked.");
             }
-            t.checkout();
         }
 
+        Set involvedObjects = new HashSet();
+        involvedObjects.addAll(this.newObjects);
+        involvedObjects.addAll(this.modifiedObjects);
+        involvedObjects.addAll(this.removedObjects);
+
+        for (Iterator i = involvedObjects.iterator(); i.hasNext();) {
+            Transactionable t = (Transactionable) i.next();
+            t.checkout();
+        }
+        
         for (Iterator i = this.newObjects.iterator(); i.hasNext();) {
             Transactionable t = (Transactionable) i.next();
             t.createTransactionable();
