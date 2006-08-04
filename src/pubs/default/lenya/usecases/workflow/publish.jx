@@ -29,6 +29,11 @@
         <i18n:text>Publish</i18n:text>
       </div>
       <div class="lenya-box-body">
+        
+        <jx:set var="title" value="${usecase.getParameter('document')
+          .getMetaData('http://purl.org/dc/elements/1.1/')
+          .getFirstValue('title')}"/>
+        
         <form id="form-publish">
           <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
           <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
@@ -36,7 +41,8 @@
             <tr>
               <td class="lenya-entry-caption" valign="top"><i18n:text>Document</i18n:text>:</td>
               <td valign="top">
-                <jx:out value="${usecase.getParameter('document').getId()}"/>
+                "<jx:out value="${title}"/>"<br/>
+                <jx:out value="${usecase.getParameter('document').getCanonicalDocumentURL()}"/>
               </td>
             </tr>
             <tr>

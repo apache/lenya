@@ -116,8 +116,8 @@
 
   <!-- reject screen -->
   <message key="Reject">Ablehnen</message>
-  <message key="reject-doc">Dokument {0} ablehnen</message>
-  <message key="reject-doc?">Wollen Sie das Dokument {0} ablehnen?</message>
+  <message key="reject-doc">Dokument "{0}" ablehnen</message>
+  <message key="reject-doc?">Wollen Sie das Dokument <xhtml:em>"{0}"</xhtml:em> ablehnen?</message>
 
   <!-- cms menu -->
   <message key="New Document">Neues Dokument</message>
