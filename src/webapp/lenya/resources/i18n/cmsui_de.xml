@@ -93,8 +93,8 @@
   
 
   <!-- submit screen -->
-  <message key="submit-for-approval">Dokument {0} einreichen</message>
-  <message key="submit-for-approval?">Möchten Sie {0} zur Durchsicht einreichen?</message>  
+  <message key="submit-for-approval">Dokument "{0}" einreichen</message>
+  <message key="submit-for-approval?">Möchten Sie "{0}" zur Durchsicht einreichen?</message>  
   
   <!-- publish screen --> 
   <message key="Publish">Veröffentlichen</message>    

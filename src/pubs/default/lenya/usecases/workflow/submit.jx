@@ -25,10 +25,15 @@
   <page:title><i18n:text>Submit Document</i18n:text></page:title>
   <page:body>
     <div class="lenya-box">
+      
+      <jx:set var="title" value="${usecase.getParameter('document')
+        .getMetaData('http://purl.org/dc/elements/1.1/')
+        .getFirstValue('title')}"/>
+      
       <div class="lenya-box-title">
         <i18n:translate>
           <i18n:text i18n:key="submit-for-approval"/>
-          <i18n:param><jx:out value="${usecase.getParameter('document').getId()}"/></i18n:param>
+          <i18n:param><jx:out value="${title}"/></i18n:param>
         </i18n:translate>      
       </div>
 
@@ -43,7 +48,7 @@
                 <td colspan="2" class="lenya-entry-caption">
                   <i18n:translate>
                     <i18n:text i18n:key="submit-for-approval?"/>
-                    <i18n:param><jx:out value="${usecase.getParameter('document').getId()}"/></i18n:param>
+                    <i18n:param><jx:out value="${title}"/></i18n:param>
                   </i18n:translate>
                 </td>
               </tr>
