@@ -61,7 +61,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
     // Input module parameters:
     protected final static String PARAM_PUBLICATION_ID = "publication-id";
     protected final static String PARAM_AREA = "area";
-    protected final static String PARAM_DOCUMENT_ID = "document-id";
+    protected final static String PARAM_UUID = "uuid";
     protected final static String PARAM_DOCUMENT_LANGUAGE = "document-language";
     protected final static String PARAM_PROPERTY = "property";
     protected final static int MIN_MANDATORY_PARAMS = 5;
@@ -78,7 +78,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
     protected final static String EXPIRES = "expires";
     protected final static String VISIBLE_IN_NAVIGATION = "visibleInNav";
 
-    protected final static String[] PARAMS = { PARAM_PUBLICATION_ID, PARAM_AREA, PARAM_DOCUMENT_ID,
+    protected final static String[] PARAMS = { PARAM_PUBLICATION_ID, PARAM_AREA, PARAM_UUID,
             PARAM_DOCUMENT_LANGUAGE, PARAM_PROPERTY };
 
     protected final static String META_RESOURCE_TYPE = "resourceType";
@@ -88,13 +88,13 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
      * Parse the parameters and return a document.
      * @param publicationId The publication ID.
      * @param area The area.
-     * @param docId The document ID.
-     * @param docLang The document language.
+     * @param uuid The document UUID.
+     * @param language The document language.
      * @param objectModel The object model.
      * @return The document object created.
      * @throws ConfigurationException
      */
-    protected Document getDocument(String publicationId, String area, String docId, String docLang,
+    protected Document getDocument(String publicationId, String area, String uuid, String language,
             Map objectModel) throws ConfigurationException {
         Document document = null;
 
@@ -105,10 +105,10 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
             DocumentFactory docFactory = DocumentUtil.createDocumentIdentityMap(this.manager,
                     session);
             Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
-            document = docFactory.get(publication, area, docId, docLang);
+            document = docFactory.get(publication, area, uuid, language);
         } catch (Exception e) {
             throw new ConfigurationException("Error getting document [" + publicationId + ":"
-                    + area + ":" + docId + ":" + docLang + "]: " + e.getMessage(), e);
+                    + area + ":" + uuid + ":" + language + "]: " + e.getMessage(), e);
         }
         return document;
     }
@@ -126,7 +126,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
         try {
             Document document = getDocument(params.getParameter(PARAM_PUBLICATION_ID),
                     params.getParameter(PARAM_AREA),
-                    params.getParameter(PARAM_DOCUMENT_ID),
+                    params.getParameter(PARAM_UUID),
                     params.getParameter(PARAM_DOCUMENT_LANGUAGE),
                     objectModel);
             String attribute = params.getParameter(PARAM_PROPERTY);
