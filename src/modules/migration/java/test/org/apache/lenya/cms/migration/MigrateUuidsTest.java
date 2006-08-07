@@ -17,9 +17,7 @@
 package org.apache.lenya.cms.migration;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
@@ -29,6 +27,7 @@ import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteManager;
@@ -44,6 +43,7 @@ public class MigrateUuidsTest extends AbstractAccessControlTest {
         DocumentFactory factory = DocumentUtil.createDocumentIdentityMap(getManager(), session);
         Publication[] pubs = PublicationUtil.getPublications(getManager());
         for (int i = 0; i < pubs.length; i++) {
+            this.migratedDocs.clear();
             migratePublication(pubs[i], factory);
         }
         session.commit();
@@ -86,9 +86,12 @@ public class MigrateUuidsTest extends AbstractAccessControlTest {
 
             String path = SiteUtil.getPath(getManager(), doc);
 
-            siteManager.getSiteStructure(doc.getFactory(), doc.getPublication(), doc.getArea())
-                    .getRepositoryNode()
-                    .lock();
+            Node node = siteManager.getSiteStructure(doc.getFactory(), doc.getPublication(),
+                    doc.getArea()).getRepositoryNode();
+
+            if (!node.isLocked()) {
+                node.lock();
+            }
 
             Document newDoc;
 
@@ -97,19 +100,15 @@ public class MigrateUuidsTest extends AbstractAccessControlTest {
                 Document migratedDoc = (Document) this.migratedDocs.get(docId);
                 newDoc = docManager.addVersion(migratedDoc, doc.getArea(), doc.getLanguage());
             } else {
-                newDoc = docManager.add(doc.getFactory(),
-                        doc.getResourceType(),
-                        doc.getSourceURI(),
-                        doc.getPublication(),
-                        doc.getArea(),
-                        doc.getLanguage(),
+                newDoc = docManager.add(doc.getFactory(), doc.getResourceType(),
+                        doc.getSourceURI(), doc.getPublication(), doc.getArea(), doc.getLanguage(),
                         doc.getExtension());
-                
+
                 String[] uris = doc.getMetaDataNamespaceUris();
                 for (int i = 0; i < uris.length; i++) {
                     newDoc.getMetaData(uris[i]).replaceBy(doc.getMetaData(uris[i]));
                 }
-                
+
                 migratedDocs.put(docId, newDoc);
                 siteManager.set(path, newDoc);
             }
