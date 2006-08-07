@@ -75,7 +75,6 @@ public class ObservationTest extends AbstractAccessControlTest {
     protected void testChanged(Document doc, TestListener listener) throws Exception {
         listener.reset();
         NamespaceHelper xml = new NamespaceHelper("http://apache.org/lenya/test", "", "test");
-        doc.getRepositoryNode().lock();
         SourceUtil.writeDOM(xml.getDocument(), doc.getSourceURI(), getManager());
 
         String mimeType = doc.getMimeType();
