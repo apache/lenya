@@ -455,4 +455,8 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
         return (String[]) resourceTypes.toArray(new String[resourceTypes.size()]);
     }
 
+    public String toString() {
+        return getId();
+    }
+
 }
