@@ -30,7 +30,10 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.generation.ServiceableGenerator;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
@@ -39,6 +42,7 @@ import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.xml.sax.SAXException;
@@ -57,7 +61,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
     protected DocumentFactory identityMap;
 
     /** Parameter which denotes the documentid of the clicked node */
-    protected String documentid;
+    protected String uuid;
 
     /** Parameter which denotes the area of the clicked node */
     protected String area;
@@ -74,9 +78,10 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      * Convenience object, so we don't need to create an AttributesImpl for every element.
      */
     protected AttributesImpl attributes;
+    private Document document;
 
     protected static final String PARAM_AREA = "area";
-    protected static final String PARAM_DOCUMENTID = "documentid";
+    protected static final String PARAM_DOCUMENTID = "uuid";
     protected static final String PARAM_INITIAL = "initial";
     protected static final String PARAM_AREAS = "areas";
 
@@ -118,7 +123,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
         }
 
         this.area = par.getParameter(PARAM_AREA, null);
-        this.documentid = par.getParameter(PARAM_DOCUMENTID, null);
+        this.uuid = par.getParameter(PARAM_DOCUMENTID, null);
 
         if (par.isParameter(PARAM_INITIAL)) {
             this.initialTree = Boolean.valueOf(par.getParameter(PARAM_INITIAL, null))
@@ -137,7 +142,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
 
         if (this.getLogger().isDebugEnabled()) {
             this.getLogger().debug("Parameter area: " + this.area);
-            this.getLogger().debug("Parameter documentid: " + this.documentid);
+            this.getLogger().debug("Parameter documentid: " + this.uuid);
             this.getLogger().debug("Parameter initialTree: " + this.initialTree);
             String areasStr = "";
             for (int i = 0; i < this.areas.length; i++) {
@@ -170,7 +175,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
             this.attributes.clear();
             if (!this.initialTree) {
                 this.attributes.addAttribute("", ATTR_AREA, ATTR_AREA, "CDATA", this.area);
-                this.attributes.addAttribute("", ATTR_BASE, ATTR_BASE, "CDATA", this.documentid);
+                this.attributes.addAttribute("", ATTR_BASE, ATTR_BASE, "CDATA", this.uuid);
             }
 
             this.contentHandler.startElement(URI,
@@ -223,18 +228,21 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
             SiteTree siteTree = (SiteTree) siteManager.getSiteStructure(this.identityMap,
                     this.publication,
                     this.area);
+            this.document = identityMap.get(this.publication, this.area, this.uuid, this.publication.getDefaultLanguage());
 
-            SiteTreeNode node = siteTree.getNode(this.documentid);
+            SiteTreeNode node = siteTree.getNode(this.document.getLocator().getPath());
             if (this.getLogger().isDebugEnabled()) {
-                this.getLogger().debug("Node with documentid " + this.documentid + " found.");
+                this.getLogger().debug("Node with documentid " + this.uuid + " found.");
             }
             if (node == null)
-                throw new SiteException("Node with documentid " + this.documentid + " not found.");
+                throw new SiteException("Node with documentid " + this.uuid + " not found.");
 
             SiteTreeNode[] children = node.getChildren();
 
             addNodes(children);
         } catch (ServiceException e) {
+            throw new ProcessingException(e);
+        } catch (DocumentBuildException e) {
             throw new ProcessingException(e);
         } finally {
             if (selector != null) {
@@ -307,7 +315,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
             startNode(NODE_SITE);
 
             if (this.area.equals(siteArea)) {
-                generateFragmentRecursive(siteTree.getTopNodes(), this.documentid);
+                generateFragmentRecursive(siteTree.getTopNodes(), this.uuid);
             }
 
             endNode(NODE_SITE);

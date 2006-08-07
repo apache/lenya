@@ -124,7 +124,7 @@ This sitemap creates default navigation components.
         <map:generate type="sitetree-fragment">
           <map:parameter name="areas" value="{request-param:areas}"/>
           <map:parameter name="area" value="{request-param:area}"/>
-          <map:parameter name="documentid" value="{request-param:documentid}"/>
+          <map:parameter name="uuid" value="{page-envelope:document-uuid}"/>
           <map:parameter name="initial" value="{request-param:initial}"/>
         </map:generate>
         <!-- <map:call resource="i18n"/> -->
