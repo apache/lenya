@@ -34,6 +34,8 @@ limitations under the License.
     <map:pipeline>
       <map:match pattern="lenyametadata.xml">
         <map:generate type="lenyaMetaData">
+          <map:parameter name="area" value="{page-envelope:area}"/>
+          <map:parameter name="pubid" value="{page-envelope:publication-id}"/>
           <map:parameter name="docid" value="{page-envelope:document-id}"/>
           <map:parameter name="lang" value="{page-envelope:document-language}"/>
         </map:generate>
