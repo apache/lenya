@@ -85,7 +85,7 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
                 } else if (name.equals(PageEnvelope.DOCUMENT_ID)) {
                     value = document.getId();
                 } else if (name.equals(PageEnvelope.DOCUMENT_PARENT)) {
-                    value = document.getLocator().getParent();
+                    value = document.getLocator().getParent().getPath();
                 } else if (name.equals(PageEnvelope.DOCUMENT_NAME)) {
                     value = document.getName();
                 } else if (name.equals(PageEnvelope.DOCUMENT_LABEL)) {
