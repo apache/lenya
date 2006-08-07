@@ -17,7 +17,7 @@
   <xsl:import href="fallback://lenya/modules/resource/xslt/common/mimetype.xsl"/>
   <xsl:include href="fallback://lenya/modules/xhtml/xslt/helper-object.xsl"/>
   <xsl:param name="root"/> <!-- the URL up to (including) the area -->
-  <xsl:param name="documentId"/>
+  <xsl:param name="path"/>
   <xsl:param name="context-prefix" select="''"/>
   <xsl:param name="language"/>
   <xsl:param name="document-type"/>
@@ -39,7 +39,7 @@
     
   <xsl:template match="meta:metadata" mode="media">
     
-    <xsl:variable name="mediaName" select="concat($documentId, '.', mediameta:elements/mediameta:filename)"/>
+    <xsl:variable name="mediaName" select="concat($path, '.', mediameta:elements/mediameta:filename)"/>
     
     <xsl:variable name="mediaURI">
       <xsl:value-of select="$root"/>
