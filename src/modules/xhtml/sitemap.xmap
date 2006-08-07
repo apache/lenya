@@ -38,18 +38,18 @@
     <!-- search pipeline -->
     <map:pipeline>
       
-      <!-- {pub-id}/{area}{doc-id}/{language} -->
+      <!-- {pub-id}/{area}{uuid}/{language} -->
       <map:match pattern="metadata/*/*/*/*">
         <map:generate type="lenyaMetaData">
           <map:parameter name="pubid" value="{1}"/>
           <map:parameter name="area" value="{2}"/>
-          <map:parameter name="docid" value="{3}"/>
+          <map:parameter name="uuid" value="{3}"/>
           <map:parameter name="lang" value="{4}"/>
         </map:generate>
         <map:serialize type="xml"/>
       </map:match>
       
-      <!-- {pub-id}/{area}{doc-id}/{language} -->
+      <!-- {pub-id}/{area}{uuid}/{language} -->
       <map:match pattern="lucene-index/*/*/*/*">
         <map:aggregate element="cmsbody">
           <map:part src="lenyadoc://{1}/{2}/{4}/{3}"/>
