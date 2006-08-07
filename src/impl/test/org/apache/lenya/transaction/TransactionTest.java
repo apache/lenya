@@ -44,9 +44,27 @@ public class TransactionTest extends ContainerTestCase {
         MockTransactionable lenyaT1 = (MockTransactionable) lenyaMap.get(lenyaFactory, "t1");
         MockTransactionable aliceT1 = (MockTransactionable) aliceMap.get(aliceFactory, "t1");
 
+        checkDoubleLock(lenyaT1);
+        checkLockAndModify(lenyaUnit, lenyaT1, aliceT1);
+
+    }
+
+    protected void checkDoubleLock(MockTransactionable t) throws TransactionException {
+        t.lock();
+        Exception e = null;
+        try {
+            t.lock();
+        } catch (LockException e1) {
+            e = e1;
+        }
+        assertNotNull(e);
+        t.unlock();
+    }
+
+    protected void checkLockAndModify(UnitOfWork lenyaUnit, MockTransactionable lenyaT1,
+            MockTransactionable aliceT1) throws TransactionException {
         lenyaT1.lock();
         aliceT1.write();
-
         Exception e = null;
         try {
             lenyaUnit.commit();
@@ -54,7 +72,6 @@ public class TransactionTest extends ContainerTestCase {
             e = e1;
         }
         assertNotNull(e);
-
     }
 
 }

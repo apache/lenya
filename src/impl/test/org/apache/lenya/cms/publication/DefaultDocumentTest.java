@@ -22,6 +22,7 @@ package org.apache.lenya.cms.publication;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.site.SiteUtil;
 
 /**
  * 
@@ -29,13 +30,10 @@ import org.apache.lenya.cms.repository.Session;
  * Generation>Code and Comments
  */
 public class DefaultDocumentTest extends AbstractAccessControlTest {
-    
+
     protected static final DocumentTestSet[] testSets = {
             new DocumentTestSet("/index.html", "/index", Publication.AUTHORING_AREA, "en", "html"),
-            new DocumentTestSet("/index_de.html",
-                    "/index",
-                    Publication.AUTHORING_AREA,
-                    "de",
+            new DocumentTestSet("/index_de.html", "/index", Publication.AUTHORING_AREA, "de",
                     "html") };
 
     /**
@@ -54,7 +52,7 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
 
         Publication publication = PublicationUtil.getPublication(getManager(), "test");
         assertEquals(document.getPublication(), publication);
-        assertEquals(document.getUUID(), testSet.getUUId());
+        assertEquals(SiteUtil.getPath(getManager(), document), testSet.getPath());
         assertEquals(document.getArea(), testSet.getArea());
         assertEquals(document.getLanguage(), testSet.getLanguage());
         assertEquals(document.getCanonicalDocumentURL(), testSet.getUrl());
@@ -79,7 +77,7 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
 
     protected DocumentFactory getIdentityMap() {
         if (this.identityMap == null) {
-            
+
             Session session;
             try {
                 session = RepositoryUtil.createSession(getManager(), getIdentity());
@@ -95,15 +93,15 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
      * Returns the test document for a given test set.
      * @param testSet A document test set.
      * @return A document.
-     * @throws PublicationException 
+     * @throws PublicationException
      */
     protected Document getDocument(DocumentTestSet testSet) throws PublicationException {
 
         Publication pub = PublicationUtil.getPublication(getManager(), "test");
-        DocumentIdentifier id = new DocumentIdentifier(pub,
-                testSet.getArea(),
-                testSet.getUUId(),
-                testSet.getLanguage());
+        String uuid = SiteUtil.getUUID(getManager(), getIdentityMap(), pub, testSet.getArea(),
+                testSet.getPath());
+        DocumentIdentifier id = new DocumentIdentifier(pub, testSet.getArea(), uuid, testSet
+                .getLanguage());
         DocumentImpl document = new DocumentImpl(getManager(), getIdentityMap(), id, getLogger());
         document.setDocumentURL(testSet.getUrl());
         document.setExtension(testSet.getExtension());
@@ -116,7 +114,7 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
      */
     protected static class DocumentTestSet {
         private String url;
-        private String id;
+        private String path;
         private String extension;
         private String area;
         private String language;
@@ -124,15 +122,15 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
         /**
          * Ctor.
          * @param _url The url.
-         * @param _id The ID.
+         * @param _path The path.
          * @param _area The area.
          * @param _language The language.
          * @param _extension The extension.
          */
-        public DocumentTestSet(String _url, String _id, String _area, String _language,
+        public DocumentTestSet(String _url, String _path, String _area, String _language,
                 String _extension) {
             this.url = _url;
-            this.id = _id;
+            this.path = _path;
             this.area = _area;
             this.language = _language;
             this.extension = _extension;
@@ -153,10 +151,10 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
         }
 
         /**
-         * @return The UUID.
+         * @return The path.
          */
-        public String getUUId() {
-            return this.id;
+        public String getPath() {
+            return this.path;
         }
 
         /**
