@@ -38,12 +38,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
-
 /**
  * Servlet utility class.
  */
 public final class ServletHelper {
-	
+
     /**
      * Ctor.
      */
@@ -52,7 +51,7 @@ public final class ServletHelper {
     }
 
     /**
-     * Returns the URL inside the web application (without the context prefix). 
+     * Returns the URL inside the web application (without the context prefix).
      * @param request The request.
      * @return A string.
      */
@@ -63,7 +62,7 @@ public final class ServletHelper {
     }
 
     /**
-     * Returns the URL inside the web application (without the context prefix). 
+     * Returns the URL inside the web application (without the context prefix).
      * @param context The context prefix.
      * @param requestUri The complete request URI.
      * @return A string.
@@ -73,16 +72,16 @@ public final class ServletHelper {
             context = "";
         }
         String url = requestUri.substring(context.length());
-		if (url.length() > 0 && !url.startsWith("/")) {
-			url = "/" + url;
-		}
-		
+        if (url.length() > 0 && !url.startsWith("/")) {
+            url = "/" + url;
+        }
+
         return url;
     }
 
     /**
-     * Converts the request parameters to a map.
-     * If a key is mapped to multiple parameters, a string array is used as the value.
+     * Converts the request parameters to a map. If a key is mapped to multiple parameters, a string
+     * array is used as the value.
      * @param request The request.
      * @return A map.
      */
@@ -94,34 +93,40 @@ public final class ServletHelper {
             Object value;
             if (values.length == 1) {
                 value = values[0];
-            }
-            else {
+            } else {
                 value = values;
             }
             requestParameters.put(key, value);
         }
         return requestParameters;
     }
-    
+
+    private static Boolean uploadEnabled = null;
+
     /**
      * Returns the value of enable-uploads in web.xml
      * @param manager The Service Manager.
      * @return true if enable upload is true or not set in web.xml, else false
      */
-    public static boolean isUploadEnabled(ServiceManager manager)
-            throws SourceNotFoundException, ServiceException,
-            ParserConfigurationException, SAXException, IOException,
-            TransformerException {
+    public static synchronized boolean isUploadEnabled(ServiceManager manager)
+            throws SourceNotFoundException, ServiceException, ParserConfigurationException,
+            SAXException, IOException, TransformerException {
 
-        Node node;
-        String webappUrl = "context://WEB-INF/web.xml";
-        Document document = SourceUtil.readDOM(webappUrl, manager);
-        Element root = document.getDocumentElement();
-        node = XPathAPI.selectSingleNode(root,"/web-app/servlet/init-param[param-name='enable-uploads']/param-value/text()");
-        
-        if (node == null) {
-            return false;
+        if (ServletHelper.uploadEnabled == null) {
+
+            Node node;
+            String webappUrl = "context://WEB-INF/web.xml";
+            Document document = SourceUtil.readDOM(webappUrl, manager);
+            Element root = document.getDocumentElement();
+            node = XPathAPI.selectSingleNode(root,
+                    "/web-app/servlet/init-param[param-name='enable-uploads']/param-value/text()");
+
+            if (node == null) {
+                ServletHelper.uploadEnabled = Boolean.FALSE;
+            }
+            boolean enabled = node.getNodeValue().equals("true");
+            ServletHelper.uploadEnabled = Boolean.valueOf(enabled);
         }
-        return node.getNodeValue().equals("true");
+        return ServletHelper.uploadEnabled.booleanValue();
     }
 }
