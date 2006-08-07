@@ -32,7 +32,6 @@ public class DocumentIdentifier {
      * @param area The area.
      * @param uuid The document UUID.
      * @param language The language.
-     * @param uuid The UUID.
      */
     public DocumentIdentifier(Publication publication, String area, String uuid, String language) {
 
