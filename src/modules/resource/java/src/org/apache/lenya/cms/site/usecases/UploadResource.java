@@ -20,12 +20,20 @@ import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.ResourceWrapper;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * Usecase to upload a resource.
  * 
  */
 public class UploadResource extends DocumentUsecase {
+
+    protected void doCheckPreconditions() throws Exception {
+        super.doCheckPreconditions();
+        if (!ServletHelper.isUploadEnabled(manager)) {
+            addErrorMessage("Upload is not enabled. Please check local.build.properties!");
+        }
+    }
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()

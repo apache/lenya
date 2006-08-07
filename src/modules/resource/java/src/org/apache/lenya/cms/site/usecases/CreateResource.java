@@ -26,11 +26,19 @@ import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.ResourceWrapper;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * Create a new resource document.
  */
 public class CreateResource extends CreateDocument {
+
+    protected void doCheckPreconditions() throws Exception {
+        super.doCheckPreconditions();
+        if (!ServletHelper.isUploadEnabled(manager)) {
+            addErrorMessage("Upload is not enabled. Please check local.build.properties!");
+        }
+    }
 
     /**
      * Validates the request parameters.
