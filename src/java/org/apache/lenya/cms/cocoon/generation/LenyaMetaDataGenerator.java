@@ -93,14 +93,14 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
 
     protected String language = null;
 
-    protected String docId = null;
+    protected String uuid = null;
 
     /**
      * Recycle this component. All instance variables are set to <code>null</code>.
      */
     public void recycle() {
         this.document = null;
-        this.docId = null;
+        this.uuid = null;
         this.language = null;
         this.area = null;
         this.publicationId = null;
@@ -140,9 +140,9 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
             throw new ProcessingException("The area is not set! Please set like e.g. <map:parameter name='area' value='{request-param:area}'/>");
         }
 
-        docId = par.getParameter("docid", null);
-        if (this.docId == null) {
-            throw new ProcessingException("The docid is not set! Please set like e.g. <map:parameter name='docid' value='{request-param:docid}'/>");
+        uuid = par.getParameter("uuid", null);
+        if (this.uuid == null) {
+            throw new ProcessingException("The uuid is not set! Please set like e.g. <map:parameter name='uuid' value='{request-param:uuid}'/>");
         }
 
         language = par.getParameter("lang", null);
@@ -172,7 +172,7 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
         }
 
         DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
-        this.document = map.get(pub, area, docId, language);
+        this.document = map.get(pub, area, uuid, language);
     }
 
     /**
@@ -181,7 +181,7 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
      * @return The generated key hashes the src
      */
     public Serializable getKey() {
-        return language + "$$" + docId;
+        return language + "$$" + uuid;
     }
 
     /**
