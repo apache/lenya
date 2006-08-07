@@ -34,7 +34,6 @@ import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
@@ -140,9 +139,7 @@ public abstract class Create extends AbstractUsecase {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
             DocumentLocator locator = DocumentLocator.getLocator(getPublication().getId(),
-                    getArea(),
-                    getNewDocumentPath(),
-                    getParameterAsString(LANGUAGE));
+                    getArea(), getNewDocumentPath(), getParameterAsString(LANGUAGE));
 
             Document initialDocument = getInitialDocument();
             if (initialDocument == null) {
@@ -151,19 +148,13 @@ public abstract class Create extends AbstractUsecase {
                 if (getParameterAsString(SAMPLE) != null
                         && getParameterAsString(SAMPLE).length() > 0)
                     resourceType.setSampleURI(getParameterAsString(SAMPLE));
-                documentManager.add(getDocumentFactory(),
-                        locator,
-                        resourceType,
-                        getSourceExtension(),
-                        getParameterAsString(DublinCore.ELEMENT_TITLE),
+                documentManager.add(getDocumentFactory(), locator, resourceType,
+                        getSourceExtension(), getParameterAsString(DublinCore.ELEMENT_TITLE),
                         getVisibleInNav());
                 resourceType.setSampleURI(""); // reset to default sample
             } else {
-                documentManager.add(locator,
-                        initialDocument,
-                        getSourceExtension(),
-                        getParameterAsString(DublinCore.ELEMENT_TITLE),
-                        getVisibleInNav());
+                documentManager.add(locator, initialDocument, getSourceExtension(),
+                        getParameterAsString(DublinCore.ELEMENT_TITLE), getVisibleInNav());
             }
 
             Document document = getDocumentFactory().get(locator);
@@ -221,7 +212,7 @@ public abstract class Create extends AbstractUsecase {
      * Sets the meta data of the created document.
      * 
      * @param document The document.
-     * @throws DocumentException if an error occurs.
+     * @throws MetaDataException if an error occurs.
      */
     protected void setMetaData(Document document) throws MetaDataException {
 
@@ -322,11 +313,12 @@ public abstract class Create extends AbstractUsecase {
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
-            DocumentFactory map = getDocumentFactory();
-            document = map.get(getPublication(),
-                    getArea(),
-                    getNewDocumentPath(),
-                    getParameterAsString(LANGUAGE));
+            DocumentFactory factory = getDocumentFactory();
+
+            String path = getNewDocumentPath();
+            String uuid = SiteUtil.getUUID(this.manager, factory, getPublication(), getArea(), path);
+
+            document = factory.get(getPublication(), getArea(), uuid, getParameterAsString(LANGUAGE));
 
         } catch (Exception e) {
             throw new RuntimeException(e);
