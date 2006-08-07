@@ -89,4 +89,11 @@ public interface UnitOfWork {
      * @throws TransactionException if a lock is already placed on this transactionable.
      */
     Lock createLock(Lockable lockable, int version) throws TransactionException;
+    
+    /**
+     * Removes a lock.
+     * @param lockable The lockable.
+     * @throws TransactionException if no lock is placed on this transactionable.
+     */
+    void removeLock(Lockable lockable) throws TransactionException;
 }

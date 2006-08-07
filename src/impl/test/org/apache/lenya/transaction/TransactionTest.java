@@ -72,6 +72,7 @@ public class TransactionTest extends ContainerTestCase {
             e = e1;
         }
         assertNotNull(e);
+        lenyaT1.unlock();
     }
 
 }

@@ -117,4 +117,8 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
         return getUnitOfWork().createLock(lockable, version);
     }
 
+    public void removeLock(Lockable lockable) throws TransactionException {
+        getUnitOfWork().removeLock(lockable);
+    }
+
 }

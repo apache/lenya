@@ -440,6 +440,11 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
      */
     public void unlock() throws RepositoryException {
         this.lock = null;
+        try {
+            getSession().removeLock(this);
+        } catch (TransactionException e) {
+            throw new RepositoryException(e);
+        }
     }
 
     /**

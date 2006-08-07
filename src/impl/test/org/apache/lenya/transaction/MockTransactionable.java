@@ -100,6 +100,7 @@ public class MockTransactionable implements Transactionable {
 
     public void unlock() throws TransactionException {
         this.lock = null;
+        unit.removeLock(this);
     }
 
     public String getId() {

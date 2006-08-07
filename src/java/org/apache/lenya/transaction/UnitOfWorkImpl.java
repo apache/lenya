@@ -127,7 +127,7 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
             Transactionable t = (Transactionable) i.next();
             t.checkout();
         }
-        
+
         for (Iterator i = this.newObjects.iterator(); i.hasNext();) {
             Transactionable t = (Transactionable) i.next();
             t.createTransactionable();
@@ -229,12 +229,19 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
 
     public Lock createLock(Lockable lockable, int version) throws TransactionException {
         if (this.locks.containsKey(lockable)) {
-            throw new TransactionException("A lock is already placed on [" + lockable +
-                    "]. A new lock could lead to inconsistent data.");
+            throw new LockException("A lock is already placed on [" + lockable
+                    + "]. A new lock could lead to inconsistent data.");
         }
         Lock lock = new Lock(version);
         this.locks.put(lockable, lock);
         return lock;
+    }
+
+    public void removeLock(Lockable lockable) throws TransactionException {
+        if (!this.locks.containsKey(lockable)) {
+            throw new LockException("No lock is already placed on [" + lockable + "]!");
+        }
+        this.locks.remove(lockable);
     }
 
 }
