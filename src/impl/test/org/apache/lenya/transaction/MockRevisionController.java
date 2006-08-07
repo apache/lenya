@@ -39,6 +39,7 @@ public class MockRevisionController {
         
         private int version = 0;
         private boolean checkedOut = false;
+        private String checkOutUser = null;
         
         public void newVersion() {
             this.version++;
@@ -52,14 +53,19 @@ public class MockRevisionController {
             return this.checkedOut;
         }
         
-        public void checkOut() {
+        public void checkOut(String user) {
             this.checkedOut = true;
+            this.checkOutUser = user;
         }
 
         public void checkIn() {
             this.checkedOut = false;
+            this.checkOutUser = null;
         }
         
+        public String getCheckOutUser() {
+            return this.checkOutUser;
+        }
         
     }
 

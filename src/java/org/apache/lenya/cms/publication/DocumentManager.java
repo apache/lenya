@@ -32,6 +32,19 @@ public interface DocumentManager {
     String ROLE = DocumentManager.class.getName();
 
     /**
+     * Checks if a document exists.
+     * @param factory The document factory.
+     * @param pub The publication.
+     * @param area The area.
+     * @param uuid The UUID.
+     * @param language The language.
+     * @return A boolean value.
+     * @throws PublicationException if an error occurs.
+     */
+    boolean exists(DocumentFactory factory, Publication pub, String area, String uuid,
+            String language) throws PublicationException;
+
+    /**
      * Copies a document from one location to another location.
      * @param sourceDocument The document to copy.
      * @param destination The destination document.

@@ -16,7 +16,6 @@
  */
 package org.apache.lenya.transaction;
 
-import org.apache.lenya.cms.rc.RCMLEntry;
 import org.apache.lenya.cms.repository.RepositoryException;
 
 public class MockTransactionable implements Transactionable {
@@ -52,7 +51,7 @@ public class MockTransactionable implements Transactionable {
     }
 
     public void checkout() throws TransactionException {
-        MockRevisionController.getHistory(this).checkOut();
+        MockRevisionController.getHistory(this).checkOut(getUserId());
     }
 
     public boolean hasChanged() throws TransactionException {
@@ -75,13 +74,14 @@ public class MockTransactionable implements Transactionable {
     }
 
     public boolean isCheckedOutByUser() throws TransactionException {
-        RCMLEntry entry = getRevisionController().getRCML(getRCPath()).getLatestEntry();
-        if (entry.getIdentity().equals(getUserId()) && isCheckedOut())
-            return true;
-        else
-            return false;
+        String user = MockRevisionController.getHistory(this).getCheckOutUser();
+        return user != null && user.equals(getUserId());
     }
     
+    private String getUserId() {
+        return this.unit.getIdentity().getUser().getId();
+    }
+
     private Lock lock;
 
     public Lock getLock() {

@@ -16,6 +16,8 @@
  */
 package org.apache.lenya.cms.publication;
 
+import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -34,6 +36,7 @@ import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.repository.UUIDGenerator;
@@ -59,12 +62,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             boolean visibleInNav) throws DocumentBuildException, PublicationException {
 
         String contentsURI = documentType.getSampleURI();
-        return add(factory,
-                locator,
-                documentType,
-                extension,
-                navigationTitle,
-                visibleInNav,
+        return add(factory, locator, documentType, extension, navigationTitle, visibleInNav,
                 contentsURI);
     }
 
@@ -76,13 +74,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             String navigationTitle, boolean visibleInNav) throws DocumentBuildException,
             PublicationException {
         String contentsURI = sourceDocument.getSourceURI();
-        Document document = add(sourceDocument.getFactory(),
-                locator,
-                sourceDocument.getResourceType(),
-                extension,
-                navigationTitle,
-                visibleInNav,
-                contentsURI);
+        Document document = add(sourceDocument.getFactory(), locator, sourceDocument
+                .getResourceType(), extension, navigationTitle, visibleInNav, contentsURI);
 
         try {
             String[] uris = sourceDocument.getMetaDataNamespaceUris();
@@ -118,14 +111,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         String language = locator.getLanguage();
         String uuid = generateUUID();
 
-        Document document = add(factory,
-                documentType,
-                uuid,
-                initialContentsURI,
-                pub,
-                area,
-                language,
-                extension);
+        Document document = add(factory, documentType, uuid, initialContentsURI, pub, area,
+                language, extension);
 
         addToSiteManager(locator.getPath(), document, navigationTitle, visibleInNav);
         return document;
@@ -135,6 +122,12 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             String initialContentsURI, Publication pub, String area, String language,
             String extension) throws DocumentBuildException {
         try {
+
+            if (exists(factory, pub, area, language, extension)) {
+                throw new DocumentBuildException("The document [" + pub.getId() + ":" + area + ":"
+                        + uuid + ":" + language + "] already exists!");
+            }
+
             Document document = factory.get(pub, area, uuid, language);
             Node node = document.getRepositoryNode();
             node.lock();
@@ -181,8 +174,9 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
         // Read initial contents as DOM
         if (getLogger().isDebugEnabled())
-            getLogger().debug("DefaultCreator::create(), ready to read initial contents from URI ["
-                    + initialContentsURI + "]");
+            getLogger().debug(
+                    "DefaultCreator::create(), ready to read initial contents from URI ["
+                            + initialContentsURI + "]");
 
         SourceResolver resolver = null;
         try {
@@ -250,10 +244,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
     public void copyDocument(Document sourceDocument, DocumentLocator destination)
             throws DocumentBuildException, PublicationException, DocumentException, SiteException {
-        add(destination,
-                sourceDocument,
-                sourceDocument.getExtension(),
-                sourceDocument.getLabel(),
+        add(destination, sourceDocument, sourceDocument.getExtension(), sourceDocument.getLabel(),
                 SiteUtil.isVisibleInNavigation(this.manager, sourceDocument));
     }
 
@@ -316,10 +307,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         try {
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
-            if (siteManager.contains(sourceDocument.getFactory(),
-                    sourceDocument.getPublication(),
-                    destination.getArea(),
-                    destination.getPath())) {
+            if (siteManager.contains(sourceDocument.getFactory(), sourceDocument.getPublication(),
+                    destination.getArea(), destination.getPath())) {
                 throw new PublicationException("The path [" + destination
                         + "] is already contained in this publication!");
             }
@@ -493,8 +482,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         RepositoryManager repoManager = null;
         try {
             repoManager = (RepositoryManager) this.manager.lookup(RepositoryManager.ROLE);
-            repoManager.copy(sourceDocument.getRepositoryNode(),
-                    destinationDocument.getRepositoryNode());
+            repoManager.copy(sourceDocument.getRepositoryNode(), destinationDocument
+                    .getRepositoryNode());
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {
@@ -746,7 +735,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         Document[] targetDocs = destinations.getDocuments();
 
         if (sourceDocs.length != targetDocs.length) {
-            throw new PublicationException("The number of source and destination documents must be equal!");
+            throw new PublicationException(
+                    "The number of source and destination documents must be equal!");
         }
 
         Map source2target = new HashMap();
@@ -759,8 +749,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         Document[] sortedSourceDocs = sortedSources.getDocuments();
 
         for (int i = 0; i < sortedSourceDocs.length; i++) {
-            copy(sortedSourceDocs[i],
-                    ((Document) source2target.get(sortedSourceDocs[i])).getLocator());
+            copy(sortedSourceDocs[i], ((Document) source2target.get(sortedSourceDocs[i]))
+                    .getLocator());
         }
     }
 
@@ -778,14 +768,9 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
     public Document addVersion(Document sourceDocument, String area, String language)
             throws DocumentBuildException, PublicationException {
-        Document document = add(sourceDocument.getFactory(),
-                sourceDocument.getResourceType(),
-                sourceDocument.getUUID(),
-                sourceDocument.getSourceURI(),
-                sourceDocument.getPublication(),
-                area,
-                language,
-                sourceDocument.getSourceExtension());
+        Document document = add(sourceDocument.getFactory(), sourceDocument.getResourceType(),
+                sourceDocument.getUUID(), sourceDocument.getSourceURI(), sourceDocument
+                        .getPublication(), area, language, sourceDocument.getSourceExtension());
 
         try {
             String[] uris = sourceDocument.getMetaDataNamespaceUris();
@@ -803,6 +788,17 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             throws DocumentBuildException, PublicationException {
         String uuid = generateUUID();
         return add(factory, resourceType, uuid, contentSourceUri, pub, area, language, extension);
+    }
+
+    public boolean exists(DocumentFactory factory, Publication pub, String area, String uuid,
+            String language) throws PublicationException {
+        String sourceUri = DocumentImpl.getSourceURI(pub, area, uuid, language);
+        try {
+            Node node = DocumentImpl.getRepositoryNode(this.manager, factory, sourceUri);
+            return node.exists();
+        } catch (RepositoryException e) {
+            throw new PublicationException(e);
+        }
     }
 
 }

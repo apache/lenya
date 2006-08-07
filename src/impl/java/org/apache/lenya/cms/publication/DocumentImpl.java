@@ -27,6 +27,7 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
@@ -34,7 +35,9 @@ import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteUtil;
@@ -607,24 +610,23 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.cms.publication.Document#getRepositoryNode()
      */
     public Node getRepositoryNode() {
-        Node node = null;
-        SourceResolver resolver = null;
-        RepositorySource documentSource = null;
+        return getRepositoryNode(this.manager, getFactory(), getSourceURI());
+    }
+
+    protected static Node getRepositoryNode(ServiceManager manager, DocumentFactory docFactory, String sourceUri) {
+        Session session = docFactory.getSession();
+        NodeFactory factory = null;
         try {
-            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-            documentSource = (RepositorySource) resolver.resolveURI(getSourceURI());
-            node = documentSource.getNode();
+            factory = (NodeFactory) manager.lookup(NodeFactory.ROLE);
+            factory.setSession(session);
+            return (Node) session.getRepositoryItem(factory, sourceUri);
         } catch (Exception e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Creating repository node failed: ", e);
         } finally {
-            if (resolver != null) {
-                if (documentSource != null) {
-                    resolver.release(documentSource);
-                }
-                manager.release(resolver);
+            if (factory != null) {
+                manager.release(factory);
             }
         }
-        return node;
     }
 
     /**
