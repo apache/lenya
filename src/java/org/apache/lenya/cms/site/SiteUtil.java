@@ -141,7 +141,8 @@ public class SiteUtil {
      * @param factory The document factory.
      * @param map An identity map.
      * @param node A node.
-     * @return All existing documents belonging to the node.
+     * @return All existing documents belonging to the node. Empty set if no documents belong to 
+     * the node.
      * @throws DocumentBuildException if an error occurs.
      * @throws DocumentException if an error occurs.
      * @throws SiteException
@@ -149,13 +150,17 @@ public class SiteUtil {
     public static DocumentSet getExistingDocuments(ServiceManager manager, DocumentFactory factory,
             SiteNode node) throws DocumentBuildException, DocumentException, SiteException {
         DocumentSet set = new DocumentSet();
-        String uuid = SiteUtil.getUUID(manager, factory, node.getPublication(), node.getArea(),
-                node.getPath());
-        Document document = factory.get(node.getPublication(), node.getArea(), uuid);
-        String[] languages = document.getLanguages();
-        for (int i = 0; i < languages.length; i++) {
-            Document version = document.getTranslation(languages[i]);
-            set.add(version);
+            
+        if (SiteUtil.contains(manager, factory, node.getPublication(), node.getArea(),
+                node.getPath())) {
+            String uuid = SiteUtil.getUUID(manager, factory, node.getPublication(), node.getArea(),
+                    node.getPath());
+            Document document = factory.get(node.getPublication(), node.getArea(), uuid);
+            String[] languages = document.getLanguages();
+            for (int i = 0; i < languages.length; i++) {
+                Document version = document.getTranslation(languages[i]);
+                set.add(version);
+            }
         }
         return set;
     }
@@ -639,6 +644,28 @@ public class SiteUtil {
         } catch (SiteException e) {
             throw e;
         } catch (Exception e) {
+            throw new SiteException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                manager.release(selector);
+            }
+        }
+    }
+
+    public static boolean contains(ServiceManager manager, DocumentFactory factory, Publication pub,
+            String area, String path) throws SiteException {
+        SiteManager siteManager = null;
+        ServiceSelector selector = null;
+
+        try {
+            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
+            String siteManagerHint = pub.getSiteManagerHint();
+            siteManager = (SiteManager) selector.select(siteManagerHint);
+            return siteManager.contains(factory, pub, area, path);
+        } catch (ServiceException e) {
             throw new SiteException(e);
         } finally {
             if (selector != null) {
