@@ -229,7 +229,8 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
 
     public Lock createLock(Lockable lockable, int version) throws TransactionException {
         if (this.locks.containsKey(lockable)) {
-            throw new TransactionException("A lock is already placed on [" + lockable + "]");
+            throw new TransactionException("A lock is already placed on [" + lockable +
+                    "]. A new lock could lead to inconsistent data.");
         }
         Lock lock = new Lock(version);
         this.locks.put(lockable, lock);

@@ -91,9 +91,7 @@ public class SiteUtil {
             throws SiteException {
         Assert.notNull("manager", manager);
         Assert.notNull("document", document);
-        return SiteUtil.getSiteStructure(manager,
-                document.getFactory(),
-                document.getPublication(),
+        return SiteUtil.getSiteStructure(manager, document.getFactory(), document.getPublication(),
                 document.getArea());
     }
 
@@ -151,10 +149,7 @@ public class SiteUtil {
     public static DocumentSet getExistingDocuments(ServiceManager manager, DocumentFactory factory,
             SiteNode node) throws DocumentBuildException, DocumentException, SiteException {
         DocumentSet set = new DocumentSet();
-        String uuid = SiteUtil.getUUID(manager,
-                factory,
-                node.getPublication(),
-                node.getArea(),
+        String uuid = SiteUtil.getUUID(manager, factory, node.getPublication(), node.getArea(),
                 node.getPath());
         Document document = factory.get(node.getPublication(), node.getArea(), uuid);
         String[] languages = document.getLanguages();
@@ -247,11 +242,8 @@ public class SiteUtil {
             DocumentSet subSite = SiteUtil.getSubSite(manager, source);
             Document[] docs = subSite.getDocuments();
             for (int i = 0; i < docs.length; i++) {
-                DocumentLocator targetLoc = SiteUtil.getTransferedDocument(siteManager,
-                        docs[i],
-                        source,
-                        target,
-                        mode);
+                DocumentLocator targetLoc = SiteUtil.getTransferedDocument(siteManager, docs[i],
+                        source, target, mode);
                 if (targetLoc != null) {
                     map.put(docs[i], targetLoc);
                 }
@@ -275,22 +267,16 @@ public class SiteUtil {
             DocumentException, DocumentBuildException {
 
         String targetArea = baseTarget.getArea();
-        String baseSourcePath = siteManager.getPath(baseSource.getFactory(),
-                baseSource.getPublication(),
-                baseSource.getArea(),
-                baseSource.getUUID());
+        String baseSourcePath = siteManager.getPath(baseSource.getFactory(), baseSource
+                .getPublication(), baseSource.getArea(), baseSource.getUUID());
 
-        String sourcePath = siteManager.getPath(source.getFactory(),
-                source.getPublication(),
-                source.getArea(),
-                source.getUUID());
+        String sourcePath = siteManager.getPath(source.getFactory(), source.getPublication(),
+                source.getArea(), source.getUUID());
         String suffix = sourcePath.substring(baseSourcePath.length());
         String targetId = baseTarget.getPath() + suffix;
 
         DocumentLocator target = DocumentLocator.getLocator(baseTarget.getPublicationId(),
-                targetArea,
-                targetId,
-                source.getLanguage());
+                targetArea, targetId, source.getLanguage());
         switch (mode) {
         case MODE_REPLACE:
             break;
@@ -330,10 +316,8 @@ public class SiteUtil {
             DocumentSet subSite = SiteUtil.getSubSite(manager, source);
             Document[] docs = subSite.getDocuments();
             for (int i = 0; i < docs.length; i++) {
-                DocumentLocator target = SiteUtil.getTransferedDocument(siteManager,
-                        docs[i],
-                        targetArea,
-                        mode);
+                DocumentLocator target = SiteUtil.getTransferedDocument(siteManager, docs[i],
+                        targetArea, mode);
                 if (target != null) {
                     map.put(docs[i], target);
                 }
@@ -448,6 +432,17 @@ public class SiteUtil {
             siteManager = (SiteManager) selector.select(siteManagerHint);
 
             Document[] docs = siteManager.getDocuments(factory, pub, area);
+
+            Set foundDocs = new HashSet();
+            for (int i = 0; i < docs.length; i++) {
+                String hash = getHash(docs[i]);
+                if (foundDocs.contains(hash)) {
+                    throw new SiteException("The document [" + hash
+                            + "] is contained more than once!");
+                }
+                foundDocs.add(hash);
+            }
+
             return docs;
         } catch (ServiceException e) {
             throw new SiteException(e);
@@ -459,6 +454,11 @@ public class SiteUtil {
                 manager.release(selector);
             }
         }
+    }
+
+    protected static String getHash(Document doc) {
+        return doc.getPublication().getId() + ":" + doc.getArea() + ":" + doc.getUUID() + ":"
+                + doc.getLanguage();
     }
 
     /**
@@ -495,10 +495,8 @@ public class SiteUtil {
             selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
             String siteManagerHint = doc.getPublication().getSiteManagerHint();
             siteManager = (SiteManager) selector.select(siteManagerHint);
-            return siteManager.getPath(doc.getFactory(),
-                    doc.getPublication(),
-                    doc.getArea(),
-                    doc.getUUID());
+            return siteManager.getPath(doc.getFactory(), doc.getPublication(), doc.getArea(), doc
+                    .getUUID());
         } catch (ServiceException e) {
             throw new SiteException(e);
         } finally {
