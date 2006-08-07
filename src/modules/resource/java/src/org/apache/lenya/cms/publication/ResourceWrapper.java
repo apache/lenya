@@ -145,9 +145,6 @@ public class ResourceWrapper extends AbstractLogEnabled {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             source = (ModifiableSource) resolver.resolveURI(document.getSourceURI());
 
-            // now that the source is determined, lock involved nodes
-            document.getRepositoryNode().lock();
-
             destOutputStream = source.getOutputStream();
             IOUtils.write(sourceBos.toByteArray(), destOutputStream);
 
