@@ -45,7 +45,30 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
 /**
- * Meta data generator.
+ * <p>Generates the meta data of a document.</p>
+ * <p>Parameters to specify the document:</p>
+ * <ul>
+ * <li><strong>pubid</strong> - mandatory</li>
+ * <li><strong>area</strong> - mandatory</li>
+ * <li><strong>uuid</strong> - mandatory</li>
+ * <li><strong>lang</strong> - mandatory</li>
+ * </ul>
+ * <p>Example output:</p>
+ * <pre>
+&lt;lenya:metadata xmlns:lenya="http://apache.org/cocoon/lenya/metadata/1.0"&gt;
+  &lt;elements xmlns="http://purl.org/dc/elements/1.1/"&gt;
+    &lt;title&gt;Search&lt;/title&gt;
+    &lt;date&gt;2006-06-12 13:43:14&lt;/date&gt;
+    &lt;language&gt;en&lt;/language&gt;
+    &lt;creator&gt;lenya&lt;/creator&gt;
+  &lt;/elements&gt;
+  &lt;elements xmlns="http://apache.org/lenya/metadata/document/1.0"&gt;
+    &lt;extension&gt;xml&lt;/extension&gt;
+    &lt;resourceType&gt;usecase&lt;/resourceType&gt;
+    &lt;contentType&gt;xml&lt;/contentType&gt;
+  &lt;/elements&gt;
+&lt;/lenya:metadata&gt;
+</pre>
  */
 public class LenyaMetaDataGenerator extends ServiceableGenerator implements
         CacheableProcessingComponent {
