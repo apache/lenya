@@ -17,6 +17,7 @@
 package org.apache.lenya.cms.publication;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -52,10 +53,13 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     protected static final String EXPIRES_ELEMENT = "expires";
     protected static final String SECONDS_ATTRIBUTE = "seconds";
 
+    /**
+     * The default sample name.
+     */
+    public static final String DEFAULT_SAMPLE_NAME = "Default Sample";
+
     private Schema schema = null;
-    private String sampleUri = null;
-    private String defaultSampleUri = null;
-    private Map sampleUris = new HashMap();
+    private Map sampleName2Uri = new HashMap();
     private String[] linkAttributeXPaths;
     private long expires = 0;
 
@@ -77,12 +81,12 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
             // determine the sample content locations.
             Configuration[] samplesConf = config.getChildren(SAMPLE_NAME);
             for (int i = 0; i < samplesConf.length; i++) {
-                if (samplesConf[i].getAttributeNames().length > 0)
-                    this.sampleUris.put(samplesConf[i].getAttribute(SAMPLE_NAME_ATTRIBUTE),
-                            samplesConf[i].getValue());
-                else { // default sample doesn't have name attribute
-                    this.sampleUri = samplesConf[i].getValue();
-                    this.defaultSampleUri = samplesConf[i].getValue();
+                if (Arrays.asList(samplesConf[i].getAttributeNames()).contains(
+                        SAMPLE_NAME_ATTRIBUTE)) {
+                    String name = samplesConf[i].getAttribute(SAMPLE_NAME_ATTRIBUTE);
+                    this.sampleName2Uri.put(name, samplesConf[i].getValue());
+                } else { // default sample doesn't have name attribute
+                    this.sampleName2Uri.put(DEFAULT_SAMPLE_NAME, samplesConf[i].getValue());
                 }
             }
 
@@ -100,7 +104,7 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
                 String uri = formatConfigs[i].getAttribute(ATTRIBUTE_URI);
                 this.formats.put(name, new Format(uri));
             }
-            
+
             Configuration expiresConf = config.getChild(EXPIRES_ELEMENT, false);
             if (expiresConf != null) {
                 this.expires = expiresConf.getAttributeAsLong(SECONDS_ATTRIBUTE);
@@ -111,7 +115,7 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
         }
 
     }
-    
+
     public Date getExpires() {
         Date date = new Date();
         date.setTime(date.getTime() + this.expires * 1000l);
@@ -127,24 +131,16 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     }
 
     public String[] getSampleNames() {
-        String[] names = new String[this.sampleUris.size()];
-        Iterator it = this.sampleUris.keySet().iterator();
-        int count = 0;
-        while (it.hasNext()) {
-            names[count++] = (String) it.next();
+        Set names = this.sampleName2Uri.keySet();
+        return (String[]) names.toArray(new String[names.size()]);
+    }
+
+    public String getSampleURI(String name) {
+        if (!this.sampleName2Uri.containsKey(name)) {
+            throw new IllegalArgumentException("The resource type [" + getName()
+                    + "] doesn't support the sample [" + name + "]!");
         }
-        return names;
-    }
-
-    public void setSampleURI(String name) {
-        if (name.length() > 0 && this.sampleUris.containsKey(name))
-            this.sampleUri = (String) this.sampleUris.get(name);
-        else
-            this.sampleUri = new String(this.defaultSampleUri);
-    }
-
-    public String getSampleURI() {
-        return this.sampleUri;
+        return (String) this.sampleName2Uri.get(name);
     }
 
     public void setName(String name) {

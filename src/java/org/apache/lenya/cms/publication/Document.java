@@ -119,6 +119,15 @@ public interface Document extends MetaDataOwner, RepositoryItem {
     String getLabel() throws DocumentException;
 
     /**
+     * Get the navigation label associated with this document 
+     * for the language.
+     * @param label The label.
+     * 
+     * @throws DocumentException if an error occurs
+     */
+    void setLabel(String label) throws DocumentException;
+
+    /**
      * Returns the date of the last modification of this document.
      * @return A date denoting the date of the last modification.
      */

@@ -43,21 +43,21 @@ public class Mkcol extends Create {
     protected String EXTENSION = "xml";
     protected static final String ATTRIBUTE_TYPE = "resource-type";
     protected static final String ELEMENT_EXTENSION = "extension";
-    
+
     public void configure(Configuration config) throws ConfigurationException {
         super.configure(config);
         Configuration typeConfig = config.getChild(ELEMENT_EXTENSION, false);
         if (typeConfig != null) {
-          this.EXTENSION = typeConfig.getValue();
-          this.TYPE = typeConfig.getAttribute(ATTRIBUTE_TYPE);
+            this.EXTENSION = typeConfig.getValue();
+            this.TYPE = typeConfig.getAttribute(ATTRIBUTE_TYPE);
         }
-      }
-    
+    }
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
-        //super.doExecute();
+        // super.doExecute();
         SourceResolver resolver = null;
         WorkflowManager wfManager = null;
         ResourceType resourceType = null;
@@ -74,21 +74,19 @@ public class Mkcol extends Create {
                 DocumentManager documentManager = null;
                 ServiceSelector selector = null;
                 try {
-                    selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
+                    selector = (ServiceSelector) this.manager
+                            .lookup(ResourceType.ROLE + "Selector");
 
                     documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
                     DocumentFactory map = getDocumentFactory();
                     String path = SiteUtil.getPath(this.manager, doc);
-                    DocumentLocator locator = DocumentLocator.getLocator(getPublication().getId(),
-                            doc.getArea(),
-                            path,
-                            doc.getLanguage());
 
                     resourceType = (ResourceType) selector.select(TYPE);
-                    documentManager.add(map, locator, resourceType, EXTENSION, doc.getName(), true);
+                    String sampleUri = resourceType.getSampleURI(resourceType.getSampleNames()[0]);
+                    doc = documentManager.add(map, resourceType, sampleUri, getPublication(), doc
+                            .getArea(), path, doc.getLanguage(), EXTENSION, doc.getName(), true);
 
-                    doc = map.get(locator);
                     setMetaData(doc);
                 } finally {
                     if (documentManager != null) {
@@ -102,16 +100,6 @@ public class Mkcol extends Create {
                     }
                 }
             }
-
-            String sourceUri = resourceType.getSampleURI();
-            String destination = doc.getSourceURI();
-
-            try {
-                SourceUtil.copy(resolver, sourceUri, destination);
-            } catch (Exception e) {
-                addErrorMessage("invalid source xml");
-            }
-
 
         } finally {
             if (resolver != null) {
@@ -161,6 +149,10 @@ public class Mkcol extends Create {
 
     protected String getSourceExtension() {
         return EXTENSION;
+    }
+
+    protected boolean createVersion() {
+        return false;
     }
 
 }

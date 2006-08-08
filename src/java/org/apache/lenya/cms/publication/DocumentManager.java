@@ -85,9 +85,11 @@ public interface DocumentManager {
     /**
      * Creates a new document in the same publication the <code>parentDocument</code> belongs to
      * with the given parameters:
-     * @param factory The document factory.
-     * @param locator The locator for the document to add.
-     * @param resourceType the document type (aka resource type) of the new document
+     * 
+     * @param sourceDocument The document to initialize the contents and meta data from.
+     * @param area The target area.
+     * @param path The target path.
+     * @param language The target language.
      * @param extension The extension to use for the document source.
      * @param navigationTitle navigation title
      * @param visibleInNav determines the visibility of a node in the navigation
@@ -96,53 +98,40 @@ public interface DocumentManager {
      * @throws DocumentBuildException if the document can not be created
      * @throws PublicationException if the document is already contained.
      */
-    Document add(DocumentFactory factory, DocumentLocator locator, ResourceType resourceType,
+    Document add(Document sourceDocument, String area, String path, String language,
             String extension, String navigationTitle, boolean visibleInNav)
             throws DocumentBuildException, PublicationException;
 
     /**
-     * Creates a new document in the same publication the <code>parentDocument</code> belongs to
-     * with the given parameters:
-     * 
-     * @param locator The locator for the document to add.
-     * @param sourceDocument The document to initialize the contents and meta data from.
-     * @param extension The extension to use for the document source.
-     * @param navigationTitle navigation title
-     * @param visibleInNav determines the visibility of a node in the navigation
-     * @return The added document.
-     * 
-     * @throws DocumentBuildException if the document can not be created
-     * @throws PublicationException if the document is already contained.
-     */
-    Document add(DocumentLocator locator, Document sourceDocument, String extension,
-            String navigationTitle, boolean visibleInNav) throws DocumentBuildException,
-            PublicationException;
-
-    /**
-     * Creates a new document in the same publication the <code>parentDocument</code> belongs to
-     * with the given parameters:
-     * @param factory The document factory.
-     * @param resourceType the document type (aka resource type) of the new document
-     * @param pub The publication.
-     * @param area The area.
-     * @param language The language.
-     * @param extension The extension to use for the document source.
-     * @return The added document.
-     * 
-     * @throws DocumentBuildException if the document can not be created
-     * @throws PublicationException if the document is already contained.
-     */
-    Document add(DocumentFactory factory, ResourceType resourceType, Publication pub, String area,
-            String language, String extension) throws DocumentBuildException, PublicationException;
-
-    /**
-     * Creates a new document in the same publication the <code>parentDocument</code> belongs to
-     * with the given parameters:
+     * Creates a new document with the given parameters:
      * @param factory The document factory.
      * @param resourceType the document type (aka resource type) of the new document
      * @param contentSourceUri The URI to read the content from.
      * @param pub The publication.
      * @param area The area.
+     * @param path The path.
+     * @param language The language.
+     * @param extension The extension to use for the document source.
+     * @param navigationTitle The navigation title.
+     * @param visibleInNav The navigation visibility.
+     * @return The added document.
+     * 
+     * @throws DocumentBuildException if the document can not be created
+     * @throws PublicationException if the document is already contained.
+     */
+    Document add(DocumentFactory factory, ResourceType resourceType, String contentSourceUri,
+            Publication pub, String area, String path, String language, String extension,
+            String navigationTitle, boolean visibleInNav) throws DocumentBuildException,
+            PublicationException;
+
+    /**
+     * Creates a new document without adding it to the site structure.
+     * @param factory The document factory.
+     * @param resourceType the document type (aka resource type) of the new document
+     * @param contentSourceUri The URI to read the content from.
+     * @param pub The publication.
+     * @param area The area.
+     * @param path The path.
      * @param language The language.
      * @param extension The extension to use for the document source.
      * @return The added document.
@@ -151,7 +140,7 @@ public interface DocumentManager {
      * @throws PublicationException if the document is already contained.
      */
     Document add(DocumentFactory factory, ResourceType resourceType, String contentSourceUri,
-            Publication pub, String area, String language, String extension)
+            Publication pub, String area, String path, String language, String extension)
             throws DocumentBuildException, PublicationException;
 
     /**

@@ -141,8 +141,8 @@ public class SiteUtil {
      * @param factory The document factory.
      * @param map An identity map.
      * @param node A node.
-     * @return All existing documents belonging to the node. Empty set if no documents belong to 
-     * the node.
+     * @return All existing documents belonging to the node. Empty set if no documents belong to the
+     *         node.
      * @throws DocumentBuildException if an error occurs.
      * @throws DocumentException if an error occurs.
      * @throws SiteException
@@ -150,9 +150,9 @@ public class SiteUtil {
     public static DocumentSet getExistingDocuments(ServiceManager manager, DocumentFactory factory,
             SiteNode node) throws DocumentBuildException, DocumentException, SiteException {
         DocumentSet set = new DocumentSet();
-            
-        if (SiteUtil.contains(manager, factory, node.getPublication(), node.getArea(),
-                node.getPath())) {
+
+        if (SiteUtil.contains(manager, factory, node.getPublication(), node.getArea(), node
+                .getPath())) {
             String uuid = SiteUtil.getUUID(manager, factory, node.getPublication(), node.getArea(),
                     node.getPath());
             Document document = factory.get(node.getPublication(), node.getArea(), uuid);
@@ -418,6 +418,34 @@ public class SiteUtil {
     }
 
     /**
+     * @param manager The site manager.
+     * @param document The document.
+     * @param visible if the document should be visible.
+     * @throws SiteException if an error occurs.
+     */
+    public static void setVisibleInNavigation(ServiceManager manager, Document document,
+            boolean visible) throws SiteException {
+        ServiceSelector selector = null;
+        SiteManager siteManager = null;
+        try {
+            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(document.getPublication()
+                    .getSiteManagerHint());
+
+            siteManager.setVisibleInNav(document, visible);
+        } catch (Exception e) {
+            throw new SiteException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                manager.release(selector);
+            }
+        }
+    }
+
+    /**
      * Returns all documents in a certain area.
      * @param manager The service manager.
      * @param factory The document factory.
@@ -569,14 +597,15 @@ public class SiteUtil {
         ServiceSelector selector = null;
         try {
             Publication pub = PublicationUtil.getPublication(manager, info.getPublicationId());
-            selector = (ServiceSelector) manager.lookup(DocumentBuilder.ROLE + "Selector");
-            builder = (DocumentBuilder) selector.select(pub.getDocumentBuilderHint());
-            if (builder.isDocument(webappUrl)) {
-                DocumentLocator locator = builder.getLocator(webappUrl);
-                return contains(manager, factory, locator);
-            } else {
-                return false;
+            if (pub.exists()) {
+                selector = (ServiceSelector) manager.lookup(DocumentBuilder.ROLE + "Selector");
+                builder = (DocumentBuilder) selector.select(pub.getDocumentBuilderHint());
+                if (builder.isDocument(webappUrl)) {
+                    DocumentLocator locator = builder.getLocator(webappUrl);
+                    return contains(manager, factory, locator);
+                }
             }
+            return false;
         } catch (SiteException e) {
             throw e;
         } catch (Exception e) {
@@ -655,8 +684,8 @@ public class SiteUtil {
         }
     }
 
-    public static boolean contains(ServiceManager manager, DocumentFactory factory, Publication pub,
-            String area, String path) throws SiteException {
+    public static boolean contains(ServiceManager manager, DocumentFactory factory,
+            Publication pub, String area, String path) throws SiteException {
         SiteManager siteManager = null;
         ServiceSelector selector = null;
 

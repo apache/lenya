@@ -102,7 +102,7 @@ public class MigrateUuidsTest extends AbstractAccessControlTest {
             } else {
                 newDoc = docManager.add(doc.getFactory(), doc.getResourceType(),
                         doc.getSourceURI(), doc.getPublication(), doc.getArea(), doc.getLanguage(),
-                        doc.getExtension());
+                        doc.getExtension(), doc.getLabel());
 
                 String[] uris = doc.getMetaDataNamespaceUris();
                 for (int i = 0; i < uris.length; i++) {

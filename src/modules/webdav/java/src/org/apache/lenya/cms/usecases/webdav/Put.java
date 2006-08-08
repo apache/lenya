@@ -31,7 +31,6 @@ import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -55,31 +54,32 @@ import org.apache.lenya.xml.ValidationUtil;
 public class Put extends CreateDocument {
     // registeredExtensions contain all known extension matching to a certain resource-type.
     private HashMap registeredExtensions = new HashMap();
-//  default is xhtml and xml but you can override it with the config
+    // default is xhtml and xml but you can override it with the config
     protected String TYPE = "xhtml";
     protected String EXTENSION = "*";
     protected static final String ATTRIBUTE_TYPE = "resource-type";
     protected static final String ELEMENT_ROOT = "extensions";
     protected static final String ELEMENT_EXTENSION = "extension";
-    
+
     private boolean fallback = false;
-    
+
     public void configure(Configuration config) throws ConfigurationException {
         super.configure(config);
         Configuration extensionsConfig = config.getChild(ELEMENT_ROOT, false);
         if (extensionsConfig != null) {
-            Configuration [] extensions=extensionsConfig.getChildren(ELEMENT_EXTENSION);
+            Configuration[] extensions = extensionsConfig.getChildren(ELEMENT_EXTENSION);
             for (int i = 0; i < extensions.length; i++) {
                 Configuration extension = extensions[i];
-//              add extension to register (key: extension,value: resource-type)
+                // add extension to register (key: extension,value: resource-type)
                 if (extension != null)
-                  registeredExtensions.put(extension.getValue(),extension.getAttribute(ATTRIBUTE_TYPE));
+                    registeredExtensions.put(extension.getValue(), extension
+                            .getAttribute(ATTRIBUTE_TYPE));
             }
-        }else{
-            registeredExtensions.put(this.EXTENSION,this.TYPE);
+        } else {
+            registeredExtensions.put(this.EXTENSION, this.TYPE);
         }
-      }
-    
+    }
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
@@ -91,7 +91,7 @@ public class Put extends CreateDocument {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
 
             Document doc = getSourceDocument();
-            String extension= getSourceExtension();
+            String extension = getSourceExtension();
             // sanity check
             if (doc == null)
                 throw new IllegalArgumentException("illegal usage, source document may not be null");
@@ -102,20 +102,18 @@ public class Put extends CreateDocument {
                 ServiceSelector selector = null;
                 ResourceType resourceType = null;
                 try {
-                    selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
+                    selector = (ServiceSelector) this.manager
+                            .lookup(ResourceType.ROLE + "Selector");
 
                     documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
                     DocumentFactory map = getDocumentFactory();
                     String path = SiteUtil.getPath(this.manager, doc);
-                    DocumentLocator locator = DocumentLocator.getLocator(getPublication().getId(),
-                            doc.getArea(),
-                            path,
-                            doc.getLanguage());
-                    //lookupResourceType(extension)
+                    // lookupResourceType(extension)
                     resourceType = lookUpExtension(extension, selector);
-                    documentManager.add(map, locator, resourceType, extension, doc.getName(), true);
-                    doc = map.get(locator);
+                    String sampleUri = resourceType.getSampleURI(resourceType.getSampleNames()[0]);
+                    doc = documentManager.add(map, resourceType, sampleUri, getPublication(), doc
+                            .getArea(), path, doc.getLanguage(), extension, doc.getName(), true);
                     setMetaData(doc);
                 } finally {
                     if (documentManager != null) {
@@ -132,19 +130,19 @@ public class Put extends CreateDocument {
 
             String sourceUri = "cocoon:/request/PUT/" + extension;
             org.w3c.dom.Document xmlDoc = SourceUtil.readDOM(sourceUri, manager);
-            
+
             // validate if a schema is provided and we are not using any fallback
-            if (doc.getResourceType().getSchema() != null & fallback==false){
-              validateDoc(resolver, xmlDoc, doc);
+            if (doc.getResourceType().getSchema() != null & fallback == false) {
+                validateDoc(resolver, xmlDoc, doc);
             }
 
             if (!hasErrors()) {
-              try {
-                SourceUtil.writeDOM(xmlDoc, doc.getSourceURI(), this.manager);
-              } catch (Exception e) {
-                addErrorMessage("invalid source xml. Full exception: "+ e);
-              }
-           }
+                try {
+                    SourceUtil.writeDOM(xmlDoc, doc.getSourceURI(), this.manager);
+                } catch (Exception e) {
+                    addErrorMessage("invalid source xml. Full exception: " + e);
+                }
+            }
 
         } finally {
             if (resolver != null) {
@@ -156,29 +154,30 @@ public class Put extends CreateDocument {
         }
     }
 
-
-    private ResourceType lookUpExtension(String extension, ServiceSelector selector) throws ServiceException {
+    private ResourceType lookUpExtension(String extension, ServiceSelector selector)
+            throws ServiceException {
         ResourceType resourceType;
-        String resourceTypeName=(String) registeredExtensions.get(extension);
-        if (resourceTypeName==null||resourceTypeName.equals("")){
-            resourceTypeName=(String) registeredExtensions.get(this.EXTENSION);
-            this.fallback=true;
+        String resourceTypeName = (String) registeredExtensions.get(extension);
+        if (resourceTypeName == null || resourceTypeName.equals("")) {
+            resourceTypeName = (String) registeredExtensions.get(this.EXTENSION);
+            this.fallback = true;
         }
-        if (selector.isSelectable(resourceTypeName)){
+        if (selector.isSelectable(resourceTypeName)) {
             resourceType = (ResourceType) selector.select(resourceTypeName);
-        }else{
-            //using a fallback resource type
+        } else {
+            // using a fallback resource type
             // FIXME this resource tye should be a more generic one like "media-assets" or "bin"
             resourceType = (ResourceType) selector.select(this.TYPE);
-            this.fallback=true;
+            this.fallback = true;
         }
         return resourceType;
-    }    
+    }
 
-    private void validateDoc(SourceResolver resolver, org.w3c.dom.Document xmlDoc, Document doc) throws Exception {
-          ResourceType resourceType = doc.getResourceType();
-          Schema schema = resourceType.getSchema();
-          ValidationUtil.validate(this.manager, xmlDoc, schema, new UsecaseErrorHandler(this));
+    private void validateDoc(SourceResolver resolver, org.w3c.dom.Document xmlDoc, Document doc)
+            throws Exception {
+        ResourceType resourceType = doc.getResourceType();
+        Schema schema = resourceType.getSchema();
+        ValidationUtil.validate(this.manager, xmlDoc, schema, new UsecaseErrorHandler(this));
     }
 
     /**
@@ -202,7 +201,8 @@ public class Put extends CreateDocument {
         } catch (Exception e) {
             throw new UsecaseException(e);
         }
-    }    
+    }
+
     /**
      * Sets the meta data of the created document.
      * 
@@ -245,45 +245,43 @@ public class Put extends CreateDocument {
         return this.publication;
     }
 
-
     protected String getSourceExtension() {
         String destinationUri = getParameterAsString(SOURCE_URL);
         String extension = null;
         if (destinationUri.indexOf(".") > 0) {
-            extension = destinationUri.substring(destinationUri.lastIndexOf(".")+1,destinationUri.length());
+            extension = destinationUri.substring(destinationUri.lastIndexOf(".") + 1,
+                    destinationUri.length());
         } else {
             extension = EXTENSION;
         }
         return extension;
     }
 
-
     protected String getNewDocumentName() {
         // TODO Auto-generated method stub
         return null;
     }
-
 
     protected String getNewDocumentPath() {
         Document doc = getSourceDocument();
         return doc.getUUID();
     }
 
-    protected boolean getVisibleInNav(){
+    protected boolean getVisibleInNav() {
         return true;
     }
 
     protected String getDocumentTypeName() {
         ResourceType resourceType = null;
         ServiceSelector selector = null;
-        String docType="";
+        String docType = "";
         try {
             selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
             resourceType = lookUpExtension(getSourceExtension(), selector);
-            docType=resourceType.getName();
+            docType = resourceType.getName();
         } catch (ServiceException e) {
             throw new RuntimeException(e);
-        }finally {
+        } finally {
             if (selector != null) {
                 this.manager.release(selector);
             }

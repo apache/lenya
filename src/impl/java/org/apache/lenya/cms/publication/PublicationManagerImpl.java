@@ -59,7 +59,7 @@ public final class PublicationManagerImpl extends AbstractLogEnabled implements 
      * @throws PublicationException if there was a problem creating the publication.
      */
     public synchronized Publication getPublication(String id) throws PublicationException {
-
+        
         assert id != null;
         if (id.indexOf("/") != -1) {
             throw new PublicationException("The publication ID [" + id + "] must not contain a slash!");

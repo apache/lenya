@@ -77,14 +77,11 @@ public interface ResourceType {
     
     /**
      * Returns the location of sample contents for this type
+     * @param name The name of the sample.
      * @return A string value.
+     * @see #getSampleNames()
      */
-    String getSampleURI();
-    
-    /**
-     * @param name The name attrib of the sample 
-     */
-    void setSampleURI(String name);
+    String getSampleURI(String name);
     
     /**
      * @param name The name of the resource type.

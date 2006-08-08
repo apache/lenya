@@ -20,7 +20,6 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceSelector;
@@ -35,7 +34,6 @@ import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -111,9 +109,9 @@ public abstract class Create extends AbstractUsecase {
         }
 
         if (getInitialDocument() == null) {
-            List samples = (List) getParameter(SAMPLES);
+            String[] samples = (String[]) getParameter(SAMPLES);
             String sample = getParameterAsString(SAMPLE);
-            if (samples != null && samples.size() > 1 && (sample == null || sample.equals(""))) {
+            if (samples != null && samples.length > 1 && (sample == null || sample.equals(""))) {
                 addErrorMessage("Please select a page layout.");
             }
         }
@@ -138,26 +136,30 @@ public abstract class Create extends AbstractUsecase {
 
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
-            DocumentLocator locator = DocumentLocator.getLocator(getPublication().getId(),
-                    getArea(), getNewDocumentPath(), getParameterAsString(LANGUAGE));
-
+            String language = getParameterAsString(LANGUAGE);
             Document initialDocument = getInitialDocument();
-            if (initialDocument == null) {
-                selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
-                resourceType = (ResourceType) selector.select(getDocumentTypeName());
-                if (getParameterAsString(SAMPLE) != null
-                        && getParameterAsString(SAMPLE).length() > 0)
-                    resourceType.setSampleURI(getParameterAsString(SAMPLE));
-                documentManager.add(getDocumentFactory(), locator, resourceType,
-                        getSourceExtension(), getParameterAsString(DublinCore.ELEMENT_TITLE),
-                        getVisibleInNav());
-                resourceType.setSampleURI(""); // reset to default sample
-            } else {
-                documentManager.add(locator, initialDocument, getSourceExtension(),
-                        getParameterAsString(DublinCore.ELEMENT_TITLE), getVisibleInNav());
-            }
 
-            Document document = getDocumentFactory().get(locator);
+            Document document;
+
+            if (createVersion()) {
+                document = documentManager.addVersion(initialDocument, getArea(), language);
+            } else {
+                if (initialDocument == null) {
+                    selector = (ServiceSelector) this.manager
+                            .lookup(ResourceType.ROLE + "Selector");
+                    resourceType = (ResourceType) selector.select(getDocumentTypeName());
+                    String sample = getParameterAsString(SAMPLE, resourceType.getSampleNames()[0]);
+                    String sampleUri = resourceType.getSampleURI(sample);
+                    document = documentManager.add(getDocumentFactory(), resourceType, sampleUri,
+                            getPublication(), getArea(), getNewDocumentPath(), language,
+                            getSourceExtension(), getParameterAsString(DublinCore.ELEMENT_TITLE),
+                            getVisibleInNav());
+                } else {
+                    document = documentManager.add(initialDocument, getArea(),
+                            getNewDocumentPath(), language, getSourceExtension(),
+                            getParameterAsString(DublinCore.ELEMENT_TITLE), getVisibleInNav());
+                }
+            }
 
             setMetaData(document);
 
@@ -175,8 +177,9 @@ public abstract class Create extends AbstractUsecase {
                 this.manager.release(selector);
             }
         }
-
     }
+
+    protected abstract boolean createVersion();
 
     /**
      * @return the extension to use for the document source.
@@ -271,7 +274,13 @@ public abstract class Create extends AbstractUsecase {
         try {
             selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
             resourceType = (ResourceType) selector.select(getDocumentTypeName());
-            setParameter(SAMPLES, Arrays.asList(resourceType.getSampleNames()));
+            String[] samples = resourceType.getSampleNames();
+            if (samples.length == 0) {
+                addErrorMessage("The resource type [" + resourceType.getName()
+                        + "] doesn't provide any samples!");
+            }
+            setParameter(SAMPLES, samples);
+            setParameter(SAMPLE, samples[0]);
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -316,9 +325,11 @@ public abstract class Create extends AbstractUsecase {
             DocumentFactory factory = getDocumentFactory();
 
             String path = getNewDocumentPath();
-            String uuid = SiteUtil.getUUID(this.manager, factory, getPublication(), getArea(), path);
+            String uuid = SiteUtil
+                    .getUUID(this.manager, factory, getPublication(), getArea(), path);
 
-            document = factory.get(getPublication(), getArea(), uuid, getParameterAsString(LANGUAGE));
+            document = factory.get(getPublication(), getArea(), uuid,
+                    getParameterAsString(LANGUAGE));
 
         } catch (Exception e) {
             throw new RuntimeException(e);

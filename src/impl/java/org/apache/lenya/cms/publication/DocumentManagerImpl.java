@@ -16,8 +16,6 @@
  */
 package org.apache.lenya.cms.publication;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -53,30 +51,24 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         Serviceable, Contextualizable {
 
     /**
-     * @see DocumentManager#add(sourceDocument, DocumentLocator, ResourceType, String, String,
-     *      boolean)
-     * @see org.apache.lenya.cms.publication.DocumentBuilder
+     * @see org.apache.lenya.cms.publication.DocumentManager#add(org.apache.lenya.cms.publication.Document,
+     *      java.lang.String, java.lang.String, java.lang.String, java.lang.String,
+     *      java.lang.String, boolean)
      */
-    public Document add(DocumentFactory factory, DocumentLocator locator,
-            ResourceType documentType, String extension, String navigationTitle,
-            boolean visibleInNav) throws DocumentBuildException, PublicationException {
+    public Document add(Document sourceDocument, String area, String path, String language,
+            String extension, String navigationTitle, boolean visibleInNav)
+            throws DocumentBuildException, PublicationException {
 
-        String contentsURI = documentType.getSampleURI();
-        return add(factory, locator, documentType, extension, navigationTitle, visibleInNav,
-                contentsURI);
+        Document document = add(sourceDocument.getFactory(), sourceDocument.getResourceType(),
+                sourceDocument.getSourceURI(), sourceDocument.getPublication(), area, path,
+                language, extension, navigationTitle, visibleInNav);
+
+        copyMetaData(sourceDocument, document);
+        return document;
     }
 
-    /**
-     * @see org.apache.lenya.cms.publication.DocumentManager#add(org.apache.lenya.cms.publication.DocumentLocator,
-     *      org.apache.lenya.cms.publication.Document, String, java.lang.String, boolean)
-     */
-    public Document add(DocumentLocator locator, Document sourceDocument, String extension,
-            String navigationTitle, boolean visibleInNav) throws DocumentBuildException,
-            PublicationException {
-        String contentsURI = sourceDocument.getSourceURI();
-        Document document = add(sourceDocument.getFactory(), locator, sourceDocument
-                .getResourceType(), extension, navigationTitle, visibleInNav, contentsURI);
-
+    protected void copyMetaData(Document sourceDocument, Document document)
+            throws PublicationException {
         try {
             String[] uris = sourceDocument.getMetaDataNamespaceUris();
             for (int i = 0; i < uris.length; i++) {
@@ -85,40 +77,45 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         } catch (MetaDataException e) {
             throw new PublicationException(e);
         }
+    }
+
+    /**
+     * @see org.apache.lenya.cms.publication.DocumentManager#add(org.apache.lenya.cms.publication.DocumentFactory,
+     *      org.apache.lenya.cms.publication.ResourceType, java.lang.String,
+     *      org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String,
+     *      java.lang.String, java.lang.String, java.lang.String, boolean)
+     */
+    public Document add(DocumentFactory factory, ResourceType documentType,
+            String initialContentsURI, Publication pub, String area, String path, String language,
+            String extension, String navigationTitle, boolean visibleInNav)
+            throws DocumentBuildException, DocumentException, PublicationException {
+
+        Document document = add(factory, documentType, initialContentsURI, pub, area, language,
+                extension);
+
+        addToSiteManager(path, document, navigationTitle, visibleInNav);
         return document;
     }
 
     /**
-     * Adds a document.
-     * @param locator The locator.
-     * @param documentType The document type.
-     * @param extension The extension for the document source.
-     * @param navigationTitle The navigation title.
-     * @param visibleInNav determines the visibility of a node in the navigation
-     * @param initialContentsURI A URI to read the contents from.
-     * @throws DocumentBuildException if an error occurs.
-     * @throws DocumentException if an error occurs.
-     * @throws PublicationException if an error occurs.
+     * @see org.apache.lenya.cms.publication.DocumentManager#add(org.apache.lenya.cms.publication.DocumentFactory,
+     *      org.apache.lenya.cms.publication.ResourceType, java.lang.String,
+     *      org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String,
+     *      java.lang.String, java.lang.String)
      */
+    public Document add(DocumentFactory factory, ResourceType documentType,
+            String initialContentsURI, Publication pub, String area, String path, String language,
+            String extension) throws DocumentBuildException, DocumentException,
+            PublicationException {
 
-    protected Document add(DocumentFactory factory, DocumentLocator locator,
-            ResourceType documentType, String extension, String navigationTitle,
-            boolean visibleInNav, String initialContentsURI) throws DocumentBuildException,
-            DocumentException, PublicationException {
-
-        Publication pub = PublicationUtil.getPublication(this.manager, locator.getPublicationId());
-        String area = locator.getArea();
-        String language = locator.getLanguage();
         String uuid = generateUUID();
-
         Document document = add(factory, documentType, uuid, initialContentsURI, pub, area,
                 language, extension);
 
-        addToSiteManager(locator.getPath(), document, navigationTitle, visibleInNav);
         return document;
     }
 
-    private Document add(DocumentFactory factory, ResourceType documentType, String uuid,
+    protected Document add(DocumentFactory factory, ResourceType documentType, String uuid,
             String initialContentsURI, Publication pub, String area, String language,
             String extension) throws DocumentBuildException {
         try {
@@ -229,6 +226,11 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         copyDocument(sourceDocument, destination);
         Document destinationDocument = sourceDocument.getFactory().get(destination);
 
+        copyResources(sourceDocument, destinationDocument);
+    }
+
+    protected void copyResources(Document sourceDocument, Document destinationDocument)
+            throws PublicationException {
         ResourcesManager resourcesManager = null;
         try {
             resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
@@ -242,10 +244,18 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         }
     }
 
+    /**
+     * @see org.apache.lenya.cms.publication.DocumentManager#copyDocument(org.apache.lenya.cms.publication.Document,
+     *      org.apache.lenya.cms.publication.DocumentLocator)
+     */
     public void copyDocument(Document sourceDocument, DocumentLocator destination)
             throws DocumentBuildException, PublicationException, DocumentException, SiteException {
-        add(destination, sourceDocument, sourceDocument.getExtension(), sourceDocument.getLabel(),
-                SiteUtil.isVisibleInNavigation(this.manager, sourceDocument));
+
+        add(sourceDocument, destination.getArea(), destination.getPath(),
+                destination.getLanguage(), sourceDocument.getExtension(),
+                sourceDocument.getLabel(), SiteUtil.isVisibleInNavigation(this.manager,
+                        sourceDocument));
+
     }
 
     /**
@@ -337,10 +347,32 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      * @see org.apache.lenya.cms.publication.DocumentManager#copyToArea(org.apache.lenya.cms.publication.Document,
      *      java.lang.String)
      */
-    public void copyToArea(Document sourceDocument, String destinationArea)
-            throws PublicationException {
-        DocumentLocator destination = sourceDocument.getLocator().getAreaVersion(destinationArea);
-        copy(sourceDocument, destination);
+    public void copyToArea(Document sourceDoc, String destinationArea) throws PublicationException {
+        String language = sourceDoc.getLanguage();
+        copyToVersion(sourceDoc, destinationArea, language);
+    }
+
+    protected void copyToVersion(Document sourceDoc, String destinationArea, String language)
+            throws DocumentException, DocumentBuildException, PublicationException, SiteException {
+        Document destinationDoc;
+        if (sourceDoc.existsAreaVersion(destinationArea)) {
+            destinationDoc = sourceDoc.getAreaVersion(destinationArea);
+        } else {
+            destinationDoc = addVersion(sourceDoc, destinationArea, language);
+        }
+
+        if (SiteUtil.contains(this.manager, sourceDoc)) {
+            if (SiteUtil.contains(this.manager, destinationDoc)) {
+                boolean visible = SiteUtil.isVisibleInNavigation(this.manager, sourceDoc);
+                SiteUtil.setVisibleInNavigation(this.manager, destinationDoc, visible);
+            } else {
+                String path = SiteUtil.getPath(this.manager, sourceDoc);
+                boolean visible = SiteUtil.isVisibleInNavigation(this.manager, sourceDoc);
+                addToSiteManager(path, destinationDoc, sourceDoc.getLabel(), visible);
+            }
+        }
+
+        copyResources(sourceDoc, destinationDoc);
     }
 
     /**
@@ -758,28 +790,23 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         return new DocumentFactoryImpl(session, this.manager, getLogger());
     }
 
-    public Document add(DocumentFactory factory, ResourceType resourceType, Publication pub,
-            String area, String language, String extension) throws DocumentBuildException,
-            PublicationException {
-        String contentsUri = resourceType.getSampleURI();
-        String uuid = generateUUID();
-        return add(factory, resourceType, uuid, contentsUri, pub, area, language, extension);
-    }
-
     public Document addVersion(Document sourceDocument, String area, String language)
             throws DocumentBuildException, PublicationException {
         Document document = add(sourceDocument.getFactory(), sourceDocument.getResourceType(),
                 sourceDocument.getUUID(), sourceDocument.getSourceURI(), sourceDocument
                         .getPublication(), area, language, sourceDocument.getSourceExtension());
+        copyMetaData(sourceDocument, document);
 
-        try {
-            String[] uris = sourceDocument.getMetaDataNamespaceUris();
-            for (int i = 0; i < uris.length; i++) {
-                document.getMetaData(uris[i]).replaceBy(sourceDocument.getMetaData(uris[i]));
-            }
-        } catch (MetaDataException e) {
-            throw new PublicationException(e);
+        if (SiteUtil.contains(this.manager, sourceDocument)) {
+            String path = SiteUtil.getPath(this.manager, sourceDocument);
+            boolean visible = SiteUtil.isVisibleInNavigation(this.manager, sourceDocument);
+            addToSiteManager(path, document, sourceDocument.getLabel(), visible);
         }
+        
+        if (!area.equals(sourceDocument.getArea())) {
+            copyResources(sourceDocument, document);
+        }
+
         return document;
     }
 

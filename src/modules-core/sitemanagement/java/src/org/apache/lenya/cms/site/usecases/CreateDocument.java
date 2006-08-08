@@ -170,4 +170,8 @@ public class CreateDocument extends Create {
         return "xml";
     }
 
+    protected boolean createVersion() {
+        return false;
+    }
+
 }

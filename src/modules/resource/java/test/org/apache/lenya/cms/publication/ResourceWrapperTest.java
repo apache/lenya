@@ -84,7 +84,7 @@ public class ResourceWrapperTest extends AbstractAccessControlTest {
     /**
      * @param factory
      * @param pub
-     * @param documentId
+     * @param path
      * @return
      * @throws ServiceException
      * @throws DocumentBuildException
@@ -95,10 +95,10 @@ public class ResourceWrapperTest extends AbstractAccessControlTest {
      * @throws DocumentException
      * @throws MetaDataException
      */
-    public static Document createResource(DocumentFactory factory, Publication pub,
-            String documentId, ServiceManager manager, Logger logger) throws ServiceException,
-            DocumentBuildException, PublicationException, MalformedURLException, IOException,
-            RepositoryException, DocumentException, MetaDataException {
+    public static Document createResource(DocumentFactory factory, Publication pub, String path,
+            ServiceManager manager, Logger logger) throws ServiceException, DocumentBuildException,
+            PublicationException, MalformedURLException, IOException, RepositoryException,
+            DocumentException, MetaDataException {
 
         String extension = "png";
 
@@ -111,18 +111,17 @@ public class ResourceWrapperTest extends AbstractAccessControlTest {
         try {
             docManager = (DocumentManager) manager.lookup(DocumentManager.ROLE);
             DocumentLocator loc = DocumentLocator.getLocator(pub.getId(),
-                    Publication.AUTHORING_AREA,
-                    documentId,
-                    pub.getDefaultLanguage());
+                    Publication.AUTHORING_AREA, path, pub.getDefaultLanguage());
 
             SiteUtil.getSiteStructure(manager, factory, pub, Publication.AUTHORING_AREA)
-                    .getRepositoryNode()
-                    .lock();
+                    .getRepositoryNode().lock();
 
             selector = (ServiceSelector) manager.lookup(ResourceType.ROLE + "Selector");
             resourceType = (ResourceType) selector.select("resource");
 
-            doc = docManager.add(factory, loc, resourceType, extension, "Test Resource", true);
+            String sampleUri = resourceType.getSampleURI(resourceType.getSampleNames()[0]);
+            doc = docManager.add(factory, resourceType, sampleUri, pub, Publication.AUTHORING_AREA,
+                    path, pub.getDefaultLanguage(), extension, "Test Resource", true);
 
             ResourceWrapper resource = new ResourceWrapper(doc, manager, logger);
             resource.write(IMAGE_URL);

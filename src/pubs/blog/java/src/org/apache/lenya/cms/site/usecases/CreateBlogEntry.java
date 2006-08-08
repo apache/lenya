@@ -31,7 +31,6 @@ import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.repository.Node;
@@ -123,15 +122,16 @@ public class CreateBlogEntry extends DocumentUsecase {
             DocumentFactory map = getDocumentFactory();
 
             String documentId = getDocumentID();
-            DocumentLocator locator = DocumentLocator.getLocator(getSourceDocument().getPublication()
-                    .getId(),
-                    getSourceDocument().getArea(),
-                    documentId,
-                    language);
+            
+            String sampleUri = resourceType.getSampleURI(resourceType.getSampleNames()[0]);
 
             Document document = documentManager.add(map,
-                    locator,
                     resourceType,
+                    sampleUri,
+                    getSourceDocument().getPublication(),
+                    getSourceDocument().getArea(),
+                    documentId,
+                    language,
                     "xml",
                     getParameterAsString(DublinCore.ELEMENT_TITLE),
                     true);
