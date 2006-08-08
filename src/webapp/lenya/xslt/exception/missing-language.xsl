@@ -32,25 +32,25 @@
     <page:page>
       <page:title><i18n:text>Document not available for this language</i18n:text></page:title>
       <page:body>
-	<div class="lenya-box">
-	  <div class="lenya-box-title">      <i18n:translate>
-        <i18n:text i18n:key="error-missing-language" />
-        <i18n:param>'<xsl:value-of select="$language"/>'</i18n:param>
-      </i18n:translate>
-</div>
-	  <div class="lenya-box-body">
-	    <p>
-      <i18n:translate>
-        <i18n:text i18n:key="error-missing-language" />
-        <i18n:param>'<xsl:value-of select="$language"/>'</i18n:param>
-      </i18n:translate>
-	      <i18n:text>The following languages are available:</i18n:text>
-	    </p>
-	    <ul>
-	      <xsl:apply-templates select="missing-language/available-languages/available-language"/>
-	    </ul>
-	  </div>
-	</div>
+        <div class="lenya-box">
+          <div class="lenya-box-title">      <i18n:translate>
+              <i18n:text i18n:key="error-missing-language" />
+              <i18n:param>'<xsl:value-of select="$language"/>'</i18n:param>
+            </i18n:translate>
+          </div>
+          <div class="lenya-box-body">
+            <p>
+            <i18n:translate>
+              <i18n:text i18n:key="error-missing-language" />
+              <i18n:param>'<xsl:value-of select="$language"/>'</i18n:param>
+            </i18n:translate>
+              <i18n:text>The following languages are available:</i18n:text>
+            </p>
+            <ul>
+              <xsl:apply-templates select="missing-language/available-languages/available-language"/>
+            </ul>
+          </div>
+        </div>
       </page:body>
     </page:page>
   </xsl:template>
