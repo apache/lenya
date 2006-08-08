@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!--
   Copyright 1999-2004 The Apache Software Foundation
-
+  
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,7 +26,7 @@
   <xsl:import href="../util/page-util.xsl"/>
   
   <xsl:variable name="language"><xsl:value-of select="/missing-language/current-language"/></xsl:variable>
-
+  
   <xsl:template match="/">
     
     <page:page>
@@ -34,16 +34,16 @@
       <page:body>
         <div class="lenya-box">
           <div class="lenya-box-title">      <i18n:translate>
-              <i18n:text i18n:key="error-missing-language" />
-              <i18n:param>'<xsl:value-of select="$language"/>'</i18n:param>
-            </i18n:translate>
+            <i18n:text i18n:key="error-missing-language" />
+            <i18n:param>'<xsl:value-of select="$language"/>'</i18n:param>
+          </i18n:translate>
           </div>
           <div class="lenya-box-body">
             <p>
-            <i18n:translate>
-              <i18n:text i18n:key="error-missing-language" />
-              <i18n:param>'<xsl:value-of select="$language"/>'</i18n:param>
-            </i18n:translate>
+              <i18n:translate>
+                <i18n:text i18n:key="error-missing-language" />
+                <i18n:param>'<xsl:value-of select="$language"/>'</i18n:param>
+              </i18n:translate>
               <i18n:text>The following languages are available:</i18n:text>
             </p>
             <ul>
@@ -60,5 +60,5 @@
       <a><xsl:attribute name="href"><xsl:value-of select="url"/></xsl:attribute><xsl:value-of select="language"/></a>
     </li>
   </xsl:template>
-
+  
 </xsl:stylesheet>
