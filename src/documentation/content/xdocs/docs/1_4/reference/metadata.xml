@@ -95,6 +95,43 @@ finally {
     </section>
     
     <section>
+      <title>The LenyaMetaDataGenerator</title>
+      <p>
+        To get an XML summary of all meta data, you can use the <code>LenyaMetaDataGenerator</code>.
+        Here's an example how to call it in the sitemap:
+      </p>
+      
+      <source xml:space="preserve"><![CDATA[<map:match pattern="**.html.meta">
+  <map:generate type="lenyaMetaData">
+    <map:parameter name="pubid" value="{page-envelope:publication-id}"/>
+    <map:parameter name="area" value="{page-envelope:area}"/>
+    <map:parameter name="uuid" value="{page-envelope:document-uuid}"/>
+    <map:parameter name="lang" value="{page-envelope:document-language}"/>
+  </map:generate>
+  <map:serialize type="xml"/>
+</map:match>]]></source>
+      
+      <p>
+        Here's an example for the output of the generator:
+      </p>
+      
+      <source xml:space="preserve"><![CDATA[<lenya:metadata xmlns:lenya="http://apache.org/cocoon/lenya/metadata/1.0">
+  <elements xmlns="http://purl.org/dc/elements/1.1/">
+    <title>Search</title>
+    <date>2006-06-12 13:43:14</date>
+    <language>en</language>
+    <creator>lenya</creator>
+  </elements>
+  <elements xmlns="http://apache.org/lenya/metadata/document/1.0">
+    <extension>xml</extension>
+    <resourceType>usecase</resourceType>
+    <contentType>xml</contentType>
+  </elements>
+</lenya:metadata>]]></source>
+      
+    </section>
+    
+    <section>
       <title>Storage</title>
       <p>In 1.4.x meta data is stored separately from the document content but in the same 
         directory (index_{lang}.meta).
