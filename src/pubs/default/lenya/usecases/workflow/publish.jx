@@ -41,8 +41,7 @@
             <tr>
               <td class="lenya-entry-caption" valign="top"><i18n:text>Document</i18n:text>:</td>
               <td valign="top">
-                "<jx:out value="${title}"/>"<br/>
-                <jx:out value="${usecase.getParameter('document').getCanonicalDocumentURL()}"/>
+                "<jx:out value="${title}"/>"
               </td>
             </tr>
             <tr>
