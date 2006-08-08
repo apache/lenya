@@ -25,31 +25,31 @@
   
   <xsp:structure>
     <xsp:include>org.apache.lenya.cms.publication.Document</xsp:include>
-    <xsp:include>org.apache.lenya.cms.publication.DocumentException</xsp:include>
     <xsp:include>org.apache.lenya.cms.publication.util.DocumentLanguagesHelper</xsp:include>
     <xsp:include>org.apache.avalon.framework.service.WrapperServiceManager</xsp:include>
   </xsp:structure>
   
-  <missing-language>    
+  <missing-language>
     
-    <current-language><input:get-attribute module="page-envelope" as="string" name="document-language"/></current-language>
+    <xsp:logic>
+      DocumentLanguagesHelper helper = new DocumentLanguagesHelper(
+        objectModel, new WrapperServiceManager(this.manager));
+    </xsp:logic>
+    
+    <current-language><xsp:expr>helper.getLanguage()</xsp:expr></current-language>
     <available-languages>
       <xsp:logic>
-	Document doc = (Document) <input:get-attribute module="page-envelope" as="object" name="document"/>;
-	DocumentLanguagesHelper helper = new DocumentLanguagesHelper(doc.getFactory(), objectModel, new WrapperServiceManager(this.manager));
-	try {
-	  String[] availableLanguages = doc.getLanguages();
-	  String language = null;
-	  for (int i = 0; i &lt; availableLanguages.length; i++) {
-	    language = availableLanguages[i];
-	    <xsp:content>
-	      <available-language>
-	        <language><xsp:expr>language</xsp:expr></language>
-	        <url><xsp:expr>helper.getUrl(language)</xsp:expr></url>
-	      </available-language>
-	    </xsp:content>
-	  }
-	} catch (DocumentException e) {}
+        String[] availableLanguages = helper.getLanguages();
+        String language = null;
+        for (int i = 0; i &lt; availableLanguages.length; i++) {
+          language = availableLanguages[i];
+          <xsp:content>
+            <available-language>
+              <language><xsp:expr>language</xsp:expr></language>
+              <url><xsp:expr>helper.getUrl(language)</xsp:expr></url>
+            </available-language>
+          </xsp:content>
+        }
       </xsp:logic>
     </available-languages>
     

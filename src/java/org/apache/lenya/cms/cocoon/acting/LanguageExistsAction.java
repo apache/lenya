@@ -19,23 +19,28 @@
 
 package org.apache.lenya.cms.cocoon.acting;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.acting.ServiceableAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentDoesNotExistException;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -72,18 +77,46 @@ public class LanguageExistsAction extends ServiceableAction {
         DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
 
         String url = ServletHelper.getWebappURI(request);
-        Document doc = map.getFromURL(url);
-        String language = doc.getLanguage();
 
-        if (!doc.existsInAnyLanguage()) {
-            throw new DocumentDoesNotExistException("Document " + doc
-                    + " does not exist. Check sitetree, it might need to be reloaded.");
+        Publication pub = PublicationUtil.getPublication(this.manager, objectModel);
+        if (!pub.exists()) {
+            return null;
         }
-        List availableLanguages = Arrays.asList(doc.getLanguages());
 
-        if (availableLanguages.contains(language)) {
-            return Collections.unmodifiableMap(Collections.EMPTY_MAP);
+        DocumentBuilder builder = null;
+        ServiceSelector selector = null;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
+            builder = (DocumentBuilder) selector.select(pub.getDocumentBuilderHint());
+            DocumentLocator locator = builder.getLocator(url);
+
+            List availableLanguages = new ArrayList();
+
+            String[] languages = pub.getLanguages();
+            for (int i = 0; i < languages.length; i++) {
+                DocumentLocator version = locator.getLanguageVersion(languages[i]);
+                if (SiteUtil.contains(this.manager, map, version)) {
+                    availableLanguages.add(languages[i]);
+                }
+            }
+
+            if (availableLanguages.isEmpty()) {
+                throw new DocumentDoesNotExistException("Document [" + locator
+                        + "] does not exist. Check sitetree, it might need to be reloaded.");
+            }
+            if (availableLanguages.contains(locator.getLanguage())) {
+                return Collections.unmodifiableMap(Collections.EMPTY_MAP);
+            }
+
+        } finally {
+            if (selector != null) {
+                if (builder != null) {
+                    selector.release(builder);
+                }
+                this.manager.release(selector);
+            }
         }
+
         return null;
     }
 }

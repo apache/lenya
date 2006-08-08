@@ -19,45 +19,98 @@
 
 package org.apache.lenya.cms.publication.util;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.ProcessingException;
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.PageEnvelope;
-import org.apache.lenya.cms.publication.PageEnvelopeFactory;
+import org.apache.lenya.cms.publication.DocumentLocator;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.SiteUtil;
+import org.apache.lenya.util.ServletHelper;
 
 /**
  * Helper class for the policy GUI.
  */
 public class DocumentLanguagesHelper {
 
-    private PageEnvelope pageEnvelope = null;
-    private DocumentFactory identityMap;
+    private DocumentFactory factory;
+    private ServiceManager manager;
+    private Publication pub;
+    private String url;
+    private String contextPath;
 
     /**
      * Create a new DocumentlanguageHelper.
-     * @param map The identity map.
      * @param objectModel the objectModel
      * @param manager The service manager.
      * @throws ProcessingException if the page envelope could not be created.
      */
-    public DocumentLanguagesHelper(DocumentFactory map, Map objectModel, ServiceManager manager)
+    public DocumentLanguagesHelper(Map objectModel, ServiceManager manager)
             throws ProcessingException {
-        this.identityMap = map;
+
+        this.manager = manager;
+        Request request = ObjectModelHelper.getRequest(objectModel);
+        this.url = ServletHelper.getWebappURI(request);
+        this.contextPath = request.getContextPath();
+
         try {
-            Publication pub = PublicationUtil.getPublication(manager, objectModel);
-            this.pageEnvelope = PageEnvelopeFactory.getInstance().getPageEnvelope(manager,
-                    map,
-                    objectModel,
-                    pub);
+            Session session = RepositoryUtil.getSession(manager, request);
+            this.factory = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+
+            this.pub = PublicationUtil.getPublication(manager, objectModel);
         } catch (Exception e) {
             throw new ProcessingException(e);
         }
+    }
+
+    /**
+     * @return The requested language.
+     * @throws ProcessingException if an error occurs.
+     */
+    public String getLanguage() throws ProcessingException {
+        DocumentLocator locator;
+        try {
+            locator = SiteUtil.getLocator(this.manager, url);
+        } catch (SiteException e) {
+            throw new ProcessingException(e);
+        }
+        return locator.getLanguage();
+    }
+
+    /**
+     * All available languages for the current URL.
+     * @return A string array.
+     * @throws ProcessingException
+     */
+    public String[] getLanguages() throws ProcessingException {
+        List availableLanguages = new ArrayList();
+
+        try {
+            DocumentLocator locator = SiteUtil.getLocator(this.manager, url);
+
+            String[] languages = pub.getLanguages();
+            for (int i = 0; i < languages.length; i++) {
+                DocumentLocator version = locator.getLanguageVersion(languages[i]);
+                if (SiteUtil.contains(this.manager, factory, version)) {
+                    availableLanguages.add(languages[i]);
+                }
+            }
+
+        } catch (Exception e) {
+            throw new ProcessingException(e);
+        }
+        return (String[]) availableLanguages.toArray(new String[availableLanguages.size()]);
     }
 
     /**
@@ -68,7 +121,7 @@ public class DocumentLanguagesHelper {
      */
     public String getUrl(String language) throws ProcessingException {
         Document doc = getDocument(language);
-        return this.pageEnvelope.getContext() + doc.getCanonicalWebappURL();
+        return this.contextPath + doc.getCanonicalWebappURL();
     }
 
     /**
@@ -80,9 +133,10 @@ public class DocumentLanguagesHelper {
     protected Document getDocument(String language) throws ProcessingException {
         Document document;
         try {
-            document = this.identityMap.getLanguageVersion(this.pageEnvelope.getDocument(),
-                    language);
-        } catch (DocumentBuildException e) {
+            DocumentLocator locator = SiteUtil.getLocator(this.manager, url);
+            DocumentLocator version = locator.getLanguageVersion(language);
+            document = this.factory.get(version);
+        } catch (Exception e) {
             throw new ProcessingException(e);
         }
         return document;
