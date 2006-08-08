@@ -215,9 +215,11 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
         try {
             String[] namespaces = this.document.getMetaDataNamespaceUris();
             for (int i = 0; i < namespaces.length; i++) {
+                this.contentHandler.startPrefixMapping("", namespaces[i]);
                 startNodeMeta(namespaces[i]);
                 parseMetaData(namespaces[i]);
                 endNodeMeta(namespaces[i]);
+                this.contentHandler.endPrefixMapping("");
             }
         } catch (MetaDataException e) {
             throw new ProcessingException(e);
@@ -227,7 +229,6 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
 
     private void parseMetaData(String namespace) throws ProcessingException, SAXException {
         MetaData metaData = getMetaData(namespace);
-        
         String[] names = metaData.getAvailableKeys();
         for (int i = 0; i < names.length; i++) {
             String[] values;
