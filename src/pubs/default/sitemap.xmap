@@ -114,11 +114,20 @@
     content of the document. -->
     <map:pipeline>
       <!-- pattern="meta?docid={docid}&lang={lang}" -->
+      <map:match pattern="*/**.html.meta">
+        <map:generate type="lenyaMetaData">
+          <map:parameter name="pubid" value="{page-envelope:publication-id}"/>
+          <map:parameter name="area" value="{1}"/>
+          <map:parameter name="uuid" value="{page-envelope:document-uuid}"/>
+          <map:parameter name="lang" value="{page-envelope:document-language}"/>
+        </map:generate>
+        <map:serialize type="xml"/>
+      </map:match>
       <map:match pattern="**meta">
         <map:generate type="lenyaMetaData">
           <map:parameter name="pubid" value="{request-param:pubid}"/>
           <map:parameter name="area" value="{request-param:area}"/>
-          <map:parameter name="docid" value="{request-param:docid}"/>
+          <map:parameter name="uuid" value="{request-param:uuid}"/>
           <map:parameter name="lang" value="{request-param:lang}"/>
         </map:generate>
         <map:serialize type="xml"/>
