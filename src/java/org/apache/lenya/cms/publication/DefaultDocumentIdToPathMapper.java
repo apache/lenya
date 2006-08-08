@@ -36,15 +36,15 @@ public class DefaultDocumentIdToPathMapper implements DocumentIdToPathMapper,
      * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getFile(org.apache.lenya.cms.publication.Publication,
      *      java.lang.String, java.lang.String, java.lang.String)
      */
-    public File getFile(Publication publication, String area, String documentId, String language) {
-        File file = new File(getDirectory(publication, area, documentId), getFilename(language));
+    public File getFile(Publication publication, String area, String uuid, String language) {
+        File file = new File(getDirectory(publication, area), getPath(uuid, language));
         return file;
     }
 
-    protected File getDirectory(Publication publication, String area, String uuid) {
+    protected File getDirectory(Publication publication, String area) {
 
         File file = new File(publication.getDirectory(), Publication.CONTENT_PATH + File.separator
-                + area + File.separator + uuid);
+                + area);
 
         return file;
     }
