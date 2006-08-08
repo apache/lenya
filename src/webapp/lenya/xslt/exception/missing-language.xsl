@@ -44,6 +44,8 @@
                 <i18n:text i18n:key="error-missing-language" />
                 <i18n:param>'<xsl:value-of select="$language"/>'</i18n:param>
               </i18n:translate>
+            </p>
+            <p>
               <i18n:text>The following languages are available:</i18n:text>
             </p>
             <ul>
