@@ -16,21 +16,52 @@
  */
 package org.apache.lenya.cms.observation;
 
-import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.ResourceType;
 
 /**
  * Repository event.
  */
 public class RepositoryEvent {
-    
-    private Document document;
-    
-    public RepositoryEvent(Document document) {
-        this.document = document;
+
+    private String pubId;
+    private String area;
+    private String uuid;
+    private String documentUrl;
+    private String language;
+    private ResourceType resourceType;
+
+    public RepositoryEvent(String pubId, String area, String uuid, String language,
+            ResourceType resourceType, String documentUrl) {
+        this.pubId = pubId;
+        this.area = area;
+        this.uuid = uuid;
+        this.language = language;
+        this.documentUrl = documentUrl;
+        this.resourceType = resourceType;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public String getDocumentUrl() {
+        return documentUrl;
+    }
+
+    public String getPublicationId() {
+        return pubId;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public String getLanguage() {
+        return language;
     }
     
-    public Document getDocument() {
-        return this.document;
+    public ResourceType getResourceType() {
+        return this.resourceType;
     }
 
 }

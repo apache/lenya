@@ -37,27 +37,29 @@ public class IndexUpdater extends AbstractLogEnabled implements RepositoryListen
         Serviceable, ThreadSafe {
 
     public void documentChanged(RepositoryEvent event) {
-        updateIndex("index", event.getDocument());
+        updateIndex("index", event);
     }
 
     public void documentRemoved(RepositoryEvent event) {
-        updateIndex("delete", event.getDocument());
+        updateIndex("delete", event);
     }
 
-    protected void updateIndex(String operation, Document doc) {
+    protected void updateIndex(String operation, RepositoryEvent event) {
 
         String uri = null;
         try {
-            String[] formats = doc.getResourceType().getFormats();
+            String[] formats = event.getResourceType().getFormats();
             if (Arrays.asList(formats).contains("luceneIndex")) {
-                String docString = doc.getPublication().getId() + "/" + doc.getArea() + "/"
-                        + doc.getUUID() + "/" + doc.getLanguage();
-                uri = "cocoon://modules/lucene/" + operation + "-document/" + docString + ".xml";
+                String docString = event.getPublicationId() + "/" + event.getArea() + "/"
+                        + event.getUuid() + "/" + event.getLanguage() + event.getDocumentUrl();
+                uri = "cocoon://modules/lucene/" + operation + "-document/" + docString;
                 SourceUtil.readDOM(uri, this.manager);
             } else {
-                getLogger().info("Document [" + doc
-                        + "] is not being indexed because resource type ["
-                        + doc.getResourceType().getName() + "] does not support indexing!");
+                getLogger().info(
+                        "Document [" + event.getDocumentUrl()
+                                + "] is not being indexed because resource type ["
+                                + event.getResourceType().getName()
+                                + "] does not support indexing!");
             }
         } catch (Exception e) {
             getLogger().error("Invoking indexing failed for URL [" + uri + "]: ", e);

@@ -29,6 +29,7 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
@@ -76,7 +77,7 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
     }
 
     public void documentChanged(Document doc) {
-        RepositoryEvent event = new RepositoryEvent(doc);
+        RepositoryEvent event = createEvent(doc);
         Set allListeners = getAllListeners(doc);
         Notifier notifier = new Notifier(allListeners, event) {
             public void notify(RepositoryListener listener, RepositoryEvent event) {
@@ -86,8 +87,18 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
         new Thread(notifier).run();
     }
 
+    protected RepositoryEvent createEvent(Document doc) {
+        try {
+            return new RepositoryEvent(doc.getPublication().getId(), doc.getArea(),
+                    doc.getUUID(), doc.getLanguage(), doc.getResourceType(), doc
+                            .getCanonicalDocumentURL());
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public void documentRemoved(Document doc) {
-        RepositoryEvent event = new RepositoryEvent(doc);
+        RepositoryEvent event = createEvent(doc);
         Set allListeners = getAllListeners(doc);
         Notifier notifier = new Notifier(allListeners, event) {
             public void notify(RepositoryListener listener, RepositoryEvent event) {
@@ -122,7 +133,7 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
                 notify(listener, event);
             }
         }
-        
+
         public abstract void notify(RepositoryListener listener, RepositoryEvent event);
     }
 
@@ -141,11 +152,11 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
     }
 
     protected Document getDocument(Node node, Identity identity) {
-        
+
         if (node.getSourceURI().endsWith(".xml")) {
             return null;
         }
-        
+
         Document doc = null;
 
         final String sourceUri = node.getSourceURI();
@@ -166,19 +177,18 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
 
             Session session = RepositoryUtil.createSession(manager, identity);
             DocumentFactory factory = DocumentUtil.createDocumentIdentityMap(this.manager, session);
-            
+
             String docPath = path.substring((pubId + "/content/" + area).length());
-            
+
             String uuid;
             if (docPath.charAt(docPath.length() - 3) == '_') {
                 uuid = docPath.substring(0, docPath.length() - "/index_en".length());
-            }
-            else {
+            } else {
                 uuid = docPath.substring(1, docPath.length() - "/en".length());
             }
-            
+
             String language = docPath.substring(docPath.length() - "en".length());
-            
+
             doc = factory.get(pub, area, uuid, language);
 
             if (doc == null) {
