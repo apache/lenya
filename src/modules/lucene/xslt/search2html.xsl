@@ -71,10 +71,6 @@
       </xsl:call-template>
     </p>
     
-    <p>
-        <a href="{$root}{$url}">Return to document</a>	
-    </p>
-    
   </xsl:template>
 
   <xsl:template match="search:navigation">
