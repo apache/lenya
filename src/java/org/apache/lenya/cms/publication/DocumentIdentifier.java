@@ -16,6 +16,8 @@
  */
 package org.apache.lenya.cms.publication;
 
+import java.util.Arrays;
+
 /**
  * Value object to identify documents.
  */
@@ -35,8 +37,17 @@ public class DocumentIdentifier {
      */
     public DocumentIdentifier(Publication publication, String area, String uuid, String language) {
 
+        if (!Arrays.asList(publication.getLanguages()).contains(language)) {
+            throw new IllegalArgumentException("The language [" + language
+                    + "] is not supported by publication [" + publication.getId() + "]!");
+        }
+
         if (uuid.startsWith("/") && uuid.split("-").length == 4) {
-            throw new IllegalStateException("The UUID [" + uuid + "] must not begin with a '/'!");
+            throw new IllegalArgumentException("The UUID [" + uuid + "] must not begin with a '/'!");
+        }
+        if (uuid.indexOf("/") > 0) {
+            throw new IllegalArgumentException("The UUID [" + uuid
+                    + "] must not contain a '/' after the first position!");
         }
 
         this.publication = publication;
