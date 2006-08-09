@@ -38,6 +38,14 @@
           <code>./build.sh module.test -Dmodule=org.myproject.lenya.modules.MyModule</code>
           <br/><br/>
         </li>
+        <li>
+          <p>To run a test in the Eclipse debugger:</p>
+          <ul>
+            <li>You have to run the tests once on the command line to generate the
+              <code>LenyaTestCase.xtest</code> configuration file.</li>
+            <li>To debug a single test, right-click on the test class in the package explorer and select <em>Debug as -> JUnit test</em>.</li>
+          </ul>
+        </li>
       </ul>
     </section>
     
