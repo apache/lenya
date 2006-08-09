@@ -51,13 +51,11 @@ public class TransactionTest extends ContainerTestCase {
 
     protected void checkDoubleLock(MockTransactionable t) throws TransactionException {
         t.lock();
-        Exception e = null;
         try {
             t.lock();
-        } catch (LockException e1) {
-            e = e1;
+            assertTrue("No exception thrown!", false);
+        } catch (LockException ignore) {
         }
-        assertNotNull(e);
         t.unlock();
     }
 
@@ -65,13 +63,11 @@ public class TransactionTest extends ContainerTestCase {
             MockTransactionable aliceT1) throws TransactionException {
         lenyaT1.lock();
         aliceT1.write();
-        Exception e = null;
         try {
             lenyaUnit.commit();
-        } catch (LockException e1) {
-            e = e1;
+            assertTrue("No exception thrown!", false);
+        } catch (LockException ignore) {
         }
-        assertNotNull(e);
         lenyaT1.unlock();
     }
 
