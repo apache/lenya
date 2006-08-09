@@ -94,15 +94,15 @@ public class MigrateUuidsTest extends AbstractAccessControlTest {
             }
 
             Document newDoc;
-
+            
             String docId = doc.getUUID();
             if (this.migratedDocs.containsKey(docId)) {
                 Document migratedDoc = (Document) this.migratedDocs.get(docId);
-                newDoc = docManager.addVersion(migratedDoc, doc.getArea(), doc.getLanguage());
+                newDoc = docManager.addVersion(migratedDoc, doc.getArea(), doc.getLanguage(), false);
             } else {
                 newDoc = docManager.add(doc.getFactory(), doc.getResourceType(),
                         doc.getSourceURI(), doc.getPublication(), doc.getArea(), doc.getLanguage(),
-                        doc.getExtension(), doc.getLabel());
+                        doc.getExtension());
 
                 String[] uris = doc.getMetaDataNamespaceUris();
                 for (int i = 0; i < uris.length; i++) {

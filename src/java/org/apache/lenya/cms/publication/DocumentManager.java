@@ -140,7 +140,7 @@ public interface DocumentManager {
      * @throws PublicationException if the document is already contained.
      */
     Document add(DocumentFactory factory, ResourceType resourceType, String contentSourceUri,
-            Publication pub, String area, String path, String language, String extension)
+            Publication pub, String area, String language, String extension)
             throws DocumentBuildException, PublicationException;
 
     /**
@@ -155,6 +155,21 @@ public interface DocumentManager {
      * @throws PublicationException if the document is already contained.
      */
     Document addVersion(Document sourceDocument, String area, String language)
+            throws DocumentBuildException, PublicationException;
+
+    /**
+     * Adds a new version of a document with a different language and / or in a different area.
+     * 
+     * @param sourceDocument The document to initialize the contents and meta data from.
+     * @param area The area.
+     * @param language The language of the new document.
+     * @param addToSite If the new version should be added to the site structure.
+     * @return The added document.
+     * 
+     * @throws DocumentBuildException if the document can not be created
+     * @throws PublicationException if the document is already contained.
+     */
+    Document addVersion(Document sourceDocument, String area, String language, boolean addToSite)
             throws DocumentBuildException, PublicationException;
 
     /**

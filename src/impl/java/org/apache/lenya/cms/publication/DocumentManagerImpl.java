@@ -59,9 +59,16 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             String extension, String navigationTitle, boolean visibleInNav)
             throws DocumentBuildException, PublicationException {
 
-        Document document = add(sourceDocument.getFactory(), sourceDocument.getResourceType(),
-                sourceDocument.getSourceURI(), sourceDocument.getPublication(), area, path,
-                language, extension, navigationTitle, visibleInNav);
+        Document document = add(sourceDocument.getFactory(),
+                sourceDocument.getResourceType(),
+                sourceDocument.getSourceURI(),
+                sourceDocument.getPublication(),
+                area,
+                path,
+                language,
+                extension,
+                navigationTitle,
+                visibleInNav);
 
         copyMetaData(sourceDocument, document);
         return document;
@@ -90,29 +97,25 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             String extension, String navigationTitle, boolean visibleInNav)
             throws DocumentBuildException, DocumentException, PublicationException {
 
-        Document document = add(factory, documentType, initialContentsURI, pub, area, language,
+        Document document = add(factory,
+                documentType,
+                initialContentsURI,
+                pub,
+                area,
+                language,
                 extension);
 
         addToSiteManager(path, document, navigationTitle, visibleInNav);
         return document;
     }
 
-    /**
-     * @see org.apache.lenya.cms.publication.DocumentManager#add(org.apache.lenya.cms.publication.DocumentFactory,
-     *      org.apache.lenya.cms.publication.ResourceType, java.lang.String,
-     *      org.apache.lenya.cms.publication.Publication, java.lang.String, java.lang.String,
-     *      java.lang.String, java.lang.String)
-     */
     public Document add(DocumentFactory factory, ResourceType documentType,
-            String initialContentsURI, Publication pub, String area, String path, String language,
+            String initialContentsURI, Publication pub, String area, String language,
             String extension) throws DocumentBuildException, DocumentException,
             PublicationException {
 
         String uuid = generateUUID();
-        Document document = add(factory, documentType, uuid, initialContentsURI, pub, area,
-                language, extension);
-
-        return document;
+        return add(factory, documentType, uuid, initialContentsURI, pub, area, language, extension);
     }
 
     protected Document add(DocumentFactory factory, ResourceType documentType, String uuid,
@@ -171,9 +174,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
         // Read initial contents as DOM
         if (getLogger().isDebugEnabled())
-            getLogger().debug(
-                    "DefaultCreator::create(), ready to read initial contents from URI ["
-                            + initialContentsURI + "]");
+            getLogger().debug("DefaultCreator::create(), ready to read initial contents from URI ["
+                    + initialContentsURI + "]");
 
         SourceResolver resolver = null;
         try {
@@ -251,10 +253,13 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     public void copyDocument(Document sourceDocument, DocumentLocator destination)
             throws DocumentBuildException, PublicationException, DocumentException, SiteException {
 
-        add(sourceDocument, destination.getArea(), destination.getPath(),
-                destination.getLanguage(), sourceDocument.getExtension(),
-                sourceDocument.getLabel(), SiteUtil.isVisibleInNavigation(this.manager,
-                        sourceDocument));
+        add(sourceDocument,
+                destination.getArea(),
+                destination.getPath(),
+                destination.getLanguage(),
+                sourceDocument.getExtension(),
+                sourceDocument.getLabel(),
+                SiteUtil.isVisibleInNavigation(this.manager, sourceDocument));
 
     }
 
@@ -317,8 +322,10 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         try {
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
-            if (siteManager.contains(sourceDocument.getFactory(), sourceDocument.getPublication(),
-                    destination.getArea(), destination.getPath())) {
+            if (siteManager.contains(sourceDocument.getFactory(),
+                    sourceDocument.getPublication(),
+                    destination.getArea(),
+                    destination.getPath())) {
                 throw new PublicationException("The path [" + destination
                         + "] is already contained in this publication!");
             }
@@ -514,8 +521,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         RepositoryManager repoManager = null;
         try {
             repoManager = (RepositoryManager) this.manager.lookup(RepositoryManager.ROLE);
-            repoManager.copy(sourceDocument.getRepositoryNode(), destinationDocument
-                    .getRepositoryNode());
+            repoManager.copy(sourceDocument.getRepositoryNode(),
+                    destinationDocument.getRepositoryNode());
         } catch (Exception e) {
             throw new PublicationException(e);
         } finally {
@@ -767,8 +774,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         Document[] targetDocs = destinations.getDocuments();
 
         if (sourceDocs.length != targetDocs.length) {
-            throw new PublicationException(
-                    "The number of source and destination documents must be equal!");
+            throw new PublicationException("The number of source and destination documents must be equal!");
         }
 
         Map source2target = new HashMap();
@@ -781,8 +787,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         Document[] sortedSourceDocs = sortedSources.getDocuments();
 
         for (int i = 0; i < sortedSourceDocs.length; i++) {
-            copy(sortedSourceDocs[i], ((Document) source2target.get(sortedSourceDocs[i]))
-                    .getLocator());
+            copy(sortedSourceDocs[i],
+                    ((Document) source2target.get(sortedSourceDocs[i])).getLocator());
         }
     }
 
@@ -790,31 +796,35 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         return new DocumentFactoryImpl(session, this.manager, getLogger());
     }
 
-    public Document addVersion(Document sourceDocument, String area, String language)
-            throws DocumentBuildException, PublicationException {
-        Document document = add(sourceDocument.getFactory(), sourceDocument.getResourceType(),
-                sourceDocument.getUUID(), sourceDocument.getSourceURI(), sourceDocument
-                        .getPublication(), area, language, sourceDocument.getSourceExtension());
-        copyMetaData(sourceDocument, document);
+    public Document addVersion(Document sourceDocument, String area, String language,
+            boolean addToSiteStructure) throws DocumentBuildException, PublicationException {
+        Document document = addVersion(sourceDocument, area, language);
 
-        if (SiteUtil.contains(this.manager, sourceDocument)) {
+        if (addToSiteStructure && SiteUtil.contains(this.manager, sourceDocument)) {
             String path = SiteUtil.getPath(this.manager, sourceDocument);
             boolean visible = SiteUtil.isVisibleInNavigation(this.manager, sourceDocument);
             addToSiteManager(path, document, sourceDocument.getLabel(), visible);
-        }
-        
-        if (!area.equals(sourceDocument.getArea())) {
-            copyResources(sourceDocument, document);
         }
 
         return document;
     }
 
-    public Document add(DocumentFactory factory, ResourceType resourceType,
-            String contentSourceUri, Publication pub, String area, String language, String extension)
-            throws DocumentBuildException, PublicationException {
-        String uuid = generateUUID();
-        return add(factory, resourceType, uuid, contentSourceUri, pub, area, language, extension);
+    public Document addVersion(Document sourceDocument, String area, String language)
+            throws DocumentBuildException, DocumentException, PublicationException {
+        Document document = add(sourceDocument.getFactory(),
+                sourceDocument.getResourceType(),
+                sourceDocument.getUUID(),
+                sourceDocument.getSourceURI(),
+                sourceDocument.getPublication(),
+                area,
+                language,
+                sourceDocument.getSourceExtension());
+        copyMetaData(sourceDocument, document);
+
+        if (!area.equals(sourceDocument.getArea())) {
+            copyResources(sourceDocument, document);
+        }
+        return document;
     }
 
     public boolean exists(DocumentFactory factory, Publication pub, String area, String uuid,
