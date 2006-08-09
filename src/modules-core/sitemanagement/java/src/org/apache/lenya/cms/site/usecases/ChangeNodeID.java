@@ -144,13 +144,12 @@ public class ChangeNodeID extends DocumentUsecase {
         }
     }
 
-    protected DocumentLocator getTargetLocator() throws DocumentBuildException, SiteException {
+    protected DocumentLocator getTargetLocator() throws DocumentBuildException, SiteException, DocumentException {
         String nodeId = getParameterAsString(NODE_ID);
         Document doc = getSourceDocument();
-        String path = SiteUtil.getPath(this.manager, doc);
         DocumentLocator loc = DocumentLocator.getLocator(doc.getPublication().getId(),
                 doc.getArea(),
-                path,
+                doc.getPath(),
                 doc.getLanguage());
         DocumentLocator parent = loc.getParent();
         return parent.getChild(nodeId);
@@ -217,8 +216,8 @@ public class ChangeNodeID extends DocumentUsecase {
 
         String oldPath;
         try {
-            oldPath = SiteUtil.getPath(this.manager, getSourceDocument());
-        } catch (SiteException e) {
+            oldPath = getSourceDocument().getPath();
+        } catch (DocumentException e) {
             throw new RuntimeException(e);
         }
         int lastSlashIndex = oldPath.lastIndexOf("/");

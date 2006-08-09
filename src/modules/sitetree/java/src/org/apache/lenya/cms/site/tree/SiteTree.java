@@ -17,7 +17,6 @@
 
 package org.apache.lenya.cms.site.tree;
 
-import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteStructure;
 
@@ -44,7 +43,7 @@ public interface SiteTree extends SiteStructure {
      * 
      * @throws SiteException if the addition failed
      */
-    void addNode(String parentid, String id, String uuid, Label[] labels, boolean visibleInNav) throws SiteException;
+    void addNode(String parentid, String id, String uuid, boolean visibleInNav) throws SiteException;
 
     /**
      * Add a node. TODO: Lenya 1.2.X supports argument visibleInNav
@@ -52,15 +51,15 @@ public interface SiteTree extends SiteStructure {
      * @param parentid the node where the new node is to be inserted
      * @param id the node id
      * @param uuid The UUID.
-     * @param labels the labels
      * @param visibleInNav determines the visibility of a node in the navigation. It is meant to hide specific nodes within the "public" navigation whereas the node is visible within the info/site area.
      * @param href the href of the new node (internal and external references)     
      * @param suffix the suffix of the new node
      * @param link Visibility of link respectively href. It is meant to support "grouping" nodes in the navigation which do not relate to a document (internal) or external link (www).
+     * @return A node.
      * 
      * @throws SiteException if the addition failed
      */
-    void addNode(String parentid, String id, String uuid, Label[] labels, boolean visibleInNav, String href, String suffix,
+    SiteTreeNode addNode(String parentid, String id, String uuid, boolean visibleInNav, String href, String suffix,
             boolean link) throws SiteException;
 
     /**
@@ -69,16 +68,16 @@ public interface SiteTree extends SiteStructure {
      * @param parentid the node where the new node is to be inserted
      * @param id the node id
      * @param uuid The UUID.
-     * @param labels the labels
      * @param visibleInNav determines the visibility of a node in the navigation
      * @param href the href of the new node
      * @param suffix the suffix of the new node
      * @param link the link
      * @param refDocumentId document-id of the node, before which the new node will be inserted.
+     * @return A node.
      * 
      * @throws SiteException if the addition failed
      */
-    void addNode(String parentid, String id, String uuid, Label[] labels, boolean visibleInNav, String href, String suffix,
+    SiteTreeNode addNode(String parentid, String id, String uuid, boolean visibleInNav, String href, String suffix,
             boolean link, String refDocumentId) throws SiteException;
 
     /**
@@ -87,15 +86,15 @@ public interface SiteTree extends SiteStructure {
      * @param documentid the document-id of the new node. From this the parent-id and the id are
      *            computed
      * @param uuid The UUID.
-     * @param labels the labels
      * @param visibleInNav determines the visibility of a node in the navigation
      * @param href the href
      * @param suffix the suffix
      * @param link the link
+     * @return A node.
      * 
      * @throws SiteException if the addition failed
      */
-    void addNode(String documentid, String uuid, Label[] labels, boolean visibleInNav, String href, String suffix, boolean link)
+    SiteTreeNode addNode(String documentid, String uuid, boolean visibleInNav, String href, String suffix, boolean link)
             throws SiteException;
 
     /**
@@ -105,16 +104,16 @@ public interface SiteTree extends SiteStructure {
      * @param documentid the document-id of the new node. From this the parent-id and the id are
      *            computed
      * @param uuid The UUID.
-     * @param labels the labels
      * @param visibleInNav determines the visibility of a node in the navigation
      * @param href the href
      * @param suffix the suffix
      * @param link the link
      * @param refDocumentId document-id of the node, before which the new node will be inserted.
+     * @return A node.
      * 
      * @throws SiteException if the addition failed
      */
-    void addNode(String documentid, String uuid, Label[] labels, boolean visibleInNav, String href, String suffix, boolean link,
+    SiteTreeNode addNode(String documentid, String uuid, boolean visibleInNav, String href, String suffix, boolean link,
             String refDocumentId) throws SiteException;
 
     /**
@@ -145,19 +144,21 @@ public interface SiteTree extends SiteStructure {
     /**
      * Add a label to an existing node
      * 
-     * @param documentId the document-id to which the label is to be added.
+     * @param path the path to which the label is to be added.
+     * @param language The language.
      * @param label the label to add
      */
-    void addLabel(String documentId, Label label);
+    void addLabel(String path, String language, String label);
 
     /**
      * Sets a label of an existing node. If the label does not exist, it is added. Otherwise, the
      * existing label is replaced.
      * 
-     * @param documentId the document-id to which the label is to be added.
+     * @param path the path to which the label is to be added.
+     * @param language The language.
      * @param label the label to add
      */
-    void setLabel(String documentId, Label label);
+    void setLabel(String path, String language, String label);
 
     /**
      * Sets the visibility in the navigation of an existing node. 
@@ -180,10 +181,10 @@ public interface SiteTree extends SiteStructure {
     /**
      * Remove a label from a node
      * 
-     * @param documentId the document-id from which the label is to be removed.
-     * @param label the label to remove
+     * @param path the path from which the label is to be removed.
+     * @param language The language.
      */
-    void removeLabel(String documentId, Label label);
+    void removeLabel(String path, String language);
 
     /**
      * Removes the node corresponding to the given document-id from the tree, and returns it.
@@ -193,16 +194,6 @@ public interface SiteTree extends SiteStructure {
      * @return the removed node
      */
     SiteTreeNode removeNode(String documentId);
-
-    /**
-     * Return the Node for a given document-id.
-     * 
-     * @param documentId the document-id of the node that is requested
-     * 
-     * @return a <code>SiteTreeNode</code> if there is a node for the given document-id, null
-     *         otherwise.
-     */
-    SiteTreeNode getNode(String documentId);
 
     /**
      * Return the top level nodes in the sitetree.
@@ -244,11 +235,4 @@ public interface SiteTree extends SiteStructure {
      */
     void save() throws SiteException;
     
-    /**
-     * @param uuid The UUID.
-     * @return A node.
-     * @throws SiteException 
-     */
-    SiteTreeNode getNodeByUUID(String uuid) throws SiteException;
-
 }

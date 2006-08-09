@@ -154,15 +154,16 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
                     cIncludePrefix = "ci:";
                 }
 
-                String path = this.document.getPath();
+                String path = this.document.getLink().getNode().getPath();
                 String language = this.document.getLanguage();
                 String defaultLanguage = this.publication.getDefaultLanguage();
-                SiteTreeNode[] children = this.siteTree.getNode(path).getChildren();
+                SiteTreeNode node = (SiteTreeNode) this.siteTree.getNode(path);
+                SiteTreeNode[] children = node.getChildren();
 
                 super.startElement(uri, localName, raw, attr);
 
                 for (int i = 0; i < children.length; i++) {
-                    String childId = path + "/" + children[i].getId();
+                    String childId = path + "/" + children[i].getName();
 
                     // get child document with the same language than the parent
                     // document
@@ -247,7 +248,7 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
             } else {
                 super.startElement(uri, localName, raw, attr);
             }
-        } catch (final DocumentException e) {
+        } catch (final Exception e) {
             throw new RuntimeException(e);
         }
 

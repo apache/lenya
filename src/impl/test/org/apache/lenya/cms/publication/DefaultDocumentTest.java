@@ -52,7 +52,7 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
 
         Publication publication = PublicationUtil.getPublication(getManager(), "test");
         assertEquals(document.getPublication(), publication);
-        assertEquals(SiteUtil.getPath(getManager(), document), testSet.getPath());
+        assertEquals(document.getPath(), testSet.getPath());
         assertEquals(document.getArea(), testSet.getArea());
         assertEquals(document.getLanguage(), testSet.getLanguage());
         assertEquals(document.getCanonicalDocumentURL(), testSet.getUrl());

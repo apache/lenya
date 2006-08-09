@@ -48,7 +48,7 @@ public class XLinkCollectionTest extends AbstractAccessControlTest {
         Publication pub = PublicationUtil.getPublication(getManager(), "test");
         DocumentIdentifier identifier = new DocumentIdentifier(pub,
                 Publication.AUTHORING_AREA,
-                "/collection",
+                "12345",
                 "en");
         XlinkCollection collection = new XlinkCollection(getManager(), map, identifier, getLogger());
 

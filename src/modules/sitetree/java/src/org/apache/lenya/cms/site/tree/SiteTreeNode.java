@@ -23,19 +23,14 @@ import java.util.List;
 
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.site.Label;
+import org.apache.lenya.cms.site.SiteNode;
 
 /**
  * This interface is a wrapper around the more general w3c.Node which
  * hides some details which are irrelevant for site tree nodes. It basically
  * delegates everything to the Node.
  */
-public interface SiteTreeNode {
-
-    /**
-     * Returns the parent node of this node.
-     * @return A sitetree node.
-     */
-    SiteTreeNode getParent();
+public interface SiteTreeNode extends SiteNode {
 
     /**
      * Returns the parent node of this node or null if the parent has no label for the given language.
@@ -45,30 +40,10 @@ public interface SiteTreeNode {
     SiteTreeNode getParent(String language);
 
     /**
-     * Get the absolute id of this node.
-     * 
-     * @return  the absolute id.
-     */
-    String getAbsoluteId();
-
-    /**
-     * Get the id of this node.
-     * 
-     * @return the node id.
-     */
-    String getId();
-
-    /**
-     * Get the uuid of this node.
-     * 
-     * @return the uuid.
-     */
-    String getUUID();
-
-    /**
      * Get all labels for this node (independent of their language attribute).
      * 
      * @return an <code>Array</code> of labels.
+     * @deprecated use {@link SiteNode#getLanguages()} instead.
      */
     Label[] getLabels();
 
@@ -79,6 +54,7 @@ public interface SiteTreeNode {
      * 
      * @return a <code>Label</code> if there is one for the given language, 
      * null otherwise. 
+     * @deprecated use {@link #getLink()} instead.
      */
     Label getLabel(String xmlLanguage);
 
@@ -92,9 +68,9 @@ public interface SiteTreeNode {
     /**
      * Remove a label from this node.
      * 
-     * @param label the label to be removed.
+     * @param language the label to be removed.
      */
-    void removeLabel(Label label);
+    void removeLabel(String language);
 
     /**
      * Check whether this node is visible in the navigation 

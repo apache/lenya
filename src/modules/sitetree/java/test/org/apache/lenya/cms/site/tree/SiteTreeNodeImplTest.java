@@ -20,7 +20,7 @@
 package org.apache.lenya.cms.site.tree;
 
 import org.apache.avalon.framework.container.ContainerUtil;
-import org.apache.lenya.cms.LenyaTestCase;
+import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.site.Label;
@@ -32,7 +32,7 @@ import junit.framework.TestCase;
 /**
  * Tests the site tree
  */
-public class SiteTreeNodeImplTest extends LenyaTestCase {
+public class SiteTreeNodeImplTest extends AbstractAccessControlTest {
 
     private SiteTreeNode node = null;
     private DefaultSiteTree siteTree = null;
@@ -43,26 +43,25 @@ public class SiteTreeNodeImplTest extends LenyaTestCase {
     public void setUp() throws Exception {
         super.setUp();
         Publication pub = PublicationUtil.getPublication(getManager(), "test");
-        this.siteTree = new DefaultSiteTree(pub, "testArea", getManager(), getLogger());
+        this.siteTree = new DefaultSiteTree(getIdentityMap(), pub, "testArea", getManager(), getLogger());
         ContainerUtil.enableLogging(siteTree, getLogger());
         
         siteTree.getRepositoryNode().lock();
         
-        Label label = new Label("Foo", "en");
-        Label[] fooLabels = { label };
-        siteTree.addNode("/foo", "foo-uuid", fooLabels, true, null, null, false);
-        label = new Label("Bar", "en");
-        Label label_de = new Label("Stab", "de");
-        Label[] barLabels = { label, label_de };
-        siteTree.addNode("/foo/bar", "foo-bar-uuid", barLabels, true, "http://exact.biz", "suffix", true);
+        siteTree.addNode("/foo", "foo-uuid", true, null, null, false);
+        siteTree.addLabel("/foo", "en", "Foo");
+        
+        siteTree.addNode("/foo/bar", "foo-bar-uuid", true, "http://exact.biz", "suffix", true);
+        siteTree.addLabel("/foo/bar", "en", "Bar");
+        siteTree.addLabel("/foo/bar", "de", "Stab");
 
-        this.node = siteTree.getNode("/foo/bar");
+        this.node = (SiteTreeNode) siteTree.getNode("/foo/bar");
     }
 
     /**
      * @see TestCase#tearDown()
      */
-    protected void tearDown() throws Exception {
+    public void tearDown() throws Exception {
         super.tearDown();
         this.siteTree.getRepositoryNode().unlock();
     }
@@ -72,7 +71,7 @@ public class SiteTreeNodeImplTest extends LenyaTestCase {
      * 
      */
     final public void testGetAbsoluteId() {
-        assertEquals(this.node.getAbsoluteId(), "/foo/bar");
+        assertEquals(this.node.getPath(), "/foo/bar");
     }
 
     /**
@@ -80,7 +79,7 @@ public class SiteTreeNodeImplTest extends LenyaTestCase {
      * 
      */
     final public void testGetId() {
-        assertEquals(this.node.getId(), "bar");
+        assertEquals(this.node.getName(), "bar");
     }
 
     /**
@@ -91,8 +90,8 @@ public class SiteTreeNodeImplTest extends LenyaTestCase {
         assertEquals(this.node.getLabels().length, 2);
         for (int i = 0; i < this.node.getLabels().length; i++) {
             Label label = this.node.getLabels()[i];
-            Label label1 = new Label("Bar", "en");
-            Label label2 = new Label("Stab", "de");
+            Label label1 = new Label(getIdentityMap(), node, "Bar", "en");
+            Label label2 = new Label(getIdentityMap(), node, "Stab", "de");
             assertTrue(label.equals(label1) || label.equals(label2));
         }
     }
@@ -112,7 +111,7 @@ public class SiteTreeNodeImplTest extends LenyaTestCase {
      * 
      */
     final public void testAddLabel() {
-        Label label = new Label("Barolo", "it");
+        Label label = new Label(getIdentityMap(), this.node, "Barolo", "it");
         this.node.addLabel(label);
         label = this.node.getLabel("it");
         assertNotNull(label);
@@ -126,9 +125,8 @@ public class SiteTreeNodeImplTest extends LenyaTestCase {
      * 
      */
     final public void testRemoveLabel() {
-        Label label = new Label("Bar", "en");
         assertNotNull(this.node.getLabel("en"));
-        this.node.removeLabel(label);
+        this.node.removeLabel("en");
         assertNull(this.node.getLabel("en"));
     }
 

@@ -60,8 +60,7 @@ public class Nudge extends DocumentUsecase {
                     .getFactory(), publication, getSourceDocument().getArea());
             if (structure instanceof SiteTree) {
 
-                SiteTree tree = (SiteTree) structure;
-                SiteTreeNode node = tree.getNode(SiteUtil.getPath(this.manager, getSourceDocument()));
+                SiteTreeNode node = (SiteTreeNode) getSourceDocument().getLink().getNode();
                 SiteTreeNode[] siblings = null;
 
                 String direction = getParameterAsString(DIRECTION);

@@ -27,6 +27,8 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.CollectionImpl;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Element;
@@ -39,7 +41,7 @@ import org.w3c.dom.Element;
 public class DocumentStore extends CollectionImpl implements SiteStructure {
 
     protected static final String DOCUMENT_PATH = "/site";
-
+    
     /**
      * The identifiable type.
      */
@@ -78,11 +80,11 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
      * @see org.apache.lenya.cms.publication.util.CollectionImpl#loadDocument(org.w3c.dom.Element)
      */
     protected Document loadDocument(Element documentElement) throws DocumentBuildException {
-        String documentId = documentElement.getAttribute(ATTRIBUTE_UUID);
+        String uuid = documentElement.getAttribute(ATTRIBUTE_UUID);
         String language = documentElement.getAttribute(ATTRIBUTE_LANGUAGE);
         Document document = getDelegate().getFactory().get(getDelegate().getPublication(),
                 getDelegate().getArea(),
-                documentId,
+                uuid,
                 language);
         return document;
     }
@@ -102,4 +104,45 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
     public Node getRepositoryNode() {
         return getDelegate().getRepositoryNode();
     }
+
+    public boolean contains(String path) {
+        return true;
+    }
+
+    public boolean containsUuid(String uuid) {
+        return getDocument(uuid) != null;
+    }
+    
+    protected Document getDocument(String uuid) {
+        Document[] docs;
+        try {
+            docs = getDocuments();
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
+        }
+        for (int i = 0; i < docs.length; i++) {
+            if (docs[i].getUUID().equals(uuid)) {
+                return docs[i];
+            }
+        }
+        return null;
+    }
+
+    public SiteNode getByUuid(String uuid) throws SiteException {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public SiteNode getNode(String path) throws SiteException {
+        return null;
+    }
+
+    public Publication getPublication() {
+        return getDelegate().getPublication();
+    }
+
+    public String getArea() {
+        return getDelegate().getArea();
+    }
+    
 }

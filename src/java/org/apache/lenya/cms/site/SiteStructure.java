@@ -16,6 +16,7 @@
  */
 package org.apache.lenya.cms.site;
 
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryItem;
 
@@ -30,5 +31,44 @@ public interface SiteStructure extends RepositoryItem {
      * @return The repository node the site structure is stored in.
      */
     Node getRepositoryNode();
+    
+    /**
+     * @return The publication.
+     */
+    Publication getPublication();
+    
+    /**
+     * @return The area.
+     */
+    String getArea();
 
+    /**
+     * @param path The path.
+     * @return A site node.
+     * @throws SiteException if no node is contained for the path.
+     */
+    SiteNode getNode(String path) throws SiteException;
+
+    /**
+     * Checks if a node is contained for a certain path.
+     * @param path The path.
+     * @return A boolean value.
+     */
+    boolean contains(String path);
+
+    /**
+     * Checks if the structure contains a node with a certain UUID.
+     * @param uuid The UUID.
+     * @return A boolean value.
+     */
+    boolean containsUuid(String uuid);
+    
+    /**
+     * Returns a node for a certain UUID.
+     * @param uuid The UUID.
+     * @return a site node.
+     * @throws SiteException if no node is contained for the UUID.
+     */
+    SiteNode getByUuid(String uuid) throws SiteException;
+    
 }

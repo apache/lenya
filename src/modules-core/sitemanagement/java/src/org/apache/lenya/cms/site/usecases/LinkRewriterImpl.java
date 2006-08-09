@@ -30,6 +30,7 @@ import org.apache.cocoon.components.ContextHelper;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
@@ -190,9 +191,14 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
      * @return A boolean value.
      */
     protected boolean matches(Document targetDocument, Document originalTargetDocument) {
-        String matchString = originalTargetDocument.getPath() + "/";
-        String testString = targetDocument.getPath() + "/";
-        return testString.startsWith(matchString);
+        try {
+            String matchString = originalTargetDocument.getPath() + "/";
+            String testString = targetDocument.getPath() + "/";
+            return testString.startsWith(matchString);
+        } catch (DocumentException e) {
+            e.printStackTrace();
+        }
+        return false;
     }
 
     /**
@@ -204,13 +210,13 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
      */
     protected String getNewTargetURL(Document targetDocument, Document originalTargetDocument,
             Document newTargetDocument) {
-        String originalId = originalTargetDocument.getPath();
-        String targetId = targetDocument.getPath();
-        String childString = targetId.substring(originalId.length());
-
         ServiceSelector selector = null;
         DocumentBuilder builder = null;
         try {
+            String originalId = originalTargetDocument.getPath();
+            String targetId = targetDocument.getPath();
+            String childString = targetId.substring(originalId.length());
+
             selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
             builder = (DocumentBuilder) selector.select(originalTargetDocument.getPublication()
                     .getDocumentBuilderHint());
@@ -223,7 +229,7 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
                 newLocator = locator.getDescendant(childString);
             }
             return builder.buildCanonicalUrl(newLocator);
-        } catch (ServiceException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
             if (selector != null) {

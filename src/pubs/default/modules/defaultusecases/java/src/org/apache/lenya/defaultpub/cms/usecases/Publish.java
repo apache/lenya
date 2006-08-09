@@ -39,9 +39,9 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
-import org.apache.lenya.cms.site.NodeFactory;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteNode;
+import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -143,10 +143,11 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
                 selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
                 siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
 
-                String path = SiteUtil.getPath(this.manager, document);
-                SiteNode liveNode = NodeFactory.getNode(document.getPublication(),
-                        Publication.LIVE_AREA,
-                        path);
+                String path = document.getPath();
+                SiteStructure structure = siteManager.getSiteStructure(getDocumentFactory(),
+                        publication,
+                        Publication.LIVE_AREA);
+                SiteNode liveNode = structure.getNode(path);
                 SiteNode[] requiredNodes = siteManager.getRequiredResources(map, liveNode);
 
                 for (int i = 0; i < requiredNodes.length; i++) {
@@ -155,7 +156,8 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
                             map,
                             requiredNodes[i]);
                     if (liveDocs.isEmpty()) {
-                        Document authoringDoc = map.get(requiredNodes[i].getPublication(),
+                        Document authoringDoc = map.get(requiredNodes[i].getStructure()
+                                .getPublication(),
                                 Publication.AUTHORING_AREA,
                                 requiredNodes[i].getPath());
                         if (authoringDoc.exists()) {

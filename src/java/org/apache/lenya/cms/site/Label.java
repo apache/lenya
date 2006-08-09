@@ -19,10 +19,15 @@
 
 package org.apache.lenya.cms.site;
 
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.Publication;
+
 /**
  * The Label class encapsulates a string label and a associated language.
  */
-public class Label {
+public class Label implements Link {
     private String label = null;
     private String language = null;
 
@@ -31,19 +36,22 @@ public class Label {
      *
      * @param _label the actual label
      */
-    protected Label(String _label) {
-        this(_label, null);
+    protected Label(DocumentFactory factory, SiteNode node, String _label) {
+        this(factory, node, _label, null);
     }
 
     /**
      * Creates a new Label object.
-     *
+     * @param factory The document factory.
+     * @param node The site node.
      * @param _label the actual label
      * @param _language the language
      */
-    public Label(String _label, String _language) {
+    public Label(DocumentFactory factory, SiteNode node, String _label, String _language) {
         this.label = _label;
         this.language = _language;
+        this.factory = factory;
+        this.node = node;
     }
 
     /**
@@ -102,6 +110,24 @@ public class Label {
      */
     public int hashCode() {
         return getLabel().hashCode() + getLanguage().hashCode();
+    }
+    
+    private SiteNode node;
+    private String uuid;
+    private DocumentFactory factory;
+
+    public Document getDocument() {
+        Publication pub = getNode().getStructure().getPublication();
+        String area = getNode().getStructure().getArea();
+        try {
+            return this.factory.get(pub, area, this.uuid, getLanguage());
+        } catch (DocumentBuildException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public SiteNode getNode() {
+        return this.node;
     }
 
 }

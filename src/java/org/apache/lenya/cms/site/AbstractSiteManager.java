@@ -178,7 +178,7 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
             return result;
         }
     }
-    
+
     /**
      * Compares documents according to the dependence relation.
      */
@@ -203,22 +203,22 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
             if (arg0 instanceof Document && arg1 instanceof Document) {
                 Document doc1 = (Document) arg0;
                 Document doc2 = (Document) arg1;
-                SiteNode node1 = NodeFactory.getNode(doc1);
-                SiteNode node2 = NodeFactory.getNode(doc2);
-
                 try {
+                    SiteNode node1 = doc1.getLink().getNode();
+                    SiteNode node2 = doc2.getLink().getNode();
+
                     if (AbstractSiteManager.this.requires(map, node1, node2)) {
                         result = 1;
                     }
                     if (AbstractSiteManager.this.requires(map, node2, node1)) {
                         result = -1;
                     }
-                } catch (SiteException e) {
+                } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             }
             return result;
         }
     }
-    
+
 }

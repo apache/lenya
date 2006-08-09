@@ -32,13 +32,14 @@ import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.generation.ServiceableGenerator;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.cms.site.Label;
+import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.tree.SiteTree;
@@ -218,17 +219,13 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
             throw new ProcessingException("Invalid area: " + this.area);
         }
 
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
         try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(this.publication.getSiteManagerHint());
-            SiteTree siteTree = (SiteTree) siteManager.getSiteStructure(this.identityMap,
-                    this.publication,
-                    this.area);
-            this.document = identityMap.get(this.publication, this.area, this.uuid, this.publication.getDefaultLanguage());
+            this.document = identityMap.get(this.publication,
+                    this.area,
+                    this.uuid,
+                    this.publication.getDefaultLanguage());
 
-            SiteTreeNode node = siteTree.getNode(this.document.getLocator().getPath());
+            SiteTreeNode node = (SiteTreeNode) this.document.getLink().getNode();
             if (this.getLogger().isDebugEnabled()) {
                 this.getLogger().debug("Node with documentid " + this.uuid + " found.");
             }
@@ -238,20 +235,13 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
             SiteTreeNode[] children = node.getChildren();
 
             addNodes(children);
-        } catch (ServiceException e) {
-            throw new ProcessingException(e);
         } catch (DocumentBuildException e) {
             throw new ProcessingException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
+        } catch (DocumentException e) {
+            throw new ProcessingException(e);
         }
     }
-    
+
     /**
      * Adds the given nodes (not recursive).
      * @param nodes
@@ -358,7 +348,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
             addNodeRecursive(nodes[i], nodeid, childid);
         }
     }
-    
+
     /**
      * Adds the given node, and if the node's id matched the given nodeid, it continues recursively.
      * @param node
@@ -367,10 +357,11 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      * @throws SAXException
      * @throws SiteException
      */
-    protected void addNodeRecursive(SiteTreeNode node, String nodeid, String childid) throws SAXException, SiteException {
+    protected void addNodeRecursive(SiteTreeNode node, String nodeid, String childid)
+            throws SAXException, SiteException {
         startNode(NODE_NODE, node);
         addLabels(node);
-        if (node.getId().equals(nodeid)) {
+        if (node.getName().equals(nodeid)) {
             generateFragmentRecursive(node.getChildren(), childid);
         }
         endNode(NODE_NODE);
@@ -405,7 +396,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
     protected void setNodeAttributes(SiteTreeNode node) throws SAXException {
         this.attributes.clear();
 
-        String id = node.getId();
+        String id = node.getName();
         // String isVisible = Boolean.toString(node.visibleInNav());
         String hasLink = Boolean.toString(node.hasLink());
         String href = node.getHref();
@@ -439,7 +430,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      * incremental sitetree loading, we sometimes load nodes which are folders, but we don't load
      * their children. But we still have to know if it's a folder or not, i.e. if it can be opened.
      * @param node
-     * @return 
+     * @return A boolean value.
      */
     protected boolean isFolder(SiteTreeNode node) {
         if (node.getChildren().length > 0)
@@ -462,13 +453,16 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      * @throws SAXException
      */
     protected void addLabels(SiteTreeNode node) throws SAXException {
-        Label[] labels = node.getLabels();
+        String[] languages = node.getLanguages();
 
-        for (int i = 0; i < labels.length; i++) {
-            String lang = labels[i].getLanguage();
-            if (lang == null)
-                lang = "";
-            addLabel(labels[i].getLabel(), lang);
+        for (int i = 0; i < languages.length; i++) {
+            Link link;
+            try {
+                link = node.getLink(languages[i]);
+            } catch (SiteException e) {
+                throw new RuntimeException(e);
+            }
+            addLabel(link.getLabel(), languages[i]);
         }
     }
 

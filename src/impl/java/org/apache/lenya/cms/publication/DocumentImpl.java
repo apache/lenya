@@ -19,6 +19,7 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -35,9 +36,10 @@ import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteManager;
-import org.apache.lenya.cms.site.SiteUtil;
+import org.apache.lenya.cms.site.SiteNode;
+import org.apache.lenya.cms.site.SiteStructure;
 
 /**
  * A typical CMS document.
@@ -552,23 +554,34 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     public DocumentLocator getLocator() {
+        SiteManager siteManager = null;
+        ServiceSelector selector = null;
         try {
-            String path = SiteUtil.getPath(this.manager, this);
-            if (path == null) {
-                throw new RuntimeException("The document [" + this
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(getPublication().getSiteManagerHint());
+            SiteStructure structure = siteManager.getSiteStructure(getFactory(), getPublication(), getArea());
+            if (!structure.containsUuid(getUUID())) {
+                throw new DocumentException("The document [" + this
                         + "] is not referenced in the site structure.");
             }
             return DocumentLocator.getLocator(getPublication().getId(),
                     getArea(),
-                    path,
+                    structure.getByUuid(getUUID()).getPath(),
                     getLanguage());
-        } catch (SiteException e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
         }
     }
 
-    public String getPath() {
-        return getLocator().getPath();
+    public String getPath() throws DocumentException {
+        return getLink().getNode().getPath();
     }
 
     public boolean existsAreaVersion(String area) {
@@ -612,7 +625,8 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         return getRepositoryNode(this.manager, getFactory(), getSourceURI());
     }
 
-    protected static Node getRepositoryNode(ServiceManager manager, DocumentFactory docFactory, String sourceUri) {
+    protected static Node getRepositoryNode(ServiceManager manager, DocumentFactory docFactory,
+            String sourceUri) {
         Session session = docFactory.getSession();
         NodeFactory factory = null;
         try {
@@ -657,4 +671,32 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         }
     }
 
+    public Link getLink() throws DocumentException {
+        ServiceSelector selector = null;
+        SiteManager siteManager = null;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(getPublication().getSiteManagerHint());
+            SiteStructure structure = siteManager.getSiteStructure(getFactory(),
+                    getPublication(),
+                    getArea());
+            if (structure.containsUuid(getUUID())) {
+                SiteNode node = structure.getByUuid(getUUID());
+                if (Arrays.asList(node.getLanguages()).contains(getLanguage())) {
+                    return node.getLink(getLanguage());
+                }
+            }
+        } catch (Exception e) {
+            throw new DocumentException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
+        }
+        throw new DocumentException("The document [" + this
+                + "] is not referenced in the site structure!");
+    }
 }

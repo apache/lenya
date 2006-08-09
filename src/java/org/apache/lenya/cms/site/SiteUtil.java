@@ -91,7 +91,9 @@ public class SiteUtil {
             throws SiteException {
         Assert.notNull("manager", manager);
         Assert.notNull("document", document);
-        return SiteUtil.getSiteStructure(manager, document.getFactory(), document.getPublication(),
+        return SiteUtil.getSiteStructure(manager,
+                document.getFactory(),
+                document.getPublication(),
                 document.getArea());
     }
 
@@ -115,7 +117,7 @@ public class SiteUtil {
                     .getSiteManagerHint());
 
             DocumentFactory map = document.getFactory();
-            SiteNode node = NodeFactory.getNode(document);
+            SiteNode node = document.getLink().getNode();
             set = getExistingDocuments(manager, map, node);
 
             SiteNode[] requiringNodes = siteManager.getRequiringResources(map, node);
@@ -151,11 +153,11 @@ public class SiteUtil {
             SiteNode node) throws DocumentBuildException, DocumentException, SiteException {
         DocumentSet set = new DocumentSet();
 
-        if (SiteUtil.contains(manager, factory, node.getPublication(), node.getArea(), node
-                .getPath())) {
-            String uuid = SiteUtil.getUUID(manager, factory, node.getPublication(), node.getArea(),
-                    node.getPath());
-            Document document = factory.get(node.getPublication(), node.getArea(), uuid);
+        final Publication pub = node.getStructure().getPublication();
+        final String area = node.getStructure().getArea();
+        if (SiteUtil.contains(manager, factory, pub, area, node.getPath())) {
+            String uuid = SiteUtil.getUUID(manager, factory, pub, area, node.getPath());
+            Document document = factory.get(pub, area, uuid);
             String[] languages = document.getLanguages();
             for (int i = 0; i < languages.length; i++) {
                 Document version = document.getTranslation(languages[i]);
@@ -247,8 +249,11 @@ public class SiteUtil {
             DocumentSet subSite = SiteUtil.getSubSite(manager, source);
             Document[] docs = subSite.getDocuments();
             for (int i = 0; i < docs.length; i++) {
-                DocumentLocator targetLoc = SiteUtil.getTransferedDocument(siteManager, docs[i],
-                        source, target, mode);
+                DocumentLocator targetLoc = SiteUtil.getTransferedDocument(siteManager,
+                        docs[i],
+                        source,
+                        target,
+                        mode);
                 if (targetLoc != null) {
                     map.put(docs[i], targetLoc);
                 }
@@ -272,16 +277,22 @@ public class SiteUtil {
             DocumentException, DocumentBuildException {
 
         String targetArea = baseTarget.getArea();
-        String baseSourcePath = siteManager.getPath(baseSource.getFactory(), baseSource
-                .getPublication(), baseSource.getArea(), baseSource.getUUID());
+        String baseSourcePath = siteManager.getPath(baseSource.getFactory(),
+                baseSource.getPublication(),
+                baseSource.getArea(),
+                baseSource.getUUID());
 
-        String sourcePath = siteManager.getPath(source.getFactory(), source.getPublication(),
-                source.getArea(), source.getUUID());
+        String sourcePath = siteManager.getPath(source.getFactory(),
+                source.getPublication(),
+                source.getArea(),
+                source.getUUID());
         String suffix = sourcePath.substring(baseSourcePath.length());
         String targetId = baseTarget.getPath() + suffix;
 
         DocumentLocator target = DocumentLocator.getLocator(baseTarget.getPublicationId(),
-                targetArea, targetId, source.getLanguage());
+                targetArea,
+                targetId,
+                source.getLanguage());
         switch (mode) {
         case MODE_REPLACE:
             break;
@@ -321,8 +332,10 @@ public class SiteUtil {
             DocumentSet subSite = SiteUtil.getSubSite(manager, source);
             Document[] docs = subSite.getDocuments();
             for (int i = 0; i < docs.length; i++) {
-                DocumentLocator target = SiteUtil.getTransferedDocument(siteManager, docs[i],
-                        targetArea, mode);
+                DocumentLocator target = SiteUtil.getTransferedDocument(siteManager,
+                        docs[i],
+                        targetArea,
+                        mode);
                 if (target != null) {
                     map.put(docs[i], target);
                 }
@@ -518,28 +531,6 @@ public class SiteUtil {
             throw new SiteException(e);
         }
         return (Document[]) documents.toArray(new Document[documents.size()]);
-    }
-
-    public static String getPath(ServiceManager manager, Document doc) throws SiteException {
-        SiteManager siteManager = null;
-        ServiceSelector selector = null;
-
-        try {
-            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
-            String siteManagerHint = doc.getPublication().getSiteManagerHint();
-            siteManager = (SiteManager) selector.select(siteManagerHint);
-            return siteManager.getPath(doc.getFactory(), doc.getPublication(), doc.getArea(), doc
-                    .getUUID());
-        } catch (ServiceException e) {
-            throw new SiteException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                manager.release(selector);
-            }
-        }
     }
 
     public static String getUUID(ServiceManager manager, DocumentFactory factory, Publication pub,

@@ -24,6 +24,7 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
@@ -32,8 +33,8 @@ import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryItemFactory;
 import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.Label;
+import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteNode;
-import org.apache.lenya.cms.site.NodeFactory;
 import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteStructure;
@@ -136,11 +137,11 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         }
 
         NodeSet nodes = new NodeSet();
-        Publication pub = resource.getPublication();
-        String area = resource.getArea();
+        Publication pub = resource.getStructure().getPublication();
+        String area = resource.getStructure().getArea();
         SiteTree tree = getTree(map, pub, area);
 
-        SiteTreeNode node = tree.getNode(resource.getPath());
+        SiteTreeNode node = (SiteTreeNode) tree.getNode(resource.getPath());
         if (node != null) {
             List preOrder = node.preOrder();
 
@@ -149,8 +150,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
 
             for (int i = 0; i < preOrder.size(); i++) {
                 SiteTreeNode descendant = (SiteTreeNode) preOrder.get(i);
-                SiteNode descendantNode = NodeFactory.getNode(pub, area, descendant.getAbsoluteId());
-                nodes.add(descendantNode);
+                nodes.add(descendant);
             }
 
             if (getLogger().isDebugEnabled()) {
@@ -165,9 +165,12 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      * @see org.apache.lenya.cms.site.SiteManager#contains(org.apache.lenya.cms.publication.Document)
      */
     public boolean contains(Document resource) throws SiteException {
+        boolean exists = false;
         SiteTree tree = getTree(resource);
-        SiteTreeNode node = tree.getNodeByUUID(resource.getUUID());
-        boolean exists = node != null && node.getLabel(resource.getLanguage()) != null;
+        if (tree.containsUuid(resource.getUUID())) {
+            SiteTreeNode node = (SiteTreeNode) tree.getByUuid(resource.getUUID());
+            exists = node != null && node.hasLink(resource.getLanguage());
+        }
         return exists;
     }
 
@@ -176,8 +179,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      */
     public boolean containsInAnyLanguage(Document resource) throws SiteException {
         SiteTree tree = getTree(resource);
-        SiteTreeNode node = tree.getNode(resource.getPath());
-        return node != null;
+        return tree.containsUuid(resource.getUUID());
     }
 
     /**
@@ -188,68 +190,77 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         SiteTree sourceTree = getTree(sourceDocument);
         SiteTree destinationTree = getTree(destinationDocument);
 
-        SiteTreeNode sourceNode = sourceTree.getNode(sourceDocument.getPath());
+        SiteTreeNode sourceNode = (SiteTreeNode) sourceTree.getByUuid(sourceDocument.getUUID());
         if (sourceNode == null) {
             throw new SiteException("The node for source document [" + sourceDocument
                     + "] doesn't exist!");
         }
 
         SiteTreeNode[] siblings = sourceNode.getNextSiblings();
-        SiteTreeNode parent = sourceNode.getParent();
+        SiteNode parent = sourceNode.getParent();
         String parentId = "";
         if (parent != null) {
-            parentId = parent.getAbsoluteId();
+            parentId = parent.getPath();
         }
         SiteTreeNode sibling = null;
-        String siblingDocId = null;
+        String siblingPath = null;
 
-        // same document ID -> insert at the same position
-        if (sourceDocument.getPath().equals(destinationDocument.getPath())) {
+        // same UUID -> insert at the same position
+        if (sourceDocument.getUUID().equals(destinationDocument.getUUID())) {
             for (int i = 0; i < siblings.length; i++) {
-                String docId = parentId + "/" + siblings[i].getId();
-                sibling = destinationTree.getNode(docId);
+                String path = parentId + "/" + siblings[i].getName();
+                sibling = (SiteTreeNode) destinationTree.getNode(path);
                 if (sibling != null) {
-                    siblingDocId = docId;
+                    siblingPath = path;
                     break;
                 }
             }
         }
 
-        Label label = sourceNode.getLabel(sourceDocument.getLanguage());
-        if (label == null) {
-            // the node that we're trying to publish
-            // doesn't have this language
-            throw new SiteException("The node " + sourceDocument.getPath()
-                    + " doesn't contain a label for language " + sourceDocument.getLanguage());
-        }
-        SiteTreeNode destinationNode = destinationTree.getNode(destinationDocument.getPath());
-        if (destinationNode == null) {
-            Label[] labels = { label };
+        try {
 
-            if (siblingDocId == null) {
-                destinationTree.addNode(destinationDocument.getPath(),
-                        destinationDocument.getUUID(),
-                        labels,
-                        sourceNode.visibleInNav(),
-                        sourceNode.getHref(),
-                        sourceNode.getSuffix(),
-                        sourceNode.hasLink());
-            } else {
-                destinationTree.addNode(destinationDocument.getPath(),
-                        destinationDocument.getUUID(),
-                        labels,
-                        sourceNode.visibleInNav(),
-                        sourceNode.getHref(),
-                        sourceNode.getSuffix(),
-                        sourceNode.hasLink(),
-                        siblingDocId);
+            if (!sourceNode.hasLink(sourceDocument.getLanguage())) {
+                // the node that we're trying to publish
+                // doesn't have this language
+                throw new SiteException("The node " + sourceDocument.getPath()
+                        + " doesn't contain a label for language " + sourceDocument.getLanguage());
             }
+            Link link = sourceNode.getLink(sourceDocument.getLanguage());
+            SiteTreeNode destinationNode = (SiteTreeNode) destinationTree.getNode(destinationDocument.getPath());
+            if (destinationNode == null) {
+                if (siblingPath == null) {
+                    destinationTree.addNode(destinationDocument.getPath(),
+                            destinationDocument.getUUID(),
+                            sourceNode.visibleInNav(),
+                            sourceNode.getHref(),
+                            sourceNode.getSuffix(),
+                            sourceNode.hasLink());
+                    destinationTree.addLabel(destinationDocument.getPath(),
+                            destinationDocument.getLanguage(),
+                            link.getLabel());
+                } else {
+                    destinationTree.addNode(destinationDocument.getPath(),
+                            destinationDocument.getUUID(),
+                            sourceNode.visibleInNav(),
+                            sourceNode.getHref(),
+                            sourceNode.getSuffix(),
+                            sourceNode.hasLink(),
+                            siblingPath);
+                    destinationTree.addLabel(destinationDocument.getPath(),
+                            destinationDocument.getLanguage(),
+                            link.getLabel());
+                }
 
-        } else {
-            // if the node already exists in the live
-            // tree simply insert the label in the
-            // live tree
-            destinationTree.setLabel(destinationDocument.getPath(), label);
+            } else {
+                // if the node already exists in the live
+                // tree simply insert the label in the
+                // live tree
+                destinationTree.setLabel(destinationDocument.getPath(),
+                        link.getLanguage(),
+                        link.getLabel());
+            }
+        } catch (DocumentException e) {
+            throw new SiteException(e);
         }
 
     }
@@ -262,28 +273,30 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
                 document.getPublication(),
                 document.getArea());
 
-        SiteTreeNode node = tree.getNode(document.getPath());
+        SiteTreeNode node = (SiteTreeNode) tree.getByUuid(document.getUUID());
 
         if (node == null) {
             throw new SiteException("Sitetree node for document [" + document + "] does not exist!");
         }
 
-        Label label = node.getLabel(document.getLanguage());
-
-        if (label == null) {
+        if (!node.hasLink(document.getLanguage())) {
             throw new SiteException("Sitetree label for document [" + document + "] in language ["
                     + document.getLanguage() + "]does not exist!");
         }
 
-        if (node.getLabels().length == 1 && node.getChildren().length > 0) {
+        if (node.getLanguages().length == 1 && node.getChildren().length > 0) {
             throw new SiteException("Cannot delete last language version of document [" + document
                     + "] because this node has children.");
         }
 
-        node.removeLabel(label);
+        node.removeLabel(document.getLanguage());
 
-        if (node.getLabels().length == 0) {
-            tree.removeNode(document.getPath());
+        if (node.getLanguages().length == 0) {
+            try {
+                tree.removeNode(document.getPath());
+            } catch (DocumentException e) {
+                throw new SiteException(e);
+            }
         } else {
             tree.save();
         }
@@ -302,11 +315,12 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      *      java.lang.String)
      */
     public void setLabel(Document document, String label) throws SiteException {
-        Label labelObject = getLabelObject(document);
-        labelObject.setLabel(label);
-
         SiteTree tree = getTree(document);
-        tree.setLabel(document.getPath(), labelObject);
+        try {
+            tree.setLabel(document.getPath(), document.getLanguage(), label);
+        } catch (DocumentException e) {
+            throw new SiteException(e);
+        }
     }
 
     /**
@@ -315,7 +329,11 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      */
     public void setVisibleInNav(Document document, boolean visibleInNav) throws SiteException {
         SiteTree tree = getTree(document);
-        tree.setVisibleInNav(document.getPath(), visibleInNav);
+        try {
+            tree.setVisibleInNav(document.getPath(), visibleInNav);
+        } catch (DocumentException e) {
+            throw new SiteException(e);
+        }
     }
 
     /**
@@ -329,7 +347,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         Label label = null;
         SiteTree siteTree = getTree(document);
         if (siteTree != null) {
-            SiteTreeNode node = siteTree.getNodeByUUID(document.getUUID());
+            SiteTreeNode node = (SiteTreeNode) siteTree.getByUuid(document.getUUID());
             if (node == null) {
                 throw new SiteException("Node for document [" + document + "] does not exist!");
             }
@@ -350,15 +368,16 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
     public Document[] getDocuments(DocumentFactory map, Publication publication, String area)
             throws SiteException {
         try {
-            List allNodes = getTree(map, publication, area).getNode("/").preOrder();
+            SiteTreeNode root = (SiteTreeNode) getTree(map, publication, area).getNode("/");
+            List allNodes = root.preOrder();
             List documents = new ArrayList();
 
             for (int i = 1; i < allNodes.size(); i++) {
                 SiteTreeNode node = (SiteTreeNode) allNodes.get(i);
-                Document doc = map.get(publication, area, node.getUUID());
+                Document doc = map.get(publication, area, node.getUuid());
                 String[] languages = doc.getLanguages();
                 for (int l = 0; l < languages.length; l++) {
-                    documents.add(map.getLanguageVersion(doc, languages[l]));
+                    documents.add(doc.getTranslation(languages[l]));
                 }
             }
             return (Document[]) documents.toArray(new Document[documents.size()]);
@@ -376,19 +395,17 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
             throw new SiteException("The document [" + document + "] is already contained!");
         }
         SiteTree tree = getTree(document);
-        Label label = new Label("", document.getLanguage());
 
-        SiteTreeNode node = tree.getNode(path);
-        if (node == null) {
-            Label[] labels = { label };
-            tree.addNode(path, document.getUUID(), labels, true, null, null, false);
+        SiteTreeNode node;
+        if (!tree.contains(path)) {
+            node = tree.addNode(path, document.getUUID(), true, null, null, false);
         } else {
-            if (node.getUUID() != null) {
+            node = (SiteTreeNode) tree.getNode(path);
+            if (node.getUuid() != null) {
                 ((SiteTreeNodeImpl) node).setUUID(document.getUUID());
             }
-            tree.addLabel(path, label);
         }
-
+        tree.addLabel(path, document.getLanguage(), "");
     }
 
     /**
@@ -400,7 +417,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
             throw new SiteException("The document [" + document + "] is already contained!");
         }
         SiteTree tree = getTree(document);
-        SiteTreeNode node = tree.getNode(path);
+        SiteTreeNode node = (SiteTreeNode) tree.getNode(path);
         node.setUUID(document.getUUID());
         tree.save();
     }
@@ -463,7 +480,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         }
         SiteTree tree = getTree(factory, pub, locator.getArea());
 
-        SiteTreeNode node = tree.getNode(path);
+        SiteTreeNode node = (SiteTreeNode) tree.getNode(path);
         String suffix = null;
         int version = 0;
         String idwithoutsuffix = null;
@@ -490,7 +507,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
             while (node != null) {
                 version = version + 1;
                 path = idwithoutsuffix + "-" + version;
-                node = tree.getNode(path);
+                node = (SiteTreeNode) tree.getNode(path);
             }
         }
 
@@ -499,29 +516,33 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
 
     public boolean isVisibleInNav(Document document) throws SiteException {
         SiteTree tree = getTree(document);
-        return tree.isVisibleInNav(document.getPath());
+        try {
+            return tree.isVisibleInNav(document.getPath());
+        } catch (DocumentException e) {
+            throw new SiteException(e);
+        }
     }
 
     public String getPath(DocumentFactory factory, Publication pub, String area, String uuid)
             throws SiteException {
         SiteTree tree = getTree(factory, pub, area);
-        SiteTreeNode node = tree.getNodeByUUID(uuid);
+        SiteNode node = tree.getByUuid(uuid);
         if (node == null) {
             throw new SiteException("No node found for [" + pub.getId() + ":" + area + ":" + uuid
                     + "]");
         }
-        return node.getAbsoluteId();
+        return node.getPath();
     }
 
     public String getUUID(DocumentFactory factory, Publication pub, String area, String path)
             throws SiteException {
         SiteTree tree = getTree(factory, pub, area);
-        SiteTreeNode node = tree.getNode(path);
+        SiteNode node = tree.getNode(path);
         if (node == null) {
             throw new SiteException("No node found for [" + pub.getId() + ":" + area + ":" + path
                     + "]");
         }
-        return node.getUUID();
+        return node.getUuid();
     }
 
     public boolean contains(DocumentFactory factory, Publication pub, String area, String path)
@@ -538,11 +559,11 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
             throw new SiteException(e);
         }
         SiteTree tree = getTree(factory, pub, locator.getArea());
-        SiteTreeNode node = tree.getNode(locator.getPath());
-        if (node == null) {
-            return false;
+        if (tree.contains(locator.getPath())) {
+            SiteNode node = tree.getNode(locator.getPath());
+            return node.hasLink(locator.getLanguage());
         } else {
-            return node.getLabel(locator.getLanguage()) != null;
+            return false;
         }
     }
 

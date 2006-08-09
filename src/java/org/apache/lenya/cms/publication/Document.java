@@ -24,6 +24,7 @@ import org.apache.lenya.cms.metadata.MetaDataOwner;
 import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryItem;
+import org.apache.lenya.cms.site.Link;
 
 /**
  * A CMS document.
@@ -254,10 +255,11 @@ public interface Document extends MetaDataOwner, RepositoryItem {
     DocumentIdentifier getIdentifier();
     
     /**
+     * This is a shortcut to getLink().getNode().getPath().
      * @return The path of this document in the site structure.
-     * @deprecated use {@link SiteUtil} instead.
+     * @throws DocumentException if the document is not linked in the site structure.
      */
-    String getPath();
+    String getPath() throws DocumentException;
 
     /**
      * Checks if a certain translation (language version) of this document exists.
@@ -310,5 +312,11 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      * @return A document locator.
      */
     DocumentLocator getLocator();
+    
+    /**
+     * @return The link to this document in the site structure.
+     * @throws DocumentException if the document is not referenced in the site structure.
+     */
+    Link getLink() throws DocumentException;
 
 }

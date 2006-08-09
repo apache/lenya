@@ -20,16 +20,13 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.ResourceType;
-import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.site.usecases.Create;
 import org.apache.lenya.workflow.WorkflowManager;
 
@@ -80,7 +77,7 @@ public class Mkcol extends Create {
                     documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
                     DocumentFactory map = getDocumentFactory();
-                    String path = SiteUtil.getPath(this.manager, doc);
+                    String path = doc.getPath();
 
                     resourceType = (ResourceType) selector.select(TYPE);
                     String sampleUri = resourceType.getSampleURI(resourceType.getSampleNames()[0]);

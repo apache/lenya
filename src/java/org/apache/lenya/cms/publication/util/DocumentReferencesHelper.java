@@ -253,8 +253,7 @@ public class DocumentReferencesHelper {
                     if (liveLanguage == null) {
                         liveLanguage = publication.getDefaultLanguage();
                     }
-                    unpublishedReferences.add(this.identityMap.getLanguageVersion(liveDocument,
-                            liveLanguage));
+                    unpublishedReferences.add(liveDocument.getTranslation(liveLanguage));
                 }
             }
         } catch (final DocumentBuildException e) {

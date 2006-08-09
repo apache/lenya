@@ -108,7 +108,7 @@ public class Put extends CreateDocument {
                     documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
                     DocumentFactory map = getDocumentFactory();
-                    String path = SiteUtil.getPath(this.manager, doc);
+                    String path = doc.getPath();
                     // lookupResourceType(extension)
                     resourceType = lookUpExtension(extension, selector);
                     String sampleUri = resourceType.getSampleURI(resourceType.getSampleNames()[0]);

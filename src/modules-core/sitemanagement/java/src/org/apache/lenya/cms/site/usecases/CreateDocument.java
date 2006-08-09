@@ -21,6 +21,7 @@ import java.util.Arrays;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
 
@@ -52,7 +53,11 @@ public class CreateDocument extends Create {
         if (parent == null) {
             setParameter(PARENT_PATH, "");
         } else {
-            setParameter(PARENT_PATH, parent.getPath());
+            try {
+                setParameter(PARENT_PATH, parent.getPath());
+            } catch (DocumentException e) {
+                throw new RuntimeException(e);
+            }
             String[] languages = parent.getPublication().getLanguages();
             setParameter(LANGUAGES, languages);
         }

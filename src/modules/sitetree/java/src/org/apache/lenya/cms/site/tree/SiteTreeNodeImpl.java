@@ -23,7 +23,12 @@ import java.util.List;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.site.Label;
+import org.apache.lenya.cms.site.Link;
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.SiteNode;
+import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Element;
@@ -50,7 +55,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
     /**
      * <code>ISIBLEINNAV_ATTRIBUTE_NAME</code>The visibleinnav attribute
      */
-    public static final String VISIBLEINNAV_ATTRIBUTE_NAME="visibleinnav";
+    public static final String VISIBLEINNAV_ATTRIBUTE_NAME = "visibleinnav";
     /**
      * <code>HREF_ATTRIBUTE_NAME</code> The href attribute
      */
@@ -77,30 +82,29 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
     public static final String LABEL_NAME = "label";
 
     private Node node = null;
+    private SiteTree tree;
+
+    private DocumentFactory factory;
 
     /**
      * Creates a new SiteTreeNodeImpl object.
      * 
      * @param _node the node which is to be wrapped by this SiteTreeNode
      */
-    protected SiteTreeNodeImpl(Node _node) {
+    protected SiteTreeNodeImpl(DocumentFactory factory, SiteTree tree, Node _node) {
         this.node = _node;
+        this.tree = tree;
+        this.factory = factory;
     }
 
-    /**
-     * @see org.apache.lenya.cms.site.tree.SiteTreeNode#getId()
-     */
-    public String getId() {
+    public String getName() {
         if (this.node == this.node.getOwnerDocument().getDocumentElement()) {
             return "";
         }
         return this.node.getAttributes().getNamedItem(ID_ATTRIBUTE_NAME).getNodeValue();
     }
 
-    /**
-     * @see org.apache.lenya.cms.site.tree.SiteTreeNode#getUUID()
-     */
-    public String getUUID() {
+    public String getUuid() {
         if (this.node == this.node.getOwnerDocument().getDocumentElement()) {
             getLogger().warn("Node equals OwnerDocument: " + this);
             return "";
@@ -108,16 +112,12 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         Element element = (Element) this.node;
         if (element.hasAttribute(UUID_ATTRIBUTE_NAME)) {
             return element.getAttribute(UUID_ATTRIBUTE_NAME);
-        }
-        else {
-            return getAbsoluteId();
+        } else {
+            return getPath();
         }
     }
 
-    /**
-     * @see org.apache.lenya.cms.site.tree.SiteTreeNode#getAbsoluteId()
-     */
-    public String getAbsoluteId() {
+    public String getPath() {
         String absoluteId = "";
         Node currentNode = this.node;
         NamedNodeMap attributes = null;
@@ -165,7 +165,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
                     labelLanguage = languageAttribute.getNodeValue();
                 }
 
-                labels.add(new Label(labelName, labelLanguage));
+                labels.add(new Label(this.factory, this, labelName, labelLanguage));
             }
         }
 
@@ -217,8 +217,10 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTreeNode#removeLabel(org.apache.lenya.cms.site.Label)
      */
-    public void removeLabel(Label label) {
-        if (getLabel(label.getLanguage()) != null) {
+    public void removeLabel(String language) {
+        if (!hasLink(language)) {
+            throw new RuntimeException(this + " does not contain the language [" + language + "]");
+        } else {
             // this node doesn't contain this label
 
             NodeList children = this.node.getChildNodes();
@@ -233,7 +235,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
                             .getNamedItem(LANGUAGE_ATTRIBUTE_NAME);
 
                     if (languageAttribute != null
-                            && languageAttribute.getNodeValue().equals(label.getLanguage())) {
+                            && languageAttribute.getNodeValue().equals(language)) {
                         this.node.removeChild(child);
                         break;
                     }
@@ -241,19 +243,19 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
             }
         }
     }
-    
+
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTreeNode#visibleInNav()
      */
     public boolean visibleInNav() {
         Node attribute = this.node.getAttributes().getNamedItem(VISIBLEINNAV_ATTRIBUTE_NAME);
-        
-        if (attribute != null){
+
+        if (attribute != null) {
             return attribute.getNodeValue().equals("true");
         }
         return true;
     }
-    
+
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTreeNode#getHref()
      */
@@ -300,7 +302,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         Element[] elements = helper.getChildren((Element) this.node, SiteTreeNodeImpl.NODE_NAME);
 
         for (int i = 0; i < elements.length; i++) {
-            SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]);
+            SiteTreeNode newNode = new SiteTreeNodeImpl(this.factory, getTree(), elements[i]);
             // FIXME: the if is a workaround
             if (getLogger() != null)
                 ContainerUtil.enableLogging(newNode, getLogger());
@@ -319,7 +321,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         Element[] elements = helper.getChildren((Element) this.node, SiteTreeNodeImpl.NODE_NAME);
         for (int i = 0; i < elements.length; i++) {
             this.node.removeChild(elements[i]);
-            SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]);
+            SiteTreeNode newNode = new SiteTreeNodeImpl(this.factory, getTree(), elements[i]);
             ContainerUtil.enableLogging(newNode, getLogger());
             childElements.add(newNode);
         }
@@ -333,11 +335,10 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         List siblingElements = new ArrayList();
 
         NamespaceHelper helper = getNamespaceHelper();
-        Element[] elements = helper
-                .getNextSiblings((Element) this.node, SiteTreeNodeImpl.NODE_NAME);
+        Element[] elements = helper.getNextSiblings((Element) this.node, SiteTreeNodeImpl.NODE_NAME);
 
         for (int i = 0; i < elements.length; i++) {
-            SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]);
+            SiteTreeNode newNode = new SiteTreeNodeImpl(this.factory, getTree(), elements[i]);
             ContainerUtil.enableLogging(newNode, getLogger());
             siblingElements.add(newNode);
         }
@@ -356,7 +357,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
                 SiteTreeNodeImpl.NODE_NAME);
 
         for (int i = 0; i < elements.length; i++) {
-            SiteTreeNode newNode = new SiteTreeNodeImpl(elements[i]);
+            SiteTreeNode newNode = new SiteTreeNodeImpl(this.factory, getTree(), elements[i]);
             ContainerUtil.enableLogging(newNode, getLogger());
             siblingElements.add(newNode);
         }
@@ -370,7 +371,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
     public String getNextSiblingDocumentId() {
         SiteTreeNode[] siblings = getNextSiblings();
         if (siblings != null && siblings.length > 0) {
-            return siblings[0].getAbsoluteId();
+            return siblings[0].getPath();
         }
         return null;
     }
@@ -389,7 +390,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         this.accept(visitor);
         SiteTreeNode[] children = this.getChildren();
         if (children == null) {
-            getLogger().info("The node " + this.getId() + " has no children");
+            getLogger().info("The node " + getPath() + " has no children");
             return;
         }
         for (int i = 0; i < children.length; i++) {
@@ -428,19 +429,19 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
     public void setLabel(Label label) {
         Label existingLabel = getLabel(label.getLanguage());
         if (existingLabel != null) {
-            removeLabel(existingLabel);
+            removeLabel(label.getLanguage());
         }
         addLabel(label);
     }
 
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTreeNode#setNodeAttribute(String, String)
-     */    
-    public void setNodeAttribute (String attributeName, String attributeValue) {
+     */
+    public void setNodeAttribute(String attributeName, String attributeValue) {
         Element element = (Element) this.node;
         element.setAttribute(attributeName, attributeValue);
     }
-    
+
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTreeNode#getChildren(java.lang.String)
      */
@@ -449,7 +450,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         List languageChildren = new ArrayList();
 
         for (int i = 0; i < children.length; i++) {
-            if (children[i].getLabel(language) != null) {
+            if (children[i].hasLink(language)) {
                 languageChildren.add(children[i]);
             }
         }
@@ -460,13 +461,13 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTreeNode#getParent()
      */
-    public SiteTreeNode getParent() {
+    public SiteNode getParent() {
         SiteTreeNode parent = null;
 
         Node parentNode = this.node.getParentNode();
         if (parentNode.getNodeType() == Node.ELEMENT_NODE
                 && parentNode.getLocalName().equals(NODE_NAME)) {
-            parent = new SiteTreeNodeImpl(parentNode);
+            parent = new SiteTreeNodeImpl(this.factory, getTree(), parentNode);
             ContainerUtil.enableLogging(parent, getLogger());
         }
 
@@ -478,8 +479,9 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
      * @return A namespace helper.
      */
     protected NamespaceHelper getNamespaceHelper() {
-        NamespaceHelper helper = new NamespaceHelper(DefaultSiteTree.NAMESPACE_URI, "", this.node
-                .getOwnerDocument());
+        NamespaceHelper helper = new NamespaceHelper(DefaultSiteTree.NAMESPACE_URI,
+                "",
+                this.node.getOwnerDocument());
         return helper;
     }
 
@@ -487,13 +489,10 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
      * @see org.apache.lenya.cms.site.tree.SiteTreeNode#getParent(java.lang.String)
      */
     public SiteTreeNode getParent(String language) {
-        SiteTreeNode parent = getParent();
-
-        Label label = parent.getLabel(language);
-        if (label == null) {
+        SiteTreeNode parent = (SiteTreeNode) getParent();
+        if (!parent.hasLink(language)) {
             parent = null;
         }
-
         return parent;
     }
 
@@ -518,6 +517,38 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
 
     public void setUUID(String uuid) {
         setNodeAttribute(UUID_ATTRIBUTE_NAME, uuid);
+    }
+
+    public SiteStructure getStructure() {
+        return getTree();
+    }
+
+    protected SiteTree getTree() {
+        return this.tree;
+    }
+
+    public String[] getLanguages() {
+        Label[] labels = getLabels();
+        String[] languages = new String[labels.length];
+        for (int i = 0; i < labels.length; i++) {
+            languages[i] = labels[i].getLanguage();
+        }
+        return languages;
+    }
+
+    public Link getLink(String language) throws SiteException {
+        Label[] labels = getLabels();
+        for (int i = 0; i < labels.length; i++) {
+            if (labels[i].getLanguage().equals(language)) {
+                return labels[i];
+            }
+        }
+        throw new SiteException("The node [" + this + "] doesn't contain the language [" + language
+                + "].");
+    }
+
+    public boolean hasLink(String language) {
+        return getLabel(language) != null;
     }
 
 }

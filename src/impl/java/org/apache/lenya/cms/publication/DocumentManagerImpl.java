@@ -373,7 +373,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 boolean visible = SiteUtil.isVisibleInNavigation(this.manager, sourceDoc);
                 SiteUtil.setVisibleInNavigation(this.manager, destinationDoc, visible);
             } else {
-                String path = SiteUtil.getPath(this.manager, sourceDoc);
+                String path = sourceDoc.getPath();
                 boolean visible = SiteUtil.isVisibleInNavigation(this.manager, sourceDoc);
                 addToSiteManager(path, destinationDoc, sourceDoc.getLabel(), visible);
             }
@@ -801,7 +801,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         Document document = addVersion(sourceDocument, area, language);
 
         if (addToSiteStructure && SiteUtil.contains(this.manager, sourceDocument)) {
-            String path = SiteUtil.getPath(this.manager, sourceDocument);
+            String path = sourceDocument.getPath();
             boolean visible = SiteUtil.isVisibleInNavigation(this.manager, sourceDocument);
             addToSiteManager(path, document, sourceDocument.getLabel(), visible);
         }

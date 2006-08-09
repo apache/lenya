@@ -16,63 +16,54 @@
  */
 package org.apache.lenya.cms.site;
 
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.lenya.cms.publication.Publication;
-
-public final class SiteNode {
-
-    private String path;
-    private String area;
-    private Publication publication;
+/**
+ * A node in the site structure.
+ */
+public interface SiteNode {
     
-    protected SiteNode(Publication publication, String area, String path) {
-        super();
-        this.publication = publication;
-        this.area = area;
-        this.path = path;
-    }
+    /**
+     * @return The site structure this node belongs to.
+     */
+    SiteStructure getStructure();
 
-    public String getArea() {
-        return area;
-    }
+    /**
+     * @return The path.
+     */
+    String getPath();
 
-    public String getPath() {
-        return path;
-    }
-
-    public Publication getPublication() {
-        return publication;
-    }
-
-    public boolean equals(Object obj) {
-        if (obj == null || !(obj instanceof SiteNode)) {
-            return false;
-        }
-        String thisKey = getKey(getPublication(), getArea(), getPath());
-        SiteNode node = (SiteNode) obj;
-        String nodeKey = getKey(node.getPublication(), node.getArea(), node.getPath());
-        return thisKey.equals(nodeKey);
-    }
-
-    public int hashCode() {
-        return getKey(getPublication(), getArea(), getPath()).hashCode();
-    }
+    /**
+     * @return The parent node.
+     * @throws SiteException If the node has no parent.
+     */
+    SiteNode getParent() throws SiteException;
     
-    protected static String getKey(Publication pub, String area, String docId) {
-        return pub.getId() + ":" + area + ":" + docId;
-    }
+    /**
+     * @return The languages of this node.
+     */
+    String[] getLanguages();
     
-    public SiteNode getParent() {
-        String id = getPath().substring(1);
-        String[] steps = id.split("/");
-        if (steps.length == 1) {
-            return null;
-        }
-        else {
-            int lastIndex = id.lastIndexOf("/");
-            String parentId = id.substring(0, lastIndex);
-            return NodeFactory.getNode(getPublication(), getArea(), "/" + parentId);
-        }
-    }
+    /**
+     * @param language The language.
+     * @return The link for the language.
+     * @throws SiteException if no link is contained for the language.
+     */
+    Link getLink(String language) throws SiteException;
+
+    /**
+     * @return The UUID of this node.
+     */
+    String getUuid();
+
+    /**
+     * Checks if a link for a certain language is contained.
+     * @param language The language.
+     * @return A boolean value.
+     */
+    boolean hasLink(String language);
+
+    /**
+     * @return The name, i.e. the last path element.
+     */
+    String getName();
 
 }

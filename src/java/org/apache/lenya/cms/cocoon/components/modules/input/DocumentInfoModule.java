@@ -142,7 +142,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
             } else if (attribute.equals(LANGUAGE)) {
                 value = document.getLanguage();
             } else if (attribute.equals(PATH)) {
-                value = SiteUtil.getPath(this.manager, document);
+                value = document.getPath();
             } else if (attribute.equals(UUID)) {
                 value = document.getUUID();
             } else if (attribute.equals(WEBAPP_URL)) {

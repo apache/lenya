@@ -20,6 +20,8 @@ import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryException;
@@ -53,7 +55,8 @@ public class SiteTreeFactory extends AbstractLogEnabled implements RepositoryIte
         DefaultSiteTree tree;
         try {
             Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
-            tree = new DefaultSiteTree(publication, area, this.manager, getLogger());
+            DocumentFactory factory = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+            tree = new DefaultSiteTree(factory, publication, area, this.manager, getLogger());
         } catch (Exception e) {
             throw new RepositoryException(e);
         }

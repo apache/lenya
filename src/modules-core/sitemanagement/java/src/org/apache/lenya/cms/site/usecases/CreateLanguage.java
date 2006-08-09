@@ -108,7 +108,11 @@ public class CreateLanguage extends Create {
      * @see Create#getNewDocumentPath()
      */
     protected String getNewDocumentPath() {
-        return getSourceDocument().getPath();
+        try {
+            return getSourceDocument().getPath();
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**

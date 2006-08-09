@@ -21,6 +21,7 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 
 /**
@@ -51,7 +52,12 @@ public class NodeSet {
     public NodeSet(DocumentSet documents) {
         Document[] docs = documents.getDocuments();
         for (int i = 0; i < docs.length; i++) {
-            SiteNode node = new SiteNode(docs[i].getPublication(), docs[i].getArea(), docs[i].getPath());
+            SiteNode node;
+            try {
+                node = docs[i].getLink().getNode();
+            } catch (DocumentException e) {
+                throw new RuntimeException(e);
+            }
             if (!contains(node)) {
                 add(node);
             }

@@ -84,7 +84,7 @@ public class MigrateUuidsTest extends AbstractAccessControlTest {
             selector = (ServiceSelector) getManager().lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(doc.getPublication().getSiteManagerHint());
 
-            String path = SiteUtil.getPath(getManager(), doc);
+            String path = doc.getPath();
 
             Node node = siteManager.getSiteStructure(doc.getFactory(), doc.getPublication(),
                     doc.getArea()).getRepositoryNode();
