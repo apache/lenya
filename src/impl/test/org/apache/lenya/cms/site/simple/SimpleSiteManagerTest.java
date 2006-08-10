@@ -61,13 +61,21 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
                 assertNotNull(link.getLabel());
                 Document doc = link.getDocument();
                 assertNotNull(doc);
-                
+
                 String docUuid = doc.getUUID();
                 String nodeUuid = node.getUuid();
                 
                 assertNotNull(doc.getUUID());
                 assertEquals(docUuid, nodeUuid);
                 assertEquals(doc.getLanguage(), link.getLanguage());
+                
+                try {
+                    siteManager.add("/sidebar", doc);
+                    assertTrue("No exception thrown", false);
+                }
+                catch (Exception expected) {
+                }
+                
             }
         }
         finally {

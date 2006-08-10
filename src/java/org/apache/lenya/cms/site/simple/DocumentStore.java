@@ -34,6 +34,7 @@ import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.transaction.TransactionException;
+import org.apache.lenya.util.Assert;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Element;
 
@@ -173,6 +174,11 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
     }
 
     public void add(String path, Document document) throws DocumentException {
+        Assert.notNull("path", path);
+        Assert.notNull("document", document);
+        
+        Assert.isTrue("document [" + document + "] is already contained!", !contains(document));
+        
         super.add(document);
         String uuid = document.getUUID();
         if (!uuid2path().containsKey(uuid)) {
@@ -182,6 +188,8 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
     }
 
     public void setPath(Document document, String path) throws TransactionException {
+        Assert.notNull("path", path);
+        Assert.notNull("document", document);
         uuid2path().put(document.getUUID(), path);
         path2uuid().put(path, document.getUUID());
         save();
