@@ -41,4 +41,14 @@ public final class Assert {
         notNull("undefined", object);
     }
 
+    /**
+     * @param expression The expression to check.
+     * @param value The value.
+     * @throws RuntimeException if the value is not true.
+     */
+    public static final void isTrue(String expression, boolean value) {
+        if (!value) {
+            throw new RuntimeException("The expression [" + expression + "] is not true!");
+        }
+    }
 }
