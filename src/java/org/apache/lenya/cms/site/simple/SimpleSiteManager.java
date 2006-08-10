@@ -19,6 +19,7 @@ package org.apache.lenya.cms.site.simple;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
@@ -26,9 +27,10 @@ import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.RepositoryItemFactory;
 import org.apache.lenya.cms.site.AbstractSiteManager;
-import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
+import org.apache.lenya.transaction.TransactionException;
 
 /**
  * Simple site manager which does not imply structural information. The documents are stored in
@@ -77,11 +79,11 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
     /**
      * @see org.apache.lenya.cms.site.SiteManager#add(org.apache.lenya.cms.publication.Document)
      */
-    public void add(Document document) throws SiteException {
+    public void add(String path, Document document) throws SiteException {
 
         DocumentStore store = getStore(document);
         try {
-            store.add(document);
+            store.add(path, document);
         } catch (DocumentException e) {
             throw new SiteException(e);
         }
@@ -120,18 +122,28 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
         return store;
     }
 
+    protected String getCollectionUuid(Publication pub, String area) {
+        String sourceUri = pub.getContentURI(area) + DOCUMENT_PATH;
+        try {
+            org.w3c.dom.Document xml = SourceUtil.readDOM(sourceUri, manager);
+            if (!xml.getDocumentElement().hasAttribute("uuid")) {
+                throw new RuntimeException("The document element of [" + sourceUri + "] doesn't contain a uuid attribute!");
+            }
+            return xml.getDocumentElement().getAttribute("uuid");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected static final String DOCUMENT_PATH = "/site.xml";
+
     /**
      * @param publication The publication.
      * @param area The area.
      * @return The key to store sitetree objects in the identity map.
      */
     protected String getKey(Publication publication, String area) {
-        return publication.getId() + ":" + area;
-    }
-
-    public String getUUID(DocumentFactory factory, Publication pub, String area, String path)
-            throws SiteException {
-        throw new IllegalStateException("Not implemented yet!");
+        return publication.getId() + ":" + area + ":" + getCollectionUuid(publication, area);
     }
 
     /**
@@ -140,11 +152,11 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
     public boolean contains(Document resource) throws SiteException {
 
         try {
-            if (resource.getPath().equals(DocumentStore.DOCUMENT_PATH)) {
+            DocumentStore store = getStore(resource);
+            if (resource.equals(store)) {
                 return true;
             }
-
-            return getStore(resource).contains(resource);
+            return store.contains(resource);
         } catch (DocumentException e) {
             throw new SiteException(e);
         }
@@ -157,14 +169,14 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
         try {
             boolean contains = false;
 
-            String[] languages = resource.getPublication().getLanguages();
+            String[] languages = resource.getLanguages();
             for (int i = 0; i < languages.length; i++) {
-                Document doc = resource.getFactory().getLanguageVersion(resource, languages[i]);
+                Document doc = resource.getTranslation(languages[i]);
                 DocumentStore store = getStore(doc);
                 contains = contains || store.contains(doc);
             }
 
-            return getStore(resource).contains(resource);
+            return contains;
         } catch (Exception e) {
             throw new SiteException(e);
         }
@@ -244,7 +256,8 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
     }
 
     /**
-     * @see org.apache.lenya.cms.site.SiteManager#getAvailableDocument(org.apache.lenya.cms.publication.Document)
+     * @see org.apache.lenya.cms.site.SiteManager#getAvailableLocator(DocumentFactory,
+     *      DocumentLocator)
      */
     public DocumentLocator getAvailableLocator(DocumentFactory factory, DocumentLocator document)
             throws SiteException {
@@ -255,36 +268,17 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
         return true;
     }
 
-    public String getPath(DocumentFactory factory, Publication pub, String area, String uuid)
-            throws SiteException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public String getUUID(String area, String path) throws SiteException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public void add(String path, Document document) throws SiteException {
-        // TODO Auto-generated method stub
-
-    }
-
     public boolean contains(DocumentFactory factory, Publication pub, String area, String path)
             throws SiteException {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-    public boolean contains(DocumentFactory factory, DocumentLocator locator) throws SiteException {
-        // TODO Auto-generated method stub
-        return false;
+        return getStore(factory, pub, area).contains(path);
     }
 
     public void set(String path, Document document) throws SiteException {
-        // TODO Auto-generated method stub
-        
+        try {
+            getStore(document).setPath(document, path);
+        } catch (TransactionException e) {
+            throw new SiteException(e);
+        }
     }
 
 }

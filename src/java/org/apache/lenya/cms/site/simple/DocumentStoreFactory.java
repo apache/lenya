@@ -28,6 +28,7 @@ import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.RepositoryItemFactory;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.util.Assert;
 
 /**
  * Factory for sitetree objects.
@@ -61,14 +62,18 @@ public class DocumentStoreFactory extends AbstractLogEnabled implements Reposito
      */
     public RepositoryItem buildItem(Session session, String key) throws RepositoryException {
         String[] snippets = key.split(":");
+        
+        Assert.isTrue("key [" + key + "] is invalid!", snippets.length == 3);
+        
         String publicationId = snippets[0];
         String area = snippets[1];
+        String uuid = snippets[2];
         DocumentStore store;
         try {
             Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
 
             DocumentFactory docMap = DocumentUtil.createDocumentIdentityMap(this.manager, session);
-            store = new DocumentStore(this.manager, docMap, publication, area, getLogger());
+            store = new DocumentStore(this.manager, docMap, publication, area, uuid, getLogger());
         } catch (Exception e) {
             throw new RepositoryException(e);
         }

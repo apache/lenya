@@ -16,38 +16,52 @@
  */
 package org.apache.lenya.cms.site.simple;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.site.AbstractSiteNode;
+import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteStructure;
 
 public class SimpleSiteNode extends AbstractSiteNode {
     
-    private String uuid;
-    
     public SimpleSiteNode(DocumentStore store, String path, String uuid) {
         super(store.getPublication(), store, path, uuid);
     }
 
-    public String[] getLanguages() {
-        return null;
-    }
-
     public Link getLink(String language) throws SiteException {
-        // TODO Auto-generated method stub
-        return null;
+        DocumentStore store = (DocumentStore) getStructure();
+        return new Label(store.getDelegate().getFactory(), this, "", language);
     }
 
     public String getName() {
-        // TODO Auto-generated method stub
-        return null;
+        String[] steps = getPath().split("/");
+        return steps[steps.length - 1];
     }
 
-     public boolean hasLink(String language) {
-        // TODO Auto-generated method stub
-        return false;
+    public String[] getLanguages() {
+        DocumentStore store = (DocumentStore) getStructure();
+        List languages = new ArrayList();
+        Document[] docs;
+        try {
+            docs = store.getDocuments();
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
+        }
+        for (int i = 0; i < docs.length; i++) {
+            if (docs[i].getUUID().equals(getUuid())) {
+                if (languages.contains(docs[i].getLanguage())) {
+                    throw new RuntimeException("Document [" + docs[i] + "] is contained twice!");
+                }
+                languages.add(docs[i].getLanguage());
+            }
+        }
+        return (String[]) languages.toArray(new String[languages.size()]);
     }
 
 }

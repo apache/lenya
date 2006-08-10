@@ -16,20 +16,24 @@
  */
 package org.apache.lenya.cms.site.simple;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.CollectionImpl;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
+import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Element;
 
@@ -40,8 +44,6 @@ import org.w3c.dom.Element;
  */
 public class DocumentStore extends CollectionImpl implements SiteStructure {
 
-    protected static final String DOCUMENT_PATH = "/site";
-    
     /**
      * The identifiable type.
      */
@@ -50,20 +52,27 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
     /**
      * @param manager The service manager.
      * @param map The identity map.
-     * @param publication The publication.
+     * @param pub The publication.
      * @param area The area.
+     * @param uuid The UUID.
      * @param _logger The logger.
      * @throws DocumentException if an error occurs.
      */
-    public DocumentStore(ServiceManager manager, DocumentFactory map, Publication publication,
-            String area, Logger _logger) throws DocumentException {
-        super(manager, map, new DocumentIdentifier(publication,
-                area,
-                DOCUMENT_PATH,
-                publication.getDefaultLanguage()), _logger);
+    public DocumentStore(ServiceManager manager, DocumentFactory map, Publication pub, String area,
+            String uuid, Logger _logger) throws DocumentException {
+        super(manager,
+                map,
+                new DocumentIdentifier(pub, area, uuid, pub.getDefaultLanguage()),
+                _logger);
     }
 
+    protected static final String NAMESPACE = "http://apache.org/lenya/sitemanagement/simple/1.0";
+
     protected static final String ATTRIBUTE_LANGUAGE = "xml:lang";
+    protected static final String ATTRIBUTE_PATH = "path";
+
+    private Map path2uuid = new HashMap();
+    private Map uuid2path = new HashMap();
 
     /**
      * @see org.apache.lenya.cms.publication.util.CollectionImpl#createDocumentElement(org.apache.lenya.cms.publication.Document,
@@ -73,6 +82,7 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
             throws DocumentException {
         Element element = super.createDocumentElement(document, helper);
         element.setAttribute(ATTRIBUTE_LANGUAGE, document.getLanguage());
+        element.setAttribute(ATTRIBUTE_PATH, getPath(document.getUUID()));
         return element;
     }
 
@@ -82,10 +92,15 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
     protected Document loadDocument(Element documentElement) throws DocumentBuildException {
         String uuid = documentElement.getAttribute(ATTRIBUTE_UUID);
         String language = documentElement.getAttribute(ATTRIBUTE_LANGUAGE);
+        String path = documentElement.getAttribute(ATTRIBUTE_PATH);
         Document document = getDelegate().getFactory().get(getDelegate().getPublication(),
                 getDelegate().getArea(),
                 uuid,
                 language);
+        if (!this.uuid2path.containsKey(uuid)) {
+            this.uuid2path.put(uuid, path);
+            this.path2uuid.put(path, uuid);
+        }
         return document;
     }
 
@@ -106,13 +121,13 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
     }
 
     public boolean contains(String path) {
-        return true;
+        return path2uuid().containsKey(path);
     }
 
     public boolean containsUuid(String uuid) {
-        return getDocument(uuid) != null;
+        return uuid2path().containsKey(uuid);
     }
-    
+
     protected Document getDocument(String uuid) {
         Document[] docs;
         try {
@@ -129,12 +144,24 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
     }
 
     public SiteNode getByUuid(String uuid) throws SiteException {
-        // TODO Auto-generated method stub
-        return null;
+        String path = getPath(uuid);
+        return new SimpleSiteNode(this, path, uuid);
+    }
+
+    protected String getPath(String uuid) {
+        return (String) uuid2path().get(uuid);
     }
 
     public SiteNode getNode(String path) throws SiteException {
-        return null;
+        if (!contains(path)) {
+            throw new SiteException(this + " does not contain the path [" + path + "]");
+        }
+        String uuid = (String) path2uuid().get(path);
+        return new SimpleSiteNode(this, path, uuid);
+    }
+    
+    public String toString() {
+        return getPublication().getId() + ":" + getArea();
     }
 
     public Publication getPublication() {
@@ -144,5 +171,39 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
     public String getArea() {
         return getDelegate().getArea();
     }
+
+    public void add(String path, Document document) throws DocumentException {
+        super.add(document);
+        String uuid = document.getUUID();
+        if (!uuid2path().containsKey(uuid)) {
+            uuid2path().put(uuid, path);
+            path2uuid().put(path, uuid);
+        }
+    }
+
+    public void setPath(Document document, String path) throws TransactionException {
+        uuid2path().put(document.getUUID(), path);
+        path2uuid().put(path, document.getUUID());
+        save();
+    }
     
+    protected Map path2uuid() {
+        try {
+            load();
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
+        }
+        return this.path2uuid;
+    }
+    
+    protected Map uuid2path() {
+        try {
+            load();
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
+        }
+        return this.uuid2path;
+    }
+
+
 }

@@ -16,7 +16,10 @@
  */
 package org.apache.lenya.cms.site;
 
+import java.util.Arrays;
+
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.util.Assert;
 
 /**
  * Abstract site node implementation.
@@ -29,8 +32,15 @@ public abstract class AbstractSiteNode implements SiteNode {
 
     protected AbstractSiteNode(Publication publication, SiteStructure structure, String path, String uuid) {
         super();
+        
+        Assert.notNull("structure", structure);
         this.structure = structure;
+        
+        Assert.notNull("path", path);
+        Assert.isTrue("path starts with /", path.startsWith("/"));
         this.path = path;
+        
+        Assert.notNull("uuid", uuid);
         this.uuid = uuid;
     }
 
@@ -78,6 +88,10 @@ public abstract class AbstractSiteNode implements SiteNode {
 
     public String getUuid() {
         return this.uuid;
+    }
+
+    public boolean hasLink(String language) {
+        return Arrays.asList(getLanguages()).contains(language);
     }
 
 }

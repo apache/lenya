@@ -113,14 +113,13 @@ public class Label implements Link {
     }
     
     private SiteNode node;
-    private String uuid;
     private DocumentFactory factory;
 
     public Document getDocument() {
         Publication pub = getNode().getStructure().getPublication();
         String area = getNode().getStructure().getArea();
         try {
-            return this.factory.get(pub, area, this.uuid, getLanguage());
+            return this.factory.get(pub, area, getNode().getUuid(), getLanguage());
         } catch (DocumentBuildException e) {
             throw new RuntimeException(e);
         }
