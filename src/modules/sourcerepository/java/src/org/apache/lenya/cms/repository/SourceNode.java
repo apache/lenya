@@ -243,7 +243,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        for (Iterator i = this.listeners.iterator(); i.hasNext(); ) {
+        for (Iterator i = this.listeners.iterator(); i.hasNext();) {
             NodeListener listener = (NodeListener) i.next();
             listener.nodeRemoved(node, getSession().getIdentity());
         }
@@ -358,7 +358,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        for (Iterator i = this.listeners.iterator(); i.hasNext(); ) {
+        for (Iterator i = this.listeners.iterator(); i.hasNext();) {
             NodeListener listener = (NodeListener) i.next();
             listener.nodeChanged(node, getSession().getIdentity());
         }
@@ -378,14 +378,12 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             try {
                 factory = (NodeFactory) this.manager.lookup(NodeFactory.ROLE);
                 node = (Node) factory.buildItem(getSession(), documentSourceUri);
-            }
-            finally {
+            } finally {
                 if (factory != null) {
                     this.manager.release(factory);
                 }
             }
-        }
-        else {
+        } else {
             node = this;
         }
         return node;
@@ -827,36 +825,38 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         NamespaceHelper dcHelper = new NamespaceHelper(DublinCore.DC_NAMESPACE, "", xml);
         Element dcElement = helper.getFirstChild(metaElement, "dc");
 
-        MetaDataRegistry registry = null;
-        try {
-            registry = (MetaDataRegistry) this.manager.lookup(MetaDataRegistry.ROLE);
-            ElementSet dcElementSet = registry.getElementSet(DublinCore.DC_NAMESPACE);
-            ElementSet dcTermSet = registry.getElementSet(DublinCore.DCTERMS_NAMESPACE);
+        if (dcElement != null) {
+            MetaDataRegistry registry = null;
+            try {
+                registry = (MetaDataRegistry) this.manager.lookup(MetaDataRegistry.ROLE);
+                ElementSet dcElementSet = registry.getElementSet(DublinCore.DC_NAMESPACE);
+                ElementSet dcTermSet = registry.getElementSet(DublinCore.DCTERMS_NAMESPACE);
 
-            Element[] dcElements = dcHelper.getChildren(dcElement);
-            for (int i = 0; i < dcElements.length; i++) {
-                String value = DocumentHelper.getSimpleElementText(dcElements[i]);
+                Element[] dcElements = dcHelper.getChildren(dcElement);
+                for (int i = 0; i < dcElements.length; i++) {
+                    String value = DocumentHelper.getSimpleElementText(dcElements[i]);
 
-                String key = dcElements[i].getLocalName();
+                    String key = dcElements[i].getLocalName();
 
-                if (dcElementSet.containsElement(key)) {
-                    List values = getValueList(DublinCore.DC_NAMESPACE, key);
-                    values.add(value);
-                } else if (dcTermSet.containsElement(key)) {
-                    List values = getValueList(DublinCore.DCTERMS_NAMESPACE, key);
-                    values.add(value);
-                } else {
-                    throw new RepositoryException("The dublin core key [" + key
-                            + "] is not supported.");
+                    if (dcElementSet.containsElement(key)) {
+                        List values = getValueList(DublinCore.DC_NAMESPACE, key);
+                        values.add(value);
+                    } else if (dcTermSet.containsElement(key)) {
+                        List values = getValueList(DublinCore.DCTERMS_NAMESPACE, key);
+                        values.add(value);
+                    } else {
+                        throw new RepositoryException("The dublin core key [" + key
+                                + "] is not supported.");
+                    }
                 }
-            }
-        } catch (MetaDataException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new MetaDataException(e);
-        } finally {
-            if (registry != null) {
-                this.manager.release(registry);
+            } catch (MetaDataException e) {
+                throw e;
+            } catch (Exception e) {
+                throw new MetaDataException(e);
+            } finally {
+                if (registry != null) {
+                    this.manager.release(registry);
+                }
             }
         }
 
