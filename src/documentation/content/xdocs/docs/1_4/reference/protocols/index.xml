@@ -25,7 +25,8 @@
     </p>
     <ul>
       <li><a href="site:lenya"><code>lenya:</code></a> Get a <code>RepositorySource</code> in the context of Lenya.</li>
-      <li><a href="site:lenyadoc"><code>lenyadoc:</code></a> Get a <code>RepositorySource</code> of a specific document.</li>
+      <li><a href="site:lenyadoc"><code>lenyadoc:</code></a> Get a <code>RepositorySource</code> of a specific document using the UUID.</li>
+      <li><a href="site:siteprotocol"><code>site:</code></a> Get a <code>RepositorySource</code> using the path of a document in the site structure.</li>
     </ul>
   </body>
 </document>

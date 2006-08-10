@@ -17,13 +17,14 @@
 <!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
 <document> 
   <header> 
-    <title>lenyadoc: Protocol</title> 
+    <title>site: Protocol</title> 
   </header>
   <body>
     <p>
-      The <code>lenyadoc:</code> protocol allows to access the source of a Lenya document without knowing the
-      underlying storage structure. If the relative syntax is used, only the language and the UUID
-      is needed. If the absolute syntax is used, the publication id and the area has to be specified additionally.
+      The <code>site:</code> protocol allows to access the source of a Lenya document without knowing the
+      underlying storage structure. If the relative syntax is used, only the language and the path of
+      the document in the site structure are needed.
+      If the absolute syntax is used, the publication id and the area has to be specified additionally.
     </p>
     <section>
       <title>Relative Syntax</title>
@@ -32,14 +33,15 @@
         current publication and area is used to resolve the document's location.
       </p>
       <p>
-        <em>Syntax: </em><code>lenyadoc:/&lt;language&gt;/&lt;uuid&gt;</code>
+        <em>Syntax: </em><code>site:/&lt;language&gt;&lt;path&gt;</code>
       </p>
       <p>
         <strong>Example</strong>
       </p>
 <source xml:space="preserve"><![CDATA[
-<map:match pattern="*.xml">
-  <map:generate src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-uuid}"/>
+<!-- match authoring/{path}_{language}.html -->
+<map:match pattern="authoring/**_*.html">
+  <map:generate src="site:/{2}/{1}"/>
   ...
 </map:match>
 ]]></source>
@@ -50,13 +52,13 @@
         The absolute syntax allows to specify the document's publication and the area.
       </p>
       <p>
-        <em>Syntax: </em><code>lenyadoc://&lt;publication&gt;/&lt;area&gt;/&lt;language&gt;/&lt;uuid&gt;</code>
+        <em>Syntax: </em><code>site://&lt;publication&gt;/&lt;area&gt;/&lt;language&gt;&lt;path&gt;</code>
       </p>
       <p><strong>Example</strong></p>
 <source><![CDATA[
-<map:match pattern="*.xml">
-  <map:generate src="lenyadoc://{page-envelope:publication-id}/{page-envelope:area}/
-                     {page-envelope:document-language}/{page-envelope:uuid}"/>
+<!-- match {pubId}/{area}/{path}_{language}.html -->
+<map:match pattern="*/*/**_*.html">
+  <map:generate src="site://{1}/{2}/{4}/{3}"/>
   ...
 </map:match>
 ]]></source>

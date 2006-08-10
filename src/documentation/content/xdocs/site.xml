@@ -144,6 +144,7 @@
         <protocols-overview href="index.html" label="Overview"/>
         <lenya href="lenya.html" label="lenya:"/>
         <lenyadoc href="lenyadoc.html" label="lenyadoc:"/>
+        <siteprotocol href="site.html" label="site:"/>
       </protocols>
       <link-management href="link-management.html" label="Link Management"/>
       <notification href="notification.html" label="Notification"/>
