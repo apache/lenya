@@ -51,7 +51,18 @@ import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.util.ServletHelper;
 
 /**
- * 
+ * <p>This source factory allows to access documents based on their path in the site structure.</p>
+ * <p>Relative addressing refers to the current publication and area.</p>
+ * <p>Syntax:</p>
+ * <ul>
+ * <li>Absolute: <code>site://{pubId}/{area}/{language}{path}</code></li>
+ * <li>Relative: <code>site:/{language}{path}</code></li>
+ * </ul>
+ * <p>Usage examples:</p>
+ * <ul>
+ * <li><code>site://default/authoring/en/news/today</code></li>
+ * <li><code>site:/en/news/today</code></li>
+ * </ul>
  */
 public class SiteSourceFactory extends AbstractLogEnabled implements SourceFactory, ThreadSafe,
         Contextualizable, Serviceable, Configurable {
