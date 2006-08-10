@@ -22,17 +22,17 @@
     xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:lenya="http://apache.org/cocoon/lenya/publication/1.0"
     xmlns:dir="http://apache.org/cocoon/directory/2.0"
-    xmlns="http://apache.org/cocoon/lenya/menubar/1.0"
+    xmlns:menu="http://apache.org/cocoon/lenya/menubar/1.0"
     >
 
 <xsl:param name="area"/>
 
 <xsl:template match="publication">
-  <menu>
+  <menu:menu>
     <xsl:for-each select="module">
       <xi:include href="cocoon:/menu-xml/module/{$area}/{@name}.xml#xpointer(/*/*)"/>
     </xsl:for-each>
-  </menu>
+  </menu:menu>
 </xsl:template>
 
 </xsl:stylesheet>
