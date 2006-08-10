@@ -277,27 +277,26 @@ public class SiteUtil {
             DocumentException, DocumentBuildException {
 
         String targetArea = baseTarget.getArea();
-        String baseSourcePath = siteManager.getPath(baseSource.getFactory(),
+        String baseSourcePath = siteManager.getSiteStructure(baseSource.getFactory(),
                 baseSource.getPublication(),
-                baseSource.getArea(),
-                baseSource.getUUID());
+                baseSource.getArea()).getByUuid(baseSource.getUUID()).getPath();
 
-        String sourcePath = siteManager.getPath(source.getFactory(),
+        SiteStructure sourceSite = siteManager.getSiteStructure(source.getFactory(),
                 source.getPublication(),
-                source.getArea(),
-                source.getUUID());
+                source.getArea());
+        String sourcePath = sourceSite.getByUuid(source.getUUID()).getPath();
         String suffix = sourcePath.substring(baseSourcePath.length());
-        String targetId = baseTarget.getPath() + suffix;
+        String targetPath = baseTarget.getPath() + suffix;
 
         DocumentLocator target = DocumentLocator.getLocator(baseTarget.getPublicationId(),
                 targetArea,
-                targetId,
+                targetPath,
                 source.getLanguage());
         switch (mode) {
         case MODE_REPLACE:
             break;
         case MODE_CANCEL:
-            if (siteManager.contains(source.getFactory(), target)) {
+            if (sourceSite.contains(target.getPath())) {
                 target = null;
             }
             break;
@@ -362,7 +361,10 @@ public class SiteUtil {
         case MODE_REPLACE:
             break;
         case MODE_CANCEL:
-            if (siteManager.contains(source.getFactory(), target)) {
+            SiteStructure site = siteManager.getSiteStructure(source.getFactory(),
+                    source.getPublication(),
+                    target.getArea());
+            if (site.contains(target.getPath())) {
                 target = null;
             }
             break;
@@ -542,7 +544,7 @@ public class SiteUtil {
             selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
             String siteManagerHint = pub.getSiteManagerHint();
             siteManager = (SiteManager) selector.select(siteManagerHint);
-            return siteManager.getUUID(factory, pub, area, path);
+            return siteManager.getSiteStructure(factory, pub, area).getNode(path).getUuid();
         } catch (ServiceException e) {
             throw new SiteException(e);
         } finally {
@@ -565,7 +567,8 @@ public class SiteUtil {
             Publication pub = PublicationUtil.getPublication(manager, locator.getPublicationId());
             String siteManagerHint = pub.getSiteManagerHint();
             siteManager = (SiteManager) selector.select(siteManagerHint);
-            return siteManager.contains(factory, locator);
+            SiteStructure site = siteManager.getSiteStructure(factory, pub, locator.getArea());
+            return site.contains(locator.getPath());
         } catch (SiteException e) {
             throw e;
         } catch (Exception e) {

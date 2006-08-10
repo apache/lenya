@@ -119,37 +119,6 @@ public interface SiteManager {
             throws SiteException;
 
     /**
-     * Checks if the site structure contains a certain resource in a certain area.
-     * @param factory The document factory.
-     * @param locator The locator.
-     * @return A boolean value.
-     * @throws SiteException if an error occurs.
-     */
-    boolean contains(DocumentFactory factory, DocumentLocator locator) throws SiteException;
-
-    /**
-     * Return the path of a certain resource in a certain area.
-     * @param factory The factory.
-     * @param pub The publication.
-     * @param area The area.
-     * @param uuid The uuid.
-     * @return A string.
-     * @throws SiteException if the document is not referenced in the site structure.
-     */
-    String getPath(DocumentFactory factory, Publication pub, String area, String uuid) throws SiteException;
-
-    /**
-     * Return the UUID for a given path.
-     * @param factory The factory.
-     * @param pub The publication.
-     * @param area The area.
-     * @param path The path.
-     * @return The UUID.
-     * @throws SiteException if the path does not exist.
-     */
-    String getUUID(DocumentFactory factory, Publication pub, String area, String path) throws SiteException;
-
-    /**
      * Checks if the site structure contains any language version of a certain resource in a certain
      * area.
      * 
