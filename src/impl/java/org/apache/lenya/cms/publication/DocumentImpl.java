@@ -699,4 +699,8 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         throw new DocumentException("The document [" + this
                 + "] is not referenced in the site structure!");
     }
+
+    public Area area() {
+        return new AreaImpl(this.manager, getFactory(), getPublication(), getArea());
+    }
 }

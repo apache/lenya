@@ -318,5 +318,10 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      * @throws DocumentException if the document is not referenced in the site structure.
      */
     Link getLink() throws DocumentException;
-
+    
+    /**
+     * @return The area the document belongs to.
+     */
+    Area area();
+    
 }
