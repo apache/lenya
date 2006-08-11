@@ -30,6 +30,7 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.ResourceType;
@@ -74,7 +75,11 @@ public class CreateBlogEntry extends DocumentUsecase {
         super.initParameters();
 
         Document parent = getSourceDocument();
-        setParameter(PARENT_ID, parent.getId());
+        try {
+            setParameter(PARENT_ID, parent.getPath());
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
@@ -221,7 +226,7 @@ public class CreateBlogEntry extends DocumentUsecase {
         if (getLogger().isDebugEnabled())
             getLogger().debug("NewBlogEntryCreator.transformXML(): " + document);
 
-        String[] steps = document.getId().split("/");
+        String[] steps = document.getPath().split("/");
         String nodeId = steps[5];
 
         // Replace id

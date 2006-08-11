@@ -29,6 +29,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
@@ -62,7 +63,7 @@ public class BlogOverviewGenerator extends ServiceableGenerator {
     
     protected static final String ENTRY_NODE_NAME = "entry";
 
-    protected static final String DOCID_ATTR_NAME = "docid";
+    protected static final String PATH_ATTR_NAME = "path";
 
     protected static final String URL_ATTR_NAME = "url";
     
@@ -190,13 +191,13 @@ public class BlogOverviewGenerator extends ServiceableGenerator {
             Document[] docs = siteManager.getDocuments(map, publication, area);
             ArrayList filteredDocs = new ArrayList(1);          
             for (int i=0; i<docs.length; i++) {
-                String docId = docs[i].getId();
-                if (docId.startsWith("/entries/")) {
+                String path = docs[i].getPath();
+                if (path.startsWith("/entries/")) {
                     int eYear = 0;
                     int eMonth = 0;
                     int eDay = 0;
                     boolean add = false;
-                    String[] patterns = docId.split("/");
+                    String[] patterns = path.split("/");
                     eYear = Integer.parseInt(patterns[2]);
                     eMonth = Integer.parseInt(patterns[3]);
                     eDay = Integer.parseInt(patterns[4]);
@@ -267,12 +268,21 @@ public class BlogOverviewGenerator extends ServiceableGenerator {
                     d1 = (Document)o1;
                     d2 = (Document)o2;
                     
-                    String[] patterns = d1.getId().split("/");                    
+                    String[] patterns;
+                    try {
+                        patterns = d1.getPath().split("/");
+                    } catch (DocumentException e) {
+                        throw new RuntimeException(e);
+                    }                    
                     year1 = Integer.parseInt(patterns[2]);
                     month1 = Integer.parseInt(patterns[3]);
                     day1 = Integer.parseInt(patterns[4]);
                     
-                    patterns = d2.getId().split("/");                    
+                    try {
+                        patterns = d2.getPath().split("/");
+                    } catch (DocumentException e) {
+                        throw new RuntimeException(e);
+                    }                    
                     year2 = Integer.parseInt(patterns[2]);
                     month2 = Integer.parseInt(patterns[3]);
                     day2 = Integer.parseInt(patterns[4]);                    
@@ -310,7 +320,7 @@ public class BlogOverviewGenerator extends ServiceableGenerator {
             boolean dayOpen = false;            
             for (int i=0; i<sortedList.length; i++) {
                 Document doc = ((Document)sortedList[i]);
-                String[] patterns = doc.getId().split("/");                   
+                String[] patterns = doc.getPath().split("/");                   
                 int year =  Integer.parseInt(patterns[2]);
                 int month = Integer.parseInt(patterns[3]);
                 int day = Integer.parseInt(patterns[4]);
@@ -373,8 +383,8 @@ public class BlogOverviewGenerator extends ServiceableGenerator {
                 }                
                 if (structure == null) {
                     attributes.clear();
-                    attributes.addAttribute("", DOCID_ATTR_NAME,
-                            DOCID_ATTR_NAME, "CDATA", doc.getId());
+                    attributes.addAttribute("", PATH_ATTR_NAME,
+                            PATH_ATTR_NAME, "CDATA", doc.getPath());
                     attributes.addAttribute("", URL_ATTR_NAME,
                             URL_ATTR_NAME, "CDATA", doc.getCanonicalWebappURL());
                     org.w3c.dom.Document docDOM = SourceUtil.readDOM(doc.getSourceURI(), this.manager);

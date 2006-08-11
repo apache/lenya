@@ -98,7 +98,7 @@
             <map:transform src="fallback://lenya/xslt/rc/toDoc.xsl"/>
           </map:when>
           <map:otherwise>
-            <map:generate src="lenyadoc:/en//entries/{2}/{3}/{4}/{5}/index"/>
+            <map:generate src="site:/en/entries/{2}/{3}/{4}/{5}/index"/>
           </map:otherwise>
         </map:select>
         <map:serialize type="xml"/>
@@ -112,7 +112,7 @@
             <map:transform src="fallback://lenya/xslt/rc/toDoc.xsl"/>
           </map:when>
           <map:otherwise>
-            <map:generate src="lenyadoc:/en//entries/{2}/{3}/{4}/{5}/index"/>
+            <map:generate src="site:/en/entries/{2}/{3}/{4}/{5}/index"/>
             <map:transform src="xslt/feed/atom2other.xsl">
               <map:parameter name="type" value="rss"/>
               <map:parameter name="url" value="{global:blog-url}"/>
@@ -125,9 +125,9 @@
       
       <map:match pattern="*/entries/*/*/*/*/lenya-body.xml">
         <map:aggregate element="feed">
-          <map:part src="lenyadoc:/en//feeds/all/index"/>
+          <map:part src="site:/en/feeds/all/index"/>
           <map:part src="cocoon:/{1}/entries/{2}/{3}/{4}/{5}/index.xml"/>
-          <map:part src="lenya://lenya/pubs/blog/content/{1}/sidebar.xml"/>
+          <map:part src="site:/en/sidebar"/>
           <map:part src="cocoon:/{1}/overview?struct=23"/>
         </map:aggregate>
         <map:transform src="xslt/entry/aggregate.xsl"/>
@@ -136,7 +136,7 @@
       <map:match pattern="*/entries/*/*/*/*/lenya-page-body.xml">
         <map:aggregate element="cmsbody">
           <map:part src="cocoon:/{1}/entries/{2}/{3}/{4}/{5}/lenya-body.xml"/>
-          <map:part src="lenya://lenya/pubs/blog/content/{1}/sidebar.xml"/>
+          <map:part src="site:/en/sidebar"/>
         </map:aggregate>
         <map:transform src="xslt/links.xsl">
           <map:parameter name="relpath" value="../../../../../feeds/all"/>
@@ -222,8 +222,8 @@
       </map:match>
       <map:match pattern="*/overview/lenya-page-body.xml">
         <map:aggregate element="cmsbody">
-          <map:part src="lenyadoc:/en//feeds/all"/>
-          <map:part src="content/{1}/sidebar.xml"/>
+          <map:part src="site:/en/feeds/all/index"/>
+          <map:part src="site:/en/sidebar"/>
           <map:part src="cocoon:/{1}/overview"/>
           <map:part src="cocoon:/{1}/overview?struct=23"/>
         </map:aggregate>
@@ -288,7 +288,7 @@
       <map:match pattern="*/feeds/*/lenya-page-body.xml">
         <map:aggregate element="cmsbody">
           <map:part src="cocoon:/{1}/feeds/{2}/index.xml"/>
-          <map:part src="lenya://lenya/pubs/blog/content/{1}/sidebar.xml"/>
+          <map:part src="site:/en/sidebar"/>
           <map:part src="cocoon:/{1}/overview?struct=23"/>
         </map:aggregate>
         <map:transform src="xslt/links.xsl">

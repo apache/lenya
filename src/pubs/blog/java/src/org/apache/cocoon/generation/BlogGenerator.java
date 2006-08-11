@@ -53,13 +53,12 @@ public class BlogGenerator extends ServiceableGenerator {
 
     protected static final String ENTRY_NODE_NAME = "entry";
 
-    protected static final String DOCID_ATTR_NAME = "docid";
+    protected static final String PATH_ATTR_NAME = "path";
 
     protected static final String LASTMOD_ATTR_NAME = "lastModified";
 
     /**
-     * Convenience object, so we don't need to create an AttributesImpl for
-     * every element.
+     * Convenience object, so we don't need to create an AttributesImpl for every element.
      */
     protected AttributesImpl attributes;
 
@@ -69,45 +68,39 @@ public class BlogGenerator extends ServiceableGenerator {
     protected String area;
 
     protected boolean recent;
-    
+
     /**
      * Only generate the #numrecent entries
      */
-    protected int numrecent; 
-    
+    protected int numrecent;
+
     /**
      * Set the request parameters. Must be called before the generate method.
      * 
-     * @param resolver
-     *            the SourceResolver object
-     * @param objectModel
-     *            a <code>Map</code> containing model object
-     * @param src
-     *            the source URI (ignored)
-     * @param par
-     *            configuration parameters
+     * @param resolver the SourceResolver object
+     * @param objectModel a <code>Map</code> containing model object
+     * @param src the source URI (ignored)
+     * @param par configuration parameters
      */
-    public void setup(SourceResolver resolver, Map objectModel, String src,
-            Parameters par) throws ProcessingException, SAXException,
-            IOException {
+    public void setup(SourceResolver resolver, Map objectModel, String src, Parameters par)
+            throws ProcessingException, SAXException, IOException {
         super.setup(resolver, objectModel, src, par);
 
         area = par.getParameter("area", null);
         if (area == null)
-            throw new ProcessingException("no area specified");               
-        if (area.equals(Publication.LIVE_AREA)) 
+            throw new ProcessingException("no area specified");
+        if (area.equals(Publication.LIVE_AREA))
             numrecent = 16;
-        else 
+        else
             numrecent = 0;
-        
+
         this.attributes = new AttributesImpl();
     }
 
     /**
      * Generate XML data.
      * 
-     * @throws SAXException
-     *             if an error occurs while outputting the document
+     * @throws SAXException if an error occurs while outputting the document
      */
     public void generate() throws SAXException, ProcessingException {
 
@@ -115,8 +108,10 @@ public class BlogGenerator extends ServiceableGenerator {
         this.contentHandler.startPrefixMapping(PREFIX, URI);
         attributes.clear();
 
-        this.contentHandler.startElement(URI, BLOG_NODE_NAME, PREFIX + ':'
-                + BLOG_NODE_NAME, attributes);
+        this.contentHandler.startElement(URI,
+                BLOG_NODE_NAME,
+                PREFIX + ':' + BLOG_NODE_NAME,
+                attributes);
 
         ServiceSelector selector = null;
         SiteManager siteManager = null;
@@ -124,36 +119,36 @@ public class BlogGenerator extends ServiceableGenerator {
             Request request = ObjectModelHelper.getRequest(this.objectModel);
             Session session = RepositoryUtil.getSession(this.manager, request);
             DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
-            Publication publication = PublicationUtil.getPublication(
-                    this.manager, request);
-                       
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE
-                    + "Selector");
-            siteManager = (SiteManager) selector.select(publication
-                    .getSiteManagerHint());
+            Publication publication = PublicationUtil.getPublication(this.manager, request);
+
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
 
             Document[] docs = siteManager.getDocuments(map, publication, area);
             Arrays.sort((Object[]) docs, new Comparator() {
                 public int compare(Object o1, Object o2) {
-                    return ((Document) o2).getLastModified().compareTo(
-                            ((Document) o1).getLastModified());
+                    return ((Document) o2).getLastModified()
+                            .compareTo(((Document) o1).getLastModified());
                 }
             });
 
-            for (int i = 0; i < docs.length; i++) {                
-                if (numrecent > 0 && numrecent <= i)                     
-                    break;                
-                if (docs[i].getId().startsWith("/entries/")) {
+            for (int i = 0; i < docs.length; i++) {
+                if (numrecent > 0 && numrecent <= i)
+                    break;
+                String path = docs[i].getPath();
+                if (path.startsWith("/entries/")) {
                     attributes.clear();
-                    attributes.addAttribute("", DOCID_ATTR_NAME,
-                            DOCID_ATTR_NAME, "CDATA", docs[i].getId());
-                    attributes.addAttribute("", LASTMOD_ATTR_NAME,
-                            LASTMOD_ATTR_NAME, "CDATA", String.valueOf(docs[i].getLastModified().getTime()));
-                    
-                    this.contentHandler.startElement(URI, ENTRY_NODE_NAME,
-                            PREFIX + ':' + ENTRY_NODE_NAME, attributes);
-                    this.contentHandler.endElement(URI, ENTRY_NODE_NAME, PREFIX
-                            + ':' + ENTRY_NODE_NAME);
+                    attributes.addAttribute("", PATH_ATTR_NAME, PATH_ATTR_NAME, "CDATA", path);
+                    attributes.addAttribute("",
+                            LASTMOD_ATTR_NAME,
+                            LASTMOD_ATTR_NAME,
+                            "CDATA",
+                            String.valueOf(docs[i].getLastModified().getTime()));
+
+                    this.contentHandler.startElement(URI, ENTRY_NODE_NAME, PREFIX + ':'
+                            + ENTRY_NODE_NAME, attributes);
+                    this.contentHandler.endElement(URI, ENTRY_NODE_NAME, PREFIX + ':'
+                            + ENTRY_NODE_NAME);
                 }
             }
 
@@ -168,8 +163,7 @@ public class BlogGenerator extends ServiceableGenerator {
             }
         }
 
-        this.contentHandler.endElement(URI, BLOG_NODE_NAME, PREFIX + ':'
-                + BLOG_NODE_NAME);
+        this.contentHandler.endElement(URI, BLOG_NODE_NAME, PREFIX + ':' + BLOG_NODE_NAME);
 
         this.contentHandler.endPrefixMapping(PREFIX);
         this.contentHandler.endDocument();
