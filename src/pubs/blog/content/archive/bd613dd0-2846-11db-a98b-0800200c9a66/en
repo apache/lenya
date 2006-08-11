@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<col:collection xmlns:col="http://apache.org/cocoon/lenya/collection/1.0" uuid="bd613dd0-2846-11db-a98b-0800200c9a66">
+  <col:document uuid="84980a60-2846-11db-a98b-0800200c9a66" path="/sidebar" xml:lang="en"/>
+  <col:document uuid="a166eb20-2846-11db-a98b-0800200c9a66" path="/feeds/all/index" xml:lang="en"/>
+</col:collection>
