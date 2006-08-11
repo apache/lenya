@@ -16,27 +16,28 @@
  */
 package org.apache.lenya.cms.site;
 
+import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryItem;
 
 /**
  * Object to hold a site structure information.
- *
+ * 
  * @version $Id$
  */
 public interface SiteStructure extends RepositoryItem {
-    
+
     /**
      * @return The repository node the site structure is stored in.
      */
     Node getRepositoryNode();
-    
+
     /**
      * @return The publication.
      */
     Publication getPublication();
-    
+
     /**
      * @return The area.
      */
@@ -62,7 +63,7 @@ public interface SiteStructure extends RepositoryItem {
      * @return A boolean value.
      */
     boolean containsUuid(String uuid);
-    
+
     /**
      * Returns a node for a certain UUID.
      * @param uuid The UUID.
@@ -70,5 +71,14 @@ public interface SiteStructure extends RepositoryItem {
      * @throws SiteException if no node is contained for the UUID.
      */
     SiteNode getByUuid(String uuid) throws SiteException;
-    
+
+    /**
+     * @param path The path.
+     * @param document The document to add.
+     * @return A link.
+     * @throws SiteException if the document is already contained or the node for this path already
+     *             contains a link for this language.
+     */
+    Link add(String path, Document document) throws SiteException;
+
 }

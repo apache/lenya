@@ -245,30 +245,6 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Document#setLabel(String)
-     */
-    public void setLabel(String label) throws DocumentException {
-        SiteManager siteManager = null;
-        ServiceSelector selector = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(getPublication().getSiteManagerHint());
-            if (siteManager != null) {
-                siteManager.setLabel(this, label);
-            }
-        } catch (Exception e) {
-            throw new DocumentException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
-        }
-    }
-
-    /**
      * @see org.apache.lenya.cms.publication.Document#getArea()
      */
     public String getArea() {

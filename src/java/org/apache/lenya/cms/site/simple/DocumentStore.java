@@ -30,6 +30,7 @@ import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.CollectionImpl;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
@@ -50,6 +51,8 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
      */
     public static final String IDENTIFIABLE_TYPE = "documentstore";
 
+    protected static final Object SITE_PATH = "/sitestructure";
+
     /**
      * @param manager The service manager.
      * @param map The identity map.
@@ -65,6 +68,8 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
                 map,
                 new DocumentIdentifier(pub, area, uuid, pub.getDefaultLanguage()),
                 _logger);
+        this.uuid2path.put(uuid, SITE_PATH);
+        this.path2uuid.put(SITE_PATH, uuid);
     }
 
     protected static final String NAMESPACE = "http://apache.org/lenya/sitemanagement/simple/1.0";
@@ -150,6 +155,7 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
     }
 
     protected String getPath(String uuid) {
+        Assert.isTrue("contains uuid [" + uuid + "]", containsUuid(uuid));
         return (String) uuid2path().get(uuid);
     }
 
@@ -173,18 +179,23 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
         return getDelegate().getArea();
     }
 
-    public void add(String path, Document document) throws DocumentException {
+    public Link add(String path, Document document) throws SiteException {
         Assert.notNull("path", path);
         Assert.notNull("document", document);
         
-        Assert.isTrue("document [" + document + "] is already contained!", !contains(document));
-        
-        super.add(document);
-        String uuid = document.getUUID();
-        if (!uuid2path().containsKey(uuid)) {
-            uuid2path().put(uuid, path);
-            path2uuid().put(path, uuid);
+        try {
+            Assert.isTrue("document [" + document + "] is already contained!", !contains(document));
+            String uuid = document.getUUID();
+            if (!uuid2path().containsKey(uuid)) {
+                uuid2path().put(uuid, path);
+                path2uuid().put(path, uuid);
+            }
+            super.add(document);
+        } catch (DocumentException e) {
+            throw new SiteException(e);
         }
+        
+        return getNode(path).getLink(document.getLanguage());
     }
 
     public void setPath(Document document, String path) throws TransactionException {

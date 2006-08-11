@@ -80,13 +80,7 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
      * @see org.apache.lenya.cms.site.SiteManager#add(org.apache.lenya.cms.publication.Document)
      */
     public void add(String path, Document document) throws SiteException {
-
-        DocumentStore store = getStore(document);
-        try {
-            store.add(path, document);
-        } catch (DocumentException e) {
-            throw new SiteException(e);
-        }
+        getStore(document).add(path, document);
     }
 
     /**
@@ -127,7 +121,8 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
         try {
             org.w3c.dom.Document xml = SourceUtil.readDOM(sourceUri, manager);
             if (!xml.getDocumentElement().hasAttribute("uuid")) {
-                throw new RuntimeException("The document element of [" + sourceUri + "] doesn't contain a uuid attribute!");
+                throw new RuntimeException("The document element of [" + sourceUri
+                        + "] doesn't contain a uuid attribute!");
             }
             return xml.getDocumentElement().getAttribute("uuid");
         } catch (Exception e) {

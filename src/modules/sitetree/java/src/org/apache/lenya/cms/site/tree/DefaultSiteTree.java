@@ -34,6 +34,7 @@ import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.Label;
+import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.xml.DocumentHelper;
@@ -676,6 +677,13 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
 
     protected DocumentFactory getFactory() {
         return this.factory;
+    }
+
+    public Link add(String path, org.apache.lenya.cms.publication.Document doc) throws SiteException {
+        SiteTreeNode node = addNode(path, doc.getUUID(), true, null, "", false);
+        Label label = new Label(doc.getFactory(), node, "", doc.getLanguage());
+        node.addLabel(label);
+        return label;
     }
 
 }
