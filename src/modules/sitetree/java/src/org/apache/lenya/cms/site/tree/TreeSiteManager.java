@@ -167,11 +167,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
     public boolean contains(Document resource) throws SiteException {
         boolean exists = false;
         SiteTree tree = getTree(resource);
-        if (tree.containsUuid(resource.getUUID())) {
-            SiteTreeNode node = (SiteTreeNode) tree.getByUuid(resource.getUUID());
-            exists = node != null && node.hasLink(resource.getLanguage());
-        }
-        return exists;
+        return tree.containsByUuid(resource.getUUID(), resource.getLanguage());
     }
 
     /**
@@ -179,7 +175,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      */
     public boolean containsInAnyLanguage(Document resource) throws SiteException {
         SiteTree tree = getTree(resource);
-        return tree.containsUuid(resource.getUUID());
+        return tree.containsInAnyLanguage(resource.getUUID());
     }
 
     /**
@@ -187,37 +183,31 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      *      org.apache.lenya.cms.publication.Document)
      */
     public void copy(Document sourceDocument, Document destinationDocument) throws SiteException {
-        SiteTree sourceTree = getTree(sourceDocument);
         SiteTree destinationTree = getTree(destinationDocument);
 
-        SiteTreeNode sourceNode = (SiteTreeNode) sourceTree.getByUuid(sourceDocument.getUUID());
-        if (sourceNode == null) {
-            throw new SiteException("The node for source document [" + sourceDocument
-                    + "] doesn't exist!");
-        }
+        try {
+            SiteTreeNode sourceNode = (SiteTreeNode) sourceDocument.getLink().getNode();
 
-        SiteTreeNode[] siblings = sourceNode.getNextSiblings();
-        SiteNode parent = sourceNode.getParent();
-        String parentId = "";
-        if (parent != null) {
-            parentId = parent.getPath();
-        }
-        SiteTreeNode sibling = null;
-        String siblingPath = null;
+            SiteTreeNode[] siblings = sourceNode.getNextSiblings();
+            SiteNode parent = sourceNode.getParent();
+            String parentId = "";
+            if (parent != null) {
+                parentId = parent.getPath();
+            }
+            SiteTreeNode sibling = null;
+            String siblingPath = null;
 
-        // same UUID -> insert at the same position
-        if (sourceDocument.getUUID().equals(destinationDocument.getUUID())) {
-            for (int i = 0; i < siblings.length; i++) {
-                String path = parentId + "/" + siblings[i].getName();
-                sibling = (SiteTreeNode) destinationTree.getNode(path);
-                if (sibling != null) {
-                    siblingPath = path;
-                    break;
+            // same UUID -> insert at the same position
+            if (sourceDocument.getUUID().equals(destinationDocument.getUUID())) {
+                for (int i = 0; i < siblings.length; i++) {
+                    String path = parentId + "/" + siblings[i].getName();
+                    sibling = (SiteTreeNode) destinationTree.getNode(path);
+                    if (sibling != null) {
+                        siblingPath = path;
+                        break;
+                    }
                 }
             }
-        }
-
-        try {
 
             if (!sourceNode.hasLink(sourceDocument.getLanguage())) {
                 // the node that we're trying to publish
@@ -273,32 +263,24 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
                 document.getPublication(),
                 document.getArea());
 
-        SiteTreeNode node = (SiteTreeNode) tree.getByUuid(document.getUUID());
+        try {
+            Link link = document.getLink();
+            SiteTreeNode node = (SiteTreeNode) link.getNode();
 
-        if (node == null) {
-            throw new SiteException("Sitetree node for document [" + document + "] does not exist!");
-        }
-
-        if (!node.hasLink(document.getLanguage())) {
-            throw new SiteException("Sitetree label for document [" + document + "] in language ["
-                    + document.getLanguage() + "]does not exist!");
-        }
-
-        if (node.getLanguages().length == 1 && node.getChildren().length > 0) {
-            throw new SiteException("Cannot delete last language version of document [" + document
-                    + "] because this node has children.");
-        }
-
-        node.removeLabel(document.getLanguage());
-
-        if (node.getLanguages().length == 0) {
-            try {
-                tree.removeNode(document.getPath());
-            } catch (DocumentException e) {
-                throw new SiteException(e);
+            if (node.getLanguages().length == 1 && node.getChildren().length > 0) {
+                throw new SiteException("Cannot delete last language version of document ["
+                        + document + "] because this node has children.");
             }
-        } else {
-            tree.save();
+
+            node.removeLabel(document.getLanguage());
+
+            if (node.getLanguages().length == 0) {
+                tree.removeNode(document.getPath());
+            } else {
+                tree.save();
+            }
+        } catch (DocumentException e) {
+            throw new SiteException(e);
         }
     }
 
@@ -347,11 +329,12 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         Label label = null;
         SiteTree siteTree = getTree(document);
         if (siteTree != null) {
-            SiteTreeNode node = (SiteTreeNode) siteTree.getByUuid(document.getUUID());
+            SiteTreeNode node = (SiteTreeNode) siteTree.getByUuid(document.getUUID(),
+                    document.getLanguage()).getNode();
             if (node == null) {
                 throw new SiteException("Node for document [" + document + "] does not exist!");
             }
-            label = node.getLabel(document.getLanguage());
+            label = (Label) node.getLink(document.getLanguage());
         }
 
         if (label == null) {
@@ -523,12 +506,12 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         }
     }
 
-    public String getPath(DocumentFactory factory, Publication pub, String area, String uuid)
+    public String getPath(DocumentFactory factory, Publication pub, String area, String uuid, String language)
             throws SiteException {
         SiteTree tree = getTree(factory, pub, area);
-        SiteNode node = tree.getByUuid(uuid);
+        SiteNode node = tree.getByUuid(uuid, language).getNode();
         if (node == null) {
-            throw new SiteException("No node found for [" + pub.getId() + ":" + area + ":" + uuid
+            throw new SiteException("No node found for [" + pub.getId() + ":" + area + ":" + uuid + ":" + language
                     + "]");
         }
         return node.getPath();

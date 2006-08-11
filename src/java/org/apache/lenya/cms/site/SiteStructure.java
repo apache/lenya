@@ -42,6 +42,11 @@ public interface SiteStructure extends RepositoryItem {
      * @return The area.
      */
     String getArea();
+    
+    /**
+     * @return All nodes in this structure.
+     */
+    SiteNode[] getNodes();
 
     /**
      * @param path The path.
@@ -58,27 +63,38 @@ public interface SiteStructure extends RepositoryItem {
     boolean contains(String path);
 
     /**
-     * Checks if the structure contains a node with a certain UUID.
+     * Checks if the structure contains a link with a certain UUID and language.
      * @param uuid The UUID.
+     * @param language The language.
      * @return A boolean value.
      */
-    boolean containsUuid(String uuid);
+    boolean containsByUuid(String uuid, String language);
+
+    /**
+     * Checks if the structure contains any language version of a document.
+     * @param uuid The uuid.
+     * @return A boolean value.
+     */
+    boolean containsInAnyLanguage(String uuid);
 
     /**
      * Returns a node for a certain UUID.
      * @param uuid The UUID.
-     * @return a site node.
+     * @param language The language.
+     * @return a link.
      * @throws SiteException if no node is contained for the UUID.
      */
-    SiteNode getByUuid(String uuid) throws SiteException;
+    Link getByUuid(String uuid, String language) throws SiteException;
 
     /**
+     * Adds a link to a document.
      * @param path The path.
-     * @param document The document to add.
+     * @param doc The document.
      * @return A link.
      * @throws SiteException if the document is already contained or the node for this path already
      *             contains a link for this language.
      */
-    Link add(String path, Document document) throws SiteException;
+    Link add(String path, Document doc) throws SiteException;
+
 
 }

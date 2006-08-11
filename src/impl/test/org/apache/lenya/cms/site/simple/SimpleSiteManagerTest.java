@@ -16,15 +16,19 @@
  */
 package org.apache.lenya.cms.site.simple;
 
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.ResourceType;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
@@ -42,8 +46,16 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
         Session session = RepositoryUtil.getSession(getManager(), getRequest());
         DocumentFactory factory = DocumentUtil.createDocumentIdentityMap(getManager(), session);
 
-        Publication pub = PublicationUtil.getPublication(getManager(), "blog");
+        Publication[] pubs = PublicationUtil.getPublications(getManager());
 
+        for (int i = 0; i < pubs.length; i++) {
+            checkPublication(session, factory, pubs[i]);
+        }
+    }
+
+    protected void checkPublication(Session session, DocumentFactory factory, Publication pub)
+            throws ServiceException, SiteException, DocumentBuildException, PublicationException,
+            RepositoryException {
         DocumentManager docManager = null;
         ServiceSelector selector = null;
         SiteManager siteManager = null;
@@ -56,30 +68,37 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
                     pub,
                     Publication.AUTHORING_AREA);
 
-            assertTrue(structure.contains("/sidebar"));
+            SiteNode[] nodes = structure.getNodes();
+            assertTrue(nodes.length > 0);
 
-            SiteNode node = structure.getNode("/sidebar");
-            assertNotNull(node);
-            assertNotNull(node.getUuid());
+            for (int i = 0; i < nodes.length; i++) {
 
-            checkLinks(siteManager, node);
+                assertTrue(structure.contains(nodes[i].getPath()));
 
-            docManager = (DocumentManager) getManager().lookup(DocumentManager.ROLE);
+                SiteNode node = structure.getNode(nodes[i].getPath());
+                assertNotNull(node);
+                assertNotNull(node.getUuid());
+                assertEquals(nodes[i], node);
 
-            resourceTypeSelector = (ServiceSelector) getManager().lookup(ResourceType.ROLE
-                    + "Selector");
-            ResourceType type = (ResourceType) resourceTypeSelector.select("entry");
-            String contentSourceUri = structure.getRepositoryNode().getSourceURI();
+                docManager = (DocumentManager) getManager().lookup(DocumentManager.ROLE);
 
-            Document doc = docManager.add(getIdentityMap(),
-                    type,
-                    contentSourceUri,
-                    pub,
-                    Publication.AUTHORING_AREA,
-                    "en",
-                    "xml");
+                resourceTypeSelector = (ServiceSelector) getManager().lookup(ResourceType.ROLE
+                        + "Selector");
+                ResourceType type = (ResourceType) resourceTypeSelector.select("entry");
+                String contentSourceUri = structure.getRepositoryNode().getSourceURI();
 
-            structure.add("/foo", doc);
+                Document doc = docManager.add(getIdentityMap(),
+                        type,
+                        contentSourceUri,
+                        pub,
+                        Publication.AUTHORING_AREA,
+                        "en",
+                        "xml");
+
+                structure.add("/foo", doc);
+
+                checkLinks(siteManager, node);
+            }
 
         } finally {
             if (selector != null) {
@@ -95,12 +114,14 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
                 getManager().release(resourceTypeSelector);
             }
         }
-        session.commit();
+        // session.commit();
     }
 
     protected void checkLinks(SiteManager siteManager, SiteNode node) throws SiteException {
         String[] languages = node.getLanguages();
-        assertTrue(languages.length > 0);
+        if (node.getPath().length() > 0) {
+            assertTrue(languages.length > 0);
+        }
         for (int i = 0; i < languages.length; i++) {
             Link link = node.getLink(languages[i]);
             assertEquals(link.getLanguage(), languages[i]);

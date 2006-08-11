@@ -644,21 +644,20 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         }
     }
 
-    public boolean containsUuid(String uuid) {
-        return getByUuidInternal(uuid) != null;
+    public boolean containsByUuid(String uuid, String language) {
+        return getByUuidInternal(uuid, language) != null;
     }
 
-    protected SiteNode getByUuidInternal(String uuid) {
-        String xPath = "//*[@uuid = '" + uuid + "']";
+    protected SiteNode getByUuidInternal(String uuid, String language) {
+        String xPath = "//*[@uuid = '" + uuid + "' and *[@xml:lang = '" + language + "']]";
+        return getNodeByXpath(xPath);
+    }
+
+    protected SiteNode getNodeByXpath(String xPath) {
         try {
             Element element = (Element) XPathAPI.selectSingleNode(this.document, xPath);
             if (element == null) {
-                // TODO: remove when UUIDs are fully functional
-                if (uuid.startsWith("/")) {
-                    return getNode(uuid);
-                } else {
-                    return null;
-                }
+                return null;
             } else {
                 return new SiteTreeNodeImpl(this.factory, this, element);
             }
@@ -667,23 +666,41 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         }
     }
 
-    public SiteNode getByUuid(String uuid) throws SiteException {
-        SiteNode node = getByUuidInternal(uuid);
+    public Link getByUuid(String uuid, String language) throws SiteException {
+        SiteNode node = getByUuidInternal(uuid, language);
         if (node == null) {
-            throw new SiteException("The UUID [" + uuid + "] is not contained!");
+            throw new SiteException("The link for [" + uuid + ":" + language
+                    + "] is not contained!");
         }
-        return node;
+        return node.getLink(language);
     }
 
     protected DocumentFactory getFactory() {
         return this.factory;
     }
 
-    public Link add(String path, org.apache.lenya.cms.publication.Document doc) throws SiteException {
+    public Link add(String path, org.apache.lenya.cms.publication.Document doc)
+            throws SiteException {
         SiteTreeNode node = addNode(path, doc.getUUID(), true, null, "", false);
         Label label = new Label(doc.getFactory(), node, "", doc.getLanguage());
         node.addLabel(label);
         return label;
+    }
+
+    public boolean containsInAnyLanguage(String uuid) {
+        String xPath = "//*[@uuid = '" + uuid + "']";
+        return getNodeByXpath(xPath) != null;
+    }
+
+    public SiteNode[] getNodes() {
+        SiteTreeNode root;
+        try {
+            root = (SiteTreeNode) getNode("/");
+        } catch (SiteException e) {
+            throw new RuntimeException(e);
+        }
+        List nodes = root.preOrder();
+        return (SiteNode[]) nodes.toArray(new SiteNode[nodes.size()]);
     }
 
 }

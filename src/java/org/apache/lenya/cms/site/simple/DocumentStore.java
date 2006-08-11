@@ -17,7 +17,11 @@
 package org.apache.lenya.cms.site.simple;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
+import java.util.WeakHashMap;
 
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
@@ -68,8 +72,7 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
                 map,
                 new DocumentIdentifier(pub, area, uuid, pub.getDefaultLanguage()),
                 _logger);
-        this.uuid2path.put(uuid, SITE_PATH);
-        this.path2uuid.put(SITE_PATH, uuid);
+        this.doc2path.put(getKey(uuid, pub.getDefaultLanguage()), SITE_PATH);
     }
 
     protected static final String NAMESPACE = "http://apache.org/lenya/sitemanagement/simple/1.0";
@@ -77,8 +80,19 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
     protected static final String ATTRIBUTE_LANGUAGE = "xml:lang";
     protected static final String ATTRIBUTE_PATH = "path";
 
-    private Map path2uuid = new HashMap();
-    private Map uuid2path = new HashMap();
+    private Map doc2path = new HashMap();
+
+    protected String getKey(String uuid, String language) {
+        return uuid + ":" + language;
+    }
+
+    protected String getLanguage(String key) {
+        return key.split(":")[1];
+    }
+
+    protected String getUuid(String key) {
+        return key.split(":")[0];
+    }
 
     /**
      * @see org.apache.lenya.cms.publication.util.CollectionImpl#createDocumentElement(org.apache.lenya.cms.publication.Document,
@@ -88,7 +102,8 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
             throws DocumentException {
         Element element = super.createDocumentElement(document, helper);
         element.setAttribute(ATTRIBUTE_LANGUAGE, document.getLanguage());
-        element.setAttribute(ATTRIBUTE_PATH, getPath(document.getUUID()));
+        String path = getPath(document.getUUID(), document.getLanguage());
+        element.setAttribute(ATTRIBUTE_PATH, path);
         return element;
     }
 
@@ -103,9 +118,9 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
                 getDelegate().getArea(),
                 uuid,
                 language);
-        if (!this.uuid2path.containsKey(uuid)) {
-            this.uuid2path.put(uuid, path);
-            this.path2uuid.put(path, uuid);
+        String key = getKey(uuid, language);
+        if (!this.doc2path.containsKey(key)) {
+            this.doc2path.put(key, path);
         }
         return document;
     }
@@ -127,11 +142,15 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
     }
 
     public boolean contains(String path) {
-        return path2uuid().containsKey(path);
+        return doc2path().values().contains(path);
     }
 
-    public boolean containsUuid(String uuid) {
-        return uuid2path().containsKey(uuid);
+    public boolean containsByUuid(String uuid, String language) {
+        return doc2path().containsKey(getKey(uuid, language));
+    }
+
+    public boolean containsInAnyLanguage(String uuid) {
+        return doc2path().containsKey(uuid);
     }
 
     protected Document getDocument(String uuid) {
@@ -149,24 +168,41 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
         return null;
     }
 
-    public SiteNode getByUuid(String uuid) throws SiteException {
-        String path = getPath(uuid);
-        return new SimpleSiteNode(this, path, uuid);
+    public Link getByUuid(String uuid, String language) throws SiteException {
+        String path = getPath(uuid, language);
+        SiteNode node = new SimpleSiteNode(this, path, uuid);
+        return node.getLink(language);
     }
 
-    protected String getPath(String uuid) {
-        Assert.isTrue("contains uuid [" + uuid + "]", containsUuid(uuid));
-        return (String) uuid2path().get(uuid);
+    protected String getPath(String uuid, String language) {
+        String key = getKey(uuid, language);
+        Assert.isTrue("contains [" + key + "]", containsByUuid(uuid, language));
+        return (String) doc2path().get(key);
     }
+
+    private Map path2node = new WeakHashMap();
 
     public SiteNode getNode(String path) throws SiteException {
-        if (!contains(path)) {
-            throw new SiteException(this + " does not contain the path [" + path + "]");
+
+        SiteNode node = (SiteNode) this.path2node.get(path);
+        if (node == null) {
+            Set keys = doc2path().keySet();
+            for (Iterator i = keys.iterator(); i.hasNext();) {
+                String key = (String) i.next();
+                String value = (String) doc2path().get(key);
+                if (value.equals(path)) {
+                    String uuid = getUuid(key);
+                    node = new SimpleSiteNode(this, path, uuid);
+                    this.path2node.put(path, node);
+                }
+            }
         }
-        String uuid = (String) path2uuid().get(path);
-        return new SimpleSiteNode(this, path, uuid);
+        if (node != null) {
+            return node;
+        }
+        throw new SiteException("[" + this + "] does not contain the path [" + path + "]");
     }
-    
+
     public String toString() {
         return getPublication().getId() + ":" + getArea();
     }
@@ -182,47 +218,54 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
     public Link add(String path, Document document) throws SiteException {
         Assert.notNull("path", path);
         Assert.notNull("document", document);
-        
+
         try {
             Assert.isTrue("document [" + document + "] is already contained!", !contains(document));
-            String uuid = document.getUUID();
-            if (!uuid2path().containsKey(uuid)) {
-                uuid2path().put(uuid, path);
-                path2uuid().put(path, uuid);
+            String key = getKey(document.getUUID(), document.getLanguage());
+            if (!doc2path().containsKey(key)) {
+                doc2path().put(key, path);
             }
             super.add(document);
         } catch (DocumentException e) {
             throw new SiteException(e);
         }
-        
+
         return getNode(path).getLink(document.getLanguage());
     }
 
     public void setPath(Document document, String path) throws TransactionException {
         Assert.notNull("path", path);
         Assert.notNull("document", document);
-        uuid2path().put(document.getUUID(), path);
-        path2uuid().put(path, document.getUUID());
+        String key = getKey(document.getUUID(), document.getLanguage());
+        doc2path().put(key, path);
         save();
     }
-    
-    protected Map path2uuid() {
+
+    protected Map doc2path() {
         try {
             load();
         } catch (DocumentException e) {
             throw new RuntimeException(e);
         }
-        return this.path2uuid;
-    }
-    
-    protected Map uuid2path() {
-        try {
-            load();
-        } catch (DocumentException e) {
-            throw new RuntimeException(e);
-        }
-        return this.uuid2path;
+        return this.doc2path;
     }
 
+    public SiteNode[] getNodes() {
+        try {
+            Document[] docs = getDocuments();
+            Set paths = new HashSet();
+            for (int i = 0; i < docs.length; i++) {
+                paths.add(getPath(docs[i].getUUID(), docs[i].getLanguage()));
+            }
+            Set nodes = new HashSet();
+            for (Iterator i = paths.iterator(); i.hasNext();) {
+                String path = (String) i.next();
+                nodes.add(getNode(path));
+            }
+            return (SiteNode[]) nodes.toArray(new SiteNode[nodes.size()]);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

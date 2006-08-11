@@ -279,12 +279,17 @@ public class SiteUtil {
         String targetArea = baseTarget.getArea();
         String baseSourcePath = siteManager.getSiteStructure(baseSource.getFactory(),
                 baseSource.getPublication(),
-                baseSource.getArea()).getByUuid(baseSource.getUUID()).getPath();
+                baseSource.getArea())
+                .getByUuid(baseSource.getUUID(), baseSource.getLanguage())
+                .getNode()
+                .getPath();
 
         SiteStructure sourceSite = siteManager.getSiteStructure(source.getFactory(),
                 source.getPublication(),
                 source.getArea());
-        String sourcePath = sourceSite.getByUuid(source.getUUID()).getPath();
+        String sourcePath = sourceSite.getByUuid(source.getUUID(), source.getLanguage())
+                .getNode()
+                .getPath();
         String suffix = sourcePath.substring(baseSourcePath.length());
         String targetPath = baseTarget.getPath() + suffix;
 

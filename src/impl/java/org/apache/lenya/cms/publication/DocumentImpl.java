@@ -19,7 +19,6 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -38,7 +37,6 @@ import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteManager;
-import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 
 /**
@@ -536,13 +534,13 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(getPublication().getSiteManagerHint());
             SiteStructure structure = siteManager.getSiteStructure(getFactory(), getPublication(), getArea());
-            if (!structure.containsUuid(getUUID())) {
+            if (!structure.containsByUuid(getUUID(), getLanguage())) {
                 throw new DocumentException("The document [" + this
                         + "] is not referenced in the site structure.");
             }
             return DocumentLocator.getLocator(getPublication().getId(),
                     getArea(),
-                    structure.getByUuid(getUUID()).getPath(),
+                    structure.getByUuid(getUUID(), getLanguage()).getNode().getPath(),
                     getLanguage());
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -656,11 +654,8 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
             SiteStructure structure = siteManager.getSiteStructure(getFactory(),
                     getPublication(),
                     getArea());
-            if (structure.containsUuid(getUUID())) {
-                SiteNode node = structure.getByUuid(getUUID());
-                if (Arrays.asList(node.getLanguages()).contains(getLanguage())) {
-                    return node.getLink(getLanguage());
-                }
+            if (structure.containsByUuid(getUUID(), getLanguage())) {
+                return structure.getByUuid(getUUID(), getLanguage());
             }
         } catch (Exception e) {
             throw new DocumentException(e);

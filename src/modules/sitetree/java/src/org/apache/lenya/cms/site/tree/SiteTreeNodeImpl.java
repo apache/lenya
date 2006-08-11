@@ -555,4 +555,23 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         return getLabel(language) != null;
     }
 
+    public boolean equals(Object obj) {
+        if (!getClass().isInstance(obj)) {
+            return false;
+        }
+        return getKey().equals(((SiteTreeNodeImpl) obj).getKey());
+    }
+
+    protected String getKey() {
+        return getTree().getPublication().getId() + ":" + getTree().getArea() + ":" + getPath();
+    }
+
+    public int hashCode() {
+        return getKey().hashCode();
+    }
+    
+    public String toString() {
+        return getKey();
+    }
+
 }
