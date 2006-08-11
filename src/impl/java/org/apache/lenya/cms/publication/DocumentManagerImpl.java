@@ -258,8 +258,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 destination.getPath(),
                 destination.getLanguage(),
                 sourceDocument.getExtension(),
-                sourceDocument.getLabel(),
-                SiteUtil.isVisibleInNavigation(this.manager, sourceDocument));
+                sourceDocument.getLink().getLabel(),
+                sourceDocument.getLink().getNode().isVisible());
 
     }
 
@@ -271,10 +271,10 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             throw new PublicationException("Document [" + document + "] does not exist!");
         }
 
-        if (SiteUtil.contains(this.manager, document)) {
-            deleteFromSiteStructure(document);
+        if (document.hasLink()) {
+            document.getLink().delete();
         }
-
+        
         ResourcesManager resourcesManager = null;
         try {
             resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
@@ -285,26 +285,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         } finally {
             if (resourcesManager != null) {
                 this.manager.release(resourcesManager);
-            }
-        }
-    }
-
-    protected void deleteFromSiteStructure(Document document) throws PublicationException {
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
-        try {
-            Publication publication = document.getPublication();
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
-            siteManager.delete(document);
-        } catch (Exception e) {
-            throw new PublicationException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
             }
         }
     }
@@ -322,17 +302,16 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         try {
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
-            if (siteManager.contains(sourceDocument.getFactory(),
+            if (siteManager.getSiteStructure(sourceDocument.getFactory(),
                     sourceDocument.getPublication(),
-                    destination.getArea(),
-                    destination.getPath())) {
+                    destination.getArea()).contains(destination.getPath())) {
                 throw new PublicationException("The path [" + destination
                         + "] is already contained in this publication!");
             }
 
-            String label = sourceDocument.getLabel();
-            boolean visible = siteManager.isVisibleInNav(sourceDocument);
-            siteManager.delete(sourceDocument);
+            String label = sourceDocument.getLink().getLabel();
+            boolean visible = sourceDocument.getLink().getNode().isVisible();
+            sourceDocument.getLink().delete();
 
             siteManager.add(destination.getPath(), sourceDocument);
             siteManager.setLabel(sourceDocument, label);
@@ -370,12 +349,13 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
         if (SiteUtil.contains(this.manager, sourceDoc)) {
             if (SiteUtil.contains(this.manager, destinationDoc)) {
-                boolean visible = SiteUtil.isVisibleInNavigation(this.manager, sourceDoc);
+                boolean visible = sourceDoc.getLink().getNode().isVisible();
                 SiteUtil.setVisibleInNavigation(this.manager, destinationDoc, visible);
             } else {
                 String path = sourceDoc.getPath();
-                boolean visible = SiteUtil.isVisibleInNavigation(this.manager, sourceDoc);
-                addToSiteManager(path, destinationDoc, sourceDoc.getLabel(), visible);
+                String label = sourceDoc.getLink().getLabel();
+                boolean visible = sourceDoc.getLink().getNode().isVisible();
+                addToSiteManager(path, destinationDoc, label, visible);
             }
         }
 
@@ -802,8 +782,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
         if (addToSiteStructure && SiteUtil.contains(this.manager, sourceDocument)) {
             String path = sourceDocument.getPath();
-            boolean visible = SiteUtil.isVisibleInNavigation(this.manager, sourceDocument);
-            addToSiteManager(path, document, sourceDocument.getLabel(), visible);
+            boolean visible = sourceDocument.getLink().getNode().isVisible();
+            addToSiteManager(path, document, sourceDocument.getLink().getLabel(), visible);
         }
 
         return document;

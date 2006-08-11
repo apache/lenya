@@ -80,26 +80,31 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
                 assertNotNull(node.getUuid());
                 assertEquals(nodes[i], node);
 
-                docManager = (DocumentManager) getManager().lookup(DocumentManager.ROLE);
-
-                resourceTypeSelector = (ServiceSelector) getManager().lookup(ResourceType.ROLE
-                        + "Selector");
-                ResourceType type = (ResourceType) resourceTypeSelector.select("entry");
-                String contentSourceUri = structure.getRepositoryNode().getSourceURI();
-
-                Document doc = docManager.add(getIdentityMap(),
-                        type,
-                        contentSourceUri,
-                        pub,
-                        Publication.AUTHORING_AREA,
-                        "en",
-                        "xml");
-
-                structure.add("/foo", doc);
 
                 checkLinks(siteManager, node);
             }
 
+            docManager = (DocumentManager) getManager().lookup(DocumentManager.ROLE);
+
+            resourceTypeSelector = (ServiceSelector) getManager().lookup(ResourceType.ROLE
+                    + "Selector");
+            ResourceType type = (ResourceType) resourceTypeSelector.select("entry");
+            String contentSourceUri = structure.getRepositoryNode().getSourceURI();
+            
+            Document doc = docManager.add(getIdentityMap(),
+                    type,
+                    contentSourceUri,
+                    pub,
+                    Publication.AUTHORING_AREA,
+                    "en",
+                    "xml");
+
+            structure.add("/foo", doc);
+            assertTrue(structure.contains("/foo"));
+            Document linkDoc = structure.getNode("/foo").getLink("en").getDocument();
+            assertSame(linkDoc, doc);
+            
+            
         } finally {
             if (selector != null) {
                 if (siteManager != null) {

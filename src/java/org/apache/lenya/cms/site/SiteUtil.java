@@ -412,34 +412,6 @@ public class SiteUtil {
     /**
      * @param manager The site manager.
      * @param document The document.
-     * @return If the document is visible in the navigation.
-     * @throws SiteException if an error occurs.
-     */
-    public static boolean isVisibleInNavigation(ServiceManager manager, Document document)
-            throws SiteException {
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
-        try {
-            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(document.getPublication()
-                    .getSiteManagerHint());
-
-            return siteManager.isVisibleInNav(document);
-        } catch (Exception e) {
-            throw new SiteException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                manager.release(selector);
-            }
-        }
-    }
-
-    /**
-     * @param manager The site manager.
-     * @param document The document.
      * @param visible if the document should be visible.
      * @throws SiteException if an error occurs.
      */
@@ -692,7 +664,7 @@ public class SiteUtil {
             selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
             String siteManagerHint = pub.getSiteManagerHint();
             siteManager = (SiteManager) selector.select(siteManagerHint);
-            return siteManager.contains(factory, pub, area, path);
+            return siteManager.getSiteStructure(factory, pub, area).contains(path);
         } catch (ServiceException e) {
             throw new SiteException(e);
         } finally {

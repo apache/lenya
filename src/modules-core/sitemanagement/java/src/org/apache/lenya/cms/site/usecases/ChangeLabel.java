@@ -18,6 +18,7 @@ package org.apache.lenya.cms.site.usecases;
 
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteManager;
@@ -71,27 +72,13 @@ public class ChangeLabel extends DocumentUsecase {
     protected void initParameters() {
         super.initParameters();
         Document document = getSourceDocument();
-
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
         try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(document.getPublication()
-                    .getSiteManagerHint());
-
             if (document.exists()) {
                 setParameter(DOCUMENT_ID, document.getUUID());
-                setParameter(LABEL, siteManager.getLabel(document));
+                setParameter(LABEL, document.getLink().getLabel());
             }
-        } catch (final Exception e) {
+        } catch (final DocumentException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
         }
     }
 

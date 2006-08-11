@@ -16,35 +16,27 @@
  */
 package org.apache.lenya.cms.site.simple;
 
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.site.Link;
-import org.apache.lenya.cms.site.SiteNode;
+import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.site.Label;
 
-public class SimpleLink implements Link {
-    
-    private Document doc;
-    
-    public SimpleLink(Document doc) {
+/**
+ * Link for SimpleSiteManager.
+ */
+public class SimpleLink extends Label {
+
+    protected SimpleLink(DocumentFactory factory, SimpleSiteNode node, String _label, String language) {
+        super(factory, node, _label, language);
+    }
+
+    public void delete() {
+        SimpleSiteNode node = (SimpleSiteNode) getNode();
+        DocumentStore store = (DocumentStore) node.getStructure();
+        try {
+            store.remove(getDocument());
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
+        }
     }
     
-    public Document getDocument() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public String getLanguage() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public SiteNode getNode() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public String getLabel() {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
 }

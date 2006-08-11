@@ -27,18 +27,9 @@ import org.apache.lenya.cms.publication.Publication;
 /**
  * The Label class encapsulates a string label and a associated language.
  */
-public class Label implements Link {
+public abstract class Label implements Link {
     private String label = null;
     private String language = null;
-
-    /**
-     * Creates a new Label object with no language.
-     *
-     * @param _label the actual label
-     */
-    protected Label(DocumentFactory factory, SiteNode node, String _label) {
-        this(factory, node, _label, null);
-    }
 
     /**
      * Creates a new Label object.
@@ -56,7 +47,7 @@ public class Label implements Link {
 
     /**
      * Get the actual label of the Label object
-     *
+     * 
      * @return the actual label as a String
      */
     public String getLabel() {
@@ -71,47 +62,49 @@ public class Label implements Link {
     public void setLabel(String _label) {
         this.label = _label;
     }
+
     /**
-     * Get the language of this Label object 
-     *
+     * Get the language of this Label object
+     * 
      * @return the language
      */
 
     public String getLanguage() {
         return this.language;
     }
-    
-    
-    /** (non-Javadoc)
+
+    /**
+     * (non-Javadoc)
      * @see java.lang.Object#toString()
      */
     public String toString() {
         return getLabel() + " " + getLanguage();
     }
 
-    /** (non-Javadoc)
+    /**
+     * (non-Javadoc)
      * @see java.lang.Object#equals(java.lang.Object)
      */
     public boolean equals(Object obj) {
         boolean equals = false;
 
         if (getClass().isInstance(obj)) {
-            Label otherLabel = (Label)obj;
-            equals =
-                getLabel().equals(otherLabel.getLabel())
+            Label otherLabel = (Label) obj;
+            equals = getLabel().equals(otherLabel.getLabel())
                     && getLanguage().equals(otherLabel.getLanguage());
         }
 
         return equals;
     }
 
-    /** (non-Javadoc)
+    /**
+     * (non-Javadoc)
      * @see java.lang.Object#hashCode()
      */
     public int hashCode() {
         return getLabel().hashCode() + getLanguage().hashCode();
     }
-    
+
     private SiteNode node;
     private DocumentFactory factory;
 

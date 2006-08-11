@@ -33,7 +33,6 @@ import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
@@ -323,7 +322,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         try {
             SiteTreeNode node = (SiteTreeNode) getNode(path);
             if (node != null) {
-                node.addLabel(new Label(this.factory, node, label, language));
+                node.addLabel(new SiteTreeLink(this.factory, node, label, language));
             }
             saveDocument();
         } catch (SiteException e) {
@@ -361,7 +360,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
             return null;
         }
 
-        SiteTreeNode newNode = new SiteTreeNodeImpl(this.factory, this, node);
+        SiteTreeNode newNode = new SiteTreeNodeImpl(this.factory, this, (Element) node, getLogger());
         ContainerUtil.enableLogging(newNode, getLogger());
         return newNode;
     }
@@ -419,7 +418,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
             throw new RuntimeException(e);
         }
         if (node != null) {
-            treeNode = new SiteTreeNodeImpl(this.factory, this, node);
+            treeNode = new SiteTreeNodeImpl(this.factory, this, (Element) node, getLogger());
             ContainerUtil.enableLogging(treeNode, getLogger());
         } else {
             throw new SiteException("No node contained for path [" + path + "]!");
@@ -440,7 +439,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
                 SiteTreeNodeImpl.NODE_NAME);
 
         for (int i = 0; i < elements.length; i++) {
-            SiteTreeNode newNode = new SiteTreeNodeImpl(this.factory, this, elements[i]);
+            SiteTreeNode newNode = new SiteTreeNodeImpl(this.factory, this, elements[i], getLogger());
             childElements.add(newNode);
         }
 
@@ -561,28 +560,9 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         try {
             SiteTreeNode node = (SiteTreeNode) getNode(documentId);
             if (node != null) {
-                Label labelObject = new Label(this.factory, node, label, language);
-                node.setLabel(labelObject);
+                SiteTreeLink link = new SiteTreeLink(this.factory, node, label, language);
+                node.setLink(link);
             }
-            saveDocument();
-        } catch (SiteException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * @see org.apache.lenya.cms.site.tree.SiteTree#setVisibleInNav(java.lang.String, boolean)
-     */
-    public synchronized void setVisibleInNav(String documentId, boolean visibleInNav)
-            throws SiteException {
-        SiteTreeNode node = (SiteTreeNode) getNode(documentId);
-        if (visibleInNav) {
-            node.setNodeAttribute(SiteTreeNodeImpl.VISIBLEINNAV_ATTRIBUTE_NAME, "true");
-        } else {
-            node.setNodeAttribute(SiteTreeNodeImpl.VISIBLEINNAV_ATTRIBUTE_NAME, "false");
-        }
-
-        try {
             saveDocument();
         } catch (SiteException e) {
             throw new RuntimeException(e);
@@ -618,16 +598,6 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         saveDocument();
     }
 
-    public boolean isVisibleInNav(String documentId) throws SiteException {
-        SiteTreeNode node = (SiteTreeNode) getNode(documentId);
-        String value = node.getNodeAttribute(SiteTreeNodeImpl.VISIBLEINNAV_ATTRIBUTE_NAME);
-        if (value != null && !value.equals("")) {
-            return Boolean.valueOf(value).booleanValue();
-        } else {
-            return true;
-        }
-    }
-
     public String getArea() {
         return this.area;
     }
@@ -659,7 +629,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
             if (element == null) {
                 return null;
             } else {
-                return new SiteTreeNodeImpl(this.factory, this, element);
+                return new SiteTreeNodeImpl(this.factory, this, element, getLogger());
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -682,7 +652,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     public Link add(String path, org.apache.lenya.cms.publication.Document doc)
             throws SiteException {
         SiteTreeNode node = addNode(path, doc.getUUID(), true, null, "", false);
-        Label label = new Label(doc.getFactory(), node, "", doc.getLanguage());
+        SiteTreeLink label = new SiteTreeLink(doc.getFactory(), node, "", doc.getLanguage());
         node.addLabel(label);
         return label;
     }

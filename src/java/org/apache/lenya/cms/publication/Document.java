@@ -110,16 +110,6 @@ public interface Document extends MetaDataOwner, RepositoryItem {
     String[] getLanguages() throws DocumentException;
 
     /**
-     * Get the navigation label associated with this document 
-     * for the language.
-     * 
-     * @return the label String
-     * 
-     * @throws DocumentException if an error occurs
-     */
-    String getLabel() throws DocumentException;
-
-    /**
      * Returns the date of the last modification of this document.
      * @return A date denoting the date of the last modification.
      */
@@ -314,5 +304,10 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      * @return The area the document belongs to.
      */
     Area area();
+
+    /**
+     * @return if the document is linked in the site structure.
+     */
+    boolean hasLink();
     
 }

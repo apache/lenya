@@ -44,4 +44,14 @@ public interface Link {
      */
     String getLabel();
     
+    /**
+     * @param label The new label.
+     */
+    void setLabel(String label);
+    
+    /**
+     * Removes the link.
+     */
+    void delete();
+    
 }

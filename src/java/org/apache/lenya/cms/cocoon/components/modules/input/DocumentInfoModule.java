@@ -39,8 +39,6 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.SiteUtil;
 
 /**
  * Input module to get document information.
@@ -174,8 +172,8 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
 
     protected boolean isVisibleInNavigation(Document document) throws ConfigurationException {
         try {
-            return SiteUtil.isVisibleInNavigation(this.manager, document);
-        } catch (SiteException e) {
+            return  document.getLink().getNode().isVisible();
+        } catch (DocumentException e) {
             throw new ConfigurationException("Obtaining navigation visibility failed [" + document
                     + "]: " + e.getMessage(), e);
         }

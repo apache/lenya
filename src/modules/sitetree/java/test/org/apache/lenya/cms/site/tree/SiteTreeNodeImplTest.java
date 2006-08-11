@@ -23,7 +23,8 @@ import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
-import org.apache.lenya.cms.site.Label;
+import org.apache.lenya.cms.site.Link;
+import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.tree.DefaultSiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 
@@ -84,50 +85,55 @@ public class SiteTreeNodeImplTest extends AbstractAccessControlTest {
 
     /**
      * Test getLabels
+     * @throws SiteException 
      * 
      */
-    final public void testGetLabels() {
-        assertEquals(this.node.getLabels().length, 2);
-        for (int i = 0; i < this.node.getLabels().length; i++) {
-            Label label = this.node.getLabels()[i];
-            Label label1 = new Label(getIdentityMap(), node, "Bar", "en");
-            Label label2 = new Label(getIdentityMap(), node, "Stab", "de");
+    final public void testGetLabels() throws SiteException {
+        String[] languages = this.node.getLanguages();
+        assertEquals(languages.length, 2);
+        for (int i = 0; i < languages.length; i++) {
+            Link label = this.node.getLink(languages[i]);
+            Link label1 = new SiteTreeLink(getIdentityMap(), node, "Bar", "en");
+            Link label2 = new SiteTreeLink(getIdentityMap(), node, "Stab", "de");
             assertTrue(label.equals(label1) || label.equals(label2));
         }
     }
 
     /**
      * Test getLabel
+     * @throws SiteException 
      * 
      */
-    final public void testGetLabel() {
-        Label label = this.node.getLabel("en");
+    final public void testGetLabel() throws SiteException {
+        Link label = this.node.getLink("en");
         assertNotNull(label);
         assertEquals(label.getLabel(), "Bar");
     }
 
     /**
      * Test addLabel
+     * @throws SiteException 
      * 
      */
-    final public void testAddLabel() {
-        Label label = new Label(getIdentityMap(), this.node, "Barolo", "it");
-        this.node.addLabel(label);
-        label = this.node.getLabel("it");
+    final public void testAddLabel() throws SiteException {
+        Link label = new SiteTreeLink(getIdentityMap(), this.node, "Barolo", "it");
+        this.node.addLabel((SiteTreeLink) label);
+        label = this.node.getLink("it");
         assertNotNull(label);
         assertEquals(label.getLabel(), "Barolo");
-        label = this.node.getLabel("ch");
+        label = this.node.getLink("ch");
         assertNull(label);
     }
 
     /**
      * Test removeLabel
+     * @throws SiteException 
      * 
      */
-    final public void testRemoveLabel() {
-        assertNotNull(this.node.getLabel("en"));
+    final public void testRemoveLabel() throws SiteException {
+        assertNotNull(this.node.getLink("en"));
         this.node.removeLabel("en");
-        assertNull(this.node.getLabel("en"));
+        assertNull(this.node.getLink("en"));
     }
 
     /**

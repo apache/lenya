@@ -312,7 +312,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
     public void setVisibleInNav(Document document, boolean visibleInNav) throws SiteException {
         SiteTree tree = getTree(document);
         try {
-            tree.setVisibleInNav(document.getPath(), visibleInNav);
+            tree.getNode(document.getPath()).setVisible(visibleInNav);
         } catch (DocumentException e) {
             throw new SiteException(e);
         }
@@ -500,13 +500,13 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
     public boolean isVisibleInNav(Document document) throws SiteException {
         SiteTree tree = getTree(document);
         try {
-            return tree.isVisibleInNav(document.getPath());
+            return tree.getNode(document.getPath()).isVisible();
         } catch (DocumentException e) {
             throw new SiteException(e);
         }
     }
 
-    public String getPath(DocumentFactory factory, Publication pub, String area, String uuid, String language)
+    protected String getPath(DocumentFactory factory, Publication pub, String area, String uuid, String language)
             throws SiteException {
         SiteTree tree = getTree(factory, pub, area);
         SiteNode node = tree.getByUuid(uuid, language).getNode();
@@ -517,7 +517,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         return node.getPath();
     }
 
-    public String getUUID(DocumentFactory factory, Publication pub, String area, String path)
+    protected String getUUID(DocumentFactory factory, Publication pub, String area, String path)
             throws SiteException {
         SiteTree tree = getTree(factory, pub, area);
         SiteNode node = tree.getNode(path);
@@ -528,13 +528,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         return node.getUuid();
     }
 
-    public boolean contains(DocumentFactory factory, Publication pub, String area, String path)
-            throws SiteException {
-        SiteTree tree = getTree(factory, pub, area);
-        return tree.getNode(path) != null;
-    }
-
-    public boolean contains(DocumentFactory factory, DocumentLocator locator) throws SiteException {
+    protected boolean contains(DocumentFactory factory, DocumentLocator locator) throws SiteException {
         Publication pub;
         try {
             pub = PublicationUtil.getPublication(this.manager, locator.getPublicationId());

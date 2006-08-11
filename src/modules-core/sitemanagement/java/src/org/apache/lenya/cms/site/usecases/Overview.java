@@ -22,7 +22,6 @@ import java.util.Arrays;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
@@ -75,7 +74,7 @@ public class Overview extends SiteUsecase {
             String lastModified = format.format(getSourceDocument().getLastModified());
             setParameter(LASTMODIFIED, lastModified);
             setParameter(RESOURCE_TYPE, doc.getResourceType());
-            boolean visible = SiteUtil.isVisibleInNavigation(this.manager, doc);
+            boolean visible = doc.getLink().getNode().isVisible();
             setParameter(VISIBLE_IN_NAVIGATION, Boolean.valueOf(visible));
 
             Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,

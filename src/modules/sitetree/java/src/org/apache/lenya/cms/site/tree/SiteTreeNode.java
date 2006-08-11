@@ -22,7 +22,7 @@ package org.apache.lenya.cms.site.tree;
 import java.util.List;
 
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.site.Label;
+import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
 
 /**
@@ -40,30 +40,12 @@ public interface SiteTreeNode extends SiteNode {
     SiteTreeNode getParent(String language);
 
     /**
-     * Get all labels for this node (independent of their language attribute).
-     * 
-     * @return an <code>Array</code> of labels.
-     * @deprecated use {@link SiteNode#getLanguages()} instead.
-     */
-    Label[] getLabels();
-
-    /**
-     * Get the label for a specific language.
-     * 
-     * @param xmlLanguage the language for which the label is requested.
-     * 
-     * @return a <code>Label</code> if there is one for the given language, 
-     * null otherwise. 
-     * @deprecated use {@link #getLink()} instead.
-     */
-    Label getLabel(String xmlLanguage);
-
-    /**
      * Add a label to this node iff the node does not have this label already.
      * 
      * @param label the label to be added.
+     * @throws SiteException if the label is already contained.
      */
-    void addLabel(Label label);
+    void addLabel(SiteTreeLink label) throws SiteException;
 
     /**
      * Remove a label from this node.
@@ -170,14 +152,15 @@ public interface SiteTreeNode extends SiteNode {
      * 
      * @throws DocumentException if an error occurs
 	 */
-	void acceptReverseSubtree(SiteTreeNodeVisitor visitor) throws DocumentException; 
+	void acceptReverseSubtree(SiteTreeNodeVisitor visitor) throws DocumentException;
+    
     /**
      * Sets a label of an this node. If the label does not exist, it is added.
      * Otherwise, the existing label is replaced.
      * 
      * @param label the label to add
      */
-    void setLabel(Label label);
+    void setLink(SiteTreeLink label);
 
     /**
      * Sets an attribute of this node. If the attribute already exists its value will be overwritten

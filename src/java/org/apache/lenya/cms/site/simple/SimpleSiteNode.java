@@ -17,26 +17,27 @@
 package org.apache.lenya.cms.site.simple;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.site.AbstractSiteNode;
-import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.SiteStructure;
 
+/**
+ * Node for SimpleSiteManager.
+ */
 public class SimpleSiteNode extends AbstractSiteNode {
     
-    public SimpleSiteNode(DocumentStore store, String path, String uuid) {
-        super(store.getPublication(), store, path, uuid);
+    protected SimpleSiteNode(DocumentStore store, String path, String uuid, Logger logger) {
+        super(store.getPublication(), store, path, uuid, logger);
     }
 
     public Link getLink(String language) throws SiteException {
         DocumentStore store = (DocumentStore) getStructure();
-        return new Label(store.getDelegate().getFactory(), this, "", language);
+        return new SimpleLink(store.getDelegate().getFactory(), this, "", language);
     }
 
     public String getName() {
@@ -62,6 +63,13 @@ public class SimpleSiteNode extends AbstractSiteNode {
             }
         }
         return (String[]) languages.toArray(new String[languages.size()]);
+    }
+
+    public boolean isVisible() {
+        return true;
+    }
+
+    public void setVisible(boolean visibleInNav) {
     }
 
 }

@@ -107,18 +107,6 @@ public interface SiteManager {
     boolean contains(Document resource) throws SiteException;
 
     /**
-     * Checks if the site structure contains a certain resource in a certain area.
-     * @param factory The document factory.
-     * @param pub The publication.
-     * @param area The area.
-     * @param path The path.
-     * @return A boolean value.
-     * @throws SiteException if an error occurs.
-     */
-    boolean contains(DocumentFactory factory, Publication pub, String area, String path)
-            throws SiteException;
-
-    /**
      * Checks if the site structure contains any language version of a certain resource in a certain
      * area.
      * 
@@ -136,23 +124,6 @@ public interface SiteManager {
      * @throws SiteException when something went wrong.
      */
     void copy(Document sourceDocument, Document destinationDocument) throws SiteException;
-
-    /**
-     * Deletes a document from the site structure.
-     * 
-     * @param document The document to remove.
-     * @throws SiteException when something went wrong.
-     */
-    void delete(Document document) throws SiteException;
-
-    /**
-     * Returns the label of a document.
-     * 
-     * @param document The document.
-     * @return A label.
-     * @throws SiteException if an error occurs.
-     */
-    String getLabel(Document document) throws SiteException;
 
     /**
      * Sets the label of a certain document.

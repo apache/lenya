@@ -46,7 +46,7 @@ import org.apache.lenya.cms.site.SiteStructure;
 public class DocumentImpl extends AbstractLogEnabled implements Document {
 
     private DocumentIdentifier identifier;
-    private DocumentFactory identityMap;
+    private DocumentFactory factory;
     protected ServiceManager manager;
 
     /**
@@ -109,7 +109,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
             throw new IllegalArgumentException("The document ID must not be null!");
         }
 
-        this.identityMap = map;
+        this.factory = map;
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("DefaultDocument() done building instance with _id ["
@@ -214,32 +214,6 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         }
 
         return (String[]) documentLanguages.toArray(new String[documentLanguages.size()]);
-    }
-
-    /**
-     * @see org.apache.lenya.cms.publication.Document#getLabel()
-     */
-    public String getLabel() throws DocumentException {
-        String labelString = "";
-        SiteManager siteManager = null;
-        ServiceSelector selector = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(getPublication().getSiteManagerHint());
-            if (siteManager != null) {
-                labelString = siteManager.getLabel(this);
-            }
-        } catch (Exception e) {
-            throw new DocumentException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
-        }
-        return labelString;
     }
 
     /**
@@ -387,7 +361,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.cms.publication.Document#getFactory()
      */
     public DocumentFactory getFactory() {
-        return this.identityMap;
+        return this.factory;
     }
 
     /**
@@ -669,6 +643,28 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         }
         throw new DocumentException("The document [" + this
                 + "] is not referenced in the site structure!");
+    }
+
+    public boolean hasLink() {
+        ServiceSelector selector = null;
+        SiteManager siteManager = null;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(getPublication().getSiteManagerHint());
+            SiteStructure structure = siteManager.getSiteStructure(getFactory(),
+                    getPublication(),
+                    getArea());
+            return structure.containsByUuid(getUUID(), getLanguage());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                this.manager.release(selector);
+            }
+        }
     }
 
     public Area area() {

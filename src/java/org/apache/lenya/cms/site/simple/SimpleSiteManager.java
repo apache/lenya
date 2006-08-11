@@ -193,27 +193,6 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
     }
 
     /**
-     * @see org.apache.lenya.cms.site.SiteManager#delete(org.apache.lenya.cms.publication.Document)
-     */
-    public void delete(Document document) throws SiteException {
-        DocumentStore store = getStore(document);
-        try {
-            if (store.contains(document)) {
-                store.remove(document);
-            }
-        } catch (Exception e) {
-            throw new SiteException(e);
-        }
-    }
-
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#getLabel(org.apache.lenya.cms.publication.Document)
-     */
-    public String getLabel(Document document) throws SiteException {
-        return "";
-    }
-
-    /**
      * @see org.apache.lenya.cms.site.SiteManager#setLabel(org.apache.lenya.cms.publication.Document,
      *      java.lang.String)
      */
@@ -261,11 +240,6 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
 
     public boolean isVisibleInNav(Document document) throws SiteException {
         return true;
-    }
-
-    public boolean contains(DocumentFactory factory, Publication pub, String area, String path)
-            throws SiteException {
-        return getStore(factory, pub, area).contains(path);
     }
 
     public void set(String path, Document document) throws SiteException {

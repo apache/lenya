@@ -27,7 +27,7 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.site.Label;
+import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.tree.DefaultSiteTree;
@@ -139,9 +139,9 @@ public class DefaultSiteTreeTest extends AbstractAccessControlTest {
      */
     final public void testAddLabel() throws SiteException {
         this.siteTree.addLabel("/foo/bar", "en", "Tutorial");
-        Label[] labels = ((SiteTreeNode) this.siteTree.getNode("/foo/bar")).getLabels();
+        String[] labels = ((SiteTreeNode) this.siteTree.getNode("/foo/bar")).getLanguages();
         assertEquals(labels.length, 1);
-        Label label = ((SiteTreeNode) this.siteTree.getNode("/foo/bar")).getLabel("en");
+        Link label = ((SiteTreeNode) this.siteTree.getNode("/foo/bar")).getLink("en");
         assertNotNull(label);
         assertEquals(label.getLabel(), "Tutorial");
     }
@@ -153,16 +153,16 @@ public class DefaultSiteTreeTest extends AbstractAccessControlTest {
     final public void testRemoveLabel() throws SiteException {
         this.siteTree.addLabel("/foo/bar", "de", "Hello");
         this.siteTree.addLabel("/foo/bar", "en", "World");
-        assertEquals(((SiteTreeNode) this.siteTree.getNode("/foo/bar")).getLabels().length, 2);
+        assertEquals(((SiteTreeNode) this.siteTree.getNode("/foo/bar")).getLanguages().length, 2);
 
         this.siteTree.removeLabel("/foo/bar", "de");
-        assertEquals(((SiteTreeNode) this.siteTree.getNode("/foo/bar")).getLabels().length, 1);
+        assertEquals(((SiteTreeNode) this.siteTree.getNode("/foo/bar")).getLanguages().length, 1);
 
-        assertEquals(((SiteTreeNode) this.siteTree.getNode("/foo/bar")).getLabels()[0].getLanguage(),
+        assertEquals(((SiteTreeNode) this.siteTree.getNode("/foo/bar")).getLanguages()[0],
                 "en");
 
         this.siteTree.addLabel("/foo/bar", "de", "Foo");
-        assertEquals(((SiteTreeNode) this.siteTree.getNode("/foo/bar")).getLabels().length, 2);
+        assertEquals(((SiteTreeNode) this.siteTree.getNode("/foo/bar")).getLanguages().length, 2);
     }
 
     /**

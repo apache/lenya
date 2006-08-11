@@ -65,5 +65,16 @@ public interface SiteNode {
      * @return The name, i.e. the last path element.
      */
     String getName();
+    
+    /**
+     * @return if the node is visible in the navigation.
+     */
+    boolean isVisible();
+
+    /**
+     * Sets the node visibility in the navigation.
+     * @param visibleInNav if the node should be visible.
+     */
+    void setVisible(boolean visibleInNav);
 
 }

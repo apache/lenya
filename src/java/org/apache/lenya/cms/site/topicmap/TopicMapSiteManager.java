@@ -110,14 +110,6 @@ public class TopicMapSiteManager extends AbstractSiteManager {
     }
 
     /**
-     * @see org.apache.lenya.cms.site.SiteManager#getLabel(org.apache.lenya.cms.publication.Document)
-     */
-    public String getLabel(Document document) throws SiteException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /**
      * @see org.apache.lenya.cms.site.SiteManager#setLabel(org.apache.lenya.cms.publication.Document,
      *      java.lang.String)
      */
@@ -173,12 +165,6 @@ public class TopicMapSiteManager extends AbstractSiteManager {
     public String getUUID(DocumentFactory factory, Publication pub, String area, String path) throws SiteException {
         // TODO Auto-generated method stub
         return null;
-    }
-
-    public boolean contains(DocumentFactory factory, Publication pub, String area, String path)
-            throws SiteException {
-        // TODO Auto-generated method stub
-        return false;
     }
 
     public boolean contains(DocumentFactory factory, DocumentLocator locator) throws SiteException {

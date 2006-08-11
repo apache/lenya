@@ -170,7 +170,7 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
 
     public Link getByUuid(String uuid, String language) throws SiteException {
         String path = getPath(uuid, language);
-        SiteNode node = new SimpleSiteNode(this, path, uuid);
+        SiteNode node = new SimpleSiteNode(this, path, uuid, getLogger());
         return node.getLink(language);
     }
 
@@ -192,7 +192,7 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
                 String value = (String) doc2path().get(key);
                 if (value.equals(path)) {
                     String uuid = getUuid(key);
-                    node = new SimpleSiteNode(this, path, uuid);
+                    node = new SimpleSiteNode(this, path, uuid, getLogger());
                     this.path2node.put(path, node);
                 }
             }
@@ -233,6 +233,12 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
         return getNode(path).getLink(document.getLanguage());
     }
 
+    /**
+     * Sets the path for a document.
+     * @param document
+     * @param path
+     * @throws TransactionException
+     */
     public void setPath(Document document, String path) throws TransactionException {
         Assert.notNull("path", path);
         Assert.notNull("document", document);

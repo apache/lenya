@@ -181,7 +181,7 @@ public class AbstractAccessControlTest extends LenyaTestCase {
         if (this.identityMap == null) {
             org.apache.lenya.cms.repository.Session session;
             try {
-                session = RepositoryUtil.createSession(getManager(), getIdentity());
+                session = RepositoryUtil.getSession(getManager(), getRequest());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
