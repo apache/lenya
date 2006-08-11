@@ -92,7 +92,7 @@ public class Resource extends AbstractLogEnabled implements MetaDataOwner {
             String pubBase = Node.LENYA_PROTOCOL + Publication.PUBLICATION_PREFIX_URI + "/";
             String publicationsPath = document.getPublication().getSourceURI().substring(pubBase.length());
             publicationId = publicationsPath.split("/")[0];
-            Publication pub = PublicationUtil.getPublication(this.manager, publicationId);
+            Publication pub = getDocument().getFactory().getPublication(publicationId);
             contentDir = pub.getContentDir();
         } catch (Exception e) {
             getLogger().error(e.getMessage());

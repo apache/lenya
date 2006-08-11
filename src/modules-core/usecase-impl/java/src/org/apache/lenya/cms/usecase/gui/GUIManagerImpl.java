@@ -41,6 +41,9 @@ import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.cms.ac.PolicyUtil;
 import org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer;
+import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.usecase.Usecase;
@@ -158,7 +161,21 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Co
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("Found usecase [" + tab.getUsecase() + "]");
                 }
+
+                DocumentFactory factory;
+                ContextUtility util = null;
+                try {
+                    util = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
+                    Request request = util.getRequest();
+                    factory = DocumentUtil.getDocumentFactory(this.manager, request);
+                } finally {
+                    if (util != null) {
+                        this.manager.release(util);
+                    }
+                }
+
                 Publication pub = PublicationUtil.getPublicationFromUrl(this.manager,
+                        factory,
                         this.webappUrl);
                 if (!authorizer.authorizeUsecase(tab.getUsecase(), this.roles, pub, this.requestURI)) {
                     if (getLogger().isDebugEnabled()) {

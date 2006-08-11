@@ -22,7 +22,6 @@ package org.apache.lenya.cms.site.tree;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.tree.DefaultSiteTree;
@@ -43,7 +42,7 @@ public class SiteTreeNodeImplTest extends AbstractAccessControlTest {
      */
     public void setUp() throws Exception {
         super.setUp();
-        Publication pub = PublicationUtil.getPublication(getManager(), "test");
+        Publication pub = getPublication("test");
         this.siteTree = new DefaultSiteTree(getFactory(), pub, "testArea", getManager(), getLogger());
         ContainerUtil.enableLogging(siteTree, getLogger());
         
@@ -121,8 +120,7 @@ public class SiteTreeNodeImplTest extends AbstractAccessControlTest {
         label = this.node.getLink("it");
         assertNotNull(label);
         assertEquals(label.getLabel(), "Barolo");
-        label = this.node.getLink("ch");
-        assertNull(label);
+        assertFalse(this.node.hasLink("ch"));
     }
 
     /**
@@ -133,7 +131,7 @@ public class SiteTreeNodeImplTest extends AbstractAccessControlTest {
     final public void testRemoveLabel() throws SiteException {
         assertNotNull(this.node.getLink("en"));
         this.node.removeLabel("en");
-        assertNull(this.node.getLink("en"));
+        assertFalse(this.node.hasLink("en"));
     }
 
     /**

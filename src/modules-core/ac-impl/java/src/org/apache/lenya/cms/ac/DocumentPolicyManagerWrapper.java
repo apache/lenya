@@ -29,6 +29,7 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.AccreditableManager;
@@ -79,7 +80,8 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         ContextUtility contextUtility = null;
         try {
             contextUtility = (ContextUtility) serviceManager.lookup(ContextUtility.ROLE);
-            Session session = RepositoryUtil.getSession(this.serviceManager, contextUtility.getRequest());
+            Session session = RepositoryUtil.getSession(this.serviceManager,
+                    contextUtility.getRequest());
             DocumentFactory map = DocumentUtil.createDocumentFactory(this.serviceManager, session);
             if (map.isDocument(webappUrl)) {
                 Document document = map.getFromURL(webappUrl);
@@ -123,10 +125,18 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
     protected Publication getPublication(String url) throws AccessControlException {
         getLogger().debug("Building publication");
 
+        ContextUtility util = null;
         try {
-            return PublicationUtil.getPublicationFromUrl(this.serviceManager, url);
+            util = (ContextUtility) this.serviceManager.lookup(ContextUtility.ROLE);
+            Request request = util.getRequest();
+            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.serviceManager, request);
+            return PublicationUtil.getPublicationFromUrl(this.serviceManager, factory, url);
         } catch (Exception e) {
             throw new AccessControlException(e);
+        } finally {
+            if (util != null) {
+                this.serviceManager.release(util);
+            }
         }
     }
 

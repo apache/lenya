@@ -8,14 +8,15 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
+import org.apache.cocoon.environment.Request;
+import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.observation.ObservationRegistry;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryListener;
-import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationUtil;
 
 /**
  * The content janitor cleans up empty directories after a document is removed.
@@ -27,14 +28,21 @@ public class ContentJanitor extends AbstractLogEnabled implements Serviceable, S
     }
 
     public void documentRemoved(RepositoryEvent event) {
+        ContextUtility util = null;
         try {
-            Publication pub = PublicationUtil
-                    .getPublication(this.manager, event.getPublicationId());
+            util = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
+            Request request = util.getRequest();
+            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
+            Publication pub = factory.getPublication(event.getPublicationId());
             File contentFile = pub.getContentDirectory(event.getArea());
             String contentUri = contentFile.toURI().toString();
             SourceUtil.deleteEmptyCollections(contentUri, this.manager);
         } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            if (util != null) {
+                this.manager.release(util);
+            }
         }
     }
 

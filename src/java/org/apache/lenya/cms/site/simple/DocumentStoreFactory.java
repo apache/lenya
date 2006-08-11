@@ -23,7 +23,6 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.RepositoryItemFactory;
@@ -70,10 +69,9 @@ public class DocumentStoreFactory extends AbstractLogEnabled implements Reposito
         String uuid = snippets[2];
         DocumentStore store;
         try {
-            Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
-
-            DocumentFactory docMap = DocumentUtil.createDocumentFactory(this.manager, session);
-            store = new DocumentStore(this.manager, docMap, publication, area, uuid, getLogger());
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
+            Publication publication = factory.getPublication(publicationId);
+            store = new DocumentStore(this.manager, factory, publication, area, uuid, getLogger());
         } catch (Exception e) {
             throw new RepositoryException(e);
         }

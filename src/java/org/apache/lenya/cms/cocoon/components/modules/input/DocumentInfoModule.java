@@ -36,7 +36,6 @@ import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 
@@ -102,8 +101,8 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
             Session session = RepositoryUtil.getSession(this.manager, request);
             DocumentFactory docFactory = DocumentUtil.createDocumentFactory(this.manager,
                     session);
-            Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
-            document = docFactory.get(publication, area, uuid, language);
+            Publication pub = docFactory.getPublication(publicationId);
+            document = pub.getArea(area).getDocument(uuid, language); 
         } catch (Exception e) {
             throw new ConfigurationException("Error getting document [" + publicationId + ":"
                     + area + ":" + uuid + ":" + language + "]: " + e.getMessage(), e);

@@ -25,7 +25,6 @@ import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.site.SiteException;
 
 /**
@@ -97,7 +96,7 @@ public class FilePublicationTest extends AbstractAccessControlTest {
         getLogger().info("    Destination document ID: [" + _destinationDocumentId + "]");
         getLogger().info("    Destination language:    [" + _destinationLanguage + "]");
 
-        Publication publication = PublicationUtil.getPublication(getManager(), "test");
+        Publication publication = getPublication("test");
         DocumentFactory map = getFactory();
 
         Document sourceDocument = map.get(publication,

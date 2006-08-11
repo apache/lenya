@@ -104,5 +104,17 @@ public interface DocumentFactory extends RepositoryItemFactory {
      * @throws DocumentBuildException if an error occurs.
      */
     Document get(DocumentLocator locator) throws DocumentBuildException;
+    
+    /**
+     * @param id The publication ID.
+     * @return A publication.
+     * @throws PublicationException if the publication does not exist.
+     */
+    Publication getPublication(String id) throws PublicationException;
+    
+    /**
+     * @return All publications.
+     */
+    Publication[] getPublications();
 
 }

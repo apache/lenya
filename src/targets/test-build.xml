@@ -155,7 +155,7 @@
 
 
   <!-- Runs JUnit tests -->
-  <target name="tests.junit" depends="tests.prepare">
+  <target name="tests.junit" depends="patch-modules-test">
     <junit printsummary="yes" showoutput="true" haltonerror="on" haltonfailure="on" fork="true">
       <jvmarg value="-Djava.endorsed.dirs=${build.webapp}/WEB-INF/lib/endorsed"/>
       <jvmarg value="-Dorg.xml.sax.parser=org.apache.xerces.parsers.SAXParser"/>

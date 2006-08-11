@@ -55,15 +55,6 @@ public abstract class Label implements Link {
     }
 
     /**
-     * Set the actual label of the label object.
-     * 
-     * @param _label The label.
-     */
-    public void setLabel(String _label) {
-        this.label = _label;
-    }
-
-    /**
      * Get the language of this Label object
      * 
      * @return the language

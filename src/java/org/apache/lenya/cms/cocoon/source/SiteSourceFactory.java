@@ -42,7 +42,6 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
@@ -127,15 +126,13 @@ public class SiteSourceFactory extends AbstractLogEnabled implements SourceFacto
                         + "] must start with at least one slash.");
             }
 
-            Publication pub = PublicationUtil.getPublication(this.manager, pubId);
+            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
+            Publication pub = factory.getPublication(pubId);
             String[] steps = relativePath.substring(1).split("/");
             
             String language = steps[0];
             String prefix = "/" + language;
             String path = relativePath.substring(prefix.length());
-            
-            Session session = RepositoryUtil.getSession(this.manager, request);
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
             
             ServiceSelector selector = null;
             SiteManager siteManager = null;
@@ -158,6 +155,7 @@ public class SiteSourceFactory extends AbstractLogEnabled implements SourceFacto
             }
 
             String lenyaURL = doc.getSourceURI();
+            Session session = RepositoryUtil.getSession(this.manager, request);
             return new RepositorySource(manager, lenyaURL, session, getLogger());
             
         } catch (Exception e) {

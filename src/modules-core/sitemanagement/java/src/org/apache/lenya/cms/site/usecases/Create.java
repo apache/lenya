@@ -115,6 +115,12 @@ public abstract class Create extends AbstractUsecase {
                 addErrorMessage("Please select a page layout.");
             }
         }
+        
+        String path = getNewDocumentPath();
+        SiteStructure site = getPublication().getArea(getArea()).getSite();
+        if (!createVersion() && site.contains(path)) {
+            addErrorMessage("The path [" + path + "] already exists!");
+        }
 
         String doctypeName = getDocumentTypeName();
         if (doctypeName != null) {
@@ -368,6 +374,7 @@ public abstract class Create extends AbstractUsecase {
         if (this.publication == null) {
             try {
                 this.publication = PublicationUtil.getPublicationFromUrl(this.manager,
+                        getDocumentFactory(),
                         getSourceURL());
             } catch (PublicationException e) {
                 throw new RuntimeException(e);

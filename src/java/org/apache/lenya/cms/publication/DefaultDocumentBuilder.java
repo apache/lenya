@@ -118,14 +118,14 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
      * @param locator The document.
      * @return A string.
      */
-    protected String buildCanonicalDocumentUrl(DocumentLocator locator) {
+    protected String buildCanonicalDocumentUrl(DocumentFactory factory, DocumentLocator locator) {
 
         String languageSuffix = "";
         String language = locator.getLanguage();
 
         Publication pub;
         try {
-            pub = PublicationUtil.getPublication(this.manager, locator.getPublicationId());
+            pub = factory.getPublication(locator.getPublicationId());
         } catch (PublicationException e) {
             throw new RuntimeException(e);
         }
@@ -142,9 +142,9 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
      * @see org.apache.lenya.cms.publication.DocumentBuilder#buildCanonicalUrl(
      *      org.apache.lenya.cms.publication.DocumentLocator)
      */
-    public String buildCanonicalUrl(DocumentLocator doc) {
+    public String buildCanonicalUrl(DocumentFactory factory, DocumentLocator doc) {
 
-        String documentUrl = buildCanonicalDocumentUrl(doc);
+        String documentUrl = buildCanonicalDocumentUrl(factory, doc);
         String url = "/" + doc.getPublicationId() + "/" + doc.getArea() + documentUrl;
         return url;
     }
@@ -152,7 +152,8 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
     /**
      * @see org.apache.lenya.cms.publication.DocumentBuilder#getLocator( java.lang.String)
      */
-    public DocumentLocator getLocator(String webappUrl) throws DocumentBuildException {
+    public DocumentLocator getLocator(DocumentFactory factory, String webappUrl)
+            throws DocumentBuildException {
 
         if (!isDocument(webappUrl)) {
             throw new DocumentBuildException("The webapp URL [" + webappUrl
@@ -163,7 +164,7 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
 
         Publication publication;
         try {
-            publication = PublicationUtil.getPublicationFromUrl(this.manager, webappUrl);
+            publication = PublicationUtil.getPublicationFromUrl(this.manager, factory, webappUrl);
         } catch (PublicationException e) {
             throw new DocumentBuildException(e);
         }

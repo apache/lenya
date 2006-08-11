@@ -38,9 +38,6 @@ import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
 
@@ -185,17 +182,15 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
 
         Request request = ObjectModelHelper.getRequest(objectModel);
         Publication pub;
-        Session session;
         try {
-            session = RepositoryUtil.getSession(this.manager, request);
-            pub = PublicationUtil.getPublication(this.manager, this.publicationId);
+            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
+            pub = factory.getPublication(this.publicationId);
+            this.document = pub.getArea(area).getDocument(uuid, language);
         } catch (Exception e) {
             throw new ProcessingException("Error geting publication id / area from page envelope",
                     e);
         }
 
-        DocumentFactory map = DocumentUtil.createDocumentFactory(this.manager, session);
-        this.document = map.get(pub, area, uuid, language);
     }
 
     /**

@@ -25,12 +25,16 @@ import org.apache.avalon.framework.activity.Initializable;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
+import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.impl.AbstractAccessControllerResolver;
+import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.URLInformation;
@@ -41,7 +45,8 @@ import org.apache.lenya.cms.publication.URLInformation;
 public class PublicationAccessControllerResolver extends AbstractAccessControllerResolver implements
         Initializable {
 
-    protected static final String AC_CONFIGURATION_FILE = "config/ac/ac.xconf".replace('/', File.separatorChar);
+    protected static final String AC_CONFIGURATION_FILE = "config/ac/ac.xconf".replace('/',
+            File.separatorChar);
     protected static final String TYPE_ATTRIBUTE = "type";
 
     /**
@@ -100,10 +105,20 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
             URLInformation info = new URLInformation(webappUrl);
             String publicationId = info.getPublicationId();
 
+            ContextUtility util = null;
             try {
-                publication = PublicationUtil.getPublicationFromUrl(this.manager, webappUrl);
+                util = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
+                Request request = util.getRequest();
+                DocumentFactory factory = DocumentUtil.getDocumentFactory(manager, request);
+                publication = PublicationUtil.getPublicationFromUrl(this.manager,
+                        factory,
+                        webappUrl);
             } catch (Exception e) {
                 throw new AccessControlException(e);
+            } finally {
+                if (util != null) {
+                    this.manager.release(util);
+                }
             }
             if (publication.exists()) {
                 getLogger().debug("Publication [" + publicationId + "] exists.");
@@ -160,20 +175,20 @@ public class PublicationAccessControllerResolver extends AbstractAccessControlle
 
         AccessController accessController = null;
 
-            try {
-                Configuration configuration = getConfiguration(publication);
-                String type = configuration.getAttribute(TYPE_ATTRIBUTE);
+        try {
+            Configuration configuration = getConfiguration(publication);
+            String type = configuration.getAttribute(TYPE_ATTRIBUTE);
 
-                accessController = (AccessController) getManager().lookup(AccessController.ROLE
-                        + "/" + type);
+            accessController = (AccessController) getManager().lookup(AccessController.ROLE + "/"
+                    + type);
 
-                if (accessController instanceof Configurable) {
-                    ((Configurable) accessController).configure(configuration);
-                }
-
-            } catch (Exception e) {
-                throw new AccessControlException(e);
+            if (accessController instanceof Configurable) {
+                ((Configurable) accessController).configure(configuration);
             }
+
+        } catch (Exception e) {
+            throw new AccessControlException(e);
+        }
 
         return accessController;
     }

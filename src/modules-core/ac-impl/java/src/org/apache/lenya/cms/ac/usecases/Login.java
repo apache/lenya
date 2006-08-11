@@ -46,7 +46,9 @@ public class Login extends AccessControlUsecase {
         Publication publication;
 
         try {
-            publication = PublicationUtil.getPublicationFromUrl(this.manager, getSourceURL());
+            publication = PublicationUtil.getPublicationFromUrl(this.manager,
+                    getDocumentFactory(),
+                    getSourceURL());
             if (publication.exists()) {
                 setParameter(PUBLICATION_ID, publication.getId());
             }

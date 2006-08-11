@@ -19,7 +19,6 @@ package org.apache.lenya.cms.site.usecases;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.ResourceWrapperTest;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
@@ -39,8 +38,7 @@ public class ResourceLinkRewriterTest extends LinkRewriterTest {
         Session session = RepositoryUtil.getSession(getManager(), getRequest());
         DocumentFactory factory = DocumentUtil.createDocumentFactory(getManager(), session);
 
-        Publication pub = PublicationUtil.getPublication(getManager(), "test");
-        
+        Publication pub = getPublication("test");
         
         ResourceWrapperTest.createResource(factory, pub, documentId, getManager(), getLogger());
         

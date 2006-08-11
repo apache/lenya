@@ -79,7 +79,7 @@ public class Propfind extends SiteUsecase {
         if (!request.endsWith("/"))
             request = request + "/";
         if (request.indexOf("webdav") > -1) {
-            request = request.replaceFirst("webdav","authoring");
+            request = request.replaceFirst("webdav", "authoring");
         }
         try {
             // get Parameters for RC
@@ -127,7 +127,7 @@ public class Propfind extends SiteUsecase {
             // get assets if we are currently looking at a document
             if (!request.equals("/" + _publication.getId() + "/authoring/")) {
                 String url = request.substring(0, request.length() - 1) + ".html";
-                DocumentLocator locator = docBuilder.getLocator(url);
+                DocumentLocator locator = docBuilder.getLocator(getDocumentFactory(), url);
                 Document currentDoc = getDocumentFactory().get(locator);
                 if (currentDoc.exists()) {
                     resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
@@ -183,7 +183,9 @@ public class Propfind extends SiteUsecase {
     protected Publication getPublication() {
         if (this.publication == null) {
             try {
-                this.publication = PublicationUtil.getPublicationFromUrl(this.manager, getSourceURL());
+                this.publication = PublicationUtil.getPublicationFromUrl(this.manager,
+                        getDocumentFactory(),
+                        getSourceURL());
             } catch (PublicationException e) {
                 throw new RuntimeException(e);
             }

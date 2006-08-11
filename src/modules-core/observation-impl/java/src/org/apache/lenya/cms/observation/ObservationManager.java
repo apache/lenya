@@ -33,7 +33,6 @@ import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
@@ -173,11 +172,9 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
 
         try {
 
-            Publication pub = PublicationUtil.getPublication(this.manager, pubId);
-
             Session session = RepositoryUtil.createSession(manager, identity);
             DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
-
+            Publication pub = factory.getPublication(pubId);
             String docPath = path.substring((pubId + "/content/" + area).length());
 
             String uuid;

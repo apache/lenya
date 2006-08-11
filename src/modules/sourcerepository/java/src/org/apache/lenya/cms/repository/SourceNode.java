@@ -49,9 +49,10 @@ import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.MetaDataRegistry;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RCMLEntry;
 import org.apache.lenya.cms.rc.RevisionController;
@@ -113,7 +114,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             String pubBase = Node.LENYA_PROTOCOL + Publication.PUBLICATION_PREFIX_URI + "/";
             String publicationsPath = this.sourceURI.substring(pubBase.length());
             publicationId = publicationsPath.split("/")[0];
-            Publication pub = PublicationUtil.getPublication(this.manager, publicationId);
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, getSession());
+            Publication pub = factory.getPublication(publicationId);
             contentDir = pub.getContentDir();
         } catch (Exception e) {
             getLogger().error(e.getMessage());
@@ -258,7 +260,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                 String publicationsPath = this.sourceURI.substring(pubBase.length());
                 String publicationId = publicationsPath.split("/")[0];
 
-                Publication pub = PublicationUtil.getPublication(this.manager, publicationId);
+                DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, getSession());
+                Publication pub = factory.getPublication(publicationId);
 
                 String publicationPath = pub.getDirectory().getCanonicalPath();
                 RCEnvironment rcEnvironment = RCEnvironment.getInstance(pub.getServletContext()

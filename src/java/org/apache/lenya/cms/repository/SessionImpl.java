@@ -27,6 +27,7 @@ import org.apache.lenya.transaction.TransactionException;
 import org.apache.lenya.transaction.Transactionable;
 import org.apache.lenya.transaction.UnitOfWork;
 import org.apache.lenya.transaction.UnitOfWorkImpl;
+import org.apache.lenya.util.Assert;
 
 /**
  * Repository session.
@@ -40,7 +41,10 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
      * @param logger The logger.
      */
     public SessionImpl(IdentityMap map, Identity identity, Logger logger) {
-        this.unitOfWork = new UnitOfWorkImpl(map, logger);
+        
+        Assert.notNull("identity map", map);
+        
+        this.unitOfWork = new UnitOfWorkImpl(map, identity, logger);
         this.unitOfWork.setIdentity(identity);
         ContainerUtil.enableLogging(this, logger);
     }

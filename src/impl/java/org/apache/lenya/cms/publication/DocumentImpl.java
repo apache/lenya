@@ -381,7 +381,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
             try {
                 selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
                 builder = (DocumentBuilder) selector.select(getPublication().getDocumentBuilderHint());
-                String webappUrl = builder.buildCanonicalUrl(getLocator());
+                String webappUrl = builder.buildCanonicalUrl(getFactory(), getLocator());
                 String prefix = "/" + getPublication().getId() + "/" + getArea();
                 this.documentURL = webappUrl.substring(prefix.length());
             } catch (Exception e) {

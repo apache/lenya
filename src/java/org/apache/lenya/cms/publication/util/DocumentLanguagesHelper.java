@@ -81,7 +81,7 @@ public class DocumentLanguagesHelper {
     public String getLanguage() throws ProcessingException {
         DocumentLocator locator;
         try {
-            locator = SiteUtil.getLocator(this.manager, url);
+            locator = SiteUtil.getLocator(this.manager, this.factory, url);
         } catch (SiteException e) {
             throw new ProcessingException(e);
         }
@@ -97,7 +97,7 @@ public class DocumentLanguagesHelper {
         List availableLanguages = new ArrayList();
 
         try {
-            DocumentLocator locator = SiteUtil.getLocator(this.manager, url);
+            DocumentLocator locator = SiteUtil.getLocator(this.manager, this.factory, url);
 
             String[] languages = pub.getLanguages();
             for (int i = 0; i < languages.length; i++) {
@@ -133,7 +133,7 @@ public class DocumentLanguagesHelper {
     protected Document getDocument(String language) throws ProcessingException {
         Document document;
         try {
-            DocumentLocator locator = SiteUtil.getLocator(this.manager, url);
+            DocumentLocator locator = SiteUtil.getLocator(this.manager, this.factory, url);
             DocumentLocator version = locator.getLanguageVersion(language);
             document = this.factory.get(version);
         } catch (Exception e) {

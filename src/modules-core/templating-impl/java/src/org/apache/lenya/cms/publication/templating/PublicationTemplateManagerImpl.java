@@ -31,7 +31,6 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationUtil;
 
 /**
  * Manager for publication templates.
@@ -181,7 +180,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
         String[] templateIds = publication.getTemplateIds();
         for (int i = 0; i < templateIds.length; i++) {
             try {
-                Publication template = PublicationUtil.getPublication(this.manager, templateIds[i]);
+                Publication template = publication.getFactory().getPublication(templateIds[i]);
                 Publication[] templateTemplates = getPublications(template);
                 publications.addAll(Arrays.asList(templateTemplates));
             } catch (PublicationException e) {

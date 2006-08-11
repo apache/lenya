@@ -26,7 +26,6 @@ import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryUtil;
@@ -45,8 +44,7 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
 
         Session session = RepositoryUtil.getSession(getManager(), getRequest());
         DocumentFactory factory = DocumentUtil.createDocumentFactory(getManager(), session);
-
-        Publication[] pubs = PublicationUtil.getPublications(getManager());
+        Publication[] pubs = factory.getPublications();
 
         for (int i = 0; i < pubs.length; i++) {
             checkPublication(session, factory, pubs[i]);

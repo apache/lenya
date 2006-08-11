@@ -29,7 +29,6 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryItemFactory;
 import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.Label;
@@ -165,7 +164,6 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      * @see org.apache.lenya.cms.site.SiteManager#contains(org.apache.lenya.cms.publication.Document)
      */
     public boolean contains(Document resource) throws SiteException {
-        boolean exists = false;
         SiteTree tree = getTree(resource);
         return tree.containsByUuid(resource.getUUID(), resource.getLanguage());
     }
@@ -457,7 +455,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
 
         Publication pub;
         try {
-            pub = PublicationUtil.getPublication(this.manager, locator.getPublicationId());
+            pub = factory.getPublication(locator.getPublicationId());
         } catch (PublicationException e) {
             throw new SiteException(e);
         }
@@ -531,7 +529,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
     protected boolean contains(DocumentFactory factory, DocumentLocator locator) throws SiteException {
         Publication pub;
         try {
-            pub = PublicationUtil.getPublication(this.manager, locator.getPublicationId());
+            pub = factory.getPublication(locator.getPublicationId());
         } catch (PublicationException e) {
             throw new SiteException(e);
         }

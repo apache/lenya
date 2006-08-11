@@ -38,5 +38,8 @@ public class SimpleLink extends Label {
             throw new RuntimeException(e);
         }
     }
+
+    public void setLabel(String label) {
+    }
     
 }

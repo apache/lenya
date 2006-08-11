@@ -49,45 +49,33 @@ public final class PublicationManagerImpl extends AbstractLogEnabled implements 
     public PublicationManagerImpl() {
     }
 
-    private static Map idToPublication = new HashMap();
+    private static Map id2config = new HashMap();
 
-    /**
-     * Create a new publication with the given publication-id and servlet context path. These
-     * publications are cached and reused for similar requests.
-     * @param id the publication id
-     * @return a <code>Publication</code>
-     * @throws PublicationException if there was a problem creating the publication.
-     */
-    public synchronized Publication getPublication(String id) throws PublicationException {
+    public synchronized Publication getPublication(DocumentFactory factory, String id) throws PublicationException {
         
         assert id != null;
         if (id.indexOf("/") != -1) {
             throw new PublicationException("The publication ID [" + id + "] must not contain a slash!");
         }
 
-        Publication publication = null;
+        PublicationConfiguration config = null;
 
-        if (idToPublication.containsKey(id)) {
-            publication = (Publication) idToPublication.get(id);
+        if (id2config.containsKey(id)) {
+            config = (PublicationConfiguration) id2config.get(id);
         } else {
-            publication = new PublicationImpl(id, servletContextPath);
-            ContainerUtil.enableLogging(publication, getLogger());
-            idToPublication.put(id, publication);
+            config = new PublicationConfiguration(id, servletContextPath);
+            ContainerUtil.enableLogging(config, getLogger());
+            id2config.put(id, config);
         }
 
-        if (publication == null) {
+        if (config == null) {
             throw new PublicationException("The publication for ID [" + id
                     + "] could not be created.");
         }
-        return publication;
+        return new PublicationImpl(this.manager, factory, config);
     }
 
-    /**
-     * Returns a list of all available publications.
-     * @return An array of publications.
-     * @throws PublicationException if an error occurs.
-     */
-    public Publication[] getPublications() throws PublicationException {
+    public Publication[] getPublications(DocumentFactory factory) throws PublicationException {
         List publications = new ArrayList();
 
         try {
@@ -101,7 +89,7 @@ public final class PublicationManagerImpl extends AbstractLogEnabled implements 
 
             for (int i = 0; i < publicationDirectories.length; i++) {
                 String publicationId = publicationDirectories[i].getName();
-                Publication publication = getPublication(publicationId);
+                Publication publication = getPublication(factory, publicationId);
                 publications.add(publication);
             }
 

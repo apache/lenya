@@ -40,6 +40,7 @@ import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.repository.UUIDGenerator;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 
 /**
@@ -190,30 +191,10 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
     private void addToSiteManager(String path, Document document, String navigationTitle,
             boolean visibleInNav) throws PublicationException {
-        Publication publication = document.getPublication();
-        SiteManager siteManager = null;
-        ServiceSelector selector = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
-            if (siteManager.contains(document)) {
-                throw new PublicationException("The document [" + document
-                        + "] is already contained in this publication!");
-            }
-
-            siteManager.add(path, document);
-            siteManager.setLabel(document, navigationTitle);
-            siteManager.setVisibleInNav(document, visibleInNav);
-        } catch (final ServiceException e) {
-            throw new PublicationException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
-        }
+        SiteStructure site = document.area().getSite();
+        site.add(path, document);
+        document.getLink().setLabel(navigationTitle);
+        document.getLink().getNode().setVisible(visibleInNav);
     }
 
     /**
@@ -274,7 +255,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         if (document.hasLink()) {
             document.getLink().delete();
         }
-        
+
         ResourcesManager resourcesManager = null;
         try {
             resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);

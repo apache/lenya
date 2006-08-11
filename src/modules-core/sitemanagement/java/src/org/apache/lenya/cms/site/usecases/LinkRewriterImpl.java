@@ -228,7 +228,7 @@ public class LinkRewriterImpl extends AbstractLogEnabled implements LinkRewriter
             } else {
                 newLocator = locator.getDescendant(childString);
             }
-            return builder.buildCanonicalUrl(newLocator);
+            return builder.buildCanonicalUrl(targetDocument.getFactory(), newLocator);
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {

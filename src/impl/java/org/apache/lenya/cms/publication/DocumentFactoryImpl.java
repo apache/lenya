@@ -173,7 +173,9 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
     public boolean isDocument(String webappUrl) throws DocumentBuildException {
 
         try {
-            Publication publication = PublicationUtil.getPublicationFromUrl(this.manager, webappUrl);
+            Publication publication = PublicationUtil.getPublicationFromUrl(this.manager,
+                    this,
+                    webappUrl);
             if (publication.exists()) {
 
                 ServiceSelector selector = null;
@@ -183,10 +185,9 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
                             + "Selector");
                     builder = (DocumentBuilder) selector.select(publication.getDocumentBuilderHint());
                     if (builder.isDocument(webappUrl)) {
-                        DocumentLocator locator = builder.getLocator(webappUrl);
+                        DocumentLocator locator = builder.getLocator(this, webappUrl);
                         return SiteUtil.contains(this.manager, this, locator);
-                    }
-                    else {
+                    } else {
                         return false;
                     }
                 } finally {
@@ -228,18 +229,20 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
         ServiceSelector selector = null;
         DocumentBuilder builder = null;
         try {
-            Publication publication = PublicationUtil.getPublicationFromUrl(this.manager, webappUrl);
+            Publication publication = PublicationUtil.getPublicationFromUrl(this.manager,
+                    this,
+                    webappUrl);
             selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
             builder = (DocumentBuilder) selector.select(publication.getDocumentBuilderHint());
-            DocumentLocator locator = builder.getLocator(webappUrl);
+            DocumentLocator locator = builder.getLocator(this, webappUrl);
 
             String area = locator.getArea();
             String uuid = null;
-            if (SiteUtil.isDocument(this.manager,this,webappUrl)) {
+            if (SiteUtil.isDocument(this.manager, this, webappUrl)) {
                 uuid = SiteUtil.getUUID(this.manager, this, publication, area, locator.getPath());
             } else {
                 UUIDGenerator generator = (UUIDGenerator) this.manager.lookup(UUIDGenerator.ROLE);
-                uuid = generator.nextUUID();       
+                uuid = generator.nextUUID();
             }
             return getKey(publication, area, uuid, locator.getLanguage());
         } catch (Exception e) {
@@ -273,7 +276,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
         Document document;
         try {
 
-            Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
+            Publication publication = getPublication(publicationId);
 
             selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
             builder = (DocumentBuilder) selector.select(publication.getDocumentBuilderHint());
@@ -333,12 +336,43 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
 
     public Document get(DocumentLocator locator) throws DocumentBuildException {
         try {
-            Publication pub = PublicationUtil.getPublication(this.manager,
-                    locator.getPublicationId());
-            String uuid = SiteUtil.getUUID(this.manager, this, pub, locator.getArea(), locator.getPath());
+            Publication pub = getPublication(locator.getPublicationId());
+            String uuid = SiteUtil.getUUID(this.manager,
+                    this,
+                    pub,
+                    locator.getArea(),
+                    locator.getPath());
             return get(pub, locator.getArea(), uuid, locator.getLanguage());
         } catch (PublicationException e) {
             throw new DocumentBuildException(e);
+        }
+    }
+
+    public Publication getPublication(String id) throws PublicationException {
+        PublicationManager pubManager = null;
+        try {
+            pubManager = (PublicationManager) manager.lookup(PublicationManager.ROLE);
+            return pubManager.getPublication(this, id);
+        } catch (ServiceException e) {
+            throw new PublicationException(e);
+        } finally {
+            if (pubManager != null) {
+                manager.release(pubManager);
+            }
+        }
+    }
+
+    public Publication[] getPublications() {
+        PublicationManager pubManager = null;
+        try {
+            pubManager = (PublicationManager) manager.lookup(PublicationManager.ROLE);
+            return pubManager.getPublications(this);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (pubManager != null) {
+                manager.release(pubManager);
+            }
         }
     }
 

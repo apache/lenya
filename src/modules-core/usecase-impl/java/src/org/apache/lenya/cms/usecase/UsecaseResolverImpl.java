@@ -23,8 +23,11 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
+import org.apache.cocoon.environment.Request;
+import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
 
@@ -89,8 +92,7 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
         if (publication != null) {
             PublicationTemplateManager templateManager = null;
             try {
-                templateManager = (PublicationTemplateManager) this.manager
-                        .lookup(PublicationTemplateManager.ROLE);
+                templateManager = (PublicationTemplateManager) this.manager.lookup(PublicationTemplateManager.ROLE);
                 newName = (String) templateManager.getSelectableHint(publication,
                         this.selector,
                         name);
@@ -99,8 +101,7 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
                     this.manager.release(templateManager);
                 }
             }
-        }
-        else {
+        } else {
             newName = name;
         }
 
@@ -114,18 +115,27 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
      */
     protected Publication getPublication(String webappUrl) {
         Publication publication = null;
+        ContextUtility util = null;
         try {
+            util = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
+            Request request = util.getRequest();
+            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
+
             URLInformation info = new URLInformation(webappUrl);
             String publicationId = info.getPublicationId();
 
             if (publicationId != null) {
-                Publication pub = PublicationUtil.getPublicationFromUrl(this.manager, webappUrl);
+                Publication pub = factory.getPublication(publicationId);
                 if (pub.exists()) {
                     publication = pub;
                 }
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            if (util != null) {
+                this.manager.release(util);
+            }
         }
         return publication;
     }

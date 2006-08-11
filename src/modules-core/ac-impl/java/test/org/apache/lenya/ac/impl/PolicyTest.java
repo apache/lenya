@@ -30,7 +30,6 @@ import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationUtil;
 
 /**
  * Policy Test
@@ -46,7 +45,7 @@ public class PolicyTest extends AbstractAccessControlTest {
      * @throws PublicationException
      */
     public void testLoadPolicy() throws AccessControlException, PublicationException {
-        Publication pub = PublicationUtil.getPublication(getManager(), "test");
+        Publication pub = getPublication("test");
         String url = "/" + pub.getId() + URL;
         Policy policy = getPolicy(url);
         Role[] roles = policy.getRoles(getIdentity());

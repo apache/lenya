@@ -37,6 +37,8 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
 import org.apache.excalibur.source.URIAbsolutizer;
 import org.apache.lenya.cms.module.ModuleManager;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationManager;
 import org.apache.lenya.cms.publication.URLInformation;
@@ -104,7 +106,8 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
             String publicationId = info.getPublicationId();
 
             pubMgr = (PublicationManager) this.manager.lookup(PublicationManager.ROLE);
-            Publication pub = pubMgr.getPublication(publicationId);
+            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
+            Publication pub = pubMgr.getPublication(factory, publicationId);
             if (pub.exists()) {
                 URIResolver resolver = getSourceVisitor();
                 templateManager.visit(pub, path, resolver);

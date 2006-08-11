@@ -97,7 +97,7 @@ public class SiteOverview extends AbstractUsecase {
             for (int i = 0; i < documents.length; i++) {
 
                 Entry entry = new Entry();
-                entry.setValue(KEY_DOCUMENT_ID, documents[i].getId());
+                entry.setValue(KEY_DOCUMENT_ID, documents[i].getUUID());
                 entry.setValue(KEY_RESOURCE_TYPE, documents[i].getResourceType().getName());
                 entry.setValue(KEY_LANGUAGE, documents[i].getLanguage());
                 entry.setValue(KEY_URL, documents[i].getCanonicalWebappURL());
@@ -229,7 +229,9 @@ public class SiteOverview extends AbstractUsecase {
      * @throws PublicationException if an error occurs.
      */
     protected Publication getPublication() throws PublicationException {
-        return PublicationUtil.getPublicationFromUrl(this.manager, getSourceURL());
+        return PublicationUtil.getPublicationFromUrl(this.manager,
+                getDocumentFactory(),
+                getSourceURL());
     }
 
     /**

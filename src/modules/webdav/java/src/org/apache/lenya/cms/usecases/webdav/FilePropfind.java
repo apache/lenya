@@ -128,7 +128,9 @@ public class FilePropfind extends SiteUsecase {
     protected Publication getPublication() {
         if (this.publication == null) {
             try {
-                this.publication = PublicationUtil.getPublicationFromUrl(this.manager, getSourceURL());
+                this.publication = PublicationUtil.getPublicationFromUrl(this.manager,
+                        getDocumentFactory(),
+                        getSourceURL());
             } catch (PublicationException e) {
                 throw new RuntimeException(e);
             }

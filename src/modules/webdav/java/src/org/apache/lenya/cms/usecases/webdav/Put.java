@@ -237,6 +237,7 @@ public class Put extends CreateDocument {
         if (this.publication == null) {
             try {
                 this.publication = PublicationUtil.getPublicationFromUrl(this.manager,
+                        getDocumentFactory(),
                         getSourceURL());
             } catch (PublicationException e) {
                 throw new RuntimeException(e);

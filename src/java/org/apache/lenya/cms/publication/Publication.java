@@ -216,5 +216,22 @@ public interface Publication {
      * @return The resource types that are supported by this publication.
      */
     String[] getResourceTypeNames();
+    
+    /**
+     * @param name The name.
+     * @return An area object.
+     * @throws PublicationException if an error occurs.
+     */
+    Area getArea(String name) throws PublicationException;
+    
+    /**
+     * @return The names of all available areas.
+     */
+    String[] getAreaNames();
+    
+    /**
+     * @return The document factory.
+     */
+    public DocumentFactory getFactory();
 
 }

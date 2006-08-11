@@ -26,7 +26,6 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
@@ -41,7 +40,7 @@ public class MigrateUuidsTest extends AbstractAccessControlTest {
 
         Session session = RepositoryUtil.getSession(getManager(), getRequest());
         DocumentFactory factory = DocumentUtil.createDocumentFactory(getManager(), session);
-        Publication[] pubs = PublicationUtil.getPublications(getManager());
+        Publication[] pubs = factory.getPublications();
         for (int i = 0; i < pubs.length; i++) {
             this.migratedDocs.clear();
             migratePublication(pubs[i], factory);

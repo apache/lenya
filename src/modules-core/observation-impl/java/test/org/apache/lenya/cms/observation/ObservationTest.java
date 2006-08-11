@@ -35,7 +35,7 @@ public class ObservationTest extends AbstractAccessControlTest {
         Session session = RepositoryUtil.getSession(getManager(), getRequest());
         DocumentFactory factory = DocumentUtil.createDocumentFactory(getManager(), session);
 
-        Publication publication = PublicationUtil.getPublication(getManager(), "test");
+        Publication publication = getPublication("test");
         Document doc = factory.get(publication, Publication.AUTHORING_AREA, "/index", "en");
         
         TestListener docListener = new TestListener();

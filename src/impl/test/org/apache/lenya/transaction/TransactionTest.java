@@ -32,12 +32,12 @@ public class TransactionTest extends ContainerTestCase {
         alice.addIdentifiable(new MockUser("alice"));
 
         IdentityMap lenyaMap = new IdentityMapImpl(getLogger());
-        UnitOfWork lenyaUnit = new UnitOfWorkImpl(lenyaMap, getLogger());
+        UnitOfWork lenyaUnit = new UnitOfWorkImpl(lenyaMap, lenya, getLogger());
         lenyaUnit.setIdentity(lenya);
         IdentifiableFactory lenyaFactory = new MockFactory(lenyaUnit);
 
         IdentityMap aliceMap = new IdentityMapImpl(getLogger());
-        UnitOfWork aliceUnit = new UnitOfWorkImpl(aliceMap, getLogger());
+        UnitOfWork aliceUnit = new UnitOfWorkImpl(aliceMap, alice, getLogger());
         lenyaUnit.setIdentity(alice);
         IdentifiableFactory aliceFactory = new MockFactory(aliceUnit);
 

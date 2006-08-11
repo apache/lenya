@@ -176,10 +176,9 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
 
         NamespaceHelper helper = getNamespaceHelper();
         Element labelElem = helper.createElement(SiteTreeNodeImpl.LABEL_NAME, label.getLabel());
-
         labelElem.setAttribute(SiteTreeNodeImpl.LANGUAGE_ATTRIBUTE_NAME, label.getLanguage());
-
         node.insertBefore(labelElem, node.getFirstChild());
+        getTree().save();
     }
 
     /**
@@ -407,6 +406,18 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
                 removeLabel(label.getLanguage());
             }
             addLabel(label);
+        } catch (SiteException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setLabel(String language, String label) {
+        try {
+            SiteTreeLink existingLabel = (SiteTreeLink) getLink(language);
+            if (existingLabel != null) {
+                removeLabel(language);
+            }
+            addLabel(new SiteTreeLink(this.factory, this, label, language));
         } catch (SiteException e) {
             throw new RuntimeException(e);
         }

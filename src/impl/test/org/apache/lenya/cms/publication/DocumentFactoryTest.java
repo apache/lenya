@@ -33,7 +33,7 @@ public class DocumentFactoryTest extends AbstractAccessControlTest {
         Session session = RepositoryUtil.getSession(getManager(), getRequest());
         DocumentFactory factoryA = DocumentUtil.createDocumentFactory(getManager(), session);
 
-        Publication publication = PublicationUtil.getPublication(getManager(), "test");
+        Publication publication = getPublication("test");
         
         Document docA1 = factoryA.get(publication, Publication.AUTHORING_AREA, "/index", "en");
         Document docA2 = factoryA.get(publication, Publication.AUTHORING_AREA, "/index", "en");
@@ -45,4 +45,5 @@ public class DocumentFactoryTest extends AbstractAccessControlTest {
         
         assertSame(docA1, docB1);
     }
+
 }

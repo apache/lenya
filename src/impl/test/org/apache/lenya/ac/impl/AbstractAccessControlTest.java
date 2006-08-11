@@ -36,7 +36,7 @@ import org.apache.lenya.cms.ac.PublicationAccessControllerResolver;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 
 /**
@@ -87,35 +87,36 @@ public class AbstractAccessControlTest extends LenyaTestCase {
      * @return An access controller.
      */
     public DefaultAccessController getAccessController() {
+        if (this.accessController == null) {
+            try {
+                this.accessControllerResolverSelector = (ServiceSelector) getManager().lookup(AccessControllerResolver.ROLE
+                        + "Selector");
+                assertNotNull(this.accessControllerResolverSelector);
+
+                this.accessControllerResolver = (AccessControllerResolver) this.accessControllerResolverSelector.select(AccessControllerResolver.DEFAULT_RESOLVER);
+
+                assertNotNull(this.accessControllerResolver);
+                getLogger().info("Using access controller resolver: ["
+                        + this.accessControllerResolver.getClass() + "]");
+
+                Publication pub = getPublication("test");
+                getLogger().info("Resolve access controller");
+                getLogger().info("Publication directory: [" + pub.getDirectory().getAbsolutePath()
+                        + "]");
+
+                this.accessController = (DefaultAccessController) ((PublicationAccessControllerResolver) this.accessControllerResolver).resolveAccessController(URL);
+
+                assertNotNull(this.accessController);
+                getLogger().info("Resolved access controller: [" + this.accessController.getClass()
+                        + "]");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
         return this.accessController;
     }
 
     protected static final String URL = "/test/authoring/index.html";
-
-    public void setUp() throws Exception {
-
-        super.setUp();
-
-        this.accessControllerResolverSelector = (ServiceSelector) getManager().lookup(AccessControllerResolver.ROLE
-                + "Selector");
-        assertNotNull(this.accessControllerResolverSelector);
-
-        this.accessControllerResolver = (AccessControllerResolver) this.accessControllerResolverSelector.select(AccessControllerResolver.DEFAULT_RESOLVER);
-
-        assertNotNull(this.accessControllerResolver);
-        getLogger().info("Using access controller resolver: ["
-                + this.accessControllerResolver.getClass() + "]");
-
-        Publication pub = PublicationUtil.getPublication(getManager(), "test");
-        getLogger().info("Resolve access controller");
-        getLogger().info("Publication directory: [" + pub.getDirectory().getAbsolutePath() + "]");
-
-        this.accessController = (DefaultAccessController) ((PublicationAccessControllerResolver) this.accessControllerResolver).resolveAccessController(URL);
-
-        assertNotNull(this.accessController);
-        getLogger().info("Resolved access controller: [" + this.accessController.getClass() + "]");
-
-    }
 
     /**
      * The teardown method for JUnit
@@ -178,6 +179,20 @@ public class AbstractAccessControlTest extends LenyaTestCase {
     private DocumentFactory factory;
 
     protected DocumentFactory getFactory() {
+
+        Session cocoonSession = getRequest().getSession();
+        Identity identity = (Identity) cocoonSession.getAttribute(Identity.class.getName());
+
+        if (identity == null) {
+            org.apache.lenya.cms.repository.Session session;
+            try {
+                session = RepositoryUtil.getSession(getManager(), getRequest());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+            return DocumentUtil.createDocumentFactory(getManager(), session);
+        }
+
         if (this.factory == null) {
             org.apache.lenya.cms.repository.Session session;
             try {
@@ -188,5 +203,9 @@ public class AbstractAccessControlTest extends LenyaTestCase {
             this.factory = DocumentUtil.createDocumentFactory(getManager(), session);
         }
         return this.factory;
+    }
+
+    protected Publication getPublication(String id) throws PublicationException {
+        return getFactory().getPublication(id);
     }
 }

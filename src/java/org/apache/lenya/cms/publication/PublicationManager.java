@@ -16,7 +16,6 @@
  */
 package org.apache.lenya.cms.publication;
 
-
 /**
  * Publication manager.
  */
@@ -28,16 +27,18 @@ public interface PublicationManager {
     String ROLE = PublicationManager.class.getName();
     
     /**
+     * @param factory The factory.
      * @return All publications.
      * @throws PublicationException if an error occurrs.
      */
-    Publication[] getPublications() throws PublicationException;
+    Publication[] getPublications(DocumentFactory factory) throws PublicationException;
     
     /**
+     * @param factory The factory.
      * @param id The publication ID.
      * @return A publication.
      * @throws PublicationException if an error occurs.
      */
-    Publication getPublication(String id) throws PublicationException;
+    Publication getPublication(DocumentFactory factory, String id) throws PublicationException;
     
 }

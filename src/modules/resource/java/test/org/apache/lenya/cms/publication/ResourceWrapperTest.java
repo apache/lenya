@@ -55,7 +55,7 @@ public class ResourceWrapperTest extends AbstractAccessControlTest {
         Session session = RepositoryUtil.getSession(getManager(), getRequest());
         DocumentFactory factory = DocumentUtil.createDocumentFactory(getManager(), session);
 
-        Publication pub = PublicationUtil.getPublication(getManager(), "test");
+        Publication pub = getPublication("test");
 
         Document doc = createResource(factory, pub, documentId, getManager(), getLogger());
 

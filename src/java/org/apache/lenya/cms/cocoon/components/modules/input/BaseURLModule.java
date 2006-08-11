@@ -28,9 +28,10 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
 
 /**
  * Input module for getting the base URL which may be prepended to internal 
@@ -82,7 +83,8 @@ public class BaseURLModule extends AbstractInputModule implements Serviceable {
         
         String value = null;
         try {
-            Publication publication = PublicationUtil.getPublication(this.manager, pubid);
+            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
+            Publication publication = factory.getPublication(pubid);
 
             Proxy proxy = publication.getProxy(area, ssl);
             

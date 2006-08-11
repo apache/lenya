@@ -37,11 +37,11 @@ import org.apache.lenya.cms.usecase.UsecaseException;
 
 /**
  * Empty the trash.
- *
+ * 
  * @version $Id$
  */
 public class EmptyTrash extends AbstractUsecase {
-    
+
     protected static final String DOCUMENTS = "documents";
 
     /**
@@ -58,7 +58,7 @@ public class EmptyTrash extends AbstractUsecase {
             throw new RuntimeException(e);
         }
     }
-    
+
     /**
      * Lock the following objects:
      * <ul>
@@ -68,23 +68,26 @@ public class EmptyTrash extends AbstractUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
     protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
-        List nodes = new ArrayList();        
+        List nodes = new ArrayList();
         ServiceSelector selector = null;
         SiteManager siteManager = null;
- 
+
         try {
-            Publication publication = PublicationUtil.getPublicationFromUrl(this.manager, getSourceURL());
+            Publication publication = PublicationUtil.getPublicationFromUrl(this.manager,
+                    getDocumentFactory(),
+                    getSourceURL());
             DocumentFactory identityMap = getDocumentFactory();
             Document[] docs = getTrashDocuments();
             for (int i = 0; i < docs.length; i++) {
                 nodes.add(docs[i].getRepositoryNode());
                 nodes.addAll(AssetUtil.getAssetNodes(docs[i], this.manager, getLogger()));
             }
-           
+
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(publication
-                    .getSiteManagerHint());
-            SiteStructure structure = siteManager.getSiteStructure(identityMap, publication, Publication.TRASH_AREA);
+            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
+            SiteStructure structure = siteManager.getSiteStructure(identityMap,
+                    publication,
+                    Publication.TRASH_AREA);
             nodes.add(structure.getRepositoryNode());
         } catch (Exception e) {
             throw new UsecaseException(e);
@@ -99,43 +102,42 @@ public class EmptyTrash extends AbstractUsecase {
         return (org.apache.lenya.cms.repository.Node[]) nodes.toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
     }
 
-    
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
         super.doExecute();
-        
+
         DocumentManager documentManager = null;
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             Document[] documents = getTrashDocuments();
             DocumentSet set = new DocumentSet(documents);
             documentManager.delete(set);
-        }
-        finally {
+        } finally {
             if (documentManager != null) {
                 this.manager.release(documentManager);
             }
         }
     }
-    
+
     /**
      * @return The documents in the trash area.
      * @throws PublicationException if an error occurs.
      * @throws SiteException if an error occurs.
      */
     protected Document[] getTrashDocuments() throws PublicationException, SiteException {
-        Publication publication = PublicationUtil.getPublicationFromUrl(this.manager, getSourceURL());
+        Publication publication = PublicationUtil.getPublicationFromUrl(this.manager,
+                getDocumentFactory(),
+                getSourceURL());
         DocumentFactory identityMap = getDocumentFactory();
         Document[] documents;
-        
+
         ServiceSelector selector = null;
         SiteManager siteManager = null;
         try {
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(publication
-                    .getSiteManagerHint());
+            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
             documents = siteManager.getDocuments(identityMap, publication, Publication.TRASH_AREA);
         } catch (ServiceException e) {
             throw new RuntimeException(e);
@@ -147,7 +149,7 @@ public class EmptyTrash extends AbstractUsecase {
                 this.manager.release(selector);
             }
         }
-        
+
         return documents;
     }
 }

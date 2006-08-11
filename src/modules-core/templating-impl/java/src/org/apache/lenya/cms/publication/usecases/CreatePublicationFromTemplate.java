@@ -21,7 +21,6 @@ import java.util.List;
 
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.templating.Instantiator;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
@@ -44,22 +43,15 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
     protected void initParameters() {
         super.initParameters();
 
-        try {
-            Publication[] pubs = PublicationUtil.getPublications(this.manager);
-            List templates = new ArrayList();
-            for (int i = 0; i < pubs.length; i++) {
-                if (pubs[i].getInstantiatorHint() != null) {
-                    templates.add(pubs[i].getId());
-                }
+        Publication[] pubs = getDocumentFactory().getPublications();
+        List templates = new ArrayList();
+        for (int i = 0; i < pubs.length; i++) {
+            if (pubs[i].getInstantiatorHint() != null) {
+                templates.add(pubs[i].getId());
             }
-            setParameter(AVAILABLE_TEMPLATES, templates);
-
-            setParameter(PUBLICATION_NAME, "New Publication");
-
-        } catch (PublicationException e) {
-            throw new RuntimeException(e);
         }
-
+        setParameter(AVAILABLE_TEMPLATES, templates);
+        setParameter(PUBLICATION_NAME, "New Publication");
     }
 
     /**
@@ -70,10 +62,10 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
 
         String publicationId = getParameterAsString(PUBLICATION_ID).trim();
 
-        if (!PublicationUtil.isValidPublicationID(publicationId)){
+        if (!PublicationUtil.isValidPublicationID(publicationId)) {
             addErrorMessage("Please enter a valid publication ID!");
         } else {
-            Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
+            Publication publication = getDocumentFactory().getPublication(publicationId);
             if (publication.exists()) {
                 addErrorMessage("A publication with this ID already exists.");
             }
@@ -93,7 +85,7 @@ public class CreatePublicationFromTemplate extends AbstractUsecase {
 
         try {
 
-            Publication template = PublicationUtil.getPublication(this.manager, templateId);
+            Publication template = getDocumentFactory().getPublication(templateId);
             String name = getParameterAsString(PUBLICATION_NAME);
 
             selector = (ServiceSelector) this.manager.lookup(Instantiator.ROLE + "Selector");

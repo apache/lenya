@@ -30,17 +30,17 @@ import org.apache.lenya.util.ServletHelper;
 public class DocumentUtil {
 
     /**
-     * Creates a document identity map.
+     * Creates a document factory.
      * @param manager The service manager.
      * @param session The session.
-     * @return if an error occurs.
+     * @return a document factory.
      */
     public static DocumentFactory createDocumentFactory(ServiceManager manager, Session session) {
-        DocumentFactory map;
+        DocumentFactory factory;
         DocumentManager docManager = null;
         try {
             docManager = (DocumentManager) manager.lookup(DocumentManager.ROLE);
-            map = docManager.createDocumentIdentityMap(session);
+            factory = docManager.createDocumentIdentityMap(session);
         } catch (ServiceException e) {
             throw new RuntimeException(e);
         } finally {
@@ -48,7 +48,24 @@ public class DocumentUtil {
                 manager.release(docManager);
             }
         }
-        return map;
+        return factory;
+    }
+    
+    /**
+     * Returns a document factory for the session which is attached to the request.
+     * If no session exists, it is created.
+     * @param manager The service manager.
+     * @param request The request.
+     * @return A document factory.
+     */
+    public static DocumentFactory getDocumentFactory(ServiceManager manager, Request request) {
+        Session session;
+        try {
+            session = RepositoryUtil.getSession(manager, request);
+        } catch (RepositoryException e) {
+            throw new RuntimeException(e);
+        }
+        return createDocumentFactory(manager, session);
     }
 
     /**

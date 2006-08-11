@@ -73,8 +73,7 @@ public class LanguageExistsAction extends ServiceableAction {
             Parameters parameters) throws Exception {
 
         Request request = ObjectModelHelper.getRequest(objectModel);
-        Session session = RepositoryUtil.getSession(this.manager, request);
-        DocumentFactory map = DocumentUtil.createDocumentFactory(this.manager, session);
+        DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
 
         String url = ServletHelper.getWebappURI(request);
 
@@ -88,14 +87,14 @@ public class LanguageExistsAction extends ServiceableAction {
         try {
             selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
             builder = (DocumentBuilder) selector.select(pub.getDocumentBuilderHint());
-            DocumentLocator locator = builder.getLocator(url);
+            DocumentLocator locator = builder.getLocator(factory, url);
 
             List availableLanguages = new ArrayList();
 
             String[] languages = pub.getLanguages();
             for (int i = 0; i < languages.length; i++) {
                 DocumentLocator version = locator.getLanguageVersion(languages[i]);
-                if (SiteUtil.contains(this.manager, map, version)) {
+                if (SiteUtil.contains(this.manager, factory, version)) {
                     availableLanguages.add(languages[i]);
                 }
             }

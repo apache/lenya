@@ -23,6 +23,9 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -44,28 +47,6 @@ public class PublicationUtil {
     }
 
     /**
-     * Create a new publication with the given publication-id.
-     * @param manager The service manager.
-     * @param id the publication id
-     * @return a <code>Publication</code>
-     * @throws PublicationException if there was a problem creating the publication.
-     */
-    public static Publication getPublication(ServiceManager manager, String id)
-            throws PublicationException {
-        PublicationManager pubManager = null;
-        try {
-            pubManager = (PublicationManager) manager.lookup(PublicationManager.ROLE);
-            return pubManager.getPublication(id);
-        } catch (ServiceException e) {
-            throw new PublicationException(e);
-        } finally {
-            if (pubManager != null) {
-                manager.release(pubManager);
-            }
-        }
-    }
-
-    /**
      * Creates a new publication based on a request.
      * @param manager The service manager.
      * @param request A request.
@@ -74,35 +55,45 @@ public class PublicationUtil {
      */
     public static Publication getPublication(ServiceManager manager, Request request)
             throws PublicationException {
+        Session session;
+        try {
+            session = RepositoryUtil.getSession(manager, request);
+        } catch (RepositoryException e) {
+            throw new PublicationException(e);
+        }
+        DocumentFactory factory = DocumentUtil.createDocumentFactory(manager, session);
         String webappUrl = ServletHelper.getWebappURI(request);
-        return getPublicationFromUrl(manager, webappUrl);
+        return getPublicationFromUrl(manager, factory, webappUrl);
     }
 
     /**
      * Creates a publication from a webapp URL and a servlet context directory.
      * @param manager The service manager.
+     * @param factory The factory.
      * @param webappUrl The URL within the web application (without context prefix)
      * @return A publication
      * @throws PublicationException when something went wrong
      */
-    public static Publication getPublicationFromUrl(ServiceManager manager, String webappUrl)
-            throws PublicationException {
+    public static Publication getPublicationFromUrl(ServiceManager manager,
+            DocumentFactory factory, String webappUrl) throws PublicationException {
         URLInformation info = new URLInformation(webappUrl);
         String pubId = info.getPublicationId();
-        return getPublication(manager, pubId);
+        return factory.getPublication(pubId);
     }
 
     /**
      * Returns a list of all available publications.
      * @param manager The service manager.
+     * @param factory The document factory.
      * @return An array of publications.
      * @throws PublicationException if an error occurs.
      */
-    public static Publication[] getPublications(ServiceManager manager) throws PublicationException {
+    public static Publication[] getPublications(ServiceManager manager, DocumentFactory factory)
+            throws PublicationException {
         PublicationManager pubManager = null;
         try {
             pubManager = (PublicationManager) manager.lookup(PublicationManager.ROLE);
-            return pubManager.getPublications();
+            return pubManager.getPublications(factory);
         } catch (ServiceException e) {
             throw new PublicationException(e);
         } finally {

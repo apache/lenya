@@ -34,4 +34,14 @@ public class SiteTreeLink extends Label {
         node.removeLabel(getLanguage());
     }
 
+    /**
+     * Set the actual label of the label object.
+     * 
+     * @param label The label.
+     */
+    public void setLabel(String label) {
+        SiteTreeNode node = (SiteTreeNode) getNode();
+        node.setLabel(getLanguage(), label);
+    }
+
 }

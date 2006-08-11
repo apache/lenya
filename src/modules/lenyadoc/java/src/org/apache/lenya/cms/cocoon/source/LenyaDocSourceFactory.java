@@ -115,6 +115,10 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
                     + "]");
         }
 
+        Map objectModel = ContextHelper.getObjectModel(this.context);
+        Request request = ObjectModelHelper.getRequest(objectModel);
+        DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
+
         // Absolute vs. relative
         start = end + 1;
         if (location.startsWith("//", start)) {
@@ -127,7 +131,7 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
             }
             String publicationId = location.substring(start, end);
             try {
-                pub = PublicationUtil.getPublication(this.manager, publicationId);
+                pub = factory.getPublication(publicationId);
             } catch (PublicationException e) {
                 throw new MalformedURLException("Malformed lenyadoc: Publication [" + publicationId
                         + "] does not exist or could not be initialized");
@@ -148,8 +152,6 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
         } else if (location.startsWith("/", start)) {
             end += 1;
             // Relative: get publication id and area from page envelope
-            Map objectModel = ContextHelper.getObjectModel(this.context);
-            Request request = ObjectModelHelper.getRequest(objectModel);
             try {
                 pub = PublicationUtil.getPublication(this.manager, objectModel);
             } catch (PublicationException e) {
@@ -180,7 +182,6 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
         start = end + 1;
         uuid = location.substring(start);
 
-        Request request = ContextHelper.getRequest(this.context);
         Session session;
         try {
             session = RepositoryUtil.getSession(this.manager, request);
@@ -191,10 +192,9 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Creating repository source for URI [" + location + "]");
         }
-        DocumentFactory map = DocumentUtil.createDocumentFactory(this.manager, session);
         Document document;
         try {
-            document = map.get(pub, area, uuid, language);
+            document = factory.get(pub, area, uuid, language);
         } catch (DocumentBuildException e) {
             throw new MalformedURLException("Malformed lenyadoc: Document [" + uuid + ":"
                     + language + "] could not be created.");

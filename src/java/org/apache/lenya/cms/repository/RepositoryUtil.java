@@ -36,12 +36,23 @@ public class RepositoryUtil {
             throws RepositoryException {
         Session session = (Session) request.getAttribute(Session.class.getName());
         if (session == null) {
-            org.apache.cocoon.environment.Session cocoonSession = request.getSession();
-            Identity identity = (Identity) cocoonSession.getAttribute(Identity.class.getName());
+            Identity identity = getIdentity(request);
             session = createSession(manager, identity);
             request.setAttribute(Session.class.getName(), session);
         }
+        else if (session.getIdentity() == null) {
+            Identity identity = getIdentity(request);
+            if (identity != null) {
+                session.setIdentity(identity);
+            }
+        }
         return session;
+    }
+
+    protected static Identity getIdentity(Request request) {
+        org.apache.cocoon.environment.Session cocoonSession = request.getSession();
+        Identity identity = (Identity) cocoonSession.getAttribute(Identity.class.getName());
+        return identity;
     }
 
     /**

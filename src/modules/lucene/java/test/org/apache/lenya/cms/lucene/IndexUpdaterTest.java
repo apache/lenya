@@ -23,10 +23,8 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.xml.DocumentHelper;
 
 public class IndexUpdaterTest extends AbstractAccessControlTest {
 
@@ -35,7 +33,7 @@ public class IndexUpdaterTest extends AbstractAccessControlTest {
         Session session = RepositoryUtil.getSession(getManager(), getRequest());
         DocumentFactory factory = DocumentUtil.createDocumentFactory(getManager(), session);
 
-        Publication publication = PublicationUtil.getPublication(getManager(), "test");
+        Publication publication = getPublication("test");
         Document sourceDoc = factory.get(publication, Publication.AUTHORING_AREA, "/tutorial", "en");
         Document destDoc = factory.get(publication, Publication.AUTHORING_AREA, "/concepts", "en");
 

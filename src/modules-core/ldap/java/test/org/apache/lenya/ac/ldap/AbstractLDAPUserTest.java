@@ -31,7 +31,6 @@ import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.ac.ldap.LDAPUser;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationUtil;
 
 /**
  * LDAP user test.
@@ -49,8 +48,7 @@ public class AbstractLDAPUserTest extends AbstractAccessControlTest {
      * @throws PublicationException if an error occurs
      */
     final public Publication getPublication() throws PublicationException {
-        String publicationId = "test";
-        return PublicationUtil.getPublication(getManager(), publicationId);
+        return getPublication("test");
     }
 
     /**

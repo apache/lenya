@@ -20,8 +20,6 @@
 package org.apache.lenya.cms.publication;
 
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteUtil;
 
 /**
@@ -50,7 +48,7 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
         getLogger().info("Complete URL: " + document.getCanonicalWebappURL());
         getLogger().info("Extension:    " + document.getExtension());
 
-        Publication publication = PublicationUtil.getPublication(getManager(), "test");
+        Publication publication = getPublication("test");
         assertEquals(document.getPublication(), publication);
         assertEquals(document.getPath(), testSet.getPath());
         assertEquals(document.getArea(), testSet.getArea());
@@ -73,22 +71,6 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
         }
     }
 
-    private DocumentFactory identityMap;
-
-    protected DocumentFactory getFactory() {
-        if (this.identityMap == null) {
-
-            Session session;
-            try {
-                session = RepositoryUtil.createSession(getManager(), getIdentity());
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            this.identityMap = DocumentUtil.createDocumentFactory(getManager(), session);
-        }
-        return this.identityMap;
-    }
-
     /**
      * Returns the test document for a given test set.
      * @param testSet A document test set.
@@ -97,7 +79,7 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
      */
     protected Document getDocument(DocumentTestSet testSet) throws PublicationException {
 
-        Publication pub = PublicationUtil.getPublication(getManager(), "test");
+        Publication pub = getPublication("test");
         String uuid = SiteUtil.getUUID(getManager(), getFactory(), pub, testSet.getArea(),
                 testSet.getPath());
         DocumentIdentifier id = new DocumentIdentifier(pub, testSet.getArea(), uuid, testSet

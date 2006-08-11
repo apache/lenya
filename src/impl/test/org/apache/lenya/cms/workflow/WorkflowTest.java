@@ -26,7 +26,6 @@ import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
@@ -51,7 +50,7 @@ public class WorkflowTest extends AbstractAccessControlTest {
      * @throws Exception when something went wrong.
      */
     public void testWorkflow() throws Exception {
-        Publication publication = PublicationUtil.getPublication(getManager(), "test");
+        Publication publication = getPublication("test");
         String url = "/" + publication.getId() + URL;
         DocumentFactory map = getFactory();
         Document document = map.getFromURL(url);

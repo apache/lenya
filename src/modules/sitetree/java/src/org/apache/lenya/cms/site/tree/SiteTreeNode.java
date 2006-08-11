@@ -196,4 +196,11 @@ public interface SiteTreeNode extends SiteNode {
      */
     void setUUID(String uuid);
 
+    /**
+     * Sets a label.
+     * @param language The language.
+     * @param label The label.
+     */
+    void setLabel(String language, String label);
+
 }

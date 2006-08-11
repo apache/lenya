@@ -25,7 +25,6 @@ import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
@@ -45,7 +44,7 @@ public class DefaultSiteTreeTest extends AbstractAccessControlTest {
      */
     public void setUp() throws Exception {
         super.setUp();
-        Publication pub = PublicationUtil.getPublication(getManager(), "test");
+        Publication pub = getPublication("test");
         this.siteTree = new DefaultSiteTree(getFactory(),
                 pub,
                 "test",
@@ -229,7 +228,7 @@ public class DefaultSiteTreeTest extends AbstractAccessControlTest {
      * @throws RepositoryException
      */
     final public void testImportSubtree() throws PublicationException, RepositoryException {
-        Publication pub = PublicationUtil.getPublication(getManager(), "test");
+        Publication pub = getPublication("test");
         DefaultSiteTree newSiteTree = new DefaultSiteTree(getFactory(),
                 pub,
                 "test1",

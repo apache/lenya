@@ -37,9 +37,13 @@ import org.apache.cocoon.components.search.components.IndexManager;
 import org.apache.cocoon.components.search.fieldmodel.DateFieldDefinition;
 import org.apache.cocoon.components.search.fieldmodel.FieldDefinition;
 import org.apache.cocoon.components.search.utils.SourceHelper;
+import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
+import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationManager;
@@ -50,20 +54,19 @@ import org.apache.lenya.cms.publication.PublicationManager;
  * @author Maisonneuve Nicolas
  * @version 1.0
  */
-public class IndexManagerImpl extends AbstractLogEnabled implements
-        IndexManager, Serviceable, ThreadSafe, Configurable {
+public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager, Serviceable,
+        ThreadSafe, Configurable {
 
-   
     /**
-     * indexer element 
+     * indexer element
      */
     public static final String INDEXER_ELEMENT = "indexer";
-    
+
     /**
-     * indexer element 
+     * indexer element
      */
     public static final String INDEXER_ROLE_ATTRIBUTE = "role";
-    
+
     /**
      * set of indexes
      */
@@ -102,8 +105,7 @@ public class IndexManagerImpl extends AbstractLogEnabled implements
     /**
      * type of the field: "text, "keyword", "date" (see
      * 
-     * @see org.apache.cocoon.components.search.fieldmodel.FieldDefinition
-     *      class)
+     * @see org.apache.cocoon.components.search.fieldmodel.FieldDefinition class)
      */
     public static final String TYPE_ATTRIBUTE = "type";
 
@@ -116,39 +118,41 @@ public class IndexManagerImpl extends AbstractLogEnabled implements
      * The date Format when the field type is a date
      */
     public static final String DATEFORMAT_ATTRIBUTE = "dateformat";
-    
+
     public static final String INDEX_CONF_FILE = "lucene_index.xconf";
 
     /**
-     * check the config file each time the getIndex is called to update if
-     * necessary the configuration
+     * check the config file each time the getIndex is called to update if necessary the
+     * configuration
      */
     // public static final String CHECK_ATTRIBUTE = "check";
-    
     /**
      * Source of the index configuration file
      */
     // public static final String CONFIG_ATTRIBUTE = "config";
-    
     /**
-     * Check or not the configuration file (automatic update if the file is
-     * changed)
+     * Check or not the configuration file (automatic update if the file is changed)
      */
     // private boolean check;
-    
     /**
      * Index configuration file
      */
     // private Source configfile;
-    
     private ServiceManager manager;
 
-    private Map indexes;
-    
+    private Map indexMap;
+
+    protected Map indexes() {
+        if(this.indexMap == null) {
+            this.indexMap = new HashMap();
+            loadIndexes();
+        }
+        return this.indexMap;
+    }
+
     private String indexerRole = null;
 
     public IndexManagerImpl() {
-        indexes = new HashMap();
     }
 
     /*
@@ -158,7 +162,7 @@ public class IndexManagerImpl extends AbstractLogEnabled implements
      */
     public boolean contains(String id) {
         if (id != null) {
-            return this.indexes.get(id) != null;
+            return this.indexes().get(id) != null;
         }
         return false;
     }
@@ -174,9 +178,10 @@ public class IndexManagerImpl extends AbstractLogEnabled implements
             throw new IndexException(" index with no name was called");
         }
 
-        Index index = (Index) this.indexes.get(id);
+        Index index = (Index) this.indexes().get(id);
         if (index == null) {
-            throw new IndexException("Index " + id + " doesn't exist. Check if configuration " + INDEX_CONF_FILE + " exists for this publication!");
+            throw new IndexException("Index " + id + " doesn't exist. Check if configuration "
+                    + INDEX_CONF_FILE + " exists for this publication!");
         }
 
         return index;
@@ -188,7 +193,7 @@ public class IndexManagerImpl extends AbstractLogEnabled implements
      * @see org.apache.cocoon.components.search.components.IndexManager#addIndex(org.apache.cocoon.components.search.Index)
      */
     public void addIndex(Index base) {
-        this.indexes.put(base.getID(), base);
+        this.indexes().put(base.getID(), base);
     }
 
     /*
@@ -197,44 +202,40 @@ public class IndexManagerImpl extends AbstractLogEnabled implements
      * @see org.apache.cocoon.components.search.components.IndexManager#remove(java.lang.String)
      */
     public void remove(String id) {
-        this.indexes.remove(id);
+        this.indexes().remove(id);
     }
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
-     */
-    public void configure(Configuration configuration)
-            throws ConfigurationException {
-
+    protected void loadIndexes() {
         // configure the index manager:
-        this.indexerRole = configuration.getChild(INDEXER_ELEMENT).getAttribute(INDEXER_ROLE_ATTRIBUTE);
-        
+
         // now check all publications and add their indexes:
         PublicationManager pubManager = null;
         SourceResolver resolver = null;
         Source confSource = null;
+        ContextUtility util = null;
         try {
-            pubManager = (PublicationManager) this.manager
-                    .lookup(PublicationManager.ROLE);
-            Publication[] publications = pubManager.getPublications();
+            util = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
+            Request request = util.getRequest();
+            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
+            pubManager = (PublicationManager) this.manager.lookup(PublicationManager.ROLE);
+            Publication[] publications = pubManager.getPublications(factory);
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            
+
             for (int i = 0; i < publications.length; i++) {
-                String uri = "context://" + Publication.PUBLICATION_PREFIX_URI+"/"+publications[i].getId()+
-                    "/"+Publication.CONFIGURATION_PATH + "/" + INDEX_CONF_FILE;
+                String uri = "context://" + Publication.PUBLICATION_PREFIX_URI + "/"
+                        + publications[i].getId() + "/" + Publication.CONFIGURATION_PATH + "/"
+                        + INDEX_CONF_FILE;
                 confSource = resolver.resolveURI(uri);
                 if (confSource.exists()) {
                     addIndexes(confSource);
                 }
             }
         } catch (IOException e) {
-            throw new ConfigurationException("Config file error", e);
+            throw new RuntimeException("Config file error", e);
         } catch (ServiceException e) {
-            throw new ConfigurationException("PublicationManager lookup error", e);
+            throw new RuntimeException("PublicationManager lookup error", e);
         } catch (PublicationException e) {
-            throw new ConfigurationException("Publication error", e);
+            throw new RuntimeException("Publication error", e);
         } finally {
             if (pubManager != null) {
                 this.manager.release(pubManager);
@@ -245,33 +246,44 @@ public class IndexManagerImpl extends AbstractLogEnabled implements
                 }
                 this.manager.release(resolver);
             }
+            if (util != null) {
+                this.manager.release(util);
+            }
         }
-        
+
         getLogger().info("Search Engine - Index Manager configured.");
     }
 
+    /*
+     * (non-Javadoc)
+     * 
+     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
+     */
+    public void configure(Configuration configuration) throws ConfigurationException {
+        this.indexerRole = configuration.getChild(INDEXER_ELEMENT)
+                .getAttribute(INDEXER_ROLE_ATTRIBUTE);
+    }
 
     /**
      * Adds indexes from the given configuration file to the index manager.
      * @param confSource
      * @throws ConfigurationException
      */
-    public void addIndexes(Source confSource) throws ConfigurationException {
+    public void addIndexes(Source confSource) {
         try {
             Configuration indexConfiguration = SourceHelper.build(confSource);
             addIndexes(indexConfiguration);
         } catch (ConfigurationException e) {
-            throw new ConfigurationException("Error with configuration file "+confSource.getURI(), e);
+            throw new RuntimeException("Error with configuration file " + confSource.getURI(), e);
         }
     }
-    
+
     /**
      * Adds indexes from the given configuration object to the index manager.
      * @param configuration
      * @throws ConfigurationException
      */
-    private void addIndexes(Configuration configuration)
-            throws ConfigurationException {
+    private void addIndexes(Configuration configuration) throws ConfigurationException {
         AnalyzerManager analyzerManager = null;
         Configuration[] confs = configuration.getChildren(INDEX_ELEMENT);
 
@@ -279,84 +291,75 @@ public class IndexManagerImpl extends AbstractLogEnabled implements
             throw new ConfigurationException("no index is defined !");
         }
         try {
-            analyzerManager = (AnalyzerManager) this.manager
-                    .lookup(AnalyzerManager.ROLE);
+            analyzerManager = (AnalyzerManager) this.manager.lookup(AnalyzerManager.ROLE);
 
             // configure each index
             for (int i = 0; i < confs.length; i++) {
                 String id = confs[i].getAttribute(ID_ATTRIBUTE);
-                String analyzerid = confs[i]
-                        .getAttribute(INDEX_DEFAULTANALZER_ATTRIBUTE);
+                String analyzerid = confs[i].getAttribute(INDEX_DEFAULTANALZER_ATTRIBUTE);
                 String directory = confs[i].getAttribute(INDEX_DIRECTORY_ATTRIBUTE);
                 if (!analyzerManager.exist(analyzerid)) {
-                    throw new ConfigurationException("Analyzer " + analyzerid
-                            + " no found");
+                    throw new ConfigurationException("Analyzer " + analyzerid + " no found");
                 }
-    
+
                 Configuration[] fields = confs[i].getChild(STRUCTURE_ELEMENT)
                         .getChildren(FIELD_ELEMENT);
-    
+
                 IndexStructure docdecl = new IndexStructure();
                 for (int j = 0; j < fields.length; j++) {
-    
+
                     FieldDefinition fielddecl;
-    
+
                     // field id attribute
                     String id_field = fields[j].getAttribute(ID_ATTRIBUTE);
-    
+
                     // field type attribute
                     String typeS = fields[j].getAttribute(TYPE_ATTRIBUTE, "");
                     int type = FieldDefinition.stringTotype(typeS);
                     try {
                         fielddecl = FieldDefinition.create(id_field, type);
                     } catch (IllegalArgumentException e) {
-                        throw new ConfigurationException("field " + id_field
-                                + " type " + typeS, e);
+                        throw new ConfigurationException("field " + id_field + " type " + typeS, e);
                     }
-    
+
                     // field store attribute
                     boolean store;
                     if (fielddecl.getType() == FieldDefinition.TEXT) {
-                        store = fields[j].getAttributeAsBoolean(STORE_ATTRIBUTE,
-                                false);
+                        store = fields[j].getAttributeAsBoolean(STORE_ATTRIBUTE, false);
                     } else {
-                        store = fields[j].getAttributeAsBoolean(STORE_ATTRIBUTE,
-                                true);
+                        store = fields[j].getAttributeAsBoolean(STORE_ATTRIBUTE, true);
                     }
                     fielddecl.setStore(store);
-    
+
                     // field dateformat attribute
                     if (fielddecl.getType() == FieldDefinition.DATE) {
-                        String dateformat_field = fields[j]
-                                .getAttribute(DATEFORMAT_ATTRIBUTE);
-                        ((DateFieldDefinition) fielddecl)
-                                .setDateFormat(new SimpleDateFormat(
-                                        dateformat_field));
+                        String dateformat_field = fields[j].getAttribute(DATEFORMAT_ATTRIBUTE);
+                        ((DateFieldDefinition) fielddecl).setDateFormat(new SimpleDateFormat(dateformat_field));
                     }
-    
+
                     this.getLogger().debug("field added: " + fielddecl);
                     docdecl.addFieldDef(fielddecl);
                 }
-            
+
                 Index index = new Index();
                 index.setID(id);
                 index.setIndexer(indexerRole);
-                
+
                 // if the directory path is relative, prepend context path:
                 if (!directory.startsWith(File.separator)) {
                     directory = getServletContextPath() + File.separator + directory;
                 }
-                
+
                 if (index.setDirectory(directory)) {
-                    this.getLogger().warn(
-                            "directory " + directory + " was locked ");
+                    this.getLogger().warn("directory " + directory + " was locked ");
                 }
                 index.setDefaultAnalyzerID(analyzerid);
                 index.setStructure(docdecl);
                 index.setManager(manager);
 
                 this.addIndex(index);
-                this.getLogger().info("add index  " + index.getID() + " for directory " + directory);
+                this.getLogger()
+                        .info("add index  " + index.getID() + " for directory " + directory);
             }
         } catch (ServiceException e) {
             throw new ConfigurationException("AnalyzerManager lookup error", e);
@@ -385,16 +388,17 @@ public class IndexManagerImpl extends AbstractLogEnabled implements
             }
         }
     }
-    
-    /* (non-Javadoc)
+
+    /*
+     * (non-Javadoc)
      * @see org.apache.cocoon.components.search.components.IndexManager#getIndex()
      */
     public Index[] getIndex() {
-        return (Index[]) this.indexes.values().toArray(
-                new Index[indexes.size()]);
+        return (Index[]) this.indexes().values().toArray(new Index[indexes().size()]);
     }
 
-    /* (non-Javadoc)
+    /*
+     * (non-Javadoc)
      * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
      */
     public void service(ServiceManager manager) throws ServiceException {

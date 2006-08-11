@@ -29,8 +29,6 @@ import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
@@ -45,25 +43,21 @@ public class Import extends AbstractUsecase {
 
     protected void initParameters() {
         super.initParameters();
-        try {
-            Publication[] pubs = PublicationUtil.getPublications(this.manager);
-            List pubList = Arrays.asList(pubs);
-            setParameter(PUBLICATIONS, pubList);
-        } catch (PublicationException e) {
-            throw new RuntimeException(e);
-        }
+        Publication[] pubs = getDocumentFactory().getPublications();
+        List pubList = Arrays.asList(pubs);
+        setParameter(PUBLICATIONS, pubList);
     }
 
     protected void doExecute() throws Exception {
         super.doExecute();
         String pubId = getParameterAsString(PUBLICATION);
-        DocumentFactory map = getDocumentFactory();
+        DocumentFactory factory = getDocumentFactory();
         ServiceSelector selector = null;
         SiteManager siteManager = null;
         SourceResolver resolver = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            Publication pub = PublicationUtil.getPublication(this.manager, pubId);
+            Publication pub = factory.getPublication(pubId);
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(pub.getSiteManagerHint());
 
@@ -73,20 +67,18 @@ public class Import extends AbstractUsecase {
             String[] areas = { Publication.AUTHORING_AREA, Publication.LIVE_AREA,
                     Publication.TRASH_AREA, Publication.ARCHIVE_AREA };
             for (int i = 0; i < areas.length; i++) {
-                Document[] docs = siteManager.getDocuments(map, pub, areas[i]);
+                Document[] docs = siteManager.getDocuments(factory, pub, areas[i]);
                 for (int j = 0; j < docs.length; j++) {
                     nodes.add(docs[j].getRepositoryNode());
                     final String lenyaUri = docs[j].getSourceURI();
                     final String sourcePath = lenyaUri.substring("lenya://".length());
                     final String contextUri = "context://" + sourcePath + ".meta";
                     /*
-                    MetaDataManager meta = new MetaDataManager(contextUri,
-                            this.manager,
-                            getLogger());
-                    uri2meta.put(docs[j].getSourceURI(), meta);
-                    */
+                     * MetaDataManager meta = new MetaDataManager(contextUri, this.manager,
+                     * getLogger()); uri2meta.put(docs[j].getSourceURI(), meta);
+                     */
                 }
-                nodes.add(siteManager.getSiteStructure(map, pub, areas[i]).getRepositoryNode());
+                nodes.add(siteManager.getSiteStructure(factory, pub, areas[i]).getRepositoryNode());
             }
 
             for (Iterator i = nodes.iterator(); i.hasNext();) {
@@ -97,15 +89,11 @@ public class Import extends AbstractUsecase {
                 final String jcrUri = "jcr://" + sourcePath;
                 if (SourceUtil.exists(contextUri, this.manager)) {
                     SourceUtil.copy(resolver, contextUri, jcrUri);
-/*
-                    MetaDataManager sourceMgr = (MetaDataManager) uri2meta.get(lenyaUri);
-                    if (sourceMgr != null) {
-                        MetaDataManager jcrMgr = new JCRMetaDataManager(jcrUri,
-                                this.manager,
-                                getLogger());
-                        jcrMgr.replaceMetaData(sourceMgr);
-                    }
-                    */
+                    /*
+                     * MetaDataManager sourceMgr = (MetaDataManager) uri2meta.get(lenyaUri); if
+                     * (sourceMgr != null) { MetaDataManager jcrMgr = new JCRMetaDataManager(jcrUri,
+                     * this.manager, getLogger()); jcrMgr.replaceMetaData(sourceMgr); }
+                     */
                 } else {
                     addInfoMessage("The source [" + contextUri + "] does not exist.");
                 }

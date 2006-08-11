@@ -45,7 +45,7 @@ public class XLinkCollectionTest extends AbstractAccessControlTest {
         Session session = RepositoryUtil.createSession(getManager(), getIdentity());
         DocumentFactory map = DocumentUtil.createDocumentFactory(getManager(), session);
 
-        Publication pub = PublicationUtil.getPublication(getManager(), "test");
+        Publication pub = getPublication("test");
         DocumentIdentifier identifier = new DocumentIdentifier(pub,
                 Publication.AUTHORING_AREA,
                 "12345",

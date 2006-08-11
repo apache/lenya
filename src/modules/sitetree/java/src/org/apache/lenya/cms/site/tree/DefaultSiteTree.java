@@ -213,10 +213,10 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      *      org.apache.lenya.cms.site.Label[], boolean, java.lang.String, java.lang.String, boolean,
      *      java.lang.String)
      */
-    public synchronized SiteTreeNode addNode(String documentid, String uuid, boolean visibleInNav,
+    public synchronized SiteTreeNode addNode(String path, String uuid, boolean visibleInNav,
             String href, String suffix, boolean link, String refDocumentId) throws SiteException {
         StringBuffer buf = new StringBuffer();
-        StringTokenizer st = new StringTokenizer(documentid, "/");
+        StringTokenizer st = new StringTokenizer(path, "/");
         int length = st.countTokens();
 
         for (int i = 0; i < (length - 1); i++) {
@@ -439,7 +439,10 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
                 SiteTreeNodeImpl.NODE_NAME);
 
         for (int i = 0; i < elements.length; i++) {
-            SiteTreeNode newNode = new SiteTreeNodeImpl(this.factory, this, elements[i], getLogger());
+            SiteTreeNode newNode = new SiteTreeNodeImpl(this.factory,
+                    this,
+                    elements[i],
+                    getLogger());
             childElements.add(newNode);
         }
 
@@ -619,8 +622,25 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     }
 
     protected SiteNode getByUuidInternal(String uuid, String language) {
-        String xPath = "//*[@uuid = '" + uuid + "' and *[@xml:lang = '" + language + "']]";
-        return getNodeByXpath(xPath);
+        // FIXME remove when UUID introduction is complete
+        if (uuid.startsWith("/")) {
+            if (contains(uuid)) {
+                try {
+                    return getNode(uuid);
+                } catch (SiteException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            return null;
+        } else {
+            String xPath = "//*[@uuid = '" + uuid + "']";
+            SiteNode node = getNodeByXpath(xPath);
+            if (node != null && node.hasLink(language)) {
+                return node;
+            } else {
+                return null;
+            }
+        }
     }
 
     protected SiteNode getNodeByXpath(String xPath) {

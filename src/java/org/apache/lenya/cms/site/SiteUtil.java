@@ -31,7 +31,6 @@ import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.util.Assert;
@@ -394,7 +393,7 @@ public class SiteUtil {
         SiteManager siteManager = null;
         try {
             selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
-            Publication pub = PublicationUtil.getPublication(manager, locator.getPublicationId());
+            Publication pub = factory.getPublication(locator.getPublicationId());
             siteManager = (SiteManager) selector.select(pub.getSiteManagerHint());
             return siteManager.getAvailableLocator(factory, locator);
         } catch (Exception e) {
@@ -541,7 +540,7 @@ public class SiteUtil {
 
         try {
             selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
-            Publication pub = PublicationUtil.getPublication(manager, locator.getPublicationId());
+            Publication pub = factory.getPublication(locator.getPublicationId());
             String siteManagerHint = pub.getSiteManagerHint();
             siteManager = (SiteManager) selector.select(siteManagerHint);
             SiteStructure site = siteManager.getSiteStructure(factory, pub, locator.getArea());
@@ -567,12 +566,12 @@ public class SiteUtil {
         DocumentBuilder builder = null;
         ServiceSelector selector = null;
         try {
-            Publication pub = PublicationUtil.getPublication(manager, info.getPublicationId());
+            Publication pub = factory.getPublication(info.getPublicationId());
             if (pub.exists()) {
                 selector = (ServiceSelector) manager.lookup(DocumentBuilder.ROLE + "Selector");
                 builder = (DocumentBuilder) selector.select(pub.getDocumentBuilderHint());
                 if (builder.isDocument(webappUrl)) {
-                    DocumentLocator locator = builder.getLocator(webappUrl);
+                    DocumentLocator locator = builder.getLocator(factory, webappUrl);
                     return contains(manager, factory, locator);
                 }
             }
@@ -594,7 +593,7 @@ public class SiteUtil {
     public static Document getDocument(ServiceManager manager, DocumentFactory factory,
             String webappUrl) throws SiteException {
 
-        DocumentLocator locator = getLocator(manager, webappUrl);
+        DocumentLocator locator = getLocator(manager, factory, webappUrl);
         if (contains(manager, factory, locator)) {
             try {
                 return factory.get(locator);
@@ -606,17 +605,16 @@ public class SiteUtil {
         }
     }
 
-    public static DocumentLocator getLocator(ServiceManager manager, String webappUrl)
+    public static DocumentLocator getLocator(ServiceManager manager, DocumentFactory factory, String webappUrl)
             throws SiteException {
-        DocumentLocator locator;
         URLInformation info = new URLInformation(webappUrl);
         DocumentBuilder builder = null;
         ServiceSelector selector = null;
         try {
-            Publication pub = PublicationUtil.getPublication(manager, info.getPublicationId());
+            Publication pub = factory.getPublication(info.getPublicationId());
             selector = (ServiceSelector) manager.lookup(DocumentBuilder.ROLE + "Selector");
             builder = (DocumentBuilder) selector.select(pub.getDocumentBuilderHint());
-            return builder.getLocator(webappUrl);
+            return builder.getLocator(factory, webappUrl);
 
         } catch (SiteException e) {
             throw e;

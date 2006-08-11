@@ -83,19 +83,22 @@
       file="${build.test}/org/apache/lenya/cms/LenyaTestCase.xtest"/>
   </target>
   
-  <target name="modules.test" depends="tests.prepare, prepare-modules, prepare-module-test">
+  <target name="modules.test" depends="tests.prepare">
     <ant antfile="${build.dir}/temp/modules-build.xml"
       inheritall="true"
       inheritrefs="true"
       target="test-modules"/>
   </target>
   
-  <target name="module.test" depends="tests.prepare, prepare-modules, prepare-module-test">
-    <property name="module" value=""/>
+  <target name="patch-modules-test" depends="tests.prepare, prepare-modules, prepare-module-test">
     <ant antfile="${build.dir}/temp/modules-build.xml"
       inheritall="true"
       inheritrefs="true"
       target="patch-modules-test"/>
+  </target>
+  
+  <target name="module.test" depends="patch-modules-test">
+    <property name="module" value=""/>
     <ant antfile="${build.dir}/temp/modules-build.xml"
       inheritall="true"
       inheritrefs="true"
