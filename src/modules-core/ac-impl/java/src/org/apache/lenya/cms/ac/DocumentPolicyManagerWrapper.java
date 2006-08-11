@@ -80,7 +80,7 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         try {
             contextUtility = (ContextUtility) serviceManager.lookup(ContextUtility.ROLE);
             Session session = RepositoryUtil.getSession(this.serviceManager, contextUtility.getRequest());
-            DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.serviceManager, session);
+            DocumentFactory map = DocumentUtil.createDocumentFactory(this.serviceManager, session);
             if (map.isDocument(webappUrl)) {
                 Document document = map.getFromURL(webappUrl);
                 if (document.existsInAnyLanguage()) {

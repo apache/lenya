@@ -126,7 +126,7 @@ public class WorkflowMenuTransformer extends AbstractSAXTransformer {
         try {
             Request request = ObjectModelHelper.getRequest(_objectModel);
             Session session = RepositoryUtil.getSession(this.manager, request);
-            DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+            DocumentFactory map = DocumentUtil.createDocumentFactory(this.manager, session);
 
             String webappUrl = ServletHelper.getWebappURI(request);
             Document document = null;

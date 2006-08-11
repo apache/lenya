@@ -74,7 +74,7 @@ public class LanguageExistsAction extends ServiceableAction {
 
         Request request = ObjectModelHelper.getRequest(objectModel);
         Session session = RepositoryUtil.getSession(this.manager, request);
-        DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+        DocumentFactory map = DocumentUtil.createDocumentFactory(this.manager, session);
 
         String url = ServletHelper.getWebappURI(request);
 

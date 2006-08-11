@@ -32,6 +32,6 @@ public class DefaultDocumentBuilderTest extends DefaultDocumentTest {
      */
     protected Document getDocument(DocumentTestSet set) throws PublicationException {
         Publication pub = PublicationUtil.getPublication(getManager(), "test");
-        return getIdentityMap().getFromURL("/" + pub.getId() + "/" + set.getArea() + set.getUrl());
+        return getFactory().getFromURL("/" + pub.getId() + "/" + set.getArea() + set.getUrl());
     }
 }

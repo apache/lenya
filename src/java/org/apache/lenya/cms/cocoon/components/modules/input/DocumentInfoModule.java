@@ -100,7 +100,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
 
         try {
             Session session = RepositoryUtil.getSession(this.manager, request);
-            DocumentFactory docFactory = DocumentUtil.createDocumentIdentityMap(this.manager,
+            DocumentFactory docFactory = DocumentUtil.createDocumentFactory(this.manager,
                     session);
             Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
             document = docFactory.get(publication, area, uuid, language);

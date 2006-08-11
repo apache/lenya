@@ -68,7 +68,7 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
 
             String[] steps = name.split(":");
             if (steps.length == 1) {
-                DocumentFactory docFactory = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+                DocumentFactory docFactory = DocumentUtil.createDocumentFactory(this.manager, session);
                 String webappUrl = ServletHelper.getWebappURI(request);
                 Document document = docFactory.getFromURL(webappUrl);
                 pub = document.getPublication();

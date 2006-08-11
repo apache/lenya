@@ -37,7 +37,7 @@ public class MetaDataTest extends AbstractAccessControlTest {
      */
     public void testMetaData() throws Exception {
         Session session = RepositoryUtil.getSession(getManager(), getRequest());
-        DocumentFactory factory = DocumentUtil.createDocumentIdentityMap(getManager(), session);
+        DocumentFactory factory = DocumentUtil.createDocumentFactory(getManager(), session);
 
         Publication publication = PublicationUtil.getPublication(getManager(), "test");
         Document doc = factory.get(publication, Publication.AUTHORING_AREA, "/index", "en");

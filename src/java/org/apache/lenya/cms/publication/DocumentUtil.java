@@ -35,7 +35,7 @@ public class DocumentUtil {
      * @param session The session.
      * @return if an error occurs.
      */
-    public static DocumentFactory createDocumentIdentityMap(ServiceManager manager, Session session) {
+    public static DocumentFactory createDocumentFactory(ServiceManager manager, Session session) {
         DocumentFactory map;
         DocumentManager docManager = null;
         try {
@@ -62,7 +62,7 @@ public class DocumentUtil {
     public static Document getCurrentDocument(ServiceManager manager, Request request)
             throws RepositoryException, DocumentBuildException {
         Session session = RepositoryUtil.getSession(manager, request);
-        DocumentFactory factory = DocumentUtil.createDocumentIdentityMap(manager, session);
+        DocumentFactory factory = DocumentUtil.createDocumentFactory(manager, session);
         String url = ServletHelper.getWebappURI(request);
         Document doc = null;
         if (factory.isDocument(url)) {

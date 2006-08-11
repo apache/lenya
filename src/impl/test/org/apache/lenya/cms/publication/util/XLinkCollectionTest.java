@@ -43,7 +43,7 @@ public class XLinkCollectionTest extends AbstractAccessControlTest {
             TransactionException, ServiceException {
 
         Session session = RepositoryUtil.createSession(getManager(), getIdentity());
-        DocumentFactory map = DocumentUtil.createDocumentIdentityMap(getManager(), session);
+        DocumentFactory map = DocumentUtil.createDocumentFactory(getManager(), session);
 
         Publication pub = PublicationUtil.getPublication(getManager(), "test");
         DocumentIdentifier identifier = new DocumentIdentifier(pub,

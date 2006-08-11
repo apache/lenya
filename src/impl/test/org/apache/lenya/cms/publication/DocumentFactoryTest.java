@@ -31,7 +31,7 @@ public class DocumentFactoryTest extends AbstractAccessControlTest {
      */
     public void testDocumentFactory() throws Exception {
         Session session = RepositoryUtil.getSession(getManager(), getRequest());
-        DocumentFactory factoryA = DocumentUtil.createDocumentIdentityMap(getManager(), session);
+        DocumentFactory factoryA = DocumentUtil.createDocumentFactory(getManager(), session);
 
         Publication publication = PublicationUtil.getPublication(getManager(), "test");
         
@@ -39,7 +39,7 @@ public class DocumentFactoryTest extends AbstractAccessControlTest {
         Document docA2 = factoryA.get(publication, Publication.AUTHORING_AREA, "/index", "en");
         assertSame(docA1, docA2);
         
-        DocumentFactory factoryB = DocumentUtil.createDocumentIdentityMap(getManager(), session);
+        DocumentFactory factoryB = DocumentUtil.createDocumentFactory(getManager(), session);
 
         Document docB1 = factoryB.get(publication, Publication.AUTHORING_AREA, "/index", "en");
         

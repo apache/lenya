@@ -152,7 +152,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
 
         try {
             Session session = RepositoryUtil.getSession(this.manager, request);
-            this.identityMap = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+            this.identityMap = DocumentUtil.createDocumentFactory(this.manager, session);
             this.publication = PublicationUtil.getPublication(this.manager, _objectModel);
         } catch (Exception e) {
             throw new ProcessingException("Could not create publication: ", e);

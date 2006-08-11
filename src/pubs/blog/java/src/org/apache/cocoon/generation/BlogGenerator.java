@@ -118,7 +118,7 @@ public class BlogGenerator extends ServiceableGenerator {
         try {
             Request request = ObjectModelHelper.getRequest(this.objectModel);
             Session session = RepositoryUtil.getSession(this.manager, request);
-            DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+            DocumentFactory map = DocumentUtil.createDocumentFactory(this.manager, session);
             Publication publication = PublicationUtil.getPublication(this.manager, request);
 
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");

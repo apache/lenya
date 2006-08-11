@@ -114,7 +114,7 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
             this.publication = PublicationUtil.getPublication(this.manager, _objectModel);
             Request request = ObjectModelHelper.getRequest(_objectModel);
             Session session = RepositoryUtil.getSession(this.manager, request);
-            this.identityMap = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+            this.identityMap = DocumentUtil.createDocumentFactory(this.manager, session);
             
             String url = ServletHelper.getWebappURI(request);
             setDocument(this.identityMap.getFromURL(url));

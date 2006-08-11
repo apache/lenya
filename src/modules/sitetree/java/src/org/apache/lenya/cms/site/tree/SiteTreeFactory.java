@@ -55,7 +55,7 @@ public class SiteTreeFactory extends AbstractLogEnabled implements RepositoryIte
         DefaultSiteTree tree;
         try {
             Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
-            DocumentFactory factory = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
             tree = new DefaultSiteTree(factory, publication, area, this.manager, getLogger());
         } catch (Exception e) {
             throw new RepositoryException(e);

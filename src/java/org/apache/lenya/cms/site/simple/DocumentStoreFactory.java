@@ -72,7 +72,7 @@ public class DocumentStoreFactory extends AbstractLogEnabled implements Reposito
         try {
             Publication publication = PublicationUtil.getPublication(this.manager, publicationId);
 
-            DocumentFactory docMap = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+            DocumentFactory docMap = DocumentUtil.createDocumentFactory(this.manager, session);
             store = new DocumentStore(this.manager, docMap, publication, area, uuid, getLogger());
         } catch (Exception e) {
             throw new RepositoryException(e);

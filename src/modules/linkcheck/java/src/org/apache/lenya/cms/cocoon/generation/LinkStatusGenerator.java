@@ -323,7 +323,7 @@ public class LinkStatusGenerator extends ServiceableGenerator
         } catch (RepositoryException e) {
             throw new ProcessingException(e);
         }
-        this.identityMap = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+        this.identityMap = DocumentUtil.createDocumentFactory(this.manager, session);
 
         super.setup(resolver, objectModel, src, par);
         this.src = src;

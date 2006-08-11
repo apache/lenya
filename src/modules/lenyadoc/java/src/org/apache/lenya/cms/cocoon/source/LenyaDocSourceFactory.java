@@ -191,7 +191,7 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Creating repository source for URI [" + location + "]");
         }
-        DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+        DocumentFactory map = DocumentUtil.createDocumentFactory(this.manager, session);
         Document document;
         try {
             document = map.get(pub, area, uuid, language);

@@ -53,7 +53,7 @@ public class WorkflowTest extends AbstractAccessControlTest {
     public void testWorkflow() throws Exception {
         Publication publication = PublicationUtil.getPublication(getManager(), "test");
         String url = "/" + publication.getId() + URL;
-        DocumentFactory map = getIdentityMap();
+        DocumentFactory map = getFactory();
         Document document = map.getFromURL(url);
 
         document.getRepositoryNode().lock();

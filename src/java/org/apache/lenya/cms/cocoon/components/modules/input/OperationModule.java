@@ -55,7 +55,7 @@ public class OperationModule extends AbstractInputModule implements Serviceable,
         if (this.documentIdentityMap == null) {
             try {
                 Session session = RepositoryUtil.getSession(this.manager, this.request);
-                this.documentIdentityMap = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+                this.documentIdentityMap = DocumentUtil.createDocumentFactory(this.manager, session);
             } catch (RepositoryException e) {
                 throw new RuntimeException(e);
             }

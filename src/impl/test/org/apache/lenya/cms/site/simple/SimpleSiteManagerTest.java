@@ -44,7 +44,7 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
         login("lenya");
 
         Session session = RepositoryUtil.getSession(getManager(), getRequest());
-        DocumentFactory factory = DocumentUtil.createDocumentIdentityMap(getManager(), session);
+        DocumentFactory factory = DocumentUtil.createDocumentFactory(getManager(), session);
 
         Publication[] pubs = PublicationUtil.getPublications(getManager());
 
@@ -91,7 +91,7 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
             ResourceType type = (ResourceType) resourceTypeSelector.select("entry");
             String contentSourceUri = structure.getRepositoryNode().getSourceURI();
             
-            Document doc = docManager.add(getIdentityMap(),
+            Document doc = docManager.add(getFactory(),
                     type,
                     contentSourceUri,
                     pub,

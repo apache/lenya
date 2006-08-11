@@ -194,7 +194,7 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
                     e);
         }
 
-        DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+        DocumentFactory map = DocumentUtil.createDocumentFactory(this.manager, session);
         this.document = map.get(pub, area, uuid, language);
     }
 

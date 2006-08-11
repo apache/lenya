@@ -176,7 +176,7 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
             Publication pub = PublicationUtil.getPublication(this.manager, pubId);
 
             Session session = RepositoryUtil.createSession(manager, identity);
-            DocumentFactory factory = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
 
             String docPath = path.substring((pubId + "/content/" + area).length());
 

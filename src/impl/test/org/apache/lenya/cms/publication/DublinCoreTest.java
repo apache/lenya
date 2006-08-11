@@ -51,7 +51,7 @@ public class DublinCoreTest extends AbstractAccessControlTest {
         
         Publication publication = PublicationUtil.getPublication(getManager(), "test");
         
-        DocumentFactory map = getIdentityMap();
+        DocumentFactory map = getFactory();
         Document doc = map.get(publication, AREA, DOCUMENT_ID, LANGUAGE);
         
         doc.getRepositoryNode().lock();

@@ -96,7 +96,7 @@ public class WorkflowInvokerAction extends ServiceableAction {
             throw new AccessControlException(e);
         }
         Session session = RepositoryUtil.getSession(this.manager, request);
-        DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+        DocumentFactory map = DocumentUtil.createDocumentFactory(this.manager, session);
         Document document = map.get(pub, area, documentId, language);
 
         if (getLogger().isDebugEnabled()) {

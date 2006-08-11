@@ -89,7 +89,7 @@ public class ProxyUrlModule extends AbstractInputModule implements Serviceable {
         try {
             Request request = ObjectModelHelper.getRequest(objectModel);
             Session session = RepositoryUtil.getSession(this.manager, request);
-            DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+            DocumentFactory map = DocumentUtil.createDocumentFactory(this.manager, session);
             Publication publication = PublicationUtil.getPublication(this.manager, request);
 
             Document doc = map.get(publication, area, documentId, language);

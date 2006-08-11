@@ -75,7 +75,7 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
 
     private DocumentFactory identityMap;
 
-    protected DocumentFactory getIdentityMap() {
+    protected DocumentFactory getFactory() {
         if (this.identityMap == null) {
 
             Session session;
@@ -84,7 +84,7 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-            this.identityMap = DocumentUtil.createDocumentIdentityMap(getManager(), session);
+            this.identityMap = DocumentUtil.createDocumentFactory(getManager(), session);
         }
         return this.identityMap;
     }
@@ -98,11 +98,11 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
     protected Document getDocument(DocumentTestSet testSet) throws PublicationException {
 
         Publication pub = PublicationUtil.getPublication(getManager(), "test");
-        String uuid = SiteUtil.getUUID(getManager(), getIdentityMap(), pub, testSet.getArea(),
+        String uuid = SiteUtil.getUUID(getManager(), getFactory(), pub, testSet.getArea(),
                 testSet.getPath());
         DocumentIdentifier id = new DocumentIdentifier(pub, testSet.getArea(), uuid, testSet
                 .getLanguage());
-        DocumentImpl document = new DocumentImpl(getManager(), getIdentityMap(), id, getLogger());
+        DocumentImpl document = new DocumentImpl(getManager(), getFactory(), id, getLogger());
         document.setDocumentURL(testSet.getUrl());
         document.setExtension(testSet.getExtension());
 

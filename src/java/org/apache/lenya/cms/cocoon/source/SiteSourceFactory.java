@@ -135,7 +135,7 @@ public class SiteSourceFactory extends AbstractLogEnabled implements SourceFacto
             String path = relativePath.substring(prefix.length());
             
             Session session = RepositoryUtil.getSession(this.manager, request);
-            DocumentFactory factory = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+            DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
             
             ServiceSelector selector = null;
             SiteManager siteManager = null;

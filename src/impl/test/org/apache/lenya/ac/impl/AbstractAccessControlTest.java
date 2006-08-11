@@ -175,18 +175,18 @@ public class AbstractAccessControlTest extends LenyaTestCase {
         return accrMgr.getConfigurationDirectory();
     }
 
-    private DocumentFactory identityMap;
+    private DocumentFactory factory;
 
-    protected DocumentFactory getIdentityMap() {
-        if (this.identityMap == null) {
+    protected DocumentFactory getFactory() {
+        if (this.factory == null) {
             org.apache.lenya.cms.repository.Session session;
             try {
                 session = RepositoryUtil.getSession(getManager(), getRequest());
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-            this.identityMap = DocumentUtil.createDocumentIdentityMap(getManager(), session);
+            this.factory = DocumentUtil.createDocumentFactory(getManager(), session);
         }
-        return this.identityMap;
+        return this.factory;
     }
 }

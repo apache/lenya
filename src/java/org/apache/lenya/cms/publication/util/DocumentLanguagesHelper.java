@@ -66,7 +66,7 @@ public class DocumentLanguagesHelper {
 
         try {
             Session session = RepositoryUtil.getSession(manager, request);
-            this.factory = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+            this.factory = DocumentUtil.createDocumentFactory(this.manager, session);
 
             this.pub = PublicationUtil.getPublication(manager, objectModel);
         } catch (Exception e) {

@@ -44,7 +44,7 @@ public class SiteTreeNodeImplTest extends AbstractAccessControlTest {
     public void setUp() throws Exception {
         super.setUp();
         Publication pub = PublicationUtil.getPublication(getManager(), "test");
-        this.siteTree = new DefaultSiteTree(getIdentityMap(), pub, "testArea", getManager(), getLogger());
+        this.siteTree = new DefaultSiteTree(getFactory(), pub, "testArea", getManager(), getLogger());
         ContainerUtil.enableLogging(siteTree, getLogger());
         
         siteTree.getRepositoryNode().lock();
@@ -93,8 +93,8 @@ public class SiteTreeNodeImplTest extends AbstractAccessControlTest {
         assertEquals(languages.length, 2);
         for (int i = 0; i < languages.length; i++) {
             Link label = this.node.getLink(languages[i]);
-            Link label1 = new SiteTreeLink(getIdentityMap(), node, "Bar", "en");
-            Link label2 = new SiteTreeLink(getIdentityMap(), node, "Stab", "de");
+            Link label1 = new SiteTreeLink(getFactory(), node, "Bar", "en");
+            Link label2 = new SiteTreeLink(getFactory(), node, "Stab", "de");
             assertTrue(label.equals(label1) || label.equals(label2));
         }
     }
@@ -116,7 +116,7 @@ public class SiteTreeNodeImplTest extends AbstractAccessControlTest {
      * 
      */
     final public void testAddLabel() throws SiteException {
-        Link label = new SiteTreeLink(getIdentityMap(), this.node, "Barolo", "it");
+        Link label = new SiteTreeLink(getFactory(), this.node, "Barolo", "it");
         this.node.addLabel((SiteTreeLink) label);
         label = this.node.getLink("it");
         assertNotNull(label);

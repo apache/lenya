@@ -101,7 +101,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
 
         try {
             Session session = RepositoryUtil.getSession(this.manager, _request);
-            this.identityMap = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+            this.identityMap = DocumentUtil.createDocumentFactory(this.manager, session);
             String url = ServletHelper.getWebappURI(_request);
             this.currentDocument = this.identityMap.getFromURL(url);
         } catch (final Exception e1) {

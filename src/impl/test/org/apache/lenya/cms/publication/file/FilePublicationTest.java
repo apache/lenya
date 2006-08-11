@@ -98,7 +98,7 @@ public class FilePublicationTest extends AbstractAccessControlTest {
         getLogger().info("    Destination language:    [" + _destinationLanguage + "]");
 
         Publication publication = PublicationUtil.getPublication(getManager(), "test");
-        DocumentFactory map = getIdentityMap();
+        DocumentFactory map = getFactory();
 
         Document sourceDocument = map.get(publication,
                 sourceArea,

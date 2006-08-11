@@ -84,7 +84,7 @@ public class SitetreeModule extends AbstractPageEnvelopeModule {
             
             Request request = ObjectModelHelper.getRequest(objectModel);
             Session session = RepositoryUtil.getSession(this.manager, request);
-            DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+            DocumentFactory map = DocumentUtil.createDocumentFactory(this.manager, session);
 
             if (name.equals(AUTHORING_NODE)) {
                 SiteTree authoringTree = _manager.getTree(map,

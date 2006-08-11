@@ -136,7 +136,7 @@ public class Publish extends DocumentUsecase {
     }
 
     protected void updateFeed() throws Exception {
-        DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, getSession());
+        DocumentFactory map = DocumentUtil.createDocumentFactory(this.manager, getSession());
 
         Document[] docs = new Document[2];
         org.w3c.dom.Document[] doms = new org.w3c.dom.Document[2];

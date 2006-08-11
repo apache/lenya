@@ -70,7 +70,7 @@ public class DocumentHelper {
         } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
-        this.identityMap = DocumentUtil.createDocumentIdentityMap(manager, session);
+        this.identityMap = DocumentUtil.createDocumentFactory(manager, session);
     }
 
     /**

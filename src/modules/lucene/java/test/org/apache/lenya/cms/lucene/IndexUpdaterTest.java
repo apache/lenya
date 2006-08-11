@@ -33,7 +33,7 @@ public class IndexUpdaterTest extends AbstractAccessControlTest {
     public void testIndexUpdater() throws Exception {
         login("lenya");
         Session session = RepositoryUtil.getSession(getManager(), getRequest());
-        DocumentFactory factory = DocumentUtil.createDocumentIdentityMap(getManager(), session);
+        DocumentFactory factory = DocumentUtil.createDocumentFactory(getManager(), session);
 
         Publication publication = PublicationUtil.getPublication(getManager(), "test");
         Document sourceDoc = factory.get(publication, Publication.AUTHORING_AREA, "/tutorial", "en");

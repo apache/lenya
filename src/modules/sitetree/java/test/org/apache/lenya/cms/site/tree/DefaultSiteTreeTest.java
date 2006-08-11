@@ -46,7 +46,7 @@ public class DefaultSiteTreeTest extends AbstractAccessControlTest {
     public void setUp() throws Exception {
         super.setUp();
         Publication pub = PublicationUtil.getPublication(getManager(), "test");
-        this.siteTree = new DefaultSiteTree(getIdentityMap(),
+        this.siteTree = new DefaultSiteTree(getFactory(),
                 pub,
                 "test",
                 getManager(),
@@ -230,7 +230,7 @@ public class DefaultSiteTreeTest extends AbstractAccessControlTest {
      */
     final public void testImportSubtree() throws PublicationException, RepositoryException {
         Publication pub = PublicationUtil.getPublication(getManager(), "test");
-        DefaultSiteTree newSiteTree = new DefaultSiteTree(getIdentityMap(),
+        DefaultSiteTree newSiteTree = new DefaultSiteTree(getFactory(),
                 pub,
                 "test1",
                 getManager(),

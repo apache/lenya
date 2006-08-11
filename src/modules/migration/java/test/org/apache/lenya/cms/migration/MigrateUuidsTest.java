@@ -40,7 +40,7 @@ public class MigrateUuidsTest extends AbstractAccessControlTest {
         login("lenya");
 
         Session session = RepositoryUtil.getSession(getManager(), getRequest());
-        DocumentFactory factory = DocumentUtil.createDocumentIdentityMap(getManager(), session);
+        DocumentFactory factory = DocumentUtil.createDocumentFactory(getManager(), session);
         Publication[] pubs = PublicationUtil.getPublications(getManager());
         for (int i = 0; i < pubs.length; i++) {
             this.migratedDocs.clear();

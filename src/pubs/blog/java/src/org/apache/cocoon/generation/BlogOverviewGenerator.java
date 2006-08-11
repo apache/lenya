@@ -178,7 +178,7 @@ public class BlogOverviewGenerator extends ServiceableGenerator {
         SiteManager siteManager = null;
         try {            
             Session session = RepositoryUtil.getSession(this.manager, request);
-            DocumentFactory map = DocumentUtil.createDocumentIdentityMap(this.manager, session);
+            DocumentFactory map = DocumentUtil.createDocumentFactory(this.manager, session);
             Publication publication = PublicationUtil.getPublication(
                     this.manager, request);
             

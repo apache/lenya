@@ -53,7 +53,7 @@ public class ResourceWrapperTest extends AbstractAccessControlTest {
         String documentId = "/testResource";
 
         Session session = RepositoryUtil.getSession(getManager(), getRequest());
-        DocumentFactory factory = DocumentUtil.createDocumentIdentityMap(getManager(), session);
+        DocumentFactory factory = DocumentUtil.createDocumentFactory(getManager(), session);
 
         Publication pub = PublicationUtil.getPublication(getManager(), "test");
 
