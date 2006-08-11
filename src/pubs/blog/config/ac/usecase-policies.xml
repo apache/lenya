@@ -18,25 +18,12 @@
 <!-- $Id$ -->
 
 <usecases xmlns="http://apache.org/cocoon/lenya/ac/1.0">
-	<usecase id="site.create">
-		<role id="edit"/>
-	</usecase>
-	<usecase id="publish">
-		<role id="edit"/>
-	</usecase>
-    <usecase id="archive">
-        <role id="edit"/>
-    </usecase>
-    <usecase id="delete">
-        <role id="edit"/>
-    </usecase>
-    <usecase id="restore">
-        <role id="edit"/>
-    </usecase>
+	<usecase id="site.create"><role id="edit"/></usecase>
+  <usecase id="edit.oneform"><role id="edit"/></usecase>
+  <usecase id="edit.forms"><role id="edit"/></usecase>
+  
+  <usecase id="workflow.publish"><role id="edit"/></usecase>
 
-	<usecase id="userChangeProfile"><role id="edit"/><role id="admin"/></usecase>
-	<usecase id="userChangePasswordUser"><role id="edit"/></usecase>
-	<usecase id="userChangePasswordAdmin"><role id="admin"/></usecase>
-	<usecase id="userChangeGroups"><role id="admin"/></usecase>
-
+  <usecase id="ac.logout"><role id="edit"/></usecase>
+  
 </usecases>

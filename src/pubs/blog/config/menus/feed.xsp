@@ -41,15 +41,15 @@
       </block>
       <block>
         <item uc:usecase="edit.oneform" href="../../sidebar.html">Edit Sidebar (one Form)</item>
-        <item wf:event="edit" uc:usecase="edit.forms" href="../../sidebar.html?form=sidebar">Edit&#160;Sidebar&#160;(with&#160;Forms)</item>
-	<item uc:usecase="edit.oneform" href="index.html"><i18n:text>Edit Blog Meta (one Form)</i18n:text></item>
+        <item uc:usecase="edit.forms" href="../../sidebar.html?form=sidebar">Edit&#160;Sidebar&#160;(with&#160;Forms)</item>
+        <item uc:usecase="edit.oneform" href="index.html"><i18n:text>Edit Blog Meta (one Form)</i18n:text></item>
       </block>
       <block>
-	 <item uc:usecase="workflow.publish" uc:step="showscreen" href="../../sidebar.html"><i18n:text>Publish Sidebar</i18n:text></item>
-	 <item uc:usecase="workflow.publish" uc:step="showscreen" href="index.html"><i18n:text>Publish Blog Meta</i18n:text></item>
+        <item uc:usecase="workflow.publish" href="../../sidebar.html"><i18n:text>Publish Sidebar</i18n:text></item>
+        <item uc:usecase="workflow.publish" href="index.html"><i18n:text>Publish Blog Meta</i18n:text></item>
       </block>
       <block>
-          <item uc:usecase="ac.logout" href="?"><i18n:text>Logout</i18n:text></item>
+        <item uc:usecase="ac.logout" href="?"><i18n:text>Logout</i18n:text></item>
       </block>
     </menu>
 
