@@ -178,6 +178,9 @@ document.write("Last Published: " + document.lastModified);
 <a title="The Meta Data Input Module" href="#The+Meta+Data+Input+Module">The Meta Data Input...</a>
 </div>
 <div class="menupageitem">
+<a title="The LenyaMetaDataGenerator" href="#The+LenyaMetaDataGenerator">The LenyaMetaDataGe...</a>
+</div>
+<div class="menupageitem">
 <a href="#Storage">Storage</a>
 </div>
 <div class="menupageitem">
@@ -195,6 +198,9 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div class="menuitem">
 <a href="../../../docs/1_4/reference/protocols/lenyadoc.html">lenyadoc:</a>
+</div>
+<div class="menuitem">
+<a href="../../../docs/1_4/reference/protocols/site.html">error:site:</a>
 </div>
 </div>
 <div class="menuitem">
@@ -314,7 +320,42 @@ finally {
 </div>
     
     
-<a name="N10068"></a><a name="Storage"></a>
+<a name="N10068"></a><a name="The+LenyaMetaDataGenerator"></a>
+<h2 class="h3">The LenyaMetaDataGenerator</h2>
+<div class="section">
+<p>
+        To get an XML summary of all meta data, you can use the <span class="codefrag">LenyaMetaDataGenerator</span>.
+        Here's an example how to call it in the sitemap:
+      </p>
+<pre class="code">&lt;map:match pattern="**.html.meta"&gt;
+  &lt;map:generate type="lenyaMetaData"&gt;
+    &lt;map:parameter name="pubid" value="{page-envelope:publication-id}"/&gt;
+    &lt;map:parameter name="area" value="{page-envelope:area}"/&gt;
+    &lt;map:parameter name="uuid" value="{page-envelope:document-uuid}"/&gt;
+    &lt;map:parameter name="lang" value="{page-envelope:document-language}"/&gt;
+  &lt;/map:generate&gt;
+  &lt;map:serialize type="xml"/&gt;
+&lt;/map:match&gt;</pre>
+<p>
+        Here's an example for the output of the generator:
+      </p>
+<pre class="code">&lt;lenya:metadata xmlns:lenya="http://apache.org/cocoon/lenya/metadata/1.0"&gt;
+  &lt;elements xmlns="http://purl.org/dc/elements/1.1/"&gt;
+    &lt;title&gt;Search&lt;/title&gt;
+    &lt;date&gt;2006-06-12 13:43:14&lt;/date&gt;
+    &lt;language&gt;en&lt;/language&gt;
+    &lt;creator&gt;lenya&lt;/creator&gt;
+  &lt;/elements&gt;
+  &lt;elements xmlns="http://apache.org/lenya/metadata/document/1.0"&gt;
+    &lt;extension&gt;xml&lt;/extension&gt;
+    &lt;resourceType&gt;usecase&lt;/resourceType&gt;
+    &lt;contentType&gt;xml&lt;/contentType&gt;
+  &lt;/elements&gt;
+&lt;/lenya:metadata&gt;</pre>
+</div>
+    
+    
+<a name="N10080"></a><a name="Storage"></a>
 <h2 class="h3">Storage</h2>
 <div class="section">
 <p>In 1.4.x meta data is stored separately from the document content but in the same 
@@ -368,7 +409,7 @@ finally {
  </pre>
 </div>
     
-<a name="N10076"></a><a name="Implementation"></a>
+<a name="N1008E"></a><a name="Implementation"></a>
 <h2 class="h3">Implementation</h2>
 <div class="section">
 <p>Like nearly all new modules/functionality the meta data usecases are 
@@ -377,7 +418,7 @@ finally {
         your own implementation. To override a core implementation you just 
         need to place your custom implementation to the right path in you pub 
         and lenya will try to pick it up from there.</p>
-<a name="N10085"></a><a name="Create+meta+data"></a>
+<a name="N1009D"></a><a name="Create+meta+data"></a>
 <h3 class="h4">Create meta data</h3>
 <p>Upon creation of a document a set of sample meta data is presented 
           in the creation form. This values are partially filled in by the user 
@@ -396,7 +437,7 @@ finally {
           change it and see what comes out. BTW if you need it in your custom 
           pub just mind the path. ;-)</div>
 </div>
-<a name="N100A2"></a><a name="Display%2Fmodify+meta+data"></a>
+<a name="N100BA"></a><a name="Display%2Fmodify+meta+data"></a>
 <h3 class="h4">Display/modify meta data</h3>
 <p>The display of meta data is handled by the usecase 
           <span class="codefrag">tab.meta</span>. All editable meta data are presented by the form.</p>

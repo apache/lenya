@@ -184,6 +184,9 @@ document.write("Last Published: " + document.lastModified);
 </div>
 </div>
 </div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/protocols/site.html">error:site:</a>
+</div>
 </div>
 <div class="menuitem">
 <a href="../../../../docs/1_4/reference/link-management.html">Link Management</a>
@@ -224,7 +227,7 @@ document.write("Last Published: " + document.lastModified);
     
 <p>
       The <span class="codefrag">lenyadoc:</span> protocol allows to access the source of a Lenya document without knowing the
-      underlying storage structure. If the relative syntax is used, only the language and the document id
+      underlying storage structure. If the relative syntax is used, only the language and the UUID
       is needed. If the absolute syntax is used, the publication id and the area has to be specified additionally.
     </p>
     
@@ -237,7 +240,7 @@ document.write("Last Published: " + document.lastModified);
       </p>
 <p>
         
-<em>Syntax: </em><span class="codefrag">lenyadoc:/&lt;language&gt;/&lt;document-id&gt;</span>
+<em>Syntax: </em><span class="codefrag">lenyadoc:/&lt;language&gt;/&lt;uuid&gt;</span>
       
 </p>
 <p>
@@ -247,7 +250,7 @@ document.write("Last Published: " + document.lastModified);
 </p>
 <pre class="code">
 &lt;map:match pattern="*.xml"&gt;
-  &lt;map:generate src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-id}"/&gt;
+  &lt;map:generate src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-uuid}"/&gt;
   ...
 &lt;/map:match&gt;
 </pre>
@@ -261,7 +264,7 @@ document.write("Last Published: " + document.lastModified);
       </p>
 <p>
         
-<em>Syntax: </em><span class="codefrag">lenyadoc://&lt;publication&gt;/&lt;area&gt;/&lt;language&gt;/&lt;document-id&gt;</span>
+<em>Syntax: </em><span class="codefrag">lenyadoc://&lt;publication&gt;/&lt;area&gt;/&lt;language&gt;/&lt;uuid&gt;</span>
       
 </p>
 <p>
@@ -270,7 +273,7 @@ document.write("Last Published: " + document.lastModified);
 <pre class="code">
 &lt;map:match pattern="*.xml"&gt;
   &lt;map:generate src="lenyadoc://{page-envelope:publication-id}/{page-envelope:area}/
-                     {page-envelope:document-language}/{page-envelope:document-id}"/&gt;
+                     {page-envelope:document-language}/{page-envelope:uuid}"/&gt;
   ...
 &lt;/map:match&gt;
 </pre>

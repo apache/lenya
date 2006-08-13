@@ -1,1 +1,1 @@
-svn log -r 418787:426979 --xml -v http://svn.apache.org/repos/asf/lenya > 2006-07.svn.xml
+<?xml version="1.0" encoding="ISO-8859-1"?><shell>svn log -r 427633:431181 --xml -v http://svn.apache.org/repos/asf/lenya &gt; src/documentation/content/svn-log/tlp-2006-08.svn.xml</shell>

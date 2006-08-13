@@ -5,7 +5,7 @@
 <meta content="Apache Forrest" name="Generator">
 <meta name="Forrest-version" content="0.8-dev">
 <meta name="Forrest-skin-name" content="pelt">
-<title>lenya: Protocol</title>
+<title>site: Protocol</title>
 <link type="text/css" href="../../../../skin/basic.css" rel="stylesheet">
 <link media="screen" type="text/css" href="../../../../skin/screen.css" rel="stylesheet">
 <link media="print" type="text/css" href="../../../../skin/print.css" rel="stylesheet">
@@ -170,14 +170,22 @@ document.write("Last Published: " + document.lastModified);
 <div class="menuitem">
 <a href="../../../../docs/1_4/reference/protocols/index.html">Overview</a>
 </div>
-<div class="menupage">
-<div class="menupagetitle">lenya:</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/protocols/lenya.html">lenya:</a>
 </div>
 <div class="menuitem">
 <a href="../../../../docs/1_4/reference/protocols/lenyadoc.html">lenyadoc:</a>
 </div>
-<div class="menuitem">
-<a href="../../../../docs/1_4/reference/protocols/site.html">error:site:</a>
+<div class="menupage">
+<div class="menupagetitle">error:site:</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a href="#Relative+Syntax">Relative Syntax</a>
+</div>
+<div class="menupageitem">
+<a href="#Absolute+Syntax">Absolute Syntax</a>
+</div>
+</div>
 </div>
 </div>
 <div class="menuitem">
@@ -212,17 +220,66 @@ document.write("Last Published: " + document.lastModified);
     +-->
 <div id="content">
 <div title="Portable Document Format" class="pdflink">
-<a class="dida" href="lenya.pdf"><img alt="PDF -icon" src="../../../../skin/images/pdfdoc.gif" class="skin"><br>
+<a class="dida" href="site.pdf"><img alt="PDF -icon" src="../../../../skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
 </div>
-<h1>lenya: Protocol</h1>
+<h1>site: Protocol</h1>
     
 <p>
-      The <span class="codefrag">lenya:</span> protocol creates a <a href="http://lenya.apache.org/apidocs/1.4/org/apache/lenya/cms/cocoon/source/RepositorySource.html">
-      <span class="codefrag">RepositorySource</span></a> which is a transactionable source
-      <a href="http://lenya.apache.org/apidocs/1.4/org/apache/lenya/cms/cocoon/source/TransactionableSource.html"><span class="codefrag">TransactionableSource</span></a>.
-      The resolution of the URI is based on the <span class="codefrag">context:</span> protocol handler.
+      The <span class="codefrag">site:</span> protocol allows to access the source of a Lenya document without knowing the
+      underlying storage structure. If the relative syntax is used, only the language and the path of
+      the document in the site structure are needed.
+      If the absolute syntax is used, the publication id and the area has to be specified additionally.
     </p>
+    
+<a name="N10013"></a><a name="Relative+Syntax"></a>
+<h2 class="h3">Relative Syntax</h2>
+<div class="section">
+<p>
+        The relative syntax is used to access Lenya documents in the current context, i.e. the
+        current publication and area is used to resolve the document's location.
+      </p>
+<p>
+        
+<em>Syntax: </em><span class="codefrag">site:/&lt;language&gt;&lt;path&gt;</span>
+      
+</p>
+<p>
+        
+<strong>Example</strong>
+      
+</p>
+<pre class="code">
+&lt;!-- match authoring/{path}_{language}.html --&gt;
+&lt;map:match pattern="authoring/**_*.html"&gt;
+  &lt;map:generate src="site:/{2}/{1}"/&gt;
+  ...
+&lt;/map:match&gt;
+</pre>
+</div>
+    
+<a name="N1002F"></a><a name="Absolute+Syntax"></a>
+<h2 class="h3">Absolute Syntax</h2>
+<div class="section">
+<p>
+        The absolute syntax allows to specify the document's publication and the area.
+      </p>
+<p>
+        
+<em>Syntax: </em><span class="codefrag">site://&lt;publication&gt;/&lt;area&gt;/&lt;language&gt;&lt;path&gt;</span>
+      
+</p>
+<p>
+<strong>Example</strong>
+</p>
+<pre class="code">
+&lt;!-- match {pubId}/{area}/{path}_{language}.html --&gt;
+&lt;map:match pattern="*/*/**_*.html"&gt;
+  &lt;map:generate src="site://{1}/{2}/{4}/{3}"/&gt;
+  ...
+&lt;/map:match&gt;
+</pre>
+</div>
   
 </div>
 <!--+
@@ -245,7 +302,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div id="feedback">
     Send feedback about the website to:
-  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A0docs/1_4/reference/protocols/lenya.html">dev@lenya.apache.org</a>
+  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A0docs/1_4/reference/protocols/site.html">dev@lenya.apache.org</a>
 </div>
 <!--+
     |end bottomstrip
