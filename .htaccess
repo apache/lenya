@@ -1,1 +1,3 @@
 AddDefaultCharset UTF-8
+RedirectMatch ^/1_2_x/(*)  http://lenya.apache.org/docs/1_2_x/$1
+RedirectMatch ^/1_4/(*)  http://lenya.apache.org/docs/1_4/$1
