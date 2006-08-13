@@ -16,13 +16,14 @@
  */
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -107,11 +108,28 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
 
         return attributeValues;
     }
+    
+    public Iterator getAttributeNames(Configuration modeConf, Map objectModel)
+    throws ConfigurationException {
+
+SortedSet matchset = new TreeSet();
+Enumeration enumeration = filteringProperties.keys();
+while (enumeration.hasMoreElements()) {
+    String key = (String) enumeration.nextElement();
+    matchset.add(key);
+}
+Iterator iterator = super.getAttributeNames(modeConf, objectModel);
+while (iterator.hasNext())
+    matchset.add(iterator.next());
+return matchset.iterator();
+}
 
     public void initialize() throws Exception {
 
         // add all homes important to Lenya to the properties
         setHomes();
+        
+        loadSystemProperties(filteringProperties);
 
         // NOTE: the first values set get precedence, as in AntProperties
         String lenyaPropertiesStringURI = "";
@@ -123,10 +141,6 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
 
             filteringProperties = loadXMLPropertiesFromURI(filteringProperties,
                     lenyaPropertiesStringURI);
-        } catch (FileNotFoundException e) {
-            if (debugging())
-                debug("Unable to find local.lenya.properties.xml, ignoring.");
-        }
 
         String[] module2src = moduleManager.getModuleIds();
         for (int i = 0; i < module2src.length; i++) {
@@ -141,20 +155,16 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
         }
         // get the values from lenya.properties.xml this are the default lenya
         // values
-        try {
             lenyaPropertiesStringURI = lenyaHome + SystemUtils.FILE_SEPARATOR
                     + PROPERTY_NAME;
 
             filteringProperties = loadXMLPropertiesFromURI(filteringProperties,
                     lenyaPropertiesStringURI);
-        } catch (FileNotFoundException e) {
+        } finally {
             if (debugging())
-                debug("Unable to find lenya.properties.xml, ignoring.");
+                debug("Loaded project lenya.properties.xml:" + filteringProperties);
         }
-
-        loadSystemProperties(filteringProperties);
-        if (debugging())
-            debug("Loaded project lenya.properties.xml:" + filteringProperties);
+        
     }
 
     /**
