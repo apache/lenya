@@ -26,7 +26,7 @@ function NavNode(id, parent) {
     this.href = '';
     this.label = '';
     this.area = '';
-    this.documentid = '';
+    this.path = '';
     this.isprotected = true;
     this.existsChosenLanguage = true;
     this.langSuffix = '';
@@ -41,7 +41,7 @@ NavNode.prototype.createNewNode = function(node)
   
     newItem.isfolder = isNodeFolder(node);
     newItem.area = this.area;
-    newItem.documentid = '/' + node.getAttribute('basic-url');
+    newItem.path = '/' + node.getAttribute('basic-url');
     newItem.isprotected = isNodeProtected(node);
     newItem.href = node.getAttribute('href');
     newItem.label = getLabel(node);
@@ -53,8 +53,8 @@ NavNode.prototype.createNewNode = function(node)
 
 NavNode.prototype.getLoadSubTreeURL = function() {
     area = this.area;
-    documentid = this.documentid;  
-    return encodeURI(CONTEXT_PREFIX + '/' + PUBLICATION_ID + PIPELINE_PATH + '?area='+area+'&documentid='+documentid+'&language='+CHOSEN_LANGUAGE+'&areas='+ALL_AREAS+'&lenya.module=sitetree');
+    path = this.path;  
+    return encodeURI(CONTEXT_PREFIX + '/' + PUBLICATION_ID + PIPELINE_PATH + '?area='+area+'&path='+path+'&language='+CHOSEN_LANGUAGE+'&areas='+ALL_AREAS+'&lenya.module=sitetree');
 }
 
 NavNode.prototype.getStyle = function() {
@@ -62,7 +62,7 @@ NavNode.prototype.getStyle = function() {
         return 'lenya-info-root';
     } else if (this.isprotected) {
         return 'lenya-info-protected';
-    } else if (this.documentid == CUT_DOCUMENT_ID) {
+    } else if (this.path == CUT_DOCUMENT_ID) {
         return 'lenya-info-cut';
     } else if (!this.existsChosenLanguage) {
         return 'lenya-info-nolanguage';
@@ -129,21 +129,21 @@ NavTree.prototype.init = function(id) {
     this._currentId = 0;
 };
 
-NavTree.prototype.loadInitialTree = function(area, documentid) {
-    var url = encodeURI(CONTEXT_PREFIX + '/' + PUBLICATION_ID + PIPELINE_PATH + '?area='+area+'&documentid='+documentid+'&language='+CHOSEN_LANGUAGE+'&initial=true&areas='+ALL_AREAS+'&lenya.module=sitetree');
+NavTree.prototype.loadInitialTree = function(area, path) {
+    var url = encodeURI(CONTEXT_PREFIX + '/' + PUBLICATION_ID + PIPELINE_PATH + '?area='+area+'&path='+path+'&language='+CHOSEN_LANGUAGE+'&initial=true&areas='+ALL_AREAS+'&lenya.module=sitetree');
     
     callback = function(fragment, param) {
         var tree = param[0];
         var area = param[1];
-        var documentid = param[2];
+        var path = param[2];
         tree.initialTreeLoaded(fragment);
-        var selectedItem = tree.getItemByPath(PUBLICATION_ID+'/'+area+documentid)
+        var selectedItem = tree.getItemByPath(PUBLICATION_ID+'/'+area+path)
         if (selectedItem != false) {
             tree.select(selectedItem);
         }
     }
     
-    var param = new Array(this, area, documentid);
+    var param = new Array(this, area, path);
     loadAsyncXML(url, callback, param);
 };
 
@@ -175,7 +175,7 @@ NavTree.prototype.addLoadedSite = function(site)
   
   newSite.isfolder = isNodeFolder(site);
   newSite.area = siteArea;
-  newSite.documentid = '/';
+  newSite.path = '/';
   newSite.isprotected = isNodeProtected(site);
   newSite.href = langSuffix;
   newSite.langSuffix = langSuffix;

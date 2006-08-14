@@ -23,25 +23,19 @@ import java.io.IOException;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.cocoon.generation.ServiceableGenerator;
-import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.xml.sax.SAXException;
@@ -49,18 +43,17 @@ import org.xml.sax.helpers.AttributesImpl;
 
 /**
  * Generates a fragment of the navigation XML from the sitetree, corresponding to a given node. The
- * node is specified by the sitemap parameters area/documentid. If the sitemap parameter initialTree
+ * node is specified by the sitemap parameters area/path. If the sitemap parameter initialTree
  * is true, the top nodes of the tree will be generated and the node given by the sitemap parameters
- * area/documentid will be unfolded. If initialTree is false, only the children of the selected node
+ * area/path will be unfolded. If initialTree is false, only the children of the selected node
  * will be generated.
  */
 public class SitetreeFragmentGenerator extends ServiceableGenerator {
 
     protected Publication publication;
-    protected DocumentFactory identityMap;
 
-    /** Parameter which denotes the documentid of the clicked node */
-    protected String uuid;
+    /** Parameter which denotes the path of the clicked node */
+    protected String path;
 
     /** Parameter which denotes the area of the clicked node */
     protected String area;
@@ -77,10 +70,9 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      * Convenience object, so we don't need to create an AttributesImpl for every element.
      */
     protected AttributesImpl attributes;
-    private Document document;
 
     protected static final String PARAM_AREA = "area";
-    protected static final String PARAM_DOCUMENTID = "uuid";
+    protected static final String PARAM_PATH = "path";
     protected static final String PARAM_INITIAL = "initial";
     protected static final String PARAM_AREAS = "areas";
 
@@ -122,7 +114,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
         }
 
         this.area = par.getParameter(PARAM_AREA, null);
-        this.uuid = par.getParameter(PARAM_DOCUMENTID, null);
+        this.path = par.getParameter(PARAM_PATH, null);
 
         if (par.isParameter(PARAM_INITIAL)) {
             this.initialTree = Boolean.valueOf(par.getParameter(PARAM_INITIAL, null))
@@ -141,7 +133,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
 
         if (this.getLogger().isDebugEnabled()) {
             this.getLogger().debug("Parameter area: " + this.area);
-            this.getLogger().debug("Parameter documentid: " + this.uuid);
+            this.getLogger().debug("Parameter path: " + this.path);
             this.getLogger().debug("Parameter initialTree: " + this.initialTree);
             String areasStr = "";
             for (int i = 0; i < this.areas.length; i++) {
@@ -151,8 +143,6 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
         }
 
         try {
-            Session session = RepositoryUtil.getSession(this.manager, request);
-            this.identityMap = DocumentUtil.createDocumentFactory(this.manager, session);
             this.publication = PublicationUtil.getPublication(this.manager, _objectModel);
         } catch (Exception e) {
             throw new ProcessingException("Could not create publication: ", e);
@@ -174,7 +164,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
             this.attributes.clear();
             if (!this.initialTree) {
                 this.attributes.addAttribute("", ATTR_AREA, ATTR_AREA, "CDATA", this.area);
-                this.attributes.addAttribute("", ATTR_BASE, ATTR_BASE, "CDATA", this.uuid);
+                this.attributes.addAttribute("", ATTR_BASE, ATTR_BASE, "CDATA", this.path);
             }
 
             this.contentHandler.startElement(URI,
@@ -220,24 +210,20 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
         }
 
         try {
-            this.document = identityMap.get(this.publication,
-                    this.area,
-                    this.uuid,
-                    this.publication.getDefaultLanguage());
+            
+            SiteStructure site = this.publication.getArea(this.area).getSite();
 
-            SiteTreeNode node = (SiteTreeNode) this.document.getLink().getNode();
+            SiteTreeNode node = (SiteTreeNode) site.getNode(this.path);
             if (this.getLogger().isDebugEnabled()) {
-                this.getLogger().debug("Node with documentid " + this.uuid + " found.");
+                this.getLogger().debug("Node with path " + this.path + " found.");
             }
             if (node == null)
-                throw new SiteException("Node with documentid " + this.uuid + " not found.");
+                throw new SiteException("Node with path " + this.path + " not found.");
 
             SiteTreeNode[] children = node.getChildren();
 
             addNodes(children);
-        } catch (DocumentBuildException e) {
-            throw new ProcessingException(e);
-        } catch (DocumentException e) {
+        } catch (PublicationException e) {
             throw new ProcessingException(e);
         }
     }
@@ -257,7 +243,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
 
     /**
      * Generates the top node of the given area and then calls a recursive method to traverse the
-     * tree, if the node given by area/documentid is in this area.
+     * tree, if the node given by area/path is in this area.
      * @param siteArea
      * @throws SiteException
      * @throws SAXException
@@ -265,15 +251,13 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      */
     protected void generateFragmentInitial(String siteArea) throws SiteException, SAXException,
             ProcessingException {
-
+        
         ServiceSelector selector = null;
         SiteManager siteManager = null;
         try {
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(this.publication.getSiteManagerHint());
-            SiteTree siteTree = (SiteTree) siteManager.getSiteStructure(this.identityMap,
-                    this.publication,
-                    siteArea);
+            SiteTree siteTree = (SiteTree) this.publication.getArea(siteArea).getSite();
 
             String label = "";
             String isFolder = "";
@@ -303,11 +287,11 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
             startNode(NODE_SITE);
 
             if (this.area.equals(siteArea)) {
-                generateFragmentRecursive(siteTree.getTopNodes(), this.uuid);
+                generateFragmentRecursive(siteTree.getTopNodes(), this.path);
             }
 
             endNode(NODE_SITE);
-        } catch (ServiceException e) {
+        } catch (Exception e) {
             throw new ProcessingException(e);
         } finally {
             if (selector != null) {
@@ -320,27 +304,27 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
     }
 
     /**
-     * Follows the documentid to find the way in the sitetree to the specified node and opens all
+     * Follows the path to find the way in the sitetree to the specified node and opens all
      * folders on its way.
      * @param nodes
-     * @param docid
+     * @param path
      * @throws SiteException
      * @throws SAXException
      */
-    protected void generateFragmentRecursive(SiteTreeNode[] nodes, String docid)
+    protected void generateFragmentRecursive(SiteTreeNode[] nodes, String path)
             throws SiteException, SAXException {
         String nodeid;
         String childid;
 
         if (nodes == null)
             return;
-        if (docid.startsWith("/"))
-            docid = docid.substring(1);
-        if (docid.indexOf("/") != -1) {
-            nodeid = docid.substring(0, docid.indexOf("/"));
-            childid = docid.substring(docid.indexOf("/") + 1);
+        if (path.startsWith("/"))
+            path = path.substring(1);
+        if (path.indexOf("/") != -1) {
+            nodeid = path.substring(0, path.indexOf("/"));
+            childid = path.substring(path.indexOf("/") + 1);
         } else {
-            nodeid = docid;
+            nodeid = path;
             childid = "";
         }
 

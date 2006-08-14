@@ -173,7 +173,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(org.apache.lenya.cms.site.tree.SiteTreeNode,
      *      java.lang.String)
      */
-    public synchronized void addNode(SiteTreeNode node, String refDocumentId) throws SiteException {
+    public synchronized void addNode(SiteTreeNode node, String refpath) throws SiteException {
         SiteTreeNode target = addNode(node.getParent().getPath(),
                 node.getName(),
                 node.getUuid(),
@@ -181,7 +181,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
                 node.getHref(),
                 node.getSuffix(),
                 node.hasLink(),
-                refDocumentId);
+                refpath);
         copyLinks(node, target);
     }
 
@@ -214,7 +214,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      *      java.lang.String)
      */
     public synchronized SiteTreeNode addNode(String path, String uuid, boolean visibleInNav,
-            String href, String suffix, boolean link, String refDocumentId) throws SiteException {
+            String href, String suffix, boolean link, String refpath) throws SiteException {
         StringBuffer buf = new StringBuffer();
         StringTokenizer st = new StringTokenizer(path, "/");
         int length = st.countTokens();
@@ -224,16 +224,16 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         }
         String parentid = buf.toString();
         String id = st.nextToken();
-        return addNode(parentid, id, uuid, visibleInNav, href, suffix, link, refDocumentId);
+        return addNode(parentid, id, uuid, visibleInNav, href, suffix, link, refpath);
     }
 
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String, String,
      *      org.apache.lenya.cms.site.Label[], boolean, java.lang.String, java.lang.String, boolean)
      */
-    public synchronized SiteTreeNode addNode(String documentid, String uuid, boolean visibleInNav,
+    public synchronized SiteTreeNode addNode(String path, String uuid, boolean visibleInNav,
             String href, String suffix, boolean link) throws SiteException {
-        return addNode(documentid, uuid, visibleInNav, href, suffix, link, null);
+        return addNode(path, uuid, visibleInNav, href, suffix, link, null);
     }
 
     /**
@@ -252,7 +252,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      *      boolean, java.lang.String)
      */
     public synchronized SiteTreeNode addNode(String parentid, String id, String uuid,
-            boolean visibleInNav, String href, String suffix, boolean link, String refDocumentId)
+            boolean visibleInNav, String href, String suffix, boolean link, String refpath)
             throws SiteException {
 
         Node parentNode = getNodeInternal(parentid);
@@ -301,8 +301,8 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         }
 
         // Add Node
-        if (refDocumentId != null && !refDocumentId.equals("")) {
-            Node nextSibling = getNodeInternal(refDocumentId);
+        if (refpath != null && !refpath.equals("")) {
+            Node nextSibling = getNodeInternal(refpath);
             if (nextSibling != null) {
                 parentNode.insertBefore(child, nextSibling);
             } else {
@@ -336,9 +336,9 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * @see org.apache.lenya.cms.site.tree.SiteTree#removeLabel(java.lang.String,
      *      org.apache.lenya.cms.site.Label)
      */
-    public synchronized void removeLabel(String documentId, String language) {
+    public synchronized void removeLabel(String path, String language) {
         try {
-            SiteTreeNode node = (SiteTreeNode) getNode(documentId);
+            SiteTreeNode node = (SiteTreeNode) getNode(path);
             node.removeLabel(language);
             saveDocument();
         } catch (SiteException e) {
@@ -349,12 +349,12 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTree#removeNode(java.lang.String)
      */
-    public synchronized SiteTreeNode removeNode(String documentId) {
-        assert documentId != null;
+    public synchronized SiteTreeNode removeNode(String path) {
+        assert path != null;
 
         Node node;
         try {
-            node = removeNodeInternal(documentId);
+            node = removeNodeInternal(path);
         } catch (SiteException e) {
             throw new RuntimeException(e);
         }
@@ -369,12 +369,12 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
 
     /**
      * removes the node corresponding to the given document-id and returns it
-     * @param documentId the document-id of the Node to be removed
+     * @param path the document-id of the Node to be removed
      * @return the <code>Node</code> that was removed
      * @throws SiteException
      */
-    private synchronized Node removeNodeInternal(String documentId) throws SiteException {
-        Node node = this.getNodeInternal(documentId);
+    private synchronized Node removeNodeInternal(String path) throws SiteException {
+        Node node = this.getNodeInternal(path);
         Node parentNode = node.getParentNode();
         Node newNode = parentNode.removeChild(node);
         try {
@@ -388,13 +388,13 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     /**
      * Find a node for a given document-id
      * 
-     * @param documentId the document-id of the Node that we're trying to get
+     * @param path the document-id of the Node that we're trying to get
      * 
      * @return the Node if there is a Node for the given document-id, null otherwise
      * @throws SiteException
      */
-    private synchronized Node getNodeInternal(String documentId) throws SiteException {
-        StringTokenizer st = new StringTokenizer(documentId, "/");
+    private synchronized Node getNodeInternal(String path) throws SiteException {
+        StringTokenizer st = new StringTokenizer(path, "/");
         ArrayList ids = new ArrayList();
 
         while (st.hasMoreTokens()) {
@@ -453,17 +453,17 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
 
     /**
      * Move up the node amongst its siblings.
-     * @param documentid The document id for the node.
+     * @param path The document id for the node.
      * @throws SiteException if the moving failed.
      */
-    public synchronized void moveUp(String documentid) throws SiteException {
-        Node node = this.getNodeInternal(documentid);
+    public synchronized void moveUp(String path) throws SiteException {
+        Node node = this.getNodeInternal(path);
         if (node == null) {
-            throw new SiteException("Node to move: " + documentid + " not found");
+            throw new SiteException("Node to move: " + path + " not found");
         }
         Node parentNode = node.getParentNode();
         if (parentNode == null) {
-            throw new SiteException("Parentid of node with documentid: " + documentid
+            throw new SiteException("Parentid of node with path: " + path
                     + " not found");
         }
 
@@ -487,17 +487,17 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     /**
      * Move down the node amongst its siblings.
      * 
-     * @param documentid The document id for the node.
+     * @param path The document id for the node.
      * @throws SiteException if the moving failed.
      */
-    public synchronized void moveDown(String documentid) throws SiteException {
-        Node node = this.getNodeInternal(documentid);
+    public synchronized void moveDown(String path) throws SiteException {
+        Node node = this.getNodeInternal(path);
         if (node == null) {
-            throw new SiteException("Node to move: " + documentid + " not found");
+            throw new SiteException("Node to move: " + path + " not found");
         }
         Node parentNode = node.getParentNode();
         if (parentNode == null) {
-            throw new SiteException("Parentid of node with documentid: " + documentid
+            throw new SiteException("Parentid of node with path: " + path
                     + " not found");
         }
         Node nextNode;
@@ -524,7 +524,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      *      org.apache.lenya.cms.site.tree.SiteTreeNode, java.lang.String, java.lang.String)
      */
     public synchronized void importSubtree(SiteTreeNode newParent, SiteTreeNode subtreeRoot,
-            String newid, String refDocumentId) throws SiteException {
+            String newid, String refpath) throws SiteException {
         assert subtreeRoot != null;
         assert newParent != null;
         String parentId = newParent.getPath();
@@ -539,7 +539,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
                 subtreeRoot.getHref(),
                 subtreeRoot.getSuffix(),
                 subtreeRoot.hasLink(),
-                refDocumentId);
+                refpath);
         copyLinks(subtreeRoot, targetRoot);
 
         newParent = (SiteTreeNode) this.getNode(parentId + "/" + id);
@@ -561,9 +561,9 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * @see org.apache.lenya.cms.site.tree.SiteTree#setLabel(java.lang.String,
      *      org.apache.lenya.cms.site.Label)
      */
-    public synchronized void setLabel(String documentId, String language, String label) {
+    public synchronized void setLabel(String path, String language, String label) {
         try {
-            SiteTreeNode node = (SiteTreeNode) getNode(documentId);
+            SiteTreeNode node = (SiteTreeNode) getNode(path);
             if (node != null) {
                 SiteTreeLink link = new SiteTreeLink(this.factory, node, label, language);
                 node.setLink(link);
