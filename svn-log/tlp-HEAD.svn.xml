@@ -2504,4 +2504,264 @@ http://localhost:8888/modules/properties/input-module.page-envelope.properties.x
 The match is
  &lt;map:match pattern="input-module.*.properties.xml"&gt;</msg>
 </logentry>
+<logentry
+   revision="431183">
+<author>thorsten</author>
+<date>2006-08-13T15:09:51.915802Z</date>
+<paths>
+<path
+   action="M">/lenya/site/docs/1_4/faq.html</path>
+<path
+   action="M">/lenya/site/incubator-2002-08-09.svn.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/reference/modules/index.html</path>
+<path
+   action="M">/lenya/site/docs/tests.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/reference/notification.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-05.svn.html</path>
+<path
+   action="M">/lenya/site/history.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/concepts/publication.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-09.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-01.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-01.svn.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/reference/usecase-framework/abstractusecase.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-05.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-05.svn.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/installation/subversion.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-09.svn.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/installation/source_version.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/index.html</path>
+<path
+   action="M">/lenya/site/svn-log/tlp-HEAD.svn.xml</path>
+<path
+   action="M">/lenya/site/docs/1_4/reference/protocols/lenyadoc.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-10.svn.html</path>
+<path
+   action="M">/lenya/site/linkmap.html</path>
+<path
+   action="M">/lenya/site/tlp-HEAD.svn-revision.xml</path>
+<path
+   action="M">/lenya/site/incubator-2003-06.svn.html</path>
+<path
+   action="M">/lenya/site/screenshots.html</path>
+<path
+   action="M">/lenya/site/tlp-HEAD.svn.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/reference/protocols/index.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-10.svn.html</path>
+<path
+   action="M">/lenya/site/related-projects.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-02.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-02.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-06.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-06.svn.html</path>
+<path
+   action="M">/lenya/site/license.html</path>
+<path
+   action="M">/lenya/site/incubator-2002-05-07.svn.html</path>
+<path
+   action="M">/lenya/site/roadmap.html</path>
+<path
+   action="M">/lenya/site/charter.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/reference/publication-templating/index.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-03.svn.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/reference/repository/index.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-07.svn.html</path>
+<path
+   action="M">/lenya/site/resolution.html</path>
+<path
+   action="M">/lenya/site/tlp-2004-11.svn.html</path>
+<path
+   action="M">/lenya/site/index.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-11.svn.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/concepts/urlMapping.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-03.svn.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/reference/protocols/index.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2006-03.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2002-01-04.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-07.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-11-12.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2004-07-10.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2004-04-06.svn.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/installation/index.html</path>
+<path
+   action="M">/lenya/site/guidelines.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/reference/metadata.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/reference/metadata.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2003-04.svn.html</path>
+<path
+   action="M">/lenya/site/docs/tests.pdf</path>
+<path
+   action="M">/lenya/site/docs/1_4/reference/protocols/lenyadoc.pdf</path>
+<path
+   action="M">/lenya/site/linkmap.pdf</path>
+<path
+   action="A">/lenya/site/docs/1_4/reference/protocols/site.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/reference/resource-types.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-08.svn.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/reference/usecase-framework/index.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/reference/lenya-sitemaps.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/reference/protocols/lenya.html</path>
+<path
+   action="A">/lenya/site/docs/1_4/reference/protocols/site.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2004-12.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-HEAD.svn-sh.xml</path>
+<path
+   action="M">/lenya/site/tlp-HEAD.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-12.svn.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/concepts/authoring_live.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-04.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-04.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-01-02.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2002-10-12.svn.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/concepts/wysiwyg.html</path>
+<path
+   action="M">/lenya/site/incubator-2004-01-03.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-08.svn.html</path>
+<path
+   action="M">/lenya/site/docs/1_4/reference/link-management.html</path>
+</paths>
+<msg>Automatic publish from forrestbot</msg>
+</logentry>
+<logentry
+   revision="431270">
+<author>thorsten</author>
+<date>2006-08-13T23:51:24.795093Z</date>
+<paths>
+<path
+   action="M">/lenya/site/.htaccess</path>
+</paths>
+<msg>Adding redirects for the old documentation location.</msg>
+</logentry>
+<logentry
+   revision="431271">
+<author>thorsten</author>
+<date>2006-08-14T00:01:57.448640Z</date>
+<paths>
+<path
+   action="M">/lenya/site/.htaccess</path>
+</paths>
+<msg>Correcting redirects</msg>
+</logentry>
+<logentry
+   revision="431313">
+<author>andreas</author>
+<date>2006-08-14T09:30:08.985303Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya.properties.xml</path>
+</paths>
+<msg>Use uppercase letter for Lenya</msg>
+</logentry>
+<logentry
+   revision="431374">
+<author>andreas</author>
+<date>2006-08-14T15:57:47.670508Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/topicmap/TopicMapSiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/config/cocoon-xconf/metadata/document.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/DefaultSiteTree.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/SiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/TreeSiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/simple/SimpleSiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/Document.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/simple/DocumentStore.java</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/modules/defaultusecases/java/src/org/apache/lenya/defaultpub/cms/usecases/Publish.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/SiteStructure.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/MoveSubsite.java</path>
+</paths>
+<msg>Changed SiteManager to avoid handling non-existing nodes, removed obsolete placeholder feature</msg>
+</logentry>
+<logentry
+   revision="431376">
+<author>andreas</author>
+<date>2006-08-14T16:22:40.171971Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/cocoon/generation/SitetreeFragmentGenerator.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/DefaultSiteTree.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/resources/javascript/navtree.js</path>
+</paths>
+<msg>Renamed documentId to path in sitetree fragment generator and DefaultSiteTree</msg>
+</logentry>
+<logentry
+   revision="431397">
+<author>thorsten</author>
+<date>2006-08-14T18:32:31.051839Z</date>
+<paths>
+<path
+   action="A">/lenya/docu/src/documentation/content/.htaccess</path>
+</paths>
+<msg>Adding .htaccess file to our document source</msg>
+</logentry>
 </log>
