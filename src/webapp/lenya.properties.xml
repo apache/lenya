@@ -16,5 +16,5 @@
   limitations under the License.
 -->
 <properties>
-  <property name="pubs.default.author" value="the lenya community"/>
+  <property name="pubs.default.author" value="the Lenya community"/>
 </properties>
