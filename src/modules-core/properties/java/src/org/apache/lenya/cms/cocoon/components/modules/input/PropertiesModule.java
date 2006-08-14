@@ -70,8 +70,8 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
 
     private final static String PROPERTY_NAME_LOCAL = "local." + PROPERTY_NAME;
 
-    public Object getAttribute(String name, Configuration modeConf,
-            Map objectModel) throws ConfigurationException {
+    public Object getAttribute(String name, Configuration modeConf, Map objectModel)
+            throws ConfigurationException {
         String attributeValue;
 
         attributeValue = filteringProperties.getProperty(name);
@@ -82,11 +82,10 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
                     + "Please make sure you defined "
                     + name
                     + " in lenya.properties.xml either in $LENYA_HOME or in the module that is requesting this property"
-                    + "\n" 
+                    + "\n"
                     + "If you see this message, most of the time you spotted a module bug "
                     + "(forget to define the default property). Please report it to our mailing list.";
-            throw new ConfigurationException(
-                    error);
+            throw new ConfigurationException(error);
         }
 
         if (debugging()) {
@@ -108,27 +107,27 @@ public class PropertiesModule extends DefaultsModule implements InputModule,
 
         return attributeValues;
     }
-    
-    public Iterator getAttributeNames(Configuration modeConf, Map objectModel)
-    throws ConfigurationException {
 
-SortedSet matchset = new TreeSet();
-Enumeration enumeration = filteringProperties.keys();
-while (enumeration.hasMoreElements()) {
-    String key = (String) enumeration.nextElement();
-    matchset.add(key);
-}
-Iterator iterator = super.getAttributeNames(modeConf, objectModel);
-while (iterator.hasNext())
-    matchset.add(iterator.next());
-return matchset.iterator();
-}
+    public Iterator getAttributeNames(Configuration modeConf, Map objectModel)
+            throws ConfigurationException {
+
+        SortedSet matchset = new TreeSet();
+        Enumeration enumeration = filteringProperties.keys();
+        while (enumeration.hasMoreElements()) {
+            String key = (String) enumeration.nextElement();
+            matchset.add(key);
+        }
+        Iterator iterator = super.getAttributeNames(modeConf, objectModel);
+        while (iterator.hasNext())
+            matchset.add(iterator.next());
+        return matchset.iterator();
+    }
 
     public void initialize() throws Exception {
 
         // add all homes important to Lenya to the properties
         setHomes();
-        
+
         loadSystemProperties(filteringProperties);
 
         // NOTE: the first values set get precedence, as in AntProperties
@@ -142,19 +141,20 @@ return matchset.iterator();
             filteringProperties = loadXMLPropertiesFromURI(filteringProperties,
                     lenyaPropertiesStringURI);
 
-        String[] module2src = moduleManager.getModuleIds();
-        for (int i = 0; i < module2src.length; i++) {
-            String id = module2src[i];
-            Object value = moduleManager.getBaseURI(id);
-            if (value != null) {
-                lenyaPropertiesStringURI = value
-                        + SystemUtils.FILE_SEPARATOR + PROPERTY_NAME;
-                filteringProperties = loadXMLPropertiesFromURI(
-                        filteringProperties, lenyaPropertiesStringURI);
+            String[] module2src = moduleManager.getModuleIds();
+            for (int i = 0; i < module2src.length; i++) {
+                String id = module2src[i];
+                Object value = moduleManager.getBaseURI(id);
+                if (value != null) {
+                    lenyaPropertiesStringURI = value + SystemUtils.FILE_SEPARATOR
+                            + PROPERTY_NAME;
+                    filteringProperties = loadXMLPropertiesFromURI(
+                            filteringProperties, lenyaPropertiesStringURI);
+                }
             }
-        }
-        // get the values from lenya.properties.xml this are the default lenya
-        // values
+            // get the values from lenya.properties.xml this are the default
+            // lenya
+            // values
             lenyaPropertiesStringURI = lenyaHome + SystemUtils.FILE_SEPARATOR
                     + PROPERTY_NAME;
 
@@ -164,7 +164,7 @@ return matchset.iterator();
             if (debugging())
                 debug("Loaded project lenya.properties.xml:" + filteringProperties);
         }
-        
+
     }
 
     /**
@@ -227,9 +227,8 @@ return matchset.iterator();
                 if (nl != null && nl.getLength() > 0) {
                     for (int i = 0; i < nl.getLength(); i++) {
                         Element el = (Element) nl.item(i);
-                        filteringProperties.setProperty(
-                                el.getAttribute("name"), el
-                                        .getAttribute("value"));
+                        filteringProperties.setProperty(el.getAttribute("name"), el
+                                .getAttribute("value"));
                     }
                 }
 
