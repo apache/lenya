@@ -82,12 +82,6 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     public static final String METADATA_EXTENSION = "extension";
 
     /**
-     * Determines if the document is just a placeholder in the trash and archive areas.
-     * @see org.apache.lenya.cms.site.usecases.MoveSubsite
-     */
-    public static final String METADATA_PLACEHOLDER = "placeholder";
-
-    /**
      * Creates a new instance of DefaultDocument.
      * @param manager The service manager.
      * @param map The identity map the document belongs to.
@@ -448,29 +442,6 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
 
     public String[] getMetaDataNamespaceUris() throws MetaDataException {
         return getRepositoryNode().getMetaDataNamespaceUris();
-    }
-
-    public boolean isPlaceholder() {
-        try {
-            MetaData meta = getMetaData(METADATA_NAMESPACE);
-            String value = meta.getFirstValue(METADATA_PLACEHOLDER);
-            if (value == null) {
-                return false;
-            } else {
-                return Boolean.valueOf(value).booleanValue();
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void setPlaceholder() {
-        try {
-            MetaData meta = getMetaData(METADATA_NAMESPACE);
-            meta.setValue(METADATA_PLACEHOLDER, "true");
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public String getMimeType() throws DocumentException {

@@ -41,16 +41,6 @@ public class TopicMapSiteManager extends AbstractSiteManager {
     }
 
     /**
-     * @see org.apache.lenya.cms.site.SiteManager#getRequiredResources(org.apache.lenya.cms.publication.DocumentFactory,
-     *      org.apache.lenya.cms.site.SiteNode)
-     */
-    public SiteNode[] getRequiredResources(DocumentFactory map, SiteNode resource)
-            throws SiteException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    /**
      * @see org.apache.lenya.cms.site.SiteManager#getRequiringResources(org.apache.lenya.cms.publication.DocumentFactory,
      *      org.apache.lenya.cms.site.SiteNode)
      */
@@ -77,14 +67,6 @@ public class TopicMapSiteManager extends AbstractSiteManager {
     }
 
     /**
-     * @see org.apache.lenya.cms.site.SiteManager#getUUID(org.apache.lenya.cms.publication.Document)
-     */
-    public String getUUID(Document resource) throws SiteException {
-        // TODO: Implement this method ...
-        return null;
-    }
-
-    /**
      * @see org.apache.lenya.cms.site.SiteManager#containsInAnyLanguage(org.apache.lenya.cms.publication.Document)
      */
     public boolean containsInAnyLanguage(Document resource) throws SiteException {
@@ -97,23 +79,6 @@ public class TopicMapSiteManager extends AbstractSiteManager {
      *      org.apache.lenya.cms.publication.Document)
      */
     public void copy(Document sourceDocument, Document destinationDocument) throws SiteException {
-        // TODO Auto-generated method stub
-
-    }
-
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#delete(org.apache.lenya.cms.publication.Document)
-     */
-    public void delete(Document document) throws SiteException {
-        // TODO Auto-generated method stub
-
-    }
-
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#setLabel(org.apache.lenya.cms.publication.Document,
-     *      java.lang.String)
-     */
-    public void setLabel(Document document, String label) throws SiteException {
         // TODO Auto-generated method stub
 
     }
@@ -157,24 +122,22 @@ public class TopicMapSiteManager extends AbstractSiteManager {
         return true;
     }
 
-    public String getPath(DocumentFactory factory, Publication pub, String area, String uuid) throws SiteException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public String getUUID(DocumentFactory factory, Publication pub, String area, String path) throws SiteException {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    public boolean contains(DocumentFactory factory, DocumentLocator locator) throws SiteException {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
     public void set(String path, Document document) throws SiteException {
         // TODO Auto-generated method stub
-        
+    }
+
+    public DocumentLocator[] getRequiredResources(DocumentFactory map, DocumentLocator locator)
+            throws SiteException {
+        return new DocumentLocator[0];
+    }
+
+    public void move(SiteNode source, String destinationPath) throws SiteException {
+        throw new SiteException("This operation is not supported by [" + getClass().getName()
+                + "]!");
+    }
+
+    public void setLabel(Document document, String label) throws SiteException {
+        // TODO Auto-generated method stub
     }
 
 }

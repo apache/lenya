@@ -59,15 +59,6 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
     }
 
     /**
-     * @see org.apache.lenya.cms.site.SiteManager#getRequiredResources(org.apache.lenya.cms.publication.DocumentFactory,
-     *      org.apache.lenya.cms.site.SiteNode)
-     */
-    public SiteNode[] getRequiredResources(DocumentFactory map, SiteNode resource)
-            throws SiteException {
-        return new SiteNode[0];
-    }
-
-    /**
      * @see org.apache.lenya.cms.site.SiteManager#getRequiringResources(org.apache.lenya.cms.publication.DocumentFactory,
      *      org.apache.lenya.cms.site.SiteNode)
      */
@@ -248,6 +239,16 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
         } catch (TransactionException e) {
             throw new SiteException(e);
         }
+    }
+
+    public DocumentLocator[] getRequiredResources(DocumentFactory map, DocumentLocator locator)
+            throws SiteException {
+        return new DocumentLocator[0];
+    }
+
+    public void move(SiteNode source, String destinationPath) throws SiteException {
+        throw new SiteException("This operation is not supported by [" + getClass().getName()
+                + "]!");
     }
 
 }

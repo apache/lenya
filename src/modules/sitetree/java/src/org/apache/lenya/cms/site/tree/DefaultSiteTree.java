@@ -278,7 +278,9 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         NamespaceHelper helper = new NamespaceHelper(NAMESPACE_URI, "", this.document);
         Element child = helper.createElement(SiteTreeNodeImpl.NODE_NAME);
         child.setAttribute(SiteTreeNodeImpl.ID_ATTRIBUTE_NAME, id);
-        child.setAttribute(SiteTreeNodeImpl.UUID_ATTRIBUTE_NAME, uuid);
+        if (uuid != null) {
+            child.setAttribute(SiteTreeNodeImpl.UUID_ATTRIBUTE_NAME, uuid);
+        }
 
         if (visibleInNav) {
             child.setAttribute(SiteTreeNodeImpl.VISIBLEINNAV_ATTRIBUTE_NAME, "true");
@@ -675,6 +677,11 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         SiteTreeLink label = new SiteTreeLink(doc.getFactory(), node, "", doc.getLanguage());
         node.addLabel(label);
         return label;
+    }
+
+    public SiteNode add(String path) throws SiteException {
+        SiteTreeNode node = addNode(path, null, true, null, "", false);
+        return node;
     }
 
     public boolean containsInAnyLanguage(String uuid) {

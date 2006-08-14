@@ -134,6 +134,8 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
 
             Publication publication = document.getPublication();
             DocumentFactory map = document.getFactory();
+            SiteStructure authoringSite = document.area().getSite();
+            SiteStructure liveSite = publication.getArea(Publication.LIVE_AREA).getSite();
 
             List missingDocuments = new ArrayList();
 
@@ -143,31 +145,25 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
                 selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
                 siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
 
-                String path = document.getPath();
-                SiteStructure structure = siteManager.getSiteStructure(getDocumentFactory(),
-                        publication,
-                        Publication.LIVE_AREA);
-                SiteNode liveNode = structure.getNode(path);
-                SiteNode[] requiredNodes = siteManager.getRequiredResources(map, liveNode);
+                if (!liveSite.contains(document.getPath())) {
+                    DocumentLocator liveLoc = document.getLocator()
+                            .getAreaVersion(Publication.LIVE_AREA);
+                    DocumentLocator[] requiredNodes = siteManager.getRequiredResources(map, liveLoc);
+                    for (int i = 0; i < requiredNodes.length; i++) {
 
-                for (int i = 0; i < requiredNodes.length; i++) {
-
-                    DocumentSet liveDocs = SiteUtil.getExistingDocuments(this.manager,
-                            map,
-                            requiredNodes[i]);
-                    if (liveDocs.isEmpty()) {
-                        Document authoringDoc = map.get(requiredNodes[i].getStructure()
-                                .getPublication(),
-                                Publication.AUTHORING_AREA,
-                                requiredNodes[i].getPath());
-                        if (authoringDoc.exists()) {
-                            missingDocuments.add(authoringDoc);
-                        } else {
-                            missingDocuments.add(authoringDoc.getTranslation(authoringDoc.getPublication()
-                                    .getDefaultLanguage()));
+                        String path = requiredNodes[i].getPath();
+                        if (!liveSite.contains(path)) {
+                            SiteNode authoringNode = authoringSite.getNode(path);
+                            String language;
+                            if (authoringNode.hasLink(document.getLanguage())) {
+                                language = document.getLanguage();
+                            } else {
+                                language = authoringNode.getLanguages()[0];
+                            }
+                            missingDocuments.add(authoringNode.getLink(language).getDocument());
                         }
-                    }
 
+                    }
                 }
             } catch (Exception e) {
                 throw new RuntimeException(e);

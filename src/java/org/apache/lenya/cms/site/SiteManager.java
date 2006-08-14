@@ -65,11 +65,11 @@ public interface SiteManager {
      * Returns the resources which are required by a certain resource.
      * 
      * @param map The identity map to operate on.
-     * @param resource The depending resource.
+     * @param locator The depending locator.
      * @return An array of resources.
      * @throws SiteException if an error occurs.
      */
-    SiteNode[] getRequiredResources(DocumentFactory map, SiteNode resource) throws SiteException;
+    DocumentLocator[] getRequiredResources(DocumentFactory map, DocumentLocator locator) throws SiteException;
 
     /**
      * Returns the resources which require a certain resource.
@@ -124,7 +124,7 @@ public interface SiteManager {
      * @throws SiteException when something went wrong.
      */
     void copy(Document sourceDocument, Document destinationDocument) throws SiteException;
-
+    
     /**
      * Sets the label of a certain document.
      * 

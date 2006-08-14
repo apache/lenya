@@ -202,16 +202,6 @@ public interface Document extends MetaDataOwner, RepositoryItem {
     String getSourceExtension();
     
     /**
-     * @return if this is placeholder document (in trash / archive areas).
-     */
-    boolean isPlaceholder();
-    
-    /**
-     *  Set if this is placeholder document (in trash / archive areas).
-     */
-    void setPlaceholder();
-    
-    /**
      * Sets the mime type of this document.
      * @param mimeType The mime type.
      * @throws DocumentException if an error occurs.

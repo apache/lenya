@@ -274,4 +274,9 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
         }
     }
 
+    public SiteNode add(String path) throws SiteException {
+        throw new SiteException("This operation is not supported by [" + getClass().getName()
+                + "]!");
+    }
+
 }

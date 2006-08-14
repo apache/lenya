@@ -96,5 +96,13 @@ public interface SiteStructure extends RepositoryItem {
      */
     Link add(String path, Document doc) throws SiteException;
 
+    /**
+     * Adds a site node.
+     * @param path The path.
+     * @return A site node.
+     * @throws SiteException if the path is already contained.
+     */
+    SiteNode add(String path) throws SiteException;
+
 
 }

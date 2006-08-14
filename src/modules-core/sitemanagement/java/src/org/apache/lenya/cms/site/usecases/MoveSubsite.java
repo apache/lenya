@@ -16,26 +16,19 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.util.DocumentHelper;
+import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.util.DocumentSet;
-import org.apache.lenya.cms.site.NodeSet;
-import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.SiteManager;
-import org.apache.lenya.cms.site.SiteNode;
+import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -94,55 +87,31 @@ public abstract class MoveSubsite extends DocumentUsecase {
     protected abstract String getEvent();
 
     /**
-     * Lock the following objects:
-     * <ul>
-     * <li>all involved documents in the document's area</li>
-     * <li>the target versions of these documents</li>
-     * <li>the document area's site structure</li>
-     * <li>the target site structure</li>
-     * </ul>
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
+     * Lock all source documents and the site structure repository nodes because changes to the site
+     * structure would compromise the operation.
      */
-    protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
-        List nodes = new ArrayList();
-        Document doc = getSourceDocument();
+    protected Node[] getNodesToLock() throws UsecaseException {
         try {
-            DocumentSet sources = SiteUtil.getSubSite(this.manager, doc);
-            Map targets = SiteUtil.getTransferedSubSite(this.manager,
-                    doc,
-                    getTargetArea(),
-                    SiteUtil.MODE_CHANGE_ID);
-
-            Document[] docs = sources.getDocuments();
-            for (int i = 0; i < docs.length; i++) {
-                nodes.add(docs[i].getRepositoryNode());
-                nodes.addAll(AssetUtil.getAssetNodes(docs[i], this.manager, getLogger()));
-
-                Document target = (Document) targets.get(docs[i]);
-                nodes.add(target.getRepositoryNode());
-                nodes.addAll(AssetUtil.getCopiedAssetNodes(docs[i],
-                        target,
-                        this.manager,
-                        getLogger()));
-            }
-
-            DocumentSet furtherDocs = new DocumentSet();
-            furtherDocs.addAll(getTargetDocsToCopy());
-            furtherDocs.addAll(getSourceDocsToDelete(sources));
-            docs = furtherDocs.getDocuments();
+            
+            Set nodes = new HashSet();
+            
+            SiteStructure sourceSite = getSourceDocument().area().getSite();
+            SiteStructure targetSite = getSourceDocument().getPublication()
+                    .getArea(getTargetArea())
+                    .getSite();
+            
+            nodes.add(sourceSite.getRepositoryNode());
+            nodes.add(targetSite.getRepositoryNode());
+            
+            Document[] docs  = SiteUtil.getSubSite(this.manager, getSourceDocument()).getDocuments();
             for (int i = 0; i < docs.length; i++) {
                 nodes.add(docs[i].getRepositoryNode());
             }
-
-            nodes.add(SiteUtil.getSiteStructure(this.manager, doc).getRepositoryNode());
-            nodes.add(SiteUtil.getSiteStructure(this.manager,
-                    getDocumentFactory(),
-                    doc.getPublication(),
-                    getTargetArea()).getRepositoryNode());
-        } catch (Exception e) {
+            
+            return (Node[]) nodes.toArray(new Node[nodes.size()]);
+        } catch (PublicationException e) {
             throw new UsecaseException(e);
         }
-        return (org.apache.lenya.cms.repository.Node[]) nodes.toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
     }
 
     /**
@@ -150,192 +119,40 @@ public abstract class MoveSubsite extends DocumentUsecase {
      */
     protected void doExecute() throws Exception {
 
+        String targetArea = getTargetArea();
         Document doc = getSourceDocument();
-        DocumentSet sources = SiteUtil.getSubSite(this.manager, doc);
-        DocumentFactory map = getDocumentFactory();
+        Document[] sources = SiteUtil.getSubSite(this.manager, doc).getDocuments();
+        SiteStructure targetSite = doc.getPublication().getArea(targetArea).getSite();
 
-        DocumentLocator loc = doc.getLocator().getAreaVersion(getTargetArea());
-        loc = SiteUtil.getAvailableLocator(this.manager, map, loc);
+        DocumentLocator targetParent = doc.getLocator().getAreaVersion(targetArea);
+        while (!targetSite.contains(targetParent.getPath()) && !targetParent.getPath().equals("")) {
+            targetSite.add(targetParent.getPath());
+        }
 
-        DocumentSet docsToCopy = getTargetDocsToCopy();
-
-        DocumentManager documentManager = null;
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
+        DocumentManager docManager = null;
         try {
+            docManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
-            WorkflowUtil.invoke(this.manager, getSession(), getLogger(), sources, getEvent(), true);
-
-            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-
-            SiteUtil.sortAscending(this.manager, docsToCopy);
-            Document[] targetDocs = docsToCopy.getDocuments();
-            for (int i = 0; i < targetDocs.length; i++) {
-                DocumentLocator sourceLoc = targetDocs[i].getLocator()
-                        .getAreaVersion(doc.getArea());
-                Document sourceDoc = map.get(sourceLoc);
-                Document existingSourceDoc = DocumentHelper.getExistingLanguageVersion(sourceDoc,
-                        doc.getLanguage());
-                DocumentLocator targetLoc = existingSourceDoc.getLocator()
-                        .getAreaVersion(getTargetArea());
-                documentManager.copyDocument(existingSourceDoc, targetLoc);
-                if (!targetLoc.getArea().equals(Publication.AUTHORING_AREA)) {
-                    Document targetDoc = getDocumentFactory().get(targetLoc);
-                    targetDoc.setPlaceholder();
-                }
+            for (int i = 0; i < sources.length; i++) {
+                WorkflowUtil.invoke(this.manager,
+                        getSession(),
+                        getLogger(),
+                        sources[i],
+                        getEvent(),
+                        true);
+                docManager.copyToArea(sources[i], getTargetArea());
+                sources[i].getLink().delete();
+                docManager.delete(sources[i]);
             }
-
-            Map targetMap = SiteUtil.getTransferedSubSite(this.manager,
-                    doc,
-                    getTargetArea(),
-                    SiteUtil.MODE_CHANGE_ID);
-            DocumentSet targets = new DocumentSet();
-            Document[] docs = sources.getDocuments();
-            for (int i = 0; i < docs.length; i++) {
-                targets.add((Document) targetMap.get(docs[i]));
-            }
-            documentManager.move(sources, targets);
-
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(doc.getPublication().getSiteManagerHint());
-
-            DocumentSet docsToDelete = getSourceDocsToDelete(sources);
-            documentManager.delete(docsToDelete);
 
         } finally {
-            if (documentManager != null) {
-                this.manager.release(documentManager);
-            }
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
+            if (docManager != null) {
+                this.manager.release(docManager);
             }
         }
 
-        setTargetDocument(getDocumentFactory().get(loc));
+        setTargetDocument(doc.getAreaVersion(targetArea));
 
-    }
-
-    /**
-     * @return All target documents that are required by the moved documents and have to be copied.
-     * @throws ServiceException if an error occurs.
-     * @throws SiteException if an error occurs.
-     * @throws DocumentBuildException if an error occurs.
-     * @throws DocumentException 
-     */
-    protected DocumentSet getTargetDocsToCopy() throws ServiceException, SiteException,
-            DocumentBuildException, DocumentException {
-        Document doc = getSourceDocument();
-        DocumentFactory map = getDocumentFactory();
-        DocumentSet docsToCopy = new DocumentSet();
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(doc.getPublication().getSiteManagerHint());
-
-            SiteNode node = doc.getLink().getNode();
-            SiteNode[] requiredNodes = siteManager.getRequiredResources(map, node);
-            for (int i = 0; i < requiredNodes.length; i++) {
-                Document targetDoc = map.get(getSourceDocument().getPublication(),
-                        getTargetArea(),
-                        requiredNodes[i].getPath(),
-                        doc.getLanguage());
-                if (!siteManager.containsInAnyLanguage(targetDoc)) {
-                    docsToCopy.add(targetDoc);
-                }
-            }
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
-        }
-        return docsToCopy;
-    }
-
-    /**
-     * @param sources The sources to be moved.
-     * @return All placeholder source documents that can be deleted..
-     * @throws ServiceException if an error occurs.
-     * @throws SiteException if an error occurs.
-     * @throws DocumentBuildException if an error occurs.
-     * @throws DocumentException
-     */
-    protected DocumentSet getSourceDocsToDelete(DocumentSet sources) throws ServiceException,
-            SiteException, DocumentBuildException, DocumentException {
-        DocumentSet docsToDelete = new DocumentSet();
-        Document doc = getSourceDocument();
-        DocumentFactory map = getDocumentFactory();
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(doc.getPublication().getSiteManagerHint());
-
-            NodeSet nodesToDelete = new NodeSet();
-
-            SiteNode sourceNode = doc.getLink().getNode();
-            SiteNode[] requiredSourceNodes = siteManager.getRequiredResources(map, sourceNode);
-            for (int i = 0; i < requiredSourceNodes.length; i++) {
-                SiteNode node = requiredSourceNodes[i];
-                boolean delete = true;
-
-                Document requiredDoc = map.get(node.getStructure().getPublication(),
-                        node.getStructure().getArea(),
-                        node.getPath());
-                String[] languages = requiredDoc.getLanguages();
-                for (int l = 0; l < languages.length; l++) {
-                    Document langVersion = requiredDoc.getTranslation(languages[l]);
-                    if (!sources.contains(langVersion) && !langVersion.isPlaceholder()) {
-                        delete = false;
-                    }
-                }
-
-                SiteNode[] requiringNodes = siteManager.getRequiringResources(map, node);
-
-                for (int j = 0; j < requiringNodes.length; j++) {
-                    SiteNode n = requiringNodes[j];
-                    Document reqDoc = map.get(n.getStructure().getPublication(), n.getStructure()
-                            .getArea(), n.getPath());
-                    languages = reqDoc.getLanguages();
-                    for (int l = 0; l < languages.length; l++) {
-                        Document langVersion = reqDoc.getTranslation(languages[l]);
-                        if (!sources.contains(langVersion) && !langVersion.isPlaceholder()) {
-                            delete = false;
-                        }
-                    }
-                }
-                if (delete) {
-                    nodesToDelete.add(node);
-                }
-            }
-
-            SiteNode[] nodes = nodesToDelete.getNodes();
-            for (int i = 0; i < nodes.length; i++) {
-                SiteNode n = nodes[i];
-                Document d = map.get(n.getStructure().getPublication(),
-                        n.getStructure().getArea(),
-                        n.getPath());
-                String[] languages = d.getLanguages();
-                for (int l = 0; l < languages.length; l++) {
-                    Document langVersion = d.getTranslation(languages[l]);
-                    docsToDelete.add(langVersion);
-                }
-            }
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
-        }
-        return docsToDelete;
     }
 
 }

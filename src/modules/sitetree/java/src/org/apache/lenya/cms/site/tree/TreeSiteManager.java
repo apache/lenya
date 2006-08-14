@@ -114,14 +114,17 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         return getAncestors(dependingResource).contains(requiredResource);
     }
 
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#getRequiredResources(org.apache.lenya.cms.publication.DocumentFactory,
-     *      org.apache.lenya.cms.site.SiteNode)
-     */
-    public SiteNode[] getRequiredResources(DocumentFactory map, SiteNode resource)
+    public DocumentLocator[] getRequiredResources(DocumentFactory map, final DocumentLocator loc)
             throws SiteException {
-        List ancestors = getAncestors(resource);
-        return (SiteNode[]) ancestors.toArray(new SiteNode[ancestors.size()]);
+        
+        List ancestors = new ArrayList();
+        DocumentLocator locator = loc;
+        while (locator.getParent() != null) {
+            DocumentLocator parent = locator.getParent();
+            ancestors.add(parent);
+            locator = parent;
+        }
+        return (DocumentLocator[]) ancestors.toArray(new DocumentLocator[ancestors.size()]);
     }
 
     /**
@@ -251,43 +254,6 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
             throw new SiteException(e);
         }
 
-    }
-
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#delete(org.apache.lenya.cms.publication.Document)
-     */
-    public void delete(Document document) throws SiteException {
-        SiteTree tree = getTree(document.getFactory(),
-                document.getPublication(),
-                document.getArea());
-
-        try {
-            Link link = document.getLink();
-            SiteTreeNode node = (SiteTreeNode) link.getNode();
-
-            if (node.getLanguages().length == 1 && node.getChildren().length > 0) {
-                throw new SiteException("Cannot delete last language version of document ["
-                        + document + "] because this node has children.");
-            }
-
-            node.removeLabel(document.getLanguage());
-
-            if (node.getLanguages().length == 0) {
-                tree.removeNode(document.getPath());
-            } else {
-                tree.save();
-            }
-        } catch (DocumentException e) {
-            throw new SiteException(e);
-        }
-    }
-
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#getLabel(org.apache.lenya.cms.publication.Document)
-     */
-    public String getLabel(Document document) throws SiteException {
-        Label label = getLabelObject(document);
-        return label.getLabel();
     }
 
     /**
@@ -504,13 +470,13 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         }
     }
 
-    protected String getPath(DocumentFactory factory, Publication pub, String area, String uuid, String language)
-            throws SiteException {
+    protected String getPath(DocumentFactory factory, Publication pub, String area, String uuid,
+            String language) throws SiteException {
         SiteTree tree = getTree(factory, pub, area);
         SiteNode node = tree.getByUuid(uuid, language).getNode();
         if (node == null) {
-            throw new SiteException("No node found for [" + pub.getId() + ":" + area + ":" + uuid + ":" + language
-                    + "]");
+            throw new SiteException("No node found for [" + pub.getId() + ":" + area + ":" + uuid
+                    + ":" + language + "]");
         }
         return node.getPath();
     }
@@ -526,7 +492,8 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         return node.getUuid();
     }
 
-    protected boolean contains(DocumentFactory factory, DocumentLocator locator) throws SiteException {
+    protected boolean contains(DocumentFactory factory, DocumentLocator locator)
+            throws SiteException {
         Publication pub;
         try {
             pub = factory.getPublication(locator.getPublicationId());

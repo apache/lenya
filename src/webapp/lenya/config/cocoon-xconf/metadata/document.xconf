@@ -29,7 +29,6 @@
       <element name="mimeType" multiple="false"/>
       <element name="expires" multiple="false"/>
       <element name="extension" multiple="false"/>
-      <element name="placeholder" multiple="false"/>
     </component-instance>
   </xconf>
   
