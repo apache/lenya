@@ -28,7 +28,6 @@ import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.observation.ObservationRegistry;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryListener;
-import org.apache.lenya.cms.publication.Document;
 
 /**
  * Index updater which updates the index when a document changes.
