@@ -30,7 +30,7 @@
   <div id="lenya-info-treecanvas">
 
     <div class="lenya-tabs">
-      <jx:forEach var="language" items="${document.getPublication().getLanguages()}">
+      <jx:forEach var="language" items="${document.getLanguages()}">
         <jx:set var="languageVersion"
           value="${document.getFactory().getLanguageVersion(document, language)}"/>
         <jx:set var="languageUrl"
