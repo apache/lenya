@@ -76,9 +76,15 @@
               </td>
             </tr>
             <tr>
-              <td class="lenya-entry-caption"><i18n:text>Document ID</i18n:text>:</td>
+              <td class="lenya-entry-caption"><i18n:text>UUID</i18n:text>:</td>
               <td>
-                <jx:out value="${usecase.getParameter('document').getId()}"/>
+                <jx:out value="${usecase.getParameter('document').getUUID()}"/>
+              </td>
+            </tr>
+            <tr>
+              <td class="lenya-entry-caption"><i18n:text>Path</i18n:text>:</td>
+              <td>
+                <jx:out value="${usecase.getParameter('document').getPath()}"/>
               </td>
             </tr>
             <tr>
