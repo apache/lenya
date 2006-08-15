@@ -16,75 +16,37 @@
  */
 package org.apache.lenya.cms.lucene;
 
-import java.util.Arrays;
-
-import org.apache.avalon.framework.activity.Startable;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.cms.observation.ObservationRegistry;
-import org.apache.lenya.cms.observation.RepositoryEvent;
+import org.apache.cocoon.components.search.IndexException;
 import org.apache.lenya.cms.observation.RepositoryListener;
+import org.apache.lenya.cms.publication.ResourceType;
 
 /**
  * Index updater which updates the index when a document changes.
  */
-public class IndexUpdater extends AbstractLogEnabled implements RepositoryListener, Startable,
-        Serviceable, ThreadSafe {
+public interface IndexUpdater extends RepositoryListener {
 
-    public void documentChanged(RepositoryEvent event) {
-        updateIndex("index", event);
-    }
+    /**
+     * Adds a document to the index.
+     * @param resourceType The resource type.
+     * @param publicationId The publication ID.
+     * @param uuid The UUID.
+     * @param area The area.
+     * @param language The language.
+     * @throws IndexException if an error occurs.
+     */
+    void index(ResourceType resourceType, String publicationId, String uuid, String area,
+            String language) throws IndexException;
 
-    public void documentRemoved(RepositoryEvent event) {
-        updateIndex("delete", event);
-    }
-
-    protected void updateIndex(String operation, RepositoryEvent event) {
-
-        String uri = null;
-        try {
-            String[] formats = event.getResourceType().getFormats();
-            if (Arrays.asList(formats).contains("luceneIndex")) {
-                String docString = event.getPublicationId() + "/" + event.getArea() + "/"
-                        + event.getUuid() + "/" + event.getLanguage() + event.getDocumentUrl();
-                uri = "cocoon://modules/lucene/" + operation + "-document/" + docString;
-                SourceUtil.readDOM(uri, this.manager);
-            } else {
-                getLogger().info(
-                        "Document [" + event.getDocumentUrl()
-                                + "] is not being indexed because resource type ["
-                                + event.getResourceType().getName()
-                                + "] does not support indexing!");
-            }
-        } catch (Exception e) {
-            getLogger().error("Invoking indexing failed for URL [" + uri + "]: ", e);
-            throw new RuntimeException(e);
-        }
-    }
-
-    public void start() throws Exception {
-        ObservationRegistry registry = null;
-        try {
-            registry = (ObservationRegistry) this.manager.lookup(ObservationRegistry.ROLE);
-            registry.registerListener(this);
-        } finally {
-            if (registry != null) {
-                this.manager.release(registry);
-            }
-        }
-    }
-
-    public void stop() throws Exception {
-    }
-
-    private ServiceManager manager;
-
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
-    }
+    /**
+     * Deletes a document from the index.
+     * @param resourceType The resource type.
+     * @param publicationId The publication ID.
+     * @param uuid The UUID.
+     * @param area The area.
+     * @param language The language.
+     * @throws IndexException if an error occurs.
+     */
+    void delete(ResourceType resourceType, String publicationId, String uuid,
+            String area, String language) throws IndexException;
 
 }

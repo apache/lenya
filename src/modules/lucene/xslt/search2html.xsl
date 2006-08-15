@@ -88,10 +88,20 @@
   
   <xsl:template match="search:hit">
     <li class="search-result">
-        <div class="search-result-score">Score: <xsl:value-of select="format-number( @score, '### %' )"/></div> 
-        <div class="search-result-rank">Rank: <xsl:value-of select="@rank"/></div>
-        <div class="search-result-title"><a href="{$root}{search:field[attribute::name='uid']}"><xsl:value-of select="search:field[attribute::name='title']"/></a></div>
-        <div class="search-result-description"><xsl:value-of select="search:field[attribute::name='description']"/></div>
+      <div class="search-result-score">Score: <xsl:value-of select="format-number( @score, '### %' )"/></div> 
+      <div class="search-result-rank">Rank: <xsl:value-of select="@rank"/></div>
+      <div class="search-result-title">
+        <xsl:variable name="title" select="search:field[attribute::name='title']"/>
+        <xsl:choose>
+          <xsl:when test="normalize-space(search:field[@name = 'uid']) != ''">
+            <a href="{$root}{search:field[attribute::name='uid']}"><xsl:value-of select="$title"/></a>
+          </xsl:when>
+          <xsl:otherwise>
+            <xsl:value-of select="$title"/> (not in site structure)
+          </xsl:otherwise>
+        </xsl:choose>
+      </div>
+      <div class="search-result-description"><xsl:value-of select="search:field[attribute::name='description']"/></div>
     </li>
   </xsl:template>
 

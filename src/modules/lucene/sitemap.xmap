@@ -26,6 +26,7 @@
     <map:transformers default="xslt">
       <map:transformer name="index2" logger="sitemap.transformer.luceneindextransformer2" src="org.apache.cocoon.transformation.LuceneIndexTransformer2"/>
       <map:transformer name="cinclude" src="org.apache.cocoon.transformation.CIncludeTransformer"/>
+      <map:transformer name="uuid2url" src="org.apache.cocoon.transformation.UuidToUrlTransformer"/>
     </map:transformers>
 
   </map:components>
@@ -91,6 +92,10 @@
         <map:generate type="search">
           <map:parameter name="index" value="{index-path:{1}-{2}}"/>
         </map:generate>
+        <map:transform type="uuid2url">
+          <map:parameter name="pubId" value="{1}"/>
+          <map:parameter name="area" value="{2}"/>
+        </map:transform>
         <map:serialize type="xml"/>
       </map:match>
 
@@ -111,23 +116,23 @@
         <map:serialize type="xml"/>
       </map:match>
 
-      <!-- {pub-id}/{area}/{uuid}/{language}{documentUrl} -->
-      <map:match pattern="index-document/*/*/*/*/**">
+      <!-- {pub-id}/{area}/{uuid}/{language} -->
+      <map:match pattern="index-document/*/*/*/*">
         <map:generate src="{resource-type:{doc-info:{1}:{2}:{3}:{4}:resourceType}:format-luceneIndex}/{1}/{2}/{3}/{4}"/>
         <map:transform src="fallback://lenya/modules/lucene/xslt/index.xsl">
           <map:parameter name="index" value="{1}-{2}"/>
-          <map:parameter name="id" value="/{5}"/>
+          <map:parameter name="id" value="{3}:{4}"/>
         </map:transform>
         <map:transform type="index2"/>
         <map:serialize type="xml"/>
       </map:match>
       
-      <!-- {pub-id}/{area}/{uuid}/{language}{documentUrl} -->
-      <map:match pattern="delete-document/*/*/*/*/**">
+      <!-- {pub-id}/{area}/{uuid}/{language} -->
+      <map:match pattern="delete-document/*/*/*/*">
         <map:generate src="context://lenya/content/util/empty.xml"/>
         <map:transform src="fallback://lenya/modules/lucene/xslt/delete.xsl">
           <map:parameter name="index" value="{1}-{2}"/>
-          <map:parameter name="id" value="/{5}"/>
+          <map:parameter name="id" value="{3}:{4}"/>
         </map:transform>
 
         <map:transform type="index2"/>

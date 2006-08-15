@@ -21,6 +21,6 @@
   
   <component logger="lucene.indexupdater"
     role="org.apache.lenya.cms.lucene.IndexUpdater"
-    class="org.apache.lenya.cms.lucene.IndexUpdater"/>
+    class="org.apache.lenya.cms.lucene.IndexUpdaterImpl"/>
 	
 </xconf>
