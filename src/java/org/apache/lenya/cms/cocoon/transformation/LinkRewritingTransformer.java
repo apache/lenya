@@ -87,7 +87,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
 
     private Document currentDocument;
 
-    private DocumentFactory identityMap;
+    private DocumentFactory factory;
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
@@ -101,9 +101,9 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
 
         try {
             Session session = RepositoryUtil.getSession(this.manager, _request);
-            this.identityMap = DocumentUtil.createDocumentFactory(this.manager, session);
+            this.factory = DocumentUtil.createDocumentFactory(this.manager, session);
             String url = ServletHelper.getWebappURI(_request);
-            this.currentDocument = this.identityMap.getFromURL(url);
+            this.currentDocument = this.factory.getFromURL(url);
         } catch (final Exception e1) {
             throw new ProcessingException(e1);
         }
@@ -214,21 +214,21 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                             getLogger().debug(this.indent + "webapp URL: [" + webappUrl + "]");
                             getLogger().debug(this.indent + "anchor:     [" + anchor + "]");
                         }
-                        if (this.identityMap.isDocument(webappUrl)) {
+                        if (this.factory.isDocument(webappUrl)) {
 
-                            Document targetDocument = this.identityMap.getFromURL(webappUrl);
+                            Document targetDocument = this.factory.getFromURL(webappUrl);
 
                             if (getLogger().isDebugEnabled()) {
                                 getLogger().debug(this.indent + "Resolved target document: ["
                                         + targetDocument + "]");
                             }
 
-                            targetDocument = this.identityMap.get(publication,
+                            targetDocument = this.factory.get(publication,
                                     getCurrentDocument().getArea(),
                                     targetDocument.getUUID(),
                                     targetDocument.getLanguage());
 
-                            if (targetDocument.exists()) {
+                            if (targetDocument.hasLink()) {
                                 String extension = "";
                                 int lastDotIndex = webappUrl.lastIndexOf(".");
                                 if (lastDotIndex > -1) {
@@ -248,9 +248,6 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                         }
                     }
                 } catch (final DocumentBuildException e) {
-                    getLogger().error("startElement failed: ", e);
-                    throw new SAXException(e);
-                } catch (final DocumentException e) {
                     getLogger().error("startElement failed: ", e);
                     throw new SAXException(e);
                 } catch (final AccessControlException e) {
