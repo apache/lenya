@@ -41,7 +41,7 @@ import org.apache.lenya.cms.repository.Session;
 
 /**
  * Input module to get document information.
- * {doc-info:{publication-id}:{area}:{document-id}:{document-language}:{property}} where {property}
+ * {doc-info:{publication-id}:{area}:{uuid}:{document-language}:{property}} where {property}
  * may be:
  * <ul>
  * <li>resourceType</li>
