@@ -29,6 +29,7 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.Workflowable;
 
@@ -63,10 +64,11 @@ public class WorkflowTest extends AbstractAccessControlTest {
                 getLogger(),
                 document);
         if (workflowable.getVersions().length > 0) {
-            if (workflowable.getLatestVersion().getState().equals("review")) {
-                invoke(document, rejectSituation);
-            } else if (workflowable.getLatestVersion().getState().equals("live")) {
+            Version version = workflowable.getLatestVersion();
+            if (version.getValue(variableName) == true) {
                 invoke(document, deactivateSituation);
+            } else if (version.getState().equals("review")) {
+                invoke(document, rejectSituation);
             }
         }
 
