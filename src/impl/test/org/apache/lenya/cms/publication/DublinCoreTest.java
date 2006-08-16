@@ -32,7 +32,7 @@ import org.apache.lenya.cms.repository.RepositoryException;
 public class DublinCoreTest extends AbstractAccessControlTest {
 
     private static final String AREA = "authoring";
-    private static final String DOCUMENT_ID = "/tutorial";
+    private static final String PATH = "/tutorial";
     private static final String LANGUAGE = "de";
     private static final String CREATOR = "test";
 
@@ -52,7 +52,7 @@ public class DublinCoreTest extends AbstractAccessControlTest {
         Publication publication = getPublication("test");
         
         DocumentFactory map = getFactory();
-        Document doc = map.get(publication, AREA, DOCUMENT_ID, LANGUAGE);
+        Document doc = publication.getArea(AREA).getSite().getNode(PATH).getLink(LANGUAGE).getDocument();
         
         doc.getRepositoryNode().lock();
         
@@ -63,7 +63,7 @@ public class DublinCoreTest extends AbstractAccessControlTest {
 
         dcCore.setValue(DublinCore.ELEMENT_CREATOR, CREATOR);
 
-        Document doc2 = map.get(publication, AREA, DOCUMENT_ID, LANGUAGE);
+        Document doc2 = publication.getArea(AREA).getSite().getNode(PATH).getLink(LANGUAGE).getDocument();
 
         MetaData dcCore2 = doc2.getMetaData(DublinCore.DC_NAMESPACE);
         assertEquals(title, dcCore2.getFirstValue(DublinCore.ELEMENT_TITLE));

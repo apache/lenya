@@ -23,9 +23,9 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.xml.NamespaceHelper;
 
 public class ObservationTest extends AbstractAccessControlTest {
@@ -36,7 +36,8 @@ public class ObservationTest extends AbstractAccessControlTest {
         DocumentFactory factory = DocumentUtil.createDocumentFactory(getManager(), session);
 
         Publication publication = getPublication("test");
-        Document doc = factory.get(publication, Publication.AUTHORING_AREA, "/index", "en");
+        SiteStructure site = publication.getArea("authoring").getSite();
+        Document doc = site.getNode("/index").getLink("en").getDocument();
         
         TestListener docListener = new TestListener();
         TestListener allListener = new TestListener();
