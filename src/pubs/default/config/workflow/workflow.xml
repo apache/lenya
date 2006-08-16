@@ -61,6 +61,20 @@
     <assign variable="is_live" value="false"/>
   </transition>
 
+  <transition source="review" destination="authoring">
+    <event id="deactivate"/>
+    <condition class="org.apache.lenya.workflow.impl.BooleanVariableCondition">is_live = true</condition>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">review</condition>
+    <assign variable="is_live" value="false"/>
+  </transition>
+  
+  <transition source="authoring" destination="authoring">
+    <event id="deactivate"/>
+    <condition class="org.apache.lenya.workflow.impl.BooleanVariableCondition">is_live = true</condition>
+    <condition class="org.apache.lenya.cms.workflow.RoleCondition">review</condition>
+    <assign variable="is_live" value="false"/>
+  </transition>
+  
   <transition source="authoring" destination="trash">
     <event id="delete"/>
     <condition class="org.apache.lenya.cms.workflow.RoleCondition">edit</condition>
