@@ -25,19 +25,24 @@ import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.site.SiteNode;
+import org.apache.lenya.cms.site.SiteStructure;
 
 public class IndexUpdaterTest extends AbstractAccessControlTest {
 
     public void testIndexUpdater() throws Exception {
         login("lenya");
-        Session session = RepositoryUtil.getSession(getManager(), getRequest());
-        DocumentFactory factory = DocumentUtil.createDocumentFactory(getManager(), session);
 
-        Publication publication = getPublication("test");
-        Document sourceDoc = factory.get(publication, Publication.AUTHORING_AREA, "/tutorial", "en");
-        Document destDoc = factory.get(publication, Publication.AUTHORING_AREA, "/concepts", "en");
+        Publication pub = getPublication("test");
+        SiteStructure site = pub.getArea("authoring").getSite();
+        
+        SiteNode sourceNode = site.getNode("/tutorial");
+        SiteNode destNode = site.getNode("/concepts");
+        
+        Document sourceDoc = sourceNode.getLink(sourceNode.getLanguages()[0]).getDocument();
+        Document destDoc = destNode.getLink(destNode.getLanguages()[0]).getDocument();
 
-        destDoc.getRepositoryNode().lock();
+        sourceDoc.getRepositoryNode().lock();
 
         SourceResolver resolver = null;
         try {
@@ -48,7 +53,7 @@ public class IndexUpdaterTest extends AbstractAccessControlTest {
                 getManager().release(resolver);
             }
         }
-        checkSearchResults(publication, Publication.AUTHORING_AREA);
+        checkSearchResults(pub, Publication.AUTHORING_AREA);
 
     }
 
