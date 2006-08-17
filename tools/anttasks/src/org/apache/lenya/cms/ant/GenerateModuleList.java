@@ -20,6 +20,8 @@ package org.apache.lenya.cms.ant;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -80,9 +82,25 @@ public class GenerateModuleList extends Task {
                     "modules", null);
             File[] modules = (File[]) descriptors.toArray(new File[descriptors
                     .size()]);
+            HashMap keys = new HashMap();
             for (int i = 0; i < modules.length; i++) {
                 Element element = doc.createElementNS(NAMESPACE, "module");
-                element.setAttribute("src", modules[i].getAbsolutePath());
+                String absolutePath = modules[i].getAbsolutePath();
+                String key = absolutePath.substring(absolutePath
+                        .lastIndexOf("/") + 1);
+                if (keys.containsKey(key)) {
+                    String error = "\nThe module ["
+                            + key
+                            + "] is already registered with the path ["
+                            + keys.get(key)
+                            + "]!\n"
+                            + "You are trying to reuse the key for the path ["
+                            + absolutePath
+                            + "]\nPlease make sure you are using unique naming for modules.";
+                    throw new BuildException(error);
+                }
+                keys.put(key, absolutePath);
+                element.setAttribute("src", absolutePath);
                 doc.getDocumentElement().appendChild(element);
             }
             File file = new File(this.moduleFile.replace('/',
