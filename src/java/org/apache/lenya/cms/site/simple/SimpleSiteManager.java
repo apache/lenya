@@ -110,6 +110,11 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
     protected String getCollectionUuid(Publication pub, String area) {
         String sourceUri = pub.getContentURI(area) + DOCUMENT_PATH;
         try {
+            
+            if (!SourceUtil.exists(sourceUri, manager)) {
+                throw new RuntimeException("The site configuration [" + sourceUri + "] does not exist!");
+            }
+            
             org.w3c.dom.Document xml = SourceUtil.readDOM(sourceUri, manager);
             if (!xml.getDocumentElement().hasAttribute("uuid")) {
                 throw new RuntimeException("The document element of [" + sourceUri
