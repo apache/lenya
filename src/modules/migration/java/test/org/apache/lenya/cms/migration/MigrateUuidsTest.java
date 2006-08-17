@@ -16,12 +16,16 @@
  */
 package org.apache.lenya.cms.migration;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
+import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.DocumentUtil;
@@ -29,11 +33,20 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
-import org.apache.lenya.cms.site.SiteUtil;
+import org.apache.lenya.cms.site.SiteNode;
+import org.apache.lenya.cms.site.SiteStructure;
 
+/**
+ * Migrate from path-based content to UUIDs.
+ */
 public class MigrateUuidsTest extends AbstractAccessControlTest {
 
+    /**
+     * Do the migration.
+     * @throws Exception 
+     */
     public void testMigrateUuids() throws Exception {
 
         login("lenya");
@@ -43,29 +56,46 @@ public class MigrateUuidsTest extends AbstractAccessControlTest {
         Publication[] pubs = factory.getPublications();
         for (int i = 0; i < pubs.length; i++) {
             this.migratedDocs.clear();
-            migratePublication(pubs[i], factory);
+            migratePublication(pubs[i]);
         }
         session.commit();
     }
 
-    private void migratePublication(Publication pub, DocumentFactory factory) throws Exception {
+    private void migratePublication(Publication pub) throws Exception {
         getLogger().info("Migrating publication [" + pub.getId() + "]");
 
-        String[] areas = { Publication.AUTHORING_AREA, Publication.LIVE_AREA,
-                Publication.ARCHIVE_AREA, Publication.TRASH_AREA };
-        for (int i = 0; i < areas.length; i++) {
-            migrateArea(pub, areas[i], factory);
+        String[] areaNames = pub.getAreaNames();
+        for (int i = 0; i < areaNames.length; i++) {
+            Area area = pub.getArea(areaNames[i]);
+            migrateArea(area);
         }
     }
 
-    private void migrateArea(Publication pub, String area, DocumentFactory factory)
-            throws Exception {
-        getLogger().info("Migrating area [" + pub.getId() + ":" + area + "]");
-        Document[] docs = SiteUtil.getDocuments(getManager(), factory, pub, area);
+    private void migrateArea(Area area) throws Exception {
+        getLogger().info("Migrating area [" + area + "]");
+        Document[] docs = area.getDocuments();
+        Map path2langs = new HashMap();
+
         for (int i = 0; i < docs.length; i++) {
+            
+            path2langs.put(docs[i].getPath(), docs[i].getLanguages());
+            
             if (docs[i].getUUID().startsWith("/")) {
                 migrateDocument(docs[i]);
             }
+        }
+        verifyMigration(area, path2langs);
+    }
+
+    protected void verifyMigration(Area area, Map path2langs) throws SiteException, DocumentException {
+        SiteStructure site = area.getSite();
+        for (Iterator i = path2langs.keySet().iterator(); i.hasNext(); ) {
+            String path = (String) i.next();
+            String[] langs = (String[]) path2langs.get(path);
+            SiteNode node = site.getNode(path);
+            Document migratedDoc = node.getLink(node.getLanguages()[0]).getDocument();
+            String[] migratedLangs = migratedDoc.getLanguages();
+            assertEquals(Arrays.asList(langs), Arrays.asList(migratedLangs));
         }
     }
 
@@ -85,7 +115,8 @@ public class MigrateUuidsTest extends AbstractAccessControlTest {
 
             String path = doc.getPath();
 
-            Node node = siteManager.getSiteStructure(doc.getFactory(), doc.getPublication(),
+            Node node = siteManager.getSiteStructure(doc.getFactory(),
+                    doc.getPublication(),
                     doc.getArea()).getRepositoryNode();
 
             if (!node.isLocked()) {
@@ -93,14 +124,18 @@ public class MigrateUuidsTest extends AbstractAccessControlTest {
             }
 
             Document newDoc;
-            
+
             String docId = doc.getUUID();
             if (this.migratedDocs.containsKey(docId)) {
                 Document migratedDoc = (Document) this.migratedDocs.get(docId);
                 newDoc = docManager.addVersion(migratedDoc, doc.getArea(), doc.getLanguage(), false);
             } else {
-                newDoc = docManager.add(doc.getFactory(), doc.getResourceType(),
-                        doc.getSourceURI(), doc.getPublication(), doc.getArea(), doc.getLanguage(),
+                newDoc = docManager.add(doc.getFactory(),
+                        doc.getResourceType(),
+                        doc.getSourceURI(),
+                        doc.getPublication(),
+                        doc.getArea(),
+                        doc.getLanguage(),
                         doc.getExtension());
 
                 String[] uris = doc.getMetaDataNamespaceUris();
