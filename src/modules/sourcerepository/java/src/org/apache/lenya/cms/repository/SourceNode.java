@@ -118,29 +118,23 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             Publication pub = factory.getPublication(publicationId);
             contentDir = pub.getContentDir();
         } catch (Exception e) {
-            getLogger().error(e.getMessage());
+            throw new RuntimeException(e);
         }
 
         String realSourceURI = null;
         String urlID = this.sourceURI.substring(Node.LENYA_PROTOCOL.length());
 
-        if (contentDir == null) {
-            // Default
-            realSourceURI = CONTEXT_PREFIX + urlID;
+        // Substitute e.g. "lenya://lenya/pubs/PUB_ID/content" by "contentDir/content"
+        String filePrefix = urlID.substring(0, urlID.indexOf(publicationId)) + publicationId;
+        String tempString = urlID.substring(filePrefix.length() + 1);
+        String fileMiddle = tempString.substring(0, tempString.indexOf("/"));
+        String fileSuffix = tempString.substring(fileMiddle.length() + 1, tempString.length());
+        if (new File(contentDir).isAbsolute()) {
+            // Absolute
+            realSourceURI = FILE_PREFIX + contentDir + File.separator + fileSuffix;
         } else {
-            // Substitute e.g. "lenya://lenya/pubs/PUB_ID/content" by "contentDir/content"
-            String filePrefix = urlID.substring(0, urlID.indexOf(publicationId)) + publicationId;
-            String tempString = urlID.substring(filePrefix.length() + 1);
-            String fileMiddle = tempString.substring(0, tempString.indexOf("/"));
-            String fileSuffix = tempString.substring(fileMiddle.length() + 1, tempString.length());
-            if (new File(contentDir).isAbsolute()) {
-                // Absolute
-                realSourceURI = FILE_PREFIX + contentDir + File.separator + fileMiddle
-                        + File.separator + fileSuffix;
-            } else {
-                // Relative
-                realSourceURI = CONTEXT_PREFIX + contentDir + "/" + fileMiddle + "/" + fileSuffix;
-            }
+            // Relative
+            realSourceURI = CONTEXT_PREFIX + contentDir + "/" + fileMiddle + "/" + fileSuffix;
         }
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Real Source URI: " + realSourceURI);
@@ -260,7 +254,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                 String publicationsPath = this.sourceURI.substring(pubBase.length());
                 String publicationId = publicationsPath.split("/")[0];
 
-                DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, getSession());
+                DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager,
+                        getSession());
                 Publication pub = factory.getPublication(publicationId);
 
                 String publicationPath = pub.getDirectory().getCanonicalPath();
