@@ -64,11 +64,7 @@ public class RepositoryManagerImpl extends AbstractLogEnabled implements Reposit
      * @see org.apache.lenya.cms.repository.RepositoryManager#delete(org.apache.lenya.cms.repository.Node)
      */
     public void delete(Node node) throws RepositoryException {
-        if (!node.isLocked()) {
-            throw new RuntimeException("Cannot delete node [" + node + "]: not locked!");
-        } else {
-            node.registerRemoved();
-        }
+        node.registerRemoved();
     }
 
     public Session createSession(Identity identity) throws RepositoryException {
