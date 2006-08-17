@@ -22,7 +22,9 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
+import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -108,10 +110,12 @@ public class MigrateUuidsTest extends AbstractAccessControlTest {
         DocumentManager docManager = null;
         SiteManager siteManager = null;
         ServiceSelector selector = null;
+        SourceResolver resolver = null;
         try {
             docManager = (DocumentManager) getManager().lookup(DocumentManager.ROLE);
             selector = (ServiceSelector) getManager().lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(doc.getPublication().getSiteManagerHint());
+            resolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
 
             String path = doc.getPath();
 
@@ -129,6 +133,7 @@ public class MigrateUuidsTest extends AbstractAccessControlTest {
             if (this.migratedDocs.containsKey(docId)) {
                 Document migratedDoc = (Document) this.migratedDocs.get(docId);
                 newDoc = docManager.addVersion(migratedDoc, doc.getArea(), doc.getLanguage(), false);
+                SourceUtil.copy(resolver, doc.getSourceURI(), newDoc.getSourceURI());
             } else {
                 newDoc = docManager.add(doc.getFactory(),
                         doc.getResourceType(),
@@ -138,16 +143,15 @@ public class MigrateUuidsTest extends AbstractAccessControlTest {
                         doc.getLanguage(),
                         doc.getExtension());
 
-                String[] uris = doc.getMetaDataNamespaceUris();
-                for (int i = 0; i < uris.length; i++) {
-                    newDoc.getMetaData(uris[i]).replaceBy(doc.getMetaData(uris[i]));
-                }
-
                 migratedDocs.put(docId, newDoc);
                 siteManager.set(path, newDoc);
             }
 
-            doc.getRepositoryNode().lock();
+            String[] uris = doc.getMetaDataNamespaceUris();
+            for (int i = 0; i < uris.length; i++) {
+                newDoc.getMetaData(uris[i]).replaceBy(doc.getMetaData(uris[i]));
+            }
+
             doc.delete();
 
         } finally {
@@ -159,6 +163,9 @@ public class MigrateUuidsTest extends AbstractAccessControlTest {
                     selector.release(siteManager);
                 }
                 getManager().release(selector);
+            }
+            if (resolver != null) {
+                getManager().release(resolver);
             }
         }
     }
