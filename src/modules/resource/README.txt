@@ -12,7 +12,9 @@ substituted with the default icon if they cannot be found.
 If you want your own set of icons, then please add them 
 to {yourPub}/lenya/modules/resource/resources/icons/
 
-You can download e.g. the ones from 
-https://svn.wyona.com/repos/public/lenya/modules/resource/resources/icons
+You can download and extract e.g. the icon package from Wyona in your pub
+https://svn.wyona.com/repos/public/lenya/modules-resource-icons.tar
+user: anonymous
+pass: anonymous
 
 Have fun.
