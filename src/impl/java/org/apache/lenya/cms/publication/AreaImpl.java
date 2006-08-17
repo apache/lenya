@@ -16,11 +16,16 @@
  */
 package org.apache.lenya.cms.publication;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryException;
+import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 
 /**
@@ -93,6 +98,22 @@ public class AreaImpl implements Area {
     
     public String toString() {
         return getPublication().getId() + ":" + getName();
+    }
+
+    public Document[] getDocuments() {
+        SiteNode[] nodes = getSite().getNodes();
+        List docs = new ArrayList();
+        for (int i = 0; i < nodes.length; i++) {
+            String[] langs = nodes[i].getLanguages();
+            for (int l = 0; l < langs.length; l++) {
+                try {
+                    docs.add(nodes[i].getLink(langs[l]).getDocument());
+                } catch (SiteException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return (Document[]) docs.toArray(new Document[docs.size()]);
     }
 
 }

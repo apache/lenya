@@ -53,5 +53,10 @@ public interface Area {
      * @return A boolean value.
      */
     boolean contains(String uuid, String language);
+
+    /**
+     * @return All documents in this area.
+     */
+    Document[] getDocuments();
     
 }

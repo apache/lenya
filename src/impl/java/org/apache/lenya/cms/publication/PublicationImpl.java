@@ -149,5 +149,9 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     public int hashCode() {
         return getId().hashCode();
     }
+    
+    public String toString() {
+        return getId();
+    }
 
 }
