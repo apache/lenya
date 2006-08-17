@@ -33,6 +33,10 @@
     
     <!-- prepare the various paths that will form the project -->
     <path id="srcs">
+
+      <!-- Ant tasks -->
+      <pathelement path="tools/anttasks/src"/>
+      
       <!-- API source dirs -->
       <pathelement path="${src.java.api.dir}"/>
       
