@@ -246,7 +246,7 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
      * @see org.apache.lenya.cms.publication.Publication#getContentDirectory(String)
      */
     public File getContentDirectory(String area) {
-        return new File(getDirectory(), CONTENT_PATH + File.separator + area);
+        return new File(getContentDir(), area);
     }
 
     /**
@@ -419,6 +419,9 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
      */
     public String getContentDir() {
         loadConfiguration();
+        if (this.contentDir == null) {
+            this.contentDir = new File(getDirectory(), CONTENT_PATH).getAbsolutePath();
+        }
         return this.contentDir;
     }
 
