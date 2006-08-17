@@ -36,6 +36,7 @@ import org.w3c.dom.Element;
 public class GenerateModuleList extends Task {
 
     private Path moduleDirectories;
+
     private String moduleFile;
 
     /**
@@ -45,8 +46,8 @@ public class GenerateModuleList extends Task {
 
         List descriptors = new ArrayList();
 
-        StringTokenizer st = new StringTokenizer(this.moduleDirectories.toString(),
-                File.pathSeparator);
+        StringTokenizer st = new StringTokenizer(this.moduleDirectories
+                .toString(), File.pathSeparator);
 
         while (st.hasMoreTokens()) {
             String moduleDir = st.nextToken();
@@ -75,14 +76,17 @@ public class GenerateModuleList extends Task {
         }
 
         try {
-            Document doc = AntDocumentHelper.createDocument(NAMESPACE, "modules", null);
-            File[] modules = (File[]) descriptors.toArray(new File[descriptors.size()]);
+            Document doc = AntDocumentHelper.createDocument(NAMESPACE,
+                    "modules", null);
+            File[] modules = (File[]) descriptors.toArray(new File[descriptors
+                    .size()]);
             for (int i = 0; i < modules.length; i++) {
                 Element element = doc.createElementNS(NAMESPACE, "module");
                 element.setAttribute("src", modules[i].getAbsolutePath());
                 doc.getDocumentElement().appendChild(element);
             }
-            File file = new File(this.moduleFile.replace('/', File.separatorChar));
+            File file = new File(this.moduleFile.replace('/',
+                    File.separatorChar));
             AntDocumentHelper.writeDocument(doc, file);
         } catch (Exception e) {
             throw new BuildException(e);
@@ -99,7 +103,9 @@ public class GenerateModuleList extends Task {
 
     /**
      * Set the module source directories.
-     * @param dirs The module directories.
+     * 
+     * @param dirs
+     *            The module directories.
      */
     public void setModuleDirs(Path dirs) {
         this.moduleDirectories = dirs;
@@ -107,7 +113,9 @@ public class GenerateModuleList extends Task {
 
     /**
      * Set the file to generate.
-     * @param file The file.
+     * 
+     * @param file
+     *            The file.
      */
     public void setModuleFile(String file) {
         this.moduleFile = file;
