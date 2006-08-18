@@ -18,6 +18,7 @@
   <xsl:include href="fallback://lenya/modules/xhtml/xslt/helper-object.xsl"/>
   <xsl:param name="root"/> <!-- the URL up to (including) the area -->
   <xsl:param name="path"/>
+  <xsl:param name="pubid"/>
   <xsl:param name="context-prefix" select="''"/>
   <xsl:param name="language"/>
   <xsl:param name="document-type"/>
@@ -27,7 +28,7 @@
   <xsl:param name="mimeType"/>
   
   <xsl:variable name="imageprefix"
-    select="concat($context-prefix,'/modules/resource')"/>
+    select="concat($context-prefix,'/',$pubid,'/modules/resource')"/>
   <xsl:variable name="nodeid"
     select="concat($context-prefix,$root,$documentParent)"/>
   
