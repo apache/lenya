@@ -148,7 +148,7 @@ public abstract class Create extends AbstractUsecase {
             Document document;
 
             if (createVersion()) {
-                document = documentManager.addVersion(initialDocument, getArea(), language);
+                document = documentManager.addVersion(initialDocument, getArea(), language, true);
             } else {
                 if (initialDocument == null) {
                     selector = (ServiceSelector) this.manager
