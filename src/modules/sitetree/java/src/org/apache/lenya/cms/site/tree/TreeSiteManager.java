@@ -427,12 +427,11 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         }
         SiteTree tree = getTree(factory, pub, locator.getArea());
 
-        SiteTreeNode node = (SiteTreeNode) tree.getNode(path);
         String suffix = null;
         int version = 0;
         String idwithoutsuffix = null;
 
-        if (node != null) {
+        if (tree.contains(path)) {
             int n = path.lastIndexOf("/");
             String lastToken = "";
             String substring = path;
@@ -451,10 +450,9 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
                 idwithoutsuffix = substring + lastToken;
             }
 
-            while (node != null) {
+            while (tree.contains(path)) {
                 version = version + 1;
                 path = idwithoutsuffix + "-" + version;
-                node = (SiteTreeNode) tree.getNode(path);
             }
         }
 
