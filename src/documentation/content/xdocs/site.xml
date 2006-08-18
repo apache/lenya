@@ -123,8 +123,9 @@
       <instal14l href="source_version.html" label="Install Instructions"/>
     </installation14>
     
-    <concepts href="concepts/" label="Concepts"> 	 
+    <concepts href="concepts/" label="Concepts">
       <publication href="publication.html" label="Publication" />
+      <documents href="documents.html" label="Working with Documents"/>
       <urlMapping href="urlMapping.html" label="URL Mapping" />
       <authoring href="authoring_live.html" label="Authoring and Live mode" />
       <wysiwyg href="wysiwyg.html" label="WYSIWYG" />

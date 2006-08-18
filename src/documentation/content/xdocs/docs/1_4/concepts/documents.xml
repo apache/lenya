@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<!-- $Id: index.xml 55543 2004-10-26 00:14:59Z gregor $ -->
+
+<!DOCTYPE document PUBLIC "-//APACHE//DTD Documentation V2.0//EN" "http://forrest.apache.org/dtd/document-v20.dtd">
+
+<document>
+  <header>
+    <title>Working with Documents</title>
+  </header>
+  <body>
+    
+    <section>
+      <title>The Session</title>
+      <p>
+        An <code>o.a.l.cms.repository.Session</code> is a temporary container for
+        repository nodes which you want to work with. If you want to change or remove
+        nodes - for instance in a usecase handler - you have to start a transaction.
+        To avoid overriding or losing someone else's changes, you should lock any nodes
+        which are potentially affected or read during your transaction.
+      </p>
+      <p>
+        A convenient way to get the session which is attached to the current request
+        is provided by the <code>RepositoryUtil</code>:
+      </p>
+      <source xml:space="preserve">Session session = RepositoryUtil.getSession(this.manager, request);</source>
+    </section>
+    
+    <section>
+      <title>The Document Factory</title>
+      <p>
+        The <code>o.a.l.cms.publication.DocumentFactory</code> is the main entry point to the content
+        repository. It is tied to a session. You get the document factory which is
+        attached to the current session this way:
+      </p>
+      <source xml:space="preserve">DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);</source>
+    </section>
+    
+    <section>
+      <title>Browsing Content and Site Structure</title>
+      <p>
+        From the document factory, you can access a publication:
+      </p>
+      <source xml:space="preserve">
+String webappUrl = ServletHelper.getWebappUrl(request);
+URLInformation info = new URLInformation(webappUrl);
+Publication pub = factory.getPublication(info.getPublicationId());
+</source>
+
+      <p>
+        The publication provides access to all areas (pun intended).
+        An area object enables you to obtain documents by their UUID.
+      </p>
+      <source xml:space="preserve">
+Area authoring = pub.getArea("authoring");
+Document[] docs = authoring.getDocuments();
+Document doc = authoring.getDocument(uuid, language);
+</source>
+      
+      <p>
+        If you want to obtain a document by its path in the site structure,
+        get the site structure from the area:
+      </p>
+      <source xml:space="preserve">
+SiteStructure site = authoring.getSite();
+SiteNode node = site.getNode("/tutorial");
+String[] languages = node.getLanguages();
+Link link = node.getLink(language);
+Document doc = link.getDocument();
+</source>
+      
+      <p>You can also browse the document structure in a bottom-up way:</p>
+      <source xml:space="preserve">
+Document doc = ...;
+doc.area().getPublication();
+String area = doc.getLink().getNode().getStructure().getArea();
+</source>
+
+      <p>
+        The Document class allows to access different language versions
+        of the document:
+      </p>
+      <source xml:space="preserve">
+if (doc.existsTranslation("en")) {
+    englishVersion = doc.getTranslation("en");
+}
+if (doc.existsVersion("live", doc.getLanguage()) {
+    addInfoMessage("Live version exists!");
+    liveVersion = doc.getVersion("live", doc.getLanguage());
+}
+</source>
+    </section>
+    
+  </body>
+</document>
