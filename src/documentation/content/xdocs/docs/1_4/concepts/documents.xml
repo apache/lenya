@@ -92,7 +92,7 @@ String area = doc.getLink().getNode().getStructure().getArea();
 </source>
 
       <p>
-        The Document class allows to access different language versions
+        The Document class allows to access different language and area versions
         of the document:
       </p>
       <source xml:space="preserve">
