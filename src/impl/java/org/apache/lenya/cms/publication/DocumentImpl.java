@@ -155,10 +155,11 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.cms.publication.Document#getName()
      */
     public String getName() {
-        String[] ids = getId().split("/");
-        String nodeId = ids[ids.length - 1];
-
-        return nodeId;
+        try {
+            return getLink().getNode().getName();
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     /**
