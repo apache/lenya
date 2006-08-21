@@ -22,6 +22,7 @@ import java.util.List;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
@@ -40,7 +41,7 @@ import org.apache.lenya.cms.usecase.UsecaseException;
  */
 public class Paste extends DocumentUsecase {
 
-    protected static final String CLIPBOARD_DOCUMENT_ID = "clipboardDocumentId";
+    protected static final String CLIPBOARD_LABEL = "clipboardLabel";
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
@@ -66,14 +67,14 @@ public class Paste extends DocumentUsecase {
 
         Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
         if (clipboard != null) {
-            String id;
+            String label;
             try {
                 Publication pub = getSourceDocument().getPublication();
-                id = clipboard.getDocument(getDocumentFactory(), pub).getId();
-            } catch (DocumentBuildException e) {
+                label = clipboard.getDocument(getDocumentFactory(), pub).getLink().getLabel();
+            } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-            setParameter(CLIPBOARD_DOCUMENT_ID, id);
+            setParameter(CLIPBOARD_LABEL, label);
         }
     }
 
@@ -91,32 +92,16 @@ public class Paste extends DocumentUsecase {
             Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
             DocumentFactory map = getDocumentFactory();
             Publication pub = getSourceDocument().getPublication();
-            String area = getSourceDocument().getArea();
             Document clippedDocument = clipboard.getDocument(map, pub);
-
-            String clippedName = clippedDocument.getName();
-            String clippedId = clippedDocument.getId();
-            String clippedBase = clippedId.substring(0, clippedId.length() - clippedName.length());
-
-            String targetBase = getSourceDocument().getId() + "/";
 
             DocumentSet subsite = SiteUtil.getSubSite(this.manager, clippedDocument);
             Document[] subsiteDocs = subsite.getDocuments();
+
             for (int i = 0; i < subsiteDocs.length; i++) {
                 if (clipboard.getMethod() == Clipboard.METHOD_CUT) {
                     nodes.add(subsiteDocs[i].getRepositoryNode());
                     nodes.addAll(AssetUtil.getAssetNodes(subsiteDocs[i], this.manager, getLogger()));
                 }
-                String id = subsiteDocs[i].getId().substring(clippedBase.length());
-                Document targetSubsiteDoc = map.get(pub,
-                        area,
-                        targetBase + id,
-                        subsiteDocs[i].getLanguage());
-                nodes.add(targetSubsiteDoc.getRepositoryNode());
-                nodes.addAll(AssetUtil.getCopiedAssetNodes(subsiteDocs[i],
-                        targetSubsiteDoc,
-                        this.manager,
-                        getLogger()));
             }
 
         } catch (Exception e) {
@@ -157,7 +142,7 @@ public class Paste extends DocumentUsecase {
     }
 
     protected DocumentLocator getTargetLocator() throws SiteException, DocumentBuildException,
-            ServiceException {
+            ServiceException, DocumentException {
         DocumentFactory identityMap = getDocumentFactory();
         Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
         Publication pub = getSourceDocument().getPublication();
@@ -166,7 +151,7 @@ public class Paste extends DocumentUsecase {
         String targetArea = getSourceDocument().getArea();
         String language = clippedDocument.getLanguage();
         String nodeId = clippedDocument.getName();
-        String potentialPath = getSourceDocument().getId() + "/" + nodeId;
+        String potentialPath = getSourceDocument().getPath() + "/" + nodeId;
 
         DocumentLocator potentialLoc = DocumentLocator.getLocator(getSourceDocument().getPublication()
                 .getId(),

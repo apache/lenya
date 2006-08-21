@@ -32,7 +32,7 @@
           <i18n:text key="paste-doc"/>
           <i18n:param>
             <q>
-              <jx:out value="${usecase.getParameter('clipboardDocumentId')}"/>
+              <jx:out value="${usecase.getParameter('clipboardLabel')}"/>
             </q>
           </i18n:param>
         </i18n:translate>
@@ -54,7 +54,7 @@
                   <i18n:text key="paste-doc-from-clip?"/>
                   <i18n:param>
                     <strong>
-                      <jx:out value="${usecase.getParameter('clipboardDocumentId')}"/>
+                      <jx:out value="${usecase.getParameter('clipboardLabel')}"/>
                     </strong>
                   </i18n:param>
                 </i18n:translate>
