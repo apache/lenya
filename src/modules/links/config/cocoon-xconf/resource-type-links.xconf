@@ -26,7 +26,7 @@
             src="fallback://lenya/modules/links/resources/schema/links.rng"/>
     <sample-name>fallback://lenya/modules/links/samples/links.xml</sample-name>
     <format name="xhtml" uri="cocoon://modules/links/xhtml.xml"/>
-    <format name="luceneIndex" uri="cocoon://modules/xhtml/lucene-index.xml"/>
+    <format name="luceneIndex" uri="cocoon://modules/xhtml/lucene-index"/>
     <format name="webdavGET" uri="cocoon://modules/xhtml/davget.xml"/>
   </component-instance>
 
