@@ -4,26 +4,20 @@ How to configure/install:
 2. unzip it into the src/modules/fckeditor/resources directory
    (resources directory should now contain a directory named FCKeditor)
    
-3. add the bxe usecase to your xhtml based resources menu.xmap
+3. register the module with your publication, so that the appropriate menu
+   item can be displayed: in <yourpub>/config/publication.xconf, add the line
+   <module name="fckeditor"/>
 
-    ex: menu.xsp
-    
-    [...]
-      <menu i18n:attr="name" name="Edit">
-          <xsp:logic>
-            String doctype = <input:get-attribute module="page-envelope" as="string" name="document-type"/>;
-            if ("xhtml".equals(doctype)) {
-                <block info="false">
-                  <item wf:event="edit" uc:usecase="edit.bxe" href="?"><i18n:text>With BXE</i18n:text></item>
-                  <item wf:event="edit" uc:usecase="edit.oneform" href="?"><i18n:text>With one Form</i18n:text></item>
-                  <item wf:event="edit" uc:usecase="edit.fckeditor" href="?"><i18n:text>With FRED</i18n:text></item>
-                </block>
-            }
-          </xsp:logic>
-      </menu>
-    [...]
-    
-4. build lenya
+4. make sure you have the appropriate usecase policies in
+   <yourpub>/config/ac/usecase-policies.xconf. the following entry will allow
+   the "admin" and "edit" roles access to the usecase:
 
-5. try to edit your document by clicking on "With FRED" in the edit menu
+   <usecase id="edit.tinymce">
+     <role id="admin"/>
+     <role id="edit"/>
+   </usecase>
+    
+5. build lenya
+
+6. try to edit your document by clicking on "With FCKEditor" in the edit menu
     
