@@ -251,7 +251,7 @@
       </xsl:if>
       <mkdir dir="${{build.dir}}/modules/{$id}"/>
       <xslt basedir="{$src}"
-        includes="config/cocoon-xconf/**.xconf"
+        includes="config/cocoon-xconf/*.xconf, config/cocoon-xconf/*/*.xconf"
         destdir="${{build.dir}}/modules/{$id}"
         style="${{src.resource.dir}}/test/xpatch2testpatch.xsl"
         extension=".xtest"/>
