@@ -25,8 +25,25 @@
       <field id="body" type="text" storetext="true"/>
     </structure>
   </index>
-
   <index id="default-authoring" analyzer="stopword_en" directory="lenya/pubs/default/work/lucene/index/authoring/index">
+    <structure>
+      <field id="url" type="keyword" />
+      <field id="title" type="text" storetext="true"/>
+      <field id="description" type="text" storetext="true"/>
+      <field id="subject" type="keyword" storetext="true" />
+      <field id="body" type="text" storetext="true"/>
+    </structure>
+  </index>
+  <index id="default-trash" analyzer="stopword_en" directory="lenya/pubs/default/work/lucene/index/trash/index">
+    <structure>
+      <field id="url" type="keyword" />
+      <field id="title" type="text" storetext="true"/>
+      <field id="description" type="text" storetext="true"/>
+      <field id="subject" type="keyword" storetext="true" />
+      <field id="body" type="text" storetext="true"/>
+    </structure>
+  </index>
+  <index id="default-archive" analyzer="stopword_en" directory="lenya/pubs/default/work/lucene/index/archive/index">
     <structure>
       <field id="url" type="keyword" />
       <field id="title" type="text" storetext="true"/>
