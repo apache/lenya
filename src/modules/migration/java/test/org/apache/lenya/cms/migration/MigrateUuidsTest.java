@@ -47,7 +47,7 @@ public class MigrateUuidsTest extends AbstractAccessControlTest {
 
     /**
      * Do the migration.
-     * @throws Exception 
+     * @throws Exception
      */
     public void testMigrateUuids() throws Exception {
 
@@ -75,23 +75,29 @@ public class MigrateUuidsTest extends AbstractAccessControlTest {
 
     private void migrateArea(Area area) throws Exception {
         getLogger().info("Migrating area [" + area + "]");
-        Document[] docs = area.getDocuments();
+
+        SiteNode[] nodes = area.getSite().getNodes();
+
         Map path2langs = new HashMap();
 
-        for (int i = 0; i < docs.length; i++) {
-            
-            path2langs.put(docs[i].getPath(), docs[i].getLanguages());
-            
-            if (docs[i].getUUID().startsWith("/")) {
-                migrateDocument(docs[i]);
+        for (int n = 0; n < nodes.length; n++) {
+
+            if (nodes[n].getUuid() == null) {
+                String[] languages = nodes[n].getLanguages();
+                for (int l = 0; l < languages.length; l++) {
+                    path2langs.put(nodes[n].getPath(), languages);
+                    Document doc = area.getDocument(nodes[n].getPath(), languages[l]);
+                    migrateDocument(doc);
+                }
             }
         }
         verifyMigration(area, path2langs);
     }
 
-    protected void verifyMigration(Area area, Map path2langs) throws SiteException, DocumentException {
+    protected void verifyMigration(Area area, Map path2langs) throws SiteException,
+            DocumentException {
         SiteStructure site = area.getSite();
-        for (Iterator i = path2langs.keySet().iterator(); i.hasNext(); ) {
+        for (Iterator i = path2langs.keySet().iterator(); i.hasNext();) {
             String path = (String) i.next();
             String[] langs = (String[]) path2langs.get(path);
             SiteNode node = site.getNode(path);
