@@ -23,6 +23,8 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Locale;
 import java.util.Map;
+import java.util.SortedMap;
+import java.util.TreeMap;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
@@ -102,7 +104,7 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
     private Version[] versions = null;
 
     private long lastModified = 0;
-    
+
     protected static final String METADATA_NAMESPACE = "http://apache.org/lenya/metadata/workflow/1.0";
     protected static final String METADATA_VERSION = "workflowVersion";
 
@@ -115,6 +117,9 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
             if (this.versions == null || meta.getLastModified() > this.lastModified) {
                 String[] versionStrings = meta.getValues(METADATA_VERSION);
                 this.versions = new Version[versionStrings.length];
+                
+                SortedMap number2version = new TreeMap();
+                
                 for (int i = 0; i < versionStrings.length; i++) {
                     String string = versionStrings[i];
                     int spaceIndex = string.indexOf(" ");
@@ -122,12 +127,20 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
                     int number = Integer.parseInt(numberString);
                     String versionString = string.substring(spaceIndex + 1);
                     Version version = decodeVersion(versionString);
-                    this.versions[number] = version;
+                    number2version.put(new Integer(number), version);
                 }
+                
+                int number = 0;
+                for (Iterator i = number2version.keySet().iterator(); i.hasNext(); ) {
+                    Version version = (Version) number2version.get(i.next());
+                    this.versions[number] = version;
+                    number++;
+                }
+                
                 this.lastModified = meta.getLastModified();
             }
         } catch (Exception e) {
-            throw new RuntimeException();
+            throw new RuntimeException(e);
         }
         return this.versions;
     }
@@ -158,9 +171,19 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
         newVersions[number] = version;
 
         String string = number + " " + encodeVersion(workflow, version);
+        addToMetaData(string);
+    }
+
+    protected void addToMetaData(String versionString) {
         try {
-            MetaData meta = this.document.getMetaData(METADATA_NAMESPACE);
-            meta.addValue(METADATA_VERSION, string);
+            String[] areas = getDocument().getPublication().getAreaNames();
+            for (int i = 0; i < areas.length; i++) {
+                if (getDocument().existsAreaVersion(areas[i])) {
+                    Document doc = getDocument().getAreaVersion(areas[i]);
+                    MetaData meta = doc.getMetaData(METADATA_NAMESPACE);
+                    meta.addValue(METADATA_VERSION, versionString);
+                }
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -214,9 +237,7 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
                 variables.put(nameValue[0], nameValue[1]);
             }
         }
-        
-        
-        
+
         Version version = new LenyaVersion(event, state);
         for (Iterator i = variables.keySet().iterator(); i.hasNext();) {
             String name = (String) i.next();

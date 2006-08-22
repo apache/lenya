@@ -84,8 +84,10 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
                 wfManager = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
                 Session session = RepositoryUtil.getSession(this.manager,
                         ObjectModelHelper.getRequest(objectModel));
-                Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, session,
-                        getLogger(), document);
+                Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
+                        session,
+                        getLogger(),
+                        document);
                 if (wfManager.hasWorkflow(workflowable)) {
 
                     Version latestVersion = workflowable.getLatestVersion();
@@ -141,10 +143,12 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
     protected Version getLatestVersion(Workflowable workflowable, String event) {
         Version latestEventVersion = null;
         Version versions[] = workflowable.getVersions();
-        for (int i = versions.length - 1; i > 0; i--) {
-            if (versions[i].getEvent().equals(event)) {
-                latestEventVersion = versions[i];
-            }
+        int i = versions.length - 1;
+        while (i > -1 && !versions[i].getEvent().equals(event)) {
+            i--;
+        }
+        if (i > -1) {
+            latestEventVersion = versions[i];
         }
         return latestEventVersion;
     }
