@@ -53,7 +53,7 @@
              doctitle="${Name}"
              bottom="Copyright &#169; ${year} Apache Software Foundation. All Rights Reserved."
              stylesheetfile="${src.resource.dir}/javadoc.css"
-             source="1.4">
+             source="${src.java.version}">
       <!-- sources -->
       <sourcepath>
          <pathelement path="${src.java.api.dir}"/>

@@ -94,7 +94,7 @@
            deprecation="{deprecation}"
            target="${target.vm}"
            fork="true"
-           source="1.4">
+           source="${src.java.version}">
       <classpath refid="classpath.test"/>
     </javac>
     

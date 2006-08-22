@@ -55,7 +55,7 @@
       deprecation="${deprecation}"
       target="${target.vm}"
       nowarn="${nowarn}"
-      source="1.4">
+      source="${src.java.version}">
       <src path="${compile.src.dir}"/>
       <classpath refid="${compile.classpath}"/>
     </javac>
