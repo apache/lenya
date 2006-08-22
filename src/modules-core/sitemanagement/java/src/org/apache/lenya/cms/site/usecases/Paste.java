@@ -20,6 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.avalon.framework.service.ServiceException;
+import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -27,8 +28,8 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
@@ -94,7 +95,7 @@ public class Paste extends DocumentUsecase {
             Publication pub = getSourceDocument().getPublication();
             Document clippedDocument = clipboard.getDocument(map, pub);
 
-            DocumentSet subsite = SiteUtil.getSubSite(this.manager, clippedDocument);
+            NodeSet subsite = SiteUtil.getSubSite(this.manager, clippedDocument.getLink().getNode());
             Document[] subsiteDocs = subsite.getDocuments();
 
             for (int i = 0; i < subsiteDocs.length; i++) {
@@ -122,15 +123,16 @@ public class Paste extends DocumentUsecase {
         Publication pub = getSourceDocument().getPublication();
         Document clippedDocument = clipboard.getDocument(identityMap, pub);
 
-        DocumentLocator target = getTargetLocator();
+        final String targetPath = getTargetPath();
+        final Area area = clippedDocument.area();
         DocumentManager documentManager = null;
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
 
             if (clipboard.getMethod() == Clipboard.METHOD_COPY) {
-                documentManager.copyAll(clippedDocument, target);
+                documentManager.copyAll(area, clippedDocument.getPath(), area, targetPath);
             } else if (clipboard.getMethod() == Clipboard.METHOD_CUT) {
-                documentManager.moveAll(clippedDocument, target);
+                documentManager.moveAll(area, clippedDocument.getPath(), area, targetPath);
             } else {
                 throw new RuntimeException("This clipboard method is not supported!");
             }
@@ -141,7 +143,7 @@ public class Paste extends DocumentUsecase {
         }
     }
 
-    protected DocumentLocator getTargetLocator() throws SiteException, DocumentBuildException,
+    protected String getTargetPath() throws SiteException, DocumentBuildException,
             ServiceException, DocumentException {
         DocumentFactory identityMap = getDocumentFactory();
         Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());
@@ -158,6 +160,7 @@ public class Paste extends DocumentUsecase {
                 targetArea,
                 potentialPath,
                 language);
-        return SiteUtil.getAvailableLocator(this.manager, getDocumentFactory(), potentialLoc);
+        return SiteUtil.getAvailableLocator(this.manager, getDocumentFactory(), potentialLoc)
+                .getPath();
     }
 }

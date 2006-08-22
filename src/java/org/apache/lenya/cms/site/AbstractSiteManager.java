@@ -21,19 +21,30 @@ import java.util.Arrays;
 import java.util.Comparator;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.lenya.cms.publication.Document;
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.Serviceable;
 import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.util.DocumentSet;
 
 /**
  * Abstract base class for site managers.
  * 
  * @version $Id$
  */
-public abstract class AbstractSiteManager extends AbstractLogEnabled implements SiteManager {
+public abstract class AbstractSiteManager extends AbstractLogEnabled implements SiteManager, Serviceable {
+
+    protected ServiceManager manager;
 
     /**
+     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
+     */
+    public void service(ServiceManager manager) throws ServiceException {
+        this.manager = manager;
+    }
+    
+    /**
      * Ctor.
+     * @param manager The service manager.
      */
     public AbstractSiteManager() {
     }
@@ -41,20 +52,20 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
     /**
      * @see org.apache.lenya.cms.site.SiteManager#sortAscending(org.apache.lenya.cms.publication.util.DocumentSet)
      */
-    public void sortAscending(DocumentSet set) throws SiteException {
-        if (!set.isEmpty()) {
+    public SiteNode[] sortAscending(SiteNode[] nodes) throws SiteException {
+        if (nodes.length > 0) {
 
-            DocumentFactory map = set.getDocuments()[0].getFactory();
-            if (!check(map, new NodeSet(set))) {
+            DocumentFactory map = nodes[0].getStructure().getPublication().getFactory();
+            if (!check(map, new NodeSet(this.manager, nodes))) {
                 throw new SiteException("The dependence relation is not a strict partial order!");
             }
 
-            Document[] documents = set.getDocuments();
-            Arrays.sort(documents, new DocumentComparator(map));
-            set.clear();
-            for (int i = 0; i < documents.length; i++) {
-                set.add(documents[i]);
-            }
+            SiteNode[] sortedNodes = (SiteNode[]) Arrays.asList(nodes).toArray(new SiteNode[nodes.length]);
+            Arrays.sort(sortedNodes, new NodeComparator(map));
+            return sortedNodes;
+        }
+        else {
+            return  nodes;
         }
     }
 
@@ -172,48 +183,6 @@ public abstract class AbstractSiteManager extends AbstractLogEnabled implements 
                         result = -1;
                     }
                 } catch (SiteException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-            return result;
-        }
-    }
-
-    /**
-     * Compares documents according to the dependence relation.
-     */
-    public class DocumentComparator implements Comparator {
-
-        /**
-         * Ctor.
-         * 
-         * @param map The identity map to operate on.
-         */
-        public DocumentComparator(DocumentFactory map) {
-            this.map = map;
-        }
-
-        private DocumentFactory map;
-
-        /**
-         * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
-         */
-        public int compare(Object arg0, Object arg1) {
-            int result = 0;
-            if (arg0 instanceof Document && arg1 instanceof Document) {
-                Document doc1 = (Document) arg0;
-                Document doc2 = (Document) arg1;
-                try {
-                    SiteNode node1 = doc1.getLink().getNode();
-                    SiteNode node2 = doc2.getLink().getNode();
-
-                    if (AbstractSiteManager.this.requires(map, node1, node2)) {
-                        result = 1;
-                    }
-                    if (AbstractSiteManager.this.requires(map, node2, node1)) {
-                        result = -1;
-                    }
-                } catch (Exception e) {
                     throw new RuntimeException(e);
                 }
             }

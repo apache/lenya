@@ -37,8 +37,8 @@ import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.util.DocumentSet;
-import org.apache.lenya.cms.publication.util.DocumentVisitor;
+import org.apache.lenya.cms.site.NodeIterator;
+import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
@@ -57,7 +57,7 @@ import org.apache.lenya.workflow.WorkflowException;
  * 
  * @version $Id$
  */
-public class Publish extends DocumentUsecase implements DocumentVisitor {
+public class Publish extends DocumentUsecase {
 
     protected static final String MESSAGE_SUBJECT = "notification-message";
     protected static final String MESSAGE_DOCUMENT_PUBLISHED = "document-published";
@@ -87,10 +87,15 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
     protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
         try {
             List nodes = new ArrayList();
-            DocumentSet set = new DocumentSet();
+            NodeSet set = new NodeSet(this.manager);
 
             Document doc = getSourceDocument();
-            set.addAll(SiteUtil.getSubSite(this.manager, doc));
+            set.addAll(SiteUtil.getSubSite(this.manager, doc.getLink().getNode()));
+
+            Document[] docs = set.getDocuments();
+            for (int i = 0; i < docs.length; i++) {
+                nodes.add(docs[i].getRepositoryNode());
+            }
 
             nodes.add(SiteUtil.getSiteStructure(this.manager,
                     getDocumentFactory(),
@@ -300,9 +305,10 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
         }
 
         try {
-            DocumentSet set = SiteUtil.getSubSite(this.manager, document);
-            SiteUtil.sortAscending(this.manager, set);
-            set.visit(this);
+            NodeSet set = SiteUtil.getSubSite(this.manager, document.getLink().getNode());
+            for (NodeIterator i = set.ascending(); i.hasNext();) {
+                publishAllLanguageVersions(i.next());
+            }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -323,55 +329,25 @@ public class Publish extends DocumentUsecase implements DocumentVisitor {
     }
 
     /**
-     * @throws PublicationException
-     * @see org.apache.lenya.cms.publication.util.DocumentVisitor#visitDocument(org.apache.lenya.cms.publication.Document)
-     */
-    public void visitDocument(Document document) throws PublicationException {
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Visiting resource [" + document + "]");
-        }
-
-        try {
-            DocumentLocator parentLocator = document.getLocator().getParent();
-            Document parent = document.getFactory().get(parentLocator);
-            boolean publish = true;
-            if (parent != null) {
-                Document liveParent = parent.getAreaVersion(Publication.LIVE_AREA);
-                if (!liveParent.exists()) {
-                    publish = false;
-                }
-            }
-            if (publish) {
-                publishAllLanguageVersions(document);
-            }
-        } catch (WorkflowException e) {
-            throw new PublicationException(e);
-        }
-    }
-
-    /**
      * Publishes all existing language versions of a document.
      * 
-     * @param document The document.
+     * @param node The document.
      * @throws PublicationException if an error occurs.
      * @throws WorkflowException
      */
-    protected void publishAllLanguageVersions(Document document) throws PublicationException,
+    protected void publishAllLanguageVersions(SiteNode node) throws PublicationException,
             WorkflowException {
-        String[] languages = document.getPublication().getLanguages();
+        String[] languages = node.getLanguages();
 
         try {
             for (int i = 0; i < languages.length; i++) {
-                if (document.existsTranslation(languages[i])) {
-                    Document version = document.getTranslation(languages[i]);
-                    if (WorkflowUtil.canInvoke(this.manager,
-                            getSession(),
-                            getLogger(),
-                            version,
-                            getEvent())) {
-                        publish(version);
-                    }
+                Document version = node.getLink(languages[i]).getDocument();
+                if (WorkflowUtil.canInvoke(this.manager,
+                        getSession(),
+                        getLogger(),
+                        version,
+                        getEvent())) {
+                    publish(version);
                 }
             }
         } catch (Exception e) {

@@ -115,7 +115,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         if (element.hasAttribute(UUID_ATTRIBUTE_NAME)) {
             return element.getAttribute(UUID_ATTRIBUTE_NAME);
         } else {
-            return getPath();
+            return null;
         }
     }
 
@@ -591,5 +591,10 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
             throw new RuntimeException(e);
         }
     }
+
+    public void delete() {
+        getTree().removeNode(getPath());
+    }
+
 
 }

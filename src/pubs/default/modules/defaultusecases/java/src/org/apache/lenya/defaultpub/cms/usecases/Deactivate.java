@@ -19,13 +19,14 @@ package org.apache.lenya.defaultpub.cms.usecases;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.util.DocumentSet;
-import org.apache.lenya.cms.publication.util.DocumentVisitor;
+import org.apache.lenya.cms.site.NodeIterator;
+import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.site.usecases.AssetUtil;
@@ -34,15 +35,12 @@ import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.workflow.WorkflowException;
 
-import org.apache.excalibur.source.SourceResolver;
-import org.apache.excalibur.source.Source;
-
 /**
  * Deactivate usecase handler.
  * 
  * @version $Id$
  */
-public class Deactivate extends DocumentUsecase implements DocumentVisitor {
+public class Deactivate extends DocumentUsecase {
 
     /**
      * Checks if the workflow event is supported and the parent of the document exists in the live
@@ -75,11 +73,10 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
                     addInfoMessage("The single document cannot be deactivated because the workflow event cannot be invoked.");
                 }
 
-                DocumentFactory map = getSourceDocument().getFactory();
                 Document liveDoc = getSourceDocument().getAreaVersion(Publication.LIVE_AREA);
-                DocumentSet subSite = SiteUtil.getSubSite(this.manager, liveDoc);
+                NodeSet subSite = SiteUtil.getSubSite(this.manager, liveDoc.getLink().getNode());
                 SiteNode node = liveDoc.getLink().getNode();
-                subSite.removeAll(SiteUtil.getExistingDocuments(this.manager, map, node));
+                subSite.remove(node);
 
                 if (!subSite.isEmpty()) {
                     allowSingle = false;
@@ -96,15 +93,15 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
     protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
         try {
             List nodes = new ArrayList();
-            DocumentSet set = new DocumentSet();
+            NodeSet siteNodes = new NodeSet(this.manager);
 
             Document doc = getSourceDocument();
-            set.addAll(SiteUtil.getSubSite(this.manager, doc));
+            siteNodes.addAll(SiteUtil.getSubSite(this.manager, doc.getLink().getNode()));
 
             Document liveDoc = doc.getAreaVersion(Publication.LIVE_AREA);
-            set.addAll(SiteUtil.getSubSite(this.manager, liveDoc));
+            siteNodes.addAll(SiteUtil.getSubSite(this.manager, liveDoc.getLink().getNode()));
 
-            Document[] documents = set.getDocuments();
+            Document[] documents = siteNodes.getDocuments();
             for (int i = 0; i < documents.length; i++) {
                 nodes.add(documents[i].getRepositoryNode());
                 nodes.addAll(AssetUtil.getAssetNodes(documents[i], this.manager, getLogger()));
@@ -195,10 +192,11 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
         }
 
         try {
-            DocumentSet set = SiteUtil.getSubSite(this.manager, document);
-            SiteUtil.sortDescending(this.manager, set);
-            set.visit(this);
-        } catch (PublicationException e) {
+            NodeSet set = SiteUtil.getSubSite(this.manager, document.getLink().getNode());
+            for (NodeIterator i = set.descending(); i.hasNext();) {
+                deactivateAllLanguageVersions(i.next());
+            }
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
@@ -218,42 +216,19 @@ public class Deactivate extends DocumentUsecase implements DocumentVisitor {
     }
 
     /**
-     * @throws PublicationException
-     * @see org.apache.lenya.cms.publication.util.DocumentVisitor#visitDocument(org.apache.lenya.cms.publication.Document)
-     */
-    public void visitDocument(Document document) throws PublicationException {
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Visiting resource [" + document + "]");
-        }
-
-        try {
-            deactivateAllLanguageVersions(document);
-        } catch (WorkflowException e) {
-            throw new PublicationException(e);
-        }
-    }
-
-    /**
      * Publishes all existing language versions of a document.
      * 
-     * @param document The document.
+     * @param node The document.
      * @throws PublicationException if an error occurs.
      * @throws WorkflowException
      */
-    protected void deactivateAllLanguageVersions(Document document) throws PublicationException,
+    protected void deactivateAllLanguageVersions(SiteNode node) throws PublicationException,
             WorkflowException {
-        String[] languages = document.getPublication().getLanguages();
+        String[] languages = node.getLanguages();
         for (int i = 0; i < languages.length; i++) {
-            if (document.existsVersion(Publication.LIVE_AREA, languages[i])) {
-                Document version = document.getVersion(Publication.LIVE_AREA, languages[i]);
-                if (WorkflowUtil.canInvoke(this.manager,
-                        getSession(),
-                        getLogger(),
-                        version,
-                        getEvent())) {
-                    deactivate(version);
-                }
+            Document version = node.getLink(languages[i]).getDocument();
+            if (WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), version, getEvent())) {
+                deactivate(version);
             }
         }
     }

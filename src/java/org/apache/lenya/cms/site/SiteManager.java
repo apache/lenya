@@ -21,7 +21,6 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.util.DocumentSet;
 
 /**
  * <p>
@@ -166,12 +165,13 @@ public interface SiteManager {
             throws SiteException;
 
     /**
-     * Sorts a set of documents using the "requires" relation.
+     * Sorts a set of nodes using the "requires" relation.
      * 
-     * @param set The set.
+     * @param nodes The set.
+     * @return A sorted array of nodes.
      * @throws SiteException if an error occurs.
      */
-    void sortAscending(DocumentSet set) throws SiteException;
+    SiteNode[] sortAscending(SiteNode[] nodes) throws SiteException;
 
     /**
      * @param map The identity map.

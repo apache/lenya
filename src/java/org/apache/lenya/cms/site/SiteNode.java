@@ -77,4 +77,9 @@ public interface SiteNode {
      */
     void setVisible(boolean visibleInNav);
 
+    /**
+     * Deletes this node.
+     */
+    void delete();
+
 }

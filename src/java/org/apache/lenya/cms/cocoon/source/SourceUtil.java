@@ -136,6 +136,28 @@ public final class SourceUtil {
     }
 
     /**
+     * Copies a Source without buffering.
+     * @param manager A service manager.
+     * @param sourceUri The source URI to copy from.
+     * @param destUri The destination URI to copy to.
+     * @throws IOException If an error occures.
+     * @throws ServiceException
+     * @see #copy(SourceResolver, String, String, boolean)
+     */
+    public static void copy(ServiceManager manager, String sourceUri, String destUri)
+            throws IOException, ServiceException {
+        SourceResolver resolver = null;
+        try {
+            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+            copy(resolver, sourceUri, destUri, false);
+        } finally {
+            if (resolver != null) {
+                manager.release(resolver);
+            }
+        }
+    }
+
+    /**
      * Reads a DOM from a source.
      * @param sourceUri The source URI.
      * @param manager The service manager.

@@ -14,7 +14,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.site.simple;
+package org.apache.lenya.cms.site;
 
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;

@@ -72,4 +72,15 @@ public class SimpleSiteNode extends AbstractSiteNode {
     public void setVisible(boolean visibleInNav) {
     }
 
+    public void delete() {
+        String[] languages = getLanguages();
+        for (int i = 0; i < languages.length; i++) {
+            try {
+                getLink(languages[i]).delete();
+            } catch (SiteException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
 }

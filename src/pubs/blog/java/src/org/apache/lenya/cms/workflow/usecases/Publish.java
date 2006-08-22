@@ -29,6 +29,7 @@ import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -57,11 +58,14 @@ public class Publish extends DocumentUsecase {
             DocumentSet set = new DocumentSet();
 
             Document doc = getSourceDocument();
-            set.addAll(SiteUtil.getSubSite(this.manager, doc));
+            NodeSet subsite = SiteUtil.getSubSite(this.manager, doc.getLink().getNode());
+            set.addAll(new DocumentSet(subsite.getDocuments()));
 
-            Document liveDoc = doc.getFactory().getAreaVersion(doc, Publication.LIVE_AREA);
-            if (liveDoc.exists())
-                set.addAll(SiteUtil.getSubSite(this.manager, liveDoc));
+            Document liveDoc = doc.getAreaVersion(Publication.LIVE_AREA);
+            if (liveDoc.exists()) {
+                NodeSet liveSubsite = SiteUtil.getSubSite(this.manager, liveDoc.getLink().getNode());
+                set.addAll(new DocumentSet(liveSubsite.getDocuments()));
+            }
             else
                 set.add(liveDoc);
 

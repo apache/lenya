@@ -17,9 +17,14 @@
 package org.apache.lenya.cms.site;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.util.DocumentSet;
@@ -28,18 +33,24 @@ import org.apache.lenya.cms.publication.util.DocumentSet;
  * A set containing nodes.
  */
 public class NodeSet {
-    
+
+    private ServiceManager manager;
+
     /**
      * Ctor.
+     * @param manager The service manager.
      */
-    public NodeSet() {
+    public NodeSet(ServiceManager manager) {
+        this.manager = manager;
     }
 
     /**
      * Ctor.
+     * @param manager The service manager.
      * @param _nodes The initial nodes.
      */
-    public NodeSet(SiteNode[] _nodes) {
+    public NodeSet(ServiceManager manager, SiteNode[] _nodes) {
+        this(manager);
         for (int i = 0; i < _nodes.length; i++) {
             add(_nodes[i]);
         }
@@ -69,16 +80,16 @@ public class NodeSet {
      * @return If the node is contained.
      */
     public boolean contains(SiteNode node) {
-        return getList().contains(node);
+        return getSet().contains(node);
     }
 
-    private List nodes = new ArrayList();
-    
+    private Set nodes = new HashSet();
+
     /**
      * Returns the list object that stores the documents.
      * @return A list.
      */
-    protected List getList() {
+    protected Set getSet() {
         return this.nodes;
     }
 
@@ -106,31 +117,96 @@ public class NodeSet {
      * @return A boolean value.
      */
     public boolean isEmpty() {
-        return getList().isEmpty();
+        return getSet().isEmpty();
     }
-    
+
     /**
      * Removes a node.
      * @param resource The node.
      */
     public void remove(SiteNode resource) {
         assert resource != null;
-        assert getList().contains(resource);
-        getList().remove(resource);
+        assert getSet().contains(resource);
+        getSet().remove(resource);
     }
-    
+
     /**
      * Removes all nodes.
      */
     public void clear() {
-        getList().clear();
+        getSet().clear();
     }
-    
+
     /**
-     * Reverses the node order.
+     * @return An iterator iterating in ascending order.
      */
-    public void reverse() {
-        Collections.reverse(getList());
+    public NodeIterator ascending() {
+        SiteNode[] nodes = getNodesAscending();
+        return new NodeIterator(nodes);
     }
-    
+
+    /**
+     * @return An iterator iterating in descending order.
+     */
+    public NodeIterator descending() {
+        SiteNode[] nodes = getNodesAscending();
+        List list = Arrays.asList(nodes);
+        Collections.reverse(list);
+        return new NodeIterator(list);
+    }
+
+    protected SiteNode[] getNodesAscending() {
+        if (isEmpty()) {
+            return new SiteNode[0];
+        }
+        
+        SiteNode[] nodes;
+        ServiceSelector selector = null;
+        SiteManager siteManager = null;
+        try {
+            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
+            siteManager = (SiteManager) selector.select(getNodes()[0].getStructure()
+                    .getPublication()
+                    .getSiteManagerHint());
+            nodes = siteManager.sortAscending(getNodes());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (selector != null) {
+                if (siteManager != null) {
+                    selector.release(siteManager);
+                }
+                manager.release(selector);
+            }
+        }
+        return nodes;
+    }
+
+    /**
+     * @return All documents referenced by this node set.
+     */
+    public Document[] getDocuments() {
+        List documents = new ArrayList();
+        for (NodeIterator i = ascending(); i.hasNext(); ) {
+            SiteNode node = i.next();
+            String[] langs = node.getLanguages();
+            for (int l = 0; l < langs.length; l++) {
+                try {
+                    documents.add(node.getLink(langs[l]).getDocument());
+                } catch (SiteException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return (Document[]) documents.toArray(new Document[documents.size()]);
+    }
+
+    /**
+     * Adds all nodes from a node set to this.
+     * @param set The set.
+     */
+    public void addAll(NodeSet set) {
+        this.nodes.addAll(set.getSet());
+    }
+
 }

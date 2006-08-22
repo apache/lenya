@@ -20,8 +20,6 @@ package org.apache.lenya.cms.site.tree;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -33,9 +31,9 @@ import org.apache.lenya.cms.repository.RepositoryItemFactory;
 import org.apache.lenya.cms.site.AbstractSiteManager;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.Link;
-import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 
 /**
@@ -138,7 +136,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
             getLogger().debug("Obtaining requiring resources of [" + resource + "]");
         }
 
-        NodeSet nodes = new NodeSet();
+        NodeSet nodes = new NodeSet(this.manager);
         Publication pub = resource.getStructure().getPublication();
         String area = resource.getStructure().getArea();
         SiteTree tree = getTree(map, pub, area);
@@ -376,15 +374,6 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      */
     protected String getKey(Publication publication, String area) {
         return publication.getId() + ":" + area;
-    }
-
-    protected ServiceManager manager;
-
-    /**
-     * @see org.apache.avalon.framework.service.Serviceable#service(org.apache.avalon.framework.service.ServiceManager)
-     */
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
     }
 
     /**

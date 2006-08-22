@@ -211,38 +211,48 @@ public interface DocumentManager {
     /**
      * Moves a document to another location, incl. all requiring documents. If a sitetree is used,
      * this means that the whole subtree is moved.
-     * @param source The source document.
-     * @param target The target document.
+     * @param sourceArea The source area.
+     * @param sourcePath The source path.
+     * @param targetArea The target area.
+     * @param targetPath The target path.
      * @throws PublicationException if an error occurs.
      */
-    void moveAll(Document source, DocumentLocator target) throws PublicationException;
+    void moveAll(Area sourceArea, String sourcePath, Area targetArea, String targetPath)
+            throws PublicationException;
 
     /**
      * Moves all language versions of a document to another location.
-     * @param source The source.
-     * @param target The target.
+     * @param sourceArea The source area.
+     * @param sourcePath The source path.
+     * @param targetArea The target area.
+     * @param targetPath The target path.
      * @throws PublicationException if the documents could not be moved.
      */
-    void moveAllLanguageVersions(Document source, DocumentLocator target)
-            throws PublicationException;
+    void moveAllLanguageVersions(Area sourceArea, String sourcePath, Area targetArea,
+            String targetPath) throws PublicationException;
 
     /**
      * Copies a document to another location, incl. all requiring documents. If a sitetree is used,
      * this means that the whole subtree is copied.
-     * @param source The source document.
-     * @param target The target document.
+     * @param sourceArea The source area.
+     * @param sourcePath The source path.
+     * @param targetArea The target area.
+     * @param targetPath The target path.
      * @throws PublicationException if an error occurs.
      */
-    void copyAll(Document source, DocumentLocator target) throws PublicationException;
+    void copyAll(Area sourceArea, String sourcePath, Area targetArea, String targetPath)
+            throws PublicationException;
 
     /**
      * Copies all language versions of a document to another location.
-     * @param source The source.
-     * @param target The target.
+     * @param sourceArea The source area.
+     * @param sourcePath The source path.
+     * @param targetArea The target area.
+     * @param targetPath The target path.
      * @throws PublicationException if the documents could not be copied.
      */
-    void copyAllLanguageVersions(Document source, DocumentLocator target)
-            throws PublicationException;
+    void copyAllLanguageVersions(Area sourceArea, String sourcePath, Area targetArea,
+            String targetPath) throws PublicationException;
 
     /**
      * Deletes a document, incl. all requiring documents. If a sitetree is used, this means that the

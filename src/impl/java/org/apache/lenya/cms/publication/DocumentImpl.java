@@ -36,7 +36,7 @@ import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
-import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteStructure;
 
 /**
@@ -474,29 +474,18 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     public DocumentLocator getLocator() {
-        SiteManager siteManager = null;
-        ServiceSelector selector = null;
+        SiteStructure structure = area().getSite();
+        if (!structure.containsByUuid(getUUID(), getLanguage())) {
+            throw new RuntimeException("The document [" + this
+                    + "] is not referenced in the site structure.");
+        }
         try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(getPublication().getSiteManagerHint());
-            SiteStructure structure = siteManager.getSiteStructure(getFactory(), getPublication(), getArea());
-            if (!structure.containsByUuid(getUUID(), getLanguage())) {
-                throw new DocumentException("The document [" + this
-                        + "] is not referenced in the site structure.");
-            }
             return DocumentLocator.getLocator(getPublication().getId(),
                     getArea(),
                     structure.getByUuid(getUUID(), getLanguage()).getNode().getPath(),
                     getLanguage());
-        } catch (Exception e) {
+        } catch (SiteException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
         }
     }
 
@@ -592,25 +581,12 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     public Link getLink() throws DocumentException {
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(getPublication().getSiteManagerHint());
-            SiteStructure structure = siteManager.getSiteStructure(getFactory(),
-                    getPublication(),
-                    getArea());
-            if (structure.containsByUuid(getUUID(), getLanguage())) {
+        SiteStructure structure = area().getSite();
+        if (structure.containsByUuid(getUUID(), getLanguage())) {
+            try {
                 return structure.getByUuid(getUUID(), getLanguage());
-            }
-        } catch (Exception e) {
-            throw new DocumentException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
+            } catch (SiteException e) {
+                throw new DocumentException(e);
             }
         }
         throw new DocumentException("The document [" + this
@@ -618,28 +594,15 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     public boolean hasLink() {
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(getPublication().getSiteManagerHint());
-            SiteStructure structure = siteManager.getSiteStructure(getFactory(),
-                    getPublication(),
-                    getArea());
-            return structure.containsByUuid(getUUID(), getLanguage());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
-        }
+        return area().getSite().containsByUuid(getUUID(), getLanguage());
     }
 
+    private Area area;
+
     public Area area() {
-        return new AreaImpl(this.manager, getFactory(), getPublication(), getArea());
+        if (this.area == null) {
+            this.area = new AreaImpl(this.manager, getFactory(), getPublication(), getArea());
+        }
+        return this.area;
     }
 }

@@ -36,8 +36,8 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.ResourceType;
-import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.site.usecases.CreateDocument;
@@ -188,7 +188,7 @@ public class Put extends CreateDocument {
             Document doc = getSourceDocument();
             List nodes = new ArrayList();
 
-            DocumentSet set = SiteUtil.getSubSite(this.manager, doc);
+            NodeSet set = SiteUtil.getSubSite(this.manager, doc.getLink().getNode());
             Document[] documents = set.getDocuments();
             for (int i = 0; i < documents.length; i++) {
                 nodes.add(documents[i].getRepositoryNode());

@@ -463,8 +463,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         }
         Node parentNode = node.getParentNode();
         if (parentNode == null) {
-            throw new SiteException("Parentid of node with path: " + path
-                    + " not found");
+            throw new SiteException("Parentid of node with path: " + path + " not found");
         }
 
         Node previousNode;
@@ -497,8 +496,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         }
         Node parentNode = node.getParentNode();
         if (parentNode == null) {
-            throw new SiteException("Parentid of node with path: " + path
-                    + " not found");
+            throw new SiteException("Parentid of node with path: " + path + " not found");
         }
         Node nextNode;
         try {
@@ -636,12 +634,13 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
             return null;
         } else {
             String xPath = "//*[@uuid = '" + uuid + "']";
-            SiteNode node = getNodeByXpath(xPath);
-            if (node != null && node.hasLink(language)) {
-                return node;
-            } else {
-                return null;
+            SiteNode[] nodes = getNodesByXpath(xPath);
+            for (int i = 0; i < nodes.length; i++) {
+                if (nodes[i].hasLink(language)) {
+                    return nodes[i];
+                }
             }
+            return null;
         }
     }
 
@@ -653,6 +652,20 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
             } else {
                 return new SiteTreeNodeImpl(this.factory, this, element, getLogger());
             }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected SiteNode[] getNodesByXpath(String xPath) {
+        try {
+            NodeList list = XPathAPI.selectNodeList(this.document, xPath);
+            SiteNode[] nodes = new SiteNode[list.getLength()];
+            for (int i = 0; i < nodes.length; i++) {
+                Element element = (Element) list.item(i);
+                nodes[i] = new SiteTreeNodeImpl(this.factory, this, element, getLogger());
+            }
+            return nodes;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -673,9 +686,23 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
 
     public Link add(String path, org.apache.lenya.cms.publication.Document doc)
             throws SiteException {
+
+        if (contains(path)) {
+            SiteNode node = getNode(path);
+            if (node.getUuid() != null && !node.getUuid().equals(doc.getUUID())) {
+                throw new SiteException("Node for path [" + path + "] exists with different UUID!");
+            }
+        }
+
         SiteTreeNode node = addNode(path, doc.getUUID(), true, null, "", false);
+
         SiteTreeLink label = new SiteTreeLink(doc.getFactory(), node, "", doc.getLanguage());
         node.addLabel(label);
+
+        if (node.getUuid() == null) {
+            node.setUUID(doc.getUUID());
+        }
+
         return label;
     }
 

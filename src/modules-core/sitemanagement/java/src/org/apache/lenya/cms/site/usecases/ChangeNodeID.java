@@ -17,9 +17,7 @@
 package org.apache.lenya.cms.site.usecases;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
@@ -29,9 +27,11 @@ import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.site.NodeIterator;
+import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -71,11 +71,15 @@ public class ChangeNodeID extends DocumentUsecase {
 
             Document sourceDocument = getSourceDocument();
 
-            DocumentSet subsite = SiteUtil.getSubSite(this.manager, sourceDocument);
-            Document[] subsiteDocs = subsite.getDocuments();
-            for (int i = 0; i < subsiteDocs.length; i++) {
-                nodes.add(subsiteDocs[i].getRepositoryNode());
-                nodes.addAll(AssetUtil.getAssetNodes(subsiteDocs[i], this.manager, getLogger()));
+            NodeSet subsite = SiteUtil.getSubSite(this.manager, sourceDocument.getLink().getNode());
+            for (NodeIterator i = subsite.ascending(); i.hasNext();) {
+                SiteNode node = i.next();
+                String[] languages = node.getLanguages();
+                for (int l = 0; l < languages.length; l++) {
+                    Document doc = node.getLink(languages[l]).getDocument();
+                    nodes.add(doc.getRepositoryNode());
+                    nodes.addAll(AssetUtil.getAssetNodes(doc, this.manager, getLogger()));
+                }
             }
 
         } catch (Exception e) {
@@ -144,7 +148,8 @@ public class ChangeNodeID extends DocumentUsecase {
         }
     }
 
-    protected DocumentLocator getTargetLocator() throws DocumentBuildException, SiteException, DocumentException {
+    protected DocumentLocator getTargetLocator() throws DocumentBuildException, SiteException,
+            DocumentException {
         String nodeId = getParameterAsString(NODE_ID);
         Document doc = getSourceDocument();
         DocumentLocator loc = DocumentLocator.getLocator(doc.getPublication().getId(),
@@ -168,28 +173,11 @@ public class ChangeNodeID extends DocumentUsecase {
         LinkRewriter rewriter = null;
         try {
 
-            DocumentSet subsite = SiteUtil.getSubSite(this.manager, source);
-            Map targets = SiteUtil.getTransferedSubSite(this.manager,
-                    source,
-                    getTargetLocator(),
-                    SiteUtil.MODE_CANCEL);
-            Document[] subsiteDocs = subsite.getDocuments();
-            List nodes = new ArrayList();
-            for (int i = 0; i < subsiteDocs.length; i++) {
-
-                Document targetSubsiteDoc = (Document) targets.get(subsiteDocs[i]);
-                nodes.add(targetSubsiteDoc.getRepositoryNode());
-                nodes.addAll(AssetUtil.getCopiedAssetNodes(subsiteDocs[i],
-                        targetSubsiteDoc,
-                        this.manager,
-                        getLogger()));
-            }
-            for (Iterator i = nodes.iterator(); i.hasNext();) {
-                ((Node) i.next()).lock();
-            }
-
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            documentManager.moveAll(source, target);
+            documentManager.moveAll(source.area(),
+                    source.getPath(),
+                    source.area(),
+                    target.getPath());
 
             targetDoc = getDocumentFactory().get(target);
 

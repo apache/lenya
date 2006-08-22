@@ -26,8 +26,8 @@ import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
@@ -67,16 +67,21 @@ public abstract class MoveSubsite extends DocumentUsecase {
 
             Document document = getSourceDocument();
 
-            DocumentSet set = SiteUtil.getSubSite(this.manager, document);
-            Document[] documents = set.getDocuments();
-            for (int i = 0; i < documents.length; i++) {
-                if (documents[i].existsAreaVersion(Publication.LIVE_AREA)) {
-                    Document liveVersion = documents[i].getAreaVersion(Publication.LIVE_AREA);
+            NodeSet subsite = SiteUtil.getSubSite(this.manager, document.getLink().getNode());
+            Document[] docs = subsite.getDocuments();
+            for (int i = 0; i < docs.length; i++) {
+                if (docs[i].existsAreaVersion(Publication.LIVE_AREA)) {
+                    Document liveVersion = docs[i].getAreaVersion(Publication.LIVE_AREA);
                     addErrorMessage("delete-doc-live", new String[] { liveVersion.toString() });
                 }
-            }
-            if (!WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), set, getEvent())) {
-                addErrorMessage("The workflow event cannot be invoked on all documents.");
+                if (!WorkflowUtil.canInvoke(this.manager,
+                        getSession(),
+                        getLogger(),
+                        docs[i],
+                        getEvent())) {
+                    addErrorMessage("The workflow event cannot be invoked on document [" + docs[i]
+                            + "].");
+                }
             }
         }
     }
@@ -92,22 +97,23 @@ public abstract class MoveSubsite extends DocumentUsecase {
      */
     protected Node[] getNodesToLock() throws UsecaseException {
         try {
-            
+
             Set nodes = new HashSet();
-            
+
             SiteStructure sourceSite = getSourceDocument().area().getSite();
             SiteStructure targetSite = getSourceDocument().getPublication()
                     .getArea(getTargetArea())
                     .getSite();
-            
+
             nodes.add(sourceSite.getRepositoryNode());
             nodes.add(targetSite.getRepositoryNode());
-            
-            Document[] docs  = SiteUtil.getSubSite(this.manager, getSourceDocument()).getDocuments();
+
+            Document[] docs = SiteUtil.getSubSite(this.manager,
+                    getSourceDocument().getLink().getNode()).getDocuments();
             for (int i = 0; i < docs.length; i++) {
                 nodes.add(docs[i].getRepositoryNode());
             }
-            
+
             return (Node[]) nodes.toArray(new Node[nodes.size()]);
         } catch (PublicationException e) {
             throw new UsecaseException(e);
@@ -121,7 +127,8 @@ public abstract class MoveSubsite extends DocumentUsecase {
 
         String targetArea = getTargetArea();
         Document doc = getSourceDocument();
-        Document[] sources = SiteUtil.getSubSite(this.manager, doc).getDocuments();
+        Document[] sources = SiteUtil.getSubSite(this.manager, doc.getLink().getNode())
+                .getDocuments();
         SiteStructure targetSite = doc.getPublication().getArea(targetArea).getSite();
 
         DocumentLocator targetParent = doc.getLocator().getAreaVersion(targetArea);

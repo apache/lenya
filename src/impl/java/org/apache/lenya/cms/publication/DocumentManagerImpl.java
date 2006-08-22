@@ -17,7 +17,9 @@
 package org.apache.lenya.cms.publication;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
@@ -38,10 +40,15 @@ import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.repository.UUIDGenerator;
+import org.apache.lenya.cms.site.Link;
+import org.apache.lenya.cms.site.NodeIterator;
+import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
+import org.apache.lenya.util.Assert;
 
 /**
  * DocumentManager implementation.
@@ -98,6 +105,13 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             String extension, String navigationTitle, boolean visibleInNav)
             throws DocumentBuildException, DocumentException, PublicationException {
 
+        Area areaObj = pub.getArea(area);
+        SiteStructure site = areaObj.getSite();
+        if (site.contains(path) && site.getNode(path).hasLink(language)) {
+            throw new DocumentException("The link [" + path + ":" + language
+                    + "] is already contained in site [" + site + "]");
+        }
+
         Document document = add(factory,
                 documentType,
                 initialContentsURI,
@@ -124,7 +138,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             String extension) throws DocumentBuildException {
         try {
 
-            if (exists(factory, pub, area, language, extension)) {
+            if (exists(factory, pub, area, uuid, language)) {
                 throw new DocumentBuildException("The document [" + pub.getId() + ":" + area + ":"
                         + uuid + ":" + language + "] already exists!");
             }
@@ -189,7 +203,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         }
     }
 
-    private void addToSiteManager(String path, Document document, String navigationTitle,
+    protected void addToSiteManager(String path, Document document, String navigationTitle,
             boolean visibleInNav) throws PublicationException {
         SiteStructure site = document.area().getSite();
         site.add(path, document);
@@ -205,10 +219,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      */
     public void copy(Document sourceDocument, DocumentLocator destination)
             throws PublicationException {
-
         copyDocument(sourceDocument, destination);
         Document destinationDocument = sourceDocument.getFactory().get(destination);
-
         copyResources(sourceDocument, destinationDocument);
     }
 
@@ -228,6 +240,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     }
 
     /**
+     * @param targetUuid
      * @see org.apache.lenya.cms.publication.DocumentManager#copyDocument(org.apache.lenya.cms.publication.Document,
      *      org.apache.lenya.cms.publication.DocumentLocator)
      */
@@ -241,7 +254,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 sourceDocument.getExtension(),
                 sourceDocument.getLink().getLabel(),
                 sourceDocument.getLink().getNode().isVisible());
-
     }
 
     /**
@@ -380,93 +392,93 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         return this.context;
     }
 
-    /**
-     * @see org.apache.lenya.cms.publication.DocumentManager#moveAll(org.apache.lenya.cms.publication.Document,
-     *      org.apache.lenya.cms.publication.DocumentLocator)
-     */
-    public void moveAll(Document source, DocumentLocator target) throws PublicationException {
-        SiteManager siteManager = null;
-        ServiceSelector selector = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(source.getPublication()
-                    .getSiteManagerHint());
-
-            DocumentSet subsite = SiteUtil.getSubSite(this.manager, source);
-            siteManager.sortAscending(subsite);
-
-            DocumentVisitor visitor = new MoveVisitor(this, source, target);
-            subsite.visit(visitor);
-        } catch (ServiceException e) {
-            throw new PublicationException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
-        }
-    }
-
-    /**
-     * @see org.apache.lenya.cms.publication.DocumentManager#moveAllLanguageVersions(org.apache.lenya.cms.publication.Document,
-     *      org.apache.lenya.cms.publication.Document)
-     */
-    public void moveAllLanguageVersions(Document source, DocumentLocator target)
+    public void moveAll(Area sourceArea, String sourcePath, Area targetArea, String targetPath)
             throws PublicationException {
-        String[] languages = source.getLanguages();
+        SiteStructure site = sourceArea.getSite();
+
+        SiteNode root = site.getNode(sourcePath);
+        NodeSet subsite = SiteUtil.getSubSite(this.manager, root);
+
+        for (NodeIterator n = subsite.ascending(); n.hasNext();) {
+            SiteNode node = n.next();
+            String subPath = node.getPath().substring(sourcePath.length());
+            targetArea.getSite().add(targetPath + subPath);
+        }
+        for (NodeIterator n = subsite.descending(); n.hasNext();) {
+            SiteNode node = n.next();
+            String subPath = node.getPath().substring(sourcePath.length());
+            moveAllLanguageVersions(sourceArea, sourcePath + subPath, targetArea, targetPath
+                    + subPath);
+        }
+    }
+
+    public void moveAllLanguageVersions(Area sourceArea, String sourcePath, Area targetArea,
+            String targetPath) throws PublicationException {
+
+        SiteNode sourceNode = sourceArea.getSite().getNode(sourcePath);
+        String[] languages = sourceNode.getLanguages();
         for (int i = 0; i < languages.length; i++) {
-            DocumentLocator sourceLoc = source.getLocator().getLanguageVersion(languages[i]);
-            Document sourceVersion = source.getFactory().get(sourceLoc);
-            DocumentLocator targetLoc = target.getLanguageVersion(languages[i]);
-            move(sourceVersion, targetLoc);
+            Link sourceLink = sourceNode.getLink(languages[i]);
+            String label = sourceLink.getLabel();
+            Document doc = sourceLink.getDocument();
+            sourceLink.delete();
+            Link link = targetArea.getSite().add(targetPath, doc);
+            link.setLabel(label);
+            Assert.isTrue("label set", doc.getLink().getLabel().equals(label));
         }
+        SiteNode targetNode = targetArea.getSite().getNode(targetPath);
+        targetNode.setVisible(sourceNode.isVisible());
+        sourceNode.delete();
     }
 
-    /**
-     * @see org.apache.lenya.cms.publication.DocumentManager#copyAll(org.apache.lenya.cms.publication.Document,
-     *      org.apache.lenya.cms.publication.DocumentLocator)
-     */
-    public void copyAll(Document source, DocumentLocator target) throws PublicationException {
-
-        SiteManager siteManager = null;
-        ServiceSelector selector = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(source.getPublication()
-                    .getSiteManagerHint());
-
-            DocumentSet subsite = SiteUtil.getSubSite(this.manager, source);
-            siteManager.sortAscending(subsite);
-
-            DocumentVisitor visitor = new CopyVisitor(this, source, target);
-            subsite.visit(visitor);
-        } catch (ServiceException e) {
-            throw new PublicationException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
-            }
-        }
-    }
-
-    /**
-     * @see org.apache.lenya.cms.publication.DocumentManager#copyAllLanguageVersions(org.apache.lenya.cms.publication.Document,
-     *      org.apache.lenya.cms.publication.DocumentLocator)
-     */
-    public void copyAllLanguageVersions(Document source, DocumentLocator target)
+    public void copyAll(Area sourceArea, String sourcePath, Area targetArea, String targetPath)
             throws PublicationException {
-        DocumentFactory identityMap = source.getFactory();
-        String[] languages = source.getLanguages();
+
+        SiteStructure site = sourceArea.getSite();
+
+        SiteNode root = site.getNode(sourcePath);
+        NodeSet subsite = SiteUtil.getSubSite(this.manager, root);
+
+        for (NodeIterator i = subsite.ascending(); i.hasNext();) {
+            SiteNode node = i.next();
+            String subPath = node.getPath().substring(sourcePath.length());
+            copyAllLanguageVersions(sourceArea, sourcePath + subPath, targetArea, targetPath
+                    + subPath);
+        }
+    }
+
+    public void copyAllLanguageVersions(Area sourceArea, String sourcePath, Area targetArea,
+            String targetPath) throws PublicationException {
+        Publication pub = sourceArea.getPublication();
+
+        SiteNode sourceNode = sourceArea.getSite().getNode(sourcePath);
+        String[] languages = sourceNode.getLanguages();
+
+        Document targetDoc = null;
+
         for (int i = 0; i < languages.length; i++) {
-            DocumentLocator sourceLocator = source.getLocator().getLanguageVersion(languages[i]);
-            Document sourceVersion = identityMap.get(sourceLocator);
-            DocumentLocator targetLocator = target.getLanguageVersion(languages[i]);
-            copy(sourceVersion, targetLocator);
+            Document sourceVersion = sourceNode.getLink(languages[i]).getDocument();
+            DocumentLocator targetLocator = DocumentLocator.getLocator(pub.getId(),
+                    targetArea.getName(),
+                    targetPath,
+                    languages[i]);
+            if (targetDoc == null) {
+                copy(sourceVersion, targetLocator.getLanguageVersion(languages[i]));
+                targetDoc = targetArea.getSite()
+                        .getNode(targetPath)
+                        .getLink(languages[i])
+                        .getDocument();
+            } else {
+                targetDoc = addVersion(targetDoc, targetLocator.getArea(), languages[i]);
+                addToSiteManager(targetLocator.getPath(), targetDoc, sourceVersion.getLink()
+                        .getLabel(), sourceVersion.getLink().getNode().isVisible());
+                try {
+                    SourceUtil.copy(manager, sourceVersion.getSourceURI(), targetDoc.getSourceURI());
+                } catch (Exception e) {
+                    throw new PublicationException(e);
+                }
+                copyMetaData(sourceVersion, targetDoc);
+            }
         }
     }
 
@@ -544,59 +556,13 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         protected DocumentLocator getTarget(Document source) throws DocumentBuildException {
             DocumentLocator sourceLocator = source.getLocator();
             String rootSourcePath = getRootSource().getPath();
-            String relativePath = sourceLocator.getPath().substring(rootSourcePath.length());
-            return rootTarget.getDescendant(relativePath);
+            if (sourceLocator.getPath().equals(rootSourcePath)) {
+                return rootTarget;
+            } else {
+                String relativePath = sourceLocator.getPath().substring(rootSourcePath.length());
+                return rootTarget.getDescendant(relativePath);
+            }
         }
-    }
-
-    /**
-     * DocumentVisitor to copy documents.
-     */
-    public class CopyVisitor extends SourceTargetVisitor {
-
-        /**
-         * Ctor.
-         * @param manager The document manager.
-         * @param source The root source.
-         * @param target The root target.
-         */
-        public CopyVisitor(DocumentManager manager, Document source, DocumentLocator target) {
-            super(manager, source, target);
-        }
-
-        /**
-         * @see org.apache.lenya.cms.publication.util.DocumentVisitor#visitDocument(org.apache.lenya.cms.publication.Document)
-         */
-        public void visitDocument(Document source) throws PublicationException {
-            DocumentLocator target = getTarget(source);
-            getDocumentManager().copyAllLanguageVersions(source, target);
-        }
-
-    }
-
-    /**
-     * DocumentVisitor to copy documents.
-     */
-    public class MoveVisitor extends SourceTargetVisitor {
-
-        /**
-         * Ctor.
-         * @param manager The document manager.
-         * @param source The root source.
-         * @param target The root target.
-         */
-        public MoveVisitor(DocumentManager manager, Document source, DocumentLocator target) {
-            super(manager, source, target);
-        }
-
-        /**
-         * @see org.apache.lenya.cms.publication.util.DocumentVisitor#visitDocument(org.apache.lenya.cms.publication.Document)
-         */
-        public void visitDocument(Document source) throws PublicationException {
-            DocumentLocator target = getTarget(source);
-            getDocumentManager().copyAllLanguageVersions(source, target);
-        }
-
     }
 
     /**
@@ -611,8 +577,15 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             siteManager = (SiteManager) selector.select(document.getPublication()
                     .getSiteManagerHint());
 
-            DocumentSet subsite = SiteUtil.getSubSite(this.manager, document);
-            delete(subsite);
+            NodeSet subsite = SiteUtil.getSubSite(this.manager, document.getLink().getNode());
+            for (NodeIterator i = subsite.descending(); i.hasNext();) {
+                SiteNode node = i.next();
+                String[] languages = node.getLanguages();
+                for (int l = 0; l < languages.length; l++) {
+                    Document doc = node.getLink(languages[l]).getDocument();
+                    delete(doc);
+                }
+            }
         } catch (ServiceException e) {
             throw new PublicationException(e);
         } finally {
@@ -682,7 +655,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             siteManager = (SiteManager) selector.select(pub.getSiteManagerHint());
 
             DocumentSet set = new DocumentSet(documents.getDocuments());
-            siteManager.sortAscending(set);
+            sortAscending(set);
             set.reverse();
 
             DocumentVisitor visitor = new DeleteVisitor(this);
@@ -744,12 +717,59 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         }
 
         DocumentSet sortedSources = new DocumentSet(sourceDocs);
-        SiteUtil.sortAscending(this.manager, sortedSources);
+        sortAscending(sortedSources);
         Document[] sortedSourceDocs = sortedSources.getDocuments();
 
         for (int i = 0; i < sortedSourceDocs.length; i++) {
             copy(sortedSourceDocs[i],
                     ((Document) source2target.get(sortedSourceDocs[i])).getLocator());
+        }
+    }
+
+    protected void sortAscending(DocumentSet set) throws PublicationException {
+
+        if (!set.isEmpty()) {
+
+            Document[] docs = set.getDocuments();
+            int n = docs.length;
+
+            Publication pub = docs[0].getPublication();
+            SiteManager siteManager = null;
+            ServiceSelector selector = null;
+            try {
+                selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+                siteManager = (SiteManager) selector.select(pub.getSiteManagerHint());
+
+                Set nodes = new HashSet();
+                for (int i = 0; i < docs.length; i++) {
+                    nodes.add(docs[i].getLink().getNode());
+                }
+
+                SiteNode[] ascending = siteManager.sortAscending((SiteNode[]) nodes.toArray(new SiteNode[nodes.size()]));
+
+                set.clear();
+                for (int i = 0; i < ascending.length; i++) {
+                    for (int d = 0; d < docs.length; d++) {
+                        if (docs[d].getPath().equals(ascending[i].getPath())) {
+                            set.add(docs[d]);
+                        }
+                    }
+                }
+
+                if (set.getDocuments().length != n) {
+                    throw new IllegalStateException("Number of documents has changed!");
+                }
+
+            } catch (final ServiceException e) {
+                throw new PublicationException(e);
+            } finally {
+                if (selector != null) {
+                    if (siteManager != null) {
+                        selector.release(siteManager);
+                    }
+                    this.manager.release(selector);
+                }
+            }
         }
     }
 

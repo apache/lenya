@@ -72,18 +72,18 @@ public interface SiteTree extends SiteStructure {
      * @param href the href of the new node
      * @param suffix the suffix of the new node
      * @param link the link
-     * @param refDocumentId document-id of the node, before which the new node will be inserted.
+     * @param refPath path of the node, before which the new node will be inserted.
      * @return A node.
      * 
      * @throws SiteException if the addition failed
      */
     SiteTreeNode addNode(String parentid, String id, String uuid, boolean visibleInNav, String href, String suffix,
-            boolean link, String refDocumentId) throws SiteException;
+            boolean link, String refPath) throws SiteException;
 
     /**
-     * Add a node. Compute the parent id and the id of the node from the document-id
+     * Add a node. Compute the parent id and the id of the node from the path
      * 
-     * @param documentid the document-id of the new node. From this the parent-id and the id are
+     * @param path the path of the new node. From this the parent-id and the id are
      *            computed
      * @param uuid The UUID.
      * @param visibleInNav determines the visibility of a node in the navigation
@@ -94,27 +94,27 @@ public interface SiteTree extends SiteStructure {
      * 
      * @throws SiteException if the addition failed
      */
-    SiteTreeNode addNode(String documentid, String uuid, boolean visibleInNav, String href, String suffix, boolean link)
+    SiteTreeNode addNode(String path, String uuid, boolean visibleInNav, String href, String suffix, boolean link)
             throws SiteException;
 
     /**
      * Insert a node before a given node Compute the parent id and the id of the node from the
-     * document-id
+     * path
      * 
-     * @param documentid the document-id of the new node. From this the parent-id and the id are
+     * @param path the path of the new node. From this the parent-id and the id are
      *            computed
      * @param uuid The UUID.
      * @param visibleInNav determines the visibility of a node in the navigation
      * @param href the href
      * @param suffix the suffix
      * @param link the link
-     * @param refDocumentId document-id of the node, before which the new node will be inserted.
+     * @param refpath path of the node, before which the new node will be inserted.
      * @return A node.
      * 
      * @throws SiteException if the addition failed
      */
-    SiteTreeNode addNode(String documentid, String uuid, boolean visibleInNav, String href, String suffix, boolean link,
-            String refDocumentId) throws SiteException;
+    SiteTreeNode addNode(String path, String uuid, boolean visibleInNav, String href, String suffix, boolean link,
+            String refpath) throws SiteException;
 
     /**
      * Add a node. This method is typically used when publishing, i.e. when copying a node from the
@@ -135,11 +135,11 @@ public interface SiteTree extends SiteStructure {
      * inserted at the same parentid as the original node.
      * 
      * @param node the <code>SiteTreeNode</code> that is to be added
-     * @param refDocumentId document-id of the node, before which the new node will be inserted.
+     * @param refpath path of the node, before which the new node will be inserted.
      * 
      * @throws SiteException if the addition failed
      */
-    void addNode(SiteTreeNode node, String refDocumentId) throws SiteException;
+    void addNode(SiteTreeNode node, String refpath) throws SiteException;
 
     /**
      * Add a label to an existing node
@@ -169,13 +169,13 @@ public interface SiteTree extends SiteStructure {
     void removeLabel(String path, String language);
 
     /**
-     * Removes the node corresponding to the given document-id from the tree, and returns it.
+     * Removes the node corresponding to the given path from the tree, and returns it.
      * 
-     * @param documentId the document-id of the node that is to be removed
+     * @param path the path of the node that is to be removed
      * 
      * @return the removed node
      */
-    SiteTreeNode removeNode(String documentId);
+    SiteTreeNode removeNode(String path);
 
     /**
      * Return the top level nodes in the sitetree.
@@ -186,30 +186,30 @@ public interface SiteTree extends SiteStructure {
     /**
      * Move up the node amongst its siblings.
      * 
-     * @param documentid The document id of the node.
+     * @param path The document id of the node.
      * @throws SiteException if the moving failed.
      */
-    void moveUp(String documentid) throws SiteException;
+    void moveUp(String path) throws SiteException;
 
     /**
      * Move down the node amongst its siblings.
-     * @param documentid The document id of the node.
+     * @param path The document id of the node.
      * @throws SiteException if the moving failed.
      */
-    void moveDown(String documentid) throws SiteException;
+    void moveDown(String path) throws SiteException;
 
     /**
      * Imports a subtree (from this or from another tree) at a certain position.
      * @param subtreeRoot The root of the subtree to import.
      * @param newParent The node where the subtree shall be inserted.
      * @param newid The new id of the inserted subtreeRoot node (to not overwrite
-     * @param refDocumentId The document-id corresponding to the reference node, before which the
+     * @param refpath The path corresponding to the reference node, before which the
      *            subtree should be inserted. If null, the subtree is inserted at the end. in case
      *            there is already a node with the same id in the tree).
      * @throws SiteException when an error occurs.
      */
     void importSubtree(SiteTreeNode subtreeRoot, SiteTreeNode newParent, String newid,
-            String refDocumentId) throws SiteException;
+            String refpath) throws SiteException;
     
     /**
      * Saves the tree. Call this method after a node has been changed.

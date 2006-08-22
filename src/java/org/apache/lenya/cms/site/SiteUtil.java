@@ -18,6 +18,7 @@ package org.apache.lenya.cms.site;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -97,33 +98,34 @@ public class SiteUtil {
     }
 
     /**
-     * Returns a sub-site starting with a certain document, which includes the document itself and
-     * all documents which require this document, including all language versions.
+     * Returns a sub-site starting with a certain node, which includes the node itself and all nodes
+     * which require this node, in preorder.
      * 
      * @param manager The service manager.
-     * @param document The top-level document.
+     * @param node The top-level document.
      * @return A document set.
      * @throws SiteException if an error occurs.
      */
-    public static DocumentSet getSubSite(ServiceManager manager, Document document)
-            throws SiteException {
-        DocumentSet set = null;
+    public static NodeSet getSubSite(ServiceManager manager, SiteNode node) throws SiteException {
         ServiceSelector selector = null;
         SiteManager siteManager = null;
+        SiteNode[] subsite;
         try {
             selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(document.getPublication()
+            siteManager = (SiteManager) selector.select(node.getStructure()
+                    .getPublication()
                     .getSiteManagerHint());
 
-            DocumentFactory map = document.getFactory();
-            SiteNode node = document.getLink().getNode();
-            set = getExistingDocuments(manager, map, node);
+            DocumentFactory map = node.getStructure().getPublication().getFactory();
+            Set nodes = new HashSet();
+            nodes.add(node);
 
             SiteNode[] requiringNodes = siteManager.getRequiringResources(map, node);
             for (int i = 0; i < requiringNodes.length; i++) {
-                set.addAll(getExistingDocuments(manager, map, requiringNodes[i]));
+                nodes.add(requiringNodes[i]);
             }
 
+            subsite = (SiteNode[]) nodes.toArray(new SiteNode[nodes.size()]);
         } catch (Exception e) {
             throw new SiteException(e);
         } finally {
@@ -134,7 +136,7 @@ public class SiteUtil {
                 manager.release(selector);
             }
         }
-        return set;
+        return new NodeSet(manager, subsite);
     }
 
     /**
@@ -164,50 +166,6 @@ public class SiteUtil {
             }
         }
         return set;
-    }
-
-    /**
-     * Sorts a document set in ascending order.
-     * 
-     * @param manager The service manager.
-     * @param set The set.
-     * @throws SiteException if an error occurs.
-     */
-    public static void sortAscending(ServiceManager manager, DocumentSet set) throws SiteException {
-
-        if (set.isEmpty()) {
-            return;
-        }
-
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
-        try {
-            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(set.getDocuments()[0].getPublication()
-                    .getSiteManagerHint());
-            siteManager.sortAscending(set);
-        } catch (Exception e) {
-            throw new SiteException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                manager.release(selector);
-            }
-        }
-    }
-
-    /**
-     * Sorts a document set in descending order.
-     * 
-     * @param manager The service manager.
-     * @param set The set.
-     * @throws SiteException if an error occurs.
-     */
-    public static void sortDescending(ServiceManager manager, DocumentSet set) throws SiteException {
-        SiteUtil.sortAscending(manager, set);
-        set.reverse();
     }
 
     /**
@@ -245,16 +203,20 @@ public class SiteUtil {
             siteManager = (SiteManager) selector.select(source.getPublication()
                     .getSiteManagerHint());
 
-            DocumentSet subSite = SiteUtil.getSubSite(manager, source);
-            Document[] docs = subSite.getDocuments();
-            for (int i = 0; i < docs.length; i++) {
-                DocumentLocator targetLoc = SiteUtil.getTransferedDocument(siteManager,
-                        docs[i],
-                        source,
-                        target,
-                        mode);
-                if (targetLoc != null) {
-                    map.put(docs[i], targetLoc);
+            NodeSet subSite = SiteUtil.getSubSite(manager, source.getLink().getNode());
+            for (NodeIterator i = subSite.ascending(); i.hasNext(); ) {
+                SiteNode node = i.next();
+                String[] languages = node.getLanguages();
+                for (int l = 0; l < languages.length; l++) {
+                    Document doc = node.getLink(languages[l]).getDocument();
+                    DocumentLocator targetLoc = SiteUtil.getTransferedDocument(siteManager,
+                            doc,
+                            source,
+                            target,
+                            mode);
+                    if (targetLoc != null) {
+                        map.put(doc, targetLoc);
+                    }
                 }
             }
 
@@ -332,15 +294,19 @@ public class SiteUtil {
             siteManager = (SiteManager) selector.select(source.getPublication()
                     .getSiteManagerHint());
 
-            DocumentSet subSite = SiteUtil.getSubSite(manager, source);
-            Document[] docs = subSite.getDocuments();
-            for (int i = 0; i < docs.length; i++) {
-                DocumentLocator target = SiteUtil.getTransferedDocument(siteManager,
-                        docs[i],
-                        targetArea,
-                        mode);
-                if (target != null) {
-                    map.put(docs[i], target);
+            NodeSet subsite = SiteUtil.getSubSite(manager, source.getLink().getNode());
+            for (NodeIterator i = subsite.ascending(); i.hasNext(); ) {
+                SiteNode node = i.next();
+                String[] langs = node.getLanguages();
+                for (int l = 0; l < langs.length; l++) {
+                    Document doc = node.getLink(langs[l]).getDocument();
+                    DocumentLocator target = SiteUtil.getTransferedDocument(siteManager,
+                            doc,
+                            targetArea,
+                            mode);
+                    if (target != null) {
+                        map.put(doc, target);
+                    }
                 }
             }
 
@@ -605,8 +571,8 @@ public class SiteUtil {
         }
     }
 
-    public static DocumentLocator getLocator(ServiceManager manager, DocumentFactory factory, String webappUrl)
-            throws SiteException {
+    public static DocumentLocator getLocator(ServiceManager manager, DocumentFactory factory,
+            String webappUrl) throws SiteException {
         URLInformation info = new URLInformation(webappUrl);
         DocumentBuilder builder = null;
         ServiceSelector selector = null;
