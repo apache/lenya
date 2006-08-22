@@ -21,6 +21,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentManager;
@@ -125,32 +126,40 @@ public abstract class MoveSubsite extends DocumentUsecase {
      */
     protected void doExecute() throws Exception {
 
-        String targetArea = getTargetArea();
+        String targetAreaName = getTargetArea();
         Document doc = getSourceDocument();
         Document[] sources = SiteUtil.getSubSite(this.manager, doc.getLink().getNode())
                 .getDocuments();
-        SiteStructure targetSite = doc.getPublication().getArea(targetArea).getSite();
+        Area targetArea = doc.getPublication().getArea(targetAreaName);
+        SiteStructure targetSite = targetArea.getSite();
 
-        DocumentLocator targetParent = doc.getLocator().getAreaVersion(targetArea);
-        while (!targetSite.contains(targetParent.getPath()) && !targetParent.getPath().equals("")) {
-            targetSite.add(targetParent.getPath());
+        DocumentLocator targetLoc = doc.getLocator().getAreaVersion(targetAreaName);
+        targetLoc = SiteUtil.getAvailableLocator(this.manager, getDocumentFactory(), targetLoc);
+
+        String[] steps = targetLoc.getPath().substring(1).split("/");
+        int s = 0;
+        String path = "";
+        while (s < steps.length) {
+            if (!targetSite.contains(path)) {
+                targetSite.add(path);
+            }
+            path += steps[s];
+            s++;
+        }
+
+        for (int i = 0; i < sources.length; i++) {
+            WorkflowUtil.invoke(this.manager,
+                    getSession(),
+                    getLogger(),
+                    sources[i],
+                    getEvent(),
+                    true);
         }
 
         DocumentManager docManager = null;
         try {
             docManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-
-            for (int i = 0; i < sources.length; i++) {
-                WorkflowUtil.invoke(this.manager,
-                        getSession(),
-                        getLogger(),
-                        sources[i],
-                        getEvent(),
-                        true);
-                docManager.copyToArea(sources[i], getTargetArea());
-                sources[i].getLink().delete();
-                docManager.delete(sources[i]);
-            }
+            docManager.moveAll(doc.area(), doc.getPath(), targetArea, targetLoc.getPath());
 
         } finally {
             if (docManager != null) {
@@ -158,7 +167,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
             }
         }
 
-        setTargetDocument(doc.getAreaVersion(targetArea));
+        setTargetDocument(doc.getAreaVersion(targetAreaName));
 
     }
 

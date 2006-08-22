@@ -52,6 +52,7 @@ public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInv
             resolver = (UsecaseResolver) this.manager.lookup(UsecaseResolver.ROLE);
             usecase = resolver.resolve(webappUrl, usecaseName);
 
+            usecase.setCommitEnabled(isCommitEnabled());
             usecase.setSourceURL(webappUrl);
             usecase.setName(usecaseName);
 
@@ -60,16 +61,16 @@ public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInv
             usecase.checkPreconditions();
 
             if (succeeded(PRECONDITIONS_FAILED, usecase)) {
-                
+
                 usecase.lockInvolvedObjects();
                 usecase.checkExecutionConditions();
 
                 if (succeeded(EXECUTION_CONDITIONS_FAILED, usecase)) {
                     usecase.execute();
-                    
+
                     if (succeeded(EXECUTION_FAILED, usecase)) {
                         usecase.checkPostconditions();
-                        
+
                         succeeded(POSTCONDITIONS_FAILED, usecase);
                     }
                 }
@@ -90,12 +91,16 @@ public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInv
             }
         }
     }
+    
+    protected boolean isCommitEnabled() {
+        return true;
+    }
 
     protected boolean succeeded(int result, Usecase usecase) {
-        
+
         this.errorMessages.addAll(usecase.getErrorMessages());
         this.infoMessages.addAll(usecase.getInfoMessages());
-        
+
         if (usecase.getErrorMessages().isEmpty()) {
             return true;
         } else {

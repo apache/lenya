@@ -88,9 +88,16 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
 
     protected RepositoryEvent createEvent(Document doc) {
         try {
-            return new RepositoryEvent(doc.getPublication().getId(), doc.getArea(),
-                    doc.getUUID(), doc.getLanguage(), doc.getResourceType(), doc
-                            .getCanonicalDocumentURL());
+            String url = null;
+            if (doc.hasLink()) {
+                url = doc.getCanonicalDocumentURL();
+            }
+            return new RepositoryEvent(doc.getPublication().getId(),
+                    doc.getArea(),
+                    doc.getUUID(),
+                    doc.getLanguage(),
+                    doc.getResourceType(),
+                    url);
         } catch (DocumentException e) {
             throw new RuntimeException(e);
         }

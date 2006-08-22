@@ -21,7 +21,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.avalon.framework.service.ServiceException;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 
@@ -32,18 +31,16 @@ public abstract class AbstractUsecaseTest extends AbstractAccessControlTest {
 
     /**
      * The test.
-     * @throws ServiceException
-     * @throws UsecaseException
-     * @throws AccessControlException
+     * @throws Exception
      */
-    public void testUsecase() throws ServiceException, UsecaseException, AccessControlException {
+    public void testUsecase() throws Exception {
 
         login();
         prepareUsecase();
 
         UsecaseInvoker invoker = null;
         try {
-            invoker = (UsecaseInvoker) getManager().lookup(UsecaseInvoker.ROLE);
+            invoker = (UsecaseInvoker) getManager().lookup(TestUsecaseInvoker.ROLE);
             invoker.invoke(getRequest().getPathInfo(), getUsecaseName(), getParameters());
 
             List errorMessages = invoker.getErrorMessages();
@@ -75,7 +72,7 @@ public abstract class AbstractUsecaseTest extends AbstractAccessControlTest {
         login("lenya");
     }
 
-    protected void prepareUsecase() {
+    protected void prepareUsecase() throws Exception {
     }
 
     protected Map getParameters() {
@@ -84,7 +81,7 @@ public abstract class AbstractUsecaseTest extends AbstractAccessControlTest {
 
     protected abstract String getUsecaseName();
 
-    protected void checkPostconditions() {
+    protected void checkPostconditions() throws Exception {
     }
 
 }

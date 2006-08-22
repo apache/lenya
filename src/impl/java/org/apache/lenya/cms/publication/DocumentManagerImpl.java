@@ -420,11 +420,21 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         for (int i = 0; i < languages.length; i++) {
             Link sourceLink = sourceNode.getLink(languages[i]);
             String label = sourceLink.getLabel();
-            Document doc = sourceLink.getDocument();
+            Document sourceDoc = sourceLink.getDocument();
+            
+            Document targetDoc;
+            if (sourceArea.getName().equals(targetArea.getName())) {
+                targetDoc = sourceDoc;
+            }
+            else {
+                targetDoc = addVersion(sourceDoc, targetArea.getName(), sourceDoc.getLanguage());
+                sourceDoc.delete();
+            }
+            
             sourceLink.delete();
-            Link link = targetArea.getSite().add(targetPath, doc);
+            Link link = targetArea.getSite().add(targetPath, targetDoc);
             link.setLabel(label);
-            Assert.isTrue("label set", doc.getLink().getLabel().equals(label));
+            Assert.isTrue("label set", targetDoc.getLink().getLabel().equals(label));
         }
         SiteNode targetNode = targetArea.getSite().getNode(targetPath);
         targetNode.setVisible(sourceNode.isVisible());

@@ -269,10 +269,12 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
             throw new UsecaseException(e);
         } finally {
             try {
-                if (getErrorMessages().isEmpty() && exception == null) {
-                    getSession().commit();
-                } else {
-                    getSession().rollback();
+                if (this.commitEnabled) {
+                    if (getErrorMessages().isEmpty() && exception == null) {
+                        getSession().commit();
+                    } else {
+                        getSession().rollback();
+                    }
                 }
             } catch (RepositoryException e1) {
                 getLogger().error("Exception during commit or rollback: ", e1);
@@ -778,6 +780,12 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
         this.session = session;
         Request request = ContextHelper.getRequest(this.context);
         request.setAttribute(org.apache.lenya.cms.repository.Session.class.getName(), this.session);
+    }
+    
+    private boolean commitEnabled = true;
+
+    public void setCommitEnabled(boolean enabled) {
+        this.commitEnabled = enabled;
     }
 
 }

@@ -251,14 +251,14 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      *      String, org.apache.lenya.cms.site.Label[], boolean, java.lang.String, java.lang.String,
      *      boolean, java.lang.String)
      */
-    public synchronized SiteTreeNode addNode(String parentid, String id, String uuid,
+    public synchronized SiteTreeNode addNode(String parentPath, String name, String uuid,
             boolean visibleInNav, String href, String suffix, boolean link, String refpath)
             throws SiteException {
 
-        Node parentNode = getNodeInternal(parentid);
+        Node parentNode = getNodeInternal(parentPath);
 
         if (parentNode == null) {
-            throw new SiteException("Parentid: " + parentid + " in " + this.area
+            throw new SiteException("Parent path: " + parentPath + " in " + this.area
                     + " tree not found");
         }
 
@@ -266,7 +266,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         getLogger().debug("VISIBLEINNAV IS: " + visibleInNav);
 
         // Check if child already exists
-        String path = parentid + "/" + id;
+        String path = parentPath + "/" + name;
         Node childNode = getNodeInternal(path);
 
         if (childNode != null) {
@@ -277,7 +277,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         // Create node
         NamespaceHelper helper = new NamespaceHelper(NAMESPACE_URI, "", this.document);
         Element child = helper.createElement(SiteTreeNodeImpl.NODE_NAME);
-        child.setAttribute(SiteTreeNodeImpl.ID_ATTRIBUTE_NAME, id);
+        child.setAttribute(SiteTreeNodeImpl.ID_ATTRIBUTE_NAME, name);
         if (uuid != null) {
             child.setAttribute(SiteTreeNodeImpl.UUID_ATTRIBUTE_NAME, uuid);
         }
