@@ -16,6 +16,7 @@
  */
 package org.apache.lenya.cms.publication;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -82,12 +83,12 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         return document;
     }
 
-    protected void copyMetaData(Document sourceDocument, Document document)
+    protected void copyMetaData(Document source, Document destination)
             throws PublicationException {
         try {
-            String[] uris = sourceDocument.getMetaDataNamespaceUris();
+            String[] uris = source.getMetaDataNamespaceUris();
             for (int i = 0; i < uris.length; i++) {
-                document.getMetaData(uris[i]).replaceBy(sourceDocument.getMetaData(uris[i]));
+                destination.getMetaData(uris[i]).replaceBy(source.getMetaData(uris[i]));
             }
         } catch (MetaDataException e) {
             throw new PublicationException(e);
@@ -336,6 +337,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         Document destinationDoc;
         if (sourceDoc.existsAreaVersion(destinationArea)) {
             destinationDoc = sourceDoc.getAreaVersion(destinationArea);
+            copyContent(sourceDoc, destinationDoc);
         } else {
             destinationDoc = addVersion(sourceDoc, destinationArea, language);
         }
@@ -352,7 +354,22 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             }
         }
 
-        copyResources(sourceDoc, destinationDoc);
+    }
+
+    /**
+     * Copies content, resources, and meta data.
+     * @param sourceDoc The source document.
+     * @param destinationDoc The destination document.
+     * @throws PublicationException if an error occurs.
+     */
+    protected void copyContent(Document sourceDoc, Document destinationDoc) throws PublicationException {
+        try {
+            SourceUtil.copy(this.manager, sourceDoc.getSourceURI(), destinationDoc.getSourceURI());
+            copyMetaData(sourceDoc, destinationDoc);
+            copyResources(sourceDoc, destinationDoc);
+        } catch (Exception e) {
+            throw new PublicationException(e);
+        }
     }
 
     /**
