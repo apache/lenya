@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   Copyright 1999-2004 The Apache Software Foundation
-
+  
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,16 +24,16 @@
 -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
-
-  <map:pipelines>
   
+  <map:pipelines>
+    
     <map:pipeline type="noncaching">
       <map:match pattern="i18n-catalogue/**">
         <map:select type="resource-exists">
-          <map:when test="fallback://resources/i18n/{1}">
-            <map:generate type="serverpages" src="fallback://resources/i18n/catalogue.xsp">
-              <map:parameter name="pub-catalogue-location" value="fallback://resources/i18n/"/>
-        	  <map:parameter name="catalogue-file" value="{1}"/>
+          <map:when test="fallback://lenya/resources/i18n/{1}">
+            <map:generate type="serverpages" src="fallback://lenya/resources/i18n/catalogue.xsp">
+              <map:parameter name="pub-catalogue-location" value="fallback://lenya/resources/i18n/"/>
+              <map:parameter name="catalogue-file" value="{1}"/>
             </map:generate>
             <map:transform type="xinclude"/>
             <map:serialize/>
@@ -46,5 +46,5 @@
       </map:match>
     </map:pipeline>  
   </map:pipelines>
-
+  
 </map:sitemap>
