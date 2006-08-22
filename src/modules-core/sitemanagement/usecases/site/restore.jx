@@ -30,7 +30,7 @@
           <i18n:text key="restore-doc"/>
           <i18n:param>
             <q>
-              <jx:out value="${usecase.getParameter('document').getId()}"/>
+              <jx:out value="${usecase.getParameter('document').getLink().getLabel()}"/>
             </q>
           </i18n:param>
         </i18n:translate>
@@ -49,7 +49,7 @@
                 <i18n:text key="restore-doc?"/>
                 <i18n:param>
                   <strong>
-                    <jx:out value="${usecase.getParameter('documentid')}"/>
+                    <jx:out value="${usecase.getParameter('document').getLink().getLabel()}"/>
                   </strong>
                 </i18n:param>
               </i18n:translate>

@@ -28,7 +28,7 @@
       <div class="lenya-box-title">
         <i18n:translate>
           <i18n:text key="delete-doc"/>
-          <i18n:param><q><jx:out value="${usecase.getParameter('document').getId()}"/></q></i18n:param>
+          <i18n:param><q><jx:out value="${usecase.getParameter('document').getLink().getLabel()}"/></q></i18n:param>
         </i18n:translate>
       </div>
       <div class="lenya-box-body">
@@ -45,7 +45,7 @@
               <td>
                 <i18n:translate>
                   <i18n:text key="delete-language-versions?"/>
-                  <i18n:param><strong><jx:out value="${usecase.getParameter('document').getId()}"/></strong></i18n:param>
+                  <i18n:param><strong><jx:out value="${usecase.getParameter('document').getLink().getLabel()}"/></strong></i18n:param>
                 </i18n:translate><br/><br/>
               </td>
             </tr>
