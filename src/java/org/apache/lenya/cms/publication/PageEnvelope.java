@@ -183,7 +183,7 @@ public class PageEnvelope {
     public PageEnvelope(ServiceManager manager, DocumentFactory map, String contextPath,
             String webappUrl, File servletContext, Publication publication)
             throws PageEnvelopeException {
-        this.identityMap = map;
+        this.factory = map;
         this.context = contextPath;
         this.webappUrl = webappUrl;
         this.publication = publication;
@@ -192,14 +192,14 @@ public class PageEnvelope {
 
     private String webappUrl;
 
-    private DocumentFactory identityMap;
+    private DocumentFactory factory;
 
     /**
-     * Returns the identity map.
-     * @return An identity map.
+     * Returns the document factory.
+     * @return A document factory.
      */
-    public DocumentFactory getIdentityMap() {
-        return this.identityMap;
+    public DocumentFactory getDocumentFactory() {
+        return this.factory;
     }
 
     /**
@@ -286,8 +286,8 @@ public class PageEnvelope {
         if (!documentChecked) {
             try {
                 documentChecked = true;
-                if (SiteUtil.isDocument(this.manager, getIdentityMap(), this.webappUrl)) {
-                    this.document = getIdentityMap().getFromURL(this.webappUrl);
+                if (SiteUtil.isDocument(this.manager, getDocumentFactory(), this.webappUrl)) {
+                    this.document = getDocumentFactory().getFromURL(this.webappUrl);
                 }
             } catch (final Exception e) {
                 throw new RuntimeException(e);

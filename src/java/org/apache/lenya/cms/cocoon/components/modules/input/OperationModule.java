@@ -51,7 +51,7 @@ public class OperationModule extends AbstractInputModule implements Serviceable,
 
     private Request request;
 
-    protected DocumentFactory getDocumentIdentityMap() {
+    protected DocumentFactory getDocumentFactory() {
         if (this.documentIdentityMap == null) {
             try {
                 Session session = RepositoryUtil.getSession(this.manager, this.request);
