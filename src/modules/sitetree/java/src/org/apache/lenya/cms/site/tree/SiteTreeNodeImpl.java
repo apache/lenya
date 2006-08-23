@@ -115,7 +115,15 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         if (element.hasAttribute(UUID_ATTRIBUTE_NAME)) {
             return element.getAttribute(UUID_ATTRIBUTE_NAME);
         } else {
-            return null;
+            if (getLanguages().length > 0) {
+                String path = getPath();
+                getLogger().warn("Assuming non-UUID content because no 'uuid' attribute is set"
+                        + " and the node contains links. Returning path [" + path + "] as UUID.");
+                return path;
+            }
+            else {
+                return null;
+            }
         }
     }
 
@@ -595,6 +603,5 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
     public void delete() {
         getTree().removeNode(getPath());
     }
-
 
 }
