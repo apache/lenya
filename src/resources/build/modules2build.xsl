@@ -282,7 +282,7 @@
         deprecation="${{deprecation}}"
         target="${{target.vm}}"
         nowarn="${{nowarn}}"
-        source="${{java.version}}">
+        source="${{src.java.version}}">
         <src path="{$src}/java/test"/>
         <classpath refid="module.test-classpath.{$id}"/>
       </javac>
