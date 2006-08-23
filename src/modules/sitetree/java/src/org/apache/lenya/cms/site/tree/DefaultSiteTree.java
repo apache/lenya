@@ -689,7 +689,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
 
         if (contains(path)) {
             SiteNode node = getNode(path);
-            if (node.getUuid() != null && !node.getUuid().equals(doc.getUUID())) {
+            if (node.getLanguages().length > 0 && !node.getUuid().equals(doc.getUUID())) {
                 throw new SiteException("Node for path [" + path + "] exists with different UUID!");
             }
         }
@@ -699,7 +699,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         SiteTreeLink label = new SiteTreeLink(doc.getFactory(), node, "", doc.getLanguage());
         node.addLabel(label);
 
-        if (node.getUuid() == null) {
+        if (node.getLanguages().length == 1) {
             node.setUUID(doc.getUUID());
         }
 
