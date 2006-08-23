@@ -82,7 +82,8 @@ public class MigrateUuidsTest extends AbstractAccessControlTest {
 
         for (int n = 0; n < nodes.length; n++) {
 
-            if (nodes[n].getUuid() == null) {
+            String uuid = nodes[n].getUuid();
+            if (uuid != null && uuid.startsWith("/")) {
                 String[] languages = nodes[n].getLanguages();
                 for (int l = 0; l < languages.length; l++) {
                     path2langs.put(nodes[n].getPath(), languages);
