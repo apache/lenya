@@ -63,15 +63,9 @@
   <map:pipelines>
     
     <map:pipeline type="noncaching">
-      
-      <map:match type="step" pattern="open">
-        
-        <!--+
-          | Check if BXE is installed 
-          +-->
-        <map:act type="resource-exists" src="fallback://lenya/modules/bxe/resources/bxe/bxeLoader.js">
-          
-          <map:act type="reserved-checkout">
+    
+      <map:match pattern="bxe.open">
+        <map:act type="reserved-checkout">
             <map:generate type="serverpages" src="fallback://lenya/content/rc/{exception}.xsp">
               <map:parameter name="user" value="{user}"/>
               <map:parameter name="filename" value="{filename}"/>
@@ -81,28 +75,29 @@
             <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
             <map:call resource="style-cms-page"/>
             <map:serialize />
-          </map:act>
-          
-          <map:aggregate element="bxe">
-            <map:part src="fallback://lenya/modules/bxe/resources/misc/index.xhtml"/>
-            <map:part src="fallback://lenya/modules/bxe/resources/misc/content-namespaces.xml"/>
-          </map:aggregate>
-          <map:transform src="fallback://lenya/modules/bxe/xslt/aggregate.xsl"/>
-          <map:transform src="fallback://lenya/modules/bxe/xslt/index-xhtml.xsl">
-            <map:parameter name="configfile" value="{request:requestURI}?lenya.module=bxe&amp;lenya.step=config"/>
-            <map:parameter name="context" value="{request:contextPath}"/>
-          </map:transform>
-          <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
-          <map:serialize type="xhtml"/>
-        </map:act>
-        
-        <!--+
-          | BXE is not installed - generate info page for the user 
-          +-->
-        <map:generate src="fallback://lenya/modules/bxe/resources/misc/download.xhtml"/>
-        <map:call resource="style-cms-page"/>
-        <map:serialize />
-        
+        </map:act>    
+        <map:generate type="jx" src="fallback://lenya/modules/bxe/usecases/bxe.jx"/>
+        <map:transform type="i18n">
+          <map:parameter name="locale" value="{request:locale}"/>
+        </map:transform>
+        <map:transform src="cocoon://lenya-screen.xsl"/>
+        <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
+        <map:serialize type="xhtml"/>
+      </map:match>
+      
+      <map:match pattern="bxe.close">
+        <map:act type="reserved-checkin">
+            <map:generate type="serverpages" src="fallback://lenya/content/rc/{exception}.xsp">
+              <map:parameter name="user" value="{user}"/>
+              <map:parameter name="filename" value="{filename}"/>
+              <map:parameter name="date" value="{date}"/>
+              <map:parameter name="message" value="{message}"/>
+            </map:generate>
+            <map:transform src="fallback://lenya/xslt/rc/rco-exception.xsl"/>
+            <map:call resource="style-cms-page"/>
+            <map:serialize />
+        </map:act>  
+        <map:redirect-to uri="{request:requestURI}"/>
       </map:match>
       
       <map:match pattern="image-upload-show" type="step">
@@ -175,7 +170,6 @@
               2. save the changed contents (by issuing a PUT to this URL)
             -->
             <map:parameter name="BX_xmlfile" value="{request:contextPath}/{../1}/webdav/{../3}.xml"/>
-            <!--<map:parameter name="BX_xmlfile" value="{request:requestURI}?lenya.module=bxe&amp;lenya.step=xml"/>-->
             <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
             
             <!-- Instead of an xsl we use the xhtml file to provide the basic layout
@@ -187,7 +181,7 @@
             <!-- The document is checked in when we exit from bx (in case of save&exit and in case of exit), so we use the usecase
               for the checkin while we redirect to the document
             -->
-            <map:parameter name="BX_exitdestination" value="{request:requestURI}?lenya.usecase=edit.bxe&amp;lenya.continuation={request-param:lenya.continuation}&amp;submit=Submit"/>
+            <map:parameter name="BX_exitdestination" value="{request:requestURI}?lenya.usecase=close.bxe"/>
             <map:parameter name="contextmenufile" value="fallback://lenya/modules/bxe/resources/misc/contextmenu.xml"/>
           </map:transform>
           <map:transform type="cinclude"/>
@@ -196,50 +190,6 @@
         
       </map:match>
       
-      <map:match pattern="*/**.html">
-        
-        <map:match type="step" pattern="xml">      
-          <!--+
-            | This step handles the exchange of XML contents between BXE and Lenya.
-            | When BXE sends a GET request, it is requesting the contents of the
-            | document. When BXE sends a PUT request, it is sending the contents
-            | back to Lenya.
-            +-->
-          <map:select type="request-method">
-            
-            <!--
-              This reads the data that BXE posts when the user saves changes,      
-              applies a transformation and provides the data as XML
-              TODO: document why the special transformation is needed, either here
-              or in the change-object-path-back.xsl stylesheet.
-            -->
-            <map:when test="PUT">
-              <map:call function="saveXML">
-                <map:parameter name="source" value="context://lenya/pubs/{page-envelope:publication-id}/work/bxe/content/{page-envelope:area}/{page-envelope:document-path}.tmp"/>
-              </map:call>
-            </map:when>
-            
-            <map:otherwise> <!-- GET -->
-              <map:generate src="lenya://lenya/pubs/{page-envelope:publication-id}/content/authoring/{page-envelope:document-path}"/>
-              <map:transform src="fallback://lenya/modules/bxe/xslt/change-object-path.xsl">
-                <map:parameter name="documentid" value="{page-envelope:document-id}"/>
-              </map:transform>
-              <map:serialize type="xml"/>
-            </map:otherwise>
-            
-          </map:select>
-        </map:match>
-        <!-- step xml -->
-        
-      </map:match> <!-- uri pattern -->
-      
-      <map:match pattern="saveXML">
-        <map:generate type="stream"/>
-        <map:transform src="fallback://lenya/modules/bxe/xslt/change-object-path-back.xsl">
-          <map:parameter name="documentid" value="{page-envelope:document-id}"/>
-        </map:transform>
-        <map:serialize type="xml"/>
-      </map:match>
     </map:pipeline>
     
   </map:pipelines>
