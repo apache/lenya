@@ -126,6 +126,7 @@ This sitemap creates default navigation components.
           <map:parameter name="area" value="{request-param:area}"/>
           <map:parameter name="path" value="{request-param:path}"/>
           <map:parameter name="initial" value="{request-param:initial}"/>
+          <map:parameter name="mimetype" value="{request-param:mimetype}"/>
         </map:generate>
         <!-- <map:call resource="i18n"/> -->
         <map:transform type="access-control-sitetree">

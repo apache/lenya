@@ -62,6 +62,11 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      * Parameter which decides if the initial tree with the root nodes is generated
      */
     protected boolean initialTree;
+    
+    /**
+     * Parameter which decides if the node mime types should be reported
+     */
+    protected boolean showType;
 
     /** FIXME: should pass this as a parameter */
     protected String[] areas = null;
@@ -74,6 +79,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
     protected static final String PARAM_AREA = "area";
     protected static final String PARAM_PATH = "path";
     protected static final String PARAM_INITIAL = "initial";
+    protected static final String PARAM_TYPE = "mimetype";
     protected static final String PARAM_AREAS = "areas";
 
     /** The URI of the namespace of this generator. */
@@ -99,6 +105,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
     protected static final String ATTR_SUFFIX = "suffix";
     protected static final String ATTR_HREF = "href";
     protected static final String ATTR_LANG = "lang";
+    protected static final String ATTR_TYPE = "mimetype";
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
@@ -121,6 +128,12 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
                     .booleanValue();
         } else {
             this.initialTree = false;
+        }
+        
+        if (par.isParameter(PARAM_TYPE)) {
+            this.showType = Boolean.valueOf(par.getParameter(PARAM_TYPE, null)).booleanValue();
+        } else {
+            this.showType = false;
         }
 
         if (par.isParameter(PARAM_AREAS)) {
@@ -233,7 +246,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      * @param nodes
      * @throws SAXException
      */
-    protected void addNodes(SiteTreeNode[] nodes) throws SAXException {
+    protected void addNodes(SiteTreeNode[] nodes) throws SAXException, SiteException {
         for (int i = 0; i < nodes.length; i++) {
             startNode(NODE_NODE, nodes[i]);
             addLabels(nodes[i]);
@@ -366,7 +379,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      * @param node The attributes are taken from this node
      * @throws SAXException if an error occurs while creating the node
      */
-    protected void startNode(String nodeName, SiteTreeNode node) throws SAXException {
+    protected void startNode(String nodeName, SiteTreeNode node) throws SAXException, SiteException {
         setNodeAttributes(node);
         this.contentHandler.startElement(URI, nodeName, PREFIX + ':' + nodeName, this.attributes);
     }
@@ -377,7 +390,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      * @param node
      * @throws SAXException if an error occurs while setting the attributes
      */
-    protected void setNodeAttributes(SiteTreeNode node) throws SAXException {
+    protected void setNodeAttributes(SiteTreeNode node) throws SAXException, SiteException {
         this.attributes.clear();
 
         String id = node.getName();
@@ -407,6 +420,18 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
         if (suffix != null)
             this.attributes.addAttribute("", ATTR_SUFFIX, ATTR_SUFFIX, "CDATA", suffix);
         this.attributes.addAttribute("", ATTR_FOLDER, ATTR_FOLDER, "CDATA", isFolder);
+        
+        if (this.showType) {
+            try {
+                String type = this.publication.getArea(this.area)
+                    .getDocument(node.getUuid(),this.publication.getDefaultLanguage())
+                    .getMimeType();
+                this.attributes.addAttribute("",ATTR_TYPE, ATTR_TYPE, "CDATA", type);
+            } catch (PublicationException e) {
+                throw new SiteException(e);
+            }
+        }
+            
     }
 
     /**

@@ -179,7 +179,11 @@ Apply nodes recursively
         </xsl:otherwise>
       </xsl:choose>
     </xsl:attribute>
-    
+	
+	<xsl:if test="@mimetype">
+	  <xsl:attribute name="mimetype"><xsl:value-of select="@mimetype"/></xsl:attribute>
+	</xsl:if>
+  
     <xsl:choose>
       <xsl:when test="tree:label[lang($existinglanguage)]">
         <xsl:apply-templates select="tree:label[lang($existinglanguage)]">
