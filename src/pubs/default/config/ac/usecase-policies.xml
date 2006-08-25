@@ -27,6 +27,10 @@
     <role id="admin"/>
     <role id="edit"/>
   </usecase>
+  <usecase id="close.bxe">
+    <role id="admin"/>
+    <role id="edit"/>
+  </usecase>  
   <usecase id="edit.insertAsset">
     <role id="admin"/>
     <role id="edit"/>
