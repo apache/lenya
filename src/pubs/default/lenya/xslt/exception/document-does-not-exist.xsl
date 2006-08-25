@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="iso-8859-1"?>
 <!--
   Copyright 1999-2004 The Apache Software Foundation
-
+  
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -23,7 +23,7 @@
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
   >
   
-  <xsl:param name="documentid"/>
+  <xsl:param name="path"/>
   <xsl:param name="documenturl"/>
   <xsl:param name="area"/>
   
@@ -39,16 +39,17 @@
               <i18n:translate>
                 <i18n:text i18n:key="error-document-existance" />
                 <i18n:param>'<xsl:value-of select="$documenturl"/>'</i18n:param>
-                <i18n:param>'<xsl:value-of select="$documentid"/>'</i18n:param>
+                <i18n:param>'<xsl:value-of select="$path"/>'</i18n:param>
               </i18n:translate>
             </p>
             <xsl:if test="$area = 'authoring'">
               <p>
-                <a href="?lenya.usecase=site.create&amp;documentId={$documentid}"><i18n:text>create-document</i18n:text></a>
+                <a href="?lenya.usecase=site.create&amp;path={$path}"><i18n:text>create-document</i18n:text></a>
               </p>
-<p>
-<b>NOTE:</b> Please make sure that your content repository is configured correctly within (local.)publication.xconf
-</p>
+              <p>
+                <strong>NOTE:</strong> Please make sure that your content repository
+                is configured correctly within (local.)publication.xconf.
+              </p>
             </xsl:if>
           </div>
         </div>

@@ -48,24 +48,23 @@ import org.apache.lenya.cms.usecase.AbstractUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 
 /**
- * Abstract superclass for usecases to create a document.
+ * <p>Abstract superclass for usecases to create a document.</p>
+ * <p>You can pass the following parameters into the usecase:</p>
+ * <ul>
+ * <li><strong>path</strong> - the path of the document to create (optional)</li>
+ * </ul>
  * 
  * @version $Id$
  */
 public abstract class Create extends AbstractUsecase {
 
     protected static final String RESOURCE_TYPES = "resourceTypes";
-
     protected static final String LANGUAGE = "language";
-
     protected static final String LANGUAGES = "languages";
-
-    protected static final String DOCUMENT_ID = "documentId";
-
+    protected static final String PATH = "path";
+    protected static final String NODE_NAME = "nodeName";
     protected static final String VISIBLEINNAV = "visibleInNav";
-
     protected static final String SAMPLE = "sample";
-
     protected static final String SAMPLES = "samples";
 
     /**
@@ -91,10 +90,10 @@ public abstract class Create extends AbstractUsecase {
      */
     protected Node[] getNodesToLock() throws UsecaseException {
         try {
-            SiteStructure structure = SiteUtil.getSiteStructure(this.manager, getSourceDocument());
+            SiteStructure structure = getPublication().getArea(getArea()).getSite();
             Node[] nodes = { structure.getRepositoryNode() };
             return nodes;
-        } catch (SiteException e) {
+        } catch (Exception e) {
             throw new UsecaseException(e);
         }
     }

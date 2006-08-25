@@ -32,7 +32,7 @@ import org.apache.lenya.cms.publication.Publication;
  */
 public class CreateDocument extends Create {
 
-    protected static final String PARENT_PATH = "parentId";
+    protected static final String PARENT_PATH = "parentPath";
 
     protected static final String DOCUMENT_TYPE = "doctype";
 
@@ -41,7 +41,7 @@ public class CreateDocument extends Create {
     protected static final String RELATION_CHILD = "child";
     protected static final String RELATION_BEFORE = "sibling before";
     protected static final String RELATION_AFTER = "sibling after";
-    protected static final String DOCUMENT_ID_PROVIDED = "documentIdProvided";
+    protected static final String PATH_PROVIDED = "pathProvided";
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
@@ -58,17 +58,21 @@ public class CreateDocument extends Create {
             } catch (DocumentException e) {
                 throw new RuntimeException(e);
             }
-            String[] languages = parent.getPublication().getLanguages();
-            setParameter(LANGUAGES, languages);
         }
 
+        String[] languages = getPublication().getLanguages();
+        if (languages.length == 0){
+            addErrorMessage("The publication doesn't contain any languages!");
+        }
+        setParameter(LANGUAGES, languages);
+        
         String[] relations = { RELATION_CHILD, RELATION_AFTER };
         setParameter(RELATIONS, relations);
         setParameter(RELATION, RELATION_CHILD);
 
-        String documentId = getParameterAsString(DOCUMENT_ID);
-        boolean provided = documentId != null && !documentId.equals("");
-        setParameter(DOCUMENT_ID_PROVIDED, Boolean.valueOf(provided));
+        String path = getParameterAsString(PATH);
+        boolean provided = path != null && !path.equals("");
+        setParameter(PATH_PROVIDED, Boolean.valueOf(provided));
     }
 
     /**
@@ -85,33 +89,29 @@ public class CreateDocument extends Create {
     protected void doCheckExecutionConditions() throws Exception {
         super.doCheckExecutionConditions();
 
-        String documentName = getParameterAsString(DOCUMENT_ID);
-        String language = getParameterAsString(LANGUAGE);
+        String nodeName = getParameterAsString(NODE_NAME);
         String relation = getParameterAsString(RELATION);
 
         if (!Arrays.asList(getSupportedRelations()).contains(relation)) {
             addErrorMessage("The relation '" + relation + "' is not supported.");
         }
+        
+        Publication pub = getPublication();
 
         ServiceSelector selector = null;
         DocumentBuilder builder = null;
         try {
             selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
-            String hint = getSourceDocument().getPublication().getDocumentBuilderHint();
+            String hint = pub.getDocumentBuilderHint();
             builder = (DocumentBuilder) selector.select(hint);
 
-            boolean provided = getParameterAsBoolean(DOCUMENT_ID_PROVIDED, false);
-            if (!provided && !builder.isValidDocumentName(documentName)) {
+            boolean provided = getParameterAsBoolean(PATH_PROVIDED, false);
+            if (!provided && !builder.isValidDocumentName(nodeName)) {
                 addErrorMessage("The document ID may not contain any special characters.");
             } else {
-                Publication publication = getSourceDocument().getPublication();
-                String newDocumentId = getNewDocumentPath();
-                Document document = getSourceDocument().getFactory().get(publication,
-                        getSourceDocument().getArea(),
-                        newDocumentId,
-                        language);
-                if (document.exists()) {
-                    addErrorMessage("The document with ID " + newDocumentId + " already exists.");
+                String newPath = getNewDocumentPath();
+                if (pub.getArea(getArea()).getSite().contains(newPath)) {
+                    addErrorMessage("The document with path " + newPath + " already exists.");
                 }
             }
         } finally {
@@ -128,14 +128,14 @@ public class CreateDocument extends Create {
      * @see Create#getNewDocumentName()
      */
     protected String getNewDocumentName() {
-        final String documentId = getParameterAsString(DOCUMENT_ID);
-        String documentName;
-        if (getParameterAsBoolean(DOCUMENT_ID_PROVIDED, false)) {
-            documentName = documentId.substring(documentId.lastIndexOf("/") + 1);
+        String nodeName;
+        if (getParameterAsBoolean(PATH_PROVIDED, false)) {
+            final String path = getParameterAsString(PATH);
+            nodeName = path.substring(path.lastIndexOf("/") + 1);
         } else {
-            documentName = documentId;
+            nodeName = getParameterAsString(NODE_NAME);
         }
-        return documentName;
+        return nodeName;
     }
 
     /**
@@ -149,8 +149,8 @@ public class CreateDocument extends Create {
      * @see Create#getNewDocumentPath()
      */
     protected String getNewDocumentPath() {
-        if (getParameterAsBoolean(DOCUMENT_ID_PROVIDED, false)) {
-            return getParameterAsString(DOCUMENT_ID);
+        if (getParameterAsBoolean(PATH_PROVIDED, false)) {
+            return getParameterAsString(PATH);
         } else {
             String relation = getRelation();
             DocumentLocator sourceLoc = getSourceDocument().getLocator();
@@ -170,7 +170,7 @@ public class CreateDocument extends Create {
     protected String getDocumentTypeName() {
         return getParameterAsString(DOCUMENT_TYPE);
     }
-    
+
     protected String getSourceExtension() {
         return "xml";
     }

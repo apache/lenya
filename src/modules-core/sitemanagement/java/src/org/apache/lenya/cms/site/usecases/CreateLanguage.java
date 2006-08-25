@@ -84,8 +84,8 @@ public class CreateLanguage extends Create {
 
         Document source = getSourceDocument();
         if (source != null) {
-            setParameter(DOCUMENT_ID, source.getUUID());
             try {
+                setParameter(PATH, source.getPath());
                 List nonExistingLanguages = getNonExistingLanguages();
                 setParameter(LANGUAGES, nonExistingLanguages
                         .toArray(new String[nonExistingLanguages.size()]));

@@ -27,15 +27,21 @@ import java.util.Map;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.cocoon.environment.ObjectModelHelper;
+import org.apache.cocoon.environment.Request;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.PageEnvelope;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourceType;
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.SiteUtil;
+import org.apache.lenya.util.ServletHelper;
 
 /**
- * Input module wrapping the page envelope. This module provides publication
- * related information such as document-id, area, publication-id.
+ * Input module wrapping the page envelope. This module provides publication related information
+ * such as document-id, area, publication-id.
  * 
  * @see org.apache.lenya.cms.publication.PageEnvelope
  * @deprecated use DocumentInfoModule instead.
@@ -46,12 +52,11 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
-     *      org.apache.avalon.framework.configuration.Configuration,
-     *      java.util.Map)
+     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object getAttribute(final String attributeName, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
-        
+
         final String name = getAttributeName(attributeName);
 
         if (!Arrays.asList(PageEnvelope.PARAMETER_NAMES).contains(name)) {
@@ -76,6 +81,8 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
                 value = envelope.getPublication().getDefaultLanguage();
             } else if (name.equals(PageEnvelope.BREADCRUMB_PREFIX)) {
                 value = envelope.getPublication().getBreadcrumbPrefix();
+            } else if (name.equals(PageEnvelope.DOCUMENT_PATH)) {
+                value = getPath(envelope, objectModel);
             }
 
             Document document = envelope.getDocument();
@@ -83,6 +90,9 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
                 if (name.equals(PageEnvelope.DOCUMENT)) {
                     value = document;
                 } else if (name.equals(PageEnvelope.DOCUMENT_ID)) {
+                    getLogger().warn(
+                            "This attribute is deprecated."
+                                    + " Use document-path or document-uuid instead!");
                     value = document.getId();
                 } else if (name.equals(PageEnvelope.DOCUMENT_PARENT)) {
                     value = document.getLocator().getParent().getPath();
@@ -94,8 +104,6 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
                     value = document.getCanonicalDocumentURL();
                 } else if (name.equals(PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE)) {
                     value = document.getCanonicalWebappURL();
-                } else if (name.equals(PageEnvelope.DOCUMENT_PATH)) {
-                    value = document.getLocator().getPath();
                 } else if (name.equals(PageEnvelope.DOCUMENT_FILE)) {
                     value = document.getFile();
                 } else if (name.equals(PageEnvelope.DOCUMENT_EXTENSION)) {
@@ -117,13 +125,12 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
                     ResourceType resourceType = document.getResourceType();
                     if (resourceType == null) {
                         value = null;
-                    }
-                    else {
+                    } else {
                         value = resourceType.getName();
                     }
                 }
             }
-        } catch (final DocumentException e) {
+        } catch (final Exception e) {
             throw new ConfigurationException("Getting attribute for name [" + name + "] failed: ",
                     e);
         }
@@ -133,6 +140,21 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
         }
 
         return value;
+    }
+
+    protected String getPath(PageEnvelope envelope, Map objectModel) throws SiteException {
+        String path;
+        Document doc = envelope.getDocument();
+        if (doc == null) {
+            Publication pub = envelope.getPublication();
+            Request request = ObjectModelHelper.getRequest(objectModel);
+            String url = ServletHelper.getWebappURI(request);
+            DocumentLocator loc = SiteUtil.getLocator(this.manager, pub.getFactory(), url);
+            path = loc.getPath();
+        } else {
+            path = doc.getLocator().getPath();
+        }
+        return path;
     }
 
     /**
@@ -151,8 +173,7 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String,
-     *      org.apache.avalon.framework.configuration.Configuration,
-     *      java.util.Map)
+     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
     public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
