@@ -66,6 +66,9 @@
     <copy todir="${test.pub.dir}">
       <fileset dir="${build.webapp}/lenya/pubs/${test.pub.source.id}"/>
     </copy>
+    <replace encoding="utf-8"
+      file="${build.webapp}/lenya/pubs/${test.pub.id}/publication.xml"
+      token="Default Publication" value="Test Publication"/>
   </target>
   
   <!-- prepares the tests. -->
