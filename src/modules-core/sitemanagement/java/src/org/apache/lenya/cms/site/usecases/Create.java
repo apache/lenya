@@ -228,19 +228,15 @@ public abstract class Create extends AbstractUsecase {
             throw new IllegalArgumentException("parameter document may not be null");
 
         MetaData dcMetaData = document.getMetaData(DublinCore.DC_NAMESPACE);
+        String[] dcKeys = dcMetaData.getAvailableKeys();
 
-        dcMetaData.setValue(DublinCore.ELEMENT_TITLE,
-                getParameterAsString(DublinCore.ELEMENT_TITLE));
-        dcMetaData.setValue(DublinCore.ELEMENT_CREATOR,
-                getParameterAsString(DublinCore.ELEMENT_CREATOR));
-        dcMetaData.setValue(DublinCore.ELEMENT_PUBLISHER,
-                getParameterAsString(DublinCore.ELEMENT_PUBLISHER));
-        dcMetaData.setValue(DublinCore.ELEMENT_SUBJECT,
-                getParameterAsString(DublinCore.ELEMENT_SUBJECT));
-        dcMetaData.setValue(DublinCore.ELEMENT_DATE, getParameterAsString(DublinCore.ELEMENT_DATE));
-        dcMetaData.setValue(DublinCore.ELEMENT_RIGHTS,
-                getParameterAsString(DublinCore.ELEMENT_RIGHTS));
-        dcMetaData.setValue(DublinCore.ELEMENT_LANGUAGE, getParameterAsString(LANGUAGE));
+        for (int i=0; i < dcKeys.length; i++) {
+            String param = getParameterAsString(dcKeys[i], null);
+            if (param != null) {
+                dcMetaData.setValue(dcKeys[i], param);
+            }
+        }
+
     }
 
     /**
