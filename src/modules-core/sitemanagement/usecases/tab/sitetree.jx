@@ -30,17 +30,26 @@
   <div id="lenya-info-treecanvas">
 
     <div class="lenya-tabs">
-      <jx:forEach var="language" items="${document.getLanguages()}">
-        <jx:set var="languageVersion"
-          value="${document.getFactory().getLanguageVersion(document, language)}"/>
-        <jx:set var="languageUrl"
-          value="${request.contextPath + '/' + publicationId + '/' + area + languageVersion.getCanonicalDocumentURL()}"/>
+      <jx:forEach var="language" items="${document.getPublication().getLanguages()}">
         <jx:choose>
-          <jx:when test="${language.equals(document.getLanguage())}">
-            <a id="${language}" class="lenya-tablink-active" href="${languageUrl}?lenya.usecase=${usecase.getName()}"><jx:out value="${language}"/></a>
+          <jx:when test="${document.existsTranslation(language)}">
+            <jx:set var="languageVersion"
+              value="${document.getFactory().getLanguageVersion(document, language)}"/>
+            <jx:set var="languageUrl"
+              value="${request.contextPath + '/' + publicationId + '/' + area + languageVersion.getCanonicalDocumentURL()}"/>
+            <jx:choose>
+              <jx:when test="${language.equals(document.getLanguage())}">
+                <a id="${language}" class="lenya-tablink-active" href="${languageUrl}?lenya.usecase=${usecase.getName()}"><jx:out value="${language}"/></a>
+              </jx:when>
+              <jx:otherwise>
+                <a id="${language}" class="lenya-tablink" href="${languageUrl}?lenya.usecase=${usecase.getName()}"><jx:out value="${language}"/></a>
+              </jx:otherwise>
+            </jx:choose>
           </jx:when>
           <jx:otherwise>
-            <a id="${language}" class="lenya-tablink" href="${languageUrl}?lenya.usecase=${usecase.getName()}"><jx:out value="${language}"/></a>
+            <a id="${language}" class="lenya-tablink" title="This language version doesn't exist.">
+              <jx:out value="${language}"/>
+            </a>
           </jx:otherwise>
         </jx:choose>
       </jx:forEach>

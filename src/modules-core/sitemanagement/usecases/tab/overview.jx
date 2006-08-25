@@ -61,14 +61,40 @@
                 <i18n:text><jx:out value="${usecase.getParameter('isLive')}"/></i18n:text>
               </td>
             </tr>
+            <jx:set var="document" value="${usecase.getParameter('document')}"/>
             <tr>
               <td class="lenya-entry-caption"><i18n:text>Available Languages</i18n:text>:</td>
               <td>
                 <jx:forEach var="language" items="${usecase.getParameter('languages')}">
-                  <jx:out value="${language}"/>
+                  <jx:choose>
+                    <jx:when test="${language.equals(document.getLanguage())}">
+                      <jx:out value="${language}"/>
+                    </jx:when>
+                    <jx:otherwise>
+                      <jx:set var="translation" value="${document.getTranslation(language)}"/>
+                      <a href="${request.contextPath}${translation.getCanonicalWebappURL()}?lenya.usecase=tab.overview">
+                        <jx:out value="${language}"/></a>
+                    </jx:otherwise>
+                  </jx:choose>
                 </jx:forEach>
               </td>
             </tr>
+            <jx:set var="docLanguages" value="${document.getLanguages().size()}"/>
+            <jx:set var="pubLanguages" value="${document.getPublication().getLanguages().size()}"/>
+            <jx:if test="${docLanguages lt pubLanguages}">
+              <tr>
+                <td class="lenya-entry-caption"><i18n:text>Missing Languages<br/> (click to create)</i18n:text>:</td>
+                <td>
+                  <jx:forEach var="language" items="${document.getPublication().getLanguages()}">
+                    <jx:if test="${!document.existsTranslation(language)}">
+                      <a href="?lenya.usecase=site.createLanguage&amp;lenya.exitUsecase=tab.overview&amp;language=${language}">
+                        <jx:out value="${language}"/>
+                      </a>
+                    </jx:if>
+                  </jx:forEach>
+                </td>
+              </tr>
+            </jx:if>
             <tr>
               <td class="lenya-entry-caption"><i18n:text>Last modified</i18n:text>:</td>
               <td>
