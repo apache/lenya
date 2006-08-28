@@ -268,17 +268,6 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         this.extension = _extension;
     }
 
-    private String documentURL;
-
-    /**
-     * Sets the document URL.
-     * @param url The document URL (without publication ID and area).
-     */
-    public void setDocumentURL(String url) {
-        assert url != null;
-        this.documentURL = url;
-    }
-
     /**
      * @see org.apache.lenya.cms.publication.Document#exists()
      */
@@ -370,27 +359,24 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.cms.publication.Document#getCanonicalDocumentURL()
      */
     public String getCanonicalDocumentURL() {
-        if (this.documentURL == null) {
-            DocumentBuilder builder = null;
-            ServiceSelector selector = null;
-            try {
-                selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
-                builder = (DocumentBuilder) selector.select(getPublication().getDocumentBuilderHint());
-                String webappUrl = builder.buildCanonicalUrl(getFactory(), getLocator());
-                String prefix = "/" + getPublication().getId() + "/" + getArea();
-                this.documentURL = webappUrl.substring(prefix.length());
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            } finally {
-                if (selector != null) {
-                    if (builder != null) {
-                        selector.release(builder);
-                    }
-                    this.manager.release(selector);
+        DocumentBuilder builder = null;
+        ServiceSelector selector = null;
+        try {
+            selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
+            builder = (DocumentBuilder) selector.select(getPublication().getDocumentBuilderHint());
+            String webappUrl = builder.buildCanonicalUrl(getFactory(), getLocator());
+            String prefix = "/" + getPublication().getId() + "/" + getArea();
+            return webappUrl.substring(prefix.length());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (selector != null) {
+                if (builder != null) {
+                    selector.release(builder);
                 }
+                this.manager.release(selector);
             }
         }
-        return this.documentURL;
     }
 
     /**

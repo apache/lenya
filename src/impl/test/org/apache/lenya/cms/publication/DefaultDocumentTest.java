@@ -85,7 +85,6 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
         DocumentIdentifier id = new DocumentIdentifier(pub, testSet.getArea(), uuid, testSet
                 .getLanguage());
         DocumentImpl document = new DocumentImpl(getManager(), getFactory(), id, getLogger());
-        document.setDocumentURL(testSet.getUrl());
         document.setExtension(testSet.getExtension());
 
         return document;
