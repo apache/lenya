@@ -32,6 +32,7 @@ import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.util.Assert;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
+import org.w3c.dom.DOMException;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
@@ -198,23 +199,29 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         } else {
             // this node doesn't contain this label
 
-            NodeList children = this.node.getChildNodes();
+            try {
+                NodeList children = this.node.getChildNodes();
 
-            for (int i = 0; i < children.getLength(); i++) {
-                Node child = children.item(i);
+                for (int i = 0; i < children.getLength(); i++) {
+                    Node child = children.item(i);
 
-                if ((child.getNodeType() == Node.ELEMENT_NODE)
-                        && child.getNodeName().equals(LABEL_NAME)) {
+                    if ((child.getNodeType() == Node.ELEMENT_NODE)
+                            && child.getNodeName().equals(LABEL_NAME)) {
 
-                    Node languageAttribute = child.getAttributes()
-                            .getNamedItem(LANGUAGE_ATTRIBUTE_NAME);
+                        Node languageAttribute = child.getAttributes()
+                                .getNamedItem(LANGUAGE_ATTRIBUTE_NAME);
 
-                    if (languageAttribute != null
-                            && languageAttribute.getNodeValue().equals(language)) {
-                        this.node.removeChild(child);
-                        break;
+                        if (languageAttribute != null
+                                && languageAttribute.getNodeValue().equals(language)) {
+                            this.node.removeChild(child);
+                            getTree().save();
+                            break;
+                        }
                     }
                 }
+            } catch (SiteException e) {
+                throw new RuntimeException("could not save sitetree after deleting label of " 
+                        + this + " [" + language + "]");
             }
         }
     }
