@@ -30,7 +30,6 @@ import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.cms.site.SiteUtil;
 
 /**
  * Resource wrapper test.
@@ -85,7 +84,9 @@ public class ResourceWrapperTest extends AbstractAccessControlTest {
      * @param factory
      * @param pub
      * @param path
-     * @return
+     * @param manager 
+     * @param logger 
+     * @return A document.
      * @throws ServiceException
      * @throws DocumentBuildException
      * @throws PublicationException
@@ -113,8 +114,7 @@ public class ResourceWrapperTest extends AbstractAccessControlTest {
             DocumentLocator loc = DocumentLocator.getLocator(pub.getId(),
                     Publication.AUTHORING_AREA, path, pub.getDefaultLanguage());
 
-            SiteUtil.getSiteStructure(manager, factory, pub, Publication.AUTHORING_AREA)
-                    .getRepositoryNode().lock();
+            pub.getArea(Publication.AUTHORING_AREA).getSite().getRepositoryNode().lock();
 
             selector = (ServiceSelector) manager.lookup(ResourceType.ROLE + "Selector");
             resourceType = (ResourceType) selector.select("resource");

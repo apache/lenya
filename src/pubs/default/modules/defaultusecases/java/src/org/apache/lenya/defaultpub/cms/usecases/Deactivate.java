@@ -107,7 +107,7 @@ public class Deactivate extends DocumentUsecase {
                 nodes.addAll(AssetUtil.getAssetNodes(documents[i], this.manager, getLogger()));
             }
 
-            nodes.add(SiteUtil.getSiteStructure(this.manager, liveDoc).getRepositoryNode());
+            nodes.add(liveDoc.area().getSite().getRepositoryNode());
             return (org.apache.lenya.cms.repository.Node[]) nodes.toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
 
         } catch (Exception e) {

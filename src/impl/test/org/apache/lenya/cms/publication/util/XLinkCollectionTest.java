@@ -46,16 +46,11 @@ public class XLinkCollectionTest extends AbstractAccessControlTest {
         DocumentFactory map = DocumentUtil.createDocumentFactory(getManager(), session);
 
         Publication pub = getPublication("test");
-        DocumentIdentifier identifier = new DocumentIdentifier(pub,
-                Publication.AUTHORING_AREA,
-                "12345",
-                "en");
+        DocumentIdentifier identifier = new DocumentIdentifier(pub, Publication.AUTHORING_AREA,
+                "12345", "en");
         XlinkCollection collection = new XlinkCollection(getManager(), map, identifier, getLogger());
 
-        SiteStructure structure = SiteUtil.getSiteStructure(getManager(),
-                map,
-                pub,
-                identifier.getArea());
+        SiteStructure structure = pub.getArea(identifier.getArea()).getSite();
         structure.getRepositoryNode().lock();
 
         SiteManager siteManager = null;

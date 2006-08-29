@@ -97,11 +97,9 @@ public class Publish extends DocumentUsecase {
                 nodes.add(docs[i].getRepositoryNode());
             }
 
-            nodes.add(SiteUtil.getSiteStructure(this.manager,
-                    getDocumentFactory(),
-                    doc.getPublication(),
-                    Publication.LIVE_AREA).getRepositoryNode());
-            return (org.apache.lenya.cms.repository.Node[]) nodes.toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
+            nodes.add(doc.area().getSite().getRepositoryNode());
+            return (org.apache.lenya.cms.repository.Node[]) nodes
+                    .toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
 
         } catch (Exception e) {
             throw new UsecaseException(e);
@@ -126,11 +124,8 @@ public class Publish extends DocumentUsecase {
                 return;
             }
 
-            if (!WorkflowUtil.canInvoke(this.manager,
-                    getSession(),
-                    getLogger(),
-                    getSourceDocument(),
-                    event)) {
+            if (!WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(),
+                    getSourceDocument(), event)) {
                 setParameter(ALLOW_SINGLE_DOCUMENT, Boolean.toString(false));
                 addInfoMessage("The single document cannot be published because the workflow event cannot be invoked.");
             } else {
@@ -151,9 +146,10 @@ public class Publish extends DocumentUsecase {
                 siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
 
                 if (!liveSite.contains(document.getPath())) {
-                    DocumentLocator liveLoc = document.getLocator()
-                            .getAreaVersion(Publication.LIVE_AREA);
-                    DocumentLocator[] requiredNodes = siteManager.getRequiredResources(map, liveLoc);
+                    DocumentLocator liveLoc = document.getLocator().getAreaVersion(
+                            Publication.LIVE_AREA);
+                    DocumentLocator[] requiredNodes = siteManager
+                            .getRequiredResources(map, liveLoc);
                     for (int i = 0; i < requiredNodes.length; i++) {
 
                         String path = requiredNodes[i].getPath();
@@ -237,10 +233,7 @@ public class Publish extends DocumentUsecase {
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             documentManager.copyToArea(authoringDocument, Publication.LIVE_AREA);
-            WorkflowUtil.invoke(this.manager,
-                    getSession(),
-                    getLogger(),
-                    authoringDocument,
+            WorkflowUtil.invoke(this.manager, getSession(), getLogger(), authoringDocument,
                     getEvent());
 
             boolean notify = Boolean.valueOf(getBooleanCheckboxParameter(SEND_NOTIFICATION))
@@ -277,9 +270,7 @@ public class Publish extends DocumentUsecase {
             url = serverUrl + request.getContextPath() + webappUrl;
         }
         String[] params = { url };
-        Message message = new Message(MESSAGE_SUBJECT,
-                new String[0],
-                MESSAGE_DOCUMENT_PUBLISHED,
+        Message message = new Message(MESSAGE_SUBJECT, new String[0], MESSAGE_DOCUMENT_PUBLISHED,
                 params);
 
         NotificationUtil.notify(this.manager, recipients, sender, message);
@@ -342,10 +333,7 @@ public class Publish extends DocumentUsecase {
         try {
             for (int i = 0; i < languages.length; i++) {
                 Document version = node.getLink(languages[i]).getDocument();
-                if (WorkflowUtil.canInvoke(this.manager,
-                        getSession(),
-                        getLogger(),
-                        version,
+                if (WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), version,
                         getEvent())) {
                     publish(version);
                 }

@@ -74,7 +74,7 @@ public class Publish extends DocumentUsecase {
                 nodes.add(documents[i].getRepositoryNode());
             }
 
-            nodes.add(SiteUtil.getSiteStructure(this.manager, liveDoc).getRepositoryNode());
+            nodes.add(liveDoc.area().getSite().getRepositoryNode());
             return (Node[]) nodes.toArray(new Node[nodes.size()]);
 
         } catch (Exception e) {

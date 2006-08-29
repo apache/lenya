@@ -194,7 +194,7 @@ public class Put extends CreateDocument {
                 nodes.add(documents[i].getRepositoryNode());
             }
 
-            SiteStructure structure = SiteUtil.getSiteStructure(this.manager, getSourceDocument());
+            SiteStructure structure = getSourceDocument().area().getSite();
             nodes.add(structure.getRepositoryNode());
             return (Node[]) nodes.toArray(new Node[nodes.size()]);
 

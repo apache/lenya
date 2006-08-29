@@ -22,7 +22,6 @@ import java.util.List;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
@@ -47,8 +46,7 @@ public class Delete extends DocumentUsecase {
                 addErrorMessage("This usecase can only be invoked from the authoring area.");
                 return;
             }
-            Document liveDocument = getSourceDocument().getFactory()
-            .getAreaVersion(getSourceDocument(), Publication.LIVE_AREA);
+            Document liveDocument = getSourceDocument().getAreaVersion(Publication.LIVE_AREA);
             if (liveDocument.exists()) {
                 addErrorMessage("The document cannot be deleted because it's Live, deactivate it first");
                 return;
@@ -72,7 +70,7 @@ public class Delete extends DocumentUsecase {
             List nodes = new ArrayList();
             Document doc = getSourceDocument();           
             nodes.add(doc.getRepositoryNode());            
-            nodes.add(SiteUtil.getSiteStructure(this.manager, doc).getRepositoryNode());            
+            nodes.add(doc.area().getSite().getRepositoryNode());            
             return (org.apache.lenya.cms.repository.Node[]) nodes.toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);            
         } catch (Exception e) {
             throw new UsecaseException(e);
@@ -90,8 +88,7 @@ public class Delete extends DocumentUsecase {
 
     /**
      * Deletes a document.
-     * 
-     * @param authoringDocument The authoring document.
+     * @param document The document to delete.
      */
     protected void delete(Document document) {
         DocumentManager documentManager = null;

@@ -19,10 +19,8 @@ package org.apache.lenya.cms.site.usecases;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteStructure;
-import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
@@ -94,14 +92,9 @@ public class Nudge extends DocumentUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
     protected Node[] getNodesToLock() throws UsecaseException {
-        try {
-            Node node = SiteUtil.getSiteStructure(this.manager, getSourceDocument())
-                    .getRepositoryNode();
-            Node[] nodes = { node };
-            return nodes;
-        } catch (SiteException e) {
-            throw new UsecaseException(e);
-        }
+        Node node = getSourceDocument().area().getSite().getRepositoryNode();
+        Node[] nodes = { node };
+        return nodes;
     }
 
     /**

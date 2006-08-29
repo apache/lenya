@@ -21,8 +21,6 @@ import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 
@@ -54,13 +52,7 @@ public class DeleteLanguage extends DocumentUsecase {
      */
     protected Node[] getNodesToLock() throws UsecaseException {
         Node docNode = getSourceDocument().getRepositoryNode();
-        Node siteNode;
-        try {
-            siteNode = SiteUtil.getSiteStructure(this.manager, getSourceDocument())
-                    .getRepositoryNode();
-        } catch (SiteException e) {
-            throw new UsecaseException(e);
-        }
+        Node siteNode = getSourceDocument().area().getSite().getRepositoryNode();
         Node[] nodes = { docNode, siteNode };
         return nodes;
     }

@@ -33,7 +33,6 @@ import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.util.DocumentSet;
-import org.apache.lenya.util.Assert;
 
 /**
  * Utility to handle site structures.
@@ -43,57 +42,6 @@ import org.apache.lenya.util.Assert;
 public class SiteUtil {
 
     private SiteUtil() {
-    }
-
-    /**
-     * Returns a site structure object.
-     * 
-     * @param map The identity map.
-     * @param publication The publication.
-     * @param area The area.
-     * @param manager The service manager.
-     * @return A site structure.
-     * @throws SiteException if an error occurs.
-     */
-    public static SiteStructure getSiteStructure(ServiceManager manager, DocumentFactory map,
-            Publication publication, String area) throws SiteException {
-
-        SiteStructure structure = null;
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
-        try {
-            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
-            structure = siteManager.getSiteStructure(map, publication, area);
-        } catch (Exception e) {
-            throw new SiteException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                manager.release(selector);
-            }
-        }
-        return structure;
-    }
-
-    /**
-     * Returns the site structure a document belongs to.
-     * 
-     * @param manager The service manager.
-     * @param document The document.
-     * @return A site structure.
-     * @throws SiteException if an error occurs.
-     */
-    public static SiteStructure getSiteStructure(ServiceManager manager, Document document)
-            throws SiteException {
-        Assert.notNull("manager", manager);
-        Assert.notNull("document", document);
-        return SiteUtil.getSiteStructure(manager,
-                document.getFactory(),
-                document.getPublication(),
-                document.getArea());
     }
 
     /**

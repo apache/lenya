@@ -65,8 +65,7 @@ public class ChangeNodeID extends DocumentUsecase {
         List nodes = new ArrayList();
 
         try {
-            Node siteNode = SiteUtil.getSiteStructure(this.manager, getSourceDocument())
-                    .getRepositoryNode();
+            Node siteNode = getSourceDocument().area().getSite().getRepositoryNode();
             nodes.add(siteNode);
 
             Document sourceDocument = getSourceDocument();

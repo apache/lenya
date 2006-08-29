@@ -86,8 +86,7 @@ public class Paste extends DocumentUsecase {
         List nodes = new ArrayList();
 
         try {
-            Node siteNode = SiteUtil.getSiteStructure(this.manager, getSourceDocument())
-                    .getRepositoryNode();
+            Node siteNode = getSourceDocument().area().getSite().getRepositoryNode();
             nodes.add(siteNode);
 
             Clipboard clipboard = new ClipboardHelper().getClipboard(getContext());

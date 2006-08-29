@@ -22,7 +22,6 @@ import java.util.List;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
@@ -65,11 +64,11 @@ public class Deactivate extends DocumentUsecase {
         try {
             List nodes = new ArrayList();
             Document doc = getSourceDocument();
-            Document liveDoc = doc.getFactory().getAreaVersion(doc, Publication.LIVE_AREA);            
+            Document liveDoc = doc.getAreaVersion(Publication.LIVE_AREA);            
             nodes.add(doc.getRepositoryNode());
             nodes.add(liveDoc.getRepositoryNode());            
-            nodes.add(SiteUtil.getSiteStructure(this.manager, liveDoc).getRepositoryNode());
-            nodes.add(SiteUtil.getSiteStructure(this.manager, doc).getRepositoryNode());            
+            nodes.add(liveDoc.area().getSite().getRepositoryNode());
+            nodes.add(doc.area().getSite().getRepositoryNode());            
             return (org.apache.lenya.cms.repository.Node[]) nodes.toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);            
         } catch (Exception e) {
             throw new UsecaseException(e);
@@ -95,8 +94,7 @@ public class Deactivate extends DocumentUsecase {
 
         DocumentManager documentManager = null;
         try {
-            Document liveDocument = authoringDocument.getFactory()
-                    .getAreaVersion(authoringDocument, Publication.LIVE_AREA);
+            Document liveDocument = authoringDocument.getAreaVersion(Publication.LIVE_AREA);
 
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             documentManager.delete(liveDocument);
