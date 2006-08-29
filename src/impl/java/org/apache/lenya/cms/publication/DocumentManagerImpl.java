@@ -240,7 +240,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
     }
 
     /**
-     * @param targetUuid
      * @see org.apache.lenya.cms.publication.DocumentManager#copyDocument(org.apache.lenya.cms.publication.Document,
      *      org.apache.lenya.cms.publication.DocumentLocator)
      */
@@ -344,7 +343,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         if (SiteUtil.contains(this.manager, sourceDoc)) {
             if (SiteUtil.contains(this.manager, destinationDoc)) {
                 boolean visible = sourceDoc.getLink().getNode().isVisible();
-                SiteUtil.setVisibleInNavigation(this.manager, destinationDoc, visible);
+                destinationDoc.getLink().getNode().setVisible(visible);
             } else {
                 String path = sourceDoc.getPath();
                 String label = sourceDoc.getLink().getLabel();

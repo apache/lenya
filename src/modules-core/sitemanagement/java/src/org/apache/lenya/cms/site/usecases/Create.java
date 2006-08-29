@@ -33,7 +33,6 @@ import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -41,15 +40,17 @@ import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteStructure;
-import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 
 /**
- * <p>Abstract superclass for usecases to create a document.</p>
- * <p>You can pass the following parameters into the usecase:</p>
+ * <p>
+ * Abstract superclass for usecases to create a document.
+ * </p>
+ * <p>
+ * You can pass the following parameters into the usecase:
+ * </p>
  * <ul>
  * <li><strong>path</strong> - the path of the document to create (optional)</li>
  * </ul>
@@ -114,7 +115,7 @@ public abstract class Create extends AbstractUsecase {
                 addErrorMessage("Please select a page layout.");
             }
         }
-        
+
         String path = getNewDocumentPath();
         SiteStructure site = getPublication().getArea(getArea()).getSite();
         if (!createVersion() && site.contains(path)) {
@@ -315,37 +316,14 @@ public abstract class Create extends AbstractUsecase {
      * @return The new document.
      */
     protected Document getNewDocument() {
-        Document document = null;
-        // get new document
-        DocumentManager documentManager = null;
-        ServiceSelector selector = null;
-        ResourceType resourceType = null;
         try {
-            documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-
-            DocumentFactory factory = getDocumentFactory();
-
             String path = getNewDocumentPath();
-            String uuid = SiteUtil
-                    .getUUID(this.manager, factory, getPublication(), getArea(), path);
-
-            document = factory.get(getPublication(), getArea(), uuid,
-                    getParameterAsString(LANGUAGE));
-
+            String language = getParameterAsString(LANGUAGE);
+            return getPublication().getArea(getArea()).getSite().getNode(path)
+                    .getLink(language).getDocument();
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (documentManager != null) {
-                this.manager.release(documentManager);
-            }
-            if (selector != null) {
-                if (resourceType != null) {
-                    selector.release(resourceType);
-                }
-                this.manager.release(selector);
-            }
         }
-        return document;
     }
 
     /**
@@ -369,8 +347,7 @@ public abstract class Create extends AbstractUsecase {
         if (this.publication == null) {
             try {
                 this.publication = PublicationUtil.getPublicationFromUrl(this.manager,
-                        getDocumentFactory(),
-                        getSourceURL());
+                        getDocumentFactory(), getSourceURL());
             } catch (PublicationException e) {
                 throw new RuntimeException(e);
             }

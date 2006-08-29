@@ -80,8 +80,7 @@ public class DefaultDocumentTest extends AbstractAccessControlTest {
     protected Document getDocument(DocumentTestSet testSet) throws PublicationException {
 
         Publication pub = getPublication("test");
-        String uuid = SiteUtil.getUUID(getManager(), getFactory(), pub, testSet.getArea(),
-                testSet.getPath());
+        String uuid = pub.getArea(testSet.getArea()).getSite().getNode(testSet.getPath()).getUuid();
         DocumentIdentifier id = new DocumentIdentifier(pub, testSet.getArea(), uuid, testSet
                 .getLanguage());
         DocumentImpl document = new DocumentImpl(getManager(), getFactory(), id, getLogger());

@@ -25,10 +25,10 @@ import java.util.Map;
 import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.Resource;
 import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.util.ServletHelper;
 
@@ -91,12 +91,8 @@ public class Assets extends SiteUsecase {
             resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
             Resource[] resources = resourcesManager.getResources(getSourceDocument());
             setParameter("assets", Arrays.asList(resources));
-
-            Document[] resourceDocs = SiteUtil.getDocuments(this.manager,
-                    getSourceDocument().getFactory(),
-                    getSourceDocument().getPublication(),
-                    getSourceDocument().getArea(),
-                    "resource");
+            
+            Document[] resourceDocs = getResourceDocuments();
             setParameter("resourceDocuments", resourceDocs);
 
             User user = getSession().getIdentity().getUser();
@@ -111,6 +107,17 @@ public class Assets extends SiteUsecase {
                 this.manager.release(resourcesManager);
             }
         }
+    }
+
+    protected Document[] getResourceDocuments() throws DocumentException {
+        List list = new ArrayList();
+        Document[] docs = getSourceDocument().area().getDocuments();
+        for (int i = 0; i < docs.length; i++) {
+            if (docs[i].getResourceType().getName().equals("resource")) {
+                list.add(docs);
+            }
+        }
+        return (Document[]) list.toArray(new Document[list.size()]);
     }
 
     /**

@@ -26,6 +26,7 @@ import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.repository.UUIDGenerator;
+import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 
 /**
@@ -70,15 +71,16 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
             throws DocumentBuildException {
 
         if (getLogger().isDebugEnabled())
-            getLogger().debug("DocumentIdentityMap::get() called on publication ["
-                    + publication.getId() + "], area [" + area + "], UUID [" + uuid
-                    + "], language [" + language + "]");
+            getLogger().debug(
+                    "DocumentIdentityMap::get() called on publication [" + publication.getId()
+                            + "], area [" + area + "], UUID [" + uuid + "], language [" + language
+                            + "]");
 
         String key = getKey(publication, area, uuid, language);
 
         if (getLogger().isDebugEnabled())
-            getLogger().debug("DocumentIdentityMap::get() got key [" + key
-                    + "] from DocumentFactory");
+            getLogger().debug(
+                    "DocumentIdentityMap::get() got key [" + key + "] from DocumentFactory");
 
         try {
             return (Document) getSession().getRepositoryItem(this, key);
@@ -173,8 +175,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
     public boolean isDocument(String webappUrl) throws DocumentBuildException {
 
         try {
-            Publication publication = PublicationUtil.getPublicationFromUrl(this.manager,
-                    this,
+            Publication publication = PublicationUtil.getPublicationFromUrl(this.manager, this,
                     webappUrl);
             if (publication.exists()) {
 
@@ -183,7 +184,8 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
                 try {
                     selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE
                             + "Selector");
-                    builder = (DocumentBuilder) selector.select(publication.getDocumentBuilderHint());
+                    builder = (DocumentBuilder) selector.select(publication
+                            .getDocumentBuilderHint());
                     if (builder.isDocument(webappUrl)) {
                         DocumentLocator locator = builder.getLocator(this, webappUrl);
                         return SiteUtil.contains(this.manager, this, locator);
@@ -229,8 +231,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
         ServiceSelector selector = null;
         DocumentBuilder builder = null;
         try {
-            Publication publication = PublicationUtil.getPublicationFromUrl(this.manager,
-                    this,
+            Publication publication = PublicationUtil.getPublicationFromUrl(this.manager, this,
                     webappUrl);
             selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
             builder = (DocumentBuilder) selector.select(publication.getDocumentBuilderHint());
@@ -239,7 +240,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
             String area = locator.getArea();
             String uuid = null;
             if (SiteUtil.isDocument(this.manager, this, webappUrl)) {
-                uuid = SiteUtil.getUUID(this.manager, this, publication, area, locator.getPath());
+                uuid = publication.getArea(area).getSite().getNode(locator.getPath()).getUuid();
             } else {
                 UUIDGenerator generator = (UUIDGenerator) this.manager.lookup(UUIDGenerator.ROLE);
                 uuid = generator.nextUUID();
@@ -280,9 +281,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
 
             selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
             builder = (DocumentBuilder) selector.select(publication.getDocumentBuilderHint());
-            DocumentIdentifier identifier = new DocumentIdentifier(publication,
-                    area,
-                    uuid,
+            DocumentIdentifier identifier = new DocumentIdentifier(publication, area, uuid,
                     language);
             document = buildDocument(this, identifier, builder);
         } catch (Exception e) {
@@ -324,9 +323,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
     }
 
     public Document get(DocumentIdentifier identifier) throws DocumentBuildException {
-        return get(identifier.getPublication(),
-                identifier.getArea(),
-                identifier.getUUID(),
+        return get(identifier.getPublication(), identifier.getArea(), identifier.getUUID(),
                 identifier.getLanguage());
     }
 
@@ -337,11 +334,8 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
     public Document get(DocumentLocator locator) throws DocumentBuildException {
         try {
             Publication pub = getPublication(locator.getPublicationId());
-            String uuid = SiteUtil.getUUID(this.manager,
-                    this,
-                    pub,
-                    locator.getArea(),
-                    locator.getPath());
+            SiteStructure site = pub.getArea(locator.getArea()).getSite();
+            String uuid = site.getNode(locator.getPath()).getUuid();
             return get(pub, locator.getArea(), uuid, locator.getLanguage());
         } catch (PublicationException e) {
             throw new DocumentBuildException(e);

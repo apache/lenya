@@ -32,7 +32,6 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.publication.util.DocumentSet;
 
 /**
  * Utility to handle site structures.
@@ -84,35 +83,6 @@ public class SiteUtil {
             }
         }
         return new NodeSet(manager, subsite);
-    }
-
-    /**
-     * @param manager The service manager.
-     * @param factory The document factory.
-     * @param map An identity map.
-     * @param node A node.
-     * @return All existing documents belonging to the node. Empty set if no documents belong to the
-     *         node.
-     * @throws DocumentBuildException if an error occurs.
-     * @throws DocumentException if an error occurs.
-     * @throws SiteException
-     */
-    public static DocumentSet getExistingDocuments(ServiceManager manager, DocumentFactory factory,
-            SiteNode node) throws DocumentBuildException, DocumentException, SiteException {
-        DocumentSet set = new DocumentSet();
-
-        final Publication pub = node.getStructure().getPublication();
-        final String area = node.getStructure().getArea();
-        if (SiteUtil.contains(manager, factory, pub, area, node.getPath())) {
-            String uuid = SiteUtil.getUUID(manager, factory, pub, area, node.getPath());
-            Document document = factory.get(pub, area, uuid);
-            String[] languages = document.getLanguages();
-            for (int i = 0; i < languages.length; i++) {
-                Document version = document.getTranslation(languages[i]);
-                set.add(version);
-            }
-        }
-        return set;
     }
 
     /**
@@ -293,7 +263,7 @@ public class SiteUtil {
     }
 
     /**
-     * @see org.apache.lenya.cms.site.SiteManager#getAvailableDocument(Document)
+     * @see org.apache.lenya.cms.site.SiteManager#getAvailableLocator(DocumentFactory, DocumentLocator)
      * @param manager The service manager.
      * @param factory The factory.
      * @param locator The locator.
@@ -310,131 +280,6 @@ public class SiteUtil {
             siteManager = (SiteManager) selector.select(pub.getSiteManagerHint());
             return siteManager.getAvailableLocator(factory, locator);
         } catch (Exception e) {
-            throw new SiteException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                manager.release(selector);
-            }
-        }
-    }
-
-    /**
-     * @param manager The site manager.
-     * @param document The document.
-     * @param visible if the document should be visible.
-     * @throws SiteException if an error occurs.
-     */
-    public static void setVisibleInNavigation(ServiceManager manager, Document document,
-            boolean visible) throws SiteException {
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
-        try {
-            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(document.getPublication()
-                    .getSiteManagerHint());
-
-            siteManager.setVisibleInNav(document, visible);
-        } catch (Exception e) {
-            throw new SiteException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                manager.release(selector);
-            }
-        }
-    }
-
-    /**
-     * Returns all documents in a certain area.
-     * @param manager The service manager.
-     * @param factory The document factory.
-     * @param pub The publication.
-     * @param area The area.
-     * @return An array of documents.
-     * @throws SiteException if an error occurs.
-     */
-    public static Document[] getDocuments(ServiceManager manager, DocumentFactory factory,
-            Publication pub, String area) throws SiteException {
-        SiteManager siteManager = null;
-        ServiceSelector selector = null;
-
-        try {
-            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
-            String siteManagerHint = pub.getSiteManagerHint();
-            siteManager = (SiteManager) selector.select(siteManagerHint);
-
-            Document[] docs = siteManager.getDocuments(factory, pub, area);
-
-            Set foundDocs = new HashSet();
-            for (int i = 0; i < docs.length; i++) {
-                String hash = getHash(docs[i]);
-                if (foundDocs.contains(hash)) {
-                    throw new SiteException("The document [" + hash
-                            + "] is contained more than once!");
-                }
-                foundDocs.add(hash);
-            }
-
-            return docs;
-        } catch (ServiceException e) {
-            throw new SiteException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                manager.release(selector);
-            }
-        }
-    }
-
-    protected static String getHash(Document doc) {
-        return doc.getPublication().getId() + ":" + doc.getArea() + ":" + doc.getUUID() + ":"
-                + doc.getLanguage();
-    }
-
-    /**
-     * Returns all documents in a certain area which have a certain resource type.
-     * @param manager The service manager.
-     * @param factory The document factory.
-     * @param pub The publication.
-     * @param area The area.
-     * @param resourceType The resource type name.
-     * @return An array of documents.
-     * @throws SiteException if an error occurs.
-     */
-    public static Document[] getDocuments(ServiceManager manager, DocumentFactory factory,
-            Publication pub, String area, String resourceType) throws SiteException {
-        Document[] docs = getDocuments(manager, factory, pub, area);
-        Set documents = new HashSet();
-        try {
-            for (int i = 0; i < docs.length; i++) {
-                if (docs[i].getResourceType().getName().equals(resourceType)) {
-                    documents.add(docs[i]);
-                }
-            }
-        } catch (DocumentException e) {
-            throw new SiteException(e);
-        }
-        return (Document[]) documents.toArray(new Document[documents.size()]);
-    }
-
-    public static String getUUID(ServiceManager manager, DocumentFactory factory, Publication pub,
-            String area, String path) throws SiteException {
-        SiteManager siteManager = null;
-        ServiceSelector selector = null;
-
-        try {
-            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
-            String siteManagerHint = pub.getSiteManagerHint();
-            siteManager = (SiteManager) selector.select(siteManagerHint);
-            return siteManager.getSiteStructure(factory, pub, area).getNode(path).getUuid();
-        } catch (ServiceException e) {
             throw new SiteException(e);
         } finally {
             if (selector != null) {
