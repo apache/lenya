@@ -477,9 +477,11 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
                     return file.isDirectory() && !name.equals("rcml") && !name.equals("rcbak");
                 }
             });
-            this.areas = new String[directories.length];
-            for (int i = 0; i < directories.length; i++) {
-                this.areas[i] = directories[i].getName();
+            if (directories != null) {
+                this.areas = new String[directories.length];
+                for (int i = 0; i < directories.length; i++) {
+                    this.areas[i] = directories[i].getName();
+                }
             }
         }
         return this.areas;

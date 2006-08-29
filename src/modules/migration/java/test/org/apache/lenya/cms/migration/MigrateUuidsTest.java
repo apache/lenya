@@ -67,9 +67,11 @@ public class MigrateUuidsTest extends AbstractAccessControlTest {
         getLogger().info("Migrating publication [" + pub.getId() + "]");
 
         String[] areaNames = pub.getAreaNames();
-        for (int i = 0; i < areaNames.length; i++) {
-            Area area = pub.getArea(areaNames[i]);
-            migrateArea(area);
+        if (areaNames != null) {
+            for (int i = 0; i < areaNames.length; i++) {
+                Area area = pub.getArea(areaNames[i]);
+                migrateArea(area);
+            }
         }
     }
 
