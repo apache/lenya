@@ -19,6 +19,7 @@ package org.apache.lenya.cms.metadata.usecases;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -72,7 +73,7 @@ public class Metadata extends SiteUsecase {
                 String[] keys = meta.getPossibleKeys();
                 for (int keyIndex = 0; keyIndex < keys.length; keyIndex++) {
                     if (meta.getElementSet().getElement(keys[keyIndex]).isEditable()) {
-                        String key = nsIndex + "." + keys[keyIndex];
+                        String key = "ns" + nsIndex + "." + keys[keyIndex];
                         String value = meta.getFirstValue(keys[keyIndex]);
                         if (value != null) {
                             setParameter(key, value);
@@ -126,16 +127,30 @@ public class Metadata extends SiteUsecase {
     protected void doExecute() throws Exception {
         super.doExecute();
 
+        // we need a reverse lookup to get the correct ns index:
+        Map num2namespace = (Map)getParameter("namespaces");
+        Map namespace2num = new HashMap();
+        
+        Iterator iter = num2namespace.keySet().iterator();
+        while (iter.hasNext()) {
+            String key = (String)iter.next();
+            namespace2num.put(num2namespace.get(key), key);
+        }
+        
+        
         String[] namespaces = getSourceDocument().getMetaDataNamespaceUris();
 
         for (int nsIndex = 0; nsIndex < namespaces.length; nsIndex++) {
             MetaData meta = getSourceDocument().getMetaData(namespaces[nsIndex]);
+            String orgNsIndex = (String)namespace2num.get(namespaces[nsIndex]);
 
-            String[] keys = meta.getPossibleKeys();
-            for (int keyIndex = 0; keyIndex < keys.length; keyIndex++) {
-                String value = getParameterAsString(nsIndex + "." + keys[keyIndex]);
-                if (value != null) {
-                    meta.setValue(keys[keyIndex], value);
+            if (orgNsIndex != null) {
+                String[] keys = meta.getPossibleKeys();
+                for (int keyIndex = 0; keyIndex < keys.length; keyIndex++) {
+                    String value = getParameterAsString("ns" + orgNsIndex + "." + keys[keyIndex]);
+                    if (value != null) {
+                        meta.setValue(keys[keyIndex], value);
+                    }
                 }
             }
         }
