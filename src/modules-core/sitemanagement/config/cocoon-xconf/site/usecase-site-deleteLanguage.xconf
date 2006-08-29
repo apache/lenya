@@ -23,6 +23,5 @@
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'site.deleteLanguage']">
     <component-instance name="site.deleteLanguage" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.DeleteLanguage">
       <view template="modules/sitemanagement/usecases/site/deleteLanguage.jx"/>
-      <exit usecase="tab.overview" />
     </component-instance>
   </xconf>
