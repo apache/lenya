@@ -36,36 +36,41 @@ limitations under the License.
               <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
             </td>
           </tr>
-          <jx:if test="${!usecase.getParameter('documentIdProvided')}">
-            <tr>
-              <td class="lenya-entry-caption">
-                <i18n:text>Parent ID</i18n:text>:</td>
-              <td>
-                <jx:out value="${usecase.getParameter('parentId')}"/>
-              </td>
-            </tr>
-          </jx:if>
+          <jx:choose>
+              <jx:when test="${usecase.getParameter('pathProvided')}">
+                <tr>
+                  <td class="lenya-entry-caption">
+                    <label for="nodeName"><i18n:text>Path</i18n:text>: </label>
+                  </td>
+                  <td>
+                    <jx:out value="${usecase.getParameter('path')}"/>
+                  </td>
+                </tr>
+              </jx:when>
+              <jx:otherwise>
+                <tr>
+                  <td class="lenya-entry-caption">
+                    <label for="nodeName"><i18n:text>Parent Path</i18n:text>: </label>
+                  </td>
+                  <td>
+                    <jx:out value="${usecase.getParameter('parentPath')}"/>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="lenya-entry-caption">
+                    <label for="nodeName"><i18n:text>Node Name</i18n:text>*: </label>
+                  </td>
+                  <td>
+                    <input class="lenya-form-element" type="text" name="nodeName" value="${usecase.getParameter('nodeName')}"/>
+                    <br/> (<i18n:text>No whitespace, no special characters</i18n:text>)
+                  </td>
+                </tr>
+              </jx:otherwise>
+          </jx:choose>
           <tr>
             <td class="lenya-entry-caption"><label for="file">
               <i18n:text>File</i18n:text> *</label></td>
             <td><input type="file" name="file" class="lenya-form-element"/></td>
-          </tr>
-          <tr>
-            <td class="lenya-entry-caption">
-              <label for="documentId"><i18n:text>Document ID</i18n:text>*:
-              </label></td>
-            <td>
-              <jx:choose>
-                <jx:when test="${usecase.getParameter('documentIdProvided')}">
-                  <jx:out value="${usecase.getParameter('documentId')}"/>
-                </jx:when>
-                <jx:otherwise>
-                  <input class="lenya-form-element" type="text" name="documentId"
-                    value="${usecase.getParameter('documentId')}"/>
-                  <br/> (<i18n:text>No whitespace, no special characters</i18n:text>)
-                </jx:otherwise>
-              </jx:choose>
-            </td>
           </tr>
           <tr>
             <td class="lenya-entry-caption">
