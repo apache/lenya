@@ -159,7 +159,7 @@
               <map:parameter name="language" value="{page-envelope:document-language}"/>
               <map:parameter name="contextprefix" value="{request:contextPath}"/>
               <map:parameter name="title" value="{dublincore:title}"/>
-              <map:parameter name="lastPublishedUser" value="{workflow:lastUser.publish}"/>
+              <map:parameter name="lastPublishedUser" value="{access-control:user-name:{workflow:lastUser.publish}}"/>
               <map:parameter name="lastPublishedDate" value="{workflow:lastDate.publish}"/>
               <!--Following is a show off to explain lenya.properties.xml -->
               <map:parameter name="author" value="{properties:pubs.default.author}"/>
@@ -176,7 +176,7 @@
               <map:parameter name="language" value="{page-envelope:document-language}"/>
               <map:parameter name="contextprefix" value="{request:contextPath}"/>
               <map:parameter name="title" value="{dublincore:title}"/>
-              <map:parameter name="lastPublishedUser" value="{workflow:lastUser.publish}"/>
+              <map:parameter name="lastPublishedUser" value="{access-control:user-name:{workflow:lastUser.publish}}"/>
               <map:parameter name="lastPublishedDate" value="{workflow:lastDate.publish}"/>
               <!--Following is a show off to explain lenya.properties.xml -->
               <map:parameter name="author" value="{properties:pubs.default.author}"/>

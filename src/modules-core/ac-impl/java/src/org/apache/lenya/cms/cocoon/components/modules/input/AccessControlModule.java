@@ -42,10 +42,30 @@ import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserManager;
 import org.apache.lenya.cms.ac.PolicyUtil;
 
 /**
+ * <p>
  * Input module for access control attributes.
+ * </p>
+ * <p>
+ * Attributes:
+ * </p>
+ * <ul>
+ * <li>user-id</li>
+ * <li>user-name</li>
+ * <li>user-name:{user-id}</li>
+ * <li>user-email</li>
+ * <li>user-email:{user-id}</li>
+ * <li>ip-address</li>
+ * <li>role-ids</li>
+ * <li>user-manager</li>
+ * <li>group-manager</li>
+ * <li>iprange-manager</li>
+ * <li>role-manager</li>
+ * </ul>
+ * 
  */
 public class AccessControlModule extends AbstractInputModule implements Serviceable {
 
@@ -54,11 +74,11 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
      */
     public static final String USER_ID = "user-id";
     /**
-     * <code>USER_NAME</code> The user name
+     * <code>USER_NAME</code> The user name, optional: provide the user ID after a colon
      */
     public static final String USER_NAME = "user-name";
     /**
-     * <code>USER_EMAIL</code> The user email
+     * <code>USER_EMAIL</code> The user email, optional: provide the user ID after a colon
      */
     public static final String USER_EMAIL = "user-email";
     /**
@@ -97,55 +117,60 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
      *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
      */
-    public Object getAttribute(String name, Configuration modeConf, Map objectModel)
+    public Object getAttribute(String attribute, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
 
         Request request = ObjectModelHelper.getRequest(objectModel);
         Session session = request.getSession();
         Object value = null;
 
+        String[] parameters = attribute.split(":");
+        String name = parameters[0];
+
         if (!Arrays.asList(PARAMETER_NAMES).contains(name)) {
             throw new ConfigurationException("The attribute [" + name + "] is not supported!");
         }
 
+        Identity identity = null;
+        
         if (session != null) {
-            Identity identity = (Identity) session.getAttribute(Identity.class.getName());
-            if (identity != null) {
-                if (name.equals(USER_ID)) {
-                    User user = identity.getUser();
-                    if (user != null) {
-                        value = user.getId();
-                    }
-                } else if (name.equals(USER_NAME)) {
-                    User user = identity.getUser();
-                    if (user != null) {
-                        value = user.getName();
-                    }
-                } else if (name.equals(USER_EMAIL)) {
-                    User user = identity.getUser();
-                    if (user != null) {
-                        value = user.getEmail();
-                    }
-                } else if (name.equals(IP_ADDRESS)) {
-                    Machine machine = identity.getMachine();
-                    if (machine != null) {
-                        value = machine.getIp();
-                    }
-                } else if (name.equals(ROLE_IDS)) {
-                    try {
-                        Role[] roles = PolicyUtil.getRoles(request);
-                        StringBuffer buf = new StringBuffer();
-                        for (int i = 0; i < roles.length; i++) {
-                            if (i > 0) {
-                                buf.append(",");
-                            }
-                            buf.append(roles[i].getId());
+            identity = (Identity) session.getAttribute(Identity.class.getName());
+        }
+        User user = getUser(request, parameters, identity);
+
+        if (user != null) {
+            if (name.equals(USER_NAME)) {
+                value = user.getName();
+            } else if (name.equals(USER_EMAIL)) {
+                value = user.getEmail();
+            }
+        }
+
+        if (identity != null) {
+            if (name.equals(USER_ID)) {
+                User currentUser = identity.getUser();
+                if (currentUser != null) {
+                    value = currentUser.getId();
+                }
+            } else if (name.equals(IP_ADDRESS)) {
+                Machine machine = identity.getMachine();
+                if (machine != null) {
+                    value = machine.getIp();
+                }
+            } else if (name.equals(ROLE_IDS)) {
+                try {
+                    Role[] roles = PolicyUtil.getRoles(request);
+                    StringBuffer buf = new StringBuffer();
+                    for (int i = 0; i < roles.length; i++) {
+                        if (i > 0) {
+                            buf.append(",");
                         }
-                        value = buf.toString();
-                    } catch (AccessControlException e) {
-                        throw new ConfigurationException("Obtaining value for attribute [" + name
-                                + "] failed: ", e);
+                        buf.append(roles[i].getId());
                     }
+                    value = buf.toString();
+                } catch (AccessControlException e) {
+                    throw new ConfigurationException("Obtaining value for attribute [" + name
+                            + "] failed: ", e);
                 }
             }
         }
@@ -156,6 +181,29 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
         }
 
         return value;
+    }
+
+    /**
+     * Returns the user specified with parameter[1], falling back to the currently logged in user.
+     * @param request The request.
+     * @param parameters The parameters.
+     * @param identity The logged in identity.
+     * @return A user or <code>null</code> if no user is specified or logged in.
+     * @throws ConfigurationException if an error occurs.
+     */
+    protected User getUser(Request request, String[] parameters, Identity identity)
+            throws ConfigurationException {
+        User user = null;
+        if (parameters.length == 1) {
+            if (identity != null) {
+                user = identity.getUser();
+            }
+        } else {
+            String userId = parameters[1];
+            UserManager userManager = (UserManager) getItemManager(request, USER_MANAGER);
+            user = userManager.getUser(userId);
+        }
+        return user;
     }
 
     /**
@@ -196,7 +244,8 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
         try {
             selector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
                     + "Selector");
-            resolver = (AccessControllerResolver) selector.select(AccessControllerResolver.DEFAULT_RESOLVER);
+            resolver = (AccessControllerResolver) selector
+                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
 
             String requestURI = request.getRequestURI();
             String context = request.getContextPath();
