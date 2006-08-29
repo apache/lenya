@@ -252,7 +252,9 @@ function executeUsecase() {
                     usecase.cancel();
                     ready = true;
                 }
-                proxy = new Packages.org.apache.lenya.cms.usecase.UsecaseProxy(usecase);
+                if (!ready) {
+                    proxy = new Packages.org.apache.lenya.cms.usecase.UsecaseProxy(usecase);
+                }
                 targetUrl = usecase.getTargetURL(success);
             }
             catch (exception) {
