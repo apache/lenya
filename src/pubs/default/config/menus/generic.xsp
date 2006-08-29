@@ -41,8 +41,13 @@
       
       Object documentObject = <input:get-attribute as="object" module="page-envelope" name="document"/>;
       Document document = null;
+      String visible = null;
       if (documentObject != null &amp;&amp; !"".equals(documentObject)) {
           document = (Document) documentObject;
+
+        visible = <input:get-attribute module="doc-info" as="string">
+          <input:param name="name"><xsp:expr>document.getPublication().getId() + ":" + document.getArea() + ":" + document.getId() + ":" + document.getLanguage() + ":visibleInNav"</xsp:expr></input:param>
+        </input:get-attribute>;
       }
 
       boolean isDocument = false;
@@ -55,9 +60,6 @@
           throw new ProcessingException(e);
       }
       
-      String visible = <input:get-attribute module="doc-info" as="string">
-        <input:param name="name"><xsp:expr>document.getPublication().getId() + ":" + document.getArea() + ":" + document.getId() + ":" + document.getLanguage() + ":visibleInNav"</xsp:expr></input:param>
-      </input:get-attribute>;
       
     </xsp:logic>
     
