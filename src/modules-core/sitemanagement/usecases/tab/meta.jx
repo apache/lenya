@@ -50,7 +50,7 @@
             <jx:forEach var="key" items="${usecase.getParameter('keys')}">
               <jx:if test="${key.startsWith('ns' + num + '.')}">
                 <tr>
-                  <td class="lenya-entry-caption"><label for="title"><i18n:text><jx:out value="${key.substring(key.indexOf('.')).substring(1)}"/></i18n:text>:</label></td>
+                  <td class="lenya-entry-caption"><label for="${key}"><i18n:text><jx:out value="${key.substring(key.indexOf('.')).substring(1)}"/></i18n:text>:</label></td>
                   <td>
                     <input type="text" id="${key}" name="${key}" class="lenya-form-element" value="${usecase.getParameter(key)}"/>
                   </td>
