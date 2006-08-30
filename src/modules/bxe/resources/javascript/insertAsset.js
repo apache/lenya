@@ -17,7 +17,7 @@
       var type = document.forms['image'].type.value;
       var height = document.forms['image'].height.value;
       var width = document.forms['image'].width.value;
-      var content = '<object xmlns="'+window.opener.XHTMLNS+'" href="'+link+'" title="'+title+'" type="'+type+'" data="'+nodeid + '/' + src+'" height="'+height+'" width="'+width+'">'+src+'</object>'; 
+      var content = '<object xmlns="'+window.opener.XHTMLNS+'" href="'+link+'" title="'+title+'" type="'+type+'" data="'+src+'" height="'+height+'" width="'+width+'">'+src+'</object>'; 
       window.opener.bxe_insertContent(content,window.opener.bxe_ContextNode); 
       window.close();
    }

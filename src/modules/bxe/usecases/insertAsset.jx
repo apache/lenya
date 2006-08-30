@@ -42,20 +42,22 @@
         </tr>
         <jx:forEach var="asset" items="${usecase.getParameter('assets')}">
           <tr>
-            <td><input type="radio" name="asset" value="${asset.getName()}"
-                       onClick="javascript:insertData('${asset.getName()}', '${asset.getMetaDataManager().getDublinCoreMetaData().getFirstValue('title')}', '${asset.getMimeType()}', '${asset.getContentLength() / 1000}', '${asset.getMetaDataManager().getLenyaMetaData().getFirstValue('height')}', '${asset.getMetaDataManager().getLenyaMetaData().getFirstValue('width')}')"/></td>
-            <td><jx:out value="${asset.getName()}"/></td>
+            <td>
+            <input type="radio" name="asset" value="${asset.getPath()}" 
+             onClick="javascript:insertData('${cocoon.request.getContextPath()}/${asset.getPublication().getId()}/${asset.getArea()}${asset.getPath()}.${asset.getMetaData('http://apache.org/lenya/metadata/document/1.0').getFirstValue('extension')}', '${asset.getMetaData('http://purl.org/dc/elements/1.1/').getFirstValue('title')}', '${asset.getMimeType()}', '${asset.getContentLength() / 1000}', '${asset.getMetaData('http://apache.org/lenya/metadata/media/1.0').getFirstValue('height')}', '${asset.getMetaData('http://apache.org/lenya/metadata/media/1.0').getFirstValue('width')}')"/> 
+            </td>
+            <td><jx:out value="${asset.getPath()}"/></td>
             <td>        
               <jx:set var="mimeType" value="${asset.getMimeType()}"/>
               <jx:if test="${mimeType.startsWith('image/')}">
                 <jx:set var="doc" value="${usecase.getParameter('document')}"/>
-                <img src="${request.getContextPath()}/${doc.getPublication().getId()}/authoring/${doc.getId()}/${asset.getName()}"
+                <img src="'${cocoon.request.getContextPath()}/${asset.getPublication().getId()}/${asset.getArea()}${asset.getPath()}.${asset.getMetaData('http://apache.org/lenya/metadata/document/1.0').getFirstValue('extension')}'"
                      style="height: 32px; vertical-align: middle;"/>&#160;
               </jx:if>
             </td>
-            <td><jx:out value="${asset.getMetaDataManager().getDublinCoreMetaData().getFirstValue('title')}"/></td>
+            <td><jx:out value="${asset.getMetaData('http://purl.org/dc/elements/1.1/').getFirstValue('title')}"/></td>
             <td align="right"><jx:out value="${asset.getContentLength() / 1000}"/> kB</td>
-            <td align="right"><jx:if test="${mimeType.startsWith('image/')}"><jx:out value="${asset.getMetaDataManager().getLenyaMetaData().getFirstValue('width')}"/> x <jx:out value="${asset.getMetaDataManager().getLenyaMetaData().getFirstValue('height')}"/></jx:if></td>
+            <td align="right"><jx:if test="${mimeType.startsWith('image/')}"><jx:out value="${asset.getMetaData('http://apache.org/lenya/metadata/media/1.0').getFirstValue('width')}"/> x <jx:out value="${asset.getMetaData('http://apache.org/lenya/metadata/media/1.0').getFirstValue('height')}"/></jx:if></td>
             <td align="right"><jx:out value="${java.text.DateFormat.getDateInstance().format(asset.getLastModified())}"/></td>
           </tr>
         </jx:forEach>

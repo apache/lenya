@@ -21,8 +21,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.lenya.ac.User;
-import org.apache.lenya.cms.publication.Resource;
-import org.apache.lenya.cms.publication.ResourcesManager;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.UsecaseInvoker;
@@ -62,12 +62,20 @@ public class InsertAsset extends DocumentUsecase {
         }
     }
 
-    protected void loadResources() {
-        ResourcesManager resourcesManager = null;
-        
-        try {
-            resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
-            Resource[] resources = resourcesManager.getResources(getSourceDocument());
+    protected Document[] getResourceDocuments() throws DocumentException {
+        List list = new ArrayList();
+        Document[] docs = getSourceDocument().area().getDocuments();
+        for (int i = 0; i < docs.length; i++) {
+            if (docs[i].getResourceType().getName().equals("resource")) {
+                list.add(docs[i]);
+            }
+        }
+        return (Document[]) list.toArray(new Document[list.size()]);
+    }    
+    
+    protected void loadResources() {        
+        try {            
+            Document[] resources = getResourceDocuments();
 
             List selectedResources = new ArrayList();
             String mimeTypePrefix = getParameterAsString("mimeTypePrefix", "");
@@ -83,11 +91,7 @@ public class InsertAsset extends DocumentUsecase {
             setParameter("assets", selectedResources);
         } catch (final Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (resourcesManager != null) {
-                this.manager.release(resourcesManager);
-            }
-        }
+        } 
     }
 
     /**

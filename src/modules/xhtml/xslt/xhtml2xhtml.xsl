@@ -74,7 +74,7 @@
    </xsl:variable>
    <div class="asset">
        <xsl:text>&#160;</xsl:text>
-       <a href="{$nodeid}/{@src}" title="{text()}">
+       <a href="{@src}" title="{text()}">
          <xsl:value-of select="text()"/>
        </a>
        (<xsl:value-of select="number($extent)"/>KB)
