@@ -83,7 +83,7 @@
       file="${build.test}/org/apache/lenya/cms/LenyaTestCase.xtest"/>
   </target>
   
-  <target name="modules.test" depends="tests.prepare">
+  <target name="modules.test" depends="patch-modules-test">
     <ant antfile="${build.dir}/temp/modules-build.xml"
       inheritall="true"
       inheritrefs="true"
