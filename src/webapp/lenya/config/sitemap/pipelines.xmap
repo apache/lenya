@@ -102,42 +102,42 @@
 
     </map:pipeline>
 
-     <!-- this is the default error handler -->
-      <map:handle-errors>
-        <map:select type="exception">
-          <map:when test="document-does-not-exist">
-            <map:generate src="lenya/content/util/empty.xml"/>
-            <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl">
-              <map:parameter name="path" value="{page-envelope:document-path}"/>
-              <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
-              <map:parameter name="area" value="{page-envelope:area}"/>
-            </map:transform>
-            <map:call resource="style-cms-page" />
-            <map:serialize status-code="404" />
-          </map:when>
-           <map:when test="not-found">
-             <map:generate src="lenya/content/util/empty.xml" />
-            <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl">
-              <map:parameter name="path" value="{page-envelope:document-path}"/>
-              <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
-              <map:parameter name="area" value="{page-envelope:area}"/>
-            </map:transform>
-            <map:call resource="style-cms-page" />
-            <map:serialize status-code="404" />
-          </map:when>
-	      <map:otherwise>
-	        <map:generate type="notifying"/>
-	        <map:transform src="fallback://lenya/xslt/exception/generic.xsl">
-	          <map:parameter name="documentid" value="{page-envelope:document-id}"/>
-	          <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
-	          <map:parameter name="contextPath" value="{request:contextPath}"/>
-	        </map:transform>
-            <map:call resource="style-cms-page" />
-            <map:serialize status-code="500" />
-	      </map:otherwise>
-        </map:select>
-        <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
-        <map:serialize type="xhtml"/>
-      </map:handle-errors>    
-
+    <!-- this is the default error handler -->
+    <map:handle-errors>
+      <map:select type="exception">
+        <map:when test="document-does-not-exist">
+          <map:generate src="lenya/content/util/empty.xml"/>
+          <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl">
+            <map:parameter name="path" value="{page-envelope:document-path}"/>
+            <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
+            <map:parameter name="area" value="{page-envelope:area}"/>
+          </map:transform>
+          <map:call resource="style-cms-page" />
+          <map:serialize status-code="404" />
+        </map:when>
+        <map:when test="not-found">
+          <map:generate src="lenya/content/util/empty.xml" />
+          <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl">
+            <map:parameter name="path" value="{page-envelope:document-path}"/>
+            <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
+            <map:parameter name="area" value="{page-envelope:area}"/>
+          </map:transform>
+          <map:call resource="style-cms-page" />
+          <map:serialize status-code="404" />
+        </map:when>
+        <map:otherwise>
+          <map:generate type="notifying"/>
+          <map:transform src="fallback://lenya/xslt/exception/generic.xsl">
+            <map:parameter name="documentid" value="{page-envelope:document-id}"/>
+            <map:parameter name="documenturl" value="{page-envelope:document-url}"/>
+            <map:parameter name="contextPath" value="{request:contextPath}"/>
+          </map:transform>
+          <map:call resource="style-cms-page" />
+          <map:serialize status-code="500" />
+        </map:otherwise>
+      </map:select>
+      <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
+      <map:serialize type="xhtml"/>
+    </map:handle-errors>    
+    
   </map:pipelines></xmap>
