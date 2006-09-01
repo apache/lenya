@@ -38,8 +38,6 @@ import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.util.ServletHelper;
 
@@ -97,11 +95,6 @@ public class LanguageExistsAction extends ServiceableAction {
                 if (SiteUtil.contains(this.manager, factory, version)) {
                     availableLanguages.add(languages[i]);
                 }
-            }
-
-            if (availableLanguages.isEmpty()) {
-                throw new DocumentDoesNotExistException("Document [" + locator
-                        + "] does not exist. Check sitetree, it might need to be reloaded.");
             }
             if (availableLanguages.contains(locator.getLanguage())) {
                 return Collections.unmodifiableMap(Collections.EMPTY_MAP);
