@@ -133,6 +133,7 @@
     
     <reference href="reference/" label="Technical Reference"> 	 
       <sitemaps14 href="lenya-sitemaps.html" label="Overview of Lenya Sitemaps" />
+      <ac-restricted href="ac.html" label="Access Control Specification"/>
       <usecase-framework href="usecase-framework/" label="Usecase Framework">
         <usecase-framework-overview href="index.html" label="Overview"/>
         <abstractusecase href="abstractusecase.html" label="AbstractUsecase"/> 	 
