@@ -36,8 +36,14 @@
 <!-- include Lenya schema, for Lenya assets within xhtml -->
 <include href="fallback://lenya/resources/schemas/lenya.rng"/>
 
-<!-- include original XHTML transitional schema -->
+<!-- include original XHTML basic schema -->
 <include href="fallback://lenya/modules/xhtml/resources/schemas/xhtml/xhtml-basic.rng">
+<!-- change to this to include XHTML transitional schema 
+<include href="fallback://lenya/modules/xhtml/resources/schemas/xhtml/xhtml.rng">
+-->
+<!-- change to this to include XHTML strict schema 
+<include href="fallback://lenya/modules/xhtml/resources/schemas/xhtml/xhtml-strict.rng">
+-->
 
   <define name="html">
     <element name="html">
