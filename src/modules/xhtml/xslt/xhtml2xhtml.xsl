@@ -31,12 +31,14 @@
 
 <xsl:template match="/xhtml:html">
   <xsl:copy-of select="lenya:meta"/>
-  <div id="body">
-    <xsl:if test="$rendertype = 'edit'">
-      <xsl:attribute name="bxe_xpath">/xhtml:html/xhtml:body</xsl:attribute>
-    </xsl:if>
-    <xsl:apply-templates select="xhtml:body/node()"/>
-  </div>
+  <html>
+    <body>
+      <xsl:if test="$rendertype = 'edit'">
+        <xsl:attribute name="bxe_xpath">/xhtml:html/xhtml:body</xsl:attribute>
+      </xsl:if>
+      <xsl:apply-templates select="xhtml:body/node()"/>
+    </body>
+  </html>
 </xsl:template>
 
 <xsl:template match="@*|node()">

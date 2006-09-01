@@ -56,11 +56,9 @@
         <!-- Load doctype-specific CSS -->
         <xsl:choose>
           <xsl:when test="$document-type">
-            <!-- The following only work if the module is called like the {$document-type}
-              This makes it possible to provide css e.g. for bxe on a module basis -->
-            <link rel="stylesheet" href="{$context-prefix}/modules/{$document-type}/css/{$document-type}.css" type="text/css"/>
             <!-- Looking into the pub e.g. {$yourPub}/resources/shared/css/{$document-type}.css -->
             <link rel="stylesheet" href="{$root}/css/{$document-type}.css" type="text/css"/>
+            <xsl:copy-of select="xhtml:html/xhtml:head/*"/>
           </xsl:when>
           <xsl:otherwise>
             <!-- do nothing -->
@@ -98,6 +96,11 @@
                   <xsl:apply-templates select="xhtml:div[@id = 'breadcrumb']"/>
                   <xsl:apply-templates select="xhtml:div[@id = 'search']"/>
                   <xsl:apply-templates select="xhtml:div[@id = 'body']"/>
+                  <xsl:if test="xhtml:html">
+                    <div id="body">
+                      <xsl:apply-templates select="xhtml:html/xhtml:body/*"/>
+                    </div>
+                  </xsl:if>
                   <xsl:call-template name="footer"/>
                 </div>
               </td>
