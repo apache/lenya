@@ -5,7 +5,7 @@
 <meta content="Apache Forrest" name="Generator">
 <meta name="Forrest-version" content="0.8-dev">
 <meta name="Forrest-skin-name" content="pelt">
-<title>A Publication in Lenya</title>
+<title>Working with Documents</title>
 <link type="text/css" href="../../../skin/basic.css" rel="stylesheet">
 <link media="screen" type="text/css" href="../../../skin/screen.css" rel="stylesheet">
 <link media="print" type="text/css" href="../../../skin/print.css" rel="stylesheet">
@@ -126,11 +126,22 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div onclick="SwitchMenu('menu_selected_1.1.4', '../../../skin/')" id="menu_selected_1.1.4Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Concepts</div>
 <div id="menu_selected_1.1.4" class="selectedmenuitemgroup" style="display: block;">
-<div class="menupage">
-<div class="menupagetitle">Publication</div>
-</div>
 <div class="menuitem">
-<a href="../../../docs/1_4/concepts/documents.html">Working with Documents</a>
+<a href="../../../docs/1_4/concepts/publication.html">Publication</a>
+</div>
+<div class="menupage">
+<div class="menupagetitle">Working with Documents</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a href="#The+Session">The Session</a>
+</div>
+<div class="menupageitem">
+<a title="The Document Factory" href="#The+Document+Factory">The Document Factor...</a>
+</div>
+<div class="menupageitem">
+<a title="Browsing Content and Site Structure" href="#Browsing+Content+and+Site+Structure">Browsing Content an...</a>
+</div>
+</div>
 </div>
 <div class="menuitem">
 <a href="../../../docs/1_4/concepts/urlMapping.html">URL Mapping</a>
@@ -218,31 +229,95 @@ document.write("Last Published: " + document.lastModified);
     +-->
 <div id="content">
 <div title="Portable Document Format" class="pdflink">
-<a class="dida" href="publication.pdf"><img alt="PDF -icon" src="../../../skin/images/pdfdoc.gif" class="skin"><br>
+<a class="dida" href="documents.pdf"><img alt="PDF -icon" src="../../../skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
 </div>
-<h1>A Publication in Lenya</h1>
-
-		
-<a name="N1000D"></a><a name="What+is+a+publication%3F"></a>
-<h2 class="h3">What is a publication?</h2>
+<h1>Working with Documents</h1>
+    
+    
+<a name="N1000E"></a><a name="The+Session"></a>
+<h2 class="h3">The Session</h2>
 <div class="section">
-<p>Though it's not entirely accurate, you can think of a Lenya publication as a website that
-			you are building, editing and maybe also serving through Lenya.</p>
-<p>A publication typically consists of at least:</p>
-<ul>
-			
-<li>Some original content (usually XML files and other resources such as images). The XML files
-			may be XHTML files, but they might be any other XML format as well.</li>
-			
-<li>One more more XSLT files.</li>
-			
-<li>A Cocoon sitemap that glues the pieces together and controls how the site will be rendered in Live mode</li>
-			
-</ul>
+<p>
+        An <span class="codefrag">o.a.l.cms.repository.Session</span> is a temporary container for
+        repository nodes which you want to work with. If you want to change or remove
+        nodes - for instance in a usecase handler - you have to start a transaction.
+        To avoid overriding or losing someone else's changes, you should lock any nodes
+        which are potentially affected or read during your transaction.
+      </p>
+<p>
+        A convenient way to get the session which is attached to the current request
+        is provided by the <span class="codefrag">RepositoryUtil</span>:
+      </p>
+<pre class="code">Session session = RepositoryUtil.getSession(this.manager, request);</pre>
 </div>
-			
-	
+    
+    
+<a name="N10025"></a><a name="The+Document+Factory"></a>
+<h2 class="h3">The Document Factory</h2>
+<div class="section">
+<p>
+        The <span class="codefrag">o.a.l.cms.publication.DocumentFactory</span> is the main entry point to the content
+        repository. It is tied to a session. You get the document factory which is
+        attached to the current session this way:
+      </p>
+<pre class="code">DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);</pre>
+</div>
+    
+    
+<a name="N10036"></a><a name="Browsing+Content+and+Site+Structure"></a>
+<h2 class="h3">Browsing Content and Site Structure</h2>
+<div class="section">
+<p>
+        From the document factory, you can access a publication:
+      </p>
+<pre class="code">
+String webappUrl = ServletHelper.getWebappUrl(request);
+URLInformation info = new URLInformation(webappUrl);
+Publication pub = factory.getPublication(info.getPublicationId());
+</pre>
+<p>
+        The publication provides access to all areas (pun intended).
+        An area object enables you to obtain documents by their UUID.
+      </p>
+<pre class="code">
+Area authoring = pub.getArea("authoring");
+Document[] docs = authoring.getDocuments();
+Document doc = authoring.getDocument(uuid, language);
+</pre>
+<p>
+        If you want to obtain a document by its path in the site structure,
+        get the site structure from the area:
+      </p>
+<pre class="code">
+SiteStructure site = authoring.getSite();
+SiteNode node = site.getNode("/tutorial");
+String[] languages = node.getLanguages();
+Link link = node.getLink(language);
+Document doc = link.getDocument();
+</pre>
+<p>You can also browse the document structure in a bottom-up way:</p>
+<pre class="code">
+Document doc = ...;
+doc.area().getPublication();
+String area = doc.getLink().getNode().getStructure().getArea();
+</pre>
+<p>
+        The Document class allows to access different language and area versions
+        of the document:
+      </p>
+<pre class="code">
+if (doc.existsTranslation("en")) {
+    englishVersion = doc.getTranslation("en");
+}
+if (doc.existsVersion("live", doc.getLanguage()) {
+    addInfoMessage("Live version exists!");
+    liveVersion = doc.getVersion("live", doc.getLanguage());
+}
+</pre>
+</div>
+    
+  
 </div>
 <!--+
     |end content
@@ -264,7 +339,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div id="feedback">
     Send feedback about the website to:
-  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A0docs/1_4/concepts/publication.html">dev@lenya.apache.org</a>
+  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A0docs/1_4/concepts/documents.html">dev@lenya.apache.org</a>
 </div>
 <!--+
     |end bottomstrip

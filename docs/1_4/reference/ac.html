@@ -5,7 +5,7 @@
 <meta content="Apache Forrest" name="Generator">
 <meta name="Forrest-version" content="0.8-dev">
 <meta name="Forrest-skin-name" content="pelt">
-<title>A Publication in Lenya</title>
+<title>Access Control Specification</title>
 <link type="text/css" href="../../../skin/basic.css" rel="stylesheet">
 <link media="screen" type="text/css" href="../../../skin/screen.css" rel="stylesheet">
 <link media="print" type="text/css" href="../../../skin/print.css" rel="stylesheet">
@@ -124,10 +124,10 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../docs/1_4/installation/source_version.html">Install Instructions</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_selected_1.1.4', '../../../skin/')" id="menu_selected_1.1.4Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Concepts</div>
-<div id="menu_selected_1.1.4" class="selectedmenuitemgroup" style="display: block;">
-<div class="menupage">
-<div class="menupagetitle">Publication</div>
+<div onclick="SwitchMenu('menu_1.1.4', '../../../skin/')" id="menu_1.1.4Title" class="menutitle">Concepts</div>
+<div id="menu_1.1.4" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../docs/1_4/concepts/publication.html">Publication</a>
 </div>
 <div class="menuitem">
 <a href="../../../docs/1_4/concepts/documents.html">Working with Documents</a>
@@ -142,13 +142,36 @@ document.write("Last Published: " + document.lastModified);
 <a href="../../../docs/1_4/concepts/wysiwyg.html">WYSIWYG</a>
 </div>
 </div>
-<div onclick="SwitchMenu('menu_1.1.5', '../../../skin/')" id="menu_1.1.5Title" class="menutitle">Technical Reference</div>
-<div id="menu_1.1.5" class="menuitemgroup">
+<div onclick="SwitchMenu('menu_selected_1.1.5', '../../../skin/')" id="menu_selected_1.1.5Title" class="menutitle" style="background-image: url('../../../skin/images/chapter_open.gif');">Technical Reference</div>
+<div id="menu_selected_1.1.5" class="selectedmenuitemgroup" style="display: block;">
 <div class="menuitem">
 <a href="../../../docs/1_4/reference/lenya-sitemaps.html">Overview of Lenya Sitemaps</a>
 </div>
-<div class="menuitem">
-<a href="../../../docs/1_4/reference/ac.html">Access Control Specification</a>
+<div class="menupage">
+<div class="menupagetitle">Access Control Specification</div>
+<div class="menupageitemgroup">
+<div class="menupageitem">
+<a title="Access Control Specification" href="#ac-intro">Access Control Spec...</a>
+</div>
+<div class="menupageitem">
+<a href="#Terminology">Terminology</a>
+</div>
+<div class="menupageitem">
+<a title="We use the following names." href="#Names">We use the followin...</a>
+</div>
+<div class="menupageitem">
+<a href="#Concept">Concept</a>
+</div>
+<div class="menupageitem">
+<a title="Role resolving algorithm" href="#resolving">Role resolving algo...</a>
+</div>
+<div class="menupageitem">
+<a href="#gui">User interface</a>
+</div>
+<div class="menupageitem">
+<a href="#samples">Examples</a>
+</div>
+</div>
 </div>
 <div onclick="SwitchMenu('menu_1.1.5.3', '../../../skin/')" id="menu_1.1.5.3Title" class="menutitle">Usecase Framework</div>
 <div id="menu_1.1.5.3" class="menuitemgroup">
@@ -218,31 +241,149 @@ document.write("Last Published: " + document.lastModified);
     +-->
 <div id="content">
 <div title="Portable Document Format" class="pdflink">
-<a class="dida" href="publication.pdf"><img alt="PDF -icon" src="../../../skin/images/pdfdoc.gif" class="skin"><br>
+<a class="dida" href="ac.pdf"><img alt="PDF -icon" src="../../../skin/images/pdfdoc.gif" class="skin"><br>
         PDF</a>
 </div>
-<h1>A Publication in Lenya</h1>
-
-		
-<a name="N1000D"></a><a name="What+is+a+publication%3F"></a>
-<h2 class="h3">What is a publication?</h2>
+<h1>Access Control Specification</h1>
+    
+<a name="N1000E"></a><a name="ac-intro"></a>
+<h2 class="h3">Access Control Specification</h2>
 <div class="section">
-<p>Though it's not entirely accurate, you can think of a Lenya publication as a website that
-			you are building, editing and maybe also serving through Lenya.</p>
-<p>A publication typically consists of at least:</p>
 <ul>
-			
-<li>Some original content (usually XML files and other resources such as images). The XML files
-			may be XHTML files, but they might be any other XML format as well.</li>
-			
-<li>One more more XSLT files.</li>
-			
-<li>A Cocoon sitemap that glues the pieces together and controls how the site will be rendered in Live mode</li>
-			
+        
+<li>Possibility to deny permissions</li>
+      
 </ul>
 </div>
-			
-	
+    
+<a name="N1001B"></a><a name="Terminology"></a>
+<h2 class="h3">Terminology</h2>
+<div class="section">
+<ul>
+        
+<li>An accreditable is either a user, a group, an IP range, or the world.</li>
+        
+<li>A credential is an assignment of a role to an accreditable.</li>
+      
+</ul>
+</div>
+    
+<a name="N1002B"></a><a name="Names"></a>
+<h2 class="h3">We use the following names.</h2>
+<div class="section">
+<ul>
+        
+<li>n - a node</li>
+        
+<li>parent(n) - the parent node of n</li>
+        
+<li>n.c1, ..., n.ci - the credentials of the node n</li>
+        
+<li>acc(c) - the accreditable which the credential refers to</li>
+        
+<li>role(c) - the role which the credential assignes to the accreditable</li>
+        
+<li>method(c) - the method of the credential</li>
+      
+</ul>
+</div>
+    
+<a name="N10047"></a><a name="Concept"></a>
+<h2 class="h3">Concept</h2>
+<div class="section">
+<ul>
+        
+<li>Credential methods can be grant or deny.</li>
+        
+<li>The order of credentials at a node is important.</li>
+        
+<li>To find out if a certain accreditable a has a role r for the node n, use the following algorithm:
+          <ul>
+            
+<li>Search for the first matching credential, starting with the first credential of the node n.</li>
+            
+<li>If no credential of n matches the accreditable, continue with the parent node.</li>
+            
+<li>When a credential is found which assigns the role r to the accreditable a, return the method of the credential.</li>
+            
+<li>When a credential is found which assigns the role r to the accreditable a, return the method of the credential.</li>
+          
+</ul>
+        
+</li>
+      
+</ul>
+</div>
+    
+<a name="N10069"></a><a name="resolving"></a>
+<h2 class="h3">Role resolving algorithm</h2>
+<div class="section">
+<ul>
+        
+<li>while not matched:
+          <ul>
+            
+<li>for c : n.ci to n.c1: + if acc(c) = a and role(c) = r, return method(c)</li>
+            
+<li>n := parent(n)</li>
+          
+</ul>
+        
+</li>
+        
+<li>return deny</li>
+      
+</ul>
+</div>
+    
+<a name="N10082"></a><a name="gui"></a>
+<h2 class="h3">User interface</h2>
+<div class="section">
+<p>The user interface has to allow the following operations:</p>
+<ul>
+        
+<li>add/remove credentials for users, groups, world</li>
+        
+<li>set the credential method</li>
+        
+<li>change credential order (move up/down)</li>
+      
+</ul>
+</div>
+    
+<a name="N10098"></a><a name="samples"></a>
+<h2 class="h3">Examples</h2>
+<div class="section">
+<p>Like stated above the order of the credential is important. Credentials are builded
+        from policies. Imaginge you are trying to access
+        http://localhost:8888/default/introduction.html </p>
+<p>The defined policy (with highest priority) would be:
+        config/ac/policies/introduction.html/subtree-policy.acml. Imaginge you have
+        defined:</p>
+<pre class="code">&lt;policy xmlns="http://apache.org/cocoon/lenya/ac/1.0"&gt;
+  &lt;world&gt;
+    &lt;role id="visit" method="deny"/&gt;
+  &lt;/world&gt;
+  &lt;group id="editor"&gt;
+    &lt;role id="edit" method="grant"/&gt;
+  &lt;/group&gt;
+&lt;/policy&gt; </pre>
+<p>Then you try to login in with user "lenya" who is in the editor group. However you will
+        not be successful, because everybody always is world. Since the DENY of world is
+        coming first nobody will now be able to see the page. Changing above policy to </p>
+<pre class="code">&lt;policy xmlns="http://apache.org/cocoon/lenya/ac/1.0"&gt;
+  &lt;group id="editor"&gt;
+    &lt;role id="edit" method="grant"/&gt;
+  &lt;/group&gt;
+  &lt;world&gt;
+    &lt;role id="visit" method="deny"/&gt;
+  &lt;/world&gt;
+&lt;/policy&gt; </pre>
+<p>Let all user of the group editor access the page.</p>
+<p>Best practise is to deny access early in a node tree of policies for e.g. WORLD.
+        Meaning to define it e.g. in config/ac/policies/authoring/subtree-policy.acml</p>
+</div>
+  
 </div>
 <!--+
     |end content
@@ -264,7 +405,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
 <div id="feedback">
     Send feedback about the website to:
-  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A0docs/1_4/concepts/publication.html">dev@lenya.apache.org</a>
+  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A0docs/1_4/reference/ac.html">dev@lenya.apache.org</a>
 </div>
 <!--+
     |end bottomstrip

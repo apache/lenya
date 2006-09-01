@@ -2764,4 +2764,1754 @@ The match is
 </paths>
 <msg>Adding .htaccess file to our document source</msg>
 </logentry>
+<logentry
+   revision="431418">
+<author>thorsten</author>
+<date>2006-08-14T19:40:07.131363Z</date>
+<paths>
+<path
+   action="A">/lenya/site/1_2_x/how-to/usecase-search.xmap</path>
+<path
+   action="M">/lenya/site/incubator-2003-11-12.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-07.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-08.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-09.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2004-07-10.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2002-08-09.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-05.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-09.svn.html</path>
+<path
+   action="A">/lenya/site/1_2_x</path>
+<path
+   action="M">/lenya/site/tlp-2005-01.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-01.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-05.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-05.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-10.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-11.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-12.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-09.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2002-01-04.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2004-01-03.svn.pdf</path>
+<path
+   action="M">/lenya/site/svn-log/tlp-HEAD.svn.xml</path>
+<path
+   action="M">/lenya/site/incubator-2002-05-07.svn.pdf</path>
+<path
+   action="A">/lenya/site/1_2_x/how-to/searchfixer.xsl</path>
+<path
+   action="M">/lenya/site/incubator-2003-10.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-HEAD.svn-revision.xml</path>
+<path
+   action="A">/lenya/site/1_2_x/how-to/search-and-results.xsp</path>
+<path
+   action="M">/lenya/site/incubator-2003-06.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-HEAD.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-10.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-02.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-02.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2004-11.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-06.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-06.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2004-12.svn.pdf</path>
+<path
+   action="A">/lenya/site/1_2_x/how-to</path>
+<path
+   action="M">/lenya/site/incubator-2002-05-07.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2004-04-06.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2002-08-09.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2003-03.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-07.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-03.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2003-04.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2003-05.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2003-06.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2004-11.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-07.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-11.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-08.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-03.svn.html</path>
+<path
+   action="M">/lenya/site/.htaccess</path>
+<path
+   action="M">/lenya/site/incubator-2003-09.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2006-03.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2002-01-04.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-11-12.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-01.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-07.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-02.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2006-07.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-03.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2006-04.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2003-01-02.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2002-10-12.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2006-05.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2004-07-10.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-06.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2006-07.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2004-04-06.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-04.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-10.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2003-08.svn.html</path>
+<path
+   action="A">/lenya/site/1_2_x/how-to/typical-lenya-setup.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2004-12.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-HEAD.svn-sh.xml</path>
+<path
+   action="M">/lenya/site/tlp-HEAD.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-12.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-04.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2006-04.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2003-01-02.svn.html</path>
+<path
+   action="M">/lenya/site/incubator-2002-10-12.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-01.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-02.svn.pdf</path>
+<path
+   action="M">/lenya/site/incubator-2004-01-03.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-03.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-08.svn.html</path>
+<path
+   action="M">/lenya/site/tlp-2005-04.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-05.svn.pdf</path>
+<path
+   action="M">/lenya/site/tlp-2005-06.svn.pdf</path>
+</paths>
+<msg>Automatic publish from forrestbot</msg>
+</logentry>
+<logentry
+   revision="431421">
+<author>thorsten</author>
+<date>2006-08-14T19:47:28.124532Z</date>
+<paths>
+<path
+   action="D">/lenya/site/1_2_x</path>
+</paths>
+<msg>Removing the 1_2_x dir again that still have been in my backup maschine</msg>
+</logentry>
+<logentry
+   revision="431429">
+<author>thorsten</author>
+<date>2006-08-14T20:28:14.802278Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/properties/java/src/org/apache/lenya/cms/cocoon/components/modules/input/PropertiesModule.java</path>
+</paths>
+<msg>White noise - formating changed</msg>
+</logentry>
+<logentry
+   revision="431503">
+<author>chestnut</author>
+<date>2006-08-15T03:11:33.696233Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/tab/sitetree.jx</path>
+</paths>
+<msg>don't try to make lang tab if lang version doesn't exist for the current document</msg>
+</logentry>
+<logentry
+   revision="431567">
+<author>andreas</author>
+<date>2006-08-15T10:20:21.292108Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/tab/overview.jx</path>
+</paths>
+<msg>Show path and UUID instead of document ID on overview tab</msg>
+</logentry>
+<logentry
+   revision="431568">
+<author>andreas</author>
+<date>2006-08-15T10:21:24.756962Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/java/src/org/apache/lenya/cms/lucene/IndexUpdater.java</path>
+</paths>
+<msg>[minor change] removed unused import</msg>
+</logentry>
+<logentry
+   revision="431589">
+<author>andreas</author>
+<date>2006-08-15T12:33:31.011675Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/xslt/search2html.xsl</path>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/java/src/org/apache/lenya/cms/lucene/IndexUpdater.java</path>
+<path
+   action="A">/lenya/trunk/src/modules/lucene/java/src/org/apache/lenya/cms/lucene/IndexUpdaterImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/config/cocoon-xconf/index-updater.xconf</path>
+<path
+   action="A">/lenya/trunk/src/modules/lucene/java/src/org/apache/cocoon/transformation/UuidToUrlTransformer.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/sitemap.xmap</path>
+</paths>
+<msg>Use UUID+language instead of URL as index keys. This way, the index doesn't have to be updated when the URL of a document changes. The URLs are resolved dynamically when the search results are presented.</msg>
+</logentry>
+<logentry
+   revision="431591">
+<author>andreas</author>
+<date>2006-08-15T12:39:49.224714Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/java/src/org/apache/cocoon/components/search/components/Searcher.java</path>
+</paths>
+<msg>[minor change] code formatting</msg>
+</logentry>
+<logentry
+   revision="431595">
+<author>andreas</author>
+<date>2006-08-15T13:01:53.064116Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/transformation/LinkRewritingTransformer.java</path>
+</paths>
+<msg>LinkRewritingTransformer: don't throw exception for broken links</msg>
+</logentry>
+<logentry
+   revision="431860">
+<author>andreas</author>
+<date>2006-08-16T08:12:18.145952Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/DocumentInfoModule.java</path>
+</paths>
+<msg>Renamed document-id to uuid in comment</msg>
+</logentry>
+<logentry
+   revision="431861">
+<author>andreas</author>
+<date>2006-08-16T08:13:10.186826Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/lucene/java/test/org/apache/lenya/cms/lucene/IndexUpdaterTest.java</path>
+</paths>
+<msg>Fixed IndexUpdaterTest: lookup paths in site structure instead of using them as UUIDs</msg>
+</logentry>
+<logentry
+   revision="431893">
+<author>andreas</author>
+<date>2006-08-16T13:23:58.384765Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/config/workflow/workflow.xml</path>
+</paths>
+<msg>Added transitions to deactivate a document in authoring + review state</msg>
+</logentry>
+<logentry
+   revision="431894">
+<author>andreas</author>
+<date>2006-08-16T13:24:26.602799Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/impl/test/org/apache/lenya/cms/workflow/WorkflowTest.java</path>
+</paths>
+<msg>Allow WorkflowTest to run for authoring/review + is_live = true</msg>
+</logentry>
+<logentry
+   revision="431895">
+<author>andreas</author>
+<date>2006-08-16T13:25:20.969632Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/observation-impl/java/test/org/apache/lenya/cms/observation/ObservationTest.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/test/org/apache/lenya/cms/publication/DublinCoreTest.java</path>
+</paths>
+<msg>Fixed docId vs. UUID issues in tests</msg>
+</logentry>
+<logentry
+   revision="431948">
+<author>thorsten</author>
+<date>2006-08-16T17:03:41.072752Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/PageEnvelopeModule.java</path>
+</paths>
+<msg>Updating the page-envelope to return the path and not the uuid for document-path</msg>
+</logentry>
+<logentry
+   revision="432179">
+<author>andreas</author>
+<date>2006-08-17T08:32:35.471845Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/PublicationConfiguration.java</path>
+<path
+   action="A">/lenya/trunk/src/impl/test/org/apache/lenya/cms/publication/PublicationTest.java</path>
+</paths>
+<msg>Initialize publication content dir if not set in publication.xconf. Added corresponding test case.</msg>
+</logentry>
+<logentry
+   revision="432180">
+<author>andreas</author>
+<date>2006-08-17T08:47:37.823315Z</date>
+<paths>
+<path
+   action="D">/lenya/trunk/src/pubs/blog/content/live/sidebar.xml.meta</path>
+<path
+   action="D">/lenya/trunk/src/pubs/blog/content/archive/sidebar.xml.meta</path>
+<path
+   action="D">/lenya/trunk/src/pubs/blog/content/live/sidebar.xml</path>
+</paths>
+<msg>Removed obsolete blog content files</msg>
+</logentry>
+<logentry
+   revision="432182">
+<author>andreas</author>
+<date>2006-08-17T08:49:56.247378Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/Area.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/AreaImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/PublicationImpl.java</path>
+</paths>
+<msg>Added Area.getDocuments() method</msg>
+</logentry>
+<logentry
+   revision="432192">
+<author>andreas</author>
+<date>2006-08-17T09:44:56.789538Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/PublicationConfiguration.java</path>
+</paths>
+<msg>Exclude rcml and rcbak from area names</msg>
+</logentry>
+<logentry
+   revision="432193">
+<author>andreas</author>
+<date>2006-08-17T09:45:37.389726Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/simple/SimpleSiteManager.java</path>
+</paths>
+<msg>SimpleSiteManager: check if site config file exists</msg>
+</logentry>
+<logentry
+   revision="432194">
+<author>thorsten</author>
+<date>2006-08-17T09:47:22.019320Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/resource/README.txt</path>
+</paths>
+<msg>The original resource module from will be removed. 
+However the icon package is still aviable under a new location.
+Updating the readme to reflect this.</msg>
+</logentry>
+<logentry
+   revision="432197">
+<author>andreas</author>
+<date>2006-08-17T10:11:23.419372Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/sourcerepository/java/src/org/apache/lenya/cms/repository/SourceNode.java</path>
+</paths>
+<msg>Fixed path handling for SourceNode.getRealSourceURI()</msg>
+</logentry>
+<logentry
+   revision="432198">
+<author>andreas</author>
+<date>2006-08-17T10:11:53.674601Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/migration/java/test/org/apache/lenya/cms/migration/MigrateUuidsTest.java</path>
+</paths>
+<msg>Added verification to MigrateUuidsTest</msg>
+</logentry>
+<logentry
+   revision="432202">
+<author>thorsten</author>
+<date>2006-08-17T10:50:52.856135Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/tools/anttasks/src/org/apache/lenya/cms/ant/GenerateModuleList.java</path>
+</paths>
+<msg>White noise - formating changes.</msg>
+</logentry>
+<logentry
+   revision="432204">
+<author>andreas</author>
+<date>2006-08-17T10:57:27.348788Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/targets/ide-build.xml</path>
+</paths>
+<msg>Added ant task sources to eclipse classpath</msg>
+</logentry>
+<logentry
+   revision="432205">
+<author>thorsten</author>
+<date>2006-08-17T11:07:11.285423Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/tools/anttasks/build/classes/org/apache/lenya/cms/ant/GenerateModuleList.class</path>
+<path
+   action="M">/lenya/trunk/tools/anttasks/src/org/apache/lenya/cms/ant/GenerateModuleList.java</path>
+</paths>
+<msg>Enhancing the build process of modules. Checking now whether we have two modules with the same name. If so we will now throw an exception</msg>
+</logentry>
+<logentry
+   revision="432207">
+<author>thorsten</author>
+<date>2006-08-17T11:11:47.353577Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/tools/anttasks/src/org/apache/lenya/cms/ant/GenerateModuleList.java</path>
+</paths>
+<msg>Organising imports</msg>
+</logentry>
+<logentry
+   revision="432220">
+<author>thorsten</author>
+<date>2006-08-17T12:58:50.065918Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/tools/anttasks/build/classes/org/apache/lenya/cms/ant/GenerateModuleList.class</path>
+</paths>
+<msg>Compiling the ant target with 1.4 and not with 1.5</msg>
+</logentry>
+<logentry
+   revision="432242">
+<author>andreas</author>
+<date>2006-08-17T14:06:58.067514Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/repository/RepositoryManagerImpl.java</path>
+</paths>
+<msg>Allow to delete nodes without locking.</msg>
+</logentry>
+<logentry
+   revision="432243">
+<author>andreas</author>
+<date>2006-08-17T14:07:27.366443Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/migration/java/test/org/apache/lenya/cms/migration/MigrateUuidsTest.java</path>
+</paths>
+<msg>Copy content of language version after migrating a document</msg>
+</logentry>
+<logentry
+   revision="432398">
+<author>josias</author>
+<date>2006-08-17T21:41:26.578370Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/targets/modules-build.xml</path>
+</paths>
+<msg>removed dependency of patch-modules-test on prepare-modules, because prepare-modules is already executed when lenya is built. this should fix a problem about cocoon.xconf missing some module configuration after the tests are executed as './build.sh clean webapp test'</msg>
+</logentry>
+<logentry
+   revision="432497">
+<author>thorsten</author>
+<date>2006-08-18T06:41:14.115073Z</date>
+<paths>
+<path
+   copyfrom-path="/lenya/trunk/src"
+   copyfrom-rev="432263"
+   action="A">/lenya/sandbox/ac-restricted-1.4-src</path>
+</paths>
+<msg>Adding initial ac-restricted branch base on lenya-1.4 r432243</msg>
+</logentry>
+<logentry
+   revision="432516">
+<author>andreas</author>
+<date>2006-08-18T08:30:19.015790Z</date>
+<paths>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/1_4/concepts/documents.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/site.xml</path>
+</paths>
+<msg>Added tutorial how to work with documents</msg>
+</logentry>
+<logentry
+   revision="432518">
+<author>andreas</author>
+<date>2006-08-18T08:32:41.476310Z</date>
+<paths>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/docs/1_4/concepts/documents.xml</path>
+</paths>
+<msg>Added comment about area versions</msg>
+</logentry>
+<logentry
+   revision="432524">
+<author>josias</author>
+<date>2006-08-18T08:47:17.449320Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Create.java</path>
+</paths>
+<msg>when a new language version is created, add it to the sitetree</msg>
+</logentry>
+<logentry
+   revision="432540">
+<author>josias</author>
+<date>2006-08-18T10:08:07.589106Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentImpl.java</path>
+</paths>
+<msg>return correct document name (use sitetree information instead of uuid)</msg>
+</logentry>
+<logentry
+   revision="432544">
+<author>thorsten</author>
+<date>2006-08-18T10:27:26.481081Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/resource/xslt/resource2xhtml.xsl</path>
+<path
+   action="M">/lenya/trunk/src/modules/resource/sitemap.xmap</path>
+</paths>
+<msg>Fixing a bug regarding the usage of the fallback src. 
+If you call  
+http://localhost:8888/modules/resource/icons/jpg_med.gif
+then your pub will be ignored as fallback. 
+
+Changing the call to 
+http://localhost:8888/default/modules/resource/icons/jpg_med.gif
+fixes the problem.</msg>
+</logentry>
+<logentry
+   revision="432549">
+<author>thorsten</author>
+<date>2006-08-18T10:47:18.272608Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/default/config/ac/policies/live/subtree-policy.acml</path>
+<path
+   action="A">/lenya/sandbox/ac-restricted-1.4-src/pubs/default/config/ac/policies/authoring/index/url-policy.acml</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/default/config/ac/policies/authoring/subtree-policy.acml</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/java/org/apache/lenya/ac/Credential.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/default/config/ac/policies/index.html/url-policy.acml</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/default/config/ac/policies/admin/users/lenya.html/subtree-policy.acml</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/default/config/ac/usecase-policies.xml</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/impl/PolicyBuilder.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/file/FilePolicyManager.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/cms/ac/DocumentPolicyManagerWrapper.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/impl/PolicyAuthorizer.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/default/config/ac/policies/archive/subtree-policy.acml</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/impl/URLPolicy.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/java/org/apache/lenya/ac/PolicyManager.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/default/config/ac/policies/trash/subtree-policy.acml</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/default/config/ac/policies/introduction.html/subtree-policy.acml</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/default/sitemap.xmap</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/java/org/apache/lenya/ac/Policy.java</path>
+<path
+   action="A">/lenya/sandbox/ac-restricted-1.4-src/pubs/default/config/ac/policies/authoring/index</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/default/config/ac/policies/admin/subtree-policy.acml</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/default/config/ac/policies/url-policy.acml</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/impl/CredentialImpl.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/cms/ac/SitemapPolicyManager.java</path>
+</paths>
+<msg>Basic refactored AC prototype. You can now GRANT or DENY credentials on a url basis. This is integrated into the current implementation. We extend the *.acml files with an @method attribute to define whether or not a certain accreditable can have a role. Till now I did not cleaned/verify that some method can be romved due to this changes. The sitetree usecase AC... needs an update and the whole stuff more testing. Please do in lenya-trunk/src: svn switch https://svn.apache.org/repos/asf/lenya/sandbox/ac-restricted-1.4-src 
+if you are keen to test and play around. Try to change the *acml in the build (e.g. with vim) and see the effect after reload.</msg>
+</logentry>
+<logentry
+   revision="432553">
+<author>thorsten</author>
+<date>2006-08-18T11:21:05.448425Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/default/sitemap.xmap</path>
+</paths>
+<msg>Removing custom code that should not be in there.</msg>
+</logentry>
+<logentry
+   revision="432568">
+<author>thorsten</author>
+<date>2006-08-18T13:04:14.220203Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/default/config/ac/policies/authoring/index/url-policy.acml</path>
+<path
+   action="A">/lenya/sandbox/ac-restricted-1.4-src/README_AC.txt</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/impl/DefaultPolicy.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/impl/PolicyBuilder.java</path>
+</paths>
+<msg>Adding explanation of the Access Control Specification. Further explaining how it works with an example. Since the order of the policy is important I changed all set and maps to Linked* to keep the entry order.</msg>
+</logentry>
+<logentry
+   revision="432585">
+<author>thorsten</author>
+<date>2006-08-18T13:48:49.429841Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/default/sitemap.xmap</path>
+</paths>
+<msg>Removing custom code that should not have been changed in there.</msg>
+</logentry>
+<logentry
+   revision="432591">
+<author>josias</author>
+<date>2006-08-18T14:11:25.261244Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/tools/bin/ant</path>
+</paths>
+<msg>prevent ant from using the system's ant.conf, always use the provided ant. fixes bug #40284, thanks to Simon Litwan</msg>
+</logentry>
+<logentry
+   revision="432614">
+<author>chestnut</author>
+<date>2006-08-18T15:10:53.659388Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/config/sitemap/pipelines.xmap</path>
+</paths>
+<msg>Check to see if current session is authorized before trying basic auth for webdav request</msg>
+</logentry>
+<logentry
+   revision="432616">
+<author>josias</author>
+<date>2006-08-18T15:14:29.180715Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/editors/sitemap.xmap</path>
+</paths>
+<msg>made the oneformeditor work again by using the lenyadoc protocol instead of the lenya protocol.</msg>
+</logentry>
+<logentry
+   revision="432618">
+<author>chestnut</author>
+<date>2006-08-18T15:15:13.929801Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/bxe/sitemap.xmap</path>
+</paths>
+<msg>use webDAV GET/PUT requests for bxe again, shouldn't be prompted for a userid/pass now</msg>
+</logentry>
+<logentry
+   revision="432620">
+<author>thorsten</author>
+<date>2006-08-18T15:39:23.934356Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/administration/java/src/org/apache/lenya/cms/ac/usecases/AccessControl.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/README_AC.txt</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/java/org/apache/lenya/ac/ModifiablePolicy.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/impl/DefaultPolicy.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/impl/PolicyBuilder.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/file/FilePolicyManager.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/administration/java/src/org/apache/lenya/cms/ac/usecases/CredentialWrapper.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/sitemanagement/usecases/tab/ac/ac.jx</path>
+</paths>
+<msg>first steps refactoring the jx template. Adding the method and header to the form. Adding URL rights isnow working fine. Other not yet implemented/tested. Needed to comment one line in a method that I have not yet been able to debug.</msg>
+</logentry>
+<logentry
+   revision="432626">
+<author>andreas</author>
+<date>2006-08-18T16:16:38.867613Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/TreeSiteManager.java</path>
+</paths>
+<msg>Don't use non-existing nodes in TreeSiteManager.getAvailableLocator()</msg>
+</logentry>
+<logentry
+   revision="433206">
+<author>thorsten</author>
+<date>2006-08-21T09:45:45.174940Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/administration/java/src/org/apache/lenya/cms/ac/usecases/AccessControl.java</path>
+</paths>
+<msg>White noise - formating changes.</msg>
+</logentry>
+<logentry
+   revision="433215">
+<author>andreas</author>
+<date>2006-08-21T10:11:07.642430Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Paste.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/site/copy.jx</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/site/paste.jx</path>
+</paths>
+<msg>Copy/Paste: show label instead of UUID on confirmation screen</msg>
+</logentry>
+<logentry
+   revision="433235">
+<author>thorsten</author>
+<date>2006-08-21T12:23:16.034213Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/administration/java/src/org/apache/lenya/cms/ac/usecases/AccessControl.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/impl/URLPolicy.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/file/FilePolicyManager.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/sitemanagement/usecases/tab/ac/ac.jx</path>
+</paths>
+<msg>Adding possibility to define URL *and* subtree policy. Further ordering the forms regarding url policies and inheritable credentials. Changing java mehtods to use Linked* methods to keep te order of credentials.</msg>
+</logentry>
+<logentry
+   revision="433250">
+<author>thorsten</author>
+<date>2006-08-21T14:11:56.456924Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/impl/URLPolicy.java</path>
+</paths>
+<msg>White noise - formating changes.</msg>
+</logentry>
+<logentry
+   revision="433265">
+<author>josias</author>
+<date>2006-08-21T15:46:14.549595Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/links/config/cocoon-xconf/resource-type-links.xconf</path>
+</paths>
+<msg>fixed luceneIndex uri</msg>
+</logentry>
+<logentry
+   revision="433266">
+<author>josias</author>
+<date>2006-08-21T15:46:57.896317Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/links/sitemap.xmap</path>
+</paths>
+<msg>use lenyadoc protocol instead of lenya protocol to read the xml source</msg>
+</logentry>
+<logentry
+   revision="433294">
+<author>thorsten</author>
+<date>2006-08-21T17:23:45.972576Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/administration/java/src/org/apache/lenya/cms/ac/usecases/AccessControl.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/impl/URLPolicy.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/java/org/apache/lenya/ac/ModifiablePolicy.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/impl/DefaultPolicy.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/java/org/apache/lenya/ac/Policy.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/file/FilePolicyManager.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/impl/PolicyAuthorizer.java</path>
+</paths>
+<msg>Fixing credential bug regarding the test set. We have to check the credential that the identity can obtain. Further returning now credentials sorted in importance order. Still missing ordering of rights (up and down) and fixing the bug with multiple role childs of an accreditable. This bug can be seen in the ac form, where only one credential is returned even if the accreditable has more role definitions.</msg>
+</logentry>
+<logentry
+   revision="433561">
+<author>andreas</author>
+<date>2006-08-22T08:36:01.843177Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/modules/defaultusecases/java/src/org/apache/lenya/defaultpub/cms/usecases/Deactivate.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/SiteTreeNodeImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/webdav/java/src/org/apache/lenya/cms/usecases/webdav/Put.java</path>
+<path
+   action="A">/lenya/trunk/src/java/org/apache/lenya/cms/site/NodeIterator.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/SiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/TreeSiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentManagerImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/NodeSet.java</path>
+<path
+   action="D">/lenya/trunk/src/impl/test/org/apache/lenya/cms/site/simple/SimpleSiteManagerTest.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/SiteUtil.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/MoveSubsite.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/SiteTree.java</path>
+<path
+   copyfrom-path="/lenya/trunk/src/impl/test/org/apache/lenya/cms/site/simple/SimpleSiteManagerTest.java"
+   copyfrom-rev="433198"
+   action="A">/lenya/trunk/src/impl/test/org/apache/lenya/cms/site/SimpleSiteManagerTest.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/ChangeNodeID.java</path>
+<path
+   action="M">/lenya/trunk/src/pubs/blog/java/src/org/apache/lenya/cms/workflow/usecases/Publish.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/source/SourceUtil.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/SiteNode.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/DefaultSiteTree.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Paste.java</path>
+<path
+   action="A">/lenya/trunk/src/impl/test/org/apache/lenya/cms/publication/DocumentManagerTest.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/simple/SimpleSiteNode.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/DocumentManager.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/AbstractSiteManager.java</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/modules/defaultusecases/java/src/org/apache/lenya/defaultpub/cms/usecases/Publish.java</path>
+</paths>
+<msg>Improved DocumentManager API, fixed UUID handling in sitetree, added DocumentManager test case. Copy+Paste should work  again.</msg>
+</logentry>
+<logentry
+   revision="433562">
+<author>andreas</author>
+<date>2006-08-22T08:49:02.986850Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/site/cut.jx</path>
+</paths>
+<msg>Show label instead of UUID on cut screen</msg>
+</logentry>
+<logentry
+   revision="433565">
+<author>andreas</author>
+<date>2006-08-22T08:56:23.275120Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/site/archive.jx</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/site/delete.jx</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/site/restore.jx</path>
+</paths>
+<msg>Show label instead of UUID on usecase screens</msg>
+</logentry>
+<logentry
+   revision="433588">
+<author>andreas</author>
+<date>2006-08-22T10:53:00.871008Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/config/lucene_index.xconf</path>
+</paths>
+<msg>Added lucene index configuration for trash and archive areas</msg>
+</logentry>
+<logentry
+   revision="433589">
+<author>andreas</author>
+<date>2006-08-22T10:53:26.765115Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/resources/build/modules2build.xsl</path>
+</paths>
+<msg>Adding xconf files in subdirectories of config/cocoon-xconf to the test configuration</msg>
+</logentry>
+<logentry
+   revision="433590">
+<author>andreas</author>
+<date>2006-08-22T10:54:32.057221Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/migration/java/test/org/apache/lenya/cms/migration/MigrateUuidsTest.java</path>
+</paths>
+<msg>Don't rely on sitetree handling of old UUIDs in migration class</msg>
+</logentry>
+<logentry
+   revision="433595">
+<author>andreas</author>
+<date>2006-08-22T11:11:04.552738Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/modules-core/sitemanagement/java/test</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/usecase/java/src/org/apache/lenya/cms/usecase/Usecase.java</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/sitemanagement/java/test/org/apache/lenya/cms</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/observation-impl/java/src/org/apache/lenya/cms/observation/ObservationManager.java</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/sitemanagement/java/test/org/apache/lenya/cms/site</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/sitemanagement/java/test/org/apache/lenya/cms/site/usecases/MoveSubsiteTest.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/test/org/apache/lenya/cms/usecase/AbstractUsecaseTest.java</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/sitemanagement/java/test/org/apache</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentManagerImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/MoveSubsite.java</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/sitemanagement/java/test/org/apache/lenya</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/usecase-impl/java/src/org/apache/lenya/cms/usecase/UsecaseInvokerImpl.java</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/sitemanagement/java/test/org/apache/lenya/cms/site/usecases</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/usecase-impl/config/cocoon-xconf/test-usecase-invoker.xconf</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/DefaultSiteTree.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/usecase/java/src/org/apache/lenya/cms/usecase/AbstractUsecase.java</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/sitemanagement/java/test/org</path>
+<path
+   action="A">/lenya/trunk/src/modules-core/usecase-impl/java/src/org/apache/lenya/cms/usecase/TestUsecaseInvoker.java</path>
+</paths>
+<msg>Fixed delete+restore, added test case</msg>
+</logentry>
+<logentry
+   revision="433597">
+<author>andreas</author>
+<date>2006-08-22T11:19:29.498881Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/targets/properties-build.xml</path>
+<path
+   action="M">/lenya/trunk/src/targets/test-build.xml</path>
+<path
+   action="M">/lenya/trunk/src/resources/build/modules2build.xsl</path>
+<path
+   action="M">/lenya/trunk/src/targets/compile-build.xml</path>
+<path
+   action="M">/lenya/trunk/src/targets/docs-build.xml</path>
+</paths>
+<msg>Added an entry in the build.properties file that allows setting the -source compiler option to either 1.4 or 1.5. This fixes bug #40280. Thanks to Paloma Gomez for the patch.</msg>
+</logentry>
+<logentry
+   revision="433598">
+<author>andreas</author>
+<date>2006-08-22T11:26:50.458052Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/AbstractPageEnvelopeModule.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/OperationModule.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/PageEnvelope.java</path>
+</paths>
+<msg>Refactoring: renamed getDocumentIdentityMap() to getDocumentFactory()</msg>
+</logentry>
+<logentry
+   revision="433601">
+<author>andreas</author>
+<date>2006-08-22T11:39:19.718471Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/i18n.xmap</path>
+</paths>
+<msg>Use fallback to resolve i18n catalogues. Thanks to Joern Nettingsmeier for the patch.</msg>
+</logentry>
+<logentry
+   revision="433612">
+<author>chestnut</author>
+<date>2006-08-22T12:37:12.425543Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/targets/properties-build.xml</path>
+</paths>
+<msg>update build.properties.version check to check for the current version</msg>
+</logentry>
+<logentry
+   revision="433624">
+<author>andreas</author>
+<date>2006-08-22T13:29:14.114072Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentManagerImpl.java</path>
+</paths>
+<msg>DocumentManager.copyToVersion(): copy content also when destination doc exists</msg>
+</logentry>
+<logentry
+   revision="433633">
+<author>andreas</author>
+<date>2006-08-22T13:52:41.547126Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentManagerImpl.java</path>
+</paths>
+<msg>[minor change] removed unused import</msg>
+</logentry>
+<logentry
+   revision="433635">
+<author>andreas</author>
+<date>2006-08-22T13:58:03.827739Z</date>
+<paths>
+<path
+   action="A">/lenya/trunk/src/modules/fckeditor/config/menu.xsp</path>
+<path
+   action="M">/lenya/trunk/src/modules/fckeditor/README.txt</path>
+<path
+   action="A">/lenya/trunk/src/modules/fckeditor/menus.xmap</path>
+</paths>
+<msg>FCK editor: fix SOC wrt menu item generation. adds two files, menu.xmap and config/menu.xsp, and fixes the readme. Thanks to Joern Nettingsmeier for the patch.</msg>
+</logentry>
+<logentry
+   revision="433646">
+<author>thorsten</author>
+<date>2006-08-22T14:43:06.697356Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/java/org/apache/lenya/ac/PolicyManager.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/impl/DefaultPolicy.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/file/FilePolicyManager.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/sitemanagement/usecases/tab/ac/ac.jx</path>
+</paths>
+<msg>Fixing bug which occured when there have been multiple role childs 
+in a policy under one accreditable. Changed the savePolicy methods to save now
+only one accreditable and one role. Further enhanced the caption of the ac form. 
+
+Only one feature is missing (moving the credentials up and down) but I do not consider
+it as a blocker for a merge with trunk.
+</msg>
+</logentry>
+<logentry
+   revision="433650">
+<author>andreas</author>
+<date>2006-08-22T14:50:42.209063Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/build.properties</path>
+</paths>
+<msg>Added an entry in the build.properties file that allows setting the -source compiler option to either 1.4 or 1.5. This fixes bug #40280. Thanks to Paloma Gomez for the patch.</msg>
+</logentry>
+<logentry
+   revision="433651">
+<author>chestnut</author>
+<date>2006-08-22T14:52:45.922448Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/targets/properties-build.xml</path>
+</paths>
+<msg>updated build.properties.version check</msg>
+</logentry>
+<logentry
+   revision="433671">
+<author>thorsten</author>
+<date>2006-08-22T15:17:12.035605Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/file/FilePolicyManager.java</path>
+</paths>
+<msg>White noise - formating changes.</msg>
+</logentry>
+<logentry
+   revision="433674">
+<author>thorsten</author>
+<date>2006-08-22T15:29:09.493960Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/file/FilePolicyManager.java</path>
+</paths>
+<msg>Removing the check for the live site in the FilePolicyManger 
+since it does not make sense anymore, because we can now restricted any url/suburl.</msg>
+</logentry>
+<logentry
+   revision="433675">
+<author>andreas</author>
+<date>2006-08-22T15:40:09.747637Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/i18n.xmap</path>
+</paths>
+<msg>Fixed fallback URLs for i18n</msg>
+</logentry>
+<logentry
+   revision="433677">
+<author>thorsten</author>
+<date>2006-08-22T15:40:32.926918Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/README_AC.txt</path>
+</paths>
+<msg>Adding note about to change the order of the credential.</msg>
+</logentry>
+<logentry
+   revision="433682">
+<author>andreas</author>
+<date>2006-08-22T16:08:22.215711Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/workflow/DocumentWorkflowable.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/workflow-impl/java/src/org/apache/lenya/cms/cocoon/components/modules/input/WorkflowModule.java</path>
+</paths>
+<msg>Store new workflow version meta data in all area documents. This fixes bug #40061.</msg>
+</logentry>
+<logentry
+   revision="433706">
+<author>thorsten</author>
+<date>2006-08-22T17:32:40.214361Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/file/FilePolicyManager.java</path>
+</paths>
+<msg>using the original url for last policy. Other wise the url got changed and it is not theone we are looking for</msg>
+</logentry>
+<logentry
+   revision="433962">
+<author>andreas</author>
+<date>2006-08-23T07:27:53.901722Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/resources/build/modules2build.xsl</path>
+</paths>
+<msg>Renamed java.version to src.java.version. See bug 40280.</msg>
+</logentry>
+<logentry
+   revision="433967">
+<author>andreas</author>
+<date>2006-08-23T07:56:10.745504Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/SiteTreeNodeImpl.java</path>
+</paths>
+<msg>SiteTreeNodeImpl: Return path as UUID if the node doesn't contain a uuid attribute, but contains links. This restores support for non-uuid content.</msg>
+</logentry>
+<logentry
+   revision="433973">
+<author>andreas</author>
+<date>2006-08-23T08:20:27.215218Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/migration/java/test/org/apache/lenya/cms/migration/MigrateUuidsTest.java</path>
+</paths>
+<msg>Match for UUIDs starting with a slash in migration target.</msg>
+</logentry>
+<logentry
+   revision="433977">
+<author>andreas</author>
+<date>2006-08-23T08:39:22.479333Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/DefaultSiteTree.java</path>
+</paths>
+<msg>DefaultSiteTree: Don't rely on node.getUUID() == null, because this doesn't work with old non-UUID content.</msg>
+</logentry>
+<logentry
+   revision="434443">
+<author>chestnut</author>
+<date>2006-08-24T17:27:25.122380Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/bxe/config/cocoon-xconf/usecase-bxe.xconf</path>
+<path
+   action="D">/lenya/trunk/src/modules/bxe/java</path>
+<path
+   action="A">/lenya/trunk/src/modules/bxe/config/cocoon-xconf/usecase-bxe-close.xconf</path>
+<path
+   action="D">/lenya/trunk/src/modules/bxe/usecases/bxe.js</path>
+<path
+   action="M">/lenya/trunk/src/modules/bxe/sitemap.xmap</path>
+</paths>
+<msg>bxe saves via webdav, might as well use webdav module to save and get xml
+removed flow and java usecase which duplicates this</msg>
+</logentry>
+<logentry
+   revision="434534">
+<author>chestnut</author>
+<date>2006-08-24T21:47:09.173182Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/cocoon/generation/SitetreeFragmentGenerator.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/xslt/navigation/sitetree2nav.xsl</path>
+</paths>
+<msg>added mimetype as an optional attribute reported by the sitetreefragmentgenerator
+</msg>
+</logentry>
+<logentry
+   revision="436743">
+<author>andreas</author>
+<date>2006-08-25T09:51:46.470580Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/targets/test-build.xml</path>
+</paths>
+<msg>Replace Default Publication by Test Publication in test/publication.xml to avoid confusion on publication overview page.</msg>
+</logentry>
+<logentry
+   revision="436760">
+<author>chestnut</author>
+<date>2006-08-25T11:25:39.351079Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/config/ac/usecase-policies.xml</path>
+</paths>
+<msg>forgot to commit close.bxe usecase policy
+Thanks to Michael Wohlfart for the patch</msg>
+</logentry>
+<logentry
+   revision="436768">
+<author>andreas</author>
+<date>2006-08-25T11:53:23.927247Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/xslt/exception/document-does-not-exist.xsl</path>
+</paths>
+<msg>[minor change] code formatting</msg>
+</logentry>
+<logentry
+   revision="436774">
+<author>andreas</author>
+<date>2006-08-25T12:09:33.028594Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/SiteUtil.java</path>
+</paths>
+<msg>[minor change] removed unused import</msg>
+</logentry>
+<logentry
+   revision="436789">
+<author>andreas</author>
+<date>2006-08-25T13:45:20.841067Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/components/modules/input/PageEnvelopeModule.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/CreateLanguage.java</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/lenya/xslt/exception/document-does-not-exist.xsl</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/site/create.jx</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/config/sitemap/pipelines.xmap</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/CreateDocument.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Create.java</path>
+</paths>
+<msg>Changed Create parameter documentId to path and clarified some other parameters, set language param even when no source document exists, allow PageEnvelopeModule to return paths for non-existing documents.</msg>
+</logentry>
+<logentry
+   revision="436813">
+<author>andreas</author>
+<date>2006-08-25T14:30:28.908346Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/tab/sitetree.jx</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/tab/overview.jx</path>
+</paths>
+<msg>Site area: show disabled tab for non-existing languages, added links for existing/non-existing language versions to overview page</msg>
+</logentry>
+<logentry
+   revision="436889">
+<author>chestnut</author>
+<date>2006-08-25T18:25:57.726876Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Create.java</path>
+</paths>
+<msg>Allow any dc meta elements as parameters from create.jx (or your doctypes create document view template)</msg>
+</logentry>
+<logentry
+   revision="437606">
+<author>josias</author>
+<date>2006-08-28T08:41:19.558602Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/SiteTreeNodeImpl.java</path>
+</paths>
+<msg>save sitetree after removing a label</msg>
+</logentry>
+<logentry
+   revision="437608">
+<author>josias</author>
+<date>2006-08-28T08:48:17.987576Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/tree/SiteTreeNodeImpl.java</path>
+</paths>
+<msg>[minor] removed unused import</msg>
+</logentry>
+<logentry
+   revision="437609">
+<author>josias</author>
+<date>2006-08-28T08:48:58.417427Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/site/deleteLanguage.jx</path>
+</paths>
+<msg>display document label instead of uuid</msg>
+</logentry>
+<logentry
+   revision="437723">
+<author>josias</author>
+<date>2006-08-28T15:18:52.814220Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/impl/test/org/apache/lenya/cms/publication/DefaultDocumentTest.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentImpl.java</path>
+</paths>
+<msg>don't store the webapp url in a member variable, because its value may become invalid when the path of the document changes. consequently removed the setDocumentURL method and adapted the test accordingly.</msg>
+</logentry>
+<logentry
+   revision="437724">
+<author>josias</author>
+<date>2006-08-28T15:19:31.295614Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/site/changeNodeID.jx</path>
+</paths>
+<msg>show document label instead of uuid</msg>
+</logentry>
+<logentry
+   revision="438002">
+<author>andreas</author>
+<date>2006-08-29T08:06:38.045756Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/ac-impl/java/src/org/apache/lenya/cms/cocoon/components/modules/input/AccessControlModule.java</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/sitemap.xmap</path>
+</paths>
+<msg>AccessControlModule: allow to get the user name / email for a specific user ID, added javadocs, show user name instead of user ID in "last published" footer of default publication</msg>
+</logentry>
+<logentry
+   revision="438059">
+<author>andreas</author>
+<date>2006-08-29T12:23:40.049598Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/modules/defaultusecases/java/src/org/apache/lenya/defaultpub/cms/usecases/Deactivate.java</path>
+<path
+   action="M">/lenya/trunk/src/pubs/blog/java/src/org/apache/lenya/cms/site/usecases/CreateBlogEntry.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/ChangeVisibility.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/webdav/java/src/org/apache/lenya/cms/usecases/webdav/Put.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/sitetree/java/src/org/apache/lenya/cms/site/usecases/Nudge.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/SiteUtil.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/DeleteLanguage.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/ChangeNodeID.java</path>
+<path
+   action="M">/lenya/trunk/src/pubs/blog/java/src/org/apache/lenya/cms/workflow/usecases/Publish.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/resource/java/test/org/apache/lenya/cms/publication/ResourceWrapperTest.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Paste.java</path>
+<path
+   action="M">/lenya/trunk/src/pubs/blog/java/src/org/apache/lenya/blog/cms/usecases/Delete.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/test/org/apache/lenya/cms/publication/util/XLinkCollectionTest.java</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/modules/defaultusecases/java/src/org/apache/lenya/defaultpub/cms/usecases/Publish.java</path>
+<path
+   action="M">/lenya/trunk/src/pubs/blog/java/src/org/apache/lenya/blog/cms/usecases/Deactivate.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/ChangeLabel.java</path>
+</paths>
+<msg>Removed obsolete methods SiteUtil.getSiteStructure(...). Use Area.getSite() instead.</msg>
+</logentry>
+<logentry
+   revision="438067">
+<author>andreas</author>
+<date>2006-08-29T13:10:37.165294Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/impl/test/org/apache/lenya/cms/publication/DefaultDocumentTest.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentFactoryImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/DocumentManagerImpl.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/site/SiteUtil.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Assets.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/site/usecases/Create.java</path>
+</paths>
+<msg>Removed obsolete methods from SiteUtil and replaced occurences with SiteStructure methods</msg>
+</logentry>
+<logentry
+   revision="438076">
+<author>josias</author>
+<date>2006-08-29T13:53:05.417633Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/usecases/usecases.js</path>
+</paths>
+<msg>only recreate the usecase proxy if the usecase has not finished yet. (if the usecase has finished, the creation of the usecase proxy may fail, because e.g. in the case of the delete-language usecase, the document does not exist anymore)</msg>
+</logentry>
+<logentry
+   revision="438077">
+<author>josias</author>
+<date>2006-08-29T13:54:45.142005Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/config/cocoon-xconf/site/usecase-site-deleteLanguage.xconf</path>
+</paths>
+<msg>removed the exit usecase, because this usecase may be called from either the authoring or the site view, and the exit usecase is defined by a parameter in the menu</msg>
+</logentry>
+<logentry
+   revision="438078">
+<author>andreas</author>
+<date>2006-08-29T14:08:08.285296Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/config/menus/generic.xsp</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/usecase/java/src/org/apache/lenya/cms/usecase/DocumentUsecase.java</path>
+</paths>
+<msg>Avoid NPE in menu XSP when document is null, return original source URI in usecase when source document is not referenced in site structure.</msg>
+</logentry>
+<logentry
+   revision="438101">
+<author>josias</author>
+<date>2006-08-29T15:26:40.706666Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/java/src/org/apache/lenya/cms/metadata/usecases/Metadata.java</path>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/tab/meta.jx</path>
+</paths>
+<msg>fixed metadata usecase: id and name attributes in html must not start with a number, so added 'ns' prefix to the keys. further fixed mapping from namespace urls to indexes.</msg>
+</logentry>
+<logentry
+   revision="438213">
+<author>chestnut</author>
+<date>2006-08-29T21:05:18.385792Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/impl/java/org/apache/lenya/cms/publication/PublicationConfiguration.java</path>
+<path
+   action="M">/lenya/trunk/src/modules/migration/java/test/org/apache/lenya/cms/migration/MigrateUuidsTest.java</path>
+</paths>
+<msg>fixed some NPEs when migrating a pub with no areas (should skip pub, not give npe)</msg>
+</logentry>
+<logentry
+   revision="438238">
+<author>chestnut</author>
+<date>2006-08-29T21:45:12.621202Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/resource/usecases/create-resource.jx</path>
+</paths>
+<msg>fixes ability to create new resources</msg>
+</logentry>
+<logentry
+   revision="438400">
+<author>chestnut</author>
+<date>2006-08-30T07:04:56.970257Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules/xhtml/xslt/xhtml2xhtml.xsl</path>
+<path
+   action="M">/lenya/trunk/src/modules/bxe/resources/javascript/insertAsset.js</path>
+<path
+   action="M">/lenya/trunk/src/modules/bxe/usecases/insertAsset.jx</path>
+<path
+   action="M">/lenya/trunk/src/modules/editors/java/src/org/apache/lenya/cms/editors/InsertAsset.java</path>
+</paths>
+<msg>insert asset and image from editor using resource documents</msg>
+</logentry>
+<logentry
+   revision="438463">
+<author>thorsten</author>
+<date>2006-08-30T11:12:36.130978Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/file/FilePolicyManager.java</path>
+</paths>
+<msg>We need to revert the order of the credentials to keep the most important policy on top.</msg>
+</logentry>
+<logentry
+   revision="438472">
+<author>thorsten</author>
+<date>2006-08-30T12:05:11.944866Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/sitemanagement/usecases/tab/ac/ac.jx</path>
+</paths>
+<msg>Implementing moving up and down the credentials. Step 1 implementing buttons in the view. Still the functionality in the usecase is not yet implemented/triggered.</msg>
+</logentry>
+<logentry
+   revision="438501">
+<author>josias</author>
+<date>2006-08-30T14:39:11.531294Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/modules-core/sitemanagement/usecases/tab/meta.jx</path>
+</paths>
+<msg>fixed 'for' attribute of labels (point to the correct input field)</msg>
+</logentry>
+<logentry
+   revision="438846">
+<author>andreas</author>
+<date>2006-08-31T09:12:58.830244Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/targets/modules-build.xml</path>
+</paths>
+<msg>Patch module manager configuration before running modules.test. This makes the test build work with modules.copy=false.</msg>
+</logentry>
+<logentry
+   revision="438893">
+<author>thorsten</author>
+<date>2006-08-31T12:36:52.780127Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/file/FilePolicyManager.java</path>
+</paths>
+<msg>Adding code comment to the reverting loop like suggested by Joern Nettingsmeier.</msg>
+</logentry>
+<logentry
+   revision="438929">
+<author>thorsten</author>
+<date>2006-08-31T14:10:51.011999Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/file/FilePolicyManager.java</path>
+</paths>
+<msg>we need to revert the order of the url credentials as well</msg>
+</logentry>
+<logentry
+   revision="438936">
+<author>thorsten</author>
+<date>2006-08-31T14:17:56.286062Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/administration/java/src/org/apache/lenya/cms/ac/usecases/AccessControl.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/java/org/apache/lenya/ac/ModifiablePolicy.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/impl/DefaultPolicy.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/sitemanagement/usecases/tab/ac/ac.jx</path>
+</paths>
+<msg>Implementing moving up and down the credentials. Step 2 implementing back end logic
+which is moving the credentials. Needed to change the accreditableToCredential key 
+keeping to have unique ids.</msg>
+</logentry>
+<logentry
+   revision="438939">
+<author>thorsten</author>
+<date>2006-08-31T14:30:32.471438Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/administration/java/src/org/apache/lenya/cms/ac/usecases/AccessControl.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/java/org/apache/lenya/ac/ModifiablePolicy.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/impl/DefaultPolicy.java</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/sitemanagement/usecases/tab/ac/ac.jx</path>
+</paths>
+<msg>White noise - formating changes.</msg>
+</logentry>
+<logentry
+   revision="438941">
+<author>thorsten</author>
+<date>2006-08-31T14:36:12.396682Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/README_AC.txt</path>
+</paths>
+<msg>Finished work in the ac branch.</msg>
+</logentry>
+<logentry
+   revision="438944">
+<author>thorsten</author>
+<date>2006-08-31T14:50:15.837428Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/blog/config/ac/policies/authoring/subtree-policy.acml</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/blog/config/ac/policies/index.html/url-policy.acml</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/blog/config/ac/usecase-policies.xml</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/blog/config/ac/policies/admin/subtree-policy.acml</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/blog/config/ac/policies/webdav/subtree-policy.acml</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/blog/config/ac/policies/url-policy.acml</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/blog/config/ac/policies/atomapi/subtree-policy.acml</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/default/config/ac/policies/admin/users/alice.html/subtree-policy.acml</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/blog/config/ac/policies/info/subtree-policy.acml</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/blog/config/ac/policies/introduction.html/url-policy.acml</path>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/pubs/blog/config/ac/policies/live/subtree-policy.acml</path>
+</paths>
+<msg>Updating all pubs to meet the new policy system. Granting the access by adding 
+ method="grant" to the role.</msg>
+</logentry>
+<logentry
+   revision="438951">
+<author>thorsten</author>
+<date>2006-08-31T15:29:07.547114Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/impl/DefaultPolicy.java</path>
+</paths>
+<msg>Fixing bug for adding a role to a policy that was introduced in -r438936. 
+Thanks to Josias for testing and spotting the bug.</msg>
+</logentry>
+<logentry
+   revision="438989">
+<author>thorsten</author>
+<date>2006-08-31T17:20:04.301214Z</date>
+<paths>
+<path
+   action="M">/lenya/sandbox/ac-restricted-1.4-src/modules-core/ac-impl/java/src/org/apache/lenya/ac/impl/DefaultPolicy.java</path>
+</paths>
+<msg>Fixing a bug that occured when adding an user in the admin area. While testing it I found a bug related to remove an user. It seems that there is a loop in the RemovedAccreditablePolicyBuilder which first deletes the accreditable from the user management but later on tries to access it again. Resulting in org.apache.lenya.ac.AccessControlException: Unknown accreditable [user] with ID [x3x]. Not sure why that is happening, need to investigate why and fix the bug before the merge.</msg>
+</logentry>
+<logentry
+   revision="439053">
+<author>andreas</author>
+<date>2006-08-31T21:34:15.733369Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/config/sitemap/pipelines.xmap</path>
+</paths>
+<msg>[minor change] code formatting</msg>
+</logentry>
+<logentry
+   revision="439258">
+<author>thorsten</author>
+<date>2006-09-01T10:03:47.189668Z</date>
+<paths>
+<path
+   action="A">/lenya/docu/src/documentation/content/xdocs/docs/1_4/reference/ac.xml</path>
+<path
+   action="M">/lenya/docu/src/documentation/content/xdocs/site.xml</path>
+</paths>
+<msg>Adding documentation about the restricted AC management to the documentation.</msg>
+</logentry>
+<logentry
+   revision="439259">
+<author>andreas</author>
+<date>2006-09-01T10:06:39.390992Z</date>
+<paths>
+<path
+   action="M">/lenya/trunk/src/pubs/default/lenya/xslt/exception/document-does-not-exist.xsl</path>
+<path
+   action="M">/lenya/trunk/src/pubs/default/sitemap.xmap</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/publication/DefaultDocumentBuilder.java</path>
+<path
+   action="M">/lenya/trunk/src/java/org/apache/lenya/cms/cocoon/acting/LanguageExistsAction.java</path>
+<path
+   action="M">/lenya/trunk/src/webapp/lenya/xslt/exception/missing-language.xsl</path>
+</paths>
+<msg>Don't throw exception in LanguageExistsAction, unified document-does-not-exist and missing-language screens</msg>
+</logentry>
 </log>
