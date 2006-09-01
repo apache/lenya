@@ -112,7 +112,7 @@ public class UserManagerTest extends AbstractAccessControlTest {
     final public void testGetUser() throws AccessControlException {
         FileAccreditableManager accrMgr = (FileAccreditableManager) getAccreditableManager();
         File configDir = accrMgr.getConfigurationDirectory();
-        String userName = "testuser";
+        String userName = "aliceTest";
         FileUser user = new FileUser(configDir, userName, "Alice in Wonderland",
                 "alice@wonderland.com", "secret");
         UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
