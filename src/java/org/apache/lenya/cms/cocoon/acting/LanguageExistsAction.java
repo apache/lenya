@@ -32,7 +32,6 @@ import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.publication.DocumentBuilder;
-import org.apache.lenya.cms.publication.DocumentDoesNotExistException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentUtil;
@@ -62,8 +61,6 @@ public class LanguageExistsAction extends ServiceableAction {
      *         language, null otherwiese
      * @throws Exception if an error occurs
      * 
-     * @exception DocumentDoesNotExistException if there is no document with the specified
-     *                document-id.
      * @exception Exception if the PageEnvelope could not be created or if the language information
      *                could not be fetched from the document.
      */
