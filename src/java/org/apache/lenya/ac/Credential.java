@@ -37,5 +37,6 @@ public interface Credential {
      * @return A boolean value.
      */
     boolean contains(Role role);
-
+    
+    String getMethod();
 }

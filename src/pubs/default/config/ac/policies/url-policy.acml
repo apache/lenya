@@ -15,12 +15,12 @@
   limitations under the License.
 -->
 
-<!-- $Id: url-policy.acml,v 1.3 2004/03/13 12:34:17 gregor Exp $ -->
+<!-- $Id$ -->
 
 <policy xmlns="http://apache.org/cocoon/lenya/ac/1.0">
 
   <world>
-    <role id="visit"/>
+    <role id="visit" method="deny"/>
   </world>
 
 </policy> 

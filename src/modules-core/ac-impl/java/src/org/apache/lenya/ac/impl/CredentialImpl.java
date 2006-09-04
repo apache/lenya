@@ -32,6 +32,9 @@ import org.apache.lenya.ac.Role;
 public class CredentialImpl implements Credential {
     private Accreditable accreditable;
     private Set roles = new HashSet();
+    private String method;
+    protected static final String GRANT = "grant";
+    protected static final String DENY = "deny";
 
     /**
      * Creates a new credential object.
@@ -108,5 +111,26 @@ public class CredentialImpl implements Credential {
      */
     public boolean isEmpty() {
         return this.roles.isEmpty();
+    }
+    
+    /**
+     * Set the method of the credential, grant or deny
+     * @param method A string grant or deny
+     */
+    public void setMethod(String method) {
+        this.method = method;
+    }
+    
+
+    public String getMethod() {
+        return method;
+    }
+
+    public boolean isGranted() {
+        return this.method.equals(GRANT);
+    }
+
+    public boolean isDenied() {
+        return this.method.equals(DENY);
     }
 }

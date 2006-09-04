@@ -31,6 +31,13 @@ import org.apache.lenya.ac.User;
 public class CredentialWrapper {
 
     /**
+     * Returns the method of the Credential
+     * @return A string that is either "deny" or "grant"
+     */
+    public String getMethod() {
+        return method;
+    }
+    /**
      * Returns the accreditable ID.
      * @return A string.
      */
@@ -74,8 +81,9 @@ public class CredentialWrapper {
      * Ctor.
      * @param accreditable The accreditable of the credential to wrap.
      * @param role The role of the credential to wrap.
+     * @param method 
      */
-    public CredentialWrapper(Accreditable accreditable, Role role) {
+    public CredentialWrapper(Accreditable accreditable, Role role, String method) {
         if (accreditable instanceof Item) {
             Item item = (Item) accreditable;
             this.accreditableId = item.getId();
@@ -98,6 +106,7 @@ public class CredentialWrapper {
         }
         this.roleId = role.getId();
         this.roleName = role.getName();
+        this.method = method;
         
     }
     
@@ -110,5 +119,6 @@ public class CredentialWrapper {
     private String accreditableName;
     private String roleId;
     private String roleName;
+    private String method;
 
 }

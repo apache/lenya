@@ -32,6 +32,7 @@ import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.AccreditableManager;
+import org.apache.lenya.ac.Credential;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.impl.PolicyBuilder;
@@ -45,7 +46,9 @@ import org.xml.sax.SAXException;
  */
 public class SitemapPolicyManager extends AbstractLogEnabled implements PolicyManager, Serviceable {
 
-    /**
+    private Credential[] credentials;
+
+	/**
      * @see org.apache.lenya.ac.PolicyManager#getPolicy(org.apache.lenya.ac.AccreditableManager,
      *      java.lang.String)
      */
@@ -73,6 +76,7 @@ public class SitemapPolicyManager extends AbstractLogEnabled implements PolicyMa
             source = resolver.resolveURI("cocoon://" + policyUrl);
             Document document = DocumentHelper.readDocument(source.getInputStream());
             policy = new PolicyBuilder(accreditableManager).buildPolicy(document);
+            this.credentials=policy.getCredentials();
         } catch (SourceNotFoundException e) {
             throw new AccessControlException(e);
         } catch (ServiceException e) {
@@ -133,5 +137,13 @@ public class SitemapPolicyManager extends AbstractLogEnabled implements PolicyMa
             throws AccessControlException {
 	    // do nothing
     }
+
+	public Credential[] getCredentials(AccreditableManager controller, String url) throws AccessControlException {
+		Credential[] copy = new Credential[credentials.length];
+		for (int i = 0; i < credentials.length; i++) {
+			copy[i]=credentials[i];
+		}
+		return copy;
+	}
 
 }

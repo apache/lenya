@@ -47,4 +47,8 @@ public interface Policy {
      */
     boolean isEmpty() throws AccessControlException;
     
+    Credential[] getCredentials(Identity identity) throws AccessControlException;
+    
+    Credential[] getCredentials() throws AccessControlException;
+
 }

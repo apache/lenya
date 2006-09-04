@@ -33,6 +33,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.AccreditableManager;
+import org.apache.lenya.ac.Credential;
 import org.apache.lenya.ac.InheritingPolicyManager;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
@@ -282,4 +283,8 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
             throws AccessControlException {
         getPolicyManager().accreditableAdded(manager, accreditable);
     }
+
+    public Credential[] getCredentials(AccreditableManager controller, String url) throws AccessControlException {
+		return getPolicyManager().getCredentials(controller, getPolicyURL(url));
+	}
 }

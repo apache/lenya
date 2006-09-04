@@ -1,177 +1,445 @@
 <?xml version="1.0"?>
 <!--
-  Copyright 1999-2004 The Apache Software Foundation
+Copyright 1999-2004 The Apache Software Foundation
 
-  Licensed under the Apache License, Version 2.0 (the "License");
-  you may not use this file except in compliance with the License.
-  You may obtain a copy of the License at
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-      http://www.apache.org/licenses/LICENSE-2.0
+http://www.apache.org/licenses/LICENSE-2.0
 
-  Unless required by applicable law or agreed to in writing, software
-  distributed under the License is distributed on an "AS IS" BASIS,
-  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-  See the License for the specific language governing permissions and
-  limitations under the License.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
 -->
 
 <!-- $Id: ac.jx 156161 2005-03-04 15:23:21Z andreas $ -->
 <page:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0"
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
-  xmlns="http://www.w3.org/1999/xhtml" xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
   
   <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/tab/head.jx"/>
   <page:body>
-    <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/tab/sitetree.jx"/>
+    <jx:import
+      uri="fallback://lenya/modules/sitemanagement/usecases/tab/sitetree.jx"/>
     <jx:import uri="fallback://lenya/usecases/templates/tabs.jx"/>
     
     <jx:set var="area" value="${usecase.getParameter('acArea')}"/>
     <div id="contentblock1" class="lenya-tab-sitetree">
       <table class="lenya-table">
         <tr>
-          <td colspan="4">
+          <td colspan="5">
             <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
           </td>
         </tr>
         <tr>
-          <th colspan="4">
-            <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/tab/ac/ssl-form.jx"/>
+          <th colspan="5">
+            <jx:import
+              uri="fallback://lenya/modules/sitemanagement/usecases/tab/ac/ssl-form.jx"/>
           </th>
         </tr>
-        <tr><td colspan="4">&#160;</td></tr>
         <tr>
-          <th colspan="2">
-            <i18n:text>Access Object</i18n:text>
+          <td colspan="5">&#160;
+          </td>
+        </tr>
+        <tr>
+          <th colspan="5">
+            <h1>
+              <i18n:text>URL credentials </i18n:text> </h1> (only affect this url) </th>
+        </tr>
+        <tr>
+          <th colspan="5">
+            <h1>
+              <i18n:text>New URL Credential</i18n:text> </h1>
           </th>
-          <th>
-            <jx:if test="${area.equals('authoring')}">
-              <i18n:text>Role</i18n:text>
-            </jx:if>&#160;
+        </tr>
+        <tr>
+          <th>Type</th>
+          <th>Id</th>
+          <th>Role</th>
+          <th>Method</th>
+          <th>&#160;
           </th>
-          <th/>
         </tr>
         <tr>
           
           <form method="get" id="form-addCredential_user">
-            <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
-            <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
-            <td><i18n:text>user</i18n:text></td>
+            <input type="hidden" name="lenya.usecase"
+              value="${usecase.getName()}"/>
+            <input type="hidden" name="lenya.continuation"
+              value="${continuation.id}"/>
+            <td>
+              <i18n:text>user</i18n:text>
+            </td>
             <td>
               <select name="user" class="lenya-form-element-narrow">
                 <jx:forEach var="user" items="${usecase.getParameter('users')}">
-                  <option value="${user}"><jx:out value="${user}"/></option>
+                  <option value="${user}">
+                    <jx:out value="${user}"/>
+                  </option>
                 </jx:forEach>
               </select>
             </td>
             <td>
               <select name="role" class="lenya-form-element-narrow">
                 <jx:forEach var="role" items="${usecase.getParameter('roles')}">
-                  <option value="${role}"><jx:out value="${role}"/></option>
+                  <option value="${role}">
+                    <jx:out value="${role}"/>
+                  </option>
                 </jx:forEach>
               </select>
             </td>
             <td>
-              <input i18n:attr="value" type="submit" name="addCredential_user" value="Add"/>
+              <select name="method" class="lenya-form-element-narrow">
+                <option value="deny">Deny</option>
+                <option value="grant">Grant</option>
+              </select>
+            </td>
+            <td>
+              <input i18n:attr="value" type="submit" name="addCredential_user"
+                value="Add"/>
             </td>
           </form>
-                    
+          
         </tr>
         <tr>
           <form method="get" id="form-addCredential_group">
-            <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
-            <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
-            <td><i18n:text>group</i18n:text></td>
+            <input type="hidden" name="lenya.usecase"
+              value="${usecase.getName()}"/>
+            <input type="hidden" name="lenya.continuation"
+              value="${continuation.id}"/>
+            <td>
+              <i18n:text>group</i18n:text>
+            </td>
             <td>
               <select name="group" class="lenya-form-element-narrow">
                 <jx:forEach var="group" items="${usecase.getParameter('groups')}">
-                  <option value="${group}"><jx:out value="${group}"/></option>
+                  <option value="${group}">
+                    <jx:out value="${group}"/>
+                  </option>
                 </jx:forEach>
               </select>
             </td>
             <td>
               <select name="role" class="lenya-form-element-narrow">
                 <jx:forEach var="role" items="${usecase.getParameter('roles')}">
-                  <option value="${role}"><jx:out value="${role}"/></option>
+                  <option value="${role}">
+                    <jx:out value="${role}"/>
+                  </option>
                 </jx:forEach>
               </select>
             </td>
             <td>
-              <input i18n:attr="value" type="submit" name="addCredential_group" value="Add" />
+              <select name="method" class="lenya-form-element-narrow">
+                <option value="deny">Deny</option>
+                <option value="grant">Grant</option>
+              </select>
+            </td>
+            <td>
+              <input i18n:attr="value" type="submit" name="addCredential_group"
+                value="Add"/>
             </td>
           </form>
         </tr>
         <jx:if test="${area.equals('live')}">
           <tr>
             <form method="get" id="form-addCredential_ipRange">
-              <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
-              <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
-              <td><i18n:text>IP Range</i18n:text></td>
+              <input type="hidden" name="lenya.usecase"
+                value="${usecase.getName()}"/>
+              <input type="hidden" name="lenya.continuation"
+                value="${continuation.id}"/>
+              <td>
+                <i18n:text>IP Range</i18n:text>
+              </td>
               <td>
                 <select name="ipRange" class="lenya-form-element-narrow">
-                  <jx:forEach var="ipRange" items="${usecase.getParameter('ipRanges')}">
-                    <option value="${ipRange}"><jx:out value="${ipRange}"/></option>
+                  <jx:forEach var="ipRange"
+                    items="${usecase.getParameter('ipRanges')}">
+                    <option value="${ipRange}">
+                      <jx:out value="${ipRange}"/>
+                    </option>
                   </jx:forEach>
                 </select>
               </td>
               <td>
                 <select name="role" class="lenya-form-element-narrow">
                   <jx:forEach var="role" items="${usecase.getParameter('roles')}">
-                    <option value="${role}"><jx:out value="${role}"/></option>
+                    <option value="${role}">
+                      <jx:out value="${role}"/>
+                    </option>
                   </jx:forEach>
                 </select>
               </td>
               <td>
-                <input i18n:attr="value" type="submit" name="addCredential_ipRange" value="Add"/>
+                <select name="method" class="lenya-form-element-narrow">
+                  <option value="deny">Deny</option>
+                  <option value="grant">Grant</option>
+                </select>
+              </td>
+              <td>
+                <input i18n:attr="value" type="submit" name="addCredential_ipRange"
+                  value="Add"/>
               </td>
             </form>
           </tr>
         </jx:if>
         
-        <tr><td colspan="4">&#160;</td></tr>
         <tr>
-          <th colspan="4">
-            <i18n:text>URL Rights</i18n:text>
+          <th colspan="5">
+            <h1>
+              <i18n:text>Stored URL credentials</i18n:text> </h1>
           </th>
         </tr>
-        <jx:forEach var="credential" items="${usecase.getParameter('urlCredentials')}">
+        <tr>
+          <th>Type</th>
+          <th>Id</th>
+          <th>Role</th>
+          <th>Method</th>
+          <th>&#160;
+          </th>
+        </tr>
+        <jx:forEach var="credential"
+          items="${usecase.getParameter('urlCredentials')}" varStatus="status">
           <form method="get" id="form-deleteCredential">
-            <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
-            <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+            <input type="hidden" name="lenya.usecase"
+              value="${usecase.getName()}"/>
+            <input type="hidden" name="lenya.continuation"
+              value="${continuation.id}"/>
             <tr>
               <td>
-                <i18n:text><jx:out value="${credential.getType()}"/></i18n:text>
+                <i18n:text>
+                  <jx:out value="${credential.getType()}"/>
+                </i18n:text>
               </td>
               <td>
-                <input type="hidden" name="${credential.getType()}" value="${credential.getAccreditableId()}"/>
+                <input type="hidden" name="${credential.getType()}"
+                  value="${credential.getAccreditableId()}"/>
                 <jx:out value="${credential.getAccreditableId()}"/>
               </td>
               <td>
-                <input type="hidden" name="role" value="${credential.getRoleId()}"/>
+                <input type="hidden" name="role"
+                  value="${credential.getRoleId()}"/>
                 <jx:out value="${credential.getRoleId()}"/>
               </td>
               <td>
-                <input type="submit" name="deleteCredential_${credential.getType()}" i18n:attr="value" value="Delete"/>
+                <input type="hidden" name="method"
+                  value="${credential.getMethod()}"/>
+                <jx:out value="${credential.getMethod()}"/>
+              </td>
+              <td>
+                <input type="submit"
+                  name="deleteCredential_${credential.getType()}"
+                  i18n:attr="value" value="Delete"/>
+                <jx:if test="${status.count>1}">
+                  <input type="submit" name="upCredential_${credential.getType()}"
+                    i18n:attr="value" value="Move Up"/>
+                </jx:if>
+                <jx:if test="${!status.last}">
+                  <input type="submit"
+                    name="downCredential_${credential.getType()}"
+                    i18n:attr="value" value="Move Down"/>
+                </jx:if>
               </td>
             </tr>
           </form>
         </jx:forEach>
         
-        <tr><td colspan="4">&#160;</td></tr>
         <tr>
-          <th colspan="4">
-            <i18n:text>Inherited Rights</i18n:text>
+          <td colspan="5">&#160;
+          </td>
+        </tr>
+        <tr>
+          <th colspan="5">
+            <h1>
+              <i18n:text>Inherited credentials</i18n:text> </h1>(affect this url and
+            all following child url) </th>
+        </tr>
+        <tr>
+          <th colspan="5">
+            <h1>
+              <i18n:text>New inheritable credential</i18n:text> </h1>
           </th>
         </tr>
-        <jx:forEach var="credential" items="${usecase.getParameter('parentCredentials')}">
+        <tr>
+          <th>Type</th>
+          <th>Id</th>
+          <th>Role</th>
+          <th>Method</th>
+          <th>&#160;
+          </th>
+        </tr>
+        <tr>
+          
+          <form method="get" id="form-addCredential_subuser">
+            <input type="hidden" name="lenya.usecase"
+              value="${usecase.getName()}"/>
+            <input type="hidden" name="lenya.continuation"
+              value="${continuation.id}"/>
+            <td>
+              <i18n:text>user</i18n:text>
+            </td>
+            <td>
+              <select name="user" class="lenya-form-element-narrow">
+                <jx:forEach var="user" items="${usecase.getParameter('users')}">
+                  <option value="${user}">
+                    <jx:out value="${user}"/>
+                  </option>
+                </jx:forEach>
+              </select>
+            </td>
+            <td>
+              <select name="role" class="lenya-form-element-narrow">
+                <jx:forEach var="role" items="${usecase.getParameter('roles')}">
+                  <option value="${role}">
+                    <jx:out value="${role}"/>
+                  </option>
+                </jx:forEach>
+              </select>
+            </td>
+            <td>
+              <select name="method" class="lenya-form-element-narrow">
+                <option value="deny">Deny</option>
+                <option value="grant">Grant</option>
+              </select>
+            </td>
+            <td>
+              <input i18n:attr="value" type="submit" name="addCredential_subuser"
+                value="Add"/>
+            </td>
+          </form>
+          
+        </tr>
+        <tr>
+          <form method="get" id="form-addCredential_subgroup">
+            <input type="hidden" name="lenya.usecase"
+              value="${usecase.getName()}"/>
+            <input type="hidden" name="lenya.continuation"
+              value="${continuation.id}"/>
+            <td>
+              <i18n:text>group</i18n:text>
+            </td>
+            <td>
+              <select name="group" class="lenya-form-element-narrow">
+                <jx:forEach var="group" items="${usecase.getParameter('groups')}">
+                  <option value="${group}">
+                    <jx:out value="${group}"/>
+                  </option>
+                </jx:forEach>
+              </select>
+            </td>
+            <td>
+              <select name="role" class="lenya-form-element-narrow">
+                <jx:forEach var="role" items="${usecase.getParameter('roles')}">
+                  <option value="${role}">
+                    <jx:out value="${role}"/>
+                  </option>
+                </jx:forEach>
+              </select>
+            </td>
+            <td>
+              <select name="method" class="lenya-form-element-narrow">
+                <option value="deny">Deny</option>
+                <option value="grant">Grant</option>
+              </select>
+            </td>
+            <td>
+              <input i18n:attr="value" type="submit" name="addCredential_subgroup"
+                value="Add"/>
+            </td>
+          </form>
+        </tr>
+        <tr>
+          <th colspan="5">
+            <h1>
+              <i18n:text>from here</i18n:text> </h1>
+          </th>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <th>Id</th>
+          <th>Role</th>
+          <th>Method</th>
+          <th>&#160;
+          </th>
+        </tr>
+        <jx:forEach var="credential" varStatus="status"
+          items="${usecase.getParameter('subCredentials')}">
+          <form method="get" id="form-deleteSubCredential">
+            <input type="hidden" name="lenya.usecase"
+              value="${usecase.getName()}"/>
+            <input type="hidden" name="lenya.continuation"
+              value="${continuation.id}"/>
+            <tr>
+              <td>
+                <i18n:text>
+                  <jx:out value="${credential.getType()}"/>
+                </i18n:text>
+              </td>
+              <td>
+                <input type="hidden" name="${credential.getType()}"
+                  value="${credential.getAccreditableId()}"/>
+                <jx:out value="${credential.getAccreditableId()}"/>
+              </td>
+              <td>
+                <input type="hidden" name="role"
+                  value="${credential.getRoleId()}"/>
+                <jx:out value="${credential.getRoleId()}"/>
+              </td>
+              <td>
+                <input type="hidden" name="method"
+                  value="${credential.getMethod()}"/>
+                <jx:out value="${credential.getMethod()}"/>
+              </td>
+              <td>
+                <input type="submit"
+                  name="deleteCredential_sub${credential.getType()}"
+                  i18n:attr="value" value="Delete"/>
+                <jx:if test="${status.count>1}">
+                  <input type="submit"
+                    name="upCredential_sub${credential.getType()}"
+                    i18n:attr="value" value="Move Up"/>
+                </jx:if>
+                <jx:if test="${!status.last}">
+                  <input type="submit"
+                    name="downCredential_sub${credential.getType()}"
+                    i18n:attr="value" value="Move Down"/>
+                </jx:if>
+              </td>
+            </tr>
+          </form>
+        </jx:forEach>
+        
+        <tr>
+          <th colspan="5">
+            <h1>
+              <i18n:text>from parents</i18n:text></h1> (starting with direct parent)
+            </th>
+        </tr>
+        <tr>
+          <th>Type</th>
+          <th>Id</th>
+          <th>Role</th>
+          <th colspan="2">Method</th>
+        </tr>
+        <jx:forEach var="credential"
+          items="${usecase.getParameter('parentCredentials')}">
           <tr>
             <td>
-              <i18n:text><jx:out value="${credential.getType()}"/></i18n:text>
+              <i18n:text>
+                <jx:out value="${credential.getType()}"/>
+              </i18n:text>
             </td>
             <td>
               <jx:out value="${credential.getAccreditableId()}"/>
             </td>
-            <td colspan="2">
+            <td>
               <jx:out value="${credential.getRoleId()}"/>
+            </td>
+            <td colspan="2">
+              <jx:out value="${credential.getMethod()}"/>
             </td>
           </tr>
         </jx:forEach>

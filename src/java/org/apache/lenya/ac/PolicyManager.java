@@ -39,9 +39,21 @@ public interface PolicyManager extends Component {
 	 * @throws AccessControlException when something went wrong.
 	 */
     Policy getPolicy(AccreditableManager controller, String url) throws AccessControlException;
+    
+    /**
+     * Return all credentials for this url
+     * @param url The AC url
+     * @param manager The Accreditable Manager
+     * @return An array of credentials
+     * @throws AccessControlException when something went wrong.
+     */
+    Credential[] getCredentials(AccreditableManager controller, String url) throws AccessControlException;
 
     /**
      * Called when an accreditable was added. Used to create the admin interface policy.
+     * This method get invoked, when e.g. a new user is added.
+     * The user always should be able to edit her profile.
+     * Therefore the method normally grant inherit edit rights to the user profile page.
      * 
      * @param manager The accreditable manager the accreditable belonged to.
      * @param accreditable The accreditable that was removed.

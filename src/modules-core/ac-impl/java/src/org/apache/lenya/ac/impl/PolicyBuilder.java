@@ -71,6 +71,7 @@ public class PolicyBuilder implements InputStreamBuilder {
     protected static final String IP_RANGE_ELEMENT = "ip-range";
     protected static final String ID_ATTRIBUTE = "id";
     protected static final String SSL_ATTRIBUTE = "ssl";
+    protected static final String METHOD_ATTRIBUTE = "method";
     
     /**
      * Builds a policy from an input stream.
@@ -119,17 +120,20 @@ public class PolicyBuilder implements InputStreamBuilder {
             String id = credentialElements[i].getAttribute(ID_ATTRIBUTE);
             accreditable = getAccreditable(credentialElements[i].getLocalName(), id);
 
-            CredentialImpl credential = new CredentialImpl(accreditable);
-
             Element[] roleElements = helper.getChildren(credentialElements[i], ROLE_ELEMENT);
 
             for (int j = 0; j < roleElements.length; j++) {
+            	CredentialImpl credential = new CredentialImpl(accreditable);
                 String roleId = roleElements[j].getAttribute(ID_ATTRIBUTE);
                 Role role = getAccreditableManager().getRoleManager().getRole(roleId);
+                String method = roleElements[j].getAttribute(METHOD_ATTRIBUTE);
+                // If method is not set, we assume DENY 
+                if(method.length()==0) method=CredentialImpl.DENY;
+                credential.setMethod(method);
                 credential.addRole(role);
+                policy.addCredential(credential);
             }
 
-            policy.addCredential(credential);
         }
         
         boolean ssl = false;
@@ -203,6 +207,7 @@ public class PolicyBuilder implements InputStreamBuilder {
             for (int j = 0; j < roles.length; j++) {
                 Element roleElement = helper.createElement(ROLE_ELEMENT);
                 roleElement.setAttribute(ID_ATTRIBUTE, roles[j].getId());
+                roleElement.setAttribute(METHOD_ATTRIBUTE, credentials[i].getMethod());
                 accreditableElement.appendChild(roleElement);
             }
             

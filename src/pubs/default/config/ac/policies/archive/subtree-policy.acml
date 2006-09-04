@@ -20,15 +20,15 @@
 <policy xmlns="http://apache.org/cocoon/lenya/ac/1.0">
 
   <group id="editor">
-    <role id="edit"/>
+    <role id="edit" method="grant" />
   </group>
 
   <group id="reviewer">
-    <role id="review"/>
+    <role id="review" method="grant" />
   </group>
 
   <group id="admin">
-    <role id="admin"/>
+    <role id="admin" method="grant" />
   </group>
 
 </policy> 

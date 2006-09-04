@@ -23,36 +23,67 @@ public interface ModifiablePolicy extends Policy {
 
     /**
      * Sets if this policy requires SSL protection.
-     * @param ssl A boolean value.
+     * 
+     * @param ssl
+     *            A boolean value.
      */
     void setSSL(boolean ssl);
 
     /**
-     * Adds a role to this policy for a certain accreditable and a certain role. If a credenital
-     * exists for the accreditable, the role is added to this credential. Otherwise, a new
-     * credential is created.
-     * @param accreditable An accreditable.
-     * @param role A role.
+     * Adds a role to this policy for a certain accreditable and a certain role.
+     * If a credenital exists for the accreditable, the role is added to this
+     * credential. Otherwise, a new credential is created.
+     * 
+     * @param accreditable
+     *            An accreditable.
+     * @param role
+     *            A role.
+     * @param method
      */
-    public void addRole(Accreditable accreditable, Role role);
+    public void addRole(Accreditable accreditable, Role role, String method);
 
     /**
-     * Removes a role from this policy for a certain accreditable and a certain role.
-     * @param accreditable An accreditable.
-     * @param role A role.
-     * @throws AccessControlException if the accreditable-role pair is not contained.
+     * Removes a role from this policy for a certain accreditable and a certain
+     * role.
+     * 
+     * @param accreditable
+     *            An accreditable.
+     * @param role
+     *            A role.
+     * @throws AccessControlException
+     *             if the accreditable-role pair is not contained.
      */
-    public void removeRole(Accreditable accreditable, Role role) throws AccessControlException;
+    public void removeRole(Accreditable accreditable, Role role)
+            throws AccessControlException;
 
     /**
      * Removes all roles from this policy for a certain accreditable.
-     * @param accreditable An accreditable.
-     * @throws AccessControlException if the accreditable-role pair is not contained.
+     * 
+     * @param accreditable
+     *            An accreditable.
+     * @throws AccessControlException
+     *             if the accreditable-role pair is not contained.
      */
     void removeRoles(Accreditable accreditable) throws AccessControlException;
 
     /**
-     * @return The credentials of this policy.
+     * Moves a role up the credential tree, giving it higher priority.
+     * 
+     * @param accreditable
+     * @param role
+     * @throws AccessControlException
      */
-    Credential[] getCredentials();
+    public void moveRoleUp(Accreditable accreditable, Role role)
+            throws AccessControlException;
+
+    /**
+     * Moves a role down the credential tree, decreasing its priority.
+     * 
+     * @param accreditable
+     * @param role
+     * @throws AccessControlException
+     */
+    public void moveRoleDown(Accreditable accreditable, Role role)
+            throws AccessControlException;
+
 }
