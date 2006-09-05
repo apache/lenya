@@ -84,7 +84,7 @@ public class PolicyTest extends AbstractAccessControlTest {
         for (int i = 0; i < credentials.length; i++) {
             CredentialImpl credential = new CredentialImpl(credentials[i].getAccreditable());
             Role[] roles = credentials[i].getRoles();
-
+            credential.setMethod(credentials[i].getMethod());
             for (int j = 0; j < roles.length; j++) {
                 credential.addRole(roles[j]);
             }
@@ -103,8 +103,12 @@ public class PolicyTest extends AbstractAccessControlTest {
         Credential[] newCredentials = newPolicy.getCredentials();
 
         for (int i = 0; i < credentials.length; i++) {
-            Credential credential = new CredentialImpl(credentials[i].getAccreditable());
-
+            CredentialImpl credential = new CredentialImpl(credentials[i].getAccreditable());
+Role[] roles = credentials[i].getRoles();
+for (int j = 0; j < roles.length; j++) {
+    credential.addRole(roles[j]);
+}
+credential.setMethod(credential.getMethod());
             Credential newCredential = null;
 
             for (int k = 0; k < newCredentials.length; k++) {
