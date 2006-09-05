@@ -18,8 +18,6 @@
 package org.apache.lenya.ac.impl;
 
 import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.cocoon.environment.Request;
@@ -28,7 +26,6 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.ac.Credential;
-import org.apache.lenya.ac.Identifiable;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
