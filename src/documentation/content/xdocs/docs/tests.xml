@@ -45,6 +45,10 @@
               <code>LenyaTestCase.xtest</code> configuration file.</li>
             <li>To debug a single test, right-click on the test class in the package explorer and select <em>Debug as -> JUnit test</em>.</li>
           </ul>
+          <note>Make sure you added all classes and libs from the build dir (
+            <code>build/lenya/webapp/WEB-INF/lib/</code>) to the junit classpath in
+            the eclipse debugger, otherwise you propably get a file not found
+            exception.</note>
         </li>
       </ul>
     </section>
