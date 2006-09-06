@@ -31,9 +31,9 @@
 
 <xsl:template match="dir:directory" xmlns:dir="http://apache.org/cocoon/directory/2.0">
 <atom:feed xmlns:atom="http://purl.org/atom/ns#">
-  <xi:include href="feeds/all/index.xml#xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:title)"/>
-  <xi:include href="feeds/all/index.xml#xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:link)"/>
-  <xi:include href="feeds/all/index.xml#xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:modified)"/>
+  <xi:include href="feeds/all/index.xml" xpointer="xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:title)"/>
+  <xi:include href="feeds/all/index.xml" xpointer="xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:link)"/>
+  <xi:include href="feeds/all/index.xml" xpointer="xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:modified)"/>
 
   <xsl:variable name="month"><xsl:value-of select="@name"/></xsl:variable>
   <xsl:for-each select="dir:directory">

@@ -22,9 +22,9 @@
   </xsl:template>
   <xsl:template match="blog:blog">
     <echo:feed xmlns:echo="http://purl.org/atom/ns#" xmlns="http://www.w3.org/1999/xhtml" version="0.3" xml:lang="en">
-      <xi:include href="site:/en/feeds/{$feedid}/index#xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:title)"/>
-      <xi:include href="site:/en/feeds/{$feedid}/index#xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:link)"/>
-      <xi:include href="site:/en/feeds/{$feedid}/index#xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:modified)"/>
+      <xi:include href="site:/en/feeds/{$feedid}/index" xpointer="xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:title)"/>
+      <xi:include href="site:/en/feeds/{$feedid}/index" xpointer="xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:link)"/>
+      <xi:include href="site:/en/feeds/{$feedid}/index" xpointer="xmlns(atom=http://purl.org/atom/ns#)xpointer(/atom:feed/atom:modified)"/>
       <xsl:for-each select="blog:entry">
         <xi:include href="site:/en{@path}"/>
       </xsl:for-each>

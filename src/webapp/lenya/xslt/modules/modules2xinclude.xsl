@@ -30,7 +30,7 @@
 <xsl:template match="publication">
   <menu:menu>
     <xsl:for-each select="module">
-      <xi:include href="cocoon:/menu-xml/module/{$area}/{@name}.xml#xpointer(/*/*)"/>
+      <xi:include href="cocoon:/menu-xml/module/{$area}/{@name}.xml" xpointer="xpointer(/*/*)"/>
     </xsl:for-each>
   </menu:menu>
 </xsl:template>
