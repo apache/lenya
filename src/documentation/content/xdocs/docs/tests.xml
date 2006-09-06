@@ -47,8 +47,11 @@
           </ul>
           <note>Make sure you added all classes and libs from the build dir (
             <code>build/lenya/webapp/WEB-INF/lib/</code>) to the junit classpath in
-            the eclipse debugger, otherwise you propably get a file not found
-            exception.</note>
+            the eclipse debugger, otherwise you propably get a file not found exception.
+            Further if you are looking into a way to debug htmlunit test then see the article on
+            the <a
+              href="http://www.baccoubonneville.com/blogs/index.php/eclipse/2005/12/04/htmlunit-tests-with-eclipse-and-ant">
+              Eclipse Blog - HtmlUnit tests with Eclipse and Ant</a> </note>
         </li>
       </ul>
     </section>
