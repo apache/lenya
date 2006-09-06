@@ -23,12 +23,37 @@
            xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
 
   <page:title>
-    <i18n:translate>
-      <i18n:text i18n:key="login-to-pub"/>
-      <i18n:param><jx:out value="${usecase.getParameterAsString('publicationId').toUpperCase()}"/></i18n:param>
-    </i18n:translate>
+    <jx:choose>
+      <jx:when test="${usecase.getParameter('currentUser') != null}">
+        <i18n:text>Access Denied</i18n:text>
+      </jx:when>
+      <jx:otherwise>
+        <i18n:translate>
+          <i18n:text i18n:key="login-to-pub"/>
+          <i18n:param><jx:out value="${usecase.getParameterAsString('publicationId').toUpperCase()}"/></i18n:param>
+        </i18n:translate>
+      </jx:otherwise>
+    </jx:choose>
   </page:title>
   <page:body>
+    <jx:if test="${usecase.getParameter('currentUser') != null}">
+      <div class="lenya-box">
+        <div class="lenya-box-title">
+          <i18n:text>Access Denied</i18n:text>
+        </div>
+        <div class="lenya-box-body">
+          <i18n:translate>
+            <i18n:text i18n:key="user-not-authorized"/>
+            <i18n:param><jx:out value="${usecase.getParameter('currentUser').getId()}"/></i18n:param>
+            <i18n:param><jx:out value="${request.getRequestURI()}"/></i18n:param>
+          </i18n:translate>
+          <br/>
+          <br/>
+          <i18n:text>have-another-account</i18n:text>
+        </div>
+      </div>
+    </jx:if>
+    
     <p>
       <strong> <i18n:text>NOTE</i18n:text>: </strong>
       <i18n:translate>
@@ -39,11 +64,12 @@
         <i18n:param>"levi"</i18n:param>
       </i18n:translate>
     </p>
+    
     <div class="lenya-box">
       <div class="lenya-box-title">
         <i18n:text>Login</i18n:text>
       </div>
-
+      
       <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
 
       <div class="lenya-box-body">

@@ -106,6 +106,9 @@
   <message key="Username">Username</message>
   <message key="Authentication failed">Authentication failed</message>
   <message key="try-user-lenya">Try user {0} and password {1} (editor), or user {2} and password {3} (reviewer)</message>
+  <message key="Access Denied">Access Denied</message>
+  <message key="user-not-authorized">The user '{0}' is not authorized to access the page '{1}'.</message>
+  <message key="have-another-account">If you have another user account with the corresponding privileges, please provide user name and password below.</message>
 
   <!-- logout screen -->
   <message key="logout-from-pub">LOGOUT from the {0} Publication</message>

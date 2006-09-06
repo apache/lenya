@@ -21,6 +21,7 @@ import java.util.Map;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -36,6 +37,7 @@ public class Login extends AccessControlUsecase {
     protected static final String USERNAME = "username";
     protected static final String REFERRER_QUERY_STRING = "referrerQueryString";
     protected static final String PUBLICATION_ID = "publicationId";
+    protected static final String CURRENT_USER = "currentUser";
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
@@ -51,6 +53,10 @@ public class Login extends AccessControlUsecase {
                     getSourceURL());
             if (publication.exists()) {
                 setParameter(PUBLICATION_ID, publication.getId());
+            }
+            Identity identity = this.getSession().getIdentity(); 
+            if (identity != null && identity.getUser() != null) {
+                setParameter(CURRENT_USER, this.getSession().getIdentity().getUser());
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
