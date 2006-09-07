@@ -101,6 +101,7 @@ Apply nodes recursively
     <xsl:copy-of select="@visibleinnav"/>
     <xsl:copy-of select="@protected"/>
     <xsl:copy-of select="@folder"/>
+    <xsl:copy-of select="@uuid"/>
   
     <!-- basic url - for all nodes -->
   

@@ -104,6 +104,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
     protected static final String ATTR_BASE = "base";
     protected static final String ATTR_SUFFIX = "suffix";
     protected static final String ATTR_HREF = "href";
+    protected static final String ATTR_UUID = "uuid";
     protected static final String ATTR_LANG = "lang";
     protected static final String ATTR_TYPE = "mimetype";
 
@@ -399,6 +400,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
         String href = node.getHref();
         String suffix = node.getSuffix();
         String isFolder = Boolean.toString(isFolder(node));
+        String uuid = node.getUuid();
 
         if (this.getLogger().isDebugEnabled()) {
             this.getLogger().debug("adding attribute id: " + id);
@@ -419,6 +421,8 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
             this.attributes.addAttribute("", ATTR_HREF, ATTR_HREF, "CDATA", href);
         if (suffix != null)
             this.attributes.addAttribute("", ATTR_SUFFIX, ATTR_SUFFIX, "CDATA", suffix);
+        if (uuid != null)
+            this.attributes.addAttribute("", ATTR_UUID, ATTR_UUID, "CDATA", uuid);
         this.attributes.addAttribute("", ATTR_FOLDER, ATTR_FOLDER, "CDATA", isFolder);
         
         if (this.showType) {
