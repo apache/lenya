@@ -15,9 +15,14 @@
         cx="${x}" cy="${r}" r="${r}"/>
     </clipPath>
   </defs>
-  
+
+  <!-- disabled, works with Mac OS X
   <svg:rect x="${x - r}" y="0" width="${width + r + 1}" height="${height + 1}"
     fill="${backgroundColor}" stroke="${lineColor}" stroke-width="2"/>
+  -->
+  
+  <svg:rect x="${x - r}" y="0" width="${width + r}" height="${height + 1}"
+    fill="${backgroundColor}" stroke="${lineColor}" stroke-width="1"/>
     
   <svg:rect x="0" y="0" width="${r}" height="${r}"
     fill="#FFFFFF" stroke-width="0"/>
