@@ -97,9 +97,7 @@
                   <xsl:apply-templates select="xhtml:div[@id = 'search']"/>
                   <xsl:apply-templates select="xhtml:div[@id = 'body']"/>
                   <xsl:if test="xhtml:html">
-                    <div id="body">
-                      <xsl:apply-templates select="xhtml:html/xhtml:body/*"/>
-                    </div>
+                    <xsl:apply-templates select="xhtml:html/xhtml:body/*"/>
                   </xsl:if>
                   <xsl:call-template name="footer"/>
                 </div>
