@@ -114,7 +114,7 @@ public class Assets extends SiteUsecase {
         Document[] docs = getSourceDocument().area().getDocuments();
         for (int i = 0; i < docs.length; i++) {
             if (docs[i].getResourceType().getName().equals("resource")) {
-                list.add(docs);
+                list.add(docs[i]);
             }
         }
         return (Document[]) list.toArray(new Document[list.size()]);
