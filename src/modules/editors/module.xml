@@ -20,6 +20,8 @@
 <module xmlns="http://apache.org/lenya/module/1.0">
   <id>org.apache.lenya.modules.editors</id>
   <depends module="org.apache.lenya.modules.usecase"/>
+  <depends module="org.apache.lenya.modules.resource"/>
+  <depends module="org.apache.lenya.modules.sitemanagement"/>
   <package>org.apache.lenya.modules.editors</package>
   <version>0.1-dev</version>
   <name>Editors</name>
