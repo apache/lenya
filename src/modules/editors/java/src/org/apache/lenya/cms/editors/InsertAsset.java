@@ -23,19 +23,21 @@ import java.util.List;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.UsecaseInvoker;
 import org.apache.lenya.cms.usecase.UsecaseMessage;
 import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.cms.site.usecases.CreateResource;
 
 /**
  * Usecase to insert an image into a document.
  * 
  * @version $Id$
  */
-public class InsertAsset extends DocumentUsecase {
+public class InsertAsset extends CreateResource {
 
+    protected static final String DOCUMENT = "document";
+    
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
      */
@@ -43,6 +45,7 @@ public class InsertAsset extends DocumentUsecase {
         super.initParameters();
         loadResources();
         
+        setParameter(DOCUMENT, getSourceDocument());
         try {
             User user = getSession().getIdentity().getUser();
             if (user != null) {

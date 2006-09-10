@@ -28,6 +28,7 @@
         <parameter name="callbackFunction" value="insertAsset"/>
       </view>
       <parameter name="asset-usecase" value="tab.assets"/>
+      <exit usecase="edit.insertAsset"/>
     </component-instance>
     
   </xconf>
