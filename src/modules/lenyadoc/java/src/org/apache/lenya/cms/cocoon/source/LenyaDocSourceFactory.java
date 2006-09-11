@@ -68,15 +68,10 @@ import org.apache.lenya.util.ServletHelper;
 public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceFactory, ThreadSafe,
         Contextualizable, Serviceable, Configurable {
 
-    private static final String META_SUFFIX = ".meta";
-
     protected static final String SCHEME = "lenyadoc";
 
     private Context context;
     private ServiceManager manager;
-
-    // Determines whether we have to request the meta data instead of the doc
-    private boolean isMetaDataLookup;
 
     /**
      * Used for resolving the object model.
@@ -108,7 +103,6 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
         String area = null;
         String language = null;
         String uuid = null;
-        isMetaDataLookup=false;
         Publication pub;
 
         // Parse the url
@@ -132,13 +126,6 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
         DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
 
         start = end + 1;
-        
-        // Meta data document instead of the doc? 
-        if (location.startsWith("meta", start)){
-            end = location.indexOf(':', start);
-            this.isMetaDataLookup = true;
-            start = end + 1;
-        }
         
         // Absolute vs. relative
         if (location.startsWith("//", start)) {
@@ -220,11 +207,7 @@ public class LenyaDocSourceFactory extends AbstractLogEnabled implements SourceF
                     + language + "] could not be created.");
         }
 
-        String lenyaURL;
-        if (this.isMetaDataLookup)
-            lenyaURL = document.getSourceURI()+META_SUFFIX;
-        else
-            lenyaURL = document.getSourceURI();
+        String lenyaURL = document.getSourceURI();
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Mapping 'lenyadoc:' URL [" + location + "] to 'lenya:' URL ["
