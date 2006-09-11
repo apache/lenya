@@ -44,9 +44,20 @@ import org.apache.lenya.util.ServletHelper;
  * Resource type module.
  * </p>
  * <p>
- * The syntax is either <code>{resource-type:&lt;attribute&gt;}</code> or
- * <code>{resource-type:&lt;name&gt;:&lt;attribute&gt;}</code>.
+ * The syntax is either <code>{resource-type:&lt;attribute&gt;}</code> (which uses the resource
+ * type of the currenlty requested document) or
+ * <code>{resource-type:&lt;name&gt;:&lt;attribute&gt;}</code> (which allows to access an
+ * arbitrary resource type).
  * </p>
+ * <p>
+ * Attributes:
+ * </p>
+ * <ul>
+ * <li><strong><code>expires</code></strong> - the expiration date in RFC 822/1123 format, see
+ * {@link org.apache.lenya.cms.publication.ResourceType#getExpires()}</li>
+ * <li><strong><code>schemaUri</code></strong> - see {@link org.apache.lenya.xml.Schema#getURI()}</li>
+ * <li><strong><code>httpSchemaUri</code></strong> - the URI to request the schema over HTTP</li>
+ * </ul>
  */
 public class ResourceTypeModule extends AbstractInputModule implements Serviceable {
 
@@ -68,11 +79,12 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
 
             String[] steps = name.split(":");
             if (steps.length == 1) {
-                DocumentFactory docFactory = DocumentUtil.createDocumentFactory(this.manager, session);
+                DocumentFactory docFactory = DocumentUtil.createDocumentFactory(this.manager,
+                        session);
                 String webappUrl = ServletHelper.getWebappURI(request);
                 Document document = docFactory.getFromURL(webappUrl);
                 pub = document.getPublication();
-                
+
                 attribute = name;
                 resourceType = document.getResourceType();
             } else {
@@ -81,7 +93,8 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
 
                 ServiceSelector selector = null;
                 try {
-                    selector = (ServiceSelector) this.manager.lookup(ResourceType.ROLE + "Selector");
+                    selector = (ServiceSelector) this.manager
+                            .lookup(ResourceType.ROLE + "Selector");
                     resourceType = (ResourceType) selector.select(resourceTypeName);
                 } finally {
                     this.manager.release(selector);
@@ -115,11 +128,11 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
 
     /**
      * Transforms a fallback URI for resources into a HTTP URL.
-     *
-     * Currently only supports module urls: 
      * 
-     * fallback://lenya/modules/foo/resources/schemas/bar.rng
-     * -> prefix/pubid/modules/foo/schemas/bar.rng
+     * Currently only supports module urls:
+     * 
+     * fallback://lenya/modules/foo/resources/schemas/bar.rng ->
+     * prefix/pubid/modules/foo/schemas/bar.rng
      * 
      * FIXME: allow other kind of fallback URIs
      * 
@@ -129,14 +142,15 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
      * @return A string.
      * @throws ConfigurationException
      */
-    protected String transformFallbackUriToHttp(String pubid, String prefix, String uri) throws ConfigurationException {
+    protected String transformFallbackUriToHttp(String pubid, String prefix, String uri)
+            throws ConfigurationException {
         if (uri.startsWith("fallback://lenya/modules/")) {
             String path = StringUtils.substringAfter(uri, "fallback://lenya/modules/");
             String module = StringUtils.substringBefore(path, "/");
             path = StringUtils.substringAfter(path, module + "/resources");
             return prefix + "/" + pubid + "/modules/" + module + path;
         } else {
-            throw new ConfigurationException("Don't know how to create HTTP URL from : "+uri);
+            throw new ConfigurationException("Don't know how to create HTTP URL from : " + uri);
         }
     }
 
