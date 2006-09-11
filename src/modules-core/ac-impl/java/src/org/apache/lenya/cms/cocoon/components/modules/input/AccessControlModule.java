@@ -53,17 +53,17 @@ import org.apache.lenya.cms.ac.PolicyUtil;
  * Attributes:
  * </p>
  * <ul>
- * <li>user-id</li>
- * <li>user-name</li>
- * <li>user-name:{user-id}</li>
- * <li>user-email</li>
- * <li>user-email:{user-id}</li>
- * <li>ip-address</li>
- * <li>role-ids</li>
- * <li>user-manager</li>
- * <li>group-manager</li>
- * <li>iprange-manager</li>
- * <li>role-manager</li>
+ * <li><code>user-id</code> - the ID of the currently logged-in user</li>
+ * <li><code>user-name</code> - the full name of the currently logged-in user</li>
+ * <li><code>user-name:{user-id}</code> - the full name of a specific user</li>
+ * <li><code>user-email</code> - the e-mail address of the currently logged-in user</li>
+ * <li><code>user-email:{user-id}</code> - the e-mail address of a specific user</li>
+ * <li><code>ip-address</code> - the IP address of the client machine</li>
+ * <li><code>role-ids</code> - the role IDs which are granted to the current identity</li>
+ * <li><code>user-manager</code> - the user manager object</li>
+ * <li><code>group-manager</code> - the group manager object</li>
+ * <li><code>iprange-manager</code> - the IP range manager object</li>
+ * <li><code>role-manager</code> - the role manager object</li>
  * </ul>
  * 
  */
