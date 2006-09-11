@@ -32,7 +32,21 @@ import org.apache.lenya.cms.metadata.MetaDataRegistry;
 import org.apache.lenya.cms.publication.Document;
 
 /**
- * Input module to access custom meta data values.
+ * <p>
+ * Input module to access meta data values. Use the name of the element as
+ * input module parameter.
+ * </p>
+ * <p>Configuration:</p>
+ * <pre>
+ *  &lt;component-instance logger="sitemap.modules.input.dublincore" name="[...]"
+ *    class="org.apache.lenya.cms.cocoon.components.modules.input.MetaDataModule"
+ *    namespace="[namespace URI of the element set]"/&gt;
+ * </pre>
+ * <p>Usage examples:</p>
+ * <ul>
+ * <li><code>{dublincore:title}</code></li>
+ * <li><code>{myMetData:myElementName}</code></li>
+ * </ul>
  */
 public class MetaDataModule extends AbstractPageEnvelopeModule {
 
