@@ -124,7 +124,7 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
         Session session = request.getSession();
         Object value = null;
 
-        String[] parameters = attribute.split(":");
+        String[] parameters = attribute.split(":", 2);
         String name = parameters[0];
 
         if (!Arrays.asList(PARAMETER_NAMES).contains(name)) {
@@ -200,8 +200,10 @@ public class AccessControlModule extends AbstractInputModule implements Servicea
             }
         } else {
             String userId = parameters[1];
-            UserManager userManager = (UserManager) getItemManager(request, USER_MANAGER);
-            user = userManager.getUser(userId);
+            if (!userId.equals("")) {
+                UserManager userManager = (UserManager) getItemManager(request, USER_MANAGER);
+                user = userManager.getUser(userId);
+            }
         }
         return user;
     }
