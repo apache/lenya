@@ -19,6 +19,7 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
+import org.xml.sax.helpers.AttributesImpl;
 import org.xml.sax.helpers.DefaultHandler;;
 
 public class MetaDataTransformer extends AbstractSAXTransformer implements
@@ -26,7 +27,7 @@ public class MetaDataTransformer extends AbstractSAXTransformer implements
     /**
      * The namespace for the meta data is http://apache.org/lenya/meta/1.0
      */
-    static public final String NAMESPACE_URI = "http://apache.org/lenya/meta/1.0";
+    static public final String NAMESPACE_URI = "http://apache.org/lenya/meta/1.0/";
 
     /**
      * The namespace prefix for this namespace.
@@ -112,7 +113,7 @@ public class MetaDataTransformer extends AbstractSAXTransformer implements
                     if (ELEMENT_ATT.equals(localName))
                         key = value;
                     else if (NS_ATT.equals(localName))
-                        ns = key;
+                        ns = value;
                     else if (UUID_ATT.equals(localName))
                         uuid = value;
                     else if (LANG_ATT.equals(localName))
@@ -126,6 +127,17 @@ public class MetaDataTransformer extends AbstractSAXTransformer implements
                     Document document = pub.getArea(area).getDocument(uuid, lang);
                     MetaData metaData = document.getMetaData(ns);
                     String [] returnValue=metaData.getValues(key);
+                    if (returnValue.length>1){
+                        for (int i = 0; i < returnValue.length; i++) {
+                            AttributesImpl attributes = new AttributesImpl();
+                            attributes.addAttribute("", VALUE_ELEMENT, VALUE_ELEMENT, "CDATA", returnValue[i]);
+                            attributes.addAttribute("", ELEMENT_ATT, ELEMENT_ATT, "CDATA", key);
+                            this.contentHandler.startElement(ns, VALUE_ELEMENT, PREFIX+":"+VALUE_ELEMENT, attributes);
+                            this.contentHandler.endElement(ns, VALUE_ELEMENT, PREFIX+":"+VALUE_ELEMENT);
+                        }
+                    }else if (returnValue.length==1){
+                        this.contentHandler.characters(returnValue[0].toCharArray(), 0, returnValue[0].toCharArray().length);
+                    }
                 } catch (PublicationException e) {
                     throw new SAXException("Error by getting document for [ "+lang+"/"+uuid+" ]");
                 } catch (MetaDataException e) {

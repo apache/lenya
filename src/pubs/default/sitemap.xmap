@@ -15,11 +15,14 @@
   limitations under the License.
 -->
 
-<!-- $Id$ -->
+<!-- $Id: sitemap.xmap 439259 2006-09-01 10:06:39Z andreas $ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
   <map:components>
+    <map:transformers default="xslt">
+      <map:transformer name="metaData" logger="lenya.sitemap.transformer.metaData" src="org.apache.lenya.cms.cocoon.transformation.MetaDataTransformer"/>
+    </map:transformers>
     <map:serializers default="xhtml">
       <map:serializer logger="sitemap.serializer.links" name="links" src="org.apache.lenya.cms.cocoon.serialization.LinkSerializer"/>
     </map:serializers>
@@ -184,6 +187,24 @@
           </map:otherwise>
         </map:select>
         
+        <!-- This is a demonstration of the generic meta data transformer
+          described in bug 39891.
+          
+          1) define the ns: xmlns:meta="http://apache.org/lenya/meta/1.0/"
+          2) use it in above xsl like e.g.
+          <meta:value ns="http://purl.org/dc/elements/1.1/" element="date" uuid="{@uuid}"/>
+          
+          Where @ns is the namespace for which you want to retrieve the @element for.
+          If there is more then one element registered then the transformer returns:
+          <value xmlns="http://apache.org/lenya/meta/1.0/" value="2005-09-11 12:44:05" element="date" />
+          <value xmlns="http://apache.org/lenya/meta/1.0/" value="2006-09-11 12:44:05" element="date" />
+          
+          Otherwise it will return the value as characters.
+          -->
+        <map:transform type="metaData">
+          <map:parameter name='pubid' value='{page-envelope:publication-id}'/>
+          <map:parameter name='area' value='{page-envelope:area}'/>
+        </map:transform>
         <map:transform type="i18n">      
           <map:parameter name="locale" value="{page-envelope:document-language}"/>
         </map:transform>    
