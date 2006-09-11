@@ -53,17 +53,17 @@ import org.apache.lenya.cms.ac.PolicyUtil;
  * Attributes:
  * </p>
  * <ul>
- * <li><code>user-id</code> - the ID of the currently logged-in user</li>
- * <li><code>user-name</code> - the full name of the currently logged-in user</li>
- * <li><code>user-name:{user-id}</code> - the full name of a specific user</li>
- * <li><code>user-email</code> - the e-mail address of the currently logged-in user</li>
- * <li><code>user-email:{user-id}</code> - the e-mail address of a specific user</li>
- * <li><code>ip-address</code> - the IP address of the client machine</li>
- * <li><code>role-ids</code> - the role IDs which are granted to the current identity</li>
- * <li><code>user-manager</code> - the user manager object</li>
- * <li><code>group-manager</code> - the group manager object</li>
- * <li><code>iprange-manager</code> - the IP range manager object</li>
- * <li><code>role-manager</code> - the role manager object</li>
+ * <li><strong><code>user-id</code></strong> - the ID of the currently logged-in user</li>
+ * <li><strong><code>user-name</code></strong> - the full name of the currently logged-in user</li>
+ * <li><strong><code>user-name:{user-id}</code></strong> - the full name of a specific user</li>
+ * <li><strong><code>user-email</code></strong> - the e-mail address of the currently logged-in user</li>
+ * <li><strong><code>user-email:{user-id}</code></strong> - the e-mail address of a specific user</li>
+ * <li><strong><code>ip-address</code></strong> - the IP address of the client machine</li>
+ * <li><strong><code>role-ids</code></strong> - the role IDs which are granted to the current identity</li>
+ * <li><strong><code>user-manager</code></strong> - the user manager object</li>
+ * <li><strong><code>group-manager</code></strong> - the group manager object</li>
+ * <li><strong><code>iprange-manager</code></strong> - the IP range manager object</li>
+ * <li><strong><code>role-manager</code></strong> - the role manager object</li>
  * </ul>
  * 
  */

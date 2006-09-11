@@ -41,14 +41,20 @@ import org.apache.lenya.cms.repository.Session;
 
 /**
  * Input module to get document information.
- * {doc-info:{publication-id}:{area}:{uuid}:{document-language}:{property}} where {property}
- * may be:
+ * {doc-info:{publication-id}:{area}:{uuid}:{document-language}:{property}} where {property} may be:
  * <ul>
- * <li>resourceType</li>
- * <li>lastModified</li>
- * <li>mimeType</li>
- * <li>expires</li>
- * <li>visibleInNav</li>
+ * <li><strong><code>contentLength</code></strong> - the content length (number of bytes).</li>
+ * <li><strong><code>expires</code></strong> - the expiration date in RFC 822/1123 format.</li>
+ * <li><strong><code>lastModified</code></strong> - the last modification date in RFC 822/1123
+ * format.</li>
+ * <li><strong><code>mimeType</code></strong> - the MIME type</li>
+ * <li><strong><code>path</code></strong> - the path in the site structure (starting with a
+ * slash) or an empty string if the document is not referenced in the site structure.</li>
+ * <li><strong><code>resourceType</code></strong> - the name of the resource type</li>
+ * <li><strong><code>visibleInNav</code></strong> - <code>true</code> if the document's node
+ * is visible in the navigation, <code>false</code> otherwise.</li>
+ * <li><strong><code>webappUrl</code></strong> - the web application URL of the document or
+ * an empty string if the document is not referenced in the site structure.</li>
  * </ul>
  */
 public class DocumentInfoModule extends AbstractInputModule implements Serviceable {
@@ -99,10 +105,9 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
 
         try {
             Session session = RepositoryUtil.getSession(this.manager, request);
-            DocumentFactory docFactory = DocumentUtil.createDocumentFactory(this.manager,
-                    session);
+            DocumentFactory docFactory = DocumentUtil.createDocumentFactory(this.manager, session);
             Publication pub = docFactory.getPublication(publicationId);
-            document = pub.getArea(area).getDocument(uuid, language); 
+            document = pub.getArea(area).getDocument(uuid, language);
         } catch (Exception e) {
             throw new ConfigurationException("Error getting document [" + publicationId + ":"
                     + area + ":" + uuid + ":" + language + "]: " + e.getMessage(), e);
@@ -121,11 +126,9 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
         InputModuleParameters params = new InputModuleParameters(name, PARAMS, MIN_MANDATORY_PARAMS);
 
         try {
-            Document document = getDocument(params.getParameter(PARAM_PUBLICATION_ID),
-                    params.getParameter(PARAM_AREA),
-                    params.getParameter(PARAM_UUID),
-                    params.getParameter(PARAM_DOCUMENT_LANGUAGE),
-                    objectModel);
+            Document document = getDocument(params.getParameter(PARAM_PUBLICATION_ID), params
+                    .getParameter(PARAM_AREA), params.getParameter(PARAM_UUID), params
+                    .getParameter(PARAM_DOCUMENT_LANGUAGE), objectModel);
             String attribute = params.getParameter(PARAM_PROPERTY);
 
             if (attribute.equals(RESOURCE_TYPE)) {
@@ -171,7 +174,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
 
     protected boolean isVisibleInNavigation(Document document) throws ConfigurationException {
         try {
-            return  document.getLink().getNode().isVisible();
+            return document.getLink().getNode().isVisible();
         } catch (DocumentException e) {
             throw new ConfigurationException("Obtaining navigation visibility failed [" + document
                     + "]: " + e.getMessage(), e);
