@@ -22,8 +22,9 @@
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'edit.bxe']">
     
     <component-instance name="edit.bxe" logger="lenya.publication" 
-    class="org.apache.lenya.cms.usecase.DummyUsecase">
+    class="org.apache.lenya.cms.workflow.usecases.CheckWorkflow">
       <view uri="cocoon://modules/bxe/bxe.open" menu="false"/>
+      <event id="edit"/>
     </component-instance>
     
   </xconf>

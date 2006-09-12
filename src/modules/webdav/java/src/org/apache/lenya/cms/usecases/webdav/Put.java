@@ -29,6 +29,7 @@ import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
+import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
@@ -43,7 +44,7 @@ import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.site.usecases.CreateDocument;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.xml.UsecaseErrorHandler;
-import org.apache.lenya.workflow.WorkflowManager;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.xml.Schema;
 import org.apache.lenya.xml.ValidationUtil;
 
@@ -52,6 +53,7 @@ import org.apache.lenya.xml.ValidationUtil;
  * @version $Id: $
  */
 public class Put extends CreateDocument {
+    
     // registeredExtensions contain all known extension matching to a certain resource-type.
     private HashMap registeredExtensions = new HashMap();
     // default is xhtml and xml but you can override it with the config
@@ -60,7 +62,8 @@ public class Put extends CreateDocument {
     protected static final String ATTRIBUTE_TYPE = "resource-type";
     protected static final String ELEMENT_ROOT = "extensions";
     protected static final String ELEMENT_EXTENSION = "extension";
-
+    protected static final String EVENT = "lenya.event";
+    
     private boolean fallback = false;
 
     public void configure(Configuration config) throws ConfigurationException {
@@ -80,12 +83,23 @@ public class Put extends CreateDocument {
         }
     }
 
+    protected void doCheckExecutionConditions() throws Exception {
+        super.doCheckExecutionConditions();
+
+        Document doc = getSourceDocument();
+        String event = getParameterAsString(EVENT);
+        if (event != null
+                && !WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), doc, event)) {
+            String title = DublinCoreHelper.getTitle(doc);
+            addErrorMessage("error-workflow-document", new String[] { event, title });
+        }
+    }
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
         SourceResolver resolver = null;
-        WorkflowManager wfManager = null;
 
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
@@ -144,12 +158,14 @@ public class Put extends CreateDocument {
                 }
             }
 
+            String event = getParameterAsString(EVENT);
+            if (event != null) {
+                WorkflowUtil.invoke(this.manager, getSession(), getLogger(), doc, event);
+            }
+
         } finally {
             if (resolver != null) {
                 this.manager.release(resolver);
-            }
-            if (wfManager != null) {
-                this.manager.release(wfManager);
             }
         }
     }
@@ -237,8 +253,7 @@ public class Put extends CreateDocument {
         if (this.publication == null) {
             try {
                 this.publication = PublicationUtil.getPublicationFromUrl(this.manager,
-                        getDocumentFactory(),
-                        getSourceURL());
+                        getDocumentFactory(), getSourceURL());
             } catch (PublicationException e) {
                 throw new RuntimeException(e);
             }
