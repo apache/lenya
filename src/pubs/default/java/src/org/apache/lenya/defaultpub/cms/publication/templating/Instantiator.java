@@ -212,10 +212,12 @@ public class Instantiator extends AbstractLogEnabled implements
 
             Element[] indexElement = indexHelper.getChildren(indexDoc.getDocumentElement(), "index");
 
-            indexElement[0].setAttribute("id", newPublicationId + "-live");
-            indexElement[0].setAttribute("directory", indexDir + "/live/index");
-            indexElement[1].setAttribute("id", newPublicationId + "-authoring");
-            indexElement[1].setAttribute("directory", indexDir + "/authoring/index");
+            for (int i=0; i<indexElement.length; i++) {
+                String id = indexElement[i].getAttribute("id");
+                String area = id.split("-")[1];
+                indexElement[i].setAttribute("id", newPublicationId + "-" + area);
+                indexElement[i].setAttribute("directory", indexDir + "/" + area + "/index");
+            }
 
             save(indexDoc, indexSource);
 
