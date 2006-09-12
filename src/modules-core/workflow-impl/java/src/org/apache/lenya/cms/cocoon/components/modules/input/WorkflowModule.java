@@ -63,7 +63,7 @@ public class WorkflowModule extends AbstractPageEnvelopeModule {
      */
     public static final String LAST_DATE_PREFIX = "lastDate.";
 
-    protected static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    protected static final DateFormat DATE_FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     static final String[] PARAMETER_NAMES = { STATE };
 
