@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id: sitemap.xmap 439259 2006-09-01 10:06:39Z andreas $ -->
+<!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
@@ -157,7 +157,7 @@
               <map:parameter name="publication-id" value="{2}"/>
               <map:parameter name="area" value="{3}"/>
               <map:parameter name="url" value="{5}"/>
-              <map:parameter name="document-id" value="{page-envelope:document-id}"/>
+              <map:parameter name="document-path" value="{page-envelope:document-path}"/>
               <map:parameter name="document-type" value="{page-envelope:document-type}"/>
               <map:parameter name="language" value="{page-envelope:document-language}"/>
               <map:parameter name="contextprefix" value="{request:contextPath}"/>
@@ -174,7 +174,7 @@
               <map:parameter name="publication-id" value="{2}"/>
               <map:parameter name="area" value="{3}"/>
               <map:parameter name="url" value="{5}"/>
-              <map:parameter name="document-id" value="{page-envelope:document-id}"/>
+              <map:parameter name="document-path" value="{page-envelope:document-path}"/>
               <map:parameter name="document-type" value="{page-envelope:document-type}"/>
               <map:parameter name="language" value="{page-envelope:document-language}"/>
               <map:parameter name="contextprefix" value="{request:contextPath}"/>
@@ -283,7 +283,7 @@
                         </map:transform>
                         <map:transform src="fallback://lenya/xslt/authoring/edit/removeSourceTags.xsl"/>
                         <map:act type="set-header">
-                          <map:parameter name="Expires" value="{doc-info:{page-envelope:publication-id}:{page-envelope:area}:{page-envelope:document-id}:{page-envelope:document-language}:expires}"/>
+                          <map:parameter name="Expires" value="{doc-info:{page-envelope:publication-id}:{page-envelope:area}:{page-envelope:document-uuid}:{page-envelope:document-language}:expires}"/>
                         </map:act>
                       </map:when>
                       <!-- Turn off caching in authoring area -->
@@ -317,12 +317,12 @@
       <map:match pattern="*/**.*">
         <!-- TODO: http://marc.theaimsgroup.com/?l=xml-cocoon-dev&amp;m=112496255207733&amp;w=2 -->
         <map:match type="regexp" pattern="(.*\.)(pdf|PDF|Pdf)$"> 
-            <map:read src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-id}" mime-type="application/pdf">
-              <map:parameter name="byte-ranges" value="false"/>
-            </map:read>
+          <map:read src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-uuid}" mime-type="application/pdf">
+            <map:parameter name="byte-ranges" value="false"/>
+          </map:read>
         </map:match>      
         <map:act type="language-exists">
-          <map:read src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-id}"/>
+          <map:read src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-uuid}"/>
         </map:act>
 
         <map:generate type="serverpages" src="fallback://lenya/content/exception/document-does-not-exist.xsp"/>

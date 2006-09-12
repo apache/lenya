@@ -35,7 +35,7 @@
   <!-- i.e. doctypes/xhtml-document -->
   <xsl:param name="document-type"/>
   
-  <xsl:param name="document-id"/>
+  <xsl:param name="document-path"/>
   
   <!-- The request url i.e. /lenya/doctypes/xhtml-document_en.html -->
   <xsl:param name="url"/>
@@ -51,7 +51,7 @@
   <xsl:template match="cmsbody">
     <html>
       <head>
-        <link rel="neutron-introspection" type="application/neutron+xml" href="{$root}{$document-id}/introspection.xml"/>
+        <link rel="neutron-introspection" type="application/neutron+xml" href="{$root}{$document-path}/introspection.xml"/>
         <link rel="stylesheet" href="{$root}/css/page.css" type="text/css"/>
         <!-- Load doctype-specific CSS -->
         <xsl:choose>
