@@ -52,7 +52,7 @@
         </tr>
         <jx:forEach var="item" items="${usecase.getParameter('versions')}" varStatus="status">
           <tr>
-            <td><jx:formatDate value="${item.getDate()}"/></td>
+            <td><jx:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${item.getDate()}"/></td>
             <td><i18n:text><jx:out value="${item.event}"/></i18n:text></td>
             <td><i18n:text><jx:out value="${item.state}"/></i18n:text></td>
             <td>
