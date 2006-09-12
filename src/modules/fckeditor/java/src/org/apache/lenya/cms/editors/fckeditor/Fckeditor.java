@@ -106,6 +106,8 @@ public class Fckeditor extends DocumentUsecase {
         content = content.replaceAll("&nbsp;","&#160;");
         content = content.replaceAll("&ldquo;","&#8220;");
         content = content.replaceAll("&rdquo;","&#8221;");
+        content = content.replaceAll("&ndash;","&#8211;");
+        content = content.replaceAll("&mdash;","&#8212;");
         saveDocument(encoding, content);
     }
 
