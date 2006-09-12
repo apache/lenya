@@ -21,7 +21,7 @@
 
   <component-instance name="module.odt.create" logger="lenya.module.odt"
     class="org.apache.lenya.cms.site.usecases.CreateOpenDocument">
-    <view template="modules/opendocument/usecases/create.jx"/>
+    <view template="modules/sitemanagement/usecases/site/create.jx"/>
   </component-instance>
   
 </xconf>
