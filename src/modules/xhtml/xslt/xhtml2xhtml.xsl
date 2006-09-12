@@ -25,12 +25,12 @@
     xmlns:dc="http://purl.org/dc/elements/1.1/"
     exclude-result-prefixes="xhtml lenya"
     >
+    
 <xsl:include href="fallback://lenya/modules/xhtml/xslt/helper-object.xsl"/>
 <xsl:param name="rendertype" select="''"/>
 <xsl:param name="nodeid"/>
 
 <xsl:template match="/xhtml:html">
-  <xsl:copy-of select="lenya:meta"/>
   <html>
     <body>
       <div id="body">
