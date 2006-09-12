@@ -103,7 +103,7 @@
       <map:match pattern="request/PUT/*">    
         <map:act type="resource-exists" src="fallback://lenya/modules/{page-envelope:document-type}/xslt/clean-{page-envelope:document-type}.xsl">
           <map:generate type="stream">
-              <map:parameter name="defaultContentType" value="text/xml" />
+            <map:parameter name="defaultContentType" value="text/xml" />
           </map:generate>
           <map:transform src="fallback://lenya/modules/{page-envelope:document-type}/xslt/clean-{page-envelope:document-type}.xsl"/>        
           <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
@@ -120,7 +120,7 @@
     
       <!-- Disable caching for webdav/authoring area -->
       <map:act type="set-header">
-          <map:parameter name="Cache-Control" value="no-cache" />
+        <map:parameter name="Cache-Control" value="no-cache" />
       </map:act>    
  
       <map:match pattern="webdav">
