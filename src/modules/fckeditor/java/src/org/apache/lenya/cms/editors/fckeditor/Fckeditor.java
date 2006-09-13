@@ -24,7 +24,14 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.Properties;
+import javax.xml.transform.stream.StreamResult;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.OutputKeys;
 
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.xml.XMLUtils;
@@ -46,7 +53,10 @@ import org.w3c.tidy.Tidy;
  * 
  */
 public class Fckeditor extends DocumentUsecase {
-
+    
+    public static final String TIDY_CONFIG="tidyConfig";
+    
+    
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
@@ -75,6 +85,8 @@ public class Fckeditor extends DocumentUsecase {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
+        
+        
         if (!WorkflowUtil.canInvoke(this.manager,
                 getSession(),
                 getLogger(),
@@ -102,12 +114,6 @@ public class Fckeditor extends DocumentUsecase {
         String encoding = request.getCharacterEncoding();
         String content = "<?xml version=\"1.0\" encoding=\"" + encoding + "\"?>\n"
                 + addNamespaces(namespaces, getParameterAsString("content"));
-        // ToDo: set replacements in an properties file
-        content = content.replaceAll("&nbsp;","&#160;");
-        content = content.replaceAll("&ldquo;","&#8220;");
-        content = content.replaceAll("&rdquo;","&#8221;");
-        content = content.replaceAll("&ndash;","&#8211;");
-        content = content.replaceAll("&mdash;","&#8212;");
         saveDocument(encoding, content);
     }
 
@@ -123,6 +129,8 @@ public class Fckeditor extends DocumentUsecase {
         ModifiableSource xmlSource = null;
         SourceResolver resolver = null;
         Source indexSource = null;
+        Source tidySource = null;
+        Properties properties = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             xmlSource = (ModifiableSource) resolver.resolveURI(getSourceDocument().getSourceURI());
@@ -130,8 +138,23 @@ public class Fckeditor extends DocumentUsecase {
             
             // Setup an instance of Tidy.
             Tidy tidy = new Tidy();
-            tidy.setXmlOut(true);
-            tidy.setNumEntities(true);
+            
+            String tidyProps = this.getParameterAsString(TIDY_CONFIG, null);
+            if (tidyProps != null) {
+                tidySource = resolver.resolveURI(tidyProps);
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug(
+                        "Loading configuration from " + tidySource.getURI());
+                }
+                properties = new Properties();
+                properties.load(tidySource.getInputStream());
+            }
+
+            if (properties == null) {
+                tidy.setXHTML(true);
+            } else {
+                tidy.setConfigurationFromProps(properties);
+            }
             
             //Set Jtidy warnings on-off
             tidy.setShowWarnings(getLogger().isWarnEnabled());
@@ -149,6 +172,25 @@ public class Fckeditor extends DocumentUsecase {
             // FIXME: Jtidy doesn't warn or strip duplicate attributes in same
             // tag; stripping.
             XMLUtils.stripDuplicateAttributes(xmlDoc, null);
+            
+            StringWriter output = new StringWriter();
+            StreamResult strResult = new StreamResult(output);
+            TransformerFactory tfac = TransformerFactory.newInstance();
+            try {
+                Transformer t = tfac.newTransformer();
+                t.setOutputProperty(OutputKeys.ENCODING, encoding);
+                t.setOutputProperty(OutputKeys.INDENT, "yes");
+                t.setOutputProperty(OutputKeys.METHOD, "xml");
+                t.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+                t.transform(new DOMSource(xmlDoc.getDocumentElement()), strResult);
+                
+                content = strResult.getWriter().toString();
+            } catch (Exception e) {
+                this.addErrorMessage(e.getMessage());
+            }
+            
+            
+            saveXMLFile(encoding, content, xmlSource);
 
             if (xmlDoc != null) {
                 ResourceType resourceType = getSourceDocument().getResourceType();
@@ -173,11 +215,14 @@ public class Fckeditor extends DocumentUsecase {
                 if (indexSource != null) {
                     resolver.release(indexSource);
                 }
+                if (tidySource != null) {
+                    resolver.release(tidySource);
+                }
                 this.manager.release(resolver);
             }
         }
     }
-
+    
     /**
      * Save the XML file
      * @param encoding The encoding

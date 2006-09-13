@@ -20,6 +20,7 @@
   <component-instance name="edit.fckeditor" logger="lenya.publication"
                       class="org.apache.lenya.cms.editors.fckeditor.Fckeditor">
     <transaction policy="pessimistic"/>
+    <parameter name="tidyConfig" value="fallback://lenya/modules/fckeditor/config/jtidy.properties"/>
     <view template="modules/fckeditor/usecases/fckeditor.jx" menu="false"/>
   </component-instance>
     
