@@ -31,7 +31,6 @@ import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.OutputKeys;
 
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.xml.XMLUtils;
@@ -43,9 +42,11 @@ import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.xml.UsecaseErrorHandler;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
+import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.Schema;
 import org.apache.lenya.xml.ValidationUtil;
 import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 import org.w3c.tidy.Tidy;
 
 /**
@@ -136,6 +137,8 @@ public class Fckeditor extends DocumentUsecase {
             xmlSource = (ModifiableSource) resolver.resolveURI(getSourceDocument().getSourceURI());
             saveXMLFile(encoding, content, xmlSource);
             
+            Document xmlDoc = null;
+            
             // Setup an instance of Tidy.
             Tidy tidy = new Tidy();
             
@@ -148,50 +151,54 @@ public class Fckeditor extends DocumentUsecase {
                 }
                 properties = new Properties();
                 properties.load(tidySource.getInputStream());
-            }
-
-            if (properties == null) {
-                tidy.setXHTML(true);
-            } else {
-                tidy.setConfigurationFromProps(properties);
-            }
             
-            //Set Jtidy warnings on-off
-            tidy.setShowWarnings(getLogger().isWarnEnabled());
-            //Set Jtidy final result summary on-off
-            tidy.setQuiet(!getLogger().isInfoEnabled());
-            //Set Jtidy infos to a String (will be logged) instead of System.out
-            StringWriter stringWriter = new StringWriter();
-            PrintWriter errorWriter = new PrintWriter(stringWriter);
-            tidy.setErrout(errorWriter);
 
-            Document xmlDoc = null;
+                if (properties == null) {
+                    tidy.setXHTML(true);
+                } else {
+                    tidy.setConfigurationFromProps(properties);
+                }
+            
+                //Set Jtidy warnings on-off
+                tidy.setShowWarnings(getLogger().isWarnEnabled());
+                //Set Jtidy final result summary on-off
+                tidy.setQuiet(!getLogger().isInfoEnabled());
+                //Set Jtidy infos to a String (will be logged) instead of System.out
+                StringWriter stringWriter = new StringWriter();
+                PrintWriter errorWriter = new PrintWriter(stringWriter);
+                tidy.setErrout(errorWriter);
 
-            xmlDoc = tidy.parseDOM(xmlSource.getInputStream(), null);
+                xmlDoc = tidy.parseDOM(xmlSource.getInputStream(), null);
             
-            // FIXME: Jtidy doesn't warn or strip duplicate attributes in same
-            // tag; stripping.
-            XMLUtils.stripDuplicateAttributes(xmlDoc, null);
+                // FIXME: Jtidy doesn't warn or strip duplicate attributes in same
+                // tag; stripping.
+                XMLUtils.stripDuplicateAttributes(xmlDoc, null);
             
-            StringWriter output = new StringWriter();
-            StreamResult strResult = new StreamResult(output);
-            TransformerFactory tfac = TransformerFactory.newInstance();
-            try {
-                Transformer t = tfac.newTransformer();
-                t.setOutputProperty(OutputKeys.ENCODING, encoding);
-                t.setOutputProperty(OutputKeys.INDENT, "yes");
-                t.setOutputProperty(OutputKeys.METHOD, "xml");
-                t.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-                t.transform(new DOMSource(xmlDoc.getDocumentElement()), strResult);
+                StringWriter output = new StringWriter();
+                StreamResult strResult = new StreamResult(output);
+                TransformerFactory tfac = TransformerFactory.newInstance();
+                try {
+                    Transformer t = tfac.newTransformer();
+                    t.setOutputProperty(OutputKeys.ENCODING, encoding);
+                    t.setOutputProperty(OutputKeys.INDENT, "yes");
+                    t.setOutputProperty(OutputKeys.METHOD, "xml");
+                    t.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+                    t.transform(new DOMSource(xmlDoc.getDocumentElement()), strResult);
                 
-                content = strResult.getWriter().toString();
-            } catch (Exception e) {
-                this.addErrorMessage(e.getMessage());
+                    content = strResult.getWriter().toString();
+                } catch (Exception e) {
+                    addErrorMessage(e.getMessage());
+                }
+                
+                saveXMLFile(encoding, content, xmlSource);
+            } else {
+                try {
+                  xmlDoc = DocumentHelper.readDocument(xmlSource.getInputStream());
+                } catch (SAXException e) {
+                    addErrorMessage("error-document-form", new String[] { e.getMessage() });
+                }
             }
             
-            
-            saveXMLFile(encoding, content, xmlSource);
-
             if (xmlDoc != null) {
                 ResourceType resourceType = getSourceDocument().getResourceType();
                 Schema schema = resourceType.getSchema();
