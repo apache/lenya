@@ -26,6 +26,10 @@
   <xsl:param name="title"/>
   <xsl:param name="contentLength"/>
   <xsl:param name="mimeType"/>
+  <xsl:param name="documentUrl"/>
+  <xsl:param name="sourceExtension"/>
+  
+  <xsl:variable name="mediaUrl" select="concat(substring-before($documentUrl, '.html'), '.', $sourceExtension)"/>
   
   <xsl:variable name="imageprefix"
     select="concat($context-prefix,'/',$pubid,'/modules/resource')"/>
@@ -40,11 +44,9 @@
     
   <xsl:template match="meta:metadata" mode="media">
     
-    <xsl:variable name="mediaName" select="concat($path, '.', mediameta:elements/mediameta:filename)"/>
-    
     <xsl:variable name="mediaURI">
       <xsl:value-of select="$root"/>
-      <xsl:value-of select="$mediaName"/>
+      <xsl:value-of select="$mediaUrl"/>
     </xsl:variable>
     
     <xsl:variable name="size">
@@ -72,7 +74,7 @@
       </tr>
       <tr>
         <td><i><i18n:text>Content</i18n:text>:</i></td>
-        <td><a href="{$mediaURI}" target="_new"><xsl:value-of select="$mediaName"/>
+        <td><a href="{$mediaURI}" target="_new"><xsl:value-of select="$mediaUrl"/>
           </a></td>
       </tr>
       <tr>

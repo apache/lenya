@@ -51,6 +51,7 @@ import org.apache.lenya.cms.repository.Session;
  * <li><strong><code>path</code></strong> - the path in the site structure (starting with a
  * slash) or an empty string if the document is not referenced in the site structure.</li>
  * <li><strong><code>resourceType</code></strong> - the name of the resource type</li>
+ * <li><strong><code>sourceExtension</code></strong> - the source extension</li>
  * <li><strong><code>visibleInNav</code></strong> - <code>true</code> if the document's node
  * is visible in the navigation, <code>false</code> otherwise.</li>
  * <li><strong><code>webappUrl</code></strong> - the web application URL of the document or
@@ -78,6 +79,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
     protected final static String LAST_MODIFIED = "lastModified";
     protected final static String MIME_TYPE = "mimeType";
     protected final static String CONTENT_LENGTH = "contentLength";
+    protected final static String SOURCE_EXTENSION = "sourceExtension";
     protected final static String EXPIRES = "expires";
     protected final static String VISIBLE_IN_NAVIGATION = "visibleInNav";
 
@@ -139,6 +141,8 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
                 value = document.getMimeType();
             } else if (attribute.equals(CONTENT_LENGTH)) {
                 value = Long.toString(document.getContentLength());
+            } else if (attribute.equals(SOURCE_EXTENSION)) {
+                value = document.getSourceExtension();
             } else if (attribute.equals(LANGUAGE)) {
                 value = document.getLanguage();
             } else if (attribute.equals(PATH)) {
