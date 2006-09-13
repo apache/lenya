@@ -153,8 +153,7 @@
           </tr>
           <tr>
             <td class="lenya-entry-caption">
-              <label for="visibleinnav"><i18n:text>Document visible in
-                Navigation</i18n:text>*:
+              <label for="visibleinnav"><i18n:text>Document visible in Navigation</i18n:text>*:
               </label></td>
             <jx:set var="visible" value="yes"/>
             <jx:if
