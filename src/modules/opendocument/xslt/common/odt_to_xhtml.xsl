@@ -273,11 +273,83 @@ http://books.evc-cit.info/odf_utils/odt_to_xhtml.html
 	Yes, paragraphs in ODT really produce a <div> in XHTML,
 	because an ODT paragraph has no extra line spacing.
 -->
+<!-- Case of Notes -->
+<!-- FIXME : this is not XHTML
+<xsl:template match="text:p[@text:style-name='Forrest_3a__20_Note']">
+	<note>
+		<xsl:apply-templates/>
+		<xsl:if test="count(node())=0"><br /></xsl:if>
+	</note>
+</xsl:template>
+-->
+<!-- Case of Warnings -->
+<!-- FIXME : this is not XHTML
+<xsl:template match="text:p[@text:style-name='Forrest_3a__20_Warning']">
+	<warning>
+		<xsl:apply-templates/>
+		<xsl:if test="count(node())=0"><br /></xsl:if>
+	</warning>
+</xsl:template>
+-->
+<!-- Case of Fixme  - still a problem to retrieve the author...-->
+<!-- FIXME : this is not XHTML
+<xsl:template match="text:p[@text:style-name='Forrest_3a__20_Fixme']">
+	<fixme>
+		<xsl:apply-templates/>
+		<xsl:if test="count(node())=0"><br /></xsl:if>
+	</fixme>
+</xsl:template>
+-->
+<!-- Case of Sources -->
+<!-- FIXME : this is not XHTML
+<xsl:template match="text:p[@text:style-name='Forrest_3a__20_Source']">
+	<source>
+		<xsl:apply-templates/>
+		<xsl:if test="count(node())=0"><br /></xsl:if>
+	</source>
+</xsl:template>
+-->
+<!-- Otherwise -->
 <xsl:template match="text:p">
 	<div class="{translate(@text:style-name,'.','_')}">
 		<xsl:apply-templates/>
 		<xsl:if test="count(node())=0"><br /></xsl:if>
 	</div>
+</xsl:template>
+
+<!-- Case of the Code style -->
+<xsl:template match="text:span[@text:style-name='Forrest_3a__20_Code']">
+	<code>
+		<xsl:apply-templates/>
+	</code>
+</xsl:template>
+
+<!-- Case of the below style -->
+<xsl:template match="text:span[@text:style-name='Forrest_3a__20_Below']">
+	<sub>
+		<xsl:apply-templates/>
+	</sub>
+</xsl:template>
+
+<!-- Case of the above style -->
+<xsl:template match="text:span[@text:style-name='Forrest_3a__20_Above']">
+	<sup>
+		<xsl:apply-templates/>
+	</sup>
+</xsl:template>
+
+<!-- Case of the strong style -->
+<xsl:template match="text:span[@text:style-name='Strong_20_Emphasis']">
+	<strong>
+		<xsl:apply-templates/>
+	</strong>
+</xsl:template>
+
+<!-- Case of the emphasys style - generally rendered with Italic -->
+<xsl:template match="text:span[@text:style-name='Emphasis']">
+	<em>
+		<xsl:apply-templates/>
+	</em>
 </xsl:template>
 
 <xsl:template match="text:span">
@@ -436,6 +508,8 @@ http://books.evc-cit.info/odf_utils/odt_to_xhtml.html
 
 <xsl:template match="text:line-break">
 	<br />
+	<xsl:text>
+</xsl:text>
 </xsl:template>
 
 <xsl:variable name="spaces"
@@ -473,7 +547,19 @@ http://books.evc-cit.info/odf_utils/odt_to_xhtml.html
 </xsl:template>
 
 <xsl:template match="text:a">
-<a href="{@xlink:href}"><xsl:apply-templates/></a>
+	<a href="{@xlink:href}">
+		<xsl:if test="@office:target-frame-name">
+			<xsl:attribute name="target">
+				<xsl:value-of select="@office:target-frame-name"/>
+			</xsl:attribute>
+		</xsl:if>
+		<xsl:if test="@office:name">
+			<xsl:attribute name="title">
+				<xsl:value-of select="@office:name"/>
+			</xsl:attribute>
+		</xsl:if>
+		<xsl:apply-templates/>
+	</a>
 </xsl:template>
 
 <!--
