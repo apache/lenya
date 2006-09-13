@@ -25,7 +25,6 @@ import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.ResourceWrapper;
 import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -41,23 +40,25 @@ public class CreateResource extends CreateDocument {
     }
 
     /**
-     * Validates the request parameters.
-     * 
-     * @throws UsecaseException if an error occurs.
-     */
-    void validate() throws UsecaseException {
-        String title = getParameterAsString("title");
-
-        if (title.length() == 0) {
-            addErrorMessage("Please enter a title.");
-        }
-    }
-
-    /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
      */
     protected void doCheckExecutionConditions() throws Exception {
-        validate();
+        
+        super.doCheckExecutionConditions();
+        
+        String title = getParameterAsString("title");
+        if (title.length() == 0) {
+            addErrorMessage("Please enter a title.");
+        }
+        
+        Part file = getPart("file");
+        if (file == null) {
+            addErrorMessage("Please choose a file to upload.");
+        }
+        else if (file.isRejected()) {
+            String[] params = { Integer.toString(file.getSize()) };
+            addErrorMessage("upload-size-exceeded", params);
+        }
     }
 
     /**
@@ -90,15 +91,9 @@ public class CreateResource extends CreateDocument {
             getLogger().debug("Assets::addAsset() called");
 
         Part file = getPart("file");
-
-        if (file.isRejected()) {
-            String[] params = { Integer.toString(file.getSize()) };
-            addErrorMessage("upload-size-exceeded", params);
-        } else {
-            Document document = getNewDocument();
-            ResourceWrapper wrapper = new ResourceWrapper(document, this.manager, getLogger());
-            wrapper.write(file);
-        }
+        Document document = getNewDocument();
+        ResourceWrapper wrapper = new ResourceWrapper(document, this.manager, getLogger());
+        wrapper.write(file);
     }
 
     protected String getSourceExtension() {
