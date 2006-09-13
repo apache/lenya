@@ -279,7 +279,10 @@
       <!-- Copy document -->
   <message key="Copy Document">Dokument kopieren</message>
   <message key="copy-doc">Kopieren von Dokument {0}</message>
-  <message key="copy-doc-to-clip?">Wollen Sie das Dokument {0} in die Zwischenablage kopieren? Sie können das Dokument später an gewünschter Stelle einfügen.</message>
+  <message key="copy-doc-to-clip?">
+    Wollen Sie das Dokument {0} und die untergeordneten Dokumente in die Zwischenablage kopieren?
+    Sie können den Teilbaum später an gewünschter Stelle einfügen.
+  </message>
       <!-- Paste document -->
   <message key="Paste Document">Dokument einfügen</message>
   <message key="paste-doc">Dokument {0} einfügen</message>
@@ -287,7 +290,10 @@
       <!-- Cut document -->
   <message key="Cut Document">Dokument ausschneiden</message>
   <message key="cut-doc">Ausschneiden von Dokument {0}</message>
-  <message key="cut-doc-to-clip?">Wollen Sie das Dokument {0} ausschneiden und in die Zwischenablage verschieben? Sie können das Dokument später an gewünschter Stelle einfügen.</message>
+  <message key="cut-doc-to-clip?">
+    Wollen Sie das Dokument {0} und die untergeordneten Dokumente ausschneiden und in die Zwischenablage verschieben?
+    Sie können den Teilbaum später an gewünschter Stelle einfügen.
+  </message>
 
   <!-- Info Asset -->
   <message key="Insert Image">Bild einfügen</message>

@@ -280,7 +280,10 @@
       <!-- Copy document -->
   <message key="Copy Document">Copy Document</message>
   <message key="copy-doc">Copy document {0}</message>
-  <message key="copy-doc-to-clip?">Do you want to copy the document {0} to the clipboard? You can paste the document later at the location of your choosing.</message>
+  <message key="copy-doc-to-clip?">
+    Do you want to copy the document {0} and its descendants to the clipboard?
+    You can paste the subtree later at the location of your choosing.
+  </message>
       <!-- Paste document -->
   <message key="Paste Document">Paste Document</message>
   <message key="paste-doc">Paste document {0}</message>
@@ -289,7 +292,10 @@
       <!-- Cut document -->
   <message key="Cut Document">Cut Document</message>
   <message key="cut-doc">Cut document {0}</message>
-  <message key="cut-doc-to-clip?">Do you want to cut the document {0} and move it to the clipboard? You can paste the document later at the location of your choosing.</message>
+  <message key="cut-doc-to-clip?">
+    Do you want to cut the document {0} and its descendants and move it to the clipboard?
+    You can paste the subtree later at the location of your choosing.
+  </message>
 
       <!-- Nudge document -->
   <message key="nudge-error-direction-unknown">The direction {0} is not supported!</message>
