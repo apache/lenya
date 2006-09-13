@@ -107,35 +107,35 @@
             </td>
           </tr>
           <jx:choose>
-              <jx:when test="${usecase.getParameter('pathProvided')}">
-                <tr>
-                  <td class="lenya-entry-caption">
-                    <label for="nodeName"><i18n:text>Path</i18n:text>: </label>
-                  </td>
-                  <td>
-                    <jx:out value="${usecase.getParameter('path')}"/>
-                  </td>
-                </tr>
-              </jx:when>
-              <jx:otherwise>
-                <tr>
-                  <td class="lenya-entry-caption">
-                    <label for="nodeName"><i18n:text>Parent Path</i18n:text>: </label>
-                  </td>
-                  <td>
-                    <jx:out value="${usecase.getParameter('parentPath')}"/>
-                  </td>
-                </tr>
-                <tr>
-                  <td class="lenya-entry-caption">
-                    <label for="nodeName"><i18n:text>Node Name</i18n:text>*: </label>
-                  </td>
-                  <td>
-                    <input class="lenya-form-element" type="text" name="nodeName" value="${usecase.getParameter('nodeName')}"/>
-                    <br/> (<i18n:text>No whitespace, no special characters</i18n:text>)
-                  </td>
-                </tr>
-              </jx:otherwise>
+            <jx:when test="${usecase.getParameter('pathProvided')}">
+              <tr>
+                <td class="lenya-entry-caption">
+                  <label for="nodeName"><i18n:text>Path</i18n:text>: </label>
+                </td>
+                <td>
+                  <jx:out value="${usecase.getParameter('path')}"/>
+                </td>
+              </tr>
+            </jx:when>
+            <jx:otherwise>
+              <tr>
+                <td class="lenya-entry-caption">
+                  <label for="nodeName"><i18n:text>Parent Path</i18n:text>: </label>
+                </td>
+                <td>
+                  <jx:out value="${usecase.getParameter('parentPath')}"/>
+                </td>
+              </tr>
+              <tr>
+                <td class="lenya-entry-caption">
+                  <label for="nodeName"><i18n:text>Node Name</i18n:text>*: </label>
+                </td>
+                <td>
+                  <input class="lenya-form-element" type="text" name="nodeName" value="${usecase.getParameter('nodeName')}"/>
+                  <br/> (<i18n:text>No whitespace, no special characters</i18n:text>)
+                </td>
+              </tr>
+            </jx:otherwise>
           </jx:choose>
           <tr>
             <td class="lenya-entry-caption"><label for="file">
