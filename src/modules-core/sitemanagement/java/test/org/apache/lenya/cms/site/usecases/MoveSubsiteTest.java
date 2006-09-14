@@ -32,8 +32,8 @@ import org.apache.lenya.cms.usecase.AbstractUsecaseTest;
  */
 public class MoveSubsiteTest extends AbstractUsecaseTest {
 
-    protected static final String DELETE_URL = "/test/authoring/doctypes/xhtml-document.html";
     protected static final String PATH = "/foo/bar/baz";
+    protected static final String DELETE_URL = "/test/authoring" + PATH + ".html";
     protected static final String SOURCE_PATH = "/tutorial";
 
     protected String getUsecaseName() {
@@ -78,6 +78,10 @@ public class MoveSubsiteTest extends AbstractUsecaseTest {
 
             DocumentLocator loc = DocumentLocator.getLocator(doc.getPublication().getId(), doc
                     .getArea(), PATH, doc.getLanguage());
+            
+            authoringSite.add("/foo");
+            authoringSite.add("/foo/bar");
+            
             docMgr.copy(doc, loc);
             SiteNode childNode = authoringSite.getNode(PATH);
             this.uuid = childNode.getUuid();
