@@ -20,6 +20,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apache.lenya.cms.publication.Area;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentLocator;
+import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.usecase.AbstractUsecaseTest;
 
@@ -29,7 +33,8 @@ import org.apache.lenya.cms.usecase.AbstractUsecaseTest;
 public class MoveSubsiteTest extends AbstractUsecaseTest {
 
     protected static final String DELETE_URL = "/test/authoring/doctypes/xhtml-document.html";
-    protected static final String PATH = "/doctypes/xhtml-document";
+    protected static final String PATH = "/foo/bar/baz";
+    protected static final String SOURCE_PATH = "/tutorial";
 
     protected String getUsecaseName() {
         return "site.delete";
@@ -37,16 +42,18 @@ public class MoveSubsiteTest extends AbstractUsecaseTest {
 
     protected void checkPostconditions() throws Exception {
         super.checkPostconditions();
-        
+
         Area authoring = getPublication("test").getArea("authoring");
         SiteStructure authoringSite = authoring.getSite();
         assertFalse(authoringSite.contains(PATH));
-        
+
         Area trash = getPublication("test").getArea("trash");
         SiteStructure trashSite = trash.getSite();
         assertTrue(trashSite.contains(PATH));
-        assertEquals(trashSite.getNode(PATH).getUuid(), this.uuid);
-        
+        String trashUuid = trashSite.getNode(PATH).getUuid();
+        assertNotNull(trashUuid);
+        assertEquals(trashUuid, this.uuid);
+
     }
 
     protected Map getParameters() {
@@ -54,14 +61,31 @@ public class MoveSubsiteTest extends AbstractUsecaseTest {
         params.put("private.sourceUrl", DELETE_URL);
         return params;
     }
-    
+
     private String uuid;
 
     protected void prepareUsecase() throws Exception {
         super.prepareUsecase();
         Area authoring = getPublication("test").getArea("authoring");
+
         SiteStructure authoringSite = authoring.getSite();
-        this.uuid = authoringSite.getNode(PATH).getUuid();
+        SiteNode node = authoringSite.getNode(SOURCE_PATH);
+        Document doc = node.getLink("en").getDocument();
+
+        DocumentManager docMgr = null;
+        try {
+            docMgr = (DocumentManager) getManager().lookup(DocumentManager.ROLE);
+
+            DocumentLocator loc = DocumentLocator.getLocator(doc.getPublication().getId(), doc
+                    .getArea(), PATH, doc.getLanguage());
+            docMgr.copy(doc, loc);
+            SiteNode childNode = authoringSite.getNode(PATH);
+            this.uuid = childNode.getUuid();
+        } finally {
+            if (docMgr != null) {
+                getManager().release(docMgr);
+            }
+        }
     }
 
 }
