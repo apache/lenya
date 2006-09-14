@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<exception xmlns="http://www.wyona.org/neutron/1.0" xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" type="authorization">
+  <message>${message}</message>
+  <authentication>
+    <login url="https://demo.phoenix.wyona.org/protected/?action=login-neutron">
+      <message>Login for realm 'phoenix-demo' ...</message>
+      <form>
+        <param description="Username" name="username"/>
+        <param description="Password" name="passwd"/>
+      </form>
+    </login>
+    <logout url="http://demo.phoenix.wyona.org/?action=logout"/>
+  </authentication>
+</exception>

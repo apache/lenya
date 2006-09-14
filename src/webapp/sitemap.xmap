@@ -521,6 +521,14 @@
       <map:read mime-type="text/javascript" src="resources/scripts/{1}.js"/>
     </map:match>
 
+  <!-- Neutron introspection -->
+    
+    <map:match type="usecase" pattern="neutron">
+      <map:match type="step" pattern="introspect">
+        <map:mount uri-prefix="" src="lenya/usecases/neutron/usecase-neutron.xmap" check-reload="true" reload-method="synchron"/>
+      </map:match>
+    </map:match>
+
       <map:handle-errors>
         <map:generate type="notifying"/>
         <map:transform src="stylesheets/system/error2html.xslt">
@@ -551,6 +559,17 @@
         <map:act type="authorizer">
           <map:mount uri-prefix="" src="global-sitemap.xmap" check-reload="true" reload-method="synchron"/>
         </map:act>
+        <!-- Neutron Authentication -->
+        <map:match type="usecase" pattern="neutron">
+          <map:match type="step" pattern="authenticate">
+            <map:mount uri-prefix="" src="lenya/usecases/neutron/usecase-neutron.xmap" check-reload="true" reload-method="synchron"/>
+          </map:match>
+          <map:generate type="jx" src="lenya/usecases/neutron/jx/exception-auth.jx">
+            <map:parameter name="base-url" value="http://{request:serverName}:{request:serverPort}{request:requestURI}"/>
+          </map:generate>
+          <map:serialize type="xml" status-code="401"/>
+        </map:match>
+        <!-- End Neutron Authentication -->
         <map:redirect-to uri="{request:requestURI}?lenya.usecase=login&amp;lenya.step=showscreen" session="true"/>
       </map:match>
 

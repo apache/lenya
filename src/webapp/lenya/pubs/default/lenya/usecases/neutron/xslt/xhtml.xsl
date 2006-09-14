@@ -15,7 +15,7 @@
   limitations under the License.
 -->
 
-<!-- $Id$ -->
+<!-- $Id: page2xhtml.xsl 170255 2005-05-15 19:58:26Z gregor $ -->
 
 <xsl:stylesheet version="1.0"
     xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
@@ -44,13 +44,12 @@
 <xsl:param name="language"/>
 
 
-<xsl:template match="cmsbody">
+<xsl:template match="/">
   <html>
     <head>
       <link rel="stylesheet" href="{$root}/css/page.css" type="text/css"/>
       <meta content="Apache Lenya" name="generator"/>
       <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
-      <link rel="neutron-introspection" type="application/neutron+xml" href="?lenya.usecase=neutron&#38;lenya.step=introspect"/>     
       <title><xsl:value-of select="//lenya:meta/dc:title"/></title>
     </head>	
     <body>
@@ -74,13 +73,11 @@
       <table width="100%" border="0" cellpadding="0" cellspacing="0">
         <tr>
           <td valign="top">
-            <xsl:apply-templates select="xhtml:div[@id = 'menu']"/>
+            <div id="menu"/>
           </td>
           <td valign="top">
             <div id="main">
-              <xsl:apply-templates select="xhtml:div[@id = 'breadcrumb']"/>
-              <xsl:apply-templates select="xhtml:div[@id = 'search']"/>
-              <xsl:apply-templates select="xhtml:div[@id = 'body']"/>
+              <xsl:apply-templates select="//xhtml:body/*"/>
             </div>
           </td>
         </tr>
