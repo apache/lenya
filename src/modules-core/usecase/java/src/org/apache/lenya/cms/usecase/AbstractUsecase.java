@@ -269,12 +269,10 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
             throw new UsecaseException(e);
         } finally {
             try {
-                if (this.commitEnabled) {
-                    if (getErrorMessages().isEmpty() && exception == null) {
-                        getSession().commit();
-                    } else {
-                        getSession().rollback();
-                    }
+                if (this.commitEnabled && getErrorMessages().isEmpty() && exception == null) {
+                    getSession().commit();
+                } else {
+                    getSession().rollback();
                 }
             } catch (RepositoryException e1) {
                 getLogger().error("Exception during commit or rollback: ", e1);
@@ -672,8 +670,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     public final void lockInvolvedObjects(Node[] objects) throws UsecaseException {
 
         if (getLogger().isDebugEnabled())
-            getLogger().debug("AbstractUsecase::lockInvolvedObjects() called, are there objects to lock ? "
-                    + (objects != null));
+            getLogger().debug(
+                    "AbstractUsecase::lockInvolvedObjects() called, are there objects to lock ? "
+                            + (objects != null));
 
         try {
             boolean canExecute = true;
@@ -681,8 +680,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
             for (int i = 0; i < objects.length; i++) {
                 if (objects[i].isCheckedOut() && !objects[i].isCheckedOutByUser()) {
                     if (getLogger().isDebugEnabled())
-                        getLogger().debug("AbstractUsecase::lockInvolvedObjects() can not execute, object ["
-                                + objects[i] + "] is already checked out");
+                        getLogger().debug(
+                                "AbstractUsecase::lockInvolvedObjects() can not execute, object ["
+                                        + objects[i] + "] is already checked out");
 
                     canExecute = false;
                 }
@@ -690,11 +690,13 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
 
             if (canExecute) {
                 for (int i = 0; i < objects.length; i++) {
-                    if (getLogger().isDebugEnabled())
-                        getLogger().debug("AbstractUsecase::lockInvolvedObjects() locking "
-                                + objects[i]);
+                    if (!objects[i].isLocked()) {
+                        if (getLogger().isDebugEnabled())
+                            getLogger().debug(
+                                    "AbstractUsecase::lockInvolvedObjects() locking " + objects[i]);
 
-                    objects[i].lock();
+                        objects[i].lock();
+                    }
                     if (!isOptimistic() && !objects[i].isCheckedOutByUser()) {
                         objects[i].checkout();
                     }
@@ -781,7 +783,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
         Request request = ContextHelper.getRequest(this.context);
         request.setAttribute(org.apache.lenya.cms.repository.Session.class.getName(), this.session);
     }
-    
+
     private boolean commitEnabled = true;
 
     public void setCommitEnabled(boolean enabled) {
