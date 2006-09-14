@@ -31,6 +31,7 @@
           <map:generate src="template-fallback://resources/shared/css/{../3}.xml"/>
           <map:transform src="template-fallback://lenya/resources/css/css.xsl">
             <map:parameter name="contextprefix" value="{request:contextPath}"/>
+            <map:parameter name="root" value="{base-url:{page-envelope:publication-id}:{page-envelope:area}:false}"/>
           </map:transform>
           <map:serialize type="text" mime-type="text/css"/>
         </map:act>
@@ -44,6 +45,7 @@
           <map:generate src="fallback://resources/shared/css/{../3}.xml"/>
           <map:transform src="fallback://lenya/resources/css/css.xsl">
             <map:parameter name="contextprefix" value="{request:contextPath}"/>
+            <map:parameter name="root" value="{base-url:{page-envelope:publication-id}:{page-envelope:area}:false}"/>
           </map:transform>
           <map:serialize type="text" mime-type="text/css"/>
         </map:act>

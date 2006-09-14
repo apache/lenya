@@ -1,14 +1,19 @@
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform">
   
-<xsl:param name="contextprefix"/>
-
-<xsl:template match="css">
-  <xsl:apply-templates/>
-</xsl:template>
-
-<xsl:template match="context-prefix">
-  <xsl:value-of select="$contextprefix"/>
-</xsl:template>
+  <xsl:param name="contextprefix"/>
+  <xsl:param name="root"/>
+  
+  <xsl:template match="css">
+    <xsl:apply-templates/>
+  </xsl:template>
+  
+  <xsl:template match="context-prefix">
+    <xsl:value-of select="$contextprefix"/>
+  </xsl:template>
+  
+  <xsl:template match="root">
+    <xsl:value-of select="$root"/>
+  </xsl:template>
   
 </xsl:stylesheet>
