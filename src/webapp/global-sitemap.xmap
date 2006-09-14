@@ -217,7 +217,7 @@
       </map:match>
 
 
-      <!-- menu-xml/module/{module-id}/{area}.xml -->
+      <!-- menu-xml/module/{area}/{module-id}.xml -->
       <map:match pattern="menu-xml/module/*/*.xml">
         <map:select type="resource-exists">
           <map:when test="fallback://lenya/modules/{2}/menus.xmap">
