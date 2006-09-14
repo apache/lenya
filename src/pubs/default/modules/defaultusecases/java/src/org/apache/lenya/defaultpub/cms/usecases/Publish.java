@@ -37,8 +37,10 @@ import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.NodeIterator;
 import org.apache.lenya.cms.site.NodeSet;
+import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
@@ -154,14 +156,10 @@ public class Publish extends DocumentUsecase {
 
                         String path = requiredNodes[i].getPath();
                         if (!liveSite.contains(path)) {
-                            SiteNode authoringNode = authoringSite.getNode(path);
-                            String language;
-                            if (authoringNode.hasLink(document.getLanguage())) {
-                                language = document.getLanguage();
-                            } else {
-                                language = authoringNode.getLanguages()[0];
+                            Link link = getExistingLink(path, document);
+                            if (link != null) {
+                                missingDocuments.add(link.getDocument());
                             }
-                            missingDocuments.add(authoringNode.getLink(language).getDocument());
                         }
 
                     }
@@ -182,6 +180,25 @@ public class Publish extends DocumentUsecase {
                 setParameter(MISSING_DOCUMENTS, missingDocuments);
             }
         }
+    }
+    
+    /**
+     * Returns a link of a certain node, preferrably in the document's language, or <code>null</code> if
+     * the node has no links.
+     * @param path The path of the node.
+     * @param document The document.
+     * @return A link or <code>null</code>.
+     * @throws SiteException if an error occurs.
+     */
+    protected Link getExistingLink(String path, Document document) throws SiteException {
+        SiteNode node = document.area().getSite().getNode(path);
+        Link link = null;
+        if (node.hasLink(document.getLanguage())) {
+            link = node.getLink(document.getLanguage());
+        } else if (node.getLanguages().length > 0){
+            link = node.getLink(node.getLanguages()[0]);
+        }
+        return link;
     }
 
     /**
