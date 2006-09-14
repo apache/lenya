@@ -25,13 +25,13 @@
       window.close();
     }
    
-   function insertImage(nodeid) { 
+   function insertImage() { 
       var src = document.forms['image'].assetName.value;
       var title = document.forms['image'].caption.value; 
       var type = document.forms['image'].type.value;
       var height = document.forms['image'].height.value;
       var width = document.forms['image'].width.value;
-      window.opener.SetUrl( nodeid + '/' + src, width, height, title );
+      window.opener.SetUrl( src, width, height, title );
       window.close();
    }
 

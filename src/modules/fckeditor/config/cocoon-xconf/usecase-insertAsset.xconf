@@ -23,6 +23,7 @@
         <parameter name="callbackFunction" value="insertAsset"/>
       </view>
       <parameter name="asset-usecase" value="tab.assets"/>
+      <exit usecase="insertAsset.fckeditor"/>
     </component-instance>
     
   </xconf>

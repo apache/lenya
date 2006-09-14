@@ -24,6 +24,7 @@
       </view>
       <parameter name="mimeTypePrefix" value="image/"/>
       <parameter name="asset-usecase" value="tab.assets"/>
+      <exit usecase="insertImage.fckeditor"/>
     </component-instance>
     
   </xconf>
