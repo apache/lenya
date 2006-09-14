@@ -143,7 +143,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
             if (!targetSite.contains(path)) {
                 targetSite.add(path);
             }
-            path += steps[s];
+            path += "/" + steps[s];
             s++;
         }
 
