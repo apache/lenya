@@ -301,7 +301,19 @@
   <message key="Asset Upload">Analge hochladen</message>
   <message key="Insert a new Image">Neues bild einfügen</message>
   <message key="Upload an Asset">Anlage hochladen</message>
-   
+  <message key="upload-size-exceeded">Die Datei ist zu groß ({0}).</message>
+  <message key="upload-enter-title">Bitte geben Sie einen Titel ein.</message>
+  <message key="upload-choose-file">Bitte wählen Sie eine Datei.</message>
+  <message key="upload-missing-extension">Bitte wählen Sie eine Datei mit einer Endung.</message>
+  <message key="upload-disabled">
+    Das Hochladen von Dateien ist nicht erlaubt.
+    Bitte prüfen Sie die Einstellungen in local.build.properties!
+  </message>
+  <message key="upload-reset">
+    Der Browser darf aus Sicherheitsgründen den Wert des Datei-Upload-Felds nicht setzen.
+    Bitte wählen Sie die Datei erneut.
+  </message>
+  
   <!-- Info workflow  --> 
   <message key="Value">Wert</message>
   <message key="Event">Ereignis</message>

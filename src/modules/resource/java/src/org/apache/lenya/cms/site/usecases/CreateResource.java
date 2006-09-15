@@ -32,10 +32,20 @@ import org.apache.lenya.util.ServletHelper;
  */
 public class CreateResource extends CreateDocument {
 
+    protected static final String PARAMETER_FILE = "file";
+    protected static final String PARAMETER_TITLE = "title";
+    
+    protected static final String MESSAGE_UPLOAD_DISABLED = "upload-disabled";
+    protected static final String MESSAGE_UPLOAD_ENTER_TITLE = "upload-enter-title";
+    protected static final String MESSAGE_UPLOAD_CHOOSE_FILE = "upload-choose-file";
+    protected static final String MESSAGE_UPLOAD_SIZE_EXCEEDED = "upload-size-exceeded";
+    protected static final String MESSAGE_UPLOAD_RESET = "upload-reset";
+    protected static final String MESSAGE_UPLOAD_MISSING_EXTENSION = "upload-missing-extension";
+
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
         if (!ServletHelper.isUploadEnabled(manager)) {
-            addErrorMessage("Upload is not enabled. Please check local.build.properties!");
+            addErrorMessage(MESSAGE_UPLOAD_DISABLED);
         }
     }
 
@@ -43,22 +53,34 @@ public class CreateResource extends CreateDocument {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
      */
     protected void doCheckExecutionConditions() throws Exception {
-        
+
         super.doCheckExecutionConditions();
-        
-        String title = getParameterAsString("title");
+
+        String title = getParameterAsString(PARAMETER_TITLE);
         if (title.length() == 0) {
-            addErrorMessage("Please enter a title.");
+            addErrorMessage(MESSAGE_UPLOAD_ENTER_TITLE);
         }
-        
-        Part file = getPart("file");
-        if (file == null) {
-            addErrorMessage("Please choose a file to upload.");
+
+        if (hasErrors()) {
+            resetUploadField();
+        } else {
+            Part file = getPart(PARAMETER_FILE);
+            if (file == null) {
+                addErrorMessage(MESSAGE_UPLOAD_CHOOSE_FILE);
+            } else if (file.isRejected()) {
+                String[] params = { Integer.toString(file.getSize()) };
+                addErrorMessage(MESSAGE_UPLOAD_SIZE_EXCEEDED, params);
+            }
         }
-        else if (file.isRejected()) {
-            String[] params = { Integer.toString(file.getSize()) };
-            addErrorMessage("upload-size-exceeded", params);
-        }
+    }
+
+    /**
+     * The browser can't set the value of the file upload widget for security reasons, so we have to
+     * remove the file parameter and the user has to select the file again.
+     */
+    protected void resetUploadField() {
+        deleteParameter(PARAMETER_FILE);
+        addErrorMessage(MESSAGE_UPLOAD_RESET);
     }
 
     /**
@@ -81,8 +103,8 @@ public class CreateResource extends CreateDocument {
      * @throws IOException
      * @throws ServiceException
      * @throws DocumentException
-     * @throws MetaDataException 
-     * @throws RepositoryException 
+     * @throws MetaDataException
+     * @throws RepositoryException
      */
     protected void addResource() throws ServiceException, IOException, DocumentException,
             RepositoryException, MetaDataException {
@@ -90,7 +112,7 @@ public class CreateResource extends CreateDocument {
         if (getLogger().isDebugEnabled())
             getLogger().debug("Assets::addAsset() called");
 
-        Part file = getPart("file");
+        Part file = getPart(PARAMETER_FILE);
         Document document = getNewDocument();
         ResourceWrapper wrapper = new ResourceWrapper(document, this.manager, getLogger());
         wrapper.write(file);
@@ -99,13 +121,13 @@ public class CreateResource extends CreateDocument {
     protected String getSourceExtension() {
         String extension = "";
 
-        Part file = getPart("file");
+        Part file = getPart(PARAMETER_FILE);
         String fileName = file.getFileName();
         int lastDotIndex = fileName.lastIndexOf(".");
         if (lastDotIndex > -1) {
             extension = fileName.substring(lastDotIndex + 1);
         } else {
-            addErrorMessage("Please upload a file with an extension.");
+            addErrorMessage(MESSAGE_UPLOAD_MISSING_EXTENSION);
         }
         return extension;
     }

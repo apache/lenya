@@ -308,7 +308,16 @@
   <message key="Asset Upload">Asset Upload</message>
   <message key="Insert a new Image">Insert a new Image</message>
   <message key="Upload an Asset">Upload an Asset</message>
-
+  <message key="upload-size-exceeded">The file is too big ({0}).</message>
+  <message key="upload-enter-title">Please enter a title.</message>
+  <message key="upload-choose-file">Please choose a file to upload.</message>
+  <message key="upload-missing-extension">Please upload a file with an extension.</message>
+  <message key="upload-disabled">Upload is not enabled. Please check local.build.properties!</message>
+  <message key="upload-reset">
+    The browser can't set the value of the file upload widget for security reasons.
+    Please select the file again.
+  </message>
+  
   <!-- Workflow  --> 
   <message key="Value">Value</message>
   <message key="Event">Event</message>
