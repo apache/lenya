@@ -48,6 +48,7 @@ import org.apache.lenya.cms.repository.Session;
  * <li><strong><code>lastModified</code></strong> - the last modification date in RFC 822/1123
  * format.</li>
  * <li><strong><code>mimeType</code></strong> - the MIME type</li>
+ * <li><strong><code>nodeName</code></strong> - the name of the node in the site structure</li>
  * <li><strong><code>path</code></strong> - the path in the site structure (starting with a
  * slash) or an empty string if the document is not referenced in the site structure.</li>
  * <li><strong><code>resourceType</code></strong> - the name of the resource type</li>
@@ -73,6 +74,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
     protected final static String UUID = "uuid";
     protected final static String LANGUAGE = "language";
     protected final static String PATH = "path";
+    protected final static String NODE_NAME = "nodeName";
     protected final static String WEBAPP_URL = "webappUrl";
     protected final static String DOCUMENT_URL = "documentUrl";
     protected final static String RESOURCE_TYPE = "resourceType";
@@ -147,6 +149,8 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
                 value = document.getLanguage();
             } else if (attribute.equals(PATH)) {
                 value = document.getPath();
+            } else if (attribute.equals(NODE_NAME)) {
+                value = document.getName();
             } else if (attribute.equals(UUID)) {
                 value = document.getUUID();
             } else if (attribute.equals(WEBAPP_URL)) {
