@@ -28,6 +28,20 @@
   <map:pipelines>
     
     <map:pipeline type="noncaching">
+      
+      <!-- i18n-catalogue/module/{module-id}/{catalogue}--> 
+      <map:match pattern="i18n-catalogue/module/*/*">
+        <map:select type="resource-exists">
+          <map:when test="fallback://lenya/modules/{1}/resources/i18n/{2}">
+            <map:generate src="fallback://lenya/modules/{1}/resources/i18n/{2}"/>
+          </map:when>
+          <map:otherwise>
+            <map:generate src="resources/i18n/emptyCatalogue.xml"/>
+          </map:otherwise>
+        </map:select>
+        <map:serialize/>
+      </map:match>
+      
       <map:match pattern="i18n-catalogue/**">
         <map:select type="resource-exists">
           <map:when test="fallback://lenya/resources/i18n/{1}">
@@ -35,14 +49,17 @@
               <map:parameter name="pub-catalogue-location" value="fallback://lenya/resources/i18n/"/>
               <map:parameter name="catalogue-file" value="{1}"/>
             </map:generate>
-            <map:transform type="xinclude"/>
-            <map:serialize/>
           </map:when>
           <map:when test="resources/i18n/{1}">
             <map:generate src="resources/i18n/{1}"/>
-            <map:serialize/>
           </map:when>
         </map:select>
+        <map:transform src="resources/i18n/modules2xinclude.xsl">
+          <map:parameter name="pubId" value="{page-envelope:publication-id}"/>
+          <map:parameter name="catalogue" value="{1}"/>
+        </map:transform>
+        <map:transform type="xinclude"/>
+        <map:serialize/>
       </map:match>
     </map:pipeline>  
   </map:pipelines>
