@@ -33,7 +33,6 @@ import org.apache.lenya.util.ServletHelper;
 public class CreateResource extends CreateDocument {
 
     protected static final String PARAMETER_FILE = "file";
-    protected static final String PARAMETER_TITLE = "title";
     
     protected static final String MESSAGE_UPLOAD_DISABLED = "upload-disabled";
     protected static final String MESSAGE_UPLOAD_ENTER_TITLE = "upload-enter-title";
@@ -56,15 +55,10 @@ public class CreateResource extends CreateDocument {
 
         super.doCheckExecutionConditions();
 
-        String title = getParameterAsString(PARAMETER_TITLE);
-        if (title.length() == 0) {
-            addErrorMessage(MESSAGE_UPLOAD_ENTER_TITLE);
-        }
-
-        if (hasErrors()) {
+        Part file = getPart(PARAMETER_FILE);
+        if (hasErrors() && file != null) {
             resetUploadField();
         } else {
-            Part file = getPart(PARAMETER_FILE);
             if (file == null) {
                 addErrorMessage(MESSAGE_UPLOAD_CHOOSE_FILE);
             } else if (file.isRejected()) {
