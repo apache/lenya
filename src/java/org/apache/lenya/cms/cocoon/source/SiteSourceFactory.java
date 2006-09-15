@@ -38,7 +38,9 @@ import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceFactory;
+import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
@@ -50,14 +52,22 @@ import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.util.ServletHelper;
 
 /**
- * <p>This source factory allows to access documents based on their path in the site structure.</p>
- * <p>Relative addressing refers to the current publication and area.</p>
- * <p>Syntax:</p>
+ * <p>
+ * This source factory allows to access documents based on their path in the site structure.
+ * </p>
+ * <p>
+ * Relative addressing refers to the current publication and area.
+ * </p>
+ * <p>
+ * Syntax:
+ * </p>
  * <ul>
  * <li>Absolute: <code>site://{pubId}/{area}/{language}{path}</code></li>
  * <li>Relative: <code>site:/{language}{path}</code></li>
  * </ul>
- * <p>Usage examples:</p>
+ * <p>
+ * Usage examples:
+ * </p>
  * <ul>
  * <li><code>site://default/authoring/en/news/today</code></li>
  * <li><code>site:/en/news/today</code></li>
@@ -103,11 +113,14 @@ public class SiteSourceFactory extends AbstractLogEnabled implements SourceFacto
         Map objectModel = ContextHelper.getObjectModel(this.context);
         Request request = ObjectModelHelper.getRequest(objectModel);
 
+        String completePath = location.split("\\?")[0];
+        String queryString = location.split("\\?")[1];
+
         String relativePath;
         try {
 
-            final String scheme = location.split(":")[0] + ":";
-            final String absolutePath = location.substring(scheme.length());
+            final String scheme = completePath.split(":")[0] + ":";
+            final String absolutePath = completePath.substring(scheme.length());
             if (absolutePath.startsWith("//")) {
                 final String fullPath = absolutePath.substring(2);
                 String[] steps = fullPath.split("/");
@@ -129,23 +142,22 @@ public class SiteSourceFactory extends AbstractLogEnabled implements SourceFacto
             DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
             Publication pub = factory.getPublication(pubId);
             String[] steps = relativePath.substring(1).split("/");
-            
+
             String language = steps[0];
             String prefix = "/" + language;
             String path = relativePath.substring(prefix.length());
-            
+
             ServiceSelector selector = null;
             SiteManager siteManager = null;
-            
+
             Document doc;
-            
+
             try {
                 selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
                 siteManager = (SiteManager) selector.select(pub.getSiteManagerHint());
                 SiteStructure structure = siteManager.getSiteStructure(factory, pub, area);
                 doc = structure.getNode(path).getLink(language).getDocument();
-            }
-            finally {
+            } finally {
                 if (selector != null) {
                     if (siteManager != null) {
                         selector.release(siteManager);
@@ -154,14 +166,45 @@ public class SiteSourceFactory extends AbstractLogEnabled implements SourceFacto
                 }
             }
 
-            String lenyaURL = doc.getSourceURI();
-            Session session = RepositoryUtil.getSession(this.manager, request);
-            return new RepositorySource(manager, lenyaURL, session, getLogger());
-            
+            if (queryString.length() > 0) {
+                return getFormatSource(doc, queryString);
+            } else {
+                String lenyaURL = doc.getSourceURI();
+                Session session = RepositoryUtil.getSession(this.manager, request);
+                return new RepositorySource(manager, lenyaURL, session, getLogger());
+            }
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
 
+    }
+
+    protected Source getFormatSource(Document doc, String queryString) throws DocumentException, ServiceException, MalformedURLException, IOException {
+        String name = queryString.split("=")[0];
+        String value = queryString.split("=")[1];
+
+        if (name.equals("format")) {
+            String format = value;
+            String formatBaseUri = doc.getResourceType().getFormatURI(format);
+            String formatUri = formatBaseUri + "/" + doc.getPublication().getId() + "/"
+                    + doc.getArea() + "/" + doc.getUUID() + "/" + doc.getLanguage();
+            
+            SourceResolver resolver = null;
+            try {
+                resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+                return resolver.resolveURI(formatUri);
+            }
+            finally {
+                if (resolver != null) {
+                    this.manager.release(resolver);
+                }
+            }
+            
+        } else {
+            throw new MalformedURLException("The parameter [" + name
+                    + "] is not supported.");
+        }
     }
 
     /**
