@@ -38,16 +38,16 @@
           <table class="lenya-table-noborder">
               <tr>
                 <td class="lenya-entry-caption">
-                  <i18n:text>Document ID</i18n:text>: </td>
+                  <i18n:text>Document Path</i18n:text>: </td>
                 <td>
-                  <jx:out value="${usecase.getParameter('documentId')}"/>
-                  <br/> (<i18n:text>No whitespace, no special characters</i18n:text>)</td>
+                  <jx:out value="${usecase.getParameter('path')}"/>
+                </td>
               </tr>
               <tr>
                 <td class="lenya-entry-caption">
-                  <label for="title"><i18n:text>Navigation Title</i18n:text>*: </label></td>
+                  <label for="dublincore.title"><i18n:text>Navigation Title</i18n:text>*: </label></td>
                 <td>
-                  <input class="lenya-form-element" type="text" name="title" value="${usecase.getParameter('title')}"/>
+                  <input class="lenya-form-element" type="text" name="dublincore.title" value="${usecase.getParameter('dublincore.title')}"/>
                 </td>
               </tr>
               <tr>
@@ -63,37 +63,37 @@
               </tr>
               <tr>
                 <td class="lenya-entry-caption">
-                  <label for="creator"><i18n:text>Creator</i18n:text>:</label></td>
+                  <label for="dublincore.creator"><i18n:text>Creator</i18n:text>:</label></td>
                 <td>
-                  <input class="lenya-form-element" type="text" name="creator" value="${usecase.getParameter('creator')}"/>
+                  <input class="lenya-form-element" type="text" name="dublincore.creator" value="${usecase.getParameter('dublincore.creator')}"/>
                 </td>
               </tr>
               <tr>
                 <td class="lenya-entry-caption">
-                  <label for="subject"><i18n:text>Subject</i18n:text>:</label></td>
+                  <label for="dublincore.subject"><i18n:text>Subject</i18n:text>:</label></td>
                 <td>
-                  <input class="lenya-form-element" type="text" name="subject" value="${usecase.getParameter('subject')}"/>
+                  <input class="lenya-form-element" type="text" name="dublincore.subject" value="${usecase.getParameter('dublincore.subject')}"/>
                 </td>
               </tr>
               <tr>
                 <td class="lenya-entry-caption">
-                  <label for="publisher"><i18n:text>Publisher</i18n:text>:</label></td>
+                  <label for="dublincore.publisher"><i18n:text>Publisher</i18n:text>:</label></td>
                 <td>
-                  <input class="lenya-form-element" type="text" name="publisher" value="${usecase.getParameter('publisher')}"/>
+                  <input class="lenya-form-element" type="text" name="dublincore.publisher" value="${usecase.getParameter('dublincore.publisher')}"/>
                 </td>
               </tr>
               <tr>
                 <td class="lenya-entry-caption">
                   <i18n:text>Date</i18n:text>:</td>
                 <td>
-                  <jx:out value="${usecase.getParameter('date')}"/>
+                  <jx:out value="${usecase.getParameter('dublincore.date')}"/>
                 </td>
               </tr>
               <tr>
                 <td class="lenya-entry-caption">
-                  <label for="rights"><i18n:text>Rights</i18n:text>:</label></td>
+                  <label for="dublincore.rights"><i18n:text>Rights</i18n:text>:</label></td>
                 <td>
-                  <input class="lenya-form-element" type="text" name="rights" value="${usecase.getParameter('rights')}"/>
+                  <input class="lenya-form-element" type="text" name="dublincore.rights" value="${usecase.getParameter('dublincore.rights')}"/>
                 </td>
               </tr>
               <tr>
