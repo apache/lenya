@@ -16,14 +16,29 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 
 /**
  * Cut a document into the clipboard.
  * 
- * @version $Id:$
+ * @version $Id$
  */
 public class Cut extends DocumentUsecase {
+
+    protected static final String MESSAGE_ISLIVE = "cut-error-islive";
+
+    protected void doCheckPreconditions() throws Exception {
+        super.doCheckPreconditions();
+        
+        Document doc = getSourceDocument();
+        SiteStructure liveSite = doc.getPublication().getArea(Publication.LIVE_AREA).getSite();
+        if (liveSite.contains(doc.getPath())) {
+            addErrorMessage(MESSAGE_ISLIVE);
+        }
+    }
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
