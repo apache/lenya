@@ -246,8 +246,8 @@
             <map:select type="resource-exists">
               <!-- Read from cache -->
               <!-- If configured within Apache then mod_lenya will nevertheless read from cache -->
-              <map:when test="{global:cache-dir}/{../../1}/{../../2}.htmlDISABLED">
-                <map:read src="{global:cache-dir}/{../../1}/{../../2}.html" mime-type="text/html"/>
+              <map:when test="context:/lenya/pubs/{page-envelope:publication-id}/{global:cache-dir}/{../../1}/{../../2}.htmlDISABLED">
+                <map:read src="context:/lenya/pubs/{page-envelope:publication-id}/{global:cache-dir}/{../../1}/{../../2}.html" mime-type="text/html"/>
               </map:when>
               <!-- Write to cache and serialize -->
               <map:otherwise>
@@ -276,7 +276,7 @@
                       <map:parameter name="parameter-selector-test" value="{../../1}"/>
                       <map:when test="live">
                         <map:transform src="fallback://lenya/xslt/authoring/edit/addSourceTags.xsl">
-                          <map:parameter name="source" value="{global:cache-dir}/{../../1}/{../../2}.html"/>
+                          <map:parameter name="source" value="context:/lenya/pubs/{page-envelope:publication-id}/{global:cache-dir}/{../../1}/{../../2}.html"/>
                         </map:transform>
                         <map:transform type="write-source">
                           <map:parameter name="serializer" value="xhtml"/>
