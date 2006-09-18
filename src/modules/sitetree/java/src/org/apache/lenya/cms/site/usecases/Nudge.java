@@ -17,6 +17,7 @@
 package org.apache.lenya.cms.site.usecases;
 
 import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteManager;
@@ -33,6 +34,10 @@ import org.apache.lenya.cms.usecase.UsecaseException;
  */
 public class Nudge extends DocumentUsecase {
 
+    protected static final String MESSAGE_AREA = "nudge-error-area";
+    protected static final String MESSAGE_DIRECTION = "nudge-error-direction";
+    protected static final String MESSAGE_DIRECTION_UNKNOWN = "nudge-error-direction-unknown";
+    protected static final String MESSAGE_ISLIVE = "nudge-error-islive";
     protected static final String DIRECTION = "direction";
     protected static final String UP = "up";
     protected static final String DOWN = "down";
@@ -47,18 +52,24 @@ public class Nudge extends DocumentUsecase {
             return;
         }
 
-        Publication publication = getSourceDocument().getPublication();
+        Document doc = getSourceDocument();
+        SiteStructure liveSite = doc.getPublication().getArea(Publication.LIVE_AREA).getSite();
+        if (liveSite.contains(doc.getPath())) {
+            addErrorMessage(MESSAGE_ISLIVE);
+        }
+
+        Publication publication = doc.getPublication();
 
         ServiceSelector selector = null;
         SiteManager siteManager = null;
         try {
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
-            SiteStructure structure = siteManager.getSiteStructure(getSourceDocument()
-                    .getFactory(), publication, getSourceDocument().getArea());
+            SiteStructure structure = siteManager.getSiteStructure(doc.getFactory(), publication,
+                    doc.getArea());
             if (structure instanceof SiteTree) {
 
-                SiteTreeNode node = (SiteTreeNode) getSourceDocument().getLink().getNode();
+                SiteTreeNode node = (SiteTreeNode) doc.getLink().getNode();
                 SiteTreeNode[] siblings = null;
 
                 String direction = getParameterAsString(DIRECTION);
@@ -67,14 +78,14 @@ public class Nudge extends DocumentUsecase {
                 } else if (direction.equals(DOWN)) {
                     siblings = node.getNextSiblings();
                 } else {
-                    addErrorMessage("nudge-error-direction-unknown", new String[] { direction });
+                    addErrorMessage(MESSAGE_DIRECTION_UNKNOWN, new String[] { direction });
                 }
 
                 if (siblings != null && siblings.length == 0) {
-                    addErrorMessage("nudge-error-direction");
+                    addErrorMessage(MESSAGE_DIRECTION);
                 }
             } else {
-                addErrorMessage("nudge-error-area");
+                addErrorMessage(MESSAGE_AREA);
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -109,8 +120,8 @@ public class Nudge extends DocumentUsecase {
         try {
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(publication.getSiteManagerHint());
-            SiteStructure structure = siteManager.getSiteStructure(getSourceDocument()
-                    .getFactory(), publication, getSourceDocument().getArea());
+            SiteStructure structure = siteManager.getSiteStructure(
+                    getSourceDocument().getFactory(), publication, getSourceDocument().getArea());
             if (structure instanceof SiteTree) {
 
                 SiteTree tree = (SiteTree) structure;

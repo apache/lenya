@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+
+  $Id: cmsui_es.xml 410620 2006-05-31 18:10:54Z thorsten $
+
+  @translators
+	Salvador Cobrero <salvador_cobrero_jimenez at dmr-consulting dot com>
+	David Pinelo <david dot pinelo at juntadeandalucia dot es>
+	Thorsten Scherler <thorsten at apache dot org>
+  J. Cayetano Delgado <jcdelgado at ingenia dot es>
+
+-->
+
+<catalogue xml:lang="es" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+
+  <!-- Nudge document -->
+  <message key="nudge-error-direction-unknown">&iexcl;La dirección {0} no está soportada!</message>
+  <message key="nudge-error-direction">No puedo mover el nodo en esta dirección.</message>
+  <message key="nudge-error-area">Esta operación solo puede ser llamada en los árboles del sitio.</message>
+
+</catalogue>
+
