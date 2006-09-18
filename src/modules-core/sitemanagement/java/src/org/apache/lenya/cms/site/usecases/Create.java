@@ -147,8 +147,11 @@ public abstract class Create extends AbstractUsecase {
 
             Document document;
 
+            String title = getDublinCoreParameter(DublinCore.ELEMENT_TITLE);
+
             if (createVersion()) {
                 document = documentManager.addVersion(initialDocument, getArea(), language, true);
+                document.getLink().setLabel(title);
             } else {
                 if (initialDocument == null) {
                     selector = (ServiceSelector) this.manager
@@ -158,12 +161,11 @@ public abstract class Create extends AbstractUsecase {
                     String sampleUri = resourceType.getSampleURI(sample);
                     document = documentManager.add(getDocumentFactory(), resourceType, sampleUri,
                             getPublication(), getArea(), getNewDocumentPath(), language,
-                            getSourceExtension(), getDublinCoreParameter(DublinCore.ELEMENT_TITLE),
-                            getVisibleInNav());
+                            getSourceExtension(), title, getVisibleInNav());
                 } else {
                     document = documentManager.add(initialDocument, getArea(),
-                            getNewDocumentPath(), language, getSourceExtension(),
-                            getDublinCoreParameter(DublinCore.ELEMENT_TITLE), getVisibleInNav());
+                            getNewDocumentPath(), language, getSourceExtension(), title,
+                            getVisibleInNav());
                 }
             }
 
@@ -184,7 +186,7 @@ public abstract class Create extends AbstractUsecase {
             }
         }
     }
-    
+
     protected String getDublinCoreParameter(String name) {
         return getParameterAsString(DUBLIN_CORE_PREFIX + name, null);
     }
@@ -224,7 +226,7 @@ public abstract class Create extends AbstractUsecase {
      * @return The type of the created document.
      */
     protected abstract String getDocumentTypeName();
-    
+
     protected static final String DUBLIN_CORE_PREFIX = "dublincore.";
 
     /**
@@ -241,7 +243,7 @@ public abstract class Create extends AbstractUsecase {
         MetaData dcMetaData = document.getMetaData(DublinCore.DC_NAMESPACE);
         String[] dcKeys = dcMetaData.getAvailableKeys();
 
-        for (int i=0; i < dcKeys.length; i++) {
+        for (int i = 0; i < dcKeys.length; i++) {
             String param = getDublinCoreParameter(dcKeys[i]);
             if (param != null) {
                 dcMetaData.setValue(dcKeys[i], param);
@@ -268,7 +270,8 @@ public abstract class Create extends AbstractUsecase {
         }
 
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        setDublinCoreParameter(DublinCore.ELEMENT_DATE, format.format(new GregorianCalendar().getTime()));
+        setDublinCoreParameter(DublinCore.ELEMENT_DATE, format.format(new GregorianCalendar()
+                .getTime()));
 
         String doctypeName = getDocumentTypeName();
         if (doctypeName != null) {
@@ -329,8 +332,8 @@ public abstract class Create extends AbstractUsecase {
         try {
             String path = getNewDocumentPath();
             String language = getParameterAsString(LANGUAGE);
-            return getPublication().getArea(getArea()).getSite().getNode(path)
-                    .getLink(language).getDocument();
+            return getPublication().getArea(getArea()).getSite().getNode(path).getLink(language)
+                    .getDocument();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
