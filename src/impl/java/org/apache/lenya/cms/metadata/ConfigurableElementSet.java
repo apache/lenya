@@ -48,7 +48,27 @@ public class ConfigurableElementSet extends AbstractLogEnabled implements Elemen
             String name = attributeConfigs[i].getAttribute("name");
             boolean isMultiple = attributeConfigs[i].getAttributeAsBoolean("multiple", false);
             boolean isEditable = attributeConfigs[i].getAttributeAsBoolean("editable", false);
-            this.elements.put(name, new ElementImpl(name, isMultiple, isEditable));
+            String actionOnCopy = attributeConfigs[i].getAttribute("onCopy", "copy");
+            ElementImpl element = new ElementImpl(name, isMultiple, isEditable);
+            int action;
+            if (actionOnCopy.equalsIgnoreCase("copy")) {
+                action = Element.ONCOPY_COPY;
+            }
+            else if (actionOnCopy.equalsIgnoreCase("ignore")) {
+                action = Element.ONCOPY_IGNORE;
+            }
+            else if (actionOnCopy.equalsIgnoreCase("delete")) {
+                action = Element.ONCOPY_DELETE;
+            }
+            else {
+                throw new ConfigurationException("The action [" + actionOnCopy + "] is not supported.");
+            }
+            try {
+                element.setActionOnCopy(action);
+            } catch (MetaDataException e) {
+                throw new RuntimeException(e);
+            }
+            this.elements.put(name, element);
         }
 
     }

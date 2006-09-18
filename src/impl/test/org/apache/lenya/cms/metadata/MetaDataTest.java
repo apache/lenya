@@ -16,9 +16,13 @@
  */
 package org.apache.lenya.cms.metadata;
 
+import java.util.Map;
+
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
@@ -52,12 +56,12 @@ public class MetaDataTest extends AbstractAccessControlTest {
 
         namespaceUri = DublinCore.DC_NAMESPACE;
         MetaData dc = doc.getMetaData(namespaceUri);
-        
+
         doc.getRepositoryNode().lock();
-        
+
         checkSetTitle(dc);
         checkRemoveAllValues(dc);
-        
+
     }
 
     protected void checkSetTitle(MetaData dc) throws MetaDataException {
@@ -69,7 +73,7 @@ public class MetaDataTest extends AbstractAccessControlTest {
         }
         assertNotNull(e);
         dc.setValue("title", "This is the title");
-        
+
         e = null;
         // addValue() should throw an exception because a value is already set
         try {
@@ -78,12 +82,113 @@ public class MetaDataTest extends AbstractAccessControlTest {
             e = e1;
         }
         assertNotNull(e);
+
+    }
+
+    String NAMESPACE = "http://apache.org/lenya/test/metadata";
+
+    protected void checkOnCopy(Publication pub) throws Exception {
+        MetaDataRegistry registry = null;
+        try {
+            registry = (MetaDataRegistry) getManager().lookup(MetaDataRegistry.ROLE);
+            ElementSet set = new TestElementSet();
+            registry.register(NAMESPACE, set);
+        }
+        finally {
+            getManager().release(registry);
+        }
         
+        DocumentFactory factory = getFactory();
+        Document source = factory.get(pub, Publication.AUTHORING_AREA, "/index", "en");
+        Document target = factory.get(pub, Publication.AUTHORING_AREA, "/index", "en");
+        
+        MetaData sourceMeta = source.getMetaData(NAMESPACE);
+        sourceMeta.setValue("copy", "sourceCopy");
+        sourceMeta.setValue("ignore", "sourceIgnore");
+        sourceMeta.setValue("delete", "sourceDelete");
+        
+        MetaData targetMeta = target.getMetaData(NAMESPACE);
+        targetMeta.setValue("ignore", "targetIgnore");
+        targetMeta.setValue("delete", "targetDelete");
+        
+        targetMeta.replaceBy(sourceMeta);
+        
+        assertTrue(targetMeta.getValues("copy").length == 1);
+        assertEquals(sourceMeta.getValues("copy"), targetMeta.getValues("copy"));
+        
+        assertTrue(targetMeta.getValues("ignore").length == 1);
+        assertEquals(targetMeta.getFirstValue("ignore"), "targetIgnore");
+        
+        assertTrue(targetMeta.getValues("delete").length == 0);
     }
 
     protected void checkRemoveAllValues(MetaData dc) throws MetaDataException {
         dc.removeAllValues("title");
         assertTrue(dc.getValues("title").length == 0);
     }
-    
+
+    protected class TestElement implements Element {
+
+        private String name;
+        private int actionOnCopy;
+
+        protected TestElement(String name, int actionOnCopy) {
+            this.name = name;
+            this.actionOnCopy = actionOnCopy;
+        }
+
+        public int getActionOnCopy() {
+            return actionOnCopy;
+        }
+
+        public String getDescription() {
+            return "";
+        }
+
+        public String getName() {
+            return name;
+        }
+
+        public boolean isEditable() {
+            return false;
+        }
+
+        public boolean isMultiple() {
+            return false;
+        }
+
+    }
+
+    protected class TestElementSet implements ElementSet {
+
+        private Element[] elements = { new TestElement("copy", Element.ONCOPY_COPY),
+                new TestElement("ignore", Element.ONCOPY_IGNORE),
+                new TestElement("delete", Element.ONCOPY_DELETE) };
+        
+        private Map name2element;
+
+        protected TestElementSet() {
+            for (int i = 0; i < elements.length; i++) {
+                this.name2element.put(elements[i].getName(), elements[i]);
+            }
+        }
+
+        public boolean containsElement(String name) {
+            return true;
+        }
+
+        public Element getElement(String name) throws MetaDataException {
+            return (Element) this.name2element.get(name);
+        }
+
+        public Element[] getElements() {
+            return elements;
+        }
+
+        public String getNamespaceUri() {
+            return NAMESPACE;
+        }
+
+    }
+
 }

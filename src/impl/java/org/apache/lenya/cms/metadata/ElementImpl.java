@@ -42,11 +42,11 @@ public class ElementImpl implements Element {
      * Ctor.
      * @param name The name.
      * @param isMultiple if the element can have multiple values.
+     * @param isEditable  if the element can be edited.
      * @param description The description of the element.
      */
-    public ElementImpl(String name, boolean isMultiple, String description) {
-        this.name = name;
-        this.multiple = isMultiple;
+    public ElementImpl(String name, boolean isMultiple, boolean isEditable, String description) {
+        this(name, isMultiple, isEditable);
         this.description = description;
     }
 
@@ -64,6 +64,20 @@ public class ElementImpl implements Element {
 
     public boolean isEditable() {
         return this.editable;
+    }
+    
+    private int actionOnCopy;
+
+    public int getActionOnCopy() {
+        return this.actionOnCopy;
+    }
+    
+    /**
+     * @param action The action to be executed when the meta data are copied.
+     * @throws MetaDataException if the action is not supported.
+     */
+    public void setActionOnCopy(int action) throws MetaDataException {
+        this.actionOnCopy = action;
     }
 
 }

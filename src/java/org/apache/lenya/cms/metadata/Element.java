@@ -20,25 +20,45 @@ package org.apache.lenya.cms.metadata;
  * A meta data element.
  */
 public interface Element {
-    
+
     /**
      * @return the name of the element.
      */
     String getName();
-    
+
     /**
      * @return if the element can have multiple values.
      */
     boolean isMultiple();
-    
+
     /**
      * @return the description of the element.
      */
     String getDescription();
-    
+
     /**
      * @return if the element value can be edited.
      */
     boolean isEditable();
+
+    /**
+     * Copy all values if the meta data are copied.
+     */
+    int ONCOPY_COPY = 0;
+    
+    /**
+     * Don't copy the values of this element if the meta data are copied.
+     */
+    int ONCOPY_IGNORE = 1;
+
+    /**
+     * Delete all values of this element if the meta data are copied.
+     */
+    int ONCOPY_DELETE = 2;
+
+    /**
+     * @return The action to be taken when meta data are copied from one owner to another.
+     */
+    int getActionOnCopy();
 
 }

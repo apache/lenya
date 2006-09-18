@@ -24,7 +24,7 @@
     unless="/cocoon/meta-data/component-instance[@name = 'http://apache.org/lenya/metadata/workflow/1.0']">
     <component-instance name="http://apache.org/lenya/metadata/workflow/1.0"
       class="org.apache.lenya.cms.metadata.ConfigurableElementSet">
-      <element name="workflowVersion" multiple="true"/>
+      <element name="workflowVersion" multiple="true" onCopy="delete"/>
     </component-instance>
   </xconf>
   
