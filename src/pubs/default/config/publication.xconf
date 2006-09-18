@@ -37,13 +37,15 @@
   <resource-type name="cforms" workflow="fallback://config/workflow/workflow.xml"/>
   <resource-type name="opendocument" workflow="fallback://config/workflow/workflow.xml"/>
   
-  <!-- NOTE: Modules need to be listed because of the menu -->
+  <!-- NOTE: Modules need to be listed because of the menu and i18n -->
   <module name="xhtml"/>
   <module name="links"/>
   <module name="opendocument"/>
   <module name="cforms"/>
   <module name="homepage"/>
   <module name="resource"/>
+  <module name="sitemanagement"/>
+  <module name="sitetree"/>
   <!-- TODO: The goal is to have a blog module ;-) -->
   <!--
   <module name="blog"/>

@@ -302,11 +302,6 @@
   <message key="cut-doc">Cortar documento {0}</message>
   <message key="cut-doc-to-clip?">¿Seguro que desea cortar el documento {0} y moverlo al portapapeles? Más tarde puede pegar el documento en el lugar que elija.</message>
 
-      <!-- Nudge document -->
-  <message key="nudge-error-direction-unknown">&iexcl;La dirección {0} no está soportada!</message>
-  <message key="nudge-error-direction">No puedo mover el nodo en esta dirección.</message>
-  <message key="nudge-error-area">Esta operación solo puede ser llamada en los árboles del sitio.</message>
-
   <!-- Info Asset -->
   <message key="Insert Image">Insertar imagen</message>
   <message key="Insert Asset">Insertar activo</message>

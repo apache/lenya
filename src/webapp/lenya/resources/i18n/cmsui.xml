@@ -297,11 +297,6 @@
     You can paste the subtree later at the location of your choosing.
   </message>
 
-      <!-- Nudge document -->
-  <message key="nudge-error-direction-unknown">The direction {0} is not supported!</message>
-  <message key="nudge-error-direction">Cannot move the node in this direction.</message>
-  <message key="nudge-error-area">This operation can only be invoked on site trees.</message>
-
   <!-- Workflow  --> 
   <message key="Value">Value</message>
   <message key="Event">Event</message>

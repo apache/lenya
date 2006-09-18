@@ -276,11 +276,6 @@
   <message key="cut-doc">Couper le document {0}</message>
   <message key="cut-doc-to-clip?">Voulez-vous couper le document {0} vers le presse-papiers? Vous pourrez le coller ultérieurement à l'endroit de votre choix.</message>
 
-      <!-- Nudge document -->
-  <message key="nudge-error-direction-unknown">La direction {0} n'est pas soutenue!</message>
-  <message key="nudge-error-direction">Le nouyau ne peut pas &#234;tre déplacé dans cette direction.</message>
-  <message key="nudge-error-area">Cette opération ne peut &#234;tre invoquée que sur une arborescence du site (Site tree).</message>
-
   <!-- Info Asset -->
   <message key="Insert Image">Insérer une Image</message>
   <message key="Insert Asset">Insérer un Actif</message>
