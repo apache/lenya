@@ -117,7 +117,7 @@
           <xsl:when test="$lastPublishedUser != ''">
             <i18n:translate>
               <i18n:text>last-published</i18n:text>
-              <i18n:param><i18n:date-time src-pattern="yyyy-MM-dd hh:mm:ss"><xsl:value-of select="$lastPublishedDate"/></i18n:date-time></i18n:param>
+              <i18n:param><i18n:date-time src-pattern="yyyy-MM-dd HH:mm:ss"><xsl:value-of select="$lastPublishedDate"/></i18n:date-time></i18n:param>
               <i18n:param><xsl:value-of select="$lastPublishedUser"/></i18n:param>
             </i18n:translate>
           </xsl:when>
