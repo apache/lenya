@@ -144,11 +144,11 @@
           </tr>
           <tr>
             <td class="lenya-entry-caption">
-              <label for="title"><i18n:text>Navigation Title</i18n:text>*:
+              <label for="dublincore.title"><i18n:text>Navigation Title</i18n:text>*:
               </label></td>
             <td>
-              <input class="lenya-form-element" type="text" name="title"
-                value="${usecase.getParameter('title')}"/>
+              <input class="lenya-form-element" type="text" name="dublincore.title"
+                value="${usecase.getParameter('dublincore.title')}"/>
             </td>
           </tr>
           <tr>
