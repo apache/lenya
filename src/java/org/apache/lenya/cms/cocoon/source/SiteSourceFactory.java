@@ -114,7 +114,10 @@ public class SiteSourceFactory extends AbstractLogEnabled implements SourceFacto
         Request request = ObjectModelHelper.getRequest(objectModel);
 
         String completePath = location.split("\\?")[0];
-        String queryString = location.split("\\?")[1];
+        String queryString = null;
+        if (location.indexOf("?") > -1) {
+            queryString = location.split("\\?")[1];
+        }
 
         String relativePath;
         try {
@@ -166,7 +169,7 @@ public class SiteSourceFactory extends AbstractLogEnabled implements SourceFacto
                 }
             }
 
-            if (queryString.length() > 0) {
+            if (queryString != null && queryString.length() > 0) {
                 return getFormatSource(doc, queryString);
             } else {
                 String lenyaURL = doc.getSourceURI();
