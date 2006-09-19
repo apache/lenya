@@ -30,47 +30,9 @@
   <xsl:include href="copy-mixed-content.xsl" />
   
   <xsl:template match="/">
-    <div>
-        <div class="lenya-box">
-          <div class="lenya-box-title">
-            <a href="http://www.w3.org/TR/REC-xml#syntax">Predefined Entities</a>
-          </div>
-          <div class="lenya-box-body">
-            <ul>
-              <li>&amp;lt; instead of &lt; (left angle bracket <strong>must</strong> be escaped)</li>
-              <li>&amp;amp; instead of &amp; (ampersand <strong>must</strong> be escaped)</li>
-              <li>&amp;gt; instead of &gt; (right angle bracket)</li>
-              <li>&amp;apos; instead of ' (single-quote)</li>
-              <li>&amp;quot; instead of " (double-quote)</li>
-            </ul>
-          </div>
-        </div>
-        <div class="lenya-box">
-          <div class="lenya-box-body">
-    	      <input type="hidden" name="namespaces"><xsl:attribute name="value"><xsl:apply-templates mode="namespaces" /></xsl:attribute></input>
-              <table border="0">
-                <tr>
-                  <td align="right">
-                    <input type="submit" value="Save" name="submit" />
-                    <input type="submit" value="Cancel" name="cancel" />
-                  </td>
-                </tr>
-                <tr>
-                  <td>
-                    <textarea name="content" cols="120" rows="80">
-                      <xsl:apply-templates mode="mixedcontent" />
-                    </textarea>
-                  </td>
-                </tr>
-                <tr>
-                  <td align="right">
-                    <input type="submit" value="Save" name="submit" />
-                    <input type="submit" value="Cancel" name="cancel" />
-                  </td>
-                </tr>
-              </table>
-          </div>
-        </div>
-    </div>
+    <input type="hidden" name="namespaces"><xsl:attribute name="value"><xsl:apply-templates mode="namespaces" /></xsl:attribute></input>
+    <textarea name="content" cols="120" rows="80">
+      <xsl:apply-templates mode="mixedcontent" />
+    </textarea>
   </xsl:template>
 </xsl:stylesheet>

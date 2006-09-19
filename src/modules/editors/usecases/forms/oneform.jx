@@ -34,7 +34,7 @@
       <jx:choose>
         <jx:when test="${! usecase.hasErrors()}">
           
-          <div class="lenya-box">
+          <div class="lenya-box-toggled" style="float: left; margin-right: 10px;">
             <div class="lenya-box-title">Information</div>
             <div class="lenya-box-body">
               <table class="lenya-table-noborder">
@@ -58,9 +58,37 @@
             </div>
           </div>
           
-          <cinclude:includexml>
-            <cinclude:src>cocoon://modules/editors/oneform</cinclude:src>
-          </cinclude:includexml>
+          <div class="lenya-box-toggled" style="float: left; margin-right: 10px;">
+            <div class="lenya-box-title">
+              <a href="http://www.w3.org/TR/REC-xml#syntax">Predefined Entities</a>
+            </div>
+            <div class="lenya-box-body">
+              <ul>
+                <li>&amp;lt; instead of &lt; (left angle bracket <strong>must</strong> be escaped)</li>
+                <li>&amp;amp; instead of &amp; (ampersand <strong>must</strong> be escaped)</li>
+                <li>&amp;gt; instead of &gt; (right angle bracket)</li>
+                <li>&amp;apos; instead of ' (single-quote)</li>
+                <li>&amp;quot; instead of " (double-quote)</li>
+              </ul>
+            </div>
+          </div>
+          
+          <div style="float: left;">
+            <input type="submit" value="Save" name="submit" />
+            <input type="submit" value="Cancel" name="cancel" />
+          </div>
+
+          <div style="clear: both;">
+            <cinclude:includexml>
+              <cinclude:src>cocoon://modules/editors/oneform</cinclude:src>
+            </cinclude:includexml>
+          </div>
+
+          <div>
+            <input type="submit" value="Save" name="submit" />
+            <input type="submit" value="Cancel" name="cancel" />
+          </div>
+          
         </jx:when>
         <jx:otherwise>
           <input type="submit" name="cancel" value="Cancel"/>

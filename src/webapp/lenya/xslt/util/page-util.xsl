@@ -15,12 +15,15 @@
   limitations under the License.
 -->
 
-<!-- $Id: page-util.xsl,v 1.10 2004/03/13 12:42:09 gregor Exp $ -->
+<!-- $Id$ -->
 
 <xsl:stylesheet version="1.0"
-    xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    >
-
+  xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+  xmlns="http://www.w3.org/1999/xhtml"
+  >
+  
+  
 <!-- includes the default CSS stylesheet -->
 <xsl:template name="include-css">
   <xsl:param name="contextprefix"/>
@@ -63,5 +66,6 @@
     </xsl:otherwise>
   </xsl:choose>
 </xsl:template>
+
 
 </xsl:stylesheet>

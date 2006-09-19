@@ -21,9 +21,11 @@
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
   xmlns:error="http://apache.org/cocoon/error/2.1"
+  xmlns="http://www.w3.org/1999/xhtml"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
   
   <xsl:import href="../util/page-util.xsl"/>
+  <xsl:import href="../util/toggle.xsl"/>
   
   <xsl:param name="documentid"/>
   <xsl:param name="documenturl"/>
@@ -46,24 +48,7 @@
       </page:head>
       <page:body>
         <xsl:apply-templates select="." mode="onload"/>
-        <script>
-function toggle(id) {
-    var element = document.getElementById(id);
-    with (element.style) {
-        if ( display == "none" ){
-            display = ""
-        } else{
-            display = "none"
-        }
-    }
-    var text = document.getElementById(id + "-switch").firstChild;
-    if (text.nodeValue == "[<i18n:text i18n:key="show" />]") {
-        text.nodeValue = "[<i18n:text i18n:key="hide" />]";
-    } else {
-        text.nodeValue = "[<i18n:text i18n:key="show" />]";
-    }
-}
-</script>
+        <xsl:call-template name="toggle-script"/>
 	<div class="lenya-box">
 	  <div class="lenya-box-title"><i18n:text i18n:key="error-generic" /></div>
 	  <div class="lenya-box-body">
