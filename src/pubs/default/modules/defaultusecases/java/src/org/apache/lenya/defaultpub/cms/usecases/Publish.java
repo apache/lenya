@@ -136,7 +136,6 @@ public class Publish extends DocumentUsecase {
 
             Publication publication = document.getPublication();
             DocumentFactory map = document.getFactory();
-            SiteStructure authoringSite = document.area().getSite();
             SiteStructure liveSite = publication.getArea(Publication.LIVE_AREA).getSite();
 
             List missingDocuments = new ArrayList();
@@ -181,10 +180,10 @@ public class Publish extends DocumentUsecase {
             }
         }
     }
-    
+
     /**
-     * Returns a link of a certain node, preferrably in the document's language, or <code>null</code> if
-     * the node has no links.
+     * Returns a link of a certain node, preferrably in the document's language, or
+     * <code>null</code> if the node has no links.
      * @param path The path of the node.
      * @param document The document.
      * @return A link or <code>null</code>.
@@ -195,7 +194,7 @@ public class Publish extends DocumentUsecase {
         Link link = null;
         if (node.hasLink(document.getLanguage())) {
             link = node.getLink(document.getLanguage());
-        } else if (node.getLanguages().length > 0){
+        } else if (node.getLanguages().length > 0) {
             link = node.getLink(node.getLanguages()[0]);
         }
         return link;
@@ -238,12 +237,10 @@ public class Publish extends DocumentUsecase {
         }
     }
 
-    /**
-     * Publishes a document.
-     * 
-     * @param authoringDocument The authoring document.
-     */
-    protected void publish(Document authoringDocument) {
+    protected void publish(Document authoringDocument) throws DocumentException, SiteException,
+            PublicationException {
+
+        createAncestorNodes(authoringDocument);
 
         DocumentManager documentManager = null;
 
@@ -323,6 +320,21 @@ public class Publish extends DocumentUsecase {
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Publishing completed.");
+        }
+    }
+
+    protected void createAncestorNodes(Document document) throws PublicationException,
+            DocumentException, SiteException {
+        SiteStructure liveSite = document.getPublication().getArea(Publication.LIVE_AREA).getSite();
+        String[] steps = document.getPath().substring(1).split("/");
+        int s = 0;
+        String path = "";
+        while (s < steps.length) {
+            if (!liveSite.contains(path)) {
+                liveSite.add(path);
+            }
+            path += "/" + steps[s];
+            s++;
         }
     }
 
