@@ -71,7 +71,7 @@ This sitemap creates default navigation components.
       </map:transform>
       <map:call resource="fallback-transformation">
         <map:parameter name="publication-id" value="{1}"/>
-        <map:parameter name="url" value="{3}"/>
+        <map:parameter name="url" value="/{3}"/>
         <map:parameter name="stylesheet" value="sitetree2nav"/>
       </map:call>    
     </map:match>
@@ -83,7 +83,7 @@ This sitemap creates default navigation components.
       <map:generate src="cocoon:/{1}/admin/sitetree/{3}.xml"/>
       <map:call resource="fallback-transformation">
         <map:parameter name="publication-id" value="{1}"/>
-        <map:parameter name="url" value="{3}"/>
+        <map:parameter name="url" value="/{3}"/>
         <map:parameter name="stylesheet" value="admin-{2}"/>
       </map:call>
     </map:match>
@@ -94,7 +94,7 @@ This sitemap creates default navigation components.
       <map:generate src="cocoon:/{1}/{2}/sitetree/{4}.xml"/>
       <map:call resource="fallback-transformation">
         <map:parameter name="publication-id" value="{1}"/>
-        <map:parameter name="url" value="{4}"/>
+        <map:parameter name="url" value="/{4}"/>
         <map:parameter name="stylesheet" value="{3}"/>
       </map:call>
     </map:match>

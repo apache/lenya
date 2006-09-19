@@ -25,15 +25,19 @@
     exclude-result-prefixes="tree"
     >
 
-<xsl:param name="url"/>
+<xsl:param name="url"/> <!-- the links will be relative to this url (must start with slash)-->
 <xsl:param name="chosenlanguage"/>
 <xsl:param name="defaultlanguage"/>
     
-<xsl:variable name="path-to-context"><xsl:call-template name="create-path-to-context"/></xsl:variable>
+<xsl:variable name="path-to-context">
+  <xsl:call-template name="create-path-to-context">
+    <xsl:with-param name="local-url" select="substring-after($url, '/')"/>
+  </xsl:call-template>
+</xsl:variable>
 <xsl:variable name="root" select="$path-to-context"/>
   
 <xsl:template name="create-path-to-context">
-  <xsl:param name="local-url" select="$url"/>
+  <xsl:param name="local-url"/>
   <xsl:if test="contains($local-url, '/')">
     <xsl:text/>../<xsl:call-template name="create-path-to-context">
       <xsl:with-param name="local-url" select="substring-after($local-url, '/')"/>
