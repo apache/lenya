@@ -38,6 +38,7 @@
   <resource-type name="opendocument" workflow="fallback://config/workflow/workflow.xml"/>
   
   <!-- NOTE: Modules need to be listed because of the menu and i18n -->
+  <module name="editors"/>
   <module name="xhtml"/>
   <module name="links"/>
   <module name="opendocument"/>

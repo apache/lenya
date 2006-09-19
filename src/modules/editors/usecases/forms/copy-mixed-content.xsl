@@ -22,8 +22,6 @@
 >
 
 
-
-
 <!-- FIXME: works bugfree, but is kind of ugly, because each element will list all namespaces -->
 <!--
 <xsl:template match="//*" mode="mixedcontent" priority="-1">

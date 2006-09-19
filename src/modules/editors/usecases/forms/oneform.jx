@@ -74,8 +74,9 @@
           </div>
           
           <div style="float: left;">
-            <input type="submit" value="Save" name="submit" />
-            <input type="submit" value="Cancel" name="cancel" />
+            <input type="submit" value="Save" name="submit" i18n:attr="value"/>
+            <input type="submit" value="Cancel" name="cancel" i18n:attr="value"/>
+            <input type="submit" value="Reformat" name="reformat" i18n:attr="value"/>
           </div>
 
           <div style="clear: both;">
