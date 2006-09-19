@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
   Copyright 1999-2004 The Apache Software Foundation
-
+  
   Licensed under the Apache License, Version 2.0 (the "License");
   you may not use this file except in compliance with the License.
   You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,13 +21,13 @@
     <map:script src="shape/corner.js"/>
     <map:script src="shape/tab.js"/>
   </map:flow>
-
+  
   <map:pipelines>
-
+    
     <map:pipeline>
       
       <!--
-      Views for shape flowscripts.
+        Views for shape flowscripts.
       -->
       <map:match pattern="view/*">
         <map:generate type="jx" src="shape/{1}.jx"/>
@@ -35,9 +35,9 @@
       </map:match>
       
       <!--
-      Internal pipeline to generate shape SVGs.
-      shape/{type}-{where}-{radius}-{backgroundColor}-{lineColor}
-      example: shape/corner-topLeft-5-FF0000-000000
+        Internal pipeline to generate shape SVGs.
+        shape/{type}-{where}-{radius}-{backgroundColor}-{lineColor}
+        example: shape/corner-topLeft-5-FF0000-000000
       -->
       <map:match pattern="shape/*-*-*-*-*.svg">
         <map:call function="{1}">
@@ -49,9 +49,9 @@
       </map:match>
       
       <!--
-      This matches a shape URL.
-      {type}-{where}-{radius}-{backgroundColor}-{lineColor}
-      example: corner-topLeft-5-FF0000-000000
+        This matches a shape URL.
+        {type}-{where}-{radius}-{backgroundColor}-{lineColor}
+        example: corner-topLeft-5-FF0000-000000
       -->
       <map:match pattern="*-*-*-*-*.png">
         <map:generate src="cocoon:/shape/{1}-{2}-{3}-{4}-{5}.svg"/>
@@ -59,94 +59,53 @@
       </map:match>
       
       <!--
-      image resizing pipelines
+        image resizing pipelines
       -->
+      <!-- {pubId}/{area}/{path}.{extension} -->
       <map:match pattern="*/*/**.*">
-        
-        <map:match type="regexp" pattern="(.*\.)(jpg|JPG|Jpg|jpeg|Jpeg|JPEG)$"> 
-          <map:generate src="dummy.xml"/>
-          <map:act type="resource-exists-enhanced">
-            <map:parameter name="url" value="fallback://resources/{../2}/{../3}.{../4}"/>
-            <map:parameter name="type" value="file"/>
-            <map:transform src="xslt/scale.xsl">
-              <map:parameter name="url" value="{fallback:resources/{../../2}/{../../3}.{../../4}}"/>
-              <map:parameter name="width" value="{request-param:width}"/>
-              <map:parameter name="height" value="{request-param:height}"/>
-            </map:transform>
-          </map:act>
-          <map:act type="resource-exists-enhanced">
-            <map:parameter name="url" value="fallback://resources/shared/{../3}.{../4}"/>
-            <map:parameter name="type" value="file"/>
-            <map:transform src="xslt/scale.xsl">
-              <map:parameter name="url" value="{fallback:resources/shared/{../../3}.{../../4}}"/>
-              <map:parameter name="width" value="{request-param:width}"/>
-              <map:parameter name="height" value="{request-param:height}"/>
-            </map:transform>
-          </map:act>
+        <map:generate src="dummy.xml"/>
+        <map:act type="resource-exists">
+          <map:parameter name="url" value="site://{1}/{2}/{page-envelope:default-language}/{3}"/>
+          <map:transform src="xslt/scale.xsl">
+            <map:parameter name="url" value="http://localhost:{request:serverPort}{request:contextPath}/{../1}/{../2}/{../3}.{../4}"/>
+            <map:parameter name="width" value="{request-param:width}"/>
+            <map:parameter name="height" value="{request-param:height}"/>
+          </map:transform>
+        </map:act>
+        <map:act type="resource-exists-enhanced">
+          <map:parameter name="url" value="lenyadoc://resources/shared/{3}.{4}"/>
+          <map:parameter name="type" value="file"/>
+          <map:transform src="xslt/scale.xsl">
+            <map:parameter name="url" value="{fallback:resources/shared/{../3}.{../4}}"/>
+            <map:parameter name="width" value="{request-param:width}"/>
+            <map:parameter name="height" value="{request-param:height}"/>
+          </map:transform>
+        </map:act>
+        <map:match type="regexp" pattern="(.*\.)(jpg|JPG|Jpg|jpeg|Jpeg|JPEG)$">
           <map:serialize type="svg2jpeg"/>
-        </map:match> 
-
+        </map:match>
         <map:match type="regexp" pattern="(.*\.)(png|PNG|Png)$"> 
-          <map:generate src="dummy.xml"/>
-          <map:act type="resource-exists-enhanced">
-            <map:parameter name="url" value="fallback://resources/{../2}/{../3}.{../4}"/>
-            <map:parameter name="type" value="file"/>
-            <map:transform src="xslt/scale.xsl">
-              <map:parameter name="url" value="{fallback:resources/{../../2}/{../../3}.{../../4}}"/>
-              <map:parameter name="width" value="{request-param:width}"/>
-              <map:parameter name="height" value="{request-param:height}"/>
-            </map:transform>
-          </map:act>
-          <map:act type="resource-exists-enhanced">
-            <map:parameter name="url" value="fallback://resources/shared/{../3}.{../4}"/>
-            <map:parameter name="type" value="file"/>
-            <map:transform src="xslt/scale.xsl">
-              <map:parameter name="url" value="{fallback:resources/shared/{../../3}.{../../4}}"/>
-              <map:parameter name="width" value="{request-param:width}"/>
-              <map:parameter name="height" value="{request-param:height}"/>
-            </map:transform>
-          </map:act>           
           <map:serialize type="svg2png"/>
         </map:match>
-
         <map:match type="regexp" pattern="(.*\.)(tif|TIF|Tif)$"> 
-          <map:generate src="dummy.xml"/>
-          <map:act type="resource-exists-enhanced">
-            <map:parameter name="url" value="fallback://resources/{../2}/{../3}.{../4}"/>
-            <map:parameter name="type" value="file"/>
-            <map:transform src="xslt/scale.xsl">
-              <map:parameter name="url" value="{fallback:resources/{../../2}/{../../3}.{../../4}}"/>
-              <map:parameter name="width" value="{request-param:width}"/>
-              <map:parameter name="height" value="{request-param:height}"/>
-            </map:transform>
-          </map:act>
-          <map:act type="resource-exists-enhanced">
-            <map:parameter name="url" value="fallback://resources/shared/{../3}.{../4}"/>
-            <map:parameter name="type" value="file"/>
-            <map:transform src="xslt/scale.xsl">
-              <map:parameter name="url" value="{fallback:resources/shared/{../../3}.{../../4}}"/>
-              <map:parameter name="width" value="{request-param:width}"/>
-              <map:parameter name="height" value="{request-param:height}"/>
-            </map:transform>
-          </map:act>              
           <map:serialize type="svg2tiff"/>
         </map:match> 
-
-        <map:match type="regexp" pattern="(.*\.)(gif|GIF|Gif)$"> 
-          <map:act type="resource-exists-enhanced">
-            <map:parameter name="url" value="fallback://resources/{../2}/{../3}.{../4}"/>
-            <map:parameter name="type" value="file"/>
-            <map:read src="fallback://resources/{../../2}/{../../3}.{../../4}" mime-type="image/gif" />
-          </map:act>
-          <map:act type="resource-exists-enhanced">
-            <map:parameter name="url" value="fallback://resources/shared/{../3}.{../4}"/>
-            <map:parameter name="type" value="file"/>
-            <map:read src="fallback://resources/shared/{../../3}.{../../4}" mime-type="image/gif" />
-          </map:act>
-          <map:act type="language-exists">
-            <map:read src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-id}" mime-type="image/gif"/>
-          </map:act>  
-        </map:match>
+      </map:match> 
+      
+      <map:match type="regexp" pattern="(.*\.)(gif|GIF|Gif)$"> 
+        <map:act type="resource-exists-enhanced">
+          <map:parameter name="url" value="fallback://resources/{../2}/{../3}.{../4}"/>
+          <map:parameter name="type" value="file"/>
+          <map:read src="fallback://resources/{../../2}/{../../3}.{../../4}" mime-type="image/gif" />
+        </map:act>
+        <map:act type="resource-exists-enhanced">
+          <map:parameter name="url" value="fallback://resources/shared/{../3}.{../4}"/>
+          <map:parameter name="type" value="file"/>
+          <map:read src="fallback://resources/shared/{../../3}.{../../4}" mime-type="image/gif" />
+        </map:act>
+        <map:act type="language-exists">
+          <map:read src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-id}" mime-type="image/gif"/>
+        </map:act>  
       </map:match>
       
     </map:pipeline>
