@@ -44,7 +44,9 @@
       </head>
       <body>
         <xsl:copy-of select="page:body/@*"/>
-        <xsl:call-template name="toggle-script"/>
+        <xsl:if test="page:body//xhtml:div[@class = 'lenya-box-toggled']">
+          <xsl:call-template name="toggle-script"/>
+        </xsl:if>
           
         <xsl:apply-templates select="page:title"/>
         <table class="lenya-body" border="0" cellpadding="0" cellspacing="0">
