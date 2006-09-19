@@ -17,6 +17,7 @@
 package org.apache.lenya.cms.site.usecases;
 
 import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.Publication;
@@ -25,6 +26,7 @@ import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 
 /**
  * Change the label of a document.
@@ -36,6 +38,10 @@ public class ChangeLabel extends DocumentUsecase {
     protected static final String LABEL = "label";
     protected static final String DOCUMENT_ID = "documentId";
 
+    protected String getEvent() {
+        return "edit";
+    }
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
      */
@@ -45,10 +51,14 @@ public class ChangeLabel extends DocumentUsecase {
             return;
         }
 
+        Document doc = getSourceDocument();
         if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
             addErrorMessage("This usecase can only be invoked in the authoring area!");
-        } else if (!getSourceDocument().exists()) {
-            addErrorMessage("This usecase can only be invoked on existing documents.");
+        }
+
+        if (!WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), doc, getEvent())) {
+            String title = DublinCoreHelper.getTitle(doc);
+            addErrorMessage("error-workflow-document", new String[] { getEvent(), title });
         }
     }
 
@@ -103,6 +113,8 @@ public class ChangeLabel extends DocumentUsecase {
                 this.manager.release(selector);
             }
         }
+
+        WorkflowUtil.invoke(this.manager, getSession(), getLogger(), document, getEvent());
 
     }
 }

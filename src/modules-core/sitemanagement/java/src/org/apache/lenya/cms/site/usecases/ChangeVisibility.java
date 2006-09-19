@@ -16,42 +16,60 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import org.apache.avalon.framework.service.ServiceSelector;
+import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 
 /**
  * Switch the navigation visibility of a document.
  */
 public class ChangeVisibility extends DocumentUsecase {
 
-    protected void doExecute() throws Exception {
-        
-        super.doExecute();
-        
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
-        try {
-            Document document = getSourceDocument();
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(document.getPublication()
-                    .getSiteManagerHint());
+    protected String getEvent() {
+        return "edit";
+    }
 
-            boolean visible = siteManager.isVisibleInNav(document);
-            siteManager.setVisibleInNav(document, !visible);
-        } catch (final Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                this.manager.release(selector);
+    /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
+     */
+    protected void doCheckPreconditions() throws Exception {
+        super.doCheckPreconditions();
+        if (hasErrors()) {
+            return;
+        }
+
+        Document doc = getSourceDocument();
+        if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
+            addErrorMessage("This usecase can only be invoked in the authoring area!");
+        }
+
+        String[] languages = doc.getLanguages();
+        for (int i = 0; i < languages.length; i++) {
+            Document version = doc.getTranslation(languages[i]);
+            if (!WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), version,
+                    getEvent())) {
+                String title = DublinCoreHelper.getTitle(version);
+                addErrorMessage("error-workflow-document", new String[] { getEvent(), title });
             }
+        }
+    }
+
+    protected void doExecute() throws Exception {
+        super.doExecute();
+        Document doc = getSourceDocument();
+        SiteNode node = doc.getLink().getNode();
+        node.setVisible(!node.isVisible());
+
+        String[] languages = doc.getLanguages();
+        for (int i = 0; i < languages.length; i++) {
+            Document version = doc.getTranslation(languages[i]);
+            WorkflowUtil.invoke(this.manager, getSession(), getLogger(), version, getEvent());
         }
     }
 
