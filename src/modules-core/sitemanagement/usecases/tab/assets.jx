@@ -60,7 +60,6 @@
               </jx:if>
             </td>
             <td align="right"><jx:out value="${java.text.DateFormat.getDateInstance().format(doc.getLastModified())}"/></td>
-            <td/>
           </tr> 
         </jx:forEach>
       </table>
