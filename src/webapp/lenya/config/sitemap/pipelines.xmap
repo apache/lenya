@@ -18,7 +18,8 @@
 <xmap remove="/sitemap/pipelines"
       unless="/sitemap/pipelines/pipeline/match[@pattern = 'lenya-screen.xsl']"
       xpath="/sitemap"
-      insert-after="/sitemap/resources">
+      insert-after="/sitemap/resources"
+      xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
 <!-- =========================== Pipelines ================================= -->
 

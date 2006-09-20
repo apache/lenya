@@ -15,7 +15,8 @@
   limitations under the License.
 -->
 
-<xmap xpath="/sitemap/components/matchers" unless="/sitemap/components/matchers/matcher[@name = 'usecase']">
+<xmap xpath="/sitemap/components/matchers" unless="/sitemap/components/matchers/matcher[@name = 'usecase']"
+  xmlns:map="http://apache.org/cocoon/sitemap/1.0">
      <map:matcher name="agent-match" logger="sitemap.matcher.referer-match" src="org.apache.cocoon.matching.WildcardHeaderMatcher">
         <header-name>User-Agent</header-name>
     </map:matcher>

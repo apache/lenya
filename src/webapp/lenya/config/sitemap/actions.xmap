@@ -16,7 +16,8 @@
 -->
 <!-- $Id: actions.xmap 280060 2005-09-11 01:56:31Z chestnut $  -->
 
-<xmap xpath="/sitemap/components/actions" unless="/sitemap/components/actions/action[@name = 'language-exists']">
+<xmap xpath="/sitemap/components/actions" unless="/sitemap/components/actions/action[@name = 'language-exists']" 
+  xmlns:map="http://apache.org/cocoon/sitemap/1.0">
    <map:action name="language-exists" logger="lenya.sitemap.action.language-exists" src="org.apache.lenya.cms.cocoon.acting.LanguageExistsAction"/>
    <map:action name="request-parameter-exists" logger="sitemap.action.requestParameterExists" src="org.apache.cocoon.acting.RequestParameterExistsAction" />
    <map:action name="reserved-checkin" src="org.apache.lenya.cms.cocoon.acting.ReservedCheckinAction" logger="sitemap.action.reserved-checkin"/>
