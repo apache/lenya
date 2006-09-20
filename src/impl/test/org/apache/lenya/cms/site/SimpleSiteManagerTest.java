@@ -62,8 +62,7 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
         try {
             selector = (ServiceSelector) getManager().lookup(SiteManager.ROLE + "Selector");
             siteManager = (SiteManager) selector.select(pub.getSiteManagerHint());
-            SiteStructure structure = siteManager.getSiteStructure(factory,
-                    pub,
+            SiteStructure structure = siteManager.getSiteStructure(factory, pub,
                     Publication.AUTHORING_AREA);
 
             SiteNode[] nodes = structure.getNodes();
@@ -75,34 +74,29 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
 
                 SiteNode node = structure.getNode(nodes[i].getPath());
                 assertNotNull(node);
-                assertNotNull(node.getUuid());
+                if (node.getLanguages().length > 0) {
+                    assertNotNull(node.getUuid());
+                }
                 assertEquals(nodes[i], node);
-
 
                 checkLinks(siteManager, node);
             }
 
             docManager = (DocumentManager) getManager().lookup(DocumentManager.ROLE);
 
-            resourceTypeSelector = (ServiceSelector) getManager().lookup(ResourceType.ROLE
-                    + "Selector");
+            resourceTypeSelector = (ServiceSelector) getManager().lookup(
+                    ResourceType.ROLE + "Selector");
             ResourceType type = (ResourceType) resourceTypeSelector.select("entry");
             String contentSourceUri = structure.getRepositoryNode().getSourceURI();
-            
-            Document doc = docManager.add(getFactory(),
-                    type,
-                    contentSourceUri,
-                    pub,
-                    Publication.AUTHORING_AREA,
-                    "en",
-                    "xml");
+
+            Document doc = docManager.add(getFactory(), type, contentSourceUri, pub,
+                    Publication.AUTHORING_AREA, "en", "xml");
 
             structure.add("/foo", doc);
             assertTrue(structure.contains("/foo"));
             Document linkDoc = structure.getNode("/foo").getLink("en").getDocument();
             assertSame(linkDoc, doc);
-            
-            
+
         } finally {
             if (selector != null) {
                 if (siteManager != null) {
@@ -122,9 +116,6 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
 
     protected void checkLinks(SiteManager siteManager, SiteNode node) throws SiteException {
         String[] languages = node.getLanguages();
-        if (node.getPath().length() > 0) {
-            assertTrue(languages.length > 0);
-        }
         for (int i = 0; i < languages.length; i++) {
             Link link = node.getLink(languages[i]);
             assertEquals(link.getLanguage(), languages[i]);
