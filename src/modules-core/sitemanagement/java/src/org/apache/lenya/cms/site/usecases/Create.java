@@ -172,7 +172,7 @@ public abstract class Create extends AbstractUsecase {
             setMetaData(document);
 
             // the location to navigate to after completion of usecase
-            setTargetURL(document.getCanonicalWebappURL());
+            setDefaultTargetURL(document.getCanonicalWebappURL());
 
         } finally {
             if (documentManager != null) {

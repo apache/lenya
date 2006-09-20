@@ -440,19 +440,28 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
         return value;
     }
 
-    private String TARGET_URL = "private.targetUrl";
+    private String EXIT_URI = "lenya.exitUri";
+    private String DEFAULT_TARGET_URL = "private.defaultTargetUrl";
 
-    protected void setTargetURL(String url) {
-        setParameter(TARGET_URL, url);
+    /**
+     * Sets the default target URL which should be used if no explicit target URL
+     * is set.
+     * @param url A URL string.
+     */
+    protected void setDefaultTargetURL(String url) {
+        setParameter(DEFAULT_TARGET_URL, url);
     }
 
     /**
-     * If {@link #setTargetURL(String)}was not called, the source document (
+     * If {@link #setDefaultTargetURL(String)}was not called, the source document (
      * {@link #getSourceURL()}) is returned.
      * @see org.apache.lenya.cms.usecase.Usecase#getTargetURL(boolean)
      */
     public String getTargetURL(boolean success) {
-        String url = getParameterAsString(TARGET_URL);
+        String url = getParameterAsString(EXIT_URI);
+        if (url == null) {
+            url = getParameterAsString(DEFAULT_TARGET_URL);
+        }
         if (url == null) {
             url = getSourceURL();
         }

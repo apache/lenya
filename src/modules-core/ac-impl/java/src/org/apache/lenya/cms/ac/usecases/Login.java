@@ -102,7 +102,7 @@ public class Login extends AccessControlUsecase {
         Request request = ObjectModelHelper.getRequest(objectModel);
         request.getSession(true);
         if (getAccessController().authenticate(request)) {
-            setTargetURL(request.getPathInfo());
+            setDefaultTargetURL(request.getPathInfo());
         } else {
             addErrorMessage("Authentication failed");
         }

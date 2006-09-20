@@ -126,9 +126,9 @@ public class DocumentUsecase extends AbstractUsecase {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#setTargetURL(java.lang.String)
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#setDefaultTargetURL(java.lang.String)
      */
-    protected void setTargetURL(String url) {
+    protected void setDefaultTargetURL(String url) {
         try {
             Document target = getDocumentFactory().getFromURL(url);
             setParameter(TARGET_DOCUMENT, target);

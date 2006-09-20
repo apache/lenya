@@ -82,7 +82,7 @@ public class ContactForm extends AbstractUsecase {
 
         NotificationUtil.notify(this.manager, recipients, sender, message);
 
-        setTargetURL(getSourceURL() + "?sent=true");
+        setDefaultTargetURL(getSourceURL() + "?sent=true");
     }
 
     protected User getUser(String userId) throws Exception {
