@@ -32,7 +32,7 @@
   <xsl:template match="page:page">
     <html>
       <head>
-        <title><xsl:apply-templates select="page:title/*"/></title>
+        <title><xsl:apply-templates select="page:title/node()"/></title>
         <link rel="stylesheet" type="text/css" href="{$contextprefix}/lenya/css/default.css" title="default css"/>
         <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
         <xsl:if test="count(xhtml:script) &gt; 0">
@@ -70,7 +70,7 @@
     <table width="100%" border="0" cellpadding="10" cellspacing="0">
       <tr>
         <td class="lenya-header">
-          <h1><xsl:apply-templates select="*"/></h1>
+          <h1><xsl:apply-templates select="node()"/></h1>
         </td>
         <td class="lenya-project-logo">
           <img src="{$contextprefix}/lenya/images/project-logo-small.png" alt="Apache Lenya Project Logo"/>
