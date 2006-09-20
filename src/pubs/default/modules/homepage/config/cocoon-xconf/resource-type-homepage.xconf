@@ -23,6 +23,10 @@
                       logger="lenya.resourcetypes.homepage"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
     <schema src="fallback://lenya/modules/homepage/resources/schemas/homepage.rng" language="http://relaxng.org/ns/structure/0.9"/>
+
+    <!-- Default time in seconds until the resource-type has expired -->  
+    <expires seconds="0" />
+
     <sample-name>homepage.xml</sample-name>
     <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@href"/>
     <format name="xhtml" uri="cocoon://modules/homepage/xhtml.xml"/>
