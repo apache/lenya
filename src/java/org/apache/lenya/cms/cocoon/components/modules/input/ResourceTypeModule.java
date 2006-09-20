@@ -16,6 +16,7 @@
  */
 package org.apache.lenya.cms.cocoon.components.modules.input;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -55,8 +56,11 @@ import org.apache.lenya.util.ServletHelper;
  * <ul>
  * <li><strong><code>expires</code></strong> - the expiration date in RFC 822/1123 format, see
  * {@link org.apache.lenya.cms.publication.ResourceType#getExpires()}</li>
- * <li><strong><code>schemaUri</code></strong> - see {@link org.apache.lenya.xml.Schema#getURI()}</li>
+ * <li><strong><code>schemaUri</code></strong> - see
+ * {@link org.apache.lenya.xml.Schema#getURI()}</li>
  * <li><strong><code>httpSchemaUri</code></strong> - the URI to request the schema over HTTP</li>
+ * <li><strong><code>supportsFormat:{format}</code></strong> - true if the resource type
+ * supports this format, false otherwise</li>
  * </ul>
  */
 public class ResourceTypeModule extends AbstractInputModule implements Serviceable {
@@ -64,6 +68,7 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
     protected static final String SCHEMA_URI = "schemaUri";
     protected static final String HTTP_SCHEMA_URI = "httpSchemaUri";
     protected static final String EXPIRES = "expires";
+    protected static final String SUPPORTS_FORMAT = "supportsFormat";
 
     public Object getAttribute(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
@@ -115,6 +120,10 @@ public class ResourceTypeModule extends AbstractInputModule implements Serviceab
                 Date expires = resourceType.getExpires();
                 SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss zzz");
                 value = sdf.format(expires);
+            } else if (attribute.equals(SUPPORTS_FORMAT)) {
+                String format = steps[steps.length - 1];
+                String[] formats = resourceType.getFormats();
+                return Boolean.toString(Arrays.asList(formats).contains(format));
             } else {
                 throw new ConfigurationException("Attribute [" + name + "] not supported!");
             }

@@ -35,6 +35,7 @@
     <format name="xhtml" uri="cocoon://modules/xhtml/xhtml.xml"/>
     <format name="webdavGET" uri="cocoon://modules/xhtml/davget.xml"/>
     <format name="luceneIndex" uri="cocoon://modules/xhtml/lucene-index"/>
+    <format name="icon" uri="cocoon://modules/xhtml/icon"/>
   </component-instance>
   
 </xconf>

@@ -25,6 +25,7 @@
     <schema src="fallback://lenya/modules/resource/resources/schemas/resource.rng" language="http://relaxng.org/ns/structure/0.9"/>
     <sample-name>fallback://lenya/modules/resource/samples/resource.xml</sample-name>
     <format name="xhtml" uri="cocoon://modules/resource/xhtml.xml"/>
+    <format name="icon" uri="cocoon://modules/resource/icon"/>
   </component-instance>
 
 </xconf>
