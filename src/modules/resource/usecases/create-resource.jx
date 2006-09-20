@@ -23,6 +23,7 @@ limitations under the License.
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
   
   <page:body>
+    <div class="lenya-box">
     <div class="lenya-box-title">
       <i18n:text>New Document of type: Media</i18n:text>
     </div>
@@ -74,11 +75,11 @@ limitations under the License.
           </tr>
           <tr>
             <td class="lenya-entry-caption">
-              <label for="title"><i18n:text>Navigation Title</i18n:text>*:
+              <label for="dublincore.title"><i18n:text>Navigation Title</i18n:text>*:
               </label></td>
             <td>
-              <input class="lenya-form-element" type="text" name="title"
-                value="${usecase.getParameter('title')}"/>
+              <input class="lenya-form-element" type="text" name="dublincore.title"
+                value="${usecase.getParameter('dublincore.title')}"/>
             </td>
           </tr>
           <tr>
@@ -269,6 +270,7 @@ limitations under the License.
           </tr>
         </table>
       </form>
+    </div>
     </div>
   </page:body>
 </page:page>

@@ -99,7 +99,8 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
         File configFile = getConfigurationFile();
 
         if (!configFile.exists()) {
-            getLogger().error("Config file [" + configFile.getAbsolutePath() + "] does not exist: ",
+            getLogger().error(
+                    "Config file [" + configFile.getAbsolutePath() + "] does not exist: ",
                     new RuntimeException());
             throw new RuntimeException("The configuration file [" + configFile
                     + "] does not exist!");
@@ -128,7 +129,8 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
             Configuration documentBuilderConfiguration = config.getChild(ELEMENT_DOCUMENT_BUILDER,
                     false);
             if (documentBuilderConfiguration != null) {
-                this.documentBuilderHint = documentBuilderConfiguration.getAttribute(ATTRIBUTE_NAME);
+                this.documentBuilderHint = documentBuilderConfiguration
+                        .getAttribute(ATTRIBUTE_NAME);
             }
 
             Configuration[] _languages = config.getChild(LANGUAGES).getChildren();
@@ -158,8 +160,9 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
                 Object key = getProxyKey(area, Boolean.valueOf(ssl).booleanValue());
                 this.areaSsl2proxy.put(key, proxy);
                 if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("Adding proxy: [" + proxy + "] for area=[" + area + "] SSL=["
-                            + ssl + "]");
+                    getLogger().debug(
+                            "Adding proxy: [" + proxy + "] for area=[" + area + "] SSL=[" + ssl
+                                    + "]");
                 }
             }
 
@@ -173,17 +176,18 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
                 }
             }
 
-            Configuration templateInstantiatorConfig = config.getChild(ELEMENT_TEMPLATE_INSTANTIATOR,
-                    false);
+            Configuration templateInstantiatorConfig = config.getChild(
+                    ELEMENT_TEMPLATE_INSTANTIATOR, false);
             if (templateInstantiatorConfig != null) {
-                this.instantiatorHint = templateInstantiatorConfig.getAttribute(PublicationConfiguration.ATTRIBUTE_NAME);
+                this.instantiatorHint = templateInstantiatorConfig
+                        .getAttribute(PublicationConfiguration.ATTRIBUTE_NAME);
             }
 
             Configuration contentDirConfig = config.getChild(ELEMENT_CONTENT_DIR, false);
             if (contentDirConfig != null) {
                 this.contentDir = contentDirConfig.getAttribute("src");
-                getLogger().info("Content directory loaded from pub configuration: "
-                        + this.contentDir);
+                getLogger().info(
+                        "Content directory loaded from pub configuration: " + this.contentDir);
             } else {
                 getLogger().info("No content directory specified within pub configuration!");
             }
@@ -361,7 +365,8 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
         Proxy proxy = getProxy(document.getArea(), isSslProtected);
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Resolving proxy for [" + document + "] SSL=[" + isSslProtected + "]");
+            getLogger()
+                    .debug("Resolving proxy for [" + document + "] SSL=[" + isSslProtected + "]");
             getLogger().debug("Resolved proxy: [" + proxy + "]");
         }
 
@@ -455,7 +460,22 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
      * @see org.apache.lenya.cms.publication.Publication#getResourceTypeNames()
      */
     public String[] getResourceTypeNames() {
-        return (String[]) resourceTypes.toArray(new String[resourceTypes.size()]);
+        loadConfiguration();
+
+        List allTypes = new ArrayList();
+        allTypes.addAll(this.resourceTypes);
+        String[] templateIds = getTemplateIds();
+        try {
+            for (int i = 0; i < templateIds.length; i++) {
+                Publication template = getFactory().getPublication(templateIds[i]);
+                String[] templateTypes = template.getResourceTypeNames();
+                allTypes.addAll(Arrays.asList(templateTypes));
+            }
+        } catch (PublicationException e) {
+            throw new RuntimeException(e);
+        }
+
+        return (String[]) allTypes.toArray(new String[allTypes.size()]);
     }
 
     public String toString() {

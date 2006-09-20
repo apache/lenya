@@ -17,20 +17,12 @@
 package org.apache.lenya.cms.site.usecases;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import org.apache.cocoon.servlet.multipart.Part;
-import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.Resource;
-import org.apache.lenya.cms.publication.ResourcesManager;
-import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.SiteNode;
 
 /**
  * Usecase to add Assets to a resource.
@@ -40,179 +32,32 @@ import org.apache.lenya.util.ServletHelper;
 public class Assets extends SiteUsecase {
 
     /**
-     * Validates the request parameters.
-     * @throws UsecaseException if an error occurs.
-     */
-    void validate() throws UsecaseException {
-
-        /*
-         * The <input type="file"/> value cannot be passed to the next screen because the browser
-         * doesn't allow this for security reasons.
-         */
-
-        if (hasErrors()) {
-            deleteParameter("file");
-        }
-
-        Part file = getPart("file");
-        if (file == null) {
-            addErrorMessage("Please choose a file to upload. Your previous choice could not be preselected for security reasons.");
-        }
-
-    }
-
-    /**
-     * @see org.apache.lenya.cms.usecase.DocumentUsecase#doCheckPreconditions()
-     */
-    protected void doCheckPreconditions() throws Exception {
-        if (!ServletHelper.isUploadEnabled(manager)) {
-            addInfoMessage("Upload is not enabled. Please check local.build.properties!");
-        }
-    }
-
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
-     */
-    protected void doCheckExecutionConditions() throws Exception {
-        if (getParameter("delete") == null) {
-            validate();
-        }
-    }
-
-    /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
      */
     protected void initParameters() {
         super.initParameters();
 
-        ResourcesManager resourcesManager = null;
-
         try {
-            resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
-            Resource[] resources = resourcesManager.getResources(getSourceDocument());
-            setParameter("assets", Arrays.asList(resources));
-            
             Document[] resourceDocs = getResourceDocuments();
             setParameter("resourceDocuments", resourceDocs);
-
-            User user = getSession().getIdentity().getUser();
-            if (user != null) {
-                setParameter("creator", user.getId());
-            }
-
         } catch (final Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (resourcesManager != null) {
-                this.manager.release(resourcesManager);
-            }
         }
     }
 
-    protected Document[] getResourceDocuments() throws DocumentException {
+    protected Document[] getResourceDocuments() throws DocumentException, SiteException {
         List list = new ArrayList();
         Document[] docs = getSourceDocument().area().getDocuments();
+        SiteNode node = getSourceDocument().getLink().getNode();
         for (int i = 0; i < docs.length; i++) {
-            if (docs[i].getResourceType().getName().equals("resource")) {
+            if (docs[i].hasLink()
+                    && !docs[i].getLink().getNode().isTopLevel()
+                    && docs[i].getLink().getNode().getParent().getPath().equals(node.getPath())
+                    && docs[i].getResourceType().getName().equals("resource")) {
                 list.add(docs[i]);
             }
         }
         return (Document[]) list.toArray(new Document[list.size()]);
-    }
-
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
-     */
-    protected void doExecute() throws Exception {
-        super.doExecute();
-
-        if (getParameter("delete") == null) {
-            addAsset();
-        } else {
-            deleteAsset();
-        }
-    }
-
-    /**
-     * Deletes an asset.
-     * @throws Exception if an error occurs.
-     */
-    protected void deleteAsset() throws Exception {
-        String assetName = getParameterAsString("delete");
-        ResourcesManager resourcesManager = null;
-        try {
-
-            // Retrieve the resource instance via the ResourcesManager
-            resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
-            Resource theResource = resourcesManager.getResource(getSourceDocument(), assetName);
-            if (theResource == null)
-                throw new Exception("no such resource [" + assetName + "] exists for document [ "
-                        + getSourceDocument() + "]");
-
-            // Lock the resource nodes
-            List nodes = new ArrayList();
-            nodes.addAll(Arrays.asList(theResource.getRepositoryNodes()));
-            lockInvolvedObjects((Node[]) nodes.toArray(new Node[nodes.size()]));
-
-            // Delete the resource
-            resourcesManager.deleteResource(theResource);
-
-        } catch (final Exception e) {
-            getLogger().error("The resource could not be deleted: ", e);
-            addErrorMessage("The resource could not be deleted (see log files for details).");
-        } finally {
-            if (resourcesManager != null) {
-                this.manager.release(resourcesManager);
-            }
-        }
-    }
-
-    /**
-     * Adds an asset. If asset upload is not enabled, an error message is added.
-     */
-    protected void addAsset() {
-
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("Assets::addAsset() called");
-
-        Part file = getPart("file");
-
-        if (file.isRejected()) {
-            String[] params = { Integer.toString(file.getSize()) };
-            addErrorMessage("upload-size-exceeded", params);
-        } else {
-            addAsset(file);
-        }
-    }
-
-    /**
-     * Adds an asset.
-     * @param file The part.
-     */
-    protected void addAsset(Part file) {
-        String title = getParameterAsString("title");
-        String creator = getParameterAsString("creator");
-        String rights = getParameterAsString("rights");
-
-        Map metadata = new HashMap();
-        metadata.put("title", title);
-        metadata.put("creator", creator);
-        metadata.put("rights", rights);
-        ResourcesManager resourcesManager = null;
-        try {
-            resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
-            resourcesManager.addResource(getSourceDocument(), file, metadata);
-        } catch (final Exception e) {
-            getLogger().error("The resource could not be added: ", e);
-            addErrorMessage("The resource could not be added (see log files for details).");
-        } finally {
-            if (resourcesManager != null) {
-                this.manager.release(resourcesManager);
-            }
-        }
-
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("Assets::addAsset() done.");
     }
 
 }

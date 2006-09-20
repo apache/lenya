@@ -29,7 +29,6 @@ import org.apache.lenya.cms.site.NodeIterator;
 import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteUtil;
-import org.apache.lenya.cms.site.usecases.AssetUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
@@ -104,7 +103,6 @@ public class Deactivate extends DocumentUsecase {
             Document[] documents = siteNodes.getDocuments();
             for (int i = 0; i < documents.length; i++) {
                 nodes.add(documents[i].getRepositoryNode());
-                nodes.addAll(AssetUtil.getAssetNodes(documents[i], this.manager, getLogger()));
             }
 
             nodes.add(liveDoc.area().getSite().getRepositoryNode());

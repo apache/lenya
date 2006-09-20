@@ -80,7 +80,6 @@ public class EmptyTrash extends AbstractUsecase {
             Document[] docs = getTrashDocuments();
             for (int i = 0; i < docs.length; i++) {
                 nodes.add(docs[i].getRepositoryNode());
-                nodes.addAll(AssetUtil.getAssetNodes(docs[i], this.manager, getLogger()));
             }
 
             selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");

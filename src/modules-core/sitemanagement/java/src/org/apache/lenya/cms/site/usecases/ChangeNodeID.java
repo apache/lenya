@@ -77,7 +77,6 @@ public class ChangeNodeID extends DocumentUsecase {
                 for (int l = 0; l < languages.length; l++) {
                     Document doc = node.getLink(languages[l]).getDocument();
                     nodes.add(doc.getRepositoryNode());
-                    nodes.addAll(AssetUtil.getAssetNodes(doc, this.manager, getLogger()));
                 }
             }
 

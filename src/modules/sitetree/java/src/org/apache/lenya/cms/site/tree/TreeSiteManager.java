@@ -88,17 +88,15 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      */
     protected List getAncestors(SiteNode node) throws SiteException {
         List ancestors = new ArrayList();
-        SiteNode parent;
+        SiteNode parent = null;
         try {
-            parent = node.getParent();
-            if (parent != null) {
+            if (!node.isTopLevel()) {
+                parent = node.getParent();
                 ancestors.add(parent);
+                ancestors.addAll(getAncestors(parent));
             }
         } catch (Exception e) {
             throw new SiteException(e);
-        }
-        if (parent != null) {
-            ancestors.addAll(getAncestors(parent));
         }
         return ancestors;
     }

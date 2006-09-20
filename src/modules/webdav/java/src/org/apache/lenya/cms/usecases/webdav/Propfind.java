@@ -18,19 +18,15 @@ package org.apache.lenya.cms.usecases.webdav;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.Vector;
 
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
-import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
-import org.apache.lenya.cms.publication.Resource;
-import org.apache.lenya.cms.publication.ResourcesManager;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.rc.RCMLEntry;
@@ -68,7 +64,6 @@ public class Propfind extends SiteUsecase {
         ServiceSelector siteManagerSelector = null;
         ServiceSelector docBuilderSelector = null;
         SiteManager siteManager = null;
-        ResourcesManager resourcesManager = null;
         DocumentBuilder docBuilder = null;
         Vector docs = new Vector();
         Vector checkedOut = new Vector();
@@ -121,18 +116,6 @@ public class Propfind extends SiteUsecase {
                         checkedOut.add(entry);
                     else
                         checkedOut.add(null);
-                }
-            }
-
-            // get assets if we are currently looking at a document
-            if (!request.equals("/" + _publication.getId() + "/authoring/")) {
-                String url = request.substring(0, request.length() - 1) + ".html";
-                DocumentLocator locator = docBuilder.getLocator(getDocumentFactory(), url);
-                Document currentDoc = getDocumentFactory().get(locator);
-                if (currentDoc.exists()) {
-                    resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
-                    Resource[] resources = resourcesManager.getResources(currentDoc);
-                    setParameter("assets", Arrays.asList(resources));
                 }
             }
 

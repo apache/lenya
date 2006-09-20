@@ -219,33 +219,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
      */
     public void copy(Document sourceDocument, DocumentLocator destination)
             throws PublicationException {
-        copyDocument(sourceDocument, destination);
-        Document destinationDocument = sourceDocument.getFactory().get(destination);
-        copyResources(sourceDocument, destinationDocument);
-    }
-
-    protected void copyResources(Document sourceDocument, Document destinationDocument)
-            throws PublicationException {
-        ResourcesManager resourcesManager = null;
-        try {
-            resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
-            resourcesManager.copyResources(sourceDocument, destinationDocument);
-        } catch (Exception e) {
-            throw new PublicationException(e);
-        } finally {
-            if (resourcesManager != null) {
-                this.manager.release(resourcesManager);
-            }
-        }
-    }
-
-    /**
-     * @see org.apache.lenya.cms.publication.DocumentManager#copyDocument(org.apache.lenya.cms.publication.Document,
-     *      org.apache.lenya.cms.publication.DocumentLocator)
-     */
-    public void copyDocument(Document sourceDocument, DocumentLocator destination)
-            throws DocumentBuildException, PublicationException, DocumentException, SiteException {
-
         add(sourceDocument,
                 destination.getArea(),
                 destination.getPath(),
@@ -267,18 +240,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             document.getLink().delete();
         }
 
-        ResourcesManager resourcesManager = null;
-        try {
-            resourcesManager = (ResourcesManager) this.manager.lookup(ResourcesManager.ROLE);
-            resourcesManager.deleteResources(document);
-            document.delete();
-        } catch (Exception e) {
-            throw new PublicationException(e);
-        } finally {
-            if (resourcesManager != null) {
-                this.manager.release(resourcesManager);
-            }
-        }
+        document.delete();
     }
 
     /**
@@ -364,7 +326,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         try {
             SourceUtil.copy(this.manager, sourceDoc.getSourceURI(), destinationDoc.getSourceURI());
             copyMetaData(sourceDoc, destinationDoc);
-            copyResources(sourceDoc, destinationDoc);
         } catch (Exception e) {
             throw new PublicationException(e);
         }
@@ -827,9 +788,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 sourceDocument.getSourceExtension());
         copyMetaData(sourceDocument, document);
 
-        if (!area.equals(sourceDocument.getArea())) {
-            copyResources(sourceDocument, document);
-        }
         return document;
     }
 

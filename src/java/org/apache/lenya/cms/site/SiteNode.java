@@ -38,6 +38,11 @@ public interface SiteNode {
     SiteNode getParent() throws SiteException;
     
     /**
+     * @return If this is a top level node. Top level nodes have no parents.
+     */
+    boolean isTopLevel();
+    
+    /**
      * @return The languages of this node.
      */
     String[] getLanguages();

@@ -90,6 +90,10 @@ public abstract class AbstractSiteNode extends AbstractLogEnabled implements Sit
             return getStructure().getNode("/" + parentId);
         }
     }
+    
+    public boolean isTopLevel() {
+        return getPath().lastIndexOf("/") == 0;
+    }
 
     public String getUuid() {
         return this.uuid;

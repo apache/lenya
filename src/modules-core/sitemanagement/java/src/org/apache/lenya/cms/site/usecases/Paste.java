@@ -100,7 +100,6 @@ public class Paste extends DocumentUsecase {
             for (int i = 0; i < subsiteDocs.length; i++) {
                 if (clipboard.getMethod() == Clipboard.METHOD_CUT) {
                     nodes.add(subsiteDocs[i].getRepositoryNode());
-                    nodes.addAll(AssetUtil.getAssetNodes(subsiteDocs[i], this.manager, getLogger()));
                 }
             }
 

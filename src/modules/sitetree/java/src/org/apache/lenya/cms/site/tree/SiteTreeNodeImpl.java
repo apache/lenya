@@ -464,7 +464,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTreeNode#getParent()
      */
-    public SiteNode getParent() {
+    public SiteNode getParent() throws SiteException {
         SiteTreeNode parent = null;
 
         Node parentNode = this.node.getParentNode();
@@ -475,6 +475,9 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
                     (Element) parentNode,
                     getLogger());
             ContainerUtil.enableLogging(parent, getLogger());
+        }
+        else {
+            throw new SiteException("The node [" + this + "] has no parent.");
         }
 
         return parent;
@@ -495,7 +498,12 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
      * @see org.apache.lenya.cms.site.tree.SiteTreeNode#getParent(java.lang.String)
      */
     public SiteTreeNode getParent(String language) {
-        SiteTreeNode parent = (SiteTreeNode) getParent();
+        SiteTreeNode parent;
+        try {
+            parent = (SiteTreeNode) getParent();
+        } catch (SiteException e) {
+            throw new RuntimeException(e);
+        }
         if (!parent.hasLink(language)) {
             parent = null;
         }
@@ -608,6 +616,10 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
 
     public void delete() {
         getTree().removeNode(getPath());
+    }
+
+    public boolean isTopLevel() {
+        return getPath().lastIndexOf("/") == 0;
     }
 
 }
