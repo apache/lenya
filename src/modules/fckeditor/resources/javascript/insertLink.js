@@ -41,7 +41,7 @@ function LinkTree(doc, treeElement) {
 LinkTree.prototype = new NavTree;
 
 LinkTree.prototype.handleItemClick = function(item, event) {
-    setLink('/' + item.href);
+    setLink(item.href);
 }
 
 function buildTree() {

@@ -28,23 +28,33 @@
 <xsl:param name="url"/> <!-- the links will be relative to this url (must start with slash)-->
 <xsl:param name="chosenlanguage"/>
 <xsl:param name="defaultlanguage"/>
-    
-<xsl:variable name="path-to-context">
-  <xsl:call-template name="create-path-to-context">
-    <xsl:with-param name="local-url" select="substring-after($url, '/')"/>
-  </xsl:call-template>
+
+<xsl:variable name="relative">
+  <xsl:choose>
+    <xsl:when test="$url != '' and starts-with($url, '/')">true</xsl:when>
+    <xsl:otherwise>false</xsl:otherwise>
+  </xsl:choose>
 </xsl:variable>
-<xsl:variable name="root" select="$path-to-context"/>
-  
+
+<xsl:variable name="root">
+  <xsl:if test="$relative = 'true'">
+    <xsl:call-template name="create-path-to-context">
+      <xsl:with-param name="local-url" select="substring-after($url, '/')"/>
+    </xsl:call-template>
+  </xsl:if>
+</xsl:variable>
+
 <xsl:template name="create-path-to-context">
   <xsl:param name="local-url"/>
   <xsl:if test="contains($local-url, '/')">
-    <xsl:text/>../<xsl:call-template name="create-path-to-context">
-      <xsl:with-param name="local-url" select="substring-after($local-url, '/')"/>
+    <xsl:variable name="tail" select="substring-after($local-url, '/')"/>
+    <xsl:text>..</xsl:text>
+    <xsl:if test="contains($tail, '/')"><xsl:text>/</xsl:text></xsl:if>
+    <xsl:call-template name="create-path-to-context">
+      <xsl:with-param name="local-url" select="$tail"/>
     </xsl:call-template>
   </xsl:if>
 </xsl:template>
-
 
 <xsl:template match="tree:fragment">
   <nav:fragment>
@@ -52,7 +62,7 @@
     <xsl:choose>
       <xsl:when test="@base">
          <xsl:apply-templates>
-          <xsl:with-param name="previous-url" select="concat(substring-after(@base, '/'), '/')"/>
+          <xsl:with-param name="previous-url" select="@base"/>
         </xsl:apply-templates>
       </xsl:when>
       <xsl:otherwise>
@@ -116,7 +126,7 @@ Apply nodes recursively
           <xsl:value-of select="@href"/>
         </xsl:when>
         <xsl:otherwise>
-          <xsl:value-of select="$previous-url"/><xsl:value-of select="@id"/>
+          <xsl:value-of select="concat($previous-url, '/', @id)"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:variable>  
@@ -153,21 +163,15 @@ Apply nodes recursively
     </xsl:variable>
     
     <xsl:attribute name="suffix"><xsl:value-of select="$suffix"/></xsl:attribute>
-    <xsl:attribute name="basic-url"><xsl:value-of select="$previous-url"/><xsl:value-of select="@id"/></xsl:attribute>
+    <xsl:attribute name="basic-url"><xsl:value-of select="concat($previous-url, '/', @id)"/></xsl:attribute>
     <xsl:attribute name="language-suffix"><xsl:value-of select="$canonical-language-suffix"/></xsl:attribute>
     
     <xsl:variable name="canonical-url">
-      <xsl:text/>
-      <xsl:value-of select="$basic-url"/><xsl:text/>
-      <xsl:value-of select="$canonical-language-suffix"/><xsl:text/>
-      <xsl:value-of select="$suffix"/><xsl:text/>
+      <xsl:value-of select="concat($basic-url, $canonical-language-suffix, $suffix)"/>
     </xsl:variable>
     
     <xsl:variable name="non-canonical-url">
-      <xsl:text/>
-      <xsl:value-of select="$basic-url"/><xsl:text/>
-      <xsl:value-of select="$language-suffix"/><xsl:text/>
-      <xsl:value-of select="$suffix"/><xsl:text/>
+      <xsl:value-of select="concat($basic-url, $language-suffix, $suffix)"/>
     </xsl:variable>
     
     <xsl:if test="$url = $canonical-url or $url = $non-canonical-url">
@@ -179,8 +183,11 @@ Apply nodes recursively
         <xsl:when test="@href">
           <xsl:value-of select="@href"/>
         </xsl:when>
+        <xsl:when test="$relative = 'true' and $root = ''">
+          <xsl:value-of select="substring-after($canonical-url, '/')"/>
+        </xsl:when>
         <xsl:otherwise>
-	  <xsl:value-of select="concat($root, $canonical-url)"/>
+          <xsl:value-of select="concat($root, $canonical-url)"/>
         </xsl:otherwise>
       </xsl:choose>
     </xsl:attribute>
@@ -191,19 +198,15 @@ Apply nodes recursively
   
     <xsl:choose>
       <xsl:when test="tree:label[lang($existinglanguage)]">
-        <xsl:apply-templates select="tree:label[lang($existinglanguage)]">
-         <xsl:with-param name="previous-url" select="concat($basic-url, '/')"/>
-        </xsl:apply-templates>      	  	    
+        <xsl:apply-templates select="tree:label[lang($existinglanguage)]"/>
       </xsl:when>
       <xsl:otherwise>
-       <xsl:apply-templates select="tree:label[1]">
-         <xsl:with-param name="previous-url" select="concat($basic-url, '/')"/>
-       </xsl:apply-templates>
+       <xsl:apply-templates select="tree:label[1]"/>
       </xsl:otherwise>
     </xsl:choose>
          
     <xsl:apply-templates select="tree:node">
-      <xsl:with-param name="previous-url" select="concat($basic-url, '/')"/>
+      <xsl:with-param name="previous-url" select="$basic-url"/>
     </xsl:apply-templates>
     
   </nav:node>
