@@ -20,8 +20,8 @@
     This file defines the publication specific use-cases
 -->
 
-  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'usecase.createUsecaseDocument']">
-    <component-instance name="usecase.createUsecaseDocument" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.CreateUsecaseDocument">
+  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'usecasedocument.create']">
+    <component-instance name="usecasedocument.create" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.CreateUsecaseDocument">
       <view template="modules/usecasedocument/usecases/createUsecaseDocument.jx"/>
     </component-instance>
   </xconf>

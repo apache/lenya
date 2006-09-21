@@ -15,15 +15,15 @@
   limitations under the License.
 -->
 
-  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'insertAsset.fckeditor']">
+  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'fckeditor.insertAsset']">
 
-    <component-instance name="insertAsset.fckeditor" logger="lenya.publication"
+    <component-instance name="fckeditor.insertAsset" logger="lenya.publication"
       class="org.apache.lenya.cms.editors.InsertAsset">
       <view template="modules/fckeditor/usecases/insertAsset.jx" menu="false">
         <parameter name="callbackFunction" value="insertAsset"/>
       </view>
       <parameter name="asset-usecase" value="tab.assets"/>
-      <exit usecase="insertAsset.fckeditor"/>
+      <exit usecase="fckeditor.insertAsset"/>
     </component-instance>
     
   </xconf>

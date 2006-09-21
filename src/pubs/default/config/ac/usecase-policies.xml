@@ -19,35 +19,35 @@
     
 <!--+++NOTE+++ The usecase list was initialized using modules/usecase-impl/xslt/initUsecasePolicies.xsl.-->
 <usecases xmlns="http://apache.org/cocoon/lenya/ac/1.0">
-  <usecase id="edit.bxe">
+  <usecase id="bxe.edit">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
-  <usecase id="close.bxe">
+  <usecase id="bxe.close">
     <role id="admin"/>
     <role id="edit"/>
   </usecase>  
-  <usecase id="edit.insertAsset">
+  <usecase id="bxe.insertAsset">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
-  <usecase id="edit.insertImage">
+  <usecase id="bxe.insertImage">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
-  <usecase id="edit.cforms">
+  <usecase id="cforms.edit">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
-  <usecase id="insertAsset.fckeditor">
+  <usecase id="fckeditor.insertAsset">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
-  <usecase id="insertImage.fckeditor">
+  <usecase id="fckeditor.insertImage">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
-  <usecase id="edit.fckeditor">
+  <usecase id="fckeditor.edit">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
@@ -72,49 +72,49 @@
     <role id="edit" method="grant"/>
     <role id="visit" method="grant"/>
   </usecase>
-  <usecase id="site.archive">
+  <usecase id="sitemanagement.archive">
     <role id="admin" method="grant"/>
   </usecase>
-  <usecase id="site.changeLabel">
+  <usecase id="sitemanagement.changeLabel">
     <role id="admin" method="grant"/>
   </usecase>
-  <usecase id="site.changeNodeID">
+  <usecase id="sitemanagement.changeNodeID">
     <role id="admin" method="grant"/>
   </usecase>
-  <usecase id="site.changeVisibility">
+  <usecase id="sitemanagement.changeVisibility">
     <role id="admin" method="grant"/>
   </usecase>
-  <usecase id="site.copy">
+  <usecase id="sitemanagement.copy">
     <role id="admin" method="grant"/>
   </usecase>
-  <usecase id="site.create">
-    <role id="admin" method="grant"/>
-    <role id="edit" method="grant"/>
-  </usecase>
-  <usecase id="site.createLanguage">
+  <usecase id="sitemanagement.create">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
-  <usecase id="site.cut">
-    <role id="admin" method="grant"/>
-  </usecase>
-  <usecase id="site.delete">
+  <usecase id="sitemanagement.createLanguage">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
-  <usecase id="site.deleteLanguage">
+  <usecase id="sitemanagement.cut">
+    <role id="admin" method="grant"/>
+  </usecase>
+  <usecase id="sitemanagement.delete">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
-  <usecase id="site.paste">
+  <usecase id="sitemanagement.deleteLanguage">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
-  <usecase id="site.restore">
+  <usecase id="sitemanagement.paste">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
-  <usecase id="site.rollback">
+  <usecase id="sitemanagement.restore">
+    <role id="admin" method="grant"/>
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="sitemanagement.rollback">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>  
@@ -155,22 +155,22 @@
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
-  <usecase id="module.odt.create">
+  <usecase id="opendocument.create">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
-  <usecase id="module.odt.upload">
+  <usecase id="opendocument.upload">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
-  <usecase id="site.nudge">
+  <usecase id="sitetree.nudge">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
-  <usecase id="usecase.contactForm">
+  <usecase id="contactForm.sendMessage">
     <role id="visit" method="grant"/>
   </usecase>
-  <usecase id="usecase.createUsecaseDocument">
+  <usecase id="usecasedocument.create">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
@@ -265,18 +265,18 @@
   <usecase id="admin.users">
     <role id="admin" method="grant"/>
   </usecase>
-  <usecase id="edit.forms">
+  <usecase id="editors.forms">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
-  <usecase id="edit.oneform">
+  <usecase id="editors.oneform">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
-  <usecase id="publication.edit">
+  <usecase id="editors.publicationEdit">
     <role id="admin" method="grant"/>
   </usecase>
-  <usecase id="publication.createPublicationFromTemplate">
+  <usecase id="templating.createPublicationFromTemplate">
     <role id="admin" method="grant"/>
   </usecase>
   <usecase id="workflow.delete">
@@ -307,12 +307,12 @@
     <role id="edit" method="grant"/>
     <role id="review" method="grant"/>
   </usecase>
-  <usecase id="upload.resource">
+  <usecase id="resource.upload">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
     <role id="review" method="grant"/>
   </usecase>
-  <usecase id="create.resource">
+  <usecase id="resource.create">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
     <role id="review" method="grant"/>

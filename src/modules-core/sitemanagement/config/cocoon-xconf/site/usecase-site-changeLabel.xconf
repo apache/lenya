@@ -20,8 +20,8 @@
     This file defines the publication specific use-cases
 -->
 
-  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'site.changeLabel']">
-    <component-instance name="site.changeLabel" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.ChangeLabel">
+  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'sitemanagement.changeLabel']">
+    <component-instance name="sitemanagement.changeLabel" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.ChangeLabel">
       <view template="modules/sitemanagement/usecases/site/changeLabel.jx"/>
     </component-instance>
   </xconf>

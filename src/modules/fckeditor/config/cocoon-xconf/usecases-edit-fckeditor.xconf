@@ -15,9 +15,9 @@
   limitations under the License.
 -->
 
-<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'edit.fckeditor']">
+<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'fckeditor.edit']">
 
-  <component-instance name="edit.fckeditor" logger="lenya.publication"
+  <component-instance name="fckeditor.edit" logger="lenya.publication"
                       class="org.apache.lenya.cms.editors.fckeditor.Fckeditor">
     <transaction policy="pessimistic"/>
     <parameter name="tidyConfig" value="fallback://lenya/modules/fckeditor/config/jtidy.properties"/>

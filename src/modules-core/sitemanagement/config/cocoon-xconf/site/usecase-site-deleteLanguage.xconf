@@ -20,8 +20,8 @@
     This file defines the publication specific use-cases
 -->
 
-  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'site.deleteLanguage']">
-    <component-instance name="site.deleteLanguage" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.DeleteLanguage">
+  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'sitemanagement.deleteLanguage']">
+    <component-instance name="sitemanagement.deleteLanguage" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.DeleteLanguage">
       <view template="modules/sitemanagement/usecases/site/deleteLanguage.jx"/>
     </component-instance>
   </xconf>

@@ -15,8 +15,8 @@
   limitations under the License.
 -->
 
-  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'create.resource']">
-    <component-instance name="create.resource" 
+  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'resource.create']">
+    <component-instance name="resource.create" 
                         logger="lenya.site" 
                         class="org.apache.lenya.cms.site.usecases.CreateResource">
       <view template="modules/resource/usecases/create-resource.jx" menu="true"/>

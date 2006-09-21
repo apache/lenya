@@ -17,9 +17,9 @@
 
 <!-- $Id: usecase-create-metadata.xconf 7081 2005-11-11 13:04:23Z felix $ -->
 
-<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'module.odt.create']">
+<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'opendocument.create']">
 
-  <component-instance name="module.odt.create" logger="lenya.module.odt"
+  <component-instance name="opendocument.create" logger="lenya.module.odt"
     class="org.apache.lenya.cms.site.usecases.CreateOpenDocument">
     <view template="modules/sitemanagement/usecases/site/create.jx"/>
   </component-instance>

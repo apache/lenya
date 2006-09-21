@@ -181,7 +181,7 @@
             <!-- The document is checked in when we exit from bx (in case of save&exit and in case of exit), so we use the usecase
               for the checkin while we redirect to the document
             -->
-            <map:parameter name="BX_exitdestination" value="{request:requestURI}?lenya.usecase=close.bxe"/>
+            <map:parameter name="BX_exitdestination" value="{request:requestURI}?lenya.usecase=bxe.close"/>
             <map:parameter name="contextmenufile" value="fallback://lenya/modules/bxe/resources/misc/contextmenu.xml"/>
           </map:transform>
           <map:transform type="cinclude"/>

@@ -37,7 +37,7 @@ public class MoveSubsiteTest extends AbstractUsecaseTest {
     protected static final String SOURCE_PATH = "/tutorial";
 
     protected String getUsecaseName() {
-        return "site.delete";
+        return "sitemanagement.delete";
     }
 
     protected void checkPostconditions() throws Exception {

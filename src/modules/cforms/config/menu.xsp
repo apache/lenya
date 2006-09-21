@@ -38,7 +38,7 @@
     <menus>
       <menu i18n:attr="name" name="File">
         <block admin="false">
-          <item uc:usecase="site.create" href="?doctype=cforms"><i18n:text>New CForms Document</i18n:text></item>
+          <item uc:usecase="sitemanagement.create" href="?doctype=cforms"><i18n:text>New CForms Document</i18n:text></item>
         </block>
       </menu>
       
@@ -50,10 +50,10 @@
                     String doctype = <input:get-attribute module="page-envelope" as="string" name="document-type"/>;
                     if ("cforms".equals(doctype)) {
                         <block info="false">
-                          <item wf:event="edit" uc:usecase="edit.cforms" href="?"><i18n:text>With CForms</i18n:text></item>
+                          <item wf:event="edit" uc:usecase="cforms.edit" href="?"><i18n:text>With CForms</i18n:text></item>
                           <!-- TODO: add RelaxNG schemas for cforms doctype.
-                          <item wf:event="edit" uc:usecase="edit.forms"><xsp:attribute name="href"><xsp:expr>"?form=" + doctype</xsp:expr></xsp:attribute><i18n:text>With Forms</i18n:text></item>
-                          <item wf:event="edit" uc:usecase="edit.oneform" href="?"><i18n:text>With one Form</i18n:text></item>
+                          <item wf:event="edit" uc:usecase="editors.forms"><xsp:attribute name="href"><xsp:expr>"?form=" + doctype</xsp:expr></xsp:attribute><i18n:text>With Forms</i18n:text></item>
+                          <item wf:event="edit" uc:usecase="editors.oneform" href="?"><i18n:text>With one Form</i18n:text></item>
                           -->
                         </block>
                     }

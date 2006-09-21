@@ -38,7 +38,7 @@
     <menus>
       <menu i18n:attr="name" name="File">
         <block admin="false">
-          <item uc:usecase="usecase.createUsecaseDocument" href="?usecase=usecase.contactForm"><i18n:text>New Contact Form</i18n:text></item>
+          <item uc:usecase="usecasedocument.create" href="?usecase=contactform.sendMessage"><i18n:text>New Contact Form</i18n:text></item>
         </block>
       </menu>
     </menus>

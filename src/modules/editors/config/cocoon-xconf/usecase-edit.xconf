@@ -20,8 +20,8 @@
     This file defines the publication specific use-cases
 -->
 
-  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'publication.edit']">
-    <component-instance name="publication.edit" logger="lenya.publication"
+  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'editors.publicationEdit']">
+    <component-instance name="editors.publicationEdit" logger="lenya.publication"
       class="org.apache.lenya.cms.editors.EditDocument">
       <parameter name="sourceUri" value="cocoon:/request2document"/>
     </component-instance>

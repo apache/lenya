@@ -66,8 +66,8 @@
     <menus>
       <menu i18n:attr="name" name="File">
         <block>
-          <item uc:usecase="site.createLanguage" href="?"><i18n:text>New Language Version</i18n:text></item>
-          <item uc:usecase="site.deleteLanguage" href="?"><i18n:text>Remove Language Version</i18n:text></item>
+          <item uc:usecase="sitemanagement.createLanguage" href="?"><i18n:text>New Language Version</i18n:text></item>
+          <item uc:usecase="sitemanagement.deleteLanguage" href="?"><i18n:text>Remove Language Version</i18n:text></item>
         </block>
         <block>
           <item uc:usecase="admin.changePassword" href="?"><i18n:text>Change Password</i18n:text></item>
@@ -79,32 +79,32 @@
         
         <block info="false">
           <item wf:event="edit" uc:usecase="tab.meta"><xsp:attribute name="href"><xsp-request:get-context-path/>/<input:get-attribute module="page-envelope" as="string" name="publication-id"/>/<input:get-attribute module="page-envelope" as="string" name="area"/><input:get-attribute module="page-envelope" as="string" name="document-url"/>?</xsp:attribute><i18n:text>Edit Metadata</i18n:text></item>
-          <item wf:event="edit" uc:usecase="site.changeLabel" href="?"><i18n:text>Edit Navigation Title</i18n:text></item>
+          <item wf:event="edit" uc:usecase="sitemanagement.changeLabel" href="?"><i18n:text>Edit Navigation Title</i18n:text></item>
         </block>
 
         <block authoring="false">
-          <item uc:usecase="site.cut" href="?"><i18n:text>Cut</i18n:text></item>
-          <item uc:usecase="site.copy" href="?"><i18n:text>Copy</i18n:text></item>
-          <item uc:usecase="site.paste" href="?"><i18n:text>Paste</i18n:text></item>
+          <item uc:usecase="sitemanagement.cut" href="?"><i18n:text>Cut</i18n:text></item>
+          <item uc:usecase="sitemanagement.copy" href="?"><i18n:text>Copy</i18n:text></item>
+          <item uc:usecase="sitemanagement.paste" href="?"><i18n:text>Paste</i18n:text></item>
         </block>
         
         
       <block authoring="false">
-        <item uc:usecase="site.changeNodeID" href="?"><i18n:text>Rename URL</i18n:text></item>
-        <item uc:usecase="site.changeLabel" href="?"><i18n:text>Edit Navigation Title</i18n:text></item>
-        <item uc:usecase="site.changeVisibility" href="?">
+        <item uc:usecase="sitemanagement.changeNodeID" href="?"><i18n:text>Rename URL</i18n:text></item>
+        <item uc:usecase="sitemanagement.changeLabel" href="?"><i18n:text>Edit Navigation Title</i18n:text></item>
+        <item uc:usecase="sitemanagement.changeVisibility" href="?">
           <xsp:attribute name="checked"><xsp:expr>visible</xsp:expr></xsp:attribute>
           <i18n:text>Visible in Navigation</i18n:text>
         </item>
       </block>
       <block authoring="false">
-        <item uc:usecase="site.nudge" href="?direction=up"><i18n:text>Move Up</i18n:text></item>
-        <item uc:usecase="site.nudge" href="?direction=down"><i18n:text>Move Down</i18n:text></item>
+        <item uc:usecase="sitetree.nudge" href="?direction=up"><i18n:text>Move Up</i18n:text></item>
+        <item uc:usecase="sitetree.nudge" href="?direction=down"><i18n:text>Move Down</i18n:text></item>
       </block>
       <block authoring="false">
-        <item uc:usecase="site.delete" href="?"><i18n:text>Delete</i18n:text></item>
-        <item uc:usecase="site.archive" href="?"><i18n:text>Archive</i18n:text></item>
-        <item uc:usecase="site.restore" href="?"><i18n:text>Restore</i18n:text></item>
+        <item uc:usecase="sitemanagement.delete" href="?"><i18n:text>Delete</i18n:text></item>
+        <item uc:usecase="sitemanagement.archive" href="?"><i18n:text>Archive</i18n:text></item>
+        <item uc:usecase="sitemanagement.restore" href="?"><i18n:text>Restore</i18n:text></item>
       </block>
         
       </menu>

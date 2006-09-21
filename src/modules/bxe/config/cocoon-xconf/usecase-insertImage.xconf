@@ -20,16 +20,16 @@
     This file defines the publication specific use-cases
 -->
 
-  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'edit.insertImage']">
+  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'bxe.insertImage']">
 
-    <component-instance name="edit.insertImage" logger="lenya.publication"
+    <component-instance name="bxe.insertImage" logger="lenya.publication"
       class="org.apache.lenya.cms.editors.InsertAsset">
       <view template="modules/bxe/usecases/insertAsset.jx" menu="false">
         <parameter name="callbackFunction" value="insertImage"/>
       </view>
       <parameter name="mimeTypePrefix" value="image/"/>
       <parameter name="asset-usecase" value="tab.assets"/>
-      <exit usecase="edit.insertImage"/>
+      <exit usecase="bxe.insertImage"/>
     </component-instance>
     
   </xconf>

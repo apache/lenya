@@ -51,11 +51,11 @@ if [ "$DISPLAY" = "" ] ; then
     <resource-type name="resource" workflow="fallback://config/workflow/workflow.xml"/>
     
     add to yourpub/config/ac/usecase-policies.xml
-    <usecase id="create.resource">
+    <usecase id="resource.create">
       <role id="admin"/>
       <role id="edit"/>
     </usecase>  
-    <usecase id="upload.resource">
+    <usecase id="resource.upload">
       <role id="admin"/>
       <role id="edit"/>
     </usecase>  

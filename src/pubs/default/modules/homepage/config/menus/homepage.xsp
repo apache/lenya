@@ -45,9 +45,9 @@
                     if ("homepage".equals(doctype)) {
                         <block info="false">
                           <item wf:event="edit" uc:usecase="kupu" uc:step="open" href="?"><i18n:text>With Kupu</i18n:text></item>
-                          <item wf:event="edit" uc:usecase="edit.bxe" href="?"><i18n:text>With BXE</i18n:text></item>
-                          <item wf:event="edit" uc:usecase="edit.forms"><xsp:attribute name="href"><xsp:expr>"?form=" + doctype</xsp:expr></xsp:attribute><i18n:text>With Forms</i18n:text></item>
-                          <item wf:event="edit" uc:usecase="edit.oneform" href="?"><i18n:text>With one Form</i18n:text></item>
+                          <item wf:event="edit" uc:usecase="bxe.edit" href="?"><i18n:text>With BXE</i18n:text></item>
+                          <item wf:event="edit" uc:usecase="editors.forms"><xsp:attribute name="href"><xsp:expr>"?form=" + doctype</xsp:expr></xsp:attribute><i18n:text>With Forms</i18n:text></item>
+                          <item wf:event="edit" uc:usecase="editors.oneform" href="?"><i18n:text>With one Form</i18n:text></item>
                         </block>
                     }
                 }

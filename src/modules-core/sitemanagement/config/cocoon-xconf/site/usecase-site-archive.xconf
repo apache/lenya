@@ -20,8 +20,8 @@
     This file defines the publication specific use-cases
 -->
 
-  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'site.archive']">
-    <component-instance name="site.archive" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Archive">
+  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'sitemanagement.archive']">
+    <component-instance name="sitemanagement.archive" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Archive">
       <view template="modules/sitemanagement/usecases/site/archive.jx"/>
       <exit usecase="tab.overview" />
     </component-instance>

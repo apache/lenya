@@ -17,9 +17,9 @@
 
 <!-- $Id: usecase-create-metadata.xconf 7081 2005-11-11 13:04:23Z felix $ -->
 
-<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'upload.resource']">
+<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'resource.upload']">
 
-  <component-instance name="upload.resource" logger="lenya.module.resource"
+  <component-instance name="resource.upload" logger="lenya.module.resource"
     class="org.apache.lenya.cms.site.usecases.UploadResource">
     <view template="modules/resource/usecases/upload-resource.jx"/>
   </component-instance>

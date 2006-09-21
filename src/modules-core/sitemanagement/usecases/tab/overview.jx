@@ -87,7 +87,7 @@
                 <td>
                   <jx:forEach var="language" items="${document.getPublication().getLanguages()}">
                     <jx:if test="${!document.existsTranslation(language)}">
-                      <a href="?lenya.usecase=site.createLanguage&amp;lenya.exitUsecase=tab.overview&amp;language=${language}">
+                      <a href="?lenya.usecase=sitemanagement.createLanguage&amp;lenya.exitUsecase=tab.overview&amp;language=${language}">
                         <jx:out value="${language}"/>
                       </a>
                     </jx:if>

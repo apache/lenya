@@ -17,9 +17,9 @@
 
 <!-- $Id: usecase-create-metadata.xconf 7081 2005-11-11 13:04:23Z felix $ -->
 
-<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'module.odt.upload']">
+<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'opendocument.upload']">
 
-  <component-instance name="module.odt.upload" logger="lenya.module.odt"
+  <component-instance name="opendocument.upload" logger="lenya.module.odt"
     class="org.apache.lenya.cms.site.usecases.UploadOpenDocument">
     <view template="modules/opendocument/usecases/upload.jx"/>
   </component-instance>

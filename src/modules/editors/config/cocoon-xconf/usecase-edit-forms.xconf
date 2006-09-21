@@ -20,8 +20,8 @@
     This file defines the publication specific use-cases
 -->
 
-  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'edit.forms']">
-    <component-instance name="edit.forms" logger="lenya.publication"
+  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'editors.forms']">
+    <component-instance name="editors.forms" logger="lenya.publication"
       class="org.apache.lenya.cms.editors.forms.FormsEditor">
       <transaction policy="pessimistic"/>
       <view template="modules/editors/usecases/forms/forms.jx" menu="false"/>

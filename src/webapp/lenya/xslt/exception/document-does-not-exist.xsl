@@ -88,7 +88,7 @@
                 </p>
                 <xsl:if test="$area = 'authoring'">
                   <p>
-                    <a href="?lenya.usecase=site.create&amp;path={$path}"><i18n:text>create-document</i18n:text></a>
+                    <a href="?lenya.usecase=sitemanagement.create&amp;path={$path}"><i18n:text>create-document</i18n:text></a>
                   </p>
                   <p>
                     <strong>NOTE:</strong> Please make sure that your content repository

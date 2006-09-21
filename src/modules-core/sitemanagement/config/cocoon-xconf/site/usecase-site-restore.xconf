@@ -20,8 +20,8 @@
     This file defines the publication specific use-cases
 -->
 
-  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'site.restore']">
-    <component-instance name="site.restore" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Restore">
+  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'sitemanagement.restore']">
+    <component-instance name="sitemanagement.restore" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Restore">
       <view template="modules/sitemanagement/usecases/site/restore.jx"/>
       <exit usecase="tab.overview" />
     </component-instance>

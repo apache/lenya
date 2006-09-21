@@ -66,7 +66,7 @@
       
      <jx:if test="${usecase.getParameter('document').getArea().equals('authoring')}">
       <form method="GET" id="form-add_asset" style="margin-top: 20px">
-        <input type="hidden" name="lenya.usecase" value="create.resource"/>
+        <input type="hidden" name="lenya.usecase" value="resource.create"/>
         <input type="hidden" name="doctype" value="resource"/>
         <input type="hidden" name="lenya.exitUsecase" value="tab.assets"/>
         <input type="hidden" name="lenya.exitUri" value="${request.contextPath}${usecase.getParameter('document').getCanonicalWebappURL()}"/>

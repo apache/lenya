@@ -33,7 +33,7 @@
             String doctype = <input:get-attribute module="page-envelope" as="string" name="document-type"/>;
             if ("xhtml".equals(doctype)) {
                 <block info="false">
-                  <item wf:event="edit" uc:usecase="edit.fckeditor" href="?"><i18n:text>With FCKEditor</i18n:text></item>
+                  <item wf:event="edit" uc:usecase="fckeditor.edit" href="?"><i18n:text>With FCKEditor</i18n:text></item>
                 </block>
             }
           </xsp:logic>

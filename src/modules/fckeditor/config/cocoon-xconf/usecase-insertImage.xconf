@@ -15,16 +15,16 @@
   limitations under the License.
 -->
 
-  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'insertImage.fckeditor']">
+  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'fckeditor.insertImage']">
 
-    <component-instance name="insertImage.fckeditor" logger="lenya.publication"
+    <component-instance name="fckeditor.insertImage" logger="lenya.publication"
       class="org.apache.lenya.cms.editors.InsertAsset">
       <view template="modules/fckeditor/usecases/insertAsset.jx" menu="false">
         <parameter name="callbackFunction" value="insertImage"/>
       </view>
       <parameter name="mimeTypePrefix" value="image/"/>
       <parameter name="asset-usecase" value="tab.assets"/>
-      <exit usecase="insertImage.fckeditor"/>
+      <exit usecase="fckeditor.insertImage"/>
     </component-instance>
     
   </xconf>

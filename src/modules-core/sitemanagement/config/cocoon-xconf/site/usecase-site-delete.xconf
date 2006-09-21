@@ -20,8 +20,8 @@
     This file defines the publication specific use-cases
 -->
 
-  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'site.delete']">
-    <component-instance name="site.delete" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Delete">
+  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'sitemanagement.delete']">
+    <component-instance name="sitemanagement.delete" logger="lenya.site" class="org.apache.lenya.cms.site.usecases.Delete">
       <view template="modules/sitemanagement/usecases/site/delete.jx"/>
       <exit usecase="tab.overview" />
     </component-instance>

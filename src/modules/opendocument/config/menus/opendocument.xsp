@@ -38,7 +38,7 @@
     <menus>
       <menu i18n:attr="name" name="File">
         <block admin="false">
-          <item uc:usecase="module.odt.create" href="?doctype=opendocument"><i18n:text>New ODT</i18n:text></item>
+          <item uc:usecase="opendocument.create" href="?doctype=opendocument"><i18n:text>New ODT</i18n:text></item>
         </block>
       </menu>
       <menu i18n:attr="name" name="Edit">
@@ -58,7 +58,7 @@
                             <i18n:text>Download ODT</i18n:text></item>
                         </block>
                         <block info="false">
-                          <item uc:usecase="module.odt.upload" href="?"><i18n:text>Upload ODT</i18n:text></item>
+                          <item uc:usecase="opendocument.upload" href="?"><i18n:text>Upload ODT</i18n:text></item>
                         </block>
                     }
                 }

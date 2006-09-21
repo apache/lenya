@@ -27,8 +27,8 @@ How to configure/install:
             String doctype = <input:get-attribute module="page-envelope" as="string" name="document-type"/>;
             if ("xhtml".equals(doctype)) {
                 <block info="false">
-                  <item wf:event="edit" uc:usecase="edit.bxe" href="?"><i18n:text>With BXE</i18n:text></item>
-                  <item wf:event="edit" uc:usecase="edit.oneform" href="?"><i18n:text>With one Form</i18n:text></item>
+                  <item wf:event="edit" uc:usecase="bxe.edit" href="?"><i18n:text>With BXE</i18n:text></item>
+                  <item wf:event="edit" uc:usecase="editors.oneform" href="?"><i18n:text>With one Form</i18n:text></item>
                   <item wf:event="edit" mod:module="xopus" href="?lenya.step=open"><i18n:text>With Xopus</i18n:text></item>
                 </block>
             }
