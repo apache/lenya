@@ -255,7 +255,7 @@ limitations under the License.
           <th colspan="5">
             <h1>
               <i18n:text>Inherited credentials</i18n:text> </h1>(affect this URL and
-            all following child URL) </th>
+            all descendant URLs) </th>
         </tr>
         <tr>
           <th colspan="5">
