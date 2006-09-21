@@ -63,6 +63,23 @@
       -->
       <!-- {pubId}/{area}/{path}.{extension} -->
       <map:match pattern="*/*/**.*">
+        
+        <map:match type="regexp" pattern="(.*\.)(gif|GIF|Gif)$"> 
+          <map:act type="resource-exists-enhanced">
+            <map:parameter name="url" value="fallback://resources/{../2}/{../3}.{../4}"/>
+            <map:parameter name="type" value="file"/>
+            <map:read src="fallback://resources/{../../2}/{../../3}.{../../4}" mime-type="image/gif" />
+          </map:act>
+          <map:act type="resource-exists-enhanced">
+            <map:parameter name="url" value="fallback://resources/shared/{../3}.{../4}"/>
+            <map:parameter name="type" value="file"/>
+            <map:read src="fallback://resources/shared/{../../3}.{../../4}" mime-type="image/gif" />
+          </map:act>
+          <map:act type="language-exists">
+            <map:read src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-id}" mime-type="image/gif"/>
+          </map:act>  
+        </map:match>
+        
         <map:generate src="dummy.xml"/>
         <map:act type="resource-exists">
           <map:parameter name="url" value="site://{1}/{2}/{page-envelope:default-language}/{3}"/>
@@ -90,22 +107,6 @@
         <map:match type="regexp" pattern="(.*\.)(tif|TIF|Tif)$"> 
           <map:serialize type="svg2tiff"/>
         </map:match> 
-      </map:match> 
-      
-      <map:match type="regexp" pattern="(.*\.)(gif|GIF|Gif)$"> 
-        <map:act type="resource-exists-enhanced">
-          <map:parameter name="url" value="fallback://resources/{../2}/{../3}.{../4}"/>
-          <map:parameter name="type" value="file"/>
-          <map:read src="fallback://resources/{../../2}/{../../3}.{../../4}" mime-type="image/gif" />
-        </map:act>
-        <map:act type="resource-exists-enhanced">
-          <map:parameter name="url" value="fallback://resources/shared/{../3}.{../4}"/>
-          <map:parameter name="type" value="file"/>
-          <map:read src="fallback://resources/shared/{../../3}.{../../4}" mime-type="image/gif" />
-        </map:act>
-        <map:act type="language-exists">
-          <map:read src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-id}" mime-type="image/gif"/>
-        </map:act>  
       </map:match>
       
     </map:pipeline>
