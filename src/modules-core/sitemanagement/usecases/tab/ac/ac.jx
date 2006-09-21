@@ -28,7 +28,18 @@ limitations under the License.
     <jx:import uri="fallback://lenya/usecases/templates/tabs.jx"/>
     
     <jx:set var="area" value="${usecase.getParameter('acArea')}"/>
+    
     <div id="contentblock1" class="lenya-tab-sitetree">
+
+      <div class="lenya-box-toggled">
+        <div class="lenya-box-title"><i18n:text>Help</i18n:text></div>
+        <div class="lenya-box-body">
+          I guess a help text would be necessary for this page.
+          Would someone mind adding some hints? Or maybe we should add a
+          link to the documentation.
+        </div>
+      </div>
+      
       <table class="lenya-table">
         <tr>
           <td colspan="5" style="border-left: 0; border-right: 0; border-top: 0px;">
