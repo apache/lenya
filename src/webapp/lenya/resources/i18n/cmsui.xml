@@ -88,8 +88,8 @@
   <message key="Height">Height</message>
   <message key="Width">Width</message>
   <message key="All rights reserved">All rights reserved.</message>
-  <message key="show">Show</message>
-  <message key="hide">Hide</message>
+  <message key="show">&#160;+&#160;</message>
+  <message key="hide">&#160;-&#160;</message>
 
   <!-- submit screen -->
   <message key="submit-for-approval">Submit "{0}" for approval</message>  

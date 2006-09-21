@@ -94,7 +94,7 @@
     <div class="lenya-box">
       <xsl:apply-templates select="@*|node()"/>
       <xsl:text> </xsl:text>
-      <span class="switch" onclick="toggle('{$number}')" id="{$number}-switch">[<i18n:text i18n:key="show" />]</span>
+      <span class="switch" onclick="toggle('{$number}')" id="{$number}-switch"><i18n:text i18n:key="show" /></span>
     </div>
   </xsl:template>
   

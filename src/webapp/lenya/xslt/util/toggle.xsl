@@ -35,10 +35,10 @@
               }
           }
           var text = document.getElementById(id + "-switch").firstChild;
-          if (text.nodeValue == "[<i18n:text i18n:key="show" />]") {
-              text.nodeValue = "[<i18n:text i18n:key="hide" />]";
+          if (text.nodeValue == "<i18n:text i18n:key="show" />") {
+              text.nodeValue = "<i18n:text i18n:key="hide" />";
           } else {
-              text.nodeValue = "[<i18n:text i18n:key="show" />]";
+              text.nodeValue = "<i18n:text i18n:key="show" />";
           }
       }
     </script>

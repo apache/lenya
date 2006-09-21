@@ -36,6 +36,9 @@ div.lenya-box-body {
 }
 
 span.switch {
+    width: 2em;
     cursor: pointer;
-    color: blue;
+    background-color: #F5F4E9;
+    border: solid 1px #CCCCCC;
+    color: Black;
 }
