@@ -42,19 +42,16 @@ limitations under the License.
           </th>
         </tr>
         <tr>
-          <td colspan="5">&#160;
+          <td colspan="5" style="border-left: 0; border-right: 0; border-bottom: 0px;">
+            <p style="margin: 30px 0 0 0; font-weight: bold;">
+              <i18n:text>URL credentials (only affect this URL)</i18n:text>
+            </p>
           </td>
         </tr>
         <tr>
-          <th colspan="5">
-            <h1>
-              <i18n:text>URL credentials </i18n:text> </h1> (only affect this URL) </th>
-        </tr>
-        <tr>
-          <th colspan="5">
-            <h1>
-              <i18n:text>New URL Credential</i18n:text> </h1>
-          </th>
+          <td colspan="5" style="border-left: 0; border-right: 0; border-top: 0px;">
+              <i18n:text>New URL Credential</i18n:text>
+          </td>
         </tr>
         <tr>
           <th>Type</th>
@@ -188,10 +185,11 @@ limitations under the License.
         </jx:if>
         
         <tr>
-          <th colspan="5">
-            <h1>
-              <i18n:text>Stored URL credentials</i18n:text> </h1>
-          </th>
+          <td colspan="5" style="border-left: 0; border-right: 0;">
+            <p style="margin: 30px 0 0 0; font-weight: bold;">
+              <i18n:text>Stored URL credentials</i18n:text> 
+            </p>
+          </td>
         </tr>
         <tr>
           <th>Type</th>
@@ -252,16 +250,16 @@ limitations under the License.
           </td>
         </tr>
         <tr>
-          <th colspan="5">
-            <h1>
-              <i18n:text>Inherited credentials</i18n:text> </h1>(affect this URL and
-            all descendant URLs) </th>
+          <td colspan="5" style="border-left: 0; border-right: 0; border-bottom: 0px;">
+            <p style="margin: 30px 0 0 0; font-weight: bold;">
+              <i18n:text>Inherited credentials (affect this URL and all descendant URLs)</i18n:text> 
+            </p>
+          </td>
         </tr>
         <tr>
-          <th colspan="5">
-            <h1>
-              <i18n:text>New inheritable credential</i18n:text> </h1>
-          </th>
+          <td colspan="5" style="border-left: 0; border-right: 0; border-top: 0px;">
+            <i18n:text>New inheritable credential</i18n:text>
+          </td>
         </tr>
         <tr>
           <th>Type</th>
@@ -352,10 +350,11 @@ limitations under the License.
           </form>
         </tr>
         <tr>
-          <th colspan="5">
-            <h1>
-              <i18n:text>from here</i18n:text> </h1>
-          </th>
+          <td colspan="5" style="border-left: 0; border-right: 0;">
+            <p style="margin: 30px 0 0 0; font-weight: bold;">
+              <i18n:text>from here</i18n:text>
+            </p>
+          </td>
         </tr>
         <tr>
           <th>Type</th>
@@ -413,10 +412,11 @@ limitations under the License.
         </jx:forEach>
         
         <tr>
-          <th colspan="5">
-            <h1>
-              <i18n:text>from parents</i18n:text></h1> (starting with direct parent)
-            </th>
+          <td colspan="5" style="border-left: 0; border-right: 0;">
+            <p style="margin: 30px 0 0 0; font-weight: bold;">
+              <i18n:text>from parents (starting with direct parent)</i18n:text>
+            </p>
+          </td>
         </tr>
         <tr>
           <th>Type</th>
