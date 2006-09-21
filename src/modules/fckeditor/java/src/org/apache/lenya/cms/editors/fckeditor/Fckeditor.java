@@ -24,7 +24,9 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.io.Writer;
+import java.util.Arrays;
 import java.util.Properties;
+import javax.xml.transform.stream.StreamSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
@@ -56,6 +58,7 @@ import org.w3c.tidy.Tidy;
 public class Fckeditor extends DocumentUsecase {
     
     public static final String TIDY_CONFIG="tidyConfig";
+    public static final String XSLT_CLEAN_FORMAT="xslt-clean";
     
     
     /**
@@ -131,6 +134,7 @@ public class Fckeditor extends DocumentUsecase {
         SourceResolver resolver = null;
         Source indexSource = null;
         Source tidySource = null;
+        ModifiableSource xsltSource = null;
         Properties properties = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
@@ -199,6 +203,31 @@ public class Fckeditor extends DocumentUsecase {
                 }
             }
             
+            //Try to clean the xml using xslt
+            ResourceType resType = getSourceDocument().getResourceType();
+            String[] formats = resType.getFormats();
+            if (Arrays.asList(formats).contains(XSLT_CLEAN_FORMAT)) {
+                StringWriter output = new StringWriter();
+                StreamResult strResult = new StreamResult(output);
+                TransformerFactory tfac = TransformerFactory.newInstance();
+                try {
+                    xsltSource = (ModifiableSource) resolver.resolveURI(resType.getFormatURI(XSLT_CLEAN_FORMAT));
+                    Transformer t = tfac.newTransformer(new StreamSource(xsltSource.getInputStream()));
+                    t.setOutputProperty(OutputKeys.ENCODING, encoding);
+                    t.setOutputProperty(OutputKeys.INDENT, "yes");
+                    t.setOutputProperty(OutputKeys.METHOD, "xml");
+                    t.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
+                    xmlDoc = DocumentHelper.readDocument(xmlSource.getInputStream());
+                    t.transform(new DOMSource(xmlDoc.getDocumentElement()), strResult);
+                
+                    content = strResult.getWriter().toString();
+                } catch (Exception e) {
+                    addErrorMessage(e.getMessage());
+                }
+                
+                saveXMLFile(encoding, content, xmlSource);
+            }
+            
             if (xmlDoc != null) {
                 ResourceType resourceType = getSourceDocument().getResourceType();
                 Schema schema = resourceType.getSchema();
@@ -224,6 +253,9 @@ public class Fckeditor extends DocumentUsecase {
                 }
                 if (tidySource != null) {
                     resolver.release(tidySource);
+                }
+                if (xsltSource != null) {
+                    resolver.release(xsltSource);
                 }
                 this.manager.release(resolver);
             }
