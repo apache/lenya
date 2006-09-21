@@ -31,7 +31,7 @@ limitations under the License.
     <div id="contentblock1" class="lenya-tab-sitetree">
       <table class="lenya-table">
         <tr>
-          <td colspan="5">
+          <td colspan="5" style="border-left: 0; border-right: 0; border-top: 0px;">
             <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
           </td>
         </tr>
