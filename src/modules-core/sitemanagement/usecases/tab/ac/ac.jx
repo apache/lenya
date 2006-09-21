@@ -352,7 +352,7 @@ limitations under the License.
         <tr>
           <td colspan="5" style="border-left: 0; border-right: 0;">
             <p style="margin: 30px 0 0 0; font-weight: bold;">
-              <i18n:text>from here</i18n:text>
+              <i18n:text>From here</i18n:text>
             </p>
           </td>
         </tr>
@@ -414,7 +414,7 @@ limitations under the License.
         <tr>
           <td colspan="5" style="border-left: 0; border-right: 0;">
             <p style="margin: 30px 0 0 0; font-weight: bold;">
-              <i18n:text>from parents (starting with direct parent)</i18n:text>
+              <i18n:text>From parents (starting with direct parent)</i18n:text>
             </p>
           </td>
         </tr>
