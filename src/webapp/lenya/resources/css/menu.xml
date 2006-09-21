@@ -72,7 +72,7 @@ body { background-color: #fff; margin: 0; padding: 0; }
 
 #lenya-areas ul li { list-style: none; float: left; display: block; margin: 0 1px 0 0; }
 
-#lenya-areas ul li a { color: #454646; display: block; text-decoration: none; text-align: center; padding: 9px 9px 0 9px; height: 16px !important; }
+#lenya-areas ul li a { color: #454646; display: block; text-decoration: none; text-align: center; padding: 9px 9px 0 9px; height: 16px !important; height /**/: 25px; display: inline-block; }
 
 #lenya-areas ul li a span { font: bold 10px/1.0 Arial, Verdana, sans-serif; text-transform: uppercase; vertical-align: top; }
 
