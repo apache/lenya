@@ -38,7 +38,7 @@
   <authorizer type="policy"/>
   
   <authorizer type="usecase">
-    <parameter name="configuration" value="context:///lenya/pubs/default/config/ac/usecase-policies.xml"/>
+    <parameter name="configuration" value="fallback://config/ac/usecase-policies.xml"/>
   </authorizer>
   
 </access-controller>
