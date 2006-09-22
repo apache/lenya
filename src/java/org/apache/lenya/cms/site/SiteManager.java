@@ -125,15 +125,6 @@ public interface SiteManager {
     void copy(Document sourceDocument, Document destinationDocument) throws SiteException;
     
     /**
-     * Sets the label of a certain document.
-     * 
-     * @param document The document.
-     * @param label The label.
-     * @throws SiteException if an error occurs.
-     */
-    void setLabel(Document document, String label) throws SiteException;
-
-    /**
      * Sets the visibility of a node in the navigation. It is meant to hide specific nodes within
      * the "public" navigation whereas the node is visible within the info/site area.
      * 

@@ -242,9 +242,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
                 // if the node already exists in the live
                 // tree simply insert the label in the
                 // live tree
-                destinationTree.setLabel(destinationDocument.getPath(),
-                        link.getLanguage(),
-                        link.getLabel());
+                destinationDocument.getLink().setLabel(link.getLabel());
             }
         } catch (DocumentException e) {
             throw new SiteException(e);

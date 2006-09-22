@@ -189,13 +189,6 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
     }
 
     /**
-     * @see org.apache.lenya.cms.site.SiteManager#setLabel(org.apache.lenya.cms.publication.Document,
-     *      java.lang.String)
-     */
-    public void setLabel(Document document, String label) throws SiteException {
-    }
-
-    /**
      * @see org.apache.lenya.cms.site.SiteManager#setVisibleInNav(org.apache.lenya.cms.publication.Document,
      *      boolean)
      */

@@ -19,20 +19,26 @@ package org.apache.lenya.cms.site.tree;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.SiteNode;
+import org.apache.lenya.xml.DocumentHelper;
+import org.w3c.dom.Element;
 
 /**
  * SiteTree link.
  */
 public class SiteTreeLink extends Label {
 
-    protected SiteTreeLink(DocumentFactory factory, SiteNode node, String _label, String _language) {
+    protected SiteTreeLink(DocumentFactory factory, SiteNode node, String _label, String _language,
+            Element element) {
         super(factory, node, _label, _language);
+        this.element = element;
     }
 
     public void delete() {
         SiteTreeNode node = (SiteTreeNode) getNode();
         node.removeLabel(getLanguage());
     }
+    
+    private Element element;
 
     /**
      * Set the actual label of the label object.
@@ -40,8 +46,7 @@ public class SiteTreeLink extends Label {
      * @param label The label.
      */
     public void setLabel(String label) {
-        SiteTreeNode node = (SiteTreeNode) getNode();
-        node.setLabel(getLanguage(), label);
+        DocumentHelper.setSimpleElementText(this.element, label);
     }
 
 }

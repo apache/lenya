@@ -38,6 +38,9 @@ import org.apache.lenya.cms.site.SiteStructure;
 
 public class SimpleSiteManagerTest extends AbstractAccessControlTest {
 
+    protected static final String PATH = "/foo/bar";
+    protected static final String PARENT_PATH = "/foo";
+
     public void testSimpleSiteManager() throws Exception {
 
         login("lenya");
@@ -92,14 +95,15 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
             Document doc = docManager.add(getFactory(), type, contentSourceUri, pub,
                     Publication.AUTHORING_AREA, "en", "xml");
 
-            structure.add("/foo", doc);
-            assertTrue(structure.contains("/foo"));
-            Document linkDoc = structure.getNode("/foo").getLink("en").getDocument();
+            structure.add(PATH, doc);
+            assertTrue(structure.contains(PATH));
+            Document linkDoc = structure.getNode(PATH).getLink("en").getDocument();
             assertSame(linkDoc, doc);
             
             doc.getLink().delete();
             assertFalse(structure.containsByUuid(doc.getUUID(), doc.getLanguage()));
-            assertFalse(structure.contains("/foo"));
+            assertFalse(structure.contains(PATH));
+            assertFalse(structure.contains(PARENT_PATH));
 
         } finally {
             if (selector != null) {

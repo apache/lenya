@@ -131,21 +131,9 @@ public abstract class MoveSubsite extends DocumentUsecase {
         Document[] sources = SiteUtil.getSubSite(this.manager, doc.getLink().getNode())
                 .getDocuments();
         Area targetArea = doc.getPublication().getArea(targetAreaName);
-        SiteStructure targetSite = targetArea.getSite();
 
         DocumentLocator targetLoc = doc.getLocator().getAreaVersion(targetAreaName);
         targetLoc = SiteUtil.getAvailableLocator(this.manager, getDocumentFactory(), targetLoc);
-
-        String[] steps = targetLoc.getPath().substring(1).split("/");
-        int s = 0;
-        String path = "";
-        while (s < steps.length) {
-            if (!targetSite.contains(path)) {
-                targetSite.add(path);
-            }
-            path += "/" + steps[s];
-            s++;
-        }
 
         for (int i = 0; i < sources.length; i++) {
             WorkflowUtil.invoke(this.manager,

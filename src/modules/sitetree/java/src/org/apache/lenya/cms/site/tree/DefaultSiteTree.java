@@ -245,6 +245,19 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
             boolean visibleInNav, String href, String suffix, boolean link) throws SiteException {
         return addNode(parentid + "/" + id, uuid, visibleInNav, href, suffix, link, null);
     }
+    
+    protected void createParents(final String path) throws SiteException {
+        String[] steps = path.substring(1).split("/");
+        int s = 0;
+        String ancestorPath = "";
+        while (s < steps.length) {
+            if (!contains(ancestorPath)) {
+                add(ancestorPath);
+            }
+            ancestorPath += "/" + steps[s];
+            s++;
+        }
+    }
 
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String, java.lang.String,
@@ -254,19 +267,16 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     public synchronized SiteTreeNode addNode(String parentPath, String name, String uuid,
             boolean visibleInNav, String href, String suffix, boolean link, String refpath)
             throws SiteException {
+        
+        String path = parentPath + "/" + name;
+        createParents(path);
 
         Node parentNode = getNodeInternal(parentPath);
-
-        if (parentNode == null) {
-            throw new SiteException("Parent path: " + parentPath + " in " + this.area
-                    + " tree not found");
-        }
 
         getLogger().debug("PARENT ELEMENT: " + parentNode);
         getLogger().debug("VISIBLEINNAV IS: " + visibleInNav);
 
         // Check if child already exists
-        String path = parentPath + "/" + name;
         Node childNode = getNodeInternal(path);
 
         if (childNode != null) {
@@ -324,7 +334,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         try {
             SiteTreeNode node = (SiteTreeNode) getNode(path);
             if (node != null) {
-                node.addLabel(new SiteTreeLink(this.factory, node, label, language));
+                node.addLabel(language, label);
             }
             saveDocument();
         } catch (SiteException e) {
@@ -382,6 +392,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         } catch (SiteException e) {
             throw new RuntimeException(e);
         }
+        
         return newNode;
     }
 
@@ -562,11 +573,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     public synchronized void setLabel(String path, String language, String label) {
         try {
             SiteTreeNode node = (SiteTreeNode) getNode(path);
-            if (node != null) {
-                SiteTreeLink link = new SiteTreeLink(this.factory, node, label, language);
-                node.setLink(link);
-            }
-            saveDocument();
+            node.getLink(language).setLabel(label);
         } catch (SiteException e) {
             throw new RuntimeException(e);
         }
@@ -695,15 +702,13 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         }
 
         SiteTreeNode node = addNode(path, doc.getUUID(), true, null, "", false);
-
-        SiteTreeLink label = new SiteTreeLink(doc.getFactory(), node, "", doc.getLanguage());
-        node.addLabel(label);
+        node.addLabel(doc.getLanguage(), "");
 
         if (node.getLanguages().length == 1) {
             node.setUUID(doc.getUUID());
         }
 
-        return label;
+        return node.getLink(doc.getLanguage());
     }
 
     public SiteNode add(String path) throws SiteException {

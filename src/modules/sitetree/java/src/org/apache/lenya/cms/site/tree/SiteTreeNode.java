@@ -41,11 +41,11 @@ public interface SiteTreeNode extends SiteNode {
 
     /**
      * Add a label to this node iff the node does not have this label already.
-     * 
+     * @param language The language.
      * @param label the label to be added.
      * @throws SiteException if the label is already contained.
      */
-    void addLabel(SiteTreeLink label) throws SiteException;
+    void addLabel(String language, String label) throws SiteException;
 
     /**
      * Remove a label from this node.
@@ -155,14 +155,6 @@ public interface SiteTreeNode extends SiteNode {
 	void acceptReverseSubtree(SiteTreeNodeVisitor visitor) throws DocumentException;
     
     /**
-     * Sets a label of an this node. If the label does not exist, it is added.
-     * Otherwise, the existing label is replaced.
-     * 
-     * @param label the label to add
-     */
-    void setLink(SiteTreeLink label);
-
-    /**
      * Sets an attribute of this node. If the attribute already exists its value will be overwritten
      *
      * @param attributeName name of the attribute
@@ -195,12 +187,5 @@ public interface SiteTreeNode extends SiteNode {
      * @param uuid The UUID.
      */
     void setUUID(String uuid);
-
-    /**
-     * Sets a label.
-     * @param language The language.
-     * @param label The label.
-     */
-    void setLabel(String language, String label);
 
 }

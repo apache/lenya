@@ -92,8 +92,8 @@ public class SiteTreeNodeImplTest extends AbstractAccessControlTest {
         assertEquals(languages.length, 2);
         for (int i = 0; i < languages.length; i++) {
             Link label = this.node.getLink(languages[i]);
-            Link label1 = new SiteTreeLink(getFactory(), node, "Bar", "en");
-            Link label2 = new SiteTreeLink(getFactory(), node, "Stab", "de");
+            Link label1 = new SiteTreeLink(getFactory(), node, "Bar", "en", null);
+            Link label2 = new SiteTreeLink(getFactory(), node, "Stab", "de", null);
             assertTrue(label.equals(label1) || label.equals(label2));
         }
     }
@@ -115,9 +115,8 @@ public class SiteTreeNodeImplTest extends AbstractAccessControlTest {
      * 
      */
     final public void testAddLabel() throws SiteException {
-        Link label = new SiteTreeLink(getFactory(), this.node, "Barolo", "it");
-        this.node.addLabel((SiteTreeLink) label);
-        label = this.node.getLink("it");
+        this.node.addLabel("it", "Barolo");
+        Link label = this.node.getLink("it");
         assertNotNull(label);
         assertEquals(label.getLabel(), "Barolo");
         assertFalse(this.node.hasLink("ch"));

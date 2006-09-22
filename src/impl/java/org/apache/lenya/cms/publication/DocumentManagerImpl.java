@@ -268,7 +268,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             sourceDocument.getLink().delete();
 
             siteManager.add(destination.getPath(), sourceDocument);
-            siteManager.setLabel(sourceDocument, label);
+            sourceDocument.getLink().setLabel(label);
             siteManager.setVisibleInNav(sourceDocument, visible);
         } catch (final ServiceException e) {
             throw new PublicationException(e);
@@ -414,7 +414,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         }
         SiteNode targetNode = targetArea.getSite().getNode(targetPath);
         targetNode.setVisible(sourceNode.isVisible());
-        sourceNode.delete();
     }
 
     public void copyAll(Area sourceArea, String sourcePath, Area targetArea, String targetPath)
