@@ -190,10 +190,12 @@ function executeUsecase() {
                     if (viewUri.startsWith("cocoon:/")) {
                         viewUri = viewUri.substring(new Packages.java.lang.String("cocoon:/").length());
                     }
-                    cocoon.sendPage(viewUri, {
-                            "usecase" : proxy
-                        });
-                    return;
+                    if (cocoon.log.isDebugEnabled())
+                        cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", creating view, calling Cocoon with viewUri = [" + viewUri + "]");
+                    
+                    cocoon.sendPageAndWait(viewUri, {
+                        "usecase" : proxy
+                    });
                 }
             }
             catch (exception) {
