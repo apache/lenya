@@ -22,6 +22,8 @@
            xmlns="http://www.w3.org/1999/xhtml" 
            xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
 
+  <jx:set var="pubId" value="${usecase.getParameterAsString('publicationId')}"/>
+
   <page:title>
     <jx:choose>
       <jx:when test="${usecase.getParameter('currentUser') != null}">
@@ -30,7 +32,7 @@
       <jx:otherwise>
         <i18n:translate>
           <i18n:text i18n:key="login-to-pub"/>
-          <i18n:param><jx:out value="${usecase.getParameterAsString('publicationId').toUpperCase()}"/></i18n:param>
+          <i18n:param><jx:out value="${pubId.toUpperCase()}"/></i18n:param>
         </i18n:translate>
       </jx:otherwise>
     </jx:choose>
@@ -54,16 +56,18 @@
       </div>
     </jx:if>
     
-    <p>
-      <strong> <i18n:text>NOTE</i18n:text>: </strong>
-      <i18n:translate>
-        <i18n:text i18n:key="try-user-lenya" />
-        <i18n:param>"lenya"</i18n:param>
-        <i18n:param>"levi"</i18n:param>
-        <i18n:param>"alice"</i18n:param>
-        <i18n:param>"levi"</i18n:param>
-      </i18n:translate>
-    </p>
+    <jx:if test="${pubId.equals('default') || pubId.equals('blog')}">
+      <p>
+        <strong> <i18n:text>NOTE</i18n:text>: </strong>
+        <i18n:translate>
+          <i18n:text i18n:key="try-user-lenya" />
+          <i18n:param>"lenya"</i18n:param>
+          <i18n:param>"levi"</i18n:param>
+          <i18n:param>"alice"</i18n:param>
+          <i18n:param>"levi"</i18n:param>
+        </i18n:translate>
+      </p>
+    </jx:if>
     
     <div class="lenya-box">
       <div class="lenya-box-title">
