@@ -96,6 +96,10 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
             assertTrue(structure.contains("/foo"));
             Document linkDoc = structure.getNode("/foo").getLink("en").getDocument();
             assertSame(linkDoc, doc);
+            
+            doc.getLink().delete();
+            assertFalse(structure.containsByUuid(doc.getUUID(), doc.getLanguage()));
+            assertFalse(structure.contains("/foo"));
 
         } finally {
             if (selector != null) {
