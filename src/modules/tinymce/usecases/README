@@ -1,0 +1,10 @@
+The tinymce module uses a cocoon URI view for its usecase
+(see ../config/cocoon-xconf/usecase-tinymce-edit.xconf).
+Hence it does not need a usecase template.
+It calls two other generic usecases, tinymce.InsertAsset 
+and tinymce.InsertLink. When these are ready, they will
+be moved to the editors module, since they do not contain
+any tinymce-specific code and should be applicable to other
+editors as well.
+
+ 

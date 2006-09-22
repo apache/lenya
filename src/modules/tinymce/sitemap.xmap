@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+
+<!-- TinyMCE integration module sitemap -->
+
+<map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
+
+  <map:resources>
+    <map:resource name="style-cms-page">
+      <map:transform type="i18n">      
+        <map:parameter name="locale" value="{request:locale}"/>
+      </map:transform>    
+      <map:transform src="fallback://lenya/xslt/util/page2xhtml.xsl">
+        <map:parameter name="contextprefix" value="{request:contextPath}"/>
+      </map:transform>
+      <map:transform src="context://lenya/xslt/util/strip_namespaces.xsl"/>
+    </map:resource>
+  </map:resources>
+
+  <map:pipelines>
+
+    <map:pipeline internal-only="yes">
+
+      <!-- when editing, the page should look exactly like the original, and since
+           we cannot know anything about the pipelines used for rendering, we must
+           delegate the job to the publication's own sitemap. -->
+
+      <map:match pattern="tinymce.delegateToPubSitemap/**">
+        <map:mount src="{fallback:{page-envelope:publication-id}:sitemap.xmap}" uri-prefix="tinymce.delegateToPubSitemap"/>
+      </map:match>
+
+      <!-- the usecase framework provides error and info messages. since we bypass
+           the jxtemplate view mechanism, we must include them by hand. -->
+
+      <map:match pattern="tinymce.getUsecaseMessages">
+        <map:generate type="jx" src="fallback://lenya/usecases/templates/messages.jx"/>
+        <map:transform type="i18n">
+          <map:param name="locale" value="[request:locale}"/>
+        </map:transform>
+        <map:transform src="context://lenya/xslt/util/strip_namespaces.xsl"/>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+
+    <map:pipeline type="profile-noncaching">
+
+      <!-- this is the view of the usecase (see config/cocoon-xconf/usecases.xconf) -->
+
+      <map:match pattern="tinymce.edit">
+        <!-- check if TinyMCE is installed -->
+        <map:select type="resource-exists">
+          <!-- render page with tinymce inserted -->
+          <map:when test="fallback://lenya/modules/tinymce/resources/tinymce/jscripts/tiny_mce/tiny_mce.js">
+            <map:aggregate element="tinymceWrapper">
+              <map:part src="cocoon:/tinymce.delegateToPubSitemap/authoring{page-envelope:document-url}"/>
+              <map:part src="cocoon:/tinymce.getUsecaseMessages"/>
+            </map:aggregate>
+            <map:transform src="fallback://lenya/modules/tinymce/xslt/page2edit.xsl">
+              <map:parameter name="contextPath" value="{request:contextPath}"/>
+              <map:parameter name="continuationId" value="{flow-continuation:id}"/>
+              <map:parameter name="usecaseName" value="{request-param:lenya.usecase}"/>
+            </map:transform>
+          </map:when>
+          <!-- TinyMCE is not installed - generate info page for the user -->
+          <map:otherwise>
+            <map:generate src="fallback://lenya/modules/tinymce/resources/misc/download.xhtml"/>
+          </map:otherwise>
+        </map:select>
+        <map:call resource="style-cms-page"/>
+        <map:serialize type="xhtml"/>
+      </map:match>
+
+    </map:pipeline>
+
+  </map:pipelines>
+
+</map:sitemap>

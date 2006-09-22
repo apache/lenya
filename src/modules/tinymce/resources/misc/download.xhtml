@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <title>No TinyMCE installation found</title>
+</head>
+<body>
+<div id="body">
+  <h1>No TinyMCE installation found.</h1>
+  <p>
+    Due to license incompatibilites, TinyMCE (released under the GPL) cannot
+    be distributed with Lenya (released under the Apache License 2.0), although
+    it is perfectly legal for you to use them together.
+  </p>
+  <p>
+    Please <a href="http://tinymce.moxiecode.com/download.php">download the 
+    TinyMCE editor from moxiecode.com</a>.<br />
+    Unpack the zip archive or tarball in your Lenya source tree under
+    <code>$LENYA-SRC/src/modules/tinymce/resources</code>.<br />
+    By default, TinyMCE comes with an English localization only. If you prefer
+    another language, you can 
+    <a href="http://tinymce.moxiecode.com/language.php">download additional
+    language catalogues</a>. Unpack them in the same location.
+  </p>
+  <p>
+    Depending on the setting of the "modules.copy" option in 
+    <code>local.build.properties</code> you will have to rebuild Lenya before
+    you can use TinyMCE.
+  </p>
+  <p>
+    No further setup is required, but if you want to fine-tune TinyMCE, edit 
+    <code>modules/tinymce/resources/javascript/tiny_config.js</code>.<br/>
+    Refer to the excellent 
+    <a href="http://tinymce.moxiecode.com/tinymce/docs/index.html">TinyMCE
+    documentation</a> for details.
+  </p>
+  <p>
+    Thanks to the crew at moxiecode for a capable, exceptionally clean,
+    well-packaged and extensively documented open-source editor! Enjoy.
+  </p>
+</div>
+</body>
+</html>

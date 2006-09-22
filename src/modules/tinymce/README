@@ -1,0 +1,36 @@
+TinyMCE Editor integration for Lenya 1.4
+
+
+Loosely based on a module written by Wyona (http://wyona.com).
+Thanks to Bob Harner, Renaud Richardet and Tim Hannigan for
+documentation and code examples.
+
+Lenya 1.4 integration and some extra bells and whistles
+by Jörn Nettingsmeier <nettings@folkwang-hochschule.de>.
+
+
+Installation:
+
+- Download TinyMCE from http://tinymce.moxiecode.com/ and 
+  unpack the archive in the resources directory of this module.
+
+- Optionally download additional language packs and unpack them
+  in the same place.
+
+- To add a menu entry, in $YOURPUB/config/publication.xconf
+  add  <module name="tinymce"/> next to the other module 
+  declarations.
+
+- Add the appropriate permissions to 
+  $YOURPUB/config/ac/usecase-permissions.conf, for example:
+
+    <usecase id="tinymce.edit">
+      <role id="admin" method="grant"/>
+      <role id="edit" method="grant"/>
+    </usecase>
+ 
+  This will allow the "admin" and "edit" roles to access the 
+  usecase.
+
+
+This module has been developed and tested with TinyMCE 2.0.6.

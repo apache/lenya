@@ -1,0 +1,25 @@
+TinyMCE integration: TODO
+
+* implement generic insertAsset usecase
+* implement generic insertLink usecase
+* when done, move these generic usecases into the editors module
+* don't return xhtml snippet to caller, define a nice JSON structure
+instead. (tiny chokes on <object/>s, and it's nicer if the editor can create
+the tags by itself from the raw data.)
+* fix wysiwyg: some of the css styles are not properly passed to the editor
+content (font-size and font-family)
+* define valid xhtml elements (this is a little redundant, since the usecase
+handler will validate against a schema). ideally the valid_elements are
+gleaned from the schema.
+* define some style classes (again, this could be gleaned from the schema).
+* allow multiple resource types to be edited with different valid_elements
+settings. (partly done)
+* allow multiple editable areas. (partly done)
+
+DONE:
+
+* fix table plugin (it inserts bogus attributes and uses &nbsp; regardless
+of the "entities" setting being "raw", which leads to errors as the nbsp
+entity is not declared in cocoon). -- cleaned up in save callback
+* finish generic insertImage usecase  -- done, but needs testing.
+
