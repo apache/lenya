@@ -18,6 +18,8 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 
@@ -51,7 +53,7 @@ public class PublicationTest extends AbstractAccessControlTest {
         
     }
 
-    protected void doTestPublication(Publication pub) {
+    protected void doTestPublication(Publication pub) throws PublicationException {
         String contentDirPath = pub.getContentDir();
         assertNotNull(contentDirPath);
         
@@ -73,6 +75,20 @@ public class PublicationTest extends AbstractAccessControlTest {
         
         assertNotNull(pub.getDefaultLanguage());
         assertTrue(Arrays.asList(languages).contains(pub.getDefaultLanguage()));
+        
+        String[] types = pub.getResourceTypeNames();
+        assertTrue(types.length > 0);
+        
+        Set typeSet = new HashSet(Arrays.asList(types));
+        
+        String[] templateIds = pub.getTemplateIds();
+        for (int i = 0; i < templateIds.length; i++) {
+            Publication template = pub.getFactory().getPublication(templateIds[i]);
+            String[] templateTypes = template.getResourceTypeNames();
+            for (int t = 0; t < templateTypes.length; t++) {
+                assertTrue(typeSet.contains(templateTypes[i]));
+            }
+        }
         
     }
 

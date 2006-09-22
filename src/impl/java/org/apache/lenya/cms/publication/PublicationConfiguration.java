@@ -461,21 +461,7 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
      */
     public String[] getResourceTypeNames() {
         loadConfiguration();
-
-        List allTypes = new ArrayList();
-        allTypes.addAll(this.resourceTypes);
-        String[] templateIds = getTemplateIds();
-        try {
-            for (int i = 0; i < templateIds.length; i++) {
-                Publication template = getFactory().getPublication(templateIds[i]);
-                String[] templateTypes = template.getResourceTypeNames();
-                allTypes.addAll(Arrays.asList(templateTypes));
-            }
-        } catch (PublicationException e) {
-            throw new RuntimeException(e);
-        }
-
-        return (String[]) allTypes.toArray(new String[allTypes.size()]);
+        return (String[]) this.resourceTypes.toArray(new String[this.resourceTypes.size()]);
     }
 
     public String toString() {

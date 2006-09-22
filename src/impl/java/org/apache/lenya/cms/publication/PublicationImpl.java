@@ -18,6 +18,9 @@
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceManager;
@@ -96,7 +99,21 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     }
 
     public String[] getResourceTypeNames() {
-        return delegate.getResourceTypeNames();
+        
+        List allTypes = new ArrayList();
+        allTypes.addAll(Arrays.asList(this.delegate.getResourceTypeNames()));
+        String[] templateIds = getTemplateIds();
+        try {
+            for (int i = 0; i < templateIds.length; i++) {
+                Publication template = getFactory().getPublication(templateIds[i]);
+                String[] templateTypes = template.getResourceTypeNames();
+                allTypes.addAll(Arrays.asList(templateTypes));
+            }
+        } catch (PublicationException e) {
+            throw new RuntimeException(e);
+        }
+
+        return (String[]) allTypes.toArray(new String[allTypes.size()]);
     }
 
     public File getServletContext() {
