@@ -231,14 +231,19 @@ LenyaTree.prototype.createNewNode = function(node) {
 
 /* return an img object that represents the file type */
 LenyaTree.prototype.getIcon = function(item) {
-/*
-    return this.doc.createTextNode('');
-*/
-    var img = this.doc.createElement('img');
-    var language = CHOSEN_LANGUAGE;
-    img.setAttribute('src', CONTEXT_PREFIX + item.getPath() + '_' + language + '.gif?lenya.module=sitetree');
-    img.setAttribute('alt', '');
-    return img;
+
+    var steps = new Array();
+    steps = item.getPath().split('/');
+    if (steps.length < 4) {
+        return this.doc.createTextNode('');
+    }
+    else {
+        var img = this.doc.createElement('img');
+        var language = CHOSEN_LANGUAGE;
+        img.setAttribute('src', CONTEXT_PREFIX + item.getPath() + '_' + language + '.gif?lenya.module=sitetree');
+        img.setAttribute('alt', '');
+        return img;
+    }
 };
 
 /* creates the item name and any icons and such */
