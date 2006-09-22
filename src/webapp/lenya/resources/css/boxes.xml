@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Copyright 1999-2004 The Apache Software Foundation
+  
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+<css>
+  
+div.lenya-box {
+    background: url('<context-prefix/>/modules/svg/tab-topLeft-5-DDDCCF-CCCCCC.png') left top no-repeat;
+    width: auto;
+    max-width: 100%;
+    font-size: small;
+    margin-bottom: 10px;
+}
+
+div.lenya-box-title {
+    background: url('<context-prefix/>/modules/svg/tab-topRight-5-DDDCCF-CCCCCC.png') right top no-repeat;
+    border-bottom: solid 1px #CCCCCC;
+    color: Black;
+    font-weight: bold;
+    padding: 2px 10px;
+}
+
+div.lenya-box-body {
+    background: url('<context-prefix/>/modules/svg/tab-bottomLeft-5-F5F4E9-CCCCCC.png') left bottom no-repeat;
+}
+
+div.lenya-box-content {
+  background: url('<context-prefix/>/modules/svg/tab-bottomRight-5-F5F4E9-CCCCCC.png') right bottom no-repeat;
+  padding: 10px;
+  color: Black;
+}
+  
+  span.switch {
+    width: 2em;
+    cursor: pointer;
+    background-color: #F5F4E9;
+    border: solid 1px #CCCCCC;
+    color: Black;
+}
+</css>

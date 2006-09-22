@@ -8,28 +8,37 @@
   
   <defs>
     <clipPath id="circlePath">
-      <rect x="0" y="0" width="${r}" height="${r}"/>
-    </clipPath>
-    <clipPath id="rectPath">
-      <svg:circle
-        cx="${x}" cy="${r}" r="${r}"/>
+      <jx:choose>
+        <jx:when test="${y == r}">
+          <rect x="0" y="0" width="${r}" height="${r}"/>
+        </jx:when>
+        <jx:otherwise>
+          <rect x="0" y="${y + 1}" width="${r}" height="${r}"/>
+        </jx:otherwise>
+      </jx:choose>
     </clipPath>
   </defs>
 
   <!-- disabled, works with Mac OS X
-  <svg:rect x="${x - r}" y="0" width="${width + r + 1}" height="${height + 1}"
+  <svg:rect x="${x - r}" y="0" width="${width + r + 1}" height="${height - 1}"
     fill="${backgroundColor}" stroke="${lineColor}" stroke-width="2"/>
   -->
   
-  <svg:rect x="${x - r}" y="0" width="${width + r}" height="${height + 1}"
+  <svg:rect x="${x - r}" y="0" width="${width + r}" height="${height - 1}"
     fill="${backgroundColor}" stroke="${lineColor}" stroke-width="1"/>
     
-  <svg:rect x="0" y="0" width="${r}" height="${r}"
-    fill="#FFFFFF" stroke-width="0"/>
+  <jx:choose>
+    <jx:when test="${y == r}">
+      <svg:rect x="0" y="${y - r}" width="${r}" height="${r}" fill="#FFFFFF" stroke-width="0"/>
+    </jx:when>
+    <jx:otherwise>
+      <svg:rect x="0" y="${y + 1}" width="${r}" height="${r}" fill="#FFFFFF" stroke-width="0"/>
+    </jx:otherwise>
+  </jx:choose>
   
   <g clip-path="url(#circlePath)">
     <svg:circle
-      cx="${x}" cy="${r}" r="${r}"
+      cx="${x}" cy="${y}" r="${r}"
       stroke="${lineColor}" stroke-width="1" fill="${backgroundColor}"/>
   </g>
   

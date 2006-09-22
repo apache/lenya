@@ -13,32 +13,8 @@
 * See the License for the specific language governing permissions and
 * limitations under the License.
 */
-div.lenya-box {
-    border: solid 1px #CCCCCC;
-    width: auto;
-    max-width: 100%;
-    font-size: small;
-    margin-bottom: 10px;
-}
 
-div.lenya-box-title {
-    background-color: #DDDCCF;
-    border-bottom: solid 1px #CCCCCC;
-    color: Black;
-    font-weight: bold;
-    padding: 3px 10px;
-}
-
-div.lenya-box-body {
-    padding: 10px;
-    background-color: #F5F4E9;
-    color: Black;
-}
-
-span.switch {
-    width: 2em;
-    cursor: pointer;
-    background-color: #F5F4E9;
-    border: solid 1px #CCCCCC;
-    color: Black;
-}
+/*
+just a dummy file
+use boxes.xml instead
+*/

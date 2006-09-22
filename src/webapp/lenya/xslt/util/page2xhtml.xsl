@@ -94,7 +94,7 @@
     <div class="lenya-box">
       <xsl:apply-templates select="@*|node()"/>
       <xsl:text> </xsl:text>
-      <span class="switch" onclick="toggle('{$number}')" id="{$number}-switch"><i18n:text i18n:key="show" /></span>
+      <span class="switch" onclick="toggle('{$number}')" id="{$number}-switch"><i18n:text i18n:key="show"/></span>
     </div>
   </xsl:template>
   
@@ -102,8 +102,21 @@
   <xsl:template match="xhtml:div[@class = 'lenya-box-toggled']/xhtml:div[@class = 'lenya-box-body']">
     <xsl:param name="number"/>
     <div id="{$number}" style="display: none">
-      <xsl:apply-templates select="@*|node()"/>
+      <xsl:apply-templates select="@*"/>
+      <div class="lenya-box-content">
+        <xsl:apply-templates select="node()"/>
+      </div>
     </div>
+  </xsl:template>
+  
+  
+  <xsl:template match="xhtml:div[@class = 'lenya-box']/xhtml:div[@class = 'lenya-box-body']">
+    <xsl:copy>
+      <xsl:apply-templates select="@*"/>
+      <div class="lenya-box-content">
+        <xsl:apply-templates select="node()"/>
+      </div>
+    </xsl:copy>
   </xsl:template>
   
   
