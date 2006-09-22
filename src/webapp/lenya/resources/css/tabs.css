@@ -110,6 +110,7 @@
   color: #333333;
   text-decoration: none;
   cursor: pointer;
+  float: left;
 }
 
 #lenya-info-treecanvas .lenya-info-root { font-weight: bold; cursor: default; }
@@ -135,7 +136,13 @@
   padding: 0px 0px 0px 2px; 
 }
 
-#lenya-info-treecanvas .treenode_icon { padding-left: 2px; padding-right: 5px; vertical-align: middle; }
+#lenya-info-treecanvas .treenode_icon {
+  float: left;
+  padding-right: 5px;
+  vertical-align: middle;
+  background-color: #F5F4E9;
+  text-decoration: none;
+}
 #lenya-info-treecanvas .selected_node span { background-color: rgb(221, 220, 207); }
 #lenya-info-treecanvas .treenode_sign { vertical-align: top; padding: 0px; }
 
