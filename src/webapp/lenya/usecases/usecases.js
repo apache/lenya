@@ -33,9 +33,13 @@ function passRequestParameters(flowHelper, usecase) {
             var string = new Packages.java.lang.String();
             var vector = new Packages.java.util.Vector();
             if (string.getClass().isInstance(value) || vector.getClass().isInstance(value)) {
-                // use getParameter() to avoid character encoding problems
-                value = flowHelper.getRequest(cocoon).getParameter(name);
-                usecase.setParameter(name, value);
+                // use getParameters() to avoid character encoding problems
+                var values = flowHelper.getRequest(cocoon).getParameterValues(name);
+				if (values.length < 2) {
+                    usecase.setParameter(name, values[0]);
+			    } else {
+					usecase.setParameter(name, values);
+				}
             }
             else {
                 usecase.setPart(name, value);
