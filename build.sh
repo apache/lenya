@@ -29,15 +29,16 @@ fi
 OLD_CLASSPATH="$CLASSPATH"
 unset CLASSPATH
 CLASSPATH="`echo lib/*.jar | tr ' ' $S`"
+ENDORSED_DIR="externals/cocoon_2_1_x/lib/endorsed"
 # Add cocoon endorsed libs
-CLASSPATH="$CLASSPATH `echo externals/cocoon_2_1_x/lib/endorsed/*.jar | tr ' ' $S`"
+CLASSPATH="$CLASSPATH `echo $ENDORSED_DIR/*.jar | tr ' ' $S`"
 export CLASSPATH
 
 # ----- Use Ant shipped with Lenya. Ignore installed in the system Ant
 OLD_ANT_HOME="$ANT_HOME"
 ANT_HOME=tools
 OLD_ANT_OPTS="$ANT_OPTS"
-ANT_OPTS="-Xms32M -Xmx512M -Djava.endorsed.dirs=lib/endorsed"
+ANT_OPTS="-Xms32M -Xmx512M -Djava.endorsed.dirs=$ENDORSED_DIR"
 export ANT_HOME ANT_OPTS
 
 "$ANT_HOME/bin/ant" -logger org.apache.tools.ant.NoBannerLogger -emacs  $@
