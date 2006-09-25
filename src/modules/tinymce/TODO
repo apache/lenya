@@ -12,6 +12,8 @@ content (font-size and font-family)
 handler will validate against a schema). ideally the valid_elements are
 gleaned from the schema.
 * define some style classes (again, this could be gleaned from the schema).
+* add onunload handler to avoid data loss if the user accidentally clicks
+on a link or closes the window (confirmation dialog like bxe)
 * allow multiple resource types to be edited with different valid_elements
 settings. (partly done)
 * allow multiple editable areas. (partly done)
