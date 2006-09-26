@@ -80,7 +80,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
                         getLogger(),
                         docs[i],
                         getEvent())) {
-                    addErrorMessage("The workflow event cannot be invoked on document [" + docs[i]
+                    addErrorMessage("The workflow event [" + getEvent() + "] cannot be invoked on document [" + docs[i]
                             + "].");
                 }
             }
