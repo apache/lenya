@@ -642,6 +642,42 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             }
         }
     }
+    
+    /* 
+     * @return the last modified date of the meta data
+     */
+    public long getMetaLastModified() throws RepositoryException {
+        SourceResolver resolver = null;
+        Source source = null;
+        try {
+            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI(getMetaSourceURI());
+
+            long sourceLastModified;
+
+            if (source.exists()) {
+                sourceLastModified = source.getLastModified();
+                if (sourceLastModified > this.lastModified) {
+                    this.lastModified = sourceLastModified;
+                }
+            } else if (this.lastModified == -1) {
+                throw new RepositoryException("The source [" + getMetaSourceURI()
+                        + "] does not exist!");
+            }
+
+            return this.lastModified;
+
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                this.manager.release(resolver);
+            }
+        }
+    }
 
     /**
      * @see org.apache.lenya.cms.repository.Node#getMimeType()

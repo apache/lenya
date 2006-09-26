@@ -139,7 +139,7 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
 
     public long getLastModified() throws MetaDataException {
         try {
-            return this.node.getLastModified();
+            return this.node.getMetaLastModified();
         } catch (RepositoryException e) {
             throw new MetaDataException(e);
         }
