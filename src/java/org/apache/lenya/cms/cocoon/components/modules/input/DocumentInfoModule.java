@@ -191,13 +191,13 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
     }
 
     /**
-     * Returns last modification date in HTTP date format (see RFC 1123).
+     * Returns last modification date in ISO-8601 format.
      * @param document
      * @return Formatted HTTP date string.
      * @throws ConfigurationException
      */
     protected String getLastModified(Document document) throws ConfigurationException {
-        SimpleDateFormat httpDateFormat = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss z");
+        SimpleDateFormat httpDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
         return httpDateFormat.format(document.getLastModified());
     }
 
