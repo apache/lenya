@@ -22,10 +22,12 @@
   PIPELINE_PATH
   IMAGE_PATH
   SHOW_LOADING_HINT (optional)
+  SHOW_ICONS (optional)
 */
   
 var xmlhttp;
 var SHOW_LOADING_HINT = false;
+var SHOW_ICONS = true;
 
 /******************************************
  *  LenyaNode 
@@ -232,17 +234,21 @@ LenyaTree.prototype.createNewNode = function(node) {
 /* return an img object that represents the file type */
 LenyaTree.prototype.getIcon = function(item) {
 
-    var steps = new Array();
-    steps = item.getPath().split('/');
-    if (steps.length < 4) {
+    if (SHOW_ICONS) {
+        var steps = new Array();
+        steps = item.getPath().split('/');
+        if (steps.length < 4) {
+            return this.doc.createTextNode('');
+        }
+        else {
+            var img = this.doc.createElement('img');
+            var language = CHOSEN_LANGUAGE;
+            img.setAttribute('src', CONTEXT_PREFIX + item.getPath() + '_' + language + '.gif?lenya.module=sitetree');
+            img.setAttribute('alt', '');
+            return img;
+        }
+    } else {
         return this.doc.createTextNode('');
-    }
-    else {
-        var img = this.doc.createElement('img');
-        var language = CHOSEN_LANGUAGE;
-        img.setAttribute('src', CONTEXT_PREFIX + item.getPath() + '_' + language + '.gif?lenya.module=sitetree');
-        img.setAttribute('alt', '');
-        return img;
     }
 };
 

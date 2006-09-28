@@ -67,6 +67,7 @@
           ALL_AREAS = 'authoring,trash,archive';
           PIPELINE_PATH = '/authoring/sitetree-fragment.xml';
           SHOW_LOADING_HINT = true;
+          SHOW_ICONS = true;
           
           var tree = new NavTree(document, document.getElementById('tree'));
           tree.init(PUBLICATION_ID);
