@@ -44,8 +44,8 @@ import org.apache.lenya.cms.repository.Session;
  * {doc-info:{publication-id}:{area}:{uuid}:{document-language}:{property}} where {property} may be:
  * <ul>
  * <li><strong><code>contentLength</code></strong> - the content length (number of bytes).</li>
- * <li><strong><code>expires</code></strong> - the expiration date in RFC 822/1123 format.</li>
- * <li><strong><code>lastModified</code></strong> - the last modification date in RFC 822/1123
+ * <li><strong><code>expires</code></strong> - the expiration date in ISO 8601 format.</li>
+ * <li><strong><code>lastModified</code></strong> - the last modification date in ISO 8601
  * format.</li>
  * <li><strong><code>mimeType</code></strong> - the MIME type</li>
  * <li><strong><code>nodeName</code></strong> - the name of the node in the site structure</li>
@@ -91,6 +91,8 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
     protected final static String META_RESOURCE_TYPE = "resourceType";
     protected final static String META_EXPIRES = "expires";
 
+    protected SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+    
     /**
      * Parse the parameters and return a document.
      * @param publicationId The publication ID.
@@ -138,7 +140,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
             if (attribute.equals(RESOURCE_TYPE)) {
                 value = document.getResourceType().getName();
             } else if (attribute.equals(LAST_MODIFIED)) {
-                value = getLastModified(document);
+                value = this.dateFormat.format(document.getLastModified());
             } else if (attribute.equals(MIME_TYPE)) {
                 value = document.getMimeType();
             } else if (attribute.equals(CONTENT_LENGTH)) {
@@ -160,8 +162,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
             } else if (attribute.equals(EXPIRES)) {
                 try {
                     Date expires = document.getExpires();
-                    SimpleDateFormat sdf = new SimpleDateFormat("EEE, dd MMM yyyy kk:mm:ss zzz");
-                    value = sdf.format(expires);
+                    value = this.dateFormat.format(expires);
                 } catch (DocumentException e) {
                     throw new ConfigurationException("Error getting expires date from document.", e);
                 }
@@ -188,17 +189,6 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
                     + "]: " + e.getMessage(), e);
         }
 
-    }
-
-    /**
-     * Returns last modification date in ISO-8601 format.
-     * @param document
-     * @return Formatted HTTP date string.
-     * @throws ConfigurationException
-     */
-    protected String getLastModified(Document document) throws ConfigurationException {
-        SimpleDateFormat httpDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
-        return httpDateFormat.format(document.getLastModified());
     }
 
     public void service(ServiceManager manager) throws ServiceException {

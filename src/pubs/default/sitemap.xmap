@@ -285,7 +285,7 @@
                         </map:transform>
                         <map:transform src="fallback://lenya/xslt/authoring/edit/removeSourceTags.xsl"/>
                         <map:act type="set-header">
-                          <map:parameter name="Expires" value="{doc-info:{page-envelope:publication-id}:{page-envelope:area}:{page-envelope:document-uuid}:{page-envelope:document-language}:expires}"/>
+                          <map:parameter name="Expires" value="{date-iso8601-rfc822:{doc-info:{page-envelope:publication-id}:{page-envelope:area}:{page-envelope:document-uuid}:{page-envelope:document-language}:expires}}"/>
                         </map:act>
                       </map:when>
                       <!-- Turn off caching in authoring area -->
