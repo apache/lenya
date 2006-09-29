@@ -31,7 +31,7 @@
       <menu i18n:attr="name" name="Edit">
           <xsp:logic>
             String doctype = <input:get-attribute module="page-envelope" as="string" name="document-type"/>;
-            if ("xhtml".equals(doctype)) {
+            if ("xhtml".equals(doctype) || "homepage".equals(doctype)) {
                 <block info="false">
                   <item wf:event="edit" uc:usecase="fckeditor.edit" href="?"><i18n:text>With FCKEditor</i18n:text></item>
                 </block>
