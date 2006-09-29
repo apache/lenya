@@ -22,6 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -120,27 +121,45 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
-        String realSourceURI = null;
+        
+        String contentBaseUri = null;
         String urlID = this.sourceURI.substring(Node.LENYA_PROTOCOL.length());
 
-        // Substitute e.g. "lenya://lenya/pubs/PUB_ID/content" by "contentDir/content"
+        // Substitute e.g. "lenya://lenya/pubs/PUB_ID/content" by "contentDir"
         String filePrefix = urlID.substring(0, urlID.indexOf(publicationId)) + publicationId;
         String tempString = urlID.substring(filePrefix.length() + 1);
         String fileMiddle = tempString.substring(0, tempString.indexOf("/"));
         String fileSuffix = tempString.substring(fileMiddle.length() + 1, tempString.length());
+        String uriSuffix;
         if (new File(contentDir).isAbsolute()) {
             // Absolute
-            realSourceURI = FILE_PREFIX + contentDir + File.separator + fileSuffix;
+            contentBaseUri = FILE_PREFIX + contentDir; 
+            uriSuffix = File.separator + fileSuffix;
         } else {
             // Relative
-            realSourceURI = CONTEXT_PREFIX + contentDir + "/" + fileMiddle + "/" + fileSuffix;
+            contentBaseUri = CONTEXT_PREFIX + contentDir;
+            uriSuffix = "/" + fileSuffix;
         }
+        
+        try {
+            if (!SourceUtil.exists(contentBaseUri, this.manager)) {
+                throw new RuntimeException("The content directory [" + contentBaseUri + "] does not exist!");
+            }
+        } catch (ServiceException e) {
+            throw new RuntimeException(e);
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        
+        String realSourceUri = contentBaseUri + uriSuffix;
+        
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Real Source URI: " + realSourceURI);
+            getLogger().debug("Real Source URI: " + realSourceUri);
         }
 
-        return realSourceURI;
+        return realSourceUri;
     }
 
     /**
