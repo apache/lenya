@@ -32,9 +32,21 @@
       </map:match>
     </map:pipeline>
 
-    <map:pipeline>  
-        
-      <!-- Lenya GUI screen -->
+    <!-- 
+    <map:pipeline>
+      <map:match pattern="profiler.html">
+        <map:generate type="profiler"/>
+        <map:transform src="lenya/xslt/util/profile2html.xsl">
+          <map:parameter name="use-request-parameters" value="true"/>
+         </map:transform>
+         <map:serialize type="html"/>
+      </map:match>
+    </map:pipeline>
+    -->
+
+    <map:pipeline>
+    
+    <!-- Lenya GUI screen -->
       <map:match pattern="lenya-screen.xsl">
         <map:generate src="fallback://lenya/xslt/util/page2xhtml.xsl"/>
         <map:transform src="lenya/xslt/util/page2xslt.xsl">
