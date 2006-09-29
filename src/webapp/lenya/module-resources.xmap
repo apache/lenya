@@ -33,7 +33,7 @@
       <map:match pattern="*/**.css">
         <!-- Only called if a {3}.css exists because of resource-exists-enhanced before -->
         <map:act type="resource-exists" src="fallback://lenya/modules/{1}/resources/{2}.xml">
-          <map:generate src="fallback://lenya/modules/{1}/resources/{../2}.xml"/>
+          <map:generate src="fallback://lenya/modules/{../1}/resources/{../2}.xml"/>
           <map:transform src="fallback://lenya/resources/css/css.xsl">
             <map:parameter name="contextprefix" value="{request:contextPath}"/>
           </map:transform>
