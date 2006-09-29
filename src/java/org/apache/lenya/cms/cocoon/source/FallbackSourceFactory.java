@@ -72,14 +72,23 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
         long startTime = new GregorianCalendar().getTimeInMillis();
 
         // Remove the protocol and the first '//'
-        final int pos = location.indexOf("://");
+        int pos = location.indexOf("://");
 
         if (pos == -1) {
             throw new RuntimeException("The location [" + location
                     + "] does not contain the string '://'");
         }
-
-        final String path = location.substring(pos + 3);
+        
+        String path = location.substring(pos + 3);
+        String publicationId = null;
+        
+        //allow for template-fallback://{pubid}//{path} for the sake of the
+        //cocoon use-store
+        if (path.indexOf("//") > 1) {
+            pos = path.indexOf("//");
+            publicationId = path.substring(0, pos);
+            path = path.substring(pos + 2, path.length());
+        }
 
         if (path.length() == 0) {
             throw new RuntimeException("The path after the protocol must not be empty!");
@@ -99,11 +108,15 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
 
             templateManager = (PublicationTemplateManager) this.manager.lookup(PublicationTemplateManager.ROLE);
 
+            
             Request request = ContextHelper.getRequest(this.context);
-            String webappUrl = request.getRequestURI().substring(request.getContextPath().length());
+            
+            if (publicationId == null) {
+                String webappUrl = request.getRequestURI().substring(request.getContextPath().length());
 
-            URLInformation info = new URLInformation(webappUrl);
-            String publicationId = info.getPublicationId();
+                URLInformation info = new URLInformation(webappUrl);
+                publicationId = info.getPublicationId();
+            }
 
             pubMgr = (PublicationManager) this.manager.lookup(PublicationManager.ROLE);
             DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
