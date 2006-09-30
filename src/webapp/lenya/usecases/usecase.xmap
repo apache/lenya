@@ -43,12 +43,6 @@
   <map:pipelines>
     
     <map:pipeline type="noncaching">
-      <map:match pattern="redirect">
-        <map:generate src="context://lenya/content/admin/common/redirect.xsp" type="serverpages"/>
-        <map:transform src="context://lenya/xslt/admin/common/redirect.xsl"/>
-        <map:serialize/>
-      </map:match>
-      
       <!-- 
         This internal sitemap fragment renders the usecase, once the
         executeUsecase() flowscript has completed and issued a redirect,
