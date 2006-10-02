@@ -310,52 +310,100 @@ http://books.evc-cit.info/odf_utils/odt_to_xhtml.html
 </xsl:template>
 -->
 <!-- Otherwise -->
+
+<!-- FIXME : An idea should be to add a class attribute to <p> in order to be able to keep the original
+             layout. Maybe depending on a properties keepLayout=True. -->
 <xsl:template match="text:p">
-	<div class="{translate(@text:style-name,'.','_')}">
+	<p>
 		<xsl:apply-templates/>
-		<xsl:if test="count(node())=0"><br /></xsl:if>
-	</div>
-</xsl:template>
-
-<!-- Case of the Code style -->
-<xsl:template match="text:span[@text:style-name='Forrest_3a__20_Code']">
-	<code>
-		<xsl:apply-templates/>
-	</code>
-</xsl:template>
-
-<!-- Case of the below style -->
-<xsl:template match="text:span[@text:style-name='Forrest_3a__20_Below']">
-	<sub>
-		<xsl:apply-templates/>
-	</sub>
-</xsl:template>
-
-<!-- Case of the above style -->
-<xsl:template match="text:span[@text:style-name='Forrest_3a__20_Above']">
-	<sup>
-		<xsl:apply-templates/>
-	</sup>
-</xsl:template>
-
-<!-- Case of the strong style -->
-<xsl:template match="text:span[@text:style-name='Strong_20_Emphasis']">
-	<strong>
-		<xsl:apply-templates/>
-	</strong>
-</xsl:template>
-
-<!-- Case of the emphasys style - generally rendered with Italic -->
-<xsl:template match="text:span[@text:style-name='Emphasis']">
-	<em>
-		<xsl:apply-templates/>
-	</em>
+	</p>
 </xsl:template>
 
 <xsl:template match="text:span">
-	<span class="{translate(@text:style-name,'.','_')}">
+	<xsl:variable name="styleName" select="@text:style-name"/>
+	<xsl:apply-templates select="//office:document-content/office:automatic-styles/style:style[@style:name=$styleName]/style:text-properties/@*[last()]">
+		<xsl:with-param name="text" select="./text()"/>
+	</xsl:apply-templates>
+	<!--span class="{translate(@text:style-name,'.','_')}">
 		<xsl:apply-templates/>
-	</span>
+	</span-->
+</xsl:template>
+
+<xsl:template match="style:text-properties/@*">
+	<xsl:param name="text"/>
+	<xsl:param name="indStyle" select="count(../@*)"/>
+	<xsl:choose>
+		<!-- Case of the emphasys style - generally rendered with Italic -->
+		<xsl:when test="name()='fo:font-style' and .='italic'">
+			<xsl:call-template name="layout-span">
+				<xsl:with-param name="text" select="$text"/>
+				<xsl:with-param name="indStyle" select="$indStyle"/>
+				<xsl:with-param name="tag" select="'em'"/>
+			</xsl:call-template>
+		</xsl:when>
+		<!-- Case of the strong style -->
+		<xsl:when test="name()='fo:font-weight' and .='bold'">
+			<xsl:call-template name="layout-span">
+				<xsl:with-param name="text" select="$text"/>
+				<xsl:with-param name="indStyle" select="$indStyle"/>
+				<xsl:with-param name="tag" select="'strong'"/>
+			</xsl:call-template>
+		</xsl:when>
+		<!-- Case of the exponent style -->
+		<xsl:when test="name()='style:text-position' and starts-with(.,'super')">
+			<xsl:call-template name="layout-span">
+				<xsl:with-param name="text" select="$text"/>
+				<xsl:with-param name="indStyle" select="$indStyle"/>
+				<xsl:with-param name="tag" select="'sup'"/>
+			</xsl:call-template>
+		</xsl:when>
+		<!-- Case of the subscript style -->
+		<xsl:when test="name()='style:text-position' and starts-with(.,'sub')">
+			<xsl:call-template name="layout-span">
+				<xsl:with-param name="text" select="$text"/>
+				<xsl:with-param name="indStyle" select="$indStyle"/>
+				<xsl:with-param name="tag" select="'sub'"/>
+			</xsl:call-template>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:call-template name="text-span">
+				<xsl:with-param name="text" select="$text"/>
+				<xsl:with-param name="indStyle" select="$indStyle"/>
+			</xsl:call-template>
+		</xsl:otherwise>
+	</xsl:choose>
+</xsl:template>
+
+<xsl:template name="layout-span">
+	<xsl:param name="text"/>
+	<xsl:param name="indStyle"/>
+	<xsl:param name="tag" select="NONE"/>
+	<!-- Add a layout tag for a span -->
+	<xsl:if test="not($tag='NONE')">
+		<xsl:element name="{$tag}">
+			<xsl:call-template name="text-span">
+				<xsl:with-param name="text" select="$text"/>
+				<xsl:with-param name="indStyle" select="$indStyle"/>
+			</xsl:call-template>
+		</xsl:element>
+	</xsl:if>
+</xsl:template>
+
+<xsl:template name="text-span">
+	<xsl:param name="text"/>
+	<xsl:param name="indStyle" select="last()"/>
+	<!-- Add the text of a span or continue to browse the styles -->
+	<xsl:choose>
+		<xsl:when test="$indStyle=1">
+			<xsl:apply-templates select="$text"/>
+		</xsl:when>
+		<xsl:otherwise>
+			<xsl:apply-templates select="../@*[number($indStyle)-1]">
+				<xsl:with-param name="text" select="$text"/>
+				<xsl:with-param name="indStyle" select="number($indStyle)-1"/>
+			</xsl:apply-templates>
+		</xsl:otherwise>
+	</xsl:choose>
 </xsl:template>
 
 <xsl:template match="text:h">
