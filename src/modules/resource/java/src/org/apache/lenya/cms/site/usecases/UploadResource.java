@@ -18,9 +18,13 @@ package org.apache.lenya.cms.site.usecases;
 
 import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourceWrapper;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.util.ServletHelper;
+import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
+import org.apache.lenya.cms.publication.Document;
 
 /**
  * Usecase to upload a resource.
@@ -28,11 +32,26 @@ import org.apache.lenya.util.ServletHelper;
  */
 public class UploadResource extends DocumentUsecase {
 
+    protected String getEvent() {
+        return "edit";
+    }
+    
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
         if (!ServletHelper.isUploadEnabled(manager)) {
             addErrorMessage("Upload is not enabled. Please check local.build.properties!");
         }
+        Document doc = getSourceDocument();
+        if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
+            addErrorMessage("This usecase can only be invoked in the authoring area!");
+        } else if (!getSourceDocument().exists()) {
+            addErrorMessage("This usecase can only be invoked on existing documents.");
+        }
+
+        if (!WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), doc, getEvent())) {
+            String title = DublinCoreHelper.getTitle(doc);
+            addErrorMessage("error-workflow-document", new String[] { getEvent(), title });
+        }        
     }
 
     /**
@@ -51,6 +70,7 @@ public class UploadResource extends DocumentUsecase {
             Document document = getSourceDocument();
             ResourceWrapper wrapper = new ResourceWrapper(document, this.manager, getLogger());
             wrapper.write(file);
+            WorkflowUtil.invoke(this.manager, getSession(), getLogger(), document, getEvent());
         }
     }
 
