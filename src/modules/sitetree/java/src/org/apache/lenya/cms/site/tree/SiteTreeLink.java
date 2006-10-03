@@ -17,7 +17,7 @@
 package org.apache.lenya.cms.site.tree;
 
 import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.site.Label;
+import org.apache.lenya.cms.site.AbstractLink;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.xml.DocumentHelper;
 import org.w3c.dom.Element;
@@ -25,7 +25,7 @@ import org.w3c.dom.Element;
 /**
  * SiteTree link.
  */
-public class SiteTreeLink extends Label {
+public class SiteTreeLink extends AbstractLink {
 
     protected SiteTreeLink(DocumentFactory factory, SiteNode node, String _label, String _language,
             Element element) {

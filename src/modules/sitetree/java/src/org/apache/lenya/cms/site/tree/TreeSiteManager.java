@@ -29,7 +29,6 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.repository.RepositoryItemFactory;
 import org.apache.lenya.cms.site.AbstractSiteManager;
-import org.apache.lenya.cms.site.Label;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteException;
@@ -283,8 +282,8 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      * @return A label.
      * @throws SiteException if an error occurs.
      */
-    protected Label getLabelObject(Document document) throws SiteException {
-        Label label = null;
+    protected Link getLabelObject(Document document) throws SiteException {
+        Link label = null;
         SiteTree siteTree = getTree(document);
         if (siteTree != null) {
             SiteTreeNode node = (SiteTreeNode) siteTree.getByUuid(document.getUUID(),
@@ -292,7 +291,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
             if (node == null) {
                 throw new SiteException("Node for document [" + document + "] does not exist!");
             }
-            label = (Label) node.getLink(document.getLanguage());
+            label = (Link) node.getLink(document.getLanguage());
         }
 
         if (label == null) {

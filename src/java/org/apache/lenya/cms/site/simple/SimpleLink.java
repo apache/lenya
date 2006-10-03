@@ -18,12 +18,12 @@ package org.apache.lenya.cms.site.simple;
 
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.site.Label;
+import org.apache.lenya.cms.site.AbstractLink;
 
 /**
  * Link for SimpleSiteManager.
  */
-public class SimpleLink extends Label {
+public class SimpleLink extends AbstractLink {
 
     protected SimpleLink(DocumentFactory factory, SimpleSiteNode node, String _label, String language) {
         super(factory, node, _label, language);

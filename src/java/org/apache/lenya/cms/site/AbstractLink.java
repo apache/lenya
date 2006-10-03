@@ -25,20 +25,20 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 
 /**
- * The Label class encapsulates a string label and a associated language.
+ * The AbstractLink class encapsulates a string label and a associated language.
  */
-public abstract class Label implements Link {
+public abstract class AbstractLink implements Link {
     private String label = null;
     private String language = null;
 
     /**
-     * Creates a new Label object.
+     * Creates a new AbstractLink object.
      * @param factory The document factory.
      * @param node The site node.
      * @param _label the actual label
      * @param _language the language
      */
-    public Label(DocumentFactory factory, SiteNode node, String _label, String _language) {
+    public AbstractLink(DocumentFactory factory, SiteNode node, String _label, String _language) {
         this.label = _label;
         this.language = _language;
         this.factory = factory;
@@ -46,7 +46,7 @@ public abstract class Label implements Link {
     }
 
     /**
-     * Get the actual label of the Label object
+     * Get the actual label of the AbstractLink object
      * 
      * @return the actual label as a String
      */
@@ -55,7 +55,7 @@ public abstract class Label implements Link {
     }
 
     /**
-     * Get the language of this Label object
+     * Get the language of this AbstractLink object
      * 
      * @return the language
      */
@@ -80,7 +80,7 @@ public abstract class Label implements Link {
         boolean equals = false;
 
         if (getClass().isInstance(obj)) {
-            Label otherLabel = (Label) obj;
+            AbstractLink otherLabel = (AbstractLink) obj;
             equals = getLabel().equals(otherLabel.getLabel())
                     && getLanguage().equals(otherLabel.getLanguage());
         }
