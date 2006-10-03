@@ -273,6 +273,10 @@
   <message key="Archive Document">Archive Document</message>
   <message key="archive-doc">Archive document {0}</message>
   <message key="archive-doc?">Do you really want to archive the document {0}?</message>
+      <!-- Restore document -->
+  <message key="Restore Document">Restore Document</message>
+  <message key="restore-doc">Restore document {0}</message>
+  <message key="restore-doc?">Do you really want to restore the document {0}?</message>
       <!-- Rename document -->
   <message key="Rename Document">Rename Document</message>
   <message key="rename-doc">Rename document {0}</message>

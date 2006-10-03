@@ -53,6 +53,7 @@
                   </strong>
                 </i18n:param>
               </i18n:translate>
+              <br/><br/>
               <input i18n:attr="value" type="submit" name="submit" value="Restore"/>
               &#160;
               <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>
