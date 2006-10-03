@@ -129,6 +129,18 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
         }
     }
 
+    public void forcedReplaceBy(MetaData other) throws MetaDataException {
+        Element[] elements = getElementSet().getElements();
+        for (int i = 0; i < elements.length; i++) {
+            String key = elements[i].getName();
+            removeAllValues(key);
+            String[] values = other.getValues(key);
+            for (int j = 0; j < values.length; j++) {
+                addValue(key, values[j]);
+            }
+        }
+    }
+
     public String[] getPossibleKeys() {
         return getAvailableKeys();
     }

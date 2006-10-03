@@ -69,6 +69,14 @@ public interface MetaData {
     void replaceBy(MetaData other) throws MetaDataException;
     
     /**
+     * Replace the contents of the current meta data by the contents of other.
+     * All meta data is replaced, disregarding the rules given by element.getActionOnCopy().
+     * @param other The other meta data manager.
+     * @throws MetaDataException if an error occurs.
+     */
+    void forcedReplaceBy(MetaData other) throws MetaDataException;
+    
+    /**
      * @return All keys that can be used.
      */
     String[] getPossibleKeys();

@@ -82,12 +82,38 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         return document;
     }
 
+    /**
+     * Copies meta data from one document to another.
+     * @param source
+     * @param destination
+     * @throws PublicationException
+     */
     protected void copyMetaData(Document source, Document destination)
             throws PublicationException {
         try {
             String[] uris = source.getMetaDataNamespaceUris();
             for (int i = 0; i < uris.length; i++) {
                 destination.getMetaData(uris[i]).replaceBy(source.getMetaData(uris[i]));
+            }
+        } catch (MetaDataException e) {
+            throw new PublicationException(e);
+        }
+    }
+
+    /**
+     * Copies meta data from one document to another, whereas both documents will have
+     * completely identical meta data afterwards (including workflow etc.). This is only 
+     * useful if the source document will be deleted afterwards.
+     * @param source
+     * @param destination
+     * @throws PublicationException
+     */
+    protected void duplicateMetaData(Document source, Document destination)
+    throws PublicationException {
+        try {
+            String[] uris = source.getMetaDataNamespaceUris();
+            for (int i = 0; i < uris.length; i++) {
+                destination.getMetaData(uris[i]).forcedReplaceBy(source.getMetaData(uris[i]));
             }
         } catch (MetaDataException e) {
             throw new PublicationException(e);
@@ -403,7 +429,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 targetDoc = sourceDoc;
             }
             else {
-                targetDoc = addVersion(sourceDoc, targetArea.getName(), sourceDoc.getLanguage());
+                targetDoc = duplicateVersion(sourceDoc, targetArea.getName(), sourceDoc.getLanguage());
                 sourceDoc.delete();
             }
             
@@ -787,6 +813,21 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 sourceDocument.getSourceExtension());
         copyMetaData(sourceDocument, document);
 
+        return document;
+    }
+
+    public Document duplicateVersion(Document sourceDocument, String area, String language)
+    throws DocumentBuildException, DocumentException, PublicationException {
+        Document document = add(sourceDocument.getFactory(),
+                sourceDocument.getResourceType(),
+                sourceDocument.getUUID(),
+                sourceDocument.getSourceURI(),
+                sourceDocument.getPublication(),
+                area,
+                language,
+                sourceDocument.getSourceExtension());
+        duplicateMetaData(sourceDocument, document);
+        
         return document;
     }
 

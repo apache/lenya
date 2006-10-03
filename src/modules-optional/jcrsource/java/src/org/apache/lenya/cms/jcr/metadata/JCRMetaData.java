@@ -192,6 +192,10 @@ public class JCRMetaData extends AbstractLogEnabled implements MetaData {
         save();
     }
 
+    public void forcedReplaceBy(MetaData other) throws MetaDataException {
+        replaceBy(other);
+    }
+    
     private String[] possibleKeys = new String[0];
 
     /**

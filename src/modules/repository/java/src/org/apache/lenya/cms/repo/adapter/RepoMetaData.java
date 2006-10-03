@@ -90,6 +90,10 @@ public class RepoMetaData implements MetaData {
         throw new RuntimeException("not implemented");
     }
 
+    public void forcedReplaceBy(MetaData other) throws MetaDataException {
+        throw new RuntimeException("not implemented");
+    }
+
     public String[] getPossibleKeys() {
         Element[] elements;
         try {
