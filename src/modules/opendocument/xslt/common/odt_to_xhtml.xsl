@@ -73,8 +73,6 @@ http://books.evc-cit.info/odf_utils/odt_to_xhtml.html
 <xsl:variable name="lineBreak"><xsl:text>
 </xsl:text></xsl:variable>
 
-<xsl:key name="listTypes" match="text:list-style" use="@style:name"/>
-
 <xsl:template match="/office:document-content">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -430,8 +428,8 @@ http://books.evc-cit.info/odf_utils/odt_to_xhtml.html
 	*and* level of nesting
 -->
 <xsl:template match="text:list">
-	<xsl:variable name="level" select="count(ancestor::text:list)+1"/>
-	
+	<xsl:variable name="level" select="count(ancestor::text:list)+1"/>$
+
 	<!-- the list class is the @text:style-name of the outermost
 		<text:list> element -->
 	<xsl:variable name="listClass">
@@ -448,9 +446,7 @@ http://books.evc-cit.info/odf_utils/odt_to_xhtml.html
 	
 	<!-- Now select the <text:list-level-style-foo> element at this
 		level of nesting for this list -->
-	<xsl:variable name="node" select="key('listTypes',
-		$listClass)/*[@text:level='$level']"/>
-
+	<xsl:variable name="node" select="//office:document-content/office:automatic-styles/text:list-style[@style:name=$listClass]/text:list-level-style-number[@text:level=$level]"/>
 	<!-- emit appropriate list type -->
 	<xsl:choose>
 		<xsl:when test="local-name($node)='list-level-style-number'">
