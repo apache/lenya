@@ -174,7 +174,7 @@
   <xsl:template match="menu:menu" mode="nav">
     <li id="nav{position()}"><xsl:value-of select="@name"/>
       <ul id="menu{position()}">
-        <xsl:apply-templates select="menu:block[not(@info = 'false') and ($currentTab = 'site') or not(@*[local-name() = $currentTab] = 'false') and not($currentTab = 'site')]"/>
+        <xsl:apply-templates select="menu:block"/>
       </ul>
     </li>
   </xsl:template>
@@ -190,10 +190,9 @@
     </li>
   </xsl:template>
  
-  <!-- match blocks with not area='false' -->
   <xsl:template match="menu:block">
     <xsl:apply-templates select="menu:title"/>
-    <xsl:apply-templates select="menu:menu | menu:item[not(@info = 'false') and ($currentTab = 'site') or not(@*[local-name() = $currentTab] = 'false') and not($currentTab = 'site')]"/>
+    <xsl:apply-templates select="menu:menu | menu:item"/>
 		
     <xsl:if test="position() != last()">
       <li class="lenya-menu-separator"></li>
@@ -223,7 +222,6 @@
   </xsl:template>
   
   	
-  <!-- match items with not area='false' -->
   <xsl:template match="menu:item">
     <xsl:choose>
       <xsl:when test="@href">
