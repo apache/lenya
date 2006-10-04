@@ -271,42 +271,42 @@ http://books.evc-cit.info/odf_utils/odt_to_xhtml.html
 	Yes, paragraphs in ODT really produce a <div> in XHTML,
 	because an ODT paragraph has no extra line spacing.
 -->
+<!-- FIXME : this is not XHTML -->
 <!-- Case of Notes -->
-<!-- FIXME : this is not XHTML
 <xsl:template match="text:p[@text:style-name='Forrest_3a__20_Note']">
 	<note>
 		<xsl:apply-templates/>
 		<xsl:if test="count(node())=0"><br /></xsl:if>
 	</note>
 </xsl:template>
--->
+
+<!-- FIXME : this is not XHTML -->
 <!-- Case of Warnings -->
-<!-- FIXME : this is not XHTML
 <xsl:template match="text:p[@text:style-name='Forrest_3a__20_Warning']">
 	<warning>
 		<xsl:apply-templates/>
 		<xsl:if test="count(node())=0"><br /></xsl:if>
 	</warning>
 </xsl:template>
--->
+
 <!-- Case of Fixme  - still a problem to retrieve the author...-->
-<!-- FIXME : this is not XHTML
+<!-- FIXME : this is not XHTML -->
 <xsl:template match="text:p[@text:style-name='Forrest_3a__20_Fixme']">
 	<fixme>
 		<xsl:apply-templates/>
 		<xsl:if test="count(node())=0"><br /></xsl:if>
 	</fixme>
 </xsl:template>
--->
+
 <!-- Case of Sources -->
-<!-- FIXME : this is not XHTML
+<!-- FIXME : this is not XHTML -->
 <xsl:template match="text:p[@text:style-name='Forrest_3a__20_Source']">
 	<source>
 		<xsl:apply-templates/>
 		<xsl:if test="count(node())=0"><br /></xsl:if>
 	</source>
 </xsl:template>
--->
+
 <!-- Otherwise -->
 
 <!-- FIXME : An idea should be to add a class attribute to <p> in order to be able to keep the original
@@ -322,9 +322,6 @@ http://books.evc-cit.info/odf_utils/odt_to_xhtml.html
 	<xsl:apply-templates select="//office:document-content/office:automatic-styles/style:style[@style:name=$styleName]/style:text-properties/@*[last()]">
 		<xsl:with-param name="text" select="./text()"/>
 	</xsl:apply-templates>
-	<!--span class="{translate(@text:style-name,'.','_')}">
-		<xsl:apply-templates/>
-	</span-->
 </xsl:template>
 
 <xsl:template match="style:text-properties/@*">
@@ -428,7 +425,7 @@ http://books.evc-cit.info/odf_utils/odt_to_xhtml.html
 	*and* level of nesting
 -->
 <xsl:template match="text:list">
-	<xsl:variable name="level" select="count(ancestor::text:list)+1"/>$
+	<xsl:variable name="level" select="count(ancestor::text:list)+1"/>
 
 	<!-- the list class is the @text:style-name of the outermost
 		<text:list> element -->
