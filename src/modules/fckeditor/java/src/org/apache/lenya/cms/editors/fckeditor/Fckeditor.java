@@ -228,6 +228,8 @@ public class Fckeditor extends DocumentUsecase {
                 saveXMLFile(encoding, content, xmlSource);
             }
             
+            xmlDoc = DocumentHelper.readDocument(xmlSource.getInputStream());
+            
             if (xmlDoc != null) {
                 ResourceType resourceType = getSourceDocument().getResourceType();
                 Schema schema = resourceType.getSchema();
