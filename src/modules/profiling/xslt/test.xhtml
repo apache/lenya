@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?><html xmlns="http://www.w3.org/1999/xhtml"><head><style type="text/css">
+         
+.highlight-elem {
+  color:green;
+}
+.highlight-attr {
+}
+.highlight-attrName {
+  color:blue;
+}
+.highlight-attrValue {
+  color:red;
+}
+.highlight-text {
+  color:grey;
+}
+
+.highlight-pi {
+  color:darkgrey;
+  font-weight:bold;
+  font-style:italic;
+}
+
+.highlight-comment {
+  color:#bbbbbb;
+  font-style:italic;
+}
+
+      </style></head><body><h1>XML Source Viewer</h1><span class="highlight-elem">&lt;root <span class="highlight-attr"><span class="highlight-attrName">attr</span>="<span class="highlight-attrValue">bogus</span>"</span>&gt;</span><br/>   <span class="highlight-text"/>   <span class="highlight-comment">&lt;!--  this is a comment  --&gt;</span><br/>   <span class="highlight-text"/><span class="highlight-pi">&lt;?foo "This is a processing Instruction" ?&gt;</span><br/>   <span class="highlight-text"/>   <span class="highlight-elem">&lt;tier <span class="highlight-attr"><span class="highlight-attrName">level</span>="<span class="highlight-attrValue">1</span>"</span>&gt;</span><br/>      <span class="highlight-text"/>      <span class="highlight-elem">&lt;info&gt;</span>         <span class="highlight-text">dork dork dork!</span><span class="highlight-elem">&lt;/info&gt;</span><br/>      <span class="highlight-text"/>      <span class="highlight-elem">&lt;info <span class="highlight-attr"><span class="highlight-attrName">meta</span>="<span class="highlight-attrValue">leading whitespace</span>"</span>&gt;</span>         <span class="highlight-text">dork dork dork dork!</span><span class="highlight-elem">&lt;/info&gt;</span><br/>      <span class="highlight-text"/>      <span class="highlight-comment">&lt;!--  this is an indented comment  --&gt;</span><br/>      <span class="highlight-text"/>      <span class="highlight-elem">&lt;info <span class="highlight-attr"><span class="highlight-attrName">meta</span>="<span class="highlight-attrValue">trailing whitespace</span>"</span>&gt;</span>         <span class="highlight-text">dork!</span><span class="highlight-elem">&lt;/info&gt;</span><br/>      <span class="highlight-text"/>   <span class="highlight-elem">&lt;/tier&gt;</span><br/>   <span class="highlight-text"/>   <span class="highlight-elem">&lt;tier <span class="highlight-attr"><span class="highlight-attrName">level</span>="<span class="highlight-attrValue">2</span>"</span>/&gt;</span><br/>   <span class="highlight-text"/>   <span class="highlight-elem">&lt;tier <span class="highlight-attr"><span class="highlight-attrName">level</span>="<span class="highlight-attrValue">3</span>"</span> <span class="highlight-attr"><span class="highlight-attrName">comment</span>="<span class="highlight-attrValue">yeehah!</span>"</span>&gt;</span><br/>      <span class="highlight-text">Now for some</span>      <span class="highlight-elem">&lt;strong&gt;</span><br/>         <span class="highlight-elem">&lt;em&gt;</span>            <span class="highlight-text">seriously</span><span class="highlight-elem">&lt;/em&gt;</span><br/>         <span class="highlight-text"/>         <span class="highlight-elem">&lt;a <span class="highlight-attr"><span class="highlight-attrName">href</span>="<span class="highlight-attrValue">foo</span>"</span>&gt;</span>            <span class="highlight-text">mixed content</span><span class="highlight-elem">&lt;/a&gt;</span><br/>      <span class="highlight-elem">&lt;/strong&gt;</span><br/>      <span class="highlight-text">.</span>   <span class="highlight-elem">&lt;/tier&gt;</span><br/>   <span class="highlight-text"/><span class="highlight-elem">&lt;/root&gt;</span><br/><p>
+         Note: this source viewer is not very well tested, does not currently handle namespace nodes and mixed content formatting is very ugly.
+      </p></body></html>

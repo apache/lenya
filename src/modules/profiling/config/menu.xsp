@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+   |
+   |  Lenya menu.xsp
+   |
+   -->
+
+
+<xsp:page xmlns:uc="http://apache.org/cocoon/lenya/usecase/1.0"
+          xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+          xmlns="http://apache.org/cocoon/lenya/menubar/1.0"
+          xmlns:xsp="http://apache.org/xsp"
+          language="java">
+   <menu>
+      <menus>
+         <menu i18n:attr="name" name="File">
+            <block admin="true">
+               <!-- 
+                    this is a semi-nasty kind of hack. the goal is to open 
+                    the profiler output in a separate window with javascript.
+                    the UsecaseMenuTransformer will only accept a href="" 
+                    attribute, i.e. we can't use onclick="" here. 
+                    to make sure the window always pops up in front, we
+                    we focus() it.
+                    at the same time, we want the original window to remain 
+                    unchanged, so we use the "void" operator to suppress the
+                    return value of the whole expression. 
+                -->
+               <item href="javascript: void window.open(
+                              '/modules/profiling/profile.html',
+                              'Cocoon Profiler',
+                              'location=yes,scrollbars=yes,menubar=no,'
+                              + 'toolbar=no,status=yes,top=100,left=100,'
+                              + 'height=500,width=700'
+                           ).focus()">
+                  <i18n:text>Profiling</i18n:text>
+               </item>
+            </block>
+         </menu>
+      </menus>
+   </menu>
+</xsp:page>

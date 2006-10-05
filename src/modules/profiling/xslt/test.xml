@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<root xmlns="foo" attr="bogus">
+<!-- this is a comment -->
+<?foo "This is a processing Instruction" ?>
+  <tier level="1">
+     <info>dork dork dork!</info>
+     <info meta="leading whitespace"> dork dork dork dork!</info>
+     <!-- this is an indented comment -->
+     <info meta="trailing whitespace">dork!   </info>
+  </tier>
+  <tier level="2"/>
+  <tier level="3" comment="yeehah!">
+	  Now for some <strong><em>seriously</em> <a href="foo">mixed content</a></strong>.
+  </tier>
+</root>

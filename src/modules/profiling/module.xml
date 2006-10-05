@@ -1,0 +1,10 @@
+<module xmlns="http://apache.org/lenya/module/1.0">
+  <id>org.apache.lenya.modules.profiling</id>
+  <package>org.apache.lenya.modules</package>
+  <version>0.0.3</version>
+  <name>Cocoon Pipeline Profiling Module</name>
+  <lenya-version>@lenya.version@</lenya-version>
+  <description>Makes the Cocoon profiling mechanism available to Lenya site
+administrators. See also
+http://cocoon.apache.org/2.1/userdocs/concepts/profiler.html</description>
+</module> 
