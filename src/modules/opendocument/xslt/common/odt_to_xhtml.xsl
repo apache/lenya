@@ -463,6 +463,21 @@ http://books.evc-cit.info/odf_utils/odt_to_xhtml.html
 	<li><xsl:apply-templates/></li>
 </xsl:template>
 
+  <!--+
+      | Images
+      +-->
+<xsl:template match="draw:image[@xlink:show]">
+	<xsl:variable name="href"><xsl:value-of select="@xlink:href"/></xsl:variable>
+	<xsl:choose>
+		<xsl:when test="starts-with($href, 'http:')">
+			<img src="{$href}" alt="{@draw:name}"/>
+		</xsl:when>
+		<xsl:otherwise>
+			<img src="/{$dirname}openDocumentEmbeddedImages/zip-{$filename}.odt/file-{$href}" alt="{../@draw:name}"/>
+		</xsl:otherwise>
+	</xsl:choose>
+</xsl:template>
+
 <xsl:template match="table:table">
 	<table class="{@table:style-name}">
 		<colgroup>
