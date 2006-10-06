@@ -563,9 +563,7 @@ http://books.evc-cit.info/odf_utils/odt_to_xhtml.html
 </xsl:template>
 
 <xsl:template match="text:line-break">
-	<br />
-	<xsl:text>
-</xsl:text>
+<br />
 </xsl:template>
 
 <xsl:variable name="spaces"
