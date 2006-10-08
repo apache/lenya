@@ -26,14 +26,21 @@
                     unchanged, so we use the "void" operator to suppress the
                     return value of the whole expression. 
                 -->
-               <item href="javascript: void window.open(
-                              '/modules/profiling/profile.html',
-                              'Cocoon Profiler',
-                              'location=yes,scrollbars=yes,menubar=no,'
-                              + 'toolbar=no,status=yes,top=100,left=100,'
-                              + 'height=500,width=700'
-                           ).focus()">
-                  <i18n:text>Profiling</i18n:text>
+               <item>
+                 <xsp:attribute> 
+                   <xsp:param name="name">href</xsp:param>
+                   <xsp:expr>
+                      "javascript: void window.open('"
+                    + parameters.getParameter("servlet-context", "[context]") 
+                    + "/modules/profiling/profile.html',"
+                    + "'Cocoon Profiler',"
+                    + "'location=yes,scrollbars=yes,menubar=no,"
+                    + "toolbar=no,status=yes,top=100,left=100,"
+                    + "height=500,width=700'"
+                    + ").focus()"
+                   </xsp:expr>
+                 </xsp:attribute> 
+                 <i18n:text>Profiling</i18n:text>
                </item>
             </block>
          </menu>
