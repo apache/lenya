@@ -25,13 +25,14 @@
   </D:response>
   <jx:if test="${request.getHeader('depth') &gt; 0}">
     <jx:forEach var="doc" items="${usecase.getParameter('documents')}">
+      <!-- FIXME: shouldn't this conditional be doc.exists()? -->
       <jx:if test="${doc.getId()}">
         <jx:if test="${doc.getLanguage().equals(defaultLang)}">
          <!-- create a directory for each document;
           the language check is to prevent multiple folders appearing with the same name
           since concepts_en and concepts_de would both produce a folder called concepts -->
           <D:response>
-            <D:href>${request.getContextPath()}/${doc.getPublication().getId()}/webdav${doc.getId()}</D:href>
+            <D:href>${request.getContextPath()}/${doc.getPublication().getId()}/webdav${doc.getPath()}</D:href>
             <D:propstat>
               <D:prop>
                 <D:displayname>${doc.getName()}</D:displayname>
@@ -61,7 +62,7 @@
        <!-- create a file for each document, the href is the path to the file and the 
         display name is what will appear in the webdav folder -->
         <D:response>
-          <D:href>${request.getContextPath()}/${doc.getPublication().getId()}/webdav${doc.getId()}_${doc.getLanguage()}.${fileExtension}</D:href>
+          <D:href>${request.getContextPath()}/${doc.getPublication().getId()}/webdav${doc.getPath()}_${doc.getLanguage()}.${fileExtension}</D:href>
           <D:propstat>
             <D:prop>
               <D:displayname>${doc.getName()}_${doc.getLanguage()}.${fileExtension}</D:displayname>
