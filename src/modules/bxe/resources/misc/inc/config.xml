@@ -129,6 +129,8 @@
 
         <button name="Copy" col="0" row="4" action="ClipboardCopy"/>
         <button name="Cut" col="1" row="4" action="ClipboardCut"/>
+        <!-- see https://ssl.bitflux.ch/horde/chora/diff.php/trunk/examples/uni/config.xml?rt=svneditor&ws=0&r1=1027&r2=1444&ty=u -->
+        <button name="PasteDialog" col="4" row="4" action="ClipboardPasteDialog"/>
 
         <button name="Paste" col="2" row="4" action="ClipboardPaste"/>
         <button name="Image" col="3" row="5" action="InsertImage"/>
@@ -148,4 +150,7 @@
      <option name="autoParaElementName">p</option>
      <option name="autoParaElementNamespace">http://www.w3.org/1999/xhtml</option>
     </options>
+    <plugins>
+      <plugin name="ClipboardPasteDialog"/>
+    </plugins>
 </config>
