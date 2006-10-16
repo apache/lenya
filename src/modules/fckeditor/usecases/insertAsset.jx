@@ -23,6 +23,8 @@
   <page:head>
     <script src="${request.contextPath}/modules/fckeditor/javascript/insertAsset.js"/>
   </page:head>
+  
+  <page:title>FCKEditor - Insert Lenya resource</page:title>
 
   <page:body>
   
