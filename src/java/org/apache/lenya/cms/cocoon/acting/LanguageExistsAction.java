@@ -31,23 +31,27 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
+import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
-import org.apache.lenya.cms.site.SiteUtil;
+import org.apache.lenya.cms.site.SiteNode;
+import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.util.ServletHelper;
 
 /**
- * Action that checks the sitetree if there is a node with the current document-id and the current
- * language, i.e. if the current document has a version in the current language.
+ * Action that checks the sitetree if there is a node with the current
+ * document-id and the current language, i.e. if the current document has a
+ * version in the current language.
  */
 public class LanguageExistsAction extends ServiceableAction {
 
     /**
-     * Check if the current document-id has a document for the currently requested language.
+     * Check if the current document-id has a document for the currently
+     * requested language.
      * 
      * If yes return an empty map, if not return null.
      * 
@@ -57,12 +61,12 @@ public class LanguageExistsAction extends ServiceableAction {
      * @param source a <code>String</code> value
      * @param parameters a <code>Parameters</code> value
      * 
-     * @return an empty <code>Map</code> if there is a version of this document for the current
-     *         language, null otherwiese
+     * @return an empty <code>Map</code> if there is a version of this
+     *         document for the current language, null otherwiese
      * @throws Exception if an error occurs
      * 
-     * @exception Exception if the PageEnvelope could not be created or if the language information
-     *                could not be fetched from the document.
+     * @exception Exception if the PageEnvelope could not be created or if the
+     *            language information could not be fetched from the document.
      */
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String source,
             Parameters parameters) throws Exception {
@@ -84,13 +88,18 @@ public class LanguageExistsAction extends ServiceableAction {
             builder = (DocumentBuilder) selector.select(pub.getDocumentBuilderHint());
             DocumentLocator locator = builder.getLocator(factory, url);
 
-            List availableLanguages = new ArrayList();
+            Area area = pub.getArea(locator.getArea());
+            SiteStructure site = area.getSite();
 
-            String[] languages = pub.getLanguages();
-            for (int i = 0; i < languages.length; i++) {
-                DocumentLocator version = locator.getLanguageVersion(languages[i]);
-                if (SiteUtil.contains(this.manager, factory, version)) {
-                    availableLanguages.add(languages[i]);
+            List availableLanguages = new ArrayList();
+            if (site.contains(locator.getPath())) {
+                SiteNode node = site.getNode(locator.getPath());
+
+                String[] languages = pub.getLanguages();
+                for (int i = 0; i < languages.length; i++) {
+                    if (node.hasLink(languages[i])) {
+                        availableLanguages.add(languages[i]);
+                    }
                 }
             }
             if (availableLanguages.contains(locator.getLanguage())) {
