@@ -302,7 +302,9 @@ public class SiteUtil {
             String siteManagerHint = pub.getSiteManagerHint();
             siteManager = (SiteManager) selector.select(siteManagerHint);
             SiteStructure site = siteManager.getSiteStructure(factory, pub, locator.getArea());
-            return site.contains(locator.getPath());
+            String path = locator.getPath();
+            String language = locator.getLanguage();
+            return site.contains(path) && site.getNode(path).hasLink(language);
         } catch (SiteException e) {
             throw e;
         } catch (Exception e) {
