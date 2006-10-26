@@ -11,7 +11,9 @@
 <map:views>
   <map:view name="pretty-content" from-label="data">
     <map:transform src="xslt/xml2nicexml.xsl"/>
-    <map:transform src="xslt/xml2xhtml.xsl"/>
+    <map:transform src="xslt/xmlverbatimwrapper.xsl">
+      <map:parameter name="css-stylesheet" value="{request:contextPath}/modules/profiling/css/xmlverbatim.css"/>
+    </map:transform>
     <map:serialize type="xhtml"/>
   </map:view>
 </map:views>
