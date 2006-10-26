@@ -22,6 +22,10 @@ limitations under the License.
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
   
+  <page:title>
+      <i18n:text>Upload Resource</i18n:text>
+  </page:title>
+  
   <page:body>
     <div class="lenya-box-title">
       <i18n:text>Upload Resource</i18n:text>

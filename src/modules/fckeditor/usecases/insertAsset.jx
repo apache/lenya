@@ -24,7 +24,9 @@
     <script src="${request.contextPath}/modules/fckeditor/javascript/insertAsset.js"/>
   </page:head>
   
-  <page:title>FCKEditor - Insert Lenya resource</page:title>
+  <page:title>
+    <i18n:text>FCKEditor - Insert Lenya resource</i18n:text>
+  </page:title>
 
   <page:body>
   

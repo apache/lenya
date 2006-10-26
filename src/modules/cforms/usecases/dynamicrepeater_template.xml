@@ -26,6 +26,10 @@
   <page:head>
   </page:head>
 
+  <page:title>
+    <i18n:text>CForm Example</i18n:text>
+  </page:title>
+
   <page:body>
     <ft:form-template method="POST" ajax="false">
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>

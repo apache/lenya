@@ -25,6 +25,10 @@
   <page:head>
     <script src="${request.contextPath}/modules/bxe/javascript/insertAsset.js"/>
   </page:head>
+
+   <page:title>
+     <i18n:text>BXE - Insert Lenya resource</i18n:text>
+   </page:title>
   
   <page:body>
     <form method="POST" name="image" id="image">

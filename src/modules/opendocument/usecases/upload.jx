@@ -21,10 +21,14 @@ limitations under the License.
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1">
-  
+
+  <page:title>
+    <i18n:text>Upload ODT File</i18n:text>
+  </page:title> 
+ 
   <page:body>
     <div class="lenya-box-title">
-      <i18n:text>Upload odt</i18n:text>
+      <i18n:text>Upload ODT File</i18n:text>
     </div>
     <div class="lenya-box-body">
       <form method="POST" enctype="multipart/form-data" id="form-upload">

@@ -48,7 +48,11 @@
   <page:head>
     <script src="${request.contextPath}/modules/tinymce/javascript/insertAsset.js"/>
   </page:head>
-  
+ 
+  <page:title>
+    <i18n:text>TinyMCE - Insert Lenya resource</i18n:text>
+  </page:title>
+ 
   <page:body>
     <form method="POST" name="asset" id="asset">
       <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
