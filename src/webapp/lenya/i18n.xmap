@@ -25,6 +25,17 @@
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
   
+  <map:resources>
+    <map:resource name="serializeCatalogue">
+      <map:transform src="resources/i18n/modules2xinclude.xsl">
+        <map:parameter name="pubId" value="{page-envelope:publication-id}"/>
+        <map:parameter name="catalogue" value="{catalogue}"/>
+      </map:transform>
+      <map:transform type="xinclude"/>
+      <map:serialize/>
+    </map:resource>
+  </map:resources>
+  
   <map:pipelines>
     
     <map:pipeline type="noncaching">
@@ -49,17 +60,17 @@
               <map:parameter name="pub-catalogue-location" value="fallback://lenya/resources/i18n/"/>
               <map:parameter name="catalogue-file" value="{1}"/>
             </map:generate>
+            <map:call resource="serializeCatalogue">
+              <map:parameter name="catalogue" value="{1}"/>
+            </map:call>
           </map:when>
           <map:when test="resources/i18n/{1}">
             <map:generate src="resources/i18n/{1}"/>
+            <map:call resource="serializeCatalogue">
+              <map:parameter name="catalogue" value="{1}"/>
+            </map:call>
           </map:when>
         </map:select>
-        <map:transform src="resources/i18n/modules2xinclude.xsl">
-          <map:parameter name="pubId" value="{page-envelope:publication-id}"/>
-          <map:parameter name="catalogue" value="{1}"/>
-        </map:transform>
-        <map:transform type="xinclude"/>
-        <map:serialize/>
       </map:match>
     </map:pipeline>  
   </map:pipelines>
