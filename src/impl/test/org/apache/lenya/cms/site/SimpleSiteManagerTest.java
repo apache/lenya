@@ -100,6 +100,9 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
             Document linkDoc = structure.getNode(PATH).getLink("en").getDocument();
             assertSame(linkDoc, doc);
             
+            Link link = doc.getLink();
+            checkSetLabel(link);
+            
             doc.getLink().delete();
             assertFalse(structure.containsByUuid(doc.getUUID(), doc.getLanguage()));
             assertFalse(structure.contains(PATH));
@@ -120,6 +123,13 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
             }
         }
         // session.commit();
+    }
+
+    protected void checkSetLabel(Link link) {
+        String newLabel = "New Label";
+        assertFalse(link.getLabel().equals(newLabel));
+        link.setLabel(newLabel);
+        assertTrue(link.getLabel().equals(newLabel));
     }
 
     protected void checkLinks(SiteManager siteManager, SiteNode node) throws SiteException {
