@@ -25,9 +25,13 @@ import java.util.Map;
 
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataRegistry;
+import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.cms.workflow.WorkflowUtil;
 
 /**
  * Usecase to edit metadata for a resource.
@@ -105,20 +109,16 @@ public class Metadata extends SiteUsecase {
 
     }
 
-    /**
-     * Validates the request parameters.
-     * 
-     * @throws UsecaseException if an error occurs.
-     */
-    void validate() throws UsecaseException {
-        // do nothing
-    }
-
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
-     */
-    protected void doCheckExecutionConditions() throws Exception {
-        validate();
+    protected void doCheckPreconditions() throws Exception {
+        super.doCheckPreconditions();
+        Document doc = getSourceDocument();
+        if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
+            addErrorMessage("This usecase can only be invoked in the authoring area!");
+        }
+        if (!WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), doc, getEvent())) {
+            String title = DublinCoreHelper.getTitle(doc);
+            addErrorMessage("error-workflow-document", new String[] { getEvent(), title });
+        }
     }
 
     /**
@@ -137,11 +137,11 @@ public class Metadata extends SiteUsecase {
             namespace2num.put(num2namespace.get(key), key);
         }
         
-        
-        String[] namespaces = getSourceDocument().getMetaDataNamespaceUris();
+        Document document = getSourceDocument();
+        String[] namespaces = document.getMetaDataNamespaceUris();
 
         for (int nsIndex = 0; nsIndex < namespaces.length; nsIndex++) {
-            MetaData meta = getSourceDocument().getMetaData(namespaces[nsIndex]);
+            MetaData meta = document.getMetaData(namespaces[nsIndex]);
             String orgNsIndex = (String)namespace2num.get(namespaces[nsIndex]);
 
             if (orgNsIndex != null) {
@@ -155,6 +155,11 @@ public class Metadata extends SiteUsecase {
             }
         }
 
+        WorkflowUtil.invoke(this.manager, getSession(), getLogger(), document, getEvent());
+    }
+
+    protected String getEvent() {
+        return "edit";
     }
 
 }
