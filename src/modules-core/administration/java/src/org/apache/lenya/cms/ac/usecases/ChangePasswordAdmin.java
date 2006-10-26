@@ -44,4 +44,13 @@ public class ChangePasswordAdmin extends AbstractChangePassword {
             return;
         }
     }
+
+    /**
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
+     */
+    protected void doExecute() throws Exception {
+        super.doExecute();
+        setExitParameter(UserProfile.USER_ID, getParameterAsString(UserProfile.USER_ID));
+    }
+
 }
