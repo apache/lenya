@@ -166,7 +166,7 @@
               <map:parameter name="lastPublishedDate" value="{workflow:lastDate.publish}"/>
               <!--Following is a show off to explain lenya.properties.xml -->
               <map:parameter name="author" value="{properties:pubs.default.author}"/>
-	      <map:parameter name="nodeName" value="{page-envelope:document-name}"/>
+              <map:parameter name="nodeName" value="{page-envelope:document-name}"/>
             </map:transform>
           </map:when>
           <map:otherwise>
@@ -184,7 +184,7 @@
               <map:parameter name="lastPublishedDate" value="{workflow:lastDate.publish}"/>
               <!--Following is a show off to explain lenya.properties.xml -->
               <map:parameter name="author" value="{properties:pubs.default.author}"/>
-	      <map:parameter name="nodeName" value="{page-envelope:document-name}"/>
+              <map:parameter name="nodeName" value="{page-envelope:document-name}"/>
             </map:transform>
           </map:otherwise>
         </map:select>
