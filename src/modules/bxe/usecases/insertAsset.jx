@@ -88,7 +88,7 @@
               </jx:if>
               <tr>
                 <td colspan="2">
-                  <input i18n:attr="value" type="submit" name="submit" value="Submit"
+                  <input i18n:attr="value" type="submit" value="Submit"
                     onClick="javascript:${usecase.getView().getParameter('callbackFunction')}('${usecase.getParameter('document').getName()}');" />
                   &#160;
                   <input i18n:attr="value" type="submit" name="cancel" value="Cancel"
