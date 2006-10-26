@@ -43,7 +43,7 @@
         <xsl:if test="page:body//xhtml:div[@class = 'lenya-box-toggled']">
           <xsl:call-template name="toggle-script"/>
         </xsl:if>
-          
+        
         <xsl:apply-templates select="page:title"/>
         <table class="lenya-body" border="0" cellpadding="0" cellspacing="0">
           <tr>
@@ -79,12 +79,25 @@
   </xsl:template>
   
   
+  <xsl:template match="xhtml:div[@class = 'lenya-box']">
+    <xsl:copy>
+      <xsl:apply-templates select="@*|node()"/>
+      <div class="lenya-box-bottom">
+        <div class="lenya-box-bottom-content">&#160;</div>
+      </div>
+    </xsl:copy>
+  </xsl:template>
+  
+  
   <xsl:template match="xhtml:div[@class = 'lenya-box-toggled']">
     <xsl:variable name="number" select="count(preceding::xhtml:div[@class = 'lenya-box-toggled']) + 1"/>
     <div class="lenya-box">
       <xsl:apply-templates select="@*[local-name() != 'class']|node()">
         <xsl:with-param name="number" select="$number"/>
       </xsl:apply-templates>
+      <div class="lenya-box-bottom">
+        <div class="lenya-box-bottom-content">&#160;</div>
+      </div>
     </div>
   </xsl:template>
   

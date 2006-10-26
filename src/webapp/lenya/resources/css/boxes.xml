@@ -33,20 +33,30 @@ div.lenya-box-title {
 }
 
 div.lenya-box-body {
-    background: url('<context-prefix/>/modules/svg/tab-bottomLeft-5-F5F4E9-CCCCCC.png') left bottom no-repeat;
 }
 
 div.lenya-box-content {
-  background: url('<context-prefix/>/modules/svg/tab-bottomRight-5-F5F4E9-CCCCCC.png') right bottom no-repeat;
   padding: 10px;
   color: Black;
+  background-color: #F5F4E9;
+  border-left: solid 1px #CCCCCC;
+  border-right: solid 1px #CCCCCC;
+}
+
+div.lenya-box-bottom {
+  background: url('<context-prefix/>/modules/svg/tab-bottomLeft-5-F5F4E9-CCCCCC.png') left bottom no-repeat;
+}
+
+div.lenya-box-bottom-content {
+  background: url('<context-prefix/>/modules/svg/tab-bottomRight-5-F5F4E9-CCCCCC.png') right bottom no-repeat;
+  height: 5px;
 }
   
-  span.switch {
-    width: 2em;
-    cursor: pointer;
-    background-color: #F5F4E9;
-    border: solid 1px #CCCCCC;
-    color: Black;
+span.switch {
+  width: 2em;
+  cursor: pointer;
+  background-color: #F5F4E9;
+  border: solid 1px #CCCCCC;
+  color: Black;
 }
 </css>

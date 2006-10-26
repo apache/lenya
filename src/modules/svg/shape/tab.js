@@ -6,7 +6,7 @@ function tab() {
     var x;
     var y;
     var width;
-    var height = 1000;
+    var height = 50;
     var maxWidth = 1500;
     
     if (where == "topLeft") {
