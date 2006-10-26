@@ -4,7 +4,7 @@
       xmlns:lenya="http://apache.org/cocoon/lenya/page-envelope/1.0"
 >
   <head>
-    <title></title>
+    <title>XHTML document</title>
   </head>
   <body>
     <h1>New XHTML document</h1>
