@@ -35,10 +35,12 @@ import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
+import org.apache.lenya.cms.site.simple.DocumentStore;
 
 public class SimpleSiteManagerTest extends AbstractAccessControlTest {
 
     protected static final String PATH = "/foo/bar";
+
     protected static final String PARENT_PATH = "/foo";
 
     public void testSimpleSiteManager() throws Exception {
@@ -99,10 +101,12 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
             assertTrue(structure.contains(PATH));
             Document linkDoc = structure.getNode(PATH).getLink("en").getDocument();
             assertSame(linkDoc, doc);
-            
-            Link link = doc.getLink();
-            checkSetLabel(link);
-            
+
+            if (!(structure instanceof DocumentStore)) {
+                Link link = doc.getLink();
+                checkSetLabel(link);
+            }
+
             doc.getLink().delete();
             assertFalse(structure.containsByUuid(doc.getUUID(), doc.getLanguage()));
             assertFalse(structure.contains(PATH));
@@ -127,9 +131,11 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
 
     protected void checkSetLabel(Link link) {
         String newLabel = "New Label";
-        assertFalse(link.getLabel().equals(newLabel));
+        String oldLabel = link.getLabel();
+        assertFalse(oldLabel.equals(newLabel));
         link.setLabel(newLabel);
         assertTrue(link.getLabel().equals(newLabel));
+        link.setLabel(oldLabel);
     }
 
     protected void checkLinks(SiteManager siteManager, SiteNode node) throws SiteException {

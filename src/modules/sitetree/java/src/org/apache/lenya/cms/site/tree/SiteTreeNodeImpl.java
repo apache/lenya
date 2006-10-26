@@ -30,7 +30,6 @@ import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.util.Assert;
-import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Element;
 import org.w3c.dom.NamedNodeMap;
@@ -164,7 +163,6 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
 
             if ((child.getNodeType() == Node.ELEMENT_NODE)
                     && child.getNodeName().equals(LABEL_NAME)) {
-                String labelName = DocumentHelper.getSimpleElementText((Element) child);
                 String labelLanguage = null;
                 Node languageAttribute = child.getAttributes()
                         .getNamedItem(LANGUAGE_ATTRIBUTE_NAME);
@@ -173,7 +171,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
                     labelLanguage = languageAttribute.getNodeValue();
                 }
 
-                labels.add(new SiteTreeLink(this.factory, this, labelName, labelLanguage,
+                labels.add(new SiteTreeLink(this.factory, this, labelLanguage,
                         (Element) child));
             }
         }
@@ -579,11 +577,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         } else {
             setNodeAttribute(SiteTreeNodeImpl.VISIBLEINNAV_ATTRIBUTE_NAME, "false");
         }
-        try {
-            ((DefaultSiteTree) getTree()).saveDocument();
-        } catch (SiteException e) {
-            throw new RuntimeException(e);
-        }
+        save();
     }
 
     public void delete() {
@@ -603,6 +597,14 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
 
     public boolean isTopLevel() {
         return getPath().lastIndexOf("/") == 0;
+    }
+    
+    protected void save() {
+        try {
+            ((DefaultSiteTree) getTree()).saveDocument();
+        } catch (SiteException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

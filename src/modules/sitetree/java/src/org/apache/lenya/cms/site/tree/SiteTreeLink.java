@@ -27,9 +27,9 @@ import org.w3c.dom.Element;
  */
 public class SiteTreeLink extends AbstractLink {
 
-    protected SiteTreeLink(DocumentFactory factory, SiteNode node, String _label, String _language,
+    protected SiteTreeLink(DocumentFactory factory, SiteNode node, String _language,
             Element element) {
-        super(factory, node, _label, _language);
+        super(factory, node, "", _language);
         this.element = element;
     }
 
@@ -47,6 +47,11 @@ public class SiteTreeLink extends AbstractLink {
      */
     public void setLabel(String label) {
         DocumentHelper.setSimpleElementText(this.element, label);
+        ((SiteTreeNodeImpl) getNode()).save();
+    }
+
+    public String getLabel() {
+        return DocumentHelper.getSimpleElementText(this.element);
     }
 
 }
