@@ -23,7 +23,7 @@
     
     <component-instance name="bxe.close" logger="lenya.publication" 
     class="org.apache.lenya.cms.usecase.DummyUsecase">
-      <view uri="cocoon://modules/bxe/bxe.close" menu="false"/>
+      <view uri="cocoon://modules/bxe/bxe.close" menu="false" createContinuation="false"/>
     </component-instance>
     
   </xconf>

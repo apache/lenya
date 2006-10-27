@@ -23,7 +23,7 @@
     
     <component-instance name="bxe.edit" logger="lenya.publication" 
     class="org.apache.lenya.cms.workflow.usecases.CheckWorkflow">
-      <view uri="cocoon://modules/bxe/bxe.open" menu="false"/>
+      <view uri="cocoon://modules/bxe/bxe.open" menu="false" createContinuation="false"/>
       <event id="edit"/>
     </component-instance>
     

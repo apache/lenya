@@ -13,7 +13,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.usecase;
+package org.apache.lenya.cms.editors.cforms;
 
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.publication.Document;
@@ -25,7 +25,7 @@ import org.apache.cocoon.environment.Request;
 /**
  * Dummy CForms usecase.
  */
-public class DummyCFormsUsecase extends DocumentUsecase {
+public class CForms extends DocumentUsecase {
     
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()

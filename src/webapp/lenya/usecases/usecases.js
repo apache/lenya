@@ -16,299 +16,347 @@
  */
 /* $Id$ */
  
- cocoon.load("resource://org/apache/cocoon/forms/flow/javascript/Form.js");
- cocoon.load("fallback://lenya/usecases/usecases-util.js");
+cocoon.load("resource://org/apache/cocoon/forms/flow/javascript/Form.js");
 
-/* Helper method to add all request parameters to a usecase */
-function passRequestParameters(flowHelper, usecase) {
+//placeholders for custom flow code:
+var customLoopFlow = undefined;  
+var customSubmitFlow = undefined;
+
+/**
+ * Get the current usecase.
+ *
+ * @param the name of the usecase
+ * @return a org.apache.lenya.cms.usecase.Usecase object
+ */
+function getUsecase(usecaseName) {
+    var flowHelper;
+    var request;
+    var sourceUrl;
+    var usecaseResolver;
+    var usecase;
+    try {
+        flowHelper = cocoon.getComponent("org.apache.lenya.cms.cocoon.flow.FlowHelper");
+        request = flowHelper.getRequest(cocoon);
+        sourceUrl = Packages.org.apache.lenya.util.ServletHelper.getWebappURI(request);
+        usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
+        usecase = usecaseResolver.resolve(sourceUrl, usecaseName);
+        usecase.setSourceURL(sourceUrl);
+        usecase.setName(usecaseName);
+    } catch (exception) {
+        log("error", "Error in getUsecase(): " + exception);
+        log("debug", "usecaseName = " + usecaseName);
+        log("debug", "flowHelper = " + flowHelper);
+        log("debug", "request = " + request);
+        log("debug", "sourceUrl = " + sourceUrl);
+        log("debug", "usecaseResolver = " + usecaseResolver);
+        log("debug", "usecase = " + usecase);
+
+        throw exception;
+    } finally {
+        cocoon.releaseComponent(flowHelper);
+        cocoon.releaseComponent(usecaseResolver);
+    }
+    return usecase;
+}
+
+/**
+ * Release a usecase. Since usecases are Avalon Components, they must
+ * be released before a continuation is created.
+ *
+ * @param a org.apache.lenya.cms.usecase.Usecase object
+ */
+function releaseUsecase(usecase) {
+    var usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
+    try {
+        usecaseResolver.release(usecase);
+    } finally {
+        cocoon.releaseComponent(usecaseResolver);
+    }
+}
+
+/**
+ * Pass all parameters from the current request to a usecase
+ * (except lenya.usecase, lenya.continuation and submit).
+ *
+ * @param a org.apache.lenya.cms.usecase.Usecase object
+ */
+function passRequestParameters(usecase) {
+    var flowHelper = cocoon.getComponent("org.apache.lenya.cms.cocoon.flow.FlowHelper");
     var names = cocoon.request.getParameterNames();
     while (names.hasMoreElements()) {
         var name = names.nextElement();
-        if (!name.equals("lenya.usecase")
-            && !name.equals("lenya.continuation")
-            && !name.equals("submit")) {
-            
+        // some parameters are handled elsewhere:
+        if (!name.equals("lenya.usecase") 
+            && !name.equals("lenya.continuation") 
+            && !name.equals("submit")) { 
+            // pass the rest on:
             var value = flowHelper.getRequest(cocoon).get(name);
-            
             var string = new Packages.java.lang.String();
             var vector = new Packages.java.util.Vector();
             if (string.getClass().isInstance(value) || vector.getClass().isInstance(value)) {
                 // use getParameters() to avoid character encoding problems
                 var values = flowHelper.getRequest(cocoon).getParameterValues(name);
-				if (values.length < 2) {
+                if (values.length < 2) {
                     usecase.setParameter(name, values[0]);
-			    } else {
-					usecase.setParameter(name, values);
-				}
-            }
-            else {
+                } else {
+                    usecase.setParameter(name, values);
+                }
+            } else {
                 usecase.setPart(name, value);
             }
-            
         }
+    }
+    cocoon.releaseComponent(flowHelper);
+}
+
+/**
+ * Load the custom flow functions as provided in the view 
+ * configuration, if any.
+ *
+ * @param a org.apache.lenya.cms.usecase.UsecaseView object
+ */
+function loadCustomFlow(view) {
+    var flowUri = view.getCustomFlow();
+    if (flowUri != null && flowUri != "") { // for some reason, flowUri is not correctly cast into a Boolean, so "if (flowUri)" does not work
+          log("debug", "customFlow uri: [" + flowUri + "]");
+          //loopFlow = new Function(prepareCustomFlow(flowUri));
+          cocoon.load(flowUri);
     }
 }
 
 
-/*
- * Main function to execute a usecase.
+/**
+ * Log messages via cocoon.log.
+ *
+ * @param level, one of ("debug"|"warn"|"error")
+ * @param message (a string).
+ * @param usecaseName (a string).
+ */
+function log(level, message, usecaseName) {
+    var msg = "usecases.js::executeUsecase() "
+        + (usecaseName ? "with lenya.usecase=[" + usecaseName + "]" : "")
+        + ": " 
+        + message;
+    switch (level) {
+        case "debug":
+            if (cocoon.log.isDebugEnabled())
+                cocoon.log.debug(msg);
+            break;
+        case "info":
+            cocoon.log.info(msg);
+            break;
+       case "warn":
+            cocoon.log.warn(msg);
+            break;
+        case "error":
+            cocoon.log.error(msg);
+            break;
+        default:
+            cocoon.log.error(msg + "[Unknown log level " + level + "]"); 
+            break;
+    }
+}
+
+/**
+ * The Loop stage of the flow, in which a view is displayed. 
+ * <em>Note:</em> All Avalon components should be released before calling
+ * this function! This means especially that you cannot hold a usecase object,
+ * hence the proxy.
+ * 
+ * @param a org.apache.lenya.cms.usecase.UsecaseView object
+ * @param a org.apache.lenya.cms.usecase.UsecaseProxy object
+ * @param a generic Javascript object for custom flow code to preserve state information (not used by default)
+ *
+ * This function invokes customLoopFlow if it exists.
+ * Otherwise it falls back to defaultLoopFlow.
+ */
+function loopFlow(view, proxy, generic) {
+    if (customLoopFlow != undefined) {
+        log("info", "Using customLoopFlow function", proxy.getName());
+        return customLoopFlow(view, proxy, generic);
+    } else{
+        return defaultLoopFlow(view, proxy);
+    }
+}
+
+
+/**
+ * The Submit stage of the flow, in which a user interaction is processed.
+ * and the usecase is advanced. If the user has submitted, the usecase is executed.
+ * 
+ * @param a org.apache.lenya.cms.usecase.Usecase object
+ * @param a generic Javascript object for custom flow code to preserve state information (not used by default)
+ * @return a string with the return state ("success"|"cancel"|"continue").
+ *
+ * This function invokes customSubmitFlow if it exists.
+ * Otherwise it falls back to defaultSubmitFlow.
+ */
+function submitFlow(usecase, generic) {
+    if (customSubmitFlow != null) {
+        log("info", "Using customSubmitFlow function", usecase.getName());
+        return customSubmitFlow(usecase, generic);
+    } else{
+
+        return defaultSubmitFlow(usecase);
+    }
+}
+
+/**
+ * @see loopFlow.
+ */
+function defaultLoopFlow(view, proxy) {
+    var viewUri = view.getViewURI();
+    // we used to allow a cocoon:/ prefix (which sendPageXXX does not handle),
+    // but it is now deprecated!
+    if (viewUri.startsWith("cocoon:/")) {
+        viewUri = viewUri.substring(new Packages.java.lang.String("cocoon:/").length());
+        log("warn", "The use of the cocoon:/ protocol prefix in the <view uri=\"...\"> attribute is deprecated!");
+    }
+    if (! viewUri.startsWith("/")) {
+        // a local URI must be handled by usecase.xmap, which assumes a prefix "usecases-view/[menu|nomenu]/
+        // that determines whether the menu is to be displayed. this mechanism is used by most lenya core usecases.
+        viewUri = "usecases-view/" 
+            + (view.showMenu() ? "menu" : "nomenu")
+            + "/" + viewUri;
+    }
+    if (view.createContinuation()) {
+        log("debug", "Creating view and continuation, calling Cocoon with viewUri = [" + viewUri + "]");
+        cocoon.sendPageAndWait(viewUri, { "usecase" : proxy });
+    } else {
+        log("debug", "Creating view without continuation (!), calling Cocoon with viewUri = [" + viewUri + "]");
+        cocoon.sendPage(viewUri, { "usecase" : proxy});
+        cocoon.exit(); // we're done.
+    }
+}
+
+/**
+ * @see submitFlow
+ */
+function defaultSubmitFlow(usecase) {
+    usecase.advance();
+    if (cocoon.request.getParameter("submit")||cocoon.request.getParameter("lenya.submit")=="ok") {
+        usecase.checkExecutionConditions();
+        if (! usecase.hasErrors()) {
+            return executeFlow(usecase);
+        }
+    } else if (cocoon.request.getParameter("cancel")) {
+        usecase.cancel();
+        return "cancel";
+    }
+    return "continue"
+}
+
+/**
+ * The Execute stage of the flow, in which the usecase is finally executed.
+ *
+ * @param a org.apache.lenya.cms.usecase.Usecase object
+ * @return a string with the return state ("success"|"continue").
+ */
+function executeFlow(usecase) {
+    usecase.execute();
+    if (! usecase.hasErrors()) {
+        usecase.checkPostconditions();
+        if (! usecase.hasErrors()) {
+            return "success";
+        }
+    }
+    return "continue";
+}
+
+/**
+ * Redirect to target URL after finishing the usecase.
+ *
+ * @param the target URL
+ */
+function redirect(targetUrl) {
+    var flowHelper = cocoon.getComponent("org.apache.lenya.cms.cocoon.flow.FlowHelper");
+    var contextPath = flowHelper.getRequest(cocoon).getContextPath();
+    cocoon.releaseComponent(flowHelper);
+    cocoon.redirectTo(contextPath + targetUrl, true);
+}
+
+
+
+/**
+ * Main function to execute a usecase. This is called from <map:flow/>.
  *
  * Uses request parameter "lenya.usecase" to determine what
  * usecase to execute.
  * 
+ * Since "usecase" and "flowHelper" are avalon components, 
+ * they must be released before a continuation is created.
+ * In order to preserve state information, a "proxy" object
+ * is used.
  */
 function executeUsecase() {
 
-    var usecaseName = cocoon.parameters["usecaseName"];
+    var usecaseName;
+    var usecase; // the Usecase object
+    var proxy; // a UsecaseProxy to make the usecase state persistent across continuations
+    var view; // the UsecaseView object that belongs to our usecase.
+    var state; // the state of the usecase ("continue"|"success"|"cancel");
+    var targetUrl; // URL to redirect to after completion.
+    var generic = new Object; // a generic helper object for custom flow code to preserve state information.
 
-    var view;
-    var proxy;
-    var menu = "nomenu";
-    
-    var usecaseResolver;
-    var usecase;
-    var sourceUrl;
-    
-    if (cocoon.log.isDebugEnabled())
-       cocoon.log.debug("usecases.js::executeUsecase() called, parameter lenya.usecase = [" + usecaseName + "]");
-    
     try {
-
-        var flowHelper = cocoon.getComponent("org.apache.lenya.cms.cocoon.flow.FlowHelper");
-        var request = flowHelper.getRequest(cocoon);
-        sourceUrl = Packages.org.apache.lenya.util.ServletHelper.getWebappURI(request);
-
-        usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
-        usecase = usecaseResolver.resolve(sourceUrl, usecaseName);
-        usecase.setSourceURL(sourceUrl);
-        usecase.setName(usecaseName);
-        view = usecase.getView();
-        if (view && view.showMenu()) {
-            menu = "menu";
-        }
-
-        passRequestParameters(flowHelper, usecase);
+        usecaseName = cocoon.parameters["usecaseName"];
+        usecase = getUsecase(usecaseName);
+        passRequestParameters(usecase);
         usecase.checkPreconditions();
         usecase.lockInvolvedObjects();
+        // create proxy object to save usecase state
         proxy = new Packages.org.apache.lenya.cms.usecase.UsecaseProxy(usecase);
+        view = usecase.getView();
+        log("debug", "Successfully prepared usecase.", usecaseName);
+    } catch (exception) {
+        log("error", "Could not prepare usecase: " + exception, usecaseName);
+        throw exception;
+    } finally {
+        releaseUsecase(usecase);
     }
-    finally {
-        /* done with usecase component, tell usecaseResolver to release it */
-        if (usecaseResolver != null) {
-            if (usecase != null) {
-                usecaseResolver.release(usecase);
-                usecase = undefined;
-            }
-            cocoon.releaseComponent(usecaseResolver);
-        }
-    }
-    
-    var success = false;
-    var targetUrl;
-    var form;
-    var scriptString;
-    var evalFunc;
-    var generic;
-
-    /*
-     * If the usecase has a view, this means we want to display something 
-     * to the user before proceeding. This also means the usecase consists
-     * several steps; repeated until the user chooses to submit or cancel.
-     *
-     * If the usecase does not have a view, it is simply executed.
-     */
-
-    if (view) {
-        var ready = false;
-        while (!ready) {
-
+    loadCustomFlow(view);
+    if (view.getViewURI()) {
+        // If the usecase has a view uri, this means we want to display something 
+        // to the user before proceeding. This also means the usecase can consist
+        // of several steps; repeated until the user chooses to submit or cancel.
+        do {
+            // show the view:
             try {
-                var templateUri = view.getTemplateURI();
-                if (templateUri) {
-                    var viewUri = "view/" + menu + "/" + view.getTemplateURI();
-                    if (cocoon.log.isDebugEnabled())
-                        cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", creating view, calling Cocoon with viewUri = [" + viewUri + "]");
-                    if (view.getViewType()=="cforms"){
-                    /*
-                     * var generic - Generic object that can be used in all custom flow code
-                     * that is added by usecases. Right now it focus on document opertations
-                     *  but the properties should be extended through user/dev feedback.
-                     * The intention of this var is to provide a generic global flow object
-                     * (like in lots of cocoon examples) that can be accessed through out the different flow stages.
-                     * Alternatively one can use the invoking java class by providing bean properties methods 
-                     * (getter/setter methods) in this class and use them within the extensions (see usecase doc).
-                     * 
-                     * FIXME: Add cforms integration howto to the documentation.
-                     */
-                      generic={proxy:proxy,uri:null,doc:null,generic:null};
-                      var viewDef = "fallback://lenya/"+ view.getCformDefinition();
-                      if (cocoon.log.isDebugEnabled())
-                       cocoon.log.debug("usecases.js::executeUsecase()::cforms in usecase " + usecaseName + ", preparing formDefinition, calling Cocoon with viewUri = [" + viewDef + "]");
-                       
-                       // custom flowscript 
-                       if (view.getCformIntro()!=null){
-                          scriptString= view.getCformIntro();
-                          evalFunc = new Function (scriptString);
-                          evalFunc();
-                       }
-
-                       // form definition                       
-                       form = new Form(viewDef);
-                       
-                       // custom flowscript 
-                       if (view.getCformDefinitionBody()!=null){
-                          scriptString= view.getCformDefinitionBody();
-                          evalFunc = new Function ("form","generic",scriptString);
-                          evalFunc(form,generic);
-                       }
-
-                       // form binding
-                       if (view.getCformBinding() != null){
-                          var viewBind = "fallback://lenya/"+ view.getCformBinding();
-                          if (cocoon.log.isDebugEnabled())
-                             cocoon.log.debug("usecases.js::executeUsecase()::cforms in usecase " + usecaseName + ", preparing formDefinition, calling Cocoon with viewUri = [" + viewBind + "]");
-                          
-                          // form binding
-                          form.createBinding(viewBind);
-                          
-                          // custom flowscript 
-                          if (view.getCformBindingBody()!=null){
-                              scriptString= view.getCformBindingBody();
-                              evalFunc = new Function ("form","generic",scriptString);
-                              evalFunc(form,generic);
-                          }
-                       }
-                        // form template
-                          form.showForm(viewUri, {"usecase" : proxy});
-//DEBUG ajax="true"
-// print("form.showForm after");
-                    }
-                    else{
-                        cocoon.sendPageAndWait(viewUri, {
-                            "usecase" : proxy
-                        });
-                    }
-                }
-                else {
-                    var viewUri = view.getViewURI();
-                    if (viewUri.startsWith("cocoon:/")) {
-                        viewUri = viewUri.substring(new Packages.java.lang.String("cocoon:/").length());
-                    }
-                    if (cocoon.log.isDebugEnabled())
-                        cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", creating view, calling Cocoon with viewUri = [" + viewUri + "]");
-                    
-                    cocoon.sendPageAndWait(viewUri, {
-                        "usecase" : proxy
-                    });
-                }
-            }
-            catch (exception) {
-                /* if an exception was thrown by the view, allow the usecase to rollback the transition */
+                loopFlow(view, proxy, generic); //usecase must be released here!
+            } catch (exception) {
+                // if something went wrong, try and rollback the usecase:
+                log("error", "Exception during loopFlow(): " + exception, usecaseName);
                 try {
-                    usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
-                    usecase = usecaseResolver.resolve(sourceUrl, usecaseName);
+                    usecase = getUsecase(usecaseName);
                     proxy.setup(usecase);
                     usecase.cancel();
                     throw exception;
-                }
-                finally {
-                    if (usecaseResolver != null) {
-                        if (usecase != null) {
-                            usecaseResolver.release(usecase);
-                            usecase = undefined;
-                        }
-                        cocoon.releaseComponent(usecaseResolver);
-                    }
+                } finally {
+                    releaseUsecase(usecase);
                 }
             }
-            
-            if (cocoon.log.isDebugEnabled())
-                cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", after view, now advancing in usecase");
-        
-            try {
-                usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
-                usecase = usecaseResolver.resolve(sourceUrl, usecaseName);
-                proxy.setup(usecase);
-            
-                passRequestParameters(flowHelper, usecase);
-                usecase.advance();
-                //HEADSUP: Cform do not allow id="submit" anymore. Use id="ok" for now (till it is settled on cocoon-dev).
-                if (cocoon.request.getParameter("submit")||cocoon.request.getParameter("lenya.submit")=="ok") {
-                    usecase.checkExecutionConditions();
-                    if (! usecase.hasErrors()) {
-                       if (view.getViewType()=="cforms"){
-                       // custom flowscript 
-                         if (view.getCformOutro()!=null){
-                            scriptString= view.getCformOutro();
-                            evalFunc = new Function ("form","generic",scriptString);
-                            evalFunc(form,generic);
-                         }
-                       }
-                        usecase.execute();
-                        if (! usecase.hasErrors()) {
-                            usecase.checkPostconditions();
-                            if (! usecase.hasErrors()) {
-                                ready = true;
-                                success = true;
-                            }
-                        }
-                    }
-                }
-                else if (cocoon.request.getParameter("cancel")) {
-                    usecase.cancel();
-                    ready = true;
-                }
-                if (!ready) {
-                    proxy = new Packages.org.apache.lenya.cms.usecase.UsecaseProxy(usecase);
-                }
-                targetUrl = usecase.getTargetURL(success);
-            }
-            catch (exception) {
-                /* allow usecase to rollback the transition */
-                usecase.cancel();
-                throw exception;
-            }
-            finally {
-                if (usecaseResolver != null) {
-                    if (usecase != null) {
-                        usecaseResolver.release(usecase);
-                        usecase = undefined;
-                    }
-                    cocoon.releaseComponent(usecaseResolver);
-                }
-            }
-        }
-    }
-    else {
-        try {
-            usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
-            usecase = usecaseResolver.resolve(sourceUrl, usecaseName);
+            log("debug", "Advancing in usecase.", usecaseName);
+            // restore the usecase state and handle the user input:
+            usecase = getUsecase(usecaseName);
             proxy.setup(usecase);
-                
-            usecase.execute();
-            if (! usecase.hasErrors()) {
-                usecase.checkPostconditions();
-                if (! usecase.hasErrors()) {
-                    success = true;
-                }
-            }
-            targetUrl = usecase.getTargetURL(success);
-        }
-        catch (exception) {
-            /* allow usecase to rollback the transition */
-            usecase.cancel();
-            throw exception;
-        }
-        finally {
-            usecaseResolver.release(usecase);
-            usecase = undefined;
-            cocoon.releaseComponent(usecaseResolver);
-        }
+            passRequestParameters(usecase);
+            state = submitFlow(usecase, generic);
+            // create a new proxy with the updated usecase state
+            proxy = new Packages.org.apache.lenya.cms.usecase.UsecaseProxy(usecase);
+            releaseUsecase(usecase);
+        } while (state == "continue");
+        // If the usecase does not have a view uri, we can directly jump to 
+        // executeFlow().
+    } else {
+        usecase = getUsecase(usecaseName);
+        proxy.setup(usecase);
+        passRequestParameters(usecase);
+        state = executeFlow(usecase);
+        releaseUsecase(usecase);
     }
-    var url = flowHelper.getRequest(cocoon).getContextPath() + targetUrl;
-
-    if (cocoon.log.isDebugEnabled())
-       cocoon.log.debug("usecases.js::executeUsecase() in usecase " + usecaseName + ", completed, redirecting to url = [" + url + "]");
-    cocoon.redirectTo(url, true);
-    
+    //getTargetURL takes a boolean that is true on success:
+    targetUrl = usecase.getTargetURL(state == "success");
+    log("debug", "Completed, redirecting to url = [context:/" + targetUrl + "]", usecaseName);
+    // jump to the appropriate URL:
+    redirect(targetUrl);
 }

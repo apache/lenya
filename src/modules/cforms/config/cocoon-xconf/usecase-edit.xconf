@@ -3,23 +3,11 @@
 <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'cforms.edit']">
   <component-instance name="cforms.edit"
                       logger="lenya.site"
-                      class="org.apache.lenya.cms.usecase.DummyCFormsUsecase">
-    <view template="modules/cforms/usecases/dynamicrepeater_template.xml" type="cforms">
-      <intro/>
-      <definition template="modules/cforms/usecases/dynamicrepeater.xml">
-          form.setAttribute("counter", new java.lang.Integer(0));
-      </definition>
-      <binding template="modules/cforms/usecases/dynamicrepeater_binding.xml">
-          generic.doc = loadDocument(generic.proxy.getParameter('sourceUri'));
-          form.load(generic.doc);
-      </binding>
-      <outro>
-        form.save(generic.doc);
-        var flowHelper = cocoon.getComponent("org.apache.lenya.cms.cocoon.flow.FlowHelper");
-        flowHelper.triggerWorkflow(cocoon, 'edit');
-        saveDocument(generic.doc, generic.proxy.getParameter('sourceUri'));
-      </outro>
-    </view>
+                      class="org.apache.lenya.cms.editors.cforms.CForms">
+    <view 
+       uri="modules/cforms/usecases/dynamicrepeater_template.xml" 
+       customFlow="fallback://lenya/modules/cforms/flow/customFlow.js"
+    />
   </component-instance>
 </xconf>
 

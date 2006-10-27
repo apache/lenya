@@ -48,7 +48,7 @@
         executeUsecase() flowscript has completed and issued a redirect,
         which is matched here.
         -->
-      <map:match pattern="view/*/**" internal-only="true">
+      <map:match pattern="usecases-view/*/**" internal-only="true">
         
         <map:generate type="jx" src="fallback://lenya/{2}"/>
         <map:transform type="browser-update"/>
@@ -64,7 +64,7 @@
           <map:parameter name="resources-uri" value="{page-envelope:context-prefix}/cforms"/>
         </map:transform>
         <map:transform src="fallback://lenya/xslt/cforms/add-xhtml-namespace.xsl"/>
-        <map:match pattern="view/menu/**">
+        <map:match pattern="usecases-view/menu/**">
           <map:transform src="cocoon://lenya-page/{page-envelope:publication-id}/{page-envelope:area}/default.xml"/>
         </map:match>
         <map:select type="ajax-request">
