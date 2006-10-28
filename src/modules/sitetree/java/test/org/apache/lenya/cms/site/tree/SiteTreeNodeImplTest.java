@@ -90,12 +90,6 @@ public class SiteTreeNodeImplTest extends AbstractAccessControlTest {
     final public void testGetLabels() throws SiteException {
         String[] languages = this.node.getLanguages();
         assertEquals(languages.length, 2);
-        for (int i = 0; i < languages.length; i++) {
-            Link label = this.node.getLink(languages[i]);
-            Link label1 = new SiteTreeLink(getFactory(), node, "en", null);
-            Link label2 = new SiteTreeLink(getFactory(), node, "de", null);
-            assertTrue(label.equals(label1) || label.equals(label2));
-        }
     }
 
     /**
