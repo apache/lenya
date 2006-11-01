@@ -25,8 +25,8 @@ var customSubmitFlow = undefined;
 /**
  * Get the current usecase.
  *
- * @param the name of the usecase
- * @return a org.apache.lenya.cms.usecase.Usecase object
+ * @param usecaseName, a string
+ * @return a new org.apache.lenya.cms.usecase.Usecase Avalon component
  */
 function getUsecase(usecaseName) {
     var flowHelper;
@@ -50,7 +50,6 @@ function getUsecase(usecaseName) {
         log("debug", "sourceUrl = " + sourceUrl);
         log("debug", "usecaseResolver = " + usecaseResolver);
         log("debug", "usecase = " + usecase);
-
         throw exception;
     } finally {
         cocoon.releaseComponent(flowHelper);
@@ -63,7 +62,7 @@ function getUsecase(usecaseName) {
  * Release a usecase. Since usecases are Avalon Components, they must
  * be released before a continuation is created.
  *
- * @param a org.apache.lenya.cms.usecase.Usecase object
+ * @param usecase, a org.apache.lenya.cms.usecase.Usecase Avalon component
  */
 function releaseUsecase(usecase) {
     var usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
@@ -78,7 +77,7 @@ function releaseUsecase(usecase) {
  * Pass all parameters from the current request to a usecase
  * (except lenya.usecase, lenya.continuation and submit).
  *
- * @param a org.apache.lenya.cms.usecase.Usecase object
+ * @param usecase, a org.apache.lenya.cms.usecase.Usecase Avalon component
  */
 function passRequestParameters(usecase) {
     var flowHelper = cocoon.getComponent("org.apache.lenya.cms.cocoon.flow.FlowHelper");
@@ -113,7 +112,7 @@ function passRequestParameters(usecase) {
  * Load the custom flow functions as provided in the view 
  * configuration, if any.
  *
- * @param a org.apache.lenya.cms.usecase.UsecaseView object
+ * @param view, a org.apache.lenya.cms.usecase.UsecaseView object
  */
 function loadCustomFlow(view) {
     var flowUri;
@@ -121,7 +120,6 @@ function loadCustomFlow(view) {
         flowUri = view.getCustomFlow();
         if (flowUri != null && flowUri != "") { // for some reason, flowUri is not correctly cast into a Boolean, so "if (flowUri)" does not work
             log("debug", "customFlow uri: [" + flowUri + "]");
-            //loopFlow = new Function(prepareCustomFlow(flowUri));
             cocoon.load(flowUri);
         }
     } else {
@@ -133,9 +131,9 @@ function loadCustomFlow(view) {
 /**
  * Log messages via cocoon.log.
  *
- * @param level, one of ("debug"|"warn"|"error")
- * @param message (a string).
- * @param usecaseName (a string).
+ * @param level, one of ("debug"|"info"|"warn"|"error")
+ * @param message, a string
+ * @param usecaseName, a string.
  */
 function log(level, message, usecaseName) {
     var msg = "usecases.js::executeUsecase() "
@@ -165,12 +163,12 @@ function log(level, message, usecaseName) {
 /**
  * The Loop stage of the flow, in which a view is displayed. 
  * <em>Note:</em> All Avalon components should be released before calling
- * this function! This means especially that you cannot hold a usecase object,
+ * this function! This means that you cannot hold a usecase object,
  * hence the proxy.
  * 
- * @param a org.apache.lenya.cms.usecase.UsecaseView object
- * @param a org.apache.lenya.cms.usecase.UsecaseProxy object
- * @param a generic Javascript object for custom flow code to preserve state information (not used by default)
+ * @param view, a org.apache.lenya.cms.usecase.UsecaseView object
+ * @param proxy, a org.apache.lenya.cms.usecase.UsecaseProxy object
+ * @param generic, a generic Javascript object for custom flow code to preserve state information (currently not used by the default code)
  *
  * This function invokes customLoopFlow if it exists.
  * Otherwise it falls back to defaultLoopFlow.
@@ -189,8 +187,8 @@ function loopFlow(view, proxy, generic) {
  * The Submit stage of the flow, in which a user interaction is processed.
  * and the usecase is advanced. If the user has submitted, the usecase is executed.
  * 
- * @param a org.apache.lenya.cms.usecase.Usecase object
- * @param a generic Javascript object for custom flow code to preserve state information (not used by default)
+ * @param usecase, a org.apache.lenya.cms.usecase.Usecase Avalon component
+ * @param generic, a generic Javascript object for custom flow code to preserve state information (currently not used by the default code)
  * @return a string with the return state ("success"|"cancel"|"continue").
  *
  * This function invokes customSubmitFlow if it exists.
