@@ -116,11 +116,16 @@ function passRequestParameters(usecase) {
  * @param a org.apache.lenya.cms.usecase.UsecaseView object
  */
 function loadCustomFlow(view) {
-    var flowUri = view.getCustomFlow();
-    if (flowUri != null && flowUri != "") { // for some reason, flowUri is not correctly cast into a Boolean, so "if (flowUri)" does not work
-          log("debug", "customFlow uri: [" + flowUri + "]");
-          //loopFlow = new Function(prepareCustomFlow(flowUri));
-          cocoon.load(flowUri);
+    var flowUri;
+    if (view != null) {
+        flowUri = view.getCustomFlow();
+        if (flowUri != null && flowUri != "") { // for some reason, flowUri is not correctly cast into a Boolean, so "if (flowUri)" does not work
+            log("debug", "customFlow uri: [" + flowUri + "]");
+            //loopFlow = new Function(prepareCustomFlow(flowUri));
+            cocoon.load(flowUri);
+        }
+    } else {
+        log("debug", "Usecase does not define a view.");
     }
 }
 
@@ -315,7 +320,7 @@ function executeUsecase() {
         releaseUsecase(usecase);
     }
     loadCustomFlow(view);
-    if (view.getViewURI()) {
+    if (view != null && view.getViewURI()) {
         // If the usecase has a view uri, this means we want to display something 
         // to the user before proceeding. This also means the usecase can consist
         // of several steps; repeated until the user chooses to submit or cancel.
