@@ -54,7 +54,7 @@
         executeUsecase() flowscript has completed and issued a redirect,
         which is matched here.
         -->
-      <map:match pattern="view/*/**" internal-only="true">
+      <map:match pattern="usecases-view/*/**" internal-only="true">
         
         <map:generate type="jx" src="fallback://lenya/{2}"/>
         <map:transform type="browser-update"/>
