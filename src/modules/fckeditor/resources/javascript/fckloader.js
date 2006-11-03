@@ -22,6 +22,7 @@ function fckloader(host, requesturi, contextPath)
   oFCKeditor.Height="700";
   oFCKeditor.Config[ "FullPage" ] = true ;
   oFCKeditor.Config[ "ProcessHTMLEntities" ] = true ;
+  oFCKeditor.Config[ "ProcessNumericEntities" ] = true ;
   oFCKeditor.Config[ "BaseHref" ] = host + requesturi ;
   oFCKeditor.Config["CustomConfigurationsPath"] = contextPath + "/modules/fckeditor/javascript/fckconfig.js"  ;
   oFCKeditor.ToolbarSet = 'Lenya' ;
