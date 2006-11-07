@@ -15,6 +15,7 @@
 <xsl:param name="contextPath" select="'tinymce.ERROR'"/>
 <xsl:param name="continuationId" select="'tinymce.ERROR'"/>
 <xsl:param name="usecaseName" select="'tinymce.ERROR'"/>
+<xsl:param name="publicationid" />
 
 
 <!--
@@ -56,7 +57,7 @@
   </xsl:text>
   <script language="javascript" 
           type="text/javascript" 
-          src="{$contextPath}/modules/tinymce/tinymce/jscripts/tiny_mce/tiny_mce_src.js"
+          src="{$contextPath}/{$publicationid}/modules/tinymce/tinymce/jscripts/tiny_mce/tiny_mce_src.js"
   >&#160;</script>
   <xsl:text>
   </xsl:text>

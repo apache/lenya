@@ -5,7 +5,10 @@ Installation:
 
 - Download TinyMCE from http://tinymce.moxiecode.com/ and 
   unpack the archive in the resources directory of this module.
-  That should give you a subdirectory named "tinymce".
+  That should give you a subdirectory named "tinymce"
+  OR
+  Download TinyMCE and unpack the archive in 
+  {yourpub}/lenya/modules/tinymce/resource/
 
 - Optionally download additional language packs and unpack them
   in the same place. (The new files will end up in tinymce/ as 
