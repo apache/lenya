@@ -50,29 +50,15 @@ import org.apache.lenya.util.ServletHelper;
 
 /**
  * <p>
- * This source factory allows to access documents using their
+ * This source factory allows to access documents using the
+ * link syntax of the {@link org.apache.lenya.cms.linking.LinkResolver}.
  * </p>
- * <ul>
- * <li>publication ID</li>
- * <li>area</li>
- * <li>UUID</li>
- * <li>language</li>
- * <li>revision number</li>
- * </ul>
  * <p>
  * Additional parameters:
  * </p>
  * <ul>
  * <li><strong>format</strong> - the resource type format</li>
  * </ul>
- * <p>
- * All of these parameters are optional and default to the attributes of the
- * document which contains the link.
- * </p>
- * <p>
- * Syntax (square brackets denote optional parts):
- * </p>
- * <code>lenya-document:&lt;uuid&gt;[,lang=...][,area=...][,rev=...][,pub=...]</code>
  */
 public class DocumentSourceFactory extends AbstractLogEnabled implements SourceFactory, ThreadSafe,
         Contextualizable, Serviceable, Configurable {

@@ -21,7 +21,24 @@ import java.net.MalformedURLException;
 import org.apache.lenya.cms.publication.Document;
 
 /**
- * Resolve a link from a document to another document.
+ * <p>
+ * Resolve a link from a document to another document using it's
+ * </p>
+ * <ul>
+ * <li>publication ID</li>
+ * <li>area</li>
+ * <li>UUID</li>
+ * <li>language</li>
+ * <li>revision number</li>
+ * </ul>
+ * <p>
+ * All of these parameters are optional and default to the attributes of the
+ * document which contains the link.
+ * </p>
+ * <p>
+ * Syntax (square brackets denote optional parts):
+ * </p>
+ * <code>lenya-document:&lt;uuid&gt;[,lang=...][,area=...][,rev=...][,pub=...]</code>
  */
 public interface LinkResolver {
     
