@@ -34,9 +34,8 @@ import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
+import org.apache.lenya.cms.linking.LinkResolver;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
-import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Proxy;
@@ -88,6 +87,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
     private Document currentDocument;
 
     private DocumentFactory factory;
+    private LinkResolver linkResolver;
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
@@ -116,6 +116,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
         this.serviceSelector = null;
         this.acResolver = null;
         this.policyManager = null;
+        this.linkResolver = null;
 
         try {
             this.serviceSelector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
@@ -132,6 +133,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("    Using policy manager [" + this.policyManager + "]");
             }
+            this.linkResolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
         } catch (final ServiceException e) {
             throw new ProcessingException(e);
         } catch (final AccessControlException e) {
@@ -183,8 +185,38 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                     if (getLogger().isDebugEnabled()) {
                         getLogger().debug(this.indent + "href URL: [" + href + "]");
                     }
+                    
+                    if (href.startsWith("lenya-document:")) {
+                        
+                        String anchor = null;
+                        String url = null;
 
-                    if (href.startsWith("/" + publication.getId())) {
+                        int anchorIndex = href.indexOf("#");
+                        if (anchorIndex > -1) {
+                            url = href.substring(0, anchorIndex);
+                            anchor = href.substring(anchorIndex + 1);
+                        } else {
+                            url = href;
+                        }
+                        
+                        String[] linkUriAndQuery = url.split("\\?");
+                        String linkUri = linkUriAndQuery[0];
+                        String queryString = null;
+                        if (linkUriAndQuery.length > 1) {
+                            queryString = linkUriAndQuery[1];
+                        }
+                        Document targetDocument = this.linkResolver.resolve(getCurrentDocument(), linkUri);
+                        String extension = targetDocument.getExtension();
+                        if (extension.length() > 0) {
+                            extension = "." + extension;
+                        }
+                        rewriteLink(newAttrs,
+                                targetDocument,
+                                anchor,
+                                queryString,
+                                extension);
+                    }
+                    else if (href.startsWith("/" + publication.getId())) {
 
                         final String webappUrlWithQueryString = href;
                         String webappUrlWithAnchor;
@@ -247,10 +279,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                             }
                         }
                     }
-                } catch (final DocumentBuildException e) {
-                    getLogger().error("startElement failed: ", e);
-                    throw new SAXException(e);
-                } catch (final AccessControlException e) {
+                } catch (final Exception e) {
                     getLogger().error("startElement failed: ", e);
                     throw new SAXException(e);
                 }
@@ -390,6 +419,9 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                 this.serviceSelector.release(this.acResolver);
             }
             this.manager.release(this.serviceSelector);
+        }
+        if (this.linkResolver != null) {
+            this.manager.release(this.linkResolver);
         }
     }
 

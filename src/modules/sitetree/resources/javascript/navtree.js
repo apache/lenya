@@ -23,6 +23,7 @@ function NavNode(id, parent) {
     this.parent = parent;
     this.items = {};
     this.isfolder = false;
+    this.uuid = '';
     this.href = '';
     this.label = '';
     this.area = '';
@@ -42,6 +43,7 @@ NavNode.prototype.createNewNode = function(node)
     newItem.isfolder = isNodeFolder(node);
     newItem.area = this.area;
     newItem.path = node.getAttribute('basic-url');
+    newItem.uuid = node.getAttribute('uuid');
     newItem.isprotected = isNodeProtected(node);
     newItem.href = node.getAttribute('href');
     newItem.label = getLabel(node);

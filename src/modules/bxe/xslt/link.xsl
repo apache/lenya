@@ -95,19 +95,15 @@
                     <td colspan="2">&#160;</td>
                   </tr>
                   <tr>
-                    <td class="lenya-form-caption">URL:</td>
+                    <td class="lenya-form-caption"><i18n:text>URL</i18n:text>:</td>
                     <td>
-                      <input class="lenya-form-element" 
-                        type="text" 
-                        name="url"/>
+                      <input class="lenya-form-element" type="text" name="url"/>
                     </td>
                   </tr>
                   <tr>
-                    <td class="lenya-form-caption">Title:</td>
+                    <td class="lenya-form-caption"><i18n:text>Title</i18n:text>:</td>
                     <td>
-                      <input class="lenya-form-element" 
-                        type="text" 
-                        name="title"/>
+                      <input class="lenya-form-element" type="text" name="title"/>
                     </td>
                   </tr>
                   <tr>

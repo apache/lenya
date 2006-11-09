@@ -12,9 +12,9 @@ function insertLink() {
     window.close();
 }
 
-function setLink(src) { 
-    url = src;
-    document.forms["link"].url.value = url;
+function setLink(uuid) {
+    var language = CHOSEN_LANGUAGE;
+    document.forms["link"].url.value = "lenya-document:" + uuid + ",lang=" + language;
 }
 
 function insertText() { 
@@ -34,7 +34,7 @@ function LinkTree(doc, treeElement) {
 LinkTree.prototype = new NavTree;
 
 LinkTree.prototype.handleItemClick = function(item, event) {
-    setLink(item.href);
+    setLink(item.uuid);
 }
 
 function buildTree() {

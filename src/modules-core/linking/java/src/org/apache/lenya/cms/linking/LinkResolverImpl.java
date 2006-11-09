@@ -1,0 +1,71 @@
+/*
+ * Copyright  1999-2004 The Apache Software Foundation
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+package org.apache.lenya.cms.linking;
+
+import java.net.MalformedURLException;
+
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.util.Query;
+
+public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver {
+
+    public static final String ROLE = LinkResolverImpl.class.getName();
+    protected static final String PAIR_DELIMITER = ",";
+    protected static final String KEY_VALUE_DELIMITER = "=";
+
+    public Document resolve(Document currentDoc, String linkUri) throws MalformedURLException {
+
+        String[] schemeAndPath = linkUri.split(":");
+        String path = schemeAndPath[1];
+
+        String pubId;
+        String uuid;
+        String area;
+        String language;
+
+        if (path.indexOf(PAIR_DELIMITER) > -1) {
+            int firstDelimiterIndex = path.indexOf(PAIR_DELIMITER);
+            uuid = path.substring(0, firstDelimiterIndex);
+            String pathQueryString = path.substring(firstDelimiterIndex + 1);
+            Query query = new Query(pathQueryString, PAIR_DELIMITER, KEY_VALUE_DELIMITER);
+            pubId = query.getValue("pub", currentDoc.getPublication().getId());
+            area = query.getValue("area", currentDoc.getArea());
+            language = query.getValue("lang", currentDoc.getLanguage());
+        } else {
+            uuid = path;
+            pubId = currentDoc.getPublication().getId();
+            area = currentDoc.getArea();
+            language = currentDoc.getLanguage();
+        }
+
+        if (uuid.length() == 0) {
+            uuid = currentDoc.getUUID();
+        }
+
+        try {
+            Publication pub = currentDoc.getFactory().getPublication(pubId);
+            Document doc = pub.getArea(area).getDocument(uuid, language);
+            return doc;
+        } catch (PublicationException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+}
