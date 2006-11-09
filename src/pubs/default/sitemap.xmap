@@ -299,14 +299,21 @@
           </map:act>
         </map:act>
 
-        <map:generate type="serverpages" src="fallback://lenya/content/exception/document-does-not-exist.xsp"/>
-        <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl">
-          <map:parameter name="documenturl" value="{2}.html"/>
-          <map:parameter name="path" value="{page-envelope:document-path}"/>
-          <map:parameter name="area" value="{1}"/>
-        </map:transform>
-        <map:call resource="style-cms-page" />
-        <map:serialize status-code="404" />
+        <map:select type="resource-exists">
+          <map:when test="site:/en/index">
+            <map:generate type="serverpages" src="fallback://lenya/content/exception/document-does-not-exist.xsp"/>
+            <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl">
+              <map:parameter name="documenturl" value="{2}.html"/>
+              <map:parameter name="path" value="{page-envelope:document-path}"/>
+              <map:parameter name="area" value="{1}"/>
+            </map:transform>
+            <map:call resource="style-cms-page" />
+            <map:serialize status-code="404" />
+          </map:when>
+          <map:otherwise>
+            <map:redirect-to uri="{request:contextPath}{request:requestUri}?lenya.usecase=export.importExampleContent"/>
+          </map:otherwise>
+        </map:select>
       </map:match>
       
     </map:pipeline>

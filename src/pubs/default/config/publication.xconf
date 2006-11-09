@@ -49,6 +49,7 @@
   <module name="resource"/>
   <module name="sitemanagement"/>
   <module name="sitetree"/>
+  <module name="export"/>
   <!-- TODO: The goal is to have a blog module ;-) -->
   <!--
   <module name="blog"/>
