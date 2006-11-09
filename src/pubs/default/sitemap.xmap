@@ -142,11 +142,7 @@
           <map:part src="cocoon://modules/sitetree/{2}/{3}/tabs/{5}.xml"/>
           <map:part src="cocoon://modules/sitetree/{2}/{3}/menu/{5}.xml"/>
           <map:part src="cocoon://modules/sitetree/{2}/{3}/search/{5}.xml"/>
-          <!--
-          <map:part src="cocoon://modules/{page-envelope:document-type}/{1}.xml"/>
-          -->
-          <!-- e.g. cocoon://modules/xhtml/xhtml.xml according to cocoon.xconf -->
-          <map:part src="{resource-type:format-xhtml}"/>
+          <map:part src="{resource-type:format-xhtml}?rendertype={1}"/>
         </map:aggregate>
         <map:transform src="fallback://lenya/modules/svg/xslt/image2svg.xsl"/>
         <map:select type="resource-exists">
