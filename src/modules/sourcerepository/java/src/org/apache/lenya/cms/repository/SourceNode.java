@@ -80,6 +80,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     /**
      * Ctor.
+     * 
      * @param session
      * @param sourceURI
      * @param manager
@@ -106,6 +107,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     /**
      * Returns the URI of the actual source which is used.
+     * 
      * @return A string.
      */
     protected String getRealSourceURI() {
@@ -115,13 +117,14 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             String pubBase = Node.LENYA_PROTOCOL + Publication.PUBLICATION_PREFIX_URI + "/";
             String publicationsPath = this.sourceURI.substring(pubBase.length());
             publicationId = publicationsPath.split("/")[0];
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, getSession());
+            DocumentFactory factory = DocumentUtil
+                    .createDocumentFactory(this.manager, getSession());
             Publication pub = factory.getPublication(publicationId);
             contentDir = pub.getContentDir();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        
+
         String contentBaseUri = null;
         String urlID = this.sourceURI.substring(Node.LENYA_PROTOCOL.length());
 
@@ -133,17 +136,19 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         String uriSuffix;
         if (new File(contentDir).isAbsolute()) {
             // Absolute
-            contentBaseUri = FILE_PREFIX + contentDir; 
+            contentBaseUri = FILE_PREFIX + contentDir;
             uriSuffix = File.separator + fileSuffix;
         } else {
             // Relative
             contentBaseUri = CONTEXT_PREFIX + contentDir;
             uriSuffix = "/" + fileSuffix;
         }
-        
+
         try {
             if (!SourceUtil.exists(contentBaseUri, this.manager)) {
-                throw new RuntimeException("The content directory [" + contentBaseUri + "] does not exist!");
+                getLogger().info(
+                    "The content directory [" + contentBaseUri + "] does not exist. "
+                            + "It will be created as soon as documents are added.");
             }
         } catch (ServiceException e) {
             throw new RuntimeException(e);
@@ -152,9 +157,9 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        
+
         String realSourceUri = contentBaseUri + uriSuffix;
-        
+
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Real Source URI: " + realSourceUri);
         }
@@ -274,7 +279,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                 String publicationId = publicationsPath.split("/")[0];
 
                 DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager,
-                        getSession());
+                    getSession());
                 Publication pub = factory.getPublication(publicationId);
 
                 String publicationPath = pub.getDirectory().getCanonicalPath();
@@ -284,8 +289,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                         + rcEnvironment.getRCMLDirectory();
                 String backupDirectory = publicationPath + File.separator
                         + rcEnvironment.getBackupDirectory();
-                this.revisionController = new RevisionController(rcmlDirectory,
-                        backupDirectory,
+                this.revisionController = new RevisionController(rcmlDirectory, backupDirectory,
                         publicationPath);
 
             } catch (Exception e) {
@@ -382,7 +386,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     /**
-     * @return The document node, if this is a meta data node, or the node itself otherwise.
+     * @return The document node, if this is a meta data node, or the node
+     *         itself otherwise.
      * @throws ServiceException
      * @throws RepositoryException
      */
@@ -390,7 +395,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         Node node;
         String sourceUri = getSourceURI();
         if (sourceUri.endsWith(".meta")) {
-            String documentSourceUri = sourceUri.substring(0, sourceUri.length() - ".meta".length());
+            String documentSourceUri = sourceUri
+                    .substring(0, sourceUri.length() - ".meta".length());
             NodeFactory factory = null;
             try {
                 factory = (NodeFactory) this.manager.lookup(NodeFactory.ROLE);
@@ -510,10 +516,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             java.util.Vector newChildren = new java.util.Vector();
             while (iterator.hasNext()) {
                 TraversableSource child = (TraversableSource) iterator.next();
-                newChildren.add(new SourceNode(getSession(),
-                        sourceURI + "/" + child.getName(),
-                        this.manager,
-                        getLogger()));
+                newChildren.add(new SourceNode(getSession(), sourceURI + "/" + child.getName(),
+                        this.manager, getLogger()));
             }
             return newChildren;
         } catch (Exception e) {
@@ -538,6 +542,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     /**
      * Loads the data from the real source.
+     * 
      * @throws RepositoryException if an error occurs.
      */
     protected synchronized void loadData() throws RepositoryException {
@@ -661,8 +666,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             }
         }
     }
-    
-    /* 
+
+    /*
      * @return the last modified date of the meta data
      */
     public long getMetaLastModified() throws RepositoryException {
@@ -733,8 +738,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     /**
-     * @return The source URI of the meta data node. TODO: This is a hack and can be removed when
-     *         UUIDs are used.
+     * @return The source URI of the meta data node. TODO: This is a hack and
+     *         can be removed when UUIDs are used.
      */
     protected String getMetaSourceURI() {
         String sourceUri = getSourceURI();
@@ -831,17 +836,18 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                 } else {
                     NamespaceHelper helper = new NamespaceHelper(META_DATA_NAMESPACE, "", xml);
                     Element[] setElements = helper.getChildren(xml.getDocumentElement(),
-                            ELEMENT_SET);
+                        ELEMENT_SET);
                     for (int setIndex = 0; setIndex < setElements.length; setIndex++) {
                         String namespace = setElements[setIndex].getAttribute(ATTRIBUTE_NAMESPACE);
                         Element[] elementElements = helper.getChildren(setElements[setIndex],
-                                ELEMENT_ELEMENT);
+                            ELEMENT_ELEMENT);
                         for (int elemIndex = 0; elemIndex < elementElements.length; elemIndex++) {
                             String key = elementElements[elemIndex].getAttribute(ATTRIBUTE_KEY);
-                            Element[] valueElements = helper.getChildren(elementElements[elemIndex],
-                                    ELEMENT_VALUE);
+                            Element[] valueElements = helper.getChildren(
+                                elementElements[elemIndex], ELEMENT_VALUE);
                             for (int valueIndex = 0; valueIndex < valueElements.length; valueIndex++) {
-                                String value = DocumentHelper.getSimpleElementText(valueElements[valueIndex]);
+                                String value = DocumentHelper
+                                        .getSimpleElementText(valueElements[valueIndex]);
                                 List values = getValueList(namespace, key);
                                 values.add(value);
                             }
