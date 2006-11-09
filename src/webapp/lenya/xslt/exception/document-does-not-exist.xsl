@@ -20,7 +20,8 @@
 <xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0"
-  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
+  xmlns="http://www.w3.org/1999/xhtml"
   >
   
   <xsl:import href="../util/page-util.xsl"/>
