@@ -62,6 +62,9 @@ public class CheckWorkflow extends DocumentUsecase implements Configurable {
         Document doc = getSourceDocument();
         if (!WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), doc, getEvent())) {
             String title = DublinCoreHelper.getTitle(doc);
+            if (title == null) {
+                title = "";
+            }
             addErrorMessage("error-workflow-document", new String[] { getEvent(), title });
         }
     }
