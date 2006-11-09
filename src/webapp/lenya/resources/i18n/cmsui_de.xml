@@ -375,7 +375,7 @@
   <message key="error-validation">Schema Validierung schlug fehl: {0}</message>
   <message key="error-missing-language">Das angeforderte Dokument ist nicht verfügbar in der Sprache: {0}</message>
   <message key="error-document-existance-short">Dokument existiert nicht</message>
-  <message key="error-document-existance">Das angeforderte Dokument {0} mit der ID {1} existiert nicht.</message>
+  <message key="error-document-existance">Das angeforderte Dokument {0} existiert nicht.</message>
   <message key="error-generic">Ein Fehler ist aufgetreten.</message>
   <message key="error-404">404: Seite nicht gefunden</message>
 </catalogue>

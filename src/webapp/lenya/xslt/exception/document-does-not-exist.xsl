@@ -69,12 +69,6 @@
                 <ul>
                   <xsl:apply-templates select="missing-language/available-languages/available-language"/>
                 </ul>
-                <xsl:if test="$area = 'authoring'">
-                  <p>
-                    <strong>NOTE:</strong> Please make sure that your content repository
-                    is configured correctly within (local.)publication.xconf.
-                  </p>
-                </xsl:if>
               </div>
             </xsl:when>
             <xsl:otherwise>
@@ -84,7 +78,6 @@
                   <i18n:translate>
                     <i18n:text i18n:key="error-document-existance" />
                     <i18n:param>'<xsl:value-of select="$documenturl"/>'</i18n:param>
-                    <i18n:param>'<xsl:value-of select="$path"/>'</i18n:param>
                   </i18n:translate>
                 </p>
                 <xsl:if test="$area = 'authoring'">
