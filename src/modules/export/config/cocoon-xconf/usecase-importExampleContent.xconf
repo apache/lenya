@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <!--
   Copyright 1999-2005 The Apache Software Foundation
 
@@ -15,10 +15,14 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmsui.xml 447395 2006-09-18 13:01:33Z andreas $ -->
+<!-- $Id: usecases-workflow-deactivate.xconf 348547 2005-11-23 20:13:01Z chestnut $ -->
+<!--
+    This file defines the publication specific use-cases
+-->
 
-<catalogue xml:lang="de" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
-  <message key="Reformat">Formatieren</message>
-
-</catalogue>
+  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'export.importExampleContent']">
+    <component-instance name="export.importExampleContent" logger="lenya.export"
+      class="org.apache.lenya.cms.export.Import">
+      <view template="modules/export/usecases/importExampleContent.jx" menu="false"/>
+    </component-instance>
+  </xconf>

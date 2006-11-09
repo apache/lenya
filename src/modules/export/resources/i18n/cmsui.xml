@@ -17,8 +17,12 @@
 
 <!-- $Id: cmsui.xml 447395 2006-09-18 13:01:33Z andreas $ -->
 
-<catalogue xml:lang="de" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
-  <message key="Reformat">Formatieren</message>
-
+  <message key="getting-started">Getting Started</message>
+  <message key="thanks">Thank you for considering Apache Lenya!</message>
+  <message key="import-example-content">Import example pages</message>
+  <message key="create-own-page">Start with own page</message>
+  <message key="may-take-a-while">This may take a couple of seconds.</message>
+  
 </catalogue>

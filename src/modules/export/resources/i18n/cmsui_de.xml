@@ -19,6 +19,10 @@
 
 <catalogue xml:lang="de" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
-  <message key="Reformat">Formatieren</message>
-
+  <message key="getting-started">Erste Schritte</message>
+  <message key="thanks">Vielen Dank, dass Sie sich Apache Lenya näher anschauen!</message>
+  <message key="import-example-content">Beispiel-Inhalt importieren</message>
+  <message key="create-own-page">Eigene Seite anlegen</message>
+  <message key="may-take-a-while">Dies kann einige Sekunden dauern.</message>
+  
 </catalogue>
