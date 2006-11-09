@@ -107,7 +107,7 @@ public class Import extends AbstractUsecase {
         boolean visible = true;
         String visibleString = element.getAttribute("visibleinnav");
         if (visibleString != null && !visibleString.equals("")) {
-            visible = Boolean.parseBoolean(visibleString);
+            visible = Boolean.valueOf(visibleString).booleanValue();
         }
 
         Element[] labelElements = helper.getChildren(element, "label");
