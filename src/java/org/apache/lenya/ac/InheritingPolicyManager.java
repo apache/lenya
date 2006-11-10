@@ -49,7 +49,7 @@ public interface InheritingPolicyManager extends PolicyManager {
             throws AccessControlException;
 
     /**
-     * Returns the existing policies for all URL steps, beginning with the root policy.
+     * Returns the existing policies for all URL steps in bottom-up order, ending with the root policy.
      * @param controller The accreditable manager to use.
      * @param url The URL inside the web application.
      * @return An array of policies.

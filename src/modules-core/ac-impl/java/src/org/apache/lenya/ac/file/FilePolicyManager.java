@@ -26,9 +26,11 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.net.URI;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
@@ -45,11 +47,11 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Credential;
+import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.InheritingPolicyManager;
 import org.apache.lenya.ac.ModifiablePolicy;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
-import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.cache.CachingException;
 import org.apache.lenya.ac.cache.SourceCache;
 import org.apache.lenya.ac.impl.CredentialImpl;
@@ -63,8 +65,8 @@ import org.w3c.dom.Document;
 /**
  * A PolicyBuilder is used to build policies.
  */
-public class FilePolicyManager extends AbstractLogEnabled implements
-        InheritingPolicyManager, Parameterizable, Disposable, Serviceable {
+public class FilePolicyManager extends AbstractLogEnabled implements InheritingPolicyManager,
+        Parameterizable, Disposable, Serviceable {
 
     private static final class SubtreeFileFilter implements FileFilter {
         private final String url;
@@ -81,8 +83,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements
          * @see java.io.FileFilter#accept(java.io.File)
          */
         public boolean accept(File file) {
-            return file.getName().equals(this.subtree)
-                    || file.getName().equals(this.url);
+            return file.getName().equals(this.subtree) || file.getName().equals(this.url);
         }
     }
 
@@ -113,25 +114,17 @@ public class FilePolicyManager extends AbstractLogEnabled implements
 
     private SourceCache cache;
 
-    private Credential[] credentials;
-
     protected static final String URL_FILENAME = "url-policy.acml";
-
     protected static final String SUBTREE_FILENAME = "subtree-policy.acml";
-
-    protected static final String USER_ADMIN_URL = "/admin/users/";
 
     /**
      * Builds the URL policy for a URL from a file. When the file is not
      * present, an empty policy is returned.
      * 
-     * @param controller
-     *            The access controller to use.
-     * @param url
-     *            The URL inside the web application.
+     * @param controller The access controller to use.
+     * @param url The URL inside the web application.
      * @return A policy.
-     * @throws AccessControlException
-     *             when something went wrong.
+     * @throws AccessControlException when something went wrong.
      */
     public Policy buildURLPolicy(AccreditableManager controller, String url)
             throws AccessControlException {
@@ -142,13 +135,10 @@ public class FilePolicyManager extends AbstractLogEnabled implements
      * Builds a subtree policy from a file. When the file is not present, an
      * empty policy is returned.
      * 
-     * @param controller
-     *            The access controller to use.
-     * @param url
-     *            The URL inside the web application.
+     * @param controller The access controller to use.
+     * @param url The URL inside the web application.
      * @return A policy.
-     * @throws AccessControlException
-     *             when something went wrong.
+     * @throws AccessControlException when something went wrong.
      */
     public Policy buildSubtreePolicy(AccreditableManager controller, String url)
             throws AccessControlException {
@@ -159,18 +149,14 @@ public class FilePolicyManager extends AbstractLogEnabled implements
      * Builds a policy from a file. When the file is not present, an empty
      * policy is returned.
      * 
-     * @param controller
-     *            The access controller to use.
-     * @param url
-     *            The url.
-     * @param policyFilename
-     *            The policy filename.
+     * @param controller The access controller to use.
+     * @param url The url.
+     * @param policyFilename The policy filename.
      * @return A policy.
-     * @throws AccessControlException
-     *             when something went wrong.
+     * @throws AccessControlException when something went wrong.
      */
-    protected DefaultPolicy buildPolicy(AccreditableManager controller,
-            String url, String policyFilename) throws AccessControlException {
+    protected DefaultPolicy buildPolicy(AccreditableManager controller, String url,
+            String policyFilename) throws AccessControlException {
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Building policy for URL [" + url + "]");
@@ -203,22 +189,26 @@ public class FilePolicyManager extends AbstractLogEnabled implements
     /**
      * Returns the policy file URI for a URL and a policy filename.
      * 
-     * @param url
-     *            The url to get the file for.
-     * @param policyFilename
-     *            The name of the policy file.
+     * @param url The url to get the file for.
+     * @param policyFilename The name of the policy file.
      * @return A String.
-     * @throws AccessControlException
-     *             if an error occurs
+     * @throws AccessControlException if an error occurs
      */
     protected String getPolicySourceURI(String url, String policyFilename)
             throws AccessControlException {
         if (url.startsWith("/")) {
             url = url.substring(1);
         }
+        
+        // remove publication ID
+        if (url.indexOf("/") > -1) {
+            url = url.substring(url.indexOf("/") + 1);
+        }
+        else {
+            url = "";
+        }
 
-        File policyFile = new File(getPoliciesDirectory(), url + File.separator
-                + policyFilename);
+        File policyFile = new File(getPoliciesDirectory(), url + File.separator + policyFilename);
         String policyUri = policyFile.toURI().toString();
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Computing policy URI [" + policyUri + "]");
@@ -229,16 +219,12 @@ public class FilePolicyManager extends AbstractLogEnabled implements
     /**
      * Returns the policy file for a certain URL.
      * 
-     * @param url
-     *            The URL to get the policy for.
-     * @param policyFilename
-     *            The policy filename.
+     * @param url The URL to get the policy for.
+     * @param policyFilename The policy filename.
      * @return A file.
-     * @throws AccessControlException
-     *             when an error occurs.
+     * @throws AccessControlException when an error occurs.
      */
-    protected File getPolicyFile(String url, String policyFilename)
-            throws AccessControlException {
+    protected File getPolicyFile(String url, String policyFilename) throws AccessControlException {
         String fileUri = getPolicySourceURI(url, policyFilename);
         File file;
         try {
@@ -252,15 +238,11 @@ public class FilePolicyManager extends AbstractLogEnabled implements
     /**
      * Saves a URL policy.
      * 
-     * @param url
-     *            The URL to save the policy for.
-     * @param policy
-     *            The policy to save.
-     * @throws AccessControlException
-     *             when something went wrong.
+     * @param url The URL to save the policy for.
+     * @param policy The policy to save.
+     * @throws AccessControlException when something went wrong.
      */
-    public void saveURLPolicy(String url, Policy policy)
-            throws AccessControlException {
+    public void saveURLPolicy(String url, Policy policy) throws AccessControlException {
         getLogger().debug("Saving URL policy for URL [" + url + "]");
         savePolicy(url, policy, URL_FILENAME);
     }
@@ -268,15 +250,11 @@ public class FilePolicyManager extends AbstractLogEnabled implements
     /**
      * Saves a Subtree policy.
      * 
-     * @param url
-     *            The url to save the policy for.
-     * @param policy
-     *            The policy to save.
-     * @throws AccessControlException
-     *             when something went wrong.
+     * @param url The url to save the policy for.
+     * @param policy The policy to save.
+     * @throws AccessControlException when something went wrong.
      */
-    public void saveSubtreePolicy(String url, Policy policy)
-            throws AccessControlException {
+    public void saveSubtreePolicy(String url, Policy policy) throws AccessControlException {
         getLogger().debug("Saving subtree policy for URL [" + url + "]");
         savePolicy(url, policy, SUBTREE_FILENAME);
     }
@@ -284,14 +262,10 @@ public class FilePolicyManager extends AbstractLogEnabled implements
     /**
      * Saves a policy to a file.
      * 
-     * @param url
-     *            The URL to save the policy for.
-     * @param policy
-     *            The policy.
-     * @param filename
-     *            The file.
-     * @throws AccessControlException
-     *             if something goes wrong.
+     * @param url The URL to save the policy for.
+     * @param policy The policy.
+     * @param filename The file.
+     * @throws AccessControlException if something goes wrong.
      */
     protected void savePolicy(String url, Policy policy, String filename)
             throws AccessControlException {
@@ -303,31 +277,25 @@ public class FilePolicyManager extends AbstractLogEnabled implements
     /**
      * Saves a policy to a file.
      * 
-     * @param policy
-     *            The policy to save.
-     * @param file
-     *            The file.
-     * @throws AccessControlException
-     *             when an error occurs.
+     * @param policy The policy to save.
+     * @param file The file.
+     * @throws AccessControlException when an error occurs.
      */
-    protected void savePolicy(Policy policy, File file)
-            throws AccessControlException {
+    protected void savePolicy(Policy policy, File file) throws AccessControlException {
         Document document = PolicyBuilder.savePolicy(policy);
 
         try {
             if (!file.exists()) {
                 file.getParentFile().mkdirs();
                 if (!file.createNewFile()) {
-                    throw new AccessControlException("File [" + file
-                            + "] could not be created.");
+                    throw new AccessControlException("File [" + file + "] could not be created.");
                 }
             }
             DocumentHelper.writeDocument(document, file);
         } catch (AccessControlException e) {
             throw e;
         } catch (Exception e) {
-            throw new AccessControlException("Path: [" + file.getAbsolutePath()
-                    + "]", e);
+            throw new AccessControlException("Path: [" + file.getAbsolutePath() + "]", e);
         }
     }
 
@@ -352,11 +320,9 @@ public class FilePolicyManager extends AbstractLogEnabled implements
      */
     public void parameterize(Parameters parameters) throws ParameterException {
         if (parameters.isParameter(DIRECTORY_PARAMETER)) {
-            this.policiesDirectoryUri = parameters
-                    .getParameter(DIRECTORY_PARAMETER);
+            this.policiesDirectoryUri = parameters.getParameter(DIRECTORY_PARAMETER);
             if (getLogger().isDebugEnabled()) {
-                getLogger().debug(
-                        "Policies directory URI: " + this.policiesDirectoryUri);
+                getLogger().debug("Policies directory URI: " + this.policiesDirectoryUri);
             }
         }
     }
@@ -365,8 +331,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements
      * Get the path to the policies directory.
      * 
      * @return the path to the policies directory
-     * @throws AccessControlException
-     *             if an error occurs
+     * @throws AccessControlException if an error occurs
      */
     public File getPoliciesDirectory() throws AccessControlException {
 
@@ -376,16 +341,12 @@ public class FilePolicyManager extends AbstractLogEnabled implements
             File directory;
 
             try {
-                resolver = (SourceResolver) getServiceManager().lookup(
-                        SourceResolver.ROLE);
+                resolver = (SourceResolver) getServiceManager().lookup(SourceResolver.ROLE);
                 source = resolver.resolveURI(this.policiesDirectoryUri);
-                getLogger().debug(
-                        "Policies directory source: [" + source.getURI() + "]");
-                directory = new File(new URI(NetUtils.encodePath(source
-                        .getURI())));
+                getLogger().debug("Policies directory source: [" + source.getURI() + "]");
+                directory = new File(new URI(NetUtils.encodePath(source.getURI())));
             } catch (final Exception e) {
-                throw new AccessControlException(
-                        "Resolving policies directory failed: ", e);
+                throw new AccessControlException("Resolving policies directory failed: ", e);
             } finally {
                 if (resolver != null) {
                     if (source != null) {
@@ -396,8 +357,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements
             }
 
             getLogger().debug(
-                    "Policies directory resolved to ["
-                            + directory.getAbsolutePath() + "]");
+                    "Policies directory resolved to [" + directory.getAbsolutePath() + "]");
             setPoliciesDirectory(directory);
         }
 
@@ -415,16 +375,11 @@ public class FilePolicyManager extends AbstractLogEnabled implements
     /**
      * Sets the policies directory.
      * 
-     * @param directory
-     *            The directory.
-     * @throws AccessControlException
-     *             if the directory is not a directory
+     * @param directory The directory.
+     * @throws AccessControlException if the directory is not a directory
      */
-    public void setPoliciesDirectory(File directory)
-            throws AccessControlException {
-        getLogger().debug(
-                "Setting policies directory [" + directory.getAbsolutePath()
-                        + "]");
+    public void setPoliciesDirectory(File directory) throws AccessControlException {
+        getLogger().debug("Setting policies directory [" + directory.getAbsolutePath() + "]");
         if (!directory.isDirectory()) {
             throw new AccessControlException("Policies directory invalid: ["
                     + directory.getAbsolutePath() + "]");
@@ -438,6 +393,12 @@ public class FilePolicyManager extends AbstractLogEnabled implements
      */
     public Policy[] getPolicies(AccreditableManager controller, String url)
             throws AccessControlException {
+        
+        if (!url.startsWith("/")) {
+            throw new IllegalArgumentException("The URL [" + url + "] doesn't start with a slash!");
+        }
+        
+        url = url.substring(1);
 
         String orgUrl = url;
         List policies = new LinkedList();
@@ -445,9 +406,9 @@ public class FilePolicyManager extends AbstractLogEnabled implements
         int position = 1;
         Policy policy;
         String[] directories = url.split("/");
-        url = "";
+        url = directories[0] + "/";
 
-        for (int i = 0; i < directories.length; i++) {
+        for (int i = 1; i < directories.length; i++) {
             url += directories[i] + "/";
             policy = buildSubtreePolicy(controller, url);
             orderedPolicies.put(String.valueOf(position), policy);
@@ -458,8 +419,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements
         for (int i = orderedPolicies.size(); i > 0; i--) {
             policies.add(orderedPolicies.get(String.valueOf(i)));
         }
-        return (DefaultPolicy[]) policies.toArray(new DefaultPolicy[policies
-                .size()]);
+        return (DefaultPolicy[]) policies.toArray(new DefaultPolicy[policies.size()]);
     }
 
     /**
@@ -480,35 +440,27 @@ public class FilePolicyManager extends AbstractLogEnabled implements
      * Removes an accreditable from all policies within a certain directory
      * tree.
      * 
-     * @param manager
-     *            The accreditable manager which owns the accreditable.
-     * @param accreditable
-     *            The accreditable to remove.
-     * @param policyDirectory
-     *            The directory where the policies are located.
-     * @throws AccessControlException
-     *             when an error occurs.
+     * @param manager The accreditable manager which owns the accreditable.
+     * @param accreditable The accreditable to remove.
+     * @param policyDirectory The directory where the policies are located.
+     * @throws AccessControlException when an error occurs.
      */
-    protected void removeAccreditable(AccreditableManager manager,
-            Accreditable accreditable, File policyDirectory)
-            throws AccessControlException {
+    protected void removeAccreditable(AccreditableManager manager, Accreditable accreditable,
+            File policyDirectory) throws AccessControlException {
 
-        File[] policyFiles = policyDirectory.listFiles(new SubtreeFileFilter(
-                URL_FILENAME, SUBTREE_FILENAME));
+        File[] policyFiles = policyDirectory.listFiles(new SubtreeFileFilter(URL_FILENAME,
+                SUBTREE_FILENAME));
 
         try {
-            RemovedAccreditablePolicyBuilder builder = new RemovedAccreditablePolicyBuilder(
-                    manager);
+            RemovedAccreditablePolicyBuilder builder = new RemovedAccreditablePolicyBuilder(manager);
             builder.setRemovedAccreditable(accreditable);
             for (int i = 0; i < policyFiles.length; i++) {
 
                 if (getLogger().isDebugEnabled()) {
                     getLogger().debug("Removing roles");
+                    getLogger().debug("    Accreditable: [" + accreditable + "]");
                     getLogger().debug(
-                            "    Accreditable: [" + accreditable + "]");
-                    getLogger().debug(
-                            "    File:         ["
-                                    + policyFiles[i].getAbsolutePath() + "]");
+                            "    File:         [" + policyFiles[i].getAbsolutePath() + "]");
                 }
 
                 InputStream stream = new FileInputStream(policyFiles[i]);
@@ -520,8 +472,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements
             throw new AccessControlException(e1);
         }
 
-        File[] directories = policyDirectory
-                .listFiles(new IsDirectoryFileFilter());
+        File[] directories = policyDirectory.listFiles(new IsDirectoryFileFilter());
 
         for (int i = 0; i < directories.length; i++) {
             removeAccreditable(manager, accreditable, directories[i]);
@@ -533,31 +484,14 @@ public class FilePolicyManager extends AbstractLogEnabled implements
      * @see org.apache.lenya.ac.PolicyManager#accreditableRemoved(org.apache.lenya.ac.AccreditableManager,
      *      org.apache.lenya.ac.Accreditable)
      */
-    public void accreditableRemoved(AccreditableManager manager,
-            Accreditable accreditable) throws AccessControlException {
+    public void accreditableRemoved(AccreditableManager manager, Accreditable accreditable)
+            throws AccessControlException {
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug(
-                    "An accreditable was removed: [" + accreditable + "]");
+            getLogger().debug("An accreditable was removed: [" + accreditable + "]");
         }
 
         removeAccreditable(manager, accreditable, getPoliciesDirectory());
-
-        if (accreditable instanceof User) {
-            Role role = URLPolicy.getAuthorRole(manager);
-            if (role != null) {
-                String url = USER_ADMIN_URL + ((User) accreditable).getId()
-                        + ".html";
-                DefaultPolicy policy = (DefaultPolicy) buildSubtreePolicy(
-                        manager, url);
-                Credential credential = policy
-                        .getCredential(accreditable, role);
-                if (credential != null && credential.contains(role)) {
-                    policy.removeRole(accreditable, role);
-                }
-                saveSubtreePolicy(url, policy);
-            }
-        }
     }
 
     private ServiceManager serviceManager;
@@ -575,41 +509,34 @@ public class FilePolicyManager extends AbstractLogEnabled implements
      * @see org.apache.lenya.ac.PolicyManager#accreditableAdded(org.apache.lenya.ac.AccreditableManager,
      *      org.apache.lenya.ac.Accreditable)
      */
-    public void accreditableAdded(AccreditableManager manager,
-            Accreditable accreditable) throws AccessControlException {
-        if (accreditable instanceof User) {
-            Role role = URLPolicy.getAuthorRole(manager);
-            if (role != null) {
-                String url = USER_ADMIN_URL + ((User) accreditable).getId()
-                        + ".html";
-                ModifiablePolicy policy = (ModifiablePolicy) buildSubtreePolicy(
-                        manager, url);
-                // This method get invoked, when a new user is added.
-                // The user always should be able to edit her profile.
-                // Therefore we grant her inherit edit rights to his page
-                policy.addRole(accreditable, role, "grant");
-                saveSubtreePolicy(url, policy);
-            }
-        }
+    public void accreditableAdded(AccreditableManager manager, Accreditable accreditable)
+            throws AccessControlException {
     }
 
-    public Credential[] getCredentials(AccreditableManager controller,
-            String url) throws AccessControlException {
+    public Credential[] getCredentials(AccreditableManager controller, String url)
+            throws AccessControlException {
+
+        if (!url.startsWith("/")) {
+            throw new IllegalArgumentException("The URL [" + url + "] doesn't start with a slash!");
+        }
+        
+        url = url.substring(1);
+
         HashMap orderedCredential = new LinkedHashMap();
         int position = 1;
         Policy policy;
         String orgUrl = url;
 
         String[] directories = url.split("/");
-        url = "";
+        url = directories[0] + "/";
 
-        for (int i = 0; i < directories.length; i++) {
+        for (int i = 1; i < directories.length; i++) {
             url += directories[i] + "/";
             policy = buildSubtreePolicy(controller, url);
             Credential[] tmp = policy.getCredentials();
             // we need to revert the order of the credentials
             // to keep the most important policy on top
-            for (int j = tmp.length-1; j >= 0; j--) {
+            for (int j = tmp.length - 1; j >= 0; j--) {
                 Credential credential = tmp[j];
                 orderedCredential.put(String.valueOf(position), credential);
                 position++;
@@ -620,22 +547,33 @@ public class FilePolicyManager extends AbstractLogEnabled implements
             Credential[] tmp = policy.getCredentials();
             // we need to revert the order of the credentials
             // to keep the most important policy on top
-            for (int i = tmp.length-1; i >= 0; i--) {
+            for (int i = tmp.length - 1; i >= 0; i--) {
                 Credential credential = tmp[i];
                 orderedCredential.put(String.valueOf(position), credential);
                 position++;
             }
         }
-        Credential[] returnCredential = new CredentialImpl[orderedCredential
-                .size()];
+        Credential[] returnCredential = new CredentialImpl[orderedCredential.size()];
         int y = 0;
         for (int i = orderedCredential.size(); i > 0; i--) {
-            returnCredential[y] = (Credential) orderedCredential.get(String
-                    .valueOf(i));
+            returnCredential[y] = (Credential) orderedCredential.get(String.valueOf(i));
             y++;
         }
 
         return returnCredential;
+    }
+
+    public Role[] getGrantedRoles(AccreditableManager accreditableManager, Identity identity,
+            String url) throws AccessControlException {
+        Role[] roles = accreditableManager.getRoleManager().getRoles();
+        Set grantedRoles = new HashSet();
+        Policy policy = getPolicy(accreditableManager, url);
+        for (int i = 0; i < roles.length; i++) {
+            if (policy.check(identity, roles[i]) == Policy.RESULT_GRANTED) {
+                grantedRoles.add(roles[i]);
+            }
+        }
+        return (Role[]) grantedRoles.toArray(new Role[grantedRoles.size()]);
     }
 
 }

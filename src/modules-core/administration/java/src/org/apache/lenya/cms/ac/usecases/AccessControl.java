@@ -463,12 +463,9 @@ public class AccessControl extends AccessControlUsecase {
         for (Iterator i = policyCredentials.iterator(); i.hasNext();) {
             Credential credential = (Credential) i.next();
             Accreditable accreditable = credential.getAccreditable();
-            Role[] roles = credential.getRoles();
+            Role role = credential.getRole();
             String method = credential.getMethod();
-            for (int j = 0; j < roles.length; j++) {
-                credentials.add(new CredentialWrapper(accreditable, roles[j],
-                        method));
-            }
+            credentials.add(new CredentialWrapper(accreditable, role, method));
         }
         return (CredentialWrapper[]) credentials
                 .toArray(new CredentialWrapper[credentials.size()]);

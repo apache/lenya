@@ -17,7 +17,7 @@
 package org.apache.lenya.ac;
 
 /**
- * A credential assigns a set of {@link Role}s to an {@link Accreditable}.
+ * A credential assigns a {@link Role} to an {@link Accreditable}.
  */
 public interface Credential {
 
@@ -27,16 +27,9 @@ public interface Credential {
     Accreditable getAccreditable();
 
     /**
-     * @return The roles of this credential.
+     * @return The role of this credential.
      */
-    Role[] getRoles();
+    Role getRole();
 
-    /**
-     * Returns if the credential contains a certain role.
-     * @param role A role.
-     * @return A boolean value.
-     */
-    boolean contains(Role role);
-    
     String getMethod();
 }

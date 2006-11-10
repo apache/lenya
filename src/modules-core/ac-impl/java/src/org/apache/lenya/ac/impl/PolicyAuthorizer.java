@@ -17,7 +17,9 @@
 
 package org.apache.lenya.ac.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.cocoon.environment.Request;
@@ -25,7 +27,6 @@ import org.apache.cocoon.environment.Session;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Authorizer;
-import org.apache.lenya.ac.Credential;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
@@ -105,35 +106,9 @@ public class PolicyAuthorizer extends AbstractLogEnabled implements Authorizer {
         String webappUrl)
         throws AccessControlException {
 
-        Policy policy = getPolicyManager().getPolicy(getAccreditableManager(), webappUrl);
-        Role[] roles = policy.getRoles(identity);
-        boolean authorized = false,out=false;
-        /*
-         * If the policy does not contain any role 
-         * that the identity can obtain, we can assume
-         * deny.
-         * */
-        if (roles.length<1)
-            return authorized;
-        Credential[] credentials = policy.getCredentials(identity);
-        for (int i = 0; i < credentials.length; i++) {
-			Credential credential = credentials[i];
-			for (int j = 0; j < roles.length; j++) {
-                            Role role = roles[j];
-                            if (credential.contains(role)){
-                                    String method=credential.getMethod();
-                                    if (method.equals(CredentialImpl.GRANT)){
-                                        authorized=true;
-                                    }
-                                    out=true;
-                                    break;
-                                }
-			}
-                        if(out)
-                            break;
-		}
+        Role[] roles = getPolicyManager().getGrantedRoles(getAccreditableManager(), identity, webappUrl);
         saveRoles(request, roles);
-        return authorized;
+        return roles.length > 0;
     }
 
     /**

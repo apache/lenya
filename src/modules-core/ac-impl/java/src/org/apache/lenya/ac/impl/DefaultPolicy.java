@@ -19,11 +19,11 @@
 
 package org.apache.lenya.ac.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
-import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.util.Map;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.lenya.ac.AccessControlException;
@@ -31,6 +31,7 @@ import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.Credential;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.ModifiablePolicy;
+import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
 
 /**
@@ -38,173 +39,78 @@ import org.apache.lenya.ac.Role;
  */
 public class DefaultPolicy implements ModifiablePolicy {
 
-    private static final String KEY_SEPERATOR = ":";
-
-    private Map accreditableToCredential = new LinkedHashMap();
+    private List credentials = new ArrayList();
 
     /**
      * Adds a credential to this policy.
      * 
-     * @param credential
-     *            A credential.
+     * @param credential A credential.
      */
     public void addCredential(Credential credential) {
         assert credential != null;
-        if (credential.getRoles().length > 0) {
-            Credential[] credentials = null;
-            String key = credential.getAccreditable().toString()
-                    + KEY_SEPERATOR + credential.getRoles()[0];
-            if (!this.accreditableToCredential.containsKey(key)) {
-                credentials = new Credential[1];
-                credentials[0] = credential;
-            } else {
-                Credential[] oldCredentials = (Credential[]) this.accreditableToCredential
-                        .get(key);
-                int oldSize = oldCredentials.length;
-                credentials = new Credential[oldSize + 1];
-                int i;
-                for (i = 0; i < oldSize; i++) {
-                    credentials[i] = (Credential) oldCredentials[i];
-                }
-                credentials[i] = credential;
-            }
-            this.accreditableToCredential.put(key, credentials);
+        if (this.credentials.contains(credential)) {
+            throw new IllegalArgumentException("The credential [" + credential
+                    + "] is already contained!");
+        } else {
+            this.credentials.add(credential);
         }
     }
 
     /**
      * Adds a role to this policy for a certain accreditable and a certain role.
-     * If a credenital exists for the accreditable, the role is added to this
-     * credential. Otherwise, a new credential is created.
      * 
-     * @param accreditable
-     *            An accreditable.
-     * @param role
-     *            A role.
+     * @param accreditable An accreditable.
+     * @param role A role.
      */
     public void addRole(Accreditable accreditable, Role role, String method) {
         assert accreditable != null;
         assert role != null;
 
-        CredentialImpl credential = (CredentialImpl) getCredential(
-                accreditable, role);
-        if (credential == null) {
-            credential = new CredentialImpl(accreditable);
-            credential.addRole(role);
-            addCredential(credential);
-        }
+        CredentialImpl credential = (CredentialImpl) getCredential(accreditable, role);
         credential.setMethod(method);
-        if (!credential.contains(role)) {
-            credential.addRole(role);
-        }
+        addCredential(credential);
     }
 
     /**
      * Removes a role from this policy for a certain accreditable and a certain
      * role.
      * 
-     * @param accreditable
-     *            An accreditable.
-     * @param role
-     *            A role.
-     * @throws AccessControlException
-     *             if the accreditable-role pair is not contained.
+     * @param accreditable An accreditable.
+     * @param role A role.
+     * @throws AccessControlException if the accreditable-role pair is not
+     *         contained.
      */
-    public void removeRole(Accreditable accreditable, Role role)
-            throws AccessControlException {
+    public void removeRole(Accreditable accreditable, Role role) throws AccessControlException {
         assert accreditable != null;
         assert role != null;
-        CredentialImpl credential = (CredentialImpl) getCredential(
-                accreditable, role);
-        if (credential == null) {
-            throw new AccessControlException("No credential for accreditable ["
-                    + accreditable + "] ["
-                    + this.accreditableToCredential.keySet().size() + "]");
-        }
-        if (!credential.contains(role)) {
-            throw new AccessControlException("Credential for accreditable ["
-                    + accreditable + "] does not contain role [" + role + "]");
-        }
-        removeCredential(credential);
+        removeCredential(getCredential(accreditable, role));
     }
 
     /**
-     * Returns the credentials of this policy.
+     * Returns the credentials of this policy in top-down order.
      * 
      * @return An array of credentials.
      */
     public Credential[] getCredentials() {
-        Credential[] credentials = null;
-        LinkedHashSet returnCredential = new LinkedHashSet();
-        for (Iterator iter = accreditableToCredential.keySet().iterator(); iter
-                .hasNext();) {
-            String key = (String) iter.next();
-            Credential[] oldCredentials = (Credential[]) this.accreditableToCredential
-                    .get(key);
-            for (int i = 0; i < oldCredentials.length; i++) {
-                returnCredential.add((Credential) oldCredentials[i]);
-            }
-        }
-        return (Credential[]) returnCredential
-                .toArray(new Credential[returnCredential.size()]);
-    }
-
-    /**
-     * @see org.apache.lenya.ac.Policy#getRoles(org.apache.lenya.ac.Identity)
-     */
-    public Role[] getRoles(Identity identity) {
-        Accreditable[] accreditables = identity.getAccreditables();
-        Credential[] credentials = getCredentials();
-
-        Set roles = new LinkedHashSet();
-
-        for (int credIndex = 0; credIndex < credentials.length; credIndex++) {
-            for (int accrIndex = 0; accrIndex < accreditables.length; accrIndex++) {
-
-                Credential credential = credentials[credIndex];
-                Accreditable accreditable = accreditables[accrIndex];
-
-                if (credential.getAccreditable().equals(accreditable)) {
-                    roles.addAll(Arrays.asList(credential.getRoles()));
-                }
-            }
-        }
-
-        return (Role[]) roles.toArray(new Role[roles.size()]);
+        return (Credential[]) this.credentials.toArray(new Credential[this.credentials.size()]);
     }
 
     /**
      * Returns the credentials for a certain accreditable.
      * 
-     * @param accreditable
-     *            An accreditable.
+     * @param accreditable An accreditable.
      * @param role
      * @return A credential.
      */
     public Credential getCredential(Accreditable accreditable, Role role) {
-        Credential returnCredential = null;
-        String key = accreditable.toString() + KEY_SEPERATOR + role;
-        if (this.accreditableToCredential.containsKey(key)) {
-            Credential[] oldCredentials = (Credential[]) this.accreditableToCredential
-                    .get(key);
-            int i;
-            boolean out = false;
-            for (i = 0; i < oldCredentials.length; i++) {
-                Credential current = oldCredentials[i];
-                Role[] checkRole = current.getRoles();
-                for (int j = 0; j < checkRole.length; j++) {
-                    Role role2 = checkRole[j];
-                    if (role2.equals(role)) {
-                        out = true;
-                        returnCredential = current;
-                        break;
-                    }
-                }
-                if (out)
-                    break;
+        Credential credential = null;
+        for (Iterator i = this.credentials.iterator(); i.hasNext();) {
+            Credential cred = (Credential) i.next();
+            if (cred.getAccreditable().equals(accreditable) && cred.getRole().equals(role)) {
+                credential = cred;
             }
         }
-        return returnCredential;
+        return credential;
     }
 
     private boolean isSSL;
@@ -219,8 +125,7 @@ public class DefaultPolicy implements ModifiablePolicy {
     /**
      * Sets if this policy requires SSL protection.
      * 
-     * @param ssl
-     *            A boolean value.
+     * @param ssl A boolean value.
      */
     public void setSSL(boolean ssl) {
         this.isSSL = ssl;
@@ -236,74 +141,33 @@ public class DefaultPolicy implements ModifiablePolicy {
     /**
      * Removes a credential.
      * 
-     * @param credential
-     *            The credential to remove.
-     * @throws AccessControlException
-     *             If the credential does not exist.
+     * @param credential The credential to remove.
+     * @throws AccessControlException If the credential does not exist.
      */
-    protected void removeCredential(Credential credential)
-            throws AccessControlException {
-        if (credential.getRoles().length > 0) {
-            String key = credential.getAccreditable().toString()
-                    + KEY_SEPERATOR + credential.getRoles()[0];
-            if (this.accreditableToCredential.containsKey(key)) {
-                Credential[] oldCredentials = (Credential[]) this.accreditableToCredential
-                        .get(key);
-                int occurrence;
-                boolean out = false;
-                for (occurrence = 0; occurrence < oldCredentials.length; occurrence++) {
-                    Credential current = oldCredentials[occurrence];
-                    Role[] checkRole = current.getRoles();
-                    for (int j = 0; j < checkRole.length; j++) {
-                        Role role2 = checkRole[j];
-                        if (role2.equals(credential.getRoles()[0])) {
-                            out = true;
-                            break;
-                        }
-                    }
-                    if (out)
-                        break;
-                }
-                if (out) {
-                    Credential[] newCredentials = new Credential[oldCredentials.length - 1];
-                    for (int i = 0; i < oldCredentials.length; i++) {
-                        if (i < occurrence) {
-                            newCredentials[i] = oldCredentials[i];
-                        } else if (i > occurrence) {
-                            newCredentials[i - 1] = oldCredentials[i];
-                        }
-                    }
-                    this.accreditableToCredential.put(key, newCredentials);
-                }
-            }
+    protected void removeCredential(Credential credential) throws AccessControlException {
+        if (this.credentials.contains(credential)) {
+            this.credentials.remove(credential);
         }
-
     }
 
     /**
      * Removes all roles for a certain accreditable.
      * 
-     * @param accreditable
-     *            The accreditable to remove all roles for.
-     * @throws AccessControlException
-     *             If no credential exists for this accreditable.
+     * @param accreditable The accreditable to remove all roles for.
+     * @throws AccessControlException If no credential exists for this
+     *         accreditable.
      */
-    public void removeRoles(Accreditable accreditable)
-            throws AccessControlException {
+    public void removeRoles(Accreditable accreditable) throws AccessControlException {
         Credential[] credentials = getCredentials();
         for (int credIndex = 0; credIndex < credentials.length; credIndex++) {
             Credential credential = credentials[credIndex];
             if (credential.getAccreditable().equals(accreditable)) {
-                String key = accreditable.toString()+KEY_SEPERATOR+credential.getRoles()[0];
-                if (this.accreditableToCredential.containsKey(key)) {
-                    this.accreditableToCredential.remove(key);
-                }
+                this.credentials.remove(credential);
             }
         }
     }
 
-    public Credential[] getCredentials(Identity identity)
-            throws AccessControlException {
+    public Credential[] getCredentials(Identity identity) throws AccessControlException {
         Accreditable[] accreditables = identity.getAccreditables();
         Credential[] credentials = getCredentials();
         Set returnCredential = new LinkedHashSet();
@@ -316,54 +180,49 @@ public class DefaultPolicy implements ModifiablePolicy {
                 }
             }
         }
-        return (Credential[]) returnCredential
-                .toArray(new Credential[returnCredential.size()]);
+        return (Credential[]) returnCredential.toArray(new Credential[returnCredential.size()]);
     }
 
-    public void moveRoleDown(Accreditable accreditable, Role role)
-            throws AccessControlException {
+    public void moveRoleDown(Accreditable accreditable, Role role) throws AccessControlException {
         moveRole(accreditable, role, true);
     }
 
     private void moveRole(Accreditable accreditable, Role role, boolean down) {
-        String key = accreditable.toString() + KEY_SEPERATOR + role;
-        if (this.accreditableToCredential.containsKey(key)) {
-            String[] keys = new String[accreditableToCredential.keySet().size()];
-            int currentPosition = 0, matchedPosition = 0;
-            for (Iterator iter = accreditableToCredential.keySet().iterator(); iter
-                    .hasNext();) {
-                String currentKey = (String) iter.next();
-                keys[currentPosition] = currentKey;
-                if (key.equals(currentKey)) {
-                    matchedPosition = currentPosition;
-                }
-                currentPosition++;
-            }
-            int newPosition = 0;
-            if (down) {
-                // need to move it one down the tree
-                newPosition = matchedPosition + 1;
-            } else {
-                // need to move it one up the tree
-                newPosition = matchedPosition - 1;
-            }
-            String credentialMove = keys[newPosition];
-            keys[newPosition] = key;
-            keys[matchedPosition] = credentialMove;
-            Map newAccreditable = new LinkedHashMap();
-            for (int i = 0; i < keys.length; i++) {
-                String oldKey = keys[i];
-                newAccreditable.put(oldKey, this.accreditableToCredential
-                        .get(oldKey));
-            }
-            this.accreditableToCredential = newAccreditable;
 
+        Credential cred = getCredential(accreditable, role);
+        int position = this.credentials.indexOf(cred);
+
+        if (!down && position > 0) {
+            this.credentials.remove(cred);
+            this.credentials.add(position - 1, cred);
+        } else if (down && position < this.credentials.size() - 1) {
+            this.credentials.remove(cred);
+            this.credentials.add(position + 1, cred);
         }
     }
 
-    public void moveRoleUp(Accreditable accreditable, Role role)
-            throws AccessControlException {
+    public void moveRoleUp(Accreditable accreditable, Role role) throws AccessControlException {
         moveRole(accreditable, role, false);
+    }
+
+    public int check(Identity identity, Role role) throws AccessControlException {
+        Credential[] credentials = getCredentials();
+        for (int i = credentials.length - 1; i >= 0; i--) {
+            if (matches(identity, credentials[i].getAccreditable())
+                    && credentials[i].getRole().equals(role)) {
+                if (credentials[i].getMethod().equals(CredentialImpl.GRANT)) {
+                    return Policy.RESULT_GRANTED;
+                } else {
+                    return Policy.RESULT_DENIED;
+                }
+            }
+        }
+        return Policy.RESULT_NOT_MATCHED;
+    }
+
+    protected boolean matches(Identity identity, Accreditable accreditable) {
+        Accreditable[] accrs = identity.getAccreditables();
+        return Arrays.asList(accrs).contains(accreditable);
     }
 
 }

@@ -22,13 +22,14 @@ package org.apache.lenya.ac.impl;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
+import org.apache.lenya.ac.Role;
 
 /**
  * Test for the Policy Manager
  */
 public class PolicyManagerTest extends AbstractAccessControlTest {
 
-    private static String[] URLS = { "/test/authoring/index.html" };
+    private static String[] URLS = { "/default/authoring/index.html" };
 
     /**
      * The test.
@@ -43,7 +44,9 @@ public class PolicyManagerTest extends AbstractAccessControlTest {
         for (int i = 0; i < URLS.length; i++) {
             Policy policy = policyManager.getPolicy(controller.getAccreditableManager(), URLS[i]);
             assertNotNull(policy);
-            assertTrue(policy.getRoles(getIdentity()).length > 0);
+            
+            Role[] roles = policyManager.getGrantedRoles(controller.getAccreditableManager(), getIdentity(), URLS[i]);
+            assertTrue(roles.length > 0);
         }
     }
 

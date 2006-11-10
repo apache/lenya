@@ -24,13 +24,19 @@ package org.apache.lenya.ac;
  * @version $Id$
  */
 public interface Policy {
+    
+    int RESULT_NOT_MATCHED = 0;
+    int RESULT_DENIED = 1;
+    int RESULT_GRANTED = 2;
+    
     /**
-     * Returns all roles of a certain identity.
+     * Checks if a certain role is granted for a certain policy.
      * @param identity The identity.
-     * @return An array of roles.
+     * @param role The role to check.
+     * @return A result code.
      * @throws AccessControlException when something went wrong.
      */
-    Role[] getRoles(Identity identity) throws AccessControlException;
+    int check(Identity identity, Role role) throws AccessControlException;
     
     /**
      * Returns if this policy requires SSL protection.

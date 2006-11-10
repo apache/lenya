@@ -21,6 +21,7 @@ import org.apache.avalon.framework.component.Component;
 
 /**
  * A policy manager.
+ * 
  * @version $Id$
  */
 public interface PolicyManager extends Component {
@@ -31,44 +32,58 @@ public interface PolicyManager extends Component {
     String ROLE = PolicyManager.class.getName();
 
     /**
-	 * Returns the policy for a given page.
-	 * 
-	 * @param controller The access controller.
-	 * @param url The url inside the web application.
-	 * @return The policy.
-	 * @throws AccessControlException when something went wrong.
-	 */
+     * Returns the policy for a given page.
+     * @param controller The access controller.
+     * @param url The url inside the web application.
+     * @return The policy.
+     * @throws AccessControlException when something went wrong.
+     */
     Policy getPolicy(AccreditableManager controller, String url) throws AccessControlException;
-    
+
+    /**
+     * Returns all granted roles for a certain identity on a certain URL.
+     * @param accreditableManager The accreditable manager.
+     * @param identity The identity.
+     * @param url The URL.
+     * @return An array of roles.
+     * @throws AccessControlException if an error occurs.
+     */
+    Role[] getGrantedRoles(AccreditableManager accreditableManager, Identity identity, String url)
+            throws AccessControlException;
+
     /**
      * Return all credentials for this url
+     * 
      * @param url The AC url
      * @param manager The Accreditable Manager
      * @return An array of credentials
      * @throws AccessControlException when something went wrong.
      */
-    Credential[] getCredentials(AccreditableManager controller, String url) throws AccessControlException;
+    Credential[] getCredentials(AccreditableManager controller, String url)
+            throws AccessControlException;
 
     /**
-     * Called when an accreditable was added. Used to create the admin interface policy.
-     * This method get invoked, when e.g. a new user is added.
-     * The user always should be able to edit her profile.
-     * Therefore the method normally grant inherit edit rights to the user profile page.
+     * Called when an accreditable was added. Used to create the admin interface
+     * policy. This method get invoked, when e.g. a new user is added. The user
+     * always should be able to edit her profile. Therefore the method normally
+     * grant inherit edit rights to the user profile page.
      * 
      * @param manager The accreditable manager the accreditable belonged to.
      * @param accreditable The accreditable that was removed.
      * @throws AccessControlException when something went wrong.
      */
-    void accreditableAdded(AccreditableManager manager, Accreditable accreditable) throws AccessControlException;
+    void accreditableAdded(AccreditableManager manager, Accreditable accreditable)
+            throws AccessControlException;
 
     /**
-	 * Called when an accreditable was removed. Used to clean up the policies
+     * Called when an accreditable was removed. Used to clean up the policies
      * and to remove the admin interface policy.
-	 * 
+     * 
      * @param manager The accreditable manager the accreditable belonged to.
-	 * @param accreditable The accreditable that was removed.
+     * @param accreditable The accreditable that was removed.
      * @throws AccessControlException when something went wrong.
-	 */
-    void accreditableRemoved(AccreditableManager manager, Accreditable accreditable) throws AccessControlException;
+     */
+    void accreditableRemoved(AccreditableManager manager, Accreditable accreditable)
+            throws AccessControlException;
 
 }

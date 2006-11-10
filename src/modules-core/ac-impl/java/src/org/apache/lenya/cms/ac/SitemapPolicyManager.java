@@ -19,6 +19,8 @@ package org.apache.lenya.cms.ac;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -33,8 +35,10 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Credential;
+import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
+import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.impl.PolicyBuilder;
 import org.apache.lenya.xml.DocumentHelper;
 import org.w3c.dom.Document;
@@ -145,5 +149,18 @@ public class SitemapPolicyManager extends AbstractLogEnabled implements PolicyMa
 		}
 		return copy;
 	}
+
+    public Role[] getGrantedRoles(AccreditableManager accreditableManager, Identity identity,
+            String url) throws AccessControlException {
+        Role[] roles = accreditableManager.getRoleManager().getRoles();
+        Set grantedRoles = new HashSet();
+        Policy policy = getPolicy(accreditableManager, url);
+        for (int i = 0; i < roles.length; i++) {
+            if (policy.check(identity, roles[i]) == Policy.RESULT_GRANTED) {
+                grantedRoles.add(roles[i]);
+            }
+        }
+        return (Role[]) grantedRoles.toArray(new Role[grantedRoles.size()]);
+    }
 
 }

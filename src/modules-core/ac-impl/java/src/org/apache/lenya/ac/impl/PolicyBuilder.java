@@ -123,14 +123,13 @@ public class PolicyBuilder implements InputStreamBuilder {
             Element[] roleElements = helper.getChildren(credentialElements[i], ROLE_ELEMENT);
 
             for (int j = 0; j < roleElements.length; j++) {
-            	CredentialImpl credential = new CredentialImpl(accreditable);
                 String roleId = roleElements[j].getAttribute(ID_ATTRIBUTE);
                 Role role = getAccreditableManager().getRoleManager().getRole(roleId);
+                CredentialImpl credential = new CredentialImpl(accreditable, role);
                 String method = roleElements[j].getAttribute(METHOD_ATTRIBUTE);
                 // If method is not set, we assume DENY 
-                if(method.length()==0) method=CredentialImpl.DENY;
+                if (method.length() == 0) method = CredentialImpl.DENY;
                 credential.setMethod(method);
-                credential.addRole(role);
                 policy.addCredential(credential);
             }
 
@@ -203,13 +202,11 @@ public class PolicyBuilder implements InputStreamBuilder {
             Accreditable accreditable = credentials[i].getAccreditable();
             Element accreditableElement = save(accreditable, helper);
             
-            Role[] roles = credentials[i].getRoles();
-            for (int j = 0; j < roles.length; j++) {
-                Element roleElement = helper.createElement(ROLE_ELEMENT);
-                roleElement.setAttribute(ID_ATTRIBUTE, roles[j].getId());
-                roleElement.setAttribute(METHOD_ATTRIBUTE, credentials[i].getMethod());
-                accreditableElement.appendChild(roleElement);
-            }
+            Role role = credentials[i].getRole();
+            Element roleElement = helper.createElement(ROLE_ELEMENT);
+            roleElement.setAttribute(ID_ATTRIBUTE, role.getId());
+            roleElement.setAttribute(METHOD_ATTRIBUTE, credentials[i].getMethod());
+            accreditableElement.appendChild(roleElement);
             
             policyElement.appendChild(accreditableElement);
         }

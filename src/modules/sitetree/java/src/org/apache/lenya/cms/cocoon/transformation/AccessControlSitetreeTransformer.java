@@ -37,7 +37,6 @@ import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.cms.site.tree.DefaultSiteTree;
@@ -184,8 +183,7 @@ public class AccessControlSitetreeTransformer extends AbstractSAXTransformer imp
 
             try {
                 String url = this.urlPrefix + this.documentId;
-                Policy policy = this.policyManager.getPolicy(this.accreditableManager, url);
-                Role[] roles = policy.getRoles(this.identity);
+                Role[] roles = this.policyManager.getGrantedRoles(this.accreditableManager, this.identity, url);
 
                 getLogger().debug("    Roles:       [" + roles.length + "]");
 

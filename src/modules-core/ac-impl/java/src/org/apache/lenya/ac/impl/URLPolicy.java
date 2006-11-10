@@ -19,11 +19,7 @@
 
 package org.apache.lenya.ac.impl;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.LinkedHashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.lenya.ac.AccessControlException;
@@ -34,8 +30,6 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.InheritingPolicyManager;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.Role;
-
-import com.ibm.icu.util.StringTokenizer;
 
 /**
  * A policy at a certain URL. The final policy is computed by merging the
@@ -112,24 +106,19 @@ public class URLPolicy implements Policy {
     static final String[] AUTHOR_ROLES = { "author", "edit" };
 
     /**
-     * @see org.apache.lenya.ac.Policy#getRoles(org.apache.lenya.ac.Identity)
+     * @see org.apache.lenya.ac.Policy#check(org.apache.lenya.ac.Identity, org.apache.lenya.ac.Role)
+     * Iterate the policy tree bottom-up.
      */
-    public Role[] getRoles(Identity identity) throws AccessControlException {
+    public int check(Identity identity, Role role) throws AccessControlException {
         obtainPolicies();
-        Set roles = new LinkedHashSet();
-
-        // no policies defined: return "visit" or "visitor" role
-        if (isEmpty()) {
-            Role visitorRole = getVisitorRole(getAccreditableManager());
-            if (visitorRole != null) {
-                roles.add(visitorRole);
-            }
-        } else {
-            for (int i = 0; i < this.policies.length; i++) {
-                addRoles(this.policies[i], identity, roles);
+        
+        for (int i = 0; i < this.policies.length; i++) {
+            int result = this.policies[i].check(identity, role);
+            if (result == Policy.RESULT_GRANTED || result == Policy.RESULT_DENIED) {
+                return result;
             }
         }
-        return (Role[]) roles.toArray(new Role[roles.size()]);
+        return Policy.RESULT_NOT_MATCHED;
     }
 
     /**
@@ -194,23 +183,6 @@ public class URLPolicy implements Policy {
             }
         }
         return administratorRole;
-    }
-
-    /**
-     * Adds the roles of an identity of a policy to a role set.
-     * 
-     * @param policy
-     *            The policy.
-     * @param identity
-     *            The identity.
-     * @param roles
-     *            The role set.
-     * @throws AccessControlException
-     *             when something went wrong.
-     */
-    protected void addRoles(Policy policy, Identity identity, Set roles)
-            throws AccessControlException {
-        roles.addAll(Arrays.asList(policy.getRoles(identity)));
     }
 
     /**

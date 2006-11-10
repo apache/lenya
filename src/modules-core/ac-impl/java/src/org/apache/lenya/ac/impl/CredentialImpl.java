@@ -19,9 +19,6 @@
 
 package org.apache.lenya.ac.impl;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.Credential;
 import org.apache.lenya.ac.Role;
@@ -31,58 +28,36 @@ import org.apache.lenya.ac.Role;
  */
 public class CredentialImpl implements Credential {
     private Accreditable accreditable;
-    private Set roles = new HashSet();
-    private String method;
+    private Role role;
+    private String method = DENY;
     protected static final String GRANT = "grant";
     protected static final String DENY = "deny";
 
     /**
      * Creates a new credential object.
-     * @param _accreditable The accreditable.
+     * 
+     * @param accreditable The accreditable.
+     * @param role The role.
      */
-    public CredentialImpl(Accreditable _accreditable) {
-        setAccreditable(_accreditable);
-    }
-
-    /**
-     * Sets the accreditable for this credential.
-     * @param _accreditable The accreditable.
-     */
-    protected void setAccreditable(Accreditable _accreditable) {
-        assert _accreditable != null;
-        this.accreditable = _accreditable;
-    }
-
-    /**
-     * Returns all roles of this credential.
-     * @return An array of roles.
-     */
-    public Role[] getRoles() {
-        return (Role[]) this.roles.toArray(new Role[this.roles.size()]);
-    }
-
-    /**
-     * Adds a role to this credential.
-     * @param role The role to add.
-     */
-    public void addRole(Role role) {
+    public CredentialImpl(Accreditable accreditable, Role role) {
+        assert accreditable != null;
+        this.accreditable = accreditable;
         assert role != null;
-        assert !this.roles.contains(role);
-        this.roles.add(role);
+        this.role = role;
     }
 
     /**
-     * Removes a role from this credential.
-     * @param role The role to remove.
+     * Returns the role of this credential.
+     * 
+     * @return A role.
      */
-    public void removeRole(Role role) {
-        assert role != null;
-        assert this.roles.contains(role);
-        this.roles.remove(role);
+    public Role getRole() {
+        return this.role;
     }
 
     /**
      * Returns the accreditable of this credential.
+     * 
      * @return An accreditable.
      */
     public Accreditable getAccreditable() {
@@ -93,34 +68,17 @@ public class CredentialImpl implements Credential {
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        return "[credential of: " + getAccreditable() + "]";
+        return "[" + getAccreditable() + ":" + getRole() + " (" + getMethod() + ")]";
     }
 
-    /**
-     * Returns if a role is contained.
-     * @param role A role.
-     * @return A boolean value.
-     */
-    public boolean contains(Role role) {
-        return this.roles.contains(role);
-    }
-
-    /**
-     * Returns if the credential is empty (contains no roles).
-     * @return A boolean value.
-     */
-    public boolean isEmpty() {
-        return this.roles.isEmpty();
-    }
-    
     /**
      * Set the method of the credential, grant or deny
+     * 
      * @param method A string grant or deny
      */
     public void setMethod(String method) {
         this.method = method;
     }
-    
 
     public String getMethod() {
         return method;
@@ -132,5 +90,13 @@ public class CredentialImpl implements Credential {
 
     public boolean isDenied() {
         return this.method.equals(DENY);
+    }
+
+    public boolean equals(Object obj) {
+        if (!getClass().isInstance(obj)) {
+            return false;
+        }
+        Credential cred = (Credential) obj;
+        return cred.getAccreditable().equals(getAccreditable()) && cred.getRole().equals(getRole());
     }
 }

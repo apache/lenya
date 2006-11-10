@@ -19,10 +19,6 @@
 
 package org.apache.lenya.ac.impl;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
-
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Credential;
 import org.apache.lenya.ac.InheritingPolicyManager;
@@ -43,31 +39,34 @@ public class PolicyTest extends AbstractAccessControlTest {
     /**
      * A test.
      * 
-     * @throws AccessControlException
-     *             when something went wrong.
+     * @throws AccessControlException when something went wrong.
      * @throws PublicationException
      */
-    public void testLoadPolicy() throws AccessControlException,
-            PublicationException {
+    public void testLoadPolicy() throws AccessControlException, PublicationException {
         Publication pub = getPublication("test");
         String url = "/" + pub.getId() + URL;
         Policy policy = getPolicy(url);
-        Role[] roles = policy.getRoles(getIdentity());
+        
+        Role[] allRoles = getAccreditableManager().getRoleManager().getRoles();
+        
         getLogger().info("Roles: ");
-
-        for (int i = 0; i < roles.length; i++) {
-            getLogger().info(" " + roles[i]);
+        for (int i = 0; i < allRoles.length; i++) {
+            int result = policy.check(getIdentity(), allRoles[i]);
+            if (result == Policy.RESULT_GRANTED) {
+                getLogger().info(allRoles[i].getId() + ": granted");
+            }
+            else {
+                getLogger().info(allRoles[i].getId() + ": denied");
+            }
         }
     }
 
     /**
      * Returns the policy for a URL.
      * 
-     * @param url
-     *            The URL.
+     * @param url The URL.
      * @return The policy.
-     * @throws AccessControlException
-     *             when something went wrong.
+     * @throws AccessControlException when something went wrong.
      */
     protected Policy getPolicy(String url) throws AccessControlException {
         Policy policy = getPolicyManager().getPolicy(
@@ -79,8 +78,7 @@ public class PolicyTest extends AbstractAccessControlTest {
     /**
      * A test.
      * 
-     * @throws AccessControlException
-     *             when something went wrong.
+     * @throws AccessControlException when something went wrong.
      */
     public void testSavePolicy() throws AccessControlException {
         InheritingPolicyManager policyManager = (InheritingPolicyManager) getPolicyManager();
@@ -91,53 +89,40 @@ public class PolicyTest extends AbstractAccessControlTest {
         Credential[] credentials = urlPolicy.getCredentials();
 
         for (int i = 0; i < credentials.length; i++) {
-            CredentialImpl credential = new CredentialImpl(credentials[i]
-                    .getAccreditable());
-            Role[] roles = credentials[i].getRoles();
+            Role role = credentials[i].getRole();
+            CredentialImpl credential = new CredentialImpl(credentials[i].getAccreditable(), role);
             credential.setMethod(credentials[i].getMethod());
-            for (int j = 0; j < roles.length; j++) {
-                credential.addRole(roles[j]);
-            }
-
             newPolicy.addCredential(credential);
         }
 
-        assertEquals(urlPolicy.getCredentials().length, newPolicy
-                .getCredentials().length);
+        assertEquals(urlPolicy.getCredentials().length, newPolicy.getCredentials().length);
 
         policyManager.saveURLPolicy(SAVE_URL, newPolicy);
 
-        newPolicy = (DefaultPolicy) policyManager.buildURLPolicy(
-                getAccessController().getAccreditableManager(), SAVE_URL);
-        assertEquals(urlPolicy.getCredentials().length, newPolicy
-                .getCredentials().length);
+        newPolicy = (DefaultPolicy) policyManager.buildURLPolicy(getAccessController()
+                .getAccreditableManager(), SAVE_URL);
+        assertEquals(urlPolicy.getCredentials().length, newPolicy.getCredentials().length);
 
         Credential[] newCredentials = newPolicy.getCredentials();
 
         for (int i = 0; i < credentials.length; i++) {
-            CredentialImpl credential = new CredentialImpl(credentials[i]
-                    .getAccreditable());
-            Role[] roles = credentials[i].getRoles();
-            for (int j = 0; j < roles.length; j++) {
-                credential.addRole(roles[j]);
-            }
+            Role role = credentials[i].getRole();
+            CredentialImpl credential = new CredentialImpl(credentials[i].getAccreditable(), role);
             credential.setMethod(credential.getMethod());
             Credential newCredential = null;
 
             for (int k = 0; k < newCredentials.length; k++) {
-                if (newCredentials[k].getAccreditable().equals(
-                        credential.getAccreditable())) {
+                if (newCredentials[k].getAccreditable().equals(credential.getAccreditable())) {
                     newCredential = newCredentials[k];
                 }
             }
 
-            getLogger().info(
-                    "Accreditable: [" + credential.getAccreditable() + "]");
+            getLogger().info("Accreditable: [" + credential.getAccreditable() + "]");
             assertNotNull(newCredential);
 
-            Set oldRoles = new HashSet(Arrays.asList(credential.getRoles()));
-            Set newRoles = new HashSet(Arrays.asList(newCredential.getRoles()));
-            assertEquals(oldRoles, newRoles);
+            Role oldRole = credential.getRole();
+            Role newRole = newCredential.getRole();
+            assertEquals(oldRole, newRole);
 
             /*
              * for (int j = 0; j < roles.length; j++) { assertEquals(roles[j],

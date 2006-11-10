@@ -34,9 +34,11 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Credential;
+import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.InheritingPolicyManager;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
+import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.impl.DefaultAccessController;
 import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.publication.Document;
@@ -76,7 +78,6 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
             getLogger().debug("Resolving policy for webapp URL [" + webappUrl + "]");
         }
 
-        Publication publication = getPublication(webappUrl);
         String url = null;
         ContextUtility contextUtility = null;
         try {
@@ -87,7 +88,7 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
             if (map.isDocument(webappUrl)) {
                 Document document = map.getFromURL(webappUrl);
                 if (document.existsInAnyLanguage()) {
-                    url = "/" + document.getArea() + document.getPath();
+                    url = "/" + document.getPublication().getId() + "/" + document.getArea() + document.getPath();
                     if (getLogger().isDebugEnabled()) {
                         getLogger().debug("    Document exists");
                         getLogger().debug("    Document path: [" + document.getPath() + "]");
@@ -108,7 +109,7 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("    Document does not exist.");
             }
-            url = webappUrl.substring(("/" + publication.getId()).length());
+            url = webappUrl;
         }
 
         if (getLogger().isDebugEnabled()) {
@@ -287,4 +288,8 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
     public Credential[] getCredentials(AccreditableManager controller, String url) throws AccessControlException {
 		return getPolicyManager().getCredentials(controller, getPolicyURL(url));
 	}
+
+    public Role[] getGrantedRoles(AccreditableManager accreditableManager, Identity identity, String url) throws AccessControlException {
+        return getPolicyManager().getGrantedRoles(accreditableManager, identity, getPolicyURL(url));
+    }
 }

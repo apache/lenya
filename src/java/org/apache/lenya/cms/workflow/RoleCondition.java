@@ -20,15 +20,19 @@
 package org.apache.lenya.cms.workflow;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.AccessControllerResolver;
+import org.apache.lenya.ac.AccreditableManager;
+import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.Role;
+import org.apache.lenya.ac.RoleManager;
 import org.apache.lenya.workflow.Condition;
 import org.apache.lenya.workflow.Workflow;
 import org.apache.lenya.workflow.WorkflowException;
@@ -56,9 +60,12 @@ public class RoleCondition implements Condition {
     }
 
     /**
-     * Returns if the condition is complied in a certain situation. The condition is complied when
-     * the current user has the role that is required by the RoleCondition.
-     * @see org.apache.lenya.workflow.impl.AbstractCondition#isComplied(Workflow, Workflowable)
+     * Returns if the condition is complied in a certain situation. The
+     * condition is complied when the current user has the role that is required
+     * by the RoleCondition.
+     * 
+     * @see org.apache.lenya.workflow.impl.AbstractCondition#isComplied(Workflow,
+     *      Workflowable)
      */
     public boolean isComplied(Workflow workflow, Workflowable instance) {
 
@@ -72,17 +79,23 @@ public class RoleCondition implements Condition {
         try {
 
             selector = (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
-            acResolver = (AccessControllerResolver) selector.select(AccessControllerResolver.DEFAULT_RESOLVER);
+            acResolver = (AccessControllerResolver) selector
+                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
             accessController = acResolver.resolveAccessController(url);
 
             PolicyManager policyManager = accessController.getPolicyManager();
-            Policy policy = policyManager.getPolicy(accessController.getAccreditableManager(), url);
-
-            Role[] roles = policy.getRoles(workflowable.getSession().getIdentity());
+            Identity identity = workflowable.getSession().getIdentity();
+            AccreditableManager accreditableMgr = accessController
+            .getAccreditableManager();
+            Policy policy = policyManager.getPolicy(accreditableMgr, url);
+            RoleManager roleManager = accreditableMgr.getRoleManager();
+            
             boolean complied = false;
-
-            for (int i = 0; i < roles.length; i++) {
-                if (this.roleIds.contains(roles[i].getId())) {
+            
+            for (Iterator i = this.roleIds.iterator(); i.hasNext(); ) {
+                String roleId = (String) i.next();
+                Role role = roleManager.getRole(roleId);
+                if (policy.check(identity, role) == Policy.RESULT_GRANTED) {
                     complied = true;
                 }
             }
@@ -109,6 +122,7 @@ public class RoleCondition implements Condition {
 
     /**
      * Returns the expression of this condition.
+     * 
      * @return A string.
      */
     public String getExpression() {
