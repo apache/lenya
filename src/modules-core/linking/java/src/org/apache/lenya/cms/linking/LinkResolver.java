@@ -41,14 +41,17 @@ import org.apache.lenya.cms.publication.Document;
  * <code>lenya-document:&lt;uuid&gt;[,lang=...][,area=...][,rev=...][,pub=...]</code>
  */
 public interface LinkResolver {
-    
+
     String ROLE = LinkResolver.class.getName();
-    
+    String SCHEME = "lenya-document";
+
     /**
      * Resolve a link.
+     * 
      * @param currentDocument The document which contains the link.
      * @param linkUri The link URI.
-     * @return A document or <code>null</code> if the target document does not exist.
+     * @return A document or <code>null</code> if the target document does not
+     *         exist.
      * @throws MalformedURLException if the URI is invalid.
      */
     Document resolve(Document currentDocument, String linkUri) throws MalformedURLException;

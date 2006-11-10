@@ -21,6 +21,7 @@
   <id>org.apache.lenya.modules.export</id>
   <depends module="org.apache.lenya.modules.usecase"/>
   <depends module="org.apache.lenya.modules.sitetree"/>
+  <depends module="org.apache.lenya.modules.linking"/>
   <package>org.apache.lenya.modules</package>
   <version>0.1-dev</version>
   <name>Export and import</name>
