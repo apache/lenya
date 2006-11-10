@@ -142,6 +142,8 @@
   <usecase id="tab.overview">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
+    <role id="review" method="grant"/>
+    <role id="visit" method="grant"/>
   </usecase>
   <usecase id="tab.revisions">
     <role id="admin" method="grant"/>
@@ -207,6 +209,7 @@
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
     <role id="review" method="grant"/>
+    <role id="visit" method="grant"/>
   </usecase>
   <usecase id="admin.changePasswordAdmin">
     <role id="admin" method="grant"/>
@@ -306,6 +309,7 @@
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
     <role id="review" method="grant"/>
+    <role id="visit" method="grant"/>
   </usecase>
   <usecase id="resource.upload">
     <role id="admin" method="grant"/>
