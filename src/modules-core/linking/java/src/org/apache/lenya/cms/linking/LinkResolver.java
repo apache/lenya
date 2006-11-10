@@ -39,11 +39,30 @@ import org.apache.lenya.cms.publication.Document;
  * Syntax (square brackets denote optional parts):
  * </p>
  * <code>lenya-document:&lt;uuid&gt;[,lang=...][,area=...][,rev=...][,pub=...]</code>
+ * <p>
+ * The fallback mode determines the behaviour if the target language is omitted
+ * and the target document doesn't exist in the language of the source document.
+ * The default fallback mode is {@link #MODE_DEFAULT_LANGUAGE}.
+ * <p>
  */
 public interface LinkResolver {
 
     String ROLE = LinkResolver.class.getName();
     String SCHEME = "lenya-document";
+    
+    /**
+     * Fail if the target document doesn't exist in the source language.
+     */
+    int MODE_FAIL = 0;
+    
+    /**
+     * Try to fall back to the default language.
+     */
+    int MODE_DEFAULT_LANGUAGE = 1;
+
+    void setFallbackMode(int mode);
+
+    int getFallbackMode();
 
     /**
      * Resolve a link.

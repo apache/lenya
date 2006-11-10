@@ -53,22 +53,22 @@ import org.xml.sax.helpers.AttributesImpl;
  * </p>
  * 
  * <p>
- * This transformer is applied to an XHMTL document. It processes
- * <code>&lt;xhtml:a href="..."&gt;</code> attributes of the following form:
+ * This transformer is applied to an XHMTL document. It processes all links
+ * following the {@link LinkResolver} syntax which are denoted by
+ * {@link ResourceType#getLinkAttributeXPaths()}.
  * </p>
  * <p>
- * <code>/{publication-id}/{area}{document-url}</code>
- * </p>
- * <p>
- * These links are rewritten using the following rules:
+ * These links are resolved using the following rules:
  * </p>
  * <ul>
- * <li>The area is replaced by the current area (obtained from the page envelope).</li>
- * <li>A URL prefix is added depending on the proxy configuration of the publication.</li>
- * <li>If the target document does not exist and is in the authoring area, the href attribute is
- * removed and a class="brokenlink" attribute is added to the <code>&lt;a/&gt;</code> element</li>
- * <li>If the target document does not exist and is in the live area, the <code>&lt;a/&gt;</code>
- * element is removed to disable the link.</li>
+ * <li>The current area (obtained from the page envelope) is used.</li>
+ * <li>A URL prefix is added depending on the proxy configuration of the
+ * publication.</li>
+ * <li>If the target document does not exist and is in the authoring area, the
+ * href attribute is removed and a class="brokenlink" attribute is added to the
+ * <code>&lt;a/&gt;</code> element.</li>
+ * <li>If the target document does not exist and is in the live area, the
+ * <code>&lt;a/&gt;</code> element is removed to disable the link.</li>
  * </ul>
  * 
  * $Id: LinkRewritingTransformer.java,v 1.7 2004/03/16 11:12:16 gregor
@@ -91,7 +91,8 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
-     *      java.util.Map, java.lang.String, org.apache.avalon.framework.parameters.Parameters)
+     *      java.util.Map, java.lang.String,
+     *      org.apache.avalon.framework.parameters.Parameters)
      */
     public void setup(SourceResolver _resolver, Map _objectModel, String _source,
             Parameters _parameters) throws ProcessingException, SAXException, IOException {
@@ -119,9 +120,10 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
         this.linkResolver = null;
 
         try {
-            this.serviceSelector = (ServiceSelector) this.manager.lookup(AccessControllerResolver.ROLE
-                    + "Selector");
-            this.acResolver = (AccessControllerResolver) this.serviceSelector.select(AccessControllerResolver.DEFAULT_RESOLVER);
+            this.serviceSelector = (ServiceSelector) this.manager
+                    .lookup(AccessControllerResolver.ROLE + "Selector");
+            this.acResolver = (AccessControllerResolver) this.serviceSelector
+                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
 
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("    Resolved AC resolver [" + this.acResolver + "]");
@@ -143,6 +145,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
 
     /**
      * Returns the currently processed document.
+     * 
      * @return A document.
      */
     protected Document getCurrentDocument() {
@@ -157,15 +160,15 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
     private String indent = "";
 
     /**
-     * @see org.xml.sax.ContentHandler#startElement(java.lang.String, java.lang.String,
-     *      java.lang.String, org.xml.sax.Attributes)
+     * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
+     *      java.lang.String, java.lang.String, org.xml.sax.Attributes)
      */
     public void startElement(String uri, String name, String qname, Attributes attrs)
             throws SAXException {
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug(this.indent + "<" + qname + "> (ignoreAElement = "
-                    + this.ignoreAElement + ")");
+            getLogger().debug(
+                    this.indent + "<" + qname + "> (ignoreAElement = " + this.ignoreAElement + ")");
             this.indent += "  ";
         }
 
@@ -177,7 +180,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
             String href = attrs.getValue(ATTRIBUTE_HREF);
             if (href != null) {
 
-                Publication publication = getCurrentDocument().getPublication();
+                Document doc = getCurrentDocument();
 
                 try {
                     newAttrs = new AttributesImpl(attrs);
@@ -185,9 +188,9 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                     if (getLogger().isDebugEnabled()) {
                         getLogger().debug(this.indent + "href URL: [" + href + "]");
                     }
-                    
+
                     if (href.startsWith("lenya-document:")) {
-                        
+
                         String anchor = null;
                         String url = null;
 
@@ -198,85 +201,24 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                         } else {
                             url = href;
                         }
-                        
+
                         String[] linkUriAndQuery = url.split("\\?");
                         String linkUri = linkUriAndQuery[0];
                         String queryString = null;
                         if (linkUriAndQuery.length > 1) {
                             queryString = linkUriAndQuery[1];
                         }
-                        Document targetDocument = this.linkResolver.resolve(getCurrentDocument(), linkUri);
-                        String extension = targetDocument.getExtension();
-                        if (extension.length() > 0) {
-                            extension = "." + extension;
-                        }
-                        rewriteLink(newAttrs,
-                                targetDocument,
-                                anchor,
-                                queryString,
-                                extension);
-                    }
-                    else if (href.startsWith("/" + publication.getId())) {
-
-                        final String webappUrlWithQueryString = href;
-                        String webappUrlWithAnchor;
-
-                        String queryString = null;
-                        int queryStringIndex = webappUrlWithQueryString.indexOf("?");
-                        if (queryStringIndex > -1) {
-                            webappUrlWithAnchor = webappUrlWithQueryString.substring(0,
-                                    queryStringIndex);
-                            queryString = webappUrlWithQueryString.substring(queryStringIndex + 1);
-                        } else {
-                            webappUrlWithAnchor = webappUrlWithQueryString;
-                        }
-
-                        String anchor = null;
-                        String webappUrl = null;
-
-                        int anchorIndex = webappUrlWithAnchor.indexOf("#");
-                        if (anchorIndex > -1) {
-                            webappUrl = webappUrlWithAnchor.substring(0, anchorIndex);
-                            anchor = webappUrlWithAnchor.substring(anchorIndex + 1);
-                        } else {
-                            webappUrl = webappUrlWithAnchor;
-                        }
-
-                        if (getLogger().isDebugEnabled()) {
-                            getLogger().debug(this.indent + "webapp URL: [" + webappUrl + "]");
-                            getLogger().debug(this.indent + "anchor:     [" + anchor + "]");
-                        }
-                        if (this.factory.isDocument(webappUrl)) {
-
-                            Document targetDocument = this.factory.getFromURL(webappUrl);
-
-                            if (getLogger().isDebugEnabled()) {
-                                getLogger().debug(this.indent + "Resolved target document: ["
-                                        + targetDocument + "]");
+                        Document targetDocument = this.linkResolver.resolve(doc, linkUri);
+                        if (targetDocument != null) {
+                            String extension = targetDocument.getExtension();
+                            if (extension.length() > 0) {
+                                extension = "." + extension;
                             }
-
-                            targetDocument = this.factory.get(publication,
-                                    getCurrentDocument().getArea(),
-                                    targetDocument.getUUID(),
-                                    targetDocument.getLanguage());
-
-                            if (targetDocument.hasLink()) {
-                                String extension = "";
-                                int lastDotIndex = webappUrl.lastIndexOf(".");
-                                if (lastDotIndex > -1) {
-                                    extension = webappUrl.substring(lastDotIndex);
-                                }
-                                rewriteLink(newAttrs,
-                                        targetDocument,
-                                        anchor,
-                                        queryString,
-                                        extension);
-                            } else if (getCurrentDocument().getArea()
-                                    .equals(Publication.AUTHORING_AREA)) {
-                                markBrokenLink(newAttrs, href);
-                            } else {
-                                this.ignoreAElement = true;
-                            }
+                            rewriteLink(newAttrs, targetDocument, anchor, queryString, extension);
+                        } else if (doc.getArea().equals(Publication.AUTHORING_AREA)) {
+                            markBrokenLink(newAttrs, href);
+                        } else {
+                            this.ignoreAElement = true;
                         }
                     }
                 } catch (final Exception e) {
@@ -303,7 +245,8 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
     }
 
     /**
-     * Marks a <code>&lt;a/&gt;</code> element as broken and removes href attribute.
+     * Marks a <code>&lt;a/&gt;</code> element as broken and removes href
+     * attribute.
      * 
      * @param newAttrs The new attributes.
      * @throws AccessControlException when something went wrong.
@@ -374,7 +317,8 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
      * 
      * @param attr The attributes.
      * @param value The value.
-     * @throws IllegalArgumentException if the href attribute is not contained in this attributes.
+     * @throws IllegalArgumentException if the href attribute is not contained
+     *         in this attributes.
      */
     protected void setHrefAttribute(AttributesImpl attr, String value) {
         int position = attr.getIndex(ATTRIBUTE_HREF);
@@ -385,8 +329,8 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
     }
 
     /**
-     * @see org.xml.sax.ContentHandler#endElement(java.lang.String, java.lang.String,
-     *      java.lang.String)
+     * @see org.xml.sax.ContentHandler#endElement(java.lang.String,
+     *      java.lang.String, java.lang.String)
      */
     public void endElement(String uri, String name, String qname) throws SAXException {
         if (getLogger().isDebugEnabled()) {

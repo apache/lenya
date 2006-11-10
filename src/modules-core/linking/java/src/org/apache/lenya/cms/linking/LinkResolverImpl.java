@@ -19,6 +19,7 @@ package org.apache.lenya.cms.linking;
 import java.net.MalformedURLException;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -61,11 +62,39 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
 
         try {
             Publication pub = currentDoc.getFactory().getPublication(pubId);
-            Document doc = pub.getArea(area).getDocument(uuid, language);
+            Area areaObj = pub.getArea(area);
+            Document doc;
+            if (areaObj.contains(uuid, language)) {
+                doc = areaObj.getDocument(uuid, language);
+            } else {
+                if (this.fallbackMode == MODE_FAIL) {
+                    doc = null;
+                } else if (this.fallbackMode == MODE_DEFAULT_LANGUAGE) {
+                    if (areaObj.contains(uuid, pub.getDefaultLanguage())) {
+                        doc = areaObj.getDocument(uuid, pub.getDefaultLanguage());
+                    }
+                    else {
+                        doc = null;
+                    }
+                } else {
+                    throw new RuntimeException("The fallback mode [" + this.fallbackMode
+                            + "] is not supported!");
+                }
+            }
             return doc;
         } catch (PublicationException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private int fallbackMode = MODE_DEFAULT_LANGUAGE;
+
+    public int getFallbackMode() {
+        return this.fallbackMode;
+    }
+
+    public void setFallbackMode(int mode) {
+        this.fallbackMode = mode;
     }
 
 }
