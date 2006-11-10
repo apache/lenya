@@ -168,25 +168,16 @@ public class ChangeNodeID extends DocumentUsecase {
         Document source = getSourceDocument();
         DocumentLocator target = getTargetLocator();
         DocumentManager documentManager = null;
-        LinkRewriter rewriter = null;
         try {
-
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             documentManager.moveAll(source.area(),
                     source.getPath(),
                     source.area(),
                     target.getPath());
-
             targetDoc = getDocumentFactory().get(target);
-
-            rewriter = (LinkRewriter) this.manager.lookup(LinkRewriter.ROLE);
-            rewriter.rewriteLinks(source, targetDoc);
         } finally {
             if (documentManager != null) {
                 this.manager.release(documentManager);
-            }
-            if (rewriter != null) {
-                this.manager.release(rewriter);
             }
         }
 
