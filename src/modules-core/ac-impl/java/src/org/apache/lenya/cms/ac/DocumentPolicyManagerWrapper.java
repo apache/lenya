@@ -173,11 +173,6 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         this.policyManager = _policyManager;
     }
 
-    public Policy buildURLPolicy(AccreditableManager controller, String url)
-            throws AccessControlException {
-        return getPolicyManager().buildURLPolicy(controller, getPolicyURL(url));
-    }
-
     public Policy buildSubtreePolicy(AccreditableManager controller, String url)
             throws AccessControlException {
         return getPolicyManager().buildSubtreePolicy(controller, getPolicyURL(url));
@@ -186,11 +181,6 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
     public Policy[] getPolicies(AccreditableManager controller, String url)
             throws AccessControlException {
         return getPolicyManager().getPolicies(controller, getPolicyURL(url));
-    }
-
-    public void saveURLPolicy(String url, Policy policy) throws AccessControlException {
-        getPolicyManager().saveURLPolicy(getPolicyURL(url), policy);
-
     }
 
     public void saveSubtreePolicy(String url, Policy policy) throws AccessControlException {

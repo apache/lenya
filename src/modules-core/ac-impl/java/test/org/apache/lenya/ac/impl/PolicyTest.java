@@ -82,11 +82,11 @@ public class PolicyTest extends AbstractAccessControlTest {
      */
     public void testSavePolicy() throws AccessControlException {
         InheritingPolicyManager policyManager = (InheritingPolicyManager) getPolicyManager();
-        DefaultPolicy urlPolicy = (DefaultPolicy) policyManager.buildURLPolicy(
+        DefaultPolicy subtreePolicy = (DefaultPolicy) policyManager.buildSubtreePolicy(
                 getAccessController().getAccreditableManager(), URL);
         DefaultPolicy newPolicy = new DefaultPolicy();
 
-        Credential[] credentials = urlPolicy.getCredentials();
+        Credential[] credentials = subtreePolicy.getCredentials();
 
         for (int i = 0; i < credentials.length; i++) {
             Role role = credentials[i].getRole();
@@ -95,13 +95,13 @@ public class PolicyTest extends AbstractAccessControlTest {
             newPolicy.addCredential(credential);
         }
 
-        assertEquals(urlPolicy.getCredentials().length, newPolicy.getCredentials().length);
+        assertEquals(subtreePolicy.getCredentials().length, newPolicy.getCredentials().length);
 
-        policyManager.saveURLPolicy(SAVE_URL, newPolicy);
+        policyManager.saveSubtreePolicy(SAVE_URL, newPolicy);
 
-        newPolicy = (DefaultPolicy) policyManager.buildURLPolicy(getAccessController()
+        newPolicy = (DefaultPolicy) policyManager.buildSubtreePolicy(getAccessController()
                 .getAccreditableManager(), SAVE_URL);
-        assertEquals(urlPolicy.getCredentials().length, newPolicy.getCredentials().length);
+        assertEquals(subtreePolicy.getCredentials().length, newPolicy.getCredentials().length);
 
         Credential[] newCredentials = newPolicy.getCredentials();
 

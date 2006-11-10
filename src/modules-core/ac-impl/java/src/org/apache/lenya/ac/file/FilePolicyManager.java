@@ -69,13 +69,11 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
         Parameterizable, Disposable, Serviceable {
 
     private static final class SubtreeFileFilter implements FileFilter {
-        private final String url;
 
         private final String subtree;
 
-        private SubtreeFileFilter(String _url, String _subtree) {
+        private SubtreeFileFilter(String _subtree) {
             super();
-            this.url = _url;
             this.subtree = _subtree;
         }
 
@@ -83,7 +81,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
          * @see java.io.FileFilter#accept(java.io.File)
          */
         public boolean accept(File file) {
-            return file.getName().equals(this.subtree) || file.getName().equals(this.url);
+            return file.getName().equals(this.subtree);
         }
     }
 
@@ -114,22 +112,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
 
     private SourceCache cache;
 
-    protected static final String URL_FILENAME = "url-policy.acml";
     protected static final String SUBTREE_FILENAME = "subtree-policy.acml";
-
-    /**
-     * Builds the URL policy for a URL from a file. When the file is not
-     * present, an empty policy is returned.
-     * 
-     * @param controller The access controller to use.
-     * @param url The URL inside the web application.
-     * @return A policy.
-     * @throws AccessControlException when something went wrong.
-     */
-    public Policy buildURLPolicy(AccreditableManager controller, String url)
-            throws AccessControlException {
-        return buildPolicy(controller, url, URL_FILENAME);
-    }
 
     /**
      * Builds a subtree policy from a file. When the file is not present, an
@@ -233,18 +216,6 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
             throw new AccessControlException(e);
         }
         return file;
-    }
-
-    /**
-     * Saves a URL policy.
-     * 
-     * @param url The URL to save the policy for.
-     * @param policy The policy to save.
-     * @throws AccessControlException when something went wrong.
-     */
-    public void saveURLPolicy(String url, Policy policy) throws AccessControlException {
-        getLogger().debug("Saving URL policy for URL [" + url + "]");
-        savePolicy(url, policy, URL_FILENAME);
     }
 
     /**
@@ -400,7 +371,6 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
         
         url = url.substring(1);
 
-        String orgUrl = url;
         List policies = new LinkedList();
         HashMap orderedPolicies = new LinkedHashMap();
         int position = 1;
@@ -414,8 +384,6 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
             orderedPolicies.put(String.valueOf(position), policy);
             position++;
         }
-        policy = buildURLPolicy(controller, orgUrl);
-        orderedPolicies.put(String.valueOf(position), policy);
         for (int i = orderedPolicies.size(); i > 0; i--) {
             policies.add(orderedPolicies.get(String.valueOf(i)));
         }
@@ -448,8 +416,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
     protected void removeAccreditable(AccreditableManager manager, Accreditable accreditable,
             File policyDirectory) throws AccessControlException {
 
-        File[] policyFiles = policyDirectory.listFiles(new SubtreeFileFilter(URL_FILENAME,
-                SUBTREE_FILENAME));
+        File[] policyFiles = policyDirectory.listFiles(new SubtreeFileFilter(SUBTREE_FILENAME));
 
         try {
             RemovedAccreditablePolicyBuilder builder = new RemovedAccreditablePolicyBuilder(manager);
@@ -524,31 +491,18 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
 
         HashMap orderedCredential = new LinkedHashMap();
         int position = 1;
-        Policy policy;
-        String orgUrl = url;
 
         String[] directories = url.split("/");
         url = directories[0] + "/";
 
         for (int i = 1; i < directories.length; i++) {
             url += directories[i] + "/";
-            policy = buildSubtreePolicy(controller, url);
+            Policy policy = buildSubtreePolicy(controller, url);
             Credential[] tmp = policy.getCredentials();
             // we need to revert the order of the credentials
             // to keep the most important policy on top
             for (int j = tmp.length - 1; j >= 0; j--) {
                 Credential credential = tmp[j];
-                orderedCredential.put(String.valueOf(position), credential);
-                position++;
-            }
-        }
-        policy = buildURLPolicy(controller, orgUrl);
-        if (policy != null) {
-            Credential[] tmp = policy.getCredentials();
-            // we need to revert the order of the credentials
-            // to keep the most important policy on top
-            for (int i = tmp.length - 1; i >= 0; i--) {
-                Credential credential = tmp[i];
                 orderedCredential.put(String.valueOf(position), credential);
                 position++;
             }

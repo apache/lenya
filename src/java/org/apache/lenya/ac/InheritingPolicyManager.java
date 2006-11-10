@@ -28,16 +28,6 @@ import org.apache.lenya.ac.PolicyManager;
 public interface InheritingPolicyManager extends PolicyManager {
 
     /**
-     * Builds the URL policy for a URL from a file. When the file is not present, an empty policy is
-     * returned.
-     * @param controller The access controller to use.
-     * @param url The URL inside the web application.
-     * @return A policy.
-     * @throws AccessControlException when something went wrong.
-     */
-    Policy buildURLPolicy(AccreditableManager controller, String url) throws AccessControlException;
-
-    /**
      * Builds a subtree policy from a file. When the file is not present, an empty policy is
      * returned.
      * @param controller The access controller to use.
@@ -56,14 +46,6 @@ public interface InheritingPolicyManager extends PolicyManager {
      * @throws AccessControlException when something went wrong.
      */
     Policy[] getPolicies(AccreditableManager controller, String url) throws AccessControlException;
-
-    /**
-     * Saves a URL policy.
-     * @param url The URL to save the policy for.
-     * @param policy The policy to save.
-     * @throws AccessControlException when something went wrong.
-     */
-    void saveURLPolicy(String url, Policy policy) throws AccessControlException;
 
     /**
      * Saves a Subtree policy.
