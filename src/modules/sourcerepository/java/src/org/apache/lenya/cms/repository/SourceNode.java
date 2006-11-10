@@ -147,8 +147,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         try {
             if (!SourceUtil.exists(contentBaseUri, this.manager)) {
                 getLogger().info(
-                    "The content directory [" + contentBaseUri + "] does not exist. "
-                            + "It will be created as soon as documents are added.");
+                        "The content directory [" + contentBaseUri + "] does not exist. "
+                                + "It will be created as soon as documents are added.");
             }
         } catch (ServiceException e) {
             throw new RuntimeException(e);
@@ -279,7 +279,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                 String publicationId = publicationsPath.split("/")[0];
 
                 DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager,
-                    getSession());
+                        getSession());
                 Publication pub = factory.getPublication(publicationId);
 
                 String publicationPath = pub.getDirectory().getCanonicalPath();
@@ -836,15 +836,15 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                 } else {
                     NamespaceHelper helper = new NamespaceHelper(META_DATA_NAMESPACE, "", xml);
                     Element[] setElements = helper.getChildren(xml.getDocumentElement(),
-                        ELEMENT_SET);
+                            ELEMENT_SET);
                     for (int setIndex = 0; setIndex < setElements.length; setIndex++) {
                         String namespace = setElements[setIndex].getAttribute(ATTRIBUTE_NAMESPACE);
                         Element[] elementElements = helper.getChildren(setElements[setIndex],
-                            ELEMENT_ELEMENT);
+                                ELEMENT_ELEMENT);
                         for (int elemIndex = 0; elemIndex < elementElements.length; elemIndex++) {
                             String key = elementElements[elemIndex].getAttribute(ATTRIBUTE_KEY);
                             Element[] valueElements = helper.getChildren(
-                                elementElements[elemIndex], ELEMENT_VALUE);
+                                    elementElements[elemIndex], ELEMENT_VALUE);
                             for (int valueIndex = 0; valueIndex < valueElements.length; valueIndex++) {
                                 String value = DocumentHelper
                                         .getSimpleElementText(valueElements[valueIndex]);
@@ -987,11 +987,17 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     public String[] getMetaDataNamespaceUris() throws MetaDataException {
-        if (this.namespace2metamap == null) {
-            loadMetaData();
+        MetaDataRegistry registry = null;
+        try {
+            registry = (MetaDataRegistry) this.manager.lookup(MetaDataRegistry.ROLE);
+            return registry.getNamespaceUris();
+        } catch (ServiceException e) {
+            throw new MetaDataException(e);
+        } finally {
+            if (registry != null) {
+                this.manager.release(registry);
+            }
         }
-        Set uris = this.namespace2metamap.keySet();
-        return (String[]) uris.toArray(new String[uris.size()]);
     }
 
     private Set listeners = new HashSet();
