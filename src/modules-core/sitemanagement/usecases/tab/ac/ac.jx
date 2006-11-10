@@ -133,16 +133,16 @@ limitations under the License.
               </td>
               <td>
                 <input type="submit"
-                  name="deleteCredential_sub${credential.getType()}"
+                  name="deleteCredential_${credential.getType()}"
                   i18n:attr="value" value="Delete"/>
                 <jx:if test="${status.count>1}">
                   <input type="submit"
-                    name="upCredential_sub${credential.getType()}"
+                    name="upCredential_${credential.getType()}"
                     i18n:attr="value" value="Move Up"/>
                 </jx:if>
                 <jx:if test="${!status.last}">
                   <input type="submit"
-                    name="downCredential_sub${credential.getType()}"
+                    name="downCredential_${credential.getType()}"
                     i18n:attr="value" value="Move Down"/>
                 </jx:if>
               </td>
@@ -167,7 +167,7 @@ limitations under the License.
         </tr>
         <tr>
           
-          <form method="get" id="form-addCredential_subuser">
+          <form method="get" id="form-addCredential_user">
             <input type="hidden" name="lenya.usecase"
               value="${usecase.getName()}"/>
             <input type="hidden" name="lenya.continuation"
@@ -200,14 +200,14 @@ limitations under the License.
               </select>
             </td>
             <td>
-              <input i18n:attr="value" type="submit" name="addCredential_subuser"
+              <input i18n:attr="value" type="submit" name="addCredential_user"
                 value="Add"/>
             </td>
           </form>
           
         </tr>
         <tr>
-          <form method="get" id="form-addCredential_subgroup">
+          <form method="get" id="form-addCredential_group">
             <input type="hidden" name="lenya.usecase"
               value="${usecase.getName()}"/>
             <input type="hidden" name="lenya.continuation"
@@ -240,7 +240,7 @@ limitations under the License.
               </select>
             </td>
             <td>
-              <input i18n:attr="value" type="submit" name="addCredential_subgroup"
+              <input i18n:attr="value" type="submit" name="addCredential_group"
                 value="Add"/>
             </td>
           </form>

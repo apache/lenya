@@ -65,10 +65,9 @@ public class DefaultPolicy implements ModifiablePolicy {
     public void addRole(Accreditable accreditable, Role role, String method) {
         assert accreditable != null;
         assert role != null;
-
-        CredentialImpl credential = (CredentialImpl) getCredential(accreditable, role);
-        credential.setMethod(method);
-        addCredential(credential);
+        CredentialImpl cred = new CredentialImpl(accreditable, role);
+        cred.setMethod(method);
+        addCredential(cred);
     }
 
     /**

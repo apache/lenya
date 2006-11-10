@@ -207,7 +207,6 @@ public class AccessControl extends AccessControlUsecase {
                     String type = types[i];
                     String paramName = operations[j] + "Credential_" + type;
                     if (getParameterAsString(paramName) != null) {
-                        boolean inherit = true;
                         String roleId = getParameterAsString(ROLE);
                         String method = getParameterAsString(METHOD);
 
