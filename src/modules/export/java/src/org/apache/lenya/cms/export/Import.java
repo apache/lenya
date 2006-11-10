@@ -50,7 +50,7 @@ public class Import extends AbstractUsecase {
         super.initParameters();
         Area area = getArea();
         String pubPath = area.getPublication().getDirectory().getAbsolutePath();
-        String path = pubPath.replace(File.separatorChar, '/') + "/example-content/authoring";
+        String path = pubPath.replace(File.separatorChar, '/') + "/example-content";
         setParameter("path", path);
     }
 
