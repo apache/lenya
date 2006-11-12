@@ -1,6 +1,9 @@
-This product includes software developed by The Apache Software Foundation
-(http://www.apache.org/).
-   
+Apache Lenya
+Copyright 1999-2006 The Apache Software Foundation
+
+This product includes software developed at
+The Apache Software Foundation (http://www.apache.org/).
+
 This product includes software developed by the DOM4J Project
 (http://www.dom4j.org/).
 
