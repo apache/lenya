@@ -1,9 +1,10 @@
 /*
- * Copyright  1999-2004 The Apache Software Foundation
- *
- *  Licensed under the Apache License, Version 2.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ *  contributor license agreements.  See the NOTICE file distributed with
+ *  this work for additional information regarding copyright ownership.
+ *  The ASF licenses this file to You under the Apache License, Version 2.0
+ *  (the "License"); you may not use this file except in compliance with
+ *  the License.  You may obtain a copy of the License at
  *
  *      http://www.apache.org/licenses/LICENSE-2.0
  *
@@ -38,7 +39,7 @@ import org.apache.lenya.cms.publication.DocumentHelper;
  * <code>{document-url:{page-envelope:area}:{page-envelope:document-id}:{page-envelope:document-language}}</code>
  * </p>
  * 
- * @version: $Id: DocumentURLModule.java,v 1.2 2004/07/26 17:33:10 andreas Exp $
+ * @version: $Id$
  */
 public class DocumentURLModule extends AbstractPageEnvelopeModule implements Serviceable {
 
