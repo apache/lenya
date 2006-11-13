@@ -38,11 +38,13 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.impl.AbstractSource;
+import org.apache.lenya.cms.repository.ContentHolder;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.util.Query;
 
 /**
  * Repository source.
@@ -52,7 +54,7 @@ import org.apache.lenya.cms.repository.Session;
 public class RepositorySource extends AbstractSource implements ModifiableTraversableSource {
 
     private ServiceManager manager;
-    private Node node;
+    private ContentHolder content;
     private Session session;
     private Logger logger;
     protected static final String SCHEME = "lenya";
@@ -101,7 +103,31 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
         try {
             factory = (NodeFactory) this.manager.lookup(NodeFactory.ROLE);
             factory.setSession(session);
-            this.node = (Node) session.getRepositoryItem(factory, uri);
+            
+            String sourceUri;
+            int revisionNumber = -1;
+            
+            int questionMarkIndex = uri.indexOf("?");
+            if (questionMarkIndex > -1) {
+                sourceUri = uri.substring(0, questionMarkIndex);
+                Query query = new Query(uri.substring(questionMarkIndex + 1));
+                String revisionString = query.getValue("rev", null);
+                if (revisionString != null) {
+                    revisionNumber = Integer.valueOf(revisionString).intValue();
+                }
+            }
+            else {
+                sourceUri = uri;
+            }
+            
+            if (revisionNumber == -1) {
+                this.content = (ContentHolder) session.getRepositoryItem(factory, sourceUri);
+            }
+            else {
+                Node node = (Node) session.getRepositoryItem(factory, sourceUri);
+                this.content = node.getHistory().getRevision(revisionNumber);
+            }
+            
         } catch (Exception e) {
             throw new SourceException("Creating repository node failed: ", e);
         } finally {
@@ -115,7 +141,12 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
      * @return The repository node which is accessed by this source.
      */
     public Node getNode() {
-        return this.node;
+        
+        if (!(this.content instanceof Node)) {
+            throw new RuntimeException("This operation can only be invoked on nodes, not on revisions.");
+        }
+        
+        return (Node) this.content;
     }
 
     protected Logger getLogger() {
@@ -127,7 +158,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
      */
     public OutputStream getOutputStream() throws IOException {
         try {
-            return this.node.getOutputStream();
+            return getNode().getOutputStream();
         } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
@@ -140,7 +171,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
         RepositoryManager repoManager = null;
         try {
             repoManager = (RepositoryManager) this.manager.lookup(RepositoryManager.ROLE);
-            repoManager.delete(this.node);
+            repoManager.delete(getNode());
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -168,7 +199,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
      */
     public boolean exists() {
         try {
-            if (this.node.exists()) {
+            if (getContent().exists()) {
                 return true;
             } else {
                 return isCollection();
@@ -188,7 +219,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
             throw new SourceNotFoundException("The source [" + getURI() + "] does not exist!");
         }
         try {
-            return this.node.getInputStream();
+            return getContent().getInputStream();
         } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
@@ -234,13 +265,17 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
         transformer.transform(new DOMSource(edoc), new StreamResult(pos));
 
     }
+    
+    protected ContentHolder getContent() {
+        return this.content;
+    }
 
     /**
      * @see org.apache.excalibur.source.Source#getContentLength()
      */
     public long getContentLength() {
         try {
-            return this.node.getContentLength();
+            return getContent().getContentLength();
         } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
@@ -251,7 +286,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
      */
     public long getLastModified() {
         try {
-            return this.node.getLastModified();
+            return getContent().getLastModified();
         } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
@@ -262,7 +297,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
      */
     public String getMimeType() {
         try {
-            return this.node.getMimeType();
+            return getContent().getMimeType();
         } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
@@ -307,7 +342,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
      */
     public Collection getChildren() {
         try {
-            Collection children = this.node.getChildren();
+            Collection children = getNode().getChildren();
             java.util.Iterator iterator = children.iterator();
             java.util.Vector newChildren = new java.util.Vector();
             while (iterator.hasNext()) {
@@ -328,7 +363,7 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
      */
     public boolean isCollection() {
         try {
-            return this.node.isCollection();
+            return getNode().isCollection();
         } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }

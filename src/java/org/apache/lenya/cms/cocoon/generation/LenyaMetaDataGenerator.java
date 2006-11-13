@@ -212,7 +212,7 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
     public SourceValidity getValidity() {
         long lastModified;
         try {
-            lastModified = document.getLastModified().getTime();
+            lastModified = document.getLastModified();
         } catch (Exception e) {
             getLogger().error("Error determining last modification date", e);
             return null;

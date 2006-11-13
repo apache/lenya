@@ -17,15 +17,9 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import java.io.File;
-
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.rc.RCEnvironment;
-import org.apache.lenya.cms.rc.RCML;
-import org.apache.lenya.cms.rc.RevisionController;
-import org.apache.lenya.cms.site.usecases.SiteUsecase;
-
 import java.util.Vector;
+
+import org.apache.lenya.cms.rc.RCML;
 
 /**
  * Usecase to display revisions of a resource.
@@ -34,7 +28,6 @@ import java.util.Vector;
  */
 public class Revisions extends SiteUsecase {
 
-    private RevisionController rc = null;
     private RCML rcml = null;
 
     /**
@@ -45,26 +38,14 @@ public class Revisions extends SiteUsecase {
         super.initParameters();
 
         try {
-            final Publication publication = getSourceDocument().getPublication();
-            final String publicationPath = publication.getDirectory().getCanonicalPath();
-            final RCEnvironment rcEnvironment = RCEnvironment.getInstance(publication
-                    .getServletContext().getCanonicalPath());
-            String rcmlDirectory = rcEnvironment.getRCMLDirectory();
-            rcmlDirectory = publicationPath + File.separator + rcmlDirectory;
-            String backupDirectory = rcEnvironment.getBackupDirectory();
-            backupDirectory = publicationPath + File.separator + backupDirectory;
-            this.rc = new RevisionController(rcmlDirectory, backupDirectory, publicationPath);
-            final String filename = getSourceDocument().getFile().getCanonicalPath()
-                    .substring(publication.getDirectory().getCanonicalPath().length());
-            this.rcml = this.rc.getRCML(filename);
-
+            this.rcml = getSourceDocument().getRepositoryNode().getRcml();
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }
-        
+
         Vector entries;
         try {
-            entries = this.rcml.getBackupEntries(); 
+            entries = this.rcml.getBackupEntries();
         } catch (final Exception e) {
             throw new RuntimeException(e);
         }

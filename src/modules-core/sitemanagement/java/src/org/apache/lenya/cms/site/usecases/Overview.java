@@ -19,6 +19,7 @@ package org.apache.lenya.cms.site.usecases;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Date;
 
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
@@ -72,7 +73,7 @@ public class Overview extends SiteUsecase {
             // read parameters from document attributes
             setParameter(LANGUAGES, doc.getLanguages());
             SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
-            String lastModified = format.format(getSourceDocument().getLastModified());
+            String lastModified = format.format(new Date(getSourceDocument().getLastModified()));
             setParameter(LASTMODIFIED, lastModified);
             setParameter(RESOURCE_TYPE, doc.getResourceType());
             boolean visible = doc.getLink().getNode().isVisible();

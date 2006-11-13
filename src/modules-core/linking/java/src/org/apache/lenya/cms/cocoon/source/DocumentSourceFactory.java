@@ -40,6 +40,7 @@ import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceFactory;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.linking.LinkResolver;
+import org.apache.lenya.cms.linking.LinkTarget;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
@@ -64,6 +65,9 @@ import org.apache.lenya.util.ServletHelper;
 public class DocumentSourceFactory extends AbstractLogEnabled implements SourceFactory, ThreadSafe,
         Contextualizable, Serviceable, Configurable {
 
+    /**
+     * The URI scheme.
+     */
     public static final String SCHEME = "lenya-document";
 
     private Context context;
@@ -116,7 +120,8 @@ public class DocumentSourceFactory extends AbstractLogEnabled implements SourceF
             String webappUrl = ServletHelper.getWebappURI(request);
             Document currentDoc = factory.getFromURL(webappUrl);
 
-            Document doc = resolver.resolve(currentDoc, linkUri);
+            LinkTarget target = resolver.resolve(currentDoc, linkUri);
+            Document doc = target.getDocument();
 
             String format = null;
             if (queryString != null) {
@@ -127,6 +132,9 @@ public class DocumentSourceFactory extends AbstractLogEnabled implements SourceF
                 return getFormatSource(doc, format);
             } else {
                 String lenyaURL = doc.getSourceURI();
+                if (target.isRevisionSpecified()) {
+                    lenyaURL += "?rev=" + target.getRevisionNumber();
+                }
                 Session session = RepositoryUtil.getSession(this.manager, request);
                 return new RepositorySource(manager, lenyaURL, session, getLogger());
             }

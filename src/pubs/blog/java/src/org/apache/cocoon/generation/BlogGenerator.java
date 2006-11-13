@@ -19,6 +19,7 @@ package org.apache.cocoon.generation;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
@@ -28,6 +29,7 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
@@ -128,8 +130,14 @@ public class BlogGenerator extends ServiceableGenerator {
             Document[] docs = siteManager.getDocuments(map, publication, area);
             Arrays.sort((Object[]) docs, new Comparator() {
                 public int compare(Object o1, Object o2) {
-                    return ((Document) o2).getLastModified()
-                            .compareTo(((Document) o1).getLastModified());
+                    try {
+                        Date d1 = new Date(((Document) o2).getLastModified());
+                        Date d2 = new Date(((Document) o1).getLastModified());
+                        return d2.compareTo(d1);
+                    }
+                    catch (DocumentException e) {
+                        throw new RuntimeException(e);
+                    }
                 }
             });
 
@@ -144,7 +152,7 @@ public class BlogGenerator extends ServiceableGenerator {
                             LASTMOD_ATTR_NAME,
                             LASTMOD_ATTR_NAME,
                             "CDATA",
-                            String.valueOf(docs[i].getLastModified().getTime()));
+                            String.valueOf(docs[i].getLastModified()));
 
                     this.contentHandler.startElement(URI, ENTRY_NODE_NAME, PREFIX + ':'
                             + ENTRY_NODE_NAME, attributes);

@@ -20,6 +20,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
@@ -298,7 +299,13 @@ public class BlogOverviewGenerator extends ServiceableGenerator {
                                 return 1;
                             } else if (day1 == day2) {
                                 /* newest first */
-                                return d2.getLastModified().compareTo(d1.getLastModified());
+                                try {
+                                    Date date1 = new Date(d1.getLastModified());
+                                    Date date2 = new Date(d2.getLastModified());
+                                    return date2.compareTo(date1);
+                                } catch (DocumentException e) {
+                                    throw new RuntimeException(e);
+                                }
                             } else {
                                 return -1;
                             }
@@ -395,7 +402,7 @@ public class BlogOverviewGenerator extends ServiceableGenerator {
                     attributes.addAttribute("", TITLE_ATTR_NAME,
                             TITLE_ATTR_NAME, "CDATA",DocumentHelper.getSimpleElementText(element));
                     attributes.addAttribute("", LASTMOD_ATTR_NAME,
-                            LASTMOD_ATTR_NAME, "CDATA", String.valueOf(doc.getLastModified().getTime())); 
+                            LASTMOD_ATTR_NAME, "CDATA", String.valueOf(doc.getLastModified())); 
                     DocumentHelper.getSimpleElementText(element);
                     this.contentHandler.startElement(URI, ENTRY_NODE_NAME,
                             PREFIX + ':' + ENTRY_NODE_NAME, attributes);

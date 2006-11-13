@@ -20,141 +20,37 @@
 
 package org.apache.lenya.cms.rc;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Vector;
 
 import javax.xml.parsers.ParserConfigurationException;
 
-import org.apache.lenya.xml.DocumentHelper;
-import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.xpath.XPathAPI;
-import org.apache.log4j.Logger;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXParseException;
-
 /**
  * Handle with the RCML file
  */
-public class RCML {
-    private static Logger log = Logger.getLogger(RCML.class);
+public interface RCML {
 
     /**
      * <code>co</code> Checkout
      */
-    public static final short co = 0;
+    short co = 0;
     /**
      * <code>ci</code> Checkin
      */
-    public static final short ci = 1;
-
-    private File rcmlFile;
-    private Document document = null;
-    private boolean dirty = false;
-    private int maximalNumberOfEntries = 5;
-
-    private static Map ELEMENTS = new HashMap();
-    protected static final String ELEMENT_CHECKIN = "CheckIn";
-    protected static final String ELEMENT_CHECKOUT = "CheckOut";
-    protected static final String ELEMENT_BACKUP = "Backup";
-
-    {
-        ELEMENTS.put(new Short(ci), ELEMENT_CHECKIN);
-        ELEMENTS.put(new Short(co), ELEMENT_CHECKOUT);
-    }
-
-    /**
-     * Creates a new RCML object.
-     */
-    public RCML() {
-        this.maximalNumberOfEntries = 10;
-        this.maximalNumberOfEntries = (2 * this.maximalNumberOfEntries) + 1;
-    }
-
-    /**
-     * create a RCML-File if no one exists already
-     * @param rcmlDirectory The rcml directory.
-     * @param filename The path of the file from the publication (e.g. for file with absolute path
-     *            home/...//lenya/pubs/{publication id}/content/authoring/foo/bar.xml the filename
-     *            is content/authoring/foo/bar.xml)
-     * @param rootDirectory The publication directory
-     * @throws Exception if an error occurs
-     */
-    public RCML(String rcmlDirectory, String filename, String rootDirectory) throws Exception {
-        this();
-        this.rcmlFile = new File(rcmlDirectory, filename + ".rcml");
-
-        if (!this.rcmlFile.isFile()) {
-            // The rcml file does not yet exist, so we create it now...
-            //
-            File dataFile = new File(rootDirectory, filename);
-            long lastModified = 0;
-
-            if (dataFile.isFile()) {
-                lastModified = dataFile.lastModified();
-            }
-
-            initDocument();
-
-            // Create a "fake" checkin entry so it looks like the
-            // system checked the document in. We use the filesystem
-            // modification date as checkin time.
-            //
-            checkOutIn(RCML.ci, RevisionController.systemUsername, lastModified, false);
-
-            File parent = new File(this.rcmlFile.getParent());
-            parent.mkdirs();
-
-            write();
-        } else {
-            try {
-                this.document = DocumentHelper.readDocument(this.rcmlFile);
-            } catch (SAXParseException e) {
-                throw new RevisionControlException("Could not read RC file ["
-                        + this.rcmlFile.getAbsolutePath() + "]");
-            }
-        }
-    }
+    short ci = 1;
 
     /**
      * initialise the RCML-document. Delete all entries
      * @throws ParserConfigurationException
      */
-    public void initDocument() throws ParserConfigurationException {
-        this.document = DocumentHelper.createDocument(null, "XPSRevisionControl", null);
-    }
-
-    /**
-     * Call the methode write, if the document is dirty
-     * 
-     * @throws IOException if an error occurs
-     * @throws Exception if an error occurs
-     */
-    protected void finalize() throws IOException, Exception {
-        if (this.isDirty()) {
-            log.debug("RCML.finalize(): calling write()");
-            write();
-        }
-    }
+    public void initDocument() throws ParserConfigurationException ;
 
     /**
      * Write the xml RCML-document in the RCML-file.
      * @throws IOException if an error occurs
      * @throws Exception if an error occurs
      */
-    public void write() throws Exception {
-        if (this.document == null) {
-            throw new IllegalStateException("The XML for RC file [" + this.rcmlFile + "] is null!");
-        }
-        DocumentHelper.writeDocument(this.document, this.rcmlFile);
-        clearDirty();
-    }
+    public void write() throws Exception;
 
     /**
      * Write a new entry for a check out or a check in the RCML-File made by the user with identity
@@ -167,211 +63,56 @@ public class RCML {
      * @throws Exception if an error occurs
      */
     public void checkOutIn(short type, String identity, long time, boolean backup)
-            throws IOException, Exception {
-        
-        if (identity == null) {
-            throw new IllegalArgumentException("The identity must not be null!");
-        }
-
-        if (type != co && type != ci) {
-            throw new IllegalArgumentException("ERROR: " + this.getClass().getName()
-                    + ".checkOutIn(): No such type");
-        }
-
-        NamespaceHelper helper = new NamespaceHelper(null, "", this.document);
-
-        Element identityElement = helper.createElement("Identity", identity);
-        Element timeElement = helper.createElement("Time", "" + time);
-
-        String elementName = (String) ELEMENTS.get(new Short(type));
-        Element checkOutElement = helper.createElement(elementName);
-
-        checkOutElement.appendChild(identityElement);
-        checkOutElement.appendChild(timeElement);
-
-        if (type == ci) {
-            int version = 0;
-            CheckInEntry latestEntry = getLatestCheckInEntry();
-            if (latestEntry != null) {
-                version = latestEntry.getVersion();
-            }
-            version++;
-            Element versionElement = helper.createElement("Version", "" + version);
-            checkOutElement.appendChild(versionElement);
-        }
-
-        if (backup) {
-            Element backupElement = helper.createElement(ELEMENT_BACKUP);
-            checkOutElement.appendChild(backupElement);
-        }
-
-        Element root = this.document.getDocumentElement();
-        root.insertBefore(checkOutElement, root.getFirstChild());
-
-        setDirty();
-
-        // If this is a checkout, we write back the changed state
-        // to the file immediately because otherwise another
-        // process might read the file and think there is no open
-        // checkout (as it is only visible in our private DOM tree
-        // at this time).
-        //
-        // If, however, this is a checkin, we do not yet write it
-        // out because then another process might again check it
-        // out immediately and manipulate the file contents
-        // *before* our caller has finished writing back the
-        // changed data to the destination file. We therefore rely
-        // on either our caller invoking the write() method when
-        // finished or the garbage collector calling the finalize()
-        // method.
-        //
-        if (type == co) {
-            write();
-        }
-    }
+            throws Exception;
 
     /**
      * get the latest check out
      * @return CheckOutEntry The entry of the check out
      * @throws Exception if an error occurs
      */
-    public CheckOutEntry getLatestCheckOutEntry() throws Exception {
-        Element parent = this.document.getDocumentElement();
-        Node identity = null;
-        Node time = null;
-        String rcIdentity = null;
-
-        identity = XPathAPI.selectSingleNode(parent,
-                "/XPSRevisionControl/CheckOut[1]/Identity/text()");
-        time = XPathAPI.selectSingleNode(parent, "/XPSRevisionControl/CheckOut[1]/Time/text()");
-
-        if (identity == null && time == null) {
-            // No checkout at all
-            return null;
-        }
-        rcIdentity = identity.getNodeValue();
-        long rcTime = new Long(time.getNodeValue()).longValue();
-
-        return new CheckOutEntry(rcIdentity, rcTime);
-    }
+    public CheckOutEntry getLatestCheckOutEntry() throws Exception;
 
     /**
      * get the latest check in
      * @return CheckInEntry The entry of the check in
      * @throws Exception if an error occurs
      */
-    public CheckInEntry getLatestCheckInEntry() throws Exception {
-        Element parent = this.document.getDocumentElement();
-
-        Node identity = XPathAPI.selectSingleNode(parent,
-                "/XPSRevisionControl/CheckIn[1]/Identity/text()");
-        Node time = XPathAPI.selectSingleNode(parent, "/XPSRevisionControl/CheckIn[1]/Time/text()");
-        Node versionNode = XPathAPI.selectSingleNode(parent,
-                "/XPSRevisionControl/CheckIn[1]/Version/text()");
-
-        if (identity == null && time == null) {
-            // No checkout at all
-            return null;
-        }
-        String rcIdentity = identity.getNodeValue();
-        long rcTime = new Long(time.getNodeValue()).longValue();
-        int version = 0;
-        if (versionNode != null) {
-            version = new Integer(versionNode.getNodeValue()).intValue();
-        }
-
-        return new CheckInEntry(rcIdentity, rcTime, version);
-    }
+    public CheckInEntry getLatestCheckInEntry() throws Exception;
 
     /**
      * get the latest entry (a check out or check in)
      * @return RCMLEntry The entry of the check out/in
      * @throws Exception if an error occurs
      */
-    public RCMLEntry getLatestEntry() throws Exception {
-        CheckInEntry cie = getLatestCheckInEntry();
-        CheckOutEntry coe = getLatestCheckOutEntry();
-
-        if ((cie != null) && (coe != null)) {
-            if (cie.getTime() > coe.getTime()) {
-                return cie;
-            }
-            return coe;
-        }
-
-        if (cie != null) {
-            return cie;
-        }
-        return coe;
-    }
+    public RCMLEntry getLatestEntry() throws Exception;
 
     /**
      * get all check in and check out
      * @return Vector of all check out and check in entries in this RCML-file
      * @throws Exception if an error occurs
      */
-    public Vector getEntries() throws Exception {
-        Element parent = this.document.getDocumentElement();
-        NodeList entries = XPathAPI.selectNodeList(parent,
-                "/XPSRevisionControl/CheckOut|/XPSRevisionControl/CheckIn");
-        Vector RCMLEntries = new Vector();
-
-        for (int i = 0; i < entries.getLength(); i++) {
-            Element elem = (Element) entries.item(i);
-            String time = elem.getElementsByTagName("Time").item(0).getFirstChild().getNodeValue();
-            String identity = elem.getElementsByTagName("Identity")
-                    .item(0)
-                    .getFirstChild()
-                    .getNodeValue();
-
-            if (elem.getTagName().equals("CheckOut")) {
-                RCMLEntries.add(new CheckOutEntry(identity, new Long(time).longValue()));
-            } else {
-                NodeList versionElements = elem.getElementsByTagName("Version");
-                int version = 0;
-                if (versionElements.getLength() > 0) {
-                    String versionString = versionElements.item(0).getFirstChild().getNodeValue();
-                    version = new Integer(versionString).intValue();
-                }
-
-                RCMLEntries.add(new CheckInEntry(identity, new Long(time).longValue(), version));
-            }
-        }
-
-        return RCMLEntries;
-    }
+    public Vector getEntries() throws Exception;
 
     /**
      * get all backup entries
      * @return Vector of all entries in this RCML-file with a backup
      * @throws Exception if an error occurs
      */
-    public Vector getBackupEntries() throws Exception {
-        Element parent = this.document.getDocumentElement();
-        NodeList entries = XPathAPI.selectNodeList(parent, "/XPSRevisionControl/CheckOut["
-                + ELEMENT_BACKUP + "]|/XPSRevisionControl/CheckIn[" + ELEMENT_BACKUP + "]");
-        Vector RCMLEntries = new Vector();
+    public Vector getBackupEntries() throws Exception;
+    
+    /**
+     * Creates a backup.
+     * @param time The time.
+     * @throws RevisionControlException
+     */
+    public void makeBackup(long time) throws RevisionControlException;
 
-        for (int i = 0; i < entries.getLength(); i++) {
-            Element elem = (Element) entries.item(i);
-            String time = elem.getElementsByTagName("Time").item(0).getFirstChild().getNodeValue();
-            String identity = elem.getElementsByTagName("Identity")
-                    .item(0)
-                    .getFirstChild()
-                    .getNodeValue();
-
-            NodeList versionElements = elem.getElementsByTagName("Version");
-            int version = 0;
-            if (versionElements.getLength() > 0) {
-                String versionString = versionElements.item(0).getFirstChild().getNodeValue();
-                version = new Integer(versionString).intValue();
-            }
-
-            RCMLEntries.add(new CheckInEntry(identity, new Long(time).longValue(), version));
-        }
-
-        return RCMLEntries;
-    }
+    /**
+     * Restores a backup.
+     * @param time The time.
+     * @throws RevisionControlException
+     */
+    public void restoreBackup(long time) throws RevisionControlException;
 
     /**
      * Prune the list of entries and delete the corresponding backups. Limit the number of entries
@@ -379,118 +120,49 @@ public class RCML {
      * @param backupDir The backup directory
      * @throws Exception if an error occurs
      */
-    public void pruneEntries(String backupDir) throws Exception {
-        Element parent = this.document.getDocumentElement();
-        NodeList entries = XPathAPI.selectNodeList(parent,
-                "/XPSRevisionControl/CheckOut|/XPSRevisionControl/CheckIn");
-
-        for (int i = this.maximalNumberOfEntries; i < entries.getLength(); i++) {
-            Element current = (Element) entries.item(i);
-
-            // remove the backup file associated with this entry
-            String time = current.getElementsByTagName("Time")
-                    .item(0)
-                    .getFirstChild()
-                    .getNodeValue();
-            File backupFile = new File(backupDir + "/" + time + ".bak");
-            backupFile.delete();
-            // remove the entry from the list
-            current.getParentNode().removeChild(current);
-        }
-    }
+    public void pruneEntries() throws Exception;
 
     /**
      * Get a clone document
      * @return org.w3c.dom.Document The clone document
      * @throws Exception if an error occurs
      */
-    public org.w3c.dom.Document getDOMDocumentClone() throws Exception {
-        Document documentClone = DocumentHelper.createDocument(null, "dummy", null);
-        documentClone.removeChild(documentClone.getDocumentElement());
-        documentClone.appendChild(documentClone.importNode(this.document.getDocumentElement(), true));
-
-        return documentClone;
-    }
+    public org.w3c.dom.Document getDOMDocumentClone() throws Exception;
 
     /**
      * Check if the document is dirty
      * @return boolean dirty
      */
-    public boolean isDirty() {
-        return this.dirty;
-    }
-
-    /**
-     * Set the value dirty to true
-     */
-    protected void setDirty() {
-        this.dirty = true;
-    }
-
-    /**
-     * Set the value dirty to false
-     */
-    protected void clearDirty() {
-        this.dirty = false;
-    }
+    public boolean isDirty();
 
     /**
      * Delete the latest check in
      * @throws Exception if an error occurs
      */
-    public void deleteFirstCheckIn() throws Exception {
-        Node root = this.document.getDocumentElement();
-        Node firstCheckIn = XPathAPI.selectSingleNode(root, "/XPSRevisionControl/CheckIn[1]");
-        root.removeChild(firstCheckIn);
-        root.removeChild(root.getFirstChild()); // remove EOL (end of line)
-        setDirty();
-    }
+    public void deleteFirstCheckIn() throws Exception;
 
     /**
      * Delete the latest check in
      * @throws Exception if an error occurs
      */
-    public void deleteFirstCheckOut() throws Exception {
-        Node root = this.document.getDocumentElement();
-        Node firstCheckIn = XPathAPI.selectSingleNode(root, "/XPSRevisionControl/CheckOut[1]");
-        root.removeChild(firstCheckIn);
-        root.removeChild(root.getFirstChild()); // remove EOL (end of line)
-        setDirty();
-    }
+    public void deleteFirstCheckOut() throws Exception;
 
     /**
      * get the time's value of the backups
      * @return String[] the times
      * @throws Exception if an error occurs
      */
-    public String[] getBackupsTime() throws Exception {
-        Node root = this.document.getDocumentElement();
-        NodeList entries = XPathAPI.selectNodeList(root, "/XPSRevisionControl/CheckIn");
-
-        ArrayList times = new ArrayList();
-
-        for (int i = 0; i < entries.getLength(); i++) {
-            Element elem = (Element) entries.item(i);
-            String time = elem.getElementsByTagName("Time").item(0).getFirstChild().getNodeValue();
-            NodeList backupNodes = elem.getElementsByTagName(ELEMENT_BACKUP);
-            if (backupNodes != null && backupNodes.getLength() > 0) {
-                times.add(time);
-            }
-        }
-        return (String[]) times.toArray(new String[times.size()]);
-
-    }
+    public String[] getBackupsTime() throws Exception;
 
     /**
      * delete the rcml file and the directory if this one is empty
      * @return boolean true, if the file was deleted
      */
-    public boolean delete() {
-        File directory = this.rcmlFile.getParentFile();
-        boolean deleted = this.rcmlFile.delete();
-        if (directory.exists() && directory.isDirectory() && directory.listFiles().length == 0) {
-            directory.delete();
-        }
-        return deleted;
-    }
+    public boolean delete();
+    
+    /**
+     * Delete all revisions.
+     * @throws RevisionControlException if an error occurs.
+     */
+    void deleteRevisions() throws RevisionControlException;
 }

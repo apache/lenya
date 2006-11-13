@@ -17,6 +17,21 @@
  */
 package org.apache.lenya.cms.repository;
 
-public interface RepositoryItem {
+/**
+ * The revision history of a node.
+ */
+public interface History {
     
+    /**
+     * @return The latest revision.
+     */
+    Revision getLatestRevision();
+    
+    /**
+     * @param number A revision number.
+     * @return A revision.
+     * @throws RepositoryException if no revision with this number exists.
+     */
+    Revision getRevision(int number) throws RepositoryException;
+
 }

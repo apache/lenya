@@ -23,21 +23,15 @@ package org.apache.lenya.cms.rc;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
-import junit.framework.TestCase;
+import org.apache.lenya.ac.impl.AbstractAccessControlTest;
+import org.apache.lenya.cms.publication.Document;
 
 /**
  * Revision Controller test
  */
-public class RevisionControllerTest extends TestCase {
-    /**
-     * Constructor.
-     * @param test The test to execute.
-     */
-    public RevisionControllerTest(String test) {
-        super(test);
-    }
+public class RevisionControllerTest extends AbstractAccessControlTest {
 
-    public static void testRevisionController() {
+    public void testRevisionController() {
         
         String[] args = { "", "", "", "" };
         
@@ -52,13 +46,16 @@ public class RevisionControllerTest extends TestCase {
             return;
         }
 
+        Document doc1 = null;
+        Document doc2 = null;
+        
         String identityS = args[0];
         String source = args[1];
         String identityD = args[2];
         String destination = args[3];
-        RevisionController rc = new RevisionController(null, null, null);
+        RevisionController rc = new RevisionController();
         try {
-            rc.reservedCheckOut(source, identityS);
+            rc.reservedCheckOut(doc1.getRepositoryNode(), identityS);
         } catch (FileNotFoundException e) // No such source file
             {
             System.out.println(e.toString());
@@ -78,7 +75,7 @@ public class RevisionControllerTest extends TestCase {
         }
 
         try {
-            rc.reservedCheckIn(destination, identityD, true, true);
+            rc.reservedCheckIn(doc2.getRepositoryNode(), identityD, true, true);
         } catch (FileReservedCheckInException e) {
             System.out.println(e.toString());
         } catch (Exception e) {

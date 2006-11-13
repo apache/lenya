@@ -40,6 +40,7 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RevisionController;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 
 /**
@@ -53,7 +54,7 @@ public class RevisionControllerAction extends ServiceableAction {
     private String backupDirectory = null;
     private RevisionController rc = null;
     private String username = null;
-    private String filename = null;
+    private Node node = null;
 
     /**
      * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector,
@@ -117,8 +118,7 @@ public class RevisionControllerAction extends ServiceableAction {
         this.backupDirectory = publicationPath + File.separator + this.backupDirectory;
 
         // Initialize Revision Controller
-        this.rc = new RevisionController(this.rcmlDirectory, this.backupDirectory, publicationPath);
-        getLogger().debug("revision controller" + this.rc);
+        this.rc = new RevisionController();
 
         // /Initialize Revision Controller
         // Get session
@@ -159,14 +159,11 @@ public class RevisionControllerAction extends ServiceableAction {
             }
 
             Document srcDoc = map.get(publication, document.getArea(), documentid, language);
-            File newFile = srcDoc.getFile();
-            this.filename = newFile.getCanonicalPath();
+            this.node = srcDoc.getRepositoryNode();
 
         } else {
-            this.filename = document.getFile().getCanonicalPath();
+            this.node = document.getRepositoryNode();
         }
-
-        this.filename = this.filename.substring(publicationPath.length());
 
         this.username = null;
 
@@ -185,11 +182,11 @@ public class RevisionControllerAction extends ServiceableAction {
     }
 
     /**
-     * Get the filename.
-     * @return the filename
+     * Get the node.
+     * @return the node
      */
-    protected String getFilename() {
-        return this.filename;
+    protected Node getNode() {
+        return this.node;
     }
 
     /**

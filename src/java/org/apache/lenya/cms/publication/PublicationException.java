@@ -20,10 +20,12 @@
 
 package org.apache.lenya.cms.publication;
 
+import org.apache.lenya.cms.repository.RepositoryException;
+
 /**
  * Publication Exception
  */
-public class PublicationException extends Exception {
+public class PublicationException extends RepositoryException {
 
     /**
 	 * 

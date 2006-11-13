@@ -34,18 +34,26 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
 
     private String namespaceUri;
     private ServiceManager manager;
-    private SourceNode node;
+    private SourceNodeMetaDataHandler handler;
 
     /**
      * Ctor.
      * @param namespaceUri The namespace URI.
-     * @param node The node.
+     * @param handler The meta data handler.
      * @param manager The service manager.
      */
-    public SourceNodeMetaData(String namespaceUri, SourceNode node, ServiceManager manager) {
+    public SourceNodeMetaData(String namespaceUri, SourceNodeMetaDataHandler handler, ServiceManager manager) {
         this.namespaceUri = namespaceUri;
-        this.node = node;
+        this.handler = handler;
         this.manager = manager;
+    }
+    
+    protected String getNamespaceUri() {
+        return this.namespaceUri;
+    }
+    
+    protected SourceNodeMetaDataHandler getHandler() {
+        return this.handler;
     }
 
     private ElementSet elementSet;
@@ -66,7 +74,7 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
 
     public String[] getValues(String key) throws MetaDataException {
         checkKey(key);
-        return this.node.getValues(this.namespaceUri, key);
+        return getHandler().getValues(this.namespaceUri, key);
     }
 
     public String getFirstValue(String key) throws MetaDataException {
@@ -99,7 +107,7 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
 
     public void setValue(String key, String value) throws MetaDataException {
         checkKey(key);
-        this.node.removeAllValues(this.namespaceUri, key);
+        getHandler().removeAllValues(this.namespaceUri, key);
         addValue(key, value);
     }
 
@@ -109,7 +117,7 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
             throw new MetaDataException("The element [" + key
                     + "] doesn't support multiple values!");
         }
-        this.node.addValue(this.namespaceUri, key, value);
+        getHandler().addValue(this.namespaceUri, key, value);
     }
 
     public void replaceBy(MetaData other) throws MetaDataException {
@@ -152,7 +160,7 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
 
     public long getLastModified() throws MetaDataException {
         try {
-            return this.node.getMetaLastModified();
+            return getHandler().getMetaLastModified();
         } catch (RepositoryException e) {
             throw new MetaDataException(e);
         }
@@ -160,7 +168,7 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
 
     public void removeAllValues(String key) throws MetaDataException {
         checkKey(key);
-        this.node.removeAllValues(this.namespaceUri, key);
+        getHandler().removeAllValues(this.namespaceUri, key);
     }
 
 }

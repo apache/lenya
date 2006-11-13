@@ -120,7 +120,7 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
                 } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGES_CSV)) {
                     value = StringUtils.join(document.getLanguages(), ',');
                 } else if (name.equals(PageEnvelope.DOCUMENT_LASTMODIFIED)) {
-                    Date date = document.getLastModified();
+                    Date date = new Date(document.getLastModified());
                     value = new SimpleDateFormat(DATE_FORMAT).format(date);
                 } else if (name.equals(PageEnvelope.DOCUMENT_TYPE)) {
                     ResourceType resourceType = document.getResourceType();

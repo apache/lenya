@@ -51,10 +51,10 @@ public class ReservedCheckinAction extends RevisionControllerAction {
         getLogger().debug("Backup: " + backup);
 
         try {
-            getRc().reservedCheckIn(getFilename(), getUsername(), backup, true);
+            getRc().reservedCheckIn(getNode(), getUsername(), backup, true);
         } catch (FileReservedCheckInException e) {
             actionMap.put("exception", "fileReservedCheckInException");
-            actionMap.put("filename", getFilename());
+            actionMap.put("filename", getNode().getSourceURI());
             actionMap.put("checkType", e.getTypeString());
             actionMap.put("user", e.getUsername());
             actionMap.put("date", e.getDate());
@@ -63,9 +63,9 @@ public class ReservedCheckinAction extends RevisionControllerAction {
             return actionMap;
         } catch (Exception e) {
             actionMap.put("exception", "genericException");
-            actionMap.put("filename", getFilename());
+            actionMap.put("filename", getNode().getSourceURI());
             actionMap.put("message", e.getMessage());
-            getLogger().warn("The document " + getFilename() + " couldn't be checked in");
+            getLogger().warn("The document " + getNode().getSourceURI() + " couldn't be checked in");
 
             return actionMap;
         }

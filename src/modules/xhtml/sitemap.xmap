@@ -69,8 +69,11 @@
       <!-- View Revision? -->
       <map:match pattern="*.xml">
         <map:match type="step" pattern="view-revision">
+          <!--
           <map:generate type="serverpages" src="fallback://lenya/content/rc/view.xsp">
           </map:generate>
+          -->
+          <map:generate src="lenya-document:{page-envelope:document-uuid},lang={page-envelope:document-language},rev={request-param:rev}"/>
           <map:transform src="fallback://lenya/xslt/rc/toDoc.xsl"/>
           <map:transform src="fallback://lenya/modules/xhtml/xslt/xhtml2xhtml.xsl">
             <map:parameter name="rendertype" value="{1}"/>

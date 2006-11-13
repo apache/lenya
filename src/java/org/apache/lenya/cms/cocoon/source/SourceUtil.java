@@ -50,20 +50,22 @@ public final class SourceUtil {
 
     /**
      * <p>
-     * Copies one Source to another using a source buffer i.e. the source Source is buffered before
-     * it is copied to its final destination.
+     * Copies one Source to another using a source buffer i.e. the source Source
+     * is buffered before it is copied to its final destination.
      * </p>
      * <p>
-     * The optional buffering is sometimes useful, if the source Source somehow depends on the
-     * destination Source. This situation may occur e.g. if source Source is a Cocoon pipeline.
+     * The optional buffering is sometimes useful, if the source Source somehow
+     * depends on the destination Source. This situation may occur e.g. if
+     * source Source is a Cocoon pipeline.
      * </p>
      * <p>
-     * <em>NOTE:</em> o.a.e..s.SourceUtil.copy does not close streams on an exception!!
+     * <em>NOTE:</em> o.a.e..s.SourceUtil.copy does not close streams on an
+     * exception!!
      * </p>
      * @param source
      * @param destination
-     * @param useBuffer If true, the source data will be read into a buffer before it is written to
-     *            the final destination.
+     * @param useBuffer If true, the source data will be read into a buffer
+     *        before it is written to the final destination.
      * @throws IOException If an error occures.
      */
     public static void copy(Source source, ModifiableSource destination, boolean useBuffer)
@@ -97,8 +99,8 @@ public final class SourceUtil {
      * @param resolver The SourceResolver to use for lookin up Sources.
      * @param sourceUri The source to be copied.
      * @param destUri The URI to copy to.
-     * @param useBuffer If true, the source Source is buffered before copied to the final
-     *            destination.
+     * @param useBuffer If true, the source Source is buffered before copied to
+     *        the final destination.
      * @throws IOException If an error occures.
      * @throws SourceException If the destination is not modifiable.
      * @see #copy(Source, ModifiableSource, boolean)
@@ -329,6 +331,35 @@ public final class SourceUtil {
     }
 
     /**
+     * Returns the last modification date of a source.
+     * @param sourceUri The source URI.
+     * @param manager The service manager.
+     * @return A long value.
+     * @throws ServiceException if an error occurs.
+     * @throws MalformedURLException if an error occurs.
+     * @throws IOException if an error occurs.
+     */
+    public static long getLastModified(String sourceUri, ServiceManager manager)
+            throws ServiceException, MalformedURLException, IOException {
+        SourceResolver resolver = null;
+        Source source = null;
+        try {
+
+            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI(sourceUri);
+
+            return source.getLastModified();
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                manager.release(resolver);
+            }
+        }
+    }
+
+    /**
      * Checks out a repository source.
      * @param sourceUri The source URI.
      * @param manager The service manager.
@@ -464,6 +495,62 @@ public final class SourceUtil {
 
         } catch (Exception e) {
             throw new RuntimeException(e);
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                manager.release(resolver);
+            }
+        }
+    }
+
+    /**
+     * @param sourceUri The source URI.
+     * @param manager The service manager.
+     * @return A content length.
+     * @throws ServiceException
+     * @throws MalformedURLException
+     * @throws IOException
+     */
+    public static long getContentLength(String sourceUri, ServiceManager manager)
+            throws ServiceException, MalformedURLException, IOException {
+        SourceResolver resolver = null;
+        Source source = null;
+        try {
+
+            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI(sourceUri);
+
+            return source.getContentLength();
+        } finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                manager.release(resolver);
+            }
+        }
+    }
+
+    /**
+     * @param sourceUri The source URI.
+     * @param manager The service manager.
+     * @return A mime type.
+     * @throws ServiceException
+     * @throws IOException
+     * @throws MalformedURLException
+     */
+    public static String getMimeType(String sourceUri, ServiceManager manager)
+            throws ServiceException, MalformedURLException, IOException {
+        SourceResolver resolver = null;
+        Source source = null;
+        try {
+
+            resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI(sourceUri);
+
+            return source.getMimeType();
         } finally {
             if (resolver != null) {
                 if (source != null) {

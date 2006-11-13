@@ -17,6 +17,14 @@
  */
 package org.apache.lenya.cms.repository;
 
-public interface RepositoryItem {
+/**
+ * A revision.
+ */
+public interface Revision extends ContentHolder {
+    
+    /**
+     * @return The revision number.
+     */
+    int getNumber();
     
 }

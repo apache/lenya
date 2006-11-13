@@ -209,7 +209,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                         if (linkUriAndQuery.length > 1) {
                             queryString = linkUriAndQuery[1];
                         }
-                        Document targetDocument = this.linkResolver.resolve(doc, linkUri);
+                        Document targetDocument = this.linkResolver.resolve(doc, linkUri).getDocument();
                         if (targetDocument != null) {
                             String extension = targetDocument.getExtension();
                             if (extension.length() > 0) {
@@ -250,6 +250,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
      * attribute.
      * 
      * @param newAttrs The new attributes.
+     * @param brokenHref The broken link URI.
      * @throws AccessControlException when something went wrong.
      */
     protected void markBrokenLink(AttributesImpl newAttrs, String brokenHref)

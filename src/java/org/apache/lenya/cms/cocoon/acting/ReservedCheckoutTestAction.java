@@ -48,25 +48,25 @@ public class ReservedCheckoutTestAction extends RevisionControllerAction {
         HashMap actionMap = new HashMap();
 
         try {
-            RCMLEntry entry =getRc().getRCML(getFilename()).getLatestEntry();
+            RCMLEntry entry = getNode().getRcml().getLatestEntry();
 
 			if ((entry == null) || (entry.getType() != RCML.co) || !entry.getIdentity().equals(getUsername())) {
 				//check out
-	            getRc().reservedCheckOut(getFilename(),getUsername());   
+	            getRc().reservedCheckOut(getNode(), getUsername());   
 			}
 		} catch (FileReservedCheckOutException e) {
 			actionMap.put("exception", "fileReservedCheckOutException");
-			actionMap.put("filename", getFilename());
+			actionMap.put("filename", getNode().getSourceURI());
 			actionMap.put("user", e.getCheckOutUsername());
 			actionMap.put("date", e.getCheckOutDate());
-			getLogger().warn("Document " + getFilename() + " already checked-out by " + e.getCheckOutUsername() + " since " + e.getCheckOutDate());
+			getLogger().warn("Node " + getNode().getSourceURI() + " already checked-out by " + e.getCheckOutUsername() + " since " + e.getCheckOutDate());
 
 			return actionMap;
 		} catch (Exception e) {
 			actionMap.put("exception", "genericException");
-			actionMap.put("filename", getFilename());
+			actionMap.put("filename", getNode().getSourceURI());
 			actionMap.put("message", e.getMessage());
-			getLogger().error(".act(): The document " + getFilename() + " couldn't be checked out: ", e);
+			getLogger().error(".act(): The node " + getNode().getSourceURI() + " couldn't be checked out: ", e);
 
 			return actionMap;
 		}

@@ -17,7 +17,6 @@
  */
 package org.apache.lenya.cms.usecases.webdav;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Vector;
@@ -28,10 +27,8 @@ import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
-import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.rc.RCMLEntry;
-import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 
@@ -78,19 +75,6 @@ public class Propfind extends SiteUsecase {
             request = request.replaceFirst("webdav", "authoring");
         }
         try {
-            // get Parameters for RC
-            String publicationPath = _publication.getDirectory().getCanonicalPath();
-            RCEnvironment rcEnvironment = RCEnvironment.getInstance(_publication.getServletContext()
-                    .getCanonicalPath());
-            String rcmlDirectory = rcEnvironment.getRCMLDirectory();
-            rcmlDirectory = publicationPath + File.separator + rcmlDirectory;
-            String backupDirectory = rcEnvironment.getBackupDirectory();
-            backupDirectory = publicationPath + File.separator + backupDirectory;
-
-            // Initialize Revision Controller
-            RevisionController rc = new RevisionController(rcmlDirectory,
-                    backupDirectory,
-                    publicationPath);
 
             siteManagerSelector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE
                     + "Selector");
@@ -110,9 +94,7 @@ public class Propfind extends SiteUsecase {
                 if (test.equals(request)) {
                     docs.add(documents[i]);
 
-                    String filename = documents[i].getFile().getCanonicalPath();
-                    filename = filename.substring(publicationPath.length());
-                    RCMLEntry entry = rc.getRCML(filename).getLatestEntry();
+                    RCMLEntry entry = documents[i].getRepositoryNode().getRcml().getLatestEntry();
                     if ((entry != null) && (entry.getType() == RCML.co))
                         checkedOut.add(entry);
                     else

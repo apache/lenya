@@ -42,10 +42,10 @@ public class DiscoverCheckoutAction extends RevisionControllerAction {
         super.act(redirector, resolver, objectModel, src, parameters);
 
         HashMap actionMap = new HashMap();
-        final RCMLEntry entry =getRc().getRCML(getFilename()).getLatestEntry();
+        final RCMLEntry entry = getNode().getRcml().getLatestEntry();
 
         if ((entry != null) && (entry.getType() == RCML.co) ) {
-            actionMap.put("filename", getFilename());
+            actionMap.put("filename", getNode().getSourceURI());
             actionMap.put("user", entry.getIdentity());
             return actionMap;
         }

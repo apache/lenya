@@ -17,7 +17,6 @@
  */
 package org.apache.lenya.cms.usecases.webdav;
 
-import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Vector;
 
@@ -26,10 +25,8 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.URLInformation;
-import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.rc.RCMLEntry;
-import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 
 /**
@@ -50,34 +47,17 @@ public class FilePropfind extends SiteUsecase {
     protected void initParameters() {
         super.initParameters();
 
-        Publication _publication = this.getPublication();
-
         Vector docs = new Vector();
         Vector checkedOut = new Vector();
 
         String request = getSourceURL();
 
         try {
-            // get Parameters for RC
-            String publicationPath = _publication.getDirectory().getCanonicalPath();
-            RCEnvironment rcEnvironment = RCEnvironment.getInstance(_publication.getServletContext()
-                    .getCanonicalPath());
-            String rcmlDirectory = rcEnvironment.getRCMLDirectory();
-            rcmlDirectory = publicationPath + File.separator + rcmlDirectory;
-            String backupDirectory = rcEnvironment.getBackupDirectory();
-            backupDirectory = publicationPath + File.separator + backupDirectory;
-
-            // Initialize Revision Controller
-            RevisionController rc = new RevisionController(rcmlDirectory,
-                    backupDirectory,
-                    publicationPath);
 
             Document doc = getTargetDocument(false);
             docs.add(doc);
 
-            String filename = doc.getFile().getCanonicalPath();
-            filename = filename.substring(publicationPath.length());
-            RCMLEntry entry = rc.getRCML(filename).getLatestEntry();
+            RCMLEntry entry = doc.getRepositoryNode().getRcml().getLatestEntry();
             if ((entry != null) && (entry.getType() == RCML.co))
                 checkedOut.add(entry);
             else

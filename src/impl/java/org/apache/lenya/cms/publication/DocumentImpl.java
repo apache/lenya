@@ -19,6 +19,7 @@
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -173,8 +174,12 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     /**
      * @see org.apache.lenya.cms.publication.Document#getLastModified()
      */
-    public Date getLastModified() {
-        return new Date(getFile().lastModified());
+    public long getLastModified() throws DocumentException {
+        try {
+            return getRepositoryNode().getLastModified();
+        } catch (RepositoryException e) {
+            throw new DocumentException(e);
+        }
     }
 
     public File getFile() {
@@ -591,5 +596,9 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
             this.area = new AreaImpl(this.manager, getFactory(), getPublication(), getArea());
         }
         return this.area;
+    }
+
+    public InputStream getInputStream() throws RepositoryException {
+        return getRepositoryNode().getInputStream();
     }
 }

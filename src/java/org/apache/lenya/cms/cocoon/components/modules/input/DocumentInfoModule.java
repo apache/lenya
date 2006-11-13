@@ -141,7 +141,7 @@ public class DocumentInfoModule extends AbstractInputModule implements Serviceab
             if (attribute.equals(RESOURCE_TYPE)) {
                 value = document.getResourceType().getName();
             } else if (attribute.equals(LAST_MODIFIED)) {
-                value = this.dateFormat.format(document.getLastModified());
+                value = this.dateFormat.format(new Date(document.getLastModified()));
             } else if (attribute.equals(MIME_TYPE)) {
                 value = document.getMimeType();
             } else if (attribute.equals(CONTENT_LENGTH)) {

@@ -28,7 +28,9 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
+import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.repo.Translation;
+import org.apache.lenya.cms.repository.History;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeListener;
 import org.apache.lenya.cms.repository.RepositoryException;
@@ -199,6 +201,14 @@ public class RepoNode extends AbstractLogEnabled implements Node {
 
     public boolean isListenerRegistered(NodeListener listener) {
         return this.listeners.contains(listener);
+    }
+
+    public RCML getRcml() {
+        return null;
+    }
+
+    public History getHistory() {
+        return null;
     }
 
 }

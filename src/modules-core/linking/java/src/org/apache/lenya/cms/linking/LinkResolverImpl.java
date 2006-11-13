@@ -26,13 +26,20 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.util.Query;
 
+/**
+ * Link resolver implemenation.
+ */
 public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver {
 
+    /**
+     * The Avalon role.
+     */
     public static final String ROLE = LinkResolverImpl.class.getName();
+    
     protected static final String PAIR_DELIMITER = ",";
     protected static final String KEY_VALUE_DELIMITER = "=";
 
-    public Document resolve(Document currentDoc, String linkUri) throws MalformedURLException {
+    public LinkTarget resolve(Document currentDoc, String linkUri) throws MalformedURLException {
 
         String[] schemeAndPath = linkUri.split(":");
         String path = schemeAndPath[1];
@@ -41,6 +48,7 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
         String uuid;
         String area;
         String language;
+        int revision = -1;
 
         if (path.indexOf(PAIR_DELIMITER) > -1) {
             int firstDelimiterIndex = path.indexOf(PAIR_DELIMITER);
@@ -50,6 +58,10 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
             pubId = query.getValue("pub", currentDoc.getPublication().getId());
             area = query.getValue("area", currentDoc.getArea());
             language = query.getValue("lang", currentDoc.getLanguage());
+            String revisionString = query.getValue("rev", null);
+            if (revisionString != null) {
+                revision = Integer.valueOf(revisionString).intValue();
+            }
         } else {
             uuid = path;
             pubId = currentDoc.getPublication().getId();
@@ -82,7 +94,12 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
                             + "] is not supported!");
                 }
             }
-            return doc;
+            if (revision > -1) {
+                return new LinkTarget(doc, revision);
+            }
+            else {
+                return new LinkTarget(doc);
+            }
         } catch (PublicationException e) {
             throw new RuntimeException(e);
         }

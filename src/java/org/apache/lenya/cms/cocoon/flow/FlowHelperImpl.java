@@ -20,7 +20,6 @@
 
 package org.apache.lenya.cms.cocoon.flow;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Map;
@@ -44,8 +43,8 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.publication.util.DocumentHelper;
 import org.apache.lenya.cms.rc.FileReservedCheckInException;
-import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RevisionController;
+import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
@@ -162,16 +161,7 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Se
      */
     public RevisionController getRevisionController(FOM_Cocoon cocoon)
             throws PageEnvelopeException, IOException {
-        final Publication publication = getPageEnvelope(cocoon).getPublication();
-        final String publicationPath = publication.getDirectory().getCanonicalPath();
-        final RCEnvironment rcEnvironment = RCEnvironment.getInstance(publication.getServletContext()
-                .getCanonicalPath());
-        String rcmlDirectory = rcEnvironment.getRCMLDirectory();
-        rcmlDirectory = publicationPath + File.separator + rcmlDirectory;
-        String backupDirectory = rcEnvironment.getBackupDirectory();
-        backupDirectory = publicationPath + File.separator + backupDirectory;
-
-        return new RevisionController(rcmlDirectory, backupDirectory, publicationPath);
+        return new RevisionController();
     }
 
     /**
@@ -184,12 +174,8 @@ public class FlowHelperImpl extends AbstractLogEnabled implements FlowHelper, Se
                 .getSession()
                 .getAttribute(Identity.class.getName());
         final PageEnvelope pageEnvelope = getPageEnvelope(cocoon);
-        final Publication publication = getPageEnvelope(cocoon).getPublication();
-        final String filename = pageEnvelope.getDocument()
-                .getFile()
-                .getCanonicalPath()
-                .substring(publication.getDirectory().getCanonicalPath().length());
-        getRevisionController(cocoon).reservedCheckIn(filename,
+        Node node = pageEnvelope.getDocument().getRepositoryNode();
+        getRevisionController(cocoon).reservedCheckIn(node,
                 identity.getUser().getId(),
                 backup,
                 true);

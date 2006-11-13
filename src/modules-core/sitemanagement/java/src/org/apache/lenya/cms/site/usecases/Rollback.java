@@ -17,19 +17,17 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Map;
 
-import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.cocoon.environment.Session;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -59,7 +57,7 @@ public class Rollback extends DocumentUsecase {
                 getSourceDocument(),
                 getEvent())) {
             addErrorMessage("error-workflow-document", new String[] { getEvent(),
-                    getSourceDocument().getId() });
+                    DublinCoreHelper.getTitle(getSourceDocument()) });
         }
     }
 
@@ -76,24 +74,10 @@ public class Rollback extends DocumentUsecase {
         long newtime = 0;
         
         Document document = getSourceDocument();
-        Publication publication = document.getPublication(); 
         
-        // get Parameters for RC
-        String publicationPath = publication.getDirectory().getCanonicalPath();
-        RCEnvironment rcEnvironment = RCEnvironment.getInstance(publication.getServletContext()
-                .getCanonicalPath());
-        String rcmlDirectory = rcEnvironment.getRCMLDirectory();
-        rcmlDirectory = publicationPath + File.separator + rcmlDirectory;
-        String backupDirectory = rcEnvironment.getBackupDirectory();
-        backupDirectory = publicationPath + File.separator + backupDirectory;
-
         // Initialize Revision Controller
-        RevisionController rc = new RevisionController(rcmlDirectory, backupDirectory, publicationPath);
-        getLogger().debug("revision controller" + rc);
+        RevisionController rc = new RevisionController();
         
-        String filename = document.getFile().getCanonicalPath();
-        filename = filename.substring(publicationPath.length());
-
         Map objectModel = ContextHelper.getObjectModel(getContext());
         Request request = ObjectModelHelper.getRequest(objectModel);
         Session session = request.getSession(false);
@@ -101,7 +85,7 @@ public class Rollback extends DocumentUsecase {
         User user = identity.getUser();
         
         try {
-            newtime = rc.rollback(filename, user.getId(), true, new Long(rollbackTime).longValue());
+            newtime = rc.rollback(document.getRepositoryNode(), user.getId(), true, new Long(rollbackTime).longValue());
             WorkflowUtil.invoke(this.manager,
                 getSession(),
                 getLogger(),

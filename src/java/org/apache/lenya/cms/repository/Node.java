@@ -17,18 +17,17 @@
  */
 package org.apache.lenya.cms.repository;
 
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collection;
 
-import org.apache.lenya.cms.metadata.MetaDataOwner;
+import org.apache.lenya.cms.rc.RCML;
 
 /**
  * Repository node.
  * 
  * @version $Id$
  */
-public interface Node extends MetaDataOwner, RepositoryItem {
+public interface Node extends RepositoryItem, ContentHolder {
     
     /**
      * @return The session this node belongs to.
@@ -64,41 +63,11 @@ public interface Node extends MetaDataOwner, RepositoryItem {
     public Collection getChildren() throws RepositoryException;
 
     /**
-     * @return The input stream.
-     * @throws RepositoryException if the node does not exist.
-     */
-    InputStream getInputStream() throws RepositoryException;
-
-    /**
      * @return The output stream.
      * @throws RepositoryException if the node does not exist.
      */
     OutputStream getOutputStream() throws RepositoryException;
     
-    /**
-     * @return The last modification date.
-     * @throws RepositoryException if the node does not exist.
-     */
-    long getLastModified() throws RepositoryException;
-    
-    /**
-     * @return The content length.
-     * @throws RepositoryException if the node does not exist.
-     */
-    long getContentLength() throws RepositoryException;
-    
-    /**
-     * @return The MIME type.
-     * @throws RepositoryException if the node does not exist.
-     */
-    String getMimeType() throws RepositoryException;
-
-    /**
-     * Accessor for the source URI of this node
-     * @return the source URI
-     */
-    String getSourceURI();
-
     /**
      * Locks the node.
      * @throws RepositoryException if an error occurs.
@@ -165,4 +134,14 @@ public interface Node extends MetaDataOwner, RepositoryItem {
      * @return A boolean value.
      */
     boolean isListenerRegistered(NodeListener listener);
+    
+    /**
+     * @return The RCML to use for this node.
+     */
+    RCML getRcml();
+    
+    /**
+     * @return The revision history.
+     */
+    History getHistory();
 }

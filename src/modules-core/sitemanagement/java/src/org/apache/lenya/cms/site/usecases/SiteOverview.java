@@ -17,13 +17,13 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import java.io.File;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -38,11 +38,9 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
-import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.rc.RCMLEntry;
 import org.apache.lenya.cms.rc.RevisionController;
-import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
@@ -104,7 +102,7 @@ public class SiteOverview extends AbstractUsecase {
                 entry.setValue(KEY_URL, documents[i].getCanonicalWebappURL());
 
                 DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                String lastModified = format.format(documents[i].getLastModified());
+                String lastModified = format.format(new Date(documents[i].getLastModified()));
                 entry.setValue(KEY_LAST_MODIFIED, lastModified);
 
                 if (WorkflowUtil.hasWorkflow(this.manager, getSession(), getLogger(), documents[i])) {
@@ -129,17 +127,7 @@ public class SiteOverview extends AbstractUsecase {
                 }
 
                 if (documents[i].getRepositoryNode().isCheckedOut()) {
-
-                    RevisionController controller = getRevisionController();
-                    String sourceUri = documents[i].getSourceURI();
-
-                    String pubBase = Node.LENYA_PROTOCOL + Publication.PUBLICATION_PREFIX_URI + "/";
-                    String publicationsPath = sourceUri.substring(pubBase.length());
-                    String publicationId = publicationsPath.split("/")[0];
-                    String path = pubBase + publicationId + "/";
-                    String rcmlPath = sourceUri.substring(path.length());
-
-                    RCML rcml = controller.getRCML(rcmlPath);
+                    RCML rcml = documents[i].getRepositoryNode().getRcml();
                     RCMLEntry lastEntry = rcml.getLatestCheckOutEntry();
                     String userId = lastEntry.getIdentity();
                     entry.setValue(KEY_CHECKED_OUT, userId);
@@ -175,22 +163,7 @@ public class SiteOverview extends AbstractUsecase {
     }
 
     protected RevisionController getRevisionController() {
-        try {
-
-            Publication pub = getPublication();
-
-            String publicationPath = pub.getDirectory().getCanonicalPath();
-            RCEnvironment rcEnvironment = RCEnvironment.getInstance(pub.getServletContext()
-                    .getCanonicalPath());
-            String rcmlDirectory = publicationPath + File.separator
-                    + rcEnvironment.getRCMLDirectory();
-            String backupDirectory = publicationPath + File.separator
-                    + rcEnvironment.getBackupDirectory();
-            return new RevisionController(rcmlDirectory, backupDirectory, publicationPath);
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+        return new RevisionController();
     }
 
     /**

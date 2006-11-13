@@ -44,10 +44,10 @@ public class ReservedCheckoutAction extends RevisionControllerAction {
 
         //check out
         try {
-            getLogger().debug(".act(): Filename: " + getFilename());
+            getLogger().debug(".act(): Node: " + getNode().getSourceURI());
             getLogger().debug(".act(): Username: " + getUsername());
 
-            if (getFilename() == null) {
+            if (getNode() == null) {
                 throw new Exception("Filename is null");
             }
 
@@ -55,22 +55,22 @@ public class ReservedCheckoutAction extends RevisionControllerAction {
                 throw new Exception("Username is null");
             }
 
-            getRc().reservedCheckOut(getFilename(), getUsername());
+            getRc().reservedCheckOut(getNode(), getUsername());
         } catch (FileReservedCheckOutException e) {
             actionMap.put("exception", "fileReservedCheckOutException");
-            actionMap.put("filename", getFilename());
+            actionMap.put("filename", getNode().getSourceURI());
             actionMap.put("user", e.getCheckOutUsername());
             actionMap.put("date", e.getCheckOutDate());
             getLogger().warn(
-                    "Document " + getFilename() + " already checked-out by "
+                    "Node " + getNode().getSourceURI() + " already checked-out by "
                             + e.getCheckOutUsername() + " since " + e.getCheckOutDate());
 
             return actionMap;
         } catch (Exception e) {
             actionMap.put("exception", "genericException");
-            actionMap.put("filename", getFilename());
+            actionMap.put("filename", getNode().getSourceURI());
             actionMap.put("message", "" + e.getMessage());
-            getLogger().error("The document " + getFilename() + " couldn't be checked out: ", e);
+            getLogger().error("The node " + getNode().getSourceURI() + " couldn't be checked out: ", e);
 
             return actionMap;
         }
