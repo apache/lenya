@@ -27,7 +27,7 @@
       <!-- parametrized doctype matcher -->
       <!-- pattern="{rendertype}" -->
       <map:match pattern="*.xml">
-        <map:generate src="cocoon://modules/linking/current-document.xml"/>
+        <map:generate src="lenya-document:{page-envelope:document-uuid},lang={page-envelope:document-language}{link:rev}"/>
         <map:transform src="fallback://lenya/modules/links/xslt/links2xhtml.xsl">
           <map:parameter name="rendertype" value="{request-param:rendertype}"/>
           <map:parameter name="nodeid" value="{page-envelope:document-name}"/>
