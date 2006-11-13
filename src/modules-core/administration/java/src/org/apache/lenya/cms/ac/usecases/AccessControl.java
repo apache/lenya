@@ -442,7 +442,7 @@ public class AccessControl extends AccessControlUsecase {
                         ancestorUrl);
                 policies = new ModifiablePolicy[pArray.length];
                 for (int i = 0; i < pArray.length; i++) {
-                    policies[i] = (ModifiablePolicy) pArray[i];
+                    policies[policies.length - 1 - i] = (ModifiablePolicy) pArray[i];
                 }
             }
         } catch (AccessControlException e) {
