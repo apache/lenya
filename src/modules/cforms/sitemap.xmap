@@ -23,25 +23,11 @@
   <map:pipelines>
 
     <map:pipeline>
-      <!-- View Revision? -->
-      <map:match pattern="*.xml">
-        <map:match type="step" pattern="view-revision">
-          <map:generate type="serverpages" src="fallback://lenya/content/rc/view.xsp">
-          </map:generate>
-          <map:transform src="fallback://lenya/xslt/rc/toDoc.xsl"/>
-          <map:transform src="fallback://lenya/modules/cforms/xslt/cforms2xhtml.xsl">
-            <map:parameter name="rendertype" value="{1}"/>
-            <map:parameter name="nodeid" value="{page-envelope:document-name}"/>
-            <map:parameter name="language" value="{page-envelope:document-language}"/>
-          </map:transform>
-          <map:serialize type="xml"/>
-        </map:match>
-      </map:match>
 
       <!-- parametrized doctype matcher -->
       <!-- pattern="{rendertype}" -->
       <map:match pattern="*.xml">
-        <map:generate src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-id}"/>
+        <map:generate src="cocoon://modules/linking/current-document.xml"/>
         <map:transform src="fallback://lenya/modules/cforms/xslt/cforms2xhtml.xsl">
           <map:parameter name="rendertype" value="{request-param:rendertype}"/>
           <map:parameter name="nodeid" value="{page-envelope:document-name}"/>
