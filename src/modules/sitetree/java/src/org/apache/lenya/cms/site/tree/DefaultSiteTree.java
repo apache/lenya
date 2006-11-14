@@ -209,11 +209,6 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         addNode(node, null);
     }
 
-    /**
-     * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String, String,
-     *      org.apache.lenya.cms.site.Label[], boolean, java.lang.String, java.lang.String, boolean,
-     *      java.lang.String)
-     */
     public synchronized SiteTreeNode addNode(String path, String uuid, boolean visibleInNav,
             String href, String suffix, boolean link, String refpath) throws SiteException {
         StringBuffer buf = new StringBuffer();
@@ -228,20 +223,11 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         return addNode(parentid, id, uuid, visibleInNav, href, suffix, link, refpath);
     }
 
-    /**
-     * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String, String,
-     *      org.apache.lenya.cms.site.Label[], boolean, java.lang.String, java.lang.String, boolean)
-     */
     public synchronized SiteTreeNode addNode(String path, String uuid, boolean visibleInNav,
             String href, String suffix, boolean link) throws SiteException {
         return addNode(path, uuid, visibleInNav, href, suffix, link, null);
     }
 
-    /**
-     * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String, java.lang.String,
-     *      String, org.apache.lenya.cms.site.Label[], boolean, java.lang.String, java.lang.String,
-     *      boolean)
-     */
     public synchronized SiteTreeNode addNode(String parentid, String id, String uuid,
             boolean visibleInNav, String href, String suffix, boolean link) throws SiteException {
         return addNode(parentid + "/" + id, uuid, visibleInNav, href, suffix, link, null);
@@ -260,11 +246,6 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         }
     }
 
-    /**
-     * @see org.apache.lenya.cms.site.tree.SiteTree#addNode(java.lang.String, java.lang.String,
-     *      String, org.apache.lenya.cms.site.Label[], boolean, java.lang.String, java.lang.String,
-     *      boolean, java.lang.String)
-     */
     public synchronized SiteTreeNode addNode(String parentPath, String name, String uuid,
             boolean visibleInNav, String href, String suffix, boolean link, String refpath)
             throws SiteException {
@@ -328,8 +309,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     }
 
     /**
-     * @see org.apache.lenya.cms.site.tree.SiteTree#addLabel(java.lang.String,
-     *      org.apache.lenya.cms.site.Label)
+     * @see org.apache.lenya.cms.site.tree.SiteTree#addLabel(String, String, String)
      */
     public synchronized void addLabel(String path, String language, String label) {
         try {
@@ -344,8 +324,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     }
 
     /**
-     * @see org.apache.lenya.cms.site.tree.SiteTree#removeLabel(java.lang.String,
-     *      org.apache.lenya.cms.site.Label)
+     * @see org.apache.lenya.cms.site.tree.SiteTree#removeLabel(String, String)
      */
     public synchronized void removeLabel(String path, String language) {
         try {
@@ -568,8 +547,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     }
 
     /**
-     * @see org.apache.lenya.cms.site.tree.SiteTree#setLabel(java.lang.String,
-     *      org.apache.lenya.cms.site.Label)
+     * @see org.apache.lenya.cms.site.tree.SiteTree#setLabel(String, String, String)
      */
     public synchronized void setLabel(String path, String language, String label) {
         try {
