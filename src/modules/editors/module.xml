@@ -23,7 +23,7 @@
   <depends module="org.apache.lenya.modules.usecase"/>
   <depends module="org.apache.lenya.modules.resource"/>
   <depends module="org.apache.lenya.modules.sitemanagement"/>
-  <package>org.apache.lenya.modules.editors</package>
+  <package>org.apache.lenya.modules</package>
   <version>0.1-dev</version>
   <name>Editors</name>
   <lenya-version>@lenya.version@</lenya-version>
