@@ -99,22 +99,33 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
         return delegate.getProxy(area, isSslProtected);
     }
 
-    public String[] getResourceTypeNames() {
-        
-        List allTypes = new ArrayList();
-        allTypes.addAll(Arrays.asList(this.delegate.getResourceTypeNames()));
-        String[] templateIds = getTemplateIds();
-        try {
-            for (int i = 0; i < templateIds.length; i++) {
-                Publication template = getFactory().getPublication(templateIds[i]);
-                String[] templateTypes = template.getResourceTypeNames();
-                allTypes.addAll(Arrays.asList(templateTypes));
-            }
-        } catch (PublicationException e) {
-            throw new RuntimeException(e);
-        }
+    private List allResourceTypes;
 
-        return (String[]) allTypes.toArray(new String[allTypes.size()]);
+    protected String getFirstTemplateId() {
+        String[] templateIds = getTemplateIds();
+        if (templateIds.length > 0) {
+            return templateIds[0];
+        } else {
+            return null;
+        }
+    }
+
+    public String[] getResourceTypeNames() {
+        if (this.allResourceTypes == null) {
+            this.allResourceTypes = new ArrayList();
+            this.allResourceTypes.addAll(Arrays.asList(this.delegate.getResourceTypeNames()));
+            String templateId = getFirstTemplateId();
+            if (templateId != null) {
+                try {
+                    Publication template = getFactory().getPublication(templateId);
+                    String[] templateTypes = template.getResourceTypeNames();
+                    this.allResourceTypes.addAll(Arrays.asList(templateTypes));
+                } catch (PublicationException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+        }
+        return (String[]) this.allResourceTypes.toArray(new String[this.allResourceTypes.size()]);
     }
 
     public File getServletContext() {
@@ -134,7 +145,17 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     }
 
     public String getWorkflowSchema(ResourceType resourceType) {
-        return delegate.getWorkflowSchema(resourceType);
+        String schema = this.delegate.getWorkflowSchema(resourceType);
+        if (schema == null) {
+            String templateId = getFirstTemplateId();
+            try {
+                Publication template = getFactory().getPublication(templateId);
+                schema = template.getWorkflowSchema(resourceType);
+            } catch (PublicationException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return schema;
     }
 
     public void setDefaultLanguage(String language) {
@@ -167,7 +188,7 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
     public int hashCode() {
         return getId().hashCode();
     }
-    
+
     public String toString() {
         return getId();
     }
