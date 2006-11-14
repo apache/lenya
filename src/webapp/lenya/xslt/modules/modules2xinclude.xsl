@@ -26,14 +26,18 @@
     xmlns:menu="http://apache.org/cocoon/lenya/menubar/1.0"
     >
 
-<xsl:param name="area"/>
+  <xsl:param name="area"/>
 
-<xsl:template match="publication">
-  <menu:menu>
-    <xsl:for-each select="module">
+  <xsl:template match="publication">
+    <menu:menu>
+      <xsl:apply-templates select="module"/>
+    </menu:menu>
+  </xsl:template>
+
+  <xsl:template match="module">
+    <xsl:if test="not(preceding-sibling::module[@name = current()/@name])">
       <xi:include href="cocoon:/menu-xml/module/{$area}/{@name}.xml" xpointer="xpointer(/*/*)"/>
-    </xsl:for-each>
-  </menu:menu>
-</xsl:template>
+    </xsl:if>
+  </xsl:template>
 
 </xsl:stylesheet>

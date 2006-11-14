@@ -213,7 +213,7 @@
       <!-- menu-xml/modules -->
       <!-- menu-xml/modules/{pub-id}/{area}.xml -->
       <map:match pattern="menu-xml/modules/*/*.xml">
-        <map:generate src="lenya/pubs/{1}/config/publication.xconf"/>
+        <map:generate src="aggregate-fallback://config/publication.xconf"/>
         <map:transform src="lenya/xslt/modules/modules2xinclude.xsl">
           <map:parameter name="area" value="{2}"/>
         </map:transform>
