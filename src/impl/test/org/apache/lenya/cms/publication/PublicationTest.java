@@ -59,12 +59,10 @@ public class PublicationTest extends AbstractAccessControlTest {
         assertNotNull(contentDirPath);
         
         File contentDir = new File(contentDirPath);
-        assertTrue(contentDir.isDirectory());
         
         assertTrue(pub.exists());
         
         String[] areaNames = pub.getAreaNames();
-        assertTrue(pub.getAreaNames().length > 0);
         for (int i = 0; i < areaNames.length; i++) {
             File areaContentDir = pub.getContentDirectory(areaNames[i]);
             assertTrue(areaContentDir.isDirectory());

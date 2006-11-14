@@ -76,7 +76,8 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
      * Creates a new instance of Publication
      * @param _id the publication id
      * @param servletContextPath the servlet context of this publication
-     * @throws PublicationException if there was a problem reading the config file
+     * @throws PublicationException if there was a problem reading the config
+     *         file
      */
     protected PublicationConfiguration(String _id, String servletContextPath)
             throws PublicationException {
@@ -303,8 +304,8 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     }
 
     /**
-     * Get the breadcrumb prefix. It can be used as a prefix if a publication is part of a larger
-     * site
+     * Get the breadcrumb prefix. It can be used as a prefix if a publication is
+     * part of a larger site
      * @return the breadcrumb prefix
      */
     public String getBreadcrumbPrefix() {
@@ -375,7 +376,8 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.Publication#getProxy(java.lang.String, boolean)
+     * @see org.apache.lenya.cms.publication.Publication#getProxy(java.lang.String,
+     *      boolean)
      */
     public Proxy getProxy(String area, boolean isSslProtected) {
         loadConfiguration();
@@ -484,11 +486,12 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
                     return file.isDirectory() && !name.equals("rcml") && !name.equals("rcbak");
                 }
             });
-            if (directories != null) {
-                this.areas = new String[directories.length];
-                for (int i = 0; i < directories.length; i++) {
-                    this.areas[i] = directories[i].getName();
-                }
+            if (directories == null) {
+                directories = new File[0];
+            }
+            this.areas = new String[directories.length];
+            for (int i = 0; i < directories.length; i++) {
+                this.areas[i] = directories[i].getName();
             }
         }
         return this.areas;
