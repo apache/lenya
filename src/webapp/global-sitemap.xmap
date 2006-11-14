@@ -133,7 +133,7 @@
             
 
       <!-- Lenya page transformation for adding a Lenya menu -->
-      <!-- lenya-page/{publication-id}/{complete-area}/... -->
+      <!-- lenya-page/{publication-id}/{area}/... -->
       <map:match pattern="lenya-page/*/*/**">
         <map:aggregate element="menu" ns="http://apache.org/cocoon/lenya/menubar/1.0">
           <map:part src="cocoon:/menu-xml/{1}/{2}/{3}" strip-root="true"/>
