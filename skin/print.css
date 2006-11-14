@@ -31,12 +31,12 @@ body {
   padding: 0;
   float: none !important;
   color: black;
-  background: transparent;
+  background: inherit;
 }
 
 a:link, a:visited {
   color: #336699;
-  background: transparent;
+  background: inherit;
   text-decoration: underline;
 }
 

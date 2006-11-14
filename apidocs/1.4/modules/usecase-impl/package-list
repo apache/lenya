@@ -1,0 +1,4 @@
+org.apache.lenya.cms.ac.usecase
+org.apache.lenya.cms.usecase
+org.apache.lenya.cms.usecase.gui
+org.apache.lenya.cms.usecase.scheduling

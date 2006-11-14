@@ -208,7 +208,112 @@ document.write("Last Published: " + document.lastModified);
 </div>
 </div>
 <div class="menuitem">
-<a href="../../../apidocs/1.4/index.html">1.4 API (Javadoc)</a>
+<a href="../../../apidocs/1.4/index.html">Core API</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.7', '../../../skin/')" id="menu_1.1.7Title" class="menutitle">Module APIs</div>
+<div id="menu_1.1.7" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/ac-impl/index.html">ac-impl</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/administration/index.html">administration</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/cache/index.html">cache</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/cforms/index.html">cforms</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/contacform/index.html">contactform</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/defaultusecases/index.html">defaultusecases</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/editors/index.html">editors</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/export/index.html">export</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/fckeditor/index.html">fckeditor</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/jackrabbit/index.html">jackrabbit</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/janitor/index.html">janitor</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/jcr/index.html">jcr</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/kupu/index.html">kupu</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/ldap/index.html">ldap</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/lenyadoc/index.html">lenyadoc</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/linkcheck/index.html">linkcheck</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/linking/index.html">linking</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/lucene/index.html">lucene</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/notification/index.html">notification</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/observation-impl/index.html">observation-impl</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/opendocument/index.html">opendocument</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/properties/index.html">properties</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/repository/index.html">repository</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/resource/index.html">resource</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/sitemanagement/index.html">sitemanagement</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/sitetree/index.html">sitetree</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/sourcerepository/index.html">sourcerepository</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/templating-impl/index.html">templating-impl</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/tinymce/index.html">tinymce</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/usecase/index.html">usecase</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/usecase-impl/index.html">usecase-impl</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/usecasedocument/index.html">usecasedocument</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/webdav/index.html">webdav</a>
+</div>
+<div class="menuitem">
+<a href="../../../apidocs/1.4/modules/workflow-impl/index.html">workflow-impl</a>
+</div>
 </div>
 </div>
 <div id="credit"></div>
@@ -408,23 +513,45 @@ document.write("Last Published: " + document.lastModified);
       The formats are defined in the resource type declaration:
     </p>
 <pre class="code">
-  &lt;format name="xhtml" uri="cocoon://modules/profile/profile.xml"/&gt;
+  &lt;format name="xhtml" uri="cocoon://modules/profile/profile"/&gt;
 </pre>
 <p>
       The <span class="codefrag">uri</span> attribute of the <span class="codefrag">format</span> element may refer to an arbitrary URL,
       which is typically a request into the module itself. This URI is matched inside the module
-      sitemap (in our case, <span class="codefrag">modules/profile/sitemap.xmap</span>). Typically, an XSLT is applied
-      to the content document to transform it into another format (XHTML, XSL-FO, ...):
+      sitemap (in our case, <span class="codefrag">modules/profile/sitemap.xmap</span>).
+    </p>
+<p>
+      There are two ways in which the format can be requested:
+    </p>
+<ul>
+      
+<li>for the current document - without parameters</li>
+      
+<li>for a specific document - with the parameters <span class="codefrag">/{pubId}/{area}/{uuid}/{language}</span>
+</li>
+    
+</ul>
+<p>
+      Typically, an XSLT is applied to the content document to transform
+      it into another format (XHTML, XSL-FO, ...):
     </p>
 <pre class="code">
   &lt;!-- apply a format --&gt;
-  &lt;map:match pattern="*.xml"&gt;
-    &lt;map:generate src="lenya://lenya/pubs/{page-envelope:publication-id}/ \
-      content/{page-envelope:area}/{page-envelope:document-path}"/&gt;
+  &lt;map:match pattern="xhtml"&gt;
+    &lt;map:generate src="cocoon:/xhtml/{page-envelope:publication-id}/ \
+                                     {page-envelope:area}/ \
+                                     {page-envelope:document-uuid}/ \
+                                     {page-envelope:document-language}"/&gt;
+    &lt;map:serialize type="xml"/&gt;
+  &lt;/map:match&gt;
+  
+  &lt;!-- xhtml/{pubId}/{area}/{uuid}/{language} --&gt;
+  &lt;map:match pattern="xhtml/*/*/*/*"&gt;
+    &lt;map:generate src="lenyadoc:/{4}/{3}"/&gt;
     &lt;map:transform src="fallback://lenya/modules/profile/xslt/profile2xhtml.xsl"&gt;
       &lt;map:parameter name="rendertype" value="{request-param:rendertype}"/&gt;
-      &lt;map:parameter name="nodeid" value="{page-envelope:document-name}"/&gt;
-      &lt;map:parameter name="language" value="{page-envelope:document-language}"/&gt;
+      &lt;map:parameter name="nodeid" value="{doc-info:{1}:{2}:{3}:{4}:nodeName}"/&gt;
+      &lt;map:parameter name="language" value="{4}"/&gt;
     &lt;/map:transform&gt;
     &lt;map:serialize type="xml"/&gt;
   &lt;/map:match&gt;
@@ -444,7 +571,14 @@ document.write("Last Published: " + document.lastModified);
   &lt;/map:aggregate&gt;
 
 </pre>
-<a name="N10111"></a><a name="Presentation"></a>
+<p>
+      The <span class="codefrag">site:/</span> protocol supports a format parameter.
+      This is particularly useful to include formatted documents in other documents:
+    </p>
+<pre class="code">
+  &lt;ci:include src="site:/{$language}{$path}?format=xhtml-inline"/&gt;
+    </pre>
+<a name="N1012C"></a><a name="Presentation"></a>
 <h3 class="h4">Presentation</h3>
 <p>
       To make your resources available as HTTP pages, you have to add the

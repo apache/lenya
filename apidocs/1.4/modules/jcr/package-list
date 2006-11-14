@@ -1,0 +1,5 @@
+org.apache.lenya.cms.cocoon.generation
+org.apache.lenya.cms.jcr
+org.apache.lenya.cms.jcr.mapping
+org.apache.lenya.cms.jcr.metadata
+org.apache.lenya.cms.jcr.util

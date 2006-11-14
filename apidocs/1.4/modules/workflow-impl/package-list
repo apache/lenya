@@ -1,0 +1,5 @@
+org.apache.lenya.cms.cocoon.acting
+org.apache.lenya.cms.cocoon.components.modules.input
+org.apache.lenya.cms.cocoon.transformation
+org.apache.lenya.cms.workflow.usecases
+org.apache.lenya.workflow.impl

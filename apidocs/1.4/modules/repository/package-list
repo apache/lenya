@@ -1,0 +1,12 @@
+org.apache.lenya.cms.cocoon.source
+org.apache.lenya.cms.migration
+org.apache.lenya.cms.repo
+org.apache.lenya.cms.repo.adapter
+org.apache.lenya.cms.repo.avalon
+org.apache.lenya.cms.repo.cocoon
+org.apache.lenya.cms.repo.impl
+org.apache.lenya.cms.repo.metadata
+org.apache.lenya.cms.repo.metadata.impl
+org.apache.lenya.cms.repo.mock
+org.apache.lenya.cms.url
+org.apache.lenya.cms.url.impl

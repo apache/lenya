@@ -1,0 +1,9 @@
+org.apache.cocoon.components.modules.input
+org.apache.cocoon.components.search
+org.apache.cocoon.components.search.analyzer
+org.apache.cocoon.components.search.components
+org.apache.cocoon.components.search.components.impl
+org.apache.cocoon.components.search.fieldmodel
+org.apache.cocoon.components.search.utils
+org.apache.cocoon.transformation
+org.apache.lenya.cms.lucene

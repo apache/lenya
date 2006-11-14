@@ -71,6 +71,7 @@ img { border: 0; }
 }
 .fixme .label {
   background: #C6C600;
+  color: black;
   font-weight: bold;
   padding: 5px 10px;
 }

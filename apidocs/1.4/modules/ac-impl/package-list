@@ -1,0 +1,7 @@
+org.apache.lenya.ac.cifs
+org.apache.lenya.ac.file
+org.apache.lenya.ac.impl
+org.apache.lenya.cms.ac
+org.apache.lenya.cms.ac.usecases
+org.apache.lenya.cms.cocoon.acting
+org.apache.lenya.cms.cocoon.components.modules.input

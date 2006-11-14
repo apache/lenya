@@ -1,0 +1,5 @@
+org.apache.lenya.cms.cocoon.components.modules.input
+org.apache.lenya.cms.cocoon.generation
+org.apache.lenya.cms.cocoon.transformation
+org.apache.lenya.cms.site.tree
+org.apache.lenya.cms.site.usecases

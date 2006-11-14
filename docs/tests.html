@@ -210,6 +210,17 @@ document.write("Last Published: " + document.lastModified);
 <li>To debug a single test, right-click on the test class in the package explorer and select <em>Debug as -&gt; JUnit test</em>.</li>
           
 </ul>
+          
+<div class="note">
+<div class="label">Note</div>
+<div class="content">Make sure you added all classes and libs from the build dir (
+            <span class="codefrag">build/lenya/webapp/WEB-INF/lib/</span>) to the junit classpath in
+            the eclipse debugger, otherwise you propably get a file not found exception.
+            Further if you are looking into a way to debug htmlunit test then see the article on
+            the <a href="http://www.baccoubonneville.com/blogs/index.php/eclipse/2005/12/04/htmlunit-tests-with-eclipse-and-ant">
+              Eclipse Blog - HtmlUnit tests with Eclipse and Ant</a> 
+</div>
+</div>
         
 </li>
       
@@ -217,7 +228,7 @@ document.write("Last Published: " + document.lastModified);
 </div>
     
     
-<a name="N1004E"></a><a name="Adding+Tests+to+Modules"></a>
+<a name="N10058"></a><a name="Adding+Tests+to+Modules"></a>
 <h2 class="h3">Adding Tests to Modules</h2>
 <div class="section">
 <p>
@@ -262,7 +273,7 @@ public class MetaDataTest extends AbstractAccessControlTest {
 </div>
     
     
-<a name="N1006C"></a><a name="Testing+Usecases"></a>
+<a name="N10076"></a><a name="Testing+Usecases"></a>
 <h2 class="h3">Testing Usecases</h2>
 <div class="section">
 <p>To implement a unit test for a usecase, you can extend the class
