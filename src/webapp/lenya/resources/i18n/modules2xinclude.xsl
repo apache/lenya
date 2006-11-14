@@ -31,14 +31,16 @@
   <xsl:template match="catalogue">
     <xsl:copy>
       <xsl:copy-of select="@*|node()"/>
-      <xsl:apply-templates select="document(concat('context://lenya/pubs/', $pubId, '/config/publication.xconf'))/publication/module"/>
+      <xsl:apply-templates select="document('aggregate-fallback://config/publication.xconf')/publication/module"/>
     </xsl:copy>
   </xsl:template>  
   
   
   <xsl:template match="module">
-    <xi:include href="cocoon:/i18n-catalogue/module/{@name}/{$catalogue}"
-      xpointer="xpointer(/catalogue/message)"/>
+    <xsl:if test="not(preceding-sibling::module[@name = current()/@name])">
+      <xi:include href="cocoon:/i18n-catalogue/module/{@name}/{$catalogue}"
+        xpointer="xpointer(/catalogue/message)"/>
+    </xsl:if>
   </xsl:template>
   
   
