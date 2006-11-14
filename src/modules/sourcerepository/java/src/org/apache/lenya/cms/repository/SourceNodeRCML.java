@@ -37,7 +37,6 @@ import org.apache.lenya.cms.rc.RCMLEntry;
 import org.apache.lenya.cms.rc.RevisionControlException;
 import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.xml.DocumentHelper;
-import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -169,13 +168,14 @@ public class SourceNodeRCML implements RCML {
                     + ".checkOutIn(): No such type");
         }
 
-        NamespaceHelper helper = new NamespaceHelper(null, "", this.document);
 
-        Element identityElement = helper.createElement("Identity", identity);
-        Element timeElement = helper.createElement("Time", "" + time);
+        Element identityElement = this.document.createElement("Identity");
+        identityElement.appendChild(this.document.createTextNode(identity));
+        Element timeElement = this.document.createElement("Time");
+        timeElement.appendChild(this.document.createTextNode("" + time));
 
         String elementName = (String) ELEMENTS.get(new Short(type));
-        Element checkOutElement = helper.createElement(elementName);
+        Element checkOutElement = this.document.createElement(elementName);
 
         checkOutElement.appendChild(identityElement);
         checkOutElement.appendChild(timeElement);
@@ -187,12 +187,13 @@ public class SourceNodeRCML implements RCML {
                 version = latestEntry.getVersion();
             }
             version++;
-            Element versionElement = helper.createElement("Version", "" + version);
+            Element versionElement = this.document.createElement("Version");
+            versionElement.appendChild(this.document.createTextNode("" + version));
             checkOutElement.appendChild(versionElement);
         }
 
         if (backup) {
-            Element backupElement = helper.createElement(ELEMENT_BACKUP);
+            Element backupElement = this.document.createElement(ELEMENT_BACKUP);
             checkOutElement.appendChild(backupElement);
         }
 
