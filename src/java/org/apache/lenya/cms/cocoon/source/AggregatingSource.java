@@ -86,19 +86,21 @@ public class AggregatingSource implements Source {
     protected byte[] getData() {
         if (this.data == null) {
             Document dom = getDom();
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            try {
-                DocumentHelper.writeDocument(dom, out);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
+            if (dom != null) {
+                ByteArrayOutputStream out = new ByteArrayOutputStream();
+                try {
+                    DocumentHelper.writeDocument(dom, out);
+                } catch (Exception e) {
+                    throw new RuntimeException(e);
+                }
+                this.data = out.toByteArray();
             }
-            this.data = out.toByteArray();
         }
         return this.data;
     }
 
     public boolean exists() {
-        return getData().length > 0;
+        return getData() != null;
     }
 
     public long getContentLength() {
