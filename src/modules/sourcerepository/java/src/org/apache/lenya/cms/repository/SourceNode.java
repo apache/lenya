@@ -190,11 +190,13 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
      */
     public boolean isCheckedOutByUser() throws RepositoryException {
         try {
-            RCMLEntry entry = getRcml().getLatestEntry();
-            if (entry.getIdentity().equals(getUserId()) && isCheckedOut())
-                return true;
-            else
-                return false;
+            if (getRcml().getEntries().size() > 0) {
+                RCMLEntry entry = getRcml().getLatestEntry();
+                if (entry.getIdentity().equals(getUserId()) && isCheckedOut()) {
+                    return true;
+                }
+            }
+            return false;
         } catch (Exception e) {
             throw new RepositoryException(e);
         }
