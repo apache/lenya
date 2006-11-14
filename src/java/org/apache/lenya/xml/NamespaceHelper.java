@@ -22,10 +22,10 @@ package org.apache.lenya.xml;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.lenya.util.Assert;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.Text;
-
 
 /**
  * A NamespaceHelper object simplifies the creation of elements in a certain
@@ -40,12 +40,18 @@ public class NamespaceHelper {
 
     /**
      * Creates a new instance of NamespaceHelper using an existing document. The
-     * document is not affected. If you omit the prefix, the default namespace is used.
+     * document is not affected. If you omit the prefix, the default namespace
+     * is used.
      * @param _document The document.
      * @param _namespaceUri The namespace URI.
      * @param _prefix The namespace prefix.
      */
     public NamespaceHelper(String _namespaceUri, String _prefix, Document _document) {
+
+        Assert.notNull("namespace URI", _namespaceUri);
+        Assert.notNull("prefix", _prefix);
+        Assert.notNull("DOM", _document);
+
         this.namespaceUri = _namespaceUri;
         this.prefix = _prefix;
         this.document = _document;
@@ -54,14 +60,13 @@ public class NamespaceHelper {
     /**
      * <p>
      * Creates a new instance of NamespaceHelper. A new document is created
-     * using a document element in the given namespace with the given prefix.
-     * If you omit the prefix, the default namespace is used.
+     * using a document element in the given namespace with the given prefix. If
+     * you omit the prefix, the default namespace is used.
      * </p>
      * <p>
      * NamespaceHelper("http://www.w3.org/2000/svg", "svg", "svg"):<br/>
-     * &lt;?xml version="1.0"&gt;<br/>
-     * &lt;svg:svg xmlns:svg="http://www.w3.org/2000/svg"&gt;<br/>
-     * &lt;/svg:svg&gt;
+     * &lt;?xml version="1.0"&gt;<br/> &lt;svg:svg
+     * xmlns:svg="http://www.w3.org/2000/svg"&gt;<br/> &lt;/svg:svg&gt;
      * </p>
      * @param localName The local name of the document element.
      * @param _namespaceUri The namespace URI.
@@ -69,19 +74,9 @@ public class NamespaceHelper {
      * @throws ParserConfigurationException if an error occured
      */
     public NamespaceHelper(String _namespaceUri, String _prefix, String localName)
-        throws ParserConfigurationException {
-        this.namespaceUri = _namespaceUri;
-        this.prefix = _prefix;
-        setDocument(DocumentHelper.createDocument(getNamespaceURI(), getQualifiedName(localName),
-                null));
-    }
-
-    /**
-     * Sets the document of this NamespaceHelper.
-     * @param _document the document
-     */
-    protected void setDocument(Document _document) {
-        this.document = _document;
+            throws ParserConfigurationException {
+        this(_namespaceUri, _prefix, DocumentHelper.createDocument(_namespaceUri, getQualifiedName(
+                _prefix, localName), null));
     }
 
     /**
@@ -111,20 +106,21 @@ public class NamespaceHelper {
     /**
      * Returns the qualified name for a local name using the prefix of this
      * NamespaceHelper.
+     * @param prefix The namespace prefix.
      * @param localName The local name.
      * @return The qualified name, i.e. prefix:localName.
      */
-    public String getQualifiedName(String localName) {
-        if (getPrefix().equals("")) {
+    public static String getQualifiedName(String prefix, String localName) {
+        if (prefix.equals("")) {
             return localName;
         }
-        return getPrefix() + ":" + localName;
+        return prefix + ":" + localName;
     }
 
     /**
      * <p>
-     * Creates an element within the namespace of this NamespaceHelper object with
-     * a given local name containing a text node.<br/>
+     * Creates an element within the namespace of this NamespaceHelper object
+     * with a given local name containing a text node.<br/>
      * </p>
      * <p>
      * <code>createElement("text")</code>: <code>&lt;prefix:text/&gt;<code>.
@@ -133,13 +129,14 @@ public class NamespaceHelper {
      * @return A new element.
      */
     public Element createElement(String localName) {
-        return getDocument().createElementNS(getNamespaceURI(), getQualifiedName(localName));
+        return getDocument().createElementNS(getNamespaceURI(),
+                getQualifiedName(getPrefix(), localName));
     }
 
     /**
      * <p>
-     * Creates an element within the namespace of this NamespaceHelper object with
-     * a given local name containing a text node.
+     * Creates an element within the namespace of this NamespaceHelper object
+     * with a given local name containing a text node.
      * </p>
      * <p>
      * <code>createElement("text", "Hello World!")</code>:
@@ -158,8 +155,8 @@ public class NamespaceHelper {
     }
 
     /**
-     * Returns all children of an element in the namespace
-     * of this NamespaceHelper.
+     * Returns all children of an element in the namespace of this
+     * NamespaceHelper.
      * @param element The parent element.
      * @return the children.
      */
@@ -168,8 +165,8 @@ public class NamespaceHelper {
     }
 
     /**
-     * Returns all children of an element with a local name in the namespace
-     * of this NamespaceHelper.
+     * Returns all children of an element with a local name in the namespace of
+     * this NamespaceHelper.
      * @param element The parent element.
      * @param localName The local name of the children to return.
      * @return the children.
@@ -189,20 +186,20 @@ public class NamespaceHelper {
         return DocumentHelper.getFirstChild(element, getNamespaceURI(), localName);
     }
 
-	/**
-	 * Returns the next siblings of an element with a local name in the namespace
-	 * of this NamespaceHelper or <code>null</code> if none exists.
-	 * @param element The parent element.
-	 * @param localName The local name of the children to return.
-	 * @return the next siblings.
-	 */
-	public Element[] getNextSiblings(Element element, String localName) {
-		return DocumentHelper.getNextSiblings(element, getNamespaceURI(), localName);
-	}
+    /**
+     * Returns the next siblings of an element with a local name in the
+     * namespace of this NamespaceHelper or <code>null</code> if none exists.
+     * @param element The parent element.
+     * @param localName The local name of the children to return.
+     * @return the next siblings.
+     */
+    public Element[] getNextSiblings(Element element, String localName) {
+        return DocumentHelper.getNextSiblings(element, getNamespaceURI(), localName);
+    }
 
     /**
-     * Returns the preceding siblings of an element with a local name in the namespace
-     * of this NamespaceHelper or <code>null</code> if none exists.
+     * Returns the preceding siblings of an element with a local name in the
+     * namespace of this NamespaceHelper or <code>null</code> if none exists.
      * @param element The parent element.
      * @param localName The local name of the children to return.
      * @return the preceding siblings.
