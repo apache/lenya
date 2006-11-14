@@ -39,7 +39,7 @@
   <authorizer type="policy"/>
   
   <authorizer type="usecase">
-    <parameter name="configuration" value="fallback://config/ac/usecase-policies.xml"/>
+    <parameter name="configuration" value="aggregate-fallback://config/ac/usecase-policies.xml"/>
   </authorizer>
   
 </access-controller>

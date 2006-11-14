@@ -20,7 +20,9 @@ package org.apache.lenya.cms.ac.usecase;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.configuration.Configuration;
@@ -64,28 +66,32 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
         return this.cache;
     }
 
+    private Map pubId2configUri = new HashMap();
+
     /**
-     * Returns the source URI of the usecase role configuration file for a certain publication.
-     * TODO: This method seems to be called many times. Wouldn't it make sense to cache it somehow
-     * ...?
+     * Returns the source URI of the usecase role configuration file for a
+     * certain publication.
      * 
      * @param publication The publication.
-     * @param requestURI The request URI.
      * @return A string representing a URI.
      */
-    protected String getConfigurationURI(Publication publication, String requestURI) {
-        String configURI = null;
-        try {
-            Configuration config = getConfiguration(publication);
-            Configuration[] authorizerConfigs = config.getChildren("authorizer");
-            for (int i = 0; i < authorizerConfigs.length; i++) {
-                if (authorizerConfigs[i].getAttribute("type").equals("usecase")) {
-                    Configuration paraConfig = authorizerConfigs[i].getChild("parameter");
-                    configURI = paraConfig.getAttribute("value");
+    protected String getConfigurationURI(Publication publication) {
+
+        String configURI = (String) this.pubId2configUri.get(publication.getId());
+        if (configURI == null) {
+            try {
+                Configuration config = getConfiguration(publication);
+                Configuration[] authorizerConfigs = config.getChildren("authorizer");
+                for (int i = 0; i < authorizerConfigs.length; i++) {
+                    if (authorizerConfigs[i].getAttribute("type").equals("usecase")) {
+                        Configuration paraConfig = authorizerConfigs[i].getChild("parameter");
+                        configURI = paraConfig.getAttribute("value");
+                        this.pubId2configUri.put(publication.getId(), configURI);
+                    }
                 }
+            } catch (Exception e) {
+                getLogger().error(e.getMessage(), e);
             }
-        } catch (Exception e) {
-            getLogger().error(e.getMessage(), e);
         }
         return configURI;
     }
@@ -109,14 +115,12 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
                     _configurationUri = getConfigurationURI();
                 } else {
                     Publication publication = PublicationUtil.getPublication(this.manager, request);
-                    _configurationUri = getConfigurationURI(publication, request.getRequestURI());
+                    _configurationUri = getConfigurationURI(publication);
                 }
 
                 Role[] roles = PolicyUtil.getRoles(request);
-                authorized = authorizeUsecase(usecase,
-                        roles,
-                        _configurationUri,
-                        request.getRequestURI());
+                authorized = authorizeUsecase(usecase, roles, _configurationUri, request
+                        .getRequestURI());
             } else {
                 getLogger().debug("No usecase to authorize. Granting access.");
             }
@@ -140,7 +144,8 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
      * 
      * @param usecase The usecase ID.
      * @param roles The roles of the current identity.
-     * @param _configurationUri The URI to retrieve the policy configuration from.
+     * @param _configurationUri The URI to retrieve the policy configuration
+     *        from.
      * @param requestURI The request URI.
      * @return A boolean value.
      * @throws AccessControlException when something went wrong.
@@ -171,8 +176,10 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
             int i = 0;
             while (!authorized && i < roles.length) {
                 authorized = usecaseRoleIds.contains(roles[i].getId());
-                getLogger().debug("Authorization for role [" + roles[i].getId() + "] is ["
-                        + authorized + "]");
+                getLogger()
+                        .debug(
+                                "Authorization for role [" + roles[i].getId() + "] is ["
+                                        + authorized + "]");
                 i++;
             }
         } else {
@@ -231,18 +238,16 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
      */
     public boolean authorizeUsecase(String usecase, Role[] roles, Publication publication,
             String requestURI) throws AccessControlException {
-        return authorizeUsecase(usecase,
-                roles,
-                getConfigurationURI(publication, requestURI),
-                requestURI);
+        return authorizeUsecase(usecase, roles, getConfigurationURI(publication), requestURI);
     }
 
     protected boolean authorize(Request request, String webappUrl) throws AccessControlException {
         return authorize(request);
     }
 
-    protected static final String AC_CONFIGURATION_FILE = "config/ac/ac.xconf".replace('/', File.separatorChar);
-    
+    protected static final String AC_CONFIGURATION_FILE = "config/ac/ac.xconf".replace('/',
+            File.separatorChar);
+
     /**
      * Retrieves access control configuration of a specific publication.
      * @param publication The publication.
@@ -254,7 +259,8 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
 
         if (configurationFile.isFile()) {
             try {
-                Configuration configuration = new DefaultConfigurationBuilder().buildFromFile(configurationFile);
+                Configuration configuration = new DefaultConfigurationBuilder()
+                        .buildFromFile(configurationFile);
                 return configuration;
             } catch (Exception e) {
                 throw new AccessControlException(e);

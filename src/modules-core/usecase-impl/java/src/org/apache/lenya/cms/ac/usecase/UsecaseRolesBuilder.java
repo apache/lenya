@@ -32,7 +32,7 @@ import org.w3c.dom.Element;
 
 /**
  * Builder for usecase roles.
- *
+ * 
  * @version $Id$
  */
 public class UsecaseRolesBuilder implements InputStreamBuilder {
@@ -57,24 +57,25 @@ public class UsecaseRolesBuilder implements InputStreamBuilder {
         }
         assert document.getDocumentElement().getLocalName().equals(USECASES_ELEMENT);
 
-        NamespaceHelper helper =
-            new NamespaceHelper(
-                AccessController.NAMESPACE,
-                AccessController.DEFAULT_PREFIX,
-                document);
+        NamespaceHelper helper = new NamespaceHelper(AccessController.NAMESPACE,
+                AccessController.DEFAULT_PREFIX, document);
 
-        Element[] usecaseElements =
-            helper.getChildren(document.getDocumentElement(), USECASE_ELEMENT);
+        Element[] usecaseElements = helper.getChildren(document.getDocumentElement(),
+                USECASE_ELEMENT);
         for (int i = 0; i < usecaseElements.length; i++) {
             String usecaseId = usecaseElements[i].getAttribute(ID_ATTRIBUTE);
-            Element[] roleElements = helper.getChildren(usecaseElements[i], ROLE_ELEMENT);
-            Set roleIds = new HashSet();
-            for (int j = 0; j < roleElements.length; j++) {
-                String roleId = roleElements[j].getAttribute(ID_ATTRIBUTE);
-                roleIds.add(roleId);
+            
+            // add roles only if not overridden by child publication
+            if (!usecaseRoles.hasRoles(usecaseId)) {
+                Element[] roleElements = helper.getChildren(usecaseElements[i], ROLE_ELEMENT);
+                Set roleIds = new HashSet();
+                for (int j = 0; j < roleElements.length; j++) {
+                    String roleId = roleElements[j].getAttribute(ID_ATTRIBUTE);
+                    roleIds.add(roleId);
+                }
+                String[] roleIdArray = (String[]) roleIds.toArray(new String[roleIds.size()]);
+                usecaseRoles.setRoles(usecaseId, roleIdArray);
             }
-            String[] roleIdArray = (String[]) roleIds.toArray(new String[roleIds.size()]);
-            usecaseRoles.setRoles(usecaseId, roleIdArray);
         }
         return usecaseRoles;
     }
