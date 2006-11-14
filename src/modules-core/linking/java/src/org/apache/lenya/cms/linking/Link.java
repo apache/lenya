@@ -28,49 +28,85 @@ public class Link {
     private String area;
     private String pubId;
     
+    /**
+     * Ctor.
+     */
     public Link() {
     }
     
+    /**
+     * @return The area.
+     */
     public String getArea() {
         return area;
     }
 
+    /**
+     * @param area The area.
+     */
     public void setArea(String area) {
         this.area = area;
     }
 
+    /**
+     * @return The language.
+     */
     public String getLanguage() {
         return language;
     }
 
+    /**
+     * @param language The language.
+     */
     public void setLanguage(String language) {
         this.language = language;
     }
 
+    /**
+     * @return The publication ID.
+     */
     public String getPubId() {
         return pubId;
     }
 
+    /**
+     * @param pubId The publication ID.
+     */
     public void setPubId(String pubId) {
         this.pubId = pubId;
     }
 
+    /**
+     * @return The revision.
+     */
     public String getRevision() {
         return revision;
     }
 
+    /**
+     * @param revision The revision.
+     */
     public void setRevision(String revision) {
         this.revision = revision;
     }
 
+    /**
+     * @return The UUID.
+     */
     public String getUuid() {
         return uuid;
     }
 
+    /**
+     * @param uuid The UUID.
+     */
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
 
+    /**
+     * @return The link URI.
+     */
     public String getUri() {
         String uri = LinkResolver.SCHEME + ":";
         if (this.uuid != null) {
