@@ -39,30 +39,29 @@
     <echo message="  ${src.java.dir}/**/*.java"/>
     <echo message="-------------------------------------------------------------"/>
   </target>
-
-  <!-- Creates the API documentation -->
-  <target name="javadocs" depends="prepare-src, javadocs_check, javadocs_done" unless="javadocs.notrequired" description="Generates the API documentation">
+  
+  <target name="javadocs-api">
     <mkdir dir="${dist.bin.javadocs}"/>
     <javadoc packagenames="${packages}"
-             destdir="${dist.bin.javadocs}"
-             author="true"
-             version="true"
-             use="false"
-             noindex="true"
-             breakiterator="true"
-             windowtitle="${Name} API - Version ${version}"
-             doctitle="${Name}"
-             bottom="Copyright &#169; ${year} Apache Software Foundation. All Rights Reserved."
-             stylesheetfile="${src.resource.dir}/javadoc.css"
-             source="${src.java.version}">
+      destdir="${dist.bin.javadocs}"
+      author="true"
+      version="true"
+      use="false"
+      noindex="true"
+      breakiterator="true"
+      windowtitle="${Name} API - Version ${version}"
+      doctitle="${Name}"
+      bottom="Copyright &#169; ${year} Apache Software Foundation. All Rights Reserved."
+      stylesheetfile="${src.resource.dir}/javadoc.css"
+      source="${src.java.version}">
       <!-- sources -->
       <sourcepath>
-         <pathelement path="${src.java.api.dir}"/>
-         <!--
-         <pathelement path="${build.java.src}"/>
-         -->
+        <pathelement path="${src.java.api.dir}"/>
+        <!--
+          <pathelement path="${build.java.src}"/>
+        -->
       </sourcepath>
-
+      
       <!-- pass ant in the classpath to avoid class not found errors -->
       <classpath>
         <fileset dir="${lib.dir}">
@@ -80,4 +79,11 @@
       </classpath>
     </javadoc>
   </target>
+
+  <!-- Creates the API documentation -->
+  <target name="javadocs"
+    depends="prepare-src, javadocs_check, javadocs_done, javadocs-api, javadocs-modules"
+    unless="javadocs.notrequired"
+    description="Generates the API documentation"/>
+  
 </project>

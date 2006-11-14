@@ -30,6 +30,14 @@
   <xsl:param name="module-schema"/>
   <xsl:param name="copy-modules"/>
   
+  
+  <xsl:template name="separator">
+    <xsl:if test="following-sibling::list:module">
+      <xsl:text>, </xsl:text>
+    </xsl:if>
+  </xsl:template>
+  
+  
   <xsl:template match="list:modules">
     <project name="lenya-modules">
       
@@ -55,9 +63,7 @@
       <xsl:variable name="compileDependencyList">
         <xsl:for-each select="list:module">
           <xsl:apply-templates select="document(concat(@src, '/module.xml'))/mod:module" mode="call"/>
-          <xsl:if test="following-sibling::list:module">
-            <xsl:text>, </xsl:text>
-          </xsl:if>
+          <xsl:call-template name="separator"/>
         </xsl:for-each>
       </xsl:variable>
       <target name="compile-modules" depends="{$compileDependencyList}"/>
@@ -65,13 +71,15 @@
       <xsl:variable name="testDependencyList">
         <xsl:for-each select="list:module">
           <xsl:apply-templates select="document(concat(@src, '/module.xml'))/mod:module" mode="patch-test"/>
-          <xsl:if test="following-sibling::list:module">
-            <xsl:text>, </xsl:text>
-          </xsl:if>
+          <xsl:call-template name="separator"/>
         </xsl:for-each>
       </xsl:variable>
       
       <target name="patch-modules-test" depends="{$testDependencyList}"/>
+      
+      <target name="javadocs-modules">
+        <xsl:apply-templates select="list:module" mode="call-javadocs"/>
+      </target>
       
       <target name="test-modules" depends="patch-modules-test">
         <xsl:apply-templates select="list:module" mode="call-test"/>
@@ -97,9 +105,17 @@
     <xsl:apply-templates select="document(concat(@src, '/module.xml'))/mod:module" mode="call-test"/>
   </xsl:template>
   
-  
   <xsl:template match="mod:module" mode="call-test">
     <antcall target="test-module-{mod:id}"/>
+  </xsl:template>
+  
+  
+  <xsl:template match="list:module" mode="call-javadocs">
+    <xsl:apply-templates select="document(concat(@src, '/module.xml'))/mod:module" mode="call-javadocs"/>
+  </xsl:template>
+  
+  <xsl:template match="mod:module" mode="call-javadocs">
+    <antcall target="javadocs-module-{mod:id}"/>
   </xsl:template>
   
   
@@ -113,6 +129,7 @@
   <xsl:template match="mod:module" mode="target">
     <xsl:param name="src"/>
     <xsl:variable name="id" select="mod:id"/>
+    <xsl:variable name="shortname" select="substring(mod:id, string-length(mod:package) + 2)"/>
 
     <target name="validate-module-{$id}">
       <jing rngfile="{$module-schema}" file="{$src}/module.xml"/>
@@ -139,17 +156,17 @@
     
     <xsl:variable name="destDir">${build.dir}/modules/<xsl:value-of select="$id"/>/java/classes</xsl:variable>
     
+    <path id="module.classpath.{$id}">
+      <path refid="classpath"/>
+      <fileset dir="${{build.webapp}}/WEB-INF/lib" includes="lenya-*-api.jar"/>
+      <xsl:for-each select="mod:depends">
+        <fileset dir="${{build.webapp}}/WEB-INF/lib" includes="lenya-module-{@module}.jar"/>
+      </xsl:for-each>
+      <fileset dir="{$src}" includes="java/lib/*.jar"/>
+      <fileset dir="${{lib.dir}}" includes="*.jar"/>
+    </path>
+    
     <target name="compile-module-{$id}" if="compile.module.{$id}">
-      
-      <path id="module.classpath.{$id}">
-        <path refid="classpath"/>
-        <fileset dir="${{build.webapp}}/WEB-INF/lib" includes="lenya-*-api.jar"/>
-        <xsl:for-each select="mod:depends">
-          <fileset dir="${{build.webapp}}/WEB-INF/lib" includes="lenya-module-{@module}.jar"/>
-        </xsl:for-each>
-        <fileset dir="{$src}" includes="java/lib/*.jar"/>
-        <fileset dir="${{lib.dir}}" includes="*.jar"/>
-      </path>
       
       <mkdir dir="{$destDir}"/>
       
@@ -231,6 +248,42 @@
     <target name="deploy-module-{$id}"
       depends="dependency-warnings-{$id}, {$dependencyList} validate-module-{$id}, compile-module-{$id}, copy-module-{$id}, patch-module-{$id}"/>
       
+    <!-- ============================================================ -->
+    <!-- Javadocs -->
+    <!-- ============================================================ -->
+    
+    <!-- Set a variable if javadoc is already up-to-date -->
+    <target name="javadocs-module-check-{$id}">
+      <uptodate property="javadocs.notrequired.module.{$id}" targetfile="${{dist.bin.javadocs}}/packages.html" >
+        <srcfiles dir="{$src}/java/src" includes="**/*.java"/>
+      </uptodate>
+    </target>
+    
+    <target name="javadocs-module-{$id}"
+            if="compile.module.{$id}"
+            unless="javadocs.notrequired.module.{$id}">
+      <javadoc packagenames="${{packages}}"
+        destdir="${{dist.bin.javadocs}}/modules/{$shortname}"
+        author="true"
+        version="true"
+        use="false"
+        noindex="true"
+        breakiterator="true"
+        windowtitle="${{Name}} API - Version ${{version}}"
+        doctitle="${{Name}}"
+        bottom="Copyright &#169; ${year} Apache Software Foundation. All Rights Reserved."
+        stylesheetfile="${{src.resource.dir}}/javadoc.css"
+        source="${{src.java.version}}">
+        <!-- sources -->
+        <sourcepath>
+          <pathelement path="{$src}/java/src"/>
+        </sourcepath>
+        
+        <!-- pass ant in the classpath to avoid class not found errors -->
+        <classpath refid="module.classpath.{$id}"/>
+      </javadoc>
+    </target>
+    
     <!-- ============================================================ -->
     <!-- Test -->
     <!-- ============================================================ -->

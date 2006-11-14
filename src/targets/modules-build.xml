@@ -70,6 +70,18 @@
   
   
   <!-- ================================================ -->
+  <!-- Javadocs -->
+  <!-- ================================================ -->
+  
+  <target name="javadocs-modules" depends="prepare-modules">
+    <ant antfile="${build.dir}/temp/modules-build.xml"
+      inheritall="true"
+      inheritrefs="true"
+      target="javadocs-modules"/>
+  </target>
+  
+  
+  <!-- ================================================ -->
   <!-- Module tests -->
   <!-- ================================================ -->
   
