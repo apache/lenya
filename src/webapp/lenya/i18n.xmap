@@ -28,10 +28,14 @@
   
   <map:resources>
     <map:resource name="serializeCatalogue">
-      <map:transform src="resources/i18n/modules2xinclude.xsl">
-        <map:parameter name="pubId" value="{page-envelope:publication-id}"/>
-        <map:parameter name="catalogue" value="{catalogue}"/>
-      </map:transform>
+      <map:select type="resource-exists">
+        <map:when test="context://lenya/pubs/{page-envelope:publication-id}/config/publication.xconf">
+          <map:transform src="resources/i18n/modules2xinclude.xsl">
+            <map:parameter name="pubId" value="{page-envelope:publication-id}"/>
+            <map:parameter name="catalogue" value="{catalogue}"/>
+          </map:transform>
+        </map:when>
+      </map:select>
       <map:transform type="xinclude"/>
       <map:serialize/>
     </map:resource>
