@@ -209,9 +209,7 @@ public class Instantiator extends AbstractLogEnabled implements
             indexSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
                     + newPublicationId + "/config/lucene_index.xconf");
             Document indexDoc = DocumentHelper.readDocument(indexSource.getInputStream());
-            NamespaceHelper indexHelper = new NamespaceHelper(null, "xconf", indexDoc);
-
-            Element[] indexElement = indexHelper.getChildren(indexDoc.getDocumentElement(), "index");
+            Element[] indexElement = DocumentHelper.getChildren(indexDoc.getDocumentElement(), "index");
 
             for (int i=0; i<indexElement.length; i++) {
                 String id = indexElement[i].getAttribute("id");
