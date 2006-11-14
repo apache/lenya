@@ -598,7 +598,4 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         return this.area;
     }
 
-    public InputStream getInputStream() throws RepositoryException {
-        return getRepositoryNode().getInputStream();
-    }
 }

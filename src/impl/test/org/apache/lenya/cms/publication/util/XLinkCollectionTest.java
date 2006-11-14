@@ -27,12 +27,10 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteStructure;
-import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.transaction.TransactionException;
 
 /**
@@ -40,6 +38,12 @@ import org.apache.lenya.transaction.TransactionException;
  */
 public class XLinkCollectionTest extends AbstractAccessControlTest {
 
+    /**
+     * @throws PublicationException
+     * @throws AccessControlException
+     * @throws TransactionException
+     * @throws ServiceException
+     */
     public void testXLinkCollection() throws PublicationException, AccessControlException,
             TransactionException, ServiceException {
 

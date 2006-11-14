@@ -817,8 +817,8 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         return document;
     }
 
-    public Document duplicateVersion(Document sourceDocument, String area, String language)
-    throws DocumentBuildException, DocumentException, PublicationException {
+    protected Document duplicateVersion(Document sourceDocument, String area, String language)
+            throws DocumentBuildException, DocumentException, PublicationException {
         Document document = add(sourceDocument.getFactory(),
                 sourceDocument.getResourceType(),
                 sourceDocument.getUUID(),
@@ -828,7 +828,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 language,
                 sourceDocument.getSourceExtension());
         duplicateMetaData(sourceDocument, document);
-        
         return document;
     }
 
