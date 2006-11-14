@@ -19,6 +19,9 @@ package org.apache.lenya.cms.linking;
 
 import java.net.MalformedURLException;
 
+import org.apache.avalon.framework.configuration.Configurable;
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
@@ -29,7 +32,7 @@ import org.apache.lenya.util.Query;
 /**
  * Link resolver implemenation.
  */
-public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver {
+public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver, Configurable {
 
     /**
      * The Avalon role.
@@ -113,6 +116,21 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
 
     public void setFallbackMode(int mode) {
         this.fallbackMode = mode;
+    }
+    
+    protected static final String ELEMENT_FALLBACK = "fallback";
+
+    public void configure(Configuration config) throws ConfigurationException {
+        Configuration fallbackConfig = config.getChild(ELEMENT_FALLBACK, false);
+        if (fallbackConfig != null) {
+            boolean fallback = config.getValueAsBoolean();
+            if (fallback) {
+                setFallbackMode(MODE_DEFAULT_LANGUAGE);
+            }
+            else {
+                setFallbackMode(MODE_FAIL);
+            }
+        }
     }
 
 }
