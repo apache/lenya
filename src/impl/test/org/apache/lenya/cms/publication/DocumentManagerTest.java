@@ -17,13 +17,16 @@
  */
 package org.apache.lenya.cms.publication;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
+import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 
 /**
@@ -42,11 +45,74 @@ public class DocumentManagerTest extends AbstractAccessControlTest {
             doTestMoveAll(docManager, "/doctypes", "/tutorial/doctypes");
             doTestMoveAll(docManager, "/tutorial/doctypes", "/doctypes");
             doTestCopyAll(docManager, "/doctypes", "/tutorial/doctypes");
+
+            String areaName1 = "authoring";
+            String areaName2 = "live";
+            String path1 = "/tutorial";
+            String path2 = "/doctypes";
+
+            doTestCopyToArea(docManager, areaName1, areaName2, path1, path2);
+
         } finally {
             if (docManager != null) {
                 getManager().release(docManager);
             }
         }
+    }
+
+    protected void doTestCopyToArea(DocumentManager docManager, String sourceAreaName,
+            String destAreaName, String path1, String path2) throws PublicationException,
+            SiteException {
+        
+        DocumentFactory factory = getFactory();
+        Publication pub = factory.getPublication("test");
+        SiteStructure sourceArea = pub.getArea(sourceAreaName).getSite();
+        SiteStructure destArea = pub.getArea(destAreaName).getSite();
+
+        if (destArea.contains(path1)) {
+            destArea.getNode(path1).delete();
+        }
+        if (destArea.contains(path2)) {
+            destArea.getNode(path2).delete();
+        }
+        
+        assertFalse(destArea.contains(path1));
+        assertFalse(destArea.contains(path2));
+        
+        // copy second node first to test correct ordering
+        doTestCopyToArea(docManager, path2, sourceAreaName, destAreaName);
+        doTestCopyToArea(docManager, path1, sourceAreaName, destAreaName);
+
+        List sourceNodes = Arrays.asList(sourceArea.getNodes());
+
+        SiteNode authoringNode1 = sourceArea.getNode(path1);
+        assertTrue(sourceNodes.contains(authoringNode1));
+        int sourcePos1 = sourceNodes.indexOf(authoringNode1);
+
+        SiteNode sourceNode2 = sourceArea.getNode(path2);
+        int sourcePos2 = sourceNodes.indexOf(sourceNode2);
+
+        assertTrue(sourcePos1 < sourcePos2);
+
+        assertTrue(destArea.contains(path1));
+        List liveNodes = Arrays.asList(destArea.getNodes());
+        SiteNode liveNode1 = destArea.getNode(path1);
+        assertTrue(liveNodes.contains(liveNode1));
+        int livePos1 = liveNodes.indexOf(liveNode1);
+
+        SiteNode liveNode2 = destArea.getNode(path2);
+        int livePos2 = liveNodes.indexOf(liveNode2);
+
+        assertTrue(livePos1 < livePos2);
+    }
+
+    protected void doTestCopyToArea(DocumentManager docManager, String path, String areaName1,
+            String areaName2) throws PublicationException {
+        DocumentFactory factory = getFactory();
+        Publication pub = factory.getPublication("test");
+        Area area1 = pub.getArea(areaName1);
+        Document doc = area1.getSite().getNode(path).getLink("en").getDocument();
+        docManager.copyToArea(doc, areaName2);
     }
 
     protected void doTestCopyAll(DocumentManager docManager, String sourcePath, String targetPath)
@@ -90,7 +156,7 @@ public class DocumentManagerTest extends AbstractAccessControlTest {
         NodeSet nodes = SiteUtil.getSubSite(getManager(), sourceNode);
         Document[] docs = nodes.getDocuments();
         Map doc2path = new HashMap();
-        
+
         String sourceBase = sourcePath.substring(0, sourcePath.lastIndexOf("/"));
         String targetBase = targetPath.substring(0, targetPath.lastIndexOf("/"));
 
