@@ -146,7 +146,7 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
 
     public String getWorkflowSchema(ResourceType resourceType) {
         String schema = this.delegate.getWorkflowSchema(resourceType);
-        if (schema == null) {
+        if (schema == null && getTemplateIds().length > 0) {
             String templateId = getFirstTemplateId();
             try {
                 Publication template = getFactory().getPublication(templateId);

@@ -37,6 +37,7 @@ import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
+import org.apache.lenya.util.Assert;
 
 /**
  * Factory for creating publication objects.
@@ -54,7 +55,7 @@ public final class PublicationManagerImpl extends AbstractLogEnabled implements 
 
     public synchronized Publication getPublication(DocumentFactory factory, String id) throws PublicationException {
         
-        assert id != null;
+        Assert.notNull("publication ID", id);
         if (id.indexOf("/") != -1) {
             throw new PublicationException("The publication ID [" + id + "] must not contain a slash!");
         }
