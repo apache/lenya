@@ -23,13 +23,13 @@ import java.io.OutputStreamWriter;
 import java.net.MalformedURLException;
 import java.util.Collection;
 import java.util.Iterator;
-import java.text.SimpleDateFormat;
-import java.lang.Boolean;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 
+import org.apache.avalon.framework.configuration.Configuration;
+import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
@@ -37,6 +37,7 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.cocoon.components.search.components.IndexManager;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceNotFoundException;
@@ -48,19 +49,6 @@ import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
-
-import org.apache.cocoon.components.search.Index;
-import org.apache.cocoon.components.search.IndexException;
-import org.apache.cocoon.components.search.IndexStructure;
-import org.apache.cocoon.components.search.components.AnalyzerManager;
-import org.apache.cocoon.components.search.components.IndexManager;
-import org.apache.cocoon.components.search.fieldmodel.DateFieldDefinition;
-import org.apache.cocoon.components.search.fieldmodel.FieldDefinition;
-import org.apache.cocoon.components.search.utils.SourceHelper;
-
-import org.apache.avalon.framework.configuration.Configurable;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
 
 /**
  * Instantiate the publication.
@@ -209,7 +197,7 @@ public class Instantiator extends AbstractLogEnabled implements
             indexSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
                     + newPublicationId + "/config/lucene_index.xconf");
             Document indexDoc = DocumentHelper.readDocument(indexSource.getInputStream());
-            Element[] indexElement = DocumentHelper.getChildren(indexDoc.getDocumentElement(), "index");
+            Element[] indexElement = DocumentHelper.getChildren(indexDoc.getDocumentElement(), null, "index");
 
             for (int i=0; i<indexElement.length; i++) {
                 String id = indexElement[i].getAttribute("id");
