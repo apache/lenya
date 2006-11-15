@@ -71,6 +71,26 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
             SiteStructure structure = siteManager.getSiteStructure(factory, pub,
                     Publication.AUTHORING_AREA);
 
+            docManager = (DocumentManager) getManager().lookup(DocumentManager.ROLE);
+
+            resourceTypeSelector = (ServiceSelector) getManager().lookup(
+                    ResourceType.ROLE + "Selector");
+            ResourceType type = (ResourceType) resourceTypeSelector.select("entry");
+            String contentSourceUri = "context://sitemap.xmap";
+
+            Document doc = docManager.add(getFactory(), type, contentSourceUri, pub,
+                    Publication.AUTHORING_AREA, "en", "xml");
+
+            structure.add(PATH, doc);
+            assertTrue(structure.contains(PATH));
+            Document linkDoc = structure.getNode(PATH).getLink("en").getDocument();
+            assertSame(linkDoc, doc);
+
+            if (!(structure instanceof DocumentStore)) {
+                Link link = doc.getLink();
+                checkSetLabel(link);
+            }
+
             SiteNode[] nodes = structure.getNodes();
             assertTrue(nodes.length > 0);
 
@@ -87,32 +107,12 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
 
                 checkLinks(siteManager, node);
             }
-
-            docManager = (DocumentManager) getManager().lookup(DocumentManager.ROLE);
-
-            resourceTypeSelector = (ServiceSelector) getManager().lookup(
-                    ResourceType.ROLE + "Selector");
-            ResourceType type = (ResourceType) resourceTypeSelector.select("entry");
-            String contentSourceUri = structure.getRepositoryNode().getSourceURI();
-
-            Document doc = docManager.add(getFactory(), type, contentSourceUri, pub,
-                    Publication.AUTHORING_AREA, "en", "xml");
-
-            structure.add(PATH, doc);
-            assertTrue(structure.contains(PATH));
-            Document linkDoc = structure.getNode(PATH).getLink("en").getDocument();
-            assertSame(linkDoc, doc);
-
-            if (!(structure instanceof DocumentStore)) {
-                Link link = doc.getLink();
-                checkSetLabel(link);
-            }
-
+            
             doc.getLink().delete();
             assertFalse(structure.containsByUuid(doc.getUUID(), doc.getLanguage()));
             assertFalse(structure.contains(PATH));
             assertFalse(structure.contains(PARENT_PATH));
-
+            
         } finally {
             if (selector != null) {
                 if (siteManager != null) {

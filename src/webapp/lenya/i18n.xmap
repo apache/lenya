@@ -48,8 +48,8 @@
       <!-- i18n-catalogue/module/{module-id}/{catalogue}--> 
       <map:match pattern="i18n-catalogue/module/*/*">
         <map:select type="resource-exists">
-          <map:when test="fallback://lenya/modules/{1}/resources/i18n/{2}">
-            <map:generate src="fallback://lenya/modules/{1}/resources/i18n/{2}"/>
+          <map:when test="aggregate-fallback://lenya/modules/{1}/resources/i18n/{2}">
+            <map:generate src="aggregate-fallback://lenya/modules/{1}/resources/i18n/{2}"/>
           </map:when>
           <map:otherwise>
             <map:generate src="resources/i18n/emptyCatalogue.xml"/>
@@ -60,9 +60,9 @@
       
       <map:match pattern="i18n-catalogue/**">
         <map:select type="resource-exists">
-          <map:when test="fallback://lenya/resources/i18n/{1}">
+          <map:when test="aggregate-fallback://lenya/resources/i18n/{1}">
             <map:generate type="serverpages" src="fallback://lenya/resources/i18n/catalogue.xsp">
-              <map:parameter name="pub-catalogue-location" value="fallback://lenya/resources/i18n/"/>
+              <map:parameter name="pub-catalogue-location" value="aggregate-fallback://lenya/resources/i18n/"/>
               <map:parameter name="catalogue-file" value="{1}"/>
             </map:generate>
             <map:call resource="serializeCatalogue">
