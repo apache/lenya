@@ -17,9 +17,11 @@
  */
 package org.apache.lenya.cms.site.simple;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
@@ -283,6 +285,21 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
     public void remove(Document document) throws DocumentException {
         super.remove(document);
         this.doc2path.remove(getKey(document.getUUID(), document.getLanguage()));
+    }
+
+    public SiteNode add(String path, String followingSiblingPath) throws SiteException {
+        return add(path);
+    }
+
+    public SiteNode[] getTopLevelNodes() {
+        SiteNode[] nodes = getNodes();
+        List topLevelNodes = new ArrayList();
+        for (int i = 0; i < nodes.length; i++) {
+            if (nodes[i].isTopLevel()) {
+                topLevelNodes.add(nodes[i]);
+            }
+        }
+        return (SiteNode[]) topLevelNodes.toArray(new SiteNode[topLevelNodes.size()]);
     }
 
 }

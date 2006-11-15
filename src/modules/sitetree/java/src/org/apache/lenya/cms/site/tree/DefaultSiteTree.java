@@ -535,13 +535,13 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         if (newParent == null) {
             throw new SiteException("The added node was not found.");
         }
-        SiteTreeNode[] children = subtreeRoot.getChildren();
+        SiteNode[] children = subtreeRoot.getChildren();
         if (children == null) {
             getLogger().info("The node " + subtreeRoot.toString() + " has no children");
             return;
         }
         for (int i = 0; i < children.length; i++) {
-            importSubtree(newParent, children[i], children[i].getName(), null);
+            importSubtree(newParent, (SiteTreeNode) children[i], children[i].getName(), null);
         }
         saveDocument();
     }
@@ -701,14 +701,27 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     }
 
     public SiteNode[] getNodes() {
+        List nodes = getRootNode().preOrder();
+        return (SiteNode[]) nodes.toArray(new SiteNode[nodes.size()]);
+    }
+
+    public SiteNode add(String path, String followingSiblingPath) throws SiteException {
+        SiteTreeNode node = addNode(path, null, true, null, "", false, followingSiblingPath);
+        return node;
+    }
+
+    public SiteNode[] getTopLevelNodes() {
+        return getRootNode().getChildren();
+    }
+
+    protected SiteTreeNode getRootNode() {
         SiteTreeNode root;
         try {
             root = (SiteTreeNode) getNode("/");
         } catch (SiteException e) {
             throw new RuntimeException(e);
         }
-        List nodes = root.preOrder();
-        return (SiteNode[]) nodes.toArray(new SiteNode[nodes.size()]);
+        return root;
     }
 
 }

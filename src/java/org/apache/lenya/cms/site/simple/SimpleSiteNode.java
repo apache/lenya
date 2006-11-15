@@ -26,6 +26,7 @@ import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.site.AbstractSiteNode;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
+import org.apache.lenya.cms.site.SiteNode;
 
 /**
  * Node for SimpleSiteManager.
@@ -82,6 +83,10 @@ public class SimpleSiteNode extends AbstractSiteNode {
                 throw new RuntimeException(e);
             }
         }
+    }
+
+    public SiteNode[] getChildren() {
+        return new SiteNode[0];
     }
 
 }

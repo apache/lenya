@@ -43,7 +43,7 @@ public interface SiteStructure extends RepositoryItem {
      * @return The area.
      */
     String getArea();
-    
+
     /**
      * @return All nodes in this structure.
      */
@@ -92,8 +92,8 @@ public interface SiteStructure extends RepositoryItem {
      * @param path The path.
      * @param doc The document.
      * @return A link.
-     * @throws SiteException if the document is already contained or the node for this path already
-     *             contains a link for this language.
+     * @throws SiteException if the document is already contained or the node
+     *         for this path already contains a link for this language.
      */
     Link add(String path, Document doc) throws SiteException;
 
@@ -105,5 +105,19 @@ public interface SiteStructure extends RepositoryItem {
      */
     SiteNode add(String path) throws SiteException;
 
+    /**
+     * Adds a site node before a specific other node.
+     * @param path The path.
+     * @param followingSiblingPath The path of the node which will be the
+     *        following sibling of the node to insert.
+     * @return A site node.
+     * @throws SiteException if the path is already contained.
+     */
+    SiteNode add(String path, String followingSiblingPath) throws SiteException;
+    
+    /**
+     * @return The top level nodes.
+     */
+    SiteNode[] getTopLevelNodes();
 
 }

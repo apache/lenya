@@ -88,4 +88,9 @@ public interface SiteNode {
      */
     void delete();
 
+    /**
+     * @return The children of this node.
+     */
+    SiteNode[] getChildren();
+
 }

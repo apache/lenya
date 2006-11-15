@@ -45,8 +45,8 @@ import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.tree.SiteTree;
-import org.apache.lenya.cms.site.tree.SiteTreeNode;
 import org.apache.lenya.cms.site.tree.TreeSiteManager;
 import org.apache.lenya.util.ServletHelper;
 import org.xml.sax.Attributes;
@@ -158,8 +158,8 @@ public class DocumentIndexTransformer extends AbstractSAXTransformer implements 
                 String path = this.document.getLink().getNode().getPath();
                 String language = this.document.getLanguage();
                 String defaultLanguage = this.publication.getDefaultLanguage();
-                SiteTreeNode node = (SiteTreeNode) this.siteTree.getNode(path);
-                SiteTreeNode[] children = node.getChildren();
+                SiteNode node = this.siteTree.getNode(path);
+                SiteNode[] children = node.getChildren();
 
                 super.startElement(uri, localName, raw, attr);
 

@@ -36,6 +36,7 @@ import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
+import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.tree.SiteTree;
 import org.apache.lenya.cms.site.tree.SiteTreeNode;
@@ -235,7 +236,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
             if (node == null)
                 throw new SiteException("Node with path " + this.path + " not found.");
 
-            SiteTreeNode[] children = node.getChildren();
+            SiteNode[] children = node.getChildren();
 
             addNodes(children);
         } catch (PublicationException e) {
@@ -245,13 +246,13 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
 
     /**
      * Adds the given nodes (not recursive).
-     * @param nodes
+     * @param children
      * @throws SAXException
      */
-    protected void addNodes(SiteTreeNode[] nodes) throws SAXException, SiteException {
-        for (int i = 0; i < nodes.length; i++) {
-            startNode(NODE_NODE, nodes[i]);
-            addLabels(nodes[i]);
+    protected void addNodes(SiteNode[] children) throws SAXException, SiteException {
+        for (int i = 0; i < children.length; i++) {
+            startNode(NODE_NODE, children[i]);
+            addLabels(children[i]);
             endNode(NODE_NODE);
         }
     }
@@ -326,7 +327,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      * @throws SiteException
      * @throws SAXException
      */
-    protected void generateFragmentRecursive(SiteTreeNode[] nodes, String path)
+    protected void generateFragmentRecursive(SiteNode[] nodes, String path)
             throws SiteException, SAXException {
         String nodeid;
         String childid;
@@ -356,7 +357,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      * @throws SAXException
      * @throws SiteException
      */
-    protected void addNodeRecursive(SiteTreeNode node, String nodeid, String childid)
+    protected void addNodeRecursive(SiteNode node, String nodeid, String childid)
             throws SAXException, SiteException {
         startNode(NODE_NODE, node);
         addLabels(node);
@@ -381,7 +382,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      * @param node The attributes are taken from this node
      * @throws SAXException if an error occurs while creating the node
      */
-    protected void startNode(String nodeName, SiteTreeNode node) throws SAXException, SiteException {
+    protected void startNode(String nodeName, SiteNode node) throws SAXException, SiteException {
         setNodeAttributes(node);
         this.contentHandler.startElement(URI, nodeName, PREFIX + ':' + nodeName, this.attributes);
     }
@@ -392,14 +393,14 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      * @param node
      * @throws SAXException if an error occurs while setting the attributes
      */
-    protected void setNodeAttributes(SiteTreeNode node) throws SAXException, SiteException {
+    protected void setNodeAttributes(SiteNode node) throws SAXException, SiteException {
         this.attributes.clear();
 
         String id = node.getName();
         // String isVisible = Boolean.toString(node.visibleInNav());
-        String hasLink = Boolean.toString(node.hasLink());
-        String href = node.getHref();
-        String suffix = node.getSuffix();
+        String hasLink = Boolean.toString(((SiteTreeNode) node).hasLink());
+        String href = ((SiteTreeNode) node).getHref();
+        String suffix = ((SiteTreeNode) node).getSuffix();
         String isFolder = Boolean.toString(isFolder(node));
         String uuid = node.getUuid();
 
@@ -446,7 +447,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      * @param node
      * @return A boolean value.
      */
-    protected boolean isFolder(SiteTreeNode node) {
+    protected boolean isFolder(SiteNode node) {
         if (node.getChildren().length > 0)
             return true;
         return false;
@@ -466,7 +467,7 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
      * @param node
      * @throws SAXException
      */
-    protected void addLabels(SiteTreeNode node) throws SAXException {
+    protected void addLabels(SiteNode node) throws SAXException {
         String[] languages = node.getLanguages();
 
         for (int i = 0; i < languages.length; i++) {

@@ -89,6 +89,10 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
 
     /**
      * Creates a new SiteTreeNodeImpl object.
+     * @param factory The document factory.
+     * @param tree The tree.
+     * @param node The node.
+     * @param logger The logger.
      * 
      * @param _node the node which is to be wrapped by this SiteTreeNode
      */
@@ -190,9 +194,6 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         getTree().save();
     }
 
-    /**
-     * @see org.apache.lenya.cms.site.tree.SiteTreeNode#removeLabel(org.apache.lenya.cms.site.Label)
-     */
     public void removeLabel(String language) {
         if (!hasLink(language)) {
             throw new RuntimeException(this + " does not contain the language [" + language + "]");
@@ -285,7 +286,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
     /**
      * @see org.apache.lenya.cms.site.tree.SiteTreeNode#getChildren()
      */
-    public SiteTreeNode[] getChildren() {
+    public SiteNode[] getChildren() {
         List childElements = new ArrayList();
 
         NamespaceHelper helper = getNamespaceHelper();
@@ -297,7 +298,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
             childElements.add(newNode);
         }
 
-        return (SiteTreeNode[]) childElements.toArray(new SiteTreeNode[childElements.size()]);
+        return (SiteNode[]) childElements.toArray(new SiteNode[childElements.size()]);
     }
 
     /**
@@ -377,13 +378,13 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
      */
     public void acceptSubtree(SiteTreeNodeVisitor visitor) throws DocumentException {
         this.accept(visitor);
-        SiteTreeNode[] children = this.getChildren();
+        SiteNode[] children = this.getChildren();
         if (children == null) {
             getLogger().info("The node " + getPath() + " has no children");
             return;
         }
         for (int i = 0; i < children.length; i++) {
-            children[i].acceptSubtree(visitor);
+            ((SiteTreeNode) children[i]).acceptSubtree(visitor);
         }
     }
 
@@ -403,9 +404,9 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
      */
     public List postOrder() {
         List list = new ArrayList();
-        SiteTreeNode[] children = this.getChildren();
+        SiteNode[] children = this.getChildren();
         for (int i = 0; i < children.length; i++) {
-            List orderedChildren = children[i].postOrder();
+            List orderedChildren = ((SiteTreeNode) children[i]).postOrder();
             list.addAll(orderedChildren);
         }
         list.add(this);
@@ -424,7 +425,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
      * @see org.apache.lenya.cms.site.tree.SiteTreeNode#getChildren(java.lang.String)
      */
     public SiteTreeNode[] getChildren(String language) {
-        SiteTreeNode[] children = getChildren();
+        SiteNode[] children = getChildren();
         List languageChildren = new ArrayList();
 
         for (int i = 0; i < children.length; i++) {
@@ -487,9 +488,9 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
     public List preOrder() {
         List list = new ArrayList();
         list.add(this);
-        SiteTreeNode[] children = this.getChildren();
+        SiteNode[] children = this.getChildren();
         for (int i = 0; i < children.length; i++) {
-            List orderedChildren = children[i].preOrder();
+            List orderedChildren = ((SiteTreeNode) children[i]).preOrder();
             list.addAll(orderedChildren);
         }
         return list;

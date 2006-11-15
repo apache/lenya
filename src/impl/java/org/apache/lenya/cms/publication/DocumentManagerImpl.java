@@ -17,6 +17,7 @@
  */
 package org.apache.lenya.cms.publication;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -232,7 +233,15 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
 
     protected void addToSiteManager(String path, Document document, String navigationTitle,
             boolean visibleInNav) throws PublicationException {
+        addToSiteManager(path, document, navigationTitle, visibleInNav, null);
+    }
+    
+    protected void addToSiteManager(String path, Document document, String navigationTitle,
+            boolean visibleInNav, String followingSiblingPath) throws PublicationException {
         SiteStructure site = document.area().getSite();
+        if (!site.contains(path) && followingSiblingPath != null) {
+            site.add(path, followingSiblingPath);
+        }
         site.add(path, document);
         document.getLink().setLabel(navigationTitle);
         document.getLink().getNode().setVisible(visibleInNav);
@@ -328,16 +337,51 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
         } else {
             destinationDoc = addVersion(sourceDoc, destinationArea, language);
         }
+        
+        SiteStructure destSite = sourceDoc.getPublication().getArea(destinationArea).getSite();
 
-        if (SiteUtil.contains(this.manager, sourceDoc)) {
-            if (SiteUtil.contains(this.manager, destinationDoc)) {
+        if (sourceDoc.hasLink()) {
+            if (destinationDoc.hasLink()) {
                 boolean visible = sourceDoc.getLink().getNode().isVisible();
                 destinationDoc.getLink().getNode().setVisible(visible);
             } else {
                 String path = sourceDoc.getPath();
                 String label = sourceDoc.getLink().getLabel();
                 boolean visible = sourceDoc.getLink().getNode().isVisible();
-                addToSiteManager(path, destinationDoc, label, visible);
+                if (destSite.contains(sourceDoc.getLink().getNode().getPath())) {
+                    addToSiteManager(path, destinationDoc, label, visible);
+                } else {
+                    
+                    SiteStructure sourceSite = sourceDoc.area().getSite();
+                    
+                    SiteNode[] sourceSiblings;
+                    SiteNode sourceNode = sourceDoc.getLink().getNode();
+                    if (sourceNode.isTopLevel()) {
+                        sourceSiblings = sourceSite.getTopLevelNodes();
+                    }
+                    else {
+                        sourceSiblings = sourceNode.getParent().getChildren();
+                    }
+                    
+                    final int sourcePos = Arrays.asList(sourceSiblings).indexOf(sourceNode);
+                    
+                    String followingSiblingPath = null;
+                    int pos = sourcePos;
+                    while (followingSiblingPath == null && pos < sourceSiblings.length) {
+                        String siblingPath = sourceSiblings[pos].getPath();
+                        if (destSite.contains(siblingPath)) {
+                            followingSiblingPath = siblingPath;
+                        }
+                        pos++;
+                    }
+                    
+                    if (followingSiblingPath == null) {
+                        addToSiteManager(path, destinationDoc, label, visible);
+                    }
+                    else {
+                        addToSiteManager(path, destinationDoc, label, visible, followingSiblingPath);
+                    }
+                }
             }
         }
 

@@ -90,7 +90,7 @@ public interface SiteTreeNode extends SiteNode {
      * 
      * @return the children.
      */
-    SiteTreeNode[] getChildren();
+    SiteNode[] getChildren();
 
     /**
      * Get the sitetreenodes, which are children of this node

@@ -184,5 +184,5 @@ public interface SiteManager {
      * @throws SiteException if the new document could not be built.
      */
     DocumentLocator getAvailableLocator(DocumentFactory factory, DocumentLocator locator) throws SiteException;
-
+    
 }
