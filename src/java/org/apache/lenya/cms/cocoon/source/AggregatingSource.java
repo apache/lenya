@@ -35,6 +35,10 @@ public class AggregatingSource implements Source {
         this.sourceUris = uris;
         this.uri = uri;
     }
+    
+    public String toString() {
+        return getURI();
+    }
 
     protected void loadDom() {
         try {

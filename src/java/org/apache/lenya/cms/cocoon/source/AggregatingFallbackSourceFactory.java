@@ -19,6 +19,9 @@ package org.apache.lenya.cms.cocoon.source;
 
 import java.io.IOException;
 import java.net.MalformedURLException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.context.Context;
@@ -34,6 +37,7 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceFactory;
 import org.apache.excalibur.source.SourceUtil;
 import org.apache.excalibur.source.URIAbsolutizer;
+import org.apache.lenya.cms.module.ModuleManager;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
@@ -43,7 +47,8 @@ import org.apache.lenya.cms.publication.templating.AllExistingSourceResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
 
 /**
- * @see org.apache.lenya.cms.publication.templating.AggregatingVisitor
+ * Aggregate all existing fallback URIs by merging their XML content under
+ * the document element of the first encountered source.
  */
 public class AggregatingFallbackSourceFactory extends AbstractLogEnabled implements SourceFactory,
         Serviceable, Contextualizable, URIAbsolutizer {
@@ -108,8 +113,33 @@ public class AggregatingFallbackSourceFactory extends AbstractLogEnabled impleme
             } else {
                 uris = new String[0];
             }
+            
+            List allUris = new ArrayList();
+            allUris.addAll(Arrays.asList(uris));
+            
+            String contextSourceUri = null;
+            if (path.startsWith("lenya/modules/")) {
+                ModuleManager moduleMgr = null;
+                try {
+                    moduleMgr = (ModuleManager) this.manager.lookup(ModuleManager.ROLE);
+                    final String moduleShortcut = path.split("/")[2];
+                    String baseUri = moduleMgr.getBaseURI(moduleShortcut);
+                    final String modulePath = path.substring(("lenya/modules/" + moduleShortcut).length());
+                    contextSourceUri = baseUri + modulePath;
+                } finally {
+                    if (moduleMgr != null) {
+                        this.manager.release(moduleMgr);
+                    }
+                }
+            } else {
+                contextSourceUri = "context://" + path;
+            }
+            if (org.apache.lenya.cms.cocoon.source.SourceUtil.exists(contextSourceUri, this.manager)) {
+                allUris.add(contextSourceUri);
+            }
 
-            return new AggregatingSource(location, uris, this.manager);
+            String[] aggregateUris = (String[]) allUris.toArray(new String[allUris.size()]); 
+            return new AggregatingSource(location, aggregateUris, this.manager);
 
         } catch (Exception e) {
             throw new RuntimeException("Resolving path [" + location + "] failed: ", e);
