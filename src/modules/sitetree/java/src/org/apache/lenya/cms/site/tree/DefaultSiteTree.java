@@ -702,6 +702,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
 
     public SiteNode[] getNodes() {
         List nodes = getRootNode().preOrder();
+        nodes.remove(getRootNode());
         return (SiteNode[]) nodes.toArray(new SiteNode[nodes.size()]);
     }
 
