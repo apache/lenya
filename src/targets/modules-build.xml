@@ -85,6 +85,13 @@
   <!-- Module tests -->
   <!-- ================================================ -->
   
+  <target name="copy-jackrabbit-module"
+    description="Copy the jackrabbit module to the web application (necessary if modules.copy=false)">
+    <copy todir="${build.webapp}/lenya/modules/jackrabbit/repository">
+      <fileset dir="src/modules/jackrabbit/repository"/>
+    </copy>
+  </target>
+  
   <target name="prepare-module-test">
     <xslt basedir="${build.dir}/temp"
       includes="*.xconf"
@@ -97,11 +104,13 @@
       file="${build.test}/org/apache/lenya/cms/LenyaTestCase.xtest"/>
   </target>
   
-  <target name="modules.test" depends="patch-modules-test">
+  <target name="modules.test" depends="copy-jackrabbit-module, patch-modules-test">
     <ant antfile="${build.dir}/temp/modules-build.xml"
       inheritall="true"
-      inheritrefs="true"
-      target="test-modules"/>
+      inheritrefs="true">
+      <target name="test-module-org.apache.lenya.modules.export"/>
+      <target name="test-modules"/>
+    </ant>
   </target>
   
   <target name="patch-modules-test" depends="tests.prepare, prepare-module-test">
