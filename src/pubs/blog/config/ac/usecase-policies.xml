@@ -25,4 +25,5 @@
   <usecase id="workflow.publish"><role id="edit" method="grant"/></usecase>
   <usecase id="ac.logout"><role id="edit" method="grant"/></usecase>
   <usecase id="admin.users"><role id="edit" method="grant"/></usecase>
+  <usecase id="admin.secases"><role id="edit" method="grant"/></usecase>
 </usecases>

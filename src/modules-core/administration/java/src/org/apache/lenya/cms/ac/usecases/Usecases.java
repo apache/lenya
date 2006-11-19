@@ -98,7 +98,8 @@ public class Usecases extends AccessControlUsecase {
         for (int u = 0; u < usecases.length; u++) {
             for (int r = 0; r < roleNames.length; r++) {
                 String key = usecases[u] + ":" + roleNames[r];
-                boolean value = getParameterAsBoolean(key, false);
+                String stringValue = getBooleanCheckboxParameter(key);
+                boolean value = Boolean.valueOf(stringValue).booleanValue();
                 Role role = getAccessController().getAccreditableManager().getRoleManager()
                         .getRole(roleNames[r]);
                 getUsecaseAuthorizer().setPermission(usecases[u], pub, role, value);

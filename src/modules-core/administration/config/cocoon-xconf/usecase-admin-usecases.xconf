@@ -27,6 +27,7 @@
       <view template="modules/administration/usecases/usecases.jx" menu="true">
         <tab group="admin" name="usecases"/>
       </view>
+      <exit usecase="admin.usecases"/>
     </component-instance>
     
   </xconf>
