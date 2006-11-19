@@ -66,11 +66,11 @@
     
     <menus>
       <menu i18n:attr="name" name="File">
-        <block>
+        <block areas="authoring site">
           <item uc:usecase="sitemanagement.createLanguage" href="?"><i18n:text>New Language Version</i18n:text></item>
           <item uc:usecase="sitemanagement.deleteLanguage" href="?"><i18n:text>Remove Language Version</i18n:text></item>
         </block>
-        <block>
+        <block areas="authoring site admin">
           <item uc:usecase="admin.changePassword" href="?"><i18n:text>Change Password</i18n:text></item>
           <item uc:usecase="ac.logout" href="?"><i18n:text>Logout</i18n:text></item>
         </block>
@@ -78,19 +78,19 @@
       
       <menu i18n:attr="name" name="Edit">
         
-        <block info="false">
-          <item wf:event="edit" uc:usecase="tab.meta"><xsp:attribute name="href"><xsp-request:get-context-path/>/<input:get-attribute module="page-envelope" as="string" name="publication-id"/>/<input:get-attribute module="page-envelope" as="string" name="area"/><input:get-attribute module="page-envelope" as="string" name="document-url"/>?</xsp:attribute><i18n:text>Edit Metadata</i18n:text></item>
+        <block areas="authoring">
+          <item wf:event="edit" uc:usecase="tab.meta" href="?"><i18n:text>Edit Metadata</i18n:text></item>
           <item wf:event="edit" uc:usecase="sitemanagement.changeLabel" href="?"><i18n:text>Edit Navigation Title</i18n:text></item>
         </block>
 
-        <block authoring="false">
+        <block areas="site">
           <item uc:usecase="sitemanagement.cut" href="?"><i18n:text>Cut</i18n:text></item>
           <item uc:usecase="sitemanagement.copy" href="?"><i18n:text>Copy</i18n:text></item>
           <item uc:usecase="sitemanagement.paste" href="?"><i18n:text>Paste</i18n:text></item>
         </block>
         
         
-      <block authoring="false">
+      <block areas="site">
         <item uc:usecase="sitemanagement.changeNodeID" href="?"><i18n:text>Rename URL</i18n:text></item>
         <item uc:usecase="sitemanagement.changeLabel" href="?"><i18n:text>Edit Navigation Title</i18n:text></item>
         <item uc:usecase="sitemanagement.changeVisibility" href="?">
@@ -98,11 +98,11 @@
           <i18n:text>Visible in Navigation</i18n:text>
         </item>
       </block>
-      <block authoring="false">
+      <block areas="site">
         <item uc:usecase="sitetree.nudge" href="?direction=up"><i18n:text>Move Up</i18n:text></item>
         <item uc:usecase="sitetree.nudge" href="?direction=down"><i18n:text>Move Down</i18n:text></item>
       </block>
-      <block authoring="false">
+      <block areas="site">
         <item uc:usecase="sitemanagement.delete" href="?"><i18n:text>Delete</i18n:text></item>
         <item uc:usecase="sitemanagement.archive" href="?"><i18n:text>Archive</i18n:text></item>
         <item uc:usecase="sitemanagement.restore" href="?"><i18n:text>Restore</i18n:text></item>
@@ -111,7 +111,7 @@
       </menu>
       
       <menu i18n:attr="name" name="Workflow">
-        <block>
+        <block areas="authoring site">
           <item uc:usecase="workflow.submit" wf:event="submit" href="?"><i18n:text>Submit</i18n:text></item>
           <item uc:usecase="workflow.reject" wf:event="reject" href="?"><i18n:text>Reject</i18n:text></item>
           <item uc:usecase="workflow.publish" wf:event="publish" href="?"><i18n:text>Publish</i18n:text></item>
@@ -120,11 +120,11 @@
       </menu>
 
       <menu i18n:attr="name" name="Help">
-        <block>
-        <item href="http://lenya.apache.org/docs/index.html"><i18n:text>Documentation</i18n:text></item>
-        <item href="http://wiki.apache.org/lenya/"><i18n:text>Wiki</i18n:text></item>
+        <block areas="authoring site admin">
+          <item href="http://lenya.apache.org/docs/index.html"><i18n:text>Documentation</i18n:text></item>
+          <item href="http://wiki.apache.org/lenya/"><i18n:text>Wiki</i18n:text></item>
         </block>
-        <block>
+        <block areas="authoring site admin">
           <item><xsp:attribute name="href"><xsp-request:get-context-path/>/index.html</xsp:attribute><i18n:text>Apache Lenya Homepage</i18n:text></item>
           <item><xsp:attribute name="href"><xsp-request:get-context-path/>/about.html</xsp:attribute><i18n:text>About Apache Lenya</i18n:text></item>
         </block>

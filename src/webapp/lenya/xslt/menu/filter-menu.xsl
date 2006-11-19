@@ -37,9 +37,13 @@
     </xsl:choose>
   </xsl:variable>
 
-  <xsl:template match="menu:block[(@info = 'false' and $currentTab = 'site') or (@*[local-name() = $currentTab] = 'false' and $currentTab != 'site')]"/>
-
-  <xsl:template match="menu:item[(@info = 'false' and $currentTab = 'site') or (@*[local-name() = $currentTab] = 'false' and $currentTab != 'site')]"/>
+  <xsl:template match="menu:block">
+    <xsl:if test="not(@areas) or contains(@areas, $currentTab)">
+      <xsl:copy>
+        <xsl:apply-templates select="@*|node()"/>
+      </xsl:copy>
+    </xsl:if>
+  </xsl:template>
 
   <xsl:template match="@*|node()">
     <xsl:copy>

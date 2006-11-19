@@ -63,21 +63,15 @@
         <!-- ADMIN TAB -->
         <xsl:if test="not(menu:tabs/menu:tab[@label = 'admin']/@show = 'false')">
           <xsl:call-template name="area-tab">
-            <xsl:with-param name="tab-area">admin</xsl:with-param>
+            <xsl:with-param name="tab-area">authoring</xsl:with-param>
             <xsl:with-param name="tabName">admin</xsl:with-param>
+            <xsl:with-param name="queryString">?lenya.usecase=admin.users</xsl:with-param>
           </xsl:call-template>
         </xsl:if>
           
-        <xsl:variable name="info-area">
-          <xsl:choose>
-            <xsl:when test="$area = 'admin'">authoring</xsl:when>
-            <xsl:otherwise><xsl:value-of select="$area"/></xsl:otherwise>
-          </xsl:choose>
-        </xsl:variable>
-          
         <xsl:if test="not(menu:tabs/menu:tab[@label = 'info']/@show = 'false')">
           <xsl:call-template name="area-tab">
-            <xsl:with-param name="tab-area" select="$info-area"/>
+            <xsl:with-param name="tab-area">authoring</xsl:with-param>
             <xsl:with-param name="queryString">?lenya.usecase=tab.overview</xsl:with-param>
             <xsl:with-param name="tabName">site</xsl:with-param>
           </xsl:call-template>
