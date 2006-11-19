@@ -17,6 +17,9 @@
  */
 package org.apache.lenya.cms.usecase;
 
+import java.util.SortedSet;
+import java.util.TreeSet;
+
 import org.apache.avalon.framework.activity.Disposable;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
@@ -56,7 +59,13 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
      */
     public void service(ServiceManager _manager) throws ServiceException {
         this.manager = _manager;
-        this.selector = (ServiceSelector) _manager.lookup(Usecase.ROLE + "Selector");
+    }
+
+    protected ServiceSelector getSelector() throws ServiceException {
+        if (this.selector == null) {
+            this.selector = (ServiceSelector) this.manager.lookup(Usecase.ROLE + "Selector");
+        }
+        return this.selector;
     }
 
     /**
@@ -66,7 +75,7 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
         if (usecase == null) {
             throw new IllegalArgumentException("The usecase to release must not be null.");
         }
-        this.selector.release(usecase);
+        getSelector().release(usecase);
 
     }
 
@@ -93,9 +102,9 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
         if (publication != null) {
             PublicationTemplateManager templateManager = null;
             try {
-                templateManager = (PublicationTemplateManager) this.manager.lookup(PublicationTemplateManager.ROLE);
-                newName = (String) templateManager.getSelectableHint(publication,
-                        this.selector,
+                templateManager = (PublicationTemplateManager) this.manager
+                        .lookup(PublicationTemplateManager.ROLE);
+                newName = (String) templateManager.getSelectableHint(publication, getSelector(),
                         name);
             } finally {
                 if (templateManager != null) {
@@ -142,11 +151,12 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.UsecaseResolver#resolve(java.lang.String, java.lang.String)
+     * @see org.apache.lenya.cms.usecase.UsecaseResolver#resolve(java.lang.String,
+     *      java.lang.String)
      */
     public Usecase resolve(String webappUrl, String name) throws ServiceException {
         Object usecaseName = getUsecaseName(webappUrl, name);
-        return (Usecase) this.selector.select(usecaseName);
+        return (Usecase) getSelector().select(usecaseName);
     }
 
     /**
@@ -155,7 +165,26 @@ public class UsecaseResolverImpl extends AbstractLogEnabled implements UsecaseRe
      */
     public boolean isRegistered(String webappUrl, String name) throws ServiceException {
         String usecaseName = getUsecaseName(webappUrl, name);
-        return this.selector.isSelectable(usecaseName);
+        return getSelector().isSelectable(usecaseName);
+    }
+
+    /**
+     * @return The names of all registered usecases in alphabetical order.
+     */
+    public String[] getUsecaseNames() {
+        if (this.usecaseNames == null) {
+            throw new IllegalStateException("No usecase registered!");
+        }
+        return (String[]) this.usecaseNames.toArray(new String[this.usecaseNames.size()]);
+    }
+
+    private SortedSet usecaseNames;
+    
+    public void register(String usecaseName) {
+        if (this.usecaseNames == null) {
+            this.usecaseNames = new TreeSet();
+        }
+        this.usecaseNames.add(usecaseName);
     }
 
 }

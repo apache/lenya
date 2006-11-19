@@ -17,6 +17,8 @@
  */
 package org.apache.lenya.cms.usecase;
 
+import java.util.TreeSet;
+
 import org.apache.avalon.framework.service.ServiceException;
 
 /**
@@ -56,4 +58,14 @@ public interface UsecaseResolver {
      */
     void release(Usecase usecase) throws ServiceException;
     
+    /**
+     * @return The names of all registered usecases in alphabetical order.
+     */
+    String[] getUsecaseNames();
+
+    /**
+     * @param usecaseName The usecase to register.
+     */
+    void register(String usecaseName);
+
 }

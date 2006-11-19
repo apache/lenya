@@ -38,6 +38,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Role;
+import org.apache.lenya.ac.cache.BuildException;
 import org.apache.lenya.ac.cache.CachingException;
 import org.apache.lenya.ac.cache.SourceCache;
 import org.apache.lenya.cms.ac.PolicyUtil;
@@ -155,13 +156,7 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
         getLogger().debug("Authorizing usecase [" + usecase + "]");
         boolean authorized = false;
 
-        UsecaseRolesBuilder builder = new UsecaseRolesBuilder();
-        UsecaseRoles usecaseRoles;
-        try {
-            usecaseRoles = (UsecaseRoles) getCache().get(_configurationUri, builder);
-        } catch (CachingException e) {
-            throw new AccessControlException(e);
-        }
+        UsecaseRoles usecaseRoles = getUsecaseRoles(_configurationUri);
 
         if (usecaseRoles == null) {
             throw new AccessControlException("Usecase policies configuration not found at ["
@@ -186,6 +181,17 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
             getLogger().debug("No roles for usecase [" + usecase + "] found. Denying access.");
         }
         return authorized;
+    }
+
+    protected UsecaseRoles getUsecaseRoles(String _configurationUri) throws AccessControlException {
+        UsecaseRolesBuilder builder = new UsecaseRolesBuilder();
+        UsecaseRoles usecaseRoles;
+        try {
+            usecaseRoles = (UsecaseRoles) getCache().get(_configurationUri, builder);
+        } catch (CachingException e) {
+            throw new AccessControlException(e);
+        }
+        return usecaseRoles;
     }
 
     private ServiceManager manager;
@@ -267,6 +273,40 @@ public class UsecaseAuthorizerImpl extends AbstractLogEnabled implements Usecase
             }
         } else {
             throw new AccessControlException("No such file or directory: " + configurationFile);
+        }
+    }
+
+    public boolean isPermitted(String usecase, Publication publication, Role role)
+            throws AccessControlException {
+        String configUri = getConfigurationURI(publication);
+        UsecaseRoles usecaseRoles = getUsecaseRoles(configUri);
+        String[] roles = usecaseRoles.getRoles(usecase);
+        return Arrays.asList(roles).contains(role.getId());
+    }
+
+    public void setPermission(String usecase, Publication publication, Role role, boolean granted)
+            throws AccessControlException {
+        String configUri = getConfigurationURI(publication);
+        if (configUri.startsWith("aggregate-")) {
+            configUri = configUri.substring("aggregate-".length());
+        }
+        UsecaseRoles usecaseRoles = getUsecaseRoles(configUri);
+        List roles = Arrays.asList(usecaseRoles.getRoles(usecase));
+        String roleId = role.getId();
+        if (granted) {
+            if (!roles.contains(roleId)) {
+                usecaseRoles.addRole(usecase, roleId);
+            }
+        } else {
+            if (roles.contains(roleId)) {
+                usecaseRoles.removeRole(usecase, roleId);
+            }
+        }
+        UsecaseRolesBuilder builder = new UsecaseRolesBuilder();
+        try {
+            builder.save(usecaseRoles, configUri, this.manager);
+        } catch (BuildException e) {
+            throw new AccessControlException(e);
         }
     }
 

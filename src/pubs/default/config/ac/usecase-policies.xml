@@ -197,6 +197,9 @@
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
+  <usecase id="admin.usecases">
+    <role id="admin" method="grant"/>
+  </usecase>
   <usecase id="admin.addGroup">
     <role id="admin" method="grant"/>
   </usecase>

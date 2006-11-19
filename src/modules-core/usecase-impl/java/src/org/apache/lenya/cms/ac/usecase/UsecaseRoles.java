@@ -18,25 +18,28 @@
 
 package org.apache.lenya.cms.ac.usecase;
 
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Class to manage roles for a usecase.
- *
+ * 
  * @version $Id$
  */
 public class UsecaseRoles {
-    
+
     private Map usecaseToRoles = new HashMap();
-    
+
     /**
      * Ctor.
      */
     public UsecaseRoles() {
-	    // do nothing
+        // do nothing
     }
-    
+
     /**
      * Sets the roles for a usecase.
      * @param usecaseId The usecase ID.
@@ -45,10 +48,10 @@ public class UsecaseRoles {
     public void setRoles(String usecaseId, String[] roleIds) {
         this.usecaseToRoles.put(usecaseId, roleIds);
     }
-    
+
     /**
-     * Returns the roles for a usecase.
-     * If no roles are defined for this usecase, an array of size 0 is returned.
+     * Returns the roles for a usecase. If no roles are defined for this
+     * usecase, an array of size 0 is returned.
      * @param usecaseId The usecase ID.
      * @return A role array.
      */
@@ -61,7 +64,7 @@ public class UsecaseRoles {
         }
         return usecaseRoles;
     }
-    
+
     /**
      * Checks if a usecase has roles.
      * @param usecaseId The usecase ID.
@@ -69,6 +72,44 @@ public class UsecaseRoles {
      */
     public boolean hasRoles(String usecaseId) {
         return this.usecaseToRoles.containsKey(usecaseId);
+    }
+
+    /**
+     * @return All available usecase names.
+     */
+    public String[] getUsecaseNames() {
+        Set names = this.usecaseToRoles.keySet();
+        return (String[]) names.toArray(new String[names.size()]);
+    }
+
+    /**
+     * @param usecase The usecase name.
+     * @param role The role ID.
+     */
+    public void addRole(String usecase, String role) {
+        String[] usecaseRoles = getRoles(usecase);
+        Set newRoles = new HashSet();
+        newRoles.addAll(Arrays.asList(usecaseRoles));
+        newRoles.add(role);
+        this.usecaseToRoles.put(usecase, newRoles.toArray(new String[newRoles.size()]));
+    }
+
+    /**
+     * @param usecase The usecase.
+     * @param role The role.
+     */
+    public void removeRole(String usecase, String role) {
+        String[] usecaseRoles = getRoles(usecase);
+        Set newRoles = new HashSet();
+        newRoles.addAll(Arrays.asList(usecaseRoles));
+
+        if (!newRoles.contains(role)) {
+            throw new RuntimeException("The role [" + role + "] is not set for usecase [" + usecase
+                    + "]");
+        }
+
+        newRoles.remove(role);
+        this.usecaseToRoles.put(usecase, newRoles.toArray(new String[newRoles.size()]));
     }
 
 }

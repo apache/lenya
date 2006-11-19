@@ -22,9 +22,12 @@ import java.io.InputStream;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.cache.BuildException;
 import org.apache.lenya.ac.cache.InputStreamBuilder;
+import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.util.Assert;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
@@ -55,7 +58,8 @@ public class UsecaseRolesBuilder implements InputStreamBuilder {
         } catch (Exception e) {
             throw new BuildException(e);
         }
-        assert document.getDocumentElement().getLocalName().equals(USECASES_ELEMENT);
+        Assert.isTrue("Correct usecase policies XML", document.getDocumentElement().getLocalName()
+                .equals(USECASES_ELEMENT));
 
         NamespaceHelper helper = new NamespaceHelper(AccessController.NAMESPACE,
                 AccessController.DEFAULT_PREFIX, document);
@@ -64,7 +68,7 @@ public class UsecaseRolesBuilder implements InputStreamBuilder {
                 USECASE_ELEMENT);
         for (int i = 0; i < usecaseElements.length; i++) {
             String usecaseId = usecaseElements[i].getAttribute(ID_ATTRIBUTE);
-            
+
             // add roles only if not overridden by child publication
             if (!usecaseRoles.hasRoles(usecaseId)) {
                 Element[] roleElements = helper.getChildren(usecaseElements[i], ROLE_ELEMENT);
@@ -78,6 +82,35 @@ public class UsecaseRolesBuilder implements InputStreamBuilder {
             }
         }
         return usecaseRoles;
+    }
+
+    /**
+     * Saves the usecase roles.
+     * @param usecaseRoles The roles.
+     * @param sourceUri The source to save to.
+     * @param manager The service manager.
+     * @throws BuildException if an error occurs.
+     */
+    public void save(UsecaseRoles usecaseRoles, String sourceUri, ServiceManager manager) throws BuildException {
+        try {
+            NamespaceHelper helper = new NamespaceHelper(AccessController.NAMESPACE,
+                    AccessController.DEFAULT_PREFIX, USECASES_ELEMENT);
+            String[] usecaseNames = usecaseRoles.getUsecaseNames();
+            for (int u = 0; u < usecaseNames.length; u++) {
+                Element usecaseElement = helper.createElement(USECASE_ELEMENT);
+                helper.getDocument().getDocumentElement().appendChild(usecaseElement);
+                usecaseElement.setAttribute(ID_ATTRIBUTE, usecaseNames[u]);
+                String[] roles = usecaseRoles.getRoles(usecaseNames[u]);
+                for (int r = 0; r < roles.length; r++) {
+                    Element roleElement = helper.createElement(ROLE_ELEMENT);
+                    usecaseElement.appendChild(roleElement);
+                    roleElement.setAttribute(ID_ATTRIBUTE, roles[r]);
+                }
+            }
+            SourceUtil.writeDOM(helper.getDocument(), sourceUri, manager);
+        } catch (Exception e) {
+            throw new BuildException(e);
+        }
     }
 
 }

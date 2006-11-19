@@ -39,6 +39,27 @@ public interface UsecaseAuthorizer extends Authorizer {
      * @return A boolean value.
      * @throws AccessControlException when something went wrong.
      */
-    public boolean authorizeUsecase(String usecase, Role[] roles, Publication publication,
+    boolean authorizeUsecase(String usecase, Role[] roles, Publication publication,
             String requestURI) throws AccessControlException;
+
+    /**
+     * @param usecase The usecase.
+     * @param publication The publication.
+     * @param role The role.
+     * @param granted If the usecase shall be permitted.
+     * @throws AccessControlException if an error occurs.
+     */
+    void setPermission(String usecase, Publication publication, Role role, boolean granted)
+            throws AccessControlException;
+
+    /**
+     * @param usecase The usecase.
+     * @param publication The publication.
+     * @param role The role.
+     * @return A boolean value.
+     * @throws AccessControlException if an error occurs.
+     */
+    boolean isPermitted(String usecase, Publication publication, Role role)
+            throws AccessControlException;
+
 }

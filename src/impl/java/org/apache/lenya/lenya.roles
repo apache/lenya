@@ -109,7 +109,7 @@
         
   <role name="org.apache.lenya.cms.usecase.UsecaseSelector"
         shorthand="usecases"
-        default-class="org.apache.cocoon.components.ExtendedComponentSelector"/>
+        default-class="org.apache.lenya.cms.usecase.UsecaseSelector"/>
 
   <role name="org.apache.lenya.cms.usecase.UsecaseInvoker"
   	    shorthand="usecase-invoker"
