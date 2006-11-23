@@ -312,7 +312,7 @@
             <map:serialize status-code="404" />
           </map:when>
           <map:otherwise>
-            <map:redirect-to uri="{request:contextPath}{request:requestUri}?lenya.usecase=export.importExampleContent"/>
+            <map:redirect-to uri="{request:requestUri}?lenya.usecase=export.importExampleContent"/>
           </map:otherwise>
         </map:select>
       </map:match>

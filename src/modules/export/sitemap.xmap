@@ -27,7 +27,7 @@
         <map:transform src="xslt/dir2xhtml.xsl">
           <map:parameter name="path" value="{1}"/>
           <map:parameter name="continuationId" value="{2}"/>
-          <map:parameter name="uri" value="{request:contextPath}{request:requestUri}"/>
+          <map:parameter name="uri" value="{request:requestUri}"/>
         </map:transform>
         <map:serialize type="xml"/>
       </map:match>
