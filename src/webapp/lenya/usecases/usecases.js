@@ -101,6 +101,9 @@ function passRequestParameters(usecase) {
                 } else {
                     usecase.setParameter(name, values);
                 }
+            } else if (value == null) {
+                value = cocoon.request.getParameter(name);
+                usecase.setParameter(name, value);
             } else {
                 usecase.setPart(name, value);
             }
