@@ -475,7 +475,11 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      */
     public void setPart(String name, Part value) {
         if (!Part.class.isInstance(value)) {
-            throw new RuntimeException("[" + value.getClass() + "] [" + value
+            String className = "";
+            if (value != null) {
+                className = value.getClass().getName();
+            }
+            throw new RuntimeException("[" + name +"] = (" + className + ")  [" + value
                     + "] is not a part object. Maybe you have to enable uploads?");
         }
         setParameter(name, value);
