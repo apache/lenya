@@ -103,16 +103,8 @@
       </map:match>
 
     </map:pipeline>
+
     
-    <map:pipeline>
-    <!-- pattern="{rendertype}/{area}/{doctype}/{document-path}" -->
-      <!-- NOTE: rendertype seems to be 'edit' or 'view' -->
-      <map:match pattern="lenya-document/*/*/*/**.xml">
-        <map:mount uri-prefix="lenya-document/" src="{fallback:doctypes.xmap}" check-reload="true" reload-method="synchron"/>
-      </map:match>
-    </map:pipeline>
-
-
     <!-- This is the pipeline that builds the page. It aggregates all
     the navigational elements (breadcrumb, tabs, menu) with the actual
     content of the document. -->
