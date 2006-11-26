@@ -23,32 +23,61 @@ package org.apache.lenya.cms.rc;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import org.apache.avalon.framework.service.ServiceException;
+import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.repository.RepositoryException;
 
 /**
  * Revision Controller test
  */
 public class RevisionControllerTest extends AbstractAccessControlTest {
 
+    /**
+     * @see <a href="http://issues.apache.org/bugzilla/show_bug.cgi?id=41005">Bug 41005</a>
+     * @throws AccessControlException
+     * @throws RepositoryException
+     * @throws ServiceException
+     */
+    public void testCheckIn() throws AccessControlException, RepositoryException, ServiceException {
+        login("lenya");
+        
+        DocumentManager docMgr = null;
+        try {
+            docMgr = (DocumentManager) getManager().lookup(DocumentManager.ROLE);
+            Document source = getPublication("test").getArea("authoring").getSite().getNode("/links").getLink("en").getDocument();
+            Document target = docMgr.addVersion(source, "authoring", "de");
+            target.delete();
+        }
+        finally {
+            if (docMgr != null) {
+                getManager().release(docMgr);
+            }
+        }
+        
+        getFactory().getSession().commit();
+    }
+
     public void testRevisionController() {
-        
+
         String[] args = { "", "", "", "" };
-        
-        //       TestRunner.run(getSuite());
+
+        // TestRunner.run(getSuite());
 
         if (args.length != 4) {
-            System.out.println(
-                "Usage: "
-                    + RevisionController.class.getName()
-                    + " username(user who checkout) source(filename without the rootDirectory of the document to checkout) username(user who checkin) destination(filename without the rootDirectory of document to checkin)");
+            System.out
+                    .println("Usage: "
+                            + RevisionController.class.getName()
+                            + " username(user who checkout) source(filename without the rootDirectory of the document to checkout) username(user who checkin) destination(filename without the rootDirectory of document to checkin)");
 
             return;
         }
 
         Document doc1 = null;
         Document doc2 = null;
-        
+
         String identityS = args[0];
         String source = args[1];
         String identityD = args[2];
@@ -57,12 +86,14 @@ public class RevisionControllerTest extends AbstractAccessControlTest {
         try {
             rc.reservedCheckOut(doc1.getRepositoryNode(), identityS);
         } catch (FileNotFoundException e) // No such source file
-            {
+        {
             System.out.println(e.toString());
-        } catch (FileReservedCheckOutException e) // Source has been checked out already
-            {
+        } catch (FileReservedCheckOutException e) // Source has been checked
+                                                    // out already
+        {
             System.out.println(e.toString());
-            //	System.out.println(error(e.source + "is already check out by " + e.checkOutUsername + " since " +						e.checkOutDate));
+            // System.out.println(error(e.source + "is already check out by " +
+            // e.checkOutUsername + " since " + e.checkOutDate));
             return;
 
         } catch (IOException e) { // Cannot create rcml file
@@ -83,25 +114,4 @@ public class RevisionControllerTest extends AbstractAccessControlTest {
         }
     }
 
-    /*   protected static final Class[] classes = {
-       };
-    
-       /**
-        * Creates a test suite.
-        * @return a test suite.
-        */
-    /*    public static Test getSuite() {
-            TestSuite suite = new TestSuite();
-    
-            for (int i = 0; i < classes.length; i++) {
-                suite.addTestSuite(classes[i]);
-            }
-    
-            return suite;
-        }
-    */
-    /** @see junit.framework.TestCase#setUp() */
-    protected void setUp() throws Exception {
-        // do nothing
-    }
 }
