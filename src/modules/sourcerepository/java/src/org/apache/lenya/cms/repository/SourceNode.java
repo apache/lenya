@@ -168,7 +168,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         try {
             String userName = getUserId();
             boolean newVersion = getSession().isDirty(this);
-            getRevisionController().reservedCheckIn(this, userName, true, newVersion);
+            getRevisionController().reservedCheckIn(this, userName, exists(), newVersion);
         } catch (Exception e) {
             throw new RepositoryException(e);
         }
@@ -228,6 +228,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
                 throw new RuntimeException("Cannot delete source [" + this.sourceURI
                         + "]: not checked out!");
             } else {
+                this.data = null;
                 SourceUtil.delete(getRealSourceURI(), this.manager);
             }
         } catch (Exception e) {
