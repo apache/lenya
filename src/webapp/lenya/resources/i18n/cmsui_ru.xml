@@ -109,7 +109,8 @@
 <message key="Password">Пароль</message>
 <message key="Username">Имя пользователя</message>
 <message key="Authentication failed">Авторизация провалилась</message>
-<message key="try-user-lenya">Попробуйте логин {0} и пароль {1} (редактор), или логин {2} и пароль {3} (обозреватель)</message>
+<message key="try-user-lenya-alice">Попробуйте логин {0} и пароль {1} (редактор), или логин {2} и пароль {3} (обозреватель)</message>
+<message key="try-user-lenya">Попробуйте логин {0} и пароль {1}</message>
 <!-- logout screen -->
 <message key="logout-from-pub">Выйти из {0} Публикации</message>
 <message key="Your History">Ваша история</message>

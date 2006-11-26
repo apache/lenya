@@ -103,8 +103,9 @@
   <message key="Password">Password</message>
   <message key="Username">Nome do utilizador</message>
   <message key="Authentication failed">Erro na autenticação</message>
-  <message key="try-user-lenya">Tente com utilizador {0} e password {1} (editor) ou utilizador {2} e password {3} (revisor)</message>
-
+  <message key="try-user-lenya-alice">Tente com utilizador {0} e password {1} (editor) ou utilizador {2} e password {3} (revisor)</message>
+  <message key="try-user-lenya">Tente com utilizador {0} e password {1}</message>
+  
   <!-- logout screen -->
   <message key="logout-from-pub">Sair da publicação {0}</message>
   <message key="Your History">O seu historial</message>

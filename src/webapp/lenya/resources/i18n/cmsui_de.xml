@@ -108,7 +108,8 @@
   <message key="Password">Passwort</message>    
   <message key="Username">Benutzername</message>                
   <message key="Authentication failed">Anmeldung ist fehlgeschlagen</message>  
-  <message key="try-user-lenya">Versuchen Sie Benutzername {0} und Passwort {1} (Bearbeiter), oder Benutzername {2} und Passwort {3} (Prüfer)</message>
+  <message key="try-user-lenya-alice">Versuchen Sie Benutzername {0} und Passwort {1} (Bearbeiter), oder Benutzername {2} und Passwort {3} (Prüfer)</message>
+  <message key="try-user-lenya">Versuchen Sie Benutzername {0} und Passwort {1}</message>
   <message key="Access Denied">Zugriff verweigert</message>
   <message key="user-not-authorized">Der Benutzer '{0}' ist nicht berechtigt, auf die Seite '{1}' zuzugreifen.</message>
   <message key="have-another-account">Wenn Sie ein weiteres Benutzerkonto mit den entsprechenden Berechtigungen haben, geben Sie bitte Benutzernamen und Passwort unten ein.</message>

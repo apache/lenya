@@ -113,8 +113,9 @@
   <message key="Username">Gebruikersnaam</message>
 
   <message key="Authentication failed">Authenticatie mislukt</message>
-  <message key="try-user-lenya">Probeer gebruiker {0} met wachtwoord {1} (auteur), of gebruiker {2} en wachtwoord {3} (reviewer)</message>
-
+  <message key="try-user-lenya-alice">Probeer gebruiker {0} met wachtwoord {1} (auteur), of gebruiker {2} en wachtwoord {3} (reviewer)</message>
+  <message key="try-user-lenya">Probeer gebruiker {0} met wachtwoord {1}</message>
+  
   <!-- logout screen -->
   <message key="logout-from-pub">Afmelden voor de {0} Publicatie</message>
   <message key="Your History">Uw historie</message>

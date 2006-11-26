@@ -100,8 +100,8 @@
   <message key="Password">パスワード</message>
   <message key="Username">ユーザ名</message>
   <message key="Authentication failed">認証失敗</message>
-  <message key="try-user-lenya">ユーザ {0} のパスワード {1} （編集者）、あるいは、ユーザ {2} のパスワード {3} （レビュアー）を使ってください</message>
-
+  <message key="try-user-lenya-alice">ユーザ {0} のパスワード {1} （編集者）、あるいは、ユーザ {2} のパスワード {3} （レビュアー）を使ってください</message>
+  
   <!-- logout screen -->
   <message key="logout-from-pub">{0} パブリケーションからのログアウト</message>
   <message key="Your History">履歴</message>

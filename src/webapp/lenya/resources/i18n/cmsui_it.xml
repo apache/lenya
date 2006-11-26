@@ -93,8 +93,9 @@
 	<message key="Password">Password</message>
 	<message key="Username">Nome utente</message>
 	<message key="Authentication failed">Autenticazione fallita</message>
-	<message key="try-user-lenya">Prova utente {0} e password {1} (editore) o utente {2} e password {3} (revisore)</message>
-	<!-- logout screen -->
+	<message key="try-user-lenya-alice">Prova utente {0} e password {1} (editore) o utente {2} e password {3} (revisore)</message>
+  <message key="try-user-lenya">Prova utente {0} e password {1}</message>
+  <!-- logout screen -->
 	<message key="logout-from-pub">LOGOUT dalla Pubblicazione {0}</message>
 	<message key="Your History">Le tue modifiche</message>
 	<message key="Login to Authoring Area">Login nell'area Authoring</message>
