@@ -21,6 +21,7 @@ import java.io.File;
 
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Area;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
@@ -32,8 +33,14 @@ public class Import extends AbstractUsecase {
 
     protected void initParameters() {
         super.initParameters();
-        Area area = getArea();
-        String pubPath = area.getPublication().getDirectory().getAbsolutePath();
+        
+        Publication defaultPub;
+        try {
+            defaultPub = getDocumentFactory().getPublication("default");
+        } catch (PublicationException e) {
+            throw new RuntimeException(e);
+        }
+        String pubPath = defaultPub.getDirectory().getAbsolutePath();
         String path = pubPath.replace(File.separatorChar, '/') + "/example-content";
         setParameter("path", path);
     }
