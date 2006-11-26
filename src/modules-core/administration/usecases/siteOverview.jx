@@ -90,7 +90,7 @@
             <jx:forEach var="key" items="${usecase.getParameter('keys')}">
               <td>
                 <jx:choose>
-                  <jx:when test="${key.equals('keyDocumentId')}">
+                  <jx:when test="${key.equals('keyPath')}">
                     <a href="${request.getContextPath()}${entry.getValue('keyUrl')}">
                       <i18n:text><jx:out value="${entry.getValue(key)}"/></i18n:text>
                     </a>

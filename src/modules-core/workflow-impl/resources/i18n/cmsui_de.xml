@@ -16,13 +16,20 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmsui.xml 446564 2006-09-15 10:13:16Z andreas $ -->
+<!-- $Id: cmsui_de.xml 446564 2006-09-15 10:13:16Z andreas $ -->
 
-<catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+<catalogue xml:lang="de" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <message key="sitemanagement.delete">Delete</message>
-  <message key="sitemanagement.archive">Archive</message>
-  <message key="sitemanagement.restore">Restore</message>
-  <message key="cut-error-islive">The node cannot be cut when a language version is published.</message>
-
+  <message key="workflow.multiWorkflow">Workflow-Übersicht</message>
+  <message key="back-to-document">Zurück zum Dokument</message>
+  <message key="workflow.submit">Einreichen</message>
+  <message key="workflow.reject">Zurückweisen</message>
+  <message key="workflow.publish">Publizieren</message>
+  <message key="workflow.deactivate">Deaktivieren</message>
+  <message key="Path">Pfad</message>
+  <message key="Actions">Aktionen</message>
+  <message key="state-as-text">Zustand als Text</message>
+  <message key="state-as-columns">Zustand als Spalten</message>
+  
 </catalogue>
+

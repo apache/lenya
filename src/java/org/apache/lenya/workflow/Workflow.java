@@ -78,4 +78,9 @@ public interface Workflow {
      * @return The events.
      */
     String[] getEvents();
+
+    /**
+     * @return The states.
+     */
+    String[] getStates();
 }

@@ -20,6 +20,9 @@
 
 <catalogue xml:lang="de" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
+  <message key="sitemanagement.delete">Löschen</message>
+  <message key="sitemanagement.archive">Archivieren</message>
+  <message key="sitemanagement.restore">Wiederherstellen</message>
   <message key="cut-error-islive">Der Knoten kann nicht ausgeschnitten werden wenn eine Sprachversion publiziert ist.</message>
 
 </catalogue>

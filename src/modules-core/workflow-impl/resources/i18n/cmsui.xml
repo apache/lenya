@@ -20,9 +20,15 @@
 
 <catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <message key="sitemanagement.delete">Delete</message>
-  <message key="sitemanagement.archive">Archive</message>
-  <message key="sitemanagement.restore">Restore</message>
-  <message key="cut-error-islive">The node cannot be cut when a language version is published.</message>
-
+  <message key="workflow.multiWorkflow">Workflow-Übersicht</message>
+  <message key="back-to-document">Back to document</message>
+  <message key="workflow.submit">Submit</message>
+  <message key="workflow.reject">Reject</message>
+  <message key="workflow.publish">Publish</message>
+  <message key="workflow.deactivate">Deactivate</message>
+  <message key="Path">Path</message>
+  <message key="Actions">Actions</message>
+  <message key="state-as-text">State as text</message>
+  <message key="state-as-columns">State as columns</message>
+  
 </catalogue>

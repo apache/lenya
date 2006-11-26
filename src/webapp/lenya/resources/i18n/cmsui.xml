@@ -229,7 +229,7 @@
   <message key="keyWorkflowState">Workflow State</message>
   <message key="keyLanguage">Language</message>
   <message key="keyLastModified">Last Modified</message>
-  <message key="keyDocumentId">Document ID</message>
+  <message key="keyPath">Path</message>
   <message key="keyCheckedOut">Checked Out By</message>
   <message key="Update">Update</message>
   
@@ -313,6 +313,9 @@
   <message key="submit">submit</message>
   <message key="reject">reject</message>
   <message key="publish">publish</message>
+  <message key="delete">delete</message>
+  <message key="archive">archive</message>
+  <message key="restore">restore</message>
   <message key="error-workflow-document">The event {0} is not executable on
   document {1}</message>
   

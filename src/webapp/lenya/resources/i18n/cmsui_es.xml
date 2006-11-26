@@ -239,7 +239,7 @@
   <message key="Live">En producción</message>
   <message key="keyLanguage">Idioma</message>
   <message key="keyLastModified">Ultima modificación</message>
-  <message key="keyDocumentId">Identificativo de documento</message>
+  <message key="keyPath">Identificativo de documento</message>
   <message key="keyCheckedOut">Revisado por</message>
   <message key="Update">Actualiza</message>
 

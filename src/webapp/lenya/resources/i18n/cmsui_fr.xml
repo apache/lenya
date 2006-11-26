@@ -216,7 +216,7 @@
   <message key="keyWorkflowState">Statut</message>
   <message key="keyLanguage">Langue</message>
   <message key="keyLastModified">Dernière&#160;mise&#160;à&#160;jour</message>
-  <message key="keyDocumentId">ID du document</message>
+  <message key="keyPath">ID du document</message>
   <message key="keyCheckedOut">Extrait par</message>
   <message key="Update">Actualisation</message>
 

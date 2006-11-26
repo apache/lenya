@@ -60,7 +60,7 @@ public class SiteOverview extends AbstractUsecase {
     protected static final String FILTER_WORKFLOW_STATE_VALUES = "filterWorkflowStateValues";
     protected static final String FILTER_RESOURCE_TYPE_VALUES = "filterResourceTypeValues";
 
-    protected static final String KEY_DOCUMENT_ID = "keyDocumentId";
+    protected static final String KEY_PATH = "keyPath";
     protected static final String KEY_RESOURCE_TYPE = "keyResourceType";
     protected static final String KEY_WORKFLOW_STATE = "keyWorkflowState";
     protected static final String KEY_LANGUAGE = "keyLanguage";
@@ -69,7 +69,7 @@ public class SiteOverview extends AbstractUsecase {
     protected static final String KEY_CHECKED_OUT = "keyCheckedOut";
     protected static final String PARAMETER_KEYS = "keys";
 
-    protected static final String[] KEYS = { KEY_DOCUMENT_ID, KEY_LANGUAGE, KEY_RESOURCE_TYPE,
+    protected static final String[] KEYS = { KEY_PATH, KEY_LANGUAGE, KEY_RESOURCE_TYPE,
             KEY_WORKFLOW_STATE, KEY_LAST_MODIFIED, KEY_CHECKED_OUT };
 
     protected static final String FILTER_RESOURCE_TYPE = "filterResourceType";
@@ -96,7 +96,12 @@ public class SiteOverview extends AbstractUsecase {
             for (int i = 0; i < documents.length; i++) {
 
                 Entry entry = new Entry();
-                entry.setValue(KEY_DOCUMENT_ID, documents[i].getUUID());
+                if (documents[i].hasLink()) {
+                    entry.setValue(KEY_PATH, documents[i].getPath());
+                }
+                else {
+                    entry.setValue(KEY_PATH, "not in site structure");
+                }
                 entry.setValue(KEY_RESOURCE_TYPE, documents[i].getResourceType().getName());
                 entry.setValue(KEY_LANGUAGE, documents[i].getLanguage());
                 entry.setValue(KEY_URL, documents[i].getCanonicalWebappURL());

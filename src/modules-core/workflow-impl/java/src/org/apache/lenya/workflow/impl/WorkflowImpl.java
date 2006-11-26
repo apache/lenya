@@ -111,11 +111,7 @@ public class WorkflowImpl implements Workflow {
         return this.states.contains(state);
     }
 
-    /**
-     * Returns the states.
-     * @return An array of states.
-     */
-    protected String[] getStates() {
+    public String[] getStates() {
         return (String[]) this.states.toArray(new String[this.states.size()]);
     }
 
