@@ -188,7 +188,7 @@ NavTree.prototype.addLoadedSite = function(site)
 }
 
 NavTree.prototype.handleItemClick = function(item, event) {
-    if (!item.isprotected && item.root!=item) {
+    if (!item.isprotected) { // && item.root!=item) {
         var itemhref = item.href.replace(/^\//, "");
         href = encodeURI(CONTEXT_PREFIX+'/'+PUBLICATION_ID+"/"+item.area+"/"+itemhref+"?lenya.usecase=tab.overview"); 
         window.location = href;
@@ -238,8 +238,8 @@ NavTree.prototype.createItemHtml = function(item) {
     var line = this.createItemLine(item);
     td2.appendChild(line);
     
-    // make areas not clickable
-    if (item.depth>1) {
+    // make root node not clickable
+    if (item.depth > 0) {
       addEventHandler(line, 'click', this.handleItemClick, this, item);
     }
     addEventHandler(item.opensign, 'click', this.handleItemSignClick, 

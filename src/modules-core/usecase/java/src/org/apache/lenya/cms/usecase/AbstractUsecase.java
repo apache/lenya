@@ -72,6 +72,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     protected String SOURCE_URL = "private.sourceUrl";
+    protected String FACTORY = "private.factory";
 
     /**
      * @see org.apache.lenya.cms.usecase.Usecase#getSourceURL()
@@ -568,6 +569,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      */
     public void setSourceURL(String url) {
         setParameter(SOURCE_URL, url);
+        setParameter(FACTORY, getDocumentFactory());
     }
 
     private UsecaseView view;

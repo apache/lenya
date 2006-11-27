@@ -115,8 +115,10 @@ public class AccessControl extends AccessControlUsecase {
             setParameter(COMPLETE_AREA, info.getCompleteArea());
 
             DocumentFactory map = getDocumentFactory();
-            Document sourceDocument = map.getFromURL(getSourceURL());
-            setParameter(DOCUMENT, sourceDocument);
+            if (map.isDocument(getSourceURL())) {
+                Document sourceDocument = map.getFromURL(getSourceURL());
+                setParameter(DOCUMENT, sourceDocument);
+            }
 
             setParameter(SSL, Boolean.toString(isSSLProtected()));
             setParameter(ANCESTOR_SSL, Boolean.toString(isAncestorSSLProtected()));

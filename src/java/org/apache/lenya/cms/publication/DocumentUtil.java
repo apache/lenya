@@ -19,6 +19,7 @@ package org.apache.lenya.cms.publication;
 
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryUtil;
@@ -51,10 +52,10 @@ public class DocumentUtil {
         }
         return factory;
     }
-    
+
     /**
-     * Returns a document factory for the session which is attached to the request.
-     * If no session exists, it is created.
+     * Returns a document factory for the session which is attached to the
+     * request. If no session exists, it is created.
      * @param manager The service manager.
      * @param request The request.
      * @return A document factory.
@@ -70,7 +71,8 @@ public class DocumentUtil {
     }
 
     /**
-     * Returns the currently requested document or <code>null</code> if no document is requested.
+     * Returns the currently requested document or <code>null</code> if no
+     * document is requested.
      * @param manager The service manager.
      * @param request The request.
      * @return A document.

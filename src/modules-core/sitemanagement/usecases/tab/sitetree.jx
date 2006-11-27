@@ -24,16 +24,24 @@
   xmlns="http://www.w3.org/1999/xhtml"
   name="">
   
-  <jx:set var="document" value="${usecase.getParameter('document')}"/>
-  <jx:set var="area" value="${document.getArea()}"/>
-  <jx:set var="publicationId" value="${document.getPublication().getId()}"/>
+  <jx:set var="url" value="${usecase.getParameter('private.sourceUrl')}"/>
+  <jx:set var="steps" value="${url.split('/')}"/>
+  <jx:set var="area" value="${steps[2]}"/>
+  <jx:set var="publicationId" value="${steps[1]}"/>
+  <jx:set var="factory" value="${usecase.getParameter('private.factory')}"/>
+  <jx:set var="publication" value="${factory.getPublication(publicationId)}"/>
   
-  <div id="lenya-info-treecanvas">
+  <jx:set var="document" value="${usecase.getParameter('document')}"/>
+  <jx:set var="docExists" value="${java.lang.Boolean.valueOf(org.apache.lenya.cms.publication.Document.class.isInstance(document))}"/>
 
+  <div id="lenya-info-treecanvas">
     <div class="lenya-tabs">
-      <jx:forEach var="language" items="${document.getPublication().getLanguages()}">
+      <jx:forEach var="language" items="${publication.getLanguages()}">
         <jx:choose>
-          <jx:when test="${document.existsTranslation(language)}">
+          <jx:when test="${!docExists.booleanValue() &amp;&amp; language.equals(publication.getDefaultLanguage())}">
+            <a id="${language}" class="lenya-tablink-active"><jx:out value="${language}"/></a>
+          </jx:when>
+          <jx:when test="${document != null &amp;&amp; document.existsTranslation(language)}">
             <jx:set var="languageVersion"
               value="${document.getFactory().getLanguageVersion(document, language)}"/>
             <jx:set var="languageUrl"
@@ -61,8 +69,15 @@
         <script type="text/javascript">
           CONTEXT_PREFIX = '<jx:out value="${request.contextPath}"/>';
           PUBLICATION_ID = '<jx:out value="${publicationId}"/>';
-          CHOSEN_LANGUAGE = '<jx:out value="${document.getLanguage()}"/>';
-          DEFAULT_LANGUAGE = '<jx:out value="${document.getPublication().getDefaultLanguage()}"/>';
+          <jx:choose>
+            <jx:when test="${docExists.booleanValue()}">
+              CHOSEN_LANGUAGE = '<jx:out value="${document.getLanguage()}"/>';
+            </jx:when>
+            <jx:otherwise>
+              CHOSEN_LANGUAGE = '<jx:out value="${publication.getDefaultLanguage()}"/>';
+            </jx:otherwise>
+          </jx:choose>
+          DEFAULT_LANGUAGE = '<jx:out value="${publication.getDefaultLanguage()}"/>';
           IMAGE_PATH = '<jx:out value="${request.contextPath + '/lenya/images/tree/'}"/>';
           CUT_DOCUMENT_ID = '<jx:out value="${request.getSession().getAttribute('org.apache.lenya.cms.info.cutdocumentid')}"/>';
           ALL_AREAS = 'authoring,trash,archive';

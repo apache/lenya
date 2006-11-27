@@ -229,17 +229,11 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
      * @return A key.
      */
     public String getKey(String webappUrl) {
-        ServiceSelector selector = null;
-        DocumentBuilder builder = null;
+        DocumentLocator locator = getLocator(webappUrl);
+        String area = locator.getArea();
+        String uuid = null;
         try {
-            Publication publication = PublicationUtil.getPublicationFromUrl(this.manager, this,
-                    webappUrl);
-            selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
-            builder = (DocumentBuilder) selector.select(publication.getDocumentBuilderHint());
-            DocumentLocator locator = builder.getLocator(this, webappUrl);
-
-            String area = locator.getArea();
-            String uuid = null;
+            Publication publication = getPublication(locator.getPublicationId());
             if (SiteUtil.isDocument(this.manager, this, webappUrl)) {
                 uuid = publication.getArea(area).getSite().getNode(locator.getPath()).getUuid();
             } else {
@@ -247,6 +241,22 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
                 uuid = generator.nextUUID();
             }
             return getKey(publication, area, uuid, locator.getLanguage());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected DocumentLocator getLocator(String webappUrl) {
+        DocumentLocator locator;
+        ServiceSelector selector = null;
+        DocumentBuilder builder = null;
+        try {
+            Publication publication = PublicationUtil.getPublicationFromUrl(this.manager, this,
+                    webappUrl);
+            selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
+            builder = (DocumentBuilder) selector.select(publication.getDocumentBuilderHint());
+            locator = builder.getLocator(this, webappUrl);
+
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {
@@ -257,6 +267,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
                 this.manager.release(selector);
             }
         }
+        return locator;
     }
 
     /**
@@ -310,8 +321,8 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
     }
 
     /**
-     * Creates a new document object. Override this method to create specific document objects,
-     * e.g., for different document IDs.
+     * Creates a new document object. Override this method to create specific
+     * document objects, e.g., for different document IDs.
      * @param map The identity map.
      * @param identifier The identifier.
      * @param builder The document builder.

@@ -44,6 +44,10 @@ public class MultiWorkflow extends DocumentUsecase {
     protected void initParameters() {
         super.initParameters();
 
+        if (getSourceDocument() == null) {
+            return;
+        }
+        
         try {
             List preOrder = getPreOrder(getSourceDocument().getLink().getNode());
             List wrappers = new ArrayList();

@@ -75,10 +75,6 @@ public interface Publication {
      * <code>DELETE_PATH</code> The delete path
      */
     String DELETE_PATH = "delete";
-    /**
-     * <code>SEARCH_AREA_PREFIX</code> The search area prefix
-     */
-    String SEARCH_AREA_PREFIX = "search-";
 
     /**
      * Returns the publication ID.

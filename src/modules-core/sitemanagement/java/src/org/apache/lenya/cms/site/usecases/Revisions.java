@@ -36,28 +36,22 @@ public class Revisions extends SiteUsecase {
      */
     protected void initParameters() {
         super.initParameters();
-
-        try {
-            this.rcml = getSourceDocument().getRepositoryNode().getRcml();
-        } catch (final Exception e) {
-            throw new RuntimeException(e);
+        
+        if (getSourceDocument() != null) {
+            try {
+                this.rcml = getSourceDocument().getRepositoryNode().getRcml();
+            } catch (final Exception e) {
+                throw new RuntimeException(e);
+            }
+    
+            Vector entries;
+            try {
+                entries = this.rcml.getBackupEntries();
+            } catch (final Exception e) {
+                throw new RuntimeException(e);
+            }
+            setParameter("entries", entries);
         }
-
-        Vector entries;
-        try {
-            entries = this.rcml.getBackupEntries();
-        } catch (final Exception e) {
-            throw new RuntimeException(e);
-        }
-        setParameter("entries", entries);
-    }
-
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute() TODO add
-     *      rollback and view revision functionality
-     */
-    protected void doExecute() throws Exception {
-        super.doExecute();
     }
 
 }

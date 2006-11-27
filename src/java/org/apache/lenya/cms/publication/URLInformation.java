@@ -31,7 +31,7 @@ public class URLInformation {
     private String documentUrl = null;
 
     /**
-     * Returns the area (without the "info-" prefix).
+     * Returns the area (without the "webdav" prefix).
      * @return A string.
      */
     public String getArea() {
@@ -39,7 +39,7 @@ public class URLInformation {
     }
 
     /**
-     * Returns the complete area (including the "info-" prefix).
+     * Returns the complete area (including the "webdav" prefix).
      * @return A string.
      */
     public String getCompleteArea() {
@@ -87,9 +87,7 @@ public class URLInformation {
                     this.documentUrl = "";
                 }
 
-                if (this.completeArea.startsWith(Publication.SEARCH_AREA_PREFIX)) {
-                    this.area = this.completeArea.substring(Publication.SEARCH_AREA_PREFIX.length());
-                } else if (this.completeArea.equals(Publication.DAV_AREA)) {
+                if (this.completeArea.equals(Publication.DAV_AREA)) {
                     this.area = Publication.AUTHORING_AREA;
                 } else {
                     this.area = this.completeArea;

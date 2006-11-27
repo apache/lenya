@@ -25,7 +25,6 @@ import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
-import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.Workflow;
@@ -63,46 +62,48 @@ public class Overview extends SiteUsecase {
         WorkflowManager resolver = null;
         try {
             Document doc = getSourceDocument();
+            if (doc != null) {
+                // read parameters from Dublin Core meta-data
+                MetaData dc = doc.getMetaData(DublinCore.DC_NAMESPACE);
+                setParameter(DublinCore.ELEMENT_TITLE, dc.getFirstValue(DublinCore.ELEMENT_TITLE));
+                setParameter(DublinCore.ELEMENT_DESCRIPTION, dc
+                        .getFirstValue(DublinCore.ELEMENT_DESCRIPTION));
 
-            // read parameters from Dublin Core meta-data
-            MetaData dc = doc.getMetaData(DublinCore.DC_NAMESPACE);
-            setParameter(DublinCore.ELEMENT_TITLE, dc.getFirstValue(DublinCore.ELEMENT_TITLE));
-            setParameter(DublinCore.ELEMENT_DESCRIPTION,
-                    dc.getFirstValue(DublinCore.ELEMENT_DESCRIPTION));
+                // read parameters from document attributes
+                setParameter(LANGUAGES, doc.getLanguages());
+                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
+                String lastModified = format
+                        .format(new Date(getSourceDocument().getLastModified()));
+                setParameter(LASTMODIFIED, lastModified);
+                setParameter(RESOURCE_TYPE, doc.getResourceType());
+                boolean visible = doc.getLink().getNode().isVisible();
+                setParameter(VISIBLE_IN_NAVIGATION, Boolean.valueOf(visible));
 
-            // read parameters from document attributes
-            setParameter(LANGUAGES, doc.getLanguages());
-            SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
-            String lastModified = format.format(new Date(getSourceDocument().getLastModified()));
-            setParameter(LASTMODIFIED, lastModified);
-            setParameter(RESOURCE_TYPE, doc.getResourceType());
-            boolean visible = doc.getLink().getNode().isVisible();
-            setParameter(VISIBLE_IN_NAVIGATION, Boolean.valueOf(visible));
-
-            Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
-                    getSession(),
-                    getLogger(),
-                    doc);
-            resolver = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
-            if (resolver.hasWorkflow(workflowable)) {
-                Workflow workflow = resolver.getWorkflowSchema(workflowable);
-                String[] variableNames = workflow.getVariableNames();
-                Version latestVersion = workflowable.getLatestVersion();
-                Boolean isLive = null;
-                if (latestVersion != null) {
-                    setParameter(STATE, latestVersion.getState());
-                    if (Arrays.asList(variableNames).contains(WORKFLOW_VARIABLE_ISLIVE)) {
-                        isLive = Boolean.valueOf(latestVersion.getValue(WORKFLOW_VARIABLE_ISLIVE));
+                Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager,
+                        getSession(), getLogger(), doc);
+                resolver = (WorkflowManager) this.manager.lookup(WorkflowManager.ROLE);
+                if (resolver.hasWorkflow(workflowable)) {
+                    Workflow workflow = resolver.getWorkflowSchema(workflowable);
+                    String[] variableNames = workflow.getVariableNames();
+                    Version latestVersion = workflowable.getLatestVersion();
+                    Boolean isLive = null;
+                    if (latestVersion != null) {
+                        setParameter(STATE, latestVersion.getState());
+                        if (Arrays.asList(variableNames).contains(WORKFLOW_VARIABLE_ISLIVE)) {
+                            isLive = Boolean.valueOf(latestVersion
+                                    .getValue(WORKFLOW_VARIABLE_ISLIVE));
+                        }
+                    } else {
+                        setParameter(STATE, workflow.getInitialState());
+                        if (Arrays.asList(variableNames).contains(WORKFLOW_VARIABLE_ISLIVE)) {
+                            isLive = Boolean.valueOf(workflow
+                                    .getInitialValue(WORKFLOW_VARIABLE_ISLIVE));
+                        }
                     }
+                    setParameter(ISLIVE, isLive);
                 } else {
-                    setParameter(STATE, workflow.getInitialState());
-                    if (Arrays.asList(variableNames).contains(WORKFLOW_VARIABLE_ISLIVE)) {
-                        isLive = Boolean.valueOf(workflow.getInitialValue(WORKFLOW_VARIABLE_ISLIVE));
-                    }
+                    setParameter(STATE, "");
                 }
-                setParameter(ISLIVE, isLive);
-            } else {
-                setParameter(STATE, "");
             }
 
         } catch (final Exception e) {
@@ -116,31 +117,10 @@ public class Overview extends SiteUsecase {
     }
 
     /**
-     * Validates the request parameters.
-     * @throws UsecaseException if an error occurs.
+     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
      */
-    void validate() throws UsecaseException {
-        // do nothing
+    protected void doCheckPreconditions() throws Exception {
+        // don't complain if document is null
     }
 
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
-     */
-    protected void doCheckExecutionConditions() throws Exception {
-        validate();
-    }
-
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
-     */
-    protected void doExecute() throws Exception {
-        super.doExecute();
-    }
-
-    /**
-     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.Object)
-     */
-    public void setParameter(String name, Object value) {
-        super.setParameter(name, value);
-    }
 }

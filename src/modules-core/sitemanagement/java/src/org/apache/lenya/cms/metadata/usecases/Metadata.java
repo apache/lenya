@@ -42,13 +42,6 @@ import org.apache.lenya.cms.workflow.WorkflowUtil;
 public class Metadata extends SiteUsecase {
 
     /**
-     * Ctor.
-     */
-    public Metadata() {
-        super();
-    }
-
-    /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
     protected Node[] getNodesToLock() throws UsecaseException {
@@ -61,6 +54,10 @@ public class Metadata extends SiteUsecase {
      */
     protected void initParameters() {
         super.initParameters();
+        
+        if (getSourceDocument() == null) {
+            return;
+        }
 
         MetaDataRegistry registry = null;
         try {
@@ -113,7 +110,11 @@ public class Metadata extends SiteUsecase {
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
         Document doc = getSourceDocument();
-        if (!getSourceDocument().getArea().equals(Publication.AUTHORING_AREA)) {
+        if (doc == null) {
+            return;
+        }
+        
+        if (!doc.getArea().equals(Publication.AUTHORING_AREA)) {
             addErrorMessage("This usecase can only be invoked in the authoring area!");
         }
         if (!WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), doc, getEvent())) {

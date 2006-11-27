@@ -77,7 +77,7 @@ public class ChangeLabel extends DocumentUsecase {
         super.initParameters();
         Document document = getSourceDocument();
         try {
-            if (document.exists()) {
+            if (document != null && document.exists()) {
                 setParameter(DOCUMENT_ID, document.getUUID());
                 setParameter(LABEL, document.getLink().getLabel());
             }

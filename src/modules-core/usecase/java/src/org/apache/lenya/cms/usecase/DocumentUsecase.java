@@ -20,6 +20,7 @@ package org.apache.lenya.cms.usecase;
 
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentFactory;
 
 /**
  * <p>
@@ -59,8 +60,9 @@ public class DocumentUsecase extends AbstractUsecase {
      */
     public void setSourceURL(String url) {
         try {
-            if (getDocumentFactory().isDocument(url)) {
-                Document document = getDocumentFactory().getFromURL(url);
+            DocumentFactory factory = getDocumentFactory();
+            if (factory.isDocument(url)) {
+                Document document = factory.getFromURL(url);
                 setParameter(DOCUMENT, document);
             }
         } catch (Exception e) {
@@ -88,9 +90,9 @@ public class DocumentUsecase extends AbstractUsecase {
     }
 
     /**
-     * Returns the document to be redirected to after the usecase has been completed. If the
-     * parameter <code>success</code> is false, the source document is returned (override this
-     * method to change this behaviour).
+     * Returns the document to be redirected to after the usecase has been
+     * completed. If the parameter <code>success</code> is false, the source
+     * document is returned (override this method to change this behaviour).
      * @param success If the usecase was successfully completed.
      * @return A document.
      */
@@ -103,8 +105,8 @@ public class DocumentUsecase extends AbstractUsecase {
     }
 
     /**
-     * If {@link #setTargetDocument(Document)}was not called, the URL of the source document (
-     * {@link #getSourceDocument()}) is returned.
+     * If {@link #setTargetDocument(Document)}was not called, the URL of the
+     * source document ( {@link #getSourceDocument()}) is returned.
      * @see org.apache.lenya.cms.usecase.Usecase#getTargetURL(boolean)
      */
     public String getTargetURL(boolean success) {

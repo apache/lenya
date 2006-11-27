@@ -35,9 +35,11 @@ public class Cut extends DocumentUsecase {
         super.doCheckPreconditions();
         
         Document doc = getSourceDocument();
-        SiteStructure liveSite = doc.getPublication().getArea(Publication.LIVE_AREA).getSite();
-        if (liveSite.contains(doc.getPath())) {
-            addErrorMessage(MESSAGE_ISLIVE);
+        if (doc != null) {
+            SiteStructure liveSite = doc.getPublication().getArea(Publication.LIVE_AREA).getSite();
+            if (liveSite.contains(doc.getPath())) {
+                addErrorMessage(MESSAGE_ISLIVE);
+            }
         }
     }
 

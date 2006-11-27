@@ -38,11 +38,13 @@ public class Assets extends SiteUsecase {
     protected void initParameters() {
         super.initParameters();
 
-        try {
-            Document[] resourceDocs = getResourceDocuments();
-            setParameter("resourceDocuments", resourceDocs);
-        } catch (final Exception e) {
-            throw new RuntimeException(e);
+        if (getSourceDocument() != null) {
+            try {
+                Document[] resourceDocs = getResourceDocuments();
+                setParameter("resourceDocuments", resourceDocs);
+            } catch (final Exception e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 
@@ -51,8 +53,7 @@ public class Assets extends SiteUsecase {
         Document[] docs = getSourceDocument().area().getDocuments();
         SiteNode node = getSourceDocument().getLink().getNode();
         for (int i = 0; i < docs.length; i++) {
-            if (docs[i].hasLink()
-                    && !docs[i].getLink().getNode().isTopLevel()
+            if (docs[i].hasLink() && !docs[i].getLink().getNode().isTopLevel()
                     && docs[i].getLink().getNode().getParent().getPath().equals(node.getPath())
                     && docs[i].getResourceType().getName().equals("resource")) {
                 list.add(docs[i]);
