@@ -17,10 +17,17 @@
  */
 package org.apache.lenya.cms.repository;
 
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
+
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.ac.Identity;
+import org.apache.lenya.cms.observation.ObservationRegistry;
+import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.Lockable;
@@ -35,19 +42,36 @@ import org.apache.lenya.util.Assert;
  */
 public class SessionImpl extends AbstractLogEnabled implements Session {
 
+    private ServiceManager manager;
+    
     /**
      * Ctor.
      * @param map The identity map.
      * @param identity The identity.
+     * @param manager The service manager.
      * @param logger The logger.
      */
-    public SessionImpl(IdentityMap map, Identity identity, Logger logger) {
+    public SessionImpl(IdentityMap map, Identity identity, ServiceManager manager, Logger logger) {
         
         Assert.notNull("identity map", map);
         
+        this.manager = manager;
         this.unitOfWork = new UnitOfWorkImpl(map, identity, logger);
         this.unitOfWork.setIdentity(identity);
         ContainerUtil.enableLogging(this, logger);
+        
+        ObservationRegistry registry = null;
+        try {
+            registry = (ObservationRegistry) this.manager.lookup(ObservationRegistry.ROLE);
+            addListener(registry);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            if (registry != null) {
+                this.manager.release(registry);
+            }
+        }
     }
 
     public Identity getIdentity() {
@@ -59,7 +83,7 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
     /**
      * @return The unit of work.
      */
-    public UnitOfWork getUnitOfWork() {
+    protected UnitOfWork getUnitOfWork() {
         return this.unitOfWork;
     }
 
@@ -68,11 +92,41 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
      * @throws RepositoryException if an error occurs.
      */
     public void commit() throws RepositoryException {
+        
+        Set modifiedEvents = createEvents(this.modifiedObjects);
+        Set removedEvents = createEvents(this.removedObjects);
+        
         try {
             getUnitOfWork().commit();
         } catch (TransactionException e) {
             throw new RepositoryException(e);
         }
+        
+        for (Iterator i = modifiedEvents.iterator(); i.hasNext(); ) {
+            RepositoryEvent event = (RepositoryEvent) i.next();
+            for (Iterator l = this.listeners.iterator(); l.hasNext(); ) {
+                NodeListener listener = (NodeListener) l.next();
+                listener.nodeChanged(event);
+            }
+        }
+        for (Iterator i = removedEvents.iterator(); i.hasNext(); ) {
+            RepositoryEvent event = (RepositoryEvent) i.next();
+            for (Iterator l = this.listeners.iterator(); l.hasNext(); ) {
+                NodeListener listener = (NodeListener) l.next();
+                listener.nodeRemoved(event);
+            }
+        }
+    }
+
+    protected Set createEvents(Set transactionables) {
+        Set events = new HashSet();
+        for (Iterator i = transactionables.iterator(); i.hasNext(); ) {
+            Transactionable t = (Transactionable) i.next();
+            if (t instanceof Node) {
+                events.add(((Node) t).getEvent());
+            }
+        }
+        return events;
     }
 
     /**
@@ -97,17 +151,24 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
         return (RepositoryItem) ((UnitOfWorkImpl) getUnitOfWork()).getIdentityMap().get(wrapper,
                 key);
     }
+    
+    private Set newObjects = new HashSet();
+    private Set modifiedObjects = new HashSet();
+    private Set removedObjects = new HashSet();
 
     public void registerNew(Transactionable object) throws TransactionException {
         getUnitOfWork().registerNew(object);
+        this.newObjects.add(object);
     }
 
     public void registerDirty(Transactionable object) throws TransactionException {
         getUnitOfWork().registerDirty(object);
+        this.modifiedObjects.add(object);
     }
 
     public void registerRemoved(Transactionable object) throws TransactionException {
         getUnitOfWork().registerRemoved(object);
+        this.removedObjects.add(object);
     }
 
     public void setIdentity(Identity identity) {
@@ -124,6 +185,20 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
 
     public void removeLock(Lockable lockable) throws TransactionException {
         getUnitOfWork().removeLock(lockable);
+    }
+
+    private Set listeners = new HashSet();
+
+    public void addListener(NodeListener listener) throws RepositoryException {
+        if (this.listeners.contains(listener)) {
+            throw new RepositoryException("The listener [" + listener
+                    + "] is already registered for node [" + this + "]!");
+        }
+        this.listeners.add(listener);
+    }
+
+    public boolean isListenerRegistered(NodeListener listener) {
+        return this.listeners.contains(listener);
     }
 
 }

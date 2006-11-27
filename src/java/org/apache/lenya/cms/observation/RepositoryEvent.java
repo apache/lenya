@@ -17,52 +17,28 @@
  */
 package org.apache.lenya.cms.observation;
 
-import org.apache.lenya.cms.publication.ResourceType;
+import org.apache.lenya.cms.repository.Session;
 
 /**
- * Repository event.
+ * A repository event provides additional information if a document was added, changed, or removed.
  */
 public class RepositoryEvent {
 
-    private String pubId;
-    private String area;
-    private String uuid;
-    private String documentUrl;
-    private String language;
-    private ResourceType resourceType;
+    private Session session;
 
-    public RepositoryEvent(String pubId, String area, String uuid, String language,
-            ResourceType resourceType, String documentUrl) {
-        this.pubId = pubId;
-        this.area = area;
-        this.uuid = uuid;
-        this.language = language;
-        this.documentUrl = documentUrl;
-        this.resourceType = resourceType;
-    }
-
-    public String getArea() {
-        return area;
-    }
-
-    public String getDocumentUrl() {
-        return documentUrl;
-    }
-
-    public String getPublicationId() {
-        return pubId;
-    }
-
-    public String getUuid() {
-        return uuid;
-    }
-
-    public String getLanguage() {
-        return language;
+    /**
+     * Ctor.
+     * @param session The session.
+     */
+    public RepositoryEvent(Session session) {
+        this.session = session;
     }
     
-    public ResourceType getResourceType() {
-        return this.resourceType;
+    /**
+     * @return The session.
+     */
+    public Session getSession() {
+        return this.session;
     }
 
 }

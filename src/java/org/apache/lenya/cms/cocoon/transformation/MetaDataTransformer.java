@@ -20,8 +20,10 @@ import org.apache.lenya.cms.publication.PublicationException;
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.AttributesImpl;
-import org.xml.sax.helpers.DefaultHandler;;
 
+/**
+ * Meta data transformer.
+ */
 public class MetaDataTransformer extends AbstractSAXTransformer implements
         Disposable {
     /**

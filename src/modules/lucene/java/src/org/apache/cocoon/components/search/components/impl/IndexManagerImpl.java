@@ -120,6 +120,9 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
      */
     public static final String DATEFORMAT_ATTRIBUTE = "dateformat";
 
+    /**
+     * The name of the index configuration file.
+     */
     public static final String INDEX_CONF_FILE = "lucene_index.xconf";
 
     /**
@@ -152,9 +155,6 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
     }
 
     private String indexerRole = null;
-
-    public IndexManagerImpl() {
-    }
 
     /*
      * (non-Javadoc)
@@ -268,7 +268,6 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
     /**
      * Adds indexes from the given configuration file to the index manager.
      * @param confSource
-     * @throws ConfigurationException
      */
     public void addIndexes(Source confSource) {
         try {
@@ -373,6 +372,10 @@ public class IndexManagerImpl extends AbstractLogEnabled implements IndexManager
         }
     }
 
+    /**
+     * @return The servlet context path.
+     * @throws Exception if an error occurs.
+     */
     public String getServletContextPath() throws Exception {
         SourceResolver resolver = null;
         Source source = null;

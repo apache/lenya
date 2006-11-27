@@ -27,8 +27,8 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.components.search.IndexException;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.observation.DocumentEvent;
 import org.apache.lenya.cms.observation.ObservationRegistry;
-import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.publication.ResourceType;
 
 /**
@@ -37,7 +37,7 @@ import org.apache.lenya.cms.publication.ResourceType;
 public class IndexUpdaterImpl extends AbstractLogEnabled implements IndexUpdater, Startable,
         Serviceable, ThreadSafe {
 
-    public void documentChanged(RepositoryEvent event) {
+    public void documentChanged(DocumentEvent event) {
         try {
             index(event.getResourceType(),
                     event.getPublicationId(),
@@ -49,7 +49,7 @@ public class IndexUpdaterImpl extends AbstractLogEnabled implements IndexUpdater
         }
     }
 
-    public void documentRemoved(RepositoryEvent event) {
+    public void documentRemoved(DocumentEvent event) {
         try {
             delete(event.getResourceType(),
                     event.getPublicationId(),

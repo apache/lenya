@@ -41,6 +41,11 @@ public class ZipSource extends AbstractLogEnabled implements Source {
     Source archive;
     String documentName;
 
+    /**
+     * Ctor.
+     * @param archive The archive source.
+     * @param fileName The filename.
+     */
     public ZipSource(Source archive, String fileName) {
         this.archive = archive;
         this.documentName = fileName;

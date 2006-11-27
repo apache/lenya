@@ -195,7 +195,6 @@ public abstract class FieldDefinition {
      * 
      * @param typename
      *            String
-     * @throws Exception
      * @return int
      */
     static final public int stringTotype(String typename)

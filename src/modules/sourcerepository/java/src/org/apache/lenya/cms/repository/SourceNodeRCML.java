@@ -21,6 +21,7 @@
 package org.apache.lenya.cms.repository;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -28,6 +29,7 @@ import java.util.Vector;
 
 import javax.xml.parsers.ParserConfigurationException;
 
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.rc.CheckInEntry;
@@ -48,12 +50,11 @@ import org.w3c.dom.NodeList;
  */
 public class SourceNodeRCML implements RCML {
 
-
     private SourceNode node;
     private Document document = null;
     private boolean dirty = false;
     private int maximalNumberOfEntries = 5;
-    
+
     private ServiceManager manager;
 
     private static Map ELEMENTS = new HashMap();
@@ -101,16 +102,16 @@ public class SourceNodeRCML implements RCML {
             try {
                 this.document = SourceUtil.readDOM(getRcmlSourceUri(), this.manager);
             } catch (Exception e) {
-                throw new RevisionControlException("Could not read RC file ["
-                        + getRcmlSourceUri() + "]");
+                throw new RevisionControlException("Could not read RC file [" + getRcmlSourceUri()
+                        + "]");
             }
         }
     }
-    
+
     protected static final String RCML_EXTENSION = ".rcml";
-    
+
     protected String getRcmlSourceUri() {
-        return this.node.getRealSourceURI() + RCML_EXTENSION;
+        return this.node.getContentSource().getRealSourceUri() + RCML_EXTENSION;
     }
 
     /**
@@ -140,15 +141,16 @@ public class SourceNodeRCML implements RCML {
      */
     public void write() throws Exception {
         if (this.document == null) {
-            throw new IllegalStateException("The XML for RC source [" + getRcmlSourceUri() + "] is null!");
+            throw new IllegalStateException("The XML for RC source [" + getRcmlSourceUri()
+                    + "] is null!");
         }
         SourceUtil.writeDOM(this.document, getRcmlSourceUri(), this.manager);
         clearDirty();
     }
 
     /**
-     * Write a new entry for a check out or a check in the RCML-File made by the user with identity
-     * at time
+     * Write a new entry for a check out or a check in the RCML-File made by the
+     * user with identity at time
      * @param type co for a check out, ci for a check in
      * @param identity The identity of the user
      * @param time Time at which the check in/out is made
@@ -158,7 +160,7 @@ public class SourceNodeRCML implements RCML {
      */
     public void checkOutIn(short type, String identity, long time, boolean backup)
             throws IOException, Exception {
-        
+
         if (identity == null) {
             throw new IllegalArgumentException("The identity must not be null!");
         }
@@ -167,7 +169,6 @@ public class SourceNodeRCML implements RCML {
             throw new IllegalArgumentException("ERROR: " + this.getClass().getName()
                     + ".checkOutIn(): No such type");
         }
-
 
         Element identityElement = this.document.createElement("Identity");
         identityElement.appendChild(this.document.createTextNode(identity));
@@ -311,9 +312,7 @@ public class SourceNodeRCML implements RCML {
         for (int i = 0; i < entries.getLength(); i++) {
             Element elem = (Element) entries.item(i);
             String time = elem.getElementsByTagName("Time").item(0).getFirstChild().getNodeValue();
-            String identity = elem.getElementsByTagName("Identity")
-                    .item(0)
-                    .getFirstChild()
+            String identity = elem.getElementsByTagName("Identity").item(0).getFirstChild()
                     .getNodeValue();
 
             if (elem.getTagName().equals("CheckOut")) {
@@ -347,9 +346,7 @@ public class SourceNodeRCML implements RCML {
         for (int i = 0; i < entries.getLength(); i++) {
             Element elem = (Element) entries.item(i);
             String time = elem.getElementsByTagName("Time").item(0).getFirstChild().getNodeValue();
-            String identity = elem.getElementsByTagName("Identity")
-                    .item(0)
-                    .getFirstChild()
+            String identity = elem.getElementsByTagName("Identity").item(0).getFirstChild()
                     .getNodeValue();
 
             NodeList versionElements = elem.getElementsByTagName("Version");
@@ -364,34 +361,51 @@ public class SourceNodeRCML implements RCML {
 
         return RCMLEntries;
     }
-    
+
     public void makeBackup(long time) throws RevisionControlException {
-        String backupSourceUri = getBackupSourceUri(time);
+        makeBackup(this.node.getContentSource(), time);
+        makeBackup(this.node.getMetaSource(), time);
+    }
+
+    protected void makeBackup(SourceWrapper wrapper, long time) throws RevisionControlException {
+        String backupSourceUri = getBackupSourceUri(wrapper, time);
         try {
-            SourceUtil.copy(this.manager, this.node.getRealSourceURI(), backupSourceUri);
+            String uri = wrapper.getRealSourceUri();
+            if (SourceUtil.exists(uri, manager)) {
+                SourceUtil.copy(this.manager, uri, backupSourceUri);
+            }
         } catch (Exception e) {
             throw new RevisionControlException(e);
         }
     }
 
     public void restoreBackup(long time) throws RevisionControlException {
-        String backupSourceUri = getBackupSourceUri(time);
+        restoreBackup(this.node.getContentSource(), time);
+        restoreBackup(this.node.getMetaSource(), time);
+    }
+
+    protected void restoreBackup(SourceWrapper wrapper, long time) throws RevisionControlException {
+        String backupSourceUri = getBackupSourceUri(wrapper, time);
         try {
-            SourceUtil.copy(this.manager, backupSourceUri, this.node.getRealSourceURI());
+            SourceUtil.copy(this.manager, backupSourceUri, wrapper.getRealSourceUri());
         } catch (Exception e) {
             throw new RevisionControlException(e);
         }
     }
 
-    protected String getBackupSourceUri(long time) {
-        String backupSourceUri = this.node.getRealSourceURI() + "." + time + ".bak";
-        return backupSourceUri;
+    protected String getBackupSourceUri(SourceWrapper wrapper, long time) {
+        String uri = wrapper.getRealSourceUri();
+        return getBackupSourceUri(uri, time);
+    }
+
+    protected String getBackupSourceUri(String uri, long time) {
+        return uri + "." + time + ".bak";
     }
 
     /**
-     * Prune the list of entries and delete the corresponding backups. Limit the number of entries
-     * to the value maximalNumberOfEntries (2maxNumberOfRollbacks(configured)+1)
-     * @param backupDir The backup directory
+     * Prune the list of entries and delete the corresponding backups. Limit the
+     * number of entries to the value maximalNumberOfEntries
+     * (2maxNumberOfRollbacks(configured)+1)
      * @throws Exception if an error occurs
      */
     public void pruneEntries() throws Exception {
@@ -403,14 +417,21 @@ public class SourceNodeRCML implements RCML {
             Element current = (Element) entries.item(i);
 
             // remove the backup file associated with this entry
-            String time = current.getElementsByTagName("Time")
-                    .item(0)
-                    .getFirstChild()
+            String time = current.getElementsByTagName("Time").item(0).getFirstChild()
                     .getNodeValue();
-            SourceUtil.delete(getBackupSourceUri(Long.valueOf(time).longValue()), this.manager);
+            long timeLong = Long.valueOf(time).longValue();
+            deleteBackup(this.node.getContentSource(), timeLong);
+            deleteBackup(this.node.getMetaSource(), timeLong);
             // remove the entry from the list
             current.getParentNode().removeChild(current);
         }
+    }
+
+    protected void deleteBackup(SourceWrapper wrapper, long time) throws ServiceException,
+            MalformedURLException, IOException {
+        String uri = getBackupSourceUri(wrapper, time);
+        SourceUtil.delete(uri, this.manager);
+        SourceUtil.deleteEmptyCollections(uri, this.manager);
     }
 
     /**
@@ -421,7 +442,8 @@ public class SourceNodeRCML implements RCML {
     public org.w3c.dom.Document getDOMDocumentClone() throws Exception {
         Document documentClone = DocumentHelper.createDocument(null, "dummy", null);
         documentClone.removeChild(documentClone.getDocumentElement());
-        documentClone.appendChild(documentClone.importNode(this.document.getDocumentElement(), true));
+        documentClone.appendChild(documentClone
+                .importNode(this.document.getDocumentElement(), true));
 
         return documentClone;
     }
@@ -503,8 +525,7 @@ public class SourceNodeRCML implements RCML {
         try {
             SourceUtil.delete(getRcmlSourceUri(), this.manager);
             SourceUtil.deleteEmptyCollections(getRcmlSourceUri(), this.manager);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e);
         }
         return true;
@@ -512,7 +533,6 @@ public class SourceNodeRCML implements RCML {
 
     /**
      * delete the revisions
-     * @param node of the document
      * @throws RevisionControlException when somthing went wrong
      */
     public void deleteRevisions() throws RevisionControlException {
@@ -520,9 +540,8 @@ public class SourceNodeRCML implements RCML {
             String[] times = getBackupsTime();
             for (int i = 0; i < times.length; i++) {
                 long time = new Long(times[i]).longValue();
-                String backupSourceUri = getBackupSourceUri(time);
-                SourceUtil.delete(backupSourceUri, this.manager);
-                SourceUtil.deleteEmptyCollections(backupSourceUri, this.manager);
+                deleteBackup(this.node.getContentSource(), time);
+                deleteBackup(this.node.getMetaSource(), time);
             }
         } catch (Exception e) {
             throw new RevisionControlException(e);

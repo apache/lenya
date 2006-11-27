@@ -39,14 +39,6 @@ public class IdentityDocumentIdToPathMapper implements DocumentIdToPathMapper {
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getDirectory(org.apache.lenya.cms.publication.Publication,
-     *      java.lang.String, java.lang.String)
-     */
-    public File getDirectory(Publication publication, String area, String documentId) {
-        return getFile(publication, area, documentId, null).getParentFile();
-    }
-
-    /**
      * @see org.apache.lenya.cms.publication.DocumentIdToPathMapper#getPath(java.lang.String,
      *      java.lang.String)
      */

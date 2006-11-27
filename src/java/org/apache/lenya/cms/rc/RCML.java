@@ -117,7 +117,6 @@ public interface RCML {
     /**
      * Prune the list of entries and delete the corresponding backups. Limit the number of entries
      * to the value maximalNumberOfEntries (2maxNumberOfRollbacks(configured)+1)
-     * @param backupDir The backup directory
      * @throws Exception if an error occurs
      */
     public void pruneEntries() throws Exception;

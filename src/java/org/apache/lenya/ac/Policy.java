@@ -26,8 +26,19 @@ package org.apache.lenya.ac;
  */
 public interface Policy {
     
+    /**
+     * The identity was not matched in this policy.
+     */
     int RESULT_NOT_MATCHED = 0;
+    
+    /**
+     * The role is denied for the identity.
+     */
     int RESULT_DENIED = 1;
+    
+    /**
+     * The role is granted for the identity.
+     */
     int RESULT_GRANTED = 2;
     
     /**
@@ -54,8 +65,17 @@ public interface Policy {
      */
     boolean isEmpty() throws AccessControlException;
     
+    /**
+     * @param identity The identity.
+     * @return All credentials defined by this policy for this identity.
+     * @throws AccessControlException if an error occurs.
+     */
     Credential[] getCredentials(Identity identity) throws AccessControlException;
     
+    /**
+     * @return All credentials defined by this policy.
+     * @throws AccessControlException if an error occurs.
+     */
     Credential[] getCredentials() throws AccessControlException;
 
 }

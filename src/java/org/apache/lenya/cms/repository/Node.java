@@ -20,6 +20,7 @@ package org.apache.lenya.cms.repository;
 import java.io.OutputStream;
 import java.util.Collection;
 
+import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.rc.RCML;
 
 /**
@@ -122,18 +123,6 @@ public interface Node extends RepositoryItem, ContentHolder {
      */
     void registerRemoved() throws RepositoryException;
     
-    /**
-     * @param listener The listener to add.
-     * @throws RepositoryException if the listener is already registered.
-     */
-    void addListener(NodeListener listener) throws RepositoryException;
-    
-    /**
-     * Checks if a listener is registered.
-     * @param listener The listener.
-     * @return A boolean value.
-     */
-    boolean isListenerRegistered(NodeListener listener);
     
     /**
      * @return The RCML to use for this node.
@@ -144,4 +133,9 @@ public interface Node extends RepositoryItem, ContentHolder {
      * @return The revision history.
      */
     History getHistory();
+    
+    /**
+     * @return The event to use when this node is added/changed/removed.
+     */
+    RepositoryEvent getEvent();
 }

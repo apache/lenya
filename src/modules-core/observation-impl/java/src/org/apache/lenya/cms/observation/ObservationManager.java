@@ -28,29 +28,27 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.util.Assert;
 
 /**
- * Observation manager. Works as an observation registry and sends the notifications.
+ * Observation manager. Works as an observation registry and sends the
+ * notifications.
  */
 public class ObservationManager extends AbstractLogEnabled implements ObservationRegistry,
         ThreadSafe, Serviceable {
 
     private Map identifier2listeners = new HashMap();
-    private Map identifier2doc = new HashMap();
     private Set listeners = new HashSet();
 
     public synchronized void registerListener(RepositoryListener listener, Document doc)
             throws ObservationException {
-        Set listeners = getListeners(doc);
+        Set listeners = getListeners(doc.getIdentifier());
         if (listeners.contains(listener)) {
             throw new ObservationException("The listener [" + listener
                     + "] is already registered for the document [" + doc + "].");
@@ -58,12 +56,11 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
         listeners.add(listener);
     }
 
-    protected Set getListeners(Document doc) {
-        Set listeners = (Set) this.identifier2listeners.get(doc.getIdentifier());
+    protected Set getListeners(DocumentIdentifier doc) {
+        Set listeners = (Set) this.identifier2listeners.get(doc);
         if (listeners == null) {
             listeners = new HashSet();
-            this.identifier2listeners.put(doc.getIdentifier(), listeners);
-            this.identifier2doc.put(doc.getIdentifier(), doc);
+            this.identifier2listeners.put(doc, listeners);
         }
         return listeners;
     }
@@ -76,46 +73,24 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
         this.listeners.add(listener);
     }
 
-    public void documentChanged(Document doc) {
-        RepositoryEvent event = createEvent(doc);
-        Set allListeners = getAllListeners(doc);
-        Notifier notifier = new Notifier(allListeners, event) {
-            public void notify(RepositoryListener listener, RepositoryEvent event) {
-                listener.documentChanged(event);
-            }
-        };
-        new Thread(notifier).run();
-    }
+    protected DocumentIdentifier getIdentifier(DocumentEvent event) {
 
-    protected RepositoryEvent createEvent(Document doc) {
+        Assert.notNull("event", event);
+
+        DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, event
+                .getSession());
+        Publication pub;
         try {
-            String url = null;
-            if (doc.hasLink()) {
-                url = doc.getCanonicalDocumentURL();
-            }
-            return new RepositoryEvent(doc.getPublication().getId(),
-                    doc.getArea(),
-                    doc.getUUID(),
-                    doc.getLanguage(),
-                    doc.getResourceType(),
-                    url);
-        } catch (DocumentException e) {
+            pub = factory.getPublication(event.getPublicationId());
+        } catch (PublicationException e) {
             throw new RuntimeException(e);
         }
+        DocumentIdentifier id = new DocumentIdentifier(pub, event.getArea(), event.getUuid(), event
+                .getLanguage());
+        return id;
     }
 
-    public void documentRemoved(Document doc) {
-        RepositoryEvent event = createEvent(doc);
-        Set allListeners = getAllListeners(doc);
-        Notifier notifier = new Notifier(allListeners, event) {
-            public void notify(RepositoryListener listener, RepositoryEvent event) {
-                listener.documentRemoved(event);
-            }
-        };
-        new Thread(notifier).run();
-    }
-
-    protected Set getAllListeners(Document doc) {
+    protected Set getAllListeners(DocumentIdentifier doc) {
         Set allListeners = new HashSet();
         synchronized (this) {
             allListeners.addAll(this.listeners);
@@ -124,12 +99,12 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
         return allListeners;
     }
 
-    public abstract class Notifier implements Runnable {
+    protected abstract class Notifier implements Runnable {
 
         private Set listeners;
         private RepositoryEvent event;
 
-        public Notifier(Set listeners, RepositoryEvent event) {
+        protected Notifier(Set listeners, RepositoryEvent event) {
             this.listeners = listeners;
             this.event = event;
         }
@@ -141,70 +116,37 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
             }
         }
 
-        public abstract void notify(RepositoryListener listener, RepositoryEvent event);
+        protected abstract void notify(RepositoryListener listener, RepositoryEvent event);
     }
 
-    public void nodeChanged(Node node, Identity identity) {
-        Document doc = getDocument(node, identity);
-        if (doc != null) {
-            documentChanged(doc);
+    public void nodeChanged(RepositoryEvent event) {
+        Assert.notNull("event", event);
+        if (event instanceof DocumentEvent) {
+            final DocumentEvent docEvent = (DocumentEvent) event;
+            DocumentIdentifier id = getIdentifier(docEvent);
+            Set allListeners = getAllListeners(id);
+            Notifier notifier = new Notifier(allListeners, event) {
+                public void notify(RepositoryListener listener, RepositoryEvent event) {
+                    listener.documentChanged(docEvent);
+                }
+            };
+            new Thread(notifier).run();
         }
     }
 
-    public void nodeRemoved(Node node, Identity identity) {
-        Document doc = getDocument(node, identity);
-        if (doc != null) {
-            documentRemoved(doc);
+    public void nodeRemoved(RepositoryEvent event) {
+        Assert.notNull("event", event);
+        if (event instanceof DocumentEvent) {
+            final DocumentEvent docEvent = (DocumentEvent) event;
+            DocumentIdentifier id = getIdentifier(docEvent);
+            Set allListeners = getAllListeners(id);
+            Notifier notifier = new Notifier(allListeners, event) {
+                public void notify(RepositoryListener listener, RepositoryEvent event) {
+                    listener.documentRemoved(docEvent);
+                }
+            };
+            new Thread(notifier).run();
         }
-    }
-
-    protected Document getDocument(Node node, Identity identity) {
-
-        if (node.getSourceURI().endsWith(".xml")) {
-            return null;
-        }
-
-        Document doc = null;
-
-        final String sourceUri = node.getSourceURI();
-        if (!sourceUri.startsWith("lenya://")) {
-            throw new IllegalStateException("The source URI [" + sourceUri
-                    + "] doesn't start with lenya://");
-        }
-
-        String path = sourceUri.substring("lenya://lenya/pubs/".length());
-
-        String[] steps = path.split("/");
-        String pubId = steps[0];
-        String area = steps[2];
-
-        try {
-
-            Session session = RepositoryUtil.createSession(manager, identity);
-            DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
-            Publication pub = factory.getPublication(pubId);
-            String docPath = path.substring((pubId + "/content/" + area).length());
-
-            String uuid;
-            if (docPath.charAt(docPath.length() - 3) == '_') {
-                uuid = docPath.substring(0, docPath.length() - "/index_en".length());
-            } else {
-                uuid = docPath.substring(1, docPath.length() - "/en".length());
-            }
-
-            String language = docPath.substring(docPath.length() - "en".length());
-
-            doc = factory.get(pub, area, uuid, language);
-
-            if (doc == null) {
-                // this happens if the node was not a document node
-                this.getLogger().info("No document found for node [" + sourceUri + "]");
-            }
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return doc;
     }
 
     private ServiceManager manager;

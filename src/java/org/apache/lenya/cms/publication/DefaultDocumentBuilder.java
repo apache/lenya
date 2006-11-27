@@ -134,7 +134,8 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
 
     /**
      * Builds the canonical document URL.
-     * @param locator The document.
+     * @param factory The document factory.
+     * @param locator The document locator.
      * @return A string.
      */
     protected String buildCanonicalDocumentUrl(DocumentFactory factory, DocumentLocator locator) {
@@ -157,10 +158,6 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
         return url;
     }
 
-    /**
-     * @see org.apache.lenya.cms.publication.DocumentBuilder#buildCanonicalUrl(
-     *      org.apache.lenya.cms.publication.DocumentLocator)
-     */
     public String buildCanonicalUrl(DocumentFactory factory, DocumentLocator doc) {
 
         String documentUrl = buildCanonicalDocumentUrl(factory, doc);
@@ -168,9 +165,6 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
         return url;
     }
 
-    /**
-     * @see org.apache.lenya.cms.publication.DocumentBuilder#getLocator( java.lang.String)
-     */
     public DocumentLocator getLocator(DocumentFactory factory, String webappUrl)
             throws DocumentBuildException {
 

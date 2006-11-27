@@ -97,4 +97,5 @@ public interface UnitOfWork {
      * @throws TransactionException if no lock is placed on this transactionable.
      */
     void removeLock(Lockable lockable) throws TransactionException;
+
 }

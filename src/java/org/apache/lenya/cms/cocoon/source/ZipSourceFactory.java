@@ -47,6 +47,9 @@ public class ZipSourceFactory extends AbstractLogEnabled
     implements SourceFactory, ThreadSafe, Serviceable {
 
     protected ServiceManager manager;
+    /**
+     * The URL scheme, including the colon.
+     */
     public static String ZIP_SOURCE_SCHEME = "zip:";
 
     public Source getSource(String location, Map parameters)

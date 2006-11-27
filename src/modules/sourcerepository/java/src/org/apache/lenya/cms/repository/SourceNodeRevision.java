@@ -21,6 +21,9 @@ import java.io.InputStream;
 import java.util.Iterator;
 import java.util.Vector;
 
+import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
@@ -34,7 +37,7 @@ import org.apache.lenya.cms.rc.RCMLEntry;
 /**
  * Revision implementation.
  */
-public class SourceNodeRevision implements Revision {
+public class SourceNodeRevision extends AbstractLogEnabled implements Revision {
 
     private SourceNode node;
     private int number;
@@ -44,11 +47,13 @@ public class SourceNodeRevision implements Revision {
      * @param node The node.
      * @param number The revision number.
      * @param manager The service manager.
+     * @param logger The logger.
      */
-    public SourceNodeRevision(SourceNode node, int number, ServiceManager manager) {
+    public SourceNodeRevision(SourceNode node, int number, ServiceManager manager, Logger logger) {
         this.node = node;
         this.number = number;
         this.manager = manager;
+        ContainerUtil.enableLogging(this, logger);
     }
 
     private long time = -1;
@@ -105,7 +110,7 @@ public class SourceNodeRevision implements Revision {
 
     public String getSourceURI() {
         SourceNodeRCML rcml = (SourceNodeRCML) this.node.getRcml();
-        String sourceUri = rcml.getBackupSourceUri(getTime());
+        String sourceUri = rcml.getBackupSourceUri(this.node.getContentSource(), getTime());
         return sourceUri;
     }
 
@@ -127,7 +132,9 @@ public class SourceNodeRevision implements Revision {
     }
 
     protected String getMetaSourceUri() {
-        return this.node.getMetaSourceUri() + "." + getTime() + ".bak";
+        String realSourceUri = SourceWrapper.computeRealSourceUri(this.manager, this.node.getSession(), 
+                this.node.getSourceURI(), getLogger());
+        return realSourceUri + ".meta." + getTime() + ".bak";
     }
 
     public String[] getMetaDataNamespaceUris() throws MetaDataException {

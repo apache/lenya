@@ -32,5 +32,18 @@ public interface Credential {
      */
     Role getRole();
 
+    /**
+     * @return The method, one of {@link #GRANT} and {@link #DENY}.
+     */
     String getMethod();
+    
+    /**
+     * The "grant" method.
+     */
+    String GRANT = "grant";
+    
+    /**
+     * The "deny" method.
+     */
+    String DENY = "deny";
 }

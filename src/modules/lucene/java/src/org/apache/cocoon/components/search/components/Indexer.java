@@ -31,12 +31,10 @@ public interface Indexer {
     public static final String DOCUMENT_UID_FIELD = "uid";
 
     /**
-     * Index document (update or add if
-     * 
-     * @link #clearIndex() is called before)
+     * Index document (update or add if {@link #clearIndex()} is called before)
      * @param doc
      *            Document
-     * @throws IndeException
+     * @throws IndexException
      */
     public void index(Document doc) throws IndexException;
 
@@ -93,7 +91,6 @@ public interface Indexer {
      * 
      * @param directory
      *            the index directory
-     * @throws Exception
      */
     public void setIndex(Directory directory) throws IndexException;
 

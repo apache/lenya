@@ -11,8 +11,8 @@ import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.observation.DocumentEvent;
 import org.apache.lenya.cms.observation.ObservationRegistry;
-import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryListener;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
@@ -24,10 +24,10 @@ import org.apache.lenya.cms.publication.Publication;
 public class ContentJanitor extends AbstractLogEnabled implements Serviceable, Startable,
         ThreadSafe, RepositoryListener {
 
-    public void documentChanged(RepositoryEvent event) {
+    public void documentChanged(DocumentEvent event) {
     }
 
-    public void documentRemoved(RepositoryEvent event) {
+    public void documentRemoved(DocumentEvent event) {
         ContextUtility util = null;
         try {
             util = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);

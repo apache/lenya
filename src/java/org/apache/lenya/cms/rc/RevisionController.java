@@ -207,7 +207,9 @@ public class RevisionController {
             }
         }
         
-        rcml.makeBackup(time);
+        if (backup) {
+            rcml.makeBackup(time);
+        }
 
         if (newVersion) {
             rcml.checkOutIn(RCML.ci, identity, time, backup);

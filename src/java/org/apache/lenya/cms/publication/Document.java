@@ -113,6 +113,7 @@ public interface Document extends MetaDataOwner, RepositoryItem {
     /**
      * Returns the date of the last modification of this document.
      * @return A date denoting the date of the last modification.
+     * @throws DocumentException if an error occurs.
      */
     long getLastModified() throws DocumentException;
 

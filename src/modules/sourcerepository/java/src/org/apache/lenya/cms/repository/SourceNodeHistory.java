@@ -17,12 +17,15 @@
  */
 package org.apache.lenya.cms.repository;
 
+import org.apache.avalon.framework.container.ContainerUtil;
+import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 
 /**
  * Revision history implementation.
  */
-public class SourceNodeHistory implements History {
+public class SourceNodeHistory extends AbstractLogEnabled implements History {
 
     private SourceNode node;
     private ServiceManager manager;
@@ -31,10 +34,12 @@ public class SourceNodeHistory implements History {
      * Ctor.
      * @param node The node which the history belongs to.
      * @param manager The service manager.
+     * @param logger The logger.
      */
-    public SourceNodeHistory(SourceNode node, ServiceManager manager) {
+    public SourceNodeHistory(SourceNode node, ServiceManager manager, Logger logger) {
         this.node = node;
         this.manager = manager;
+        ContainerUtil.enableLogging(this, logger);
     }
 
     public Revision getLatestRevision() {
@@ -47,7 +52,7 @@ public class SourceNodeHistory implements History {
     }
 
     public Revision getRevision(int number) throws RepositoryException {
-        return new SourceNodeRevision(this.node, number, this.manager);
+        return new SourceNodeRevision(this.node, number, this.manager, getLogger());
     }
 
 }

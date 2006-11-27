@@ -62,8 +62,7 @@ public class DateFieldDefinition extends FieldDefinition {
      * 
      * @param dateString
      *            String date in string format
-     * @throws ParseException
-     * @return
+     * @return A field.
      * @see org.apache.lucene.document.Field
      * 
      */
@@ -83,8 +82,7 @@ public class DateFieldDefinition extends FieldDefinition {
      * 
      * @param date
      *            the date
-     * @throws ParseException
-     * @return
+     * @return A field.
      * @see org.apache.lucene.document.Field
      * 
      */

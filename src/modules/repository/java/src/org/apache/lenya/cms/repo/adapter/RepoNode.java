@@ -28,6 +28,7 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
+import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.repo.Translation;
 import org.apache.lenya.cms.repository.History;
@@ -208,6 +209,11 @@ public class RepoNode extends AbstractLogEnabled implements Node {
     }
 
     public History getHistory() {
+        return null;
+    }
+
+    public RepositoryEvent getEvent() {
+        // TODO Auto-generated method stub
         return null;
     }
 

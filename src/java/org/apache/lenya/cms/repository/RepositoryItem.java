@@ -17,6 +17,9 @@
  */
 package org.apache.lenya.cms.repository;
 
+/**
+ * Marker interface for repository items.
+ */
 public interface RepositoryItem {
     
 }

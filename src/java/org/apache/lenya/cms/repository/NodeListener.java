@@ -17,8 +17,7 @@
  */
 package org.apache.lenya.cms.repository;
 
-import org.apache.lenya.ac.Identity;
-
+import org.apache.lenya.cms.observation.RepositoryEvent;
 
 /**
  * Listener for nodes.
@@ -26,15 +25,13 @@ import org.apache.lenya.ac.Identity;
 public interface NodeListener {
 
     /**
-     * @param node The node which has changed.
-     * @param identity The identity who changed the node.
+     * @param event The event describing the change.
      */
-    void nodeChanged(Node node, Identity identity);
+    void nodeChanged(RepositoryEvent event);
     
     /**
-     * @param node The node which has been removed.
-     * @param identity The identity who removed the node.
+     * @param event The event describing the removal.
      */
-    void nodeRemoved(Node node, Identity identity);
+    void nodeRemoved(RepositoryEvent event);
     
 }

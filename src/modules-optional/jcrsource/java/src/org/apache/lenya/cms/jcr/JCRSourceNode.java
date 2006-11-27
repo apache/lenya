@@ -43,7 +43,7 @@ public class JCRSourceNode extends SourceNode {
     }
 
     /**
-     * @see org.apache.lenya.cms.repository.SourceNode#getRealSourceURI()
+     * @see org.apache.lenya.cms.repository.SourceNode#getRealSourceUri()
      */
     protected String getRealSourceURI() {
         String path = this.sourceUri.substring(LENYA_PROTOCOL.length());

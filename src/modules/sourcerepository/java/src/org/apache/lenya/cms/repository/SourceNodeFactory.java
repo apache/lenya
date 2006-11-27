@@ -22,7 +22,6 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.lenya.cms.observation.ObservationRegistry;
 
 /**
  * Factory to create source nodes.
@@ -53,18 +52,6 @@ public class SourceNodeFactory extends AbstractLogEnabled implements NodeFactory
             throw new RepositoryException("The session has not been set!");
         }
         Node node = new SourceNode(this.session, key, this.manager, getLogger());
-        ObservationRegistry registry = null;
-        try {
-            registry = (ObservationRegistry) this.manager.lookup(ObservationRegistry.ROLE);
-            node.addListener(registry);
-        } catch (ServiceException e) {
-            throw new RepositoryException(e);
-        }
-        finally {
-            if (registry != null) {
-                this.manager.release(registry);
-            }
-        }
         return node;
     }
 

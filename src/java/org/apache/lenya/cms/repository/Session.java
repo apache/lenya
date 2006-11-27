@@ -51,4 +51,17 @@ public interface Session extends UnitOfWork {
     RepositoryItem getRepositoryItem(RepositoryItemFactory factory, String key)
             throws RepositoryException;
 
+    /**
+     * @param listener The listener to add.
+     * @throws RepositoryException if the listener is already registered.
+     */
+    void addListener(NodeListener listener) throws RepositoryException;
+    
+    /**
+     * Checks if a listener is registered.
+     * @param listener The listener.
+     * @return A boolean value.
+     */
+    boolean isListenerRegistered(NodeListener listener);
+
 }

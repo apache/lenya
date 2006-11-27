@@ -31,8 +31,6 @@ public class CredentialImpl implements Credential {
     private Accreditable accreditable;
     private Role role;
     private String method = DENY;
-    protected static final String GRANT = "grant";
-    protected static final String DENY = "deny";
 
     /**
      * Creates a new credential object.
@@ -85,10 +83,16 @@ public class CredentialImpl implements Credential {
         return method;
     }
 
+    /**
+     * @return if the method is {@link Credential#GRANT}.
+     */
     public boolean isGranted() {
         return this.method.equals(GRANT);
     }
 
+    /**
+     * @return if the method is {@link Credential#DENY}.
+     */
     public boolean isDenied() {
         return this.method.equals(DENY);
     }

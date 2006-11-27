@@ -15,42 +15,25 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.observation;
+package org.apache.lenya.cms.repository;
+
+import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceManager;
 
 /**
- * Observation-specific exception.
+ * Content source wrapper.
  */
-public class ObservationException extends Exception {
-
-    private static final long serialVersionUID = -4025029670092614593L;
+public class ContentSourceWrapper extends SourceWrapper {
 
     /**
-     * 
+     * Ctor.
+     * @param node
+     * @param sourceURI
+     * @param manager
+     * @param logger
      */
-    public ObservationException() {
-        super();
-    }
-
-    /**
-     * @param arg0
-     * @param arg1
-     */
-    public ObservationException(String arg0, Throwable arg1) {
-        super(arg0, arg1);
-    }
-
-    /**
-     * @param arg0
-     */
-    public ObservationException(String arg0) {
-        super(arg0);
-    }
-
-    /**
-     * @param arg0
-     */
-    public ObservationException(Throwable arg0) {
-        super(arg0);
+    public ContentSourceWrapper(SourceNode node, String sourceURI, ServiceManager manager, Logger logger) {
+        super(node, sourceURI, manager, logger);
     }
 
 }

@@ -55,8 +55,8 @@ public interface PolicyManager extends Component {
     /**
      * Return all credentials for this url
      * 
+     * @param controller The Accreditable Manager
      * @param url The AC url
-     * @param manager The Accreditable Manager
      * @return An array of credentials
      * @throws AccessControlException when something went wrong.
      */

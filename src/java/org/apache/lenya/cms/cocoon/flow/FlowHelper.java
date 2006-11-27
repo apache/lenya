@@ -118,7 +118,7 @@ public interface FlowHelper {
      * @param backup Wether a new revision should be created.
      * @throws FileReservedCheckInException
      * @throws Exception
-     * @see RevisionController#reservedCheckIn(String, String, boolean, boolean)
+     * @see RevisionController#reservedCheckIn(org.apache.lenya.cms.repository.Node, String, boolean, boolean)
      */
     void reservedCheckIn(FOM_Cocoon cocoon, boolean backup) throws FileReservedCheckInException,
             Exception;

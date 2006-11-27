@@ -167,6 +167,7 @@ public class PageEnvelope {
 
     /**
      * Constructor.
+     * @param manager The service manager.
      */
     protected PageEnvelope(ServiceManager manager) {
         this.manager = manager;
@@ -174,6 +175,7 @@ public class PageEnvelope {
 
     /**
      * Creates a page envelope from an object model.
+     * @param manager The service manager.
      * @param map The identity map to use.
      * @param contextPath The servlet context prefix.
      * @param webappUrl The web application URL.

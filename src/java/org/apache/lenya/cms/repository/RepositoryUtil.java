@@ -40,8 +40,7 @@ public class RepositoryUtil {
             Identity identity = getIdentity(request);
             session = createSession(manager, identity);
             request.setAttribute(Session.class.getName(), session);
-        }
-        else if (session.getIdentity() == null) {
+        } else if (session.getIdentity() == null) {
             Identity identity = getIdentity(request);
             if (identity != null) {
                 session.setIdentity(identity);

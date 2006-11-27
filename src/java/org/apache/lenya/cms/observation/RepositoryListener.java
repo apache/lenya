@@ -26,12 +26,12 @@ public interface RepositoryListener {
      * Called when a document was changed.
      * @param event The event.
      */
-    void documentChanged(RepositoryEvent event);
+    void documentChanged(DocumentEvent event);
 
     /**
      * Called when a document was removed.
      * @param event The event.
      */
-    void documentRemoved(RepositoryEvent event);
+    void documentRemoved(DocumentEvent event);
     
 }

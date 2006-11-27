@@ -17,9 +17,7 @@
  */
 package org.apache.lenya.cms.site;
 
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 
 import org.apache.avalon.framework.service.ServiceException;
@@ -28,7 +26,6 @@ import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
-import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.Publication;
@@ -84,183 +81,6 @@ public class SiteUtil {
             }
         }
         return new NodeSet(manager, subsite);
-    }
-
-    /**
-     * Replace the target documents.
-     */
-    public static final int MODE_REPLACE = 0;
-
-    /**
-     * Cancel the command if one of the target document(s) exists.
-     */
-    public static final int MODE_CANCEL = 1;
-
-    /**
-     * Change the ID of a target document if it already exists.
-     */
-    public static final int MODE_CHANGE_ID = 2;
-
-    /**
-     * Returns a document set that represents the transfer of a sub-site to another location.
-     * 
-     * @param manager The service manager.
-     * @param source The source document.
-     * @param target The target document.
-     * @param mode The mode: {@link #MODE_REPLACE},{@link #MODE_CANCEL},{@link #MODE_CHANGE_ID}.
-     * @return A map which maps source to target documents.
-     * @throws SiteException if an error occurs.
-     */
-    public static Map getTransferedSubSite(ServiceManager manager, Document source,
-            DocumentLocator target, int mode) throws SiteException {
-        Map map = new HashMap();
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
-        try {
-            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(source.getPublication()
-                    .getSiteManagerHint());
-
-            NodeSet subSite = SiteUtil.getSubSite(manager, source.getLink().getNode());
-            for (NodeIterator i = subSite.ascending(); i.hasNext(); ) {
-                SiteNode node = i.next();
-                String[] languages = node.getLanguages();
-                for (int l = 0; l < languages.length; l++) {
-                    Document doc = node.getLink(languages[l]).getDocument();
-                    DocumentLocator targetLoc = SiteUtil.getTransferedDocument(siteManager,
-                            doc,
-                            source,
-                            target,
-                            mode);
-                    if (targetLoc != null) {
-                        map.put(doc, targetLoc);
-                    }
-                }
-            }
-
-        } catch (Exception e) {
-            throw new SiteException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                manager.release(selector);
-            }
-        }
-        return map;
-    }
-
-    public static DocumentLocator getTransferedDocument(SiteManager siteManager, Document source,
-            Document baseSource, DocumentLocator baseTarget, int mode) throws SiteException,
-            DocumentException, DocumentBuildException {
-
-        String targetArea = baseTarget.getArea();
-        String baseSourcePath = siteManager.getSiteStructure(baseSource.getFactory(),
-                baseSource.getPublication(),
-                baseSource.getArea())
-                .getByUuid(baseSource.getUUID(), baseSource.getLanguage())
-                .getNode()
-                .getPath();
-
-        SiteStructure sourceSite = siteManager.getSiteStructure(source.getFactory(),
-                source.getPublication(),
-                source.getArea());
-        String sourcePath = sourceSite.getByUuid(source.getUUID(), source.getLanguage())
-                .getNode()
-                .getPath();
-        String suffix = sourcePath.substring(baseSourcePath.length());
-        String targetPath = baseTarget.getPath() + suffix;
-
-        DocumentLocator target = DocumentLocator.getLocator(baseTarget.getPublicationId(),
-                targetArea,
-                targetPath,
-                source.getLanguage());
-        switch (mode) {
-        case MODE_REPLACE:
-            break;
-        case MODE_CANCEL:
-            if (sourceSite.contains(target.getPath())) {
-                target = null;
-            }
-            break;
-        case MODE_CHANGE_ID:
-            target = siteManager.getAvailableLocator(source.getFactory(), target);
-            break;
-        }
-        return target;
-    }
-
-    /**
-     * Returns a document set that represents the transfer of a sub-site to another area.
-     * 
-     * @param manager The service manager.
-     * @param source The source document.
-     * @param targetArea The target area.
-     * @param mode The mode: {@link #MODE_REPLACE},{@link #MODE_CANCEL},{@link #MODE_CHANGE_ID}.
-     * @return A map which maps sources to targets.
-     * @throws SiteException if an error occurs.
-     */
-    public static Map getTransferedSubSite(ServiceManager manager, Document source,
-            String targetArea, int mode) throws SiteException {
-
-        Map map = new HashMap();
-        ServiceSelector selector = null;
-        SiteManager siteManager = null;
-        try {
-            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(source.getPublication()
-                    .getSiteManagerHint());
-
-            NodeSet subsite = SiteUtil.getSubSite(manager, source.getLink().getNode());
-            for (NodeIterator i = subsite.ascending(); i.hasNext(); ) {
-                SiteNode node = i.next();
-                String[] langs = node.getLanguages();
-                for (int l = 0; l < langs.length; l++) {
-                    Document doc = node.getLink(langs[l]).getDocument();
-                    DocumentLocator target = SiteUtil.getTransferedDocument(siteManager,
-                            doc,
-                            targetArea,
-                            mode);
-                    if (target != null) {
-                        map.put(doc, target);
-                    }
-                }
-            }
-
-        } catch (Exception e) {
-            throw new SiteException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                manager.release(selector);
-            }
-        }
-        return map;
-    }
-
-    public static DocumentLocator getTransferedDocument(SiteManager siteManager, Document source,
-            String targetArea, int mode) throws SiteException, DocumentException,
-            DocumentBuildException {
-        DocumentLocator target = source.getLocator().getAreaVersion(targetArea);
-        switch (mode) {
-        case MODE_REPLACE:
-            break;
-        case MODE_CANCEL:
-            SiteStructure site = siteManager.getSiteStructure(source.getFactory(),
-                    source.getPublication(),
-                    target.getArea());
-            if (site.contains(target.getPath())) {
-                target = null;
-            }
-            break;
-        case MODE_CHANGE_ID:
-            target = siteManager.getAvailableLocator(source.getFactory(), target);
-            break;
-        }
-        return target;
     }
 
     /**

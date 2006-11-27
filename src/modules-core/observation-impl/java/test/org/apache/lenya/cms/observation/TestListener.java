@@ -8,7 +8,7 @@ public class TestListener implements RepositoryListener {
     private boolean changed = false;
     private boolean removed = false;
 
-    public void documentChanged(RepositoryEvent event) {
+    public void documentChanged(DocumentEvent event) {
         this.changed = true;
     }
     
@@ -25,7 +25,7 @@ public class TestListener implements RepositoryListener {
         this.removed = false;
     }
 
-    public void documentRemoved(RepositoryEvent event) {
+    public void documentRemoved(DocumentEvent event) {
         this.removed = true;
     }
     

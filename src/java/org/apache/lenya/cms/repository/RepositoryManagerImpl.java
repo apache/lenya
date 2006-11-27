@@ -69,7 +69,7 @@ public class RepositoryManagerImpl extends AbstractLogEnabled implements Reposit
     }
 
     public Session createSession(Identity identity) throws RepositoryException {
-        return new SessionImpl(new IdentityMapImpl(getLogger()), identity, getLogger());
+        return new SessionImpl(new IdentityMapImpl(getLogger()), identity, this.manager, getLogger());
     }
 
 }

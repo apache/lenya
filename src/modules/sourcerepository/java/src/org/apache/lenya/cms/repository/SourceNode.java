@@ -17,36 +17,22 @@
  */
 package org.apache.lenya.cms.repository;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.net.MalformedURLException;
 import java.util.Collection;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.excalibur.source.ModifiableSource;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.TraversableSource;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
-import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
-import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.observation.RepositoryEvent;
+import org.apache.lenya.cms.observation.RepositoryEventFactory;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.rc.RCMLEntry;
 import org.apache.lenya.cms.rc.RevisionController;
@@ -61,25 +47,42 @@ import org.apache.lenya.transaction.Transactionable;
  */
 public class SourceNode extends AbstractLogEnabled implements Node, Transactionable {
 
-    private String sourceURI;
     protected ServiceManager manager;
-    protected static final String FILE_PREFIX = "file:/";
-    protected static final String CONTEXT_PREFIX = "context://";
-    protected static final String LENYA_META_SUFFIX = "meta";
+    
+    private ContentSourceWrapper contentSource;
+    private MetaSourceWrapper metaSource;
 
     /**
      * Ctor.
      * 
      * @param session
-     * @param sourceURI
+     * @param sourceUri
      * @param manager
      * @param logger
      */
-    public SourceNode(Session session, String sourceURI, ServiceManager manager, Logger logger) {
-        this.sourceURI = sourceURI;
+    public SourceNode(Session session, String sourceUri, ServiceManager manager, Logger logger) {
         this.manager = manager;
         enableLogging(logger);
         this.session = session;
+        
+        this.contentSource = new ContentSourceWrapper(this, sourceUri, manager, logger);
+        this.metaSource = new MetaSourceWrapper(this, sourceUri, manager, logger);
+    }
+    
+    protected ContentSourceWrapper getContentSource() {
+        return this.contentSource;
+    }
+    
+    protected MetaSourceWrapper getMetaSource() {
+        return this.metaSource;
+    }
+
+    /**
+     * @see org.apache.lenya.transaction.Transactionable#deleteTransactionable()
+     */
+    public void deleteTransactionable() throws RepositoryException {
+        this.contentSource.deleteTransactionable();
+        this.metaSource.deleteTransactionable();
     }
 
     protected String getUserId() {
@@ -95,73 +98,11 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     /**
-     * Returns the URI of the actual source which is used.
-     * 
-     * @return A string.
-     */
-    protected String getRealSourceURI() {
-        String contentDir = null;
-        String publicationId = null;
-        try {
-            String pubBase = Node.LENYA_PROTOCOL + Publication.PUBLICATION_PREFIX_URI + "/";
-            String publicationsPath = this.sourceURI.substring(pubBase.length());
-            publicationId = publicationsPath.split("/")[0];
-            DocumentFactory factory = DocumentUtil
-                    .createDocumentFactory(this.manager, getSession());
-            Publication pub = factory.getPublication(publicationId);
-            contentDir = pub.getContentDir();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        String contentBaseUri = null;
-        String urlID = this.sourceURI.substring(Node.LENYA_PROTOCOL.length());
-
-        // Substitute e.g. "lenya://lenya/pubs/PUB_ID/content" by "contentDir"
-        String filePrefix = urlID.substring(0, urlID.indexOf(publicationId)) + publicationId;
-        String tempString = urlID.substring(filePrefix.length() + 1);
-        String fileMiddle = tempString.substring(0, tempString.indexOf("/"));
-        String fileSuffix = tempString.substring(fileMiddle.length() + 1, tempString.length());
-        String uriSuffix;
-        if (new File(contentDir).isAbsolute()) {
-            // Absolute
-            contentBaseUri = FILE_PREFIX + contentDir;
-            uriSuffix = File.separator + fileSuffix;
-        } else {
-            // Relative
-            contentBaseUri = CONTEXT_PREFIX + contentDir;
-            uriSuffix = "/" + fileSuffix;
-        }
-
-        try {
-            if (!SourceUtil.exists(contentBaseUri, this.manager)) {
-                getLogger().info(
-                        "The content directory [" + contentBaseUri + "] does not exist. "
-                                + "It will be created as soon as documents are added.");
-            }
-        } catch (ServiceException e) {
-            throw new RuntimeException(e);
-        } catch (MalformedURLException e) {
-            throw new RuntimeException(e);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-        String realSourceUri = contentBaseUri + uriSuffix;
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Real Source URI: " + realSourceUri);
-        }
-
-        return realSourceUri;
-    }
-
-    /**
      * @see org.apache.lenya.transaction.Transactionable#checkin()
      */
     public void checkin() throws RepositoryException {
         if (!isCheckedOut()) {
-            throw new RepositoryException("Cannot check in node [" + this.sourceURI
+            throw new RepositoryException("Cannot check in node [" + getSourceURI()
                     + "]: not checked out!");
         }
 
@@ -208,7 +149,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     public void checkout() throws RepositoryException {
 
         if (getLogger().isDebugEnabled())
-            getLogger().debug("SourceNode::checkout() called, sourceURI [" + sourceURI + "]");
+            getLogger().debug("SourceNode::checkout() called, sourceURI [" + getSourceURI() + "]");
 
         if (!isCheckedOut()) {
             try {
@@ -216,36 +157,6 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             } catch (Exception e) {
                 throw new RepositoryException(e);
             }
-        }
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.Transactionable#deleteTransactionable()
-     */
-    public void deleteTransactionable() throws RepositoryException {
-        try {
-            if (!isCheckedOut()) {
-                throw new RuntimeException("Cannot delete source [" + this.sourceURI
-                        + "]: not checked out!");
-            } else {
-                this.data = null;
-                SourceUtil.delete(getRealSourceURI(), this.manager);
-            }
-        } catch (Exception e) {
-            throw new RepositoryException(e);
-        }
-    }
-
-    public void removed() {
-        Node node;
-        try {
-            node = getDocumentNode();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        for (Iterator i = this.listeners.iterator(); i.hasNext();) {
-            NodeListener listener = (NodeListener) i.next();
-            listener.nodeRemoved(node, getSession().getIdentity());
         }
     }
 
@@ -270,77 +181,6 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             return currentVersion > lockVersion;
         } catch (Exception e) {
             throw new RepositoryException(e);
-        }
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.Transactionable#saveTransactionable()
-     */
-    public synchronized void saveTransactionable() throws RepositoryException {
-        if (!isCheckedOut()) {
-            throw new RepositoryException("Cannot save node [" + this.sourceURI
-                    + "]: not checked out!");
-        }
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Saving [" + this + "] to source [" + getRealSourceURI() + "]");
-        }
-
-        if (this.data != null) {
-            SourceResolver resolver = null;
-            ModifiableSource source = null;
-            InputStream in = null;
-            OutputStream out = null;
-            try {
-
-                resolver = (SourceResolver) manager.lookup(SourceResolver.ROLE);
-                source = (ModifiableSource) resolver.resolveURI(getRealSourceURI());
-
-                out = source.getOutputStream();
-
-                byte[] buf = new byte[4096];
-                in = new ByteArrayInputStream(this.data);
-                int read = in.read(buf);
-
-                while (read > 0) {
-                    out.write(buf, 0, read);
-                    read = in.read(buf);
-                }
-            } catch (Exception e) {
-                throw new RepositoryException(e);
-            } finally {
-
-                try {
-                    if (in != null) {
-                        in.close();
-                    }
-                    if (out != null) {
-                        out.flush();
-                        out.close();
-                    }
-                } catch (Throwable t) {
-                    throw new RuntimeException("Could not close streams: ", t);
-                }
-
-                if (resolver != null) {
-                    if (source != null) {
-                        resolver.release(source);
-                    }
-                    manager.release(resolver);
-                }
-            }
-        }
-    }
-
-    public void changed() {
-        Node node;
-        try {
-            node = getDocumentNode();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        for (Iterator i = this.listeners.iterator(); i.hasNext();) {
-            NodeListener listener = (NodeListener) i.next();
-            listener.nodeChanged(node, getSession().getIdentity());
         }
     }
 
@@ -399,13 +239,6 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             throw new RepositoryException(e);
         }
 
-        if (!getSourceURI().endsWith("." + LENYA_META_SUFFIX)) {
-            lockMetaData();
-        }
-    }
-
-    protected void lockMetaData() throws RepositoryException {
-        SourceUtil.lock(getMetaSourceUri(), this.manager);
     }
 
     /**
@@ -435,30 +268,10 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     /**
-     * @see org.apache.lenya.cms.repository.Node#exists()
-     */
-    public boolean exists() throws RepositoryException {
-        loadData();
-        return this.data != null;
-    }
-
-    /**
      * @see java.lang.Object#toString()
      */
     public String toString() {
-        return "node " + this.sourceURI;
-    }
-
-    byte[] data = null;
-
-    /**
-     * @see org.apache.lenya.cms.repository.Node#getInputStream()
-     */
-    public synchronized InputStream getInputStream() throws RepositoryException {
-        if (!exists()) {
-            throw new RuntimeException(this + " does not exist!");
-        }
-        return new ByteArrayInputStream(this.data);
+        return "node " + getSourceURI();
     }
 
     /**
@@ -469,13 +282,13 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         TraversableSource source = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = (TraversableSource) resolver.resolveURI(getRealSourceURI());
+            source = (TraversableSource) resolver.resolveURI(this.contentSource.getRealSourceUri());
             Collection children = source.getChildren();
             java.util.Iterator iterator = children.iterator();
             java.util.Vector newChildren = new java.util.Vector();
             while (iterator.hasNext()) {
                 TraversableSource child = (TraversableSource) iterator.next();
-                newChildren.add(new SourceNode(getSession(), sourceURI + "/" + child.getName(),
+                newChildren.add(new SourceNode(getSession(), getSourceURI() + "/" + child.getName(),
                         this.manager, getLogger()));
             }
             return newChildren;
@@ -492,7 +305,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         TraversableSource source = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = (TraversableSource) resolver.resolveURI(getRealSourceURI());
+            source = (TraversableSource) resolver.resolveURI(this.contentSource.getRealSourceUri());
             return source.isCollection();
         } catch (Exception e) {
             throw new RepositoryException(e);
@@ -500,173 +313,10 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     /**
-     * Loads the data from the real source.
-     * 
-     * @throws RepositoryException if an error occurs.
-     */
-    protected synchronized void loadData() throws RepositoryException {
-
-        if (this.data != null) {
-            return;
-        }
-
-        ByteArrayOutputStream out = null;
-        InputStream in = null;
-        SourceResolver resolver = null;
-        TraversableSource source = null;
-        try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = (TraversableSource) resolver.resolveURI(getRealSourceURI());
-
-            if (source.exists() && !source.isCollection()) {
-                byte[] buf = new byte[4096];
-                out = new ByteArrayOutputStream();
-                in = source.getInputStream();
-                int read = in.read(buf);
-
-                while (read > 0) {
-                    out.write(buf, 0, read);
-                    read = in.read(buf);
-                }
-
-                this.data = out.toByteArray();
-            }
-        } catch (Exception e) {
-            throw new RepositoryException(e);
-        } finally {
-            try {
-                if (in != null)
-                    in.close();
-                if (out != null)
-                    out.close();
-            } catch (Exception e) {
-                throw new RepositoryException(e);
-            }
-
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
-            }
-        }
-    }
-
-    /**
-     * @see org.apache.lenya.cms.repository.Node#getOutputStream()
-     */
-    public synchronized OutputStream getOutputStream() throws RepositoryException {
-        if (getLogger().isDebugEnabled())
-            getLogger().debug("Get OutputStream for " + getSourceURI());
-        try {
-            registerDirty();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        return new NodeOutputStream();
-    }
-
-    /**
-     * Output stream.
-     */
-    private class NodeOutputStream extends ByteArrayOutputStream {
-        /**
-         * @see java.io.OutputStream#close()
-         */
-        public synchronized void close() throws IOException {
-            SourceNode.this.data = super.toByteArray();
-            SourceNode.this.lastModified = new Date().getTime();
-            super.close();
-        }
-    }
-
-    /**
-     * @see org.apache.lenya.cms.repository.Node#getContentLength()
-     */
-    public long getContentLength() throws RepositoryException {
-        loadData();
-        return this.data.length;
-    }
-
-    private long lastModified = -1;
-
-    /**
-     * @see org.apache.lenya.cms.repository.Node#getLastModified()
-     */
-    public long getLastModified() throws RepositoryException {
-        SourceResolver resolver = null;
-        Source source = null;
-        try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI(getRealSourceURI());
-
-            long sourceLastModified;
-
-            if (source.exists()) {
-                sourceLastModified = source.getLastModified();
-                if (sourceLastModified > this.lastModified) {
-                    this.lastModified = sourceLastModified;
-                }
-            } else if (this.lastModified == -1) {
-                throw new RepositoryException("The source [" + getRealSourceURI()
-                        + "] does not exist!");
-            }
-
-            return this.lastModified;
-
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
-            }
-        }
-    }
-
-    /**
-     * @see org.apache.lenya.cms.repository.Node#getMimeType()
-     */
-    public String getMimeType() throws RepositoryException {
-        SourceResolver resolver = null;
-        Source source = null;
-        try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI(getRealSourceURI());
-            if (source.exists()) {
-                return source.getMimeType();
-            } else {
-                throw new SourceNotFoundException("The source [" + getRealSourceURI()
-                        + "] does not exist!");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
-            }
-        }
-    }
-
-    /**
      * @see org.apache.lenya.cms.repository.Node#getSourceURI()
      */
     public String getSourceURI() {
-        return sourceURI;
-    }
-
-    /**
-     * @return The source URI of the meta data node. TODO: This is a hack and
-     *         can be removed when UUIDs are used.
-     */
-    protected String getMetaSourceUri() {
-        String sourceUri = getSourceURI();
-        return sourceUri + "." + LENYA_META_SUFFIX;
+        return this.contentSource.getSourceUri();
     }
 
     private Session session;
@@ -689,28 +339,14 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     public void registerRemoved() throws RepositoryException {
         try {
             getSession().registerRemoved(this);
-            SourceUtil.delete(getMetaSourceUri(), this.manager);
+            //SourceUtil.delete(getMetaSourceUri(), this.manager);
         } catch (Exception e) {
             throw new RepositoryException(e);
         }
     }
 
-    private Set listeners = new HashSet();
-
-    public void addListener(NodeListener listener) throws RepositoryException {
-        if (this.listeners.contains(listener)) {
-            throw new RepositoryException("The listener [" + listener
-                    + "] is already registered for node [" + this + "]!");
-        }
-        this.listeners.add(listener);
-    }
-
-    public boolean isListenerRegistered(NodeListener listener) {
-        return this.listeners.contains(listener);
-    }
-
     private RCML rcml;
-    
+
     public RCML getRcml() {
         if (this.rcml == null) {
             try {
@@ -723,24 +359,67 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     public History getHistory() {
-        return new SourceNodeHistory(this, this.manager);
+        return new SourceNodeHistory(this, this.manager, getLogger());
     }
 
     public MetaData getMetaData(String namespaceUri) throws MetaDataException {
-        return getMetaDataHandler().getMetaData(namespaceUri);
+        return this.metaSource.getMetaDataHandler().getMetaData(namespaceUri);
     }
 
-    private SourceNodeMetaDataHandler metaDataHandler = null;
-    
-    protected SourceNodeMetaDataHandler getMetaDataHandler() {
-        if (this.metaDataHandler == null) {
-            this.metaDataHandler = new SourceNodeMetaDataHandler(this.manager, getMetaSourceUri());
+    private RepositoryEvent event;
+
+    public RepositoryEvent getEvent() {
+        if (this.event == null) {
+            this.event = RepositoryEventFactory.createEvent(this.manager, this, getLogger());
         }
-        return this.metaDataHandler;
+        return this.event;
+    }
+
+    public boolean exists() throws RepositoryException {
+        return this.contentSource.exists() || this.metaSource.exists();
+    }
+
+    public OutputStream getOutputStream() throws RepositoryException {
+        return this.contentSource.getOutputStream();
+    }
+
+    public long getContentLength() throws RepositoryException {
+        return this.contentSource.getContentLength();
+    }
+
+    public InputStream getInputStream() throws RepositoryException {
+        return this.contentSource.getInputStream();
+    }
+
+    public long getLastModified() throws RepositoryException {
+        
+        if (!exists()) {
+            throw new RepositoryException("The node [" + this + "] does not exist!");
+        }
+        
+        long contentLastModified = 0;
+        if (this.contentSource.exists()) {
+            contentLastModified = this.contentSource.getLastModified();
+        }
+        long metaLastModified = 0;
+        if (this.metaSource.exists()) {
+            metaLastModified = this.metaSource.getLastModified();
+        }
+        
+        return Math.max(contentLastModified, metaLastModified);
+    }
+
+    public String getMimeType() throws RepositoryException {
+        return this.contentSource.getMimeType();
     }
 
     public String[] getMetaDataNamespaceUris() throws MetaDataException {
-        return getMetaDataHandler().getMetaDataNamespaceUris();
+        return this.metaSource.getMetaDataNamespaceUris();
+    }
+
+    public void saveTransactionable() throws TransactionException {
+        this.contentSource.saveTransactionable();
+        this.metaSource.saveTransactionable();
     }
 
 }

@@ -19,7 +19,6 @@
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -412,6 +411,11 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      * @see Document#getResourceType()
      */
     public ResourceType getResourceType() throws DocumentException {
+        
+        if (!exists()) {
+            throw new DocumentException("The document [" + this + "] doesn't exist!");
+        }
+        
         if (this.resourceType == null) {
             ServiceSelector selector = null;
             try {
