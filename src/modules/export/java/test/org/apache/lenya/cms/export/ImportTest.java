@@ -44,7 +44,7 @@ public class ImportTest extends AbstractAccessControlTest {
             String pubPath = defaultArea.getPublication().getDirectory().getAbsolutePath();
             String path = pubPath.replace(File.separatorChar, '/') + "/example-content";
             Importer importer = new Importer(getManager(), getLogger());
-            importer.importContent(area, path);
+            importer.importContent(defaultPub, area, path);
             getFactory().getSession().commit();
         }
     }

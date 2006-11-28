@@ -42,11 +42,11 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
- /**
-  * Import content.
-  */
+/**
+ * Import content.
+ */
 public class Importer extends AbstractLogEnabled {
-    
+
     private ServiceManager manager;
 
     /**
@@ -66,6 +66,17 @@ public class Importer extends AbstractLogEnabled {
      * @throws Exception if an error occurs.
      */
     public void importContent(Area area, String path) throws Exception {
+        importContent(area.getPublication(), area, path);
+    }
+
+    /**
+     * Imports content from a different publication into an area.
+     * @param srcPub The source publication.
+     * @param area The area.
+     * @param path The path containing the content.
+     * @throws Exception if an error occurs.
+     */
+    public void importContent(Publication srcPub, Area area, String path) throws Exception {
 
         getLogger().info("Importing documents into area [" + area + "]");
 
@@ -77,8 +88,8 @@ public class Importer extends AbstractLogEnabled {
 
         Element siteElement = xml.getDocumentElement();
         importChildren(area, helper, siteElement, baseUri, "");
-        
-        convertLinks(area);
+
+        convertLinks(srcPub, area);
     }
 
     protected void importElement(Area area, NamespaceHelper helper, Element element,
@@ -127,8 +138,8 @@ public class Importer extends AbstractLogEnabled {
             Document newDoc;
             SiteStructure site = area.getSite();
             if (!site.contains(path) || site.getNode(path).getLanguages().length == 0) {
-                newDoc = docManager.add(area.getPublication().getFactory(), resourceType, contentUri, area
-                        .getPublication(), area.getName(), path, language, ".html",
+                newDoc = docManager.add(area.getPublication().getFactory(), resourceType,
+                        contentUri, area.getPublication(), area.getName(), path, language, ".html",
                         navigationTitle, visibleInNav);
             } else {
                 SiteNode node = site.getNode(path);
@@ -174,14 +185,14 @@ public class Importer extends AbstractLogEnabled {
         }
     }
 
-    protected void convertLinks(Area area) {
+    protected void convertLinks(Publication srcPub, Area area) {
         Document[] docs = area.getDocuments();
         for (int i = 0; i < docs.length; i++) {
-            convertLinks(docs[i]);
+            convertLinks(srcPub, docs[i]);
         }
     }
 
-    protected void convertLinks(Document examinedDocument) {
+    protected void convertLinks(Publication srcPub, Document examinedDocument) {
         boolean linksRewritten = false;
 
         LinkResolver linkResolver = null;
@@ -196,7 +207,6 @@ public class Importer extends AbstractLogEnabled {
                 }
             } else {
                 linkResolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
-                Publication pub = examinedDocument.getPublication();
                 DocumentFactory factory = examinedDocument.getFactory();
 
                 org.w3c.dom.Document xmlDocument = SourceUtil.readDOM(examinedDocument
@@ -220,8 +230,11 @@ public class Importer extends AbstractLogEnabled {
                             getLogger().debug("Convert links: Check URL [" + url + "]");
                         }
 
-                        if (url.startsWith("/" + pub.getId() + "/" + examinedDocument.getArea() + "/")) {
-                            final String webappUrl = url;
+                        if (url.startsWith("/" + srcPub.getId() + "/" + examinedDocument.getArea()
+                                + "/")) {
+                            String targetPubId = examinedDocument.getPublication().getId();
+                            final String webappUrl = "/" + targetPubId
+                                    + url.substring(("/" + srcPub.getId()).length());
                             if (factory.isDocument(webappUrl)) {
                                 Document targetDocument = factory.getFromURL(webappUrl);
 

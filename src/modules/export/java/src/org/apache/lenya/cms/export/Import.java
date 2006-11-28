@@ -34,15 +34,20 @@ public class Import extends AbstractUsecase {
     protected void initParameters() {
         super.initParameters();
         
+        Publication defaultPub = getDefaultPub();
+        String pubPath = defaultPub.getDirectory().getAbsolutePath();
+        String path = pubPath.replace(File.separatorChar, '/') + "/example-content";
+        setParameter("path", path);
+    }
+
+    protected Publication getDefaultPub() {
         Publication defaultPub;
         try {
             defaultPub = getDocumentFactory().getPublication("default");
         } catch (PublicationException e) {
             throw new RuntimeException(e);
         }
-        String pubPath = defaultPub.getDirectory().getAbsolutePath();
-        String path = pubPath.replace(File.separatorChar, '/') + "/example-content";
-        setParameter("path", path);
+        return defaultPub;
     }
 
     protected void doCheckPreconditions() throws Exception {
@@ -81,7 +86,7 @@ public class Import extends AbstractUsecase {
         super.doExecute();
         String path = getParameterAsString("path");
         Importer importer = new Importer(this.manager, getLogger());
-        importer.importContent(getArea(), path);
+        importer.importContent(getDefaultPub(), getArea(), path);
     }
 
 }
