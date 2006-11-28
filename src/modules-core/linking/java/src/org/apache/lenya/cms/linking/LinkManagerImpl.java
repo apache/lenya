@@ -32,7 +32,9 @@ import org.w3c.dom.Node;
 import org.w3c.dom.traversal.NodeIterator;
 
 /**
- * Link manager implementation.
+ * Basic link manager implementation which searches for links by parsing the
+ * document source. For better performance use an implementation which is based
+ * on meta data or a centralized link registry.
  */
 public class LinkManagerImpl extends AbstractLogEnabled implements LinkManager, Serviceable {
 

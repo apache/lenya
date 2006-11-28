@@ -29,9 +29,7 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 
 /**
- * Basic link resolver implementation which searches for links by parsing the
- * document source. For better performance use an implementation which is based
- * on meta data or a centralized link registry.
+ * Link resolver implementation.
  */
 public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver, Configurable {
 
