@@ -46,15 +46,17 @@ public class ContentLinkManager extends AbstractLogEnabled implements LinkManage
 
         try {
             String[] xPaths = source.getResourceType().getLinkAttributeXPaths();
-            org.w3c.dom.Document xml = SourceUtil.readDOM(source.getSourceURI(), this.manager);
-            for (int i = 0; i < xPaths.length; i++) {
-                NodeIterator iter = XPathAPI.selectNodeIterator(xml, xPaths[i]);
-                Node node;
-                while ((node = iter.nextNode()) != null) {
-                    Attr attr = (Attr) node;
-                    String uri = attr.getValue();
-                    if (isLinkUri(uri)) {
-                        links.add(new Link(uri));
+            if (xPaths.length > 0) {
+                org.w3c.dom.Document xml = SourceUtil.readDOM(source.getSourceURI(), this.manager);
+                for (int i = 0; i < xPaths.length; i++) {
+                    NodeIterator iter = XPathAPI.selectNodeIterator(xml, xPaths[i]);
+                    Node node;
+                    while ((node = iter.nextNode()) != null) {
+                        Attr attr = (Attr) node;
+                        String uri = attr.getValue();
+                        if (isLinkUri(uri)) {
+                            links.add(new Link(uri));
+                        }
                     }
                 }
             }

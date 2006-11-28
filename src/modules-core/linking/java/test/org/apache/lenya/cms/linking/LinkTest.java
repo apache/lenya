@@ -54,7 +54,7 @@ public class LinkTest extends AbstractAccessControlTest {
             boolean matched = false;
             for (int i = 0; i < links.length; i++) {
                 LinkTarget linkTarget = resolver.resolve(source, links[i].getUri());
-                if (linkTarget.getDocument().equals(target)) {
+                if (linkTarget.exists() && linkTarget.getDocument().equals(target)) {
                     matched = true;
                 }
             }

@@ -21,6 +21,6 @@
 <xconf xpath="/cocoon" unless="/cocoon/component[@role = 'org.apache.lenya.cms.linking.LinkManager']">
 
   <component logger="" role="org.apache.lenya.cms.linking.LinkManager"
-    class="org.apache.lenya.cms.linking.LinkManagerImpl"/>
+    class="org.apache.lenya.cms.linking.ContentLinkManager"/>
   
 </xconf>
