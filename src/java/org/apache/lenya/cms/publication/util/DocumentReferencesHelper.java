@@ -127,7 +127,7 @@ public class DocumentReferencesHelper {
      * @throws ProcessingException if the search for references failed.
      */
     public Document[] getReferences(String area) throws ProcessingException {
-
+        
         ArrayList documents = new ArrayList();
         Publication publication = this.pageEnvelope.getPublication();
         DocumentIdToPathMapper mapper = publication.getPathMapper();

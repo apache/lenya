@@ -27,7 +27,6 @@ import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.util.Query;
 
 /**
  * Link resolver implemenation.
@@ -39,37 +38,23 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
      */
     public static final String ROLE = LinkResolverImpl.class.getName();
     
-    protected static final String PAIR_DELIMITER = ",";
-    protected static final String KEY_VALUE_DELIMITER = "=";
 
     public LinkTarget resolve(Document currentDoc, String linkUri) throws MalformedURLException {
 
-        String[] schemeAndPath = linkUri.split(":");
-        String path = schemeAndPath[1];
+        Link link = new Link(linkUri);
+        
+        String uuid = getValue(link.getUuid(), currentDoc.getUUID());
+        String language = getValue(link.getLanguage(), currentDoc.getLanguage());
+        String revisionString = getValue(link.getRevision(), null);
+        String area = getValue(link.getArea(), currentDoc.getArea());
+        String pubId = getValue(link.getPubId(), currentDoc.getPublication().getId());
 
-        String pubId;
-        String uuid;
-        String area;
-        String language;
-        int revision = -1;
-
-        if (path.indexOf(PAIR_DELIMITER) > -1) {
-            int firstDelimiterIndex = path.indexOf(PAIR_DELIMITER);
-            uuid = path.substring(0, firstDelimiterIndex);
-            String pathQueryString = path.substring(firstDelimiterIndex + 1);
-            Query query = new Query(pathQueryString, PAIR_DELIMITER, KEY_VALUE_DELIMITER);
-            pubId = query.getValue("pub", currentDoc.getPublication().getId());
-            area = query.getValue("area", currentDoc.getArea());
-            language = query.getValue("lang", currentDoc.getLanguage());
-            String revisionString = query.getValue("rev", null);
-            if (revisionString != null) {
-                revision = Integer.valueOf(revisionString).intValue();
-            }
-        } else {
-            uuid = path;
-            pubId = currentDoc.getPublication().getId();
-            area = currentDoc.getArea();
-            language = currentDoc.getLanguage();
+        int revision;
+        if (revisionString == null) {
+            revision = -1;
+        }
+        else {
+            revision = Integer.valueOf(revisionString).intValue();
         }
 
         if (uuid.length() == 0) {
@@ -105,6 +90,15 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
             }
         } catch (PublicationException e) {
             throw new RuntimeException(e);
+        }
+    }
+    
+    protected String getValue(String value, String defaultValue) {
+        if (value == null) {
+            return defaultValue;
+        }
+        else {
+            return value;
         }
     }
 

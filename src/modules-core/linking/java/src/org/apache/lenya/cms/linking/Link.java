@@ -17,10 +17,17 @@
  */
 package org.apache.lenya.cms.linking;
 
+import java.net.MalformedURLException;
+
+import org.apache.lenya.util.Query;
+
 /**
  * A link to a document.
  */
 public class Link {
+
+    protected static final String PAIR_DELIMITER = ",";
+    protected static final String KEY_VALUE_DELIMITER = "=";
 
     private String uuid;
     private String language;
@@ -32,6 +39,34 @@ public class Link {
      * Ctor.
      */
     public Link() {
+    }
+    
+    /**
+     * Ctor.
+     * @param linkUri The link URI.
+     * @throws MalformedURLException if the URI doesn't represent a link.
+     */
+    public Link(String linkUri) throws MalformedURLException {
+        
+        if (!linkUri.startsWith(LinkResolver.SCHEME + ":")) {
+            throw new MalformedURLException("The string [" + linkUri + "] is not a valid link URI!");
+        }
+        
+        String[] schemeAndPath = linkUri.split(":");
+        String path = schemeAndPath[1];
+
+        if (path.indexOf(PAIR_DELIMITER) > -1) {
+            int firstDelimiterIndex = path.indexOf(PAIR_DELIMITER);
+            this.uuid = path.substring(0, firstDelimiterIndex);
+            String pathQueryString = path.substring(firstDelimiterIndex + 1);
+            Query query = new Query(pathQueryString, PAIR_DELIMITER, KEY_VALUE_DELIMITER);
+            this.pubId = query.getValue("pub");
+            this.area = query.getValue("area");
+            this.language = query.getValue("lang");
+            this.revision = query.getValue("rev");
+        } else {
+            this.uuid = path;
+        }
     }
     
     /**
@@ -125,6 +160,21 @@ public class Link {
             uri = uri + ",rev=" + this.revision;
         }
         return uri;
+    }
+
+    public boolean equals(Object obj) {
+        if (!getClass().isInstance(obj)) {
+            return false;
+        }
+        return ((Link) obj).getUri().equals(getUri());
+    }
+
+    public int hashCode() {
+        return getUri().hashCode();
+    }
+
+    public String toString() {
+        return getUri();
     }
     
 }
