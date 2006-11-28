@@ -23,13 +23,18 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.ac.Identifiable;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.cms.linking.LinkManager;
+import org.apache.lenya.cms.linking.LinkResolver;
+import org.apache.lenya.cms.linking.LinkTarget;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
@@ -70,6 +75,7 @@ public class Publish extends DocumentUsecase {
     protected static final String SCHEDULE = "schedule";
     protected static final String SCHEDULE_TIME = "schedule.time";
     protected static final String SEND_NOTIFICATION = "sendNotification";
+    protected static final String UNPUBLISHED_LINKS = "unpublishedLinks";
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
@@ -77,11 +83,46 @@ public class Publish extends DocumentUsecase {
     protected void initParameters() {
         super.initParameters();
 
+        if (hasErrors()) {
+            return;
+        }
+
         Date now = new GregorianCalendar().getTime();
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         setParameter(SCHEDULE_TIME, format.format(now));
 
         setParameter(SEND_NOTIFICATION, Boolean.TRUE);
+        
+        setParameter(UNPUBLISHED_LINKS, getUnpublishedLinks());
+    }
+
+    protected Document[] getUnpublishedLinks() {
+        Set docs = new HashSet();
+        LinkManager linkMgr = null;
+        LinkResolver resolver = null;
+        try {
+            linkMgr = (LinkManager) this.manager.lookup(LinkManager.ROLE);
+            resolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
+            org.apache.lenya.cms.linking.Link[] links = linkMgr.getLinksFrom(getSourceDocument());
+            for (int i = 0; i < links.length; i++) {
+                LinkTarget target = resolver.resolve(getSourceDocument(), links[i].getUri());
+                Document doc = target.getDocument();
+                if (!doc.existsAreaVersion(Publication.LIVE_AREA)) {
+                    docs.add(doc);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            if (linkMgr != null) {
+                this.manager.release(linkMgr);
+            }
+            if (resolver != null) {
+                this.manager.release(resolver);
+            }
+        }
+        return (Document[]) docs.toArray(new Document[docs.size()]);
     }
 
     /**

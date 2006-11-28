@@ -18,7 +18,7 @@
 package org.apache.lenya.cms.linking;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.util.Assert;
 
 /**
  * The target of a link.
@@ -27,7 +27,7 @@ public class LinkTarget {
 
     private Document doc;
     private int revisionNumber = -1;
-    
+
     /**
      * Ctor.
      * @param doc The document.
@@ -37,38 +37,60 @@ public class LinkTarget {
         this(doc);
         this.revisionNumber = revisionNumber;
     }
-    
+
     /**
      * Ctor.
      * @param doc The document.
      */
     protected LinkTarget(Document doc) {
+        Assert.notNull("document", doc);
         this.doc = doc;
     }
 
     /**
-     * @return The linked document.
+     * Ctor for non-existing targets.
      */
-    public Document getDocument() {
+    protected LinkTarget() {
+    }
+
+    /**
+     * @return The linked document.
+     * @throws LinkException if the target doesn't exist.
+     */
+    public Document getDocument() throws LinkException {
+        if (!exists()) {
+            throw new LinkException("The target doesn't exist!");
+        }
         return this.doc;
     }
-    
+
     /**
      * @return The revision number.
-     * @throws PublicationException if no revision number is specified in the link.
+     * @throws LinkException if the target doesn't exist or no revision number
+     *         is specified in the link.
      */
-    public int getRevisionNumber() throws PublicationException {
+    public int getRevisionNumber() throws LinkException {
+        if (!exists()) {
+            throw new LinkException("The target doesn't exist!");
+        }
         if (this.revisionNumber == -1) {
-            throw new PublicationException("No revision specified!");
+            throw new LinkException("No revision specified!");
         }
         return this.revisionNumber;
     }
-    
+
     /**
      * @return if the revision is specified in the link.
      */
     public boolean isRevisionSpecified() {
         return this.revisionNumber != -1;
     }
-    
+
+    /**
+     * @return if the target exists.
+     */
+    public boolean exists() {
+        return this.doc != null;
+    }
+
 }

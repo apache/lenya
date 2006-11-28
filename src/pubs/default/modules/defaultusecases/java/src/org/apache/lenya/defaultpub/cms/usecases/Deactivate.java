@@ -18,10 +18,13 @@
 package org.apache.lenya.defaultpub.cms.usecases;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.linking.LinkManager;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
@@ -41,6 +44,8 @@ import org.apache.lenya.workflow.WorkflowException;
  * @version $Id$
  */
 public class Deactivate extends DocumentUsecase {
+
+    protected static final String LINKS_TO_DOCUMENT = "linksToDocument";
 
     /**
      * Checks if the workflow event is supported and the parent of the document exists in the live
@@ -84,7 +89,33 @@ public class Deactivate extends DocumentUsecase {
                 }
                 setParameter(Publish.ALLOW_SINGLE_DOCUMENT, Boolean.toString(allowSingle));
             }
+
+            setParameter(LINKS_TO_DOCUMENT, getLinksToDocument());
         }
+    }
+
+    protected Document[] getLinksToDocument() {
+        Set docs = new HashSet();
+        LinkManager linkMgr = null;
+        try {
+            linkMgr = (LinkManager) this.manager.lookup(LinkManager.ROLE);
+            Document liveVersion = getSourceDocument().getAreaVersion(Publication.LIVE_AREA);
+            Document[] referencingDocs = linkMgr.getReferencingDocuments(liveVersion);
+            for (int d = 0; d < referencingDocs.length; d++) {
+                Document doc = referencingDocs[d];
+                if (doc.getArea().equals(Publication.LIVE_AREA)) {
+                    docs.add(doc);
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        finally {
+            if (linkMgr != null) {
+                this.manager.release(linkMgr);
+            }
+        }
+        return (Document[]) docs.toArray(new Document[docs.size()]);
     }
 
     /**

@@ -29,7 +29,9 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 
 /**
- * Link resolver implemenation.
+ * Basic link resolver implementation which searches for links by parsing the
+ * document source. For better performance use an implementation which is based
+ * on meta data or a centralized link registry.
  */
 public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver, Configurable {
 
@@ -37,12 +39,11 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
      * The Avalon role.
      */
     public static final String ROLE = LinkResolverImpl.class.getName();
-    
 
     public LinkTarget resolve(Document currentDoc, String linkUri) throws MalformedURLException {
 
         Link link = new Link(linkUri);
-        
+
         String uuid = getValue(link.getUuid(), currentDoc.getUUID());
         String language = getValue(link.getLanguage(), currentDoc.getLanguage());
         String revisionString = getValue(link.getRevision(), null);
@@ -52,8 +53,7 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
         int revision;
         if (revisionString == null) {
             revision = -1;
-        }
-        else {
+        } else {
             revision = Integer.valueOf(revisionString).intValue();
         }
 
@@ -73,8 +73,7 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
                 } else if (this.fallbackMode == MODE_DEFAULT_LANGUAGE) {
                     if (areaObj.contains(uuid, pub.getDefaultLanguage())) {
                         doc = areaObj.getDocument(uuid, pub.getDefaultLanguage());
-                    }
-                    else {
+                    } else {
                         doc = null;
                     }
                 } else {
@@ -82,22 +81,24 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
                             + "] is not supported!");
                 }
             }
-            if (revision > -1) {
-                return new LinkTarget(doc, revision);
-            }
-            else {
-                return new LinkTarget(doc);
+            if (doc == null) {
+                return new LinkTarget();
+            } else {
+                if (revision > -1) {
+                    return new LinkTarget(doc, revision);
+                } else {
+                    return new LinkTarget(doc);
+                }
             }
         } catch (PublicationException e) {
             throw new RuntimeException(e);
         }
     }
-    
+
     protected String getValue(String value, String defaultValue) {
         if (value == null) {
             return defaultValue;
-        }
-        else {
+        } else {
             return value;
         }
     }
@@ -111,7 +112,7 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
     public void setFallbackMode(int mode) {
         this.fallbackMode = mode;
     }
-    
+
     protected static final String ELEMENT_FALLBACK = "fallback";
 
     public void configure(Configuration config) throws ConfigurationException {
@@ -120,8 +121,7 @@ public class LinkResolverImpl extends AbstractLogEnabled implements LinkResolver
             boolean fallback = config.getValueAsBoolean();
             if (fallback) {
                 setFallbackMode(MODE_DEFAULT_LANGUAGE);
-            }
-            else {
+            } else {
                 setFallbackMode(MODE_FAIL);
             }
         }

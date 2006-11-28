@@ -83,8 +83,7 @@ public interface LinkResolver {
      * 
      * @param currentDocument The document which contains the link.
      * @param linkUri The link URI.
-     * @return A link target or <code>null</code> if the target document does not
-     *         exist.
+     * @return A link target.
      * @throws MalformedURLException if the URI is invalid.
      */
     LinkTarget resolve(Document currentDocument, String linkUri) throws MalformedURLException;

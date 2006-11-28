@@ -6,9 +6,9 @@
   The ASF licenses this file to You under the Apache License, Version 2.0
   (the "License"); you may not use this file except in compliance with
   the License.  You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,21 +19,21 @@
 <!-- $Id$ -->
 
 <page:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
-           xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
-           xmlns="http://www.w3.org/1999/xhtml" 
-           xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
-
+  xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
+  xmlns="http://www.w3.org/1999/xhtml" 
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
+  
   <page:title><i18n:text>Deactivate</i18n:text></page:title>
   <page:body>
     <div class="lenya-box">
       <div class="lenya-box-title">
         <i18n:text>Deactivate</i18n:text>
       </div>
-
+      
       <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
-
+      
       <div class="lenya-box-body">
-
+        
         <jx:set var="title" value="${usecase.getParameter('document')
           .getMetaData('http://purl.org/dc/elements/1.1/')
           .getFirstValue('title')}"/>
@@ -48,8 +48,33 @@
                 "<jx:out value="${title}"/>"
               </td>
             </tr>
+            <jx:if test="${!usecase.hasErrors() &amp;&amp; usecase.getParameter('linksToDocument').size() &gt; 0}">
+              <tr>
+                <td class="lenya-entry-caption" valign="top">
+                  <p>
+                    <i18n:text>links-to-document</i18n:text>
+                  </p>
+                </td>
+                <td>
+                  <ul>
+                    <jx:forEach var="link" items="${usecase.getParameter('linksToDocument')}">
+                      <li>
+                        <a href="${request.contextPath}${link.getCanonicalWebappURL()}">
+                          <jx:out value="${link.getMetaData('http://purl.org/dc/elements/1.1/').getFirstValue('title')}"/></a>
+                        <span>
+                          (<jx:out value="${link.getPath()}"/>,
+                          <jx:out value="${link.getLanguage()}"/>)
+                        </span>
+                      </li>
+                    </jx:forEach>
+                  </ul>
+                </td>
+              </tr>
+            </jx:if>
             <tr>
-              <td/>
+              <td class="lenya-entry-caption">
+                <i18n:text>deactivate complete subtree</i18n:text>:
+              </td>
               <td>
                 <jx:choose>
                   <jx:when test="${usecase.getParameter('allowSingleDocument').equals('false')}">
@@ -63,7 +88,6 @@
                     <input name="subtree" type="checkbox" checked="checked"/>
                   </jx:otherwise>
                 </jx:choose>
-                <i18n:text>deactivate complete subtree</i18n:text>
               </td>
             </tr>
             <tr>

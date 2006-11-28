@@ -32,4 +32,7 @@
 
   <message key="last-published">This page was last published at {0} by {1}.</message>
   <message key="never-published">This page has not been published yet.</message>
+  
+  <message key="unpublished-links">Links to unpublished documents:</message>
+  <message key="links-to-document">Links from other documents:</message>
 </catalogue>

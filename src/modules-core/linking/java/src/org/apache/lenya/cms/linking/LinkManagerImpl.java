@@ -80,7 +80,7 @@ public class LinkManagerImpl extends AbstractLogEnabled implements LinkManager, 
                 Link[] links = getLinksFrom(allDocs[d]);
                 for (int l = 0; l < links.length; l++) {
                     LinkTarget linkTarget = resolver.resolve(allDocs[d], links[l].getUri());
-                    if (linkTarget.getDocument().equals(target)) {
+                    if (linkTarget.exists() && linkTarget.getDocument().equals(target)) {
                         docs.add(allDocs[d]);
                     }
                 }
