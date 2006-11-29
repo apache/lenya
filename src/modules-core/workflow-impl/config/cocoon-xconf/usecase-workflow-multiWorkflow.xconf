@@ -32,5 +32,6 @@
       <usecase name="sitemanagement.delete" event="delete"/>
       <usecase name="sitemanagement.archive" event="archive"/>
       <usecase name="sitemanagement.restore" event="restore"/>
+      <parameter name="style" value="text"/>
     </component-instance>
   </xconf>

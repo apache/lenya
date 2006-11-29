@@ -26,7 +26,6 @@
   
   <page:title><i18n:text><jx:out value="${usecase.getName()}"/></i18n:text></page:title>
   <page:body>
-    
     <jx:set var="style" value="${usecase.getParameter('style')}"/>
     
     <form style="display: inline;">
@@ -71,7 +70,15 @@
       
       <jx:forEach var="doc" items="${usecase.getParameter('documents')}">
         <tr>
-          <td><a href="${request.contextPath}${doc.getUrl()}"><jx:out value="${doc.getPath()}"/></a></td>
+          <jx:set var="path" value="${doc.getPath()}"/>
+          <jx:set var="depth" value="${path.split('/').size() - 2}"/>
+          <jx:set var="whitespace" value="&#160;&#160;&#160;&#160;&#160;&#160;&#160;&#160;"/>
+          <jx:set var="indent" value="${whitespace.substring(0, depth.intValue())}"/>
+          <jx:set var="lastSlashIndex" value="${java.lang.Integer.valueOf(path.lastIndexOf('/'))}"/>
+          <jx:set var="nodeName" value="${path.substring(lastSlashIndex.intValue())}"/>
+          <td>
+            <jx:out value="${indent}"/><jx:out value="${indent}"/><jx:out value="${indent}"/><jx:out value="${indent}"/><a href="${request.contextPath}${doc.getUrl()}"><jx:out value="${nodeName}"/></a>
+          </td>
           <td><jx:out value="${doc.getLanguage()}"/></td>
           <jx:choose>
             <jx:when test="${style.equals('text')}">
