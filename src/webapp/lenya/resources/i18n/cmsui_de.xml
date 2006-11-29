@@ -207,13 +207,13 @@
   <message key="Edit Group Affiliation">Mitgliedschaften ändern</message>
   
   <!-- IP Range Administration -->
-  <message key="IP Range">IP&#160;Bereich</message>
-  <message key="IP Range ID">IP&#160;Bereichs-ID</message>
-  <message key="Network Address">IP&#160;Adresse</message>
+  <message key="IP Range">IP-Bereich</message>
+  <message key="IP Range ID">IP-Bereichs-ID</message>
+  <message key="Network Address">IP-Adresse</message>
   <message key="Subnet Mask">Netzwerkmaske</message>
   <message key="IP Range Administration">IP Administration</message>
-  <message key="Add IP Range">IP Bereich&#160;hinzufügen</message>
-  <message key="IP Range Profile">IP Bereichsprofil</message>
+  <message key="Add IP Range">IP-Bereich&#160;hinzufügen</message>
+  <message key="IP Range Profile">IP-Bereichs-Profil</message>
 
   <!-- User Types -->
   <message key="LDAP User">LDAP User</message>

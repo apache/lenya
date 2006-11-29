@@ -47,12 +47,14 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
+import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 
 /**
- * A PolicyManager which is capable of mapping all URLs of a document to the appropriate canonical
- * URL, e.g. <code>/foo/bar_de.print.html</code> is mapped to <code>/foo/bar</code>.
+ * A PolicyManager which is capable of mapping all URLs of a document to the
+ * appropriate canonical URL, e.g. <code>/foo/bar_de.print.html</code> is
+ * mapped to <code>/foo/bar</code>.
  */
 public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         InheritingPolicyManager, Serviceable, Configurable, Disposable {
@@ -83,17 +85,28 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         ContextUtility contextUtility = null;
         try {
             contextUtility = (ContextUtility) serviceManager.lookup(ContextUtility.ROLE);
-            Session session = RepositoryUtil.getSession(this.serviceManager,
-                    contextUtility.getRequest());
+            Session session = RepositoryUtil.getSession(this.serviceManager, contextUtility
+                    .getRequest());
             DocumentFactory map = DocumentUtil.createDocumentFactory(this.serviceManager, session);
-            if (map.isDocument(webappUrl)) {
-                Document document = map.getFromURL(webappUrl);
-                if (document.existsInAnyLanguage()) {
-                    url = "/" + document.getPublication().getId() + "/" + document.getArea() + document.getPath();
-                    if (getLogger().isDebugEnabled()) {
-                        getLogger().debug("    Document exists");
-                        getLogger().debug("    Document path: [" + document.getPath() + "]");
-                    }
+
+            // always check for authoring URL since the live document doesn't
+            // have to exist
+
+            URLInformation info = new URLInformation(webappUrl);
+            String pubId = info.getPublicationId();
+            String area = info.getArea();
+            String prefix = "/" + pubId + "/";
+            String prefixWithArea = prefix + area;
+            String authoringUrl = prefix + Publication.AUTHORING_AREA
+                    + webappUrl.substring(prefixWithArea.length());
+
+            if (map.isDocument(authoringUrl)) {
+                Document authoringDoc = map.getFromURL(authoringUrl);
+                url = "/" + authoringDoc.getPublication().getId() + "/" + area
+                        + authoringDoc.getPath();
+                if (getLogger().isDebugEnabled()) {
+                    getLogger().debug("    Document exists");
+                    getLogger().debug("    Document path: [" + authoringDoc.getPath() + "]");
                 }
             }
         } catch (ServiceException e) {
@@ -214,17 +227,18 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
      */
     public void configure(Configuration configuration) throws ConfigurationException {
-        Configuration policyManagerConfiguration = configuration.getChild(this.ELEMENT_POLICY_MANAGER,
-                false);
+        Configuration policyManagerConfiguration = configuration.getChild(
+                this.ELEMENT_POLICY_MANAGER, false);
         if (policyManagerConfiguration != null) {
             String type = null;
             try {
                 type = policyManagerConfiguration.getAttribute(this.ATTRIBUTE_TYPE);
 
-                this.policyManagerSelector = (ServiceSelector) getServiceManager().lookup(PolicyManager.ROLE
-                        + "Selector");
+                this.policyManagerSelector = (ServiceSelector) getServiceManager().lookup(
+                        PolicyManager.ROLE + "Selector");
 
-                PolicyManager _policyManager = (PolicyManager) this.policyManagerSelector.select(type);
+                PolicyManager _policyManager = (PolicyManager) this.policyManagerSelector
+                        .select(type);
 
                 if (!(_policyManager instanceof InheritingPolicyManager)) {
                     throw new AccessControlException("The " + getClass().getName()
@@ -276,11 +290,13 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
         getPolicyManager().accreditableAdded(manager, accreditable);
     }
 
-    public Credential[] getCredentials(AccreditableManager controller, String url) throws AccessControlException {
-		return getPolicyManager().getCredentials(controller, getPolicyURL(url));
-	}
+    public Credential[] getCredentials(AccreditableManager controller, String url)
+            throws AccessControlException {
+        return getPolicyManager().getCredentials(controller, getPolicyURL(url));
+    }
 
-    public Role[] getGrantedRoles(AccreditableManager accreditableManager, Identity identity, String url) throws AccessControlException {
+    public Role[] getGrantedRoles(AccreditableManager accreditableManager, Identity identity,
+            String url) throws AccessControlException {
         return getPolicyManager().getGrantedRoles(accreditableManager, identity, getPolicyURL(url));
     }
 }

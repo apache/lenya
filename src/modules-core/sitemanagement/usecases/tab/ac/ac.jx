@@ -106,7 +106,7 @@ limitations under the License.
         </tr>
         <jx:forEach var="credential" varStatus="status"
           items="${usecase.getParameter('subCredentials')}">
-          <form method="get" id="form-deleteSubCredential">
+          <form method="post" id="form-deleteSubCredential">
             <input type="hidden" name="lenya.usecase"
               value="${usecase.getName()}"/>
             <input type="hidden" name="lenya.continuation"
@@ -168,7 +168,7 @@ limitations under the License.
         </tr>
         <tr>
           
-          <form method="get" id="form-addCredential_user">
+          <form method="post" id="form-addCredential_user">
             <input type="hidden" name="lenya.usecase"
               value="${usecase.getName()}"/>
             <input type="hidden" name="lenya.continuation"
@@ -208,7 +208,7 @@ limitations under the License.
           
         </tr>
         <tr>
-          <form method="get" id="form-addCredential_group">
+          <form method="post" id="form-addCredential_group">
             <input type="hidden" name="lenya.usecase"
               value="${usecase.getName()}"/>
             <input type="hidden" name="lenya.continuation"
@@ -242,6 +242,76 @@ limitations under the License.
             </td>
             <td>
               <input i18n:attr="value" type="submit" name="addCredential_group"
+                value="Add"/>
+            </td>
+          </form>
+        </tr>
+        
+        <tr>
+          <form method="post" id="form-addCredential_ipRange">
+            <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
+            <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+            <td>
+              <i18n:text>IP Range</i18n:text>
+            </td>
+            <td>
+              <select name="ipRange" class="lenya-form-element-narrow">
+                <jx:forEach var="ipRange" items="${usecase.getParameter('ipRanges')}">
+                  <option value="${ipRange}">
+                    <jx:out value="${ipRange}"/>
+                  </option>
+                </jx:forEach>
+              </select>
+            </td>
+            <td>
+              <select name="role" class="lenya-form-element-narrow">
+                <jx:forEach var="role" items="${usecase.getParameter('roles')}">
+                  <option value="${role}">
+                    <jx:out value="${role}"/>
+                  </option>
+                </jx:forEach>
+              </select>
+            </td>
+            <td>
+              <select name="method" class="lenya-form-element-narrow">
+                <option value="deny">Deny</option>
+                <option value="grant">Grant</option>
+              </select>
+            </td>
+            <td>
+              <input i18n:attr="value" type="submit" name="addCredential_ipRange"
+                value="Add"/>
+            </td>
+          </form>
+        </tr>
+        
+        <tr>
+          <form method="post" id="form-addCredential_world">
+            <input type="hidden" name="lenya.usecase"
+              value="${usecase.getName()}"/>
+            <input type="hidden" name="lenya.continuation"
+              value="${continuation.id}"/>
+            <td>
+              <i18n:text>world</i18n:text>
+            </td>
+            <td/>
+            <td>
+              <select name="role" class="lenya-form-element-narrow">
+                <jx:forEach var="role" items="${usecase.getParameter('roles')}">
+                  <option value="${role}">
+                    <jx:out value="${role}"/>
+                  </option>
+                </jx:forEach>
+              </select>
+            </td>
+            <td>
+              <select name="method" class="lenya-form-element-narrow">
+                <option value="deny">Deny</option>
+                <option value="grant">Grant</option>
+              </select>
+            </td>
+            <td>
+              <input i18n:attr="value" type="submit" name="addCredential_world"
                 value="Add"/>
             </td>
           </form>

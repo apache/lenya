@@ -41,6 +41,7 @@ import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.Credential;
 import org.apache.lenya.ac.ModifiablePolicy;
 import org.apache.lenya.ac.InheritingPolicyManager;
+import org.apache.lenya.ac.World;
 
 /**
  * Usecase to display the AccessControl tab in the site area for a document.
@@ -71,6 +72,8 @@ public class AccessControl extends AccessControlUsecase {
 
     protected static final String IPRANGE = "ipRange";
 
+    protected static final String WORLD = "world";
+
     protected static final String ROLE = "role";
 
     protected static final String SUB_USER = "subuser";
@@ -79,7 +82,7 @@ public class AccessControl extends AccessControlUsecase {
 
     protected static final String SUB_IPRANGE = "subipRange";
 
-    private static String[] types = { USER, GROUP, IPRANGE, SUB_USER, SUB_GROUP, SUB_IPRANGE };
+    private static String[] types = { USER, GROUP, IPRANGE, SUB_USER, SUB_GROUP, SUB_IPRANGE, WORLD };
 
     private static String[] operations = { ADD, DELETE, DOWN, UP };
 
@@ -230,13 +233,15 @@ public class AccessControl extends AccessControlUsecase {
                         String method = getParameterAsString(METHOD);
 
                         String id = getParameterAsString(type);
-                        Item item = null;
+                        Accreditable item = null;
                         if (type.equals(USER)) {
                             item = getUserManager().getUser(id);
                         } else if (type.equals(GROUP)) {
                             item = getGroupManager().getGroup(id);
                         } else if (type.equals(IPRANGE)) {
                             item = getIpRangeManager().getIPRange(id);
+                        } else if (type.equals(WORLD)) {
+                            item = World.getInstance();
                         }
                         if (item == null) {
                             addErrorMessage("no_such_accreditable", new String[] { type, id });
@@ -341,20 +346,19 @@ public class AccessControl extends AccessControlUsecase {
     /**
      * Changes a credential by adding or deleting an item for a role.
      * 
-     * @param item The item to add or delete.
+     * @param accreditable The accreditable to add or delete.
      * @param role The role.
      * @param operation The operation, either {@link #ADD}or {@link #DELETE}.
      * @param inherit
-     * @param method2
+     * @param method
      * @throws ProcessingException when something went wrong.
      */
-    protected void manipulateCredential(Item item, Role role, String operation, String method)
+    protected void manipulateCredential(Accreditable accreditable, Role role, String operation, String method)
             throws ProcessingException {
         ModifiablePolicy policy = null;
         try {
             policy = (ModifiablePolicy) getPolicyManager().buildSubtreePolicy(
                     getAccreditableManager(), getPolicyURL());
-            Accreditable accreditable = (Accreditable) item;
 
             if (operation.equals(ADD)) {
                 policy.addRole(accreditable, role, method);
