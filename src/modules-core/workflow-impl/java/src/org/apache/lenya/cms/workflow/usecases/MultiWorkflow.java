@@ -28,10 +28,18 @@ import java.util.TreeSet;
 
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
+import org.apache.lenya.cms.publication.DocumentException;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
-import org.apache.lenya.cms.usecase.DocumentUsecase;
+import org.apache.lenya.cms.site.SiteStructure;
+import org.apache.lenya.cms.usecase.AbstractUsecase;
 import org.apache.lenya.cms.usecase.UsecaseInvoker;
 import org.apache.lenya.cms.usecase.UsecaseMessage;
 import org.apache.lenya.util.Assert;
@@ -39,17 +47,13 @@ import org.apache.lenya.util.Assert;
 /**
  * Manage the workflow of multiple documents.
  */
-public class MultiWorkflow extends DocumentUsecase {
+public class MultiWorkflow extends AbstractUsecase {
 
     protected void initParameters() {
         super.initParameters();
 
-        if (getSourceDocument() == null) {
-            return;
-        }
-        
         try {
-            List preOrder = getPreOrder(getSourceDocument().getLink().getNode());
+            List preOrder = getNodes();
             List wrappers = new ArrayList();
             SortedSet states = new TreeSet();
             for (Iterator i = preOrder.iterator(); i.hasNext();) {
@@ -65,6 +69,27 @@ public class MultiWorkflow extends DocumentUsecase {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    protected List getNodes() throws DocumentBuildException, DocumentException, PublicationException {
+        List preOrder;
+        String sourceUrl = getSourceURL();
+        DocumentFactory factory = getDocumentFactory();
+        if (getDocumentFactory().isDocument(sourceUrl)) {
+            Document doc = factory.getFromURL(sourceUrl);
+            preOrder = getPreOrder(doc.getLink().getNode());
+        } else {
+            preOrder = new ArrayList();
+            URLInformation info = new URLInformation(getSourceURL());
+            Publication pub = factory.getPublication(info.getPublicationId());
+            Area area = pub.getArea(info.getArea());
+            SiteStructure site = area.getSite();
+            SiteNode[] topLevelNodes = site.getTopLevelNodes();
+            for (int i = 0; i < topLevelNodes.length; i++) {
+                preOrder.addAll(getPreOrder(topLevelNodes[i]));
+            }
+        }
+        return preOrder;
     }
 
     protected List getPreOrder(SiteNode node) throws SiteException {
@@ -83,37 +108,36 @@ public class MultiWorkflow extends DocumentUsecase {
 
     protected void doExecute() throws Exception {
         super.doExecute();
-        
+
         String usecase = getParameterAsString("usecaseName");
         Assert.notNull("usecase", usecase);
         String url = getParameterAsString("url");
         Assert.notNull("url", url);
-        
+
         UsecaseInvoker invoker = null;
         try {
             invoker = (UsecaseInvoker) this.manager.lookup(UsecaseInvoker.ROLE);
             invoker.invoke(url, usecase, new HashMap());
-            
+
             if (invoker.getResult() != UsecaseInvoker.SUCCESS) {
                 List messages = invoker.getErrorMessages();
-                for (Iterator i = messages.iterator(); i.hasNext(); ) {
+                for (Iterator i = messages.iterator(); i.hasNext();) {
                     UsecaseMessage message = (UsecaseMessage) i.next();
                     addErrorMessage(message.getMessage(), message.getParameters());
                 }
             }
-        }
-        finally {
+        } finally {
             if (invoker == null) {
                 this.manager.release(invoker);
             }
         }
     }
-    
+
     private Map usecase2event = new HashMap();
 
     public void configure(Configuration config) throws ConfigurationException {
         super.configure(config);
-        
+
         Configuration[] usecaseConfigs = config.getChildren("usecase");
         for (int i = 0; i < usecaseConfigs.length; i++) {
             String usecase = usecaseConfigs[i].getAttribute("name");
@@ -121,14 +145,14 @@ public class MultiWorkflow extends DocumentUsecase {
             this.usecase2event.put(usecase, event);
         }
     }
-    
+
     /**
      * @param event An event.
      * @return All usecases associated with this event.
      */
     public String[] getUsecases(String event) {
         SortedSet usecases = new TreeSet();
-        for (Iterator i = this.usecase2event.keySet().iterator(); i.hasNext(); ) {
+        for (Iterator i = this.usecase2event.keySet().iterator(); i.hasNext();) {
             String usecase = (String) i.next();
             if (this.usecase2event.get(usecase).equals(event)) {
                 usecases.add(usecase);
