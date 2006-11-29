@@ -30,6 +30,7 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.NodeSet;
+import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
@@ -76,13 +77,10 @@ public abstract class MoveSubsite extends DocumentUsecase {
                     Document liveVersion = docs[i].getAreaVersion(Publication.LIVE_AREA);
                     addErrorMessage("delete-doc-live", new String[] { liveVersion.toString() });
                 }
-                if (!WorkflowUtil.canInvoke(this.manager,
-                        getSession(),
-                        getLogger(),
-                        docs[i],
+                if (!WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), docs[i],
                         getEvent())) {
-                    addErrorMessage("The workflow event [" + getEvent() + "] cannot be invoked on document [" + docs[i]
-                            + "].");
+                    addErrorMessage("The workflow event [" + getEvent()
+                            + "] cannot be invoked on document [" + docs[i] + "].");
                 }
             }
         }
@@ -94,8 +92,8 @@ public abstract class MoveSubsite extends DocumentUsecase {
     protected abstract String getEvent();
 
     /**
-     * Lock all source documents and the site structure repository nodes because changes to the site
-     * structure would compromise the operation.
+     * Lock all source documents and the site structure repository nodes because
+     * changes to the site structure would compromise the operation.
      */
     protected Node[] getNodesToLock() throws UsecaseException {
         try {
@@ -104,8 +102,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
 
             SiteStructure sourceSite = getSourceDocument().area().getSite();
             SiteStructure targetSite = getSourceDocument().getPublication()
-                    .getArea(getTargetArea())
-                    .getSite();
+                    .getArea(getTargetArea()).getSite();
 
             nodes.add(sourceSite.getRepositoryNode());
             nodes.add(targetSite.getRepositoryNode());
@@ -137,11 +134,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
         targetLoc = SiteUtil.getAvailableLocator(this.manager, getDocumentFactory(), targetLoc);
 
         for (int i = 0; i < sources.length; i++) {
-            WorkflowUtil.invoke(this.manager,
-                    getSession(),
-                    getLogger(),
-                    sources[i],
-                    getEvent(),
+            WorkflowUtil.invoke(this.manager, getSession(), getLogger(), sources[i], getEvent(),
                     true);
         }
 
@@ -160,4 +153,31 @@ public abstract class MoveSubsite extends DocumentUsecase {
 
     }
 
+    public String getTargetURL(boolean success) {
+        if (getTargetArea().equals(Publication.AUTHORING_AREA)) {
+            return super.getTargetURL(success);
+        }
+        
+        String url = null;
+        if (!success) {
+            url = getSourceURL();
+        } else {
+            try {
+                Document document = getTargetDocument(success);
+                SiteNode node = document.getLink().getNode();
+                if (node.isTopLevel()) {
+                    url = document.getPublication().getId() + "/" + document.getArea() + "/";
+                } else {
+                    SiteNode parent = node.getParent();
+                    SiteNode authoringParent = document.getPublication().getArea(
+                            Publication.AUTHORING_AREA).getSite().getNode(parent.getPath());
+                    String language = authoringParent.getLanguages()[0];
+                    url = authoringParent.getLink(language).getDocument().getCanonicalWebappURL();
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return url + getExitQueryString();
+    }
 }
