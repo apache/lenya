@@ -18,9 +18,7 @@
 
 package org.apache.lenya.ac.impl;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.cocoon.environment.Request;
@@ -29,7 +27,6 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.util.ServletHelper;
