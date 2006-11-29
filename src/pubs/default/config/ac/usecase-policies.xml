@@ -305,6 +305,11 @@
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
   </usecase>
+  <usecase id="workflow.multiWorkflow">
+    <role id="admin" method="grant"/>
+    <role id="review" method="grant"/>
+    <role id="edit" method="grant"/>
+  </usecase>
   <usecase id="kupu">
     <role id="admin" method="grant"/>
     <role id="edit" method="grant"/>
