@@ -46,7 +46,7 @@ public class WorkflowableWrapper extends AbstractLogEnabled {
 
     /**
      * Ctor.
-     * @param workflow
+     * @param usecase The usecase.
      * @param manager The service manager.
      * @param session The session.
      * @param document The document to wrap.
@@ -137,5 +137,15 @@ public class WorkflowableWrapper extends AbstractLogEnabled {
         }
 
         return (String[]) usecases.toArray(new String[usecases.size()]);
+    }
+    
+    /**
+     * @return The languages of the document in alphabetical order.
+     * @throws DocumentException 
+     */
+    public String[] getLanguages() throws DocumentException {
+        String[] languages = this.document.getLanguages();
+        Arrays.sort(languages);
+        return languages;
     }
 }

@@ -76,10 +76,15 @@
           <jx:set var="indent" value="${whitespace.substring(0, depth.intValue())}"/>
           <jx:set var="lastSlashIndex" value="${java.lang.Integer.valueOf(path.lastIndexOf('/'))}"/>
           <jx:set var="nodeName" value="${path.substring(lastSlashIndex.intValue())}"/>
+          <jx:set var="languages" value="${doc.getLanguages()}"/>
+          <jx:if test="${doc.getLanguage().equals(java.util.Arrays.asList(languages).get(0))}">
+            <td rowspan="${doc.getLanguages().size()}" style="vertical-align: top">
+              <jx:out value="${indent}"/><jx:out value="${indent}"/><jx:out value="${indent}"/><jx:out value="${indent}"/><jx:out value="${nodeName}"/>
+            </td>
+          </jx:if>
           <td>
-            <jx:out value="${indent}"/><jx:out value="${indent}"/><jx:out value="${indent}"/><jx:out value="${indent}"/><a href="${request.contextPath}${doc.getUrl()}"><jx:out value="${nodeName}"/></a>
+            <a href="${request.contextPath}${doc.getUrl()}"><jx:out value="${doc.getLanguage()}"/></a>
           </td>
-          <td><jx:out value="${doc.getLanguage()}"/></td>
           <jx:choose>
             <jx:when test="${style.equals('text')}">
               <td>
