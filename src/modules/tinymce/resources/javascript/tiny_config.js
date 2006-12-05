@@ -4,6 +4,8 @@ of options can be found in the excellent manual at
 http://tinymce.moxiecode.com/tinymce/docs/reference_configuration.html
 */
   
+    currentURL = location.href.replace(/\?.*$/,"");
+    //alert(currentURL);
     config = {
 
     /* enable customizable theme */
@@ -18,10 +20,18 @@ http://tinymce.moxiecode.com/tinymce/docs/reference_configuration.html
 
     /* enable plugins for custom save function, fullscreen editing
       and search-and-replace. */
-    plugins  : "save,fullscreen,searchreplace,table,contextmenu",
+    plugins  : "save,fullscreen,searchreplace,table,contextmenu,simplebrowser",
+    
+       plugin_simplebrowser_width : '800', //default
+       plugin_simplebrowser_height : '600', //default
+       
+       plugin_simplebrowser_browselinkurl : currentURL + '?lenya.module=tinymce&lenya.step=link-show&language=en',
+       plugin_simplebrowser_browseimageurl : '',
+       plugin_simplebrowser_browseflashurl : '',
+     
 
     /* grey out the "save" button unless there are unsaved changes: */
-    save_enablewhendirty : true,
+    save_enablewhendirty : false,
 
     /* some special settings for fullscreen mode (they override the 
       settings further down) */
