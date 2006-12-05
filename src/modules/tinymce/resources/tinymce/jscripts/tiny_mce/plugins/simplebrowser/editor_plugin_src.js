@@ -1,8 +1,4 @@
-/*
- *	Andrew Tetlaw - 2006/02 - for TinyMCE 2.0.3 and above
- *	A port of the FCKEditor file browser as a TinyMCE plugin.
- *	http://tetlaw.id.au/view/blog/fckeditor-file-browser-plugin-for-tinymce-editor/
- */
+
 
 tinyMCE.importPluginLanguagePack('simplebrowser', 'en');
 
@@ -10,11 +6,11 @@ var TinyMCE_SimpleBrowserPlugin = {
 	options : {},
 	getInfo : function() {
 		return {
-			longname : 'Simple Browser plugin',
-			author : 'Andrew Tetlaw',
-			authorurl : 'http://tetlaw.id.au',
-			infourl : 'http://tetlaw.id.au/view/blog/fckeditor-file-browser-plugin-for-tinymce-editor/',
-			version : "2.1"
+			longname : '',
+			author : '',
+			authorurl : '',
+			infourl : '',
+			version : ""
 		};
 	},
 

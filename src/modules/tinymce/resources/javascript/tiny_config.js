@@ -26,7 +26,7 @@ http://tinymce.moxiecode.com/tinymce/docs/reference_configuration.html
        plugin_simplebrowser_height : '600', //default
        
        plugin_simplebrowser_browselinkurl : currentURL + '?lenya.module=tinymce&lenya.step=link-show&language=en',
-       plugin_simplebrowser_browseimageurl : '',
+       plugin_simplebrowser_browseimageurl : currentURL + '?lenya.usecase=tinymce.insertAsset',
        plugin_simplebrowser_browseflashurl : '',
      
 

@@ -16,50 +16,26 @@
   limitations under the License.
 -->
 
-<!-- $Id: insertAsset.jx 448601 2006-09-21 16:30:56Z nettings $ -->
-
-<!--
-  A view for a generic usecase to insert assets, to be used by content editors.
-  Recommended usage is to open it into a new window via JavaScript, possibly
-  by hooking into a button handler of the editor.
-  This usecase view needs a complementing javascript file (insertAsset.js) that 
-  takes care of passing the data back to the opening window by calling its 
-  insertCallback(string) function (which the calling window must provide).
-  "string" will contain an xhtml snippet that should be inserted into the editor
-  widget.
-  Optionally, the opening page can pass an editors.instance parameter to this 
-  usecase which is returned as a second parameter to the insertCallback() 
-  function. This is useful if you have multiple editors on one page and need to
-  tell who called the usecase.
-
-  If you use this view in a usecase that ends in "insertImage", some special
-  fields pertaining to images (width, height, ratio) are displayed. Otherwise
-  only the data for generic assets is handled.
--->
-
+<!-- $Id: insertAsset.jx 473861 2006-11-12 03:51:14Z gregor $ -->
 
 <page:page xmlns:jx="http://apache.org/cocoon/templates/jx/1.0" 
   xmlns:page="http://apache.org/cocoon/lenya/cms-page/1.0" 
   xmlns="http://www.w3.org/1999/xhtml" 
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1" >
-
-<jx:set var="isImage" value="${usecase.getName().endsWith('insertImage')}"/>
-<jx:set var="debugFormData" value="printFormData();"/>
-
+  
   <page:head>
     <script src="${request.contextPath}/modules/tinymce/javascript/insertAsset.js"/>
   </page:head>
- 
-  <page:title>
-    <i18n:text>TinyMCE - Insert Lenya resource</i18n:text>
-  </page:title>
- 
+
+   <page:title>
+     <i18n:text>TinyMCE - Insert Lenya resource</i18n:text>
+   </page:title>
+  
   <page:body>
-    <form method="POST" name="asset" id="asset">
+    <form method="POST" name="image" id="image">
       <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
       <table class="lenya-table">
-
         <tr>
           <th/>
           <th><i18n:text>Assets</i18n:text></th>
@@ -69,7 +45,6 @@
           <th><i18n:text>Dimension (w x h)</i18n:text></th>
           <th><i18n:text>Creation Date</i18n:text></th>
         </tr>
-
         <jx:forEach var="asset" items="${usecase.getParameter('assets')}">
           <tr>
             <td>
@@ -91,7 +66,6 @@
             <td align="right"><jx:out value="${java.text.DateFormat.getDateInstance().format(asset.getLastModified())}"/></td>
           </tr>
         </jx:forEach>
-
         <tr>
           <td colspan="6">
             <input type="hidden" name="type" value=""/>
@@ -103,8 +77,7 @@
                 <td class="lenya-entry-caption"><label for="caption"><i18n:text>Caption</i18n:text></label>:</td>
                 <td><input class="lenya-form-element" type="text" name="caption"/></td>
               </tr>
-
-              <jx:if test="${isImage}">
+              <jx:if test="${usecase.getName().equals('tinymce.insertImage')}">
                 <tr>
                   <td class="lenya-entry-caption"><label for="width"><i18n:text>width</i18n:text></label>:</td>
                   <td><input class="lenya-form-element" type="text" name="width" onchange="javascript:scaleHeight(this.value)"/></td>
@@ -114,47 +87,30 @@
                   <td><input class="lenya-form-element" type="text" name="height" onchange="javascript:scaleWidth(this.value)"/></td>
                 </tr>
               </jx:if>
-
               <tr>
                 <td colspan="2">
-                  <jx:choose>
-                    <jx:when test="${isImage}">
-                       <input i18n:attr="value" type="submit" name="submit" value="Submit"
-                          onClick="javascript:${debugFormData}insertImage('${usecase.getParameter('editors.instance')}');/*window.close();*/" />
-                    </jx:when>
-                    <jx:otherwise>
-                       <input i18n:attr="value" type="submit" name="submit" value="Submit"
-                          onClick="javascript:${debugFormData}insertAsset('${usecase.getParameter('editors.instance')}');/*window.close();*/" />
-                    </jx:otherwise>
-                  </jx:choose>
+                  <input i18n:attr="value" type="submit" value="Submit"
+                    onClick="javascript:${usecase.getView().getParameter('callbackFunction')}('${usecase.getParameter('document').getName()}');" />
                   &#160;
                   <input i18n:attr="value" type="submit" name="cancel" value="Cancel"
-                    onClick="location.href='javascript:window.close();" />
+                    onClick="location.href='javascript:window.close();';" />
                 </td>
               </tr>
             </table>
           </td>
         </tr>
-
       </table>
     </form>
-
-
     <jx:if test="${usecase.getParameter('document').getArea().equals('authoring')}">
-
       <form method="POST" enctype="multipart/form-data" id="form-add_asset">
         <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
         <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
-        <input type="hidden" name="doctype" value="resource" />
-       
         <table class="lenya-table-noborder">
- 
-         <tr>
+          <tr>
             <td colspan="2">
               <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
             </td>
           </tr>
-
           <jx:choose>
             <jx:when test="${usecase.getParameter('pathProvided')}">
               <tr>
@@ -186,13 +142,11 @@
               </tr>
             </jx:otherwise>
           </jx:choose>
-
           <tr>
             <td class="lenya-entry-caption"><label for="file">
               <i18n:text>File</i18n:text> *</label></td>
             <td><input type="file" name="file" class="lenya-form-element"/></td>
           </tr>
-
           <tr>
             <td class="lenya-entry-caption">
               <label for="dublincore.title"><i18n:text>Navigation Title</i18n:text>*:
@@ -202,7 +156,6 @@
                 value="${usecase.getParameter('dublincore.title')}"/>
             </td>
           </tr>
-
           <tr>
             <td class="lenya-entry-caption">
               <label for="visibleinnav"><i18n:text>Document visible in Navigation</i18n:text>*:
@@ -229,7 +182,6 @@
               </select>
             </td>
           </tr>
-
           <jx:if test="${!usecase.getParameter('documentIdProvided')}">
             <tr>
               <td class="lenya-entry-caption">
@@ -254,7 +206,6 @@
               </td>
             </tr>
           </jx:if>
-
           <jx:set var="languages" value="${usecase.getParameter('languages')}"/>
           <jx:choose>
             <jx:when test="${languages.size() &gt; 1}">
@@ -281,13 +232,12 @@
               </tr>
             </jx:otherwise>
           </jx:choose>
-
+          <input type="hidden" name="doctype" value="resource" />
           <tr>
             <td class="lenya-entry-caption">*
               <i18n:text>required fields</i18n:text>
             </td>
           </tr>
-
           <tr>
             <td/>
             <td>
@@ -295,12 +245,8 @@
                 value="New Asset"/>
             </td>
           </tr>
-
         </table>
-
       </form>
-
     </jx:if>
-
   </page:body>
 </page:page>
