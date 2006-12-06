@@ -114,6 +114,8 @@
           <bxe-css href="#bxe-css"/>
         </faq>
     
+    <bestpractises href="bestpractises.html" label="Best Practises"/>
+    
     <!--          <whole_docu href="../documentation-1-4.pdf" label="1.4 PDF docs (all in one)" />
       <whole_docu href="../documentation-1-4.html" label="1.4 HTML docs (all in one)" />
     -->          
@@ -153,7 +155,43 @@
       <repository href="repository/index.html" label="Repository"/>
     </reference>
     
-    <javadoc1.4 href="../../../../apidocs/1.4/index.html" label="1.4 API (Javadoc)"/>
+    <javadoc1.4 href="../../../../apidocs/1.4/index.html" label="Core API"/>
+    <javadoc1.4overview label="Module APIs">
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/ac-impl/index.html" label="ac-impl"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/administration/index.html" label="administration"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/cache/index.html" label="cache"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/cforms/index.html" label="cforms"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/contacform/index.html" label="contactform"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/defaultusecases/index.html" label="defaultusecases"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/editors/index.html" label="editors"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/export/index.html" label="export"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/fckeditor/index.html" label="fckeditor"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/jackrabbit/index.html" label="jackrabbit"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/janitor/index.html" label="janitor"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/jcr/index.html" label="jcr"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/kupu/index.html" label="kupu"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/ldap/index.html" label="ldap"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/lenyadoc/index.html" label="lenyadoc"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/linkcheck/index.html" label="linkcheck"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/linking/index.html" label="linking"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/lucene/index.html" label="lucene"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/notification/index.html" label="notification"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/observation-impl/index.html" label="observation-impl"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/opendocument/index.html" label="opendocument"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/properties/index.html" label="properties"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/repository/index.html" label="repository"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/resource/index.html" label="resource"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/sitemanagement/index.html" label="sitemanagement"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/sitetree/index.html" label="sitetree"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/sourcerepository/index.html" label="sourcerepository"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/templating-impl/index.html" label="templating-impl"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/tinymce/index.html" label="tinymce"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/usecase/index.html" label="usecase"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/usecase-impl/index.html" label="usecase-impl"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/usecasedocument/index.html" label="usecasedocument"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/webdav/index.html" label="webdav"/>
+      <javadoc1.4 href="../../../../apidocs/1.4/modules/workflow-impl/index.html" label="workflow-impl"/>
+    </javadoc1.4overview>    
     
   </docu1.4>
   <modules href="modules/" label="Modules" tab="modules">
