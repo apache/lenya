@@ -1,0 +1,470 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta content="Apache Forrest" name="Generator">
+<meta name="Forrest-version" content="0.8-dev">
+<meta name="Forrest-skin-name" content="pelt">
+<title>Setting up Your Development Environment</title>
+<link type="text/css" href="../../../../skin/basic.css" rel="stylesheet">
+<link media="screen" type="text/css" href="../../../../skin/screen.css" rel="stylesheet">
+<link media="print" type="text/css" href="../../../../skin/print.css" rel="stylesheet">
+<link type="text/css" href="../../../../skin/profile.css" rel="stylesheet">
+<script src="../../../../skin/getBlank.js" language="javascript" type="text/javascript"></script><script src="../../../../skin/getMenu.js" language="javascript" type="text/javascript"></script><script src="../../../../skin/fontsize.js" language="javascript" type="text/javascript"></script>
+<link rel="shortcut icon" href="../../../../favicon.ico">
+</head>
+<body onload="init()">
+<script type="text/javascript">ndeSetTextSize();</script>
+<div id="top">
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+<a href="http://www.apache.org/">apache</a> &gt; <a href="http://lenya.apache.org/">lenya</a><script src="../../../../skin/breadcrumbs.js" language="JavaScript" type="text/javascript"></script>
+</div>
+<!--+
+    |header
+    +-->
+<div class="header">
+<!--+
+    |start group logo
+    +-->
+<div class="grouplogo">
+<a href=""><img class="logoImage" alt="Lenya" src="../../../../images/apache-lenya-light.png" title=""></a>
+</div>
+<!--+
+    |end group logo
+    +-->
+<!--+
+    |start Project Logo
+    +-->
+<div class="projectlogo">
+<a href=""></a>
+</div>
+<!--+
+    |end Project Logo
+    +-->
+<!--+
+    |start Search
+    +-->
+<div class="searchbox">
+<form action="http://www.google.com/search" method="get" class="roundtopsmall">
+<input value="lenya.apache.org" name="sitesearch" type="hidden"><input onFocus="getBlank (this, 'Search the site with ');" size="25" name="q" id="query" type="text" value="Search the site with ">&nbsp; 
+                    <input name="Search" value="Search" type="submit">
+</form>
+</div>
+<!--+
+    |end search
+    +-->
+<!--+
+    |start Tabs
+    +-->
+<ul id="tabs">
+<li>
+<a class="unselected" href="../../../../index.html">Project</a>
+</li>
+<li class="current">
+<a class="selected" href="../../../../docs/index.html">Documentation</a>
+</li>
+<li>
+<a class="unselected" href="../../../../community/index.html">Community</a>
+</li>
+</ul>
+<!--+
+    |end Tabs
+    +-->
+</div>
+</div>
+<div id="main">
+<div id="publishedStrip">
+<!--+
+    |start Subtabs
+    +-->
+<div id="level2tabs">
+<a class="selected" href="../../../../docs/1_4/index.html">Version 1.4</a><a class="unselected" href="../../../../docs/modules/index.html">Modules</a><a class="unselected" href="../../../../docs/1_2_x/index.html">Version 1.2</a>
+</div>
+<!--+
+    |end Endtabs
+    +-->
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<!--+
+    |breadtrail
+    +-->
+<div class="breadtrail">
+             
+             &nbsp;
+           </div>
+<!--+
+    |start Menu, mainarea
+    +-->
+<!--+
+    |start Menu
+    +-->
+<div id="menu">
+<div onclick="SwitchMenu('menu_selected_1.1', '../../../../skin/')" id="menu_selected_1.1Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Version 1.4</div>
+<div id="menu_selected_1.1" class="selectedmenuitemgroup" style="display: block;">
+<div class="menuitem">
+<a href="../../../../docs/1_4/index.html">Index</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/faq.html">FAQs</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.3', '../../../../skin/')" id="menu_1.1.3Title" class="menutitle">Installation</div>
+<div id="menu_1.1.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/1_4/installation/index.html">Download</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/installation/subversion.html">Subversion Access</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/installation/source_version.html">Install Instructions</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_selected_1.1.4', '../../../../skin/')" id="menu_selected_1.1.4Title" class="menutitle" style="background-image: url('../../../../skin/images/chapter_open.gif');">Tutorials</div>
+<div id="menu_selected_1.1.4" class="selectedmenuitemgroup" style="display: block;">
+<div class="menupage">
+<div class="menupagetitle">Setting up Eclipse</div>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/tutorials/tests.html">Writing Tests</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/tutorials/bestpractises.html">Best Practises</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.5', '../../../../skin/')" id="menu_1.1.5Title" class="menutitle">Concepts</div>
+<div id="menu_1.1.5" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/1_4/concepts/publication.html">Publication</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/concepts/documents.html">Working with Documents</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/concepts/urlMapping.html">URL Mapping</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/concepts/authoring_live.html">Authoring and Live mode</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/concepts/wysiwyg.html">WYSIWYG</a>
+</div>
+</div>
+<div onclick="SwitchMenu('menu_1.1.6', '../../../../skin/')" id="menu_1.1.6Title" class="menutitle">Technical Reference</div>
+<div id="menu_1.1.6" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/lenya-sitemaps.html">Overview of Lenya Sitemaps</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/ac.html">Access Control Specification</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.6.3', '../../../../skin/')" id="menu_1.1.6.3Title" class="menutitle">Usecase Framework</div>
+<div id="menu_1.1.6.3" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/usecase-framework/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/usecase-framework/abstractusecase.html">AbstractUsecase</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/publication-templating/index.html">Publication Templating</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/resource-types.html">Resource Types</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/modules/index.html">Modules</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/metadata.html">Meta data</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.6.8', '../../../../skin/')" id="menu_1.1.6.8Title" class="menutitle">Protocols</div>
+<div id="menu_1.1.6.8" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/protocols/index.html">Overview</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/protocols/lenya.html">lenya:</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/protocols/lenyadoc.html">lenyadoc:</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/protocols/site.html">error:site:</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/link-management.html">Link Management</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/notification.html">Notification</a>
+</div>
+<div class="menuitem">
+<a href="../../../../docs/1_4/reference/repository/index.html">Repository</a>
+</div>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/index.html">Core API</a>
+</div>
+<div onclick="SwitchMenu('menu_1.1.8', '../../../../skin/')" id="menu_1.1.8Title" class="menutitle">Module APIs</div>
+<div id="menu_1.1.8" class="menuitemgroup">
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/ac-impl/index.html">ac-impl</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/administration/index.html">administration</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/cache/index.html">cache</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/cforms/index.html">cforms</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/contacform/index.html">contactform</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/defaultusecases/index.html">defaultusecases</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/editors/index.html">editors</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/export/index.html">export</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/fckeditor/index.html">fckeditor</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/jackrabbit/index.html">jackrabbit</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/janitor/index.html">janitor</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/jcr/index.html">jcr</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/kupu/index.html">kupu</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/ldap/index.html">ldap</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/lenyadoc/index.html">lenyadoc</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/linkcheck/index.html">linkcheck</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/linking/index.html">linking</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/lucene/index.html">lucene</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/notification/index.html">notification</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/observation-impl/index.html">observation-impl</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/opendocument/index.html">opendocument</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/properties/index.html">properties</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/repository/index.html">repository</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/resource/index.html">resource</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/sitemanagement/index.html">sitemanagement</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/sitetree/index.html">sitetree</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/sourcerepository/index.html">sourcerepository</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/templating-impl/index.html">templating-impl</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/tinymce/index.html">tinymce</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/usecase/index.html">usecase</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/usecase-impl/index.html">usecase-impl</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/usecasedocument/index.html">usecasedocument</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/webdav/index.html">webdav</a>
+</div>
+<div class="menuitem">
+<a href="../../../../apidocs/1.4/modules/workflow-impl/index.html">workflow-impl</a>
+</div>
+</div>
+</div>
+<div id="credit">
+<hr>
+<a href="http://forrest.apache.org/"><img border="0" title="Built with Apache Forrest" alt="Built with Apache Forrest - logo" src="../../../../images/built-with-forrest-button.png" style="width: 88px;height: 31px;"></a>
+</div>
+<div id="roundbottom">
+<img style="display: none" class="corner" height="15" width="15" alt="" src="../../../../skin/images/rc-b-l-15-1body-2menu-3menu.png"></div>
+<!--+
+  |alternative credits
+  +-->
+<div id="credit2">
+<a href="http://apachecon.com/"><img border="0" title="ApacheCon EU 2006" alt="ApacheCon EU 2006 - logo" src="http://www.eu.apachecon.com/konferenzen/apachecon06/images/header-left.gif" style="width: 150px;height: 50px;"></a>
+</div>
+</div>
+<!--+
+    |end Menu
+    +-->
+<!--+
+    |start content
+    +-->
+<div id="content">
+<div title="Portable Document Format" class="pdflink">
+<a class="dida" href="index.pdf"><img alt="PDF -icon" src="../../../../skin/images/pdfdoc.gif" class="skin"><br>
+        PDF</a>
+</div>
+<h1>Setting up Your Development Environment</h1>
+    
+<p>
+      To ensure a good productivity when building Lenya applications, it is essential
+      that you have a well-configured development environment.
+    </p>
+    
+<p>
+      The following steps guide you through the process of setting up the Eclipse IDE for Lenya.
+      The paths apply to a Unix-like operating system, for Windows you have to change
+      the paths accordingly and replace all shell script names with the names of the corresponding
+      batch files.
+    </p>
+    
+<ul>
+      
+<li>
+        
+<p>
+        Check out the Lenya trunk and the Cocoon branch 2.1 from the Subversion
+        repository (see <a href="../../../../docs/1_4/installation/source_version.html">Installation Instructions</a>).
+        I suggest to use the following directory layout:
+        </p>
+
+<pre class="code">src/
+  apache/
+    lenya/
+      trunk/             -&gt; LENYA_HOME
+    cocoon/
+      branches/
+        BRANCH_2_1_X/    -&gt; COCOON_HOME
+</pre>
+        
+<p>
+          You don't need to set these environment variables, I only use them in
+          this tutorial.
+        </p>
+        
+<p>
+          Note that we don't use the Cocoon version which ships with Lenya, but
+          a separate working copy of Cocoon. This is necessary because Eclipse
+          doesn't support nested projects. 
+        </p>
+        
+<p>
+        The <span class="codefrag">apache</span> directory will come in handy when you start serious
+        development, because you're likely to peek into the source code of other
+        ASF projects like Excalibur or Xalan.
+        </p>
+      
+</li>
+      
+<li>
+        Edit <span class="codefrag">$LENYA_HOME/local.build.properties</span> and set the property
+        <span class="codefrag">cocoon.src.dir</span> to the path of your <span class="codefrag">$COCOON_HOME</span>
+        directory. When you use the suggested directory structure, this would be
+        <span class="codefrag">../../cocoon/branches/BRANCH_2_1_X</span>.
+      </li>
+      
+<li>
+        Go to the <span class="codefrag">$COCOON_HOME</span> directory and execute
+        <pre class="code">./build.sh eclipse-project</pre>
+        This creates the Cocoon project files for Eclipse.
+      </li>
+      
+<li>
+        Go to the <span class="codefrag">$LENYA_HOME</span> directory and execute
+        <pre class="code">./build.sh eclipse-project</pre>
+        This creates the Lenya project files for Eclipse.
+      </li>
+      
+<li>
+        You can now import both projects in Eclipse.
+      </li>
+      
+<li>
+        If your Lenya project complains that various packages are not
+        found, it is probably necessary to edit the <em>Java Build Path</em> properties
+        of your Cocoon project and select all libraries on the <em>Order and Export</em> tab.
+      </li>
+      
+<li>
+        In the <em>Preferences</em> pane, you have to configure the Java compiler to
+        use the 1.4 compliance level.
+      </li>
+      
+<li>
+        A decent XML and XSLT editor is recommended, you can for instance install the
+        web tools platform from the Eclipse project. 
+      </li>
+      
+<li>
+        Have fun!
+      </li>
+    
+</ul>
+  
+</div>
+<!--+
+    |end content
+    +-->
+<div class="clearboth">&nbsp;</div>
+</div>
+<div id="footer">
+<!--+
+    |start bottomstrip
+    +-->
+<div class="lastmodified">
+<script type="text/javascript"><!--
+document.write("Last Published: " + document.lastModified);
+//  --></script>
+</div>
+<div class="copyright">
+        Copyright &copy;
+         2002-2005 <a href="http://www.apache.org/licenses/LICENSE-2.0">The Apache Software Foundation.</a>
+</div>
+<div id="logos"></div>
+<div id="feedback">
+    Send feedback about the website to:
+  <a id="feedbackto" href="mailto:dev@lenya.apache.org?subject=Feedback%C2%A0for%C2%A0docs/1_4/tutorials/setupide/index.html">dev@lenya.apache.org</a>
+</div>
+<!--+
+    |end bottomstrip
+    +-->
+</div>
+</body>
+</html>
