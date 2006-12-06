@@ -98,7 +98,6 @@
   <docu href="docs/" label="Documentation" tab="docu">
     <index href="index.html" label="Index"/>
     <coding href="coding-guidelines.html" label="Coding Guidelines"/>
-    <tests href="tests.html" label="Writing Tests"/>
     <unit-test href="unittests.html" label="Unit Tests"/>
     <website-update href="website-update.html" label="Website Update"/>
     <rm href="release.html" label="Release Management"/>
@@ -122,8 +121,13 @@
     <installation14 href="installation/" label="Installation">
       <download14 href="index.html" label="Download"/>
       <subversion14 href="subversion.html" label="Subversion Access"/>
-      <instal14l href="source_version.html" label="Install Instructions"/>
+      <install14 href="source_version.html" label="Install Instructions"/>
     </installation14>
+    
+    <tutorials href="tutorials/" label="Tutorials">
+      <setupide href="setupide/index.html" label="Setting up Eclipse"/>
+      <tests href="tests.html" label="Writing Tests"/>
+    </tutorials>
     
     <concepts href="concepts/" label="Concepts">
       <publication href="publication.html" label="Publication" />
