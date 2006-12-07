@@ -30,8 +30,10 @@ import java.util.Set;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
+import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Identifiable;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.cms.ac.PolicyUtil;
 import org.apache.lenya.cms.linking.LinkManager;
 import org.apache.lenya.cms.linking.LinkResolver;
 import org.apache.lenya.cms.linking.LinkTarget;
@@ -92,7 +94,7 @@ public class Publish extends DocumentUsecase {
         setParameter(SCHEDULE_TIME, format.format(now));
 
         setParameter(SEND_NOTIFICATION, Boolean.TRUE);
-        
+
         setParameter(UNPUBLISHED_LINKS, getUnpublishedLinks());
     }
 
@@ -113,8 +115,7 @@ public class Publish extends DocumentUsecase {
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
-        finally {
+        } finally {
             if (linkMgr != null) {
                 this.manager.release(linkMgr);
             }
@@ -151,8 +152,8 @@ public class Publish extends DocumentUsecase {
     }
 
     /**
-     * Checks if the workflow event is supported and the parent of the document exists in the live
-     * area.
+     * Checks if the workflow event is supported and the parent of the document
+     * exists in the live area.
      * 
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
      */
@@ -224,8 +225,8 @@ public class Publish extends DocumentUsecase {
     }
 
     /**
-     * Returns a link of a certain node, preferrably in the document's language, or
-     * <code>null</code> if the node has no links.
+     * Returns a link of a certain node, preferrably in the document's language,
+     * or <code>null</code> if the node has no links.
      * @param path The path of the node.
      * @param document The document.
      * @return A link or <code>null</code>.
@@ -308,11 +309,13 @@ public class Publish extends DocumentUsecase {
     }
 
     protected void sendNotification(Document authoringDocument) throws NotificationException,
-            DocumentException {
+            DocumentException, AccessControlException {
         User sender = getSession().getIdentity().getUser();
-        Identifiable[] recipients = { sender };
-        Document liveVersion = authoringDocument.getAreaVersion(Publication.LIVE_AREA);
 
+        Identifiable[] recipients = PolicyUtil.getUsersWithRole(this.manager, authoringDocument
+                .getCanonicalWebappURL(), "review", getLogger());
+
+        Document liveVersion = authoringDocument.getAreaVersion(Publication.LIVE_AREA);
         String url;
 
         Proxy proxy = liveVersion.getPublication().getProxy(liveVersion, false);
@@ -340,7 +343,8 @@ public class Publish extends DocumentUsecase {
     }
 
     /**
-     * Publishes a document or the subtree below a document, based on the parameter SUBTREE.
+     * Publishes a document or the subtree below a document, based on the
+     * parameter SUBTREE.
      * 
      * @param document The document.
      */

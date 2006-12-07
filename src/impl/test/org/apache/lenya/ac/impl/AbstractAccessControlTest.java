@@ -149,8 +149,7 @@ public class AbstractAccessControlTest extends LenyaTestCase {
         User user = controller.getAccreditableManager().getUserManager().getUser(USERNAME);
         assertNotNull(user);
 
-        Identity identity = new Identity();
-        identity.enableLogging(getLogger());
+        Identity identity = new Identity(getLogger());
         identity.addIdentifiable(user);
 
         return identity;

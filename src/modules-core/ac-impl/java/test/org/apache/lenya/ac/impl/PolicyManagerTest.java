@@ -20,10 +20,16 @@
 
 package org.apache.lenya.ac.impl;
 
+import java.util.Arrays;
+import java.util.List;
+
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.ac.Role;
+import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserManager;
+import org.apache.lenya.cms.ac.PolicyUtil;
 
 /**
  * Test for the Policy Manager
@@ -36,7 +42,7 @@ public class PolicyManagerTest extends AbstractAccessControlTest {
      * The test.
      * @throws AccessControlException when something went wrong.
      */
-    public void testAccessController() throws AccessControlException {
+    public void testPolicyManager() throws AccessControlException {
         
         DefaultAccessController controller = getAccessController(); 
         PolicyManager policyManager = controller.getPolicyManager();
@@ -48,6 +54,16 @@ public class PolicyManagerTest extends AbstractAccessControlTest {
             
             Role[] roles = policyManager.getGrantedRoles(controller.getAccreditableManager(), getIdentity(), URLS[i]);
             assertTrue(roles.length > 0);
+
+            User[] users = PolicyUtil.getUsersWithRole(getManager(), URLS[i], "review", getLogger());
+            
+            UserManager userManager = controller.getAccreditableManager().getUserManager();
+            User lenya = userManager.getUser("lenya");
+            User alice = userManager.getUser("alice");
+            
+            List usersList = Arrays.asList(users);
+            assertFalse(usersList.contains(lenya));
+            assertTrue(usersList.contains(alice));
         }
     }
 
