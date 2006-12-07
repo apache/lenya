@@ -118,7 +118,7 @@
   <message key="reject-doc?">Voulez-vous rejeter le document {0}?</message>
 
   <!-- cms menu -->
-  <message key="New document">Nouveau document</message>
+  <message key="New document">Nouveau document {0}</message>
   <message key="New Language Version">Nouvelle traduction</message>
   <message key="Remove Language Version">Supprimer la traduction</message>
   <message key="File">Fichier</message>

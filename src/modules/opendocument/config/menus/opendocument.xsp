@@ -38,8 +38,13 @@
 
     <menus>
       <menu i18n:attr="name" name="File">
-        <block admin="false">
-          <item uc:usecase="opendocument.create" href="?doctype=opendocument"><i18n:text>New ODT</i18n:text></item>
+        <block areas="site authoring">
+          <item uc:usecase="opendocument.create" href="?doctype=opendocument">
+            <i18n:translate>
+              <i18n:text>New Document</i18n:text>
+              <i18n:param>ODT</i18n:param>
+            </i18n:translate>
+          </item>
         </block>
       </menu>
       <menu i18n:attr="name" name="Edit">
@@ -51,14 +56,14 @@
                     String requestURI = <input:get-attribute module="request" as="string" name="requestURI"/>;
                     String moduleURI = requestURI.substring(0,requestURI.lastIndexOf(".html")).concat(".odt?lenya.module=opendocument");
                     if ("opendocument".equals(doctype)) {
-                        <block info="false">
+                        <block areas="authoring">
                           <item>
                             <xsp:attribute name="href">
                               <xsp:expr>moduleURI</xsp:expr>
                             </xsp:attribute>
                             <i18n:text>Download ODT</i18n:text></item>
                         </block>
-                        <block info="false">
+                        <block areas="authoring">
                           <item uc:usecase="opendocument.upload" href="?"><i18n:text>Upload ODT</i18n:text></item>
                         </block>
                     }

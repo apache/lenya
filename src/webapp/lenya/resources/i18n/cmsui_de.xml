@@ -125,7 +125,7 @@
   <message key="reject-doc?">Wollen Sie das Dokument <xhtml:em>"{0}"</xhtml:em> ablehnen?</message>
 
   <!-- cms menu -->
-  <message key="New Document">Neues Dokument</message>
+  <message key="New Document">Neues {0}-Dokument</message>
   <message key="New Language Version">Neue Sprachversion</message>
   <message key="Remove Language Version">Sprachversion löschen</message>
   <message key="File">Datei</message>  

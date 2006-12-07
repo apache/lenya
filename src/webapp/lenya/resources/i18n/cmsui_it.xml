@@ -103,7 +103,7 @@
 	<message key="Reject">Respingi</message>
 	<message key="reject-doc?">Vuoi respingere il documento {0}?</message>
 	<!-- cms menu -->
-	<message key="New document">Nuovo Documento</message>
+	<message key="New document">Nuovo Documento {0}</message>
 	<message key="New Language Version">Nuova Lingua</message>
 	<message key="Remove Language Version">Rimuovi Lingua</message>
 	<message key="File">File</message>

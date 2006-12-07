@@ -38,8 +38,13 @@
 
     <menus>
       <menu i18n:attr="name" name="File">
-        <block admin="false">
-          <item uc:usecase="sitemanagement.create" href="?doctype=cforms"><i18n:text>New CForms Document</i18n:text></item>
+        <block areas="site authoring">
+          <item uc:usecase="sitemanagement.create" href="?doctype=cforms">
+            <i18n:translate>
+              <i18n:text>New Document</i18n:text>
+              <i18n:param>CForms</i18n:param>
+            </i18n:translate>
+          </item>
         </block>
       </menu>
       
@@ -50,7 +55,7 @@
                 if (doc instanceof Document &amp;&amp; ((Document) doc).exists()) {
                     String doctype = <input:get-attribute module="page-envelope" as="string" name="document-type"/>;
                     if ("cforms".equals(doctype)) {
-                        <block info="false">
+                        <block areas="authoring">
                           <item wf:event="edit" uc:usecase="cforms.edit" href="?"><i18n:text>With CForms</i18n:text></item>
                           <!-- TODO: add RelaxNG schemas for cforms doctype.
                           <item wf:event="edit" uc:usecase="editors.forms"><xsp:attribute name="href"><xsp:expr>"?form=" + doctype</xsp:expr></xsp:attribute><i18n:text>With Forms</i18n:text></item>

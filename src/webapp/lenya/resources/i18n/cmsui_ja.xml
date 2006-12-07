@@ -112,7 +112,7 @@
   <message key="reject-doc?">ドキュメント {0} を拒否しますか？</message>
 
   <!-- cms menu -->
-  <message key="New Document">新規ドキュメント</message>
+  <message key="New Document">新規ドキュメント {0}</message>
   <message key="New Language Version">新規言語バージョン</message>
   <message key="Remove Language Version">言語バージョンの削除</message>
   <message key="File">ファイル</message>
