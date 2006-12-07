@@ -60,7 +60,9 @@ import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.notification.Message;
 import org.apache.lenya.notification.NotificationException;
 import org.apache.lenya.notification.NotificationUtil;
+import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.WorkflowException;
+import org.apache.lenya.workflow.Workflowable;
 
 /**
  * Publish usecase handler.
@@ -312,27 +314,39 @@ public class Publish extends DocumentUsecase {
             DocumentException, AccessControlException {
         User sender = getSession().getIdentity().getUser();
 
-        Identifiable[] recipients = PolicyUtil.getUsersWithRole(this.manager, authoringDocument
-                .getCanonicalWebappURL(), "review", getLogger());
+        Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, getSession(),
+                getLogger(), authoringDocument);
+        Version version = workflowable.getLatestVersion();
 
-        Document liveVersion = authoringDocument.getAreaVersion(Publication.LIVE_AREA);
-        String url;
+        // we assume that the document has been submitted, otherwise we do nothing
+        if (version.getEvent().equals("submit")) {
+            
+            String userId = version.getUserId();
 
-        Proxy proxy = liveVersion.getPublication().getProxy(liveVersion, false);
-        if (proxy != null) {
-            url = proxy.getURL(liveVersion);
-        } else {
-            Request request = ContextHelper.getRequest(this.context);
-            final String serverUrl = "http://" + request.getServerName() + ":"
-                    + request.getServerPort();
-            final String webappUrl = liveVersion.getCanonicalWebappURL();
-            url = serverUrl + request.getContextPath() + webappUrl;
+            User user = PolicyUtil.getUser(this.manager, authoringDocument
+                    .getCanonicalWebappURL(), userId, getLogger());
+            
+            Identifiable[] recipients = { user };
+    
+            Document liveVersion = authoringDocument.getAreaVersion(Publication.LIVE_AREA);
+            String url;
+    
+            Proxy proxy = liveVersion.getPublication().getProxy(liveVersion, false);
+            if (proxy != null) {
+                url = proxy.getURL(liveVersion);
+            } else {
+                Request request = ContextHelper.getRequest(this.context);
+                final String serverUrl = "http://" + request.getServerName() + ":"
+                        + request.getServerPort();
+                final String webappUrl = liveVersion.getCanonicalWebappURL();
+                url = serverUrl + request.getContextPath() + webappUrl;
+            }
+            String[] params = { url };
+            Message message = new Message(MESSAGE_SUBJECT, new String[0], MESSAGE_DOCUMENT_PUBLISHED,
+                    params);
+    
+            NotificationUtil.notify(this.manager, recipients, sender, message);
         }
-        String[] params = { url };
-        Message message = new Message(MESSAGE_SUBJECT, new String[0], MESSAGE_DOCUMENT_PUBLISHED,
-                params);
-
-        NotificationUtil.notify(this.manager, recipients, sender, message);
     }
 
     /**

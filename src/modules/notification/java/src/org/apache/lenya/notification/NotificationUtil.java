@@ -24,7 +24,7 @@ import org.apache.lenya.ac.Identifiable;
 /**
  * Notification utility.
  */
-public class NotificationUtil {
+public final class NotificationUtil {
 
     /**
      * Invokes a notification.
@@ -34,7 +34,7 @@ public class NotificationUtil {
      * @param message The message.
      * @throws NotificationException if an error occurs.
      */
-    public static void notify(ServiceManager manager, Identifiable[] recipients,
+    public static final void notify(ServiceManager manager, Identifiable[] recipients,
             Identifiable sender, Message message) throws NotificationException {
 
         Notifier notifier = null;

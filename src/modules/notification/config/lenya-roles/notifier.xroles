@@ -3,6 +3,6 @@
 
   <role name="org.apache.lenya.notification.Notifier"
     shorthand="notifier"
-    default-class="org.apache.lenya.notification.DefaultNotifier"/>
+    default-class="org.apache.lenya.notification.EmailNotifier"/>
   
 </xroles>

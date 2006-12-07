@@ -68,6 +68,45 @@ public final class PolicyUtil {
         Role[] roles = (Role[]) roleList.toArray(new Role[roleList.size()]);
         return roles;
     }
+    
+    /**
+     * @param manager The service manager.
+     * @param webappUrl The web application URL.
+     * @param userId The user ID.
+     * @param logger The logger.
+     * @return A user.
+     * @throws AccessControlException if an error occurs.
+     */
+    public static final User getUser(ServiceManager manager, String webappUrl,
+            String userId, Logger logger) throws AccessControlException {
+        ServiceSelector selector = null;
+        AccessControllerResolver resolver = null;
+        AccessController controller = null;
+        try {
+            selector = (ServiceSelector) manager.lookup(AccessControllerResolver.ROLE + "Selector");
+            resolver = (AccessControllerResolver) selector
+                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
+            controller = resolver.resolveAccessController(webappUrl);
+
+            AccreditableManager accreditableManager = controller.getAccreditableManager();
+            UserManager userManager = accreditableManager.getUserManager();
+            
+            return userManager.getUser(userId);
+        } catch (ServiceException e) {
+            throw new AccessControlException(e);
+        } finally {
+            if (selector != null) {
+                if (resolver != null) {
+                    if (controller != null) {
+                        resolver.release(controller);
+                    }
+                    selector.release(resolver);
+                }
+                manager.release(selector);
+            }
+        }
+
+    }
 
     /**
      * @param manager The service manager.

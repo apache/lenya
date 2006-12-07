@@ -17,16 +17,9 @@
  */
 package org.apache.lenya.notification;
 
-import java.util.Arrays;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Map;
-import java.util.Set;
 
-import org.apache.avalon.framework.configuration.Configurable;
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
 import org.apache.avalon.framework.context.Contextualizable;
@@ -37,77 +30,19 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
-import org.apache.cocoon.mail.MailSender;
 import org.apache.cocoon.transformation.I18nTransformer;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.ac.Group;
-import org.apache.lenya.ac.Identifiable;
-import org.apache.lenya.ac.User;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
- * Default notifier implementation.
+ * Base class for notifier implementation.
  */
-public class DefaultNotifier extends AbstractLogEnabled implements Notifier, Serviceable,
-        Configurable, Contextualizable {
-
-    public void notify(Identifiable[] recipients, Identifiable sender, Message message)
-            throws NotificationException {
-
-        Set noDuplicates = new HashSet();
-
-        for (int i = 0; i < recipients.length; i++) {
-            if (recipients[i] instanceof Group) {
-                Group group = (Group) recipients[i];
-                noDuplicates.addAll(Arrays.asList(group.getMembers()));
-            } else {
-                noDuplicates.add(recipients[i]);
-            }
-        }
-
-        for (Iterator i = noDuplicates.iterator(); i.hasNext();) {
-            Identifiable identifiable = (Identifiable) i.next();
-            if (identifiable instanceof User) {
-                notify((User) identifiable, sender, message);
-            }
-        }
-
-    }
-
-    protected void notify(User recipient, Identifiable sender, Message message)
-            throws NotificationException {
-
-        MailSender mailer = null;
-        try {
-            mailer = (MailSender) this.manager.lookup(MailSender.ROLE);
-            mailer.setSmtpHost(this.smtpHost);
-
-            mailer.setTo(recipient.getEmail());
-            if (sender instanceof User) {
-                mailer.setFrom(((User) sender).getEmail());
-            }
-
-
-            Message translatedMessage = translateMessage(recipient.getDefaultMenuLocale(), message);
-            
-            mailer.setSubject(translatedMessage.getSubject());
-            mailer.setBody(translatedMessage.getBody());
-            mailer.setCharset("UTF-8");
-            mailer.send();
-
-        } catch (Exception e) {
-            throw new NotificationException(e);
-        } finally {
-            if (mailer != null) {
-                this.manager.release(mailer);
-            }
-        }
-
-    }
+public abstract class AbstractNotifier extends AbstractLogEnabled implements Notifier, Serviceable,
+        Contextualizable {
 
     protected static final String NAMESPACE = "http://apache.org/lenya/notification/2.0";
 
@@ -116,15 +51,14 @@ public class DefaultNotifier extends AbstractLogEnabled implements Notifier, Ser
         SourceResolver resolver = null;
         Source source = null;
         try {
-            
+
             NamespaceHelper helper = new NamespaceHelper(NAMESPACE, "not", "message");
             Document doc = helper.getDocument();
             NamespaceHelper i18nHelper = new NamespaceHelper(I18nTransformer.I18N_NAMESPACE_URI,
-                    "i18n",
-                    doc);
+                    "i18n", doc);
 
             Element docElement = doc.getDocumentElement();
-            
+
             Element subjectElement = helper.createElement("subject");
             docElement.appendChild(subjectElement);
             Element i18nTranslateSubjectElement = i18nHelper.createElement("translate");
@@ -137,7 +71,7 @@ public class DefaultNotifier extends AbstractLogEnabled implements Notifier, Ser
                 Element paramElement = i18nHelper.createElement("param", subjectParams[i]);
                 i18nTranslateSubjectElement.appendChild(paramElement);
             }
-            
+
             Element bodyElement = helper.createElement("body");
             docElement.appendChild(bodyElement);
             Element i18nTranslateElement = i18nHelper.createElement("translate");
@@ -150,17 +84,16 @@ public class DefaultNotifier extends AbstractLogEnabled implements Notifier, Ser
                 Element paramElement = i18nHelper.createElement("param", msgParams[i]);
                 i18nTranslateElement.appendChild(paramElement);
             }
-            
+
             Session session = this.request.getSession();
             session.setAttribute("notification.dom", doc);
 
             Map parameters = new HashMap();
 
             parameters.put("locale", locale);
-            
+
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI("cocoon://modules/notification/message.xml",
-                    null,
+            source = resolver.resolveURI("cocoon://modules/notification/message.xml", null,
                     parameters);
 
             doc = DocumentHelper.readDocument(source.getInputStream());
@@ -186,24 +119,16 @@ public class DefaultNotifier extends AbstractLogEnabled implements Notifier, Ser
 
     }
 
-    private ServiceManager manager;
+    protected ServiceManager manager;
 
     public void service(ServiceManager manager) throws ServiceException {
         this.manager = manager;
     }
 
-    private String smtpHost;
-
-    protected static final String ELEMENT_SMTP_HOST = "smtp-host";
-
-    public void configure(Configuration config) throws ConfigurationException {
-        this.smtpHost = config.getChild(ELEMENT_SMTP_HOST).getValue();
-    }
-    
     private Request request;
 
     public void contextualize(Context context) throws ContextException {
-        this.request= ContextHelper.getRequest(context);
+        this.request = ContextHelper.getRequest(context);
     }
 
 }
