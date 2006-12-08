@@ -93,6 +93,12 @@
         use the 1.4 compliance level.
       </li>
       <li>
+        Eclipse stores the class files in <code>$LENYA_HOME/build/eclipse</code> by default.
+        Whenever you execute <code>./build.sh clean</code>, it gets confused. To avoid this,
+        set the default output folder in <em>Project properties &gt; Build path &gt; Source</em>
+        to a different directory (e.g. <code>$LENYA_HOME/eclipse</code>).
+      </li>
+      <li>
         A decent XML and XSLT editor is recommended, you can for instance install the
         web tools platform from the Eclipse project. 
       </li>
