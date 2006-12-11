@@ -8,8 +8,17 @@ public class TestListener implements RepositoryListener {
     private boolean changed = false;
     private boolean removed = false;
 
-    public void documentChanged(DocumentEvent event) {
-        this.changed = true;
+    public void eventFired(RepositoryEvent repoEvent) {
+        if (!(repoEvent instanceof DocumentEvent)) {
+            return;
+        }
+        DocumentEvent event = (DocumentEvent) repoEvent;
+        if (event.getDescriptor().equals(DocumentEvent.CHANGED)) {
+            this.changed = true;
+        }
+        else if (event.getDescriptor().equals(DocumentEvent.REMOVED)) {
+            this.removed = true;
+        }
     }
     
     public boolean wasChanged() {
@@ -25,8 +34,4 @@ public class TestListener implements RepositoryListener {
         this.removed = false;
     }
 
-    public void documentRemoved(DocumentEvent event) {
-        this.removed = true;
-    }
-    
 }

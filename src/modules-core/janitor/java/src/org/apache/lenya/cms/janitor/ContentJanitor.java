@@ -1,19 +1,30 @@
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ *  contributor license agreements.  See the NOTICE file distributed with
+ *  this work for additional information regarding copyright ownership.
+ *  The ASF licenses this file to You under the Apache License, Version 2.0
+ *  (the "License"); you may not use this file except in compliance with
+ *  the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
 package org.apache.lenya.cms.janitor;
 
 import java.io.File;
 
-import org.apache.avalon.framework.activity.Startable;
-import org.apache.avalon.framework.logger.AbstractLogEnabled;
-import org.apache.avalon.framework.service.ServiceException;
-import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
-import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.observation.AbstractRepositoryListener;
 import org.apache.lenya.cms.observation.DocumentEvent;
-import org.apache.lenya.cms.observation.ObservationRegistry;
-import org.apache.lenya.cms.observation.RepositoryListener;
+import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
@@ -21,13 +32,19 @@ import org.apache.lenya.cms.publication.Publication;
 /**
  * The content janitor cleans up empty directories after a document is removed.
  */
-public class ContentJanitor extends AbstractLogEnabled implements Serviceable, Startable,
-        ThreadSafe, RepositoryListener {
+public class ContentJanitor extends AbstractRepositoryListener {
 
-    public void documentChanged(DocumentEvent event) {
-    }
-
-    public void documentRemoved(DocumentEvent event) {
+    public void eventFired(RepositoryEvent repoEvent) {
+        
+        if (!(repoEvent instanceof DocumentEvent)) {
+            return;
+        }
+        DocumentEvent event = (DocumentEvent) repoEvent;
+        
+        if (!event.getDescriptor().equals(DocumentEvent.REMOVED)) {
+            return;
+        }
+        
         ContextUtility util = null;
         try {
             util = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
@@ -44,27 +61,6 @@ public class ContentJanitor extends AbstractLogEnabled implements Serviceable, S
                 this.manager.release(util);
             }
         }
-    }
-
-    public void start() throws Exception {
-        ObservationRegistry registry = null;
-        try {
-            registry = (ObservationRegistry) this.manager.lookup(ObservationRegistry.ROLE);
-            registry.registerListener(this);
-        } finally {
-            if (registry != null) {
-                this.manager.release(registry);
-            }
-        }
-    }
-
-    public void stop() throws Exception {
-    }
-
-    private ServiceManager manager;
-
-    public void service(ServiceManager manager) throws ServiceException {
-        this.manager = manager;
     }
 
 }

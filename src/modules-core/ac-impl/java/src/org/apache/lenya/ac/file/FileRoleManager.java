@@ -24,6 +24,7 @@ import java.util.Map;
 
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.Role;
 import org.apache.lenya.ac.RoleManager;
@@ -39,22 +40,24 @@ public final class FileRoleManager extends FileItemManager implements RoleManage
     /**
      * Return the <code>RoleManager</code> for this configuration directory. The
      * <code>RoleManager</code> is a singleton.
+     * @param mgr The accreditable manager.
      */
-    protected FileRoleManager() {
-	    // do nothing
+    protected FileRoleManager(AccreditableManager mgr) {
+        super(mgr);
     }
 
     /**
      * Returns the role manager for this configuration directory.
+     * @param mgr The accreditable manager.
      * @param configurationDirectory The configuration directory.
      * @param logger The logger.
      * @return A role manager.
      * @throws AccessControlException when something went wrong.
      */
-    public static FileRoleManager instance(File configurationDirectory, Logger logger)
+    public static FileRoleManager instance(AccreditableManager mgr, File configurationDirectory, Logger logger)
             throws AccessControlException {
         if (!instances.containsKey(configurationDirectory)) {
-            FileRoleManager manager = new FileRoleManager();
+            FileRoleManager manager = new FileRoleManager(mgr);
             manager.enableLogging(logger);
             manager.configure(configurationDirectory);
             instances.put(configurationDirectory, manager);
@@ -108,5 +111,9 @@ public final class FileRoleManager extends FileItemManager implements RoleManage
      */
     public void remove(Role role) throws AccessControlException {
         super.remove(role);
+    }
+
+    protected Item createItem() {
+        return new FileRole(this, getLogger());
     }
 }

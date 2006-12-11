@@ -112,4 +112,8 @@ public interface User extends Identifiable, Item, Groupable {
      */
     boolean authenticate(String password);
     
+    /**
+     * @return The accreditable manager this accreditable belongs to.
+     */
+    AccreditableManager getAccreditableManager();
 }

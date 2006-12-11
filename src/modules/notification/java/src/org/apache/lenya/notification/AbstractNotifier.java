@@ -44,8 +44,6 @@ import org.w3c.dom.Element;
 public abstract class AbstractNotifier extends AbstractLogEnabled implements Notifier, Serviceable,
         Contextualizable {
 
-    protected static final String NAMESPACE = "http://apache.org/lenya/notification/2.0";
-
     protected Message translateMessage(String locale, Message message) throws NotificationException {
 
         SourceResolver resolver = null;
@@ -105,7 +103,8 @@ public abstract class AbstractNotifier extends AbstractLogEnabled implements Not
             bodyElement = helper.getFirstChild(doc.getDocumentElement(), "body");
             String body = DocumentHelper.getSimpleElementText(bodyElement);
 
-            return new Message(subject, new String[0], body, new String[0]);
+            return new Message(subject, new String[0], body, new String[0], message.getSender(),
+                    message.getRecipients());
         } catch (Exception e) {
             throw new NotificationException(e);
         } finally {

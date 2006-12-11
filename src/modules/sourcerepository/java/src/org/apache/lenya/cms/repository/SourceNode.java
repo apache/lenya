@@ -31,6 +31,7 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
+import org.apache.lenya.cms.observation.DocumentEvent;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryEventFactory;
 import org.apache.lenya.cms.rc.RCML;
@@ -48,7 +49,7 @@ import org.apache.lenya.transaction.Transactionable;
 public class SourceNode extends AbstractLogEnabled implements Node, Transactionable {
 
     protected ServiceManager manager;
-    
+
     private ContentSourceWrapper contentSource;
     private MetaSourceWrapper metaSource;
 
@@ -64,15 +65,15 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         this.manager = manager;
         enableLogging(logger);
         this.session = session;
-        
+
         this.contentSource = new ContentSourceWrapper(this, sourceUri, manager, logger);
         this.metaSource = new MetaSourceWrapper(this, sourceUri, manager, logger);
     }
-    
+
     protected ContentSourceWrapper getContentSource() {
         return this.contentSource;
     }
-    
+
     protected MetaSourceWrapper getMetaSource() {
         return this.metaSource;
     }
@@ -288,8 +289,8 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             java.util.Vector newChildren = new java.util.Vector();
             while (iterator.hasNext()) {
                 TraversableSource child = (TraversableSource) iterator.next();
-                newChildren.add(new SourceNode(getSession(), getSourceURI() + "/" + child.getName(),
-                        this.manager, getLogger()));
+                newChildren.add(new SourceNode(getSession(),
+                        getSourceURI() + "/" + child.getName(), this.manager, getLogger()));
             }
             return newChildren;
         } catch (Exception e) {
@@ -330,16 +331,25 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
 
     public void registerDirty() throws RepositoryException {
         try {
-            getSession().registerDirty(this);
+            if (!getSession().isDirty(this)) {
+                getSession().registerDirty(this);
+                enqueueEvent(DocumentEvent.CHANGED);
+            }
         } catch (TransactionException e) {
             throw new RepositoryException(e);
         }
     }
 
+    protected void enqueueEvent(Object descriptor) {
+        RepositoryEvent event = RepositoryEventFactory.createEvent(this.manager, this,
+                getLogger(), descriptor);
+        getSession().enqueueEvent(event);
+    }
+
     public void registerRemoved() throws RepositoryException {
         try {
             getSession().registerRemoved(this);
-            //SourceUtil.delete(getMetaSourceUri(), this.manager);
+            enqueueEvent(DocumentEvent.REMOVED);
         } catch (Exception e) {
             throw new RepositoryException(e);
         }
@@ -366,15 +376,6 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         return this.metaSource.getMetaDataHandler().getMetaData(namespaceUri);
     }
 
-    private RepositoryEvent event;
-
-    public RepositoryEvent getEvent() {
-        if (this.event == null) {
-            this.event = RepositoryEventFactory.createEvent(this.manager, this, getLogger());
-        }
-        return this.event;
-    }
-
     public boolean exists() throws RepositoryException {
         return this.contentSource.exists() || this.metaSource.exists();
     }
@@ -392,11 +393,11 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     public long getLastModified() throws RepositoryException {
-        
+
         if (!exists()) {
             throw new RepositoryException("The node [" + this + "] does not exist!");
         }
-        
+
         long contentLastModified = 0;
         if (this.contentSource.exists()) {
             contentLastModified = this.contentSource.getLastModified();
@@ -405,7 +406,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
         if (this.metaSource.exists()) {
             metaLastModified = this.metaSource.getLastModified();
         }
-        
+
         return Math.max(contentLastModified, metaLastModified);
     }
 

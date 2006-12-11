@@ -24,8 +24,10 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Item;
+import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.impl.AbstractRole;
 import org.apache.lenya.ac.impl.ItemConfiguration;
 
@@ -37,27 +39,33 @@ public class FileRole extends AbstractRole implements Item {
 
     /**
      * Creates a new file role.
-     * @param _configurationDirectory The configuration directory.
+     * @param itemManager The item manager.
+     * @param logger The logger.
      * @param id The role ID.
      */
-    public FileRole(File _configurationDirectory, String id) {
+    public FileRole(ItemManager itemManager, Logger logger, String id) {
+        this(itemManager, logger);
         setId(id);
-        setConfigurationDirectory(_configurationDirectory);
     }
 
     protected static final String ROLE = "role";
 
     /**
      * Creates a new FileRole object.
+     * @param itemManager The item manager.
+     * @param logger The logger.
      */
-    public FileRole() {
-	    // do nothing
+    public FileRole(ItemManager itemManager, Logger logger) {
+        super(itemManager, logger);
+        FileItemManager fileItemManager = (FileItemManager) itemManager;
+        setConfigurationDirectory(fileItemManager.getConfigurationDirectory());
     }
 
     /**
      * Configure this instance of <code>FileRole</code>
      * @param config containing the role details
-     * @throws ConfigurationException if the <code>FileRole</code> could not be configured
+     * @throws ConfigurationException if the <code>FileRole</code> could not
+     *         be configured
      */
     public void configure(Configuration config) throws ConfigurationException {
         new ItemConfiguration().configure(this, config);
@@ -100,10 +108,7 @@ public class FileRole extends AbstractRole implements Item {
         return this.configurationDirectory;
     }
 
-    /**
-     * @see org.apache.lenya.ac.Item#setConfigurationDirectory(java.io.File)
-     */
-    public void setConfigurationDirectory(File file) {
+    protected void setConfigurationDirectory(File file) {
         this.configurationDirectory = file;
     }
 }

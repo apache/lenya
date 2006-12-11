@@ -63,16 +63,15 @@ public interface Item extends LogEnabled {
     void setDescription(String description);
     
     /**
-     * Sets the configuration directory of this item.
-     * @param configurationDirectory The configuration directory.
-     */
-    void setConfigurationDirectory(File configurationDirectory);
-
-    /**
      * Configures this item.
      * @param configuration The configuration.
      * @throws ConfigurationException when something went wrong.
      */
     void configure(Configuration configuration) throws ConfigurationException;
     
+    /**
+     * @return The item manager this item belongs to.
+     */
+    ItemManager getItemManager();
+
 }

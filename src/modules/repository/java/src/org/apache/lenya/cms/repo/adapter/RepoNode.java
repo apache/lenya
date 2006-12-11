@@ -28,12 +28,11 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
-import org.apache.lenya.cms.observation.RepositoryEvent;
+import org.apache.lenya.cms.observation.RepositoryListener;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.repo.Translation;
 import org.apache.lenya.cms.repository.History;
 import org.apache.lenya.cms.repository.Node;
-import org.apache.lenya.cms.repository.NodeListener;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.Session;
 
@@ -192,7 +191,7 @@ public class RepoNode extends AbstractLogEnabled implements Node {
 
     private Set listeners = new HashSet();
 
-    public void addListener(NodeListener listener) throws RepositoryException {
+    public void addListener(RepositoryListener listener) throws RepositoryException {
         if (this.listeners.contains(listener)) {
             throw new RepositoryException("The listener [" + listener
                     + "] is already registered for node [" + this + "]!");
@@ -200,7 +199,7 @@ public class RepoNode extends AbstractLogEnabled implements Node {
         this.listeners.add(listener);
     }
 
-    public boolean isListenerRegistered(NodeListener listener) {
+    public boolean isListenerRegistered(RepositoryListener listener) {
         return this.listeners.contains(listener);
     }
 
@@ -209,11 +208,6 @@ public class RepoNode extends AbstractLogEnabled implements Node {
     }
 
     public History getHistory() {
-        return null;
-    }
-
-    public RepositoryEvent getEvent() {
-        // TODO Auto-generated method stub
         return null;
     }
 

@@ -15,23 +15,31 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.repository;
+package org.apache.lenya.cms.workflow;
 
-import org.apache.lenya.cms.observation.RepositoryEvent;
+import org.apache.lenya.util.Assert;
+import org.apache.lenya.workflow.Version;
 
 /**
- * Listener for nodes.
+ * Descriptor for workflow events.
  */
-public interface NodeListener {
+public class WorkflowEventDescriptor {
+
+    private Version version;
 
     /**
-     * @param event The event describing the change.
+     * @param version The version.
      */
-    void nodeChanged(RepositoryEvent event);
+    public WorkflowEventDescriptor(Version version) {
+        Assert.notNull("version", version);
+        this.version = version;
+    }
     
     /**
-     * @param event The event describing the removal.
+     * @return The version.
      */
-    void nodeRemoved(RepositoryEvent event);
+    public Version getVersion() {
+        return this.version;
+    }
     
 }

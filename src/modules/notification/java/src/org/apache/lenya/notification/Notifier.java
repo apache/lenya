@@ -17,12 +17,15 @@
  */
 package org.apache.lenya.notification;
 
-import org.apache.lenya.ac.Identifiable;
-
 /**
  * Notification service.
  */
 public interface Notifier {
+
+    /**
+     * The notification namespace.
+     */
+    String NAMESPACE = "http://apache.org/lenya/notification/2.0";
 
     /**
      * The service role.
@@ -31,11 +34,9 @@ public interface Notifier {
     
     /**
      * Send a notification.
-     * @param recipients The recipients.
-     * @param sender The sender.
      * @param message The message.
      * @throws NotificationException if an error occurs.
      */
-    void notify(Identifiable[] recipients, Identifiable sender, Message message) throws NotificationException;
+    void notify(Message message) throws NotificationException;
     
 }

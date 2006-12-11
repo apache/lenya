@@ -44,14 +44,14 @@ public class FileGroupTest extends AbstractAccessControlTest {
 
     /**
      * Runs the test
-     *
+     * 
      * @throws AccessControlException if an AC error occurs
      * @throws ConfigurationException if an error with the configuration occurs
      * @throws SAXException if a parsing error occurs
      * @throws IOException if an IO error occurs
      */
-    final public void testFileGroup()
-        throws AccessControlException, ConfigurationException, SAXException, IOException {
+    final public void testFileGroup() throws AccessControlException, ConfigurationException,
+            SAXException, IOException {
 
         FileGroup group = getGroup();
         group.save();
@@ -65,7 +65,7 @@ public class FileGroupTest extends AbstractAccessControlTest {
         assertNotNull(config);
 
         FileGroup newGroup = null;
-        newGroup = new FileGroup();
+        newGroup = new FileGroup(getAccreditableManager().getGroupManager(), getLogger());
         newGroup.setConfigurationDirectory(getAccreditablesDirectory());
         newGroup.configure(config);
         assertNotNull(newGroup);
@@ -78,18 +78,19 @@ public class FileGroupTest extends AbstractAccessControlTest {
      * Test getGroup
      * 
      * @return a <code>FileGroup</code>
-     * @throws AccessControlException 
+     * @throws AccessControlException
      */
     protected FileGroup getGroup() throws AccessControlException {
         File configurationDirectory = getAccreditablesDirectory();
         getLogger().info("Configuration directory: " + configurationDirectory);
-        FileGroup group = new FileGroup(configurationDirectory, GROUP_ID);
+        FileGroup group = new FileGroup(getAccreditableManager().getGroupManager(), getLogger(),
+                GROUP_ID);
         return group;
     }
 
     /**
      * Tests the removeAllMembers() method.
-     * @throws AccessControlException 
+     * @throws AccessControlException
      */
     public void testRemoveAllMembers() throws AccessControlException {
         Group group = getGroup();

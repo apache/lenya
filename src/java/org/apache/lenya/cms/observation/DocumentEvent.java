@@ -31,6 +31,16 @@ public class DocumentEvent extends RepositoryEvent {
     private String language;
     private ResourceType resourceType;
 
+
+    /**
+     * The change action.
+     */
+    public static final Object CHANGED = "changed";
+    /**
+     * The removal action.
+     */
+    public static final Object REMOVED = "removed";
+
     /**
      * Ctor.
      * @param session The session.
@@ -39,10 +49,12 @@ public class DocumentEvent extends RepositoryEvent {
      * @param uuid The UUID.
      * @param language The language.
      * @param resourceType The resource type.
+     * @param descriptor More information about the event, for example
+     *        {@link #CHANGED} or {@link #REMOVED}.
      */
     public DocumentEvent(Session session, String pubId, String area, String uuid, String language,
-            ResourceType resourceType) {
-        super(session);
+            ResourceType resourceType, Object descriptor) {
+        super(session, descriptor);
         this.pubId = pubId;
         this.area = area;
         this.uuid = uuid;

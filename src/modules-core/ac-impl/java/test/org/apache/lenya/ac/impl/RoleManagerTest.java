@@ -37,10 +37,10 @@ public class RoleManagerTest extends AbstractAccessControlTest {
      */
     final public void testInstance() throws AccessControlException {
         File configDir = getAccreditablesDirectory();
-        FileRoleManager _manager = FileRoleManager.instance(configDir, getLogger());
+        FileRoleManager _manager = FileRoleManager.instance(getAccreditableManager(), configDir, getLogger());
         assertNotNull(_manager);
 
-        FileRoleManager anotherManager = FileRoleManager.instance(configDir, getLogger());
+        FileRoleManager anotherManager = FileRoleManager.instance(getAccreditableManager(), configDir, getLogger());
         assertNotNull(anotherManager);
         assertEquals(_manager, anotherManager);
     }
@@ -60,9 +60,9 @@ public class RoleManagerTest extends AbstractAccessControlTest {
         File configDir = getAccreditablesDirectory();
         String name = "test";
         FileRoleManager _manager = null;
-        _manager = FileRoleManager.instance(configDir, getLogger());
+        _manager = FileRoleManager.instance(getAccreditableManager(), configDir, getLogger());
         assertNotNull(_manager);
-        Role role = new FileRole(_manager.getConfigurationDirectory(), name);
+        Role role = new FileRole(getAccreditableManager().getRoleManager(), getLogger(), name);
         _manager.add(role);
 
         assertTrue(_manager.getRoles().length > 0);
@@ -75,11 +75,11 @@ public class RoleManagerTest extends AbstractAccessControlTest {
     final public void testRemoveRole() throws AccessControlException {
         File configDir = getAccreditablesDirectory();
         String name = "test2";
-        Role role = new FileRole(configDir, name);
+        Role role = new FileRole(getAccreditableManager().getRoleManager(), getLogger(), name);
         FileRoleManager _manager = null;
 
         try {
-            _manager = FileRoleManager.instance(configDir, getLogger());
+            _manager = FileRoleManager.instance(getAccreditableManager(), configDir, getLogger());
         } catch (AccessControlException e) {
             e.printStackTrace();
         }

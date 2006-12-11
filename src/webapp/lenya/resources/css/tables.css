@@ -61,3 +61,20 @@ table.lenya-table-noborder-nopadding th {
 	font-size: small;
 }
 
+table.lenya-table-list {
+  border: none;
+	border-spacing: 0px;
+	border-collapse: collapse;
+}
+
+table.lenya-table-list th,
+table.lenya-table-list td {
+  text-align: left;
+  padding: 2px 2em 2px 5px;
+  border-bottom: solid 1px #CCCCCC;
+}
+
+table.lenya-table-list tr.highlight {
+  background-color: #DDDCCF;
+  color: Black;
+}

@@ -25,6 +25,7 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.repository.Session;
 
 /**
  * Factory to create repository events.
@@ -34,25 +35,55 @@ public class RepositoryEventFactory {
     /**
      * Creates a repository event for a node.
      * @param manager The service manager.
-     * @param node The node.
+     * @param session The session.
      * @param logger The logger.
+     * @param descriptor The descriptor.
      * @return An event.
      */
-    public static final RepositoryEvent createEvent(ServiceManager manager, Node node, Logger logger) {
+    public static final RepositoryEvent createEvent(ServiceManager manager,
+            Session session, Logger logger, Object descriptor) {
+            return new RepositoryEvent(session, descriptor);
+    }
+
+    /**
+     * Creates a repository event for a node.
+     * @param manager The service manager.
+     * @param doc The document.
+     * @param logger The logger.
+     * @param descriptor The descriptor.
+     * @return An event.
+     */
+    public static final RepositoryEvent createEvent(ServiceManager manager, Document doc,
+            Logger logger, Object descriptor) {
+        try {
+            return new DocumentEvent(doc.getRepositoryNode().getSession(), doc.getPublication()
+                    .getId(), doc.getArea(), doc.getUUID(), doc.getLanguage(), doc
+                    .getResourceType(), descriptor);
+        } catch (DocumentException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    /**
+     * Creates a repository event for a node.
+     * @param manager The service manager.
+     * @param node The node.
+     * @param logger The logger.
+     * @param descriptor The descriptor.
+     * @return An event.
+     */
+    public static final RepositoryEvent createEvent(ServiceManager manager, Node node,
+            Logger logger, Object descriptor) {
         RepositoryEvent event;
         Document doc = null;
         if (!node.getSourceURI().endsWith("meta")) {
             doc = getDocument(manager, node, logger);
         }
         if (doc != null) {
-            try {
-                event = new DocumentEvent(node.getSession(), doc.getPublication().getId(), doc
-                        .getArea(), doc.getUUID(), doc.getLanguage(), doc.getResourceType());
-            } catch (DocumentException e) {
-                throw new RuntimeException(e);
-            }
+            event = createEvent(manager, doc, logger, descriptor);
         } else {
-            event = new RepositoryEvent(node.getSession());
+            event = new RepositoryEvent(node.getSession(), descriptor);
         }
         return event;
     }

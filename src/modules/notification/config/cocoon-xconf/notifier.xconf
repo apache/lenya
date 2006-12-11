@@ -20,8 +20,10 @@
 
 <xconf xpath="/cocoon" unless="/cocoon/notifier">
 
-  <notifier>
+  <component logger="lenya.notification"
+    role="org.apache.lenya.notification.Notifier"
+    class="org.apache.lenya.notification.EmailNotifier">
     <smtp-host>mail.yourdomain.com</smtp-host>
-  </notifier>
+  </component>
   
 </xconf>

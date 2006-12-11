@@ -29,6 +29,7 @@ import org.apache.cocoon.components.search.IndexException;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.observation.DocumentEvent;
 import org.apache.lenya.cms.observation.ObservationRegistry;
+import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.publication.ResourceType;
 
 /**
@@ -37,25 +38,22 @@ import org.apache.lenya.cms.publication.ResourceType;
 public class IndexUpdaterImpl extends AbstractLogEnabled implements IndexUpdater, Startable,
         Serviceable, ThreadSafe {
 
-    public void documentChanged(DocumentEvent event) {
-        try {
-            index(event.getResourceType(),
-                    event.getPublicationId(),
-                    event.getArea(),
-                    event.getUuid(),
-                    event.getLanguage());
-        } catch (IndexException e) {
-            throw new RuntimeException(e);
-        }
-    }
+    public void eventFired(RepositoryEvent repoEvent) {
 
-    public void documentRemoved(DocumentEvent event) {
+        if (!(repoEvent instanceof DocumentEvent)) {
+            return;
+        }
+        DocumentEvent event = (DocumentEvent) repoEvent;
+
         try {
-            delete(event.getResourceType(),
-                    event.getPublicationId(),
-                    event.getArea(),
-                    event.getUuid(),
-                    event.getLanguage());
+            if (event.getDescriptor().equals(DocumentEvent.CHANGED)) {
+                index(event.getResourceType(), event.getPublicationId(), event.getArea(), event
+                        .getUuid(), event.getLanguage());
+            } else if (event.getDescriptor().equals(DocumentEvent.REMOVED)) {
+                delete(event.getResourceType(), event.getPublicationId(), event.getArea(), event
+                        .getUuid(), event.getLanguage());
+            }
+
         } catch (IndexException e) {
             throw new RuntimeException(e);
         }
@@ -73,9 +71,10 @@ public class IndexUpdaterImpl extends AbstractLogEnabled implements IndexUpdater
                 uri = "cocoon://modules/lucene/" + operation + "-document/" + docString;
                 SourceUtil.readDOM(uri, this.manager);
             } else {
-                getLogger().info("Document [" + pubId + ":" + area + ":" + uuid + ":" + language
-                        + "] is not being indexed because resource type [" + resourceType.getName()
-                        + "] does not support indexing!");
+                getLogger().info(
+                        "Document [" + pubId + ":" + area + ":" + uuid + ":" + language
+                                + "] is not being indexed because resource type ["
+                                + resourceType.getName() + "] does not support indexing!");
             }
         } catch (Exception e) {
             getLogger().error("Invoking indexing failed for URL [" + uri + "]: ", e);

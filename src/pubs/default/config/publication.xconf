@@ -52,6 +52,7 @@
   <module name="sitetree"/>
   <module name="export"/>
   <module name="workflow-impl"/>
+  <module name="notification"/>
   <!-- TODO: The goal is to have a blog module ;-) -->
   <!--
   <module name="blog"/>

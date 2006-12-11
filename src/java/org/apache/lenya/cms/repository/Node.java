@@ -134,8 +134,4 @@ public interface Node extends RepositoryItem, ContentHolder {
      */
     History getHistory();
     
-    /**
-     * @return The event to use when this node is added/changed/removed.
-     */
-    RepositoryEvent getEvent();
 }

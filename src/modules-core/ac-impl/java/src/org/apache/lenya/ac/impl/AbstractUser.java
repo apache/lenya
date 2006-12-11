@@ -18,7 +18,9 @@
 
 package org.apache.lenya.ac.impl;
 
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.Password;
 import org.apache.lenya.ac.User;
 
@@ -30,24 +32,30 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
 
     private String email;
     private String encryptedPassword;
-    private	String defaultMenuLocale;
+    private String defaultMenuLocale;
     private String defaultDocumentLocale;
 
     /**
      * Creates a new User.
+     * @param itemManager The item manager.
+     * @param logger The logger.
      */
-    public AbstractUser() {
-	    // do nothing
+    public AbstractUser(ItemManager itemManager, Logger logger) {
+        super(itemManager, logger);
     }
 
     /**
      * Create a User instance
+     * @param itemManager The item manager.
+     * @param logger The logger.
      * @param id the user id
      * @param fullName the full name of the user
      * @param _email the users email address
      * @param password the users password
      */
-    public AbstractUser(String id, String fullName, String _email, String password) {
+    public AbstractUser(ItemManager itemManager, Logger logger, String id, String fullName,
+            String _email, String password) {
+        this(itemManager, logger);
         setId(id);
         setName(fullName);
         this.email = _email;
@@ -61,7 +69,6 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
     public String getEmail() {
         return this.email;
     }
-
 
     /**
      * Set the email address
@@ -80,8 +87,9 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
     }
 
     /**
-     * This method can be used for subclasses to set the password without it being encrypted again.
-     * Some subclass might have knowledge of the encrypted password and needs to be able to set it.
+     * This method can be used for subclasses to set the password without it
+     * being encrypted again. Some subclass might have knowledge of the
+     * encrypted password and needs to be able to set it.
      * @param _encryptedPassword the encrypted password
      */
     protected void setEncryptedPassword(String _encryptedPassword) {
@@ -96,30 +104,34 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
         return this.encryptedPassword;
     }
 
-	/**
-	 * @return Returns the defaultDocumentLocale.
-	 */
-	public String getDefaultDocumentLocale() {
-		return defaultDocumentLocale;
-	}
-	/**
-	 * @param defaultDocumentLocale The defaultDocumentLocale to set.
-	 */
-	public void setDefaultDocumentLocale(String defaultDocumentLocale) {
-		this.defaultDocumentLocale = defaultDocumentLocale;
-	}
-	/**
-	 * @return Returns the defaultMenuLocale.
-	 */
-	public String getDefaultMenuLocale() {
-		return defaultMenuLocale;
-	}
-	/**
-	 * @param defaultMenuLocale The defaultMenuLocale to set.
-	 */
-	public void setDefaultMenuLocale(String defaultMenuLocale) {
-		this.defaultMenuLocale = defaultMenuLocale;
-	}
+    /**
+     * @return Returns the defaultDocumentLocale.
+     */
+    public String getDefaultDocumentLocale() {
+        return defaultDocumentLocale;
+    }
+
+    /**
+     * @param defaultDocumentLocale The defaultDocumentLocale to set.
+     */
+    public void setDefaultDocumentLocale(String defaultDocumentLocale) {
+        this.defaultDocumentLocale = defaultDocumentLocale;
+    }
+
+    /**
+     * @return Returns the defaultMenuLocale.
+     */
+    public String getDefaultMenuLocale() {
+        return defaultMenuLocale;
+    }
+
+    /**
+     * @param defaultMenuLocale The defaultMenuLocale to set.
+     */
+    public void setDefaultMenuLocale(String defaultMenuLocale) {
+        this.defaultMenuLocale = defaultMenuLocale;
+    }
+
     /**
      * Save the user
      * @throws AccessControlException if the save failed
@@ -135,8 +147,8 @@ public abstract class AbstractUser extends AbstractGroupable implements User {
     }
 
     /**
-     * Authenticate a user. This is done by encrypting the given password and comparing this to the
-     * encryptedPassword.
+     * Authenticate a user. This is done by encrypting the given password and
+     * comparing this to the encryptedPassword.
      * @param password to authenticate with
      * @return true if the given password matches the password for this user
      */

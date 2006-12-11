@@ -35,7 +35,6 @@ public class DublinCoreTest extends AbstractAccessControlTest {
     private static final String AREA = "authoring";
     private static final String PATH = "/tutorial";
     private static final String LANGUAGE = "de";
-    private static final String CREATOR = "test";
 
     /**
      * Test the fetching, modification and refetching of a dc core object.
@@ -52,7 +51,6 @@ public class DublinCoreTest extends AbstractAccessControlTest {
         
         Publication publication = getPublication("test");
         
-        DocumentFactory map = getFactory();
         Document doc = publication.getArea(AREA).getSite().getNode(PATH).getLink(LANGUAGE).getDocument();
         
         doc.getRepositoryNode().lock();
@@ -61,8 +59,13 @@ public class DublinCoreTest extends AbstractAccessControlTest {
         String title = dcCore.getFirstValue(DublinCore.ELEMENT_TITLE);
         String subject = dcCore.getFirstValue(DublinCore.ELEMENT_SUBJECT);
         String creator = dcCore.getFirstValue(DublinCore.ELEMENT_CREATOR);
+        
+        if (creator == null) {
+            creator = "test";
+        }
 
-        dcCore.setValue(DublinCore.ELEMENT_CREATOR, CREATOR);
+        String newCreator = creator + "-test";
+        dcCore.setValue(DublinCore.ELEMENT_CREATOR, newCreator);
 
         Document doc2 = publication.getArea(AREA).getSite().getNode(PATH).getLink(LANGUAGE).getDocument();
 
@@ -70,7 +73,7 @@ public class DublinCoreTest extends AbstractAccessControlTest {
         assertEquals(title, dcCore2.getFirstValue(DublinCore.ELEMENT_TITLE));
         assertEquals(subject, dcCore2.getFirstValue(DublinCore.ELEMENT_SUBJECT));
         assertFalse(creator.equals(dcCore2.getFirstValue(DublinCore.ELEMENT_CREATOR)));
-        assertEquals(CREATOR, dcCore2.getFirstValue(DublinCore.ELEMENT_CREATOR));
+        assertEquals(newCreator, dcCore2.getFirstValue(DublinCore.ELEMENT_CREATOR));
         
         doc.getRepositoryNode().unlock();
     }

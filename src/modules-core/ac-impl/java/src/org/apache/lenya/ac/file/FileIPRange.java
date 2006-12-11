@@ -29,7 +29,9 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.impl.AbstractIPRange;
 import org.apache.lenya.ac.impl.ItemConfiguration;
@@ -75,19 +77,23 @@ public class FileIPRange extends AbstractIPRange implements Serializable {
 
     /**
      * Ctor.
+     * @param itemManager The item manager.
+     * @param logger The logger.
      */
-    public FileIPRange() {
-	    // do nothing
-   }
+    public FileIPRange(ItemManager itemManager, Logger logger) {
+        super(itemManager, logger);
+    }
 
     /**
      * Ctor.
-     * @param configurationDirectory The configuration directory.
+     * @param itemManager The item manager.
+     * @param logger The logger.
      * @param id The IP range ID.
      */
-    public FileIPRange(File configurationDirectory, String id) {
-        super(id);
-        setConfigurationDirectory(configurationDirectory);
+    public FileIPRange(ItemManager itemManager, Logger logger, String id) {
+        super(itemManager, logger, id);
+        FileItemManager fileItemManager = (FileItemManager) itemManager;
+        setConfigurationDirectory(fileItemManager.getConfigurationDirectory());
     }
 
     /**

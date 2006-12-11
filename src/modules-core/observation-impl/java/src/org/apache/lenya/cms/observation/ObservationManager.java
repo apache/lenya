@@ -119,34 +119,22 @@ public class ObservationManager extends AbstractLogEnabled implements Observatio
         protected abstract void notify(RepositoryListener listener, RepositoryEvent event);
     }
 
-    public void nodeChanged(RepositoryEvent event) {
+    public void eventFired(RepositoryEvent event) {
         Assert.notNull("event", event);
+        Set listeners;
         if (event instanceof DocumentEvent) {
-            final DocumentEvent docEvent = (DocumentEvent) event;
-            DocumentIdentifier id = getIdentifier(docEvent);
-            Set allListeners = getAllListeners(id);
-            Notifier notifier = new Notifier(allListeners, event) {
-                public void notify(RepositoryListener listener, RepositoryEvent event) {
-                    listener.documentChanged(docEvent);
-                }
-            };
-            new Thread(notifier).run();
+            DocumentIdentifier id = getIdentifier((DocumentEvent) event);
+            listeners = getAllListeners(id);
         }
-    }
-
-    public void nodeRemoved(RepositoryEvent event) {
-        Assert.notNull("event", event);
-        if (event instanceof DocumentEvent) {
-            final DocumentEvent docEvent = (DocumentEvent) event;
-            DocumentIdentifier id = getIdentifier(docEvent);
-            Set allListeners = getAllListeners(id);
-            Notifier notifier = new Notifier(allListeners, event) {
-                public void notify(RepositoryListener listener, RepositoryEvent event) {
-                    listener.documentRemoved(docEvent);
-                }
-            };
-            new Thread(notifier).run();
+        else {
+            listeners = this.listeners;
         }
+        Notifier notifier = new Notifier(listeners, event) {
+            public void notify(RepositoryListener listener, RepositoryEvent event) {
+                listener.eventFired(event);
+            }
+        };
+        new Thread(notifier).run();
     }
 
     private ServiceManager manager;

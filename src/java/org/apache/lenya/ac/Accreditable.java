@@ -32,4 +32,5 @@ public interface Accreditable {
      * @return An array of accreditables.
      */
     Accreditable[] getAccreditables();
+    
 }

@@ -71,5 +71,11 @@ public interface AccreditableManager extends Component {
      * @param listener An item manager listener.
      */
     void removeItemManagerListener(ItemManagerListener listener);
+    
+    /**
+     * @return A source URI to store configuration sources. This URI
+     * must point to a collection.
+     */
+    String getConfigurationCollectionUri();
 
 }

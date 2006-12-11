@@ -345,5 +345,15 @@
     <role id="edit" method="grant"/>
     <role id="review" method="grant"/>
   </usecase>
+  <usecase id="notification.inbox">
+    <role id="admin" method="grant"/>
+    <role id="edit" method="grant"/>
+    <role id="review" method="grant"/>
+  </usecase>
+  <usecase id="notification.sendMessage">
+    <role id="admin" method="grant"/>
+    <role id="edit" method="grant"/>
+    <role id="review" method="grant"/>
+  </usecase>
 </usecases>
     

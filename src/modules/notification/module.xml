@@ -20,9 +20,11 @@
 
 <module xmlns="http://apache.org/lenya/module/1.0">
   <id>org.apache.lenya.modules.notification</id>
+  <depends module="org.apache.lenya.modules.administration"/> <!-- necessary for tabs -->
+  <depends module="org.apache.lenya.modules.usecase"/>
   <package>org.apache.lenya.modules</package>
   <version>0.1-dev</version>
-  <name>Repository Module</name>
+  <name>Notification</name>
   <lenya-version>@lenya.version@</lenya-version>
-  <description>Lenya Repository API (Draft)</description>
+  <description>Notification module</description>
 </module>

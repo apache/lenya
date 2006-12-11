@@ -33,6 +33,8 @@ import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.metadata.MetaData;
+import org.apache.lenya.cms.observation.RepositoryEvent;
+import org.apache.lenya.cms.observation.RepositoryEventFactory;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.repository.Session;
@@ -173,6 +175,11 @@ class DocumentWorkflowable extends AbstractLogEnabled implements Workflowable {
 
         String string = number + " " + encodeVersion(workflow, version);
         addToMetaData(string);
+        
+        WorkflowEventDescriptor descriptor = new WorkflowEventDescriptor(version);
+        RepositoryEvent event = RepositoryEventFactory.createEvent(
+                this.manager, getDocument(), getLogger(), descriptor);
+        getDocument().getRepositoryNode().getSession().enqueueEvent(event);
     }
 
     protected void addToMetaData(String versionString) {

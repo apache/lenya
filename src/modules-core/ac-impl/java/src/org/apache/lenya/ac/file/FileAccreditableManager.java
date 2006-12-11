@@ -229,7 +229,7 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
      * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeGroupManager()
      */
     protected GroupManager initializeGroupManager() throws AccessControlException {
-        FileGroupManager _manager = FileGroupManager.instance(getConfigurationDirectory(), getLogger());
+        FileGroupManager _manager = FileGroupManager.instance(this, getConfigurationDirectory(), getLogger());
         return _manager;
     }
 
@@ -237,7 +237,7 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
      * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeIPRangeManager()
      */
     protected IPRangeManager initializeIPRangeManager() throws AccessControlException {
-        FileIPRangeManager _manager = FileIPRangeManager.instance(getConfigurationDirectory(), getLogger());
+        FileIPRangeManager _manager = FileIPRangeManager.instance(this, getConfigurationDirectory(), getLogger());
         return _manager;
     }
 
@@ -245,7 +245,7 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
      * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeRoleManager()
      */
     protected RoleManager initializeRoleManager() throws AccessControlException {
-        FileRoleManager _manager = FileRoleManager.instance(getConfigurationDirectory(), getLogger());
+        FileRoleManager _manager = FileRoleManager.instance(this, getConfigurationDirectory(), getLogger());
         return _manager;
     }
 
@@ -253,9 +253,17 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
      * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeUserManager()
      */
     protected UserManager initializeUserManager() throws AccessControlException {
-        FileUserManager _manager = FileUserManager.instance(getConfigurationDirectory(),
+        FileUserManager _manager = FileUserManager.instance(this, getConfigurationDirectory(),
                 getUserTypes(), getLogger());
         return _manager;
+    }
+
+    public String getConfigurationCollectionUri() {
+        try {
+            return "file://" + getConfigurationDirectory().getCanonicalPath();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

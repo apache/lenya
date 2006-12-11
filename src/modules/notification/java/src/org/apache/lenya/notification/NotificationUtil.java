@@ -19,7 +19,6 @@ package org.apache.lenya.notification;
 
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.lenya.ac.Identifiable;
 
 /**
  * Notification utility.
@@ -29,22 +28,19 @@ public final class NotificationUtil {
     /**
      * Invokes a notification.
      * @param manager The service manager.
-     * @param recipients The recipients.
-     * @param sender The sender.
      * @param message The message.
      * @throws NotificationException if an error occurs.
      */
-    public static final void notify(ServiceManager manager, Identifiable[] recipients,
-            Identifiable sender, Message message) throws NotificationException {
+    public static final void notify(ServiceManager manager, Message message)
+            throws NotificationException {
 
         Notifier notifier = null;
         try {
             notifier = (Notifier) manager.lookup(Notifier.ROLE);
-            notifier.notify(recipients, sender, message);
+            notifier.notify(message);
         } catch (ServiceException e) {
             throw new NotificationException(e);
-        }
-        finally {
+        } finally {
             if (notifier != null) {
                 manager.release(notifier);
             }

@@ -37,6 +37,8 @@ import org.apache.lenya.cms.ac.PolicyUtil;
 import org.apache.lenya.cms.linking.LinkManager;
 import org.apache.lenya.cms.linking.LinkResolver;
 import org.apache.lenya.cms.linking.LinkTarget;
+import org.apache.lenya.cms.observation.RepositoryEvent;
+import org.apache.lenya.cms.observation.RepositoryEventFactory;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
@@ -58,8 +60,8 @@ import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.notification.Message;
+import org.apache.lenya.notification.NotificationEventDescriptor;
 import org.apache.lenya.notification.NotificationException;
-import org.apache.lenya.notification.NotificationUtil;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.Workflowable;
@@ -87,7 +89,7 @@ public class Publish extends DocumentUsecase {
     protected void initParameters() {
         super.initParameters();
 
-        if (hasErrors()) {
+        if (hasErrors() || getSourceDocument() == null) {
             return;
         }
 
@@ -343,9 +345,12 @@ public class Publish extends DocumentUsecase {
             }
             String[] params = { url };
             Message message = new Message(MESSAGE_SUBJECT, new String[0], MESSAGE_DOCUMENT_PUBLISHED,
-                    params);
-    
-            NotificationUtil.notify(this.manager, recipients, sender, message);
+                    params, sender, recipients);
+            
+            NotificationEventDescriptor descriptor = new NotificationEventDescriptor(message);
+            RepositoryEvent event = RepositoryEventFactory
+                    .createEvent(this.manager, authoringDocument, getLogger(), descriptor);
+            getSession().enqueueEvent(event);
         }
     }
 

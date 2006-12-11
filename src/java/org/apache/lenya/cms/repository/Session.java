@@ -18,6 +18,8 @@
 package org.apache.lenya.cms.repository;
 
 import org.apache.lenya.ac.Identity;
+import org.apache.lenya.cms.observation.RepositoryEvent;
+import org.apache.lenya.cms.observation.RepositoryListener;
 import org.apache.lenya.transaction.UnitOfWork;
 
 /**
@@ -55,13 +57,18 @@ public interface Session extends UnitOfWork {
      * @param listener The listener to add.
      * @throws RepositoryException if the listener is already registered.
      */
-    void addListener(NodeListener listener) throws RepositoryException;
+    void addListener(RepositoryListener listener) throws RepositoryException;
     
     /**
      * Checks if a listener is registered.
      * @param listener The listener.
      * @return A boolean value.
      */
-    boolean isListenerRegistered(NodeListener listener);
+    boolean isListenerRegistered(RepositoryListener listener);
+    
+    /**
+     * @param event The event to add to the queue.
+     */
+    void enqueueEvent(RepositoryEvent event);
 
 }

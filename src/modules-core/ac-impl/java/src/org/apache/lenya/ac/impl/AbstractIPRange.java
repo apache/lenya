@@ -25,8 +25,10 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.IPRange;
+import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.net.InetAddressUtil;
 
@@ -67,9 +69,13 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
      */
 
     /**
+     * Ctor.
      * Initializes the the IP range with the local host (127.0.0.1/24 for IPv4, ::1/128 for IPv6).
+     * @param itemManager The item manager.
+     * @param logger The logger.
      */
-    public AbstractIPRange() {
+    public AbstractIPRange(ItemManager itemManager, Logger logger) {
+        super(itemManager, logger);
         try {
             this.networkAddress = InetAddress.getLocalHost();
             byte[] mask = null;
@@ -96,9 +102,12 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
 
     /**
      * Ctor.
+     * @param itemManager The item manager.
+     * @param logger The logger.
      * @param id The IP range ID.
      */
-    public AbstractIPRange(String id) {
+    public AbstractIPRange(ItemManager itemManager, Logger logger, String id) {
+        super(itemManager, logger);
         setId(id);
     }
 
@@ -112,10 +121,7 @@ public abstract class AbstractIPRange extends AbstractGroupable implements IPRan
         return this.configurationDirectory;
     }
 
-    /**
-     * @see org.apache.lenya.ac.Item#setConfigurationDirectory(java.io.File)
-     */
-    public void setConfigurationDirectory(File _configurationDirectory) {
+    protected void setConfigurationDirectory(File _configurationDirectory) {
         this.configurationDirectory = _configurationDirectory;
     }
 

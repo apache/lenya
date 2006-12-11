@@ -17,6 +17,11 @@
  */
 package org.apache.lenya.notification;
 
+import java.util.Arrays;
+import java.util.Date;
+
+import org.apache.lenya.ac.Identifiable;
+
 /**
  * A notification message.
  */
@@ -26,6 +31,9 @@ public class Message {
     private String[] subjectParams;
     private String body;
     private String[] bodyParams;
+    private Identifiable sender;
+    private Identifiable[] recipients;
+    private Date time;
 
     /**
      * Ctor.
@@ -33,12 +41,18 @@ public class Message {
      * @param subjectParams The subject parameters.
      * @param body The body.
      * @param bodyParams The body parameters.
+     * @param sender The sender.
+     * @param recipients The recipients.
      */
-    public Message(String subject, String[] subjectParams, String body, String[] bodyParams) {
+    public Message(String subject, String[] subjectParams, String body, String[] bodyParams,
+            Identifiable sender, Identifiable[] recipients) {
         this.subject = subject;
         this.subjectParams = subjectParams;
         this.body = body;
         this.bodyParams = bodyParams;
+        this.sender = sender;
+        this.recipients = recipients;
+        this.time = new Date();
     }
 
     /**
@@ -87,6 +101,29 @@ public class Message {
      */
     public String[] getSubjectParameters() {
         return subjectParams;
+    }
+    
+    /**
+     * @return The sender.
+     */
+    public Identifiable getSender() {
+        return this.sender;
+    }
+    
+    /**
+     * @return The recipients.
+     */
+    public Identifiable[] getRecipients() {
+        // don't expose the internal array
+        return (Identifiable[]) Arrays.asList(this.recipients).toArray(
+                new Identifiable[this.recipients.length]);
+    }
+    
+    /**
+     * @return The time when the message was sent.
+     */
+    public Date getTime() {
+        return this.time;
     }
 
 }

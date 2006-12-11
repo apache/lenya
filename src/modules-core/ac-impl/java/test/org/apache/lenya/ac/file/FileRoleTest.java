@@ -37,11 +37,11 @@ public class FileRoleTest extends AbstractAccessControlTest {
     final public void testFileRole() throws AccessControlException {
         String name = "test";
         File configDir = getAccreditablesDirectory();
-        FileRole role = new FileRole(configDir, name);
+        FileRole role = new FileRole(getAccreditableManager().getRoleManager(), getLogger(), name);
         role.save();
 
         File path = null;
-        path = FileRoleManager.instance(configDir, getLogger())
+        path = FileRoleManager.instance(getAccreditableManager(), configDir, getLogger())
                 .getConfigurationDirectory();
 
         File roleFile = new File(path, name + FileRoleManager.SUFFIX);
@@ -57,11 +57,11 @@ public class FileRoleTest extends AbstractAccessControlTest {
     final public void testSave() throws AccessControlException {
         File configDir = getAccreditablesDirectory();
         String name = "test";
-        FileRole role = new FileRole(configDir, name);
+        FileRole role = new FileRole(getAccreditableManager().getRoleManager(), getLogger(), name);
         role.save();
 
         File path = null;
-        path = FileRoleManager.instance(configDir, getLogger())
+        path = FileRoleManager.instance(getAccreditableManager(), configDir, getLogger())
                 .getConfigurationDirectory();
 
         File roleFile = new File(path, name + FileRoleManager.SUFFIX);
@@ -75,8 +75,7 @@ public class FileRoleTest extends AbstractAccessControlTest {
      */
     final public void testGetId() throws AccessControlException {
         String id = "test";
-        File configDir = getAccreditablesDirectory();
-        FileRole role = new FileRole(configDir, id);
+        FileRole role = new FileRole(getAccreditableManager().getRoleManager(), getLogger(), id);
         assertTrue(role.getId().equals(id));
     }
 
@@ -86,9 +85,8 @@ public class FileRoleTest extends AbstractAccessControlTest {
      */
     final public void testEqualsObject() throws AccessControlException {
         String name = "test";
-        File configDir = getAccreditablesDirectory();
-        FileRole role1 = new FileRole(configDir, name);
-        FileRole role2 = new FileRole(configDir, name);
+        FileRole role1 = new FileRole(getAccreditableManager().getRoleManager(), getLogger(), name);
+        FileRole role2 = new FileRole(getAccreditableManager().getRoleManager(), getLogger(), name);
         assertEquals(role1, role2);
     }
 }

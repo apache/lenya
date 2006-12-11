@@ -22,9 +22,12 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.Accreditable;
+import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Groupable;
+import org.apache.lenya.ac.ItemManager;
 
 /**
  * Abstract implementation for group members.
@@ -34,9 +37,11 @@ public abstract class AbstractGroupable extends AbstractItem implements Groupabl
     
     /**
      * Ctor.
+     * @param itemManager The item manager.
+     * @param logger The logger.
      */
-    public AbstractGroupable() {
-	    // do nothing
+    public AbstractGroupable(ItemManager itemManager, Logger logger) {
+        super(itemManager, logger);
     }
 
     private Set groups = new HashSet();
@@ -92,6 +97,10 @@ public abstract class AbstractGroupable extends AbstractItem implements Groupabl
         }
 
         return (Accreditable[]) accreditables.toArray(new Accreditable[accreditables.size()]);
+    }
+    
+    public AccreditableManager getAccreditableManager() {
+        return getItemManager().getAccreditableManager();
     }
 
 }

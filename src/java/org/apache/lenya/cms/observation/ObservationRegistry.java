@@ -18,12 +18,11 @@
 package org.apache.lenya.cms.observation;
 
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.repository.NodeListener;
 
 /**
  * Observation registry.
  */
-public interface ObservationRegistry extends NodeListener {
+public interface ObservationRegistry extends RepositoryListener {
 
     /**
      * The Avalon service role.

@@ -26,6 +26,7 @@ import java.util.Map;
 
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.GroupManager;
 import org.apache.lenya.ac.Item;
@@ -39,26 +40,27 @@ public final class FileGroupManager extends FileItemManager implements GroupMana
 
     /**
      * Ctor.
+     * @param mgr The accreditable manager.
      */
-    private FileGroupManager() {
-        super();
+    private FileGroupManager(AccreditableManager mgr) {
+        super(mgr);
     }
-    
+
     /**
-     * Return the <code>GroupManager</code> for the given publication.
-     * The <code>GroupManager</code> is a singleton.
-     *
+     * Return the <code>GroupManager</code> for the given publication. The
+     * <code>GroupManager</code> is a singleton.
+     * @param mgr The accreditable manager.
      * @param configurationDirectory for which the GroupManager is requested
      * @param logger The logger.
      * @return a <code>GroupManager</code>
      * @throws AccessControlException if no GroupManager could be instanciated
      */
-    public static FileGroupManager instance(File configurationDirectory, Logger logger)
-        throws AccessControlException {
+    public static FileGroupManager instance(AccreditableManager mgr, File configurationDirectory,
+            Logger logger) throws AccessControlException {
         assert configurationDirectory != null;
 
         if (!instances.containsKey(configurationDirectory)) {
-            FileGroupManager manager = new FileGroupManager();
+            FileGroupManager manager = new FileGroupManager(mgr);
             manager.enableLogging(logger);
             manager.configure(configurationDirectory);
             instances.put(configurationDirectory, manager);
@@ -69,7 +71,7 @@ public final class FileGroupManager extends FileItemManager implements GroupMana
 
     /**
      * Get all groups
-     *
+     * 
      * @return an array of groups.
      */
     public Group[] getGroups() {
@@ -85,14 +87,14 @@ public final class FileGroupManager extends FileItemManager implements GroupMana
      * @see org.apache.lenya.ac.GroupManager#add(java.lang.String)
      */
     public Group add(String id) throws AccessControlException {
-        Group group = new FileGroup(getConfigurationDirectory(), id);
+        Group group = new FileGroup(this, getLogger(), id);
         super.add(group);
         return group;
     }
 
     /**
      * Remove a group from this manager
-     *
+     * 
      * @param group the group to be removed
      * @throws AccessControlException when the notification failed.
      */
@@ -102,16 +104,17 @@ public final class FileGroupManager extends FileItemManager implements GroupMana
 
     /**
      * Get the group with the given group name.
-     *
+     * 
      * @param groupId the id of the requested group
-     * @return a <code>Group</code> or null if there is no group with the given name
+     * @return a <code>Group</code> or null if there is no group with the
+     *         given name
      */
     public Group getGroup(String groupId) {
         return (Group) getItem(groupId);
     }
 
     protected static final String SUFFIX = ".gml";
-    
+
     /**
      * @see org.apache.lenya.ac.file.FileItemManager#getSuffix()
      */

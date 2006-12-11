@@ -18,9 +18,14 @@
 
 package org.apache.lenya.ac.impl;
 
+import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
+import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Item;
+import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.ItemUtil;
+import org.apache.lenya.util.Assert;
 
 /**
  * Abstract superclass for all access control objects that can be managed by an
@@ -33,11 +38,27 @@ public abstract class AbstractItem extends AbstractLogEnabled implements Item, C
     private String description = "";
     private String name = "";
 
+    private AccreditableManager accreditableManager;
+    private ItemManager itemManager;
+    
     /**
      * Ctor.
+     * @param itemManager The item manager this item belongs to.
+     * @param logger The logger.
      */
-    public AbstractItem() {
-        // do nothing
+    public AbstractItem(ItemManager itemManager, Logger logger) {
+        Assert.notNull("item manager", itemManager);
+        this.itemManager = itemManager;
+        
+        Assert.notNull("logger", logger);
+        ContainerUtil.enableLogging(this, logger);
+    }
+    
+    /**
+     * @return The accreditable manager.
+     */
+    public AccreditableManager getAccreditableManager() {
+        return this.accreditableManager;
     }
 
     /**
@@ -128,4 +149,9 @@ public abstract class AbstractItem extends AbstractLogEnabled implements Item, C
         }
         return 0;
     }
+    
+    public ItemManager getItemManager() {
+        return this.itemManager;
+    }
+    
 }

@@ -161,7 +161,7 @@ public class Importer extends AbstractLogEnabled {
                 String value = DocumentHelper.getSimpleElementText(dcElements[i]);
                 meta.setValue(key, value);
             }
-
+            
         } catch (Exception e) {
             throw new RuntimeException(e);
         } finally {

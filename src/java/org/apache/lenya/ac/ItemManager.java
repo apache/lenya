@@ -35,5 +35,10 @@ public interface ItemManager {
      * @param listener The listener to remove.
      */
     void removeItemManagerListener(ItemManagerListener listener);
+
+    /**
+     * @return The accreditable manager this item manager belongs to.
+     */
+    AccreditableManager getAccreditableManager();
     
 }

@@ -79,9 +79,11 @@ public class ContactForm extends AbstractUsecase {
         Message message = new Message("Contact form submitted by " + name + " (" + from + ")",
                 new String[0],
                 body,
-                new String[0]);
-
-        NotificationUtil.notify(this.manager, recipients, sender, message);
+                new String[0],
+                sender,
+                recipients);
+        
+        NotificationUtil.notify(this.manager, message);
 
         setDefaultTargetURL(getSourceURL() + "?sent=true");
     }

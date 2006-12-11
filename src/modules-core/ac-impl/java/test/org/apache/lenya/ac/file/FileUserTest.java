@@ -71,19 +71,21 @@ public class FileUserTest extends AbstractAccessControlTest {
      */
     final public FileUser createAndSaveUser(String userName, String fullName, String email,
             String password) throws AccessControlException {
-        File configDir = getAccreditablesDirectory();
 
         String editorGroupName = "editorGroup";
         String adminGroupName = "adminGroup";
 
-        FileGroup editorGroup = new FileGroup(configDir, editorGroupName);
+        FileGroup editorGroup = new FileGroup(getAccreditableManager().getGroupManager(),
+                getLogger(), editorGroupName);
         ContainerUtil.enableLogging(editorGroup, getLogger());
-        FileGroup adminGroup = new FileGroup(configDir, adminGroupName);
+        FileGroup adminGroup = new FileGroup(getAccreditableManager().getGroupManager(),
+                getLogger(), adminGroupName);
         ContainerUtil.enableLogging(adminGroup, getLogger());
         this.groups.put(editorGroupName, editorGroup);
         this.groups.put(adminGroupName, adminGroup);
 
-        FileUser user = new FileUser(configDir, userName, fullName, email, password);
+        FileUser user = new FileUser(getAccreditableManager().getUserManager(), getLogger(),
+                userName, fullName, email, password);
         ContainerUtil.enableLogging(user, getLogger());
 
         editorGroup.add(user);
@@ -102,12 +104,12 @@ public class FileUserTest extends AbstractAccessControlTest {
     /**
      * Returns the file user manager.
      * @return A file user manager.
-     * @throws AccessControlException if an error occurs. 
+     * @throws AccessControlException if an error occurs.
      */
     protected FileUserManager getUserManager() throws AccessControlException {
         UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
-        FileUserManager _manager = FileUserManager.instance(getAccreditablesDirectory(), userTypes,
-                getLogger());
+        FileUserManager _manager = FileUserManager.instance(getAccreditableManager(),
+                getAccreditablesDirectory(), userTypes, getLogger());
         return _manager;
     }
 

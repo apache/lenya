@@ -34,8 +34,8 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 
 /**
- * LDAP user test.
- * The name "Abstract..." is used to prevent it from being executed.
+ * LDAP user test. The name "Abstract..." is used to prevent it from being
+ * executed.
  * 
  * @version $Id$
  */
@@ -68,19 +68,19 @@ public class AbstractLDAPUserTest extends AbstractAccessControlTest {
         String editorRoleName = "editorRole";
         String adminRoleName = "adminRole";
 
-        File configDir = getAccreditablesDirectory();
-        FileRole editorRole = new FileRole();
+        FileRole editorRole = new FileRole(getAccreditableManager().getRoleManager(), getLogger());
         editorRole.setName(editorRoleName);
-        editorRole.setConfigurationDirectory(configDir);
 
-        FileRole adminRole = new FileRole();
+        FileRole adminRole = new FileRole(getAccreditableManager().getRoleManager(), getLogger());
         adminRole.setName(adminRoleName);
-        adminRole.setConfigurationDirectory(configDir);
 
-        FileGroup editorGroup = new FileGroup(configDir, editorGroupName);
-        FileGroup adminGroup = new FileGroup(configDir, adminGroupName);
+        FileGroup editorGroup = new FileGroup(getAccreditableManager().getGroupManager(),
+                getLogger(), editorGroupName);
+        FileGroup adminGroup = new FileGroup(getAccreditableManager().getGroupManager(),
+                getLogger(), adminGroupName);
 
-        LDAPUser user = new LDAPUser(configDir, userName, email, ldapId, getLogger());
+        LDAPUser user = new LDAPUser(getAccreditableManager().getUserManager(), getLogger(),
+                userName, email, ldapId, getLogger());
 
         editorRole.save();
         adminRole.save();
@@ -105,12 +105,11 @@ public class AbstractLDAPUserTest extends AbstractAccessControlTest {
      */
     final public LDAPUser loadUser(String userName) throws AccessControlException {
         UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
-        FileUserManager _manager = FileUserManager.instance(getAccreditablesDirectory(), userTypes,
-                getLogger());
+        FileUserManager _manager = FileUserManager.instance(getAccreditableManager(),
+                getAccreditablesDirectory(), userTypes, getLogger());
 
         return (LDAPUser) _manager.getUser(userName);
     }
-
 
     /**
      * Test the ldap id getter
@@ -168,9 +167,9 @@ public class AbstractLDAPUserTest extends AbstractAccessControlTest {
 
     /**
      * Test the deletion of a ldap user
-     *  
+     * 
      */
     final public void testDelete() {
-        //TODO Implement delete().
+        // TODO Implement delete().
     }
 }

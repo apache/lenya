@@ -25,9 +25,12 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Group;
+import org.apache.lenya.ac.GroupManager;
 import org.apache.lenya.ac.Item;
+import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.impl.AbstractUser;
 import org.apache.lenya.ac.impl.ItemConfiguration;
 
@@ -38,10 +41,10 @@ import org.apache.lenya.ac.impl.ItemConfiguration;
 public class FileUser extends AbstractUser implements Item, Serializable {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	protected static final String ID = "identity";
+     * 
+     */
+    private static final long serialVersionUID = 1L;
+    protected static final String ID = "identity";
     protected static final String EMAIL = "email";
     protected static final String MENU_LOCALE = "default-menu-locale";
     protected static final String DOCUMENT_LOCALE = "default-document-locale";
@@ -52,29 +55,36 @@ public class FileUser extends AbstractUser implements Item, Serializable {
 
     /**
      * Creates a new FileUser object.
+     * @param itemManager The item manager.
+     * @param logger The logger.
      */
-    public FileUser() {
-	    // do nothing
+    public FileUser(ItemManager itemManager, Logger logger) {
+        super(itemManager, logger);
+        FileItemManager fileItemManager = (FileItemManager) itemManager;
+        setConfigurationDirectory(fileItemManager.getConfigurationDirectory());
     }
 
     /**
      * Create a FileUser
-     * @param _configurationDirectory where the user will be attached to
+     * @param itemManager The item manager.
+     * @param logger The logger.
      * @param id the user id
      * @param fullName the full name of the user
      * @param email the users email address
      * @param password the users password
      */
-    public FileUser(File _configurationDirectory, String id, String fullName, String email,
-            String password) {
-        super(id, fullName, email, password);
-        setConfigurationDirectory(_configurationDirectory);
+    public FileUser(ItemManager itemManager, Logger logger, String id, String fullName,
+            String email, String password) {
+        super(itemManager, logger, id, fullName, email, password);
+        FileItemManager fileItemManager = (FileItemManager) itemManager;
+        setConfigurationDirectory(fileItemManager.getConfigurationDirectory());
     }
 
     /**
      * Configure this FileUser.
      * @param config where the user details are specified
-     * @throws ConfigurationException if the necessary details aren't specified in the config
+     * @throws ConfigurationException if the necessary details aren't specified
+     *         in the config
      */
     public void configure(Configuration config) throws ConfigurationException {
         new ItemConfiguration().configure(this, config);
@@ -89,14 +99,11 @@ public class FileUser extends AbstractUser implements Item, Serializable {
         if (groups.length == 1) {
             groups = groups[0].getChildren(GROUP);
 
-            FileGroupManager manager = null;
-
+            GroupManager manager;
             try {
-                manager = FileGroupManager.instance(this.configurationDirectory, getLogger());
+                manager = getAccreditableManager().getGroupManager();
             } catch (AccessControlException e) {
-                throw new ConfigurationException(
-                        "Exception when trying to fetch GroupManager for directory: ["
-                                + this.configurationDirectory + "]", e);
+                throw new ConfigurationException("configuration failed: ", e);
             }
 
             for (int i = 0; i < groups.length; i++) {
@@ -120,7 +127,8 @@ public class FileUser extends AbstractUser implements Item, Serializable {
     }
 
     /**
-     * Create a configuration from the current user details. Can be used for saving.
+     * Create a configuration from the current user details. Can be used for
+     * saving.
      * @return a <code>Configuration</code>
      */
     protected Configuration createConfiguration() {
@@ -143,7 +151,7 @@ public class FileUser extends AbstractUser implements Item, Serializable {
         child = new DefaultConfiguration(DOCUMENT_LOCALE);
         child.setValue(getDefaultDocumentLocale());
         config.addChild(child);
-        
+
         // add password node
         child = new DefaultConfiguration(PASSWORD);
         child.setValue(getEncryptedPassword());
@@ -207,10 +215,7 @@ public class FileUser extends AbstractUser implements Item, Serializable {
         return this.configurationDirectory;
     }
 
-    /**
-     * @see org.apache.lenya.ac.Item#setConfigurationDirectory(java.io.File)
-     */
-    public void setConfigurationDirectory(File _configurationDirectory) {
+    protected void setConfigurationDirectory(File _configurationDirectory) {
         assert (_configurationDirectory != null) && _configurationDirectory.isDirectory();
         this.configurationDirectory = _configurationDirectory;
     }

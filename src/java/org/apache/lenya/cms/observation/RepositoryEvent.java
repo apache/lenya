@@ -18,6 +18,7 @@
 package org.apache.lenya.cms.observation;
 
 import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.util.Assert;
 
 /**
  * A repository event provides additional information if a document was added, changed, or removed.
@@ -25,13 +26,20 @@ import org.apache.lenya.cms.repository.Session;
 public class RepositoryEvent {
 
     private Session session;
+    private Object descriptor = null;
 
     /**
      * Ctor.
      * @param session The session.
+     * @param descriptor More information about the event.
      */
-    public RepositoryEvent(Session session) {
+    public RepositoryEvent(Session session, Object descriptor) {
+        
+        Assert.notNull("session", session);
         this.session = session;
+        
+        Assert.notNull("descriptor", descriptor);
+        this.descriptor = descriptor;
     }
     
     /**
@@ -39,6 +47,13 @@ public class RepositoryEvent {
      */
     public Session getSession() {
         return this.session;
+    }
+
+    /**
+     * @return The descriptor.
+     */
+    public Object getDescriptor() {
+        return this.descriptor;
     }
 
 }

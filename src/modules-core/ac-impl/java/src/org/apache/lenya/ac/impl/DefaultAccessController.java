@@ -51,6 +51,7 @@ import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.ItemManagerListener;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.PolicyManager;
+import org.apache.lenya.ac.Role;
 
 /**
  * Default access controller implementation.
@@ -446,7 +447,10 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
             getLogger().debug("Item was removed: [" + item + "]");
             getLogger().debug("Notifying policy manager");
         }
-        getPolicyManager().accreditableRemoved(getAccreditableManager(), (Accreditable) item);
+        
+        if (!(item instanceof Role)) {
+            getPolicyManager().accreditableRemoved(getAccreditableManager(), (Accreditable) item);
+        }
     }
 
 }

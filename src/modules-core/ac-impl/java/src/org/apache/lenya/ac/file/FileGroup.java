@@ -26,8 +26,10 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfiguration;
 import org.apache.avalon.framework.configuration.DefaultConfigurationSerializer;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Item;
+import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.impl.AbstractGroup;
 import org.apache.lenya.ac.impl.ItemConfiguration;
 
@@ -46,19 +48,23 @@ public class FileGroup extends AbstractGroup implements Item {
 
     /**
      * Creates a new FileGroup object.
+     * @param itemManager The item manager.
+     * @param logger The logger.
      */
-    public FileGroup() {
-	    // do nothing
+    public FileGroup(ItemManager itemManager, Logger logger) {
+        super(itemManager, logger);
     }
 
     /**
      * Create a new instance of <code>FileGroup</code>
-     * @param _configurationDirectory to which the group will be attached to
+     * @param itemManager The item manager.
+     * @param logger The logger.
      * @param id the ID of the group
      */
-    public FileGroup(File _configurationDirectory, String id) {
-        super(id);
-        setConfigurationDirectory(_configurationDirectory);
+    public FileGroup(ItemManager itemManager, Logger logger, String id) {
+        super(itemManager, logger, id);
+        FileItemManager fileItemManager = (FileItemManager) itemManager;
+        setConfigurationDirectory(fileItemManager.getConfigurationDirectory());
     }
 
     /**
@@ -122,10 +128,7 @@ public class FileGroup extends AbstractGroup implements Item {
         return this.configurationDirectory;
     }
 
-    /**
-     * @see org.apache.lenya.ac.Item#setConfigurationDirectory(java.io.File)
-     */
-    public void setConfigurationDirectory(File _configurationDirectory) {
+    protected void setConfigurationDirectory(File _configurationDirectory) {
         assert (_configurationDirectory != null) && _configurationDirectory.isDirectory();
         this.configurationDirectory = _configurationDirectory;
     }

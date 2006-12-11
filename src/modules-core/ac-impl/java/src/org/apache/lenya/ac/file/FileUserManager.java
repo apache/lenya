@@ -27,6 +27,7 @@ import java.util.Set;
 
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Item;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.UserManager;
@@ -44,24 +45,27 @@ public class FileUserManager extends FileItemManager implements UserManager {
     /**
      * Create a UserManager
      * 
+     * @param mgr The accreditable manager.
      * @param _userTypes The supported user types.
      * @throws AccessControlException if the UserManager could not be instantiated.
      */
-    private FileUserManager(UserType[] _userTypes)
+    private FileUserManager(AccreditableManager mgr, UserType[] _userTypes)
             throws AccessControlException {
+        super(mgr);
         this.userTypes = new HashSet(Arrays.asList(_userTypes));
     }
 
     /**
      * Describe <code>instance</code> method here.
      * 
+     * @param mgr The accreditable manager.
      * @param configurationDirectory a directory
      * @param userTypes The supported user types.
      * @param logger The logger.
      * @return an <code>UserManager</code> value
      * @exception AccessControlException if an error occurs
      */
-    public static FileUserManager instance(File configurationDirectory, UserType[] userTypes, Logger logger)
+    public static FileUserManager instance(AccreditableManager mgr, File configurationDirectory, UserType[] userTypes, Logger logger)
             throws AccessControlException {
 
         assert configurationDirectory != null;
@@ -71,7 +75,7 @@ public class FileUserManager extends FileItemManager implements UserManager {
         }
 
         if (!instances.containsKey(configurationDirectory)) {
-            FileUserManager manager = new FileUserManager(userTypes);
+            FileUserManager manager = new FileUserManager(mgr, userTypes);
             manager.enableLogging(logger);
             manager.configure(configurationDirectory);
             instances.put(configurationDirectory, manager);

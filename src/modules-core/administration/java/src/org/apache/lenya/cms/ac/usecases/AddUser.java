@@ -17,12 +17,11 @@
  */
 package org.apache.lenya.cms.ac.usecases;
 
-import java.io.File;
-
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.ItemUtil;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.ac.UserManager;
 import org.apache.lenya.ac.file.FileUser;
 import org.apache.lenya.ac.file.FileUserManager;
 import org.apache.lenya.ac.ldap.LDAPUser;
@@ -64,8 +63,7 @@ public class AddUser extends AccessControlUsecase {
         }
 
         if (className.equals(LDAPUser.class.getName())) {
-            LDAPUser ldapUser = new LDAPUser(((FileUserManager) getUserManager())
-                    .getConfigurationDirectory());
+            LDAPUser ldapUser = new LDAPUser(getUserManager(), getLogger());
             ContainerUtil.enableLogging(ldapUser, getLogger());
 
             try {
@@ -97,7 +95,7 @@ public class AddUser extends AccessControlUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
     protected void doExecute() throws Exception {
-        File configDir = ((FileUserManager) getUserManager()).getConfigurationDirectory();
+        UserManager userManager = (FileUserManager) getUserManager();
 
         String userId = getParameterAsString(UserProfile.USER_ID);
         String fullName = getParameterAsString(UserProfile.FULL_NAME);
@@ -108,10 +106,10 @@ public class AddUser extends AccessControlUsecase {
         User user;
         if (className.equals(LDAPUser.class.getName())) {
             String ldapId = getParameterAsString(LDAP_ID);
-            user = new LDAPUser(configDir, userId, email, ldapId, getLogger());
+            user = new LDAPUser(userManager, getLogger(), userId, email, ldapId, getLogger());
         } else {
             String password = getParameterAsString(AbstractChangePassword.NEW_PASSWORD);
-            user = new FileUser(configDir, userId, fullName, email, "");
+            user = new FileUser(userManager, getLogger(), userId, fullName, email, "");
             user.setName(fullName);
             user.setPassword(password);
         }

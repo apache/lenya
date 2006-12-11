@@ -24,7 +24,9 @@ import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
+import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Group;
+import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.User;
 
 public class MockUser implements User {
@@ -147,6 +149,16 @@ public class MockUser implements User {
     public void removedFromGroup(Group group) {
         // TODO Auto-generated method stub
         
+    }
+
+    public AccreditableManager getAccreditableManager() {
+        // TODO Auto-generated method stub
+        return null;
+    }
+
+    public ItemManager getItemManager() {
+        // TODO Auto-generated method stub
+        return null;
     }
 
 }

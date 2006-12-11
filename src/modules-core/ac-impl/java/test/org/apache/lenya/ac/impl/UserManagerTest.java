@@ -69,24 +69,28 @@ public class UserManagerTest extends AbstractAccessControlTest {
         String editorRoleId = "editorRole";
         String adminRoleId = "adminRole";
 
-        FileRole editorRole = new FileRole(configDir, editorRoleId);
-        FileRole adminRole = new FileRole(configDir, adminRoleId);
+        FileRole editorRole = new FileRole(getAccreditableManager().getRoleManager(), getLogger(),
+                editorRoleId);
+        FileRole adminRole = new FileRole(getAccreditableManager().getRoleManager(), getLogger(),
+                adminRoleId);
 
-        User user = new FileUser(configDir, userName, "Alice in Wonderland", "alice@test.com",
-                "secret");
+        User user = new FileUser(getAccreditableManager().getUserManager(), getLogger(), userName,
+                "Alice in Wonderland", "alice@test.com", "secret");
 
         editorRole.save();
         adminRole.save();
 
-        Group editorGroup = new FileGroup(configDir, editorGroupId);
+        Group editorGroup = new FileGroup(getAccreditableManager().getGroupManager(), getLogger(),
+                editorGroupId);
 
-        //		editorGroup.addRole(editorRole);
+        // editorGroup.addRole(editorRole);
         editorGroup.add(user);
 
-        FileGroup adminGroup = new FileGroup(configDir, adminGroupId);
+        FileGroup adminGroup = new FileGroup(getAccreditableManager().getGroupManager(),
+                getLogger(), adminGroupId);
 
-        //		adminGroup.addRole(editorRole);
-        //		adminGroup.addRole(adminRole);
+        // adminGroup.addRole(editorRole);
+        // adminGroup.addRole(adminRole);
         editorGroup.save();
         adminGroup.save();
         adminGroup.add(user);
@@ -96,7 +100,7 @@ public class UserManagerTest extends AbstractAccessControlTest {
         UserManager userManager = getAccreditableManager().getUserManager();
         assertNotNull(userManager);
 
-        groupManager = FileGroupManager.instance(configDir, getLogger());
+        groupManager = FileGroupManager.instance(getAccreditableManager(), configDir, getLogger());
         assertNotNull(groupManager);
 
         Group fetchedGroup = groupManager.getGroup(editorGroupId);
@@ -114,11 +118,11 @@ public class UserManagerTest extends AbstractAccessControlTest {
         FileAccreditableManager accrMgr = (FileAccreditableManager) getAccreditableManager();
         File configDir = accrMgr.getConfigurationDirectory();
         String userName = "aliceTest";
-        FileUser user = new FileUser(configDir, userName, "Alice in Wonderland",
-                "alice@wonderland.com", "secret");
+        FileUser user = new FileUser(getAccreditableManager().getUserManager(), getLogger(),
+                userName, "Alice in Wonderland", "alice@wonderland.com", "secret");
         UserType[] userTypes = { FileAccreditableManager.getDefaultUserType() };
-        FileUserManager _manager = FileUserManager.instance(configDir, userTypes,
-                getLogger());
+        FileUserManager _manager = FileUserManager.instance(getAccreditableManager(), configDir,
+                userTypes, getLogger());
         assertNotNull(_manager);
         _manager.add(user);
 

@@ -23,6 +23,7 @@ package org.apache.lenya.ac.file;
 import java.io.File;
 import java.io.FileFilter;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -35,27 +36,34 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.configuration.DefaultConfigurationBuilder;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Groupable;
 import org.apache.lenya.ac.Item;
+import org.apache.lenya.ac.ItemManager;
 import org.apache.lenya.ac.ItemManagerListener;
 import org.apache.lenya.ac.impl.ItemConfiguration;
 
 /**
- * Abstract superclass for classes that manage items loaded from configuration files.
+ * Abstract superclass for classes that manage items loaded from configuration
+ * files.
  */
-public abstract class FileItemManager extends AbstractLogEnabled {
+public abstract class FileItemManager extends AbstractLogEnabled implements ItemManager {
 
     private Map items = new HashMap();
     private File configurationDirectory;
     private DirectoryChangeNotifier notifier;
 
+    private AccreditableManager accreditableManager;
+
     /**
      * Create a new ItemManager.
+     * @param accreditableManager The {@link AccreditableManager}.
      */
-    protected FileItemManager() {
-	    // do nothing
+    protected FileItemManager(AccreditableManager accreditableManager) {
+        this.accreditableManager = accreditableManager;
     }
 
     /**
@@ -149,8 +157,10 @@ public abstract class FileItemManager extends AbstractLogEnabled {
         String klass = ItemConfiguration.getItemClass(config);
         if (item == null) {
             try {
-                item = (Item) Class.forName(klass).newInstance();
-                item.enableLogging(getLogger());
+                Class[] paramTypes = { ItemManager.class, Logger.class };
+                Constructor ctor = Class.forName(klass).getConstructor(paramTypes);
+                Object[] params = { this, getLogger() };
+                item = (Item) ctor.newInstance(params);
             } catch (Exception e) {
                 String errorMsg = "Exception when trying to instanciate: " + klass
                         + " with exception: " + e.fillInStackTrace();
@@ -160,7 +170,6 @@ public abstract class FileItemManager extends AbstractLogEnabled {
                 getLogger().error(errorMsg);
                 throw new AccessControlException(errorMsg, e);
             }
-            item.setConfigurationDirectory(this.configurationDirectory);
         }
 
         try {
@@ -198,7 +207,7 @@ public abstract class FileItemManager extends AbstractLogEnabled {
     }
 
     protected void removeItem(File file) {
-	    // do nothing
+        // do nothing
     }
 
     /**
@@ -231,7 +240,8 @@ public abstract class FileItemManager extends AbstractLogEnabled {
     /**
      * Add an Item to this manager
      * @param item to be added
-     * @throws AccessControlException when the notification threw this exception.
+     * @throws AccessControlException when the notification threw this
+     *         exception.
      */
     public void add(Item item) throws AccessControlException {
         assert item != null;
@@ -245,7 +255,8 @@ public abstract class FileItemManager extends AbstractLogEnabled {
     /**
      * Remove an item from this manager
      * @param item to be removed
-     * @throws AccessControlException when the notification threw this exception.
+     * @throws AccessControlException when the notification threw this
+     *         exception.
      */
     public void remove(Item item) throws AccessControlException {
         this.items.remove(item.getId());
@@ -258,7 +269,8 @@ public abstract class FileItemManager extends AbstractLogEnabled {
     /**
      * Update an item.
      * @param newItem The new version of the item.
-     * @throws AccessControlException when the notification threw this exception.
+     * @throws AccessControlException when the notification threw this
+     *         exception.
      */
     public void update(Item newItem) throws AccessControlException {
         this.items.remove(newItem.getId());
@@ -395,8 +407,8 @@ public abstract class FileItemManager extends AbstractLogEnabled {
         private Set changedFiles = new HashSet();
 
         /**
-         * Checks if the directory has changed (a new file was added, a file was removed, a file has
-         * changed).
+         * Checks if the directory has changed (a new file was added, a file was
+         * removed, a file has changed).
          * @return A boolean value.
          * @throws IOException when something went wrong.
          */
@@ -422,7 +434,8 @@ public abstract class FileItemManager extends AbstractLogEnabled {
                     }
 
                 } else {
-                    Long lastModifiedObject = (Long) this.canonicalPath2LastModified.get(canonicalPath);
+                    Long lastModifiedObject = (Long) this.canonicalPath2LastModified
+                            .get(canonicalPath);
                     long lastModified = lastModifiedObject.longValue();
                     if (lastModified < files[i].lastModified()) {
                         this.changedFiles.add(files[i]);
@@ -447,7 +460,8 @@ public abstract class FileItemManager extends AbstractLogEnabled {
                 }
             }
 
-            return !this.addedFiles.isEmpty() || !this.removedFiles.isEmpty() || !this.changedFiles.isEmpty();
+            return !this.addedFiles.isEmpty() || !this.removedFiles.isEmpty()
+                    || !this.changedFiles.isEmpty();
         }
 
         /**
@@ -474,6 +488,10 @@ public abstract class FileItemManager extends AbstractLogEnabled {
             return (File[]) this.changedFiles.toArray(new File[this.changedFiles.size()]);
         }
 
+    }
+
+    public AccreditableManager getAccreditableManager() {
+        return this.accreditableManager;
     }
 
 }

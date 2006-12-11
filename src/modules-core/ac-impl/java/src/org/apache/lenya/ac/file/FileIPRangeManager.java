@@ -26,6 +26,7 @@ import java.util.Map;
 
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.IPRange;
 import org.apache.lenya.ac.IPRangeManager;
 import org.apache.lenya.ac.Item;
@@ -37,9 +38,10 @@ public class FileIPRangeManager extends FileItemManager implements IPRangeManage
 
     /**
      * Ctor.
+     * @param mgr The accreditable manager.
      */
-    private FileIPRangeManager() {
-	    // do nothing
+    private FileIPRangeManager(AccreditableManager mgr) {
+        super(mgr);
     }
 
     protected static final String SUFFIX = ".ipml";
@@ -55,12 +57,13 @@ public class FileIPRangeManager extends FileItemManager implements IPRangeManage
 
     /**
      * Return an instance of FileIPRangeManager
+     * @param mgr The accreditable manager.
      * @param configurationDirectory a directory
      * @param logger The logger.
      * @return an <code>IPRangeManager</code> value
      * @exception AccessControlException if an error occurs
      */
-    public static FileIPRangeManager instance(File configurationDirectory, Logger logger)
+    public static FileIPRangeManager instance(AccreditableManager mgr, File configurationDirectory, Logger logger)
             throws AccessControlException {
 
         assert configurationDirectory != null;
@@ -70,7 +73,7 @@ public class FileIPRangeManager extends FileItemManager implements IPRangeManage
         }
 
         if (!instances.containsKey(configurationDirectory)) {
-            FileIPRangeManager manager = new FileIPRangeManager();
+            FileIPRangeManager manager = new FileIPRangeManager(mgr);
             manager.enableLogging(logger);
             manager.configure(configurationDirectory);
             instances.put(configurationDirectory, manager);
@@ -93,7 +96,7 @@ public class FileIPRangeManager extends FileItemManager implements IPRangeManage
     }
 
     public IPRange add(String id) throws AccessControlException {
-        IPRange range = new FileIPRange(getConfigurationDirectory(), id);
+        IPRange range = new FileIPRange(this, getLogger(), id);
         super.add(range);
         return range;
     }

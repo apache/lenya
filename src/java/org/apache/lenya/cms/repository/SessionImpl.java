@@ -17,8 +17,10 @@
  */
 package org.apache.lenya.cms.repository;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import org.apache.avalon.framework.container.ContainerUtil;
@@ -28,6 +30,7 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.observation.ObservationRegistry;
 import org.apache.lenya.cms.observation.RepositoryEvent;
+import org.apache.lenya.cms.observation.RepositoryListener;
 import org.apache.lenya.transaction.IdentityMap;
 import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.Lockable;
@@ -93,40 +96,19 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
      */
     public void commit() throws RepositoryException {
         
-        Set modifiedEvents = createEvents(this.modifiedObjects);
-        Set removedEvents = createEvents(this.removedObjects);
-        
         try {
             getUnitOfWork().commit();
         } catch (TransactionException e) {
             throw new RepositoryException(e);
         }
         
-        for (Iterator i = modifiedEvents.iterator(); i.hasNext(); ) {
+        for (Iterator i = this.events.iterator(); i.hasNext(); ) {
             RepositoryEvent event = (RepositoryEvent) i.next();
             for (Iterator l = this.listeners.iterator(); l.hasNext(); ) {
-                NodeListener listener = (NodeListener) l.next();
-                listener.nodeChanged(event);
+                RepositoryListener listener = (RepositoryListener) l.next();
+                listener.eventFired(event);
             }
         }
-        for (Iterator i = removedEvents.iterator(); i.hasNext(); ) {
-            RepositoryEvent event = (RepositoryEvent) i.next();
-            for (Iterator l = this.listeners.iterator(); l.hasNext(); ) {
-                NodeListener listener = (NodeListener) l.next();
-                listener.nodeRemoved(event);
-            }
-        }
-    }
-
-    protected Set createEvents(Set transactionables) {
-        Set events = new HashSet();
-        for (Iterator i = transactionables.iterator(); i.hasNext(); ) {
-            Transactionable t = (Transactionable) i.next();
-            if (t instanceof Node) {
-                events.add(((Node) t).getEvent());
-            }
-        }
-        return events;
     }
 
     /**
@@ -189,7 +171,7 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
 
     private Set listeners = new HashSet();
 
-    public void addListener(NodeListener listener) throws RepositoryException {
+    public void addListener(RepositoryListener listener) throws RepositoryException {
         if (this.listeners.contains(listener)) {
             throw new RepositoryException("The listener [" + listener
                     + "] is already registered for node [" + this + "]!");
@@ -197,8 +179,15 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
         this.listeners.add(listener);
     }
 
-    public boolean isListenerRegistered(NodeListener listener) {
+    public boolean isListenerRegistered(RepositoryListener listener) {
         return this.listeners.contains(listener);
+    }
+
+    private List events = new ArrayList();
+    
+    public void enqueueEvent(RepositoryEvent event) {
+        Assert.isTrue("event belongs to session", event.getSession() == this);
+        this.events.add(event);
     }
 
 }

@@ -29,16 +29,21 @@ import org.apache.cocoon.mail.MailSender;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Identifiable;
 import org.apache.lenya.ac.User;
+import org.apache.lenya.inbox.InboxNotifier;
 
 /**
  * Default notifier implementation.
  */
-public class EmailNotifier extends AbstractNotifier implements Configurable {
+public class EmailNotifier extends InboxNotifier implements Configurable {
 
-    public void notify(Identifiable[] recipients, Identifiable sender, Message message)
+    public void notify(Message message)
             throws NotificationException {
+        
+        super.notify(message);
 
         Set noDuplicates = new HashSet();
+        
+        Identifiable[] recipients = message.getRecipients();
 
         for (int i = 0; i < recipients.length; i++) {
             if (recipients[i] instanceof Group) {
@@ -52,15 +57,22 @@ public class EmailNotifier extends AbstractNotifier implements Configurable {
         for (Iterator i = noDuplicates.iterator(); i.hasNext();) {
             Identifiable identifiable = (Identifiable) i.next();
             if (identifiable instanceof User) {
-                notify((User) identifiable, sender, message);
+                notify((User) identifiable, message);
             }
         }
 
     }
 
-    protected void notify(User recipient, Identifiable sender, Message message)
+    protected void notify(User recipient, Message message)
             throws NotificationException {
 
+        Identifiable sender = message.getSender();
+        
+        if (!this.manager.hasService(MailSender.ROLE)) {
+            getLogger().error("Can't send mails - no MailSender service found.");
+            return;
+        }
+        
         MailSender mailer = null;
         try {
             mailer = (MailSender) this.manager.lookup(MailSender.ROLE);
