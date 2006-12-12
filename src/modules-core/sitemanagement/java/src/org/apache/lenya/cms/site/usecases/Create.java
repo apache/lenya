@@ -124,7 +124,7 @@ public abstract class Create extends AbstractUsecase {
         }
 
         String doctypeName = getDocumentTypeName();
-        if (doctypeName != null) {
+        if (getParameterAsString(SAMPLE) == null && doctypeName != null) {
             initSampleParameters();
         }
     }

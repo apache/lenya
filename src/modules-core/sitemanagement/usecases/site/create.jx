@@ -217,7 +217,7 @@
             <jx:set var="samples" value="${usecase.getParameter('samples')}"/>
             <jx:if test="${samples.size() &gt; 0}">
               <tr>
-                <td class="lenya-entry-caption">
+                <td class="lenya-entry-caption" style="vertical-align: top">
                   <label for="sample"><i18n:text>Page Layout</i18n:text>:</label></td>
                 <td>
                   <jx:forEach var="item" items="${samples}">
