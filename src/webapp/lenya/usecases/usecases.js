@@ -297,6 +297,9 @@ function redirect(targetUrl) {
  */
 function executeUsecase() {
 
+    customLoopFlow = undefined;  
+    customSubmitFlow = undefined;
+
     var usecaseName;
     var usecase; // the Usecase object
     var proxy; // a UsecaseProxy to make the usecase state persistent across continuations
