@@ -18,12 +18,18 @@
 
 <!-- $Id: doctypes.xconf 164635 2005-04-25 20:01:43Z tschlabach $ -->
 
-<xconf xpath="/cocoon" unless="/cocoon/notifier">
+<xconf xpath="/cocoon" unless="/cocoon/component[@role = 'org.apache.lenya.notification.Notifier']">
 
   <component logger="lenya.notification"
     role="org.apache.lenya.notification.Notifier"
     class="org.apache.lenya.notification.EmailNotifier">
-    <smtp-host>mail.yourdomain.com</smtp-host>
+    
+    <smtp host="localhost"/>
+    
+    <!-- use this for authentication
+    <smtp host="localhost" username="john" password="swordfish" />
+    -->
+    
   </component>
   
 </xconf>

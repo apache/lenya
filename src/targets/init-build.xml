@@ -103,6 +103,8 @@
         <exclude name="legal/**"/>
         <exclude name="WEB-INF/db/**"/>
         <exclude name="WEB-INF/xconf/**"/>
+        <!-- exclude the geronimo libraries, see http://issues.apache.org/bugzilla/show_bug.cgi?id=38587 -->
+        <exclude name="WEB-INF/lib/geronimo-*.jar"/>
         <exclude name="**/javac.jar"/>
       </fileset>
     </copy>

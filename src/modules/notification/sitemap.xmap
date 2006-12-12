@@ -21,9 +21,17 @@
   <map:pipelines>
 
     <map:pipeline>
-      <map:match pattern="message.xml">
+      <map:match pattern="message/*">
       
+      <!--
         <map:generate src="fallback://lenya/modules/notification/content/message.xml"/>
+        -->
+        <map:generate type="session-attr">
+          <map:parameter name="attr-name" value="notification.dom"/>
+        </map:generate>
+        <map:transform type="i18n">
+          <map:parameter name="locale" value="{1}"/>
+        </map:transform>
         <map:serialize type="xml"/>
         
       </map:match>

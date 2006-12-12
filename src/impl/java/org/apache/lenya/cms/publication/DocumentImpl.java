@@ -411,11 +411,6 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      * @see Document#getResourceType()
      */
     public ResourceType getResourceType() throws DocumentException {
-        
-        if (!exists()) {
-            throw new DocumentException("The document [" + this + "] doesn't exist!");
-        }
-        
         if (this.resourceType == null) {
             ServiceSelector selector = null;
             try {

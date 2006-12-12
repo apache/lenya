@@ -17,16 +17,10 @@
  */
 package org.apache.lenya.notification;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Set;
-
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.cocoon.mail.MailSender;
-import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Identifiable;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.inbox.InboxNotifier;
@@ -36,54 +30,29 @@ import org.apache.lenya.inbox.InboxNotifier;
  */
 public class EmailNotifier extends InboxNotifier implements Configurable {
 
-    public void notify(Message message)
-            throws NotificationException {
+    protected void notify(User recipient, Message translatedMessage) throws NotificationException {
         
-        super.notify(message);
-
-        Set noDuplicates = new HashSet();
-        
-        Identifiable[] recipients = message.getRecipients();
-
-        for (int i = 0; i < recipients.length; i++) {
-            if (recipients[i] instanceof Group) {
-                Group group = (Group) recipients[i];
-                noDuplicates.addAll(Arrays.asList(group.getMembers()));
-            } else {
-                noDuplicates.add(recipients[i]);
-            }
-        }
-
-        for (Iterator i = noDuplicates.iterator(); i.hasNext();) {
-            Identifiable identifiable = (Identifiable) i.next();
-            if (identifiable instanceof User) {
-                notify((User) identifiable, message);
-            }
-        }
-
-    }
-
-    protected void notify(User recipient, Message message)
-            throws NotificationException {
-
-        Identifiable sender = message.getSender();
+        super.notify(recipient, translatedMessage);
         
         if (!this.manager.hasService(MailSender.ROLE)) {
             getLogger().error("Can't send mails - no MailSender service found.");
             return;
         }
-        
+
+        Identifiable sender = translatedMessage.getSender();
         MailSender mailer = null;
         try {
             mailer = (MailSender) this.manager.lookup(MailSender.ROLE);
-            mailer.setSmtpHost(this.smtpHost);
+            if (this.username == null) {
+                mailer.setSmtpHost(this.smtpHost);
+            } else {
+                mailer.setSmtpHost(this.smtpHost, this.username, this.password);
+            }
 
             mailer.setTo(recipient.getEmail());
             if (sender instanceof User) {
                 mailer.setFrom(((User) sender).getEmail());
             }
-
-            Message translatedMessage = translateMessage(recipient.getDefaultMenuLocale(), message);
 
             mailer.setSubject(translatedMessage.getSubject());
             mailer.setBody(translatedMessage.getBody(), "text/plain");
@@ -97,15 +66,19 @@ public class EmailNotifier extends InboxNotifier implements Configurable {
                 this.manager.release(mailer);
             }
         }
-
     }
 
     private String smtpHost;
-
-    protected static final String ELEMENT_SMTP_HOST = "smtp-host";
+    private String username;
+    private String password;
 
     public void configure(Configuration config) throws ConfigurationException {
-        this.smtpHost = config.getChild(ELEMENT_SMTP_HOST).getValue();
+        Configuration smtp = config.getChild("smtp");
+        this.smtpHost = smtp.getAttribute("host");
+        this.username = smtp.getAttribute("username", null);
+        if (this.username != null) {
+            this.password = smtp.getAttribute("password");
+        }
     }
 
 }

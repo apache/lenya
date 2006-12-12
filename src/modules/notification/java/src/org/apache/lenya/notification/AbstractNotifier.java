@@ -17,8 +17,10 @@
  */
 package org.apache.lenya.notification;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 import org.apache.avalon.framework.context.Context;
 import org.apache.avalon.framework.context.ContextException;
@@ -33,6 +35,9 @@ import org.apache.cocoon.environment.Session;
 import org.apache.cocoon.transformation.I18nTransformer;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.ac.Group;
+import org.apache.lenya.ac.Identifiable;
+import org.apache.lenya.ac.User;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
@@ -43,6 +48,35 @@ import org.w3c.dom.Element;
  */
 public abstract class AbstractNotifier extends AbstractLogEnabled implements Notifier, Serviceable,
         Contextualizable {
+
+    public void notify(Message message) throws NotificationException {
+
+        Set noDuplicates = new HashSet();
+
+        Identifiable[] recipients = message.getRecipients();
+
+        for (int i = 0; i < recipients.length; i++) {
+            if (recipients[i] instanceof Group) {
+                Group group = (Group) recipients[i];
+                noDuplicates.addAll(Arrays.asList(group.getMembers()));
+            } else {
+                noDuplicates.add(recipients[i]);
+            }
+        }
+
+        for (Iterator i = noDuplicates.iterator(); i.hasNext();) {
+            Identifiable identifiable = (Identifiable) i.next();
+            if (identifiable instanceof User) {
+                User user = (User) identifiable;
+                Message translatedMessage = translateMessage(user.getDefaultMenuLocale(), message);
+                notify(user, translatedMessage);
+            }
+        }
+
+    }
+
+    protected abstract void notify(User user, Message translatedMessage)
+            throws NotificationException;
 
     protected Message translateMessage(String locale, Message message) throws NotificationException {
 
@@ -86,25 +120,27 @@ public abstract class AbstractNotifier extends AbstractLogEnabled implements Not
             Session session = this.request.getSession();
             session.setAttribute("notification.dom", doc);
 
-            Map parameters = new HashMap();
-
-            parameters.put("locale", locale);
-
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI("cocoon://modules/notification/message.xml", null,
-                    parameters);
+            source = resolver.resolveURI("cocoon://modules/notification/message/" + locale, null,
+                    null);
 
-            doc = DocumentHelper.readDocument(source.getInputStream());
-            helper = new NamespaceHelper(NAMESPACE, "not", doc);
+            if (source.exists()) {
+                doc = DocumentHelper.readDocument(source.getInputStream());
+                helper = new NamespaceHelper(NAMESPACE, "not", doc);
 
-            subjectElement = helper.getFirstChild(doc.getDocumentElement(), "subject");
-            String subject = DocumentHelper.getSimpleElementText(subjectElement);
+                subjectElement = helper.getFirstChild(doc.getDocumentElement(), "subject");
+                String subject = DocumentHelper.getSimpleElementText(subjectElement);
 
-            bodyElement = helper.getFirstChild(doc.getDocumentElement(), "body");
-            String body = DocumentHelper.getSimpleElementText(bodyElement);
+                bodyElement = helper.getFirstChild(doc.getDocumentElement(), "body");
+                String body = DocumentHelper.getSimpleElementText(bodyElement);
 
-            return new Message(subject, new String[0], body, new String[0], message.getSender(),
-                    message.getRecipients());
+                return new Message(subject, new String[0], body, new String[0],
+                        message.getSender(), message.getRecipients());
+            } else {
+                // this happens in the test
+                getLogger().info("cocoon protocol not available, not translating message");
+                return message;
+            }
         } catch (Exception e) {
             throw new NotificationException(e);
         } finally {

@@ -23,5 +23,9 @@
   <map:generator label="content" logger="sitemap.generator.lenyaMetaData"
     name="lenyaMetaData" pool-max="16"
     src="org.apache.lenya.cms.cocoon.generation.LenyaMetaDataGenerator"/>
+    
+  <map:generator label="content" logger="sitemap.generator.sessionattr"
+    name="session-attr" pool-max="16"
+    src="org.apache.cocoon.generation.SessionAttributeGenerator"/>
   
 </xmap>
