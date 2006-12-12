@@ -68,9 +68,6 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
         return new SiteNode[0];
     }
 
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#add(org.apache.lenya.cms.publication.Document)
-     */
     public void add(String path, Document document) throws SiteException {
         getStore(document).add(path, document);
     }
@@ -243,11 +240,6 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
     public DocumentLocator[] getRequiredResources(DocumentFactory map, DocumentLocator locator)
             throws SiteException {
         return new DocumentLocator[0];
-    }
-
-    public void move(SiteNode source, String destinationPath) throws SiteException {
-        throw new SiteException("This operation is not supported by [" + getClass().getName()
-                + "]!");
     }
 
 }

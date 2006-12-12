@@ -24,6 +24,81 @@
   <usecase id="editors.forms"><role id="edit" method="grant"/></usecase>
   <usecase id="workflow.publish"><role id="edit" method="grant"/></usecase>
   <usecase id="ac.logout"><role id="edit" method="grant"/></usecase>
-  <usecase id="admin.users"><role id="edit" method="grant"/></usecase>
   <usecase id="admin.usecases"><role id="edit" method="grant"/></usecase>
+  <usecase id="admin.addGroup">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="admin.addIPRange">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="admin.addUser">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="admin.changePassword">
+    <role id="edit" method="grant"/>
+    <role id="visit" method="grant"/>
+  </usecase>
+  <usecase id="admin.changePasswordAdmin">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="admin.deleteGroup">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="admin.deleteIPRange">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="admin.deleteUser">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="admin.emptyTrash">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="admin.group">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="admin.groupMembers">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="admin.groupProfile">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="admin.groups">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="admin.ipRangeGroups">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="admin.ipRangeProfile">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="admin.ipRanges">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="admin.serverStatus">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="admin.sessions">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="admin.siteOverview">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="admin.user">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="admin.userGroups">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="admin.userProfile">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="admin.users">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="notification.inbox">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="notification.sendMessage">
+    <role id="edit" method="grant"/>
+  </usecase>
 </usecases>
