@@ -23,6 +23,15 @@
   <description>
     Webapp Targets
   </description>
+  
+  <target name="compile-api" description="compile and deploy API">
+    <antcall target="compile-src">
+      <param name="compile.src.dir" value="${src.java.api.dir}"/>
+      <param name="compile.dest.dir" value="${build.dir}/api"/>
+      <param name="compile.classpath" value="classpath"/>
+      <param name="jar.name" value="api"/>
+    </antcall>
+  </target>
 
   <!-- 
   This target creates a webapp directory which exactly mirrors how
@@ -118,13 +127,7 @@
       </fileset>
     </delete>
 
-    <!-- compile and deploy API -->    
-    <antcall target="compile-src">
-      <param name="compile.src.dir" value="${src.java.api.dir}"/>
-      <param name="compile.dest.dir" value="${build.dir}/api"/>
-      <param name="compile.classpath" value="classpath"/>
-      <param name="jar.name" value="api"/>
-    </antcall>
+    <antcall target="compile-api"/>
     
     <path id="classpath.impl">
       <path refid="classpath"/>

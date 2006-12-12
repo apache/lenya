@@ -6,18 +6,18 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.cocoon.components.source.impl.MultiSourceValidity;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceNotFoundException;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceValidity;
-import org.apache.excalibur.source.impl.validity.AggregatedValidity;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 /**
- *
+ * 
  */
 public class AggregatingSource implements Source {
 
@@ -35,7 +35,7 @@ public class AggregatingSource implements Source {
         this.sourceUris = uris;
         this.uri = uri;
     }
-    
+
     public String toString() {
         return getURI();
     }
@@ -43,10 +43,11 @@ public class AggregatingSource implements Source {
     protected void loadDom() {
         try {
             for (int i = 0; i < sourceUris.length; i++) {
-                Document sourceDom = SourceUtil.readDOM(sourceUris[i], manager);
+                Document sourceDom = SourceUtil.readDOM(sourceUris[i], this.manager);
 
                 if (sourceDom == null) {
-                    throw new RuntimeException("The source [" + sourceUris[i] + "] doesn't contain XML.");
+                    throw new RuntimeException("The source [" + sourceUris[i]
+                            + "] doesn't contain XML.");
                 }
 
                 Element docElement = sourceDom.getDocumentElement();
@@ -57,9 +58,9 @@ public class AggregatingSource implements Source {
 
                     if (namespaceUri == null || prefix == null) {
                         this.dom = DocumentHelper.createDocument(null, localName, null);
-                    }
-                    else {
-                        NamespaceHelper helper = new NamespaceHelper(namespaceUri, prefix, localName);
+                    } else {
+                        NamespaceHelper helper = new NamespaceHelper(namespaceUri, prefix,
+                                localName);
                         this.dom = helper.getDocument();
                     }
                 }
@@ -104,7 +105,7 @@ public class AggregatingSource implements Source {
     }
 
     public boolean exists() {
-        return getData() != null;
+        return this.sourceUris.length > 0;
     }
 
     public long getContentLength() {
@@ -115,15 +116,15 @@ public class AggregatingSource implements Source {
         if (!exists()) {
             throw new RuntimeException(this + " does not exist!");
         }
-        return new ByteArrayInputStream(this.data);
+        return new ByteArrayInputStream(getData());
     }
 
     public long getLastModified() {
         long lastModified = 0;
         for (int i = 0; i < this.sourceUris.length; i++) {
             try {
-                lastModified = Math
-                        .max(lastModified, SourceUtil.getLastModified(sourceUris[i], this.manager));
+                lastModified = Math.max(lastModified, SourceUtil.getLastModified(sourceUris[i],
+                        this.manager));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -142,32 +143,35 @@ public class AggregatingSource implements Source {
     public String getURI() {
         return this.uri;
     }
-    
+
     private SourceValidity validity;
 
     public SourceValidity getValidity() {
         if (this.validity == null) {
-            AggregatedValidity aggregatedValidity = new AggregatedValidity();
-            for (int i = 0; i < this.sourceUris.length; i++) {
-                SourceResolver resolver = null;
-                Source source = null;
-                try {
-                    resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-                    source = resolver.resolveURI(this.sourceUris[i]);
-                    aggregatedValidity.add(source.getValidity());
-                } catch (Exception e) {
-                    throw new RuntimeException(e);
-                }
-                finally {
-                    if (resolver != null) {
+            SourceResolver resolver = null;
+            try {
+                resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
+                MultiSourceValidity aggregatedValidity = new MultiSourceValidity(resolver, 0);
+                for (int i = 0; i < this.sourceUris.length; i++) {
+                    Source source = null;
+                    try {
+                        source = resolver.resolveURI(this.sourceUris[i]);
+                        aggregatedValidity.addSource(source);
+                    } finally {
                         if (source != null) {
                             resolver.release(source);
                         }
-                        this.manager.release(resolver);
                     }
                 }
+                aggregatedValidity.close();
+                this.validity = aggregatedValidity;
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            } finally {
+                if (resolver != null) {
+                    this.manager.release(resolver);
+                }
             }
-            this.validity = aggregatedValidity;
         }
         return this.validity;
     }
@@ -175,6 +179,7 @@ public class AggregatingSource implements Source {
     public void refresh() {
         this.dom = null;
         this.data = null;
+        this.validity = null;
     }
 
 }

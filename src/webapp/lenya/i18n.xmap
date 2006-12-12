@@ -43,7 +43,7 @@
   
   <map:pipelines>
     
-    <map:pipeline type="noncaching">
+    <map:pipeline type="caching">
       
       <!-- i18n-catalogue/module/{module-id}/{catalogue}--> 
       <map:match pattern="i18n-catalogue/module/*/*">

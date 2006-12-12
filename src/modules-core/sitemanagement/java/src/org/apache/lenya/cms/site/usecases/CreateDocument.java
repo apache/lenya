@@ -107,13 +107,18 @@ public class CreateDocument extends Create {
             builder = (DocumentBuilder) selector.select(hint);
 
             boolean provided = getParameterAsBoolean(PATH_PROVIDED, false);
-            if (!provided && !builder.isValidDocumentName(nodeName)) {
-                addErrorMessage("The document ID may not contain any special characters.");
-            } else {
+            
+            if (provided) {
                 String newPath = getNewDocumentPath();
                 if (pub.getArea(getArea()).getSite().contains(newPath)) {
                     addErrorMessage("The document with path " + newPath + " already exists.");
                 }
+            }
+            else if (nodeName == null) {
+                addErrorMessage("Please enter a node name.");
+            }
+            else if (!builder.isValidDocumentName(nodeName)) {
+                addErrorMessage("The node name may not contain any special characters.");
             }
         } finally {
             if (selector != null) {
