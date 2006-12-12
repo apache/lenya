@@ -29,6 +29,7 @@ import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -66,7 +67,7 @@ public class CollectionImpl extends AbstractLogEnabled implements Collection {
         this.manager = manager;
         try {
             this.delegate = map.get(identifier);
-        } catch (DocumentBuildException e) {
+        } catch (Exception e) {
             throw new DocumentException(e);
         }
     }
@@ -157,6 +158,8 @@ public class CollectionImpl extends AbstractLogEnabled implements Collection {
                     Document document = loadDocument(documentElement);
                     this.documentsList.add(document);
                 }
+            } catch (RuntimeException e) {
+                throw e;
             } catch (DocumentException e) {
                 throw e;
             } catch (Exception e) {

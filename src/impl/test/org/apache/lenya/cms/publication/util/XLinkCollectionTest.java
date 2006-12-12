@@ -22,11 +22,13 @@ import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentIdentifier;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteManager;
@@ -51,11 +53,13 @@ public class XLinkCollectionTest extends AbstractAccessControlTest {
         DocumentFactory map = DocumentUtil.createDocumentFactory(getManager(), session);
 
         Publication pub = getPublication("test");
-        DocumentIdentifier identifier = new DocumentIdentifier(pub, Publication.AUTHORING_AREA,
-                "12345", "en");
-        XlinkCollection collection = new XlinkCollection(getManager(), map, identifier, getLogger());
 
-        SiteStructure structure = pub.getArea(identifier.getArea()).getSite();
+        Document collectionDoc = createCollectionDocument(pub);
+
+        XlinkCollection collection = new XlinkCollection(getManager(), map, collectionDoc
+                .getIdentifier(), getLogger());
+
+        SiteStructure structure = pub.getArea("authoring").getSite();
         structure.getRepositoryNode().lock();
 
         SiteManager siteManager = null;
@@ -80,7 +84,8 @@ public class XLinkCollectionTest extends AbstractAccessControlTest {
         collection.getDelegate().getRepositoryNode().unlock();
         structure.getRepositoryNode().unlock();
 
-        Collection coll2 = new XlinkCollection(getManager(), map, identifier, getLogger());
+        Collection coll2 = new XlinkCollection(getManager(), map, collectionDoc.getIdentifier(),
+                getLogger());
 
         assertSame(collection.getDelegate().getRepositoryNode(), coll2.getDelegate()
                 .getRepositoryNode());
@@ -89,6 +94,29 @@ public class XLinkCollectionTest extends AbstractAccessControlTest {
         assertEquals(coll2.size(), 1);
         assertTrue(coll2.contains(doc));
 
+    }
+
+    protected Document createCollectionDocument(Publication pub) throws ServiceException,
+            DocumentBuildException, PublicationException {
+        ServiceSelector typeSelector = null;
+        ResourceType type = null;
+        DocumentManager docMgr = null;
+        Document doc;
+        try {
+            typeSelector = (ServiceSelector) getManager().lookup(ResourceType.ROLE + "Selector");
+            type = (ResourceType) typeSelector.select("collection");
+            docMgr = (DocumentManager) getManager().lookup(DocumentManager.ROLE);
+            String sampleUri = type.getSampleURI(type.getSampleNames()[0]);
+            doc = docMgr.add(getFactory(), type, sampleUri, pub, "authoring", "en", ".xml");
+        } finally {
+            if (docMgr != null) {
+                getManager().release(docMgr);
+            }
+            if (typeSelector != null) {
+                getManager().release(typeSelector);
+            }
+        }
+        return doc;
     }
 
 }

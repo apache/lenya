@@ -313,6 +313,11 @@ public class SourceWrapper extends AbstractLogEnabled {
         public synchronized void close() throws IOException {
             SourceWrapper.this.data = super.toByteArray();
             SourceWrapper.this.lastModified = new Date().getTime();
+            try {
+                SourceWrapper.this.getNode().registerDirty();
+            } catch (RepositoryException e) {
+                throw new RuntimeException(e);
+            }
             super.close();
         }
     }
@@ -411,11 +416,6 @@ public class SourceWrapper extends AbstractLogEnabled {
     public synchronized OutputStream getOutputStream() throws RepositoryException {
         if (getLogger().isDebugEnabled())
             getLogger().debug("Get OutputStream for " + getSourceUri());
-        try {
-            getNode().registerDirty();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
         return new NodeOutputStream();
     }
 

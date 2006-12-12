@@ -377,7 +377,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     public boolean exists() throws RepositoryException {
-        return this.contentSource.exists() || this.metaSource.exists();
+        return this.contentSource.exists();
     }
 
     public OutputStream getOutputStream() throws RepositoryException {
