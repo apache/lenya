@@ -18,10 +18,8 @@
 package org.apache.lenya.cms.publication;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -31,6 +29,7 @@ import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.thread.ThreadSafe;
+import org.apache.lenya.util.Assert;
 import org.apache.lenya.xml.Schema;
 
 /**
@@ -60,7 +59,7 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     public static final String DEFAULT_SAMPLE_NAME = "Default Sample";
 
     private Schema schema = null;
-    private Map sampleName2Uri = new HashMap();
+    private Sample[] samples;
     private String[] linkAttributeXPaths;
     private long expires = 0;
 
@@ -81,14 +80,11 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
 
             // determine the sample content locations.
             Configuration[] samplesConf = config.getChildren(SAMPLE_NAME);
+            this.samples = new Sample[samplesConf.length];
             for (int i = 0; i < samplesConf.length; i++) {
-                if (Arrays.asList(samplesConf[i].getAttributeNames()).contains(
-                        SAMPLE_NAME_ATTRIBUTE)) {
-                    String name = samplesConf[i].getAttribute(SAMPLE_NAME_ATTRIBUTE);
-                    this.sampleName2Uri.put(name, samplesConf[i].getValue());
-                } else { // default sample doesn't have name attribute
-                    this.sampleName2Uri.put(DEFAULT_SAMPLE_NAME, samplesConf[i].getValue());
-                }
+                String name = samplesConf[i].getAttribute(SAMPLE_NAME_ATTRIBUTE, DEFAULT_SAMPLE_NAME);
+                String uri = samplesConf[i].getValue();
+                this.samples[i] = new Sample(name, uri);
             }
 
             Configuration[] rewriteAttributeConfigs = config.getChildren(ELEMENT_REWRITE_ATTRIBUTE);
@@ -132,19 +128,25 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
     }
 
     public String[] getSampleNames() {
-        Set names = this.sampleName2Uri.keySet();
-        return (String[]) names.toArray(new String[names.size()]);
+        String[] names = new String[this.samples.length];
+        for (int i = 0; i < names.length; i++) {
+            names[i] = this.samples[i].getName();
+        }
+        return names;
     }
 
     public String getSampleURI(String name) {
-        if (!this.sampleName2Uri.containsKey(name)) {
-            throw new IllegalArgumentException("The resource type [" + getName()
-                    + "] doesn't support the sample [" + name + "]!");
+        for (int i = 0; i < this.samples.length; i++) {
+            if (this.samples[i].getName().equals(name)) {
+                return this.samples[i].getUri();
+            }
         }
-        return (String) this.sampleName2Uri.get(name);
+        throw new IllegalArgumentException("The resource type [" + getName()
+                + "] doesn't support the sample [" + name + "]!");
     }
 
     public void setName(String name) {
+        Assert.notNull("name", name);
         this.name = name;
     }
 
@@ -170,6 +172,41 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
 
         return ((Format) this.formats.get(format)).getURI();
     }
+    
+    /**
+     * A sample.
+     */
+    public static class Sample {
+        
+        private String name;
+        private String uri;
+        
+        /**
+         * @param name The name.
+         * @param uri The URI.
+         */
+        public Sample(String name, String uri) {
+            Assert.notNull("name", name);
+            this.name = name;
+            Assert.notNull("uri", uri);
+            this.uri = uri;
+        }
+        
+        /**
+         * @return The name.
+         */
+        public String getName() {
+            return this.name;
+        }
+        
+        /**
+         * @return The URI.
+         */
+        public String getUri() {
+            return this.uri;
+        }
+        
+    }
 
     /**
      * A format.
@@ -183,6 +220,7 @@ public class ResourceTypeImpl extends AbstractLogEnabled implements Configurable
          * @param uri The uri.
          */
         public Format(String uri) {
+            Assert.notNull("uri", uri);
             this.uri = uri;
         }
 
