@@ -154,7 +154,6 @@
         <siteprotocol href="site.html" label="site:"/>
       </protocols>
       <link-management href="link-management.html" label="Link Management"/>
-      <notification href="notification.html" label="Notification"/>
       <repository href="repository/index.html" label="Repository"/>
     </reference>
     
@@ -204,6 +203,7 @@
       <monitoring href="monitoring.html" label="Monitoring"/>
       <server href="webdav.html" label="WebDAV Servers"/>
     </webdav>
+    <notification href="notification.html" label="Notification"/>
   </modules>
   <!--+
     | Version 1.2 tab
