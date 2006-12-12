@@ -30,8 +30,6 @@
   <site-manager name="simple"/>
   <resource-type name="entry" workflow="workflow.xml"/>
   <resource-type name="sidebar" workflow="workflow.xml"/>
-  <module name="entry"/>
-  <module name="sidebar"/>
 
   <!-- NOTE: The configuration of the content directory has NOT been fully tested yet and might lead to unexpected results. Use at own risk ;-) -->
   <!-- Relative to webapp context: -->
