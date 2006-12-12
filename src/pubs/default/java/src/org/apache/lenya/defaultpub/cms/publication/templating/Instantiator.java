@@ -144,20 +144,11 @@ public class Instantiator extends AbstractLogEnabled implements
             configSource = (ModifiableSource) resolver.resolveURI(publicationsUri + "/"
                     + newPublicationId + "/config/publication.xconf");
             DefaultConfiguration config = (DefaultConfiguration) new DefaultConfigurationBuilder().build(configSource.getInputStream());
-            DefaultConfiguration templatesConfig = (DefaultConfiguration) config.getChild("templates",
-                    false);
-            if (templatesConfig == null) {
-                templatesConfig = new DefaultConfiguration("templates");
-                config.addChild(templatesConfig);
-            } else {
-                Configuration[] templateConfigs = templatesConfig.getChildren("template");
-                for (int i = 0; i < templateConfigs.length; i++) {
-                    templatesConfig.removeChild(templateConfigs[i]);
-                }
-            }
-            DefaultConfiguration templateConfig = new DefaultConfiguration("template");
-            templateConfig.setAttribute("id", template.getId());
-            templatesConfig.addChild(templateConfig);
+            addTemplateConfiguration(template, config);
+            
+            removeChildren(config, "module");
+            removeChildren(config, "resource-type");
+            
             OutputStream oStream = configSource.getOutputStream();
             new DefaultConfigurationSerializer().serialize(oStream, config);
             if (oStream != null) {
@@ -177,6 +168,30 @@ public class Instantiator extends AbstractLogEnabled implements
                     resolver.release(configSource);
                 }
             }
+        }
+    }
+
+    protected void addTemplateConfiguration(Publication template, DefaultConfiguration config) {
+        DefaultConfiguration templatesConfig = (DefaultConfiguration) config.getChild("templates",
+                false);
+        if (templatesConfig == null) {
+            templatesConfig = new DefaultConfiguration("templates");
+            config.addChild(templatesConfig);
+        } else {
+            Configuration[] templateConfigs = templatesConfig.getChildren("template");
+            for (int i = 0; i < templateConfigs.length; i++) {
+                templatesConfig.removeChild(templateConfigs[i]);
+            }
+        }
+        DefaultConfiguration templateConfig = new DefaultConfiguration("template");
+        templateConfig.setAttribute("id", template.getId());
+        templatesConfig.addChild(templateConfig);
+    }
+
+    protected void removeChildren(DefaultConfiguration config, String name) {
+        Configuration[] moduleConfigs = config.getChildren(name);
+        for (int i = 0; i < moduleConfigs.length; i++) {
+            config.removeChild(moduleConfigs[i]);
         }
     }
 
