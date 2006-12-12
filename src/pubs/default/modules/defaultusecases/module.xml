@@ -24,6 +24,7 @@
   <depends module="org.apache.lenya.modules.sitemanagement"/>
   <depends module="org.apache.lenya.modules.notification"/>
   <depends module="org.apache.lenya.modules.linking"/>
+  <depends module="org.apache.lenya.modules.workflow-impl"/>
   <package>org.apache.lenya.modules</package>
   <version>0.1-dev</version>
   <name>Default publication usecases</name>

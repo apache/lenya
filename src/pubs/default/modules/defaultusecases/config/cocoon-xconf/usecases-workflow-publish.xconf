@@ -27,6 +27,7 @@
                         logger="lenya.usecases.workflow"
                         class="org.apache.lenya.defaultpub.cms.usecases.Publish">
       <view template="usecases/workflow/publish.jx"/>
+      <event id="publish"/>
     </component-instance>
 
   </xconf>

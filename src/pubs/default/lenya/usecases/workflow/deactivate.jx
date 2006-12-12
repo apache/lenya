@@ -72,25 +72,6 @@
               </tr>
             </jx:if>
             <tr>
-              <td class="lenya-entry-caption">
-                <i18n:text>deactivate complete subtree</i18n:text>:
-              </td>
-              <td>
-                <jx:choose>
-                  <jx:when test="${usecase.getParameter('allowSingleDocument').equals('false')}">
-                    <input type="checkbox" checked="checked" disabled="disabled"/>
-                    <input name="subtree" type="hidden" value="on"/>
-                  </jx:when>
-                  <jx:when test="${usecase.getParameter('subtree') == null}">
-                    <input name="subtree" type="checkbox"/>
-                  </jx:when>
-                  <jx:otherwise>
-                    <input name="subtree" type="checkbox" checked="checked"/>
-                  </jx:otherwise>
-                </jx:choose>
-              </td>
-            </tr>
-            <tr>
               <td/>
               <td>
                 <input i18n:attr="value" type="submit" name="submit" value="Deactivate"/>

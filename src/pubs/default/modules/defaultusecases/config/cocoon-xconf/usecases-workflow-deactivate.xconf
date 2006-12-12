@@ -27,6 +27,7 @@
                         logger="lenya.usecases.workflow"
                         class="org.apache.lenya.defaultpub.cms.usecases.Deactivate">
       <view template="usecases/workflow/deactivate.jx"/>
+      <event id="deactivate"/>
     </component-instance>
 
   </xconf>

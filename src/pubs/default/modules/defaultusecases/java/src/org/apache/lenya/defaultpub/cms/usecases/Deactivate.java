@@ -28,22 +28,18 @@ import org.apache.lenya.cms.linking.LinkManager;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.site.NodeIterator;
 import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteUtil;
-import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
-import org.apache.lenya.cms.workflow.WorkflowUtil;
-import org.apache.lenya.workflow.WorkflowException;
+import org.apache.lenya.cms.workflow.usecases.InvokeWorkflow;
 
 /**
  * Deactivate usecase handler.
  * 
  * @version $Id$
  */
-public class Deactivate extends DocumentUsecase {
+public class Deactivate extends InvokeWorkflow {
 
     protected static final String LINKS_TO_DOCUMENT = "linksToDocument";
 
@@ -63,31 +59,17 @@ public class Deactivate extends DocumentUsecase {
                 return;
             }
 
-            String event = getEvent();
-            boolean allowSingle = true;
-
             if (!getSourceDocument().existsAreaVersion(Publication.LIVE_AREA)) {
                 addErrorMessage("This usecase can only be invoked when the live version exists.");
             } else {
-                if (!WorkflowUtil.canInvoke(this.manager,
-                        getSession(),
-                        getLogger(),
-                        getSourceDocument(),
-                        event)) {
-                    allowSingle = false;
-                    addInfoMessage("The single document cannot be deactivated because the workflow event cannot be invoked.");
-                }
-
                 Document liveDoc = getSourceDocument().getAreaVersion(Publication.LIVE_AREA);
                 NodeSet subSite = SiteUtil.getSubSite(this.manager, liveDoc.getLink().getNode());
                 SiteNode node = liveDoc.getLink().getNode();
                 subSite.remove(node);
 
                 if (!subSite.isEmpty()) {
-                    allowSingle = false;
-                    addInfoMessage("You have to deactivate the whole subtree because descendants are live.");
+                    addErrorMessage("You can't deactivate this document because it has children.");
                 }
-                setParameter(Publish.ALLOW_SINGLE_DOCUMENT, Boolean.toString(allowSingle));
             }
 
             setParameter(LINKS_TO_DOCUMENT, getLinksToDocument());
@@ -124,19 +106,10 @@ public class Deactivate extends DocumentUsecase {
     protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
         try {
             List nodes = new ArrayList();
-            NodeSet siteNodes = new NodeSet(this.manager);
 
             Document doc = getSourceDocument();
-            siteNodes.addAll(SiteUtil.getSubSite(this.manager, doc.getLink().getNode()));
-
             Document liveDoc = doc.getAreaVersion(Publication.LIVE_AREA);
-            siteNodes.addAll(SiteUtil.getSubSite(this.manager, liveDoc.getLink().getNode()));
-
-            Document[] documents = siteNodes.getDocuments();
-            for (int i = 0; i < documents.length; i++) {
-                nodes.add(documents[i].getRepositoryNode());
-            }
-
+            nodes.add(liveDoc.getRepositoryNode());
             nodes.add(liveDoc.area().getSite().getRepositoryNode());
             return (org.apache.lenya.cms.repository.Node[]) nodes.toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
 
@@ -150,11 +123,7 @@ public class Deactivate extends DocumentUsecase {
      */
     protected void doExecute() throws Exception {
         super.doExecute();
-        if (isSubtreeEnabled()) {
-            deactivateAll(getSourceDocument());
-        } else {
-            deactivate(getSourceDocument());
-        }
+        deactivate(getSourceDocument());
     }
 
     /**
@@ -174,12 +143,6 @@ public class Deactivate extends DocumentUsecase {
 
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             documentManager.delete(liveDocument);
-
-            WorkflowUtil.invoke(this.manager,
-                    getSession(),
-                    getLogger(),
-                    authoringDocument,
-                    getEvent());
 
             success = true;
         } catch (Exception e) {
@@ -202,64 +165,8 @@ public class Deactivate extends DocumentUsecase {
 
     }
 
-    /**
-     * @return The event to invoke.
-     */
-    private String getEvent() {
+    protected String getEvent() {
         return "deactivate";
     }
 
-    /**
-     * Deactivates a document or the subtree below a document, based on the parameter SUBTREE.
-     * 
-     * @param document The document.
-     */
-    protected void deactivateAll(Document document) {
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Deactivating document [" + document + "]");
-            getLogger().debug("Subtree deactivation: [" + isSubtreeEnabled() + "]");
-        }
-
-        try {
-            NodeSet set = SiteUtil.getSubSite(this.manager, document.getLink().getNode());
-            for (NodeIterator i = set.descending(); i.hasNext();) {
-                deactivateAllLanguageVersions(i.next());
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Publishing completed.");
-        }
-    }
-
-    /**
-     * Returns whether subtree publishing is enabled.
-     * 
-     * @return A boolean value.
-     */
-    protected boolean isSubtreeEnabled() {
-        String value = getParameterAsString(Publish.SUBTREE);
-        return value != null;
-    }
-
-    /**
-     * Publishes all existing language versions of a document.
-     * 
-     * @param node The document.
-     * @throws PublicationException if an error occurs.
-     * @throws WorkflowException
-     */
-    protected void deactivateAllLanguageVersions(SiteNode node) throws PublicationException,
-            WorkflowException {
-        String[] languages = node.getLanguages();
-        for (int i = 0; i < languages.length; i++) {
-            Document version = node.getLink(languages[i]).getDocument();
-            if (WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), version, getEvent())) {
-                deactivate(version);
-            }
-        }
-    }
 }

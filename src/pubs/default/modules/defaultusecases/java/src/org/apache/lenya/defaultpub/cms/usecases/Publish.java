@@ -48,22 +48,18 @@ import org.apache.lenya.cms.publication.Proxy;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.site.Link;
-import org.apache.lenya.cms.site.NodeIterator;
-import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
-import org.apache.lenya.cms.site.SiteUtil;
-import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
+import org.apache.lenya.cms.workflow.usecases.InvokeWorkflow;
 import org.apache.lenya.notification.Message;
 import org.apache.lenya.notification.NotificationEventDescriptor;
 import org.apache.lenya.notification.NotificationException;
 import org.apache.lenya.workflow.Version;
-import org.apache.lenya.workflow.WorkflowException;
 import org.apache.lenya.workflow.Workflowable;
 
 /**
@@ -71,13 +67,11 @@ import org.apache.lenya.workflow.Workflowable;
  * 
  * @version $Id$
  */
-public class Publish extends DocumentUsecase {
+public class Publish extends InvokeWorkflow {
 
     protected static final String MESSAGE_SUBJECT = "notification-message";
     protected static final String MESSAGE_DOCUMENT_PUBLISHED = "document-published";
     protected static final String MISSING_DOCUMENTS = "missingDocuments";
-    protected static final String SUBTREE = "subtree";
-    protected static final String ALLOW_SINGLE_DOCUMENT = "allowSingleDocument";
     protected static final String SCHEDULE = "schedule";
     protected static final String SCHEDULE_TIME = "schedule.time";
     protected static final String SEND_NOTIFICATION = "sendNotification";
@@ -136,17 +130,11 @@ public class Publish extends DocumentUsecase {
     protected org.apache.lenya.cms.repository.Node[] getNodesToLock() throws UsecaseException {
         try {
             List nodes = new ArrayList();
-            NodeSet set = new NodeSet(this.manager);
 
             Document doc = getSourceDocument();
-            set.addAll(SiteUtil.getSubSite(this.manager, doc.getLink().getNode()));
-
-            Document[] docs = set.getDocuments();
-            for (int i = 0; i < docs.length; i++) {
-                nodes.add(docs[i].getRepositoryNode());
-            }
-
+            nodes.add(doc.getRepositoryNode());
             nodes.add(doc.area().getSite().getRepositoryNode());
+            
             return (org.apache.lenya.cms.repository.Node[]) nodes
                     .toArray(new org.apache.lenya.cms.repository.Node[nodes.size()]);
 
@@ -165,20 +153,11 @@ public class Publish extends DocumentUsecase {
         super.doCheckPreconditions();
         if (!hasErrors()) {
 
-            String event = getEvent();
             Document document = getSourceDocument();
 
             if (!document.getArea().equals(Publication.AUTHORING_AREA)) {
                 addErrorMessage("This usecase can only be invoked from the authoring area.");
                 return;
-            }
-
-            if (!WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(),
-                    getSourceDocument(), event)) {
-                setParameter(ALLOW_SINGLE_DOCUMENT, Boolean.toString(false));
-                addInfoMessage("The single document cannot be published because the workflow event cannot be invoked.");
-            } else {
-                setParameter(ALLOW_SINGLE_DOCUMENT, Boolean.toString(true));
             }
 
             Publication publication = document.getPublication();
@@ -276,11 +255,7 @@ public class Publish extends DocumentUsecase {
             }
         } else {
             super.doExecute();
-            if (isSubtreeEnabled()) {
-                publishAll(getSourceDocument());
-            } else {
-                publish(getSourceDocument());
-            }
+            publish(getSourceDocument());
         }
     }
 
@@ -294,8 +269,6 @@ public class Publish extends DocumentUsecase {
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             documentManager.copyToArea(authoringDocument, Publication.LIVE_AREA);
-            WorkflowUtil.invoke(this.manager, getSession(), getLogger(), authoringDocument,
-                    getEvent());
 
             boolean notify = Boolean.valueOf(getBooleanCheckboxParameter(SEND_NOTIFICATION))
                     .booleanValue();
@@ -354,40 +327,6 @@ public class Publish extends DocumentUsecase {
         }
     }
 
-    /**
-     * @return The event to invoke.
-     */
-    private String getEvent() {
-        return "publish";
-    }
-
-    /**
-     * Publishes a document or the subtree below a document, based on the
-     * parameter SUBTREE.
-     * 
-     * @param document The document.
-     */
-    protected void publishAll(Document document) {
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Publishing document [" + document + "]");
-            getLogger().debug("Subtree publishing: [" + isSubtreeEnabled() + "]");
-        }
-
-        try {
-            NodeSet set = SiteUtil.getSubSite(this.manager, document.getLink().getNode());
-            for (NodeIterator i = set.ascending(); i.hasNext();) {
-                publishAllLanguageVersions(i.next());
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Publishing completed.");
-        }
-    }
-
     protected void createAncestorNodes(Document document) throws PublicationException,
             DocumentException, SiteException {
         SiteStructure liveSite = document.getPublication().getArea(Publication.LIVE_AREA).getSite();
@@ -401,41 +340,6 @@ public class Publish extends DocumentUsecase {
             path += "/" + steps[s];
             s++;
         }
-    }
-
-    /**
-     * Returns whether subtree publishing is enabled.
-     * 
-     * @return A boolean value.
-     */
-    protected boolean isSubtreeEnabled() {
-        String value = getParameterAsString(SUBTREE);
-        return value != null;
-    }
-
-    /**
-     * Publishes all existing language versions of a document.
-     * 
-     * @param node The document.
-     * @throws PublicationException if an error occurs.
-     * @throws WorkflowException
-     */
-    protected void publishAllLanguageVersions(SiteNode node) throws PublicationException,
-            WorkflowException {
-        String[] languages = node.getLanguages();
-
-        try {
-            for (int i = 0; i < languages.length; i++) {
-                Document version = node.getLink(languages[i]).getDocument();
-                if (WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), version,
-                        getEvent())) {
-                    publish(version);
-                }
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-
     }
 
 }
