@@ -65,7 +65,9 @@
     <delete dir="${test.pub.dir}"/>
     <mkdir dir="${test.pub.dir}"/>
     <copy todir="${test.pub.dir}">
-      <fileset dir="${build.webapp}/lenya/pubs/${test.pub.source.id}"/>
+      <fileset dir="${build.webapp}/lenya/pubs/${test.pub.source.id}">
+        <exclude name="content/**"/>
+      </fileset>
     </copy>
     <replace encoding="utf-8"
       file="${build.webapp}/lenya/pubs/${test.pub.id}/publication.xml"
