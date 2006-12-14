@@ -21,6 +21,6 @@
 <xconf xpath="/cocoon/site-managers" unless="/cocoon/site-managers/component-instance[@name = 'tree']">
 
   <component-instance name="tree" logger="lenya.site"
-    class="org.apache.lenya.cms.site.tree.TreeSiteManager"/>
+    class="org.apache.lenya.cms.site.tree2.TreeSiteManager"/>
   
 </xconf>

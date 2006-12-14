@@ -15,37 +15,30 @@
  *  limitations under the License.
  *
  */
+package org.apache.lenya.cms.site.tree2;
 
-package org.apache.lenya.cms.site.tree;
-
-import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.SiteStructure;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.site.AbstractLink;
+import org.apache.lenya.cms.site.SiteNode;
 
 /**
- * A sitetree.
- * 
- * @version $Id: SiteTree.java 177923 2005-05-23 05:15:51Z gregor $
+ * SiteTree link.
  */
-public interface SiteTree extends SiteStructure {
+public class SiteTreeLink extends AbstractLink {
+    
+    protected SiteTreeLink(DocumentFactory factory, SiteNode node,
+            String label, String language) {
+        super(factory, node, label, language);
+    }
 
-    /**
-     * The type of sitetree identifiable objects.
-     */
-    String IDENTIFIABLE_TYPE = "site";
-
-    /**
-     * Move up the node amongst its siblings.
-     * 
-     * @param path The document id of the node.
-     * @throws SiteException if the moving failed.
-     */
-    void moveUp(String path) throws SiteException;
-
-    /**
-     * Move down the node amongst its siblings.
-     * @param path The document id of the node.
-     * @throws SiteException if the moving failed.
-     */
-    void moveDown(String path) throws SiteException;
+    public void delete() {
+        TreeNodeImpl node = (TreeNodeImpl) getNode();
+        node.removeLink(getLanguage());
+    }
+    
+    public void save() {
+        TreeNodeImpl node = (TreeNodeImpl) getNode();
+        node.changed();
+    }
 
 }

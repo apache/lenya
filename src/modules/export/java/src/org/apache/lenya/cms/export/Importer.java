@@ -77,7 +77,6 @@ public class Importer extends AbstractLogEnabled {
      * @throws Exception if an error occurs.
      */
     public void importContent(Publication srcPub, Area area, String path) throws Exception {
-
         getLogger().info("Importing documents into area [" + area + "]");
 
         String baseUri = "file://" + path;
@@ -194,7 +193,6 @@ public class Importer extends AbstractLogEnabled {
 
     protected void convertLinks(Publication srcPub, Document examinedDocument) {
         boolean linksRewritten = false;
-
         LinkResolver linkResolver = null;
         try {
             ResourceType type = examinedDocument.getResourceType();

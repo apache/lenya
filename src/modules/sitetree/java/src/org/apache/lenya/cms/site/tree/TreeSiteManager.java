@@ -60,7 +60,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      * @return A site tree.
      * @throws SiteException if an error occurs.
      */
-    public SiteTree getTree(DocumentFactory map, Publication publication, String area)
+    public DefaultSiteTree getTree(DocumentFactory map, Publication publication, String area)
             throws SiteException {
 
         String key = getKey(publication, area);
@@ -75,7 +75,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         return sitetree;
     }
 
-    protected SiteTree getTree(Document document) throws SiteException {
+    protected DefaultSiteTree getTree(Document document) throws SiteException {
         return getTree(document.getFactory(), document.getPublication(), document.getArea());
     }
 
@@ -139,7 +139,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         String area = resource.getStructure().getArea();
         SiteTree tree = getTree(map, pub, area);
 
-        SiteTreeNode node = (SiteTreeNode) tree.getNode(resource.getPath());
+        SiteTreeNodeImpl node = (SiteTreeNodeImpl) tree.getNode(resource.getPath());
         if (node != null) {
             List preOrder = node.preOrder();
 
@@ -180,7 +180,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
      *      org.apache.lenya.cms.publication.Document)
      */
     public void copy(Document sourceDocument, Document destinationDocument) throws SiteException {
-        SiteTree destinationTree = getTree(destinationDocument);
+        DefaultSiteTree destinationTree = getTree(destinationDocument);
 
         try {
             SiteTreeNode sourceNode = (SiteTreeNode) sourceDocument.getLink().getNode();
@@ -218,7 +218,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
                 if (siblingPath == null) {
                     destinationTree.addNode(destinationDocument.getPath(),
                             destinationDocument.getUUID(),
-                            sourceNode.visibleInNav(),
+                            sourceNode.isVisible(),
                             sourceNode.getHref(),
                             sourceNode.getSuffix(),
                             sourceNode.hasLink());
@@ -228,7 +228,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
                 } else {
                     destinationTree.addNode(destinationDocument.getPath(),
                             destinationDocument.getUUID(),
-                            sourceNode.visibleInNav(),
+                            sourceNode.isVisible(),
                             sourceNode.getHref(),
                             sourceNode.getSuffix(),
                             sourceNode.hasLink(),
@@ -248,19 +248,6 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
             throw new SiteException(e);
         }
 
-    }
-
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#setLabel(org.apache.lenya.cms.publication.Document,
-     *      java.lang.String)
-     */
-    public void setLabel(Document document, String label) throws SiteException {
-        SiteTree tree = getTree(document);
-        try {
-            tree.setLabel(document.getPath(), document.getLanguage(), label);
-        } catch (DocumentException e) {
-            throw new SiteException(e);
-        }
     }
 
     /**
@@ -309,7 +296,7 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
     public Document[] getDocuments(DocumentFactory map, Publication publication, String area)
             throws SiteException {
         try {
-            SiteTreeNode root = (SiteTreeNode) getTree(map, publication, area).getNode("/");
+            SiteTreeNodeImpl root = (SiteTreeNodeImpl) getTree(map, publication, area).getNode("/");
             List allNodes = root.preOrder();
             List documents = new ArrayList();
 
@@ -327,15 +314,12 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         }
     }
 
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#add(org.apache.lenya.cms.publication.Document)
-     */
     public void add(String path, Document document) throws SiteException {
 
         if (contains(document)) {
             throw new SiteException("The document [" + document + "] is already contained!");
         }
-        SiteTree tree = getTree(document);
+        DefaultSiteTree tree = getTree(document);
 
         SiteTreeNode node;
         if (!tree.contains(path)) {
@@ -349,16 +333,13 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
         tree.addLabel(path, document.getLanguage(), "");
     }
 
-    /**
-     * @see org.apache.lenya.cms.site.SiteManager#set(org.apache.lenya.cms.publication.Document)
-     */
     public void set(String path, Document document) throws SiteException {
 
         if (contains(document)) {
             throw new SiteException("The document [" + document + "] is already contained!");
         }
-        SiteTree tree = getTree(document);
-        SiteTreeNode node = (SiteTreeNode) tree.getNode(path);
+        DefaultSiteTree tree = getTree(document);
+        SiteTreeNodeImpl node = (SiteTreeNodeImpl) tree.getNode(path);
         node.setUUID(document.getUUID());
         tree.save();
     }
@@ -395,8 +376,8 @@ public class TreeSiteManager extends AbstractSiteManager implements Serviceable 
 
     /**
      * compute an unique document id
-     * 
-     * @param document The document.
+     * @param factory The factory.
+     * @param locator The locator.
      * @return the unique documentid
      * @throws SiteException if an error occurs.
      */

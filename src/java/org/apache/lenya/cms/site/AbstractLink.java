@@ -113,5 +113,12 @@ public abstract class AbstractLink implements Link {
     public SiteNode getNode() {
         return this.node;
     }
+    
+    public void setLabel(String label) {
+        this.label = label;
+        save();
+    }
 
+    protected void save() {}
+    
 }

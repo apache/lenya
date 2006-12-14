@@ -155,6 +155,7 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
             assertEquals(docUuid, nodeUuid);
             assertEquals(doc.getLanguage(), link.getLanguage());
 
+            // it may not be allowed to insert the doc twice
             try {
                 siteManager.add("/sidebar", doc);
                 assertTrue("No exception thrown", false);

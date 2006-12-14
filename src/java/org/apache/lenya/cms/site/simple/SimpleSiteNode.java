@@ -89,4 +89,16 @@ public class SimpleSiteNode extends AbstractSiteNode {
         return new SiteNode[0];
     }
 
+    public String getHref() {
+        return null;
+    }
+
+    public String getSuffix() {
+        return null;
+    }
+
+    public boolean hasLink() {
+        return false;
+    }
+
 }

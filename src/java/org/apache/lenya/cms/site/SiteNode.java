@@ -93,4 +93,19 @@ public interface SiteNode {
      */
     SiteNode[] getChildren();
 
+    /**
+     * @return if the node has an external link.
+     */
+    boolean hasLink();
+
+    /**
+     * @return The external link.
+     */
+    String getHref();
+
+    /**
+     * @return The suffix.
+     */
+    String getSuffix();
+
 }

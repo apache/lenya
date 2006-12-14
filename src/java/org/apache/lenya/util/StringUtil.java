@@ -15,37 +15,28 @@
  *  limitations under the License.
  *
  */
-
-package org.apache.lenya.cms.site.tree;
-
-import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.SiteStructure;
+package org.apache.lenya.util;
 
 /**
- * A sitetree.
- * 
- * @version $Id: SiteTree.java 177923 2005-05-23 05:15:51Z gregor $
+ * String utility.
  */
-public interface SiteTree extends SiteStructure {
-
+public final class StringUtil {
+    
     /**
-     * The type of sitetree identifiable objects.
+     * Joins an array of objects into a string.
+     * @param objects The objects.
+     * @param delimiter The delimiter to use.
+     * @return A string.
      */
-    String IDENTIFIABLE_TYPE = "site";
-
-    /**
-     * Move up the node amongst its siblings.
-     * 
-     * @param path The document id of the node.
-     * @throws SiteException if the moving failed.
-     */
-    void moveUp(String path) throws SiteException;
-
-    /**
-     * Move down the node amongst its siblings.
-     * @param path The document id of the node.
-     * @throws SiteException if the moving failed.
-     */
-    void moveDown(String path) throws SiteException;
+    public static final String join(Object[] objects, String delimiter) {
+        StringBuffer buffer = new StringBuffer();
+        for (int i = 0; i < objects.length; i++) {
+            if (i > 0) {
+                buffer.append(delimiter);
+            }
+            buffer.append(objects[i].toString());
+        }
+        return buffer.toString();
+    }
 
 }

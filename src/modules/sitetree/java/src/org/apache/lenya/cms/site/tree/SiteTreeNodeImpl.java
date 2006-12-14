@@ -83,7 +83,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
     public static final String LABEL_NAME = "label";
 
     private Element node = null;
-    private SiteTree tree;
+    private DefaultSiteTree tree;
 
     private DocumentFactory factory;
 
@@ -96,7 +96,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
      * 
      * @param _node the node which is to be wrapped by this SiteTreeNode
      */
-    protected SiteTreeNodeImpl(DocumentFactory factory, SiteTree tree, Element node, Logger logger) {
+    protected SiteTreeNodeImpl(DocumentFactory factory, DefaultSiteTree tree, Element node, Logger logger) {
         ContainerUtil.enableLogging(this, logger);
         this.node = node;
         this.tree = tree;
@@ -384,17 +384,14 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
             return;
         }
         for (int i = 0; i < children.length; i++) {
-            ((SiteTreeNode) children[i]).acceptSubtree(visitor);
+            ((SiteTreeNodeImpl) children[i]).acceptSubtree(visitor);
         }
     }
 
-    /**
-     * @see org.apache.lenya.cms.site.tree.SiteTreeNode#acceptReverseSubtree(org.apache.lenya.cms.site.tree.SiteTreeNodeVisitor)
-     */
-    public void acceptReverseSubtree(SiteTreeNodeVisitor visitor) throws DocumentException {
+    protected void acceptReverseSubtree(SiteTreeNodeVisitor visitor) throws DocumentException {
         List orderedNodes = this.postOrder();
         for (int i = 0; i < orderedNodes.size(); i++) {
-            SiteTreeNode _node = (SiteTreeNode) orderedNodes.get(i);
+            SiteTreeNodeImpl _node = (SiteTreeNodeImpl) orderedNodes.get(i);
             _node.accept(visitor);
         }
     }
@@ -406,7 +403,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         List list = new ArrayList();
         SiteNode[] children = this.getChildren();
         for (int i = 0; i < children.length; i++) {
-            List orderedChildren = ((SiteTreeNode) children[i]).postOrder();
+            List orderedChildren = ((SiteTreeNodeImpl) children[i]).postOrder();
             list.addAll(orderedChildren);
         }
         list.add(this);
@@ -490,7 +487,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         list.add(this);
         SiteNode[] children = this.getChildren();
         for (int i = 0; i < children.length; i++) {
-            List orderedChildren = ((SiteTreeNode) children[i]).preOrder();
+            List orderedChildren = ((SiteTreeNodeImpl) children[i]).preOrder();
             list.addAll(orderedChildren);
         }
         return list;
@@ -509,7 +506,7 @@ public class SiteTreeNodeImpl extends AbstractLogEnabled implements SiteTreeNode
         return getTree();
     }
 
-    protected SiteTree getTree() {
+    protected DefaultSiteTree getTree() {
         return this.tree;
     }
 

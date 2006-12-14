@@ -34,7 +34,6 @@ public class ImportTest extends AbstractAccessControlTest {
     public void testImport() throws Exception {
         
         login("lenya");
-        
         Publication pub = getPublication("test");
         Area area = pub.getArea("authoring");
         

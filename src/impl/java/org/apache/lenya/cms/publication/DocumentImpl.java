@@ -56,8 +56,9 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     public static final String METADATA_NAMESPACE = "http://apache.org/lenya/metadata/document/1.0";
 
     /**
-     * The name of the resource type attribute. A resource has a resource type; this information can
-     * be used e.g. for different rendering of different types.
+     * The name of the resource type attribute. A resource has a resource type;
+     * this information can be used e.g. for different rendering of different
+     * types.
      */
     public static final String METADATA_RESOURCE_TYPE = "resourceType";
 
@@ -67,13 +68,15 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     public static final String METADATA_MIME_TYPE = "mimeType";
 
     /**
-     * The name of the content type attribute. Any content managed by Lenya has a type; this
-     * information can be used e.g. to provide an appropriate management interface.
+     * The name of the content type attribute. Any content managed by Lenya has
+     * a type; this information can be used e.g. to provide an appropriate
+     * management interface.
      */
     public static final String METADATA_CONTENT_TYPE = "contentType";
 
     /**
-     * The number of seconds from the request that a document can be cached before it expires
+     * The number of seconds from the request that a document can be cached
+     * before it expires
      */
     public static final String METADATA_EXPIRES = "expires";
 
@@ -94,8 +97,9 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
 
         ContainerUtil.enableLogging(this, _logger);
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("DefaultDocument() creating new instance with id ["
-                    + identifier.getUUID() + "], language [" + identifier.getLanguage() + "]");
+            getLogger().debug(
+                    "DefaultDocument() creating new instance with id [" + identifier.getUUID()
+                            + "], language [" + identifier.getLanguage() + "]");
         }
 
         this.manager = manager;
@@ -107,8 +111,9 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         this.factory = map;
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("DefaultDocument() done building instance with _id ["
-                    + identifier.getUUID() + "], _language [" + identifier.getLanguage() + "]");
+            getLogger().debug(
+                    "DefaultDocument() done building instance with _id [" + identifier.getUUID()
+                            + "], _language [" + identifier.getLanguage() + "]");
         }
     }
 
@@ -148,7 +153,8 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.cms.publication.Document#getId()
      */
     public String getId() {
-        // throw new IllegalStateException("Use getUUID() or getPath() instead");
+        // throw new IllegalStateException("Use getUUID() or getPath()
+        // instead");
         return this.identifier.getUUID();
     }
 
@@ -182,9 +188,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     }
 
     public File getFile() {
-        return getPublication().getPathMapper().getFile(getPublication(),
-                getArea(),
-                getUUID(),
+        return getPublication().getPathMapper().getFile(getPublication(), getArea(), getUUID(),
                 getLanguage());
     }
 
@@ -257,8 +261,9 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
             throw new RuntimeException(e);
         }
         if (sourceExtension == null) {
-            getLogger().warn("No source extension for document [" + this + "]. The extension \""
-                    + defaultSourceExtension + "\" will be used as default!");
+            getLogger().warn(
+                    "No source extension for document [" + this + "]. The extension \""
+                            + defaultSourceExtension + "\" will be used as default!");
             sourceExtension = defaultSourceExtension;
         }
         return sourceExtension;
@@ -292,16 +297,20 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
 
         if (languages.length > 0) {
             if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Document (" + this + ") exists in at least one language: "
-                        + languages.length);
+                getLogger().debug(
+                        "Document (" + this + ") exists in at least one language: "
+                                + languages.length);
             }
             String[] allLanguages = getPublication().getLanguages();
             if (languages.length == allLanguages.length)
-                // TODO: This is not entirely true, because the publication could assume the
-                // languages EN and DE, but the document could exist for the languages DE and FR!
+                // TODO: This is not entirely true, because the publication
+                // could assume the
+                // languages EN and DE, but the document could exist for the
+                // languages DE and FR!
                 if (getLogger().isDebugEnabled()) {
-                    getLogger().debug("Document (" + this
-                            + ") exists even in all languages of this publication");
+                    getLogger().debug(
+                            "Document (" + this
+                                    + ") exists even in all languages of this publication");
                 }
             return true;
         } else {
@@ -407,7 +416,8 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
     private ResourceType resourceType;
 
     /**
-     * Convenience method to read the document's resource type from the meta-data.
+     * Convenience method to read the document's resource type from the
+     * meta-data.
      * @see Document#getResourceType()
      */
     public ResourceType getResourceType() throws DocumentException {
@@ -471,10 +481,8 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
                     + "] is not referenced in the site structure.");
         }
         try {
-            return DocumentLocator.getLocator(getPublication().getId(),
-                    getArea(),
-                    structure.getByUuid(getUUID(), getLanguage()).getNode().getPath(),
-                    getLanguage());
+            return DocumentLocator.getLocator(getPublication().getId(), getArea(), structure
+                    .getByUuid(getUUID(), getLanguage()).getNode().getPath(), getLanguage());
         } catch (SiteException e) {
             throw new RuntimeException(e);
         }
@@ -573,15 +581,16 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
 
     public Link getLink() throws DocumentException {
         SiteStructure structure = area().getSite();
-        if (structure.containsByUuid(getUUID(), getLanguage())) {
-            try {
+        try {
+            if (structure.containsByUuid(getUUID(), getLanguage())) {
                 return structure.getByUuid(getUUID(), getLanguage());
-            } catch (SiteException e) {
-                throw new DocumentException(e);
+            } else {
+                throw new DocumentException("The document [" + this
+                        + "] is not referenced in the site structure!");
             }
+        } catch (Exception e) {
+            throw new DocumentException(e);
         }
-        throw new DocumentException("The document [" + this
-                + "] is not referenced in the site structure!");
     }
 
     public boolean hasLink() {

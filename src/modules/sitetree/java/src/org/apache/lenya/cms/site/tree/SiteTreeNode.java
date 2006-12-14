@@ -20,10 +20,6 @@
 
 package org.apache.lenya.cms.site.tree;
 
-import java.util.List;
-
-import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
 
 /**
@@ -32,81 +28,6 @@ import org.apache.lenya.cms.site.SiteNode;
  * delegates everything to the Node.
  */
 public interface SiteTreeNode extends SiteNode {
-
-    /**
-     * Returns the parent node of this node or null if the parent has no label for the given language.
-     * @param language A language string.
-     * @return A sitetree node.
-     */
-    SiteTreeNode getParent(String language);
-
-    /**
-     * Add a label to this node iff the node does not have this label already.
-     * @param language The language.
-     * @param label the label to be added.
-     * @throws SiteException if the label is already contained.
-     */
-    void addLabel(String language, String label) throws SiteException;
-
-    /**
-     * Remove a label from this node.
-     * 
-     * @param language the label to be removed.
-     */
-    void removeLabel(String language);
-
-    /**
-     * Check whether this node is visible in the navigation 
-     * 
-     * @return true if this node is visible. The method should also
-     * return true if the attribute is not set. That means a node missing 
-     * this attribute becomes visible by default.
-     */
-    boolean visibleInNav();
-
-    /**
-     * Get the href of this node.
-     * 
-     * @return the href.
-     */
-    String getHref();
-
-    /**
-     * Get the suffix of this node.
-     * 
-     * @return the suffix.
-     */
-    String getSuffix();
-
-    /**
-     * Check whether this node has a link.
-     * 
-     * @return true if this node has a link.
-     */
-    boolean hasLink();
-
-    /**
-     * Get the sitetreenodes, which are children of this node
-     * 
-     * @return the children.
-     */
-    SiteNode[] getChildren();
-
-    /**
-     * Get the sitetreenodes, which are children of this node
-     * and contain a label for the given language.
-     * 
-     * @param language A language string.
-     * @return the children.
-     */
-    SiteTreeNode[] getChildren(String language);
-
-    /**
-     * Remove the children of the node
-     * 
-     * @return the removed node
-     */
-    SiteTreeNode[] removeChildren();
 
     /**
      * Get the sitetreenodes, which are the siblings preceding this node
@@ -121,72 +42,5 @@ public interface SiteTreeNode extends SiteNode {
 	 * @return the children.
 	 */
 	SiteTreeNode[] getNextSiblings();
-
-    /**
-	 * @return string. The document-id corresponding to the next sibling node.
-	 */
-	String getNextSiblingDocumentId();
-
-    /**
-     * Call the visit method of the visitor, that mean
-     * the operation that shall be perfoemed on this node
-     * (Visitor pattern)
-     * @param visitor The visitor.
-     * 
-     * @throws DocumentException if an error occurs
-     */
-    void accept(SiteTreeNodeVisitor visitor) throws DocumentException;
-
-    /**
-     * Traverse the node ant its children and call the
-     * accept method.
-     * @param visitor The visitor.
-     * 
-     * @throws DocumentException if an error occurs
-     */
-    void acceptSubtree(SiteTreeNodeVisitor visitor) throws DocumentException;
-
-    /**
-     * Traverse in a reverse way the node ant its children and call the
-     * accept method.
-     * @param visitor The visitor.
-     * 
-     * @throws DocumentException if an error occurs
-	 */
-	void acceptReverseSubtree(SiteTreeNodeVisitor visitor) throws DocumentException;
-    
-    /**
-     * Sets an attribute of this node. If the attribute already exists its value will be overwritten
-     *
-     * @param attributeName name of the attribute
-     * @param attributeValue the value of the respective attribute
-     */
-    void setNodeAttribute (String attributeName, String attributeValue);
-
-    /**
-     * Returns an attribute of this node.
-     *
-     * @param attributeName name of the attribute
-     * @return The value.
-     */
-    String getNodeAttribute (String attributeName);
-
-    /**
-     * Give a list of the children and this node in a pre order way
-     * @return The list
-     */
-    List preOrder();
-    
-	/**
-     * Give a list of the children and this node in a post order way
-	 * @return The list
-	 */
-	List postOrder();
-
-    /**
-     * Sets the UUID of a node.
-     * @param uuid The UUID.
-     */
-    void setUUID(String uuid);
 
 }

@@ -77,7 +77,7 @@ public class AreaImpl implements Area {
     public Publication getPublication() {
         return this.pub;
     }
-
+    
     public SiteStructure getSite() {
         SiteManager siteManager = null;
         ServiceSelector selector = null;

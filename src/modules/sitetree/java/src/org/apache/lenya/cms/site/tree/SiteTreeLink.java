@@ -35,7 +35,7 @@ public class SiteTreeLink extends AbstractLink {
     }
 
     public void delete() {
-        SiteTreeNode node = (SiteTreeNode) getNode();
+        SiteTreeNodeImpl node = (SiteTreeNodeImpl) getNode();
         node.removeLabel(getLanguage());
     }
     
