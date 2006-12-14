@@ -44,6 +44,7 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.util.NetUtils;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.excalibur.source.SourceUtil;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.AccreditableManager;
@@ -192,8 +193,7 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
             url = "";
         }
 
-        File policyFile = new File(getPoliciesDirectory(), url + File.separator + policyFilename);
-        String policyUri = policyFile.toURI().toString();
+        final String policyUri = this.policiesDirectoryUri + "/" + url + "/" + policyFilename;
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Computing policy URI [" + policyUri + "]");
         }
@@ -210,13 +210,23 @@ public class FilePolicyManager extends AbstractLogEnabled implements InheritingP
      */
     protected File getPolicyFile(String url, String policyFilename) throws AccessControlException {
         String fileUri = getPolicySourceURI(url, policyFilename);
-        File file;
+        SourceResolver resolver = null;
+        Source source = null;
         try {
-            file = new File(new URI(NetUtils.encodePath(fileUri)));
+            resolver = (SourceResolver) this.serviceManager.lookup(SourceResolver.ROLE);
+            source = resolver.resolveURI(fileUri);
+            return SourceUtil.getFile(source);
         } catch (final Exception e) {
             throw new AccessControlException(e);
         }
-        return file;
+        finally {
+            if (resolver != null) {
+                if (source != null) {
+                    resolver.release(source);
+                }
+                this.serviceManager.release(resolver);
+            }
+        }
     }
 
     /**
