@@ -343,7 +343,7 @@
       
       <!-- Copy test resources -->
       <copy todir="{$testDestDir}" filtering="on">
-        <fileset dir="{$src}/java/test" excludes="**.java"/>
+        <fileset dir="{$src}/java/test" excludes="**/*.java"/>
       </copy>
       
       <junit printsummary="yes" showoutput="true" haltonerror="on" haltonfailure="on">

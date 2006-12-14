@@ -128,4 +128,12 @@
       target="test-module-${module}"/>
   </target>
   
+  <target name="module.compile">
+    <property name="module" value=""/>
+    <ant antfile="${build.dir}/temp/modules-build.xml"
+      inheritall="true"
+      inheritrefs="true"
+      target="compile-module-${module}"/>
+  </target>
+  
 </project>
