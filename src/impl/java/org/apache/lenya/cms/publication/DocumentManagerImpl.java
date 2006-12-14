@@ -40,7 +40,6 @@ import org.apache.lenya.cms.publication.util.DocumentVisitor;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryManager;
-import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.repository.UUIDGenerator;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.NodeIterator;
@@ -827,10 +826,6 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                 }
             }
         }
-    }
-
-    public DocumentFactory createDocumentIdentityMap(Session session) {
-        return new DocumentFactoryImpl(session, this.manager, getLogger());
     }
 
     public Document addVersion(Document sourceDocument, String area, String language,

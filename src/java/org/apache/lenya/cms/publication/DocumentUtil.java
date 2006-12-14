@@ -19,7 +19,6 @@ package org.apache.lenya.cms.publication;
 
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryUtil;
@@ -29,7 +28,9 @@ import org.apache.lenya.util.ServletHelper;
 /**
  * Document utility class.
  */
-public class DocumentUtil {
+public final class DocumentUtil {
+
+    private static DocumentFactoryBuilder builder;
 
     /**
      * Creates a document factory.
@@ -37,20 +38,21 @@ public class DocumentUtil {
      * @param session The session.
      * @return a document factory.
      */
-    public static DocumentFactory createDocumentFactory(ServiceManager manager, Session session) {
-        DocumentFactory factory;
-        DocumentManager docManager = null;
-        try {
-            docManager = (DocumentManager) manager.lookup(DocumentManager.ROLE);
-            factory = docManager.createDocumentIdentityMap(session);
-        } catch (ServiceException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (docManager != null) {
-                manager.release(docManager);
+    public static final DocumentFactory createDocumentFactory(ServiceManager manager,
+            Session session) {
+        DocumentFactoryBuilder builder = getBuilder(manager);
+        return builder.createDocumentFactory(session);
+    }
+
+    protected static DocumentFactoryBuilder getBuilder(ServiceManager manager) {
+        if (DocumentUtil.builder == null) {
+            try {
+                DocumentUtil.builder = (DocumentFactoryBuilder) manager.lookup(DocumentFactoryBuilder.ROLE);
+            } catch (ServiceException e) {
+                throw new RuntimeException(e);
             }
         }
-        return factory;
+        return DocumentUtil.builder;
     }
 
     /**

@@ -37,6 +37,7 @@ import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.SourceUtil;
+import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.util.Assert;
 
 /**
@@ -53,11 +54,13 @@ public final class PublicationManagerImpl extends AbstractLogEnabled implements 
 
     private static Map id2config = new HashMap();
 
-    public synchronized Publication getPublication(DocumentFactory factory, String id) throws PublicationException {
-        
+    public synchronized Publication getPublication(DocumentFactory factory, String id)
+            throws PublicationException {
+
         Assert.notNull("publication ID", id);
         if (id.indexOf("/") != -1) {
-            throw new PublicationException("The publication ID [" + id + "] must not contain a slash!");
+            throw new PublicationException("The publication ID [" + id
+                    + "] must not contain a slash!");
         }
 
         PublicationConfiguration config = null;
@@ -74,7 +77,12 @@ public final class PublicationManagerImpl extends AbstractLogEnabled implements 
             throw new PublicationException("The publication for ID [" + id
                     + "] could not be created.");
         }
-        return new PublicationImpl(this.manager, factory, config);
+        PublicationFactory pubFactory = new PublicationFactory(this.manager, factory, config);
+        try {
+            return (Publication) factory.getSession().getRepositoryItem(pubFactory, id);
+        } catch (RepositoryException e) {
+            throw new PublicationException(e);
+        }
     }
 
     public Publication[] getPublications(DocumentFactory factory) throws PublicationException {

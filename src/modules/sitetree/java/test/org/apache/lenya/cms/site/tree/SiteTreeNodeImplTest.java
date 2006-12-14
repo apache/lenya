@@ -26,7 +26,6 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.tree.DefaultSiteTree;
-import org.apache.lenya.cms.site.tree.SiteTreeNode;
 
 import junit.framework.TestCase;
 
@@ -35,7 +34,7 @@ import junit.framework.TestCase;
  */
 public class SiteTreeNodeImplTest extends AbstractAccessControlTest {
 
-    private SiteTreeNode node = null;
+    private SiteTreeNodeImpl node = null;
     private DefaultSiteTree siteTree = null;
 
     /**
@@ -56,7 +55,7 @@ public class SiteTreeNodeImplTest extends AbstractAccessControlTest {
         siteTree.addLabel("/foo/bar", "en", "Bar");
         siteTree.addLabel("/foo/bar", "de", "Stab");
 
-        this.node = (SiteTreeNode) siteTree.getNode("/foo/bar");
+        this.node = (SiteTreeNodeImpl) siteTree.getNode("/foo/bar");
     }
 
     /**

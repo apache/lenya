@@ -22,7 +22,6 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.Session;
@@ -179,33 +178,16 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
             Publication publication = PublicationUtil.getPublicationFromUrl(this.manager, this,
                     webappUrl);
             if (publication.exists()) {
-
-                ServiceSelector selector = null;
-                DocumentBuilder builder = null;
-                try {
-                    selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE
-                            + "Selector");
-                    builder = (DocumentBuilder) selector.select(publication
-                            .getDocumentBuilderHint());
-                    if (builder.isDocument(webappUrl)) {
-                        DocumentLocator locator = builder.getLocator(this, webappUrl);
-                        return SiteUtil.contains(this.manager, this, locator);
-                    } else {
-                        return false;
-                    }
-                } finally {
-                    if (selector != null) {
-                        if (builder != null) {
-                            selector.release(builder);
-                        }
-                        this.manager.release(selector);
-                    }
+                DocumentBuilder builder = publication.getDocumentBuilder();
+                if (builder.isDocument(webappUrl)) {
+                    DocumentLocator locator = builder.getLocator(this, webappUrl);
+                    return SiteUtil.contains(this.manager, this, locator);
+                } else {
+                    return false;
                 }
             } else {
                 return false;
             }
-        } catch (ServiceException e) {
-            throw new DocumentBuildException(e);
         } catch (PublicationException e) {
             throw new DocumentBuildException(e);
         }
@@ -248,24 +230,14 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
 
     protected DocumentLocator getLocator(String webappUrl) {
         DocumentLocator locator;
-        ServiceSelector selector = null;
-        DocumentBuilder builder = null;
         try {
             Publication publication = PublicationUtil.getPublicationFromUrl(this.manager, this,
                     webappUrl);
-            selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
-            builder = (DocumentBuilder) selector.select(publication.getDocumentBuilderHint());
+            DocumentBuilder builder = publication.getDocumentBuilder();
             locator = builder.getLocator(this, webappUrl);
 
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (selector != null) {
-                if (builder != null) {
-                    selector.release(builder);
-                }
-                this.manager.release(selector);
-            }
         }
         return locator;
     }
@@ -284,27 +256,15 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
         String uuid = snippets[2];
         String language = snippets[3];
 
-        ServiceSelector selector = null;
-        DocumentBuilder builder = null;
         Document document;
         try {
-
             Publication publication = getPublication(publicationId);
-
-            selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
-            builder = (DocumentBuilder) selector.select(publication.getDocumentBuilderHint());
+            DocumentBuilder builder = publication.getDocumentBuilder();
             DocumentIdentifier identifier = new DocumentIdentifier(publication, area, uuid,
                     language);
             document = buildDocument(this, identifier, builder);
         } catch (Exception e) {
             throw new RepositoryException(e);
-        } finally {
-            if (selector != null) {
-                if (builder != null) {
-                    selector.release(builder);
-                }
-                this.manager.release(selector);
-            }
         }
         if (getLogger().isDebugEnabled())
             getLogger().debug("DocumentFactory::build() done.");

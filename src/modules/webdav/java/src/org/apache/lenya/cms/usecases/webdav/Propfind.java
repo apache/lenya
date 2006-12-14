@@ -23,7 +23,6 @@ import java.util.Vector;
 
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;
@@ -60,9 +59,7 @@ public class Propfind extends SiteUsecase {
         Publication _publication = this.getPublication();
 
         ServiceSelector siteManagerSelector = null;
-        ServiceSelector docBuilderSelector = null;
         SiteManager siteManager = null;
-        DocumentBuilder docBuilder = null;
         Vector docs = new Vector();
         Vector checkedOut = new Vector();
 
@@ -82,10 +79,6 @@ public class Propfind extends SiteUsecase {
             Document[] documents = siteManager.getDocuments(getDocumentFactory(),
                     _publication,
                     Publication.AUTHORING_AREA);
-
-            docBuilderSelector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE
-                    + "Selector");
-            docBuilder = (DocumentBuilder) docBuilderSelector.select(_publication.getDocumentBuilderHint());
 
             for (int i = 0; i < documents.length; i++) {
                 String test = documents[i].getCanonicalWebappURL().replaceFirst("/[^/]*.html", "");
@@ -120,12 +113,6 @@ public class Propfind extends SiteUsecase {
                     siteManagerSelector.release(siteManager);
                 }
                 this.manager.release(siteManagerSelector);
-            }
-            if (docBuilderSelector != null) {
-                if (docBuilder != null) {
-                    docBuilderSelector.release(docBuilder);
-                }
-                this.manager.release(docBuilderSelector);
             }
         }
     }

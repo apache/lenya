@@ -34,6 +34,7 @@ import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
+import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
 import org.apache.lenya.cms.publication.Publication;
@@ -83,23 +84,13 @@ public class RevisionControllerAction extends ServiceableAction {
         org.apache.lenya.cms.repository.Session repoSession = RepositoryUtil.getSession(this.manager,
                 request);
 
-        DocumentFactory map;
-        DocumentManager docManager = null;
-        try {
-            docManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            map = docManager.createDocumentIdentityMap(repoSession);
-        } finally {
-            if (docManager != null) {
-                this.manager.release(docManager);
-            }
-        }
-
+        DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, repoSession);
         Document document = null;
 
         try {
             publication = PublicationUtil.getPublication(this.manager, objectModel);
             envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(this.manager,
-                    map,
+                    factory,
                     objectModel,
                     publication);
             document = envelope.getDocument();
@@ -158,7 +149,7 @@ public class RevisionControllerAction extends ServiceableAction {
                 }
             }
 
-            Document srcDoc = map.get(publication, document.getArea(), documentid, language);
+            Document srcDoc = factory.get(publication, document.getArea(), documentid, language);
             this.node = srcDoc.getRepositoryNode();
 
         } else {

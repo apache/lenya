@@ -373,23 +373,13 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      * @see org.apache.lenya.cms.publication.Document#getCanonicalDocumentURL()
      */
     public String getCanonicalDocumentURL() {
-        DocumentBuilder builder = null;
-        ServiceSelector selector = null;
         try {
-            selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
-            builder = (DocumentBuilder) selector.select(getPublication().getDocumentBuilderHint());
+            DocumentBuilder builder = getPublication().getDocumentBuilder();
             String webappUrl = builder.buildCanonicalUrl(getFactory(), getLocator());
             String prefix = "/" + getPublication().getId() + "/" + getArea();
             return webappUrl.substring(prefix.length());
         } catch (Exception e) {
             throw new RuntimeException(e);
-        } finally {
-            if (selector != null) {
-                if (builder != null) {
-                    selector.release(builder);
-                }
-                this.manager.release(selector);
-            }
         }
     }
 

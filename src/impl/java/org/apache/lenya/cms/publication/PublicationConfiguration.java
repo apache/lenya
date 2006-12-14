@@ -500,4 +500,9 @@ public class PublicationConfiguration extends AbstractLogEnabled implements Publ
     public DocumentFactory getFactory() {
         throw new IllegalStateException("Not implemented!");
     }
+
+    public DocumentBuilder getDocumentBuilder() {
+        return null;
+    }
+
 }

@@ -19,7 +19,6 @@ package org.apache.lenya.cms.site.usecases;
 
 import java.util.Arrays;
 
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -62,11 +61,11 @@ public class CreateDocument extends Create {
         }
 
         String[] languages = getPublication().getLanguages();
-        if (languages.length == 0){
+        if (languages.length == 0) {
             addErrorMessage("The publication doesn't contain any languages!");
         }
         setParameter(LANGUAGES, languages);
-        
+
         String[] relations = { RELATION_CHILD, RELATION_AFTER };
         setParameter(RELATIONS, relations);
         setParameter(RELATION, RELATION_CHILD);
@@ -96,37 +95,21 @@ public class CreateDocument extends Create {
         if (!Arrays.asList(getSupportedRelations()).contains(relation)) {
             addErrorMessage("The relation '" + relation + "' is not supported.");
         }
-        
+
         Publication pub = getPublication();
 
-        ServiceSelector selector = null;
-        DocumentBuilder builder = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
-            String hint = pub.getDocumentBuilderHint();
-            builder = (DocumentBuilder) selector.select(hint);
+        DocumentBuilder builder = pub.getDocumentBuilder();
+        boolean provided = getParameterAsBoolean(PATH_PROVIDED, false);
 
-            boolean provided = getParameterAsBoolean(PATH_PROVIDED, false);
-            
-            if (provided) {
-                String newPath = getNewDocumentPath();
-                if (pub.getArea(getArea()).getSite().contains(newPath)) {
-                    addErrorMessage("The document with path " + newPath + " already exists.");
-                }
+        if (provided) {
+            String newPath = getNewDocumentPath();
+            if (pub.getArea(getArea()).getSite().contains(newPath)) {
+                addErrorMessage("The document with path " + newPath + " already exists.");
             }
-            else if (nodeName == null) {
-                addErrorMessage("Please enter a node name.");
-            }
-            else if (!builder.isValidDocumentName(nodeName)) {
-                addErrorMessage("The node name may not contain any special characters.");
-            }
-        } finally {
-            if (selector != null) {
-                if (builder != null) {
-                    selector.release(builder);
-                }
-                this.manager.release(selector);
-            }
+        } else if (nodeName == null) {
+            addErrorMessage("Please enter a node name.");
+        } else if (!builder.isValidDocumentName(nodeName)) {
+            addErrorMessage("The node name may not contain any special characters.");
         }
     }
 
@@ -145,7 +128,8 @@ public class CreateDocument extends Create {
     }
 
     /**
-     * @return The relation between the source document and the created document.
+     * @return The relation between the source document and the created
+     *         document.
      */
     protected String getRelation() {
         return getParameterAsString(RELATION);

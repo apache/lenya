@@ -77,26 +77,31 @@ public class AreaImpl implements Area {
     public Publication getPublication() {
         return this.pub;
     }
-    
+
+    private SiteStructure site;
+
     public SiteStructure getSite() {
-        SiteManager siteManager = null;
-        ServiceSelector selector = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(getPublication().getSiteManagerHint());
-            return siteManager.getSiteStructure(this.factory, getPublication(), getName());
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
+        if (this.site == null) {
+            SiteManager siteManager = null;
+            ServiceSelector selector = null;
+            try {
+                selector = (ServiceSelector) this.manager.lookup(SiteManager.ROLE + "Selector");
+                siteManager = (SiteManager) selector.select(getPublication().getSiteManagerHint());
+                this.site = siteManager.getSiteStructure(this.factory, getPublication(), getName());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            } finally {
+                if (selector != null) {
+                    if (siteManager != null) {
+                        selector.release(siteManager);
+                    }
+                    this.manager.release(selector);
                 }
-                this.manager.release(selector);
             }
         }
+        return this.site;
     }
-    
+
     public String toString() {
         return getPublication().getId() + ":" + getName();
     }

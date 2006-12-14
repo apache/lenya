@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.cocoon.acting.ServiceableAction;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Redirector;
@@ -82,38 +81,25 @@ public class LanguageExistsAction extends ServiceableAction {
             return null;
         }
 
-        DocumentBuilder builder = null;
-        ServiceSelector selector = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
-            builder = (DocumentBuilder) selector.select(pub.getDocumentBuilderHint());
-            DocumentLocator locator = builder.getLocator(factory, url);
+        DocumentBuilder builder = pub.getDocumentBuilder();
+        DocumentLocator locator = builder.getLocator(factory, url);
 
-            Area area = pub.getArea(locator.getArea());
-            SiteStructure site = area.getSite();
+        Area area = pub.getArea(locator.getArea());
+        SiteStructure site = area.getSite();
 
-            List availableLanguages = new ArrayList();
-            if (site.contains(locator.getPath())) {
-                SiteNode node = site.getNode(locator.getPath());
+        List availableLanguages = new ArrayList();
+        if (site.contains(locator.getPath())) {
+            SiteNode node = site.getNode(locator.getPath());
 
-                String[] languages = pub.getLanguages();
-                for (int i = 0; i < languages.length; i++) {
-                    if (node.hasLink(languages[i])) {
-                        availableLanguages.add(languages[i]);
-                    }
+            String[] languages = pub.getLanguages();
+            for (int i = 0; i < languages.length; i++) {
+                if (node.hasLink(languages[i])) {
+                    availableLanguages.add(languages[i]);
                 }
             }
-            if (availableLanguages.contains(locator.getLanguage())) {
-                return Collections.unmodifiableMap(Collections.EMPTY_MAP);
-            }
-
-        } finally {
-            if (selector != null) {
-                if (builder != null) {
-                    selector.release(builder);
-                }
-                this.manager.release(selector);
-            }
+        }
+        if (availableLanguages.contains(locator.getLanguage())) {
+            return Collections.unmodifiableMap(Collections.EMPTY_MAP);
         }
 
         return null;

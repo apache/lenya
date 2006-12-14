@@ -22,10 +22,12 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 
+import org.apache.lenya.cms.repository.RepositoryItem;
+
 /**
  * A Lenya publication.
  */
-public interface Publication {
+public interface Publication extends RepositoryItem {
 
     /**
      * <code>AUTHORING_AREA</code> The authoring area
@@ -75,6 +77,11 @@ public interface Publication {
      * <code>DELETE_PATH</code> The delete path
      */
     String DELETE_PATH = "delete";
+    
+    /**
+     * The item type.
+     */
+    String ITEM_TYPE = "publication";
 
     /**
      * Returns the publication ID.
@@ -151,10 +158,10 @@ public interface Publication {
     String getSiteManagerHint();
 
     /**
-     * Returns the document builder class of this instance.
+     * Returns the document builder of this instance.
      * @return A hint to use for service selection.
      */
-    String getDocumentBuilderHint();
+    DocumentBuilder getDocumentBuilder();
 
     /**
      * Returns the publication template instantiator hint. If the publication does not allow

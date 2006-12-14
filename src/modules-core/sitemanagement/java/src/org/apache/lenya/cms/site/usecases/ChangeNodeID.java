@@ -20,7 +20,6 @@ package org.apache.lenya.cms.site.usecases;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
@@ -123,26 +122,13 @@ public class ChangeNodeID extends DocumentUsecase {
         super.doCheckExecutionConditions();
 
         String nodeId = getParameterAsString(NODE_ID);
-        ServiceSelector selector = null;
-        DocumentBuilder builder = null;
-        try {
-            selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
-            String hint = getSourceDocument().getPublication().getDocumentBuilderHint();
-            builder = (DocumentBuilder) selector.select(hint);
-            if (!builder.isValidDocumentName(nodeId)) {
-                addErrorMessage("The document ID is not valid.");
-            } else {
-                DocumentLocator target = getTargetLocator();
-                if (SiteUtil.contains(this.manager, getDocumentFactory(), target)) {
-                    addErrorMessage("The document does already exist.");
-                }
-            }
-        } finally {
-            if (selector != null) {
-                if (builder != null) {
-                    selector.release(builder);
-                }
-                this.manager.release(selector);
+        DocumentBuilder builder = getSourceDocument().getPublication().getDocumentBuilder();
+        if (!builder.isValidDocumentName(nodeId)) {
+            addErrorMessage("The document ID is not valid.");
+        } else {
+            DocumentLocator target = getTargetLocator();
+            if (SiteUtil.contains(this.manager, getDocumentFactory(), target)) {
+                addErrorMessage("The document does already exist.");
             }
         }
     }
@@ -151,10 +137,8 @@ public class ChangeNodeID extends DocumentUsecase {
             DocumentException {
         String nodeId = getParameterAsString(NODE_ID);
         Document doc = getSourceDocument();
-        DocumentLocator loc = DocumentLocator.getLocator(doc.getPublication().getId(),
-                doc.getArea(),
-                doc.getPath(),
-                doc.getLanguage());
+        DocumentLocator loc = DocumentLocator.getLocator(doc.getPublication().getId(), doc
+                .getArea(), doc.getPath(), doc.getLanguage());
         DocumentLocator parent = loc.getParent();
         return parent.getChild(nodeId);
     }
@@ -171,10 +155,8 @@ public class ChangeNodeID extends DocumentUsecase {
         DocumentManager documentManager = null;
         try {
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
-            documentManager.moveAll(source.area(),
-                    source.getPath(),
-                    source.area(),
-                    target.getPath());
+            documentManager.moveAll(source.area(), source.getPath(), source.area(), target
+                    .getPath());
             targetDoc = getDocumentFactory().get(target);
         } finally {
             if (documentManager != null) {

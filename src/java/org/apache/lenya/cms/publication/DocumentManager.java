@@ -18,7 +18,6 @@
 package org.apache.lenya.cms.publication;
 
 import org.apache.lenya.cms.publication.util.DocumentSet;
-import org.apache.lenya.cms.repository.Session;
 
 /**
  * Helper to manage documents. It takes care of attachments etc.
@@ -265,12 +264,5 @@ public interface DocumentManager {
      * @throws PublicationException if an error occurs.
      */
     void delete(DocumentSet documents) throws PublicationException;
-
-    /**
-     * Creates a new document identity map.
-     * @param session The session.
-     * @return A document identity map.
-     */
-    DocumentFactory createDocumentIdentityMap(Session session);
 
 }

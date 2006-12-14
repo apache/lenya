@@ -261,10 +261,6 @@ public class DefaultSiteTreeTest extends AbstractAccessControlTest {
         assertNotNull(node);
         SiteTreeNode parentNode = (SiteTreeNode) this.siteTree.getNode("/foo/lala");
         assertNotNull(parentNode);
-        this.siteTree.importSubtree(parentNode, node, "subtree", null);
-        this.siteTree.save();
-        assertNotNull(this.siteTree.getNode("/foo/lala/subtree"));
-        assertNotNull(this.siteTree.getNode("/foo/lala/subtree/child"));
 
         newSiteTree.getRepositoryNode().unlock();
     }

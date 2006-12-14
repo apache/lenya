@@ -21,10 +21,13 @@ package org.apache.lenya.cms.publication;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.avalon.framework.service.ServiceSelector;
 
 /**
  * A publication.
@@ -71,8 +74,19 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
         return delegate.getDirectory();
     }
 
-    public String getDocumentBuilderHint() {
-        return delegate.getDocumentBuilderHint();
+    private DocumentBuilder documentBuilder;
+    
+    public DocumentBuilder getDocumentBuilder() {
+        if (this.documentBuilder == null) {
+            ServiceSelector selector = null;
+            try {
+                selector = (ServiceSelector) this.manager.lookup(DocumentBuilder.ROLE + "Selector");
+                this.documentBuilder = (DocumentBuilder) selector.select(delegate.getDocumentBuilderHint());
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return this.documentBuilder;
     }
 
     public String getId() {
@@ -166,8 +180,14 @@ public class PublicationImpl extends AbstractLogEnabled implements Publication {
         delegate.setPathMapper(mapper);
     }
 
+    private Map areas = new HashMap();
+    
     public Area getArea(String name) throws PublicationException {
-        return new AreaImpl(this.manager, this.factory, this, name);
+        if (!this.areas.containsKey(name)) {
+            Area area = new AreaImpl(this.manager, this.factory, this, name);
+            this.areas.put(name, area);
+        }
+        return (Area) this.areas.get(name);
     }
 
     public String[] getAreaNames() {

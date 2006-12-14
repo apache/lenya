@@ -42,8 +42,8 @@ public class SiteUtil {
     }
 
     /**
-     * Returns a sub-site starting with a certain node, which includes the node itself and all nodes
-     * which require this node, in preorder.
+     * Returns a sub-site starting with a certain node, which includes the node
+     * itself and all nodes which require this node, in preorder.
      * 
      * @param manager The service manager.
      * @param node The top-level document.
@@ -56,8 +56,7 @@ public class SiteUtil {
         SiteNode[] subsite;
         try {
             selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
-            siteManager = (SiteManager) selector.select(node.getStructure()
-                    .getPublication()
+            siteManager = (SiteManager) selector.select(node.getStructure().getPublication()
                     .getSiteManagerHint());
 
             DocumentFactory map = node.getStructure().getPublication().getFactory();
@@ -84,7 +83,8 @@ public class SiteUtil {
     }
 
     /**
-     * @see org.apache.lenya.cms.site.SiteManager#getAvailableLocator(DocumentFactory, DocumentLocator)
+     * @see org.apache.lenya.cms.site.SiteManager#getAvailableLocator(DocumentFactory,
+     *      DocumentLocator)
      * @param manager The service manager.
      * @param factory The factory.
      * @param locator The locator.
@@ -144,13 +144,10 @@ public class SiteUtil {
             String webappUrl) throws SiteException {
 
         URLInformation info = new URLInformation(webappUrl);
-        DocumentBuilder builder = null;
-        ServiceSelector selector = null;
         try {
             Publication pub = factory.getPublication(info.getPublicationId());
             if (pub.exists()) {
-                selector = (ServiceSelector) manager.lookup(DocumentBuilder.ROLE + "Selector");
-                builder = (DocumentBuilder) selector.select(pub.getDocumentBuilderHint());
+                DocumentBuilder builder = pub.getDocumentBuilder();
                 if (builder.isDocument(webappUrl)) {
                     DocumentLocator locator = builder.getLocator(factory, webappUrl);
                     return contains(manager, factory, locator);
@@ -161,13 +158,6 @@ public class SiteUtil {
             throw e;
         } catch (Exception e) {
             throw new SiteException(e);
-        } finally {
-            if (selector != null) {
-                if (builder != null) {
-                    selector.release(builder);
-                }
-                manager.release(selector);
-            }
         }
     }
 
@@ -189,25 +179,15 @@ public class SiteUtil {
     public static DocumentLocator getLocator(ServiceManager manager, DocumentFactory factory,
             String webappUrl) throws SiteException {
         URLInformation info = new URLInformation(webappUrl);
-        DocumentBuilder builder = null;
-        ServiceSelector selector = null;
         try {
             Publication pub = factory.getPublication(info.getPublicationId());
-            selector = (ServiceSelector) manager.lookup(DocumentBuilder.ROLE + "Selector");
-            builder = (DocumentBuilder) selector.select(pub.getDocumentBuilderHint());
+            DocumentBuilder builder = pub.getDocumentBuilder();
             return builder.getLocator(factory, webappUrl);
 
         } catch (SiteException e) {
             throw e;
         } catch (Exception e) {
             throw new SiteException(e);
-        } finally {
-            if (selector != null) {
-                if (builder != null) {
-                    selector.release(builder);
-                }
-                manager.release(selector);
-            }
         }
     }
 
