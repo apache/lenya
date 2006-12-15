@@ -302,4 +302,16 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
         return (SiteNode[]) topLevelNodes.toArray(new SiteNode[topLevelNodes.size()]);
     }
 
+    public boolean contains(String path, String language) {
+        if (contains(path)) {
+            SiteNode node;
+            try {
+                node = getNode(path);
+            } catch (SiteException e) {
+                throw new RuntimeException(e);
+            }
+            return node.hasLink(language);
+        }
+        return false;
+    }
 }

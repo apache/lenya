@@ -18,7 +18,7 @@
 package org.apache.lenya.cms.cocoon.source;
 
 import org.apache.lenya.cms.publication.templating.ExistingAncestorSourceResolver;
-import org.apache.lenya.cms.publication.templating.URIResolver;
+import org.apache.lenya.cms.publication.templating.VisitingSourceResolver;
 
 /**
  * Source factory following the fallback principle, resolving the existing ancestor of the existing resource.
@@ -34,7 +34,7 @@ public class TemplateFallbackSourceFactory extends FallbackSourceFactory {
         super();
     }
 
-    protected URIResolver getSourceVisitor() {
+    protected VisitingSourceResolver getSourceVisitor() {
         return new ExistingAncestorSourceResolver();
     }
 

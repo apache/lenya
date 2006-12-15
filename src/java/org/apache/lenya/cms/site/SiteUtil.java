@@ -24,7 +24,6 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
@@ -112,46 +111,15 @@ public class SiteUtil {
         }
     }
 
-    public static boolean contains(ServiceManager manager, DocumentFactory factory,
-            DocumentLocator locator) throws SiteException {
-        SiteManager siteManager = null;
-        ServiceSelector selector = null;
-
-        try {
-            selector = (ServiceSelector) manager.lookup(SiteManager.ROLE + "Selector");
-            Publication pub = factory.getPublication(locator.getPublicationId());
-            String siteManagerHint = pub.getSiteManagerHint();
-            siteManager = (SiteManager) selector.select(siteManagerHint);
-            SiteStructure site = siteManager.getSiteStructure(factory, pub, locator.getArea());
-            String path = locator.getPath();
-            String language = locator.getLanguage();
-            return site.contains(path) && site.getNode(path).hasLink(language);
-        } catch (SiteException e) {
-            throw e;
-        } catch (Exception e) {
-            throw new SiteException(e);
-        } finally {
-            if (selector != null) {
-                if (siteManager != null) {
-                    selector.release(siteManager);
-                }
-                manager.release(selector);
-            }
-        }
-    }
-
-    public static boolean isDocument(ServiceManager manager, DocumentFactory factory,
-            String webappUrl) throws SiteException {
+    public static boolean isDocument(DocumentFactory factory, String webappUrl)
+            throws SiteException {
 
         URLInformation info = new URLInformation(webappUrl);
         try {
             Publication pub = factory.getPublication(info.getPublicationId());
             if (pub.exists()) {
                 DocumentBuilder builder = pub.getDocumentBuilder();
-                if (builder.isDocument(webappUrl)) {
-                    DocumentLocator locator = builder.getLocator(factory, webappUrl);
-                    return contains(manager, factory, locator);
-                }
+                return builder.isDocument(webappUrl);
             }
             return false;
         } catch (SiteException e) {
@@ -164,15 +132,18 @@ public class SiteUtil {
     public static Document getDocument(ServiceManager manager, DocumentFactory factory,
             String webappUrl) throws SiteException {
 
-        DocumentLocator locator = getLocator(manager, factory, webappUrl);
-        if (contains(manager, factory, locator)) {
-            try {
+        try {
+            DocumentLocator locator = getLocator(manager, factory, webappUrl);
+            Publication pub = factory.getPublication(locator.getPublicationId());
+            String path = locator.getPath();
+            String lang = locator.getLanguage();
+            if (pub.getArea(locator.getArea()).getSite().contains(path, lang)) {
                 return factory.get(locator);
-            } catch (DocumentBuildException e) {
-                throw new SiteException(e);
+            } else {
+                throw new SiteException("No document for webapp URL [" + webappUrl + "]");
             }
-        } else {
-            throw new SiteException("No document for webapp URL [" + webappUrl + "]");
+        } catch (Exception e) {
+            throw new SiteException(e);
         }
     }
 

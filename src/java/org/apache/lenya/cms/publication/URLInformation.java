@@ -30,11 +30,21 @@ public class URLInformation {
     private String completeArea = null;
     private String documentUrl = null;
 
+    private String url;
+
     /**
      * Returns the area (without the "webdav" prefix).
      * @return A string.
      */
     public String getArea() {
+        if (this.area == null) {
+            String completeArea = getCompleteArea();
+            if (completeArea.equals(Publication.DAV_AREA)) {
+                this.area = Publication.AUTHORING_AREA;
+            } else {
+                this.area = completeArea;
+            }
+        }
         return this.area;
     }
 
@@ -43,6 +53,14 @@ public class URLInformation {
      * @return A string.
      */
     public String getCompleteArea() {
+        if (this.completeArea == null) {
+            String pubUrl = this.url.substring(getPublicationId().length());
+            if (pubUrl.startsWith("/")) {
+                this.completeArea = extractBeforeSlash(pubUrl.substring(1));
+            } else {
+                this.completeArea = null;
+            }
+        }
         return this.completeArea;
     }
 
@@ -51,6 +69,14 @@ public class URLInformation {
      * @return A string.
      */
     public String getDocumentUrl() {
+        if (this.documentUrl == null) {
+            String pubId = getPublicationId();
+            String area = getArea();
+            if (pubId != null && area != null) {
+                String prefix = pubId + "/" + area;
+                this.documentUrl = this.url.substring(prefix.length());
+            }
+        }
         return this.documentUrl;
     }
 
@@ -59,7 +85,26 @@ public class URLInformation {
      * @return A string.
      */
     public String getPublicationId() {
+        if (this.publicationId == null) {
+            this.publicationId = extractBeforeSlash(this.url);
+        }
         return this.publicationId;
+    }
+
+    protected String extractBeforeSlash(String remaining) {
+
+        if (remaining.length() == 0) {
+            return null;
+        }
+
+        String step;
+        int slashIndex = remaining.indexOf('/');
+        if (slashIndex == -1) {
+            step = remaining;
+        } else {
+            step = remaining.substring(0, slashIndex);
+        }
+        return step;
     }
 
     /**
@@ -67,33 +112,11 @@ public class URLInformation {
      * @param webappUrl A webapp URL (without context prefix).
      */
     public URLInformation(String webappUrl) {
-        
+
         if (!webappUrl.startsWith("/")) {
             throw new RuntimeException("The URL [" + webappUrl + "] doesn't start with a slash!");
         }
 
-        String url = webappUrl.substring(1);
-
-        String[] fragments = url.split("/");
-        if (fragments.length > 0) {
-            this.publicationId = fragments[0];
-
-            if (fragments.length > 1) {
-                this.completeArea = fragments[1];
-
-                if (url.length() > (this.publicationId + "/" + this.completeArea).length()) {
-                    this.documentUrl = url.substring((this.publicationId + "/" + this.completeArea).length());
-                } else {
-                    this.documentUrl = "";
-                }
-
-                if (this.completeArea.equals(Publication.DAV_AREA)) {
-                    this.area = Publication.AUTHORING_AREA;
-                } else {
-                    this.area = this.completeArea;
-                }
-            }
-        }
+        this.url = webappUrl.substring(1);
     }
-
 }

@@ -32,6 +32,7 @@ import org.apache.lenya.cms.site.NodeIterator;
 import org.apache.lenya.cms.site.NodeSet;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
+import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -127,7 +128,9 @@ public class ChangeNodeID extends DocumentUsecase {
             addErrorMessage("The document ID is not valid.");
         } else {
             DocumentLocator target = getTargetLocator();
-            if (SiteUtil.contains(this.manager, getDocumentFactory(), target)) {
+            Publication pub = getDocumentFactory().getPublication(target.getPublicationId());
+            SiteStructure site = pub.getArea(target.getArea()).getSite();
+            if (site.contains(target.getPath(), target.getLanguage())) {
                 addErrorMessage("The document does already exist.");
             }
         }

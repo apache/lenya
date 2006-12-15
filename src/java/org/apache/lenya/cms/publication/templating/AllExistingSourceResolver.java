@@ -21,20 +21,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
 
 /**
  * Source visitor to obtain all existing sources.
  */
 public class AllExistingSourceResolver implements SourceVisitor {
 
-    public void visit(Source source) {
-        if (source.exists()) {
-            this.uris.add(source.getURI());
+    public void visit(SourceResolver resolver, String sourceUri) {
+        Source source = null;
+        try {
+            source = resolver.resolveURI(sourceUri);
+            if (source.exists()) {
+                this.uris.add(sourceUri);
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (source != null) {
+                resolver.release(source);
+            }
         }
     }
-    
+
     private List uris = new ArrayList();
-    
+
     /**
      * @return All existing source URIs.
      */

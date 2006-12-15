@@ -46,6 +46,7 @@ public class BypassableAccessController extends DefaultAccessController {
     }
 
     private List publicMatchers = new ArrayList();
+    private List publicExtensions = new ArrayList();
 
     /**
      * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
@@ -68,6 +69,19 @@ public class BypassableAccessController extends DefaultAccessController {
 
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("CONFIGURATION: public: " + publicHref);
+            }
+        }
+        
+        Configuration[] extensionConfigs = conf.getChildren("public-extensions");
+        for (int i = 0; i < extensionConfigs.length; i++) {
+            String extensionString = extensionConfigs[i].getValue();
+            String[] extensions = extensionString.split(",");
+            for (int e = 0; e < extensions.length; e++) {
+                String ext = extensions[e].trim();
+                if (!ext.startsWith(".")) {
+                    ext = "." + ext;
+                }
+                this.publicExtensions.add(ext);
             }
         }
 
@@ -149,6 +163,13 @@ public class BypassableAccessController extends DefaultAccessController {
                 }
                 authorized = true;
             }
+            i++;
+        }
+        
+        i = 0;
+        while (!authorized && i < this.publicExtensions.size()) {
+            String ext = (String) this.publicExtensions.get(i);
+            authorized = uri.endsWith(ext);
             i++;
         }
         

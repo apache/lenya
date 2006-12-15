@@ -25,6 +25,12 @@
     <component logger="lenya.ac.accesscontroller.bypassable"
       class="org.apache.lenya.ac.impl.BypassableAccessController"
       role="org.apache.lenya.ac.AccessController/bypassable">
-      <public>.*[.]css|.*[.]jpg|.*[.]gif|.*[.]png|.*[.]rng|.*[.]xsl</public>
+      
+      <public-extensions>css,jpg,gif,png,rng,xsl</public-extensions>
+      
+      <!-- bad performance, use only for complex patterns
+        <public>.*[.]css|.*[.]jpg|.*[.]gif|.*[.]png|.*[.]rng|.*[.]xsl</public>
+      -->
+      
     </component>
   </xconf>

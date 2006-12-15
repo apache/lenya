@@ -28,7 +28,6 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.avalon.framework.service.Serviceable;
-import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
@@ -36,7 +35,8 @@ import org.apache.lenya.cms.publication.PublicationException;
 /**
  * Manager for publication templates.
  * 
- * @version $Id$
+ * @version $Id: PublicationTemplateManagerImpl.java 474729 2006-11-14 11:07:44Z
+ *          andreas $
  */
 public class PublicationTemplateManagerImpl extends AbstractLogEnabled implements
         PublicationTemplateManager, Serviceable {
@@ -49,7 +49,8 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
 
     /**
      * @see org.apache.lenya.cms.publication.templating.PublicationTemplateManager#visit(org.apache.lenya.cms.publication.Publication,
-     *      java.lang.String, org.apache.lenya.cms.publication.templating.SourceVisitor)
+     *      java.lang.String,
+     *      org.apache.lenya.cms.publication.templating.SourceVisitor)
      */
     public void visit(Publication publication, String path, SourceVisitor visitor) {
 
@@ -65,18 +66,7 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
                     getLogger().debug("Trying to resolve URI [" + uri + "]");
                 }
 
-                Source source = null;
-                try {
-                    source = resolver.resolveURI(uri);
-                    visitor.visit(source);
-                } catch (Exception e) {
-                    getLogger().error("Could not resolve URI [" + uri + "]: ", e);
-                    throw e;
-                } finally {
-                    if (source != null) {
-                        resolver.release(source);
-                    }
-                }
+                visitor.visit(resolver, uri);
             }
 
         } catch (Exception e) {
@@ -100,7 +90,8 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
 
     /**
      * Returns the publication.
-     * @return A publication. protected Publication getPublication1() { return this.publication; }
+     * @return A publication. protected Publication getPublication1() { return
+     *         this.publication; }
      */
 
     /**
@@ -188,7 +179,8 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
 
     /**
      * @see org.apache.lenya.cms.publication.templating.PublicationTemplateManager#getSelectableHint(org.apache.lenya.cms.publication.Publication,
-     *      org.apache.avalon.framework.service.ServiceSelector, java.lang.String)
+     *      org.apache.avalon.framework.service.ServiceSelector,
+     *      java.lang.String)
      */
     public Object getSelectableHint(Publication publication, ServiceSelector selector,
             final String originalHint) throws ServiceException {
@@ -254,8 +246,8 @@ public class PublicationTemplateManagerImpl extends AbstractLogEnabled implement
         }
 
         /**
-         * @return The publication hint that could be selected or <code>null</code> if no hint
-         *         could be selected.
+         * @return The publication hint that could be selected or
+         *         <code>null</code> if no hint could be selected.
          */
         public Object getSelectableHint() {
             return this.selectableHint;

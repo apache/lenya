@@ -17,14 +17,16 @@
  */
 package org.apache.lenya.cms.publication.templating;
 
+import org.apache.excalibur.source.Source;
+
 /**
  * URI resolver.
  */
-public interface URIResolver extends SourceVisitor {
+public interface VisitingSourceResolver extends SourceVisitor {
 
     /**
-     * @return The resolved URI.
+     * @return The resolved source.
      */
-    String getURI();
+    Source getSource();
     
 }

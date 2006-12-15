@@ -45,7 +45,7 @@ import org.apache.lenya.cms.publication.PublicationManager;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.templating.ExistingSourceResolver;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
-import org.apache.lenya.cms.publication.templating.URIResolver;
+import org.apache.lenya.cms.publication.templating.VisitingSourceResolver;
 
 /**
  * Source factory following the fallback principle.
@@ -67,8 +67,6 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
      */
     public Source getSource(final String location, Map parameters) throws IOException,
             MalformedURLException {
-
-        String resolvedUri = null;
 
         long startTime = new GregorianCalendar().getTimeInMillis();
 
@@ -103,7 +101,7 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
         PublicationManager pubMgr = null;
         PublicationTemplateManager templateManager = null;
         SourceResolver sourceResolver = null;
-        Source source;
+        Source source = null;
         try {
             sourceResolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
 
@@ -123,16 +121,16 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
             DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
             Publication pub = pubMgr.getPublication(factory, publicationId);
             if (pub.exists()) {
-                URIResolver resolver = getSourceVisitor();
+                VisitingSourceResolver resolver = getSourceVisitor();
                 templateManager.visit(pub, path, resolver);
-                resolvedUri = resolver.getURI();
+                source = resolver.getSource();
             }
 
             if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Resolved URI:  [" + resolvedUri + "]");
+                getLogger().debug("Resolved URI:  [" + source.getURI() + "]");
             }
 
-            if (resolvedUri == null) {
+            if (source == null) {
                 if (path.startsWith("lenya/modules/")) {
                     ModuleManager moduleMgr = null;
                     try {
@@ -140,7 +138,7 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
                         final String moduleShortcut = path.split("/")[2];
                         String baseUri = moduleMgr.getBaseURI(moduleShortcut);
                         final String modulePath = path.substring(("lenya/modules/" + moduleShortcut).length());
-                        resolvedUri = baseUri + modulePath;
+                        source = sourceResolver.resolveURI(baseUri + modulePath);
                     } finally {
                         if (moduleMgr != null) {
                             this.manager.release(moduleMgr);
@@ -148,11 +146,9 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
                     }
                 } else {
                     String contextUri = "context://" + path;
-                    resolvedUri = contextUri;
+                    source = sourceResolver.resolveURI(contextUri);
                 }
             }
-
-            source = sourceResolver.resolveURI(resolvedUri);
 
         } catch (Exception e) {
             throw new RuntimeException("Resolving path [" + location + "] failed: ", e);
@@ -178,7 +174,7 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
         return source;
     }
 
-    protected URIResolver getSourceVisitor() {
+    protected VisitingSourceResolver getSourceVisitor() {
         return new ExistingSourceResolver();
     }
 

@@ -382,4 +382,16 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
         parent.moveUp(node.getName());
     }
 
+    public boolean contains(String path, String language) {
+        if (contains(path)) {
+            SiteNode node;
+            try {
+                node = getNode(path);
+            } catch (SiteException e) {
+                throw new RuntimeException(e);
+            }
+            return node.hasLink(language);
+        }
+        return false;
+    }
 }

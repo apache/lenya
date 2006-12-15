@@ -22,7 +22,6 @@ package org.apache.lenya.cms.publication;
 
 import java.io.File;
 
-import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.rc.RCEnvironment;
 import org.apache.lenya.cms.site.SiteUtil;
@@ -163,19 +162,15 @@ public class PageEnvelope {
     private String area;
     private Publication publication;
 
-    private ServiceManager manager;
-
     /**
      * Constructor.
      * @param manager The service manager.
      */
-    protected PageEnvelope(ServiceManager manager) {
-        this.manager = manager;
+    protected PageEnvelope() {
     }
 
     /**
      * Creates a page envelope from an object model.
-     * @param manager The service manager.
      * @param map The identity map to use.
      * @param contextPath The servlet context prefix.
      * @param webappUrl The web application URL.
@@ -183,14 +178,13 @@ public class PageEnvelope {
      * @param publication The publication.
      * @throws PageEnvelopeException when something went wrong.
      */
-    public PageEnvelope(ServiceManager manager, DocumentFactory map, String contextPath,
+    public PageEnvelope(DocumentFactory map, String contextPath,
             String webappUrl, File servletContext, Publication publication)
             throws PageEnvelopeException {
         this.factory = map;
         this.context = contextPath;
         this.webappUrl = webappUrl;
         this.publication = publication;
-        this.manager = manager;
     }
 
     private String webappUrl;
@@ -289,7 +283,7 @@ public class PageEnvelope {
         if (!documentChecked) {
             try {
                 documentChecked = true;
-                if (SiteUtil.isDocument(this.manager, getDocumentFactory(), this.webappUrl)) {
+                if (SiteUtil.isDocument(getDocumentFactory(), this.webappUrl)) {
                     this.document = getDocumentFactory().getFromURL(this.webappUrl);
                 }
             } catch (final Exception e) {

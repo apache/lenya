@@ -41,8 +41,8 @@ import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.util.ServletHelper;
 
 /**
- * Input module wrapping the page envelope. This module provides publication related information
- * such as document-id, area, publication-id.
+ * Input module wrapping the page envelope. This module provides publication
+ * related information such as document-id, area, publication-id.
  * 
  * @see org.apache.lenya.cms.publication.PageEnvelope
  * @deprecated use DocumentInfoModule instead.
@@ -53,7 +53,8 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttribute(java.lang.String,
-     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     *      org.apache.avalon.framework.configuration.Configuration,
+     *      java.util.Map)
      */
     public Object getAttribute(final String attributeName, Configuration modeConf, Map objectModel)
             throws ConfigurationException {
@@ -84,50 +85,50 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
                 value = envelope.getPublication().getBreadcrumbPrefix();
             } else if (name.equals(PageEnvelope.DOCUMENT_PATH)) {
                 value = getPath(envelope, objectModel);
-            }
-
-            Document document = envelope.getDocument();
-            if (document != null) {
-                if (name.equals(PageEnvelope.DOCUMENT)) {
-                    value = document;
-                } else if (name.equals(PageEnvelope.DOCUMENT_ID)) {
-                    getLogger().warn(
-                            "This attribute is deprecated."
-                                    + " Use document-path or document-uuid instead!");
-                    value = document.getId();
-                } else if (name.equals(PageEnvelope.DOCUMENT_PARENT)) {
-                    value = document.getLocator().getParent().getPath();
-                } else if (name.equals(PageEnvelope.DOCUMENT_NAME)) {
-                    value = document.getName();
-                } else if (name.equals(PageEnvelope.DOCUMENT_LABEL)) {
-                    value = document.getLink().getLabel();
-                } else if (name.equals(PageEnvelope.DOCUMENT_URL)) {
-                    value = document.getCanonicalDocumentURL();
-                } else if (name.equals(PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE)) {
-                    value = document.getCanonicalWebappURL();
-                } else if (name.equals(PageEnvelope.DOCUMENT_FILE)) {
-                    value = document.getFile();
-                } else if (name.equals(PageEnvelope.DOCUMENT_EXTENSION)) {
-                    value = document.getExtension();
-                } else if (name.equals(PageEnvelope.DOCUMENT_SOURCE_EXTENSION)) {
-                    value = document.getSourceExtension();
-                } else if (name.equals(PageEnvelope.DOCUMENT_UUID)) {
-                    value = document.getUUID();
-                } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGE)) {
-                    value = document.getLanguage();
-                } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGES)) {
-                    value = document.getLanguages();
-                } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGES_CSV)) {
-                    value = StringUtils.join(document.getLanguages(), ',');
-                } else if (name.equals(PageEnvelope.DOCUMENT_LASTMODIFIED)) {
-                    Date date = new Date(document.getLastModified());
-                    value = new SimpleDateFormat(DATE_FORMAT).format(date);
-                } else if (name.equals(PageEnvelope.DOCUMENT_TYPE)) {
-                    ResourceType resourceType = document.getResourceType();
-                    if (resourceType == null) {
-                        value = null;
-                    } else {
-                        value = resourceType.getName();
+            } else {
+                Document document = envelope.getDocument();
+                if (document != null) {
+                    if (name.equals(PageEnvelope.DOCUMENT)) {
+                        value = document;
+                    } else if (name.equals(PageEnvelope.DOCUMENT_ID)) {
+                        getLogger().warn(
+                                "This attribute is deprecated."
+                                        + " Use document-path or document-uuid instead!");
+                        value = document.getId();
+                    } else if (name.equals(PageEnvelope.DOCUMENT_PARENT)) {
+                        value = document.getLocator().getParent().getPath();
+                    } else if (name.equals(PageEnvelope.DOCUMENT_NAME)) {
+                        value = document.getName();
+                    } else if (name.equals(PageEnvelope.DOCUMENT_LABEL)) {
+                        value = document.getLink().getLabel();
+                    } else if (name.equals(PageEnvelope.DOCUMENT_URL)) {
+                        value = document.getCanonicalDocumentURL();
+                    } else if (name.equals(PageEnvelope.DOCUMENT_URL_WITHOUT_LANGUAGE)) {
+                        value = document.getCanonicalWebappURL();
+                    } else if (name.equals(PageEnvelope.DOCUMENT_FILE)) {
+                        value = document.getFile();
+                    } else if (name.equals(PageEnvelope.DOCUMENT_EXTENSION)) {
+                        value = document.getExtension();
+                    } else if (name.equals(PageEnvelope.DOCUMENT_SOURCE_EXTENSION)) {
+                        value = document.getSourceExtension();
+                    } else if (name.equals(PageEnvelope.DOCUMENT_UUID)) {
+                        value = document.getUUID();
+                    } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGE)) {
+                        value = document.getLanguage();
+                    } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGES)) {
+                        value = document.getLanguages();
+                    } else if (name.equals(PageEnvelope.DOCUMENT_LANGUAGES_CSV)) {
+                        value = StringUtils.join(document.getLanguages(), ',');
+                    } else if (name.equals(PageEnvelope.DOCUMENT_LASTMODIFIED)) {
+                        Date date = new Date(document.getLastModified());
+                        value = new SimpleDateFormat(DATE_FORMAT).format(date);
+                    } else if (name.equals(PageEnvelope.DOCUMENT_TYPE)) {
+                        ResourceType resourceType = document.getResourceType();
+                        if (resourceType == null) {
+                            value = null;
+                        } else {
+                            value = resourceType.getName();
+                        }
                     }
                 }
             }
@@ -174,7 +175,8 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
 
     /**
      * @see org.apache.cocoon.components.modules.input.InputModule#getAttributeValues(java.lang.String,
-     *      org.apache.avalon.framework.configuration.Configuration, java.util.Map)
+     *      org.apache.avalon.framework.configuration.Configuration,
+     *      java.util.Map)
      */
     public Object[] getAttributeValues(String name, Configuration modeConf, Map objectModel)
             throws ConfigurationException {

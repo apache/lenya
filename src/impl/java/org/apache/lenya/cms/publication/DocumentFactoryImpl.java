@@ -17,6 +17,8 @@
  */
 package org.apache.lenya.cms.publication;
 
+import java.util.StringTokenizer;
+
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
@@ -181,7 +183,11 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
                 DocumentBuilder builder = publication.getDocumentBuilder();
                 if (builder.isDocument(webappUrl)) {
                     DocumentLocator locator = builder.getLocator(this, webappUrl);
-                    return SiteUtil.contains(this.manager, this, locator);
+                    String area = locator.getArea();
+                    String path = locator.getPath();
+                    String language = locator.getLanguage();
+                    SiteStructure site = publication.getArea(area).getSite();
+                    return site.contains(path, language);
                 } else {
                     return false;
                 }
@@ -216,7 +222,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
         String uuid = null;
         try {
             Publication publication = getPublication(locator.getPublicationId());
-            if (SiteUtil.isDocument(this.manager, this, webappUrl)) {
+            if (SiteUtil.isDocument(this, webappUrl)) {
                 uuid = publication.getArea(area).getSite().getNode(locator.getPath()).getUuid();
             } else {
                 UUIDGenerator generator = (UUIDGenerator) this.manager.lookup(UUIDGenerator.ROLE);
@@ -250,11 +256,11 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
         if (getLogger().isDebugEnabled())
             getLogger().debug("DocumentFactory::build() called with key [" + key + "]");
 
-        String[] snippets = key.split(":");
-        String publicationId = snippets[0];
-        String area = snippets[1];
-        String uuid = snippets[2];
-        String language = snippets[3];
+        StringTokenizer tokenizer = new StringTokenizer(key, ":");
+        String publicationId = tokenizer.nextToken();
+        String area = tokenizer.nextToken();
+        String uuid = tokenizer.nextToken();
+        String language = tokenizer.nextToken();
 
         Document document;
         try {

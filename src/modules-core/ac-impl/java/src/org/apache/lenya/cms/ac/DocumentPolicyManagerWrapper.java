@@ -71,11 +71,13 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
 
     /**
      * Returns the URI which is used to obtain the policy for a webapp URL.
+     * @param controller The accreditable manager.
      * @param webappUrl The webapp URL.
      * @return A string.
      * @throws AccessControlException when something went wrong.
      */
-    protected String getPolicyURL(String webappUrl) throws AccessControlException {
+    protected String getPolicyURL(String webappUrl)
+            throws AccessControlException {
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug("Resolving policy for webapp URL [" + webappUrl + "]");
@@ -130,6 +132,20 @@ public class DocumentPolicyManagerWrapper extends AbstractLogEnabled implements
             getLogger().debug("    Using URL: [" + url + "]");
         }
         return url;
+    }
+
+    protected String getPolicyUrlFast(String webappUrl)
+            throws AccessControlException {
+        String strippedUrl = strip(strip(webappUrl, '.'), '_');
+        return strippedUrl;
+    }
+
+    protected String strip(String strippedUrl, char delimiter) {
+        int lastDotIndex = strippedUrl.lastIndexOf(delimiter);
+        if (lastDotIndex != -1) {
+            strippedUrl = strippedUrl.substring(0, lastDotIndex);
+        }
+        return strippedUrl;
     }
 
     /**

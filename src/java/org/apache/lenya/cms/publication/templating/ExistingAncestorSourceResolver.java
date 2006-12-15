@@ -19,15 +19,16 @@
 package org.apache.lenya.cms.publication.templating;
 
 import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
 
 /**
  * Source visitor to obtain the first existing source.
  * 
  * @version $Id: ExistingSourceResolver.java 179568 2005-06-02 09:27:26Z jwkaltz $
  */
-public class ExistingAncestorSourceResolver implements URIResolver {
-    
-    private String uri;
+public class ExistingAncestorSourceResolver implements VisitingSourceResolver {
+
+    private Source source;
 
     /**
      * Ctor.
@@ -35,25 +36,31 @@ public class ExistingAncestorSourceResolver implements URIResolver {
     public ExistingAncestorSourceResolver() {
         super();
     }
-    
+
     /**
-     * Returns the URI of the first existing source.
-     * @return The URI
+     * @return the ancestor of the first existing source.
      */
-    public String getURI() {
-        return this.uri;
+    public Source getSource() {
+        return this.source;
     }
 
     private int matches = 0;
 
-    /**
-     * @see org.apache.lenya.cms.publication.templating.SourceVisitor#visit(org.apache.excalibur.source.Source)
-     */
-    public void visit(Source source) {
-        if (source.exists()) {
-            matches++;
-            if (matches == 2) {
-                this.uri = source.getURI();
+    public void visit(SourceResolver resolver, String sourceUri) {
+        Source source = null;
+        try {
+            source = resolver.resolveURI(sourceUri);
+            if (source.exists()) {
+                matches++;
+                if (matches == 2) {
+                    this.source = source;
+                }
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        } finally {
+            if (source != null) {
+                resolver.release(source);
             }
         }
     }

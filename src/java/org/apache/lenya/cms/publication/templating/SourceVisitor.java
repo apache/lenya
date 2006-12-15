@@ -17,7 +17,7 @@
  */
 package org.apache.lenya.cms.publication.templating;
 
-import org.apache.excalibur.source.Source;
+import org.apache.excalibur.source.SourceResolver;
 
 /**
  * @version $Id$
@@ -25,9 +25,12 @@ import org.apache.excalibur.source.Source;
 public interface SourceVisitor {
 
     /**
-     * Visits a source.
-     * @param source The source.
+     * Visits a source. We pass the resolver and the URI so that the visitor can
+     * decide if it wants to resolve the source (mainly for performance
+     * reasons).
+     * @param resolver The resolver.
+     * @param sourceUri The source URI.
      */
-    void visit(Source source);
+    void visit(SourceResolver resolver, String sourceUri);
 
 }

@@ -36,6 +36,7 @@ import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Policy;
 import org.apache.lenya.ac.PolicyManager;
 import org.apache.lenya.cms.linking.LinkResolver;
+import org.apache.lenya.cms.linking.LinkTarget;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
@@ -56,7 +57,7 @@ import org.xml.sax.helpers.AttributesImpl;
  * <p>
  * This transformer is applied to an XHMTL document. It processes all links
  * following the {@link LinkResolver} syntax which are denoted by
- * {@link ResourceType#getLinkAttributeXPaths()}.
+ * {@link org.apache.lenya.cms.publication.ResourceType#getLinkAttributeXPaths()}.
  * </p>
  * <p>
  * These links are resolved using the following rules:
@@ -209,8 +210,9 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                         if (linkUriAndQuery.length > 1) {
                             queryString = linkUriAndQuery[1];
                         }
-                        Document targetDocument = this.linkResolver.resolve(doc, linkUri).getDocument();
-                        if (targetDocument != null) {
+                        LinkTarget target = this.linkResolver.resolve(doc, linkUri);
+                        if (target.exists()) {
+                            Document targetDocument = target.getDocument();
                             String extension = targetDocument.getExtension();
                             if (extension.length() > 0) {
                                 extension = "." + extension;

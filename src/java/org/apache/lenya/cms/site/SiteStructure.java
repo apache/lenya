@@ -64,6 +64,14 @@ public interface SiteStructure extends RepositoryItem {
     boolean contains(String path);
 
     /**
+     * Checks if a link is contained for a certain path and language.
+     * @param path The path.
+     * @param language The language.
+     * @return A boolean value.
+     */
+    boolean contains(String path, String language);
+
+    /**
      * Checks if the structure contains a link with a certain UUID and language.
      * @param uuid The UUID.
      * @param language The language.

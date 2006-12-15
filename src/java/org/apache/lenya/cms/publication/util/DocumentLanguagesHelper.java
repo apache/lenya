@@ -103,7 +103,8 @@ public class DocumentLanguagesHelper {
             String[] languages = pub.getLanguages();
             for (int i = 0; i < languages.length; i++) {
                 DocumentLocator version = locator.getLanguageVersion(languages[i]);
-                if (SiteUtil.contains(this.manager, factory, version)) {
+                Publication pub = factory.getPublication(locator.getPublicationId());
+                if (pub.getArea(version.getArea()).getSite().contains(version.getPath(), version.getLanguage())) {
                     availableLanguages.add(languages[i]);
                 }
             }

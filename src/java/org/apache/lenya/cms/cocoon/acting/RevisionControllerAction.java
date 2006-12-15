@@ -33,7 +33,6 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.PageEnvelopeFactory;
@@ -47,7 +46,8 @@ import org.apache.lenya.cms.repository.RepositoryUtil;
 /**
  * Revision controller action.
  * 
- * @version $Id$
+ * @version $Id: RevisionControllerAction.java 487290 2006-12-14 18:18:35Z
+ *          andreas $
  */
 public class RevisionControllerAction extends ServiceableAction {
 
@@ -59,8 +59,8 @@ public class RevisionControllerAction extends ServiceableAction {
 
     /**
      * @see org.apache.cocoon.acting.Action#act(org.apache.cocoon.environment.Redirector,
-     *      org.apache.cocoon.environment.SourceResolver, java.util.Map, java.lang.String,
-     *      org.apache.avalon.framework.parameters.Parameters)
+     *      org.apache.cocoon.environment.SourceResolver, java.util.Map,
+     *      java.lang.String, org.apache.avalon.framework.parameters.Parameters)
      */
     public Map act(Redirector redirector, SourceResolver resolver, Map objectModel, String src,
             Parameters parameters) throws Exception {
@@ -81,17 +81,15 @@ public class RevisionControllerAction extends ServiceableAction {
         } catch (Exception e) {
             throw new AccessControlException(e);
         }
-        org.apache.lenya.cms.repository.Session repoSession = RepositoryUtil.getSession(this.manager,
-                request);
+        org.apache.lenya.cms.repository.Session repoSession = RepositoryUtil.getSession(
+                this.manager, request);
 
         DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, repoSession);
         Document document = null;
 
         try {
             publication = PublicationUtil.getPublication(this.manager, objectModel);
-            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(this.manager,
-                    factory,
-                    objectModel,
+            envelope = PageEnvelopeFactory.getInstance().getPageEnvelope(factory, objectModel,
                     publication);
             document = envelope.getDocument();
         } catch (Exception e) {
