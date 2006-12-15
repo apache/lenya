@@ -41,10 +41,10 @@ LenyaSaveCommand.prototype.GetState = function()
 	return 0;
 }
 
-// Create the "Find" toolbar button. 
-var oFindItem = new FCKToolbarButton('lenyaSave', FCKLang['lenyaSaveDlgToolbarName']);
-oFindItem.IconPath = '/modules/fckeditor/FCKeditor/editor/skins/default/toolbar/save.gif' ;
+// Create the "Save" toolbar button. 
+var oSaveItem = new FCKToolbarButton('lenyaSave', FCKLang['lenyaSaveDlgToolbarName']);
+// Get icon from FCKEditor's icons
+oSaveItem.IconPath= [FCKConfig.SkinPath + 'fck_strip.gif', 16, 3];
 
-// 'My_Find' is the name used in the Toolbar config.
-FCKToolbarItems.RegisterItem( 'lenyaSave', oFindItem ) ;
-
+// 'lenyaSave' is the name used in the Toolbar config.
+FCKToolbarItems.RegisterItem( 'lenyaSave', oSaveItem ) ;
