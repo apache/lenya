@@ -40,3 +40,10 @@ FCKConfig.ToolbarSets["Lenya"] = [
  * plugin for save in lenya
  */  
 FCKConfig.Plugins.Add( 'lenyaSave', 'de,en', '../../plugins/' ) ;
+
+/*
+ * disable uploads since it needs to be done from withing Lenya
+ */
+FCKConfig.ImageUpload = false;
+FCKConfig.LinkUpload  = false;
+FCKConfig.FlashUpload = false;
