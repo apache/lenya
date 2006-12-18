@@ -17,9 +17,13 @@
  */
 package org.apache.lenya.notification;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.cocoon.mail.MailSender;
 import org.apache.lenya.ac.Identifiable;
 import org.apache.lenya.ac.User;
@@ -55,11 +59,16 @@ public class EmailNotifier extends InboxNotifier implements Configurable {
             }
 
             mailer.setSubject(translatedMessage.getSubject());
-            mailer.setBody(translatedMessage.getBody(), "text/plain");
-            mailer.setCharset("UTF-8");
+            mailer.setBody(translatedMessage.getBody(), "text/plain; charset=UTF-8");
             mailer.send();
-
-        } catch (Exception e) {
+        
+        } catch (AddressException e) {
+            getLogger().error("Sending mail failed (address error): ", e);
+            throw new NotificationException(e);
+        } catch (MessagingException e) {
+            getLogger().error("Sending mail failed (mail error): ", e);
+            throw new NotificationException(e);
+        } catch (ServiceException e) {
             throw new NotificationException(e);
         } finally {
             if (mailer != null) {

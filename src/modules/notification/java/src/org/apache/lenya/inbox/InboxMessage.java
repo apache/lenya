@@ -20,30 +20,29 @@ package org.apache.lenya.inbox;
 import org.apache.lenya.notification.Message;
 
 /**
- * An inbox.
+ * A message entry in an inbox.
  */
-public interface Inbox {
+public interface InboxMessage {
     
     /**
-     * @return All messages in this inbox.
+     * Marks this message as read.
+     * @param marked A boolean value.
      */
-    InboxMessage[] getMessages();
+    void markAsRead(boolean marked);
     
     /**
-     * @param message The message to add.
-     * @return The inbox message which wraps the message.
+     * @return if this message is marked as read.
      */
-    InboxMessage add(Message message);
+    boolean isMarkedAsRead();
+    
+    /**
+     * @return The message which is wrapped by this inbox message.
+     */
+    Message getMessage();
+    
+    /**
+     * @return The ID of this message.
+     */
+    String getId();
 
-    /**
-     * @param message The message to remove.
-     */
-    void remove(InboxMessage message);
-    
-    /**
-     * @param id The ID.
-     * @return The message with this ID.
-     */
-    InboxMessage getMessage(String id);
-    
 }

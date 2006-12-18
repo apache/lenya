@@ -18,32 +18,47 @@
 package org.apache.lenya.inbox;
 
 import org.apache.lenya.notification.Message;
+import org.apache.lenya.util.Assert;
 
 /**
- * An inbox.
+ * Inbox message implementation.
  */
-public interface Inbox {
-    
-    /**
-     * @return All messages in this inbox.
-     */
-    InboxMessage[] getMessages();
-    
-    /**
-     * @param message The message to add.
-     * @return The inbox message which wraps the message.
-     */
-    InboxMessage add(Message message);
+public abstract class AbstractInboxMessage implements InboxMessage {
 
-    /**
-     * @param message The message to remove.
-     */
-    void remove(InboxMessage message);
+    private boolean markedAsRead;
+    private Message message;
+    private String id;
     
     /**
      * @param id The ID.
-     * @return The message with this ID.
+     * @param message The message to wrap.
+     * @param markedAsRead if the message is marked as read.
      */
-    InboxMessage getMessage(String id);
+    public AbstractInboxMessage(String id, Message message, boolean markedAsRead) {
+        Assert.notNull("id", id);
+        this.id = id;
+        Assert.notNull("message", message);
+        this.message = message;
+        this.markedAsRead = markedAsRead;
+    }
     
+    public boolean isMarkedAsRead() {
+        return this.markedAsRead;
+    }
+
+    public Message getMessage() {
+        return this.message;
+    }
+
+    public void markAsRead(boolean marked) {
+        this.markedAsRead = marked;
+        changed();
+    }
+
+    protected abstract void changed();
+
+    public String getId() {
+        return this.id;
+    }
+
 }

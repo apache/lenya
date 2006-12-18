@@ -20,6 +20,7 @@ package org.apache.lenya.inbox.usecases;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.usecase.AbstractUsecase;
 import org.apache.lenya.inbox.InboxManager;
+import org.apache.lenya.inbox.InboxMessage;
 
 /**
  * Show and manage an inbox.
@@ -50,6 +51,14 @@ public class Inbox extends AbstractUsecase {
 
     protected void doExecute() throws Exception {
         super.doExecute();
+        
+        String id = getParameterAsString("messageId");
+        if (id != null) {
+            org.apache.lenya.inbox.Inbox inbox = (org.apache.lenya.inbox.Inbox) getParameter("inbox");
+            InboxMessage message = inbox.getMessage(id);
+            message.markAsRead(true);
+            setExitParameter("messageId", id);
+        }
     }
 
 }

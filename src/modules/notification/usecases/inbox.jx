@@ -47,7 +47,7 @@
       </p>
       
       <jx:set var="inbox" value="${usecase.getParameter('inbox')}"/>
-      <jx:set var="messageIndex" value="${request.getParameter('messageIndex')}"/>
+      <jx:set var="messageId" value="${request.getParameter('messageId')}"/>
       
       <table>
         <tr>

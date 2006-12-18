@@ -17,8 +17,6 @@
  */
 package org.apache.lenya.cms.usecase;
 
-import java.util.TreeSet;
-
 import org.apache.avalon.framework.service.ServiceException;
 
 /**

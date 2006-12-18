@@ -276,7 +276,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
                 } else {
                     getSession().rollback();
                 }
-            } catch (RepositoryException e1) {
+            } catch (Exception e1) {
                 getLogger().error("Exception during commit or rollback: ", e1);
                 addErrorMessage("Exception during commit or rollback: " + e1.getMessage()
                         + " (see logfiles for details)");

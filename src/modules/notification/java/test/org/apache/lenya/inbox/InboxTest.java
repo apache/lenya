@@ -15,55 +15,53 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.notification;
+package org.apache.lenya.inbox;
 
 import org.apache.lenya.ac.Identifiable;
 import org.apache.lenya.ac.User;
-import org.apache.lenya.cms.observation.RepositoryEvent;
-import org.apache.lenya.cms.observation.RepositoryEventFactory;
-import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.inbox.Inbox;
+import org.apache.lenya.inbox.xml.XmlSourceInbox;
+import org.apache.lenya.notification.AbstractNotificationTest;
+import org.apache.lenya.notification.Message;
 
 /**
- * Notification test.
+ * Inbox test.
  */
-public class NotificationTest extends AbstractNotificationTest {
-
+public class InboxTest extends AbstractNotificationTest {
+    
     protected static final String SUBJECT = "hello";
 
     /**
      * The test.
-     * @throws Exception
+     * @throws Exception if an error occurs.
      */
-    public void testNotification() throws Exception {
-
-        login("lenya");
-
-        Session session = getFactory().getSession();
-
+    public void testInbox() throws Exception {
+        
         User lenya = getAccreditableManager().getUserManager().getUser("lenya");
-        User alice = getAccreditableManager().getUserManager().getUser("alice");
-
-        Identifiable[] recipients = { alice };
+        Inbox inbox = getInbox(lenya);
+        
+        cleanUp(inbox, SUBJECT);
+        assertFalse(containsMessage(inbox, SUBJECT));
+        
+        Identifiable[] recipients = { lenya };
 
         Message message = new Message(SUBJECT, new String[0], "body", new String[0], lenya,
                 recipients);
-        NotificationEventDescriptor descr = new NotificationEventDescriptor(message);
-        RepositoryEvent event = RepositoryEventFactory.createEvent(getManager(), session,
-                getLogger(), descr);
-
-        session.enqueueEvent(event);
+        InboxMessage inboxMessage = inbox.add(message);
         
-        Inbox inbox = getInbox(alice);
+        assertEquals(inboxMessage.getMessage().getSubject(), SUBJECT);
+        
+        assertFalse(inboxMessage.isMarkedAsRead());
+        inboxMessage.markAsRead(true);
+        assertTrue(inboxMessage.isMarkedAsRead());
+        
+        XmlSourceInbox xmlInbox = new XmlSourceInbox(getManager(), lenya);
+        assertTrue(containsMessage(xmlInbox, SUBJECT));
+        
+        InboxMessage xmlMessage = getMessage(xmlInbox, SUBJECT);
+        assertTrue(xmlMessage.isMarkedAsRead());
+        
         cleanUp(inbox, SUBJECT);
         
-        assertFalse(containsMessage(inbox, SUBJECT));
-        session.commit();
-        Thread.sleep(100);
-        assertTrue(containsMessage(inbox, SUBJECT));
-        
-        cleanUp(inbox, SUBJECT);
-
     }
 
 }

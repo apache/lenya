@@ -24,8 +24,8 @@
   xmlns:i18n="http://apache.org/cocoon/i18n/2.1"    
   >
   
-  <jx:if test="${usecase.getName().getClass().isInstance(messageIndex)}">
-    <jx:set var="message" value="${java.util.Arrays.asList(inbox.getMessages()).get(java.lang.Integer.valueOf(messageIndex).intValue())}"/>
+  <jx:if test="${usecase.getName().getClass().isInstance(messageId)}">
+    <jx:set var="message" value="${inbox.getMessage(messageId)}"/>
     
     <div class="lenya-box" style="width: 100%">
       <div class="lenya-box-title"><i18n:text>selected-message</i18n:text></div>
@@ -34,16 +34,16 @@
           <tr>
             <td class="lenya-entry-caption"><i18n:text>From</i18n:text>:</td>
             <td style="white-space: nowrap">
-              <jx:out value="${message.getSender().getName()}"/>
-              (<a href="?lenya.usecase=admin.user&amp;userId=${message.getSender().getId()}"><jx:out value="${message.getSender().getId()}"/></a>)
+              <jx:out value="${message.getMessage().getSender().getName()}"/>
+              (<a href="?lenya.usecase=admin.user&amp;userId=${message.getMessage().getSender().getId()}"><jx:out value="${message.getMessage().getSender().getId()}"/></a>)
             </td>
           </tr>
           <tr>
             <td class="lenya-entry-caption"><i18n:text>Subject</i18n:text>:</td>
             <td>
               <i18n:translate>
-                <i18n:text><jx:out value="${message.getSubject()}"/></i18n:text>
-                <jx:forEach var="param" items="${message.getSubjectParameters()}">
+                <i18n:text><jx:out value="${message.getMessage().getSubject()}"/></i18n:text>
+                <jx:forEach var="param" items="${message.getMessage().getSubjectParameters()}">
                   <i18n:param><jx:out value="${param}"/></i18n:param>
                 </jx:forEach>
               </i18n:translate>
@@ -53,8 +53,8 @@
             <td class="lenya-entry-caption" valign="top"><i18n:text>Message</i18n:text>:</td>
             <td>
               <i18n:translate>
-                <i18n:text><jx:out value="${message.getBody()}"/></i18n:text>
-                <jx:forEach var="param" items="${message.getBodyParameters()}">
+                <i18n:text><jx:out value="${message.getMessage().getBody()}"/></i18n:text>
+                <jx:forEach var="param" items="${message.getMessage().getBodyParameters()}">
                   <i18n:param><jx:out value="${param}"/></i18n:param>
                 </jx:forEach>
               </i18n:translate>

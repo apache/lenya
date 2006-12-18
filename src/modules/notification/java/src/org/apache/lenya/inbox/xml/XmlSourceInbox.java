@@ -23,12 +23,15 @@ import java.util.List;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.axis.components.uuid.UUIDGen;
+import org.apache.axis.components.uuid.UUIDGenFactory;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Identifiable;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.inbox.Inbox;
+import org.apache.lenya.inbox.InboxMessage;
 import org.apache.lenya.notification.Message;
 import org.apache.lenya.notification.Notifier;
 import org.apache.lenya.util.Assert;
@@ -54,19 +57,28 @@ public class XmlSourceInbox implements Inbox {
         this.user = user;
     }
 
-    public synchronized void add(Message message) {
-        messages().add(message);
+    public synchronized InboxMessage add(Message message) {
+        InboxMessage msg = new XmlSourceInboxMessage(this, generateId(), message, false);
+        messages().add(msg);
         save();
+        return msg;
     }
 
-    public synchronized void remove(Message message) {
+    protected String generateId() {
+        UUIDGen generator = UUIDGenFactory.getUUIDGen();
+        String id = generator.nextUUID();
+        return id;
+    }
+
+    public synchronized void remove(InboxMessage message) {
+        Assert.isTrue("contained", messages().contains(message));
         messages().remove(message);
         save();
     }
 
-    public Message[] getMessages() {
+    public InboxMessage[] getMessages() {
         List messages = messages();
-        return (Message[]) messages.toArray(new Message[messages.size()]);
+        return (InboxMessage[]) messages.toArray(new InboxMessage[messages.size()]);
     }
 
     private List messages;
@@ -95,6 +107,15 @@ public class XmlSourceInbox implements Inbox {
 
                 Element[] messageElements = helper.getChildren(xml.getDocumentElement(), "message");
                 for (int i = 0; i < messageElements.length; i++) {
+                    
+                    String id;
+                    if (messageElements[i].hasAttribute("id")) {
+                        id = messageElements[i].getAttribute("id");
+                    }
+                    else {
+                        id = generateId();
+                    }
+                    
                     String senderId = messageElements[i].getAttribute("sender");
                     User sender = getUser(senderId);
 
@@ -108,13 +129,13 @@ public class XmlSourceInbox implements Inbox {
                             + groupElements.length];
 
                     for (int u = 0; u < userElements.length; u++) {
-                        String id = userElements[u].getAttribute("id");
-                        recipients[u] = getUser(id);
+                        String userId = userElements[u].getAttribute("id");
+                        recipients[u] = getUser(userId);
                     }
 
                     for (int g = 0; g < groupElements.length; g++) {
-                        String id = groupElements[g].getAttribute("id");
-                        recipients[userElements.length + g] = getGroup(id);
+                        String groupId = groupElements[g].getAttribute("id");
+                        recipients[userElements.length + g] = getGroup(groupId);
                     }
 
                     Element bodyElement = helper.getFirstChild(messageElements[i], "body");
@@ -135,10 +156,17 @@ public class XmlSourceInbox implements Inbox {
                         subjectParams[p] = DocumentHelper
                                 .getSimpleElementText(subjectParamElements[p]);
                     }
+                    
+                    String readString = "false";
+                    if (messageElements[i].hasAttribute("read")) {
+                        readString = messageElements[i].getAttribute("read");
+                    }
+                    boolean read = Boolean.valueOf(readString).booleanValue();
 
                     Message message = new Message(subject, subjectParams, body, bodyParams, sender,
                             recipients);
-                    this.messages.add(message);
+                    InboxMessage msg = new XmlSourceInboxMessage(this, id, message, read);
+                    this.messages.add(msg);
                 }
             }
 
@@ -188,17 +216,20 @@ public class XmlSourceInbox implements Inbox {
     protected NamespaceHelper buildXml() throws ParserConfigurationException {
         NamespaceHelper helper = new NamespaceHelper(Notifier.NAMESPACE, "", "inbox");
 
-        Message[] messages = getMessages();
+        InboxMessage[] messages = getMessages();
         for (int i = 0; i < messages.length; i++) {
+            
+            Message message = messages[i].getMessage();
+            
             Element messageElement = helper.createElement("message");
             helper.getDocument().getDocumentElement().appendChild(messageElement);
-            User sender = (User) messages[i].getSender();
+            User sender = (User) message.getSender();
             messageElement.setAttribute("sender", sender.getId());
 
             Element recipientsElement = helper.createElement("recipients");
             messageElement.appendChild(recipientsElement);
 
-            Identifiable[] recipients = messages[i].getRecipients();
+            Identifiable[] recipients = message.getRecipients();
             for (int r = 0; r < recipients.length; r++) {
                 if (recipients[r] instanceof User) {
                     Element userElement = helper.createElement("user");
@@ -213,9 +244,9 @@ public class XmlSourceInbox implements Inbox {
 
             Element subjectElement = helper.createElement("subject");
             messageElement.appendChild(subjectElement);
-            Element subjectTextElement = helper.createElement("text", messages[i].getSubject());
+            Element subjectTextElement = helper.createElement("text", message.getSubject());
             subjectElement.appendChild(subjectTextElement);
-            String[] subjectParams = messages[i].getSubjectParameters();
+            String[] subjectParams = message.getSubjectParameters();
             for (int p = 0; p < subjectParams.length; p++) {
                 Element paramElement = helper.createElement("param", subjectParams[p]);
                 subjectElement.appendChild(paramElement);
@@ -223,14 +254,27 @@ public class XmlSourceInbox implements Inbox {
 
             Element bodyElement = helper.createElement("body");
             messageElement.appendChild(bodyElement);
-            Element bodyTextElement = helper.createElement("text", messages[i].getBody());
+            Element bodyTextElement = helper.createElement("text", message.getBody());
             bodyElement.appendChild(bodyTextElement);
-            String[] bodyParams = messages[i].getBodyParameters();
+            String[] bodyParams = message.getBodyParameters();
             for (int p = 0; p < bodyParams.length; p++) {
                 Element paramElement = helper.createElement("param", bodyParams[p]);
                 bodyElement.appendChild(paramElement);
             }
+            
+            messageElement.setAttribute("read", Boolean.toString(messages[i].isMarkedAsRead()));
+            messageElement.setAttribute("id", messages[i].getId());
         }
         return helper;
+    }
+
+    public InboxMessage getMessage(String id) {
+        InboxMessage[] messages = getMessages();
+        for (int i = 0; i < messages.length; i++) {
+            if (messages[i].getId().equals(id)) {
+                return messages[i];
+            }
+        }
+        throw new RuntimeException("No message found with ID [" + id + "]");
     }
 }

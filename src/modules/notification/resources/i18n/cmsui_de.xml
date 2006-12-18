@@ -29,5 +29,8 @@
   <message key="Messages">Nachrichten</message>
   <message key="Send">Senden</message>
   <message key="selected-message">Ausgewählte&#160;Nachricht</message>
+  <message key="unread-messages">{0} neue Nachrichten</message>
+  <message key="unread-message">1 neue Nachricht</message>
+  <message key="Read">Gelesen</message>
   
 </catalogue>

@@ -29,12 +29,12 @@
       <th style="text-align: left; padding-right: 20px;"><i18n:text>Subject</i18n:text></th>
       <th style="text-align: left; padding-right: 20px;"><i18n:text>Sender</i18n:text></th>
       <th style="text-align: left; padding-right: 20px;"><i18n:text>Date</i18n:text></th>
+      <th style="text-align: left; padding-right: 20px;"><i18n:text>Read</i18n:text></th>
     </tr>
-    <jx:set var="index" value="0"/>
     <jx:forEach var="message" items="${inbox.getMessages()}">
       
       <jx:set var="class" value="normal"/>
-      <jx:if test="${index.toString().equals(messageIndex)}">
+      <jx:if test="${messageId.equals(message.getId())}">
         <jx:set var="class" value="highlight"/>
       </jx:if>
       
@@ -43,24 +43,26 @@
         <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
         <tr class="${class}">
           <td>
-            <a href="?lenya.usecase=notification.inbox&amp;messageIndex=${index}">
+            <a href="?lenya.usecase=notification.inbox&amp;messageId=${message.getId()}&amp;lenya.continuation=${continuation.id}&amp;submit=Submit">
               <i18n:translate>
-                <i18n:text><jx:out value="${message.getSubject()}"/></i18n:text>
-                <jx:forEach var="param" items="${message.getSubjectParameters()}">
+                <i18n:text><jx:out value="${message.getMessage().getSubject()}"/></i18n:text>
+                <jx:forEach var="param" items="${message.getMessage().getSubjectParameters()}">
                   <i18n:param><jx:out value="${param}"/></i18n:param>
                 </jx:forEach>
               </i18n:translate>
             </a>
           </td>
           <td>
-            <a href="?lenya.usecase=admin.user&amp;userId=${message.getSender().getId()}"><jx:out value="${message.getSender().getId()}"/></a>
+            <a href="?lenya.usecase=admin.user&amp;userId=${message.getMessage().getSender().getId()}"><jx:out value="${message.getMessage().getSender().getId()}"/></a>
           </td>
           <td>
-            <jx:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${message.getTime()}"/>
+            <jx:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${message.getMessage().getTime()}"/>
+          </td>
+          <td style="text-align: center;">
+            <jx:if test="${message.isMarkedAsRead()}">&#10004;</jx:if>
           </td>
         </tr>
       </form>
-      <jx:set var="index" value="${index + 1}"/>
     </jx:forEach>
   </table>
   

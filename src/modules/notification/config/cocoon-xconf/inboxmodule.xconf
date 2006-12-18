@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <!--
   Licensed to the Apache Software Foundation (ASF) under one or more
   contributor license agreements.  See the NOTICE file distributed with
@@ -16,21 +16,12 @@
   limitations under the License.
 -->
 
-<!-- $Id: cmsui.xml 447395 2006-09-18 13:01:33Z andreas $ -->
+<!-- $Id: usecases-workflow-deactivate.xconf 348547 2005-11-23 20:13:01Z chestnut $ -->
+<!--
+    This file defines the publication specific use-cases
+-->
 
-<catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
-  <message key="inbox-of">Inbox of User {0}</message>
-  <message key="Sender">Sender</message>
-  <message key="new-message">New Message</message>
-  <message key="From">From</message>
-  <message key="To">To</message>
-  <message key="Message">Message</message>
-  <message key="Messages">Messages</message>
-  <message key="Send">Send</message>
-  <message key="selected-message">Selected&#160;message</message>
-  <message key="unread-messages">{0} new messages</message>
-  <message key="unread-message">1 new message</message>
-  <message key="Read">Read</message>
-  
-</catalogue>
+  <xconf xpath="/cocoon/input-modules" unless="/cocoon/input-modules/component-instance[@name = 'inbox']">
+    <component-instance logger="core.modules.input.inbox" name="inbox"
+      class="org.apache.lenya.inbox.InboxModule"/>
+  </xconf>

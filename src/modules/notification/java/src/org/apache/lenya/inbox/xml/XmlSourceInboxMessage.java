@@ -15,35 +15,32 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.inbox;
+package org.apache.lenya.inbox.xml;
 
+import org.apache.lenya.inbox.AbstractInboxMessage;
 import org.apache.lenya.notification.Message;
 
 /**
- * An inbox.
+ * XML source inbox message.
  */
-public interface Inbox {
-    
-    /**
-     * @return All messages in this inbox.
-     */
-    InboxMessage[] getMessages();
-    
-    /**
-     * @param message The message to add.
-     * @return The inbox message which wraps the message.
-     */
-    InboxMessage add(Message message);
+public class XmlSourceInboxMessage extends AbstractInboxMessage {
+
+    private XmlSourceInbox inbox;
 
     /**
-     * @param message The message to remove.
-     */
-    void remove(InboxMessage message);
-    
-    /**
+     * @param inbox The inbox this message belongs to.
      * @param id The ID.
-     * @return The message with this ID.
+     * @param message The message to wrap.
+     * @param markedAsRead if the message is marked as read.
      */
-    InboxMessage getMessage(String id);
-    
+    public XmlSourceInboxMessage(XmlSourceInbox inbox, String id, Message message,
+            boolean markedAsRead) {
+        super(id, message, markedAsRead);
+        this.inbox = inbox;
+    }
+
+    protected void changed() {
+        this.inbox.save();
+    }
+
 }

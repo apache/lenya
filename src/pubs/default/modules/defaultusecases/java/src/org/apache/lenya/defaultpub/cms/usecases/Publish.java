@@ -291,13 +291,13 @@ public class Publish extends InvokeWorkflow {
 
         Workflowable workflowable = WorkflowUtil.getWorkflowable(this.manager, getSession(),
                 getLogger(), authoringDocument);
-        Version version = workflowable.getLatestVersion();
+        Version versions[] = workflowable.getVersions();
+        Version version = versions[versions.length-2];
 
         // we assume that the document has been submitted, otherwise we do nothing
         if (version.getEvent().equals("submit")) {
             
             String userId = version.getUserId();
-
             User user = PolicyUtil.getUser(this.manager, authoringDocument
                     .getCanonicalWebappURL(), userId, getLogger());
             
@@ -322,7 +322,7 @@ public class Publish extends InvokeWorkflow {
             
             NotificationEventDescriptor descriptor = new NotificationEventDescriptor(message);
             RepositoryEvent event = RepositoryEventFactory
-                    .createEvent(this.manager, authoringDocument, getLogger(), descriptor);
+                    .createEvent(this.manager, getSession(), getLogger(), descriptor);
             getSession().enqueueEvent(event);
         }
     }
