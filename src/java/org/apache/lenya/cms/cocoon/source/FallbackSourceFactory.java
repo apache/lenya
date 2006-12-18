@@ -126,10 +126,6 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
                 source = resolver.getSource();
             }
 
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("Resolved URI:  [" + source.getURI() + "]");
-            }
-
             if (source == null) {
                 if (path.startsWith("lenya/modules/")) {
                     ModuleManager moduleMgr = null;
@@ -148,6 +144,10 @@ public class FallbackSourceFactory extends AbstractLogEnabled implements SourceF
                     String contextUri = "context://" + path;
                     source = sourceResolver.resolveURI(contextUri);
                 }
+            }
+
+            if (getLogger().isDebugEnabled()) {
+                getLogger().debug("Resolved source:  [" + source.getURI() + "]");
             }
 
         } catch (Exception e) {
