@@ -33,5 +33,7 @@
   <message key="last-published">Diese Seite wurde zuletzt publiziert am {0} von {1}.</message>
   <message key="never-published">Diese Seite wurde noch nicht publiziert.</message>
   
+  <message key="notify-reviewers">Prüfer benachrichtigen</message>
+  
 </catalogue>
 

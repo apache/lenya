@@ -35,4 +35,6 @@
   
   <message key="unpublished-links">Links to unpublished documents:</message>
   <message key="links-to-document">Links from other documents:</message>
+  
+  <message key="notify-reviewers">Notify reviewers</message>
 </catalogue>
