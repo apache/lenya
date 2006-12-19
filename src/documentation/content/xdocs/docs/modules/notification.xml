@@ -22,19 +22,20 @@
   <body>
     
   <section>
-    <title>Setup</title>
+    <title>Setup E-Mail Notification</title>
     
     <ul>
       <li>
-        To enable notification by e-mail, you have to download the JavaMail and JavaBeans Activation
-        Framework libraries from the <a href="http://java.sun.com/products/javamail/">JavaMail website</a>
-        and place them in the <code>&lt;lenya-webapp&gt;/WEB-INF/lib</code> directory.
+        To enable notification by e-mail, you have to download the
+        <a href="http://java.sun.com/products/javamail/">JavaMail</a> and
+        <a href="http://java.sun.com/products/javabeans/jaf/downloads/index.html">JavaBeans Activation
+          Framework</a> libraries and place them in the <code>&lt;lenya-webapp&gt;/WEB-INF/lib</code> directory.
       </li>
       <li>
-        Edit <code>cocoon.xconf</code>, look for the component with the class
-        <code>org.apache.lenya.notification.EmailNotifier</code> and update the
-        attributes of the <code><![CDATA[<smtp>]]></code> element with the
-        settings of your SMTP host.
+        Edit <code>cocoon.xconf</code>, look for the component with the role
+        <code>org.apache.lenya.notification.Notifier</code>, change the class to
+        <code>org.apache.lenya.notification.EmailNotifier</code> and add the
+        <code><![CDATA[<smtp>]]></code> element as shown in the example below.
         The user and password attributes are optional.
         <source xml:space="preserve"><![CDATA[<component logger="lenya.notification"
     role="org.apache.lenya.notification.Notifier"
