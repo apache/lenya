@@ -22,14 +22,21 @@
 
   <component logger="lenya.notification"
     role="org.apache.lenya.notification.Notifier"
+    class="org.apache.lenya.inbox.InboxNotifier"/>
+
+  <!-- Use the following configuration to send e-mail notifications -->
+  <!--
+  <component logger="lenya.notification"
+    role="org.apache.lenya.notification.Notifier"
     class="org.apache.lenya.notification.EmailNotifier">
     
     <smtp host="localhost"/>
     
-    <!-- use this for authentication
+    <!- use this for authentication
     <smtp host="localhost" username="john" password="swordfish" />
-    -->
+    ->
     
   </component>
+  -->
   
 </xconf>
