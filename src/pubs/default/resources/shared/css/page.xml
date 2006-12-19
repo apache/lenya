@@ -382,28 +382,33 @@ a.brokenlink {
 
 /* Search Results */
 
-.search-results {} 
+.search-results {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+} 
 
 .search-result {
-    padding: 0.50em;
+    padding: 0.50em 0;
 }
 
 .search-result-score {
-    font-size: 90%; 
-    float: right;
+    /* float: right; */
+    font-size: 90%;
 }
 
 .search-result-rank {
-    font-size: 90%; 
-    float: right; 
-    margin-right: 20px;
+    float: left; 
+    font-size: 110%;
 }
 
 .search-result-title {
-    font-size: 105%;
+    margin: 0 0 0 30px;
+    padding: 0;
+    font-size: 110%;
 }
 
 .search-result-description {
-    font-size: 90%;
+    margin-left: 30px;
 }
 </css>

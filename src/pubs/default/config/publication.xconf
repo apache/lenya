@@ -54,6 +54,7 @@
   <module name="workflow-impl"/>
   <module name="notification"/>
   <module name="svg"/>
+  <module name="lucene"/>
   <!-- TODO: The goal is to have a blog module ;-) -->
   <!--
   <module name="blog"/>

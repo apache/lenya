@@ -22,6 +22,7 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml"
   xmlns="http://www.w3.org/1999/xhtml"
   xmlns:cinclude="http://apache.org/cocoon/include/1.0"
+  xmlns:i18n="http://apache.org/cocoon/i18n/2.1"
   exclude-result-prefixes="cinclude search xhtml"
 >
 
@@ -38,13 +39,26 @@
   </xsl:template>
 
   <xsl:template match="search:hits">
+    <!--
     <h1>
         <xsl:value-of select="@total-count"/> hit<xsl:if test="@total-count &gt; 1">s</xsl:if>
         <xsl:text>, </xsl:text>
         <xsl:value-of select="@count-of-pages"/> result page<xsl:if test="@count-of-pages &gt; 1">s</xsl:if> on query
         <em><xsl:value-of select="/search:results/@query-string"/></em>
     </h1>
+    -->
+    <h1><i18n:text>Search</i18n:text></h1>
+    <form action="" method="get" style="margin-bottom: 20px">
+      <input name="queryString" type="text" style="width: 400px" value="{/search:results/@query-string}"
+      />&#160;<input type="submit" name="submit" value="Search" i18n:attr="value"/>
+    </form>
     
+    <h2>
+      <i18n:translate>
+        <i18n:text>hits</i18n:text>
+        <i18n:param><xsl:value-of select="@total-count"/></i18n:param>
+      </i18n:translate>
+    </h2>
     <ul class="search-results">
       <xsl:apply-templates/>
     </ul>
@@ -89,18 +103,26 @@
   
   <xsl:template match="search:hit">
     <li class="search-result">
-      <div class="search-result-score">Score: <xsl:value-of select="format-number( @score, '### %' )"/></div> 
-      <div class="search-result-rank">Rank: <xsl:value-of select="@rank"/></div>
+      <div class="search-result-rank"><xsl:value-of select="@rank + 1"/>. </div>
       <div class="search-result-title">
-        <xsl:variable name="title" select="search:field[attribute::name='title']"/>
+        <xsl:variable name="titleField" select="search:field[attribute::name='title']"/>
+        <xsl:variable name="title">
+          <xsl:choose>
+            <xsl:when test="normalize-space($titleField) != ''">
+              <xsl:value-of select="$titleField"/>
+            </xsl:when>
+            <xsl:otherwise><i18n:text>No Title</i18n:text></xsl:otherwise>
+          </xsl:choose>
+        </xsl:variable>
         <xsl:choose>
           <xsl:when test="normalize-space(search:field[@name = 'uid']) != ''">
             <a href="{$root}{search:field[attribute::name='uid']}"><xsl:value-of select="$title"/></a>
           </xsl:when>
           <xsl:otherwise>
-            <xsl:value-of select="$title"/> (not in site structure)
+            <xsl:value-of select="$title"/> (<i18n:text>not in site structure</i18n:text>)
           </xsl:otherwise>
         </xsl:choose>
+      <span class="search-result-score"> (<i18n:text>Score</i18n:text>: <xsl:value-of select="format-number( @score, '### %' )"/>)</span>
       </div>
       <div class="search-result-description"><xsl:value-of select="search:field[attribute::name='description']"/></div>
     </li>
@@ -145,7 +167,6 @@
     <xsl:param name="next-index"/>
 
     <xsl:if test="$has-previous = 'true'">
-      
       <xsl:call-template name="navigation-link">
         <xsl:with-param name="query-string"><xsl:value-of select="$query-string"/></xsl:with-param>
         <xsl:with-param name="page-length"><xsl:value-of select="$page-length"/></xsl:with-param>
