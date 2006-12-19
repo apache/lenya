@@ -71,7 +71,7 @@ public class URLInformation {
     public String getDocumentUrl() {
         if (this.documentUrl == null) {
             String pubId = getPublicationId();
-            String area = getArea();
+            String area = getCompleteArea();
             if (pubId != null && area != null) {
                 String prefix = pubId + "/" + area;
                 this.documentUrl = this.url.substring(prefix.length());

@@ -56,44 +56,44 @@
     <table width="500" cellpadding="2" cellspacing="0" border="0" bgcolor="#FFEEEE"
       style="padding: 20px; border: solid 1px #BB9999;">
       <tr>
-        <td> <a href="{$mediaURI}" target="_new">
+        <td><a href="{$mediaURI}" target="_new">
           <xsl:call-template name="icon">
             <xsl:with-param name="mimetype" select="$mimeType"/>
             <xsl:with-param name="imageprefix" select="$imageprefix"/>
           </xsl:call-template> </a>
         </td>
-        <td><h1><i18n:text>Resource Document</i18n:text></h1></td>
+        <td><h1><i18n:text>Media Document</i18n:text></h1></td>
       </tr>
       <tr>
-        <td><i><i18n:text>Title</i18n:text>:</i></td>
+        <td><i18n:text>Title</i18n:text>:</td>
         <td><strong><xsl:value-of select="dc:elements/dc:title"/></strong></td>
       </tr>
       <tr>
-        <td><i><i18n:text>Description</i18n:text>:</i></td>
+        <td><i18n:text>Description</i18n:text>:</td>
         <td><xsl:value-of select="dc:elements/dc:description"/></td>
       </tr>
       <tr>
-        <td><i><i18n:text>Content</i18n:text>:</i></td>
+        <td><i18n:text>Content</i18n:text>:</td>
         <td><a href="{$mediaURI}" target="_new"><xsl:value-of select="$mediaUrl"/>
           </a></td>
       </tr>
       <tr>
-        <td><i><i18n:text>Size</i18n:text>:</i></td>
+        <td><i18n:text>Size</i18n:text>:</td>
         <td><xsl:value-of select="$size"/> KB</td>
       </tr>
       <tr>
-        <td><i><i18n:text>MimeType</i18n:text>:</i></td>
+        <td><i18n:text>MimeType</i18n:text>:</td>
         <td><xsl:value-of select="$mimeType"/></td>
       </tr>
       <xsl:if test="mediameta:elements/mediameta:width != ''">
         <tr>
-          <td><i><i18n:text>Dimension</i18n:text>:</i></td>
+          <td><i18n:text>Dimension (w x h)</i18n:text>:</td>
           <td><xsl:value-of select="mediameta:elements/mediameta:width"/>x
             <xsl:value-of select="mediameta:elements/mediameta:height"/></td>
         </tr>
       </xsl:if>
       <tr>
-        <td colspan="2"><i><i18n:text>Preview</i18n:text>:</i><br/><br/>
+        <td colspan="2"><i18n:text>Preview</i18n:text>:<br/><br/>
         <div style="text-align: center">
           <xsl:call-template name="preview">
             <xsl:with-param name="mimetype" select="$mimeType"/>

@@ -44,6 +44,8 @@ public class InsertAsset extends CreateResource {
      */
     protected void initParameters() {
         super.initParameters();
+        
+        deleteParameter(RELATIONS);
         loadResources();
         
         setParameter(DOCUMENT, getSourceDocument());

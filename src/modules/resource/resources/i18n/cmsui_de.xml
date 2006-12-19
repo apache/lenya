@@ -37,6 +37,17 @@
     Der Browser darf aus Sicherheitsgründen den Wert des Datei-Upload-Felds nicht setzen.
     Bitte wählen Sie die Datei erneut.
   </message>
+  <message key="width">Breite</message>
+  <message key="height">Höhe</message>
+  <message key="Preview">Vorschau</message>
+  <message key="Available Assets">Verfügbare Anlagen</message>
+  <message key="Upload Asset">Anlage hochladen</message>
+  <message key="Media Document">Medien-Dokument</message>
+  <message key="Title">Titel</message>
+  <message key="Description">Beschreibung</message>
+  <message key="Content">Inhalt</message>
+  <message key="Size">Größe</message>
+  <message key="MimeType">Mime-Type</message>
   
 </catalogue>
 

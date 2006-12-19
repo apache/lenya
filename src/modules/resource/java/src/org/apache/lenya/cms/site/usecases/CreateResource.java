@@ -83,6 +83,7 @@ public class CreateResource extends CreateDocument {
      */
     protected void initParameters() {
         super.initParameters();
+        deleteParameter(RESOURCE_TYPES);
     }
 
     /**

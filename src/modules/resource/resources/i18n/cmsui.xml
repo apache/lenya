@@ -34,5 +34,16 @@
     The browser can't set the value of the file upload widget for security reasons.
     Please select the file again.
   </message>
+  <message key="width">Width</message>
+  <message key="height">Height</message>
+  <message key="Preview">Preview</message>
+  <message key="Available Assets">Available Assets</message>
+  <message key="Upload Asset">Upload Asset</message>
+  <message key="Media Document">Media Document</message>
+  <message key="Title">Title</message>
+  <message key="Description">Description</message>
+  <message key="Content">Content</message>
+  <message key="Size">Size</message>
+  <message key="MimeType">Mime Type</message>
   
 </catalogue>

@@ -24,5 +24,11 @@
   <message key="sitemanagement.archive">Archive</message>
   <message key="sitemanagement.restore">Restore</message>
   <message key="cut-error-islive">The node cannot be cut when a language version is published.</message>
-
+  <message key="Parent Path">Parent Path</message>
+  <message key="Node Name">Node Name</message>
+  <message key="Document visible in Navigation">Visible in Navigation</message>
+  <message key="Relation">Relation</message>
+  <message key="Page Layout">Page Layout</message>
+  <message key="Document Path">Path</message>
+  
 </catalogue>

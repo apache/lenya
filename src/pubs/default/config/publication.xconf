@@ -53,6 +53,7 @@
   <module name="export"/>
   <module name="workflow-impl"/>
   <module name="notification"/>
+  <module name="svg"/>
   <!-- TODO: The goal is to have a blog module ;-) -->
   <!--
   <module name="blog"/>
