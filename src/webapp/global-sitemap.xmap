@@ -100,7 +100,7 @@
     <!-- Editor Kupu -->
     <map:pipeline>
       <map:match pattern="kupu/**">
-        <map:read src="lenya/resources/kupu/{1}"/>
+        <map:read src="fallback://lenya/modules/kupu/resources/kupu/{1}"/>
       </map:match>
     </map:pipeline>
 
