@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.lenya.cms.repository.Session;
-
 /**
  * Proxy which holds the parameters of a usecase. It is used to restore the usecase after the
  * flowscript is re-entered and to pass the usecase parameters to a JX template.
@@ -36,7 +34,6 @@ public class UsecaseProxy {
     private String name;
     private String sourceUrl;
     private UsecaseView view;
-    private Session session;
 
     /**
      * Ctor.
@@ -54,7 +51,6 @@ public class UsecaseProxy {
         this.infoMessages = usecase.getInfoMessages();
         this.sourceUrl = usecase.getSourceURL();
         this.view = usecase.getView();
-        this.session = usecase.getSession();
     }
 
     /**
@@ -62,7 +58,6 @@ public class UsecaseProxy {
      * @param usecase The usecase.
      */
     public void setup(Usecase usecase) {
-        usecase.setSession(this.session);
         usecase.setName(this.name);
         usecase.setSourceURL(this.sourceUrl);
         usecase.setView(this.view);

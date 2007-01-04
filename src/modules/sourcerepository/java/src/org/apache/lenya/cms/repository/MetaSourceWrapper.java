@@ -19,13 +19,14 @@ package org.apache.lenya.cms.repository;
 
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.MetaDataOwner;
 
 /**
  * Provides access to a meta data source.
  */
-public class MetaSourceWrapper extends SourceWrapper {
+public class MetaSourceWrapper extends SourceWrapper implements MetaDataOwner {
 
     protected static final String LENYA_META_SUFFIX = "meta";
 
@@ -36,26 +37,20 @@ public class MetaSourceWrapper extends SourceWrapper {
      * @param manager
      * @param logger
      */
-    public MetaSourceWrapper(SourceNode node, String sourceURI, ServiceManager manager, Logger logger) {
+    public MetaSourceWrapper(SourceNode node, String sourceURI, ServiceManager manager,
+            Logger logger) {
         super(node, sourceURI + "." + LENYA_META_SUFFIX, manager, logger);
+        this.handler = new ModifiableMetaDataHandler(manager, this);
     }
-
-    private SourceNodeMetaDataHandler metaDataHandler = null;
     
-    protected SourceNodeMetaDataHandler getMetaDataHandler() {
-        if (this.metaDataHandler == null) {
-            this.metaDataHandler = new SourceNodeMetaDataHandler(this.manager, getRealSourceUri());
-        }
-        return this.metaDataHandler;
+    private ModifiableMetaDataHandler handler;
+
+    public MetaData getMetaData(String namespaceUri) throws MetaDataException {
+        return this.handler.getMetaData(namespaceUri);
     }
 
-    /**
-     * @return All supported meta data namespace URIs.
-     * @throws MetaDataException if an error occurs.
-     * @see MetaDataOwner#getMetaDataNamespaceUris()
-     */
     public String[] getMetaDataNamespaceUris() throws MetaDataException {
-        return getMetaDataHandler().getMetaDataNamespaceUris();
+        return this.handler.getMetaDataNamespaceUris();
     }
-    
+
 }

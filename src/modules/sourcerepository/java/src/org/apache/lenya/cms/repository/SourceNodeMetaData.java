@@ -42,16 +42,17 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
      * @param handler The meta data handler.
      * @param manager The service manager.
      */
-    public SourceNodeMetaData(String namespaceUri, SourceNodeMetaDataHandler handler, ServiceManager manager) {
+    public SourceNodeMetaData(String namespaceUri, SourceNodeMetaDataHandler handler,
+            ServiceManager manager) {
         this.namespaceUri = namespaceUri;
         this.handler = handler;
         this.manager = manager;
     }
-    
+
     protected String getNamespaceUri() {
         return this.namespaceUri;
     }
-    
+
     protected SourceNodeMetaDataHandler getHandler() {
         return this.handler;
     }
@@ -107,8 +108,7 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
 
     public void setValue(String key, String value) throws MetaDataException {
         checkKey(key);
-        getHandler().removeAllValues(this.namespaceUri, key);
-        addValue(key, value);
+        getHandler().setValue(this.namespaceUri, key, value);
     }
 
     public void addValue(String key, String value) throws MetaDataException {
@@ -130,8 +130,7 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
                 for (int j = 0; j < values.length; j++) {
                     addValue(key, values[j]);
                 }
-            }
-            else if (elements[i].getActionOnCopy() == Element.ONCOPY_DELETE) {
+            } else if (elements[i].getActionOnCopy() == Element.ONCOPY_DELETE) {
                 String key = elements[i].getName();
                 removeAllValues(key);
             }
@@ -160,7 +159,7 @@ public class SourceNodeMetaData extends AbstractLogEnabled implements MetaData {
 
     public long getLastModified() throws MetaDataException {
         try {
-            return getHandler().getMetaLastModified();
+            return getHandler().getLastModified();
         } catch (RepositoryException e) {
             throw new MetaDataException(e);
         }

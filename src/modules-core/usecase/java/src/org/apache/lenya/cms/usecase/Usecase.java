@@ -196,11 +196,6 @@ public interface Usecase {
     Session getSession();
     
     /**
-     * @param session The repository session.
-     */
-    void setSession(Session session);
-    
-    /**
      * @param enabled if the transaction should be committed. Set to <code>false</code> for tests.
      */
     void setCommitEnabled(boolean enabled);

@@ -35,11 +35,12 @@ public class RepositoryUtil {
      */
     public static Session getSession(ServiceManager manager, Request request)
             throws RepositoryException {
-        Session session = (Session) request.getAttribute(Session.class.getName());
+        org.apache.cocoon.environment.Session cocoonSession = request.getSession();
+        Session session = (Session) cocoonSession.getAttribute(Session.class.getName());
         if (session == null) {
             Identity identity = getIdentity(request);
             session = createSession(manager, identity);
-            request.setAttribute(Session.class.getName(), session);
+            cocoonSession.setAttribute(Session.class.getName(), session);
         } else if (session.getIdentity() == null) {
             Identity identity = getIdentity(request);
             if (identity != null) {

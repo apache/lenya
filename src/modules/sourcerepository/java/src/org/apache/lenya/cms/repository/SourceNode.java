@@ -373,7 +373,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     }
 
     public MetaData getMetaData(String namespaceUri) throws MetaDataException {
-        return this.metaSource.getMetaDataHandler().getMetaData(namespaceUri);
+        return this.metaSource.getMetaData(namespaceUri);
     }
 
     public boolean exists() throws RepositoryException {

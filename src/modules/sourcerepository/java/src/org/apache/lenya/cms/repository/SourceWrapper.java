@@ -58,16 +58,16 @@ public class SourceWrapper extends AbstractLogEnabled {
      * @param logger
      */
     public SourceWrapper(SourceNode node, String sourceUri, ServiceManager manager, Logger logger) {
-        
+
         Assert.notNull("node", node);
         this.node = node;
-        
+
         Assert.notNull("source URI", sourceUri);
         this.sourceUri = sourceUri;
-        
+
         Assert.notNull("service manager", manager);
         this.manager = manager;
-        
+
         enableLogging(logger);
     }
 
@@ -198,10 +198,6 @@ public class SourceWrapper extends AbstractLogEnabled {
      */
     protected synchronized void loadData() throws RepositoryException {
 
-        if (this.data != null) {
-            return;
-        }
-
         ByteArrayOutputStream out = null;
         InputStream in = null;
         SourceResolver resolver = null;
@@ -210,7 +206,8 @@ public class SourceWrapper extends AbstractLogEnabled {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             source = (TraversableSource) resolver.resolveURI(getRealSourceUri());
 
-            if (source.exists() && !source.isCollection()) {
+            if (source.exists() && !source.isCollection()
+                    && source.getLastModified() > this.lastModified) {
                 byte[] buf = new byte[4096];
                 out = new ByteArrayOutputStream();
                 in = source.getInputStream();
@@ -222,6 +219,7 @@ public class SourceWrapper extends AbstractLogEnabled {
                 }
 
                 this.data = out.toByteArray();
+                this.lastModified = source.getLastModified();
             }
         } catch (Exception e) {
             throw new RepositoryException(e);

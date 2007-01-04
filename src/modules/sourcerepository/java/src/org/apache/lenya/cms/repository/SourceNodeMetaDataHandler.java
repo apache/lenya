@@ -18,16 +18,12 @@
 package org.apache.lenya.cms.repository;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.ElementSet;
 import org.apache.lenya.cms.metadata.MetaData;
@@ -47,21 +43,17 @@ import org.w3c.dom.Element;
 public class SourceNodeMetaDataHandler implements MetaDataOwner {
     
     private ServiceManager manager;
-    private String metaSourceUri;
+    private String sourceUri;
     
     /**
      * @param manager The service manager.
-     * @param sourceUri The soure uri.
+     * @param sourceUri The soure URI.
      */
     public SourceNodeMetaDataHandler(ServiceManager manager, String sourceUri) {
         this.manager = manager;
-        this.metaSourceUri = sourceUri;
+        this.sourceUri = sourceUri;
     }
     
-    protected String getMetaSourceUri() {
-        return this.metaSourceUri;
-    }
-
     private Map namespace2metadata = new HashMap();
 
     public MetaData getMetaData(String namespaceUri) throws MetaDataException {
@@ -89,7 +81,7 @@ public class SourceNodeMetaDataHandler implements MetaDataOwner {
         return meta;
     }
 
-    private Map namespace2metamap = null;
+    protected Map namespace2metamap = null;
 
     protected Map getMetaDataMap(String namespaceUri) throws MetaDataException {
         if (this.namespace2metamap == null) {
@@ -119,8 +111,8 @@ public class SourceNodeMetaDataHandler implements MetaDataOwner {
 
         try {
             this.namespace2metamap = new HashMap();
-            if (SourceUtil.exists(getMetaSourceUri(), this.manager)) {
-                Document xml = SourceUtil.readDOM(getMetaSourceUri(), this.manager);
+            if (SourceUtil.exists(this.sourceUri, this.manager)) {
+                Document xml = SourceUtil.readDOM(this.sourceUri, this.manager);
                 if (!xml.getDocumentElement().getNamespaceURI().equals(META_DATA_NAMESPACE)) {
                     loadLegacyMetaData(xml);
                 } else {
@@ -211,45 +203,8 @@ public class SourceNodeMetaDataHandler implements MetaDataOwner {
 
     }
 
-    protected void saveMetaData() throws MetaDataException {
-        try {
-            NamespaceHelper helper = new NamespaceHelper(META_DATA_NAMESPACE, "", ELEMENT_METADATA);
-            Collection namespaces = this.namespace2metamap.keySet();
-            for (Iterator i = namespaces.iterator(); i.hasNext();) {
-                String namespace = (String) i.next();
-
-                Element setElement = helper.createElement(ELEMENT_SET);
-                setElement.setAttribute(ATTRIBUTE_NAMESPACE, namespace);
-                helper.getDocument().getDocumentElement().appendChild(setElement);
-
-                Map map = getMetaDataMap(namespace);
-                Collection keys = map.keySet();
-                for (Iterator keyIterator = keys.iterator(); keyIterator.hasNext();) {
-                    String key = (String) keyIterator.next();
-
-                    Element elementElement = helper.createElement(ELEMENT_ELEMENT);
-                    elementElement.setAttribute(ATTRIBUTE_KEY, key);
-
-                    List values = (List) map.get(key);
-                    for (Iterator valueIterator = values.iterator(); valueIterator.hasNext();) {
-                        String value = (String) valueIterator.next();
-                        if (!value.equals("")) {
-                            Element valueElement = helper.createElement(ELEMENT_VALUE, value);
-                            elementElement.appendChild(valueElement);
-                        }
-                    }
-                    if (elementElement.hasChildNodes()) {
-                        setElement.appendChild(elementElement);
-                    }
-                }
-            }
-            SourceUtil.writeDOM(helper.getDocument(), getMetaSourceUri(), this.manager);
-        } catch (Exception e) {
-            throw new MetaDataException(e);
-        }
-    }
-
-    protected String[] getValues(String namespaceUri, String key, int revisionNumber) throws MetaDataException {
+    protected String[] getValues(String namespaceUri, String key, int revisionNumber)
+            throws MetaDataException {
         List values = getValueList(namespaceUri, key);
         return (String[]) values.toArray(new String[values.size()]);
     }
@@ -270,15 +225,15 @@ public class SourceNodeMetaDataHandler implements MetaDataOwner {
     }
 
     protected void addValue(String namespaceUri, String key, String value) throws MetaDataException {
-        List values = getValueList(namespaceUri, key);
-        values.add(value);
-        saveMetaData();
+        throw new IllegalStateException("Operation not supported");
     }
 
     protected void removeAllValues(String namespaceUri, String key) throws MetaDataException {
-        List values = getValueList(namespaceUri, key);
-        values.clear();
-        saveMetaData();
+        throw new IllegalStateException("Operation not supported");
+    }
+
+    protected void setValue(String namespaceUri, String key, String value) throws MetaDataException {
+        throw new IllegalStateException("Operation not supported");
     }
 
     public String[] getMetaDataNamespaceUris() throws MetaDataException {
@@ -294,43 +249,12 @@ public class SourceNodeMetaDataHandler implements MetaDataOwner {
             }
         }
     }
-    
-    private long lastModified;
 
-    /**
-     * @return the last modified date of the meta data
-     * @throws RepositoryException if an error occurs.
-     */
-    public long getMetaLastModified() throws RepositoryException {
-        SourceResolver resolver = null;
-        Source source = null;
+    protected long getLastModified() throws RepositoryException {
         try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = resolver.resolveURI(getMetaSourceUri());
-
-            long sourceLastModified;
-
-            if (source.exists()) {
-                sourceLastModified = source.getLastModified();
-                if (sourceLastModified > this.lastModified) {
-                    this.lastModified = sourceLastModified;
-                }
-            } else if (this.lastModified == -1) {
-                throw new RepositoryException("The source [" + getMetaSourceUri()
-                        + "] does not exist!");
-            }
-
-            return this.lastModified;
-
+            return SourceUtil.getLastModified(this.sourceUri, this.manager);
         } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
-            }
+            throw new RepositoryException(e);
         }
     }
 

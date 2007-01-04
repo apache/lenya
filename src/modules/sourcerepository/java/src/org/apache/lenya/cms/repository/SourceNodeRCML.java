@@ -51,7 +51,7 @@ import org.w3c.dom.NodeList;
 public class SourceNodeRCML implements RCML {
 
     private SourceNode node;
-    private Document document = null;
+    private Document xml = null;
     private boolean dirty = false;
     private int maximalNumberOfEntries = 5;
 
@@ -98,13 +98,6 @@ public class SourceNodeRCML implements RCML {
             checkOutIn(SourceNodeRCML.ci, RevisionController.systemUsername, lastModified, false);
 
             write();
-        } else {
-            try {
-                this.document = SourceUtil.readDOM(getRcmlSourceUri(), this.manager);
-            } catch (Exception e) {
-                throw new RevisionControlException("Could not read RC file [" + getRcmlSourceUri()
-                        + "]");
-            }
         }
     }
 
@@ -119,7 +112,7 @@ public class SourceNodeRCML implements RCML {
      * @throws ParserConfigurationException
      */
     public void initDocument() throws ParserConfigurationException {
-        this.document = DocumentHelper.createDocument(null, "XPSRevisionControl", null);
+        this.xml = DocumentHelper.createDocument(null, "XPSRevisionControl", null);
     }
 
     /**
@@ -140,11 +133,11 @@ public class SourceNodeRCML implements RCML {
      * @throws Exception if an error occurs
      */
     public void write() throws Exception {
-        if (this.document == null) {
+        if (getDocument() == null) {
             throw new IllegalStateException("The XML for RC source [" + getRcmlSourceUri()
                     + "] is null!");
         }
-        SourceUtil.writeDOM(this.document, getRcmlSourceUri(), this.manager);
+        SourceUtil.writeDOM(getDocument(), getRcmlSourceUri(), this.manager);
         clearDirty();
     }
 
@@ -160,6 +153,8 @@ public class SourceNodeRCML implements RCML {
      */
     public void checkOutIn(short type, String identity, long time, boolean backup)
             throws IOException, Exception {
+        
+        Document doc = getDocument();
 
         if (identity == null) {
             throw new IllegalArgumentException("The identity must not be null!");
@@ -170,13 +165,13 @@ public class SourceNodeRCML implements RCML {
                     + ".checkOutIn(): No such type");
         }
 
-        Element identityElement = this.document.createElement("Identity");
-        identityElement.appendChild(this.document.createTextNode(identity));
-        Element timeElement = this.document.createElement("Time");
-        timeElement.appendChild(this.document.createTextNode("" + time));
+        Element identityElement = doc.createElement("Identity");
+        identityElement.appendChild(doc.createTextNode(identity));
+        Element timeElement = doc.createElement("Time");
+        timeElement.appendChild(doc.createTextNode("" + time));
 
         String elementName = (String) ELEMENTS.get(new Short(type));
-        Element checkOutElement = this.document.createElement(elementName);
+        Element checkOutElement = doc.createElement(elementName);
 
         checkOutElement.appendChild(identityElement);
         checkOutElement.appendChild(timeElement);
@@ -188,17 +183,17 @@ public class SourceNodeRCML implements RCML {
                 version = latestEntry.getVersion();
             }
             version++;
-            Element versionElement = this.document.createElement("Version");
-            versionElement.appendChild(this.document.createTextNode("" + version));
+            Element versionElement = doc.createElement("Version");
+            versionElement.appendChild(doc.createTextNode("" + version));
             checkOutElement.appendChild(versionElement);
         }
 
         if (backup) {
-            Element backupElement = this.document.createElement(ELEMENT_BACKUP);
+            Element backupElement = doc.createElement(ELEMENT_BACKUP);
             checkOutElement.appendChild(backupElement);
         }
 
-        Element root = this.document.getDocumentElement();
+        Element root = doc.getDocumentElement();
         root.insertBefore(checkOutElement, root.getFirstChild());
 
         setDirty();
@@ -222,6 +217,23 @@ public class SourceNodeRCML implements RCML {
             write();
         }
     }
+    
+    private long lastModified = 0;
+
+    protected Document getDocument() throws RevisionControlException {
+        try {
+            String uri = getRcmlSourceUri();
+            long sourceLastModified = SourceUtil.getLastModified(uri, manager);
+            if (this.xml == null || sourceLastModified > this.lastModified) {
+                this.xml = SourceUtil.readDOM(getRcmlSourceUri(), this.manager);
+                this.lastModified = sourceLastModified;
+            }
+        } catch (Exception e) {
+            throw new RevisionControlException("Could not read RC file [" + getRcmlSourceUri()
+                    + "]");
+        }
+        return this.xml;
+    }
 
     /**
      * get the latest check out
@@ -229,7 +241,7 @@ public class SourceNodeRCML implements RCML {
      * @throws Exception if an error occurs
      */
     public CheckOutEntry getLatestCheckOutEntry() throws Exception {
-        Element parent = this.document.getDocumentElement();
+        Element parent = getDocument().getDocumentElement();
         Node identity = null;
         Node time = null;
         String rcIdentity = null;
@@ -254,7 +266,8 @@ public class SourceNodeRCML implements RCML {
      * @throws Exception if an error occurs
      */
     public CheckInEntry getLatestCheckInEntry() throws Exception {
-        Element parent = this.document.getDocumentElement();
+        Document doc = getDocument();
+        Element parent = doc.getDocumentElement();
 
         Node identity = XPathAPI.selectSingleNode(parent,
                 "/XPSRevisionControl/CheckIn[1]/Identity/text()");
@@ -304,7 +317,8 @@ public class SourceNodeRCML implements RCML {
      * @throws Exception if an error occurs
      */
     public Vector getEntries() throws Exception {
-        Element parent = this.document.getDocumentElement();
+        Document doc = getDocument();
+        Element parent = doc.getDocumentElement();
         NodeList entries = XPathAPI.selectNodeList(parent,
                 "/XPSRevisionControl/CheckOut|/XPSRevisionControl/CheckIn");
         Vector RCMLEntries = new Vector();
@@ -338,7 +352,7 @@ public class SourceNodeRCML implements RCML {
      * @throws Exception if an error occurs
      */
     public Vector getBackupEntries() throws Exception {
-        Element parent = this.document.getDocumentElement();
+        Element parent = getDocument().getDocumentElement();
         NodeList entries = XPathAPI.selectNodeList(parent, "/XPSRevisionControl/CheckOut["
                 + ELEMENT_BACKUP + "]|/XPSRevisionControl/CheckIn[" + ELEMENT_BACKUP + "]");
         Vector RCMLEntries = new Vector();
@@ -409,7 +423,7 @@ public class SourceNodeRCML implements RCML {
      * @throws Exception if an error occurs
      */
     public void pruneEntries() throws Exception {
-        Element parent = this.document.getDocumentElement();
+        Element parent = getDocument().getDocumentElement();
         NodeList entries = XPathAPI.selectNodeList(parent,
                 "/XPSRevisionControl/CheckOut|/XPSRevisionControl/CheckIn");
 
@@ -443,7 +457,7 @@ public class SourceNodeRCML implements RCML {
         Document documentClone = DocumentHelper.createDocument(null, "dummy", null);
         documentClone.removeChild(documentClone.getDocumentElement());
         documentClone.appendChild(documentClone
-                .importNode(this.document.getDocumentElement(), true));
+                .importNode(getDocument().getDocumentElement(), true));
 
         return documentClone;
     }
@@ -475,7 +489,7 @@ public class SourceNodeRCML implements RCML {
      * @throws Exception if an error occurs
      */
     public void deleteFirstCheckIn() throws Exception {
-        Node root = this.document.getDocumentElement();
+        Node root = getDocument().getDocumentElement();
         Node firstCheckIn = XPathAPI.selectSingleNode(root, "/XPSRevisionControl/CheckIn[1]");
         root.removeChild(firstCheckIn);
         root.removeChild(root.getFirstChild()); // remove EOL (end of line)
@@ -487,7 +501,7 @@ public class SourceNodeRCML implements RCML {
      * @throws Exception if an error occurs
      */
     public void deleteFirstCheckOut() throws Exception {
-        Node root = this.document.getDocumentElement();
+        Node root = getDocument().getDocumentElement();
         Node firstCheckIn = XPathAPI.selectSingleNode(root, "/XPSRevisionControl/CheckOut[1]");
         root.removeChild(firstCheckIn);
         root.removeChild(root.getFirstChild()); // remove EOL (end of line)
@@ -500,7 +514,7 @@ public class SourceNodeRCML implements RCML {
      * @throws Exception if an error occurs
      */
     public String[] getBackupsTime() throws Exception {
-        Node root = this.document.getDocumentElement();
+        Node root = getDocument().getDocumentElement();
         NodeList entries = XPathAPI.selectNodeList(root, "/XPSRevisionControl/CheckIn");
 
         ArrayList times = new ArrayList();

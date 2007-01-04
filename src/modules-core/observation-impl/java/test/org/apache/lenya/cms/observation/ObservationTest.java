@@ -64,6 +64,9 @@ public class ObservationTest extends AbstractAccessControlTest {
             testChanged(doc, docListener);
             testChanged(doc, allListener);
             
+            testMetaDataChanged(doc, docListener);
+            testMetaDataChanged(doc, allListener);
+            
         }
         finally {
             if (registry != null) {
@@ -78,6 +81,15 @@ public class ObservationTest extends AbstractAccessControlTest {
         listener.reset();
         NamespaceHelper xml = new NamespaceHelper("http://apache.org/lenya/test", "", "test");
         SourceUtil.writeDOM(xml.getDocument(), doc.getSourceURI(), getManager());
+        
+        assertFalse(listener.wasChanged());
+        doc.getRepositoryNode().getSession().commit();
+        Thread.currentThread().sleep(100);
+        assertTrue(listener.wasChanged());
+    }
+
+    protected void testMetaDataChanged(Document doc, TestListener listener) throws Exception {
+        listener.reset();
 
         String mimeType = doc.getMimeType();
         doc.setMimeType("");
