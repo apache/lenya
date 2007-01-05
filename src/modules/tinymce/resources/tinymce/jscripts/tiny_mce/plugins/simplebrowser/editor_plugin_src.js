@@ -62,6 +62,7 @@ var TinyMCE_SimpleBrowserPlugin = {
 		var sOptions = "toolbar=no,status=no,resizable=yes,dependent=yes";
 		sOptions += ",width=" + TinyMCE_SimpleBrowserPlugin.options['width'];
 		sOptions += ",height=" + TinyMCE_SimpleBrowserPlugin.options['height'];
+	    sOptions += ",scrollbars=yes";	
 
 		if (tinyMCE.isMSIE)	{
 			// The following change has been made otherwise IE will open the file 
