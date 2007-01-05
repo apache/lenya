@@ -66,7 +66,7 @@
   </xsl:text>
   <script language="javascript" 
           type="text/javascript" 
-          src="{$contextPath}/modules/tinymce/javascript/tiny_lenya_glue.js"
+          src="{$contextPath}/{$publicationid}/modules/tinymce/javascript/tiny_lenya_glue.js"
   >&#160;</script>
   <xsl:text>
   </xsl:text>
@@ -75,7 +75,7 @@
   </xsl:text>
   <script language="javascript" 
           type="text/javascript"
-          src="{$contextPath}/modules/tinymce/javascript/tiny_config.js"
+          src="{$contextPath}/{$publicationid}/modules/tinymce/javascript/tiny_config.js"
   >&#160;</script>
   <xsl:text>
   </xsl:text>
@@ -84,7 +84,7 @@
   </xsl:text>
   <script language="javascript" 
           type="text/javascript"
-          src="{$contextPath}/modules/tinymce/javascript/tiny_valid_elements.js"
+          src="{$contextPath}/{$publicationid}/modules/tinymce/javascript/tiny_valid_elements.js"
   >&#160;</script>
   <xsl:text>
   </xsl:text>
