@@ -30,6 +30,7 @@ import org.apache.lenya.cms.publication.Document;
  * <li>area</li>
  * <li>UUID</li>
  * <li>language</li>
+ * <li>revision number</li>
  * </ul>
  * <p>
  * All of these parameters are optional and default to the attributes of the
@@ -38,7 +39,7 @@ import org.apache.lenya.cms.publication.Document;
  * <p>
  * Syntax (square brackets denote optional parts):
  * </p>
- * <code>lenya-document:&lt;uuid&gt;[,lang=...][,area=...][,pub=...]</code>
+ * <code>lenya-document:&lt;uuid&gt;[,lang=...][,area=...][,rev=...][,pub=...]</code>
  * <p>
  * The fallback mode determines the behaviour if the target language is omitted
  * and the target document doesn't exist in the language of the source document.
