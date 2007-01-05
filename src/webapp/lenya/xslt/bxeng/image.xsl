@@ -110,7 +110,7 @@
                 <div class="lenya-box">
                     <div class="lenya-box-title"><i18n:text key="lenya.assetupload.subtitle"/></div>
                     <form name="fileinput" 
-                        action="" 
+                        action="?" 
                         method="post" enctype="multipart/form-data" 
                         onsubmit="return check_upload(fileinput, ext)">
                         <input type="hidden" name="lenya.usecase" 
