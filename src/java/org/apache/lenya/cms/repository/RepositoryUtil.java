@@ -78,4 +78,16 @@ public class RepositoryUtil {
         return session;
     }
 
+    /**
+     * Removes the repository session from the servlet session.
+     * @param manager The service manager.
+     * @param request The current request.
+     */
+    public static void removeSession(ServiceManager manager, Request request) {
+        org.apache.cocoon.environment.Session session = request.getSession(false);
+        if (session != null) {
+            session.removeAttribute(Session.class.getName());
+        }
+    }
+
 }

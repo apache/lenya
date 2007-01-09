@@ -21,6 +21,7 @@ import java.util.Map;
 import java.util.Vector;
 
 import org.apache.lenya.ac.Identity;
+import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
@@ -60,6 +61,7 @@ public class Logout extends AccessControlUsecase {
 
         if (session != null) {
             session.removeAttribute(Identity.class.getName());
+            RepositoryUtil.removeSession(manager, request);
         }
     }
 }
