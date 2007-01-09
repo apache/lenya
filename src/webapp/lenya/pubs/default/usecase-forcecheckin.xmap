@@ -27,7 +27,7 @@
       <map:serializers default="xhtml"/>
       <map:matchers default="wildcard"/>
       <map:actions>
-         <map:action name="forced-checkin" src="org.apache.lenya.cms.cocoon.acting.ForcedCheckInAction" logger="sitemap.action.forced-checkin"/>
+         <map:action name="forced-checkin" src="org.apache.lenya.cms.cocoon.acting.ForceCheckInAction" logger="sitemap.action.forced-checkin"/>
       </map:actions>
       <map:selectors/>
   </map:components>
