@@ -34,13 +34,6 @@ import org.apache.cocoon.environment.Session;
 public class Logout extends AccessControlUsecase {
 
     /**
-     * Ctor.
-     */
-    public Logout() {
-        super();
-    }
-
-    /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
      */
     protected void initParameters() {
