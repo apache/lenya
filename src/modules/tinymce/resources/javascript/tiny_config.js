@@ -102,7 +102,7 @@ http://tinymce.moxiecode.com/tinymce/docs/reference_configuration.html
             "bold,italic,underline,strikethrough,sub,sup,removeformat,separator," +
             "bullist,numlist,table,separator," + 
             "indent,outdent,separator," + 
-            "link,unlink,image,separator," +
+            "anchor,link,unlink,image,separator," +
             "help",
 
     /* three button rows are active by default. override. */
