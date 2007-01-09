@@ -67,7 +67,7 @@
             <map:generate src="../../content/util/empty.xml"/>
             <map:act type="forced-checkin">
               <map:parameter name="step" value="checkit"/>
-              <map:transform src="../unizh/xslt/info/forcecheckin.xsl">
+              <map:transform src="{fallback:xslt/info/forcecheckin.xsl}">
                 <map:parameter name="user" value="{user}"/>
                 <map:parameter name="date" value="{date}"/>
                 <map:parameter name="message" value="{message}"/>
