@@ -44,7 +44,6 @@ public class PreParser {
      */
     public Reader parse(Reader reader) throws IOException {
         StringBuffer buffer = new StringBuffer();
-        boolean pending = false;
 
         char[] chars = new char[1];
 

@@ -31,7 +31,6 @@ import java.nio.charset.IllegalCharsetNameException;
 import java.util.StringTokenizer;
 
 import org.apache.lenya.lucene.html.HTMLParser;
-import org.apache.log4j.Logger;
 import org.apache.lucene.analysis.Token;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -41,7 +40,6 @@ import org.apache.lucene.analysis.standard.StandardAnalyzer;
  * DOCUMENT ME!
  */
 public class ReTokenizeFile {
-    private static final Logger log = Logger.getLogger(ReTokenizeFile.class);
 
     private int offset = 100;
     

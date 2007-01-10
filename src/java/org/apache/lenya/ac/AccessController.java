@@ -54,5 +54,4 @@ public interface AccessController extends Component {
      * @throws AccessControlException when something went wrong.
      */
     void setupIdentity(Request request) throws AccessControlException;
-
 }
