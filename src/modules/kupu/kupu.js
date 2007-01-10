@@ -17,9 +17,6 @@
 
 importClass(Packages.java.util.ArrayList);
 
-importClass(Packages.org.apache.lenya.cms.cocoon.flow.FlowHelper);
-importClass(Packages.org.apache.lenya.cms.publication.util.DocumentHelper);
-
 /**
  * Kupu usecase flow.
  * @version $Id$
@@ -52,7 +49,7 @@ function sitetree_link_library() {
 		 	*/
 		
         	resources.add(addedResourcesCount, {
-                "url" : documentHelper.getDocumentUrl(allNodes[i].getUuid(), pageEnvelope.getDocument().getArea(), null),
+                "url" : "lenya-document:" + allNodes[i].getUuid(),
                 "label" : languageLabel.getLabel(),
                 "id" : allNodes[i].getName(),
                 "fullid" : allNodes[i].getPath(),
