@@ -40,23 +40,25 @@ function sitetree_link_library() {
     var allNodes = siteTree.preOrder();
     var resources = new ArrayList(allNodes.length - 1);
     var addedResourcesCount = 0;
+    var language = pageEnvelope.getDocument().getLanguage();
     
     for(var i=1; i < allNodes.length; i++) {
-    	var languageLabel = allNodes[i].getLink(pageEnvelope.getDocument().getLanguage())
-		/* If the current sitree node does not exist in the displayed document's language
-		 * Continue with next node. This is a quick fix for bug #32808.
-		 * Next step would be to offer all links to the available languages.
-		 * by roku 
-		 */
-		if (languageLabel == null) continue;
+        if (allNodes[i].hasLink(language)) {
+    		var languageLabel = allNodes[i].getLink(language);
+			/* If the current sitree node does not exist in the displayed document's language
+		 	 * Continue with next node. This is a quick fix for bug #32808.
+		 	 * Next step would be to offer all links to the available languages.
+		 	 * by roku 
+		 	*/
 		
-        resources.add(addedResourcesCount, {
+        	resources.add(addedResourcesCount, {
                 "url" : documentHelper.getDocumentUrl(allNodes[i].getUuid(), pageEnvelope.getDocument().getArea(), null),
                 "label" : languageLabel.getLabel(),
                 "id" : allNodes[i].getName(),
                 "fullid" : allNodes[i].getPath(),
                 "language" : pageEnvelope.getDocument().getLanguage()});
-        addedResourcesCount++;
+        	addedResourcesCount++;
+        }
     }
     
     cocoon.sendPage("sitetree_link_library_template", {"resources" : resources});

@@ -55,7 +55,7 @@
     
     <map:component-configurations>
       <global-variables>
-        <resourceIconUrl>kupu/apache-lenya/kupu/images/right_arrow.png</resourceIconUrl>
+        <resourceIconUrl>modules/kupu/kupu/apache-lenya/lenya/images/right_arrow.png</resourceIconUrl>
       </global-variables>
     </map:component-configurations>
 
@@ -69,7 +69,7 @@
       <!-- Flow callbacks -->
       <map:match pattern="sitetree_link_library_template">
         <map:generate src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/drawers/sitetree_link_library.xml.jx" type="jx">
-          <map:parameter name="resource-icon-url" value="{page-envelope:context-prefix}/kupu/apache-lenya/kupu/images/right_arrow.png"/>
+          <map:parameter name="resource-icon-url" value="{page-envelope:context-prefix}/{global:resourceIconUrl}"/>
         </map:generate>
         <map:serialize type="xml"/>
       </map:match>      
