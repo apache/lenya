@@ -51,6 +51,7 @@
       <li>More Info: <a href="http://wiki.apache.org/lenya/HowToEditWithWebDAV">http://wiki.apache.org/lenya/HowToEditWithWebDAV</a></li>
     </ul>
 
+    <!--
     <h4>Enable JCR</h4>
     <ul>
       <li>Build Lenya and start it</li>
@@ -62,11 +63,7 @@
       <li>Optional: The JCR implementation can be configured within local.build.properties resp. build.properties</li>
       <li>Start Lenya</li>
     </ul>
+    -->
 
-    <h4>JCR Tests and content migration</h4>
-    <ul>
-      <li>./build.sh modules.test</li>
-      <li>./build.sh migrate-14</li>
-    </ul>
   </lenya:readme>
 </lenya:publication>
