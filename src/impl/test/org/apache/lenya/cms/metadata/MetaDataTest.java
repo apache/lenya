@@ -19,16 +19,11 @@ package org.apache.lenya.cms.metadata;
 
 import java.util.Map;
 
-import org.apache.avalon.framework.service.ServiceException;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.repository.RepositoryUtil;
-import org.apache.lenya.cms.repository.Session;
 
 /**
  * Meta data test.
@@ -40,11 +35,9 @@ public class MetaDataTest extends AbstractAccessControlTest {
      * @throws Exception
      */
     public void testMetaData() throws Exception {
-        Session session = RepositoryUtil.getSession(getManager(), getRequest());
-        DocumentFactory factory = DocumentUtil.createDocumentFactory(getManager(), session);
 
         Publication publication = getPublication("test");
-        Document doc = factory.get(publication, Publication.AUTHORING_AREA, "/index", "en");
+        Document doc = publication.getArea("authoring").getSite().getNode("/index").getLink("en").getDocument(); 
 
         String namespaceUri = "foobar";
         Exception e = null;
