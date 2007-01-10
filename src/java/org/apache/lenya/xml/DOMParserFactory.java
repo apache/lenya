@@ -86,9 +86,8 @@ public class DOMParserFactory {
             return;
         }
 
-        Document doc = null;
         try {
-            doc = dpf.getDocument(args[0]);
+            Document doc = dpf.getDocument(args[0]);
         } catch (FileNotFoundException e) {
             System.err.println("No such file or directory: " + e.getMessage());
             return;
