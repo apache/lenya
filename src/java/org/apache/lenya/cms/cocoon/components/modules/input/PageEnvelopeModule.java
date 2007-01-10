@@ -32,12 +32,12 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.commons.lang.StringUtils;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.PageEnvelope;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -151,7 +151,12 @@ public class PageEnvelopeModule extends AbstractPageEnvelopeModule {
             Publication pub = envelope.getPublication();
             Request request = ObjectModelHelper.getRequest(objectModel);
             String url = ServletHelper.getWebappURI(request);
-            DocumentLocator loc = SiteUtil.getLocator(this.manager, pub.getFactory(), url);
+            DocumentLocator loc;
+            try {
+                loc = pub.getDocumentBuilder().getLocator(pub.getFactory(), url);
+            } catch (DocumentBuildException e) {
+                throw new SiteException(e);
+            }
             path = loc.getPath();
         } else {
             path = doc.getLocator().getPath();
