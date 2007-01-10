@@ -56,6 +56,7 @@
     <map:component-configurations>
       <global-variables>
         <resourceIconUrl>modules/kupu/kupu/apache-lenya/lenya/images/right_arrow.png</resourceIconUrl>
+        <imageBase>modules/kupu/kupu/apache-lenya/lenya/images</imageBase>
       </global-variables>
     </map:component-configurations>
 
@@ -170,7 +171,7 @@
           <map:generate src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/drawers/imagelibraries.xml.jx" type="jx">
             <map:parameter name="pubLibUrl" value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=publication_image_library"/>
             <map:parameter name="pageLibUrl" value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=page_image_library"/>
-            <map:parameter name="imageBaseUrl" value="{page-envelope:context-prefix}/kupu/apache-lenya/kupu/images"/>
+            <map:parameter name="imageBaseUrl" value="{page-envelope:context-prefix}/{global:imageBase}"/>
           </map:generate>
           <map:serialize type="xml"/>
         </map:match>
@@ -178,18 +179,17 @@
           <map:generate src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/drawers/linklibraries.xml.jx" type="jx">
             <map:parameter name="pubLibUrl" value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=sitetree_link_library"/>
             <map:parameter name="pageLibUrl" value="{request:requestURI}?lenya.module=kupu&amp;lenya.step=other_link_library"/>
-            <map:parameter name="imageBaseUrl" value="{page-envelope:context-prefix}/kupu/apache-lenya/kupu/images"/>
+            <map:parameter name="imageBaseUrl" value="{page-envelope:context-prefix}/{global:imageBase}"/>
           </map:generate>
           <map:serialize type="xml"/>
         </map:match>
                   
         <map:match pattern="page_image_library" type="step">
-          <map:generate src="fallback://lenya/content/info/assets.xsp" type="serverpages"/>
-          <map:transform src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/pageassets2kupulibrary.xsl">
+          <map:call function="publication_image_library">
+            <map:parameter name="template" value="publication_image_library_template"/>
             <map:parameter name="iconUrl" value="{page-envelope:context-prefix}/{global:resourceIconUrl}"/>
-            <map:parameter name="resource-path-url" value="{page-envelope:document-id}/"/>
-          </map:transform>
-          <map:serialize type="xml"/>            
+            <map:parameter name="rootPath" value=""/>
+          </map:call>
         </map:match>
         <map:match pattern="sitetree_link_library" type="step">
           <map:call function="sitetree_link_library"/>
@@ -198,6 +198,7 @@
           <map:call function="publication_image_library">
             <map:parameter name="template" value="publication_image_library_template"/>
             <map:parameter name="iconUrl" value="{page-envelope:context-prefix}/{global:resourceIconUrl}"/>
+            <map:parameter name="rootPath" value="{page-envelope:document-path}"/>
           </map:call>
         </map:match>
         

@@ -57,38 +57,53 @@ function sitetree_link_library() {
         	addedResourcesCount++;
         }
     }
-    
+    cocoon.releaseComponent(flowHelper);
     cocoon.sendPage("sitetree_link_library_template", {"resources" : resources});
 }
 
 /**
  * Collects infos about all image resources in a publication.
-FIXME PublicationHelper does no longer exist
+ */
 function publication_image_library() {        
-    var pageEnvelope = new FlowHelper().getPageEnvelope(cocoon);
-    var pubHelper = new PublicationHelper(pageEnvelope.getPublication());
-    var allDocs = pubHelper.getAllDocuments(pageEnvelope.getDocument().getArea(), pageEnvelope.getDocument().getLanguage());
+    var flowHelper = cocoon.getComponent("org.apache.lenya.cms.cocoon.flow.FlowHelper");
+    var pageEnvelope = flowHelper.getPageEnvelope(cocoon);
+    var areaName = pageEnvelope.getArea();
+    var site = pageEnvelope.getPublication().getArea(areaName).getSite();
     var imageInfos = new ArrayList();
     
-    for(var i=0; i<allDocs.length; i++) {
-        if(allDocs[i].getId().equals(pageEnvelope.getDocument().getId()))
+    var rootPath = cocoon.parameters["rootPath"];
+    var allNodes = site.getNode(rootPath).preOrder();
+    
+    for (var i=0; i < allNodes.length; i++) {
+    
+        if (allNodes[i].getPath().equals(pageEnvelope.getDocument().getPath()))
             continue;
-        var resourcesMgr = new DefaultResourcesManager(allDocs[i]);
-        var imageResources = resourcesMgr.getImageResources();
-        
-        for(var j=0; j<imageResources.length; j++) {
-            var metaDoc = org.apache.lenya.xml.DocumentHelper.readDocument(resourcesMgr.getMetaFile(imageResources[j]));
-            var title = metaDoc.getElementsByTagNameNS("http://purl.org/dc/elements/1.1/", "title").item(0).getChildNodes().item(0).getNodeValue();
             
-            imageInfos.add({
-                    "url" : pageEnvelope.getContext() + "/" + resourcesMgr.getResourceUrl(imageResources[j]),
-                    "name" : imageResources[j].getName(),
-                    "title" : title,
-                    "length" : imageResources[j].length(),
-                    "iconUrl" : cocoon.parameters["iconUrl"]
-            });
+        var languages = allNodes[i].getLanguages();
+        for (var lang = 0; lang < languages.length; lang++) {
+            var doc = allNodes[i].getLink(languages[lang]).getDocument();
+            if (doc.getResourceType().getName().equals("resource")) {
+            
+            	var meta = doc.getMetaData("http://purl.org/dc/elements/1.1/");
+	            var title = meta.getFirstValue("title");
+	            var url = doc.getCanonicalWebappURL();
+	            url = url.substring(0, url.length() - 4);
+	            url = url + doc.getSourceExtension();
+	            
+	            imageInfos.add({
+	                    "previewurl" : pageEnvelope.getContext() + url,
+	                    "url" : pageEnvelope.getContext() + url,
+	                    // FIXME: this uses UUIDs, but they are not resolved to URLs yet
+	                    // "url" : "lenya-document:" + doc.getUUID(),
+	                    "name" : doc.getName(),
+	                    "title" : title,
+	                    "length" : doc.getContentLength(),
+	                    "iconUrl" : cocoon.parameters["iconUrl"]
+	            });
+            }
         }
+            
     }
+    cocoon.releaseComponent(flowHelper);
     cocoon.sendPage(cocoon.parameters["template"], {"imageInfos" : imageInfos});
 }
-*/
