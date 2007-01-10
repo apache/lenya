@@ -50,6 +50,7 @@ function sitetree_link_library() {
 		
         	resources.add(addedResourcesCount, {
                 "url" : "lenya-document:" + allNodes[i].getUuid(),
+                "title" : getTitle(allNodes[i].getLink(language).getDocument()),
                 "label" : languageLabel.getLabel(),
                 "id" : allNodes[i].getName(),
                 "fullid" : allNodes[i].getPath(),
@@ -59,6 +60,12 @@ function sitetree_link_library() {
     }
     cocoon.releaseComponent(flowHelper);
     cocoon.sendPage("sitetree_link_library_template", {"resources" : resources});
+}
+
+function getTitle(doc) {
+    var meta = doc.getMetaData("http://purl.org/dc/elements/1.1/");
+    var title = meta.getFirstValue("title");
+    return title;
 }
 
 /**
@@ -84,8 +91,7 @@ function publication_image_library() {
             var doc = allNodes[i].getLink(languages[lang]).getDocument();
             if (doc.getResourceType().getName().equals("resource")) {
             
-            	var meta = doc.getMetaData("http://purl.org/dc/elements/1.1/");
-	            var title = meta.getFirstValue("title");
+	            var title = getTitle(doc);
 	            var url = doc.getCanonicalWebappURL();
 	            url = url.substring(0, url.length() - 4);
 	            url = url + doc.getSourceExtension();
