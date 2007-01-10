@@ -19,7 +19,6 @@ importClass(Packages.java.util.ArrayList);
 
 importClass(Packages.org.apache.lenya.cms.cocoon.flow.FlowHelper);
 importClass(Packages.org.apache.lenya.cms.publication.util.DocumentHelper);
-importClass(Packages.org.apache.lenya.cms.publication.DefaultResourcesManager);
 
 /**
  * Kupu usecase flow.
@@ -32,16 +31,18 @@ importClass(Packages.org.apache.lenya.cms.publication.DefaultResourcesManager);
  */
 function sitetree_link_library() {
     
-    var flowHelper = new FlowHelper();
+    var flowHelper = cocoon.getComponent("org.apache.lenya.cms.cocoon.flow.FlowHelper");
     var documentHelper = flowHelper.getDocumentHelper(cocoon);
     var pageEnvelope = flowHelper.getPageEnvelope(cocoon);
-    var siteTree = pageEnvelope.getPublication().getSiteTree(pageEnvelope.getDocument().getArea());
-    var allNodes = siteTree.getNode("/").preOrder();
-    var resources = new ArrayList(allNodes.size()-1);
+    var areaName = pageEnvelope.getArea();
+    var area = pageEnvelope.getPublication().getArea(areaName);
+    var siteTree = area.getSite();
+    var allNodes = siteTree.preOrder();
+    var resources = new ArrayList(allNodes.length - 1);
     var addedResourcesCount = 0;
     
-    for(var i=1; i<allNodes.size(); i++) {
-    	var languageLabel = allNodes.get(i).getLabel(pageEnvelope.getDocument().getLanguage())
+    for(var i=1; i < allNodes.length; i++) {
+    	var languageLabel = allNodes[i].getLink(pageEnvelope.getDocument().getLanguage())
 		/* If the current sitree node does not exist in the displayed document's language
 		 * Continue with next node. This is a quick fix for bug #32808.
 		 * Next step would be to offer all links to the available languages.
@@ -50,10 +51,10 @@ function sitetree_link_library() {
 		if (languageLabel == null) continue;
 		
         resources.add(addedResourcesCount, {
-                "url" : documentHelper.getDocumentUrl(allNodes.get(i).getAbsoluteId(), pageEnvelope.getDocument().getArea(), null),
+                "url" : documentHelper.getDocumentUrl(allNodes[i].getUuid(), pageEnvelope.getDocument().getArea(), null),
                 "label" : languageLabel.getLabel(),
-                "id" : allNodes.get(i).getId(),
-                "fullid" : allNodes.get(i).getAbsoluteId(),
+                "id" : allNodes[i].getName(),
+                "fullid" : allNodes[i].getPath(),
                 "language" : pageEnvelope.getDocument().getLanguage()});
         addedResourcesCount++;
     }
