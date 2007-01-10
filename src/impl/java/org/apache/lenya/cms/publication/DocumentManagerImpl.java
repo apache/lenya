@@ -832,7 +832,7 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             boolean addToSiteStructure) throws DocumentBuildException, PublicationException {
         Document document = addVersion(sourceDocument, area, language);
 
-        if (addToSiteStructure && SiteUtil.contains(this.manager, sourceDocument)) {
+        if (addToSiteStructure && sourceDocument.hasLink()) {
             String path = sourceDocument.getPath();
             boolean visible = sourceDocument.getLink().getNode().isVisible();
             addToSiteManager(path, document, sourceDocument.getLink().getLabel(), visible);
