@@ -39,8 +39,6 @@ import org.apache.lenya.cms.publication.SiteTreeNode;
  */
 public class DocumentDeactivateTaskTest extends AntTaskTest {
 
-	private long time = 0;
-
 	/**
      * Creates a new DocumentDeactivateTaskTest object.
 	 * @param test The test.
@@ -94,9 +92,8 @@ public class DocumentDeactivateTaskTest extends AntTaskTest {
      * @see org.apache.lenya.cms.task.AntTaskTest#prepareTest()
      */
     protected void prepareTest() throws Exception {
-		File publicationDirectory = PublicationHelper.getPublication().getDirectory();
-        String publicationPath = publicationDirectory.getAbsolutePath()+ File.separator; 
-
+		//File publicationDirectory = PublicationHelper.getPublication().getDirectory();
+        //String publicationPath = publicationDirectory.getAbsolutePath()+ File.separator; 
 
 		// TODO generate the resources  
 }

@@ -20,7 +20,6 @@
 
 package org.apache.lenya.cms.rc;
 
-import java.io.File;
 import java.io.PrintWriter;
 import java.util.Date;
 
@@ -36,10 +35,7 @@ public class RCMLTest extends TestCase {
 	public static final short co = 0;
 	public static final short ci = 1;
     
-	private File rcmlFile;
 	private Document document = null;
-	private boolean dirty = false;
-	private int maximalNumberOfEntries = 5;
 
     /**
      * Constructor.

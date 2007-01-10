@@ -148,8 +148,6 @@ public class AntTaskTest extends TestCase {
                 });
 
         assertTrue(logFiles.length == 1);
-
-        File logFile = logFiles[0];
     }
 
     /**

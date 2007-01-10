@@ -97,9 +97,9 @@ public class DocumentCopyTaskTest extends AntTaskTest {
      * @throws Exception if an error occurs
 	 */
 	protected void prepareTest() throws Exception {
-		File publicationDirectory = PublicationHelper.getPublication().getDirectory();
-        String publicationPath = publicationDirectory.getAbsolutePath()+ File.separator; 
-		File authoringDirectory = new File(publicationPath, AUTHORING_PATH);
+		//File publicationDirectory = PublicationHelper.getPublication().getDirectory();
+        //String publicationPath = publicationDirectory.getAbsolutePath()+ File.separator; 
+		//File authoringDirectory = new File(publicationPath, AUTHORING_PATH);
 
 		// TODO generate the resources  
 	}

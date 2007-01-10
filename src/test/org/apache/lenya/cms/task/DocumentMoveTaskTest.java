@@ -103,7 +103,7 @@ public class DocumentMoveTaskTest extends AntTaskTest {
 	protected void prepareTest() throws Exception {
 		File publicationDirectory = PublicationHelper.getPublication().getDirectory();
         String publicationPath = publicationDirectory.getAbsolutePath()+ File.separator; 
-		File authoringDirectory = new File(publicationPath, AUTHORING_PATH);
+		//File authoringDirectory = new File(publicationPath, AUTHORING_PATH);
 
 		// TODO generate the resources  
 
