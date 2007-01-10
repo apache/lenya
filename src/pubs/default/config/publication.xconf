@@ -55,6 +55,7 @@
   <module name="notification"/>
   <module name="svg"/>
   <module name="lucene"/>
+  <module name="development"/>
   <!-- TODO: The goal is to have a blog module ;-) -->
   <!--
   <module name="blog"/>
