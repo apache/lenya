@@ -48,6 +48,10 @@ public class SiteTreeNodeImplTest extends AbstractAccessControlTest {
         
         siteTree.getRepositoryNode().lock();
         
+        if (siteTree.contains("/foo")) {
+            siteTree.removeNode("/foo");
+        }
+        
         siteTree.addNode("/foo", "foo-uuid", true, null, null, false);
         siteTree.addLabel("/foo", "en", "Foo");
         

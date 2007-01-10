@@ -152,7 +152,9 @@ public class DefaultSiteTreeTest extends AbstractAccessControlTest {
      */
     final public void testRemoveLabel() throws SiteException {
         this.siteTree.addLabel("/foo/bar", "de", "Hello");
-        this.siteTree.addLabel("/foo/bar", "en", "World");
+        if (!this.siteTree.getNode("/foo/bar").hasLink("en")) {
+            this.siteTree.addLabel("/foo/bar", "en", "World");
+        }
         assertEquals(((SiteTreeNode) this.siteTree.getNode("/foo/bar")).getLanguages().length, 2);
 
         this.siteTree.removeLabel("/foo/bar", "de");
@@ -192,7 +194,7 @@ public class DefaultSiteTreeTest extends AbstractAccessControlTest {
      */
     final public void testGetNode() throws SiteException {
         assertNotNull(this.siteTree.getNode("/foo/bar"));
-        assertFalse(this.siteTree.contains("/foo/baz"));
+        assertFalse(this.siteTree.contains("/foo/bar/baz"));
     }
 
     /**

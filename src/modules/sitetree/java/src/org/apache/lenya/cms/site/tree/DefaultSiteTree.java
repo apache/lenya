@@ -37,6 +37,7 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
+import org.apache.lenya.util.Assert;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.xpath.XPathAPI;
@@ -340,6 +341,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * @throws SiteException
      */
     private synchronized Node removeNodeInternal(String path) throws SiteException {
+        Assert.isTrue("contains " + path, contains(path));
         Node node = this.getNodeInternal(path);
         Node parentNode = node.getParentNode();
         Node newNode = parentNode.removeChild(node);
