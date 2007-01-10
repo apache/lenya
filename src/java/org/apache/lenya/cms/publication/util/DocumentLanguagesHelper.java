@@ -29,6 +29,7 @@ import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
 import org.apache.lenya.cms.publication.DocumentUtil;
@@ -36,8 +37,6 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
-import org.apache.lenya.cms.site.SiteException;
-import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -80,13 +79,11 @@ public class DocumentLanguagesHelper {
      * @throws ProcessingException if an error occurs.
      */
     public String getLanguage() throws ProcessingException {
-        DocumentLocator locator;
         try {
-            locator = SiteUtil.getLocator(this.manager, this.factory, url);
-        } catch (SiteException e) {
+            return getLocator().getLanguage();
+        } catch (DocumentBuildException e) {
             throw new ProcessingException(e);
         }
-        return locator.getLanguage();
     }
 
     /**
@@ -98,8 +95,7 @@ public class DocumentLanguagesHelper {
         List availableLanguages = new ArrayList();
 
         try {
-            DocumentLocator locator = SiteUtil.getLocator(this.manager, this.factory, url);
-
+            DocumentLocator locator = getLocator();
             String[] languages = pub.getLanguages();
             for (int i = 0; i < languages.length; i++) {
                 DocumentLocator version = locator.getLanguageVersion(languages[i]);
@@ -135,12 +131,17 @@ public class DocumentLanguagesHelper {
     protected Document getDocument(String language) throws ProcessingException {
         Document document;
         try {
-            DocumentLocator locator = SiteUtil.getLocator(this.manager, this.factory, url);
+            DocumentLocator locator = getLocator();
             DocumentLocator version = locator.getLanguageVersion(language);
             document = this.factory.get(version);
         } catch (Exception e) {
             throw new ProcessingException(e);
         }
         return document;
+    }
+
+    protected DocumentLocator getLocator() throws DocumentBuildException {
+        DocumentLocator locator = this.pub.getDocumentBuilder().getLocator(this.factory, this.url);
+        return locator;
     }
 }
