@@ -97,7 +97,6 @@ public class RCML {
             if (dataFile.isFile()) {
                 lastModified = dataFile.lastModified();
             }
-
             initDocument();
 
             // Create a "fake" checkin entry so it looks like the
@@ -418,7 +417,7 @@ public class RCML {
             Element elem = (Element) entries.get(i);
             String time = elem.getElementsByTagName("Time").item(0).getFirstChild().getNodeValue();
             NodeList backupNodes = elem.getElementsByTagName(ELEMENT_BACKUP);
-            if (backupNodes != null && backupNodes.getLength()>0) {
+            if (backupNodes != null && backupNodes.getLength() > 0) {
                 times.add(time);
             }
         }

@@ -63,9 +63,6 @@ public class ProxyGenerator extends ServletGenerator implements Parameterizable 
         log.debug("loaded ProxyGenerator Config: " + "trustStore="+trustStore + " trustStorePassword=" + trustStorePassword);
     }
 
-    // The URI of the namespace of this generator
-    private String URI = "http://apache.org/cocoon/lenya/proxygenerator/1.0";
-
     /**
      * No parameters implemented.
      * @see org.apache.avalon.framework.parameters.Parameterizable#parameterize(org.apache.avalon.framework.parameters.Parameters)

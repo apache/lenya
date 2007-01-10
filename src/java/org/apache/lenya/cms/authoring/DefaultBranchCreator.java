@@ -27,7 +27,6 @@ import org.apache.lenya.cms.publication.Publication;
 import java.io.File;
 
 public class DefaultBranchCreator extends DefaultCreator {
-    private Logger log = Logger.getLogger(DefaultBranchCreator.class);
 
     /**
      * Return the child type.

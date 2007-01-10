@@ -24,7 +24,6 @@ import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.lenya.xml.XLink;
-import org.apache.log4j.Logger;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
 
@@ -35,8 +34,6 @@ import org.xml.sax.SAXException;
  * @version $Id$
  */
 public class XlinkCollection extends CollectionImpl {
-
-    private static final Logger log = Logger.getLogger(XlinkCollection.class);
 
     /**
      * Ctor.
