@@ -84,7 +84,7 @@ public abstract class AbstractSiteNode extends AbstractLogEnabled implements Sit
         String id = getPath().substring(1);
         String[] steps = id.split("/");
         if (steps.length == 1) {
-            return null;
+            throw new SiteException("The node [" + getPath() + "] is a top-level node.");
         } else {
             int lastIndex = id.lastIndexOf("/");
             String parentId = id.substring(0, lastIndex);

@@ -32,7 +32,7 @@ import org.apache.lenya.cms.site.SiteNode;
  * Node for SimpleSiteManager.
  */
 public class SimpleSiteNode extends AbstractSiteNode {
-    
+
     protected SimpleSiteNode(DocumentStore store, String path, String uuid, Logger logger) {
         super(store.getPublication(), store, path, uuid, logger);
     }
@@ -99,6 +99,10 @@ public class SimpleSiteNode extends AbstractSiteNode {
 
     public boolean hasLink() {
         return false;
+    }
+
+    public SiteNode getParent() throws SiteException {
+        return null;
     }
 
 }

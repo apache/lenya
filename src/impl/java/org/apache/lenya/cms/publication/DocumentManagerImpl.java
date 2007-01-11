@@ -358,8 +358,12 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
                     if (sourceNode.isTopLevel()) {
                         sourceSiblings = sourceSite.getTopLevelNodes();
                     }
-                    else {
+                    else if (sourceNode.getParent() != null) {
                         sourceSiblings = sourceNode.getParent().getChildren();
+                    }
+                    else {
+                        sourceSiblings = new SiteNode[1];
+                        sourceSiblings[0] = sourceNode;
                     }
                     
                     final int sourcePos = Arrays.asList(sourceSiblings).indexOf(sourceNode);
