@@ -39,7 +39,6 @@ public class UsecaseMessage {
     public UsecaseMessage(String _message) {
         Assert.notNull("message", _message);
         this.message = _message;
-        this.message = _message;
     }
 
     /**
@@ -50,6 +49,7 @@ public class UsecaseMessage {
     public UsecaseMessage(String _message, String[] _params) {
         this(_message);
         
+        Assert.notNull("params", _params);
         for (int i = 0; i < _params.length; i++) {
             Assert.notNull("params[" + i + "]", _params[i]);
         }

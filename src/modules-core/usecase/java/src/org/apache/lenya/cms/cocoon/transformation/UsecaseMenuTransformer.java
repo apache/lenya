@@ -111,7 +111,7 @@ public class UsecaseMenuTransformer extends AbstractSAXTransformer implements Di
                             getLogger().debug("Usecase not authorized");
                         }
                         attributes = removeHrefAttribute(attr);
-                        UsecaseMessage message = new UsecaseMessage("Access denied", null);
+                        UsecaseMessage message = new UsecaseMessage("Access denied");
                         messages = Collections.singletonList(message);
                     }
                 }
