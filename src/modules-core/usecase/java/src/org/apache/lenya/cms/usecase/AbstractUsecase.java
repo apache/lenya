@@ -178,7 +178,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      * @param message The message.
      */
     public void addInfoMessage(String message) {
-        addInfoMessage(message, null);
+        this.infoMessages.add(new UsecaseMessage(message));
     }
 
     /**
