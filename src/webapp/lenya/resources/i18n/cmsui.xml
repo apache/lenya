@@ -317,8 +317,7 @@
   <message key="delete">delete</message>
   <message key="archive">archive</message>
   <message key="restore">restore</message>
-  <message key="error-workflow-document">The event {0} is not executable on
-  document {1}</message>
+  <message key="error-workflow-document">The event {0} is not executable on document "{1}"</message>
   
   <!-- Notification -->
   <message key="notification-message">Lenya Notification</message>

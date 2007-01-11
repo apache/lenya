@@ -320,7 +320,7 @@
   <message key="submit">enviar</message>
   <message key="reject">rechazar</message>
   <message key="publish">publicar</message>
-  <message key="error-workflow-document">El evento  {0} no es ejecutable en el documento {1}</message>
+  <message key="error-workflow-document">El evento  {0} no es ejecutable en el documento "{1}"</message>
 
   <!-- Notification -->
   <message key="notification-message">Notificación</message>

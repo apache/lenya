@@ -296,7 +296,7 @@
   <message key="submit">soumettre</message>
   <message key="reject">rejeter</message>
   <message key="publish">publier</message>
-  <message key="error-workflow-document">L'événement {0} n'est pas exécutable pour le document {1}</message>
+  <message key="error-workflow-document">L'événement {0} n'est pas exécutable pour le document "{1}"</message>
 
  <!-- Notification -->
   <message key="notification-message">Notification de Lenya</message>

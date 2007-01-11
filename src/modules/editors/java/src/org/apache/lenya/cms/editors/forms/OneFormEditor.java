@@ -29,6 +29,7 @@ import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -65,8 +66,9 @@ public class OneFormEditor extends DocumentUsecase {
                 getLogger(),
                 getSourceDocument(),
                 getEvent())) {
+            String title = DublinCoreHelper.getTitle(getSourceDocument());
             addErrorMessage("error-workflow-document", new String[] { getEvent(),
-                    getSourceDocument().getId() });
+                    title });
         }
     }
 

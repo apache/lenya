@@ -312,7 +312,7 @@
   <message key="submit">einreichen</message>
   <message key="reject">ablehnen</message>
   <message key="publish">veröffentlichen</message>
-  <message key="error-workflow-document">Das Ereignis {0} kann nicht auf das Dokument {1} angewandt werden.</message>
+  <message key="error-workflow-document">Das Ereignis {0} kann nicht auf das Dokument "{1}" angewandt werden.</message>
     
   <!-- Notification -->
   <message key="notification-message">Lenya-Benachrichtigung</message>

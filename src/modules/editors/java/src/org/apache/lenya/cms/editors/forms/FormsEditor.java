@@ -48,6 +48,7 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
+import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.UsecaseMessage;
@@ -121,8 +122,9 @@ public class FormsEditor extends DocumentUsecase {
                 getLogger(),
                 getSourceDocument(),
                 getEvent())) {
+            String title = DublinCoreHelper.getTitle(getSourceDocument());
             addErrorMessage("error-workflow-document", new String[] { getEvent(),
-                    getSourceDocument().getId() });
+                    title });
         }
     }
 
