@@ -20,6 +20,7 @@ package org.apache.lenya.cms.editors;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.linking.LinkConverter;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
@@ -49,6 +50,9 @@ public class EditDocument extends DocumentUsecase {
             SourceUtil.copy(resolver,
                     getParameterAsString(SOURCE_URI),
                     getSourceDocument().getSourceURI());
+            
+            LinkConverter converter = new LinkConverter(this.manager, getLogger());
+            converter.convertUrlsToUuids(getSourceDocument());
 
             WorkflowUtil.invoke(this.manager,
                     getSession(),
