@@ -18,6 +18,7 @@
 package org.apache.lenya.cms.cocoon.transformation;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Map;
 
 import org.apache.avalon.framework.activity.Disposable;
@@ -80,7 +81,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
     protected static final String BROKEN_ATTRIB = "class";
     protected static final String BROKEN_VALUE = "brokenlink";
 
-    private boolean ignoreAElement = false;
+    private boolean ignoreLinkElement = false;
     private ServiceSelector serviceSelector;
     private PolicyManager policyManager;
     private AccessControllerResolver acResolver;
@@ -154,12 +155,10 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
         return this.currentDocument;
     }
 
-    /**
-     * The local name of the HTML &lt;a&gt; href attribute.
-     */
-    public static final String ATTRIBUTE_HREF = "href";
-
     private String indent = "";
+
+    protected String[] elementNames = { "a", "object", "img" };
+    protected String[] attributeNames = { "href", "src", "data" };
 
     /**
      * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
@@ -170,73 +169,75 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
 
         if (getLogger().isDebugEnabled()) {
             getLogger().debug(
-                    this.indent + "<" + qname + "> (ignoreAElement = " + this.ignoreAElement + ")");
+                    this.indent + "<" + qname + "> (ignoreAElement = " + this.ignoreLinkElement
+                            + ")");
             this.indent += "  ";
         }
 
         AttributesImpl newAttrs = null;
-        if (lookingAtAElement(name)) {
+        if (lookingAtLinkElement(name)) {
 
-            this.ignoreAElement = false;
+            this.ignoreLinkElement = false;
 
-            String href = attrs.getValue(ATTRIBUTE_HREF);
-            if (href != null) {
+            for (int i = 0; i < attributeNames.length; i++) {
+                String linkUrl = attrs.getValue(attributeNames[i]);
+                if (linkUrl != null) {
+                    try {
+                        newAttrs = new AttributesImpl(attrs);
 
-                Document doc = getCurrentDocument();
-
-                try {
-                    newAttrs = new AttributesImpl(attrs);
-
-                    if (getLogger().isDebugEnabled()) {
-                        getLogger().debug(this.indent + "href URL: [" + href + "]");
-                    }
-
-                    if (href.startsWith("lenya-document:")) {
-
-                        String anchor = null;
-                        String url = null;
-
-                        int anchorIndex = href.indexOf("#");
-                        if (anchorIndex > -1) {
-                            url = href.substring(0, anchorIndex);
-                            anchor = href.substring(anchorIndex + 1);
-                        } else {
-                            url = href;
+                        if (getLogger().isDebugEnabled()) {
+                            getLogger().debug(this.indent + "link URL: [" + linkUrl + "]");
                         }
 
-                        String[] linkUriAndQuery = url.split("\\?");
-                        String linkUri = linkUriAndQuery[0];
-                        String queryString = null;
-                        if (linkUriAndQuery.length > 1) {
-                            queryString = linkUriAndQuery[1];
-                        }
-                        LinkTarget target = this.linkResolver.resolve(doc, linkUri);
-                        if (target.exists()) {
-                            Document targetDocument = target.getDocument();
-                            String extension = targetDocument.getExtension();
-                            if (extension.length() > 0) {
-                                extension = "." + extension;
+                        if (linkUrl.startsWith("lenya-document:")) {
+                            Document doc = getCurrentDocument();
+
+                            String anchor = null;
+                            String url = null;
+
+                            int anchorIndex = linkUrl.indexOf("#");
+                            if (anchorIndex > -1) {
+                                url = linkUrl.substring(0, anchorIndex);
+                                anchor = linkUrl.substring(anchorIndex + 1);
+                            } else {
+                                url = linkUrl;
                             }
-                            rewriteLink(newAttrs, targetDocument, anchor, queryString, extension);
-                        } else if (doc.getArea().equals(Publication.AUTHORING_AREA)) {
-                            markBrokenLink(newAttrs, href);
-                        } else {
-                            this.ignoreAElement = true;
+
+                            String[] linkUriAndQuery = url.split("\\?");
+                            String linkUri = linkUriAndQuery[0];
+                            String queryString = null;
+                            if (linkUriAndQuery.length > 1) {
+                                queryString = linkUriAndQuery[1];
+                            }
+                            LinkTarget target = this.linkResolver.resolve(doc, linkUri);
+                            if (target.exists()) {
+                                Document targetDocument = target.getDocument();
+                                String extension = targetDocument.getExtension();
+                                if (extension.length() > 0) {
+                                    extension = "." + extension;
+                                }
+                                rewriteLink(newAttrs, attributeNames[i], targetDocument, anchor,
+                                        queryString, extension);
+                            } else if (doc.getArea().equals(Publication.AUTHORING_AREA)) {
+                                markBrokenLink(newAttrs, attributeNames[i], linkUrl);
+                            } else {
+                                this.ignoreLinkElement = true;
+                            }
                         }
+
+                    } catch (final Exception e) {
+                        getLogger().error("startElement failed: ", e);
+                        throw new SAXException(e);
                     }
-                } catch (final Exception e) {
-                    getLogger().error("startElement failed: ", e);
-                    throw new SAXException(e);
                 }
             }
-
         }
 
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug(this.indent + "ignoreAElement: " + this.ignoreAElement);
+            getLogger().debug(this.indent + "ignoreAElement: " + this.ignoreLinkElement);
         }
 
-        if (!(lookingAtAElement(name) && this.ignoreAElement)) {
+        if (!(lookingAtLinkElement(name) && this.ignoreLinkElement)) {
             if (newAttrs != null) {
                 attrs = newAttrs;
             }
@@ -252,18 +253,19 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
      * attribute.
      * 
      * @param newAttrs The new attributes.
-     * @param brokenHref The broken link URI.
+     * @param attrName The attribute name.
+     * @param brokenUrl The broken link URI.
      * @throws AccessControlException when something went wrong.
      */
-    protected void markBrokenLink(AttributesImpl newAttrs, String brokenHref)
+    protected void markBrokenLink(AttributesImpl newAttrs, String attrName, String brokenUrl)
             throws AccessControlException {
         if (newAttrs.getIndex(BROKEN_ATTRIB) > -1)
             newAttrs.removeAttribute(newAttrs.getIndex(BROKEN_ATTRIB));
         if (newAttrs.getIndex("title") > -1)
             newAttrs.removeAttribute(newAttrs.getIndex("title"));
-        if (newAttrs.getIndex("href") > -1)
-            newAttrs.setAttribute(newAttrs.getIndex("href"), "", "href", "href", "CDATA", "");
-        String warning = "Broken Link: " + brokenHref;
+        if (newAttrs.getIndex(attrName) > -1)
+            newAttrs.setAttribute(newAttrs.getIndex(attrName), "", attrName, attrName, "CDATA", "");
+        String warning = "Broken Link: " + brokenUrl;
         newAttrs.addAttribute("", "title", "title", "CDATA", warning);
         newAttrs.addAttribute("", BROKEN_ATTRIB, BROKEN_ATTRIB, "CDATA", BROKEN_VALUE);
     }
@@ -272,14 +274,16 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
      * Rewrites a link.
      * 
      * @param newAttrs The new attributes.
+     * @param attributeName The name of the attribute to rewrite.
      * @param targetDocument The target document.
      * @param anchor The anchor (the string after the # character in the URL).
      * @param queryString The query string without question mark.
      * @param extension The extension to use.
      * @throws AccessControlException when something went wrong.
      */
-    protected void rewriteLink(AttributesImpl newAttrs, Document targetDocument, String anchor,
-            String queryString, String extension) throws AccessControlException {
+    protected void rewriteLink(AttributesImpl newAttrs, String attributeName,
+            Document targetDocument, String anchor, String queryString, String extension)
+            throws AccessControlException {
 
         String webappUrl = targetDocument.getCanonicalWebappURL();
         Policy policy = this.policyManager.getPolicy(this.accreditableManager, webappUrl);
@@ -313,19 +317,20 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
             getLogger().debug(this.indent + "Rewriting URL to: [" + rewrittenURL + "]");
         }
 
-        setHrefAttribute(newAttrs, rewrittenURL);
+        setAttribute(newAttrs, attributeName, rewrittenURL);
     }
 
     /**
      * Sets the value of the href attribute.
      * 
      * @param attr The attributes.
+     * @param name The attribute name.
      * @param value The value.
      * @throws IllegalArgumentException if the href attribute is not contained
      *         in this attributes.
      */
-    protected void setHrefAttribute(AttributesImpl attr, String value) {
-        int position = attr.getIndex(ATTRIBUTE_HREF);
+    protected void setAttribute(AttributesImpl attr, String name, String value) {
+        int position = attr.getIndex(name);
         if (position == -1) {
             throw new IllegalArgumentException("The href attribute is not available!");
         }
@@ -341,8 +346,8 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
             this.indent = this.indent.substring(2);
             getLogger().debug(this.indent + "</" + qname + ">");
         }
-        if (lookingAtAElement(name) && this.ignoreAElement) {
-            this.ignoreAElement = false;
+        if (lookingAtLinkElement(name) && this.ignoreLinkElement) {
+            this.ignoreLinkElement = false;
         } else {
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug(this.indent + "</" + qname + "> sent");
@@ -351,8 +356,8 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
         }
     }
 
-    private boolean lookingAtAElement(String name) {
-        return name.equals("a");
+    private boolean lookingAtLinkElement(String name) {
+        return Arrays.asList(this.elementNames).contains(name);
     }
 
     /**
@@ -377,6 +382,6 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
      * @see org.apache.avalon.excalibur.pool.Recyclable#recycle()
      */
     public void recycle() {
-        this.ignoreAElement = false;
+        this.ignoreLinkElement = false;
     }
 }

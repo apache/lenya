@@ -35,6 +35,9 @@
       <img border="0">
         <xsl:attribute name="src">
           <xsl:choose>
+            <xsl:when test="starts-with(@data, 'lenya-document:')">
+              <xsl:value-of select="@data"/>
+            </xsl:when>
             <xsl:when test="not(starts-with(@data, '/'))">
               <xsl:value-of select="$nodeid"/>/<xsl:value-of select="@data"/>
             </xsl:when>

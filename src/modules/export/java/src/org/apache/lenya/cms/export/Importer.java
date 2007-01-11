@@ -22,12 +22,10 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.cms.linking.Link;
-import org.apache.lenya.cms.linking.LinkResolver;
+import org.apache.lenya.cms.linking.LinkConverter;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourceType;
@@ -36,11 +34,7 @@ import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.tree.DefaultSiteTree;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
-import org.apache.xpath.XPathAPI;
-import org.w3c.dom.Attr;
 import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
 /**
  * Import content.
@@ -187,80 +181,8 @@ public class Importer extends AbstractLogEnabled {
     protected void convertLinks(Publication srcPub, Area area) {
         Document[] docs = area.getDocuments();
         for (int i = 0; i < docs.length; i++) {
-            convertLinks(srcPub, docs[i]);
-        }
-    }
-
-    protected void convertLinks(Publication srcPub, Document examinedDocument) {
-        boolean linksRewritten = false;
-        LinkResolver linkResolver = null;
-        try {
-            ResourceType type = examinedDocument.getResourceType();
-            String[] xPaths = type.getLinkAttributeXPaths();
-
-            if (xPaths.length == 0) {
-                if (getLogger().isDebugEnabled()) {
-                    getLogger().debug(
-                            "Convert links: No XPaths for resource type [" + type.getName() + "]");
-                }
-            } else {
-                linkResolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
-                DocumentFactory factory = examinedDocument.getFactory();
-
-                org.w3c.dom.Document xmlDocument = SourceUtil.readDOM(examinedDocument
-                        .getSourceURI(), this.manager);
-
-                for (int xPathIndex = 0; xPathIndex < xPaths.length; xPathIndex++) {
-                    if (getLogger().isDebugEnabled()) {
-                        getLogger()
-                                .debug("Convert links: Check XPath [" + xPaths[xPathIndex] + "]");
-                    }
-                    NodeList nodes = XPathAPI.selectNodeList(xmlDocument, xPaths[xPathIndex]);
-                    for (int nodeIndex = 0; nodeIndex < nodes.getLength(); nodeIndex++) {
-                        Node node = nodes.item(nodeIndex);
-                        if (node.getNodeType() != Node.ATTRIBUTE_NODE) {
-                            throw new RuntimeException("The XPath [" + xPaths[xPathIndex]
-                                    + "] may only match attribute nodes!");
-                        }
-                        Attr attribute = (Attr) node;
-                        final String url = attribute.getValue();
-                        if (getLogger().isDebugEnabled()) {
-                            getLogger().debug("Convert links: Check URL [" + url + "]");
-                        }
-
-                        if (url.startsWith("/" + srcPub.getId() + "/" + examinedDocument.getArea()
-                                + "/")) {
-                            String targetPubId = examinedDocument.getPublication().getId();
-                            final String webappUrl = "/" + targetPubId
-                                    + url.substring(("/" + srcPub.getId()).length());
-                            if (factory.isDocument(webappUrl)) {
-                                Document targetDocument = factory.getFromURL(webappUrl);
-
-                                if (getLogger().isDebugEnabled()) {
-                                    getLogger().debug(
-                                            "Convert links: Check webapp URL [" + webappUrl + "]");
-                                }
-
-                                Link link = new Link();
-                                link.setUuid(targetDocument.getUUID());
-                                attribute.setValue(link.getUri());
-                                linksRewritten = true;
-                            }
-                        }
-                    }
-                }
-
-                if (linksRewritten) {
-                    SourceUtil.writeDOM(xmlDocument, examinedDocument.getSourceURI(), this.manager);
-                }
-            }
-        } catch (Exception e) {
-            throw new RuntimeException("Error rewriting document: [" + examinedDocument
-                    + "] - source URI: [" + examinedDocument.getSourceURI() + "]", e);
-        } finally {
-            if (linkResolver != null) {
-                this.manager.release(linkResolver);
-            }
+            LinkConverter converter = new LinkConverter(this.manager, getLogger());
+            converter.convertUrlsToUuids(srcPub, docs[i]);
         }
     }
 

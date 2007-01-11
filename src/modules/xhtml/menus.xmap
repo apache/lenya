@@ -26,6 +26,9 @@
     	
       <map:match pattern="**">
         <map:generate type="serverpages" src="fallback://lenya/modules/xhtml/config/menu.xsp"/>
+        <map:transform type="log">
+          <map:parameter name="logfile" value="logbxe.txt"/>
+        </map:transform>
         <map:serialize type="xml"/>
       </map:match>
       

@@ -235,8 +235,15 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      */
     public String getExtension() {
         if (extension == null) {
-            getLogger().info("Default extension will be used: " + defaultExtension);
-            return defaultExtension;
+            String sourceExtension = getSourceExtension();
+            if (sourceExtension.equals("xml") || sourceExtension.equals("")) {
+                getLogger().info("Default extension will be used: " + defaultExtension);
+                return defaultExtension;
+            }
+            else {
+                return sourceExtension;
+            }
+            
         }
         return this.extension;
     }

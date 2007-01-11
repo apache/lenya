@@ -101,7 +101,6 @@
       <map:match pattern="**/">
          <map:redirect-to uri="index.html"/>
       </map:match>
-
     </map:pipeline>
 
     
@@ -137,6 +136,7 @@
           <map:part src="cocoon://modules/sitetree/{2}/{3}/search/{5}.xml"/>
           <map:part src="{resource-type:format-xhtml}?rendertype={1}"/>
         </map:aggregate>
+        <map:transform type="link-rewrite"/>
         <map:transform src="fallback://lenya/modules/svg/xslt/image2svg.xsl"/>
         <map:select type="resource-exists">
           <map:parameter name="prefix" value="fallback://"/>
@@ -198,13 +198,8 @@
         </map:transform>
         <map:transform type="i18n">      
           <map:parameter name="locale" value="{page-envelope:document-language}"/>
-        </map:transform>    
-        <map:select type="parameter">
-          <map:parameter name="parameter-selector-test" value="{1}"/>
-          <map:when test="view">
-            <map:transform type="link-rewrite"/>
-          </map:when>
-        </map:select>
+        </map:transform>
+        <map:transform type="link-rewrite"/>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>
@@ -214,6 +209,7 @@
     request. It then aggregates the lenya menu (for the given area) and
     the lenya body, the actual document. -->
     <map:pipeline>
+      
       <map:match pattern="**.bxe.html">
         <map:generate src="cocoon:/lenyabody-edit/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-url}"/>
         <map:serialize type="xml"/>

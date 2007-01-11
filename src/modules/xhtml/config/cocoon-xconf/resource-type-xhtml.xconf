@@ -33,6 +33,7 @@
     <!-- <sample-name name="Two Column Layout">fallback://lenya/modules/xhtml/samples/xhtml-2col.xml</sample-name> -->
     
     <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@href"/>
+    <link-attribute xpath="//*[namespace-uri() = 'http://www.w3.org/1999/xhtml']/@data"/>
     <format name="xhtml" uri="cocoon://modules/xhtml/xhtml.xml"/>
     <format name="webdavGET" uri="cocoon://modules/xhtml/davget.xml"/>
     <format name="luceneIndex" uri="cocoon://modules/xhtml/lucene-index"/>
