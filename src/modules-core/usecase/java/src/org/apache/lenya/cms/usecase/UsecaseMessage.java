@@ -17,6 +17,8 @@
  */
 package org.apache.lenya.cms.usecase;
 
+import org.apache.lenya.util.Assert;
+
 
 /**
  * A message in a usecase. This an encapsulation for an internationalizable
@@ -35,6 +37,8 @@ public class UsecaseMessage {
      * @param _message The message.
      */
     public UsecaseMessage(String _message) {
+        Assert.notNull("message", _message);
+        this.message = _message;
         this.message = _message;
     }
 
@@ -44,7 +48,11 @@ public class UsecaseMessage {
      * @param _params The parameters.
      */
     public UsecaseMessage(String _message, String[] _params) {
-        this.message = _message;
+        this(_message);
+        
+        for (int i = 0; i < _params.length; i++) {
+            Assert.notNull("params[" + i + "]", _params[i]);
+        }
         this.params = _params;
     }
 
