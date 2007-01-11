@@ -97,13 +97,6 @@
       </map:match>
     </map:pipeline>
 
-    <!-- Editor Kupu -->
-    <map:pipeline>
-      <map:match pattern="kupu/**">
-        <map:read src="fallback://lenya/modules/kupu/resources/kupu/{1}"/>
-      </map:match>
-    </map:pipeline>
-
     <!-- ajax -->
     <map:pipeline>
       <map:match pattern="cforms/ajax/**">
