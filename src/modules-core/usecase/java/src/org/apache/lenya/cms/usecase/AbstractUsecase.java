@@ -794,7 +794,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
         this.manager = manager;
     }
 
-    public void setSession(org.apache.lenya.cms.repository.Session session) {
+    protected void setSession(org.apache.lenya.cms.repository.Session session) {
         this.session = session;
         Request request = ContextHelper.getRequest(this.context);
         request.setAttribute(org.apache.lenya.cms.repository.Session.class.getName(), this.session);
