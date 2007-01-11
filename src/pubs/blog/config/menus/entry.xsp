@@ -41,10 +41,10 @@
   <menus>
     <menu i18n:attr="name" name="File">
       <block>
-        <item href="index-bxe.html">Edit&#160;with&#160;BXE</item>
         <!--
-        <item uc:usecase="bxe.edit" href="?">Edit&#160;with&#160;BXE</item>
+        <item href="index-bxe.html">Edit&#160;with&#160;BXE</item>
         -->
+        <item uc:usecase="bxe.edit" href="?">Edit&#160;with&#160;BXE</item>
         <item uc:usecase="editors.oneform" href="?">Edit&#160;with&#160;one&#160;Form</item>
         <item uc:usecase="editors.forms" href="?&amp;form=entry">Edit&#160;with&#160;Forms</item>
       </block>

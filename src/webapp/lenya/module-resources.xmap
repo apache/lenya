@@ -48,6 +48,10 @@
         <map:read src="fallback://lenya/modules/{1}/resources/{2}.js" mime-type="application/x-javascript" />
       </map:match>
 
+      <map:match pattern="*/**.xsl">
+        <map:read src="fallback://lenya/modules/{1}/resources/{2}.xsl" mime-type="application/xslt+xml"/>
+      </map:match>
+      
       <!-- matches modules/*/**.* -->
       <map:match pattern="*/**.*">
         

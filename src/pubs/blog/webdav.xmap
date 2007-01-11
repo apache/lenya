@@ -6,9 +6,9 @@
   The ASF licenses this file to You under the Apache License, Version 2.0
   (the "License"); you may not use this file except in compliance with
   the License.  You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,10 +19,11 @@
 <!-- $Id$ -->
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
-
+  
   <map:pipelines>
-
+    
     <map:pipeline type="noncaching">
+      
       <map:match pattern="entries/**/propfind-depth-*.xml">
         <map:generate type="directory" src="content/authoring/entries/{1}/"/>
         <map:transform src="fallback://lenya/xslt/util/propfind.xsl">
@@ -31,6 +32,7 @@
         </map:transform>
         <map:serialize type="xml" status-code="207"/>
       </map:match>
+      
       <map:match pattern="entries/**/">
         <map:select type="request-method">
           <map:when test="PROPFIND">
@@ -48,25 +50,28 @@
         </map:select>
       </map:match>
     </map:pipeline>
-
+    
     <map:pipeline type="noncaching">
-      <map:match pattern="entries/**.xml">
-       <map:select type="request-method">
+      <map:match pattern="**/index.webdav.xml">
+        <map:select type="request-method">
           <map:when test="PUT">
             <map:generate type="stream"/>
             <map:transform src="fallback://lenya/xslt/authoring/edit/addSourceTags.xsl">
-              <map:parameter name="source" value="content/authoring/entries/{1}.xml"/>
+              <map:parameter name="source" value="lenya-document:{page-envelope:document-uuid}"/>
+              <!--
+                <map:parameter name="source" value="content/authoring/entries/{1}.xml"/>
+              -->
             </map:transform>
             <map:transform type="write-source"/>
             <map:serialize type="xml" status-code="204"/> <!-- HTTP status code: 204 No Content -->
           </map:when>
           <map:otherwise> <!-- GET -->
-            <map:generate src="content/authoring/entries/{1}.xml"/>
+            <map:generate src="lenya-document:{page-envelope:document-uuid}"/>
             <map:serialize type="xml"/>
           </map:otherwise>
         </map:select>
       </map:match>
     </map:pipeline>
-
+    
   </map:pipelines>
 </map:sitemap>

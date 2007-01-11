@@ -105,8 +105,8 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
         return store;
     }
 
-    protected String getCollectionUuid(Publication pub, String area) {
-        String sourceUri = pub.getContentURI(area) + DOCUMENT_PATH;
+    protected String getCollectionUuid(Publication pub) {
+        String sourceUri = pub.getContentURI(Publication.AUTHORING_AREA) + DOCUMENT_PATH;
         try {
             
             if (!SourceUtil.exists(sourceUri, manager)) {
@@ -132,7 +132,7 @@ public class SimpleSiteManager extends AbstractSiteManager implements Serviceabl
      * @return The key to store sitetree objects in the identity map.
      */
     protected String getKey(Publication publication, String area) {
-        return publication.getId() + ":" + area + ":" + getCollectionUuid(publication, area);
+        return publication.getId() + ":" + area + ":" + getCollectionUuid(publication);
     }
 
     /**

@@ -25,22 +25,25 @@
   <component-instance name="entry"
                       logger="lenya.resourcetypes.entry"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
-    <schema language="http://relaxng.org/ns/structure/0.9" src="fallback://lenya/resources/schemas/entry.rng"/>
-    <sample-name>fallback://lenya/resources/samples/entry.xml</sample-name>
+    <schema language="http://relaxng.org/ns/structure/0.9"
+      src="fallback://lenya/modules/blog/resources/schemas/entry.rng"/>
+    <sample-name>fallback://lenya/modules/blog/resources/samples/entry.xml</sample-name>
   </component-instance>
   
   <component-instance name="sidebar"
                       logger="lenya.resourcetypes.sidebar"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
-    <schema language="http://relaxng.org/ns/structure/0.9" src="fallback://lenya/resources/schemas/sidebar.rng"/>
-    <sample-name>fallback://lenya/resources/samples/sidebar.xml</sample-name>
+    <schema language="http://relaxng.org/ns/structure/0.9"
+      src="fallback://lenya/modules/blog/resources/schemas/sidebar.rng"/>
+    <sample-name>fallback://lenya/modules/blog/samples/sidebar.xml</sample-name>
   </component-instance>
 
   <component-instance name="feed"
                       logger="lenya.resourcetypes.feed"
                       class="org.apache.lenya.cms.publication.ResourceTypeImpl">
-    <schema language="http://relaxng.org/ns/structure/0.9" src="fallback://lenya/resources/schemas/feed.rng"/>
-    <sample-name>fallback://lenya/resources/samples/feed.xml</sample-name>
+    <schema language="http://relaxng.org/ns/structure/0.9"
+      src="fallback://lenya/modules/blog/resources/schemas/feed.rng"/>
+    <sample-name>fallback://lenya/modules/blog/resources/samples/feed.xml</sample-name>
   </component-instance>
   
 </xconf>

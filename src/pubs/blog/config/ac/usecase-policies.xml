@@ -22,6 +22,7 @@
   <usecase id="blog.createEntry"><role id="edit" method="grant"/></usecase>
   <usecase id="editors.oneform"><role id="edit" method="grant"/></usecase>
   <usecase id="editors.forms"><role id="edit" method="grant"/></usecase>
+  <usecase id="bxe.edit"><role id="edit" method="grant"/></usecase>
   <usecase id="workflow.publish"><role id="edit" method="grant"/></usecase>
   <usecase id="ac.logout"><role id="edit" method="grant"/></usecase>
   <usecase id="admin.usecases"><role id="edit" method="grant"/></usecase>
