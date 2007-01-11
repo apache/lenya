@@ -149,15 +149,6 @@
         <map:serialize type="xml"/>
       </map:match>
       
-      <map:match pattern="*/entries/*/*/*/*/index.bxe.html">
-        <map:generate src="cocoon:/{1}/entries/{2}/{3}/{4}/{5}/lenya-page-body.xml"/>
-        <map:transform src="xslt/entry/main-{1}.xsl">
-          <map:parameter name="contextprefix" value="{request:contextPath}"/>
-          <map:parameter name="relative2root" value="../../../../.."/>
-        </map:transform>
-        <map:serialize type="xml"/>
-      </map:match>        
-      
       <map:match pattern="*/entries/*/*/*/*/index.html">
         <map:generate src="cocoon:/{1}/entries/{2}/{3}/{4}/{5}/lenya-page-body.xml"/>
         <map:transform src="xslt/entry/main-{1}.xsl">
@@ -177,56 +168,6 @@
         </map:select>
       </map:match>
     </map:pipeline>
-    
-    <!-- BX Editor: Entries -->
-    
-    <map:pipeline>
-      <!--
-      <map:match pattern="*/entries/*/*/*/*/index.bxe.html">
-        <map:act type="resource-exists" src="fallback://lenya/modules/bxe/resources/bxe/bxeLoader.js">
-          <map:aggregate element="bxe">
-            <map:part src="fallback://lenya/modules/bxe/resources/misc/index.xhtml"/>
-            <map:part src="resources/misc/bxe/entry-namespaces.xml"/>
-          </map:aggregate>
-          <map:transform src="fallback://lenya/modules/bxe/xslt/aggregate.xsl"/>
-          <map:transform src="fallback://lenya/modules/bxe/xslt/index-xhtml.xsl">
-            <map:parameter name="configfile" value="./config-bxe.xml"/>
-            <map:parameter name="context" value="{request:contextPath}"/>
-          </map:transform>
-          <map:serialize type="xhtml"/>
-        </map:act>
-        <map:generate src="fallback://lenya/modules/bxe/resources/misc/download.xhtml"/>
-        <map:serialize type="xhtml"/>
-      </map:match>
-    </map:pipeline>
-    <map:pipeline>
-      <map:match pattern="*/entries/*/*/*/*/config-bxe.xml">
-        <map:generate src="fallback://lenya/modules/bxe/resources/misc/inc/config.xml"/>
-        <map:transform src="fallback://lenya/modules/bxe/xslt/config-xml.xsl">
-          <map:parameter name="BX_xmlfile" value="../../../../../../webdav/entries/{2}/{3}/{4}/{5}/index.xml"/>
-          <map:parameter name="BX_xslfile" value="entry-bxe.xsl"/>
-          <map:parameter name="css" value="entry-bxe.css"/>
-          <map:parameter name="BX_exitdestination" value="index.html"/>
-          <map:parameter name="BX_validationfile" value="entry-relaxng-bxe.xml"/>
-        </map:transform>
-        <map:serialize type="xml"/>
-      </map:match>
-    </map:pipeline>
-    <map:pipeline>
-      <map:match pattern="*/entries/*/*/*/*/entry-bxe.xsl">
-        <map:generate src="xslt/entry/bxe.xsl"/>
-        <map:serialize type="xml"/>
-      </map:match>
-      <map:match pattern="*/entries/*/*/*/*/entry-bxe.css">
-        <map:read src="resources/misc/bxe/entry.css" mime-type="text/css"/>
-      </map:match>
-      <map:match pattern="*/entries/*/*/*/*/entry-relaxng-bxe.xml">
-        <map:generate src="lenya/resources/schemas/entry.rng"/>
-        <map:serialize type="xml"/>
-      </map:match>
-    </map:pipeline>
-    --></map:pipeline>
-    <!-- /BX Editor: Entries -->
     
     <!-- Entry Overwiev -->
     <map:pipeline>
