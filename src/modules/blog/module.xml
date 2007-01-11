@@ -6,9 +6,9 @@
   The ASF licenses this file to You under the Apache License, Version 2.0
   (the "License"); you may not use this file except in compliance with
   the License.  You may obtain a copy of the License at
-
-      http://www.apache.org/licenses/LICENSE-2.0
-
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
   Unless required by applicable law or agreed to in writing, software
   distributed under the License is distributed on an "AS IS" BASIS,
   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,12 +16,14 @@
   limitations under the License.
 -->
 
-<!-- $Id$ -->
+<!-- $Id: publication.xml 374687 2006-02-03 15:24:55Z michi $ -->
 
-<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'blog/workflow.publish']">
-  <component-instance name="blog/workflow.publish"
-                      logger="lenya.workflow"
-                      class="org.apache.lenya.cms.workflow.usecases.Publish">
-    <view template="usecases/workflow/publish.jx"/>
-  </component-instance>
-</xconf>
+<module xmlns="http://apache.org/lenya/module/1.0">
+  <id>org.apache.lenya.modules.blog</id>
+  <depends module="org.apache.lenya.modules.usecase"/>
+  <package>org.apache.lenya.modules</package>
+  <version>0.1-dev</version>
+  <name>Blog</name>
+  <lenya-version>@lenya.version@</lenya-version>
+  <description>Blog module</description>
+</module>

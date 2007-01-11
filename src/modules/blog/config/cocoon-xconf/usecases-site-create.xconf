@@ -18,10 +18,10 @@
 
 <!-- $Id$ -->
 
-<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'blog/site.create']">
-  <component-instance name="blog/site.create"
+<xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'blog.createEntry']">
+  <component-instance name="blog.createEntry"
                       logger="lenya.site"
                       class="org.apache.lenya.cms.site.usecases.CreateBlogEntry">
-    <view template="usecases/site/create.jx"/>
+    <view template="modules/blog/usecases/site/create.jx"/>
   </component-instance>
 </xconf>

@@ -23,10 +23,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
+import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
-import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.util.DocumentSet;
 import org.apache.lenya.cms.repository.Node;
@@ -62,20 +63,13 @@ public class Publish extends DocumentUsecase {
             NodeSet subsite = SiteUtil.getSubSite(this.manager, doc.getLink().getNode());
             set.addAll(new DocumentSet(subsite.getDocuments()));
 
-            Document liveDoc = doc.getAreaVersion(Publication.LIVE_AREA);
-            if (liveDoc.exists()) {
-                NodeSet liveSubsite = SiteUtil.getSubSite(this.manager, liveDoc.getLink().getNode());
-                set.addAll(new DocumentSet(liveSubsite.getDocuments()));
-            }
-            else
-                set.add(liveDoc);
-
             Document[] documents = set.getDocuments();
             for (int i = 0; i < documents.length; i++) {
                 nodes.add(documents[i].getRepositoryNode());
             }
 
-            nodes.add(liveDoc.area().getSite().getRepositoryNode());
+            Area live = doc.getPublication().getArea(Publication.LIVE_AREA);
+            nodes.add(live.getSite().getRepositoryNode());
             return (Node[]) nodes.toArray(new Node[nodes.size()]);
 
         } catch (Exception e) {
@@ -106,8 +100,12 @@ public class Publish extends DocumentUsecase {
                     getLogger(),
                     getSourceDocument(),
                     event)) {
+                String title = DublinCoreHelper.getTitle(getSourceDocument());
+                if (title == null) {
+                    title = "";
+                }
                 addErrorMessage("error-workflow-document", new String[] { getEvent(),
-                        getSourceDocument().getId() });
+                        title });
             }
 
         }
@@ -141,17 +139,18 @@ public class Publish extends DocumentUsecase {
     }
 
     protected void updateFeed() throws Exception {
-        DocumentFactory map = DocumentUtil.createDocumentFactory(this.manager, getSession());
 
         Document[] docs = new Document[2];
         org.w3c.dom.Document[] doms = new org.w3c.dom.Document[2];
 
-        docs[0] = map.get(this.getSourceDocument().getPublication(),
-                Publication.LIVE_AREA,
-                "/feeds/all/index");
-        docs[1] = map.get(this.getSourceDocument().getPublication(),
-                Publication.AUTHORING_AREA,
-                "/feeds/all/index");
+        Publication pub = getSourceDocument().getPublication();
+        Area authoring = pub.getArea(Publication.AUTHORING_AREA);
+        Area live = pub.getArea(Publication.LIVE_AREA);
+        String path = "/feeds/all/index";
+        String language = pub.getDefaultLanguage();
+        
+        docs[0] = live.getSite().getNode(path).getLink(language).getDocument();
+        docs[1] = authoring.getSite().getNode(path).getLink(language).getDocument();
 
         DateFormat datefmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
         DateFormat ofsfmt = new SimpleDateFormat("Z");
@@ -162,18 +161,18 @@ public class Publish extends DocumentUsecase {
                 + dateofs.substring(3, 5);
 
         for (int i = 0; i < 2; i++) {
-            doms[i] = DocumentHelper.readDocument(docs[i].getFile());
+            doms[i] = SourceUtil.readDOM(docs[i].getSourceURI(), this.manager);
             Element parent = doms[i].getDocumentElement();
             // set modified date on publish
             Element element = (Element) XPathAPI.selectSingleNode(parent,
                     "/*[local-name() = 'feed']/*[local-name() = 'modified']");
             DocumentHelper.setSimpleElementText(element, datestr);
-            DocumentHelper.writeDocument(doms[i], docs[i].getFile());
+            SourceUtil.writeDOM(doms[i], docs[i].getSourceURI(), this.manager);
         }
     }
 
     protected void updateBlogEntry(Document doc) throws Exception {
-        org.w3c.dom.Document dom = DocumentHelper.readDocument(doc.getFile());
+        org.w3c.dom.Document dom = SourceUtil.readDOM(doc.getSourceURI(), this.manager);
         Element parent = dom.getDocumentElement();
 
         DateFormat datefmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -208,7 +207,7 @@ public class Publish extends DocumentUsecase {
             DocumentHelper.setSimpleElementText(element, datestr);
         }
 
-        DocumentHelper.writeDocument(dom, doc.getFile());
+        SourceUtil.writeDOM(dom, doc.getSourceURI(), this.manager);
     }
 
     /**

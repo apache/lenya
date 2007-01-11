@@ -25,7 +25,7 @@
     <component-instance name="blog/workflow.delete"
                         logger="lenya.usecases.workflow"
                         class="org.apache.lenya.blog.cms.usecases.Delete">
-      <view template="usecases/workflow/delete.jx"/>
+      <view template="modules/blog/usecases/workflow/delete.jx"/>
     </component-instance>
 
   </xconf>
