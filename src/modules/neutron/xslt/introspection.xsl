@@ -34,21 +34,22 @@
 <!--
     <edit mime-type="application/xml" name="Body Content">
 -->
-<!-- TODO: In order to get the WYSIWYG view one needs to change the mime-type to xhtml+xml, but somehow this causes problems re saving ... See missing mime-type within cocoon_2_1_x/src/java/org/apache/cocoon/generation/StreamGenerator.java -->
+
+    <!--
+    TODO: In order to get the WYSIWYG view one needs to change the mime-type
+    to xhtml+xml, but somehow this causes problems re saving ...
+    See missing mime-type within
+    cocoon_2_1_x/src/java/org/apache/cocoon/generation/StreamGenerator.java
+    -->
     <edit mime-type="application/xhtml+xml" name="Body Content">
 
-      <!--<open url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.module=neutron&amp;lenya.step=open" method="GET"/>-->
-
-      <checkout url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.module=neutron&amp;lenya.step=checkout" method="GET"/>
+      <checkout url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.usecase=neutron.checkout" method="GET"/>
 
 <!-- Save without releasing the lock, e.g. for "global" temporary saving -->
 <!--
       <save url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.module=neutron&amp;lenya.step=save" method="PUT"/>
 -->
-      
-      <checkin url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.module=neutron&amp;lenya.step=checkin" method="PUT"/>
-
-
+      <checkin url="{$context}/{$publication}/authoring/{$page-id}.xml?lenya.usecase=neutron.checkin" method="PUT"/>
 
 <!--
       <schemas>

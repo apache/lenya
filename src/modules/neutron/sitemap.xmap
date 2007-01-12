@@ -38,95 +38,34 @@
   
     <map:pipeline>
         
-      <map:match pattern="open" type="step">
-        <map:select type="resource-exists">
-        <map:parameter name="prefix" value="lenyadoc:/"/>
-          <map:when test="{page-envelope:document-language}/{page-envelope:document-id}">
-            <map:read src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-id}"/>
+      <map:match pattern="load.xml">
+        <map:select type="parameter">
+          <map:parameter name="parameter-selector-test" value="{flow-attr:count(usecase/errorMessages)}"/>
+          <map:when test="0.0">
+            <map:read src="lenya-document:{page-envelope:document-uuid}"/>
           </map:when>
           <map:otherwise>
             <map:generate src="context://lenya/content/util/empty.xml"/>
-            <map:serialize type="xml" status-code="412"/>
+            <map:serialize type="xml" status-code="500"/>
           </map:otherwise>
         </map:select>
       </map:match>
       
-      <map:match pattern="checkout" type="step">
+      <map:match pattern="checkout.xml">
         <map:select type="resource-exists">
-        <map:parameter name="prefix" value="lenyadoc:/"/>
-          <map:when test="{page-envelope:document-language}/{page-envelope:document-id}">
+          <map:when test="lenya-document:{page-envelope:document-uuid}">
             <map:act type="reserved-checkout">
               <!-- TODO: add info from RCML ... -->
               <map:generate src="checkout-exception.xml"/>
               <map:serialize type="xml" status-code="500"/>
             </map:act>
-            <map:read src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-id}"/>
+            <map:read src="lenya-document:{page-envelope:document-uuid}"/>
           </map:when>
           <map:otherwise>
             <map:generate src="context://lenya/content/util/empty.xml"/>
             <map:serialize type="xml" status-code="412"/>
           </map:otherwise>
         </map:select>
-      </map:match>
-      
-      <map:match pattern="save" type="step">
-        <!-- test if the document is checked out -->
-        <map:act type="reserved-checkout-test">
-          <map:generate src="checkout-exception.xml"/>
-          <map:serialize type="xml" status-code="500"/>
-        </map:act>
-        <map:generate type="stream"/>
-        <map:transform src="fallback://lenya/modules/neutron/xslt/addSourceTags.xsl">
-          <map:parameter name="source" value="context://lenya/pubs/{page-envelope:publication-id}/content/{page-envelope:area}/{page-envelope:document-path}"/>
-        </map:transform>
-        <map:transform type="write-source">
-          <map:parameter name="serializer" value="xml"/>
-        </map:transform>
-        <map:serialize type="xml"/>
-      </map:match>
-        
-      <map:match pattern="checkin" type="step">
-        <!-- test if the document is checked out -->
-        <map:act type="reserved-checkout-test">
-          <map:generate src="checkout-exception.xml"/>
-          <map:serialize type="xml" status-code="500"/>
-        </map:act>
-        <map:generate type="stream"/>
-        <map:transform src="fallback://lenya/modules/neutron/xslt/addSourceTags.xsl">
-          <map:parameter name="source" value="context://lenya/pubs/{page-envelope:publication-id}/content/{page-envelope:area}/{page-envelope:document-path}"/>
-        </map:transform>
-        <map:transform type="write-source">
-          <map:parameter name="serializer" value="xml"/>
-        </map:transform>
-        <map:act type="reserved-checkin">
-          <map:generate src="checkin-exception.xml"/>
-          <map:serialize type="xml"  status-code="500"/>
-        </map:act>
-        <map:serialize type="xml"/>
-      </map:match>
-      
-      <map:match pattern="lock" type="step">
-        <map:select type="resource-exists">
-        <map:parameter name="prefix" value="lenyadoc:/"/>
-          <map:when test="{page-envelope:document-language}/{page-envelope:document-id}">
-            <map:act type="reserved-checkout">
-              <!-- TODO: add info from RCML ... -->
-              <map:generate src="checkout-exception.xml"/>
-              <map:serialize type="xml" status-code="500"/>
-            </map:act>
-          </map:when>
-          <map:otherwise>
-            <map:generate src="context://lenya/content/util/empty.xml"/>
-            <map:serialize type="xml" status-code="412"/>
-          </map:otherwise>
-        </map:select>
-      </map:match>
-      
-      <map:match pattern="unlock" type="step">
-        <map:act type="reserved-checkin">
-          <map:generate src="checkin-exception.xml"/>
-          <map:serialize type="xml"  status-code="500"/>
-        </map:act>
       </map:match>
       
     </map:pipeline>

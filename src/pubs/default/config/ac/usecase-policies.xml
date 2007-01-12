@@ -355,5 +355,11 @@
     <role id="edit" method="grant"/>
     <role id="review" method="grant"/>
   </usecase>
+  <usecase id="neutron.checkout">
+    <role id="edit" method="grant"/>
+  </usecase>
+  <usecase id="neutron.checkin">
+    <role id="edit" method="grant"/>
+  </usecase>
 </usecases>
     

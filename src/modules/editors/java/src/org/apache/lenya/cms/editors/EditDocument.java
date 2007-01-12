@@ -21,10 +21,15 @@ import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.linking.LinkConverter;
+import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.cms.usecase.xml.UsecaseErrorHandler;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
+import org.apache.lenya.xml.Schema;
+import org.apache.lenya.xml.ValidationUtil;
 
 /**
  * Usecase to edit documents.
@@ -43,29 +48,24 @@ public class EditDocument extends DocumentUsecase {
      */
     protected void doExecute() throws Exception {
         super.doExecute();
-        SourceResolver resolver = null;
-        Source source = null;
-        try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            SourceUtil.copy(resolver,
-                    getParameterAsString(SOURCE_URI),
-                    getSourceDocument().getSourceURI());
+
+        Document sourceDoc = getSourceDocument();
+
+        String sourceUri = getParameterAsString(SOURCE_URI);
+        org.w3c.dom.Document xmlDoc = SourceUtil.readDOM(sourceUri, this.manager);
+        
+        ResourceType resourceType = sourceDoc.getResourceType();
+        Schema schema = resourceType.getSchema();
+        ValidationUtil.validate(this.manager, xmlDoc, schema, new UsecaseErrorHandler(this));
+
+        if (!hasErrors()) {
+            SourceUtil.writeDOM(xmlDoc, sourceDoc.getSourceURI(), this.manager);
             
             LinkConverter converter = new LinkConverter(this.manager, getLogger());
             converter.convertUrlsToUuids(getSourceDocument());
 
-            WorkflowUtil.invoke(this.manager,
-                    getSession(),
-                    getLogger(),
-                    getSourceDocument(),
+            WorkflowUtil.invoke(this.manager, getSession(), getLogger(), getSourceDocument(),
                     "edit");
-        } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
-            }
         }
     }
 
@@ -73,11 +73,6 @@ public class EditDocument extends DocumentUsecase {
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
     protected Node[] getNodesToLock() throws UsecaseException {
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("EditDocument::getObjectsToLock() called on source document ["
-                    + getSourceDocument().getId() + "]");
-        }
-
         Node[] objects = { getSourceDocument().getRepositoryNode() };
         return objects;
     }

@@ -21,9 +21,9 @@
     This file defines the publication specific use-cases
 -->
 
-  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'editors.publicationEdit']">
-    <component-instance name="editors.publicationEdit" logger="lenya.publication"
-      class="org.apache.lenya.cms.editors.EditDocument">
-      <parameter name="sourceUri" value="cocoon://modules/editors/stream.xml"/>
+  <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'neutron.checkout']">
+    <component-instance name="neutron.checkout" logger="lenya.neutron"
+      class="org.apache.lenya.cms.usecase.DummyUsecase">
+      <view uri="cocoon://modules/neutron/load.xml"/>
     </component-instance>
   </xconf>
