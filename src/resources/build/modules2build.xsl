@@ -135,6 +135,7 @@
       <jing rngfile="{$module-schema}" file="{$src}/module.xml"/>
     </target>
     
+    <!--
     <target name="dependency-warning-{$id}">
       <xsl:if test="mod:published = 'false'">
         <property name="dependentModule" value=""/>
@@ -144,6 +145,7 @@
         </echo>
       </xsl:if>
     </target>
+    -->
     
     <xsl:text>
       
@@ -154,24 +156,54 @@
     
     <available file="{$src}/java/src" property="compile.module.{$id}"/>
     
-    <xsl:variable name="destDir">${build.dir}/modules/<xsl:value-of select="$id"/>/java/classes</xsl:variable>
+    <xsl:variable name="destDirPublic">${build.dir}/modules/<xsl:value-of select="$id"/>/java/classes/api</xsl:variable>
+    <xsl:variable name="destDirPrivate">${build.dir}/modules/<xsl:value-of select="$id"/>/java/classes/impl</xsl:variable>
     
-    <path id="module.classpath.{$id}">
+    <path id="module.classpath.{$id}.api">
       <path refid="classpath"/>
       <fileset dir="${{build.webapp}}/WEB-INF/lib" includes="lenya-*-api.jar"/>
       <xsl:for-each select="mod:depends">
-        <fileset dir="${{build.webapp}}/WEB-INF/lib" includes="lenya-module-{@module}.jar"/>
+        <fileset dir="${{build.webapp}}/WEB-INF/lib" includes="lenya-module-{@module}-api.jar"/>
       </xsl:for-each>
       <fileset dir="{$src}" includes="java/lib/*.jar"/>
       <fileset dir="${{lib.dir}}" includes="*.jar"/>
     </path>
     
+    <path id="module.classpath.{$id}.impl">
+      <path refid="module.classpath.{$id}.api"/>
+      <fileset dir="${{build.webapp}}/WEB-INF/lib" includes="lenya-module-{$id}-api.jar"/>
+    </path>
+    
     <target name="compile-module-{$id}" if="compile.module.{$id}">
       
-      <mkdir dir="{$destDir}"/>
+      <mkdir dir="{$destDirPublic}"/>
       
+      <xsl:if test="mod:export[@package]">
+        <javac
+          destdir="{$destDirPublic}"
+          debug="${{debug}}"
+          optimize="${{optimize}}"
+          deprecation="${{deprecation}}"
+          target="${{target.vm}}"
+          nowarn="${{nowarn}}"
+          source="${{src.java.version}}">
+          <src path="{$src}/java/src"/>
+          <xsl:for-each select="mod:export[@package]">
+            <include name="{translate(@package, '.', '/')}/*.java"/>
+          </xsl:for-each>
+          <classpath refid="module.classpath.{$id}.api"/>
+        </javac>
+        
+        <jar jarfile="${{build.webapp}}/WEB-INF/lib/lenya-module-{$id}-api.jar" index="true">
+          <fileset dir="{$destDirPublic}">
+            <exclude name="**/Manifest.mf"/>
+          </fileset>
+        </jar>
+      </xsl:if>
+
+      <mkdir dir="{$destDirPrivate}"/>
       <javac
-        destdir="{$destDir}"
+        destdir="{$destDirPrivate}"
         debug="${{debug}}"
         optimize="${{optimize}}"
         deprecation="${{deprecation}}"
@@ -179,15 +211,18 @@
         nowarn="${{nowarn}}"
         source="${{src.java.version}}">
         <src path="{$src}/java/src"/>
-        <classpath refid="module.classpath.{$id}"/>
+        <xsl:for-each select="mod:export[@package]">
+          <exclude name="{translate(@package, '.', '/')}/*.java"/>
+        </xsl:for-each>
+        <classpath refid="module.classpath.{$id}.impl"/>
       </javac>
       
-      <jar jarfile="${{build.webapp}}/WEB-INF/lib/lenya-module-{$id}.jar" index="true">
-        <fileset dir="{$destDir}">
+      <jar jarfile="${{build.webapp}}/WEB-INF/lib/lenya-module-{$id}-impl.jar" index="true">
+        <fileset dir="{$destDirPrivate}">
           <exclude name="**/Manifest.mf"/>
         </fileset>
       </jar>
-
+      
     </target>
     
     <xsl:variable name="dirName">
@@ -233,11 +268,13 @@
       
     </target>
     
+    <!--
     <target name="dependency-warnings-{$id}">
       <xsl:apply-templates select="mod:depends" mode="dependencyWarning">
         <xsl:with-param name="id" select="$id"/>
       </xsl:apply-templates>
     </target>
+    -->
     
     <xsl:variable name="dependencyList">
       <xsl:for-each select="mod:depends">
@@ -246,8 +283,11 @@
     </xsl:variable>
     
     <target name="deploy-module-{$id}"
-      depends="dependency-warnings-{$id}, {$dependencyList} validate-module-{$id}, compile-module-{$id}, copy-module-{$id}, patch-module-{$id}"/>
-      
+      depends="{$dependencyList} validate-module-{$id}, compile-module-{$id}, copy-module-{$id}, patch-module-{$id}"/>
+      <!--
+    depends="dependency-warnings-{$id}, {$dependencyList} validate-module-{$id}, compile-module-{$id}, copy-module-{$id}, patch-module-{$id}"/>
+    -->
+    
     <!-- ============================================================ -->
     <!-- Javadocs -->
     <!-- ============================================================ -->

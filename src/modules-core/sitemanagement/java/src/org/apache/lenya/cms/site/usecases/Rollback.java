@@ -32,6 +32,7 @@ import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
+import org.apache.lenya.cms.workflow.usecases.UsecaseWorkflowHelper;
 
 /**
  * Rollback.
@@ -51,14 +52,8 @@ public class Rollback extends DocumentUsecase {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        if (!WorkflowUtil.canInvoke(this.manager,
-                getSession(),
-                getLogger(),
-                getSourceDocument(),
-                getEvent())) {
-            addErrorMessage("error-workflow-document", new String[] { getEvent(),
-                    DublinCoreHelper.getTitle(getSourceDocument()) });
-        }
+        UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), getSourceDocument(),
+                getLogger());
     }
 
     /**

@@ -78,8 +78,8 @@ public class Publish extends DocumentUsecase {
     }
 
     /**
-     * Checks if the workflow event is supported and the parent of the document exists in the live
-     * area.
+     * Checks if the workflow event is supported and the parent of the document
+     * exists in the live area.
      * 
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
      */
@@ -95,17 +95,8 @@ public class Publish extends DocumentUsecase {
                 return;
             }
 
-            if (!WorkflowUtil.canInvoke(this.manager,
-                    getSession(),
-                    getLogger(),
-                    getSourceDocument(),
-                    event)) {
-                String title = DublinCoreHelper.getTitle(getSourceDocument());
-                if (title == null) {
-                    title = "";
-                }
-                addErrorMessage("error-workflow-document", new String[] { getEvent(),
-                        title });
+            if (!WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), document, event)) {
+                UsecaseWorkflowHelper.addWorkflowError(this, event, document);
             }
 
         }
@@ -124,10 +115,7 @@ public class Publish extends DocumentUsecase {
             updateFeed();
             documentManager = (DocumentManager) this.manager.lookup(DocumentManager.ROLE);
             documentManager.copyToArea(authoringDocument, Publication.LIVE_AREA);
-            WorkflowUtil.invoke(this.manager,
-                    getSession(),
-                    getLogger(),
-                    authoringDocument,
+            WorkflowUtil.invoke(this.manager, getSession(), getLogger(), authoringDocument,
                     getEvent());
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -148,7 +136,7 @@ public class Publish extends DocumentUsecase {
         Area live = pub.getArea(Publication.LIVE_AREA);
         String path = "/feeds/all/index";
         String language = pub.getDefaultLanguage();
-        
+
         docs[0] = live.getSite().getNode(path).getLink(language).getDocument();
         docs[1] = authoring.getSite().getNode(path).getLink(language).getDocument();
 
@@ -189,10 +177,8 @@ public class Publish extends DocumentUsecase {
         DocumentHelper.setSimpleElementText(element, datestr);
 
         // set issued date on first time publish
-        Workflowable dw = WorkflowUtil.getWorkflowable(this.manager,
-                this.getSession(),
-                this.getLogger(),
-                doc);
+        Workflowable dw = WorkflowUtil.getWorkflowable(this.manager, this.getSession(), this
+                .getLogger(), doc);
         Version versions[] = dw.getVersions();
         boolean wasLive = false;
         for (int i = 0; i < versions.length; i++) {

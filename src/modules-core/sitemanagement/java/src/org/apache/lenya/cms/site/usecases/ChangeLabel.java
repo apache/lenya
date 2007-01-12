@@ -26,6 +26,7 @@ import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
+import org.apache.lenya.cms.workflow.usecases.UsecaseWorkflowHelper;
 
 /**
  * Change the label of a document.
@@ -55,10 +56,8 @@ public class ChangeLabel extends DocumentUsecase {
             addErrorMessage("This usecase can only be invoked in the authoring area!");
         }
 
-        if (!WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), doc, getEvent())) {
-            String title = DublinCoreHelper.getTitle(doc);
-            addErrorMessage("error-workflow-document", new String[] { getEvent(), title });
-        }
+        UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), doc,
+                getLogger());
     }
 
     /**

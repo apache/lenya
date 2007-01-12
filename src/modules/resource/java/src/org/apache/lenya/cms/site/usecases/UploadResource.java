@@ -23,6 +23,7 @@ import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourceWrapper;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
+import org.apache.lenya.cms.workflow.usecases.UsecaseWorkflowHelper;
 import org.apache.lenya.util.ServletHelper;
 import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
 import org.apache.lenya.cms.publication.Document;
@@ -49,10 +50,8 @@ public class UploadResource extends DocumentUsecase {
             addErrorMessage("This usecase can only be invoked on existing documents.");
         }
 
-        if (!WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), doc, getEvent())) {
-            String title = DublinCoreHelper.getTitle(doc);
-            addErrorMessage("error-workflow-document", new String[] { getEvent(), title });
-        }        
+        UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), doc,
+                getLogger());
     }
 
     /**

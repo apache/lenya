@@ -22,6 +22,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentLocator;
@@ -79,6 +80,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
                 }
                 if (!WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), docs[i],
                         getEvent())) {
+                    String title = DublinCoreHelper.getTitle(docs[i]);
                     addErrorMessage("The workflow event [" + getEvent()
                             + "] cannot be invoked on document [" + docs[i] + "].");
                 }

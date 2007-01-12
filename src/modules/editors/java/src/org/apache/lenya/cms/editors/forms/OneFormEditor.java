@@ -29,12 +29,12 @@ import org.apache.cocoon.environment.Request;
 import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.xml.UsecaseErrorHandler;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
+import org.apache.lenya.cms.workflow.usecases.UsecaseWorkflowHelper;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.Schema;
 import org.apache.lenya.xml.ValidationUtil;
@@ -61,15 +61,7 @@ public class OneFormEditor extends DocumentUsecase {
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        if (!WorkflowUtil.canInvoke(this.manager,
-                getSession(),
-                getLogger(),
-                getSourceDocument(),
-                getEvent())) {
-            String title = DublinCoreHelper.getTitle(getSourceDocument());
-            addErrorMessage("error-workflow-document", new String[] { getEvent(),
-                    title });
-        }
+        UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), getSourceDocument(), getLogger());
     }
 
     /**

@@ -47,6 +47,7 @@ import org.apache.lenya.cms.site.usecases.CreateDocument;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.xml.UsecaseErrorHandler;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
+import org.apache.lenya.cms.workflow.usecases.UsecaseWorkflowHelper;
 import org.apache.lenya.xml.Schema;
 import org.apache.lenya.xml.ValidationUtil;
 
@@ -88,12 +89,11 @@ public class Put extends CreateDocument {
     protected void doCheckExecutionConditions() throws Exception {
         super.doCheckExecutionConditions();
 
-        Document doc = getSourceDocument();
         String event = getParameterAsString(EVENT);
-        if (event != null
-                && !WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), doc, event)) {
-            String title = DublinCoreHelper.getTitle(doc);
-            addErrorMessage("error-workflow-document", new String[] { event, title });
+        if (event != null) {
+            Document doc = getSourceDocument();
+            UsecaseWorkflowHelper.checkWorkflow(this.manager, this, event, doc,
+                    getLogger());
         }
     }
 

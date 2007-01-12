@@ -20,6 +20,9 @@
 
 <module xmlns="http://apache.org/lenya/module/1.0">
   <id>org.apache.lenya.modules.repository</id>
+  <export package="org.apache.lenya.cms.repo"/>
+  <export package="org.apache.lenya.cms.repo.metadata"/>
+  <export package="org.apache.lenya.cms.repo.metadata.impl"/>
   <depends module="org.apache.lenya.modules.sourcerepository"/>
   <package>org.apache.lenya.modules</package>
   <version>0.1-dev</version>

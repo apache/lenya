@@ -26,13 +26,13 @@ import java.util.Map;
 
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataRegistry;
-import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.site.usecases.SiteUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
+import org.apache.lenya.cms.workflow.usecases.UsecaseWorkflowHelper;
 
 /**
  * Usecase to edit metadata for a resource.
@@ -117,10 +117,8 @@ public class Metadata extends SiteUsecase {
         if (!doc.getArea().equals(Publication.AUTHORING_AREA)) {
             addErrorMessage("This usecase can only be invoked in the authoring area!");
         }
-        if (!WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), doc, getEvent())) {
-            String title = DublinCoreHelper.getTitle(doc);
-            addErrorMessage("error-workflow-document", new String[] { getEvent(), title });
-        }
+        UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), doc,
+                getLogger());
     }
 
     /**

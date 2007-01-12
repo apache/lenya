@@ -26,6 +26,7 @@ import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
+import org.apache.lenya.cms.workflow.usecases.UsecaseWorkflowHelper;
 
 /**
  * Switch the navigation visibility of a document.
@@ -53,11 +54,8 @@ public class ChangeVisibility extends DocumentUsecase {
         String[] languages = doc.getLanguages();
         for (int i = 0; i < languages.length; i++) {
             Document version = doc.getTranslation(languages[i]);
-            if (!WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), version,
-                    getEvent())) {
-                String title = DublinCoreHelper.getTitle(version);
-                addErrorMessage("error-workflow-document", new String[] { getEvent(), title });
-            }
+            UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), version,
+                    getLogger());
         }
     }
 

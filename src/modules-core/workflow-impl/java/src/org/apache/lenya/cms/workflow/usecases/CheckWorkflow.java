@@ -20,7 +20,6 @@ package org.apache.lenya.cms.workflow.usecases;
 import org.apache.avalon.framework.configuration.Configurable;
 import org.apache.avalon.framework.configuration.Configuration;
 import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
@@ -62,11 +61,7 @@ public class CheckWorkflow extends DocumentUsecase implements Configurable {
 
         Document doc = getSourceDocument();
         if (!WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), doc, getEvent())) {
-            String title = DublinCoreHelper.getTitle(doc);
-            if (title == null) {
-                title = "";
-            }
-            addErrorMessage("error-workflow-document", new String[] { getEvent(), title });
+            UsecaseWorkflowHelper.addWorkflowError(this, getEvent(), doc);
         }
     }
 

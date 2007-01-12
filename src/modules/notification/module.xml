@@ -20,6 +20,7 @@
 
 <module xmlns="http://apache.org/lenya/module/1.0">
   <id>org.apache.lenya.modules.notification</id>
+  <export package="org.apache.lenya.notification"/>
   <depends module="org.apache.lenya.modules.administration"/> <!-- necessary for tabs -->
   <depends module="org.apache.lenya.modules.usecase"/>
   <package>org.apache.lenya.modules</package>

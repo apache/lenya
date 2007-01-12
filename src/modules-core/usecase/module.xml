@@ -20,6 +20,10 @@
 
 <module xmlns="http://apache.org/lenya/module/1.0">
   <id>org.apache.lenya.modules.usecase</id>
+  <export package="org.apache.lenya.cms.ac.usecase"/>
+  <export package="org.apache.lenya.cms.usecase"/>
+  <export package="org.apache.lenya.cms.usecase.scheduling"/>
+  <export package="org.apache.lenya.cms.usecase.xml"/>
   <package>org.apache.lenya.modules</package>
   <version>0.1-dev</version>
   <name>Usecase framework API</name>

@@ -45,6 +45,7 @@ import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.xml.UsecaseErrorHandler;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
+import org.apache.lenya.cms.workflow.usecases.UsecaseWorkflowHelper;
 import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.Schema;
 import org.apache.lenya.xml.ValidationUtil;
@@ -57,11 +58,10 @@ import org.w3c.tidy.Tidy;
  * 
  */
 public class Fckeditor extends DocumentUsecase {
-    
-    public static final String TIDY_CONFIG="tidyConfig";
-    public static final String XSLT_CLEAN_FORMAT="xslt-clean";
-    
-    
+
+    public static final String TIDY_CONFIG = "tidyConfig";
+    public static final String XSLT_CLEAN_FORMAT = "xslt-clean";
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#getNodesToLock()
      */
@@ -75,31 +75,22 @@ public class Fckeditor extends DocumentUsecase {
      */
     protected void initParameters() {
         super.initParameters();
-        
+
         Request request = ContextHelper.getRequest(this.context);
         String requesturi = request.getRequestURI();
-        String host = "http://"+request.getServerName()+":"+request.getServerPort();
-        setParameter("host",host);
-        setParameter("requesturi",requesturi);
-    }    
-    
-    
-    
+        String host = "http://" + request.getServerName() + ":" + request.getServerPort();
+        setParameter("host", host);
+        setParameter("requesturi", requesturi);
+    }
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckPreconditions()
      */
     protected void doCheckPreconditions() throws Exception {
         super.doCheckPreconditions();
-        
-        
-        if (!WorkflowUtil.canInvoke(this.manager,
-                getSession(),
-                getLogger(),
-                getSourceDocument(),
-                getEvent())) {
-            addErrorMessage("error-workflow-document", new String[] { getEvent(),
-                    getSourceDocument().toString() });
-        }
+
+        UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), getSourceDocument(),
+                getLogger());
     }
 
     /**
@@ -123,9 +114,10 @@ public class Fckeditor extends DocumentUsecase {
     }
 
     /**
-     * Save the content to the document source. After saving, the XML is validated. If validation
-     * errors occur, the usecase transaction is rolled back, so the changes are not persistent. If
-     * the validation succeeded, the workflow event is invoked.
+     * Save the content to the document source. After saving, the XML is
+     * validated. If validation errors occur, the usecase transaction is rolled
+     * back, so the changes are not persistent. If the validation succeeded, the
+     * workflow event is invoked.
      * @param encoding The encoding to use.
      * @param content The content to save.
      * @throws Exception if an error occurs.
@@ -141,44 +133,44 @@ public class Fckeditor extends DocumentUsecase {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
             xmlSource = (ModifiableSource) resolver.resolveURI(getSourceDocument().getSourceURI());
             saveXMLFile(encoding, content, xmlSource);
-            
+
             Document xmlDoc = null;
-            
+
             // Setup an instance of Tidy.
             Tidy tidy = new Tidy();
-            
+
             String tidyProps = this.getParameterAsString(TIDY_CONFIG, null);
             if (tidyProps != null) {
                 tidySource = resolver.resolveURI(tidyProps);
                 if (getLogger().isDebugEnabled()) {
-                    getLogger().debug(
-                        "Loading configuration from " + tidySource.getURI());
+                    getLogger().debug("Loading configuration from " + tidySource.getURI());
                 }
                 properties = new Properties();
                 properties.load(tidySource.getInputStream());
-            
 
                 if (properties == null) {
                     tidy.setXHTML(true);
                 } else {
                     tidy.setConfigurationFromProps(properties);
                 }
-            
-                //Set Jtidy warnings on-off
+
+                // Set Jtidy warnings on-off
                 tidy.setShowWarnings(getLogger().isWarnEnabled());
-                //Set Jtidy final result summary on-off
+                // Set Jtidy final result summary on-off
                 tidy.setQuiet(!getLogger().isInfoEnabled());
-                //Set Jtidy infos to a String (will be logged) instead of System.out
+                // Set Jtidy infos to a String (will be logged) instead of
+                // System.out
                 StringWriter stringWriter = new StringWriter();
                 PrintWriter errorWriter = new PrintWriter(stringWriter);
                 tidy.setErrout(errorWriter);
 
                 xmlDoc = tidy.parseDOM(xmlSource.getInputStream(), null);
-            
-                // FIXME: Jtidy doesn't warn or strip duplicate attributes in same
+
+                // FIXME: Jtidy doesn't warn or strip duplicate attributes in
+                // same
                 // tag; stripping.
                 XMLUtils.stripDuplicateAttributes(xmlDoc, null);
-            
+
                 StringWriter output = new StringWriter();
                 StreamResult strResult = new StreamResult(output);
                 TransformerFactory tfac = TransformerFactory.newInstance();
@@ -189,22 +181,22 @@ public class Fckeditor extends DocumentUsecase {
                     t.setOutputProperty(OutputKeys.METHOD, "xml");
                     t.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
                     t.transform(new DOMSource(xmlDoc.getDocumentElement()), strResult);
-                
+
                     content = strResult.getWriter().toString();
                 } catch (Exception e) {
                     addErrorMessage(e.getMessage());
                 }
-                
+
                 saveXMLFile(encoding, content, xmlSource);
             } else {
                 try {
-                  xmlDoc = DocumentHelper.readDocument(xmlSource.getInputStream());
+                    xmlDoc = DocumentHelper.readDocument(xmlSource.getInputStream());
                 } catch (SAXException e) {
                     addErrorMessage("error-document-form", new String[] { e.getMessage() });
                 }
             }
-            
-            //Try to clean the xml using xslt
+
+            // Try to clean the xml using xslt
             ResourceType resType = getSourceDocument().getResourceType();
             String[] formats = resType.getFormats();
             if (Arrays.asList(formats).contains(XSLT_CLEAN_FORMAT)) {
@@ -212,37 +204,37 @@ public class Fckeditor extends DocumentUsecase {
                 StreamResult strResult = new StreamResult(output);
                 TransformerFactory tfac = TransformerFactory.newInstance();
                 try {
-                    xsltSource = (ModifiableSource) resolver.resolveURI(resType.getFormatURI(XSLT_CLEAN_FORMAT));
-                    Transformer t = tfac.newTransformer(new StreamSource(xsltSource.getInputStream()));
+                    xsltSource = (ModifiableSource) resolver.resolveURI(resType
+                            .getFormatURI(XSLT_CLEAN_FORMAT));
+                    Transformer t = tfac.newTransformer(new StreamSource(xsltSource
+                            .getInputStream()));
                     t.setOutputProperty(OutputKeys.ENCODING, encoding);
                     t.setOutputProperty(OutputKeys.INDENT, "yes");
                     t.setOutputProperty(OutputKeys.METHOD, "xml");
                     t.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
                     xmlDoc = DocumentHelper.readDocument(xmlSource.getInputStream());
                     t.transform(new DOMSource(xmlDoc.getDocumentElement()), strResult);
-                
+
                     content = strResult.getWriter().toString();
                 } catch (Exception e) {
                     addErrorMessage(e.getMessage());
                 }
-                
+
                 saveXMLFile(encoding, content, xmlSource);
             }
-            
+
             xmlDoc = DocumentHelper.readDocument(xmlSource.getInputStream());
-            
+
             if (xmlDoc != null) {
                 ResourceType resourceType = getSourceDocument().getResourceType();
                 Schema schema = resourceType.getSchema();
 
-                ValidationUtil.validate(this.manager, xmlDoc, schema, new UsecaseErrorHandler(this));
+                ValidationUtil
+                        .validate(this.manager, xmlDoc, schema, new UsecaseErrorHandler(this));
 
                 if (!hasErrors()) {
-                    WorkflowUtil.invoke(this.manager,
-                            getSession(),
-                            getLogger(),
-                            getSourceDocument(),
-                            getEvent());
+                    WorkflowUtil.invoke(this.manager, getSession(), getLogger(),
+                            getSourceDocument(), getEvent());
                 }
             }
 
@@ -264,7 +256,7 @@ public class Fckeditor extends DocumentUsecase {
             }
         }
     }
-    
+
     /**
      * Save the XML file
      * @param encoding The encoding
