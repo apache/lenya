@@ -183,7 +183,7 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Co
                         getLogger().debug("Usecase not authorized");
                     }
                     messages = new UsecaseMessage[1];
-                    messages[0] = new UsecaseMessage("Access denied", null);
+                    messages[0] = new UsecaseMessage("Access denied");
                 }
             }
 
