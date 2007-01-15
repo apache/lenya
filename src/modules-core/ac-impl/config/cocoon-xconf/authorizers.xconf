@@ -21,7 +21,7 @@
     This file defines the publication specific use-cases
 -->
 
-  <xconf xpath="/cocoon" unless="/cocoon/authorizers">
+  <xconf xpath="/cocoon" unless="/cocoon/authorizers/component-instance[@name = 'policy']">
     <authorizers>
       <component-instance name="policy"
         class="org.apache.lenya.ac.impl.PolicyAuthorizer"
