@@ -23,7 +23,7 @@
 
   <xconf xpath="/cocoon/authorizers" unless="/cocoon/authorizers/component-instance[@name = 'usecase']">
     <component-instance name="usecase"
-      class="org.apache.lenya.cms.ac.usecase.UsecaseAuthorizerImpl"
+      class="org.apache.lenya.cms.ac.usecase.impl.UsecaseAuthorizerImpl"
       logger="lenya.ac.authorizer.usecase"/>
   </xconf>
   

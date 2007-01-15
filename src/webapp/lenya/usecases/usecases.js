@@ -315,7 +315,7 @@ function executeUsecase() {
         usecase.checkPreconditions();
         usecase.lockInvolvedObjects();
         // create proxy object to save usecase state
-        proxy = new Packages.org.apache.lenya.cms.usecase.UsecaseProxy(usecase);
+        proxy = new Packages.org.apache.lenya.cms.usecase.impl.UsecaseProxy(usecase);
         view = usecase.getView();
         log("debug", "Successfully prepared usecase.", usecaseName);
     } catch (exception) {
@@ -352,7 +352,7 @@ function executeUsecase() {
             passRequestParameters(usecase);
             state = submitFlow(usecase, generic);
             // create a new proxy with the updated usecase state
-            proxy = new Packages.org.apache.lenya.cms.usecase.UsecaseProxy(usecase);
+            proxy = new Packages.org.apache.lenya.cms.usecase.impl.UsecaseProxy(usecase);
             releaseUsecase(usecase);
         } while (state == "continue");
         // If the usecase does not have a view uri, we can directly jump to 

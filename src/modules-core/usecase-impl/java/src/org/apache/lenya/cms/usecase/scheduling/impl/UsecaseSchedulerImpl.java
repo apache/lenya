@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.usecase.scheduling;
+package org.apache.lenya.cms.usecase.scheduling.impl;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -39,6 +39,7 @@ import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.Machine;
 import org.apache.lenya.ac.User;
 import org.apache.lenya.cms.usecase.Usecase;
+import org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler;
 
 /**
  * Usecase scheduler implementation.

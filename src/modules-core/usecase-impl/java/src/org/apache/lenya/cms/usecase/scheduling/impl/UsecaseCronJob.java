@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.usecase.scheduling;
+package org.apache.lenya.cms.usecase.scheduling.impl;
 
 import java.util.Collections;
 import java.util.Enumeration;

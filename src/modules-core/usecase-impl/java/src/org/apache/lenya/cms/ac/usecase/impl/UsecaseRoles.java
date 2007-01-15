@@ -16,7 +16,7 @@
  *
  */
 
-package org.apache.lenya.cms.ac.usecase;
+package org.apache.lenya.cms.ac.usecase.impl;
 
 import java.util.Arrays;
 import java.util.HashMap;

@@ -16,7 +16,7 @@
  *
  */
 
-package org.apache.lenya.cms.ac.usecase;
+package org.apache.lenya.cms.ac.usecase.impl;
 
 import java.io.File;
 import java.util.Arrays;
@@ -42,6 +42,7 @@ import org.apache.lenya.ac.cache.BuildException;
 import org.apache.lenya.ac.cache.CachingException;
 import org.apache.lenya.ac.cache.SourceCache;
 import org.apache.lenya.cms.ac.PolicyUtil;
+import org.apache.lenya.cms.ac.usecase.UsecaseAuthorizer;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.PublicationUtil;

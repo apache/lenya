@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.usecase;
+package org.apache.lenya.cms.usecase.impl;
 
 /**
  * Invoker for test usecases. The transactions are not committed.

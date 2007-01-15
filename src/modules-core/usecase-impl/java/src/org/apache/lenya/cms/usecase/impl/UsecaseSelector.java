@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.usecase;
+package org.apache.lenya.cms.usecase.impl;
 
 import java.util.Iterator;
 import java.util.SortedSet;
@@ -29,6 +29,7 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
 import org.apache.cocoon.components.ExtendedComponentSelector;
+import org.apache.lenya.cms.usecase.UsecaseResolver;
 
 /**
  * Usecase selector.

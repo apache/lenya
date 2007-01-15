@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.usecase;
+package org.apache.lenya.cms.usecase.impl;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -27,6 +27,11 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.lenya.cms.usecase.Usecase;
+import org.apache.lenya.cms.usecase.UsecaseException;
+import org.apache.lenya.cms.usecase.UsecaseInvoker;
+import org.apache.lenya.cms.usecase.UsecaseMessage;
+import org.apache.lenya.cms.usecase.UsecaseResolver;
 
 /**
  * Usecase invoker implementation.

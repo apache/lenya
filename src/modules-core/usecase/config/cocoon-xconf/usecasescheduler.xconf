@@ -21,9 +21,10 @@
     This file defines the publication specific use-cases
 -->
 
-  <xconf xpath="/cocoon" unless="/cocoon/component[@role = 'org.apache.cocoon.components.cron.CronJob/usecase']">
-    <component role="org.apache.cocoon.components.cron.CronJob/usecase"
-      class="org.apache.lenya.cms.usecase.scheduling.impl.UsecaseCronJob"
-      logger="cron.usecase"/>
-    
+  <xconf xpath="/cocoon" unless="/cocoon/component[@role = 'org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler']">
+    <component
+      role="org.apache.lenya.cms.usecase.scheduling.UsecaseScheduler"
+      class="org.apache.lenya.cms.usecase.scheduling.impl.UsecaseSchedulerImpl"
+      logger="lenya.usecase"/>
   </xconf>
+  

@@ -22,8 +22,8 @@
 -->
 
   <xconf xpath="/cocoon"
-    unless="/cocoon/component[@role = 'org.apache.lenya.cms.usecase.TestUsecaseInvoker']">
+    unless="/cocoon/component[@role = 'org.apache.lenya.cms.usecase.impl.TestUsecaseInvoker']">
     <component logger="lenya.usecase.invoker"
-      class="org.apache.lenya.cms.usecase.TestUsecaseInvoker"
-      role="org.apache.lenya.cms.usecase.TestUsecaseInvoker"/>
+      class="org.apache.lenya.cms.usecase.impl.TestUsecaseInvoker"
+      role="org.apache.lenya.cms.usecase.impl.TestUsecaseInvoker"/>
   </xconf>

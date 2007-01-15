@@ -15,12 +15,15 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.usecase;
+package org.apache.lenya.cms.usecase.impl;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+
+import org.apache.lenya.cms.usecase.Usecase;
+import org.apache.lenya.cms.usecase.UsecaseView;
 
 /**
  * Proxy which holds the parameters of a usecase. It is used to restore the usecase after the

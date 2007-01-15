@@ -24,6 +24,7 @@ import java.util.Map;
 
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
+import org.apache.lenya.cms.usecase.impl.TestUsecaseInvoker;
 
 /**
  * Usecase test base class.

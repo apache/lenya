@@ -17,78 +17,41 @@
  */
 package org.apache.lenya.cms.usecase.gui;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-
 /**
  * Tab in a tabbed multiple-usecase environment.
  */
-public class Tab {
-
-    /**
-     * Ctor.
-     * @param group The name of the usecase group.
-     * @param name The name of the tab.
-     * @param usecase The usecase to be displayed.
-     * @param label The label to be displayed on the tab.
-     */
-    public Tab(String group, String name, String usecase, String label) {
-        this.name = name;
-        this.group = group;
-        this.usecase = usecase;
-        this.label = label;
-    }
-    
-    private Map parameters = new HashMap();
-
-    private String name;
+public interface Tab {
 
     /**
      * @return The name of the tab.
      */
-    public String getName() {
-        return this.name;
-    }
-
-    private String usecase;
-
-    private String label;
+    String getName();
 
     /**
      * @return The label.
      */
-    public String getLabel() {
-        return label;
-    }
+    public String getLabel();
 
     /**
      * @return The usecase which is displayed on the tab.
      */
-    public String getUsecase() {
-        return usecase;
-    }
-
-    private String group;
+    public String getUsecase();
 
     /**
      * @return The group this tab belongs to.
      */
-    public String getGroup() {
-        return this.group;
-    }
+    public String getGroup();
     
-    void setParameter(String name, String value) {
-        this.parameters.put(name, value);
-    }
+    /**
+     * @return The names of the parameters to pass to the usecase upon invocation.
+     */
+    public String[] getParameterNames();
     
-    String[] getParameterNames() {
-        Set keys = this.parameters.keySet();
-        return (String[]) keys.toArray(new String[keys.size()]);
-    }
-    
-    String getParameter(String key) {
-        return (String) this.parameters.get(key);
-    }
+    /**
+     * Returns the value of a certain parameter to pass to the usecase upon invocation. 
+     * @param key The value.
+     * @return A string.
+     */
+    public String getParameter(String key);
     
 }

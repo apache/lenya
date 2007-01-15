@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.usecase;
+package org.apache.lenya.cms.usecase.impl;
 
 import java.util.SortedSet;
 import java.util.TreeSet;
@@ -34,6 +34,8 @@ import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.URLInformation;
 import org.apache.lenya.cms.publication.templating.PublicationTemplateManager;
+import org.apache.lenya.cms.usecase.Usecase;
+import org.apache.lenya.cms.usecase.UsecaseResolver;
 
 /**
  * Usecase resolver implementation.

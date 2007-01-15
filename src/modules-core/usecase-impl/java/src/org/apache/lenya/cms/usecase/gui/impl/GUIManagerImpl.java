@@ -15,7 +15,7 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.usecase.gui;
+package org.apache.lenya.cms.usecase.gui.impl;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -50,6 +50,8 @@ import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseMessage;
 import org.apache.lenya.cms.usecase.UsecaseResolver;
+import org.apache.lenya.cms.usecase.gui.GUIManager;
+import org.apache.lenya.cms.usecase.gui.Tab;
 import org.apache.lenya.util.ServletHelper;
 
 /**
@@ -81,7 +83,7 @@ public class GUIManagerImpl extends AbstractLogEnabled implements GUIManager, Co
                 String name = tabConfigs[j].getAttribute(ATTRIBUTE_NAME);
                 String label = tabConfigs[j].getAttribute(ATTRIBUTE_LABEL);
                 String usecase = tabConfigs[j].getAttribute(ATTRIBUTE_USECASE);
-                Tab tab = new Tab(groupName, name, usecase, label);
+                TabImpl tab = new TabImpl(groupName, name, usecase, label);
                 group.add(tab);
 
                 Configuration[] paramConfigs = tabConfigs[j].getChildren(ELEMENT_PARAMETER);
