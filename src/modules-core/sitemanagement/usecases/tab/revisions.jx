@@ -26,7 +26,7 @@
   <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/tab/head.jx"/>
   <page:body>
     <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/tab/sitetree.jx"/>
-    <jx:import uri="fallback://lenya/usecases/templates/tabs.jx"/>
+    <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab-sitetree">
     <table class="lenya-table-noborder">
       <jx:forEach var="item" items="${usecase.getParameter('entries')}" end="0">

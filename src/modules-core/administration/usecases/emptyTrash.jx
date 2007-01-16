@@ -25,12 +25,12 @@
   >
   
   <page:body>
-    <jx:import uri="fallback://lenya/usecases/templates/tabs.jx"/>
+    <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab">
     <h1><i18n:text>Delete Trash</i18n:text></h1>
       
-    <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
-    <p>
+      <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
+      <p>
       <jx:choose>
         <jx:when test="${usecase.getParameter('documents').isEmpty()}">
           <i18n:text>The trash is empty.</i18n:text>

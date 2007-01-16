@@ -36,7 +36,7 @@
           <table class="lenya-table-noborder">
             <tr>
               <td colspan="2">
-                <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
+                <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
               </td>
             </tr>
               <tr>

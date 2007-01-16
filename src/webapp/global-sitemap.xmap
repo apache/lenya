@@ -246,16 +246,6 @@
         <map:mount uri-prefix="{1}/policies" src="lenya/pubs/{1}/policies-sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>
       
-      <!-- Admin area entry point: redirect to admin.users usecase -->
-      <map:match pattern="*/admin/**">
-        <map:select type="parameter">
-          <map:parameter name="parameter-selector-test" value="{request-param:lenya.usecase}"/>
-          <map:when test="">
-            <map:redirect-to session="true" uri="{request:requestURI}?lenya.usecase=admin.users"/>
-          </map:when>
-        </map:select>
-      </map:match>
-      
     </map:pipeline>
     
     <map:pipeline>
@@ -294,9 +284,6 @@
     
    <!-- Internal usecases -->
     <map:pipeline internal-only="true">
-      <map:match pattern="core/*/**">
-        <map:mount uri-prefix="core/{1}" src="lenya/usecases/{1}/usecase.xmap"/>
-      </map:match>
       <map:match pattern="*/**">
         <map:mount uri-prefix="{1}" src="lenya/pubs/{1}/sitemap.xmap" check-reload="true" reload-method="synchron"/>
       </map:match>

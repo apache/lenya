@@ -48,7 +48,7 @@
     
     <br/><br/>
     
-    <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
+    <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
     
     <table class="lenya-table-list">
       

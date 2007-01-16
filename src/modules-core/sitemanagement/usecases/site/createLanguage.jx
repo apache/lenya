@@ -30,8 +30,8 @@
         <i18n:text>New Language Version</i18n:text>
       </div>
 
-      <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
-
+      <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
+      
       <div class="lenya-box-body">
         <form id="form-create_language">
           <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>

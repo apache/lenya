@@ -30,8 +30,8 @@
         <i18n:text>Deactivate</i18n:text>
       </div>
 
-      <jx:import uri="templates/messages.jx"/>
-
+      <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
+      
       <div class="lenya-box-body">
         <form id="form-deactivate">
           <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>

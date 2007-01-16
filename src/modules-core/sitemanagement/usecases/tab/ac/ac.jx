@@ -26,7 +26,7 @@ limitations under the License.
   <page:body>
     <jx:import
       uri="fallback://lenya/modules/sitemanagement/usecases/tab/sitetree.jx"/>
-    <jx:import uri="fallback://lenya/usecases/templates/tabs.jx"/>
+    <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
     
     <jx:set var="area" value="${usecase.getParameter('acArea')}"/>
     
@@ -46,7 +46,7 @@ limitations under the License.
       <table class="lenya-table">
         <tr>
           <td colspan="5" style="border-left: 0; border-right: 0; border-top: 0px;">
-            <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
+            <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
           </td>
         </tr>
         <tr>

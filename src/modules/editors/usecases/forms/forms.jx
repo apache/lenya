@@ -27,8 +27,8 @@
   <page:title><i18n:text>Edit</i18n:text></page:title>
   <page:body>
     
-    <jx:import uri="fallback://lenya/usecases/templates/messages.jx"/>
-
+    <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
+    
     <form method="post" id="form-edit">
       <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
       <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>

@@ -331,8 +331,8 @@ function executeUsecase() {
         // of several steps; repeated until the user chooses to submit or cancel.
         do {
             // show the view:
-            try {
                 loopFlow(view, proxy, generic); //usecase must be released here!
+            try {
             } catch (exception) {
                 // if something went wrong, try and rollback the usecase:
                 log("error", "Exception during loopFlow(): " + exception, usecaseName);
