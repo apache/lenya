@@ -19,12 +19,12 @@
 <!-- $Id: publication.xml 374687 2006-02-03 15:24:55Z michi $ -->
 
 <module xmlns="http://apache.org/lenya/module/1.0">
-  <id>org.apache.lenya.modules.ac-impl</id>
-  <export package="org.apache.lenya.ac.file"/>
-  <depends module="org.apache.lenya.modules.cache"/>
+  <id>org.apache.lenya.modules.workflow</id>
+  <export package="org.apache.lenya.cms.workflow.usecases"/>
+  <depends module="org.apache.lenya.modules.usecase"/>
   <package>org.apache.lenya.modules</package>
   <version>0.1-dev</version>
-  <name>Access control</name>
+  <name>Workflow implementation</name>
   <lenya-version>@lenya.version@</lenya-version>
-  <description>Access control</description>
+  <description>Workflow implementation</description>
 </module>

@@ -19,11 +19,12 @@
 <!-- $Id: publication.xml 374687 2006-02-03 15:24:55Z michi $ -->
 
 <module xmlns="http://apache.org/lenya/module/1.0">
-  <id>org.apache.lenya.modules.templating-impl</id>
-  <depends module="org.apache.lenya.modules.usecase"/>
+  <id>org.apache.lenya.modules.ac</id>
+  <export package="org.apache.lenya.ac.file"/>
+  <depends module="org.apache.lenya.modules.cache"/>
   <package>org.apache.lenya.modules</package>
   <version>0.1-dev</version>
-  <name>Publication templating implementation</name>
+  <name>Access control</name>
   <lenya-version>@lenya.version@</lenya-version>
-  <description>Publication templating implementation</description>
+  <description>Access control</description>
 </module>

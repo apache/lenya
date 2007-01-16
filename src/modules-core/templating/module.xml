@@ -19,10 +19,11 @@
 <!-- $Id: publication.xml 374687 2006-02-03 15:24:55Z michi $ -->
 
 <module xmlns="http://apache.org/lenya/module/1.0">
-  <id>org.apache.lenya.modules.observation-impl</id>
+  <id>org.apache.lenya.modules.templating</id>
+  <depends module="org.apache.lenya.modules.usecase"/>
   <package>org.apache.lenya.modules</package>
   <version>0.1-dev</version>
-  <name>Observation implementation</name>
+  <name>Publication templating implementation</name>
   <lenya-version>@lenya.version@</lenya-version>
-  <description>Observation implementation</description>
+  <description>Publication templating implementation</description>
 </module>

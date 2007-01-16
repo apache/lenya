@@ -22,7 +22,7 @@
   <id>org.apache.lenya.modules.sitemanagement</id>
   <export package="org.apache.lenya.cms.site.usecases"/>
   <depends module="org.apache.lenya.modules.usecase"/>
-  <depends module="org.apache.lenya.modules.workflow-impl"/>
+  <depends module="org.apache.lenya.modules.workflow"/>
   <package>org.apache.lenya.modules</package>
   <version>0.1-dev</version>
   <name>Site management</name>
