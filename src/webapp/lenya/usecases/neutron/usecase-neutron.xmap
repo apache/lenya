@@ -1,11 +1,10 @@
 <?xml version="1.0"?>
 <!--
-  Licensed to the Apache Software Foundation (ASF) under one or more
-  contributor license agreements.  See the NOTICE file distributed with
-  this work for additional information regarding copyright ownership.
-  The ASF licenses this file to You under the Apache License, Version 2.0
-  (the "License"); you may not use this file except in compliance with
-  the License.  You may obtain a copy of the License at
+  Copyright 1999-2004 The Apache Software Foundation
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
 
       http://www.apache.org/licenses/LICENSE-2.0
 
@@ -23,11 +22,6 @@
 
   <map:components>
 
-<!--
-    <map:readers default="resource">
-       <map:reader logger="sitemap.reader.requestreader" name="request" pool-max="16" src="org.apache.cocoon.reading.RequestReader"/>
-    </map:readers>
--->
 
   </map:components>
 
@@ -52,11 +46,7 @@
 <!-- ========================= Private Resources =========================== -->
 
     <map:pipeline type="noncaching" internal-only="true">      
-<!--
-      <map:match pattern="request/generate">
-        <map:read type="request"/>
-      </map:match>
--->      
+      
      <map:match pattern="request2document">
        <map:generate type="stream"/>
         <map:serialize type="xml"/>
@@ -95,6 +85,7 @@
            <map:parameter name="base-url" value="{page-envelope:context-prefix}/{page-envelope:publication-id}/authoring"/>
            <map:parameter name="document-url" value="{page-envelope:document-url}"/>
            <map:parameter name="document-label" value="{page-envelope:document-label}"/>
+           <map:parameter name="document-type" value="{page-envelope:document-type}"/>
          </map:generate>
          <map:serialize type="xml"/>
        </map:match>
@@ -126,6 +117,15 @@
           <map:generate src="context://lenya/content/util/empty.xml"/> 
           <map:serialize status-code="404"/> 
         </map:match>
+
+        <map:match type="step" pattern="template">
+          <map:act src="context://lenya/pubs/{page-envelope:publication-id}/lenya/usecases/neutron/neutron-styles.xmap" type="resource-exists">
+            <map:mount check-reload="true" reload-method="synchron" src="context://lenya/pubs/{page-envelope:publication-id}/lenya/usecases/neutron/neutron-styles.xmap" uri-prefix=""/>
+          </map:act>
+          <map:generate src="context://lenya/content/util/empty.xml"/>
+          <map:serialize status-code="404"/> 
+        </map:match>
+
      
       </map:match>
       
