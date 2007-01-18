@@ -50,7 +50,7 @@
            the jxtemplate view mechanism, we must include them by hand. -->
 
       <map:match pattern="tinymce.getUsecaseMessages">
-        <map:generate type="jx" src="fallback://lenya/usecases/templates/messages.jx"/>
+        <map:generate type="jx" src="fallback://lenya/modules/usecase/templates/messages.jx"/>
         <map:transform type="i18n">
           <map:param name="locale" value="[request:locale}"/>
         </map:transform>
