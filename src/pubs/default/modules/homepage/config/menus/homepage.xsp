@@ -55,9 +55,7 @@
                             <i18n:text>With BXE</i18n:text>
                           </item>
                           <item wf:event="edit" uc:usecase="editors.forms">
-                            <xsp:attribute name="href">
-                              <xsp:expr>"?form=" + doctype</xsp:expr>
-                            </xsp:attribute>
+                            <xsp:attribute name="href"><xsp:expr>"?form=" + doctype</xsp:expr></xsp:attribute>
                             <i18n:text>With Forms</i18n:text>
                           </item>
                           <item wf:event="edit" uc:usecase="editors.oneform" href="?">
