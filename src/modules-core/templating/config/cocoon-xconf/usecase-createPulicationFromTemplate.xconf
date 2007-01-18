@@ -24,6 +24,6 @@
   <xconf xpath="/cocoon/usecases" unless="/cocoon/usecases/component-instance[@name = 'templating.createPublicationFromTemplate']">
     <component-instance name="templating.createPublicationFromTemplate" logger="lenya.publication"
       class="org.apache.lenya.cms.publication.usecases.CreatePublicationFromTemplate">
-      <view template="modules/templating-impl/usecases/createPublicationFromTemplate.jx"/>
+      <view template="modules/templating/usecases/createPublicationFromTemplate.jx"/>
     </component-instance>
   </xconf>

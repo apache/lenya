@@ -51,7 +51,7 @@
   <module name="sitemanagement"/>
   <module name="sitetree"/>
   <module name="export"/>
-  <module name="workflow-impl"/>
+  <module name="workflow"/>
   <module name="notification"/>
   <module name="svg"/>
   <module name="lucene"/>
