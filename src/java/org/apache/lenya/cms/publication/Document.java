@@ -131,7 +131,7 @@ public interface Document extends MetaDataOwner, RepositoryItem {
     File getFile();
 
     /**
-     * Returns the extension in the URL.
+     * Returns the extension in the URL without the dot.
      * @return A string.
      */
     String getExtension();
@@ -199,9 +199,19 @@ public interface Document extends MetaDataOwner, RepositoryItem {
     ResourceType getResourceType() throws DocumentException;
     
     /**
-     * @return The source extension used by this document.
+     * @param resourceType The resource type of this document.
+     */
+    void setResourceType(ResourceType resourceType);
+    
+    /**
+     * @return The source extension used by this document, without the dot.
      */
     String getSourceExtension();
+    
+    /**
+     * @param extension The source extension used by this document, without the dot.
+     */
+    void setSourceExtension(String extension);
     
     /**
      * Sets the mime type of this document.

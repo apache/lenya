@@ -21,7 +21,6 @@
 package org.apache.lenya.cms.publication;
 
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
-import org.apache.lenya.cms.site.SiteUtil;
 
 /**
  * 

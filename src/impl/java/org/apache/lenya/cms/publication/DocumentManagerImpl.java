@@ -174,12 +174,12 @@ public class DocumentManagerImpl extends AbstractLogEnabled implements DocumentM
             Node node = document.getRepositoryNode();
             node.lock();
 
+            document.setResourceType(documentType);
+            document.setSourceExtension(extension);
+
             // Write Lenya-internal meta-data
             MetaData lenyaMetaData = document.getMetaData(DocumentImpl.METADATA_NAMESPACE);
-
-            lenyaMetaData.setValue(DocumentImpl.METADATA_RESOURCE_TYPE, documentType.getName());
             lenyaMetaData.setValue(DocumentImpl.METADATA_CONTENT_TYPE, "xml");
-            lenyaMetaData.setValue(DocumentImpl.METADATA_EXTENSION, extension);
 
             if (getLogger().isDebugEnabled()) {
                 getLogger().debug("Create");

@@ -39,6 +39,7 @@ import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteStructure;
+import org.apache.lenya.util.Assert;
 
 /**
  * A typical CMS document.
@@ -60,30 +61,30 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      * this information can be used e.g. for different rendering of different
      * types.
      */
-    public static final String METADATA_RESOURCE_TYPE = "resourceType";
+    protected static final String METADATA_RESOURCE_TYPE = "resourceType";
 
     /**
      * The name of the mime type attribute.
      */
-    public static final String METADATA_MIME_TYPE = "mimeType";
+    protected static final String METADATA_MIME_TYPE = "mimeType";
 
     /**
      * The name of the content type attribute. Any content managed by Lenya has
      * a type; this information can be used e.g. to provide an appropriate
      * management interface.
      */
-    public static final String METADATA_CONTENT_TYPE = "contentType";
+    protected static final String METADATA_CONTENT_TYPE = "contentType";
 
     /**
      * The number of seconds from the request that a document can be cached
      * before it expires
      */
-    public static final String METADATA_EXPIRES = "expires";
+    protected static final String METADATA_EXPIRES = "expires";
 
     /**
      * The extension to use for the document source.
      */
-    public static final String METADATA_EXTENSION = "extension";
+    protected static final String METADATA_EXTENSION = "extension";
 
     /**
      * Creates a new instance of DefaultDocument.
@@ -282,6 +283,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      */
     protected void setExtension(String _extension) {
         assert _extension != null;
+        Assert.isTrue("Extension doesn't start with a dot", !_extension.startsWith("."));
         this.extension = _extension;
     }
 
@@ -601,6 +603,27 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
             this.area = new AreaImpl(this.manager, getFactory(), getPublication(), getArea());
         }
         return this.area;
+    }
+
+    public void setResourceType(ResourceType resourceType) {
+        Assert.notNull("resource type", resourceType);
+        try {
+            MetaData meta = getMetaData(DocumentImpl.METADATA_NAMESPACE);
+            meta.setValue(DocumentImpl.METADATA_RESOURCE_TYPE, resourceType.getName());
+        } catch (MetaDataException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void setSourceExtension(String extension) {
+        Assert.notNull("extension", extension);
+        Assert.isTrue("extension doesn't start with a dot", !extension.startsWith("."));
+        try {
+            MetaData meta = getMetaData(DocumentImpl.METADATA_NAMESPACE);
+            meta.setValue(DocumentImpl.METADATA_EXTENSION, extension);
+        } catch (MetaDataException e) {
+            throw new RuntimeException(e);
+        }
     }
 
 }

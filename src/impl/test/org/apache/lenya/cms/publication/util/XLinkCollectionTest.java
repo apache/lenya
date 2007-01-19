@@ -107,7 +107,7 @@ public class XLinkCollectionTest extends AbstractAccessControlTest {
             type = (ResourceType) typeSelector.select("collection");
             docMgr = (DocumentManager) getManager().lookup(DocumentManager.ROLE);
             String sampleUri = type.getSampleURI(type.getSampleNames()[0]);
-            doc = docMgr.add(getFactory(), type, sampleUri, pub, "authoring", "en", ".xml");
+            doc = docMgr.add(getFactory(), type, sampleUri, pub, "authoring", "en", "xml");
         } finally {
             if (docMgr != null) {
                 getManager().release(docMgr);

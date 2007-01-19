@@ -100,7 +100,7 @@ public interface DocumentManager {
      * @param area The area.
      * @param path The path.
      * @param language The language.
-     * @param extension The extension to use for the document source.
+     * @param extension The extension to use for the document source, without the leading dot.
      * @param navigationTitle The navigation title.
      * @param visibleInNav The navigation visibility.
      * @return The added document.
@@ -122,7 +122,7 @@ public interface DocumentManager {
      * @param area The area.
      * @param path The path.
      * @param language The language.
-     * @param extension The extension to use for the document source.
+     * @param extension The extension to use for the document source, without the leading dot.
      * @return The added document.
      * 
      * @throws DocumentBuildException if the document can not be created

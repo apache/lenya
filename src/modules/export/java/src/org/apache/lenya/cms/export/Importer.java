@@ -132,7 +132,7 @@ public class Importer extends AbstractLogEnabled {
             SiteStructure site = area.getSite();
             if (!site.contains(path) || site.getNode(path).getLanguages().length == 0) {
                 newDoc = docManager.add(area.getPublication().getFactory(), resourceType,
-                        contentUri, area.getPublication(), area.getName(), path, language, ".html",
+                        contentUri, area.getPublication(), area.getName(), path, language, "xml",
                         navigationTitle, visibleInNav);
             } else {
                 SiteNode node = site.getNode(path);
