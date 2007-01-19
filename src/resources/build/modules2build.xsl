@@ -297,7 +297,7 @@
         </sourcepath>
         
         <!-- pass ant in the classpath to avoid class not found errors -->
-        <classpath refid="module.classpath.{$id}"/>
+        <classpath refid="module.classpath.{$id}.api"/>
       </javadoc>
     </target>
     
@@ -339,9 +339,9 @@
       <mkdir dir="{$testDestDir}"/>
       
       <path id="module.test-classpath.{$id}">
-        <path refid="module.classpath.{$id}"/>
+        <path refid="module.classpath.{$id}.impl"/>
         <fileset dir="${{build.webapp}}/WEB-INF/lib">
-          <include name="lenya-module-{$id}.jar"/>
+          <include name="lenya-module-{$id}-impl.jar"/>
         </fileset>
         <path location="${{build.test}}"/>
       </path>
