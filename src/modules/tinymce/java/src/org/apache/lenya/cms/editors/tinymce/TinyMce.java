@@ -78,7 +78,6 @@ public class TinyMce extends DocumentUsecase {
         super.doCheckPreconditions();
         UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), getSourceDocument(),
                 getLogger());
-        addInfoMessage("This is a usecase InfoMessage.");
     }
 
     /**
