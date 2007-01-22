@@ -42,5 +42,10 @@
   <message key="he-isCurrent">עברית is your currently selected language.</message>
   <message key="he-isUnavailable">Sorry, no עברית translation is available for this page.</message>
   <message key="he-isAvailable">Change to עברית version.</message>
+  <message key="en">English</message>
+  <message key="de">Deutsch</message>
+  <message key="fr">Français</message>
+  <message key="es">Español</message>
+  <message key="he">עברית</message>
   
 </catalogue>

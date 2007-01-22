@@ -92,11 +92,16 @@
           <xsl:call-template name="text">
             <xsl:with-param name="lang" select="$lang"/>
           </xsl:call-template>
+          <xsl:call-template name="flag">
+            <xsl:with-param name="lang" select="$lang"/>
+            <xsl:with-param name="flagsize" select="$flagsize"/>
+          </xsl:call-template>
         </a>
       </xsl:when>
 
       <!-- this test is a little sloppy and can lead to spurious substring matches if 
            both two and three letter language codes (ISO 639-2) are being used. -->
+  
       <xsl:when test="contains($document-languages-csv, $lang)">
         <!-- aren't these new lenya-document links lovely? relative links to languages! -->
         <a class="lenya-language-isAvailable" 
@@ -106,6 +111,10 @@
         >
           <xsl:call-template name="text">
             <xsl:with-param name="lang" select="$lang"/>
+          </xsl:call-template>
+          <xsl:call-template name="flag">
+            <xsl:with-param name="lang" select="$lang"/>
+            <xsl:with-param name="flagsize" select="$flagsize"/>
           </xsl:call-template>
         </a>
       </xsl:when>
@@ -117,6 +126,10 @@
         >
           <xsl:call-template name="text">
             <xsl:with-param name="lang" select="$lang"/>
+          </xsl:call-template>
+          <xsl:call-template name="flag">
+            <xsl:with-param name="lang" select="$lang"/>
+            <xsl:with-param name="flagsize" select="$flagsize"/>
           </xsl:call-template>
         </a>
       </xsl:otherwise>
@@ -134,14 +147,18 @@
         <i18n:text><xsl:value-of select="$lang"/></i18n:text>
       </xsl:when>
     </xsl:choose>
-<!-- TO BE DONE:
+  </xsl:template>
+
+  <xsl:template name="flag">
+    <xsl:param name="lang"/>
+    <xsl:param name="flagsize"/>
     <xsl:choose>
       <xsl:when test="$flagsize = 'none'"/>
-      <xsl:when test="number($flagsize)">
-        <img src="{$context}/modules/languageselector/images/{$lang}-{$flagsize}.png" alt="{$lang}"/>
+      <xsl:when test="number($flagsize) &gt; 0">
+        <xsl:text>&#160;</xsl:text>
+        <img src="{$context}/modules/languageselector/flag-{$lang}-{$flagsize}.png" alt="{$lang}"/>
       </xsl:when>
     </xsl:choose>
--->
   </xsl:template>
 
 </xsl:stylesheet>

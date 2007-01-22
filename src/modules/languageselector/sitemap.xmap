@@ -18,6 +18,19 @@
 
 <map:sitemap xmlns:map="http://apache.org/cocoon/sitemap/1.0">
 
+  <map:components>
+
+    <map:serializers>
+      <map:serializer name="svg2png"
+        src="org.apache.cocoon.serialization.SVGSerializer"
+        mime-type="image/png"
+        logger="sitemap.serializer.svg2png"
+      />
+    </map:serializers>
+
+  </map:components>
+
+
   <map:pipelines>
   
     <map:pipeline>
@@ -30,7 +43,7 @@
            "none": do not show flag symbols [default]
            <n>: show flags with height of n pixels.
     -->
-    <map:match pattern="languageselector/text-*/flagsize-*">
+    <map:match pattern="text-*/flagsize-*">
       <map:generate src="context://lenya/content/util/empty.xml"/>
       <map:transform src="fallback://lenya/modules/languageselector/xslt/languageselector.xsl">
         <map:parameter name="currentLanguage" value="{page-envelope:document-language}"/>
@@ -45,10 +58,34 @@
       </map:transform>
       <map:serialize type="xml"/>
     </map:match>
-
    
     </map:pipeline>
   
+    <map:pipeline>
+    
+    <!-- flag-<language-code>-<height in pixels>.png -->
+    <map:match pattern="flag-*-*.png">
+      <map:select type="resource-exists">
+        <map:when test="resources/images/{1}.svg">
+          <map:generate src="fallback://lenya/modules/languageselector/resources/images/{1}.svg"/>
+        </map:when>
+        <map:otherwise>
+           <map:generate src="fallback://lenya/modules/languageselector/resources/images/default.svg"/>
+        </map:otherwise>
+      </map:select>
+      <map:transform src="xslt/resizesvg.xsl">
+        <parameter name="height" value="{2}"/>
+      </map:transform>  
+      <map:serialize type="svg2png"/>
+    </map:match>
+
+    <!-- currently only for debugging purposes -->
+    <map:match pattern="resources/images/*.svg">
+      <map:read src="resources/images/{1}.svg"/>
+    </map:match>
+
+    </map:pipeline>
+
   </map:pipelines>
 
 </map:sitemap>
