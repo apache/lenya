@@ -91,6 +91,7 @@
             <tr>
               <td valign="top" style="width: 230px">
                 <xsl:apply-templates select="xhtml:div[@id = 'menu']"/>
+                <xsl:apply-templates select="xhtml:div[@id = 'languageselector']"/>
               </td>
               <td valign="top">
                 <div id="main">

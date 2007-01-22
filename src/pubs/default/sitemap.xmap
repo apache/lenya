@@ -134,6 +134,7 @@
           <map:part src="cocoon://modules/sitetree/{2}/{3}/tabs/{5}.xml"/>
           <map:part src="cocoon://modules/sitetree/{2}/{3}/menu/{5}.xml"/>
           <map:part src="cocoon://modules/sitetree/{2}/{3}/search/{5}.xml"/>
+          <map:part src="cocoon://modules/languageselector/text-long/flagsize-10"/>
           <map:part src="{resource-type:format-xhtml}?rendertype={1}"/>
         </map:aggregate>
         <map:transform type="link-rewrite"/>

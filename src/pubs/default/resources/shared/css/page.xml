@@ -100,7 +100,7 @@ td.tab-post-separator {
 
 /* menu */
 
-#menu {
+#menu, #languageselector {
     font-family: Verdana, Arial, Sans-serif;
     background-color: #DDBBBB;
     border: solid 1px #BB9999;
@@ -110,14 +110,34 @@ td.tab-post-separator {
     padding: 0px 0px 5px 25px;
 }
 
-#menu a {
+#languageselector {
+    font-size:80%;
+}
+ 
+#languageselector img {
+    border:none;
+}
+#menu a, #languageselector a {
     text-decoration: none;
     color: Maroon;
 }
 
-#menu a:hover {
+#languageselector a {
+    padding:0px;
+    margin:0px;
+}
+#languageselector a.lenya-language-isCurrent {
+    font-weight:bold;
+}
+#languageselector a.lenya-language-isAvailable {
+}
+#languageselector a.lenya-language-isUnavailable {
+    color:#aaaaaa;
+}
+#menu a:hover, #languageselector a:hover {
     text-decoration: underline;
 }
+
 
 .menublock-1, .menublock-selected-1 {
     padding: 0px;

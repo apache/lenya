@@ -24,6 +24,9 @@
   <languages>
     <language default="true">en</language>
     <language>de</language>
+    <language>he</language>
+    <language>es</language>
+    <language>fr</language>
   </languages>
   <template-instantiator name="default"/>
   <path-mapper>org.apache.lenya.cms.publication.DefaultDocumentIdToPathMapper</path-mapper>
@@ -56,6 +59,7 @@
   <module name="svg"/>
   <module name="lucene"/>
   <module name="development"/>
+  <module name="languageselector"/>
   <!-- TODO: The goal is to have a blog module ;-) -->
   <!--
   <module name="blog"/>
