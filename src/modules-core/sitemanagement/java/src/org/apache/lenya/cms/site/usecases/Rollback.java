@@ -26,7 +26,6 @@ import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
-import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.rc.RevisionController;
 import org.apache.lenya.cms.usecase.DocumentUsecase;

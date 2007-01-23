@@ -22,7 +22,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentLocator;
@@ -37,6 +36,7 @@ import org.apache.lenya.cms.site.SiteUtil;
 import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
+import org.apache.lenya.cms.workflow.usecases.UsecaseWorkflowHelper;
 
 /**
  * Usecase to move a subsite to another area.
@@ -78,12 +78,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
                     Document liveVersion = docs[i].getAreaVersion(Publication.LIVE_AREA);
                     addErrorMessage("delete-doc-live", new String[] { liveVersion.toString() });
                 }
-                if (!WorkflowUtil.canInvoke(this.manager, getSession(), getLogger(), docs[i],
-                        getEvent())) {
-                    String title = DublinCoreHelper.getTitle(docs[i]);
-                    addErrorMessage("The workflow event [" + getEvent()
-                            + "] cannot be invoked on document [" + docs[i] + "].");
-                }
+                UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), docs[i], getLogger());
             }
         }
     }

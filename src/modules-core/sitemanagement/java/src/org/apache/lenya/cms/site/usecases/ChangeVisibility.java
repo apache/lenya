@@ -17,7 +17,6 @@
  */
 package org.apache.lenya.cms.site.usecases;
 
-import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
