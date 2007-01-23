@@ -38,9 +38,8 @@ public abstract class AbstractItem extends AbstractLogEnabled implements Item, C
     private String description = "";
     private String name = "";
 
-    private AccreditableManager accreditableManager;
     private ItemManager itemManager;
-    
+
     /**
      * Ctor.
      * @param itemManager The item manager this item belongs to.
@@ -49,16 +48,16 @@ public abstract class AbstractItem extends AbstractLogEnabled implements Item, C
     public AbstractItem(ItemManager itemManager, Logger logger) {
         Assert.notNull("item manager", itemManager);
         this.itemManager = itemManager;
-        
+
         Assert.notNull("logger", logger);
         ContainerUtil.enableLogging(this, logger);
     }
-    
+
     /**
      * @return The accreditable manager.
      */
     public AccreditableManager getAccreditableManager() {
-        return this.accreditableManager;
+        return getItemManager().getAccreditableManager();
     }
 
     /**
@@ -128,7 +127,9 @@ public abstract class AbstractItem extends AbstractLogEnabled implements Item, C
 
         if (getClass().isInstance(otherObject)) {
             AbstractItem otherManageable = (AbstractItem) otherObject;
-            equals = getId().equals(otherManageable.getId());
+            String thisMgrId = getAccreditableManager().getId();
+            String otherMgrId = otherManageable.getAccreditableManager().getId();
+            equals = getId().equals(otherManageable.getId()) && thisMgrId.equals(otherMgrId);
         }
         return equals;
     }
@@ -149,9 +150,9 @@ public abstract class AbstractItem extends AbstractLogEnabled implements Item, C
         }
         return 0;
     }
-    
+
     public ItemManager getItemManager() {
         return this.itemManager;
     }
-    
+
 }

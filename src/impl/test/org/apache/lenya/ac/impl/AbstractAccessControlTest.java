@@ -41,8 +41,8 @@ import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.repository.RepositoryUtil;
 
 /**
- * To change the template for this generated type comment go to Window>Preferences>Java>Code
- * Generation>Code and Comments
+ * To change the template for this generated type comment go to
+ * Window>Preferences>Java>Code Generation>Code and Comments
  */
 public class AbstractAccessControlTest extends LenyaTestCase {
 
@@ -88,36 +88,45 @@ public class AbstractAccessControlTest extends LenyaTestCase {
      * @return An access controller.
      */
     public DefaultAccessController getAccessController() {
+        String pubId = "test";
         if (this.accessController == null) {
-            try {
-                this.accessControllerResolverSelector = (ServiceSelector) getManager().lookup(AccessControllerResolver.ROLE
-                        + "Selector");
-                assertNotNull(this.accessControllerResolverSelector);
-
-                this.accessControllerResolver = (AccessControllerResolver) this.accessControllerResolverSelector.select(AccessControllerResolver.DEFAULT_RESOLVER);
-
-                assertNotNull(this.accessControllerResolver);
-                getLogger().info("Using access controller resolver: ["
-                        + this.accessControllerResolver.getClass() + "]");
-
-                Publication pub = getPublication("test");
-                getLogger().info("Resolve access controller");
-                getLogger().info("Publication directory: [" + pub.getDirectory().getAbsolutePath()
-                        + "]");
-
-                this.accessController = (DefaultAccessController) ((PublicationAccessControllerResolver) this.accessControllerResolver).resolveAccessController(URL);
-
-                assertNotNull(this.accessController);
-                getLogger().info("Resolved access controller: [" + this.accessController.getClass()
-                        + "]");
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
+            DefaultAccessController controller = getAccessController(pubId);
+            this.accessController = controller;
         }
         return this.accessController;
     }
 
-    protected static final String URL = "/test/authoring/index.html";
+    protected DefaultAccessController getAccessController(String pubId) {
+        DefaultAccessController controller;
+        try {
+            this.accessControllerResolverSelector = (ServiceSelector) getManager().lookup(
+                    AccessControllerResolver.ROLE + "Selector");
+            assertNotNull(this.accessControllerResolverSelector);
+
+            this.accessControllerResolver = (AccessControllerResolver) this.accessControllerResolverSelector
+                    .select(AccessControllerResolver.DEFAULT_RESOLVER);
+
+            assertNotNull(this.accessControllerResolver);
+            getLogger().info(
+                    "Using access controller resolver: ["
+                            + this.accessControllerResolver.getClass() + "]");
+
+            Publication pub = getPublication(pubId);
+            getLogger().info("Resolve access controller");
+            getLogger().info(
+                    "Publication directory: [" + pub.getDirectory().getAbsolutePath() + "]");
+
+            String url = "/" + pubId + "/authoring/index.html";
+            controller = (DefaultAccessController) ((PublicationAccessControllerResolver) this.accessControllerResolver)
+                    .resolveAccessController(url);
+
+            assertNotNull(controller);
+            getLogger().info("Resolved access controller: [" + controller.getClass() + "]");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+        return controller;
+    }
 
     /**
      * The teardown method for JUnit

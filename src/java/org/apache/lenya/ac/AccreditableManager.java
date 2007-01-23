@@ -78,4 +78,10 @@ public interface AccreditableManager extends Component {
      */
     String getConfigurationCollectionUri();
 
+    /**
+     * @return The unique ID of this accreditable manager. It is used to check
+     * if two accreditables belong to the same accreditable manager.
+     */
+    String getId();
+
 }

@@ -16,8 +16,8 @@
 */
 package org.apache.lenya.ac.impl;
 
-import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.lenya.ac.AccessControlException;
+import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.ac.User;
 
@@ -38,12 +38,45 @@ public class IdentityTest extends AbstractAccessControlTest {
      */
     public void testIdentity() throws AccessControlException {
         Identity identity = new Identity(getLogger());
-        ContainerUtil.enableLogging(identity, getLogger());
         User user = getAccessController().getAccreditableManager().getUserManager().getUser(USER_ID);
         getLogger().info("Adding user to identity: [" + user + "]");
         identity.addIdentifiable(user);
         
         assertSame(user, identity.getUser());
+    }
+    
+    /**
+     * Test the {@link Identity#belongsTo(org.apache.lenya.ac.AccreditableManager)} method.
+     * @throws Exception if an error occurs.
+     */
+    public void testBelongsTo() throws Exception {
+        AccreditableManager testMgr = getAccessController("test").getAccreditableManager();
+        AccreditableManager defaultMgr = getAccessController("default").getAccreditableManager();
+        AccreditableManager blogMgr = getAccessController("blog").getAccreditableManager();
+        
+        String userId = "lenya";
+        User testUser = testMgr.getUserManager().getUser(userId);
+        User defaultUser = defaultMgr.getUserManager().getUser(userId);
+        User blogUser = blogMgr.getUserManager().getUser(userId);
+        
+        Identity testIdentity = new Identity(getLogger());
+        testIdentity.addIdentifiable(testUser);
+        
+        Identity defaultIdentity = new Identity(getLogger());
+        defaultIdentity.addIdentifiable(defaultUser);
+        
+        Identity blogIdentity = new Identity(getLogger());
+        blogIdentity.addIdentifiable(blogUser);
+        
+        assertTrue(testIdentity.belongsTo(testMgr));
+        assertTrue(defaultIdentity.belongsTo(defaultMgr));
+        assertTrue(blogIdentity.belongsTo(blogMgr));
+        
+        assertTrue(testIdentity.belongsTo(defaultMgr));
+        assertTrue(defaultIdentity.belongsTo(testMgr));
+        
+        assertFalse(testIdentity.belongsTo(blogMgr));
+        assertFalse(blogIdentity.belongsTo(testMgr));
     }
 
 }

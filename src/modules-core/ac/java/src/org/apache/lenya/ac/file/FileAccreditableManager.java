@@ -21,6 +21,7 @@
 package org.apache.lenya.ac.file;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URI;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -54,7 +55,7 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
 
     /**
      * Creates a new FileAccreditableManager. If you use this constructor, you have to set the
-     * configuration directory either by calling {@link #setConfigurationDirectory(File)}or by
+     * configuration directory either by calling {@link #setConfigurationDirectory(File)} or by
      * calling {@link #parameterize(Parameters)}.
      */
     public FileAccreditableManager() {
@@ -262,6 +263,14 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
         try {
             return "file://" + getConfigurationDirectory().getCanonicalPath();
         } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String getId() {
+        try {
+            return this.configurationDirectory.getCanonicalPath();
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

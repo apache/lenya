@@ -99,8 +99,4 @@ public abstract class AbstractGroupable extends AbstractItem implements Groupabl
         return (Accreditable[]) accreditables.toArray(new Accreditable[accreditables.size()]);
     }
     
-    public AccreditableManager getAccreditableManager() {
-        return getItemManager().getAccreditableManager();
-    }
-
 }

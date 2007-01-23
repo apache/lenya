@@ -150,7 +150,7 @@ public class Identity extends AbstractLogEnabled implements Identifiable, Serial
             if (_identifiables[i] instanceof User) {
                 User user = (User) _identifiables[i];
                 User otherUser = manager.getUserManager().getUser(user.getId());
-                belongs = belongs && user == otherUser;
+                belongs = belongs && otherUser != null && user.equals(otherUser);
             }
             i++;
         }
