@@ -181,7 +181,7 @@ function executeUsecase(usecaseName) {
         passRequestHeaders(flowHelper, usecase);
         usecase.checkPreconditions();
         usecase.lockInvolvedObjects();
-        proxy = new Packages.org.apache.lenya.cms.usecase.UsecaseProxy(usecase);
+        proxy = new Packages.org.apache.lenya.cms.usecase.impl.UsecaseProxy(usecase);
     }
     finally {
         /* done with usecase component, tell usecaseResolver to release it */
