@@ -109,6 +109,7 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
                 listener.eventFired(event);
             }
         }
+        this.events.clear();
     }
 
     /**
@@ -121,6 +122,7 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
         } catch (TransactionException e) {
             throw new RepositoryException(e);
         }
+        this.events.clear();
     }
 
     /**

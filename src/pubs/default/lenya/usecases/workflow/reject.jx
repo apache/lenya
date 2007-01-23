@@ -42,7 +42,7 @@
       <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
       
       <div class="lenya-box-body">
-        <form id="formReject">
+        <form name="formReject">
           <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
           <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
           <table class="lenya-table-noborder">
@@ -62,11 +62,11 @@
                 <jx:choose>
                   <jx:when test="${usecase.getParameter('sendNotification').equals('true')}">
                     <input name="sendNotification" type="checkbox" checked="checked"
-                      onclick="javascript:formReject.rejectReason.disabled = false"/>
+                      onclick="javascript:document.formReject.rejectReason.disabled = !this.checked"/>
                   </jx:when>
                   <jx:otherwise>
                     <input name="sendNotification" type="checkbox"
-                      onclick="javascript:formReject.rejectReason.disabled = true"/>
+                      onclick="javascript:document.formReject.rejectReason.disabled = !this.checked"/>
                   </jx:otherwise>
                 </jx:choose>
               </td>
