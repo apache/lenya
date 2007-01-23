@@ -141,21 +141,15 @@ public class Identity extends AbstractLogEnabled implements Identifiable, Serial
      * @throws AccessControlException if an error occurs
      */
     public boolean belongsTo(AccreditableManager manager) throws AccessControlException {
-
-        boolean belongs = true;
-
-        Identifiable _identifiables[] = getIdentifiables();
-        int i = 0;
-        while (belongs && i < _identifiables.length) {
-            if (_identifiables[i] instanceof User) {
-                User user = (User) _identifiables[i];
-                User otherUser = manager.getUserManager().getUser(user.getId());
-                belongs = belongs && otherUser != null && user.equals(otherUser);
-            }
-            i++;
+        User user = getUser();
+        if (user == null) {
+            return true;
         }
-
-        return belongs;
+        else {
+            String thisId = user.getAccreditableManager().getId();
+            String otherId = manager.getId();
+            return thisId.equals(otherId);
+        }
     }
 
     /**
