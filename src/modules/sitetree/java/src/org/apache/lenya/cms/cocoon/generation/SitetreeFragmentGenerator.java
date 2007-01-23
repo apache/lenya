@@ -227,14 +227,15 @@ public class SitetreeFragmentGenerator extends ServiceableGenerator {
             
             SiteStructure site = this.publication.getArea(this.area).getSite();
 
-            SiteNode node = site.getNode(this.path);
-            if (this.getLogger().isDebugEnabled()) {
-                this.getLogger().debug("Node with path " + this.path + " found.");
+            SiteNode[] children;
+            
+            if (this.path.equals("/")) {
+                children = site.getTopLevelNodes();
             }
-            if (node == null)
-                throw new SiteException("Node with path " + this.path + " not found.");
-
-            SiteNode[] children = node.getChildren();
+            else {
+                SiteNode node = site.getNode(this.path);
+                children = node.getChildren();
+            }
 
             addNodes(children);
         } catch (PublicationException e) {
