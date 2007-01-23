@@ -114,20 +114,21 @@ td.tab-post-separator {
     font-size:80%;
 }
  
-#languageselector img {
+#languageselector a img {
     border:none;
+    margin:0;
+    padding:0;
 }
 #menu a, #languageselector a {
     text-decoration: none;
     color: Maroon;
 }
 
-#languageselector a {
-    padding:0px;
-    margin:0px;
-}
 #languageselector a.lenya-language-isCurrent {
     font-weight:bold;
+}
+#languageselector a.lenya-language-isCurrent img {
+    border: solid 2px Maroon;
 }
 #languageselector a.lenya-language-isAvailable {
 }

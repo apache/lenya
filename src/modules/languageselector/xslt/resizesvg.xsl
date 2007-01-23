@@ -25,22 +25,34 @@
 
   <xsl:param name="height"/>
 
+  <!-- prevent users from causing memory overflows: -->
+  <xsl:variable name="maxHeight" select="1024"/>
+
   <!-- 
      scales an svg to height $height.
      this is done by surrounding the image with a new <svg/> element with the desired height and 
      proportional width, and a viewBox whose dimensions are taken from the original image.
   -->  
   <xsl:template match="/svg:svg">
-    <svg:svg>
-      <xsl:attribute name="height"><xsl:value-of select="$height"/></xsl:attribute>
-      <xsl:if test="number(@width) &gt; 0 and number(@height) &gt; 0">
-        <xsl:attribute name="width"><xsl:value-of select="ceiling(@width div @height * $height)"/></xsl:attribute>
-      </xsl:if>
-      <xsl:attribute name="viewBox"><xsl:value-of select="concat('0 0 ', @width, ' ', @height)"/></xsl:attribute> 
-      <xsl:copy>
-        <xsl:apply-templates select="@*|node()"/>
-      </xsl:copy>
-    </svg:svg>
+    <xsl:choose>
+      <xsl:when test="number($height) &gt; 0 and number($height) &lt;= $maxHeight">
+        <svg:svg>
+          <xsl:attribute name="height"><xsl:value-of select="$height"/></xsl:attribute>
+          <xsl:if test="number(@width) &gt; 0 and number(@height) &gt; 0">
+            <xsl:attribute name="width"><xsl:value-of select="ceiling(@width div @height * $height)"/></xsl:attribute>
+          </xsl:if>
+          <xsl:attribute name="viewBox"><xsl:value-of select="concat('0 0 ', @width, ' ', @height)"/></xsl:attribute> 
+          <xsl:copy>
+            <xsl:apply-templates select="@*|node()"/>
+          </xsl:copy>
+        </svg:svg>
+      </xsl:when>
+      <xsl:otherwise>
+        <xsl:message terminate="yes">
+          Wow. You requested an image height of <xsl:value-of select="$height"/>. No way José. Go DoS someone else.
+        </xsl:message>
+      </xsl:otherwise>
+    </xsl:choose>
   </xsl:template>
 
   <xsl:template match="@*|node()" name="identity">

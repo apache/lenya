@@ -26,22 +26,22 @@
      
   <message key="en-isCurrent">English is your currently selected language.</message>
   <message key="en-isUnavailable">Sorry, no English translation is available for this document.</message>
-  <message key="en-isAvailable">Switch to English translation.</message>
+  <message key="en-isAvailable">switch to English translation</message>
   <message key="de-isCurrent">Deutsch ist die aktuell gewählte Sprache.</message>
   <message key="de-isUnavailable">Leider ist für diese Seite keine deutsche Übersetzung verfügbar.</message>
-  <message key="de-isAvailable">Zur deutschen Übersetzung.</message>
+  <message key="de-isAvailable">zur deutschen Übersetzung</message>
   <!-- sorry, my french sucks. anyone? -->
   <message key="fr-isCurrent">Vous lisez la version française.</message>
-  <message key="fr-isUnavailable">Nous regrettons qu'il n'y'a pas de traduction française.</message>
-  <message key="fr-isAvailable">Vers la version française.</message>
+  <message key="fr-isUnavailable">Nous regrettons qu'il n'y a pas de traduction française.</message>
+  <message key="fr-isAvailable">vers la version française</message>
   <!-- my spanish either. -->
-  <message key="es-isCurrent">Spanish is your currently selected language.</message>
-  <message key="es-isUnavailable">Sorry, no Spanish version is available for this document.</message>
-  <message key="es-isAvailable">Go to Spanish translation.</message>
+  <message key="es-isCurrent">Eso es castellano.</message>
+  <message key="es-isUnavailable">Desafortunadamente no hay una traducción castellana.</message>
+  <message key="es-isAvailable">para la traducción castellana</message>
   <!-- my hebrew is even worse. -->
-  <message key="he-isCurrent">עברית is your currently selected language.</message>
-  <message key="he-isUnavailable">Sorry, no עברית translation is available for this page.</message>
-  <message key="he-isAvailable">Change to עברית version.</message>
+  <message key="he-isCurrent">.זה בספה עברית</message>
+  <message key="he-isUnavailable">.אנלנו העמוד הזה בעברית</message>
+  <message key="he-isAvailable">.לעמוד עברית</message>
   <message key="en">English</message>
   <message key="de">Deutsch</message>
   <message key="fr">Français</message>
