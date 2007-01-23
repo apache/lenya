@@ -40,6 +40,8 @@ import org.apache.lenya.cms.usecase.UsecaseResolver;
  */
 public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInvoker, Serviceable {
 
+    private String targetUrl;
+
     /**
      * @see org.apache.lenya.cms.usecase.UsecaseInvoker#invoke(java.lang.String, java.lang.String,
      *      java.util.Map)
@@ -74,9 +76,10 @@ public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInv
                 if (succeeded(EXECUTION_CONDITIONS_FAILED, usecase)) {
                     usecase.execute();
 
-                    if (succeeded(EXECUTION_FAILED, usecase)) {
+                    boolean success = succeeded(EXECUTION_FAILED, usecase);
+                    this.targetUrl = usecase.getTargetURL(success);
+                    if (success) {
                         usecase.checkPostconditions();
-
                         succeeded(POSTCONDITIONS_FAILED, usecase);
                     }
                 }
@@ -179,6 +182,13 @@ public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInv
 
     public int getResult() {
         return this.result;
+    }
+
+    public String getTargetUrl() {
+        if (this.targetUrl == null) {
+            throw new IllegalStateException("The usecase has not been executed yet.");
+        }
+        return this.targetUrl;
     }
 
 }

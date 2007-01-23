@@ -29,7 +29,9 @@ import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.NodeSet;
+import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.cms.site.SiteUtil;
@@ -37,6 +39,7 @@ import org.apache.lenya.cms.usecase.DocumentUsecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.cms.workflow.usecases.UsecaseWorkflowHelper;
+import org.apache.lenya.util.Assert;
 
 /**
  * Usecase to move a subsite to another area.
@@ -78,7 +81,8 @@ public abstract class MoveSubsite extends DocumentUsecase {
                     Document liveVersion = docs[i].getAreaVersion(Publication.LIVE_AREA);
                     addErrorMessage("delete-doc-live", new String[] { liveVersion.toString() });
                 }
-                UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), docs[i], getLogger());
+                UsecaseWorkflowHelper.checkWorkflow(this.manager, this, getEvent(), docs[i],
+                        getLogger());
             }
         }
     }
@@ -154,27 +158,50 @@ public abstract class MoveSubsite extends DocumentUsecase {
         if (getTargetArea().equals(Publication.AUTHORING_AREA)) {
             return super.getTargetURL(success);
         }
-        
+
         String url;
         if (!success) {
             url = getSourceURL();
         } else {
             try {
                 Document document = getTargetDocument(success);
-                SiteNode node = document.getLink().getNode();
-                if (node.isTopLevel()) {
-                    url = document.getPublication().getId() + "/" + document.getArea() + "/";
-                } else {
-                    SiteNode parent = node.getParent();
-                    SiteNode authoringParent = document.getPublication().getArea(
-                            Publication.AUTHORING_AREA).getSite().getNode(parent.getPath());
-                    String language = authoringParent.getLanguages()[0];
-                    url = authoringParent.getLink(language).getDocument().getCanonicalWebappURL();
-                }
+                SiteStructure site = document.getPublication().getArea(Publication.AUTHORING_AREA).getSite();
+                return getTargetUrl(site, document.getPath()) + getExitQueryString();
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
         }
         return url + getExitQueryString();
     }
+
+    protected static String getTargetUrl(SiteStructure site, String path) throws SiteException {
+        if (path.length() == 0) {
+            return "/" + site.getPublication().getId() + "/" + site.getArea() + "/";
+        } else if (site.contains(path)) {
+            SiteNode node = site.getNode(path);
+            if (node.getLanguages().length > 0) {
+                Link link;
+                String defaultLanguage = site.getPublication().getDefaultLanguage();
+                if (node.hasLink(defaultLanguage)) {
+                    link = node.getLink(defaultLanguage);
+                }
+                else {
+                    link = node.getLink(node.getLanguages()[0]);
+                }
+                return link.getDocument().getCanonicalWebappURL();
+            }
+            else {
+                return getTargetUrl(site, getParentPath(path));
+            }
+        } else {
+            return getTargetUrl(site, getParentPath(path));
+        }
+    }
+
+    protected static String getParentPath(String path) {
+        Assert.notNull("path", path);
+        Assert.isTrue("not empty", path.length() > 0);
+        return path.substring(0, path.lastIndexOf("/"));
+    }
+
 }

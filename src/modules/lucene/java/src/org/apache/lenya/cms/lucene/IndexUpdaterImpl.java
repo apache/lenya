@@ -30,7 +30,12 @@ import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.observation.DocumentEvent;
 import org.apache.lenya.cms.observation.ObservationRegistry;
 import org.apache.lenya.cms.observation.RepositoryEvent;
+import org.apache.lenya.cms.publication.Area;
+import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourceType;
+import org.apache.lenya.cms.repository.Session;
 
 /**
  * Index updater implementation.
@@ -47,11 +52,11 @@ public class IndexUpdaterImpl extends AbstractLogEnabled implements IndexUpdater
 
         try {
             if (event.getDescriptor().equals(DocumentEvent.CHANGED)) {
-                index(event.getResourceType(), event.getPublicationId(), event.getArea(), event
-                        .getUuid(), event.getLanguage());
+                index(event.getSession(), event.getResourceType(), event.getPublicationId(), event
+                        .getArea(), event.getUuid(), event.getLanguage());
             } else if (event.getDescriptor().equals(DocumentEvent.REMOVED)) {
-                delete(event.getResourceType(), event.getPublicationId(), event.getArea(), event
-                        .getUuid(), event.getLanguage());
+                delete(event.getSession(), event.getResourceType(), event.getPublicationId(), event
+                        .getArea(), event.getUuid(), event.getLanguage());
             }
 
         } catch (IndexException e) {
@@ -103,14 +108,27 @@ public class IndexUpdaterImpl extends AbstractLogEnabled implements IndexUpdater
         this.manager = manager;
     }
 
-    public void delete(ResourceType resourceType, String pubId, String uuid, String area,
-            String language) throws IndexException {
+    public void delete(Session session, ResourceType resourceType, String pubId, String uuid,
+            String area, String language) throws IndexException {
         updateIndex("delete", resourceType, pubId, uuid, area, language);
     }
 
-    public void index(ResourceType resourceType, String pubId, String uuid, String area,
-            String language) throws IndexException {
-        updateIndex("index", resourceType, pubId, uuid, area, language);
+    public void index(Session session, ResourceType resourceType, String pubId, String uuid,
+            String area, String language) throws IndexException {
+        DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
+        try {
+            Publication pub = factory.getPublication(pubId);
+            Area areaObj = pub.getArea(area);
+            if (areaObj.contains(uuid, language)) {
+                updateIndex("index", resourceType, pubId, uuid, area, language);
+            } else {
+                getLogger().debug(
+                        "Ignoring document [" + pubId + ":" + area + ":" + uuid + ":" + language
+                                + "] because it doesn't exist (anymore).");
+            }
+        } catch (Exception e) {
+            throw new IndexException(e);
+        }
     }
 
 }

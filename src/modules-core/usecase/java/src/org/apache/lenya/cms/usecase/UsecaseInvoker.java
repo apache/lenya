@@ -84,5 +84,11 @@ public interface UsecaseInvoker {
      * @return A list of {@link UsecaseMessage} objects.
      */
     List getInfoMessages();
+    
+    /**
+     * @return The target URL of the usecase, based on the success.
+     * This method throws a RuntimeException if the usecase hasn't been executed yet.
+     */
+    String getTargetUrl();
 
 }

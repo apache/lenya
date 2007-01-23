@@ -20,6 +20,7 @@ package org.apache.lenya.cms.lucene;
 import org.apache.cocoon.components.search.IndexException;
 import org.apache.lenya.cms.observation.RepositoryListener;
 import org.apache.lenya.cms.publication.ResourceType;
+import org.apache.lenya.cms.repository.Session;
 
 /**
  * Index updater which updates the index when a document changes.
@@ -28,6 +29,7 @@ public interface IndexUpdater extends RepositoryListener {
 
     /**
      * Adds a document to the index.
+     * @param session The session.
      * @param resourceType The resource type.
      * @param publicationId The publication ID.
      * @param uuid The UUID.
@@ -35,11 +37,12 @@ public interface IndexUpdater extends RepositoryListener {
      * @param language The language.
      * @throws IndexException if an error occurs.
      */
-    void index(ResourceType resourceType, String publicationId, String uuid, String area,
+    void index(Session session, ResourceType resourceType, String publicationId, String uuid, String area,
             String language) throws IndexException;
 
     /**
      * Deletes a document from the index.
+     * @param session The session.
      * @param resourceType The resource type.
      * @param publicationId The publication ID.
      * @param uuid The UUID.
@@ -47,7 +50,7 @@ public interface IndexUpdater extends RepositoryListener {
      * @param language The language.
      * @throws IndexException if an error occurs.
      */
-    void delete(ResourceType resourceType, String publicationId, String uuid,
+    void delete(Session session, ResourceType resourceType, String publicationId, String uuid,
             String area, String language) throws IndexException;
 
 }
