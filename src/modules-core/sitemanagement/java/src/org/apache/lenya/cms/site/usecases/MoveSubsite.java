@@ -155,7 +155,7 @@ public abstract class MoveSubsite extends DocumentUsecase {
             return super.getTargetURL(success);
         }
         
-        String url = null;
+        String url;
         if (!success) {
             url = getSourceURL();
         } else {
