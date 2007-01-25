@@ -45,7 +45,7 @@ public class Logout extends AccessControlUsecase {
 
         if (session != null) {
             Vector history = (Vector) session
-                    .getAttribute("org.apache.lenya.cms.cocoon.acting.History");
+                    .getAttribute(Login.HISTORY_SESSION_ATTRIBUTE);
             setParameter("history", history.toArray());
         }
     }
@@ -62,6 +62,7 @@ public class Logout extends AccessControlUsecase {
         if (session != null) {
             session.removeAttribute(Identity.class.getName());
             RepositoryUtil.removeSession(manager, request);
+            session.removeAttribute(Login.HISTORY_SESSION_ATTRIBUTE);
         }
     }
 }

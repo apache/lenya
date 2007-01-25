@@ -34,6 +34,7 @@ import org.apache.lenya.cms.usecase.UsecaseException;
  */
 public class Login extends AccessControlUsecase {
 
+    protected static final String HISTORY_SESSION_ATTRIBUTE = "org.apache.lenya.cms.cocoon.acting.History";
     protected static final String PASSWORD = "password";
     protected static final String USERNAME = "username";
     protected static final String REFERRER_QUERY_STRING = "referrerQueryString";
@@ -103,6 +104,7 @@ public class Login extends AccessControlUsecase {
         Request request = ObjectModelHelper.getRequest(objectModel);
         request.getSession(true);
         if (getAccessController().authenticate(request)) {
+            request.getSession(false).removeAttribute(HISTORY_SESSION_ATTRIBUTE);
             setDefaultTargetURL(request.getPathInfo());
         } else {
             addErrorMessage("Authentication failed");
