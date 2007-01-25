@@ -46,6 +46,7 @@ import org.apache.lenya.ac.RoleManager;
 import org.apache.lenya.ac.UserManager;
 import org.apache.lenya.ac.UserType;
 import org.apache.lenya.ac.impl.AbstractAccreditableManager;
+import org.apache.lenya.util.Assert;
 
 /**
  * File-based accreditable manager.
@@ -68,9 +69,8 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
      * @param _userTypes The supported user types.
      */
     public FileAccreditableManager(File _configurationDirectory, UserType[] _userTypes) {
-        assert _configurationDirectory != null;
-        assert _configurationDirectory.exists();
-        assert _configurationDirectory.isDirectory();
+        Assert.notNull("configuration directory", _configurationDirectory);
+        Assert.isTrue("configuration directory exists", _configurationDirectory.isDirectory());
         this.configurationDirectory = _configurationDirectory;
         this.userTypes = new HashSet(Arrays.asList(_userTypes));
     }
