@@ -24,7 +24,6 @@ import java.util.Set;
 
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.Accreditable;
-import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.Group;
 import org.apache.lenya.ac.Groupable;
 import org.apache.lenya.ac.ItemManager;

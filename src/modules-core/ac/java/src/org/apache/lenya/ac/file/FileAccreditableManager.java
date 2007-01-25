@@ -27,15 +27,8 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.avalon.framework.configuration.Configuration;
-import org.apache.avalon.framework.configuration.ConfigurationException;
-import org.apache.avalon.framework.configuration.Configurable;
-import org.apache.avalon.framework.parameters.ParameterException;
-import org.apache.avalon.framework.parameters.Parameterizable;
-import org.apache.avalon.framework.parameters.Parameters;
-import org.apache.avalon.framework.service.ServiceException;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.util.NetUtils;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
@@ -51,27 +44,27 @@ import org.apache.lenya.util.Assert;
 /**
  * File-based accreditable manager.
  */
-public class FileAccreditableManager extends AbstractAccreditableManager implements Serviceable,
-        Configurable, Parameterizable {
+public class FileAccreditableManager extends AbstractAccreditableManager {
 
-    /**
-     * Creates a new FileAccreditableManager. If you use this constructor, you have to set the
-     * configuration directory either by calling {@link #setConfigurationDirectory(File)} or by
-     * calling {@link #parameterize(Parameters)}.
-     */
-    public FileAccreditableManager() {
-	    // do nothing
-    }
+    private ServiceManager manager;
 
     /**
      * Creates a new FileAccessController based on a configuration directory.
-     * @param _configurationDirectory The configuration directory.
+     * @param manager The service manager.
+     * @param logger The logger.
+     * @param configurationUri The configuration directory URI.
      * @param _userTypes The supported user types.
      */
-    public FileAccreditableManager(File _configurationDirectory, UserType[] _userTypes) {
-        Assert.notNull("configuration directory", _configurationDirectory);
-        Assert.isTrue("configuration directory exists", _configurationDirectory.isDirectory());
-        this.configurationDirectory = _configurationDirectory;
+    public FileAccreditableManager(ServiceManager manager, Logger logger,
+            String configurationUri, UserType[] _userTypes) {
+        super(logger);
+
+        Assert.notNull("service manager", manager);
+        this.manager = manager;
+
+        Assert.notNull("configuration directory", configurationUri);
+        this.configurationDirectoryUri = configurationUri;
+
         this.userTypes = new HashSet(Arrays.asList(_userTypes));
     }
 
@@ -98,7 +91,7 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
 
         if (this.configurationDirectory == null) {
 
-            if (this.configurationDirectoryPath == null) {
+            if (this.configurationDirectoryUri == null) {
                 throw new AccessControlException("Configuration directory not set!");
             }
 
@@ -108,10 +101,10 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
             try {
 
                 getLogger().debug(
-                        "Configuration directory Path: [" + this.configurationDirectoryPath + "]");
+                        "Configuration directory Path: [" + this.configurationDirectoryUri + "]");
 
                 resolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
-                source = resolver.resolveURI(this.configurationDirectoryPath);
+                source = resolver.resolveURI(this.configurationDirectoryUri);
 
                 getLogger().debug("Configuration directory URI: " + source.getURI());
                 directory = new File(new URI(NetUtils.encodePath(source.getURI())));
@@ -125,63 +118,16 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
                     getManager().release(resolver);
                 }
             }
-            setConfigurationDirectory(directory);
+            this.configurationDirectory = directory;
         }
 
         return this.configurationDirectory;
     }
 
-    protected static final String DIRECTORY = "directory";
-
-    /**
-     * @see org.apache.avalon.framework.parameters.Parameterizable#parameterize(org.apache.avalon.framework.parameters.Parameters)
-     */
-    public void parameterize(Parameters parameters) throws ParameterException {
-        if (parameters.isParameter(DIRECTORY)) {
-            this.configurationDirectoryPath = parameters.getParameter(DIRECTORY);
-            getLogger().debug("Configuration directory: [" + this.configurationDirectoryPath + "]");
-        }
-    }
-
-    protected static final String A_M_TAG = "accreditable-manager";
-    protected static final String U_M_CHILD_TAG = "user-manager";
-    protected static final String U_T_CHILD_TAG = "user-type";
-    protected static final String U_T_CLASS_ATTRIBUTE = "class";
-    protected static final String U_T_CREATE_ATTRIBUTE = "create-use-case";
     // provided for backward compatibility
     protected static final String DEFAULT_USER_TYPE_CLASS = FileUser.class.getName();
     protected static final String DEFAULT_USER_TYPE_KEY = "Local User";
     protected static final String DEFAULT_USER_CREATE_USE_CASE = "userAddUser";
-
-    /**
-     * @see org.apache.avalon.framework.configuration.Configurable#configure(org.apache.avalon.framework.configuration.Configuration)
-     *      added to read new user-manager block within accreditable-manager
-     */
-    public void configure(Configuration configuration) throws ConfigurationException {
-        if (A_M_TAG.equals(configuration.getName())) {
-            this.userTypes = new HashSet();
-            Configuration umConf = configuration.getChild(U_M_CHILD_TAG, false);
-            if (umConf != null) {
-                Configuration[] typeConfs = umConf.getChildren();
-                for (int i = 0; i < typeConfs.length; i++) {
-                    this.userTypes.add(new UserType(typeConfs[i].getValue(), typeConfs[i]
-                            .getAttribute(U_T_CLASS_ATTRIBUTE), typeConfs[i]
-                            .getAttribute(U_T_CREATE_ATTRIBUTE)));
-                }
-            } else {
-                getLogger().debug(
-                        "FileAccreditableManager: using default configuration for user types");
-                // no "user-manager" block in access control: provide
-                // a default for backward compatibility
-                this.userTypes.add(getDefaultUserType());
-            }
-            // maybe TODO (or is it overkill?) : validate the parametrized user
-            // types, for example, check if the classes are in the classpath ?
-        } else {
-            // TODO: In most cases it doesn't seem to find this element ...
-            //throw new ConfigurationException("No such element: " + A_M_TAG);
-        }
-    }
 
     /**
      * Returns the default user type.
@@ -192,31 +138,7 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
                 DEFAULT_USER_CREATE_USE_CASE);
     }
 
-    private String configurationDirectoryPath;
-
-    /**
-     * Sets the configuration directory.
-     * @param file The configuration directory.
-     * @throws AccessControlException if an error occurs
-     */
-    public void setConfigurationDirectory(File file) throws AccessControlException {
-        if (file == null || !file.isDirectory()) {
-            throw new AccessControlException("Configuration directory [" + file
-                    + "] does not exist!");
-        }
-        this.configurationDirectory = file;
-    }
-
-    private ServiceManager manager;
-
-    /**
-     * Set the global component manager.
-     * @param _manager The global component manager
-     * @throws ServiceException when something went wrong.
-     */
-    public void service(ServiceManager _manager) throws ServiceException {
-        this.manager = _manager;
-    }
+    private String configurationDirectoryUri;
 
     /**
      * Returns the service manager.
@@ -230,7 +152,8 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
      * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeGroupManager()
      */
     protected GroupManager initializeGroupManager() throws AccessControlException {
-        FileGroupManager _manager = FileGroupManager.instance(this, getConfigurationDirectory(), getLogger());
+        FileGroupManager _manager = FileGroupManager.instance(this, getConfigurationDirectory(),
+                getLogger());
         return _manager;
     }
 
@@ -238,7 +161,8 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
      * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeIPRangeManager()
      */
     protected IPRangeManager initializeIPRangeManager() throws AccessControlException {
-        FileIPRangeManager _manager = FileIPRangeManager.instance(this, getConfigurationDirectory(), getLogger());
+        FileIPRangeManager _manager = FileIPRangeManager.instance(this,
+                getConfigurationDirectory(), getLogger());
         return _manager;
     }
 
@@ -246,7 +170,8 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
      * @see org.apache.lenya.ac.impl.AbstractAccreditableManager#initializeRoleManager()
      */
     protected RoleManager initializeRoleManager() throws AccessControlException {
-        FileRoleManager _manager = FileRoleManager.instance(this, getConfigurationDirectory(), getLogger());
+        FileRoleManager _manager = FileRoleManager.instance(this, getConfigurationDirectory(),
+                getLogger());
         return _manager;
     }
 
@@ -269,6 +194,7 @@ public class FileAccreditableManager extends AbstractAccreditableManager impleme
 
     public String getId() {
         try {
+            Assert.notNull("configuration directory", this.configurationDirectory);
             return this.configurationDirectory.getCanonicalPath();
         } catch (IOException e) {
             throw new RuntimeException(e);

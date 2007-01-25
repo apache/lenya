@@ -43,6 +43,7 @@ import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessController;
 import org.apache.lenya.ac.Accreditable;
 import org.apache.lenya.ac.AccreditableManager;
+import org.apache.lenya.ac.AccreditableManagerFactory;
 import org.apache.lenya.ac.Authenticator;
 import org.apache.lenya.ac.Authorizer;
 import org.apache.lenya.ac.IPRange;
@@ -181,22 +182,19 @@ public class DefaultAccessController extends AbstractLogEnabled implements Acces
      */
     protected void setupAccreditableManager(Configuration configuration)
             throws ConfigurationException, ServiceException, ParameterException {
-
-        Configuration accreditableManagerConfiguration = configuration.getChild(
-                ACCREDITABLE_MANAGER_ELEMENT, false);
-        if (accreditableManagerConfiguration != null) {
-            String accreditableManagerType = accreditableManagerConfiguration
-                    .getAttribute(TYPE_ATTRIBUTE);
-            if (getLogger().isDebugEnabled()) {
-                getLogger().debug("AccreditableManager type: [" + accreditableManagerType + "]");
+        Configuration config = configuration.getChild(ACCREDITABLE_MANAGER_ELEMENT, false);
+        if (config != null) {
+            AccreditableManagerFactory factory = null;
+            try {
+                factory = (AccreditableManagerFactory) this.manager.lookup(AccreditableManagerFactory.ROLE);
+                this.accreditableManager = factory.getAccreditableManager(config);
+                this.accreditableManager.addItemManagerListener(this);
             }
-
-            this.accreditableManagerSelector = (ServiceSelector) this.manager.lookup(AccreditableManager.ROLE
-                    + "Selector");
-            this.accreditableManager = (AccreditableManager) this.accreditableManagerSelector
-                    .select(accreditableManagerType);
-            this.accreditableManager.addItemManagerListener(this);
-            configureOrParameterize(this.accreditableManager, accreditableManagerConfiguration);
+            finally {
+                if (factory != null) {
+                    this.manager.release(factory);
+                }
+            }
         }
     }
 

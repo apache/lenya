@@ -24,8 +24,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.avalon.framework.activity.Disposable;
+import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
+import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccreditableManager;
 import org.apache.lenya.ac.GroupManager;
@@ -40,7 +41,14 @@ import org.apache.lenya.ac.UserManager;
  */
 public abstract class AbstractAccreditableManager
     extends AbstractLogEnabled
-    implements AccreditableManager, ItemManagerListener, Disposable {
+    implements AccreditableManager, ItemManagerListener {
+    
+    /**
+     * @param logger The logger.
+     */
+    public AbstractAccreditableManager(Logger logger) {
+        ContainerUtil.enableLogging(this, logger);
+    }
 
     private UserManager userManager = null;
     private GroupManager groupManager = null;
@@ -120,28 +128,6 @@ public abstract class AbstractAccreditableManager
             getLogger().debug("Item was removed: [" + item + "] - notifying listeners");
         }
         notifyRemoved(item);
-    }
-
-    /**
-	 * @see org.apache.avalon.framework.activity.Disposable#dispose()
-	 */
-    public void dispose() {
-        if (this.userManager != null) {
-            this.userManager.removeItemManagerListener(this);
-        }
-        if (this.groupManager != null) {
-            this.groupManager.removeItemManagerListener(this);
-        }
-        if (this.ipRangeManager != null) {
-            this.ipRangeManager.removeItemManagerListener(this);
-        }
-        if (this.roleManager != null) {
-            this.roleManager.removeItemManagerListener(this);
-        }
-        
-        if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Disposing [" + this + "]");
-        }
     }
 
     /**

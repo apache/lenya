@@ -58,12 +58,6 @@
 
 <role-list>
 
-  <role name="org.apache.lenya.ac.AccreditableManagerSelector"
-        shorthand="accreditable-managers"
-        default-class="org.apache.cocoon.components.ExtendedComponentSelector">
-    <hint shorthand="file" class="org.apache.lenya.ac.file.FileAccreditableManager"/>
-  </role>
-    
   <role name="org.apache.lenya.ac.AuthorizerSelector"
         shorthand="authorizers"
         default-class="org.apache.cocoon.components.ExtendedComponentSelector">
