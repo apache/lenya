@@ -35,8 +35,14 @@
   
 	<page:title>FCKeditor - Sample</page:title>
 
-	<page:body>
-	  <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
+        <jx:choose>
+          <jx:when test="${usecase.hasErrors()}">
+            <page:body>
+              <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
+            </page:body>
+          </jx:when>
+          <jx:otherwise>
+	    <page:body>
 	  
                 <div class="lenya-box">
                   <div class="lenya-box-title">Information</div>
@@ -78,5 +84,7 @@
           <input type="submit" name="cancel" value="Cancel"/>
 		      </form>
             			
-	</page:body>
+	    </page:body>
+          </jx:otherwise>
+        </jx:choose>
 </page:page>

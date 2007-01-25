@@ -21,8 +21,9 @@
   <component-instance name="fckeditor.edit" logger="lenya.publication"
                       class="org.apache.lenya.cms.editors.fckeditor.Fckeditor">
     <transaction policy="pessimistic"/>
-    <!-- <parameter name="tidyConfig" value="fallback://lenya/modules/fckeditor/config/jtidy.properties"/> -->
-    <view template="modules/fckeditor/usecases/fckeditor.jx" menu="false"/>
+    <parameter name="tidyConfig" value="fallback://lenya/modules/fckeditor/config/jtidy.properties"/> 
+    <view uri="cocoon://modules/fckeditor/fckeditor.open" menu="false"/>
+    <event id="edit" />
   </component-instance>
     
 </xconf>
