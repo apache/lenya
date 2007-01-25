@@ -298,7 +298,7 @@
         </map:act>
 
         <map:select type="resource-exists">
-          <map:when test="site:/en/index">
+          <map:when test="lenya://lenya/pubs/{page-envelope:publication-id}/content/authoring/sitetree.xml">
             <map:generate type="serverpages" src="fallback://lenya/content/exception/document-does-not-exist.xsp"/>
             <map:transform src="fallback://lenya/xslt/exception/document-does-not-exist.xsl">
               <map:parameter name="documenturl" value="{2}.html"/>
