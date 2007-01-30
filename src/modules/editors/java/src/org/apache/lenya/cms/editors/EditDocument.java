@@ -17,8 +17,6 @@
  */
 package org.apache.lenya.cms.editors;
 
-import org.apache.excalibur.source.Source;
-import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.linking.LinkConverter;
 import org.apache.lenya.cms.publication.Document;
