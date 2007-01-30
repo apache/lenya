@@ -21,7 +21,37 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Invoke a usecase.
+ * <p>
+ * This service allows to invoke a usecase.A typical usage scenario is the
+ * composition of usecases - you can invoke one or multiple "child" usecases
+ * from another usecase.
+ * </p>
+ * <p>
+ * Example:
+ * </p>
+ * 
+ * <pre>
+ *    UsecaseInvoker invoker = null;
+ *    try {
+ *        invoker = (UsecaseInvoker) this.manager.lookup(UsecaseInvoker.ROLE);
+ *        Map params = new HashMap();
+ *        params.put(..., ...);
+ *        invoker.invoke(getSourceUrl(), childUsecaseName, params);
+ *    
+ *        if (invoker.getResult() != UsecaseInvoker.SUCCESS) {
+ *            List messages = invoker.getErrorMessages();
+ *            for (Iterator i = messages.iterator(); i.hasNext();) {
+ *                UsecaseMessage message = (UsecaseMessage) i.next();
+ *                addErrorMessage(message.getMessage(), message.getParameters());
+ *            }
+ *        }
+ *    } finally {
+ *        if (invoker == null) {
+ *            this.manager.release(invoker);
+ *        }
+ *    }
+ *    
+ * </pre>
  * 
  * @version $Id$
  */
@@ -40,37 +70,37 @@ public interface UsecaseInvoker {
      * @throws UsecaseException if an error occurs.
      */
     void invoke(String webappUrl, String usecaseName, Map parameters) throws UsecaseException;
-    
+
     /**
      * @return The result of the invocation.
      */
     int getResult();
-    
+
     /**
      * The invocation was successful.
      */
     int SUCCESS = 0;
-    
+
     /**
      * The precondition check failed.
      */
     int PRECONDITIONS_FAILED = 1;
-    
+
     /**
      * The execution condition check failed.
      */
     int EXECUTION_CONDITIONS_FAILED = 2;
-    
+
     /**
      * The execution itself failed.
      */
     int EXECUTION_FAILED = 3;
-    
+
     /**
      * The postcondition check failed.
      */
     int POSTCONDITIONS_FAILED = 4;
-    
+
     /**
      * Returns the error messages from the previous operation. Error messages
      * prevent the operation from being executed.
@@ -84,10 +114,11 @@ public interface UsecaseInvoker {
      * @return A list of {@link UsecaseMessage} objects.
      */
     List getInfoMessages();
-    
+
     /**
-     * @return The target URL of the usecase, based on the success.
-     * This method throws a RuntimeException if the usecase hasn't been executed yet.
+     * @return The target URL of the usecase, based on the success. This method
+     *         throws a RuntimeException if the usecase hasn't been executed
+     *         yet.
      */
     String getTargetUrl();
 
