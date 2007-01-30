@@ -356,6 +356,17 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     /**
+     * @see org.apache.lenya.cms.usecase.Usecase#getParameter(java.lang.String, java.lang.Object)
+     */
+    public Object getParameter(String name, Object defaultValue) {
+        Object value = getParameter(name);
+        if (value == null) {
+            value = defaultValue;
+        }
+        return value;
+    }
+
+    /**
      * @see org.apache.lenya.cms.usecase.Usecase#getParameterAsString(java.lang.String)
      */
     public String getParameterAsString(String name) {

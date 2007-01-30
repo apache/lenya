@@ -54,6 +54,14 @@ public interface Usecase {
     Object getParameter(String name);
 
     /**
+     * Returns the current value of a parameter.
+     * @param name The parameter name.
+     * @param defaultValue The default value to return if the parameter is not set.
+     * @return An object.
+     */
+    Object getParameter(String name, Object defaultValue);
+
+    /**
      * Returns the current value of a parameter as a string.
      * @param name The parameter name.
      * @return A string or <code>null</code> if the parameter was not set.

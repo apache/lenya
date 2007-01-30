@@ -82,7 +82,8 @@ public class DocumentUsecase extends AbstractUsecase {
     }
 
     /**
-     * Sets the target document.
+     * Sets the target document for the case that the usecase execution
+     * succeeded (see {@link #getTargetDocument(boolean)}).
      * @param document A document.
      */
     protected void setTargetDocument(Document document) {
@@ -97,11 +98,11 @@ public class DocumentUsecase extends AbstractUsecase {
      * @return A document.
      */
     protected Document getTargetDocument(boolean success) {
-        Document document = (Document) getParameter(TARGET_DOCUMENT);
-        if (document == null) {
-            document = getSourceDocument();
+        if (success) {
+            return (Document) getParameter(TARGET_DOCUMENT, getSourceDocument());
+        } else {
+            return getSourceDocument();
         }
-        return document;
     }
 
     /**
