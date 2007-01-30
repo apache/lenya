@@ -22,35 +22,35 @@ import java.util.Map;
 
 /**
  * <p>
- * This service allows to invoke a usecase.A typical usage scenario is the
- * composition of usecases - you can invoke one or multiple "child" usecases
- * from another usecase.
+ * This service allows to invoke a usecase in a convenient way. A typical usage
+ * scenario is the composition of usecases - you can invoke one or multiple
+ * "child" usecases from another usecase.
  * </p>
  * <p>
  * Example:
  * </p>
  * 
  * <pre>
- *    UsecaseInvoker invoker = null;
- *    try {
- *        invoker = (UsecaseInvoker) this.manager.lookup(UsecaseInvoker.ROLE);
- *        Map params = new HashMap();
- *        params.put(..., ...);
- *        invoker.invoke(getSourceUrl(), childUsecaseName, params);
- *    
- *        if (invoker.getResult() != UsecaseInvoker.SUCCESS) {
- *            List messages = invoker.getErrorMessages();
- *            for (Iterator i = messages.iterator(); i.hasNext();) {
- *                UsecaseMessage message = (UsecaseMessage) i.next();
- *                addErrorMessage(message.getMessage(), message.getParameters());
- *            }
- *        }
- *    } finally {
- *        if (invoker == null) {
- *            this.manager.release(invoker);
- *        }
- *    }
- *    
+ *     UsecaseInvoker invoker = null;
+ *     try {
+ *         invoker = (UsecaseInvoker) this.manager.lookup(UsecaseInvoker.ROLE);
+ *         Map params = new HashMap();
+ *         params.put(..., ...);
+ *         invoker.invoke(getSourceUrl(), childUsecaseName, params);
+ *     
+ *         if (invoker.getResult() != UsecaseInvoker.SUCCESS) {
+ *             List messages = invoker.getErrorMessages();
+ *             for (Iterator i = messages.iterator(); i.hasNext();) {
+ *                 UsecaseMessage message = (UsecaseMessage) i.next();
+ *                 addErrorMessage(message.getMessage(), message.getParameters());
+ *             }
+ *         }
+ *     } finally {
+ *         if (invoker == null) {
+ *             this.manager.release(invoker);
+ *         }
+ *     }
+ *     
  * </pre>
  * 
  * @version $Id$
