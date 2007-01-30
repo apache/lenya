@@ -58,7 +58,7 @@ import org.apache.lenya.cms.usecase.gui.Tab;
  * </p>
  * <p>
  * <code>customFlow</code> is a javascript file where you can provide custom methods that will override
- * those in the default usecase handler (<code>webapp/lenya/usecases/usecases.js</code>).
+ * those in the default usecase handler (<code>modules-core/usecase/usecases.js</code>).
  * Currently, it provides support for "customLoopFlow" and "customSubmitFlow". Refer to the default handler
  * for function prototypes and more information.
  * NB: the "menu" and "createContinuation" attributes will have no effect when you use custom flow code, unless

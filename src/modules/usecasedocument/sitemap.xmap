@@ -36,7 +36,7 @@
   <!-- =========================== FlowScript =============================== -->
 
   <map:flow language="javascript">
-    <map:script src="fallback://lenya/usecases/usecases.js"/>
+    <map:script src="fallback://lenya/modules/usecase/usecases.js"/>
   </map:flow>
   
   <!-- =========================== Pipelines ================================ -->
