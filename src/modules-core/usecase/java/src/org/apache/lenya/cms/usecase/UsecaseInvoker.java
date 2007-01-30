@@ -46,7 +46,7 @@ import java.util.Map;
  *             }
  *         }
  *     } finally {
- *         if (invoker == null) {
+ *         if (invoker != null) {
  *             this.manager.release(invoker);
  *         }
  *     }

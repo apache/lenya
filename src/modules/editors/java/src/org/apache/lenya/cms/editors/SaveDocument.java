@@ -63,7 +63,7 @@ public class SaveDocument extends DocumentUsecase {
                 }
             }
         } finally {
-            if (invoker == null) {
+            if (invoker != null) {
                 this.manager.release(invoker);
             }
         }
