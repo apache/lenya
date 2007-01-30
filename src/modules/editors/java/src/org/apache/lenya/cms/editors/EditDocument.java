@@ -30,11 +30,37 @@ import org.apache.lenya.xml.Schema;
 import org.apache.lenya.xml.ValidationUtil;
 
 /**
- * Usecase to edit documents.
+ * <p>
+ * You can use this usecase to save a document. It reads XML data from a source
+ * and saves as the content of the current document.
+ * </p>
+ * <ul>
+ * <li>If the document's resource type supports validation, the XML document is
+ * validated and not saved if validation errors occur.</li>
+ * <li>All URL-based internal links in the XML source are converted to
+ * UUID-based links before saving.</li>
+ * <li>A workflow event is invoked. The event defaults to "edit", you can
+ * override it using the <em>event</em> parameter.</li>
+ * </ul>
+ * <p>
+ * Parameters:
+ * </p>
+ * <ul>
+ * <li><em>sourceUri</em> - the URI to read the XML data from</li>
+ * <li><em>event</em> - the workflow event to invoke</li>
+ * </ul>
+ * <p>
+ * A typical usage scenario is to save XML data entered in a form. In this case,
+ * the <em>sourceUri</em> parameter refers to a Cocoon pipeline featuring the
+ * stream generator.
+ * </p>
  * 
  * @version $Id$
  */
 public class EditDocument extends DocumentUsecase {
+
+    protected static final String EVENT = "event";
+    protected static final String DEFAULT_EVENT = "edit";
 
     /**
      * The URI to copy the document source from.
@@ -51,19 +77,20 @@ public class EditDocument extends DocumentUsecase {
 
         String sourceUri = getParameterAsString(SOURCE_URI);
         org.w3c.dom.Document xmlDoc = SourceUtil.readDOM(sourceUri, this.manager);
-        
+
         ResourceType resourceType = sourceDoc.getResourceType();
         Schema schema = resourceType.getSchema();
         ValidationUtil.validate(this.manager, xmlDoc, schema, new UsecaseErrorHandler(this));
 
         if (!hasErrors()) {
             SourceUtil.writeDOM(xmlDoc, sourceDoc.getSourceURI(), this.manager);
-            
+
             LinkConverter converter = new LinkConverter(this.manager, getLogger());
             converter.convertUrlsToUuids(getSourceDocument());
 
-            WorkflowUtil.invoke(this.manager, getSession(), getLogger(), getSourceDocument(),
-                    "edit");
+            String event = getParameterAsString(EVENT, DEFAULT_EVENT);
+            WorkflowUtil
+                    .invoke(this.manager, getSession(), getLogger(), getSourceDocument(), event);
         }
     }
 
