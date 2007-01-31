@@ -81,7 +81,12 @@ function getLabel(node) {
     // of the correct language
     for (var i = 0; i < l; i++) {
        if (getTagName(cs[i]) =='nav:label') {
-          return cs[i].firstChild.nodeValue;
+          if (cs[i].hasChildNodes()) {
+              return cs[i].firstChild.nodeValue;
+          }
+          else {
+              return "[no title]";
+          }
        } 
     }
     return '';
