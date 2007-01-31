@@ -136,23 +136,16 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
                 key);
     }
     
-    private Set newObjects = new HashSet();
-    private Set modifiedObjects = new HashSet();
-    private Set removedObjects = new HashSet();
-
     public void registerNew(Transactionable object) throws TransactionException {
         getUnitOfWork().registerNew(object);
-        this.newObjects.add(object);
     }
 
     public void registerDirty(Transactionable object) throws TransactionException {
         getUnitOfWork().registerDirty(object);
-        this.modifiedObjects.add(object);
     }
 
     public void registerRemoved(Transactionable object) throws TransactionException {
         getUnitOfWork().registerRemoved(object);
-        this.removedObjects.add(object);
     }
 
     public void setIdentity(Identity identity) {
