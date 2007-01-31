@@ -32,12 +32,12 @@ public interface IndexUpdater extends RepositoryListener {
      * @param session The session.
      * @param resourceType The resource type.
      * @param publicationId The publication ID.
-     * @param uuid The UUID.
      * @param area The area.
+     * @param uuid The UUID.
      * @param language The language.
      * @throws IndexException if an error occurs.
      */
-    void index(Session session, ResourceType resourceType, String publicationId, String uuid, String area,
+    void index(Session session, ResourceType resourceType, String publicationId, String area, String uuid,
             String language) throws IndexException;
 
     /**
@@ -45,12 +45,12 @@ public interface IndexUpdater extends RepositoryListener {
      * @param session The session.
      * @param resourceType The resource type.
      * @param publicationId The publication ID.
-     * @param uuid The UUID.
      * @param area The area.
+     * @param uuid The UUID.
      * @param language The language.
      * @throws IndexException if an error occurs.
      */
-    void delete(Session session, ResourceType resourceType, String publicationId, String uuid,
-            String area, String language) throws IndexException;
+    void delete(Session session, ResourceType resourceType, String publicationId, String area,
+            String uuid, String language) throws IndexException;
 
 }

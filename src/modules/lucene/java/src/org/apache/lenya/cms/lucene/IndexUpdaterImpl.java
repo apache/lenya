@@ -108,19 +108,19 @@ public class IndexUpdaterImpl extends AbstractLogEnabled implements IndexUpdater
         this.manager = manager;
     }
 
-    public void delete(Session session, ResourceType resourceType, String pubId, String uuid,
-            String area, String language) throws IndexException {
-        updateIndex("delete", resourceType, pubId, uuid, area, language);
+    public void delete(Session session, ResourceType resourceType, String pubId, String area,
+            String uuid, String language) throws IndexException {
+        updateIndex("delete", resourceType, pubId, area, uuid, language);
     }
 
-    public void index(Session session, ResourceType resourceType, String pubId, String uuid,
-            String area, String language) throws IndexException {
+    public void index(Session session, ResourceType resourceType, String pubId, String area,
+            String uuid, String language) throws IndexException {
         DocumentFactory factory = DocumentUtil.createDocumentFactory(this.manager, session);
         try {
             Publication pub = factory.getPublication(pubId);
             Area areaObj = pub.getArea(area);
             if (areaObj.contains(uuid, language)) {
-                updateIndex("index", resourceType, pubId, uuid, area, language);
+                updateIndex("index", resourceType, pubId, area, uuid, language);
             } else {
                 getLogger().debug(
                         "Ignoring document [" + pubId + ":" + area + ":" + uuid + ":" + language
