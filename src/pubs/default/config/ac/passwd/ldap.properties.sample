@@ -6,7 +6,7 @@
 #############################################################################
 # General settings 
 #############################################################################
-provider-url=ldaps://ldap.example.com:636/dc=example,dc=com
+provider-url=ldaps://ldap.example.com:389/dc=example,dc=com
 base-dn=dc=example,dc=com
 
 #############################################################################
