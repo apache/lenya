@@ -26,5 +26,5 @@
   <version>0.1-dev</version>
   <name>LDAP</name>
   <lenya-version>@lenya.version@</lenya-version>
-  <description>LDAP user implementation</description>
+  <description>LDAP user implementation. Also see src/pubs/default/config/ac/passwd/ldap.properties.sample</description>
 </module>
