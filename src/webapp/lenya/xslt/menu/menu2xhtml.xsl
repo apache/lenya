@@ -171,7 +171,7 @@
   
   
   <xsl:template name="workflow">
-    <li id="info-state"><i18n:text>Workflow State</i18n:text>: <span id="workflow-state"><i18n:text><xsl:value-of select="$workflowstate"/></i18n:text></span></li>
+    <li id="info-state"><i18n:text>Workflow State</i18n:text>: <span name="workflow-state" id="workflow-state"><i18n:text><xsl:value-of select="$workflowstate"/></i18n:text></span></li>
     <li id="info-live">
       <xsl:choose>
         <xsl:when test="$islive = 'false'">
