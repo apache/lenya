@@ -73,7 +73,8 @@
                 </ul>
               </td>
             </tr>
-            <jx:if test="${usecase.getParameter('unpublishedLinks').size() &gt; 0}">
+            <jx:set var="emptyList" value="${new Packages.java.util.ArrayList()}"/>
+            <jx:if test="${usecase.getParameter('unpublishedLinks', emptyList).size() &gt; 0}">
               <tr>
                 <td class="lenya-entry-caption" valign="top">
                   <p>
