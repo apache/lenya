@@ -84,7 +84,9 @@
           <td/>
           <td>
             <input i18n:attr="value" type="submit" name="submit" value="Add"/>
-            <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>
+            <a href="?lenya.usecase=admin.users">
+              <input type="button" name="cancel" value="Cancel" i18n:attr="value"/>
+            </a>
           </td>
         </tr>
       </table>
