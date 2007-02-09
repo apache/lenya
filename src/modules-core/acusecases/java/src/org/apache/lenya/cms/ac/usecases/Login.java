@@ -50,13 +50,12 @@ public class Login extends AccessControlUsecase {
         Publication publication;
 
         try {
-            publication = PublicationUtil.getPublicationFromUrl(this.manager,
-                    getDocumentFactory(),
+            publication = PublicationUtil.getPublicationFromUrl(this.manager, getDocumentFactory(),
                     getSourceURL());
             if (publication.exists()) {
                 setParameter(PUBLICATION_ID, publication.getId());
             }
-            Identity identity = this.getSession().getIdentity(); 
+            Identity identity = this.getSession().getIdentity();
             if (identity != null && identity.getUser() != null) {
                 setParameter(CURRENT_USER, this.getSession().getIdentity().getUser());
             }
@@ -87,27 +86,26 @@ public class Login extends AccessControlUsecase {
         if (password.length() == 0) {
             addErrorMessage("Please enter a password.");
         }
+
     }
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doCheckExecutionConditions()
      */
     protected void doCheckExecutionConditions() throws Exception {
+        
         validate();
-    }
-
-    /**
-     * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
-     */
-    protected void doExecute() throws Exception {
-        Map objectModel = ContextHelper.getObjectModel(getContext());
-        Request request = ObjectModelHelper.getRequest(objectModel);
-        request.getSession(true);
-        if (getAccessController().authenticate(request)) {
-            request.getSession(false).removeAttribute(HISTORY_SESSION_ATTRIBUTE);
-            setDefaultTargetURL(request.getPathInfo());
-        } else {
-            addErrorMessage("Authentication failed");
+        
+        if (!hasErrors()) {
+            Map objectModel = ContextHelper.getObjectModel(getContext());
+            Request request = ObjectModelHelper.getRequest(objectModel);
+            request.getSession(true);
+            if (getAccessController().authenticate(request)) {
+                request.getSession(false).removeAttribute(HISTORY_SESSION_ATTRIBUTE);
+                setDefaultTargetURL(request.getPathInfo());
+            } else {
+                addErrorMessage("Authentication failed");
+            }
         }
     }
 
