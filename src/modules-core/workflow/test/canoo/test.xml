@@ -115,7 +115,9 @@
   
   <target name="overview">
     <webtest name="myTest">
-      <config host="localhost" port="8888" protocol="http" basepath="default/authoring" />
+      <config host="localhost" port="8888" protocol="http" basepath="default/authoring">
+        <header name="Accept-Language" value="en"/>
+      </config>
       <steps>
         <!-- login as lenya -->
         <invoke url="index.html" />
@@ -125,7 +127,7 @@
         <verifyElementText type="span" name="workflow-state" text="authoring"/>
         
         <invoke url="index.html?lenya.usecase=workflow.multiWorkflow"/>
-        <verifyText text="Workflow Overview"/>
+        <verifyElementText type="h1" text="Workflow Overview"/>
         
       </steps>
     </webtest>
