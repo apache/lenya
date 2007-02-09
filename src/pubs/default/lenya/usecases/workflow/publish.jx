@@ -53,9 +53,14 @@
                 <ul>
                   <jx:forEach var="message" items="${usecase.getErrorMessages()}">
                     <li>
-                      <i18n:text>
-                        <jx:out value="${message}"/>
-                      </i18n:text>
+                      <i18n:translate>
+                        <i18n:text><jx:out value="${message.getMessage()}"/></i18n:text>
+                        <jx:if test="${message.hasParameters()}"> 
+                          <jx:forEach var="param" items="${message.getParameters()}">
+                            <i18n:param><jx:out value="${param}"/></i18n:param>
+                          </jx:forEach>
+                        </jx:if>
+                      </i18n:translate>
                     </li>
                   </jx:forEach>
                   <jx:forEach var="missingDocument" items="${usecase.getParameter('missingDocuments')}">
@@ -65,16 +70,21 @@
                   </jx:forEach>
                   <jx:forEach var="message" items="${usecase.getInfoMessages()}">
                     <li>
-                      <i18n:text>
-                        <jx:out value="${message}"/>
-                      </i18n:text>
+                      <i18n:translate>
+                        <i18n:text><jx:out value="${message.getMessage()}"/></i18n:text>
+                        <jx:if test="${message.hasParameters()}"> 
+                          <jx:forEach var="param" items="${message.getParameters()}">
+                            <i18n:param><jx:out value="${param}"/></i18n:param>
+                          </jx:forEach>
+                        </jx:if>
+                      </i18n:translate>
                     </li>
                   </jx:forEach>
                 </ul>
               </td>
             </tr>
-            <jx:set var="emptyList" value="${new Packages.java.util.ArrayList()}"/>
-            <jx:if test="${usecase.getParameter('unpublishedLinks', emptyList).size() &gt; 0}">
+            <jx:if test="${usecase.getParameter('unpublishedLinks') != null &amp;&amp;
+              usecase.getParameter('unpublishedLinks').size() &gt; 0}">
               <tr>
                 <td class="lenya-entry-caption" valign="top">
                   <p>
@@ -122,8 +132,10 @@
             <tr>
               <td/>
               <td>
-                <input i18n:attr="value" type="submit" name="submit" value="Publish"/>
-                &#160;
+                <jx:if test="${!usecase.hasErrors()}">
+                  <input i18n:attr="value" type="submit" name="submit" value="Publish"/>
+                  &#160;
+                </jx:if>
                 <input i18n:attr="value" type="submit" name="cancel" value="Cancel"/>
               </td>
             </tr>
