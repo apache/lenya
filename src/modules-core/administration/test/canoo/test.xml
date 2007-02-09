@@ -67,6 +67,9 @@
           <verifyXPath xpath="//a[normalize-space(.) = 'webTestUser']"/>
         </not>
         
+        <!-- logout -->
+        <invoke url="index.html?lenya.usecase=ac.logout"/>
+        <clickButton name="submit"/>
       </steps>
     </webtest>
   </target>

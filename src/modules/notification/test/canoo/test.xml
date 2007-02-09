@@ -62,6 +62,9 @@
           <verifyText text="NotificationTestSubject"/>
         </not>
         
+        <!-- logout -->
+        <invoke url="index.html?lenya.usecase=ac.logout"/>
+        <clickButton name="submit"/>
       </steps>
     </webtest>
   </target>
