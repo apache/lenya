@@ -20,7 +20,7 @@
 
 <catalogue xml:lang="en" xmlns:xhtml="http://www.w3.org/1999/xhtml">
 
-  <message key="workflow.multiWorkflow">Workflow-Übersicht</message>
+  <message key="workflow.multiWorkflow">Workflow Overview</message>
   <message key="back-to-document">Back to document</message>
   <message key="workflow.submit">Submit</message>
   <message key="workflow.reject">Reject</message>

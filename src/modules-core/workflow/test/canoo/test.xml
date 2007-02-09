@@ -20,15 +20,13 @@
   
   <import file="${webtest.home}/lib/taskdef.xml"/>
   
-  <target name="main">
+  <target name="main" depends="sequence, overview"/>
+  
     
+  <target name="sequence">
     <echo>Using WebTest home: ${webtest.home}</echo>
     <webtest name="myTest">
-      <config
-        host="localhost"
-        port="8888"
-        protocol="http"
-        basepath="default/authoring" />
+      <config host="localhost" port="8888" protocol="http" basepath="default/authoring" />
       <steps>
         <!-- login as lenya -->
         <invoke url="index.html" />
@@ -101,12 +99,36 @@
         <clickButton name="submit"/>
         <verifyElementText type="span" name="workflow-state" text="live"/>
 
+        <!-- deactivate -->
+        <invoke url="index.html?lenya.usecase=workflow.deactivate"/>
+        <clickButton name="submit"/>
+        <verifyElementText type="span" name="workflow-state" text="authoring"/>
+        
         <!-- logout -->
         <invoke url="index.html?lenya.usecase=ac.logout"/>
         <clickButton name="submit"/>
         
+      </steps>
+    </webtest>
+  </target>
+  
+  
+  <target name="overview">
+    <webtest name="myTest">
+      <config host="localhost" port="8888" protocol="http" basepath="default/authoring" />
+      <steps>
+        <!-- login as lenya -->
+        <invoke url="index.html" />
+        <setInputField name="username" value="lenya"/>
+        <setInputField name="password" value="levi"/>
+        <clickButton name="submit"/>
+        <verifyElementText type="span" name="workflow-state" text="authoring"/>
+        
+        <invoke url="index.html?lenya.usecase=workflow.multiWorkflow"/>
+        <verifyText text="Workflow Overview"/>
         
       </steps>
     </webtest>
   </target>
+  
 </project>
