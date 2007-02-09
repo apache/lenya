@@ -60,6 +60,18 @@
               </i18n:translate>
             </td>
           </tr>
+          <tr>
+            <td/>
+            <td>
+              <br/>
+              <form method="POST">
+                <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
+                <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
+                <input type="hidden" name="deleteMessageId" value="${messageId}"/>
+                <input type="submit" name="submit" value="Delete" i18n:attr="value"/>
+              </form>
+            </td>
+          </tr>
         </table>
       </div>
     </div>

@@ -38,31 +38,27 @@
         <jx:set var="class" value="highlight"/>
       </jx:if>
       
-      <form method="POST">
-        <input type="hidden" name="lenya.usecase" value="${usecase.getName()}"/>
-        <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
-        <tr class="${class}">
-          <td>
-            <a href="?lenya.usecase=notification.inbox&amp;messageId=${message.getId()}&amp;lenya.continuation=${continuation.id}&amp;submit=Submit">
-              <i18n:translate>
-                <i18n:text><jx:out value="${message.getMessage().getSubject()}"/></i18n:text>
-                <jx:forEach var="param" items="${message.getMessage().getSubjectParameters()}">
-                  <i18n:param><jx:out value="${param}"/></i18n:param>
-                </jx:forEach>
-              </i18n:translate>
-            </a>
-          </td>
-          <td>
-            <a href="?lenya.usecase=admin.user&amp;userId=${message.getMessage().getSender().getId()}"><jx:out value="${message.getMessage().getSender().getId()}"/></a>
-          </td>
-          <td>
-            <jx:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${message.getMessage().getTime()}"/>
-          </td>
-          <td style="text-align: center;">
-            <jx:if test="${message.isMarkedAsRead()}">&#10004;</jx:if>
-          </td>
-        </tr>
-      </form>
+      <tr class="${class}">
+        <td>
+          <a href="?lenya.usecase=notification.inbox&amp;messageId=${message.getId()}">
+            <i18n:translate>
+              <i18n:text><jx:out value="${message.getMessage().getSubject()}"/></i18n:text>
+              <jx:forEach var="param" items="${message.getMessage().getSubjectParameters()}">
+                <i18n:param><jx:out value="${param}"/></i18n:param>
+              </jx:forEach>
+            </i18n:translate>
+          </a>
+        </td>
+        <td>
+          <a href="?lenya.usecase=admin.user&amp;userId=${message.getMessage().getSender().getId()}"><jx:out value="${message.getMessage().getSender().getId()}"/></a>
+        </td>
+        <td>
+          <jx:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${message.getMessage().getTime()}"/>
+        </td>
+        <td style="text-align: center;">
+          <jx:if test="${message.isMarkedAsRead()}">&#10004;</jx:if>
+        </td>
+      </tr>
     </jx:forEach>
   </table>
   

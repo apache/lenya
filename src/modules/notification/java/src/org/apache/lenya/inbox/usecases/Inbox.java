@@ -46,18 +46,28 @@ public class Inbox extends AbstractUsecase {
                 this.manager.release(inboxManager);
             }
         }
+    }
+    
+    protected void doCheckPreconditions() throws Exception {
+        super.doCheckPreconditions();
+
+        String id = getParameterAsString("messageId");
+        if (id != null) {
+            org.apache.lenya.inbox.Inbox inbox = (org.apache.lenya.inbox.Inbox) getParameter("inbox");
+            InboxMessage message = inbox.getMessage(id);
+            message.markAsRead(true);
+        }
         
     }
 
     protected void doExecute() throws Exception {
         super.doExecute();
         
-        String id = getParameterAsString("messageId");
-        if (id != null) {
+        String deleteId = getParameterAsString("deleteMessageId");
+        if (deleteId != null) {
             org.apache.lenya.inbox.Inbox inbox = (org.apache.lenya.inbox.Inbox) getParameter("inbox");
-            InboxMessage message = inbox.getMessage(id);
-            message.markAsRead(true);
-            setExitParameter("messageId", id);
+            InboxMessage message = inbox.getMessage(deleteId);
+            inbox.remove(message);
         }
     }
 
