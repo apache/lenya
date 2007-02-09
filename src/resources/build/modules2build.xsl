@@ -85,9 +85,14 @@
         <xsl:apply-templates select="list:module" mode="call-test"/>
       </target>
       
-      <target name="test-modules-canoo">
-        <xsl:apply-templates select="list:module" mode="call-test-canoo"/>
-      </target>
+      <xsl:variable name="canooDependencyList">
+        <xsl:for-each select="list:module">
+          <xsl:apply-templates select="document(concat(@src, '/module.xml'))/mod:module" mode="test-canoo"/>
+          <xsl:call-template name="separator"/>
+        </xsl:for-each>
+      </xsl:variable>
+      <target name="test-modules-canoo" depends="{$canooDependencyList}"/>
+      
       
       <xsl:apply-templates select="list:module" mode="target"/>
       
@@ -120,6 +125,11 @@
   
   <xsl:template match="mod:module" mode="call-test-canoo">
     <antcall target="canoo-module-{mod:id}"/>
+  </xsl:template>
+  
+  
+  <xsl:template match="mod:module" mode="test-canoo">
+    <xsl:text>canoo-module-</xsl:text><xsl:value-of select="mod:id"/>
   </xsl:template>
   
   
