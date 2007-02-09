@@ -55,6 +55,8 @@
         <!-- logout -->
         <invoke url="index.html?lenya.usecase=ac.logout"/>
         <verifyTitle text="LOGOUT from the Publication" />
+        <clickButton name="submit"/>
+        <verifyTitle text="LOGIN to the DEFAULT Publication" />
         
       </steps>
     </webtest>
