@@ -113,6 +113,14 @@
     </ant>
   </target>
   
+  <target name="modules.test.canoo" depends="init">
+    <ant antfile="${build.dir}/temp/modules-build.xml"
+      inheritall="true"
+      inheritrefs="true">
+      <target name="test-modules-canoo"/>
+    </ant>
+  </target>
+  
   <target name="patch-modules-test" depends="tests.prepare, prepare-module-test">
     <ant antfile="${build.dir}/temp/modules-build.xml"
       inheritall="true"

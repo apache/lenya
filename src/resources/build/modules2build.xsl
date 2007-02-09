@@ -85,6 +85,10 @@
         <xsl:apply-templates select="list:module" mode="call-test"/>
       </target>
       
+      <target name="test-modules-canoo">
+        <xsl:apply-templates select="list:module" mode="call-test-canoo"/>
+      </target>
+      
       <xsl:apply-templates select="list:module" mode="target"/>
       
     </project>
@@ -107,6 +111,15 @@
   
   <xsl:template match="mod:module" mode="call-test">
     <antcall target="test-module-{mod:id}"/>
+  </xsl:template>
+  
+  
+  <xsl:template match="list:module" mode="call-test-canoo">
+    <xsl:apply-templates select="document(concat(@src, '/module.xml'))/mod:module" mode="call-test-canoo"/>
+  </xsl:template>
+  
+  <xsl:template match="mod:module" mode="call-test-canoo">
+    <antcall target="canoo-module-{mod:id}"/>
   </xsl:template>
   
   
@@ -384,6 +397,16 @@
       </junit>
     </target>
     
+    <!-- ============================================================ -->
+    <!-- Canoo WebTest -->
+    <!-- ============================================================ -->
+    
+    <available file="{$src}/test/canoo/test.xml" property="canoo.module.{$id}"/>
+    
+    <target name="canoo-module-{$id}" if="canoo.module.{$id}">
+      <ant dir="{$src}/test/canoo" antfile="test.xml" inheritall="true"/>
+    </target>
+      
   </xsl:template>
   
   <xsl:template match="mod:depends" mode="dependencyWarning">
