@@ -1,4 +1,4 @@
-/*
+3/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  *  contributor license agreements.  See the NOTICE file distributed with
  *  this work for additional information regarding copyright ownership.
@@ -310,7 +310,9 @@ function executeUsecase() {
         usecase = getUsecase(usecaseName);
         passRequestParameters(usecase);
         usecase.checkPreconditions();
-        usecase.lockInvolvedObjects();
+        if (!usecase.hasErrors()) {
+            usecase.lockInvolvedObjects();
+        }
         // create proxy object to save usecase state
         proxy = new Packages.org.apache.lenya.cms.usecase.impl.UsecaseProxy(usecase);
         view = usecase.getView();
