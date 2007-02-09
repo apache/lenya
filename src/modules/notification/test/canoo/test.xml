@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<project name="Notification test" basedir="." default="main">
+  
+  <import file="${webtest.home}/lib/taskdef.xml"/>
+  
+  <target name="main">
+    
+    <echo>Using WebTest home: ${webtest.home}</echo>
+    <webtest name="myTest">
+      <config host="localhost" port="8888" protocol="http" basepath="default/authoring">
+        <header name="Accept-Language" value="en"/>
+      </config>
+      <steps>
+        <!-- login page -->
+        <invoke url="index.html" />
+        <verifyTitle text="LOGIN to the DEFAULT Publication" />
+        <setInputField name="username" value="lenya"/>
+        <setInputField name="password" value="levi"/>
+        <clickButton name="submit"/>
+        
+        <!-- inbox usecase -->
+        <invoke url="index.html?lenya.usecase=notification.inbox"/>
+        <verifyElementText type="h1" text="Inbox of User lenya"/>
+        
+        <!-- send message -->
+        <invoke url="index.html?lenya.usecase=notification.sendMessage"/>
+        <verifyElementText type="h1" text="New Message"/>
+        <setSelectField name="recipient" value="lenya"/>
+        <setInputField name="subject" value="NotificationTestSubject"/>
+        <setInputField name="body" value="NotificationTestBody"/>
+        <clickButton name="submit"/>
+        
+        <verifyElementText type="h1" text="Inbox of User lenya"/>
+        <verifyText text="NotificationTestSubject"/>
+        
+        <!-- read message -->
+        <clickLink xpath="//a[normalize-space(.) = 'NotificationTestSubject']"/>
+        <verifyText text="Selected"/>
+        <verifyText text="NotificationTestBody"/>
+
+        <!-- delete message -->        
+        <clickButton name="submit"/>
+        <verifyElementText type="h1" text="Inbox of User lenya"/>
+        <not>
+          <verifyText text="NotificationTestSubject"/>
+        </not>
+        
+      </steps>
+    </webtest>
+  </target>
+</project>
