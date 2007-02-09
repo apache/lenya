@@ -21,8 +21,6 @@
   <import file="${webtest.home}/lib/taskdef.xml"/>
   
   <target name="main">
-    
-    <echo>Using WebTest home: ${webtest.home}</echo>
     <webtest name="myTest">
       <config host="localhost" port="8888" protocol="http" basepath="default/authoring">
         <header name="Accept-Language" value="en"/>
