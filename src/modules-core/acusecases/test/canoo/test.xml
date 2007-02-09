@@ -16,7 +16,7 @@
   limitations under the License.
 -->
 
-<project name="SimpleTest" basedir="." default="main">
+<project name="AC usecases test" basedir="." default="main">
   
   <import file="${webtest.home}/lib/taskdef.xml"/>
   
