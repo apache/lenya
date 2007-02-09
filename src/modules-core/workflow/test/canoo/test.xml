@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Licensed to the Apache Software Foundation (ASF) under one or more
+  contributor license agreements.  See the NOTICE file distributed with
+  this work for additional information regarding copyright ownership.
+  The ASF licenses this file to You under the Apache License, Version 2.0
+  (the "License"); you may not use this file except in compliance with
+  the License.  You may obtain a copy of the License at
+  
+  http://www.apache.org/licenses/LICENSE-2.0
+  
+  Unless required by applicable law or agreed to in writing, software
+  distributed under the License is distributed on an "AS IS" BASIS,
+  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  See the License for the specific language governing permissions and
+  limitations under the License.
+-->
+
+<project name="Workflow test" basedir="." default="main">
+  
+  <import file="${webtest.home}/lib/taskdef.xml"/>
+  
+  <target name="main">
+    
+    <echo>Using WebTest home: ${webtest.home}</echo>
+    <webtest name="myTest">
+      <config
+        host="localhost"
+        port="8888"
+        protocol="http"
+        basepath="default/authoring" />
+      <steps>
+        <!-- login as lenya -->
+        <invoke url="index.html" />
+        <setInputField name="username" value="lenya"/>
+        <setInputField name="password" value="levi"/>
+        <clickButton name="submit"/>
+        <verifyElementText type="span" name="workflow-state" text="authoring"/>
+
+        <!-- publish not allowed -->
+        <invoke url="index.html?lenya.usecase=workflow.publish"/>
+        <verifyText text="The event publish is not executable on document"/>
+        <clickButton name="cancel"/>
+        <verifyText text="Welcome to the Default Publication from the Lenya community!"/>
+        
+        <!-- submit -->
+        <invoke url="index.html?lenya.usecase=workflow.submit"/>
+        <verifyText text="Submit &quot;Welcome to the Lenya default publication&quot; for approval"/>
+        <clickButton name="submit"/>
+        <verifyElementText type="span" name="workflow-state" text="review"/>
+        
+        <!-- logout -->
+        <invoke url="index.html?lenya.usecase=ac.logout"/>
+        <clickButton name="submit"/>
+        
+        
+        <!-- login as alice -->
+        <invoke url="index.html" />
+        <setInputField name="username" value="alice"/>
+        <setInputField name="password" value="levi"/>
+        <clickButton name="submit"/>
+        <verifyElementText type="span" name="workflow-state" text="review"/>
+        
+        <!-- reject -->
+        <invoke url="index.html?lenya.usecase=workflow.reject"/>
+        <verifyText text="Reject document &quot;Welcome to the Lenya default publication&quot;"/>
+        <clickButton name="submit"/>
+        <verifyElementText type="span" name="workflow-state" text="authoring"/>
+        
+        <!-- logout -->
+        <invoke url="index.html?lenya.usecase=ac.logout"/>
+        <clickButton name="submit"/>
+        
+        <!-- login as lenya -->
+        <invoke url="index.html" />
+        <setInputField name="username" value="lenya"/>
+        <setInputField name="password" value="levi"/>
+        <clickButton name="submit"/>
+        <verifyElementText type="span" name="workflow-state" text="authoring"/>
+        
+        <!-- submit -->
+        <invoke url="index.html?lenya.usecase=workflow.submit"/>
+        <verifyText text="Submit &quot;Welcome to the Lenya default publication&quot; for approval"/>
+        <clickButton name="submit"/>
+        <verifyElementText type="span" name="workflow-state" text="review"/>
+        
+        <!-- logout -->
+        <invoke url="index.html?lenya.usecase=ac.logout"/>
+        <clickButton name="submit"/>
+        
+        
+        <!-- login as alice -->
+        <invoke url="index.html" />
+        <setInputField name="username" value="alice"/>
+        <setInputField name="password" value="levi"/>
+        <clickButton name="submit"/>
+        <verifyElementText type="span" name="workflow-state" text="review"/>
+        
+        <!-- publish -->
+        <invoke url="index.html?lenya.usecase=workflow.publish"/>
+        <clickButton name="submit"/>
+        <verifyElementText type="span" name="workflow-state" text="live"/>
+
+        <!-- logout -->
+        <invoke url="index.html?lenya.usecase=ac.logout"/>
+        <clickButton name="submit"/>
+        
+        
+      </steps>
+    </webtest>
+  </target>
+</project>
