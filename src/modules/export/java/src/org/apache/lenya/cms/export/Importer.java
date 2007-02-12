@@ -140,6 +140,7 @@ public class Importer extends AbstractLogEnabled {
                 newDoc = docManager.addVersion(doc, area.getName(), language, true);
                 resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
                 SourceUtil.copy(resolver, contentUri, newDoc.getSourceURI());
+                newDoc.getLink().setLabel(navigationTitle);
             }
 
             String dcNamespace = "http://purl.org/dc/elements/1.1/";
