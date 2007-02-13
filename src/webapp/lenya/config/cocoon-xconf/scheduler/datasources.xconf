@@ -19,7 +19,7 @@
 <!-- $Id: usecases-workflow-deactivate.xconf 348547 2005-11-23 20:13:01Z chestnut $ -->
 
   <xconf xpath="/cocoon"
-    unless="/cocoon/datasources/jdbc[@name = 'LenyaScheduler']"
+    unless="datasources/jdbc[@name = 'LenyaScheduler']"
     remove="/cocoon/datasources"
     insert-before="/cocoon/hsqldb-server"
     if-prop="patch.webapp">
@@ -30,7 +30,7 @@
           <!-- use custom keep-alive query because HSQL does not accept 'SELECT 1' -->
           <keep-alive>SELECT 1 FROM QRTZ_LOCKS</keep-alive>
         </pool-controller>
-        <dburl>jdbc:hsqldb:hsql://localhost:9002</dburl>
+        <dburl>jdbc:hsqldb:hsql://localhost:9002/cocoondb</dburl>
         <user>sa</user>
         <password/>
       </jdbc>
