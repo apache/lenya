@@ -120,7 +120,7 @@
     </ant>
   </target>
   
-  <target name="patch-modules-test" depends="tests.prepare, prepare-module-test">
+  <target name="patch-modules-test" depends="set-test-patch-property, tests.prepare, prepare-module-test">
     <ant antfile="${build.dir}/temp/modules-build.xml"
       inheritall="true"
       inheritrefs="true"
