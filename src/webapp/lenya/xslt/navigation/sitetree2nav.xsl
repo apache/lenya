@@ -28,11 +28,11 @@
     >
 
 <xsl:param name="url"/>
+<xsl:param name="root"/>
 <xsl:param name="chosenlanguage"/>
 <xsl:param name="defaultlanguage"/>
     
 <xsl:variable name="path-to-context"><xsl:call-template name="create-path-to-context"/></xsl:variable>
-<xsl:variable name="root" select="$path-to-context"/>
   
 <xsl:template name="create-path-to-context">
   <xsl:param name="local-url" select="$url"/>
