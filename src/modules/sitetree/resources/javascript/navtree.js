@@ -54,9 +54,14 @@ NavNode.prototype.createNewNode = function(node)
     return newItem;
 }
 
+NavNode.prototype.getBasePath = function() {
+    var path = this.path != '/' ? this.path : '' ;
+    return path;
+}
+
 NavNode.prototype.getLoadSubTreeURL = function() {
     area = this.area;
-    path = this.path;  
+    var path = this.getBasePath();
     return encodeURI(CONTEXT_PREFIX + '/' + PUBLICATION_ID + PIPELINE_PATH + '?area='+area+'&path='+path+'&language='+CHOSEN_LANGUAGE+'&areas='+ALL_AREAS+'&lenya.module=sitetree');
 }
 
