@@ -32,10 +32,15 @@ import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 
 /**
- * <p>Inbox module.</p>
- * <p>Attributes:</p>
+ * <p>
+ * Inbox module.
+ * </p>
+ * <p>
+ * Attributes:
+ * </p>
  * <ul>
- * <li><strong>newMessageCount</strong> - the number of unread messages as string</li>
+ * <li><strong>newMessageCount</strong> - the number of unread messages as
+ * string</li>
  * </ul>
  */
 public class InboxModule extends AbstractInputModule implements Serviceable {
@@ -43,8 +48,9 @@ public class InboxModule extends AbstractInputModule implements Serviceable {
     protected static final String NEW_MESSAGE_COUNT = "newMessageCount";
     protected ServiceManager manager;
 
-    public Object getAttribute(String name, Configuration modeConf, Map objectModel) throws ConfigurationException {
-        
+    public Object getAttribute(String name, Configuration modeConf, Map objectModel)
+            throws ConfigurationException {
+
         Object value = null;
         if (name.equals(NEW_MESSAGE_COUNT)) {
             InboxManager inboxManager = null;
@@ -53,25 +59,30 @@ public class InboxModule extends AbstractInputModule implements Serviceable {
                 Request request = ObjectModelHelper.getRequest(objectModel);
                 Session session = RepositoryUtil.getSession(manager, request);
                 User user = session.getIdentity().getUser();
-                Inbox inbox = inboxManager.getInbox(user);
-                
-                int count = 0;
-                InboxMessage[] messages = inbox.getMessages();
-                for (int i = 0; i < messages.length; i++) {
-                    if (!messages[i].isMarkedAsRead()) {
-                        count++;
+                if (user == null) {
+                    return "0";
+                } else {
+                    Inbox inbox = inboxManager.getInbox(user);
+                    int count = 0;
+                    InboxMessage[] messages = inbox.getMessages();
+                    for (int i = 0; i < messages.length; i++) {
+                        if (!messages[i].isMarkedAsRead()) {
+                            count++;
+                        }
                     }
+                    value = Integer.toString(count);
                 }
-                value = Integer.toString(count);
-                
+
             } catch (Exception e) {
                 throw new ConfigurationException("Attribute [" + name + "]: ", e);
-            }
-            finally {
+            } finally {
                 if (inboxManager != null) {
                     this.manager.release(inboxManager);
                 }
             }
+        }
+        else {
+            throw new ConfigurationException("Attribute: [" + name + "] not supported.");
         }
         return value;
     }
@@ -80,6 +91,4 @@ public class InboxModule extends AbstractInputModule implements Serviceable {
         this.manager = manager;
     }
 
-    
-    
 }
