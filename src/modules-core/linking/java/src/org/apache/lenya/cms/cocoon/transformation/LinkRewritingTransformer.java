@@ -210,7 +210,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
                                 queryString = linkUriAndQuery[1];
                             }
                             LinkTarget target = this.linkResolver.resolve(doc, linkUri);
-                            if (target.exists()) {
+                            if (target.exists() && target.getDocument().hasLink()) {
                                 Document targetDocument = target.getDocument();
                                 String extension = targetDocument.getExtension();
                                 if (extension.length() > 0) {
