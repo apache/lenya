@@ -87,7 +87,14 @@
           var tree = new NavTree(document, document.getElementById('tree'));
           tree.init(PUBLICATION_ID);
           tree.render();
-          tree.loadInitialTree('<jx:out value="${area}"/>', '<jx:out value="${document.getPath()}"/>');
+          <jx:choose>
+            <jx:when test="${docExists.booleanValue() &amp;&amp; document.hasLink()}">
+              tree.loadInitialTree('<jx:out value="${area}"/>', '<jx:out value="${document.getPath()}"/>');
+            </jx:when>
+            <jx:otherwise>
+              tree.loadInitialTree('<jx:out value="${area}"/>', '');
+            </jx:otherwise>
+          </jx:choose>
         </script>
       </div>
     </div>
