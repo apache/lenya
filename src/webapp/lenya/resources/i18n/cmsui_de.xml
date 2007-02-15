@@ -240,7 +240,7 @@
   <message key="This document is not available in this language.">Das Dokument ist in der gewünschten Sprache nicht vorhanden.</message>
   <message key="Document ID">Dokument ID</message>
   <message key="Versions">Versionen</message>
-  <message key="SSL Encryption">SSL&#160;Verschlüsselung</message>
+  <message key="SSL Encryption">SSL-Verschlüsselung</message>
   <message key="Rollback to this version">Zu dieser Version zurücksetzen</message>
   <message key="AC Archive">Rechte&#160;Archiv</message>
   <message key="AC Trash">Rechte&#160;Papierkorb</message>
