@@ -88,7 +88,7 @@
           tree.init(PUBLICATION_ID);
           tree.render();
           <jx:choose>
-            <jx:when test="${docExists.booleanValue() &amp;&amp; document.hasLink()}">
+            <jx:when test="${docExists.booleanValue()}">
               tree.loadInitialTree('<jx:out value="${area}"/>', '<jx:out value="${document.getPath()}"/>');
             </jx:when>
             <jx:otherwise>
