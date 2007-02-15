@@ -1,4 +1,4 @@
-3/*
+/*
  * Licensed to the Apache Software Foundation (ASF) under one or more
  *  contributor license agreements.  See the NOTICE file distributed with
  *  this work for additional information regarding copyright ownership.
@@ -360,8 +360,17 @@ function executeUsecase() {
         usecase = getUsecase(usecaseName);
         proxy.setup(usecase);
         passRequestParameters(usecase);
-        state = executeFlow(usecase);
+        usecase.checkExecutionConditions();
+        var hasErrors = usecase.hasErrors()
+        if (!hasErrors) {
+            state = executeFlow(usecase);
+            hasErrors = usecase.hasErrors();
+        }
         releaseUsecase(usecase);
+        if (hasErrors) {
+            proxy = new Packages.org.apache.lenya.cms.usecase.impl.UsecaseProxy(usecase);
+            cocoon.sendPage("usecases-view/nomenu/modules/usecase/templates/error.jx", { "usecase" : proxy});
+        }
     }
     //getTargetURL takes a boolean that is true on success:
     targetUrl = usecase.getTargetURL(state == "success");
