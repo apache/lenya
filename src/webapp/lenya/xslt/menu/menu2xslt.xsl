@@ -50,6 +50,7 @@
               <xso:call-template name="title"/>
               <script src="{$contextprefix}/lenya/menu/menu.js" type="text/javascript">&#160;</script>
               <link href="{$contextprefix}/lenya/css/menu.css" rel="stylesheet" type="text/css"/>
+              <link rel="icon" href="{$contextprefix}/favicon.ico" type="image/ico"/>
               <xso:apply-templates select="xhtml:html/xhtml:head/*[local-name() != 'title']"/>
             </head>
             <body>

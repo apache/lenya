@@ -35,6 +35,7 @@
       <head>
         <title><xsl:apply-templates select="page:title/node()"/></title>
         <link rel="stylesheet" type="text/css" href="{$contextprefix}/lenya/css/default.css" title="default css"/>
+        <link rel="icon" href="{$contextprefix}/favicon.ico" type="image/ico"/>
         <meta http-equiv="Content-Type" content="application/xhtml+xml; charset=UTF-8"/>
         <xsl:apply-templates select="xhtml:script"/>
         <xsl:copy-of select="page:head/*"/>
