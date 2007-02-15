@@ -49,7 +49,7 @@
               <th style="background: none;"><i18n:text>Creation Date</i18n:text></th>
             </tr>
             <jx:forEach var="asset" items="${usecase.getParameter('assets')}">
-              <jx:set var="originalUrl" value="${asset.getCanonicalWebappURL()}"/>
+              <jx:set var="originalUrl" value="${cocoon.request.getContextPath() + asset.getCanonicalWebappURL()}"/>
               <jx:set var="lastDotIndex" value="${originalUrl.lastIndexOf('.')}"/>
               <jx:set var="extension" value="${asset.getMetaData('http://apache.org/lenya/metadata/document/1.0').getFirstValue('extension')}"/>
               <jx:set var="url" value="${originalUrl.substring(0, lastDotIndex).concat('.').concat(extension)}"/>
@@ -63,8 +63,7 @@
                   <jx:set var="mimeType" value="${asset.getMimeType()}"/>
                   <jx:if test="${mimeType.startsWith('image/')}">
                     <jx:set var="doc" value="${usecase.getParameter('document')}"/>
-                    <img src="${cocoon.request.getContextPath()}${url}"
-                      style="height: 32px; vertical-align: middle; margin: 3px 0px;"/>&#160;
+                    <img src="${url}" style="height: 32px; vertical-align: middle; margin: 3px 0px;"/>&#160;
                   </jx:if>
                 </td>
                 <td><jx:out value="${asset.getMetaData('http://purl.org/dc/elements/1.1/').getFirstValue('title')}"/></td>

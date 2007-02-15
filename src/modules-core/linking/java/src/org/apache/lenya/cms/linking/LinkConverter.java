@@ -20,7 +20,9 @@ package org.apache.lenya.cms.linking;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
+import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
@@ -32,10 +34,11 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
 /**
- * Utility class to convert <code>lenya-document:</code> links from and to URL links.
+ * Utility class to convert <code>lenya-document:</code> links from and to URL
+ * links.
  */
 public class LinkConverter extends AbstractLogEnabled {
-    
+
     private ServiceManager manager;
 
     /**
@@ -47,13 +50,14 @@ public class LinkConverter extends AbstractLogEnabled {
         ContainerUtil.enableLogging(this, logger);
         this.manager = manager;
     }
-    
+
     /**
      * Converts all URL-based links to UUID-based links.
      * @param doc The document to convert.
+     * @param useContextPath If the request's context path should be considered.
      */
-    public void convertUrlsToUuids(Document doc) {
-        convertUrlsToUuids(doc.getPublication(), doc);
+    public void convertUrlsToUuids(Document doc, boolean useContextPath) {
+        convertUrlsToUuids(doc.getPublication(), doc, useContextPath);
     }
 
     /**
@@ -61,11 +65,19 @@ public class LinkConverter extends AbstractLogEnabled {
      * originate from a different publication.
      * @param srcPub The publication where the content comes from.
      * @param examinedDocument The document in the target publication.
+     * @param useContextPath If the request's context path should be considered.
      */
-    public void convertUrlsToUuids(Publication srcPub, Document examinedDocument) {
+    public void convertUrlsToUuids(Publication srcPub, Document examinedDocument,
+            boolean useContextPath) {
         boolean linksRewritten = false;
         LinkResolver linkResolver = null;
         try {
+
+            String prefix = "";
+            if (useContextPath) {
+                prefix = getContextPath();
+            }
+
             ResourceType type = examinedDocument.getResourceType();
             String[] xPaths = type.getLinkAttributeXPaths();
 
@@ -78,7 +90,8 @@ public class LinkConverter extends AbstractLogEnabled {
                 linkResolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
                 DocumentFactory factory = examinedDocument.getFactory();
 
-                org.w3c.dom.Document xmlDocument = DocumentHelper.readDocument(examinedDocument.getInputStream());
+                org.w3c.dom.Document xmlDocument = DocumentHelper.readDocument(examinedDocument
+                        .getInputStream());
 
                 for (int xPathIndex = 0; xPathIndex < xPaths.length; xPathIndex++) {
                     if (getLogger().isDebugEnabled()) {
@@ -98,11 +111,11 @@ public class LinkConverter extends AbstractLogEnabled {
                             getLogger().debug("Convert links: Check URL [" + url + "]");
                         }
 
-                        if (url.startsWith("/" + srcPub.getId() + "/" + examinedDocument.getArea()
-                                + "/")) {
+                        if (url.startsWith(prefix + "/" + srcPub.getId() + "/"
+                                + examinedDocument.getArea() + "/")) {
                             String targetPubId = examinedDocument.getPublication().getId();
                             final String webappUrl = "/" + targetPubId
-                                    + url.substring(("/" + srcPub.getId()).length());
+                                    + url.substring((prefix + "/" + srcPub.getId()).length());
                             if (factory.isDocument(webappUrl)) {
                                 Document targetDocument = factory.getFromURL(webappUrl);
 
@@ -131,6 +144,20 @@ public class LinkConverter extends AbstractLogEnabled {
                 this.manager.release(linkResolver);
             }
         }
+    }
+
+    protected String getContextPath() throws ServiceException {
+        String prefix;
+        ContextUtility ctxUtil = null;
+        try {
+            ctxUtil = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
+            prefix = ctxUtil.getRequest().getContextPath();
+        } finally {
+            if (ctxUtil != null) {
+                this.manager.release(ctxUtil);
+            }
+        }
+        return prefix;
     }
 
 }

@@ -159,7 +159,7 @@ public class Put extends CreateDocument {
             }
             
             LinkConverter converter = new LinkConverter(this.manager, getLogger());
-            converter.convertUrlsToUuids(doc);
+            converter.convertUrlsToUuids(doc, true);
 
             String event = getParameterAsString(EVENT);
             if (event != null) {

@@ -183,7 +183,7 @@ public class Importer extends AbstractLogEnabled {
         Document[] docs = area.getDocuments();
         for (int i = 0; i < docs.length; i++) {
             LinkConverter converter = new LinkConverter(this.manager, getLogger());
-            converter.convertUrlsToUuids(srcPub, docs[i]);
+            converter.convertUrlsToUuids(srcPub, docs[i], false);
         }
     }
 

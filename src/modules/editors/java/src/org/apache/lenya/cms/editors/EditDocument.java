@@ -86,7 +86,7 @@ public class EditDocument extends DocumentUsecase {
             SourceUtil.writeDOM(xmlDoc, sourceDoc.getOutputStream());
 
             LinkConverter converter = new LinkConverter(this.manager, getLogger());
-            converter.convertUrlsToUuids(getSourceDocument());
+            converter.convertUrlsToUuids(getSourceDocument(), true);
 
             String event = getParameterAsString(EVENT, DEFAULT_EVENT);
             WorkflowUtil
