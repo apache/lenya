@@ -234,7 +234,19 @@ public class DocumentHelper {
 
         DOMSource source = new DOMSource(document);
         StreamResult result = new StreamResult(outputStream);
-        getTransformer(document.getDoctype()).transform(source, result);
+        try {
+            getTransformer(document.getDoctype()).transform(source, result);
+        }
+        finally {
+            try {
+                if (outputStream != null) {
+                    outputStream.close();
+                }
+            }
+            catch (Exception ignore) {
+                
+            }
+        }
     }
 
     /**
