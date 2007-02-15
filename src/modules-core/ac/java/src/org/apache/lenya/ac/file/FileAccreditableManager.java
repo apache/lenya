@@ -194,9 +194,12 @@ public class FileAccreditableManager extends AbstractAccreditableManager {
 
     public String getId() {
         try {
-            Assert.notNull("configuration directory", this.configurationDirectory);
-            return this.configurationDirectory.getCanonicalPath();
+            Assert.notNull("configuration directory", this.getConfigurationDirectory());
+            return this.getConfigurationDirectory().getCanonicalPath();
         } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        catch(AccessControlException e) {
             throw new RuntimeException(e);
         }
     }
