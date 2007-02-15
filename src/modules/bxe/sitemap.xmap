@@ -101,34 +101,6 @@
         <map:redirect-to uri="{request:requestURI}"/>
       </map:match>
       
-      <map:match pattern="image-upload-show" type="step">
-        <map:call resource="cms-screen">
-          <map:parameter name="serverpage" value="info/assets.xsp"/>
-          <map:parameter name="stylesheet" value="bxe/image.xsl"/>
-        </map:call>
-      </map:match>
-      
-      <map:match pattern="asset-upload-show" type="step">
-        <map:call resource="cms-screen">
-          <map:parameter name="serverpage" value="info/assets.xsp"/>
-          <map:parameter name="stylesheet" value="bxe/asset.xsl"/>
-        </map:call>
-      </map:match> 
-      
-      <map:match type="step" pattern="asset-upload">
-        <map:call resource="cms-screen">
-          <map:parameter name="serverpage" value="info/assets.xsp"/>
-          <map:parameter name="stylesheet" value="bxe/asset.xsl"/>
-        </map:call>
-      </map:match>
-      
-      <map:match type="step" pattern="image-upload">
-        <map:call resource="cms-screen">
-          <map:parameter name="serverpage" value="info/assets.xsp"/>
-          <map:parameter name="stylesheet" value="bxe/image.xsl"/>
-        </map:call>
-      </map:match>
-      
       <map:match pattern="link-show" type="step">
         <!-- just a dummy xsp since we call the info area directly -->
         <map:generate src="context://lenya/content/util/empty.xml"/>
