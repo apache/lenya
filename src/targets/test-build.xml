@@ -78,7 +78,7 @@
   </target>
   
   <!-- prepares the tests. -->
-  <target name="tests.prepare" depends="init, test.pub.prepare">
+  <target name="tests.prepare" depends="init, test.pub.prepare, set-test-patch-property">
     <mkdir dir="${build.test}"/>
     <mkdir dir="${junit.dir}" />
     
