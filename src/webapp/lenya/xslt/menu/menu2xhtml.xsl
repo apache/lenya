@@ -36,12 +36,12 @@
 <xsl:param name="workflowstate"/>
 <xsl:param name="islive"/>
 <xsl:param name="usecase"/>
+<xsl:param name="tabGroup"/>
 <xsl:param name="newMessages"/>
   
 <xsl:variable name="currentTab">
   <xsl:choose>
-    <xsl:when test="starts-with($usecase, 'admin.')">admin</xsl:when>
-    <xsl:when test="starts-with($usecase, 'tab.')">site</xsl:when>
+    <xsl:when test="$tabGroup != ''"><xsl:value-of select="$tabGroup"/></xsl:when>
     <xsl:otherwise>authoring</xsl:otherwise>
   </xsl:choose>
 </xsl:variable>

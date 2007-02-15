@@ -173,6 +173,7 @@
               <map:parameter name="workflowstate" value="{workflow:state}"/>
               <map:parameter name="islive" value="{workflow:variable.is_live}"/>
               <map:parameter name="usecase" value="{request-param:lenya.usecase}"/>
+              <map:parameter name="tabGroup" value="{usecase:tabGroup:{request-param:lenya.usecase}}"/>
               <map:parameter name="newMessages" value="{inbox:newMessageCount}"/>
             </map:transform>
           </map:otherwise>
