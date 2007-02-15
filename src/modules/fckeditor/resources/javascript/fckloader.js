@@ -29,6 +29,5 @@ function fckloader(host, requesturi, contextPath)
   oFCKeditor.ToolbarSet = 'Lenya' ;
   oFCKeditor.Config[ "ImageBrowserURL" ] = host + requesturi +'?lenya.usecase=fckeditor.insertImage' ;
   oFCKeditor.Config[ "LinkBrowserURL" ] = host + requesturi +'?lenya.module=fckeditor&lenya.step=link-show&language=en' ;
-  oFCKeditor.Config[ "EditorAreaCSS" ] = contextPath + '/default/authoring/css/page.css' ;
   oFCKeditor.ReplaceTextarea() ;
 }
