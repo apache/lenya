@@ -25,6 +25,7 @@ import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteStructure;
+import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 
 public class ObservationTest extends AbstractAccessControlTest {
@@ -74,8 +75,10 @@ public class ObservationTest extends AbstractAccessControlTest {
 
     protected void testChanged(Document doc, TestListener listener) throws Exception {
         listener.reset();
+        org.w3c.dom.Document oldXml = DocumentHelper.readDocument(doc.getInputStream());
         NamespaceHelper xml = new NamespaceHelper("http://apache.org/lenya/test", "", "test");
         xml.save(doc.getOutputStream());
+        DocumentHelper.writeDocument(oldXml, doc.getOutputStream());
         
         assertFalse(listener.wasChanged());
         doc.getRepositoryNode().getSession().commit();
