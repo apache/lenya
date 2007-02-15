@@ -48,6 +48,12 @@ public class ContentLinkManager extends AbstractLogEnabled implements LinkManage
             String[] xPaths = source.getResourceType().getLinkAttributeXPaths();
             if (xPaths.length > 0) {
                 org.w3c.dom.Document xml = DocumentHelper.readDocument(source.getInputStream());
+
+                if (xml == null) {
+                    throw new RuntimeException("The document [" + source
+                            + "] doesn't contain any XML content.");
+                }
+
                 for (int i = 0; i < xPaths.length; i++) {
                     NodeIterator iter = XPathAPI.selectNodeIterator(xml, xPaths[i]);
                     Node node;
@@ -60,6 +66,8 @@ public class ContentLinkManager extends AbstractLogEnabled implements LinkManage
                     }
                 }
             }
+        } catch (RuntimeException e) {
+            throw e;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
