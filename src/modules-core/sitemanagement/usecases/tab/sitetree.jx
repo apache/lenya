@@ -33,11 +33,15 @@
   
   <jx:set var="document" value="${usecase.getParameter('document')}"/>
   <jx:set var="docExists" value="${java.lang.Boolean.valueOf(document.getClass().getName().equals('org.apache.lenya.cms.publication.DocumentImpl'))}"/>
+  
   <div id="lenya-info-treecanvas">
     <div class="lenya-tabs">
       <jx:forEach var="language" items="${publication.getLanguages()}">
         <jx:choose>
-          <jx:when test="${!docExists.booleanValue() &amp;&amp; language.equals(publication.getDefaultLanguage())}">
+          <jx:when test="${!docExists.booleanValue() &amp;&amp; url.endsWith('_' + language)}">
+            <a id="${language}" class="lenya-tablink-active"><jx:out value="${language}"/></a>
+          </jx:when>
+          <jx:when test="${!docExists.booleanValue() &amp;&amp; url.endsWith('/') &amp;&amp; language.equals(publication.getDefaultLanguage())}">
             <a id="${language}" class="lenya-tablink-active"><jx:out value="${language}"/></a>
           </jx:when>
           <jx:when test="${document != null &amp;&amp; document.existsTranslation(language)}">
