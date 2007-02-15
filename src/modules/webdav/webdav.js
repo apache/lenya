@@ -300,12 +300,15 @@ function executeUsecase(usecaseName) {
             usecaseResolver = cocoon.getComponent("org.apache.lenya.cms.usecase.UsecaseResolver");
             usecase = usecaseResolver.resolve(sourceUrl, usecaseName);
             proxy.setup(usecase);
-                
-            usecase.execute();
-            if (! usecase.hasErrors()) {
-                usecase.checkPostconditions();
+            
+            usecase.checkExecutionConditions();
+            if (!usecase.hasErrors()) {
+                usecase.execute();
                 if (! usecase.hasErrors()) {
-                    success = true;
+                    usecase.checkPostconditions();
+                    if (! usecase.hasErrors()) {
+                        success = true;
+                    }
                 }
             }
         }
