@@ -20,6 +20,8 @@
 
 package org.apache.lenya.xml;
 
+import java.io.OutputStream;
+
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.lenya.util.Assert;
@@ -206,5 +208,17 @@ public class NamespaceHelper {
      */
     public Element[] getPrecedingSiblings(Element element, String localName) {
         return DocumentHelper.getPrecedingSiblings(element, getNamespaceURI(), localName);
+    }
+    
+    /**
+     * Saves the XML.
+     * @param stream The stream to write to.
+     */
+    public void save(OutputStream stream) {
+        try {
+            DocumentHelper.writeDocument(getDocument(), stream);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }
