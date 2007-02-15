@@ -102,12 +102,8 @@
          <map:redirect-to uri="index.html"/>
       </map:match>
     </map:pipeline>
-
     
-    <!-- This is the pipeline that builds the page. It aggregates all
-    the navigational elements (breadcrumb, tabs, menu) with the actual
-    content of the document. -->
-    <map:pipeline>
+    <map:pipeline type="caching">
       <!-- pattern="meta?docid={docid}&lang={lang}" -->
       <map:match pattern="*/**.html.meta">
         <map:generate type="lenyaMetaData">
@@ -127,16 +123,34 @@
         </map:generate>
         <map:serialize type="xml"/>
       </map:match>
-      <!-- /lenyabody-{rendertype}/{publication-id}/{area}/{doctype}/{url} -->
-      <map:match pattern="lenyabody-*/*/*/*/**">
+      
+      <!-- navigation/{nav-element}/{pub-id}/{area}/{url} -->
+      <map:match pattern="navigation-element/*/*/*/*/*/**">
+        <map:generate src="cocoon://modules/sitetree/{1}/{2}/{3}/{4}/{5}/{6}.xml"/>
+        <map:serialize type="xml"/>
+      </map:match>
+      
+      <!-- /lenyabody-{rendertype}/{publication-id}/{area}/{doctype}/{default-language}/{language}/{url} -->
+      <map:match pattern="lenyabody-raw-*/*/*/*/*/*/**">
         <map:aggregate element="cmsbody">
-          <map:part src="cocoon://modules/sitetree/{2}/{3}/breadcrumb/{5}.xml"/>
-          <map:part src="cocoon://modules/sitetree/{2}/{3}/tabs/{5}.xml"/>
-          <map:part src="cocoon://modules/sitetree/{2}/{3}/menu/{5}.xml"/>
-          <map:part src="cocoon://modules/sitetree/{2}/{3}/search/{5}.xml"/>
+          <map:part src="cocoon:/navigation-element/breadcrumb/{2}/{3}/{5}/{6}/{7}"/>
+          <map:part src="cocoon:/navigation-element/tabs/{2}/{3}/{5}/{6}/{7}"/>
+          <map:part src="cocoon:/navigation-element/menu/{2}/{3}/{5}/{6}/{7}"/>
+          <map:part src="cocoon:/navigation-element/search/{2}/{3}/{5}/{6}/{7}"/>
           <map:part src="cocoon://modules/languageselector/text-none/flagsize-10"/>
           <map:part src="{resource-type:format-xhtml}?rendertype={1}"/>
         </map:aggregate>
+        <map:serialize type="xml"/>
+      </map:match>
+    </map:pipeline>
+        
+    <!-- This is the pipeline that builds the page. It aggregates all
+      the navigational elements (breadcrumb, tabs, menu) with the actual
+      content of the document. -->
+    <map:pipeline type="noncaching">
+      <!-- /lenyabody-{rendertype}/{publication-id}/{area}/{doctype}/{url} -->
+      <map:match pattern="lenyabody-*/*/*/*/**">
+        <map:generate src="cocoon:/lenyabody-raw-{1}/{2}/{3}/{page-envelope:default-language}/{page-envelope:document-language}/{4}/{5}"/>
         <map:transform type="link-rewrite"/>
         <map:transform src="fallback://lenya/modules/svg/xslt/image2svg.xsl"/>
         <map:select type="resource-exists">
@@ -148,13 +162,13 @@
               <map:parameter name="area" value="{3}"/>
               <map:parameter name="url" value="{5}"/>
               <map:parameter name="document-path" value="{page-envelope:document-path}"/>
-              <map:parameter name="document-type" value="{page-envelope:document-type}"/>
+              <map:parameter name="document-type" value="{4}"/>
               <map:parameter name="language" value="{page-envelope:document-language}"/>
               <map:parameter name="contextprefix" value="{request:contextPath}"/>
               <map:parameter name="title" value="{dublincore:title}"/>
               <map:parameter name="lastPublishedUser" value="{access-control:user-name:{workflow:lastUser.publish}}"/>
               <map:parameter name="lastPublishedDate" value="{workflow:lastDate.publish}"/>
-              <!--Following is a show off to explain lenya.properties.xml -->
+              <!-- Following is a show off to explain lenya.properties.xml -->
               <map:parameter name="author" value="{properties:pubs.default.author}"/>
               <map:parameter name="nodeName" value="{page-envelope:document-name}"/>
             </map:transform>
@@ -166,13 +180,13 @@
               <map:parameter name="area" value="{3}"/>
               <map:parameter name="url" value="{5}"/>
               <map:parameter name="document-path" value="{page-envelope:document-path}"/>
-              <map:parameter name="document-type" value="{page-envelope:document-type}"/>
+              <map:parameter name="document-type" value="{4}"/>
               <map:parameter name="language" value="{page-envelope:document-language}"/>
               <map:parameter name="contextprefix" value="{request:contextPath}"/>
               <map:parameter name="title" value="{dublincore:title}"/>
               <map:parameter name="lastPublishedUser" value="{access-control:user-name:{workflow:lastUser.publish}}"/>
               <map:parameter name="lastPublishedDate" value="{workflow:lastDate.publish}"/>
-              <!--Following is a show off to explain lenya.properties.xml -->
+              <!-- Following is a show off to explain lenya.properties.xml -->
               <map:parameter name="author" value="{properties:pubs.default.author}"/>
               <map:parameter name="nodeName" value="{page-envelope:document-name}"/>
             </map:transform>
@@ -248,7 +262,7 @@
                   <map:otherwise>
                     <map:generate src="cocoon:/lenyabody-view/{page-envelope:publication-id}/{page-envelope:area}/{page-envelope:document-type}{page-envelope:document-url}"/>
                   </map:otherwise>
-                </map:select>  
+                </map:select>
           
                 <map:select type="browser">
                   <map:when test="mozilla5DISABLED">

@@ -39,18 +39,6 @@ This sitemap creates default navigation components.
   
   <map:resources>
     
-    <map:resource name="fallback-transformation">
-      <map:transform src="fallback://lenya/modules/sitetree/xslt/navigation/{stylesheet}.xsl">
-        <map:parameter name="url" value="{url}"/>
-        <map:parameter name="root" value="{page-envelope:context-prefix}/{publication-id}/{page-envelope:area}/"/>
-        <map:parameter name="area" value="{page-envelope:area}"/>
-        <map:parameter name="chosenlanguage" value="{page-envelope:document-language}"/>
-        <map:parameter name="defaultlanguage" value="{page-envelope:default-language}"/>
-        <map:parameter name="breadcrumbprefix" value="{page-envelope:breadcrumb-prefix}"/>
-      </map:transform>       
-      <map:serialize type="xml"/>     
-    </map:resource>
-    
     <map:resource name="i18n">
       <map:transform type="i18n">      
         <map:parameter name="locale" value="{request:locale}"/>
@@ -61,32 +49,35 @@ This sitemap creates default navigation components.
   
   <map:pipelines>
   
-    <map:pipeline>
+    <map:pipeline type="caching">
+      
+      <!-- sitetree -->
+      <!-- pattern: sitetree/{pub-id}/{area}/{default-language}/{language}/{url}.xml -->
+      <map:match pattern="sitetree/*/*/*/*/**.xml">
+        <map:generate src="lenya://lenya/pubs/{1}/content/{2}/sitetree.xml"/>
+        <map:transform src="fallback://lenya/modules/sitetree/xslt/navigation/sitetree2nav.xsl">
+          <map:parameter name="url" value="/{5}"/>
+          <map:parameter name="area" value="{2}"/>
+          <map:parameter name="root" value="{request:contextPath}/{1}/{2}/"/>
+          <map:parameter name="chosenlanguage" value="{4}"/>
+          <map:parameter name="defaultlanguage" value="{3}"/>
+        </map:transform>       
+        <map:serialize type="xml"/>
+      </map:match>
     
-    <!-- sitetree -->
-    <!-- pattern: {pub-id}/{area}/sitetree/{url}.xml -->
-    <map:match pattern="*/*/sitetree/**.xml">
-      <map:generate src="lenya://lenya/pubs/{1}/content/{2}/sitetree.xml"/>
-      <map:transform type="i18n">
-        <map:parameter name="locale" value="{request:locale}"/>
-      </map:transform>
-      <map:call resource="fallback-transformation">
-        <map:parameter name="publication-id" value="{1}"/>
-        <map:parameter name="url" value="/{3}"/>
-        <map:parameter name="stylesheet" value="sitetree2nav"/>
-      </map:call>    
-    </map:match>
-    
-    <!-- navigation element -->  
-    <!-- pattern: {pub-id}/{area}/{nav-element}/{url}.xml -->
-    <map:match pattern="*/*/*/**.xml">
-      <map:generate src="cocoon:/{1}/{2}/sitetree/{4}.xml"/>
-      <map:call resource="fallback-transformation">
-        <map:parameter name="publication-id" value="{1}"/>
-        <map:parameter name="url" value="/{4}"/>
-        <map:parameter name="stylesheet" value="{3}"/>
-      </map:call>
-    </map:match>
+      <!-- navigation element -->  
+      <!-- pattern: {nav-element}/{pub-id}/{area}/{default-language}/{language}/{url}.xml -->
+      <map:match pattern="*/*/*/*/*/**.xml">
+        <map:generate src="cocoon:/sitetree/{2}/{3}/{4}/{5}/{6}.xml"/>
+        <map:transform src="fallback://lenya/modules/sitetree/xslt/navigation/{1}.xsl">
+          <map:parameter name="url" value="/{6}"/>
+          <map:parameter name="area" value="{2}"/>
+          <map:parameter name="root" value="{request:contextPath}/{1}/{2}/"/>
+          <map:parameter name="chosenlanguage" value="{5}"/>
+          <map:parameter name="defaultlanguage" value="{4}"/>
+        </map:transform>       
+        <map:serialize type="xml"/>
+      </map:match>
     
     </map:pipeline>
   
