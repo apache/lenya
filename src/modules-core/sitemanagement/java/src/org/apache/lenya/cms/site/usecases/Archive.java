@@ -44,7 +44,7 @@ public class Archive extends MoveSubsite {
      * @see org.apache.lenya.cms.site.usecases.MoveSubsite#getEvent()
      */
     protected String getEvent() {
-        return "delete";
+        return "archive";
     }
 
 

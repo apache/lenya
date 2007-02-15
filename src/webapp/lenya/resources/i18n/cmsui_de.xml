@@ -35,6 +35,8 @@
   <message key="authoring">Bearbeitung</message>
   <message key="Authoring">Bearbeitung</message>
   <message key="review">Freigabe</message>
+  <message key="trash">Papierkorb</message>
+  <message key="archive">Archiv</message>
   <message key="user">Benutzer</message>
   <message key="Users">Benutzer</message>  
   <message key="group">Gruppe</message>
