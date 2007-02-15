@@ -23,8 +23,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentManager;
@@ -149,18 +147,18 @@ public class Publish extends DocumentUsecase {
                 + dateofs.substring(3, 5);
 
         for (int i = 0; i < 2; i++) {
-            doms[i] = SourceUtil.readDOM(docs[i].getSourceURI(), this.manager);
+            doms[i] = DocumentHelper.readDocument(docs[i].getInputStream());
             Element parent = doms[i].getDocumentElement();
             // set modified date on publish
             Element element = (Element) XPathAPI.selectSingleNode(parent,
                     "/*[local-name() = 'feed']/*[local-name() = 'modified']");
             DocumentHelper.setSimpleElementText(element, datestr);
-            SourceUtil.writeDOM(doms[i], docs[i].getSourceURI(), this.manager);
+            DocumentHelper.writeDocument(doms[i], docs[i].getOutputStream());
         }
     }
 
     protected void updateBlogEntry(Document doc) throws Exception {
-        org.w3c.dom.Document dom = SourceUtil.readDOM(doc.getSourceURI(), this.manager);
+        org.w3c.dom.Document dom = DocumentHelper.readDocument(doc.getInputStream());
         Element parent = dom.getDocumentElement();
 
         DateFormat datefmt = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
@@ -193,7 +191,7 @@ public class Publish extends DocumentUsecase {
             DocumentHelper.setSimpleElementText(element, datestr);
         }
 
-        SourceUtil.writeDOM(dom, doc.getSourceURI(), this.manager);
+        DocumentHelper.writeDocument(dom, doc.getOutputStream());
     }
 
     /**

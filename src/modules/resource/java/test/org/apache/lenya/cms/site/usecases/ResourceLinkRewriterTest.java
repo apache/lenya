@@ -21,7 +21,6 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourceWrapperTest;
-import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 
 /**
@@ -36,7 +35,7 @@ public class ResourceLinkRewriterTest extends LinkRewriterTest {
     public void testResourceLinkRewriting() throws Exception {
         String documentId = "/testResourceLinkRewriting";
         
-        Session session = RepositoryUtil.getSession(getManager(), getRequest());
+        Session session = login("lenya");
         DocumentFactory factory = DocumentUtil.createDocumentFactory(getManager(), session);
 
         Publication pub = getPublication("test");

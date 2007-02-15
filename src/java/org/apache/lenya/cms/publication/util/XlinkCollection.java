@@ -25,11 +25,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.lenya.xml.XLink;
 import org.w3c.dom.Element;
@@ -75,7 +74,7 @@ public class XlinkCollection extends CollectionImpl {
      * @throws DocumentException when something went wrong.
      */
     protected String getXlinkHref(Document document) throws DocumentException {
-        return document.getSourceURI();
+        return "lenya-document:" + document.getUUID();
     }
 
     /**
@@ -86,7 +85,7 @@ public class XlinkCollection extends CollectionImpl {
     protected NamespaceHelper getNamespaceHelper() throws DocumentException,
             ParserConfigurationException, SAXException, IOException, ServiceException {
         NamespaceHelper helper = super.getNamespaceHelper();
-        if (!SourceUtil.exists(getDelegate().getSourceURI(), this.manager)) {
+        if (!getDelegate().exists()) {
             Element collectionElement = helper.getDocument().getDocumentElement();
             String namespaceDeclaration = collectionElement.getAttributeNS("http://www.w3.org/2000/xmlns/",
                     "xlink");

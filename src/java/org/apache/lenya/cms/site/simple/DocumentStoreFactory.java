@@ -79,4 +79,8 @@ public class DocumentStoreFactory extends AbstractLogEnabled implements Reposito
         return store;
     }
 
+    public boolean isSharable() {
+        return false;
+    }
+
 }

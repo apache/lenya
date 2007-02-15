@@ -52,9 +52,7 @@ public class MigrateUuidsTest extends AbstractAccessControlTest {
      */
     public void testMigrateUuids() throws Exception {
 
-        login("lenya");
-
-        Session session = RepositoryUtil.getSession(getManager(), getRequest());
+        Session session = login("lenya");
         DocumentFactory factory = DocumentUtil.createDocumentFactory(getManager(), session);
         Publication[] pubs = factory.getPublications();
         for (int i = 0; i < pubs.length; i++) {
@@ -138,7 +136,7 @@ public class MigrateUuidsTest extends AbstractAccessControlTest {
             }
 
             Document newDoc;
-
+/*
             String docId = doc.getUUID();
             if (this.migratedDocs.containsKey(docId)) {
                 Document migratedDoc = (Document) this.migratedDocs.get(docId);
@@ -161,7 +159,7 @@ public class MigrateUuidsTest extends AbstractAccessControlTest {
             for (int i = 0; i < uris.length; i++) {
                 newDoc.getMetaData(uris[i]).replaceBy(doc.getMetaData(uris[i]));
             }
-
+*/
             doc.delete();
 
         } finally {

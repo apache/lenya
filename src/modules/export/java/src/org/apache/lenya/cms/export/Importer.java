@@ -139,7 +139,7 @@ public class Importer extends AbstractLogEnabled {
                 Document doc = node.getLink(node.getLanguages()[0]).getDocument();
                 newDoc = docManager.addVersion(doc, area.getName(), language, true);
                 resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-                SourceUtil.copy(resolver, contentUri, newDoc.getSourceURI());
+                SourceUtil.copy(resolver, contentUri, newDoc.getOutputStream());
                 newDoc.getLink().setLabel(navigationTitle);
             }
 

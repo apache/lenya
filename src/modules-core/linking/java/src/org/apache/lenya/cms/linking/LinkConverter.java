@@ -21,11 +21,11 @@ import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.ResourceType;
+import org.apache.lenya.xml.DocumentHelper;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
@@ -78,8 +78,7 @@ public class LinkConverter extends AbstractLogEnabled {
                 linkResolver = (LinkResolver) this.manager.lookup(LinkResolver.ROLE);
                 DocumentFactory factory = examinedDocument.getFactory();
 
-                org.w3c.dom.Document xmlDocument = SourceUtil.readDOM(examinedDocument
-                        .getSourceURI(), this.manager);
+                org.w3c.dom.Document xmlDocument = DocumentHelper.readDocument(examinedDocument.getInputStream());
 
                 for (int xPathIndex = 0; xPathIndex < xPaths.length; xPathIndex++) {
                     if (getLogger().isDebugEnabled()) {
@@ -122,12 +121,11 @@ public class LinkConverter extends AbstractLogEnabled {
                 }
 
                 if (linksRewritten) {
-                    SourceUtil.writeDOM(xmlDocument, examinedDocument.getSourceURI(), this.manager);
+                    DocumentHelper.writeDocument(xmlDocument, examinedDocument.getOutputStream());
                 }
             }
         } catch (Exception e) {
-            throw new RuntimeException("Error rewriting document: [" + examinedDocument
-                    + "] - source URI: [" + examinedDocument.getSourceURI() + "]", e);
+            throw new RuntimeException("Error rewriting document: [" + examinedDocument + "]", e);
         } finally {
             if (linkResolver != null) {
                 this.manager.release(linkResolver);

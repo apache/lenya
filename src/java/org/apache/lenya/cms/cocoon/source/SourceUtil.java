@@ -218,21 +218,33 @@ public final class SourceUtil {
             source = (ModifiableSource) resolver.resolveURI(sourceUri);
 
             OutputStream oStream = source.getOutputStream();
-            DocumentHelper.writeDocument(document, oStream);
-            if (oStream != null) {
-                oStream.flush();
-                try {
-                    oStream.close();
-                } catch (Throwable t) {
-                    throw new RuntimeException("Could not write document: ", t);
-                }
-            }
+            writeDOM(document, oStream);
         } finally {
             if (resolver != null) {
                 if (source != null) {
                     resolver.release(source);
                 }
                 manager.release(resolver);
+            }
+        }
+    }
+
+    /**
+     * @param document The XML document.
+     * @param oStream The output stream.
+     * @throws TransformerConfigurationException if an error occurs.
+     * @throws TransformerException if an error occurs.
+     * @throws IOException if an error occurs.
+     */
+    public static void writeDOM(Document document, OutputStream oStream)
+            throws TransformerConfigurationException, TransformerException, IOException {
+        DocumentHelper.writeDocument(document, oStream);
+        if (oStream != null) {
+            oStream.flush();
+            try {
+                oStream.close();
+            } catch (Throwable t) {
+                throw new RuntimeException("Could not write document: ", t);
             }
         }
     }
@@ -557,6 +569,42 @@ public final class SourceUtil {
                     resolver.release(source);
                 }
                 manager.release(resolver);
+            }
+        }
+    }
+
+    /**
+     * @param resolver
+     * @param sourceUri
+     * @param destOutputStream
+     * @throws MalformedURLException
+     * @throws IOException
+     */
+    public static void copy(SourceResolver resolver, String sourceUri, OutputStream destOutputStream) throws MalformedURLException, IOException {
+        boolean useBuffer = true;
+        InputStream sourceInputStream = null;
+        Source source = null;
+        try {
+            source = resolver.resolveURI(sourceUri);
+            sourceInputStream = source.getInputStream();
+
+            if (useBuffer) {
+                final ByteArrayOutputStream sourceBos = new ByteArrayOutputStream();
+                IOUtils.copy(sourceInputStream, sourceBos);
+                IOUtils.write(sourceBos.toByteArray(), destOutputStream);
+            } else {
+                IOUtils.copy(sourceInputStream, destOutputStream);
+            }
+        } finally {
+            if (destOutputStream != null) {
+                destOutputStream.flush();
+                destOutputStream.close();
+            }
+            if (sourceInputStream != null) {
+                sourceInputStream.close();
+            }
+            if (source != null) {
+                resolver.release(source);
             }
         }
     }

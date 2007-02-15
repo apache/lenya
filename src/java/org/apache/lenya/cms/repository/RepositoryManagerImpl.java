@@ -21,10 +21,7 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
-import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.transaction.IdentityMapImpl;
 
 /**
  * Repository manager implementation.
@@ -32,25 +29,6 @@ import org.apache.lenya.transaction.IdentityMapImpl;
  */
 public class RepositoryManagerImpl extends AbstractLogEnabled implements RepositoryManager,
         Serviceable {
-
-    public void copy(Node source, Node destination) throws RepositoryException {
-
-        SourceResolver resolver = null;
-        try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            String[] namespaces = source.getMetaDataNamespaceUris();
-            for (int i = 0; i < namespaces.length; i++) {
-                destination.getMetaData(namespaces[i]).replaceBy(source.getMetaData(namespaces[i]));
-            }
-            SourceUtil.copy(resolver, source.getSourceURI(), destination.getSourceURI());
-        } catch (Exception e) {
-            throw new RepositoryException(e);
-        } finally {
-            if (resolver != null) {
-                this.manager.release(resolver);
-            }
-        }
-    }
 
     protected ServiceManager manager;
 
@@ -61,15 +39,8 @@ public class RepositoryManagerImpl extends AbstractLogEnabled implements Reposit
         this.manager = manager;
     }
 
-    /**
-     * @see org.apache.lenya.cms.repository.RepositoryManager#delete(org.apache.lenya.cms.repository.Node)
-     */
-    public void delete(Node node) throws RepositoryException {
-        node.registerRemoved();
-    }
-
-    public Session createSession(Identity identity) throws RepositoryException {
-        return new SessionImpl(new IdentityMapImpl(getLogger()), identity, this.manager, getLogger());
+    public Session createSession(Identity identity, boolean modifiable) throws RepositoryException {
+        return new SessionImpl(identity, modifiable, this.manager, getLogger());
     }
 
 }

@@ -22,8 +22,6 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
 import org.apache.avalon.framework.thread.ThreadSafe;
-import org.apache.cocoon.environment.Request;
-import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.site.SiteNode;
 
 /**
@@ -50,8 +48,8 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
     protected ServiceManager manager;
 
     /**
-     * Removes all "."-separated extensions from a URL (e.g., <code>/foo.print.html</code> is
-     * transformed to <code>/foo</code>).
+     * Removes all "."-separated extensions from a URL (e.g.,
+     * <code>/foo.print.html</code> is transformed to <code>/foo</code>).
      * @param url The URL to trim.
      * @return A URL string.
      */
@@ -100,15 +98,11 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
     }
 
     /**
-     * @see org.apache.lenya.cms.publication.DocumentBuilder#isDocument(java.lang.String)
+     * @see org.apache.lenya.cms.publication.DocumentBuilder#isDocument(DocumentFactory,
+     *      String)
      */
-    public boolean isDocument(String url) throws DocumentBuildException {
-
-        ContextUtility util = null;
+    public boolean isDocument(DocumentFactory factory, String url) throws DocumentBuildException {
         try {
-            util = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
-            Request request = util.getRequest();
-            DocumentFactory factory = DocumentUtil.getDocumentFactory(this.manager, request);
             DocumentLocator locator = getLocatorWithoutCheck(factory, url);
             if (locator != null) {
                 Publication pub = factory.getPublication(locator.getPublicationId());
@@ -123,10 +117,6 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
             }
         } catch (Exception e) {
             throw new DocumentBuildException(e);
-        } finally {
-            if (util != null) {
-                this.manager.release(util);
-            }
         }
 
         return false;
@@ -177,23 +167,24 @@ public class DefaultDocumentBuilder extends AbstractLogEnabled implements Docume
     }
 
     /**
-     * Creates a document locator for a webapp URL without checking if the webapp URL refers to a
-     * locator first.
+     * Creates a document locator for a webapp URL without checking if the
+     * webapp URL refers to a locator first.
      * @param factory The document factory.
      * @param webappUrl The webapp URL.
-     * @return A document locator or <code>null</code> if the URL doesn't refer to a locator.
+     * @return A document locator or <code>null</code> if the URL doesn't
+     *         refer to a locator.
      * @throws DocumentBuildException if an error occurs.
      */
     protected DocumentLocator getLocatorWithoutCheck(DocumentFactory factory, String webappUrl)
             throws DocumentBuildException {
-        
+
         if (!webappUrl.startsWith("/")) {
             return null;
         }
         if (webappUrl.substring(1).split("/").length < 3) {
             return null;
         }
-        
+
         URLInformation info = new URLInformation(webappUrl);
 
         Publication publication;

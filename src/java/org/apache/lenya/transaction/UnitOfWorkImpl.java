@@ -61,24 +61,6 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
         return this.identityMap;
     }
 
-    private boolean isTransaction = false;
-
-    /**
-     * This starts the actual transaction. The unit of work starts to use a distinct identity map.
-     */
-    public void startTransaction() {
-        this.identityMap = new IdentityMapImpl(getLogger());
-        this.identityMap.setUnitOfWork(this);
-        this.isTransaction = true;
-    }
-
-    /**
-     * @return if the unit of work is in a transaction.
-     */
-    public boolean isTransaction() {
-        return this.isTransaction;
-    }
-
     private Set newObjects = new HashSet();
     private Set modifiedObjects = new HashSet();
     private Set removedObjects = new HashSet();
@@ -165,23 +147,21 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
                 }
             }
         }
+        
+        resetTransaction();
 
+    }
+
+    protected void resetTransaction() {
+        this.modifiedObjects.clear();
+        this.newObjects.clear();
+        this.removedObjects.clear();
     }
 
     private Identity identity;
 
-    /**
-     * @see org.apache.lenya.transaction.UnitOfWork#getIdentity()
-     */
-    public Identity getIdentity() {
+    protected Identity getIdentity() {
         return this.identity;
-    }
-
-    /**
-     * @see org.apache.lenya.transaction.UnitOfWork#setIdentity(org.apache.lenya.ac.Identity)
-     */
-    public void setIdentity(Identity identity) {
-        this.identity = identity;
     }
 
     /**
@@ -212,6 +192,7 @@ public class UnitOfWorkImpl extends AbstractLogEnabled implements UnitOfWork {
                 }
             }
         }
+        resetTransaction();
     }
 
     private Map locks = new HashMap();

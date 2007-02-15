@@ -28,7 +28,6 @@ import java.util.WeakHashMap;
 
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -134,7 +133,7 @@ public class DocumentStore extends CollectionImpl implements SiteStructure {
      */
     public boolean exists() throws DocumentException {
         try {
-            return SourceUtil.exists(getDelegate().getSourceURI(), this.manager);
+            return getDelegate().exists();
         } catch (Exception e) {
             throw new DocumentException(e);
         }

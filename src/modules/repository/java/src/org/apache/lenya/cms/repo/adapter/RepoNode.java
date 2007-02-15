@@ -20,15 +20,12 @@ package org.apache.lenya.cms.repo.adapter;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
-import org.apache.lenya.cms.observation.RepositoryListener;
 import org.apache.lenya.cms.rc.RCML;
 import org.apache.lenya.cms.repo.Translation;
 import org.apache.lenya.cms.repository.History;
@@ -189,26 +186,16 @@ public class RepoNode extends AbstractLogEnabled implements Node {
         return null;
     }
 
-    private Set listeners = new HashSet();
-
-    public void addListener(RepositoryListener listener) throws RepositoryException {
-        if (this.listeners.contains(listener)) {
-            throw new RepositoryException("The listener [" + listener
-                    + "] is already registered for node [" + this + "]!");
-        }
-        this.listeners.add(listener);
-    }
-
-    public boolean isListenerRegistered(RepositoryListener listener) {
-        return this.listeners.contains(listener);
-    }
-
     public RCML getRcml() {
         return null;
     }
 
     public History getHistory() {
         return null;
+    }
+
+    public void delete() throws RepositoryException {
+        registerRemoved();
     }
 
 }

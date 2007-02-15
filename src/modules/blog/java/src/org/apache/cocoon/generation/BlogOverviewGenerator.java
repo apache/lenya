@@ -29,7 +29,6 @@ import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.SourceResolver;
-import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
 import org.apache.lenya.cms.publication.DocumentFactory;
@@ -395,7 +394,7 @@ public class BlogOverviewGenerator extends ServiceableGenerator {
                             PATH_ATTR_NAME, "CDATA", doc.getPath());
                     attributes.addAttribute("", URL_ATTR_NAME,
                             URL_ATTR_NAME, "CDATA", doc.getCanonicalWebappURL());
-                    org.w3c.dom.Document docDOM = SourceUtil.readDOM(doc.getSourceURI(), this.manager);
+                    org.w3c.dom.Document docDOM = DocumentHelper.readDocument(doc.getInputStream());
                     Element parent = docDOM.getDocumentElement();
                     Element element = (Element) XPathAPI.selectSingleNode(parent,
                         "/*[local-name() = 'entry']/*[local-name() = 'title']");

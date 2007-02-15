@@ -24,8 +24,8 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
-import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
+import org.apache.lenya.xml.DocumentHelper;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.Attr;
 import org.w3c.dom.Node;
@@ -47,7 +47,7 @@ public class ContentLinkManager extends AbstractLogEnabled implements LinkManage
         try {
             String[] xPaths = source.getResourceType().getLinkAttributeXPaths();
             if (xPaths.length > 0) {
-                org.w3c.dom.Document xml = SourceUtil.readDOM(source.getSourceURI(), this.manager);
+                org.w3c.dom.Document xml = DocumentHelper.readDocument(source.getInputStream());
                 for (int i = 0; i < xPaths.length; i++) {
                     NodeIterator iter = XPathAPI.selectNodeIterator(xml, xPaths[i]);
                     Node node;

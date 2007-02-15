@@ -133,7 +133,7 @@ public class MetaDataModule extends AbstractPageEnvelopeModule {
             metaData = document.getMetaData(this.namespaceUri);
         } catch (MetaDataException e) {
             throw new ConfigurationException("Obtaining custom meta data value for ["
-                    + document.getSourceURI() + "] failed: ", e);
+                    + document + "] failed: ", e);
         }
         return metaData;
     }

@@ -27,10 +27,10 @@ import org.apache.avalon.framework.service.Serviceable;
 import org.apache.cocoon.components.modules.input.AbstractInputModule;
 import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
-import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.site.usecases.CreateUsecaseDocument;
+import org.apache.lenya.xml.DocumentHelper;
 
 /**
  * Module to retrieve information from a usecase resource type document.
@@ -47,7 +47,7 @@ public class UsecaseDocumentModule extends AbstractInputModule implements Servic
             if (name.equals(USECASE)) {
                 Request request = ObjectModelHelper.getRequest(objectModel);
                 Document doc = DocumentUtil.getCurrentDocument(this.manager, request);
-                org.w3c.dom.Document xmlDoc = SourceUtil.readDOM(doc.getSourceURI(), this.manager);
+                org.w3c.dom.Document xmlDoc = DocumentHelper.readDocument(doc.getInputStream());
                 String usecaseName = xmlDoc.getDocumentElement().getAttribute(CreateUsecaseDocument.ATTRIBUTE_NAME);
                 value = usecaseName;
             }

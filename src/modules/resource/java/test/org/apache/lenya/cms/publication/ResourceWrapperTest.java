@@ -26,10 +26,10 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.TraversableSource;
+import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 
 /**
@@ -37,7 +37,7 @@ import org.apache.lenya.cms.repository.Session;
  */
 public class ResourceWrapperTest extends AbstractAccessControlTest {
 
-    public static final String IMAGE_URL = "context://lenya/resources/images/project-logo.png";
+    protected static final String IMAGE_URL = "context://lenya/resources/images/project-logo.png";
 
     /**
      * @throws RepositoryException
@@ -46,18 +46,19 @@ public class ResourceWrapperTest extends AbstractAccessControlTest {
      * @throws MetaDataException
      * @throws IOException
      * @throws MalformedURLException
+     * @throws AccessControlException 
      */
     public void testResourceWrapper() throws RepositoryException, PublicationException,
-            ServiceException, MalformedURLException, IOException, MetaDataException {
+            ServiceException, MalformedURLException, IOException, MetaDataException, AccessControlException {
 
-        String documentId = "/testResource";
+        String path = "/testResource";
 
-        Session session = RepositoryUtil.getSession(getManager(), getRequest());
+        Session session = login("lenya");
         DocumentFactory factory = DocumentUtil.createDocumentFactory(getManager(), session);
 
         Publication pub = getPublication("test");
 
-        Document doc = createResource(factory, pub, documentId, getManager(), getLogger());
+        Document doc = createResource(factory, pub, path, getManager(), getLogger());
 
         SourceResolver resolver = null;
         TraversableSource source = null;
@@ -112,8 +113,6 @@ public class ResourceWrapperTest extends AbstractAccessControlTest {
 
         try {
             docManager = (DocumentManager) manager.lookup(DocumentManager.ROLE);
-            DocumentLocator loc = DocumentLocator.getLocator(pub.getId(),
-                    Publication.AUTHORING_AREA, path, pub.getDefaultLanguage());
 
             pub.getArea(Publication.AUTHORING_AREA).getSite().getRepositoryNode().lock();
 

@@ -20,7 +20,6 @@ package org.apache.lenya.cms.repository;
 import java.io.OutputStream;
 import java.util.Collection;
 
-import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.rc.RCML;
 
 /**
@@ -133,5 +132,11 @@ public interface Node extends RepositoryItem, ContentHolder {
      * @return The revision history.
      */
     History getHistory();
-    
+
+    /**
+     * Delete this node.
+     * @throws RepositoryException if an error occurs.
+     */
+    void delete() throws RepositoryException;
+
 }

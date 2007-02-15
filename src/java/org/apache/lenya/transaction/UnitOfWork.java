@@ -67,16 +67,6 @@ public interface UnitOfWork {
     void rollback() throws TransactionException;
     
     /**
-     * @return The identity.
-     */
-    Identity getIdentity();
-    
-    /**
-     * @param identity The identity.
-     */
-    void setIdentity(Identity identity);
-    
-    /**
      * @param transactionable A transactionable.
      * @return If the transactionable is registered as dirty.
      */

@@ -22,8 +22,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.usecase.impl.TestUsecaseInvoker;
 
 /**
@@ -37,12 +37,13 @@ public abstract class AbstractUsecaseTest extends AbstractAccessControlTest {
      */
     public void testUsecase() throws Exception {
 
-        login();
+        Session session = getSession();
         prepareUsecase();
 
         UsecaseInvoker invoker = null;
         try {
             invoker = (UsecaseInvoker) getManager().lookup(TestUsecaseInvoker.ROLE);
+            invoker.setTestSession(session);
             invoker.invoke(getRequest().getPathInfo(), getUsecaseName(), getParameters());
             
             this.targetUrl = invoker.getTargetUrl();
@@ -79,10 +80,6 @@ public abstract class AbstractUsecaseTest extends AbstractAccessControlTest {
             throw new IllegalStateException("The usecase has not yet been executed.");
         }
         return this.targetUrl;
-    }
-
-    protected void login() throws AccessControlException {
-        login("lenya");
     }
 
     protected void prepareUsecase() throws Exception {

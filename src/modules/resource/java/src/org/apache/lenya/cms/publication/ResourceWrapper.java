@@ -34,7 +34,6 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.cocoon.servlet.multipart.Part;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
-import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.excalibur.source.TraversableSource;
 import org.apache.lenya.cms.metadata.MetaData;
@@ -137,16 +136,12 @@ public class ResourceWrapper extends AbstractLogEnabled {
 
         MetaData mediaMeta = null;
 
-        SourceResolver resolver = null;
-        ModifiableSource source = null;
         OutputStream destOutputStream = null;
         try {
             mediaMeta = document.getMetaData("http://apache.org/lenya/metadata/media/1.0");
             addResourceMeta(fileName, mimeType, input, mediaMeta);
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = (ModifiableSource) resolver.resolveURI(document.getSourceURI());
 
-            destOutputStream = source.getOutputStream();
+            destOutputStream = document.getOutputStream();
             IOUtils.write(sourceBos.toByteArray(), destOutputStream);
 
             document.setMimeType(mimeType);

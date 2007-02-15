@@ -102,4 +102,8 @@ public class RepoNodeFactory extends AbstractLogEnabled implements NodeFactory, 
         this.manager = manager;
     }
 
+    public boolean isSharable() {
+        return false;
+    }
+
 }

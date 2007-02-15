@@ -297,7 +297,7 @@ public class LenyaMetaDataGenerator extends ServiceableGenerator implements
             metaData = this.document.getMetaData(namespaceUri);
         } catch (Exception e1) {
             throw new ProcessingException("Obtaining custom meta data value for ["
-                    + document.getSourceURI() + "] failed: ", e1);
+                    + document + "] failed: ", e1);
         }
         return metaData;
     }

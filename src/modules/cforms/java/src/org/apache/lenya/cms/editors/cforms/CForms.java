@@ -62,7 +62,7 @@ public class CForms extends DocumentUsecase {
     private void doPreparation(ServiceManager manager) {
         Request request = ContextHelper.getRequest(this.context);
         Document doc = getSourceDocument();
-        String sourceUri=doc.getSourceURI();
+        String sourceUri = doc.getSourceURI();
         setParameter("sourceUri", sourceUri);
         String pubId = doc.getPublication().getId();
         setParameter("pubId", pubId);

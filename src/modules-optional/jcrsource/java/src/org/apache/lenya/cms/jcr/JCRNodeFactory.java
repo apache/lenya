@@ -52,4 +52,8 @@ public class JCRNodeFactory extends AbstractLogEnabled implements NodeFactory, S
         this.session = session;
     }
 
+    public boolean isSharable() {
+        return false;
+    }
+
 }

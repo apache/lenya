@@ -41,11 +41,12 @@ public interface DocumentBuilder {
 
     /**
      * Checks if an URL corresponds to a CMS document.
+     * @param factory The document factory.
      * @param url The URL of the form /{publication-id}/...
      * @return A boolean value.
      * @throws DocumentBuildException when something went wrong.
      */
-    boolean isDocument(String url) throws DocumentBuildException;
+    boolean isDocument(DocumentFactory factory, String url) throws DocumentBuildException;
 
     /**
      * Builds an URL corresponding to a CMS document.

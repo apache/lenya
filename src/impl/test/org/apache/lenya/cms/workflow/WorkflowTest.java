@@ -21,14 +21,11 @@
 package org.apache.lenya.cms.workflow;
 
 import org.apache.lenya.ac.AccessControlException;
-import org.apache.lenya.ac.Identity;
-import org.apache.lenya.ac.User;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.workflow.Version;
 import org.apache.lenya.workflow.WorkflowException;
@@ -108,14 +105,8 @@ public class WorkflowTest extends AbstractAccessControlTest {
 
     protected Session getSession(TestSituation situation) throws AccessControlException,
             RepositoryException {
-        login(situation.getUser());
-
-        Identity identity = (Identity) getRequest().getSession()
-                .getAttribute(Identity.class.getName());
-        User user = identity.getUser();
-        getLogger().info("User: [" + user + "]");
-
-        Session session = RepositoryUtil.createSession(getManager(), identity);
+        Session session = login(situation.getUser());
+        getLogger().info("User: [" + session.getIdentity().getUser() + "]");
         return session;
     }
 

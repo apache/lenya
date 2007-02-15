@@ -55,9 +55,19 @@ public class DocumentUsecase extends AbstractUsecase {
         }
     }
 
+    /*
+    public void setParameter(String name, Object value) {
+        if (name.equals(SOURCE_URL)) {
+            setSourceURL((String) value);
+        }
+        else {
+            super.setParameter(name, value);
+        }
+    }
+    */
+
     /**
      * @see org.apache.lenya.cms.usecase.Usecase#setSourceURL(java.lang.String)
-     */
     public void setSourceURL(String url) {
         try {
             DocumentFactory factory = getDocumentFactory();
@@ -68,17 +78,29 @@ public class DocumentUsecase extends AbstractUsecase {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        super.setSourceURL(url);
+        super.setParameter(SOURCE_URL, url);
     }
+     */
 
     /**
      * Returns the source document.
      * @return A document.
      */
     protected Document getSourceDocument() {
-        String url = super.getSourceURL();
-        setSourceURL(url);
-        return (Document) getParameter(DOCUMENT);
+        Document doc = (Document) getParameter(DOCUMENT);
+        if (doc == null || doc.getFactory().getSession() != getSession()) {
+            try {
+                DocumentFactory factory = getDocumentFactory();
+                String sourceUrl = getParameterAsString(SOURCE_URL);
+                if (factory.isDocument(sourceUrl)) {
+                    doc = factory.getFromURL(sourceUrl);
+                    setParameter(DOCUMENT, doc);
+                }
+            } catch (DocumentBuildException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return doc;
     }
 
     /**
@@ -143,10 +165,10 @@ public class DocumentUsecase extends AbstractUsecase {
 
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#initParameters()
-     */
     protected void initParameters() {
         super.initParameters();
 
         setParameter(DOCUMENT, getSourceDocument());
     }
+     */
 }

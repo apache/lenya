@@ -27,6 +27,7 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.Serviceable;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.usecase.Usecase;
 import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.UsecaseInvoker;
@@ -60,7 +61,10 @@ public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInv
             resolver = (UsecaseResolver) this.manager.lookup(UsecaseResolver.ROLE);
             usecase = resolver.resolve(webappUrl, usecaseName);
 
-            usecase.setCommitEnabled(isCommitEnabled());
+            Session testSession = getTestSession();
+            if (testSession != null) {
+                usecase.setTestSession(testSession);
+            }
             usecase.setSourceURL(webappUrl);
             usecase.setName(usecaseName);
 
@@ -101,8 +105,10 @@ public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInv
         }
     }
     
-    protected boolean isCommitEnabled() {
-        return true;
+    private Session testSession = null;
+    
+    protected Session getTestSession() {
+        return this.testSession;
     }
 
     protected boolean succeeded(int result, Usecase usecase) {
@@ -189,6 +195,10 @@ public class UsecaseInvokerImpl extends AbstractLogEnabled implements UsecaseInv
             throw new IllegalStateException("The usecase has not been executed yet.");
         }
         return this.targetUrl;
+    }
+
+    public void setTestSession(Session session) {
+        this.testSession = session;
     }
 
 }

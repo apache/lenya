@@ -19,8 +19,8 @@ package org.apache.lenya.cms.site.usecases;
 
 import java.util.Arrays;
 
-import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.usecase.UsecaseResolver;
+import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.w3c.dom.Element;
 
@@ -86,7 +86,7 @@ public class CreateUsecaseDocument extends CreateDocument {
         NamespaceHelper helper = new NamespaceHelper(NAMESPACE, "", ELEMENT_USECASE);
         Element usecaseElement = helper.getDocument().getDocumentElement();
         usecaseElement.setAttribute(ATTRIBUTE_NAME, getParameterAsString(USECASE));
-        SourceUtil.writeDOM(helper.getDocument(), getNewDocument().getSourceURI(), this.manager);
+        DocumentHelper.writeDocument(helper.getDocument(), getNewDocument().getOutputStream());
 
     }
 

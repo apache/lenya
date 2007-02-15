@@ -181,7 +181,7 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
                     webappUrl);
             if (publication.exists()) {
                 DocumentBuilder builder = publication.getDocumentBuilder();
-                if (builder.isDocument(webappUrl)) {
+                if (builder.isDocument(this, webappUrl)) {
                     DocumentLocator locator = builder.getLocator(this, webappUrl);
                     String area = locator.getArea();
                     String path = locator.getPath();
@@ -346,6 +346,10 @@ public class DocumentFactoryImpl extends AbstractLogEnabled implements DocumentF
                 manager.release(pubManager);
             }
         }
+    }
+
+    public boolean isSharable() {
+        return false;
     }
 
 }

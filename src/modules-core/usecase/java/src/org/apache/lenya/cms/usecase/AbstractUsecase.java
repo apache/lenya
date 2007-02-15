@@ -55,24 +55,34 @@ import org.apache.lenya.transaction.LockException;
 public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Configurable,
         Contextualizable, Serviceable, Initializable {
 
-    protected static final String PARAMETERS_INITIALIZED = "private.parametersInitialized";
+    protected static final StateMachine.Transition[] TRANSITIONS = {
+            new StateMachine.Transition("start", "preChecked", "checkPreconditions"),
+            new StateMachine.Transition("preChecked", "nodesLocked", "lockInvolvedObjects"),
+            new StateMachine.Transition("nodesLocked", "execChecked", "checkExecutionConditions"),
+            new StateMachine.Transition("execChecked", "execChecked", "checkExecutionConditions"),
+            new StateMachine.Transition("execChecked", "executed", "execute"),
+            new StateMachine.Transition("executed", "postChecked", "checkPostconditions") };
 
-    /**
-     * Ctor.
-     */
-    public AbstractUsecase() {
-        // do nothing
-    }
+    protected static final StateMachine.Model MODEL = new StateMachine.Model("start", TRANSITIONS);
+
+    protected static final String PARAMETER_STATE_MACHINE = "private.stateMachine";
+    protected static final String PARAMETER_SESSION = "private.session";
+    protected static final String PARAMETER_FACTORY = "private.factory";
+
+    protected static final String PARAMETERS_INITIALIZED = "private.parametersInitialized";
 
     /**
      * Override to initialize parameters.
      */
     protected void initParameters() {
-        // do nothing
+    }
+
+    protected void advanceState(String event) {
+        StateMachine machine = (StateMachine) getParameter(PARAMETER_STATE_MACHINE);
+        machine.invoke(event);
     }
 
     protected String SOURCE_URL = "private.sourceUrl";
-    protected String FACTORY = "private.factory";
 
     /**
      * @see org.apache.lenya.cms.usecase.Usecase#getSourceURL()
@@ -90,8 +100,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     /**
-     * Determine if the usecase has error messages. Provides a way of checking for errors without
-     * actually retrieving them.
+     * Determine if the usecase has error messages. Provides a way of checking
+     * for errors without actually retrieving them.
      * @return true if the usecase resulted in error messages.
      */
     public boolean hasErrors() {
@@ -106,8 +116,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     /**
-     * Determine if the usecase has info messages. Provides a way of checking for info messages
-     * without actually retrieving them.
+     * Determine if the usecase has info messages. Provides a way of checking
+     * for info messages without actually retrieving them.
      * @return true if the usecase resulted in info messages being generated.
      */
     public boolean hasInfoMessages() {
@@ -118,8 +128,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     /**
-     * Checks if the operation can be executed and returns the error messages. Error messages
-     * prevent the operation from being executed.
+     * Checks if the operation can be executed and returns the error messages.
+     * Error messages prevent the operation from being executed.
      * @return A boolean value.
      */
     public List getErrorMessages() {
@@ -128,7 +138,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
 
     /**
      * Returns the information messages to show on the confirmation screen.
-     * @return An array of strings. Info messages do not prevent the operation from being executed.
+     * @return An array of strings. Info messages do not prevent the operation
+     *         from being executed.
      */
     public List getInfoMessages() {
         return Collections.unmodifiableList(new ArrayList(this.infoMessages));
@@ -197,6 +208,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
                 throw new UsecaseException(e);
             }
         }
+        if (!hasErrors()) {
+            advanceState("checkExecutionConditions");
+        }
     }
 
     /**
@@ -215,7 +229,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
             clearErrorMessages();
             clearInfoMessages();
             doCheckPreconditions();
-
+            
             List _errorMessages = getErrorMessages();
             for (int i = 0; i < _errorMessages.size(); i++) {
                 getLogger().info(_errorMessages.get(i).toString());
@@ -226,6 +240,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
             if (getLogger().isDebugEnabled()) {
                 throw new UsecaseException(e);
             }
+        }
+        if (!hasErrors()) {
+            advanceState("checkPreconditions");
         }
     }
 
@@ -255,6 +272,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      * @see org.apache.lenya.cms.usecase.Usecase#execute()
      */
     public final void execute() throws UsecaseException {
+        advanceState("execute");
         Exception exception = null;
         try {
             clearErrorMessages();
@@ -298,6 +316,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      * @see org.apache.lenya.cms.usecase.Usecase#checkPostconditions()
      */
     public void checkPostconditions() throws UsecaseException {
+        advanceState("checkPostconditions");
         try {
             clearErrorMessages();
             clearInfoMessages();
@@ -331,7 +350,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     private Map parameters = new HashMap();
 
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.Object)
+     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String,
+     *      java.lang.Object)
      */
     public void setParameter(String name, Object value) {
         if (getLogger().isDebugEnabled()) {
@@ -356,7 +376,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#getParameter(java.lang.String, java.lang.Object)
+     * @see org.apache.lenya.cms.usecase.Usecase#getParameter(java.lang.String,
+     *      java.lang.Object)
      */
     public Object getParameter(String name, Object defaultValue) {
         Object value = getParameter(name);
@@ -379,7 +400,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     /**
-     * Returns a parameter as string. If the parameter does not exist, a default value is returned.
+     * Returns a parameter as string. If the parameter does not exist, a default
+     * value is returned.
      * @param name The parameter name.
      * @param defaultValue The default value.
      * @return A string.
@@ -394,7 +416,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     /**
-     * Returns a parameter as integer. If the parameter does not exist, a default value is returned.
+     * Returns a parameter as integer. If the parameter does not exist, a
+     * default value is returned.
      * @param name The parameter name.
      * @param defaultValue The default value.
      * @return An integer.
@@ -409,7 +432,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     /**
-     * Returns a parameter as boolean. If the parameter does not exist, a default value is returned.
+     * Returns a parameter as boolean. If the parameter does not exist, a
+     * default value is returned.
      * @param name The parameter name.
      * @param defaultValue The default value.
      * @return A boolean value..
@@ -440,8 +464,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     /**
-     * Returns one of the strings "true" or "false" depending on whether the corresponding checkbox
-     * was checked.
+     * Returns one of the strings "true" or "false" depending on whether the
+     * corresponding checkbox was checked.
      * @param name The parameter name.
      * @return A string.
      */
@@ -457,8 +481,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     private String DEFAULT_TARGET_URL = "private.defaultTargetUrl";
 
     /**
-     * Sets the default target URL which should be used if no explicit target URL
-     * is set.
+     * Sets the default target URL which should be used if no explicit target
+     * URL is set.
      * @param url A URL string.
      */
     protected void setDefaultTargetURL(String url) {
@@ -466,8 +490,8 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     /**
-     * If {@link #setDefaultTargetURL(String)}was not called, the source document (
-     * {@link #getSourceURL()}) is returned.
+     * If {@link #setDefaultTargetURL(String)}was not called, the source
+     * document ( {@link #getSourceURL()}) is returned.
      * @see org.apache.lenya.cms.usecase.Usecase#getTargetURL(boolean)
      */
     public String getTargetURL(boolean success) {
@@ -491,7 +515,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
             if (value != null) {
                 className = value.getClass().getName();
             }
-            throw new RuntimeException("[" + name +"] = (" + className + ")  [" + value
+            throw new RuntimeException("[" + name + "] = (" + className + ")  [" + value
                     + "] is not a part object. Maybe you have to enable uploads?");
         }
         setParameter(name, value);
@@ -504,13 +528,13 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
         return (Part) getParameter(name);
     }
 
-    private DocumentFactory documentFactory;
-
     protected DocumentFactory getDocumentFactory() {
-        if (this.documentFactory == null) {
-            this.documentFactory = DocumentUtil.createDocumentFactory(this.manager, session);
+        DocumentFactory factory = (DocumentFactory) getParameter(PARAMETER_FACTORY);
+        if (factory == null || factory.getSession() != getSession()) {
+            factory = DocumentUtil.createDocumentFactory(this.manager, getSession());
+            setParameter(PARAMETER_FACTORY, factory);
         }
-        return this.documentFactory;
+        return factory;
     }
 
     /**
@@ -520,6 +544,7 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
         Request request = ContextHelper.getRequest(this.context);
         Session session = RepositoryUtil.getSession(this.manager, request);
         setSession(session);
+        setParameter(PARAMETER_STATE_MACHINE, new StateMachine(MODEL));
     }
 
     /**
@@ -580,7 +605,6 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      */
     public void setSourceURL(String url) {
         setParameter(SOURCE_URL, url);
-        setParameter(FACTORY, getDocumentFactory());
     }
 
     private UsecaseView view;
@@ -606,8 +630,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     private boolean isOptimistic = true;
 
     /**
-     * @return <code>true</code> if the transaction policy is optimistic offline lock,
-     *         <code>false</code> if it is pessimistic offline lock.
+     * @return <code>true</code> if the transaction policy is optimistic
+     *         offline lock, <code>false</code> if it is pessimistic offline
+     *         lock.
      */
     protected boolean isOptimistic() {
         return this.isOptimistic;
@@ -680,13 +705,26 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      * @see org.apache.lenya.cms.usecase.Usecase#lockInvolvedObjects()
      */
     public final void lockInvolvedObjects() throws UsecaseException {
+        advanceState("lockInvolvedObjects");
+        try {
+            startTransaction();
+        } catch (RepositoryException e) {
+            throw new UsecaseException(e);
+        }
         lockInvolvedObjects(getNodesToLock());
     }
 
+    protected void startTransaction() throws RepositoryException {
+        if (this.commitEnabled) {
+            setSession(RepositoryUtil.createSession(this.manager, getSession().getIdentity(), true));
+        }
+    }
+
     /**
-     * Lock the objects, for example when you need to change them (for example, delete). If you know
-     * when entering the usecase what these objects are, you do not need to call this, the framework
-     * will take of it if you implement getObjectsToLock(). If you do not know in advance what the
+     * Lock the objects, for example when you need to change them (for example,
+     * delete). If you know when entering the usecase what these objects are,
+     * you do not need to call this, the framework will take of it if you
+     * implement getObjectsToLock(). If you do not know in advance what the
      * objects are, you can call this method explicitly when appropriate.
      * 
      * @param objects the transactionable objects to lock
@@ -742,10 +780,12 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
      * @see org.apache.lenya.cms.usecase.Usecase#cancel()
      */
     public void cancel() throws UsecaseException {
-        try {
-            getSession().rollback();
-        } catch (Exception e) {
-            throw new UsecaseException(e);
+        if (getSession().isModifiable()) {
+            try {
+                getSession().rollback();
+            } catch (Exception e) {
+                throw new UsecaseException(e);
+            }
         }
     }
 
@@ -784,11 +824,9 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
         return queryString;
     }
 
-    public org.apache.lenya.cms.repository.Session getSession() {
-        return this.session;
+    public Session getSession() {
+        return (Session) getParameter(PARAMETER_SESSION);
     }
-
-    private org.apache.lenya.cms.repository.Session session;
 
     protected Context context;
 
@@ -806,15 +844,14 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
     }
 
     protected void setSession(org.apache.lenya.cms.repository.Session session) {
-        this.session = session;
-        Request request = ContextHelper.getRequest(this.context);
-        request.setAttribute(org.apache.lenya.cms.repository.Session.class.getName(), this.session);
+        setParameter(PARAMETER_SESSION, session);
     }
 
     private boolean commitEnabled = true;
 
-    public void setCommitEnabled(boolean enabled) {
-        this.commitEnabled = enabled;
+    public void setTestSession(Session session) {
+        this.commitEnabled = false;
+        setSession(session);
     }
 
 }

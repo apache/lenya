@@ -66,4 +66,8 @@ public class SourceNodeFactory extends AbstractLogEnabled implements NodeFactory
         this.manager = manager;
     }
 
+    public boolean isSharable() {
+        return false;
+    }
+
 }

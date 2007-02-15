@@ -68,7 +68,24 @@ public class TreeNodeImpl extends AbstractLogEnabled implements TreeNode {
         if (this.language2link.keySet().size() > 0) {
             throw new RuntimeException("Can't set the UUID if the node has links.");
         }
+        
+        if (this.uuid != null) {
+            String[] languages = getLanguages();
+            for (int i = 0; i < languages.length; i++) {
+                getTree().linkRemoved(this.uuid, languages[i]);
+            }
+        }
+        
         this.uuid = uuid;
+        
+        String[] languages = getLanguages();
+        for (int i = 0; i < languages.length; i++) {
+            try {
+                getTree().linkAdded(getLink(languages[i]));
+            } catch (SiteException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
     public void delete() {

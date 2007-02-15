@@ -35,12 +35,12 @@ public class RepositoryUtil {
      */
     public static Session getSession(ServiceManager manager, Request request)
             throws RepositoryException {
-        org.apache.cocoon.environment.Session cocoonSession = request.getSession();
-        Session session = (Session) cocoonSession.getAttribute(Session.class.getName());
+        Session session = (Session) request.getAttribute(Session.class.getName());
         if (session == null) {
             Identity identity = getIdentity(request);
-            session = createSession(manager, identity);
-            cocoonSession.setAttribute(Session.class.getName(), session);
+            // attach a read-only repository session to the HTTP request
+            session = createSession(manager, identity, false);
+            request.setAttribute(Session.class.getName(), session);
         } else if (session.getIdentity() == null) {
             Identity identity = getIdentity(request);
             if (identity != null) {
@@ -60,16 +60,17 @@ public class RepositoryUtil {
      * Creates a session.
      * @param manager The service manager.
      * @param identity The identity.
+     * @param modifiable Determines if the repository items in this session should be modifiable.
      * @return a session.
      * @throws RepositoryException if an error occurs.
      */
-    public static Session createSession(ServiceManager manager, Identity identity)
+    public static Session createSession(ServiceManager manager, Identity identity, boolean modifiable)
             throws RepositoryException {
         RepositoryManager repoMgr = null;
         Session session;
         try {
             repoMgr = (RepositoryManager) manager.lookup(RepositoryManager.ROLE);
-            session = repoMgr.createSession(identity);
+            session = repoMgr.createSession(identity, modifiable);
         } catch (Exception e) {
             throw new RepositoryException(e);
         } finally {
@@ -84,10 +85,13 @@ public class RepositoryUtil {
      * @param request The current request.
      */
     public static void removeSession(ServiceManager manager, Request request) {
+        request.removeAttribute(Session.class.getName());
+        /*
         org.apache.cocoon.environment.Session session = request.getSession(false);
         if (session != null) {
             session.removeAttribute(Session.class.getName());
         }
+        */
     }
 
 }

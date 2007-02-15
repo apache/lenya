@@ -18,13 +18,11 @@
 package org.apache.lenya.cms.observation;
 
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
-import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteStructure;
 import org.apache.lenya.xml.NamespaceHelper;
@@ -32,9 +30,6 @@ import org.apache.lenya.xml.NamespaceHelper;
 public class ObservationTest extends AbstractAccessControlTest {
     
     public void testObservation() throws Exception {
-        login("lenya");
-        Session session = RepositoryUtil.getSession(getManager(), getRequest());
-        DocumentFactory factory = DocumentUtil.createDocumentFactory(getManager(), session);
 
         Publication publication = getPublication("test");
         SiteStructure site = publication.getArea("authoring").getSite();
@@ -80,7 +75,7 @@ public class ObservationTest extends AbstractAccessControlTest {
     protected void testChanged(Document doc, TestListener listener) throws Exception {
         listener.reset();
         NamespaceHelper xml = new NamespaceHelper("http://apache.org/lenya/test", "", "test");
-        SourceUtil.writeDOM(xml.getDocument(), doc.getSourceURI(), getManager());
+        xml.save(doc.getOutputStream());
         
         assertFalse(listener.wasChanged());
         doc.getRepositoryNode().getSession().commit();

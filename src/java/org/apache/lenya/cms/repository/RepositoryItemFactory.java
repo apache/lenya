@@ -35,4 +35,9 @@ public interface RepositoryItemFactory {
      */
     RepositoryItem buildItem(Session session, String key) throws RepositoryException;
     
+    /**
+     * @return if the items can be shared by different read-only sessions.
+     */
+    boolean isSharable();
+    
 }

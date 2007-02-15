@@ -24,7 +24,6 @@ import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.publication.PublicationUtil;
 import org.apache.lenya.cms.repository.RepositoryException;
 import org.apache.lenya.cms.repository.RepositoryItem;
 import org.apache.lenya.cms.repository.RepositoryItemFactory;
@@ -66,6 +65,10 @@ public class SiteTreeFactory extends AbstractLogEnabled implements RepositoryIte
 
     public String getItemType() {
         return SiteTree.IDENTIFIABLE_TYPE;
+    }
+
+    public boolean isSharable() {
+        return true;
     }
 
 }

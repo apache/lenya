@@ -28,7 +28,6 @@ import org.apache.cocoon.environment.ObjectModelHelper;
 import org.apache.cocoon.environment.Request;
 import org.apache.cocoon.environment.Session;
 import org.apache.lenya.ac.Identity;
-import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentException;
@@ -214,7 +213,7 @@ public class CreateBlogEntry extends DocumentUsecase {
         Identity identity = (Identity) session.getAttribute(Identity.class.getName());
         String title = getParameterAsString(DublinCore.ELEMENT_TITLE);
 
-        org.w3c.dom.Document xmlDoc = SourceUtil.readDOM(document.getSourceURI(), this.manager);
+        org.w3c.dom.Document xmlDoc = DocumentHelper.readDocument(document.getInputStream());
 
         Element parent = xmlDoc.getDocumentElement();
 
@@ -278,6 +277,6 @@ public class CreateBlogEntry extends DocumentUsecase {
                 "/*[local-name() = 'entry']/*[local-name() = 'modified']");
         DocumentHelper.setSimpleElementText(element, datestr);
 
-        SourceUtil.writeDOM(xmlDoc, document.getSourceURI(), this.manager);
+        DocumentHelper.writeDocument(xmlDoc, document.getOutputStream());
     }
 }

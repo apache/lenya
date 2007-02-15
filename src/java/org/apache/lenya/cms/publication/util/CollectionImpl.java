@@ -28,14 +28,13 @@ import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuildException;
 import org.apache.lenya.cms.publication.DocumentException;
-import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.cms.publication.DocumentFactory;
+import org.apache.lenya.cms.publication.DocumentIdentifier;
 import org.apache.lenya.transaction.TransactionException;
+import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.NamespaceHelper;
 import org.apache.xpath.XPathAPI;
 import org.w3c.dom.DOMException;
@@ -216,7 +215,7 @@ public class CollectionImpl extends AbstractLogEnabled implements Collection {
                 Element documentElement = createDocumentElement(documents[i], helper);
                 collectionElement.appendChild(documentElement);
             }
-            SourceUtil.writeDOM(helper.getDocument(), getDelegate().getSourceURI(), this.manager);
+            DocumentHelper.writeDocument(helper.getDocument(), getDelegate().getOutputStream());
 
         } catch (Exception e) {
             throw new TransactionException(e);
@@ -255,9 +254,8 @@ public class CollectionImpl extends AbstractLogEnabled implements Collection {
 
         NamespaceHelper helper;
 
-        if (SourceUtil.exists(getDelegate().getSourceURI(), this.manager)) {
-            org.w3c.dom.Document document = SourceUtil.readDOM(getDelegate().getSourceURI(),
-                    this.manager);
+        if (getDelegate().exists()) {
+            org.w3c.dom.Document document = DocumentHelper.readDocument(getDelegate().getInputStream());
             helper = new NamespaceHelper(Collection.NAMESPACE, Collection.DEFAULT_PREFIX, document);
         } else {
             helper = new NamespaceHelper(Collection.NAMESPACE,

@@ -15,17 +15,16 @@
  *  limitations under the License.
  *
  */
-package org.apache.lenya.cms.usecase.impl;
-
+package org.apache.lenya.cms.repository;
 
 /**
- * Invoker for test usecases. The transactions are not committed.
+ * Store for read-only items which are shared by all sessions for performance reasons.
  */
-public class TestUsecaseInvoker extends UsecaseInvokerImpl {
-    
+public interface SharedItemStore extends Session {
+
     /**
-     * The Avalon role.
+     * The service role.
      */
-    public static final String ROLE = TestUsecaseInvoker.class.getName();
+    String ROLE = SharedItemStore.class.getName();
 
 }

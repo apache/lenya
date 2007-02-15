@@ -23,7 +23,6 @@ package org.apache.lenya.ac.impl;
 import java.io.File;
 
 import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.cocoon.environment.Session;
 import org.apache.lenya.ac.AccessControlException;
 import org.apache.lenya.ac.AccessControllerResolver;
 import org.apache.lenya.ac.Accreditable;
@@ -38,7 +37,8 @@ import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
-import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.repository.SessionImpl;
 
 /**
  * To change the template for this generated type comment go to
@@ -46,22 +46,28 @@ import org.apache.lenya.cms.repository.RepositoryUtil;
  */
 public class AbstractAccessControlTest extends LenyaTestCase {
 
+    protected static final String TEST_PUB_ID = "test";
     private ServiceSelector accessControllerResolverSelector;
     private AccessControllerResolver accessControllerResolver;
     private DefaultAccessController accessController;
 
-    protected void login(String userId) throws AccessControlException {
+    protected org.apache.lenya.cms.repository.Session login(String userId)
+            throws AccessControlException {
 
-        User user = getAccreditableManager().getUserManager().getUser(userId);
+        Session session = new SessionImpl(null, true, getManager(), getLogger());
+        
+        DefaultAccessController ac = getAccessController(session, TEST_PUB_ID);
+        AccreditableManager acMgr = ac.getAccreditableManager();
+        User user = acMgr.getUserManager().getUser(userId);
 
         if (user == null) {
             throw new AccessControlException("The user [" + userId + "] does not exist!");
         }
 
-        getAccessController().setupIdentity(getRequest());
+        ac.setupIdentity(getRequest());
 
-        Session session = getRequest().getSession();
-        Identity identity = (Identity) session.getAttribute(Identity.class.getName());
+        org.apache.cocoon.environment.Session cocoonSession = getRequest().getSession();
+        Identity identity = (Identity) cocoonSession.getAttribute(Identity.class.getName());
 
         if (!identity.contains(user)) {
             User oldUser = identity.getUser();
@@ -74,29 +80,22 @@ public class AbstractAccessControlTest extends LenyaTestCase {
             identity.addIdentifiable(user);
         }
 
-        getAccessController().authorize(getRequest());
+        ac.authorize(getRequest());
 
         Accreditable[] accrs = identity.getAccreditables();
         for (int i = 0; i < accrs.length; i++) {
             getLogger().info("Accreditable: " + accrs[i]);
         }
 
+        session.setIdentity(identity);
+        return session;
     }
 
-    /**
-     * Returns the access controller.
-     * @return An access controller.
-     */
-    public DefaultAccessController getAccessController() {
-        String pubId = "test";
-        if (this.accessController == null) {
-            DefaultAccessController controller = getAccessController(pubId);
-            this.accessController = controller;
-        }
-        return this.accessController;
+    protected DefaultAccessController getAccessController() {
+        return getAccessController(getSession(), TEST_PUB_ID);
     }
 
-    protected DefaultAccessController getAccessController(String pubId) {
+    protected DefaultAccessController getAccessController(Session session, String pubId) {
         DefaultAccessController controller;
         try {
             this.accessControllerResolverSelector = (ServiceSelector) getManager().lookup(
@@ -111,7 +110,7 @@ public class AbstractAccessControlTest extends LenyaTestCase {
                     "Using access controller resolver: ["
                             + this.accessControllerResolver.getClass() + "]");
 
-            Publication pub = getPublication(pubId);
+            Publication pub = getPublication(session, pubId);
             getLogger().info("Resolve access controller");
             getLogger().info(
                     "Publication directory: [" + pub.getDirectory().getAbsolutePath() + "]");
@@ -149,22 +148,6 @@ public class AbstractAccessControlTest extends LenyaTestCase {
     protected static final String USERNAME = "lenya";
 
     /**
-     * Returns the identity.
-     * @return The identity.
-     * @throws AccessControlException when something went wrong.
-     */
-    protected Identity getIdentity() throws AccessControlException {
-        DefaultAccessController controller = getAccessController();
-        User user = controller.getAccreditableManager().getUserManager().getUser(USERNAME);
-        assertNotNull(user);
-
-        Identity identity = new Identity(getLogger());
-        identity.addIdentifiable(user);
-
-        return identity;
-    }
-
-    /**
      * Returns the policy manager.
      * @return A policy manager.
      */
@@ -185,36 +168,36 @@ public class AbstractAccessControlTest extends LenyaTestCase {
         return accrMgr.getConfigurationDirectory();
     }
 
-    private DocumentFactory factory;
-
     protected DocumentFactory getFactory() {
+        return DocumentUtil.createDocumentFactory(getManager(), getSession());
+    }
 
-        Session cocoonSession = getRequest().getSession();
-        Identity identity = (Identity) cocoonSession.getAttribute(Identity.class.getName());
+    protected DocumentFactory getFactory(Session session) {
+        return DocumentUtil.createDocumentFactory(getManager(), session);
+    }
 
-        if (identity == null) {
-            org.apache.lenya.cms.repository.Session session;
+    private Session session;
+
+    protected Session getSession() {
+        if (this.session == null) {
             try {
-                session = RepositoryUtil.getSession(getManager(), getRequest());
-            } catch (Exception e) {
+                this.session = login("lenya");
+            } catch (AccessControlException e) {
                 throw new RuntimeException(e);
             }
-            return DocumentUtil.createDocumentFactory(getManager(), session);
         }
+        return this.session;
+    }
 
-        if (this.factory == null) {
-            org.apache.lenya.cms.repository.Session session;
-            try {
-                session = RepositoryUtil.getSession(getManager(), getRequest());
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-            this.factory = DocumentUtil.createDocumentFactory(getManager(), session);
-        }
-        return this.factory;
+    protected Publication getPublication(Session session, String pubId) throws PublicationException {
+        return getFactory(session).getPublication(pubId);
     }
 
     protected Publication getPublication(String id) throws PublicationException {
         return getFactory().getPublication(id);
+    }
+    
+    protected Identity getIdentity() {
+        return getSession().getIdentity();
     }
 }

@@ -20,10 +20,8 @@ package org.apache.lenya.cms.site;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.avalon.framework.service.ServiceSelector;
-import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentBuilder;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentLocator;
@@ -119,7 +117,7 @@ public class SiteUtil {
             Publication pub = factory.getPublication(info.getPublicationId());
             if (pub.exists()) {
                 DocumentBuilder builder = pub.getDocumentBuilder();
-                return builder.isDocument(webappUrl);
+                return builder.isDocument(factory, webappUrl);
             }
             return false;
         } catch (SiteException e) {

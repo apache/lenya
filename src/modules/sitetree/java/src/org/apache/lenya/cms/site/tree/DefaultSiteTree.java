@@ -29,11 +29,11 @@ import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.repository.NodeFactory;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
@@ -73,6 +73,8 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
     private Document document;
     private DocumentFactory factory;
 
+    private org.apache.lenya.cms.repository.Node repositoryNode;
+
     /**
      * Create a DefaultSiteTree
      * @param factory The document factory.
@@ -94,8 +96,10 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
         this.area = _area;
         this.manager = manager;
         try {
-            this.document = SourceUtil.readDOM(this.sourceUri, this.manager);
-            if (this.document == null) {
+            if (getRepositoryNode().exists()) {
+                this.document = DocumentHelper.readDocument(getRepositoryNode().getInputStream());
+            }
+            else {
                 getLogger().info("Empty sitetree will be created/initialized!");
                 this.document = createDocument();
             }
@@ -106,7 +110,7 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
 
     protected void saveDocument() throws SiteException {
         try {
-            SourceUtil.writeDOM(this.document, this.sourceUri, this.manager);
+            DocumentHelper.writeDocument(this.document, getRepositoryNode().getOutputStream());
         } catch (Exception e) {
             throw new SiteException(e);
         }
@@ -478,22 +482,23 @@ public class DefaultSiteTree extends AbstractLogEnabled implements SiteTree {
      * @see org.apache.lenya.cms.site.SiteStructure#getRepositoryNode()
      */
     public org.apache.lenya.cms.repository.Node getRepositoryNode() {
-        SourceResolver resolver = null;
-        RepositorySource source = null;
-        try {
-            resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            source = (RepositorySource) resolver.resolveURI(this.sourceUri);
-            return source.getNode();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
+        if (this.repositoryNode == null) {
+            Session session = this.getPublication().getFactory().getSession();
+            NodeFactory factory = null;
+            try {
+                factory = (NodeFactory) manager.lookup(NodeFactory.ROLE);
+                factory.setSession(session);
+                this.repositoryNode = (org.apache.lenya.cms.repository.Node)
+                    session.getRepositoryItem(factory, this.sourceUri);
+            } catch (Exception e) {
+                throw new RuntimeException("Creating repository node failed: ", e);
+            } finally {
+                if (factory != null) {
+                    manager.release(factory);
                 }
-                this.manager.release(resolver);
             }
         }
+        return this.repositoryNode;
     }
 
     protected void save() throws SiteException {

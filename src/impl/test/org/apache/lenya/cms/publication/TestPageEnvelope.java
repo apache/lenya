@@ -42,7 +42,7 @@ public class TestPageEnvelope extends PageEnvelope {
         setContext("");
 
         try {
-            Session session = RepositoryUtil.createSession(manager, null);
+            Session session = RepositoryUtil.createSession(manager, null, false);
             DocumentFactory map = DocumentUtil.createDocumentFactory(manager, session);
             setDocument(map.getFromURL(url));
         } catch (Exception e) {

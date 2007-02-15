@@ -83,7 +83,7 @@ public class EditDocument extends DocumentUsecase {
         ValidationUtil.validate(this.manager, xmlDoc, schema, new UsecaseErrorHandler(this));
 
         if (!hasErrors()) {
-            SourceUtil.writeDOM(xmlDoc, sourceDoc.getSourceURI(), this.manager);
+            SourceUtil.writeDOM(xmlDoc, sourceDoc.getOutputStream());
 
             LinkConverter converter = new LinkConverter(this.manager, getLogger());
             converter.convertUrlsToUuids(getSourceDocument());

@@ -42,7 +42,6 @@ import javax.xml.transform.stream.StreamSource;
 
 import org.apache.cocoon.ProcessingException;
 import org.apache.cocoon.components.ContextHelper;
-import org.apache.cocoon.components.source.SourceUtil;
 import org.apache.cocoon.environment.Request;
 import org.apache.commons.lang.StringUtils;
 import org.apache.excalibur.source.ModifiableSource;
@@ -130,7 +129,6 @@ public class FormsEditor extends DocumentUsecase {
         String unnumberTagsXslUri = "fallback://lenya/modules/editors/usecases/forms/unnumberTags.xsl";
         String numberTagsXslUri = "fallback://lenya/modules/editors/usecases/forms/numberTags.xsl";
 
-        ModifiableSource xmlSource = null;
         Source schemaSource = null;
         Source unnumberTagsXslSource = null;
         Source numberTagsXslSource = null;
@@ -138,8 +136,6 @@ public class FormsEditor extends DocumentUsecase {
         SourceResolver resolver = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-
-            xmlSource = (ModifiableSource) resolver.resolveURI(getSourceDocument().getSourceURI());
 
             unnumberTagsXslSource = resolver.resolveURI(unnumberTagsXslUri);
             numberTagsXslSource = resolver.resolveURI(numberTagsXslUri);
@@ -152,7 +148,7 @@ public class FormsEditor extends DocumentUsecase {
 
             Request request = ContextHelper.getRequest(this.context);
             String encoding = request.getCharacterEncoding();
-            save(resolver, xmlSource, unnumberTagsXslSource, numberTagsXslSource, encoding);
+            save(resolver, getSourceDocument(), unnumberTagsXslSource, numberTagsXslSource, encoding);
 
             if (hasErrors()) {
                 setParameter(VALIDATION_ERRORS, getErrorMessages());
@@ -170,9 +166,6 @@ public class FormsEditor extends DocumentUsecase {
             throw new UsecaseException(e);
         } finally {
             if (resolver != null) {
-                if (xmlSource != null) {
-                    resolver.release(xmlSource);
-                }
                 if (schemaSource != null) {
                     resolver.release(schemaSource);
                 }
@@ -202,7 +195,7 @@ public class FormsEditor extends DocumentUsecase {
     /**
      * Save the Form
      * @param resolver
-     * @param xmlSource
+     * @param lenyaDocument
      * @param unnumberTagsXslSource
      * @param numberTagsXslSource
      * @throws ProcessingException
@@ -216,16 +209,16 @@ public class FormsEditor extends DocumentUsecase {
      * @throws TransformerConfigurationException
      * @throws TransformerException
      */
-    private void save(SourceResolver resolver, ModifiableSource xmlSource,
+    private void save(SourceResolver resolver, org.apache.lenya.cms.publication.Document lenyaDocument,
             Source unnumberTagsXslSource, Source numberTagsXslSource,String encoding) throws ProcessingException,
             FactoryConfigurationError, ParserConfigurationException, IOException, SAXException,
             XPathQueryConfigurationException, Exception, MalformedURLException,
             TransformerConfigurationException, TransformerException {
-        if (!xmlSource.exists()) {
-            throw new ProcessingException("The source [" + xmlSource.getURI() + "] does not exist.");
+        if (!lenyaDocument.exists()) {
+            throw new ProcessingException("The document [" + lenyaDocument + "] does not exist.");
         }
         if (getLogger().isDebugEnabled()) {
-            getLogger().debug("Save modifications to [" + xmlSource.getURI() + "]");
+            getLogger().debug("Save modifications to [" + lenyaDocument + "]");
         }
         
         Document doc = null;
@@ -235,7 +228,7 @@ public class FormsEditor extends DocumentUsecase {
         parserFactory.setIgnoringElementContentWhitespace(true);
         DocumentBuilder builder = parserFactory.newDocumentBuilder();
 
-        InputSource xmlInputSource = SourceUtil.getInputSource(xmlSource);
+        InputSource xmlInputSource = new InputSource(lenyaDocument.getInputStream());
         Document document = builder.parse(xmlInputSource);
 
         Document renumberedDocument = renumberDocument(document, unnumberTagsXslSource,numberTagsXslSource);
@@ -251,11 +244,11 @@ public class FormsEditor extends DocumentUsecase {
         Source unnumberTagsSource = null;
 
         try {
-            String validationUri = xmlSource.getURI() + ".validate";
+            String validationUri = lenyaDocument.getSourceURI() + ".validate";
             validationSource = resolver.resolveURI(validationUri);
             checkModifiability(validationSource);
 
-            String unnumberTagsUri = xmlSource.getURI() + ".validate.unnumber";
+            String unnumberTagsUri = lenyaDocument.getSourceURI() + ".validate.unnumber";
             unnumberTagsSource = resolver.resolveURI(unnumberTagsUri);
             checkModifiability(unnumberTagsSource);
 
@@ -285,7 +278,7 @@ public class FormsEditor extends DocumentUsecase {
         }
 
         if (doc != null){
-        	writeDocument(doc, xmlSource, encoding);
+        	writeDocument(doc, getSourceDocument().getOutputStream(), encoding);
         }
     }
 
@@ -423,15 +416,14 @@ public class FormsEditor extends DocumentUsecase {
     /**
      * Writes a document to a modifiable source.
      * @param document The document.
-     * @param source The source.
+     * @param oStream The source.
      * @throws IOException if an error occurs.
      * @throws TransformerConfigurationException if an error occurs.
      * @throws TransformerException if an error occurs.
      * @throws ProcessingException if an error occurs.
      */
-    protected void writeDocument(Document document, ModifiableSource source, String encoding) throws IOException,
+    protected void writeDocument(Document document, OutputStream oStream, String encoding) throws IOException,
             TransformerConfigurationException, TransformerException, ProcessingException {
-        OutputStream oStream = source.getOutputStream();
         Writer writer = new OutputStreamWriter(oStream, encoding);
         DocumentHelper.writeDocument(document, writer);
         if (oStream != null) {
@@ -444,9 +436,6 @@ public class FormsEditor extends DocumentUsecase {
                 }
                 throw new ProcessingException("Could not write document: ", t);
             }
-        }
-        if (!source.exists()) {
-            throw new ProcessingException("Could not write source [" + source.getURI() + "]");
         }
     }
 

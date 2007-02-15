@@ -80,7 +80,7 @@ public class MockTransactionable implements Transactionable {
     }
     
     private String getUserId() {
-        return this.unit.getIdentity().getUser().getId();
+        return ((UnitOfWorkImpl) this.unit).getIdentity().getUser().getId();
     }
 
     private Lock lock;

@@ -37,12 +37,12 @@ import org.apache.excalibur.source.ModifiableTraversableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceException;
 import org.apache.excalibur.source.SourceNotFoundException;
+import org.apache.excalibur.source.SourceValidity;
 import org.apache.excalibur.source.impl.AbstractSource;
 import org.apache.lenya.cms.repository.ContentHolder;
 import org.apache.lenya.cms.repository.Node;
 import org.apache.lenya.cms.repository.NodeFactory;
 import org.apache.lenya.cms.repository.RepositoryException;
-import org.apache.lenya.cms.repository.RepositoryManager;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.util.Query;
 
@@ -168,16 +168,10 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
      * @see org.apache.excalibur.source.ModifiableSource#delete()
      */
     public void delete() {
-        RepositoryManager repoManager = null;
         try {
-            repoManager = (RepositoryManager) this.manager.lookup(RepositoryManager.ROLE);
-            repoManager.delete(getNode());
-        } catch (Exception e) {
+            getNode().delete();
+        } catch (RepositoryException e) {
             throw new RuntimeException(e);
-        } finally {
-            if (repoManager != null) {
-                this.manager.release(repoManager);
-            }
         }
     }
 
@@ -368,4 +362,15 @@ public class RepositorySource extends AbstractSource implements ModifiableTraver
             throw new RuntimeException(e);
         }
     }
+    
+    private SourceValidity validity;
+
+    public SourceValidity getValidity() {
+        if (this.validity == null) {
+            this.validity = new RepositorySourceValidity(this);
+        }
+        return this.validity;
+    }
+    
+    
 }

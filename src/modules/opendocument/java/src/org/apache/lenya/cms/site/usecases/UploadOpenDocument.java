@@ -23,7 +23,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 
 import org.apache.cocoon.servlet.multipart.Part;
-import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.RepositorySource;
 import org.apache.lenya.cms.publication.Document;
@@ -55,10 +54,6 @@ public class UploadOpenDocument extends DocumentUsecase {
         if (getLogger().isDebugEnabled())
             getLogger().debug("ODT::uploadODT() called");
         Document source = getSourceDocument();
-        String destination = source.getSourceURI();
-        if (source.getSourceExtension().equals("xml")) {
-            destination = destination.substring(0, destination.lastIndexOf(".xml")) + ODT_EXTENSION;
-        }
 
         Part file = getPart("file");
         String mimeType = file.getMimeType();
@@ -67,7 +62,7 @@ public class UploadOpenDocument extends DocumentUsecase {
             String[] params = { Integer.toString(file.getSize()) };
             addErrorMessage("upload-size-exceeded", params);
         } else if (ODT_MIME_TYPE.equals(mimeType)){
-            saveResource(destination, file);
+            saveResource(source.getOutputStream(), file);
         } else {
             addErrorMessage("The mime type of the document you want to upload does not match the mime type: \""+ODT_MIME_TYPE+"\"");
         }
@@ -77,31 +72,19 @@ public class UploadOpenDocument extends DocumentUsecase {
     /**
      * Saves the resource to a file.
      * 
-     * @param destination
+     * @param out
      *            The destination to write the file.
      * @param part
      *            The part of the multipart request.
      * @throws IOException
      *             if an error occurs.
      */
-    protected void saveResource(String destination, Part part)
+    protected void saveResource(OutputStream out, Part part)
                     throws IOException {
-        OutputStream out = null;
         InputStream in = null;
 
-        SourceResolver resolver = null;
-        ModifiableSource source = null;
-
         try {
-            resolver = (SourceResolver) this.manager
-                            .lookup(SourceResolver.ROLE);
-            source = (ModifiableSource) resolver.resolveURI(destination);
-            // now that the source is determined, lock involved nodes
-            Node node = getRepositoryNode(destination);
-            node.lock();
-
             byte[] buf = new byte[4096];
-            out = source.getOutputStream();
             in = part.getInputStream();
             int read = in.read(buf);
 
@@ -125,13 +108,6 @@ public class UploadOpenDocument extends DocumentUsecase {
             if (out != null) {
                 out.flush();
                 out.close();
-            }
-
-            if (resolver != null) {
-                if (source != null) {
-                    resolver.release(source);
-                }
-                this.manager.release(resolver);
             }
         }
     }

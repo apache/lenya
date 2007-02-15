@@ -204,8 +204,11 @@ public interface Usecase {
     Session getSession();
     
     /**
-     * @param enabled if the transaction should be committed. Set to <code>false</code> for tests.
+     * If you invoke this method, the usecase won't use its own isolated session,
+     * but the passed test session. The session will not be committed when the usecase
+     * is invoked, so you can check it for modifications without modifying the repository.
+     * @param session The test session.
      */
-    void setCommitEnabled(boolean enabled);
+    void setTestSession(Session session);
     
 }

@@ -50,9 +50,9 @@ public class IdentityTest extends AbstractAccessControlTest {
      * @throws Exception if an error occurs.
      */
     public void testBelongsTo() throws Exception {
-        AccreditableManager testMgr = getAccessController("test").getAccreditableManager();
-        AccreditableManager defaultMgr = getAccessController("default").getAccreditableManager();
-        AccreditableManager blogMgr = getAccessController("blog").getAccreditableManager();
+        AccreditableManager testMgr = getAccessController(getSession(), "test").getAccreditableManager();
+        AccreditableManager defaultMgr = getAccessController(getSession(), "default").getAccreditableManager();
+        AccreditableManager blogMgr = getAccessController(getSession(), "blog").getAccreditableManager();
         
         String userId = "lenya";
         User testUser = testMgr.getUserManager().getUser(userId);

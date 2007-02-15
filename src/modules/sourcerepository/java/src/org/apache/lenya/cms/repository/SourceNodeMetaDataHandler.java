@@ -102,7 +102,7 @@ public class SourceNodeMetaDataHandler implements MetaDataOwner {
     protected static final String ELEMENT_VALUE = "value";
     protected static final String ATTRIBUTE_NAMESPACE = "namespace";
     protected static final String ATTRIBUTE_KEY = "key";
-
+    
     protected void loadMetaData() throws MetaDataException {
 
         if (this.namespace2metamap != null) {

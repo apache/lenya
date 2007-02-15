@@ -46,9 +46,8 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
 
     public void testSimpleSiteManager() throws Exception {
 
-        login("lenya");
+        Session session = login("lenya");
 
-        Session session = RepositoryUtil.getSession(getManager(), getRequest());
         DocumentFactory factory = DocumentUtil.createDocumentFactory(getManager(), session);
         Publication[] pubs = factory.getPublications();
 
@@ -78,7 +77,7 @@ public class SimpleSiteManagerTest extends AbstractAccessControlTest {
             ResourceType type = (ResourceType) resourceTypeSelector.select("entry");
             String contentSourceUri = "context://sitemap.xmap";
 
-            Document doc = docManager.add(getFactory(), type, contentSourceUri, pub,
+            Document doc = docManager.add(factory, type, contentSourceUri, pub,
                     Publication.AUTHORING_AREA, "en", "xml");
 
             structure.add(PATH, doc);

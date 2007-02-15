@@ -398,10 +398,7 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
             throw new RepositoryException("The node [" + this + "] does not exist!");
         }
 
-        long contentLastModified = 0;
-        if (this.contentSource.exists()) {
-            contentLastModified = this.contentSource.getLastModified();
-        }
+        long contentLastModified = this.contentSource.getLastModified();
         long metaLastModified = 0;
         if (this.metaSource.exists()) {
             metaLastModified = this.metaSource.getLastModified();
@@ -421,6 +418,10 @@ public class SourceNode extends AbstractLogEnabled implements Node, Transactiona
     public void saveTransactionable() throws TransactionException {
         this.contentSource.saveTransactionable();
         this.metaSource.saveTransactionable();
+    }
+
+    public void delete() throws RepositoryException {
+        registerRemoved();
     }
 
 }

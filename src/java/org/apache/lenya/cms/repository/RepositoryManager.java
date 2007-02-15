@@ -31,25 +31,11 @@ public interface RepositoryManager {
     String ROLE = RepositoryManager.class.getName();
     
     /**
-     * Copies a node.
-     * @param source The source node.
-     * @param destination The destination node.
-     * @throws RepositoryException if an error occurs.
-     */
-    void copy(Node source, Node destination) throws RepositoryException;
-    
-    /**
-     * Deletes a node.
-     * @param node The node to delete.
-     * @throws RepositoryException if an error occurs.
-     */
-    void delete(Node node) throws RepositoryException;
-    
-    /**
      * @param identity The identity the session belongs to.
+     * @param modifiable Determines if the repository items in this session should be modifiable.
      * @return A session.
      * @throws RepositoryException if an error occurs.
      */
-    Session createSession(Identity identity) throws RepositoryException;
+    Session createSession(Identity identity, boolean modifiable) throws RepositoryException;
     
 }

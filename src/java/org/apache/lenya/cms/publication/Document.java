@@ -19,6 +19,8 @@
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.Date;
 
 import org.apache.lenya.cms.metadata.MetaDataOwner;
@@ -170,9 +172,16 @@ public interface Document extends MetaDataOwner, RepositoryItem {
     
     /**
      * Returns the URI to resolve the document's source.
+     * The source can only be used for read-only access.
+     * For write access, use {@link #getOutputStream()}.
      * @return A string.
      */
     String getSourceURI();
+    
+    /**
+     * @return The output stream to write the document content to.
+     */
+    OutputStream getOutputStream();
     
     /**
      * Accepts a document visitor.
@@ -311,5 +320,10 @@ public interface Document extends MetaDataOwner, RepositoryItem {
      * @return if the document is linked in the site structure.
      */
     boolean hasLink();
+
+    /**
+     * @return The input stream to obtain the document's content.
+     */
+    InputStream getInputStream();
     
 }

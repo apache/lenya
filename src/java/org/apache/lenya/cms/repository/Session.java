@@ -70,5 +70,15 @@ public interface Session extends UnitOfWork {
      * @param event The event to add to the queue.
      */
     void enqueueEvent(RepositoryEvent event);
-
+    
+    /**
+     * @param identity The identity.
+     */
+    void setIdentity(Identity identity);
+    
+    /**
+     * @return if the repository items in this session can be modified.
+     */
+    boolean isModifiable();
+    
 }

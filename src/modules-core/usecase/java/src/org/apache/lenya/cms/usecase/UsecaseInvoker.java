@@ -20,6 +20,8 @@ package org.apache.lenya.cms.usecase;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.lenya.cms.repository.Session;
+
 /**
  * <p>
  * This service allows to invoke a usecase in a convenient way. A typical usage
@@ -121,5 +123,10 @@ public interface UsecaseInvoker {
      *         yet.
      */
     String getTargetUrl();
+
+    /**
+     * @param session The test session to use.
+     */
+    void setTestSession(Session session);
 
 }

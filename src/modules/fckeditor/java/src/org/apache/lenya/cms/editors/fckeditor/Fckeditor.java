@@ -20,6 +20,7 @@ package org.apache.lenya.cms.editors.fckeditor;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -123,7 +124,6 @@ public class Fckeditor extends DocumentUsecase {
      * @throws Exception if an error occurs.
      */
     protected void saveDocument(String encoding, String content) throws Exception {
-        ModifiableSource xmlSource = null;
         SourceResolver resolver = null;
         Source indexSource = null;
         Source tidySource = null;
@@ -131,8 +131,7 @@ public class Fckeditor extends DocumentUsecase {
         Properties properties = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            xmlSource = (ModifiableSource) resolver.resolveURI(getSourceDocument().getSourceURI());
-            saveXMLFile(encoding, content, xmlSource);
+            saveXMLFile(encoding, content, getSourceDocument().getOutputStream());
 
             Document xmlDoc = null;
 
@@ -164,7 +163,7 @@ public class Fckeditor extends DocumentUsecase {
                 PrintWriter errorWriter = new PrintWriter(stringWriter);
                 tidy.setErrout(errorWriter);
 
-                xmlDoc = tidy.parseDOM(xmlSource.getInputStream(), null);
+                xmlDoc = tidy.parseDOM(getSourceDocument().getInputStream(), null);
 
                 // FIXME: Jtidy doesn't warn or strip duplicate attributes in
                 // same
@@ -187,10 +186,10 @@ public class Fckeditor extends DocumentUsecase {
                     addErrorMessage(e.getMessage());
                 }
 
-                saveXMLFile(encoding, content, xmlSource);
+                saveXMLFile(encoding, content, getSourceDocument().getOutputStream());
             } else {
                 try {
-                    xmlDoc = DocumentHelper.readDocument(xmlSource.getInputStream());
+                    xmlDoc = DocumentHelper.readDocument(getSourceDocument().getInputStream());
                 } catch (SAXException e) {
                     addErrorMessage("error-document-form", new String[] { e.getMessage() });
                 }
@@ -212,7 +211,7 @@ public class Fckeditor extends DocumentUsecase {
                     t.setOutputProperty(OutputKeys.INDENT, "yes");
                     t.setOutputProperty(OutputKeys.METHOD, "xml");
                     t.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "4");
-                    xmlDoc = DocumentHelper.readDocument(xmlSource.getInputStream());
+                    xmlDoc = DocumentHelper.readDocument(getSourceDocument().getInputStream());
                     t.transform(new DOMSource(xmlDoc.getDocumentElement()), strResult);
 
                     content = strResult.getWriter().toString();
@@ -220,10 +219,10 @@ public class Fckeditor extends DocumentUsecase {
                     addErrorMessage(e.getMessage());
                 }
 
-                saveXMLFile(encoding, content, xmlSource);
+                saveXMLFile(encoding, content, getSourceDocument().getOutputStream());
             }
 
-            xmlDoc = DocumentHelper.readDocument(xmlSource.getInputStream());
+            xmlDoc = DocumentHelper.readDocument(getSourceDocument().getInputStream());
 
             if (xmlDoc != null) {
                 ResourceType resourceType = getSourceDocument().getResourceType();
@@ -240,9 +239,6 @@ public class Fckeditor extends DocumentUsecase {
 
         } finally {
             if (resolver != null) {
-                if (xmlSource != null) {
-                    resolver.release(xmlSource);
-                }
                 if (indexSource != null) {
                     resolver.release(indexSource);
                 }
@@ -261,18 +257,18 @@ public class Fckeditor extends DocumentUsecase {
      * Save the XML file
      * @param encoding The encoding
      * @param content The content
-     * @param xmlSource The source
+     * @param out The stream to write to
      * @throws FileNotFoundException if the file was not found
      * @throws UnsupportedEncodingException if the encoding is not supported
      * @throws IOException if an IO error occurs
      */
-    private void saveXMLFile(String encoding, String content, ModifiableSource xmlSource)
+    private void saveXMLFile(String encoding, String content, OutputStream out)
             throws FileNotFoundException, UnsupportedEncodingException, IOException {
         FileOutputStream fileoutstream = null;
         Writer writer = null;
 
         try {
-            writer = new OutputStreamWriter(xmlSource.getOutputStream(), encoding);
+            writer = new OutputStreamWriter(out, encoding);
             writer.write(content, 0, content.length());
         } catch (FileNotFoundException e) {
             getLogger().error("File not found " + e.toString());

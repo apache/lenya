@@ -26,12 +26,14 @@ import java.util.Set;
 import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceManager;
 import org.apache.lenya.ac.Identity;
 import org.apache.lenya.cms.observation.ObservationRegistry;
 import org.apache.lenya.cms.observation.RepositoryEvent;
 import org.apache.lenya.cms.observation.RepositoryListener;
 import org.apache.lenya.transaction.IdentityMap;
+import org.apache.lenya.transaction.IdentityMapImpl;
 import org.apache.lenya.transaction.Lock;
 import org.apache.lenya.transaction.Lockable;
 import org.apache.lenya.transaction.TransactionException;
@@ -46,47 +48,57 @@ import org.apache.lenya.util.Assert;
 public class SessionImpl extends AbstractLogEnabled implements Session {
 
     private ServiceManager manager;
-    
+    private Identity identity;
+
     /**
      * Ctor.
-     * @param map The identity map.
      * @param identity The identity.
+     * @param modifiable Determins if the repository items in this session can be modified. 
      * @param manager The service manager.
      * @param logger The logger.
      */
-    public SessionImpl(IdentityMap map, Identity identity, ServiceManager manager, Logger logger) {
-        
-        Assert.notNull("identity map", map);
-        
-        this.manager = manager;
-        this.unitOfWork = new UnitOfWorkImpl(map, identity, logger);
-        this.unitOfWork.setIdentity(identity);
+    public SessionImpl(Identity identity, boolean modifiable, ServiceManager manager, Logger logger) {
+
         ContainerUtil.enableLogging(this, logger);
-        
+
+        Assert.notNull("service manager", manager);
+        this.manager = manager;
+
+        this.identityMap = new IdentityMapImpl(logger);
+
+        this.identity = identity;
+
         ObservationRegistry registry = null;
         try {
             registry = (ObservationRegistry) this.manager.lookup(ObservationRegistry.ROLE);
             addListener(registry);
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
-        finally {
+        } finally {
             if (registry != null) {
                 this.manager.release(registry);
             }
         }
+        
+        if (modifiable) {
+            this.unitOfWork = new UnitOfWorkImpl(this.identityMap, this.identity, getLogger());
+        }
     }
 
     public Identity getIdentity() {
-        return getUnitOfWork().getIdentity();
+        return this.identity;
     }
 
     private UnitOfWork unitOfWork;
+    private SharedItemStore sharedItemStore;
 
     /**
      * @return The unit of work.
      */
     protected UnitOfWork getUnitOfWork() {
+        if (this.unitOfWork == null) {
+            throw new RuntimeException("This session is not modifiable!");
+        }
         return this.unitOfWork;
     }
 
@@ -95,16 +107,16 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
      * @throws RepositoryException if an error occurs.
      */
     public void commit() throws RepositoryException {
-        
+
         try {
             getUnitOfWork().commit();
         } catch (TransactionException e) {
             throw new RepositoryException(e);
         }
-        
-        for (Iterator i = this.events.iterator(); i.hasNext(); ) {
+
+        for (Iterator i = this.events.iterator(); i.hasNext();) {
             RepositoryEvent event = (RepositoryEvent) i.next();
-            for (Iterator l = this.listeners.iterator(); l.hasNext(); ) {
+            for (Iterator l = this.listeners.iterator(); l.hasNext();) {
                 RepositoryListener listener = (RepositoryListener) l.next();
                 listener.eventFired(event);
             }
@@ -124,6 +136,17 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
         }
         this.events.clear();
     }
+    
+    protected SharedItemStore getSharedItemStore() {
+        if (this.sharedItemStore == null) {
+            try {
+                this.sharedItemStore = (SharedItemStore) this.manager.lookup(SharedItemStore.ROLE);
+            } catch (ServiceException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        return this.sharedItemStore;
+    }
 
     /**
      * @see org.apache.lenya.cms.repository.Session#getRepositoryItem(org.apache.lenya.cms.repository.RepositoryItemFactory,
@@ -131,11 +154,16 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
      */
     public RepositoryItem getRepositoryItem(RepositoryItemFactory factory, String key)
             throws RepositoryException {
-        RepositoryItemFactoryWrapper wrapper = new RepositoryItemFactoryWrapper(factory, this);
-        return (RepositoryItem) ((UnitOfWorkImpl) getUnitOfWork()).getIdentityMap().get(wrapper,
-                key);
+        
+        if (!isModifiable() && factory.isSharable()) {
+            return getSharedItemStore().getRepositoryItem(factory, key);
+        }
+        else {
+            RepositoryItemFactoryWrapper wrapper = new RepositoryItemFactoryWrapper(factory, this);
+            return (RepositoryItem) getIdentityMap().get(wrapper, key);
+        }
     }
-    
+
     public void registerNew(Transactionable object) throws TransactionException {
         getUnitOfWork().registerNew(object);
     }
@@ -148,8 +176,11 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
         getUnitOfWork().registerRemoved(object);
     }
 
+    /**
+     * @param identity The identity.
+     */
     public void setIdentity(Identity identity) {
-        getUnitOfWork().setIdentity(identity);
+        this.identity = identity;
     }
 
     public boolean isDirty(Transactionable transactionable) {
@@ -179,10 +210,22 @@ public class SessionImpl extends AbstractLogEnabled implements Session {
     }
 
     private List events = new ArrayList();
-    
+    private IdentityMap identityMap;
+
     public void enqueueEvent(RepositoryEvent event) {
+        if (!isModifiable()) {
+            throw new RuntimeException("Can't enqueue event in unmodifiable session!");
+        }
         Assert.isTrue("event belongs to session", event.getSession() == this);
         this.events.add(event);
+    }
+
+    protected IdentityMap getIdentityMap() {
+        return this.identityMap;
+    }
+
+    public boolean isModifiable() {
+        return this.unitOfWork != null;
     }
 
 }

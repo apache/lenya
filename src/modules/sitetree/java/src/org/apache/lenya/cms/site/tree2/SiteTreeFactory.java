@@ -70,4 +70,8 @@ public class SiteTreeFactory extends AbstractLogEnabled implements RepositoryIte
         return SiteTree.IDENTIFIABLE_TYPE;
     }
 
+    public boolean isSharable() {
+        return true;
+    }
+
 }

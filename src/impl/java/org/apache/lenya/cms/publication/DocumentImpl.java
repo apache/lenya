@@ -19,6 +19,8 @@
 package org.apache.lenya.cms.publication;
 
 import java.io.File;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -404,7 +406,7 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
      */
     public void delete() throws DocumentException {
         try {
-            SourceUtil.delete(getSourceURI(), this.manager);
+            getRepositoryNode().delete();
         } catch (Exception e) {
             throw new DocumentException(e);
         }
@@ -525,11 +527,16 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
         }
     }
 
+    private Node repositoryNode;
+    
     /**
      * @see org.apache.lenya.cms.publication.Document#getRepositoryNode()
      */
     public Node getRepositoryNode() {
-        return getRepositoryNode(this.manager, getFactory(), getSourceURI());
+        if (this.repositoryNode == null) {
+            this.repositoryNode = getRepositoryNode(this.manager, getFactory(), getSourceURI());
+        }
+        return this.repositoryNode;
     }
 
     protected static Node getRepositoryNode(ServiceManager manager, DocumentFactory docFactory,
@@ -622,6 +629,22 @@ public class DocumentImpl extends AbstractLogEnabled implements Document {
             MetaData meta = getMetaData(DocumentImpl.METADATA_NAMESPACE);
             meta.setValue(DocumentImpl.METADATA_EXTENSION, extension);
         } catch (MetaDataException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public OutputStream getOutputStream() {
+        try {
+            return getRepositoryNode().getOutputStream();
+        } catch (RepositoryException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public InputStream getInputStream() {
+        try {
+            return getRepositoryNode().getInputStream();
+        } catch (RepositoryException e) {
             throw new RuntimeException(e);
         }
     }

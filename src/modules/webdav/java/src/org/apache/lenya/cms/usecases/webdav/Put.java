@@ -31,7 +31,6 @@ import org.apache.lenya.cms.linking.LinkConverter;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
-import org.apache.lenya.cms.metadata.dublincore.DublinCoreHelper;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.DocumentFactory;
 import org.apache.lenya.cms.publication.DocumentManager;
@@ -48,6 +47,7 @@ import org.apache.lenya.cms.usecase.UsecaseException;
 import org.apache.lenya.cms.usecase.xml.UsecaseErrorHandler;
 import org.apache.lenya.cms.workflow.WorkflowUtil;
 import org.apache.lenya.cms.workflow.usecases.UsecaseWorkflowHelper;
+import org.apache.lenya.xml.DocumentHelper;
 import org.apache.lenya.xml.Schema;
 import org.apache.lenya.xml.ValidationUtil;
 
@@ -87,8 +87,6 @@ public class Put extends CreateDocument {
     }
 
     protected void doCheckExecutionConditions() throws Exception {
-        super.doCheckExecutionConditions();
-
         String event = getParameterAsString(EVENT);
         if (event != null) {
             Document doc = getSourceDocument();
@@ -154,7 +152,7 @@ public class Put extends CreateDocument {
 
             if (!hasErrors()) {
                 try {
-                    SourceUtil.writeDOM(xmlDoc, doc.getSourceURI(), this.manager);
+                    DocumentHelper.writeDocument(xmlDoc, doc.getOutputStream());
                 } catch (Exception e) {
                     addErrorMessage("invalid source xml. Full exception: " + e);
                 }

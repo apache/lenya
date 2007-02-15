@@ -29,7 +29,6 @@ import org.apache.lenya.cms.publication.DocumentUtil;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.publication.PublicationException;
 import org.apache.lenya.cms.publication.ResourceType;
-import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteManager;
 import org.apache.lenya.cms.site.SiteStructure;
@@ -49,7 +48,7 @@ public class XLinkCollectionTest extends AbstractAccessControlTest {
     public void testXLinkCollection() throws PublicationException, AccessControlException,
             TransactionException, ServiceException {
 
-        Session session = RepositoryUtil.createSession(getManager(), getIdentity());
+        Session session = login("lenya");
         DocumentFactory map = DocumentUtil.createDocumentFactory(getManager(), session);
 
         Publication pub = getPublication("test");
@@ -90,7 +89,6 @@ public class XLinkCollectionTest extends AbstractAccessControlTest {
         assertSame(collection.getDelegate().getRepositoryNode(), coll2.getDelegate()
                 .getRepositoryNode());
 
-        assertEquals(collection.getDelegate().getSourceURI(), coll2.getDelegate().getSourceURI());
         assertEquals(coll2.size(), 1);
         assertTrue(coll2.contains(doc));
 

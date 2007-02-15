@@ -71,10 +71,10 @@ public class Import extends AbstractUsecase {
                 Document[] docs = siteManager.getDocuments(factory, pub, areas[i]);
                 for (int j = 0; j < docs.length; j++) {
                     nodes.add(docs[j].getRepositoryNode());
+                    /*
                     final String lenyaUri = docs[j].getSourceURI();
                     final String sourcePath = lenyaUri.substring("lenya://".length());
                     final String contextUri = "context://" + sourcePath + ".meta";
-                    /*
                      * MetaDataManager meta = new MetaDataManager(contextUri, this.manager,
                      * getLogger()); uri2meta.put(docs[j].getSourceURI(), meta);
                      */

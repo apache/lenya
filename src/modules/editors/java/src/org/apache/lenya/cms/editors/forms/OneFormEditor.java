@@ -26,7 +26,6 @@ import java.io.Writer;
 
 import org.apache.cocoon.components.ContextHelper;
 import org.apache.cocoon.environment.Request;
-import org.apache.excalibur.source.ModifiableSource;
 import org.apache.excalibur.source.Source;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.publication.ResourceType;
@@ -95,18 +94,16 @@ public class OneFormEditor extends DocumentUsecase {
      * @throws Exception if an error occurs.
      */
     protected void saveDocument(String encoding, String content) throws Exception {
-        ModifiableSource xmlSource = null;
         SourceResolver resolver = null;
         Source indexSource = null;
         try {
             resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-            xmlSource = (ModifiableSource) resolver.resolveURI(getSourceDocument().getSourceURI());
-            saveXMLFile(encoding, content, xmlSource);
+            saveXMLFile(encoding, content, getSourceDocument());
 
             Document xmlDoc = null;
 
             try {
-                xmlDoc = DocumentHelper.readDocument(xmlSource.getInputStream());
+                xmlDoc = DocumentHelper.readDocument(getSourceDocument().getInputStream());
             } catch (SAXException e) {
                 addErrorMessage("error-document-form", new String[] { e.getMessage() });
             }
@@ -128,9 +125,6 @@ public class OneFormEditor extends DocumentUsecase {
 
         } finally {
             if (resolver != null) {
-                if (xmlSource != null) {
-                    resolver.release(xmlSource);
-                }
                 if (indexSource != null) {
                     resolver.release(indexSource);
                 }
@@ -143,18 +137,19 @@ public class OneFormEditor extends DocumentUsecase {
      * Save the XML file
      * @param encoding The encoding
      * @param content The content
-     * @param xmlSource The source
+     * @param document The source
      * @throws FileNotFoundException if the file was not found
      * @throws UnsupportedEncodingException if the encoding is not supported
      * @throws IOException if an IO error occurs
      */
-    private void saveXMLFile(String encoding, String content, ModifiableSource xmlSource)
+    private void saveXMLFile(String encoding, String content,
+            org.apache.lenya.cms.publication.Document document)
             throws FileNotFoundException, UnsupportedEncodingException, IOException {
         FileOutputStream fileoutstream = null;
         Writer writer = null;
 
         try {
-            writer = new OutputStreamWriter(xmlSource.getOutputStream(), encoding);
+            writer = new OutputStreamWriter(document.getOutputStream(), encoding);
             writer.write(content, 0, content.length());
         } catch (FileNotFoundException e) {
             getLogger().error("File not found " + e.toString());

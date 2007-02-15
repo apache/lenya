@@ -18,6 +18,7 @@
 package org.apache.lenya.cms.site.tree2;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
@@ -25,13 +26,15 @@ import org.apache.avalon.framework.container.ContainerUtil;
 import org.apache.avalon.framework.logger.AbstractLogEnabled;
 import org.apache.avalon.framework.logger.Logger;
 import org.apache.avalon.framework.service.ServiceManager;
-import org.apache.excalibur.source.SourceResolver;
-import org.apache.lenya.cms.cocoon.source.RepositorySource;
-import org.apache.lenya.cms.cocoon.source.SourceUtil;
+import org.apache.cocoon.environment.Request;
+import org.apache.lenya.cms.cocoon.components.context.ContextUtility;
 import org.apache.lenya.cms.publication.Area;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
 import org.apache.lenya.cms.repository.Node;
+import org.apache.lenya.cms.repository.NodeFactory;
+import org.apache.lenya.cms.repository.RepositoryUtil;
+import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.Link;
 import org.apache.lenya.cms.site.SiteException;
 import org.apache.lenya.cms.site.SiteNode;
@@ -60,6 +63,10 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
         ContainerUtil.enableLogging(this, logger);
         this.area = area;
         this.manager = manager;
+        initRoot();
+    }
+
+    protected void initRoot() {
         this.root = new RootNode(this, getLogger());
         nodeAdded(root);
     }
@@ -74,30 +81,47 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
         return this.sourceUri;
     }
 
-    private boolean loaded = false;
+    private long lastModified = -1;
+    private boolean loading = false;
 
     protected static final String NAMESPACE = "http://apache.org/cocoon/lenya/sitetree/1.0";
 
     private static final boolean DEFAULT_VISIBILITY = true;
 
-    protected void load() {
+    protected synchronized void load() {
         try {
-            if (!loaded) {
-                if (SourceUtil.exists(getSourceUri(), this.manager)) {
-                    org.w3c.dom.Document xml = SourceUtil.readDOM(getSourceUri(), this.manager);
-                    NamespaceHelper helper = new NamespaceHelper(NAMESPACE, "", xml);
-                    Assert.isTrue("document element is site", xml.getDocumentElement()
-                            .getLocalName().equals("site"));
-                    loadNodes(getRoot(), helper, xml.getDocumentElement());
-                }
-                loaded = true;
+            Node repoNode = getRepositoryNode();
+            if (repoNode.exists() && repoNode.getLastModified() > this.lastModified) {
+                long lastModified = repoNode.getLastModified();
+                org.w3c.dom.Document xml = DocumentHelper.readDocument(repoNode.getInputStream());
+                NamespaceHelper helper = new NamespaceHelper(NAMESPACE, "", xml);
+                Assert.isTrue("document element is site", xml.getDocumentElement().getLocalName()
+                        .equals("site"));
+                this.loading = true;
+                reset();
+                loadNodes(this.root, helper, xml.getDocumentElement());
+                this.loading = false;
+                this.lastModified = lastModified;
+            }
+            
+            if (!repoNode.exists() && this.lastModified > -1) {
+                reset();
+                this.lastModified = -1;
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        checkInvariants();
+    }
+
+    protected void reset() {
+        this.path2node.clear();
+        this.uuidLanguage2link.clear();
+        initRoot();
     }
 
     protected RootNode getRoot() {
+        load();
         return this.root;
     }
 
@@ -130,13 +154,20 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     }
 
     protected void save() {
-        if (!loaded) {
+        if (loading) {
             return;
         }
         try {
+            Node repoNode = getRepositoryNode();
+            if (repoNode.exists() && repoNode.getLastModified() > this.lastModified) {
+                throw new RuntimeException("The sitetree repository node has been modified!");
+            }
             NamespaceHelper helper = new NamespaceHelper(NAMESPACE, "", "site");
             saveNodes(getRoot(), helper, helper.getDocument().getDocumentElement());
-            SourceUtil.writeDOM(helper.getDocument(), getSourceUri(), this.manager);
+            helper.save(repoNode.getOutputStream());
+            this.lastModified = repoNode.getLastModified();
+        } catch (RuntimeException e) {
+            throw e;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -231,7 +262,12 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     private Map uuidLanguage2link = new HashMap();
 
     protected void nodeAdded(SiteNode node) {
-        this.path2node.put(node.getPath(), node);
+        String path = node.getPath();
+        Assert.notNull("path", path);
+        if (node != this.root) {
+            Assert.isTrue("path not empty", path.length() > 0);
+        }
+        this.path2node.put(path, node);
     }
 
     protected void linkAdded(Link link) {
@@ -306,6 +342,32 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
         return (Link) getUuidLanguage2Link().get(key);
     }
 
+    protected void checkInvariants() {
+        if (true) {
+            return;
+        }
+        for (Iterator paths = this.path2node.keySet().iterator(); paths.hasNext();) {
+            String path = (String) paths.next();
+            SiteNode node = (SiteNode) this.path2node.get(path);
+            String uuid = node.getUuid();
+            if (uuid != null) {
+                String[] langs = node.getLanguages();
+                for (int i = 0; i < langs.length; i++) {
+                    String key = getKey(uuid, langs[i]);
+                    Assert.isTrue("contains link for [" + key + "]", this.uuidLanguage2link
+                            .containsKey(key));
+                }
+            }
+        }
+        for (Iterator keys = this.uuidLanguage2link.keySet().iterator(); keys.hasNext();) {
+            String key = (String) keys.next();
+            Link link = (Link) this.uuidLanguage2link.get(key);
+            Assert.isTrue("contains path for [" + key + "]", this.path2node.containsKey(link
+                    .getNode().getPath()));
+        }
+
+    }
+
     public SiteNode getNode(String path) throws SiteException {
         Assert.notNull("path", path);
         if (!getPath2Node().containsKey(path)) {
@@ -321,29 +383,46 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
     public Publication getPublication() {
         return this.area.getPublication();
     }
-
-    private Node repositoryNode;
-
-    public Node getRepositoryNode() {
-        if (this.repositoryNode == null) {
-            SourceResolver resolver = null;
-            RepositorySource source = null;
+    
+    protected Session getSession() {
+        Session areaSession = this.area.getPublication().getFactory().getSession();
+        
+        // if the session which the sitetree originates from is modifiable, we use this one
+        if (areaSession.isModifiable()) {
+            return areaSession;
+        }
+        
+        // otherwise, we have to use the current request's session, not the SharedItemStore
+        else {
+            ContextUtility ctxUtil = null;
             try {
-                resolver = (SourceResolver) this.manager.lookup(SourceResolver.ROLE);
-                source = (RepositorySource) resolver.resolveURI(getSourceUri());
-                this.repositoryNode = source.getNode();
+                ctxUtil = (ContextUtility) this.manager.lookup(ContextUtility.ROLE);
+                Request req = ctxUtil.getRequest();
+                return RepositoryUtil.getSession(this.manager, req);
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                throw new RuntimeException("Creating repository node failed: ", e);
             } finally {
-                if (resolver != null) {
-                    if (source != null) {
-                        resolver.release(source);
-                    }
-                    this.manager.release(resolver);
+                if (ctxUtil != null) {
+                    this.manager.release(ctxUtil);
                 }
             }
         }
-        return this.repositoryNode;
+    }
+
+    public Node getRepositoryNode() {
+        NodeFactory factory = null;
+        try {
+            Session session = getSession();
+            factory = (NodeFactory) manager.lookup(NodeFactory.ROLE);
+            factory.setSession(session);
+            return (Node) session.getRepositoryItem(factory, getSourceUri());
+        } catch (Exception e) {
+            throw new RuntimeException("Creating repository node failed: ", e);
+        } finally {
+            if (factory != null) {
+                manager.release(factory);
+            }
+        }
     }
 
     public SiteNode[] getTopLevelNodes() {
@@ -371,15 +450,31 @@ public class SiteTreeImpl extends AbstractLogEnabled implements SiteStructure, S
 
     public void moveDown(String path) throws SiteException {
         TreeNode node = getTreeNode(path);
-        TreeNode parent = (TreeNode) node.getParent();
+        TreeNode parent = getParent(node);
         parent.moveDown(node.getName());
-        
+
     }
 
     public void moveUp(String path) throws SiteException {
         TreeNode node = getTreeNode(path);
-        TreeNode parent = (TreeNode) node.getParent();
+        TreeNode parent = getParent(node);
         parent.moveUp(node.getName());
+    }
+
+    /**
+     * @param node A node.
+     * @return The parent of the node, which is the root node for top level nodes.
+     * @throws SiteException if an error occurs.
+     */
+    protected TreeNode getParent(TreeNode node) throws SiteException {
+        TreeNode parent;
+        if (node.isTopLevel()) {
+            parent = getRoot();
+        }
+        else {
+            parent = (TreeNode) node.getParent();;
+        }
+        return parent;
     }
 
     public boolean contains(String path, String language) {

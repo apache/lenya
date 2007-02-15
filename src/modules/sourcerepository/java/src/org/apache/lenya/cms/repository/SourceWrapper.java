@@ -187,7 +187,9 @@ public class SourceWrapper extends AbstractLogEnabled {
      * @see org.apache.lenya.cms.repository.Node#exists()
      */
     public boolean exists() throws RepositoryException {
-        loadData();
+        if (this.data == null) {
+            loadData();
+        }
         return this.data != null;
     }
 
@@ -197,6 +199,10 @@ public class SourceWrapper extends AbstractLogEnabled {
      * @throws RepositoryException if an error occurs.
      */
     protected synchronized void loadData() throws RepositoryException {
+
+        if (this.data != null) {
+            return;
+        }
 
         ByteArrayOutputStream out = null;
         InputStream in = null;

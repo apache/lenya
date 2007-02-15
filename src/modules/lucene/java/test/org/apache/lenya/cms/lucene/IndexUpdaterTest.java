@@ -17,14 +17,10 @@
  */
 package org.apache.lenya.cms.lucene;
 
-import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
-import org.apache.lenya.cms.cocoon.source.SourceUtil;
 import org.apache.lenya.cms.publication.Document;
-import org.apache.lenya.cms.publication.DocumentFactory;
-import org.apache.lenya.cms.publication.DocumentUtil;
+import org.apache.lenya.cms.publication.DocumentManager;
 import org.apache.lenya.cms.publication.Publication;
-import org.apache.lenya.cms.repository.RepositoryUtil;
 import org.apache.lenya.cms.repository.Session;
 import org.apache.lenya.cms.site.SiteNode;
 import org.apache.lenya.cms.site.SiteStructure;
@@ -32,9 +28,9 @@ import org.apache.lenya.cms.site.SiteStructure;
 public class IndexUpdaterTest extends AbstractAccessControlTest {
 
     public void testIndexUpdater() throws Exception {
-        login("lenya");
+        Session session = login("lenya");
 
-        Publication pub = getPublication("test");
+        Publication pub = getPublication(session, "test");
         SiteStructure site = pub.getArea("authoring").getSite();
         
         SiteNode sourceNode = site.getNode("/tutorial");
@@ -45,13 +41,13 @@ public class IndexUpdaterTest extends AbstractAccessControlTest {
 
         sourceDoc.getRepositoryNode().lock();
 
-        SourceResolver resolver = null;
+        DocumentManager docMgr = null;
         try {
-            resolver = (SourceResolver) getManager().lookup(SourceResolver.ROLE);
-            SourceUtil.copy(resolver, sourceDoc.getSourceURI(), destDoc.getSourceURI());
+            docMgr = (DocumentManager) getManager().lookup(DocumentManager.ROLE);
+            docMgr.copy(sourceDoc, destDoc.getLocator());
         } finally {
-            if (resolver != null) {
-                getManager().release(resolver);
+            if (docMgr != null) {
+                getManager().release(docMgr);
             }
         }
         checkSearchResults(pub, Publication.AUTHORING_AREA);

@@ -19,9 +19,16 @@ package org.apache.lenya.cms.export;
 
 import java.io.File;
 
+import org.apache.avalon.framework.service.ServiceException;
 import org.apache.lenya.ac.impl.AbstractAccessControlTest;
+import org.apache.lenya.cms.linking.Link;
+import org.apache.lenya.cms.linking.LinkManager;
 import org.apache.lenya.cms.publication.Area;
+import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.Publication;
+import org.apache.lenya.cms.publication.PublicationException;
+import org.apache.lenya.cms.repository.Session;
+import org.apache.lenya.cms.site.SiteStructure;
 
 /**
  * Import example content into test publication.
@@ -33,19 +40,46 @@ public class ImportTest extends AbstractAccessControlTest {
      */
     public void testImport() throws Exception {
         
-        login("lenya");
-        Publication pub = getPublication("test");
+        Session session = login("lenya");
+        
+        Publication pub = getPublication(session, "test");
         Area area = pub.getArea("authoring");
         
         if (area.getDocuments().length == 0) {
-            Publication defaultPub = getPublication("default");
+            Publication defaultPub = getPublication(session, "default");
             Area defaultArea = defaultPub.getArea("authoring");
             String pubPath = defaultArea.getPublication().getDirectory().getAbsolutePath();
             String path = pubPath.replace(File.separatorChar, '/') + "/example-content";
             Importer importer = new Importer(getManager(), getLogger());
             importer.importContent(defaultPub, area, path);
-            getFactory().getSession().commit();
+            session.commit();
         }
+        
+        assertTrue(area.getSite().contains("/tutorial"));
+        checkLinks(area);
+        
+        Session aliceSession = login("alice");
+        Publication alicePub = getPublication(aliceSession, "test");
+        assertTrue(alicePub.getArea("authoring").getSite().contains("/tutorial"));
+        
+    }
+
+    protected void checkLinks(Area area) throws PublicationException, ServiceException {
+        SiteStructure site = area.getSite();
+        Document source = site.getNode("/index").getLink("en").getDocument();
+        
+        LinkManager linkManager = null;
+        try {
+            linkManager = (LinkManager) getManager().lookup(LinkManager.ROLE);
+            Link[] links = linkManager.getLinksFrom(source);
+            assertTrue(links.length > 0);
+        }
+        finally {
+            if (linkManager != null) {
+                getManager().release(linkManager);
+            }
+        }
+        
     }
     
 }
