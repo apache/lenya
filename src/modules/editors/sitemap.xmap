@@ -73,6 +73,7 @@
       
       <map:match pattern="stream.xml">
         <map:generate type="stream"/>
+        <map:transform type="url2uuid"/>
         <map:serialize type="xml"/>
       </map:match>
       

@@ -93,6 +93,7 @@
       
       <map:match pattern="request/generate">
         <map:generate type="stream" />
+        <map:transform type="url2uuid"/>
         <map:serialize type="xml" />
       </map:match>
       
@@ -102,15 +103,15 @@
           | generate the input for the PUT method.
           + -->
       <map:match pattern="request/PUT/*">    
+        <map:generate type="stream">
+          <map:parameter name="defaultContentType" value="text/xml" />
+        </map:generate>
         <map:act type="resource-exists" src="fallback://lenya/modules/{page-envelope:document-type}/xslt/clean-{page-envelope:document-type}.xsl">
-          <map:generate type="stream">
-            <map:parameter name="defaultContentType" value="text/xml" />
-          </map:generate>
           <map:transform src="fallback://lenya/modules/{page-envelope:document-type}/xslt/clean-{page-envelope:document-type}.xsl"/>        
           <map:transform src="fallback://lenya/xslt/util/strip_namespaces.xsl"/>
-          <map:serialize type="xml" />
         </map:act>
-        <map:read type="request"/>
+        <map:transform type="url2uuid"/>
+        <map:serialize type="xml"/>
       </map:match>
       
     </map:pipeline>

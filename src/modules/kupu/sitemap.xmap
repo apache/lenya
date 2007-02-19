@@ -144,7 +144,7 @@
         <map:match pattern="content" type="step">
           <map:match pattern="*/authoring/**">
             <map:generate src="lenyadoc:/{page-envelope:document-language}/{page-envelope:document-uuid}"/>
-            <map:transform type="link-rewrite"/>
+            <map:transform type="uuid2url"/>
             <map:transform 
               src="fallback://lenya/modules/kupu/resources/kupu/apache-lenya/lenya/content2edit.xsl">
               <map:parameter name="css" 

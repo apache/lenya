@@ -18,7 +18,6 @@
 package org.apache.lenya.cms.editors;
 
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.cms.linking.LinkConverter;
 import org.apache.lenya.cms.publication.Document;
 import org.apache.lenya.cms.publication.ResourceType;
 import org.apache.lenya.cms.repository.Node;
@@ -84,10 +83,6 @@ public class EditDocument extends DocumentUsecase {
 
         if (!hasErrors()) {
             SourceUtil.writeDOM(xmlDoc, sourceDoc.getOutputStream());
-
-            LinkConverter converter = new LinkConverter(this.manager, getLogger());
-            converter.convertUrlsToUuids(getSourceDocument(), true);
-
             String event = getParameterAsString(EVENT, DEFAULT_EVENT);
             WorkflowUtil
                     .invoke(this.manager, getSession(), getLogger(), getSourceDocument(), event);

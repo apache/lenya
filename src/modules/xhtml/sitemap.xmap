@@ -72,7 +72,7 @@
         <map:act type="set-header">
           <map:parameter name="Last-Modified" value="{date-iso8601-rfc822:{page-envelope:document-lastmodified}}" />
           <map:generate src="lenya-document:{page-envelope:document-uuid},lang={page-envelope:document-language}"/>
-          <map:transform type="link-rewrite"/>
+          <map:transform type="uuid2url"/>
           <map:serialize type="xml-get"/>
         </map:act>
       </map:match>

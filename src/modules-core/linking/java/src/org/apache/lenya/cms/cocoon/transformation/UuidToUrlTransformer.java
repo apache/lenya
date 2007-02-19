@@ -52,7 +52,7 @@ import org.xml.sax.helpers.AttributesImpl;
 
 /**
  * <p>
- * Link rewriting transformer.
+ * UUID to URL transformer.
  * </p>
  * 
  * <p>
@@ -76,7 +76,7 @@ import org.xml.sax.helpers.AttributesImpl;
  * 
  * $Id: LinkRewritingTransformer.java,v 1.7 2004/03/16 11:12:16 gregor
  */
-public class LinkRewritingTransformer extends AbstractSAXTransformer implements Disposable {
+public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disposable {
 
     protected static final String BROKEN_ATTRIB = "class";
     protected static final String BROKEN_VALUE = "brokenlink";
@@ -157,8 +157,8 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
 
     private String indent = "";
 
-    protected String[] elementNames = { "a", "object", "img" };
-    protected String[] attributeNames = { "href", "src", "data" };
+    protected static final String[] elementNames = { "a", "object", "img" };
+    protected static final String[] attributeNames = { "href", "src", "data" };
 
     /**
      * @see org.xml.sax.ContentHandler#startElement(java.lang.String,
@@ -357,7 +357,7 @@ public class LinkRewritingTransformer extends AbstractSAXTransformer implements 
     }
 
     private boolean lookingAtLinkElement(String name) {
-        return Arrays.asList(this.elementNames).contains(name);
+        return Arrays.asList(elementNames).contains(name);
     }
 
     /**

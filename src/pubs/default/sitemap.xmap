@@ -151,7 +151,7 @@
       <!-- /lenyabody-{rendertype}/{publication-id}/{area}/{doctype}/{url} -->
       <map:match pattern="lenyabody-*/*/*/*/**">
         <map:generate src="cocoon:/lenyabody-raw-{1}/{2}/{3}/{page-envelope:default-language}/{page-envelope:document-language}/{4}/{5}"/>
-        <map:transform type="link-rewrite"/>
+        <map:transform type="uuid2url"/>
         <map:transform src="fallback://lenya/modules/svg/xslt/image2svg.xsl"/>
         <map:select type="resource-exists">
           <map:parameter name="prefix" value="fallback://"/>
@@ -214,7 +214,7 @@
         <map:transform type="i18n">      
           <map:parameter name="locale" value="{page-envelope:document-language}"/>
         </map:transform>
-        <map:transform type="link-rewrite"/>
+        <map:transform type="uuid2url"/>
         <map:serialize type="xml"/>
       </map:match>
     </map:pipeline>

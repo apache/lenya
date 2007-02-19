@@ -27,7 +27,6 @@ import org.apache.avalon.framework.service.ServiceException;
 import org.apache.avalon.framework.service.ServiceSelector;
 import org.apache.excalibur.source.SourceResolver;
 import org.apache.lenya.cms.cocoon.source.SourceUtil;
-import org.apache.lenya.cms.linking.LinkConverter;
 import org.apache.lenya.cms.metadata.MetaData;
 import org.apache.lenya.cms.metadata.MetaDataException;
 import org.apache.lenya.cms.metadata.dublincore.DublinCore;
@@ -157,9 +156,6 @@ public class Put extends CreateDocument {
                     addErrorMessage("invalid source xml. Full exception: " + e);
                 }
             }
-            
-            LinkConverter converter = new LinkConverter(this.manager, getLogger());
-            converter.convertUrlsToUuids(doc, true);
 
             String event = getParameterAsString(EVENT);
             if (event != null) {
