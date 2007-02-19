@@ -128,7 +128,7 @@ public class CreateLanguage extends Create {
      * @see Create#getDocumentTypeName()
      */
     protected String getDocumentTypeName() {
-        if (this.documentTypeName == null) {
+        if (this.documentTypeName == null && getSourceDocument() != null) {
             try {
                 ResourceType type = getSourceDocument().getResourceType();
                 this.documentTypeName = type.getName();
