@@ -105,7 +105,7 @@ public class CreateLanguage extends Create {
     }
 
     /**
-     * For new language version of a document, id is the same as that document's
+     * For new language version of a document, the path is the same as that document's
      * @see Create#getNewDocumentPath()
      */
     protected String getNewDocumentPath() {
