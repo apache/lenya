@@ -106,9 +106,11 @@ public class Publish extends InvokeWorkflow {
             org.apache.lenya.cms.linking.Link[] links = linkMgr.getLinksFrom(getSourceDocument());
             for (int i = 0; i < links.length; i++) {
                 LinkTarget target = resolver.resolve(getSourceDocument(), links[i].getUri());
-                Document doc = target.getDocument();
-                if (!doc.existsAreaVersion(Publication.LIVE_AREA)) {
-                    docs.add(doc);
+                if (target.exists()) {
+                    Document doc = target.getDocument();
+                    if (!doc.existsAreaVersion(Publication.LIVE_AREA)) {
+                        docs.add(doc);
+                    }
                 }
             }
         } catch (Exception e) {
