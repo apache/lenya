@@ -86,9 +86,11 @@ public class AbstractUsecase extends AbstractLogEnabled implements Usecase, Conf
 
     /**
      * @see org.apache.lenya.cms.usecase.Usecase#getSourceURL()
+     * We don't use getParameterAsString() because this will typically
+     * cause stack overflows or NPEs in connection with initParameters().
      */
     public String getSourceURL() {
-        return getParameterAsString(SOURCE_URL);
+        return (String) this.parameters.get(SOURCE_URL);
     }
 
     /**
