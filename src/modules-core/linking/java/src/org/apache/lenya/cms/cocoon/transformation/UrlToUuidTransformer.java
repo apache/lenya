@@ -163,6 +163,17 @@ public class UrlToUuidTransformer extends AbstractSAXTransformer {
                                 rewriteLink(newAttrs, UuidToUrlTransformer.attributeNames[i],
                                         targetDocument, anchor, queryString);
                             }
+                            else {
+                                /*
+                                 * This is legacy code. It rewrites links to
+                                 * non-document images (in resources/shared). These
+                                 * images shouldn't be referenced in documents since
+                                 * this violates the separation between content and
+                                 * layout.
+                                 */
+                                String newUrl = completeUrl.substring(this.contextPath.length());
+                                setAttribute(newAttrs, UuidToUrlTransformer.attributeNames[i], newUrl);
+                            }
                         }
 
                     } catch (final Exception e) {

@@ -91,6 +91,7 @@ public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disp
 
     private DocumentFactory factory;
     private LinkResolver linkResolver;
+    private String contextPath;
 
     /**
      * @see org.apache.cocoon.sitemap.SitemapModelComponent#setup(org.apache.cocoon.environment.SourceResolver,
@@ -102,6 +103,7 @@ public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disp
         super.setup(_resolver, _objectModel, _source, _parameters);
 
         Request _request = ObjectModelHelper.getRequest(_objectModel);
+        this.contextPath = _request.getContextPath();
 
         try {
             Session session = RepositoryUtil.getSession(this.manager, _request);
@@ -222,6 +224,24 @@ public class UuidToUrlTransformer extends AbstractSAXTransformer implements Disp
                                 markBrokenLink(newAttrs, attributeNames[i], linkUrl);
                             } else {
                                 this.ignoreLinkElement = true;
+                            }
+                        } else {
+                            /*
+                             * This is legacy code. It rewrites links to
+                             * non-document images (in resources/shared). These
+                             * images shouldn't be referenced in documents since
+                             * this violates the separation between content and
+                             * layout.
+                             */
+                            String prefix = "/" + this.currentDocument.getPublication().getId()
+                                    + "/";
+                            if (linkUrl.startsWith(prefix)) {
+                                String pubUrl = linkUrl.substring(prefix.length());
+                                String area = pubUrl.split("/")[0];
+                                String areaUrl = pubUrl.substring(area.length());
+                                String newUrl = this.contextPath + prefix
+                                        + this.currentDocument.getArea() + areaUrl;
+                                setAttribute(newAttrs, attributeNames[i], newUrl);
                             }
                         }
 
