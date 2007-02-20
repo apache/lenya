@@ -248,6 +248,9 @@
   <usecase id="admin.ipRangeProfile">
     <role id="admin" method="grant"/>
   </usecase>
+  <usecase id="admin.ipRange">
+    <role id="admin" method="grant"/>
+  </usecase>
   <usecase id="admin.ipRanges">
     <role id="admin" method="grant"/>
   </usecase>
