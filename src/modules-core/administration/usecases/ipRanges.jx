@@ -27,6 +27,8 @@
   <page:body>
     <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab">
+      
+      <h1><i18n:text>IP Ranges</i18n:text></h1>
     
       <table class="lenya-table-noborder">
         <tr>
