@@ -34,6 +34,12 @@
   <message key="no-assets">Es wurden noch keine Anlagen hochgeladen.</message>
   <message key="Editor">Bearbeiter</message>
   <message key="missing-languages">Fehlende Sprachen<br/> (Klicken zum Erstellen)</message>
+  <message key="Namespace">Namensraum</message>
+  <message key="http://purl.org/dc/terms/">Dublin-Core-Terme</message>
+  <message key="http://purl.org/dc/elements/1.1/">Dublin-Core-Elemente</message>
+  <message key="Inherited credentials">Vererbte Berechtigungen</message>
+  <message key="Subtree credentials">Berechtigungen für diesen Teilbaum</message>
+  <message key="New subtree credential">Neue Berechtigung für diesen Teilbaum</message>
   
 </catalogue>
 

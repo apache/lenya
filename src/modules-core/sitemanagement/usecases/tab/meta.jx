@@ -27,8 +27,37 @@
     <jx:import uri="fallback://lenya/modules/sitemanagement/usecases/tab/sitetree.jx"/>
     <jx:import uri="fallback://lenya/modules/usecase/templates/tabs.jx"/>
     <div id="contentblock1" class="lenya-tab-sitetree">
-      <h1><i18n:text>Meta Data</i18n:text></h1>
-      <form id="form-meta">
+      <h1 id="form-meta" style="width: 600px"><i18n:text>Meta Data</i18n:text></h1>
+      <form>
+        
+        <jx:set var="num2namespace" value="${usecase.getParameter('namespaces')}"/>
+        
+        <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>
+        
+        <jx:forEach var="num" items="${usecase.getParameter('numbers')}">
+          <div class="lenya-box-toggled">
+            <div class="lenya-box-title">
+              <!--<i18n:text>Namespace</i18n:text>:-->
+              <i18n:text><jx:out value="${num2namespace.get(num)}"/></i18n:text>
+            </div>
+            <div class="lenya-box-body">
+              <table class="lenya-table-list-noborder">
+                <jx:forEach var="key" items="${usecase.getParameter('keys')}">
+                  <jx:if test="${key.startsWith('ns' + num + '.')}">
+                    <tr>
+                      <td class="lenya-entry-caption"><label for="${key}"><i18n:text><jx:out value="${key.substring(key.indexOf('.')).substring(1)}"/></i18n:text>:</label></td>
+                      <td>
+                        <input type="text" id="${key}" name="${key}" class="lenya-form-element" value="${usecase.getParameter(key)}"/>
+                      </td>
+                    </tr>
+                  </jx:if>
+                </jx:forEach>
+              </table>
+            </div>
+          </div>
+        </jx:forEach>
+            
+        <!--
         <table class="lenya-table-noborder">
           <tr>
             <td colspan="2">
@@ -36,8 +65,6 @@
             </td>
           </tr>
           
-          <jx:set var="num2namespace" value="${usecase.getParameter('namespaces')}"/>
-
           <jx:forEach var="num" items="${usecase.getParameter('numbers')}">
             
             <tr>
@@ -78,6 +105,18 @@
             </td>
           </tr>
         </table>
+        -->
+
+        <jx:choose>
+          <jx:when
+            test="${usecase.getParameter('document').getArea().equals('authoring') &amp;&amp; ! usecase.hasErrors()}">
+            <input i18n:attr="value" name="submit" type="submit" value="Save"/>
+          </jx:when>
+          <jx:otherwise>
+            <input i18n:attr="value" name="submit" type="submit" disabled="disabled" value="Save"/>
+          </jx:otherwise>
+        </jx:choose>
+        
         <input type="hidden" name="lenya.usecase" value="${request.getParameter('lenya.usecase')}"/>
         <input type="hidden" name="lenya.continuation" value="${continuation.id}"/>
       </form>
