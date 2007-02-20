@@ -81,6 +81,20 @@ public class UsecaseProxy {
     }
 
     /**
+     * Returns the current value of a parameter.
+     * @param name The parameter name.
+     * @param defaultValue The default value to use when the parameter is not set.
+     * @return An object.
+     */
+    public Object getParameter(String name, Object defaultValue) {
+        Object value = this.parameters.get(name);
+        if (value == null) {
+            value = defaultValue;
+        }
+        return value;
+    }
+
+    /**
      * Returns the current value of a parameter as a string.
      * @param name The parameter name.
      * @return A string or <code>null</code> if the parameter was not set.
