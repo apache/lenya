@@ -38,6 +38,10 @@
           </td>
         </tr>
         <tr>
+          <td class="lenya-entry-caption"><i18n:text>IP Range ID</i18n:text>:</td>
+          <td><jx:out value="${usecase.getParameter('ipRangeId')}"/></td>
+        </tr>
+        <tr>
           <td class="lenya-entry-caption"><i18n:text>Name</i18n:text>:</td>
           <td><jx:out value="${ipRange.getName()}"/></td>
         </tr>

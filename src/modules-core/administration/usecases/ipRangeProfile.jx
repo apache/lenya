@@ -39,16 +39,16 @@
           </td>
         </tr>
         <tr>
-          <td class="lenya-entry-caption"><i18n:text>IP Range ID</i18n:text></td>
-          <td><jx:out value="${usecase.getParameter('ipRange').getId()}"/></td>
+          <td class="lenya-entry-caption"><i18n:text>IP Range ID</i18n:text>:</td>
+          <td><jx:out value="${usecase.getParameter('ipRangeId')}"/></td>
         </tr>
         
         <tr>
-          <td class="lenya-entry-caption"><i18n:text>Name</i18n:text></td>
+          <td class="lenya-entry-caption"><i18n:text>Name</i18n:text>:</td>
           <td><input type="text" name="name" class="lenya-form-entry" value="${request.getParameter('name')}"/></td>
         </tr>
         <tr>
-          <td valign="top" class="lenya-entry-caption"><i18n:text>Description</i18n:text></td>
+          <td valign="top" class="lenya-entry-caption"><i18n:text>Description</i18n:text>:</td>
           <td>
             <textarea name="description" class="lenya-form-entry">
               <jx:out value="${request.getParameter('description')}"/>
@@ -57,7 +57,7 @@
         </tr>
 
         <tr>
-          <td class="lenya-entry-caption"><i18n:text>Network Address</i18n:text></td>
+          <td class="lenya-entry-caption"><i18n:text>Network Address</i18n:text>:</td>
           <td>
             <jx:forEach var="part" items="${usecase.getParameter('partNumbers')}">
               <jx:choose>
@@ -76,7 +76,7 @@
           </td>
         </tr>
         <tr>
-          <td class="lenya-entry-caption"><i18n:text>Subnet Mask</i18n:text></td>
+          <td class="lenya-entry-caption"><i18n:text>Subnet Mask</i18n:text>:</td>
           <td>
             <jx:forEach var="part" items="${usecase.getParameter('partNumbers')}">
               <jx:choose>
