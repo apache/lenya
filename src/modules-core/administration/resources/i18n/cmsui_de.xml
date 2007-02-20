@@ -28,6 +28,7 @@
   <message key="usecase-policies-message">Hier können Sie festlegen, welche Usecases durch welche Rollen ausgeführt werden dürfen.</message>
   <message key="Server Status">Server-Status</message>
   <message key="e-mail">E-Mail</message>
+  <message key="No groups assigned">Keine Gruppen zugeordnet</message>
   
 </catalogue>
 
