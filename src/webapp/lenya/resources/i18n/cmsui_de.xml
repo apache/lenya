@@ -39,6 +39,10 @@
   <message key="archive">Archiv</message>
   <message key="user">Benutzer</message>
   <message key="Users">Benutzer</message>  
+  <message key="User Profile">Benutzerprofil</message>  
+  <message key="Edit User Profile">Benutzerprofil bearbeiten</message>  
+  <message key="Default Menu Locale">Bevorzugte Menü-Sprache</message>  
+  <message key="Default Document Locale">Bevorzugte Dokumenten-Sprache</message>  
   <message key="group">Gruppe</message>
   <message key="Group">Gruppe</message>
   <message key="Groups">Gruppen</message>
