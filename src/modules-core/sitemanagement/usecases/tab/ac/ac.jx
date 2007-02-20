@@ -45,7 +45,7 @@ limitations under the License.
       </div>
       -->
       
-      <table class="lenya-table">
+      <table class="lenya-table-list-noborder">
         <tr>
           <td colspan="5" style="border-left: 0; border-right: 0; border-top: 0px;">
             <jx:import uri="fallback://lenya/modules/usecase/templates/messages.jx"/>

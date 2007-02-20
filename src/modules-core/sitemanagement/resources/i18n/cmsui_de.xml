@@ -33,6 +33,7 @@
   <message key="Meta Data">Meta-Daten</message>
   <message key="no-assets">Es wurden noch keine Anlagen hochgeladen.</message>
   <message key="Editor">Bearbeiter</message>
+  <message key="missing-languages">Fehlende Sprachen<br/> (Klicken zum Erstellen)</message>
   
 </catalogue>
 

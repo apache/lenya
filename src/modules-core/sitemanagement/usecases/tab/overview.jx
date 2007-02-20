@@ -52,7 +52,9 @@
               <td class="lenya-entry-caption"><i18n:text>Workflow State</i18n:text>:</td>
               <td>
                 <jx:choose>
-                  <jx:when test="${not(empty(usecase.getParameter('state')))}"><jx:out value="${usecase.getParameter('state')}"/></jx:when>
+                  <jx:when test="${not(empty(usecase.getParameter('state')))}">
+                    <i18n:text><jx:out value="${usecase.getParameter('state')}"/></i18n:text>
+                  </jx:when>
                   <jx:otherwise><span style="color: #999999;"><i18n:text>[no workflow]</i18n:text></span></jx:otherwise>
                 </jx:choose>
               </td>
@@ -85,7 +87,7 @@
             <jx:set var="pubLanguages" value="${document.getPublication().getLanguages().size()}"/>
             <jx:if test="${docLanguages lt pubLanguages}">
               <tr>
-                <td class="lenya-entry-caption"><i18n:text>Missing Languages<br/> (click to create)</i18n:text>:</td>
+                <td class="lenya-entry-caption"><i18n:text>missing-languages</i18n:text>:</td>
                 <td>
                   <jx:forEach var="language" items="${document.getPublication().getLanguages()}">
                     <jx:if test="${!document.existsTranslation(language)}">
