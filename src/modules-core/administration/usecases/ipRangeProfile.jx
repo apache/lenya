@@ -45,14 +45,12 @@
         
         <tr>
           <td class="lenya-entry-caption"><i18n:text>Name</i18n:text>:</td>
-          <td><input type="text" name="name" class="lenya-form-entry" value="${request.getParameter('name')}"/></td>
+          <td><input type="text" name="name" class="lenya-form-entry" value="${usecase.getParameter('name')}"/></td>
         </tr>
         <tr>
           <td valign="top" class="lenya-entry-caption"><i18n:text>Description</i18n:text>:</td>
           <td>
-            <textarea name="description" class="lenya-form-entry">
-              <jx:out value="${request.getParameter('description')}"/>
-            </textarea>
+            <textarea name="description" class="lenya-form-entry"><jx:out value="${usecase.getParameter('description')}"/></textarea>
           </td>
         </tr>
 

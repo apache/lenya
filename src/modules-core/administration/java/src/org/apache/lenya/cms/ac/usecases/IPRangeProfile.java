@@ -42,7 +42,7 @@ public class IPRangeProfile extends AccessControlUsecase {
     protected void doCheckExecutionConditions() throws Exception {
         IPRangeProfile.validateAddresses(this);
     }
-    
+
     /**
      * @see org.apache.lenya.cms.usecase.AbstractUsecase#doExecute()
      */
@@ -51,15 +51,15 @@ public class IPRangeProfile extends AccessControlUsecase {
 
         String name = getParameterAsString(NAME);
         String description = getParameterAsString(DESCRIPTION);
-        
+
         IPRange ipRange = getIPRange();
 
         ipRange.setName(name);
         ipRange.setDescription(description);
-        
+
         String networkString = "";
         String subnetString = "";
-        
+
         for (int i = 0; i < 4; i++) {
             if (i > 0) {
                 networkString += ".";
@@ -91,7 +91,8 @@ public class IPRangeProfile extends AccessControlUsecase {
     }
 
     /**
-     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String, java.lang.Object)
+     * @see org.apache.lenya.cms.usecase.Usecase#setParameter(java.lang.String,
+     *      java.lang.Object)
      */
     public void setParameter(String name, Object value) {
         super.setParameter(name, value);
@@ -111,9 +112,10 @@ public class IPRangeProfile extends AccessControlUsecase {
 
             List partNumbers = new ArrayList();
             for (byte i = 0; i < 4; i++) {
-                setParameter(NETWORK_ADDRESS + "-" + i, new Part(i, ""
-                        + networkAddress.getAddress()[i]));
-                setParameter(SUBNET_MASK + "-" + i, new Part(i, "" + subnetMask.getAddress()[i]));
+                String addrPart = Integer.toString(0xFF & networkAddress.getAddress()[i]);
+                setParameter(NETWORK_ADDRESS + "-" + i, new Part(i, addrPart));
+                String maskPart = Integer.toString(0xFF & subnetMask.getAddress()[i]);
+                setParameter(SUBNET_MASK + "-" + i, new Part(i, maskPart));
                 partNumbers.add(new Integer(i));
             }
             setParameter(IPRangeProfile.PART_NUMBERS, partNumbers);
