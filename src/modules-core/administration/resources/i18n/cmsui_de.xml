@@ -25,6 +25,7 @@
   <message key="Sessions">Sitzungen</message>
   <message key="Path">Pfad</message>
   <message key="Inbox">Posteingang</message>
+  <message key="usecase-policies-message">Hier können Sie festlegen, welche Usecases durch welche Rollen ausgeführt werden dürfen.</message>
   
 </catalogue>
 

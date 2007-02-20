@@ -25,5 +25,6 @@
   <message key="Sessions">Sessions</message>
   <message key="Path">Path</message>
   <message key="Inbox">Inbox</message>
+  <message key="usecase-policies-message">Here you can choose which usecases should be executable by which roles.</message>
   
 </catalogue>
