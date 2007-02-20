@@ -58,12 +58,12 @@
         </tr>
         
         <tr>
-          <td class="lenya-entry-caption"><label for="defaultMenuLocale"><i18n:text>Default Menu Locale</i18n:text> *</label></td>
+          <td class="lenya-entry-caption"><label for="defaultMenuLocale"><i18n:text>Default Menu Locale</i18n:text></label></td>
           <td><input type="text" name="defaultMenuLocale" class="lenya-form-element" value="${usecase.getParameter('defaultMenuLocale')}"/></td>
         </tr>
         
         <tr>
-          <td class="lenya-entry-caption"><label for="defaultDocumentLocale"><i18n:text>Default Document Locale</i18n:text> *</label></td>
+          <td class="lenya-entry-caption"><label for="defaultDocumentLocale"><i18n:text>Default Document Locale</i18n:text></label></td>
           <td><input type="text" name="defaultDocumentLocale" class="lenya-form-element" value="${usecase.getParameter('defaultDocumentLocale')}"/></td>
         </tr>
         
