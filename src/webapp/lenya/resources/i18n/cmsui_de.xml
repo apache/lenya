@@ -95,8 +95,8 @@
   <message key="Link">Verweis</message>
   <message key="Caption">Überschrift</message>
   <message key="All rights reserved">Alle Rechte vorbehalten.</message>
-  <message key="show">Anzeigen</message>
-  <message key="hide">Verbergen</message>
+  <message key="show">&#160;+&#160;</message>
+  <message key="hide">&#160;-&#160;</message>
   <message key="Dimension (w x h)">Abmessung (B&#160;x&#160;H)</message>
   <message key="Height">Höhe</message>
   <message key="Width">Breite</message>
